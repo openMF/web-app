@@ -11,7 +11,9 @@ import {
   INITIAL_FORM_STATE,
   LoanWizardProfileMode,
   PRODUCT_CARDS,
+  PROFILE_EXTRA_VISIBLE_FIELDS,
   PROFILE_INITIAL_OVERRIDES,
+  PROFILE_LABEL_KEYS,
   buildPayload,
   dropsDisabledOverAppliedFields,
   hiddenDefaultsFor,
@@ -495,7 +497,7 @@ describe('loan-product.config buildPayload golden parity', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 50000,
       numberOfRepayments: 12,
@@ -688,7 +690,7 @@ describe('loan-product.config buildPayload for the two-wheeler profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 80000,
       numberOfRepayments: 36,
@@ -835,7 +837,7 @@ describe('loan-product.config buildPayload for the education profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 500000,
       numberOfRepayments: 120,
@@ -996,7 +998,7 @@ describe('loan-product.config buildPayload for the agriculture profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 100000,
       numberOfRepayments: 1,
@@ -1145,7 +1147,7 @@ describe('loan-product.config buildPayload for the home and mortgage profiles', 
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 2500000,
       numberOfRepayments: 240,
@@ -1357,7 +1359,7 @@ describe('loan-product.config buildPayload for the gold profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 200000,
       numberOfRepayments: 12,
@@ -1550,7 +1552,7 @@ describe('loan-product.config buildPayload for the auto profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 800000,
       numberOfRepayments: 60,
@@ -1735,7 +1737,7 @@ describe('loan-product.config buildPayload for the jlg profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: true,
       principal: 30000,
       numberOfRepayments: 24,
@@ -2697,6 +2699,20 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('loan-against-securities');
   });
 
+  it('gives every product card a unique, non-empty translation key as its description', () => {
+    // The selection UI renders `card.description` through the `translate` pipe, so a literal English
+    // sentence silently falls through the missing-translation handler and stays English in every
+    // locale. Assert the key form here rather than trusting review to catch a literal.
+    const descriptions = PRODUCT_CARDS.map((product) => product.description);
+
+    descriptions.forEach((description) => {
+      expect(typeof description).toBe('string');
+      expect(description.startsWith('labels.text.')).toBe(true);
+      expect(description.length).toBeGreaterThan('labels.text.'.length);
+    });
+    expect(new Set(descriptions).size).toBe(PRODUCT_CARDS.length);
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -2821,5 +2837,103 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         ]);
       });
     });
+  });
+});
+
+/**
+ * Cross-profile structural invariants.
+ *
+ * The guided merge in `buildPayload` spreads `hiddenDefaultsFor(profile)` LAST, so a hidden default
+ * beats whatever the operator typed. That is deliberate for pinned fields, but it means every field
+ * a profile exposes as editable MUST have been deleted from its hidden defaults — otherwise the
+ * control renders, accepts input, and is silently overwritten on submit.
+ *
+ * The per-profile suites above assert this one field at a time for the fields they happen to cover.
+ * These tests assert it exhaustively, for every profile and every exposed field at once, so a new
+ * product template that forgets the `delete` fails here rather than shipping a dead control.
+ */
+describe('loan-product.config profile invariants', () => {
+  const allProfiles = Object.keys(PROFILE_LABEL_KEYS) as LoanWizardProfileMode[];
+
+  it('exposes no field that its own hidden defaults would clobber', () => {
+    const violations: string[] = [];
+    allProfiles.forEach((profile) => {
+      const hidden = hiddenDefaultsFor(profile);
+      (PROFILE_EXTRA_VISIBLE_FIELDS[profile] ?? []).forEach((field) => {
+        if (field in hidden) {
+          violations.push(`${profile}: ${field}`);
+        }
+      });
+    });
+    expect(violations).toEqual([]);
+  });
+
+  it('never seeds a visible control with a value its hidden defaults would overwrite', () => {
+    const violations: string[] = [];
+    allProfiles.forEach((profile) => {
+      const hidden = hiddenDefaultsFor(profile);
+      Object.entries(PROFILE_INITIAL_OVERRIDES[profile] ?? {}).forEach(
+        ([
+          field,
+          seeded
+        ]) => {
+          if (field in hidden && JSON.stringify(hidden[field]) !== JSON.stringify(seeded)) {
+            violations.push(
+              `${profile}: ${field} seeded ${JSON.stringify(seeded)} but pinned ${JSON.stringify(hidden[field])}`
+            );
+          }
+        }
+      );
+    });
+    expect(violations).toEqual([]);
+  });
+
+  it('returns a fresh hidden-defaults object per call rather than a shared mutable one', () => {
+    const first = hiddenDefaultsFor('bnpl');
+    // Snapshot BEFORE mutating: if `hiddenDefaultsFor` ever did return a shared object, mutating it
+    // would also mutate a `baseline` that merely referenced it, and the comparison below would
+    // compare the poisoned object with itself and pass. Deep, because a shallow `{ ...first }` would
+    // still share HIDDEN_DEFAULTS' mutable arrays and miss the nested case entirely.
+    // JSON round-trip rather than `structuredClone`: the defaults are plain JSON data, and the Jest
+    // environment does not expose `structuredClone`.
+    const baseline = JSON.parse(JSON.stringify(first));
+    const mutated = hiddenDefaultsFor('bnpl') as Record<string, unknown>;
+
+    // Top level: a distinct object per call.
+    expect(mutated).not.toBe(first);
+    mutated.injected = 'poison';
+    delete mutated.description;
+
+    // Nested: the variation arrays must not be one instance shared across every call and profile.
+    const arrayKey = 'principalVariationsForBorrowerCycle';
+    expect(mutated[arrayKey]).not.toBe(first[arrayKey]);
+    (mutated[arrayKey] as unknown[]).push('poison');
+    // Checked against a DIFFERENT profile that still pins the array — JLG exposes the borrower-cycle
+    // rows as editable controls, so it deletes the key from its own defaults entirely.
+    expect(hiddenDefaultsFor('personal')[arrayKey]).toEqual([]);
+
+    expect(hiddenDefaultsFor('bnpl')).toEqual(baseline);
+  });
+
+  it('sends the workbook instalment multiple of 1 for every profile', () => {
+    // Row 11 of all 13 product sheets carries `Default Value = 1`; the 10 in the sample column is the
+    // `All Params` boilerplate. This drifted once already — four profiles pinned 1 locally while the
+    // base default still sent 10 — so assert it across every profile at once.
+    const offenders = allProfiles.filter(
+      (profile) => buildPayload({ ...INITIAL_FORM_STATE }, profile).installmentAmountInMultiplesOf !== 1
+    );
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('gives every guided profile its own product description', () => {
+    // Custom/Advanced is excluded by design: it is the only mode whose merge lets the form win, and
+    // `description` is one of its visible controls (INITIAL_FORM_STATE seeds it ''), so the
+    // inherited HIDDEN_DEFAULTS description is never reachable in its payload.
+    const guided = allProfiles.filter((profile) => profile !== 'custom-advanced');
+    const descriptions = guided.map((profile) => hiddenDefaultsFor(profile).description);
+
+    expect(new Set(descriptions).size).toBe(guided.length);
+    expect(descriptions.every((description) => typeof description === 'string' && description !== '')).toBe(true);
   });
 });

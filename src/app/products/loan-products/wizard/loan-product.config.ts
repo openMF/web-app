@@ -19,7 +19,10 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   includeInBorrowerCycle: true,
   digitsAfterDecimal: 2,
   inMultiplesOf: 1,
-  installmentAmountInMultiplesOf: 10,
+  // Row 11 of every sheet in the workbook: the `Default Value` column is 1 (the 10 in column E is
+  // the `All Params` boilerplate sample, not a per-product figure). An instalment is a plain split of
+  // the financed amount and must not be rounded up to the nearest 10.
+  installmentAmountInMultiplesOf: 1,
   useBorrowerCycle: false,
   isLinkedToFloatingInterestRates: false,
   allowApprovedDisbursedAmountsOverApplied: false,
@@ -137,10 +140,6 @@ export interface FormStep {
 export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Custom / Advanced',
-    // Fully qualified translation key (rather than literal display text like the other cards below) so
-    // this specific description can be localized; the template applies `| translate` to every card's
-    // `description`, and untranslated literal text safely falls through the missing-translation handler
-    // unchanged, so this doesn't require touching the other, not-yet-translated cards.
     description: 'labels.text.Complete control over every aspect of product behavior',
     active: true,
     disabled: false,
@@ -151,7 +150,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Personal Loan',
     description:
-      'Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation.',
+      'labels.text.Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation',
     active: true,
     disabled: false,
     route: 'personal-loan',
@@ -159,7 +158,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Two Wheeler Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Finance for new or used two-wheelers with quick approval and flexible down payment options',
     active: true,
@@ -169,7 +167,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.JLG Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities',
     active: true,
@@ -179,7 +176,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Education Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration',
     active: true,
@@ -189,7 +185,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Home Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description: 'labels.text.Long-tenure financing to purchase, construct, or renovate a residential property',
     active: true,
     disabled: false,
@@ -198,7 +193,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Mortgage Loan (LAP)',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Loan against property where an existing residential or commercial asset is pledged as collateral',
     active: true,
@@ -210,7 +204,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
     // Renamed from 'Agri Loan' to match the template's full product name everywhere else
     // (profile label, breadcrumb, page title).
     name: 'labels.text.Agriculture Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles',
     active: true,
@@ -220,7 +213,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Auto Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description: 'labels.text.Financing for new or used car purchases with structured EMIs over a chosen tenure',
     active: true,
     disabled: false,
@@ -229,7 +221,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Gold Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork',
     active: true,
@@ -239,7 +230,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Consumer Durable Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options',
     active: true,
@@ -249,7 +239,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Loan vs Securities / FD',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment',
     active: true,
@@ -259,7 +248,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Credit Card EMI',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description: 'labels.text.Converts card spends or available credit limit into structured EMIs',
     active: true,
     disabled: false,
@@ -269,7 +257,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.BNPL',
     description:
-      'Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.',
+      'labels.text.Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments',
     active: true,
     disabled: false,
     route: 'bnpl-loan',
@@ -278,7 +266,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Invoice Discounting',
     description:
-      'Short-term financing against unpaid invoices to improve business cash flow before customer payment is due.',
+      'labels.text.Short-term financing against unpaid invoices to improve business cash flow before customer payment is due',
     active: false,
     disabled: true,
     icon: 'receipt_long'
@@ -286,7 +274,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Merchant Cash Advance',
     description:
-      'Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions.',
+      'labels.text.Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions',
     active: false,
     disabled: true,
     icon: 'storefront'
@@ -294,7 +282,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Line of Credit',
     description:
-      'A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized.',
+      'labels.text.A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized',
     active: false,
     disabled: true,
     icon: 'credit_score'
@@ -1639,6 +1627,29 @@ const LOAN_AGAINST_SECURITIES_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * A per-call copy of {@link HIDDEN_DEFAULTS} with its mutable values isolated.
+ *
+ * A bare `{ ...HIDDEN_DEFAULTS }` is a SHALLOW copy, so the borrower-cycle variation arrays
+ * (`principalVariationsForBorrowerCycle` and siblings) would be the same array instance in every
+ * object `hiddenDefaultsFor` ever returns — and in the module-level constant itself. Nothing mutates
+ * them in place today (the borrower-cycle step assigns a fresh array rather than pushing), but a
+ * single future `payload.principalVariationsForBorrowerCycle.push(...)` would silently corrupt every
+ * profile for the lifetime of the page. Copying the arrays here keeps each caller's object its own.
+ */
+function cloneHiddenDefaults(): Record<string, unknown> {
+  const clone: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
+  for (const [
+    key,
+    value
+  ] of Object.entries(clone)) {
+    if (Array.isArray(value)) {
+      clone[key] = [...value];
+    }
+  }
+  return clone;
+}
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1646,7 +1657,7 @@ const LOAN_AGAINST_SECURITIES_VISIBLE_KEYS: readonly string[] = [
  */
 export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<string, unknown> {
   if (profileMode === 'two-wheeler') {
-    const defaults: Record<string, unknown> = { ...HIDDEN_DEFAULTS, description: 'Two Wheeler Loan Product' };
+    const defaults: Record<string, unknown> = { ...cloneHiddenDefaults(), description: 'Two Wheeler Loan Product' };
     // The down payment percentage is THE commercial lever of a two wheeler product (it is how
     // lenders control loan-to-value on a fast-depreciating asset), so this profile exposes it as a
     // visible, editable Settings control — see PROFILE_EXTRA_VISIBLE_FIELDS. `enableDownPayment`
@@ -1661,7 +1672,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'education') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Education Loan Product',
       // No down payment concept in an education loan — overrides the base hidden true. The sanitize
       // step then drops the two down-payment dependents exactly as it does for Classic.
@@ -1703,7 +1714,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'agriculture') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Agriculture Loan Product',
       // Production credit carries no down payment concept — overrides the base hidden true; the
       // sanitize step then drops the two down-payment dependents.
@@ -1745,11 +1756,8 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'bnpl') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
-      description: 'BNPL Loan Product',
-      // Spreadsheet row 11 pins the installment multiple to 1, not the base default of 10: a BNPL
-      // instalment is a plain split of the cart value and must not be rounded up to the nearest 10.
-      installmentAmountInMultiplesOf: 1
+      ...cloneHiddenDefaults(),
+      description: 'BNPL Loan Product'
     };
     // Every key below is marked `is Applicable = Y` in the BNPL sheet, so BNPL renders it as an
     // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
@@ -1761,7 +1769,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (isHomeOrMortgageProfile(profileMode)) {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: profileMode === 'mortgage' ? 'Mortgage Loan Product' : 'Home Loan Product'
     };
     // Every key below is marked `is Applicable = Y` on the Home L sheet, so the profile renders it as
@@ -1774,7 +1782,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'gold') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Gold Loan Product',
       // Row 54 is the only sheet row in the workbook that pins `multiDisburseLoan` to an explicit
       // FALSE (Home marks the whole tranche family Applicable; the older guided sheets leave the
@@ -1802,7 +1810,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'auto') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Auto Loan Product'
       // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so unlike
       // Gold — whose row 54 pins an explicit FALSE — it simply inherits the master defaults and is
@@ -1820,7 +1828,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'jlg') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'JLG Loan Product',
       // Row 67, pinned FALSE, overriding the base hidden `true`. A joint liability group loan has no
       // down payment concept — the group's guarantee is the security — so the sanitize step then drops
@@ -1841,12 +1849,8 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'consumer-durable') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
-      description: 'Consumer Durable Loan Product',
-      // Row 11 pins the installment multiple to 1, not the base default of 10 — the same call the BNPL
-      // sheet makes, and for the same reason: a point-of-sale instalment is a plain split of the item
-      // price and must not be rounded up to the nearest 10.
-      installmentAmountInMultiplesOf: 1
+      ...cloneHiddenDefaults(),
+      description: 'Consumer Durable Loan Product'
       // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so it
       // inherits the master defaults and is dropped from the payload wholesale — this profile is absent
       // from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment as Auto
@@ -1862,12 +1866,8 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'credit-card-emi') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
-      description: 'Credit Card EMI Loan Product',
-      // Row 11 pins the installment multiple to 1, not the base default of 10 — the same call BNPL and
-      // Consumer Durable make. A card EMI is a plain split of the converted spend and must not be
-      // rounded up to the nearest 10.
-      installmentAmountInMultiplesOf: 1
+      ...cloneHiddenDefaults(),
+      description: 'Credit Card EMI Loan Product'
     };
     // Every key below is marked `is Applicable = Y` on the Card L sheet, so the profile renders it as
     // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
@@ -1879,10 +1879,8 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'loan-against-securities') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
-      description: 'Loan vs Securities / FD Product',
-      // Row 11 pins the installment multiple to 1, not the base default of 10.
-      installmentAmountInMultiplesOf: 1
+      ...cloneHiddenDefaults(),
+      description: 'Loan vs Securities / FD Product'
       // The multi-disburse family (rows 54-58) is Not Applicable with blank Default Values, so it
       // inherits the master defaults and is dropped from the payload wholesale — this profile is
       // absent from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment
@@ -1898,7 +1896,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     return defaults;
   }
   if (profileMode === 'custom-advanced') {
-    const d: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
+    const d: Record<string, unknown> = { ...cloneHiddenDefaults() };
     delete d.canDefineInstallmentAmount;
     delete d.allowVariableInstallments;
     delete d.multiDisburseLoan;
@@ -1917,7 +1915,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     delete d.daysInYearCustomStrategy;
     return d;
   }
-  return { ...HIDDEN_DEFAULTS };
+  return { ...cloneHiddenDefaults() };
 }
 
 /**
