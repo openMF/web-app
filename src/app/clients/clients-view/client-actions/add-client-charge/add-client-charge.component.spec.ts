@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { delay, of, throwError } from 'rxjs';
 import { AddClientChargeComponent } from './add-client-charge.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -54,7 +54,7 @@ describe('AddClientChargeComponent', () => {
       formatDate: jest.fn(() => '20 March 2026')
     } as any;
 
-    notifier = { notifyAndNavigate: jest.fn() } as any;
+    notifier = { notifyAndNavigate: jest.fn(), notify: jest.fn() } as any;
 
     await TestBed.configureTestingModule({
       imports: [
@@ -110,5 +110,25 @@ describe('AddClientChargeComponent', () => {
     component.submit();
 
     expect(notifier.notifyAndNavigate).not.toHaveBeenCalled();
+  });
+
+  it('should apply only the latest charge template when chargeId changes rapidly', (done) => {
+    clientsService.getChargeAndTemplate.mockReset();
+    clientsService.getChargeAndTemplate.mockImplementation((chargeId: number) =>
+      of({
+        chargeTimeType: { id: chargeId, value: chargeId === 1 ? 'Specified due date' : 'Annual Fee' },
+        chargeCalculationType: { id: 1 },
+        amount: chargeId * 100,
+        feeInterval: null
+      }).pipe(delay(chargeId === 1 ? 50 : 0))
+    );
+
+    component.clientChargeForm.controls.chargeId.setValue(1);
+    component.clientChargeForm.controls.chargeId.setValue(2);
+
+    setTimeout(() => {
+      expect(component.clientChargeForm.value.amount).toBe(200);
+      done();
+    }, 100);
   });
 });

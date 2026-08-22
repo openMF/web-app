@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -22,6 +23,7 @@ import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { switchMap } from 'rxjs/operators';
 
 /**
  * Add Fixed Deposits Charge component.
@@ -43,6 +45,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -67,9 +70,11 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
-      this.savingsChargeOptions = data.fixedDepositsAccountActionData.chargeOptions;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { fixedDepositsAccountActionData: any }) => {
+        this.savingsChargeOptions = data.fixedDepositsAccountActionData.chargeOptions;
+      });
     this.fixedDepositAccountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 
@@ -83,8 +88,12 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   }
 
   buildDependencies() {
-    this.fixedDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+    this.fixedDepositsChargeForm.controls.chargeId.valueChanges
+      .pipe(
+        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -117,7 +126,6 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
           chargeTimeType: data.chargeTimeType.id
         });
       });
-    });
   }
 
   /**
