@@ -443,6 +443,18 @@
       "noBreachConfiguration": "이 대출에는 위반 구성이 없습니다.",
       "loanIsNotActive": "위반 평가는 대출이 활성 상태일 때만 변경할 수 있습니다.",
       "breachIsDisabled": "이 대출의 위반 평가가 비활성화되어 있습니다. 이 작업을 실행하려면 활성화하세요."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "이 회수 거래는 이미 취소되었습니다.",
+      "amountMustBePositive": "금액은 0보다 커야 합니다.",
+      "beforeLastTransactionDate": "회수 거래일은 대출의 마지막 거래일보다 이전일 수 없습니다.",
+      "beforeWriteOffDate": "회수 거래일은 상각일보다 이전일 수 없습니다.",
+      "dateOutOfRange": "회수 납입 일자가 이 대출에 허용된 범위를 벗어났습니다.",
+      "futureDate": "회수 거래일은 미래일 수 없습니다.",
+      "greaterThanRemaining": "금액은 회수 잔액을 초과할 수 없습니다.",
+      "loanNotWrittenOff": "이 대출은 상각되지 않았으므로 회수 거래를 등록할 수 없습니다.",
+      "reversalForbidden": "운전자본 거래를 취소할 권한이 없습니다. 관리자에게 취소를 요청하세요.",
+      "undoWriteOffWithRecoveries": "대출에 회수 거래가 있는 동안에는 상각을 취소할 수 없습니다. 먼저 회수 거래를 취소하세요."
     }
   },
   "labels": {
@@ -1783,7 +1795,8 @@
       "Resource Provider / Beneficial Owner": "자원 제공자 / 실소유자",
       "Personal References (2 Family Members, 1 Acquaintance)": "개인 참고인(가족 2명, 지인 1명)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "최종 실소유자 선언 - 법인",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "최종 실소유자 선언 - 자연인"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "최종 실소유자 선언 - 자연인",
+      "Recovery": "회수"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -3738,7 +3751,10 @@
       "Submitted Date": "제출일",
       "No Ext": "외부 번호",
       "No Int": "내부 번호",
-      "Age of the business": "사업 기간"
+      "Age of the business": "사업 기간",
+      "Written Off Amount": "상각 금액",
+      "Total Recovered": "총 회수액",
+      "Pending Recovery": "회수 잔액"
     },
     "links": {
       "Community": "지역 사회",
@@ -4961,7 +4977,9 @@
       "Person PEP PLD Question 3": "해당 법인의 주주, 직원 또는 임원과 가족 관계 (2)가 있습니까?",
       "the contents of": "다음의 내용",
       "the": "선택된",
-      "items selected of": "개 항목:"
+      "items selected of": "개 항목:",
+      "Recovery Completed": "회수 완료",
+      "Recovery Payment Description": "상각 이후 수령한 금액을 기록합니다. 대출은 마감 상태로 유지되고 잔액도 0으로 유지되며, 총 회수액만 변경됩니다."
     },
     "permissions": {
       "actions": {
@@ -5594,7 +5612,9 @@
     "Withdraw": "철회하다",
     "Yes": "예",
     "loan product will be active and available to clients": "대출 상품이 활성화되어 고객에게 제공되는 날짜입니다. 비어 있으면 대출 상품이 생성되자마자 활성화됩니다.",
-    "loan product will become inactive and unavailable to clients": "대출 상품이 비활성화되어 고객이 사용할 수 없게 되는 날짜입니다. 비어 있으면 로드 제품이 비활성화되지 않습니다."
+    "loan product will become inactive and unavailable to clients": "대출 상품이 비활성화되어 고객이 사용할 수 없게 되는 날짜입니다. 비어 있으면 로드 제품이 비활성화되지 않습니다.",
+    "Nothing left to recover": "이 대출에서 더 이상 회수할 금액이 없습니다.",
+    "Reverse the recovery payments first": "대출에 회수 거래가 있는 동안에는 상각을 취소할 수 없습니다. 먼저 회수 거래를 취소하세요."
   },
   "countries": {
     "AF": "아프가니스탄",

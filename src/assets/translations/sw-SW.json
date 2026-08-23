@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Mkopo huu hauna usanidi wa ukiukaji.",
       "loanIsNotActive": "Tathmini ya ukiukaji inaweza kubadilishwa tu wakati mkopo uko hai.",
       "breachIsDisabled": "Tathmini ya ukiukaji imezimwa kwa mkopo huu. Iwashe ili kutekeleza kitendo hiki."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Malipo haya ya urejeshaji tayari yametenguliwa.",
+      "amountMustBePositive": "Kiasi lazima kiwe kikubwa kuliko sifuri.",
+      "beforeLastTransactionDate": "Tarehe ya malipo ya urejeshaji haiwezi kuwa kabla ya muamala wa mwisho wa mkopo.",
+      "beforeWriteOffDate": "Tarehe ya malipo ya urejeshaji haiwezi kuwa kabla ya tarehe ya kufuta deni.",
+      "dateOutOfRange": "Tarehe ya malipo ya urejeshaji iko nje ya kipindi kinachoruhusiwa kwa mkopo huu.",
+      "futureDate": "Tarehe ya malipo ya urejeshaji haiwezi kuwa ya baadaye.",
+      "greaterThanRemaining": "Kiasi hakiwezi kuzidi kiasi kilichosalia kurejeshwa.",
+      "loanNotWrittenOff": "Mkopo huu haujafutwa, hivyo hauwezi kupokea malipo ya urejeshaji.",
+      "reversalForbidden": "Huna ruhusa ya kutengua miamala ya Mtaji wa Kufanya Kazi. Muombe msimamizi atengue muamala huu.",
+      "undoWriteOffWithRecoveries": "Kufuta deni hakuwezi kutenguliwa wakati mkopo una malipo ya urejeshaji. Tengua malipo hayo kwanza."
     }
   },
   "labels": {
@@ -1779,7 +1791,8 @@
       "Resource Provider / Beneficial Owner": "Mtoa rasilimali / Mnufaika halisi",
       "Personal References (2 Family Members, 1 Acquaintance)": "Marejeleo binafsi (wanafamilia 2, mtu 1 anayefahamiana nawe)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Tamko la wamiliki wanufaika wa mwisho - taasisi za kisheria",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi",
+      "Recovery": "Urejeshaji"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -3735,7 +3748,10 @@
       "Submitted Date": "Tarehe ya kuwasilisha",
       "No Ext": "Na. nje",
       "No Int": "Na. ndani",
-      "Age of the business": "Umri wa biashara"
+      "Age of the business": "Umri wa biashara",
+      "Written Off Amount": "Kiasi kilichofutwa",
+      "Total Recovered": "Jumla iliyorejeshwa",
+      "Pending Recovery": "Kinachosalia kurejeshwa"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4958,7 +4974,9 @@
       "Person PEP PLD Question 3": "Je, una uhusiano wa kifamilia (2) na mwanahisa, mfanyakazi au afisa wa taasisi?",
       "the contents of": "maudhui ya",
       "the": "vipengee",
-      "items selected of": "vilivyochaguliwa vya"
+      "items selected of": "vilivyochaguliwa vya",
+      "Recovery Completed": "Urejeshaji umekamilika",
+      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee."
     },
     "permissions": {
       "actions": {
@@ -5591,7 +5609,9 @@
     "Withdraw": "Kutoa",
     "Yes": "Ndiyo",
     "loan product will be active and available to clients": "Tarehe ambayo bidhaa ya mkopo itaanza kutumika na inapatikana kwa wateja. Ikiwa tupu, bidhaa ya mkopo itaanza kutumika mara tu itakapoundwa.",
-    "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe."
+    "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe.",
+    "Nothing left to recover": "Hakuna kilichosalia kurejeshwa katika mkopo huu.",
+    "Reverse the recovery payments first": "Kufuta deni hakuwezi kutenguliwa wakati mkopo una malipo ya urejeshaji. Tengua malipo hayo kwanza."
   },
   "countries": {
     "AF": "Afghanistani",

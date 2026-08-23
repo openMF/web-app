@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Questo prestito non ha una configurazione delle violazioni.",
       "loanIsNotActive": "La valutazione delle violazioni può essere modificata solo mentre il prestito è attivo.",
       "breachIsDisabled": "La valutazione delle violazioni è disabilitata per questo prestito. Abilitala per eseguire questa azione."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Questo recupero è già stato stornato.",
+      "amountMustBePositive": "L'importo deve essere maggiore di zero.",
+      "beforeLastTransactionDate": "La data del recupero non può essere precedente all'ultima transazione del prestito.",
+      "beforeWriteOffDate": "La data del recupero non può essere precedente alla data dello stralcio.",
+      "dateOutOfRange": "La data del pagamento di recupero è fuori dall’intervallo consentito per questo prestito.",
+      "futureDate": "La data del recupero non può essere futura.",
+      "greaterThanRemaining": "L'importo non può superare l'importo ancora da recuperare.",
+      "loanNotWrittenOff": "Questo prestito non è stralciato, quindi non può ricevere un recupero.",
+      "reversalForbidden": "Non hai il permesso di stornare transazioni di capitale circolante. Chiedi a un amministratore di eseguire lo storno.",
+      "undoWriteOffWithRecoveries": "Lo stralcio non può essere annullato finché il prestito ha recuperi. Stornali prima."
     }
   },
   "labels": {
@@ -1782,7 +1794,8 @@
       "Resource Provider / Beneficial Owner": "Fornitore di risorse / Titolare effettivo",
       "Personal References (2 Family Members, 1 Acquaintance)": "Referenze personali (2 familiari, 1 conoscente)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Dichiarazione dei titolari effettivi ultimi - persone giuridiche",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Dichiarazione dei titolari effettivi ultimi - persone fisiche"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Dichiarazione dei titolari effettivi ultimi - persone fisiche",
+      "Recovery": "Recupero"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Il conto esce da NPA solo dopo il saldo di tutti gli arretrati",
@@ -3738,7 +3751,10 @@
       "Submitted Date": "Data di invio",
       "No Ext": "N. est.",
       "No Int": "N. int.",
-      "Age of the business": "Anzianità dell’attività"
+      "Age of the business": "Anzianità dell’attività",
+      "Written Off Amount": "Importo stralciato",
+      "Total Recovered": "Totale recuperato",
+      "Pending Recovery": "Da recuperare"
     },
     "links": {
       "Community": "Comunità",
@@ -4962,7 +4978,9 @@
       "Person PEP PLD Question 3": "Ha un rapporto familiare (2) con un azionista, dipendente o funzionario dell’entità?",
       "the contents of": "il contenuto di",
       "the": "gli",
-      "items selected of": "elementi selezionati di"
+      "items selected of": "elementi selezionati di",
+      "Recovery Completed": "Recupero completato",
+      "Recovery Payment Description": "Registra il denaro incassato dopo lo stralcio. Il prestito resta chiuso e il saldo resta a zero; cambiano sia il totale recuperato sia l'importo ancora da recuperare."
     },
     "permissions": {
       "actions": {
@@ -5595,7 +5613,9 @@
     "Withdraw": "Ritirare",
     "Yes": "Sì",
     "loan product will be active and available to clients": "La data in cui il prodotto di prestito sarà attivo e disponibile per i clienti. Se vuoto, il prodotto di prestito sarà attivo non appena verrà creato.",
-    "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto di prestito non diventerà mai inattivo."
+    "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto di prestito non diventerà mai inattivo.",
+    "Nothing left to recover": "Non resta nulla da recuperare su questo prestito.",
+    "Reverse the recovery payments first": "Lo stralcio non può essere annullato finché il prestito ha recuperi. Stornali prima."
   },
   "countries": {
     "AF": "Afghanistan",

@@ -62,7 +62,11 @@
   <mifosx-loan-reschedule [dataObject]="actionButtonData"></mifosx-loan-reschedule>
 }
 @if (actions['Recovery Payment']) {
-  <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-recovery-payment [dataObject]="actionButtonData"></mifosx-working-capital-recovery-payment>
+  } @else {
+    <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  }
 }
 @if (actions['View Guarantors']) {
   <mifosx-view-guarantors [dataObject]="actionButtonData"></mifosx-view-guarantors>

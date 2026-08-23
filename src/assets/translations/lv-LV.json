@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Šim aizdevumam nav pārkāpumu konfigurācijas.",
       "loanIsNotActive": "Pārkāpumu novērtēšanu var mainīt tikai tad, kad aizdevums ir aktīvs.",
       "breachIsDisabled": "Šim aizdevumam pārkāpumu novērtēšana ir atspējota. Iespējojiet to, lai veiktu šo darbību."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Šis atgūšanas maksājums jau ir stornēts.",
+      "amountMustBePositive": "Summai jābūt lielākai par nulli.",
+      "beforeLastTransactionDate": "Atgūšanas maksājuma datums nevar būt agrāks par aizdevuma pēdējo darījumu.",
+      "beforeWriteOffDate": "Atgūšanas maksājuma datums nevar būt agrāks par norakstīšanas datumu.",
+      "dateOutOfRange": "Atgūšanas maksājuma datums ir ārpus šim aizdevumam atļautā diapazona.",
+      "futureDate": "Atgūšanas maksājuma datums nevar būt nākotnē.",
+      "greaterThanRemaining": "Summa nevar pārsniegt vēl atgūstamo summu.",
+      "loanNotWrittenOff": "Šis aizdevums nav norakstīts, tāpēc tas nevar pieņemt atgūšanas maksājumu.",
+      "reversalForbidden": "Jums nav atļaujas stornēt apgrozāmā kapitāla darījumus. Lūdziet administratoram veikt stornēšanu.",
+      "undoWriteOffWithRecoveries": "Norakstīšanu nevar atsaukt, kamēr aizdevumam ir atgūšanas maksājumi. Vispirms tos storno."
     }
   },
   "labels": {
@@ -1782,7 +1794,8 @@
       "Resource Provider / Beneficial Owner": "Resursu nodrošinātājs / patiesais labuma guvējs",
       "Personal References (2 Family Members, 1 Acquaintance)": "Personīgās atsauksmes (2 ģimenes locekļi, 1 paziņa)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Patieso labuma guvēju deklarācija - juridiskas personas",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Patieso labuma guvēju deklarācija - fiziskas personas"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Patieso labuma guvēju deklarācija - fiziskas personas",
+      "Recovery": "Atgūšana"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -3738,7 +3751,10 @@
       "Submitted Date": "Iesniegšanas datums",
       "No Ext": "Ār. Nr.",
       "No Int": "Iekš. Nr.",
-      "Age of the business": "Uzņēmējdarbības ilgums"
+      "Age of the business": "Uzņēmējdarbības ilgums",
+      "Written Off Amount": "Norakstītā summa",
+      "Total Recovered": "Kopā atgūts",
+      "Pending Recovery": "Vēl atgūstams"
     },
     "links": {
       "Community": "kopiena",
@@ -4961,7 +4977,9 @@
       "Person PEP PLD Question 3": "Vai jums ir ģimenes attiecības (2) ar juridiskās personas akcionāru, darbinieku vai amatpersonu?",
       "the contents of": "saturu",
       "the": "atlasītie",
-      "items selected of": "vienumi no"
+      "items selected of": "vienumi no",
+      "Recovery Completed": "Atgūšana pabeigta",
+      "Recovery Payment Description": "Reģistrē naudu, kas saņemta pēc norakstīšanas. Aizdevums paliek slēgts un tā atlikums paliek nulle; mainās tikai atgūtā kopsumma."
     },
     "permissions": {
       "actions": {
@@ -5594,7 +5612,9 @@
     "Withdraw": "Izņemt",
     "Yes": "Jā",
     "loan product will be active and available to clients": "Datums, kad aizdevuma produkts būs aktīvs un pieejams klientiem. Ja lauks ir tukšs, aizdevuma produkts būs aktīvs, tiklīdz tas tiks izveidots.",
-    "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs."
+    "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs.",
+    "Nothing left to recover": "Šajā aizdevumā vairs nav ko atgūt.",
+    "Reverse the recovery payments first": "Norakstīšanu nevar atsaukt, kamēr aizdevumam ir atgūšanas maksājumi. Vispirms tos storno."
   },
   "countries": {
     "AF": "Afganistāna",

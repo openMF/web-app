@@ -445,6 +445,18 @@
       "noBreachConfiguration": "Dieses Darlehen hat keine Verstoßkonfiguration.",
       "loanIsNotActive": "Die Verstoßbewertung kann nur geändert werden, solange das Darlehen aktiv ist.",
       "breachIsDisabled": "Die Verstoßbewertung ist für dieses Darlehen deaktiviert. Aktivieren Sie sie, um diese Aktion auszuführen."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Diese Einbringung wurde bereits storniert.",
+      "amountMustBePositive": "Der Betrag muss größer als null sein.",
+      "beforeLastTransactionDate": "Das Datum der Einbringung darf nicht vor der letzten Transaktion des Darlehens liegen.",
+      "beforeWriteOffDate": "Das Datum der Einbringung darf nicht vor dem Abschreibungsdatum liegen.",
+      "dateOutOfRange": "Das Datum der Einbringung liegt außerhalb des für dieses Darlehen zulässigen Bereichs.",
+      "futureDate": "Das Datum der Einbringung darf nicht in der Zukunft liegen.",
+      "greaterThanRemaining": "Der Betrag darf den ausstehenden Betrag der Einbringung nicht überschreiten.",
+      "loanNotWrittenOff": "Dieses Darlehen ist nicht abgeschrieben und kann daher keine Einbringung verbuchen.",
+      "reversalForbidden": "Sie haben keine Berechtigung, Betriebsmittelkredit-Transaktionen zu stornieren. Bitten Sie einen Administrator, die Stornierung durchzuführen.",
+      "undoWriteOffWithRecoveries": "Die Abschreibung kann nicht rückgängig gemacht werden, solange eine Einbringung vorhanden ist. Stornieren Sie diese zuerst."
     }
   },
   "labels": {
@@ -1784,7 +1796,8 @@
       "Resource Provider / Beneficial Owner": "Mittelgeber / Wirtschaftlich Berechtigter",
       "Personal References (2 Family Members, 1 Acquaintance)": "Persönliche Referenzen (2 Familienmitglieder, 1 Bekannter)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Erklärung der wirtschaftlich Berechtigten - juristische Personen",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Erklärung der wirtschaftlich Berechtigten - natürliche Personen"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Erklärung der wirtschaftlich Berechtigten - natürliche Personen",
+      "Recovery": "Einbringung"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -2484,7 +2497,7 @@
       "Income from Goodwill Credit Interest": "Erträge aus Goodwill-Guthabenzinsen",
       "Income from Goodwill Credit Penalty": "Erträge aus Goodwill-Kreditstrafe",
       "Income from Interest": "Einkünfte aus Zinsen",
-      "Income from Recovery Repayments": "Erträge aus Sanierungsrückzahlungen",
+      "Income from Recovery Repayments": "Erträge aus der Einbringung",
       "Income from fees": "Einnahmen aus Gebühren",
       "Income from fees Repayments": "Einnahmen aus Gebührenrückzahlungen",
       "Income from penalties": "Einnahmen aus Strafen",
@@ -3740,7 +3753,10 @@
       "Submitted Date": "Einreichungsdatum",
       "No Ext": "Nr. außen",
       "No Int": "Nr. innen",
-      "Age of the business": "Alter des Unternehmens"
+      "Age of the business": "Alter des Unternehmens",
+      "Written Off Amount": "Abgeschriebener Betrag",
+      "Total Recovered": "Gesamtbetrag der Einbringung",
+      "Pending Recovery": "Ausstehender Betrag der Einbringung"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3845,7 +3861,7 @@
       "Re-Age": "Altern",
       "Re-Amortize": "Amortisieren",
       "Recover From Guarantor": "Rückforderung vom Bürgen",
-      "Recovery Payment": "Wiederherstellungszahlung",
+      "Recovery Payment": "Einbringung",
       "Reject": "Ablehnen",
       "Reports": "Berichte",
       "Reschedule": "Neu planen",
@@ -4963,7 +4979,9 @@
       "Person PEP PLD Question 3": "Haben Sie eine familiäre Beziehung (2) zu einem Anteilseigner, Mitarbeiter oder leitenden Angestellten der juristischen Person?",
       "the contents of": "den Inhalt von",
       "the": "die",
-      "items selected of": "ausgewählten Elemente von"
+      "items selected of": "ausgewählten Elemente von",
+      "Recovery Completed": "Einbringung abgeschlossen",
+      "Recovery Payment Description": "Erfasst Geld, das nach der Abschreibung eingegangen ist. Das Darlehen bleibt geschlossen und der Saldo bleibt bei null; nur der Gesamtbetrag der Einbringung ändert sich."
     },
     "permissions": {
       "actions": {
@@ -5028,7 +5046,7 @@
         "REAGING": "Neustrukturierung",
         "REAMORTIZE": "Neu amortisieren",
         "RECOVERGUARANTEES": "Bürgschaften einfordern",
-        "RECOVERYPAYMENT": "Rückzahlung einfordern",
+        "RECOVERYPAYMENT": "Einbringung",
         "REJECT": "Ablehnen",
         "REJECTADDITIONAL": "Zusätzlich ablehnen",
         "RELEASEAMOUNT": "Betrag freigeben",
@@ -5425,7 +5443,7 @@
       "REAGING": "Neualterung",
       "REAMORTIZE": "Neu tilgen",
       "RECOVERGUARANTEES": "Garantien einziehen",
-      "RECOVERYPAYMENT": "Rückforderungszahlung",
+      "RECOVERYPAYMENT": "Einbringung",
       "REJECT": "Ablehnen",
       "REJECTADDITIONAL": "Zusätzlich ablehnen",
       "RELEASEAMOUNT": "Betrag freigeben",
@@ -5884,7 +5902,9 @@
     "Yes": "Ja",
     "loan product will be active and available to clients": "Das Datum, an dem das Kreditprodukt aktiv und für Kunden gefunden sein wird. Wenn das Feld leer ist, ist das Kreditprodukt aktiv, sobald es erstellt wird.",
     "loan product will become inactive and unavailable to clients": "Das Datum, an dem das Kreditprodukt inaktiv wird und für Kunden nicht mehr gefunden ist. Wenn es leer ist, wird das Ladeprodukt niemals inaktiv.",
-    "to": "zu"
+    "to": "zu",
+    "Nothing left to recover": "Bei diesem Darlehen ist kein Betrag zur Einbringung mehr ausstehend.",
+    "Reverse the recovery payments first": "Die Abschreibung kann nicht rückgängig gemacht werden, solange eine Einbringung vorhanden ist. Stornieren Sie diese zuerst."
   },
   "countries": {
     "AF": "Afghanistan",

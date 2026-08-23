@@ -443,6 +443,18 @@
       "noBreachConfiguration": "यो ऋणमा उल्लंघन कन्फिगरेसन छैन।",
       "loanIsNotActive": "ऋण सक्रिय हुँदा मात्र उल्लंघन मूल्यांकन परिवर्तन गर्न सकिन्छ।",
       "breachIsDisabled": "यो ऋणको उल्लंघन मूल्यांकन असक्षम छ। यो कार्य चलाउन यसलाई सक्षम गर्नुहोस्।"
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "यो असुली भुक्तानी पहिले नै फिर्ता गरिएको छ।",
+      "amountMustBePositive": "रकम शून्यभन्दा बढी हुनुपर्छ।",
+      "beforeLastTransactionDate": "असुली भुक्तानीको मिति ऋणको अन्तिम कारोबारभन्दा अगाडिको हुन सक्दैन।",
+      "beforeWriteOffDate": "असुली भुक्तानीको मिति मिनाहा मितिभन्दा अगाडिको हुन सक्दैन।",
+      "dateOutOfRange": "रिकभरी भुक्तानीको मिति यो ऋणका लागि अनुमति दिइएको दायराभन्दा बाहिर छ।",
+      "futureDate": "असुली भुक्तानीको मिति भविष्यको हुन सक्दैन।",
+      "greaterThanRemaining": "रकम असुल गर्न बाँकी रकमभन्दा बढी हुन सक्दैन।",
+      "loanNotWrittenOff": "यो ऋण मिनाहा गरिएको छैन, त्यसैले असुली भुक्तानी लिन सकिँदैन।",
+      "reversalForbidden": "तपाईंसँग कार्यशील पुँजी कारोबार फिर्ता गर्ने अनुमति छैन। प्रशासकलाई यो फिर्ता गर्न अनुरोध गर्नुहोस्।",
+      "undoWriteOffWithRecoveries": "ऋणमा असुली भुक्तानी रहेसम्म मिनाहा फिर्ता गर्न मिल्दैन। पहिले ती फिर्ता गर्नुहोस्।"
     }
   },
   "labels": {
@@ -1781,7 +1793,8 @@
       "Resource Provider / Beneficial Owner": "स्रोत प्रदायक / वास्तविक लाभग्राही",
       "Personal References (2 Family Members, 1 Acquaintance)": "व्यक्तिगत सन्दर्भहरू (२ परिवारका सदस्य, १ परिचित)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "अन्तिम लाभग्राही मालिकहरूको घोषणा - कानुनी संस्थाहरू",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू",
+      "Recovery": "असुली"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -3737,7 +3750,10 @@
       "Submitted Date": "पेश गरिएको मिति",
       "No Ext": "बाह्य नं.",
       "No Int": "आन्तरिक नं.",
-      "Age of the business": "व्यवसायको उमेर"
+      "Age of the business": "व्यवसायको उमेर",
+      "Written Off Amount": "मिनाहा रकम",
+      "Total Recovered": "कुल असुली",
+      "Pending Recovery": "असुल गर्न बाँकी"
     },
     "links": {
       "Community": "समुदाय",
@@ -4961,7 +4977,9 @@
       "Person PEP PLD Question 3": "के तपाईंको संस्थाका कुनै शेयरधनी, कर्मचारी वा पदाधिकारीसँग पारिवारिक सम्बन्ध (2) छ?",
       "the contents of": "को सामग्री",
       "the": "चयन गरिएका",
-      "items selected of": "वस्तुहरू"
+      "items selected of": "वस्तुहरू",
+      "Recovery Completed": "असुली पूरा भयो",
+      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।"
     },
     "permissions": {
       "actions": {
@@ -5594,7 +5612,9 @@
     "Withdraw": "निकाल्नु",
     "Yes": "हो",
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
-    "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।"
+    "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, ऋण उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
+    "Nothing left to recover": "यस ऋणमा असुल गर्न बाँकी केही छैन।",
+    "Reverse the recovery payments first": "ऋणमा असुली भुक्तानी रहेसम्म मिनाहा फिर्ता गर्न मिल्दैन। पहिले ती फिर्ता गर्नुहोस्।"
   },
   "countries": {
     "AF": "अफगानिस्तान",
