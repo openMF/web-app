@@ -22,6 +22,14 @@ export interface CopilotContext {
   screen: string;
   /** Username decoded from the JWT. */
   loggedInUser: string;
+  /**
+   * The office the signed-in officer belongs to. Sent so the gateway can put a new client in
+   * the officer's own branch: it is a fact of the session, and letting the model choose a
+   * branch by being asked nicely is not something a bank can allow.
+   */
+  officeId: number | null;
+  /** The officer's staff record, where they have one. */
+  staffId: number | null;
   /** Role decoded from the JWT, used for permission checks. */
   role: string;
   /** Two-letter language code ('en', 'es', 'sw', ...) for AI responses. */

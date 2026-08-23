@@ -47,6 +47,8 @@ export class AiContextService {
       loanId,
       screen: this.deriveScreen(clientId, loanId, url),
       loggedInUser: credentials?.username ?? '',
+      officeId: credentials?.officeId ?? null,
+      staffId: credentials?.staffId ?? null,
       role: this.currentRole(credentials?.roles),
       language: this.currentLanguage()
     };

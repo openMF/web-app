@@ -25,6 +25,8 @@ const REQUEST: McpChatRequest = {
     loanId: null,
     screen: 'client-detail',
     loggedInUser: 'priya',
+    officeId: 4,
+    staffId: null,
     role: 'Loan Officer',
     language: 'en'
   }

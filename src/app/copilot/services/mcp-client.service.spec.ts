@@ -25,6 +25,8 @@ const CONTEXT: CopilotContext = {
   loanId: 4521,
   screen: 'client-detail',
   loggedInUser: 'priya',
+  officeId: 4,
+  staffId: null,
   role: 'Loan Officer',
   language: 'en'
 };
