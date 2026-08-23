@@ -20,7 +20,7 @@ export interface CopilotConfig {
   /**
    * Time allowed until the FIRST streamed chunk arrives. LLM turns with tool
    * calls routinely take tens of seconds before the first token, so this is
-   * deliberately long. Chat POSTs are never auto-retried — an LLM turn is not
+   * deliberately long. Chat POSTs are never auto-retried, because an LLM turn is not
    * idempotent; retry is a visible user action (ADR-001 §03).
    */
   firstTokenTimeoutMs: number;
