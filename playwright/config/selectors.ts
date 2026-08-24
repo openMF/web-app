@@ -974,7 +974,11 @@ export const CLIENT_IDENTIFIERS_SELECTORS: ClientIdentifiersSelectors = {
   addButton: 'Add',
   table: 'mifosx-identities-tab table',
   row: 'mifosx-identities-tab table tbody tr',
-  deleteRowButton: 'button.identity-action-button',
+  // Each row renders two `.identity-action-button`s — Edit then Delete —
+  // and both are `*mifosxHasPermission`-guarded, so a positional index
+  // silently shifts to Edit for a user without UPDATE_CLIENTIDENTIFIER.
+  // The aria-label is the only stable discriminator.
+  deleteRowButton: 'button.identity-action-button[aria-label="Delete"]',
   documentTypeDropdown: 'mat-select[formcontrolname="documentTypeId"]',
   statusDropdown: 'mat-select[formcontrolname="status"]',
   documentKeyInput: 'input[formcontrolname="documentKey"]',
