@@ -246,7 +246,8 @@ export class BreadcrumbComponent implements AfterViewInit {
 
             const breadcrumb: Breadcrumb = {
               label: breadcrumbLabel,
-              url: url
+              url: url,
+              queryParams: { ...route.snapshot.queryParams }
             };
 
             if (breadcrumbLabel) {

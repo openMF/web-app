@@ -20,7 +20,12 @@
           <li class="breadcrumb-item" [class.breadcrumb-item--active]="last">
             @if (first && breadcrumb.label === 'Home') {
               @if (breadcrumb.url) {
-                <a class="breadcrumb-link breadcrumb-link--home" [routerLink]="breadcrumb.url" aria-label="Home">
+                <a
+                  class="breadcrumb-link breadcrumb-link--home"
+                  [routerLink]="breadcrumb.url"
+                  [queryParams]="breadcrumb.queryParams"
+                  aria-label="Home"
+                >
                   <mat-icon>home</mat-icon>
                 </a>
               } @else {
@@ -30,7 +35,7 @@
               }
             } @else if (!last) {
               @if (breadcrumb.url) {
-                <a class="breadcrumb-link" [routerLink]="breadcrumb.url">
+                <a class="breadcrumb-link" [routerLink]="breadcrumb.url" [queryParams]="breadcrumb.queryParams">
                   {{ getTranslate(breadcrumb.label) }}
                 </a>
               } @else {

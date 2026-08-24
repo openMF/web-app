@@ -536,14 +536,19 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         endDate: this.dateUtils.formatDate(endDate, this.dateFormat)
       };
     } else if (action === 'reschedule') {
-      payload = {
-        action,
-        locale: this.locale,
-        minimumPayment,
-        minimumPaymentType,
-        frequency,
-        frequencyType
-      };
+      // Both groups are optional but the backend rejects explicit empty values,
+      // so only the fields the user actually provided are sent.
+      payload = { action, locale: this.locale };
+      Object.entries({ minimumPayment, minimumPaymentType, frequency, frequencyType }).forEach(
+        ([
+          key,
+          value
+        ]) => {
+          if (value !== null && value !== undefined && (value as any) !== '') {
+            payload[key] = value;
+          }
+        }
+      );
     } else if (action === 'reset') {
       payload = {
         action,
