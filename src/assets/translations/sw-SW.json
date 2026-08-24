@@ -5499,6 +5499,8 @@
     "currentSession": "Kipindi cha sasa",
     "newChat": "Mazungumzo mapya",
     "close": "Funga",
+    "fullScreen": "Skrini nzima",
+    "exitFullScreen": "Toka skrini nzima",
     "greeting": {
       "morning": "Habari za asubuhi",
       "afternoon": "Habari za mchana",
@@ -5525,7 +5527,23 @@
       "preferences": "Mapendeleo",
       "helpCenter": "Kituo cha usaidizi"
     },
-    "preferencesHeading": "Mapendeleo",
+    "preferences": {
+      "panelTitle": "Kidirisha",
+      "fullScreen": "Fungua skrini nzima",
+      "fullScreenHint": "Hujaza dirisha badala ya kukaa ndani ya ukurasa.",
+      "historyTitle": "Historia ya mazungumzo",
+      "keepHistory": "Hifadhi mazungumzo kwenye kifaa hiki",
+      "keepHistoryHint": "Huhifadhiwa kwenye kivinjari hiki pekee, kamwe si kwenye seva. Zima kwenye kompyuta inayotumiwa na wengi.",
+      "clearHistory": "Mazungumzo yaliyohifadhiwa",
+      "savedCount": "{{count}} yamehifadhiwa kwenye kifaa hiki",
+      "clearHistoryAction": "Futa yote",
+      "clearHistoryConfirm": "Futa kabisa",
+      "cancel": "Ghairi",
+      "aboutTitle": "Jinsi Copilot inavyofanya kazi",
+      "aboutPermissions": "Huona na hufanya tu yale ruhusa zako za Fineract zinaruhusu.",
+      "aboutConfirmation": "Kila kinachobadilisha kumbukumbu husubiri idhini yako kwanza.",
+      "aboutStorage": "Mazungumzo yako hubaki kwenye kivinjari hiki na hayahifadhiwi kamwe kwenye seva ya msaidizi."
+    },
     "recent": {
       "emptyTitle": "Hakuna mazungumzo ya hivi karibuni",
       "emptySubtitle": "Historia yako ya mazungumzo itaonekana hapa",
@@ -5629,6 +5647,28 @@
         "disburse": "Toa mkopo huu",
         "backToClient": "Rudi kwenye wasifu wa mteja"
       }
+    },
+    "actions": {
+      "tryAgain": "Jaribu tena",
+      "groupLabel": "Vitendo vya jibu",
+      "copy": "Nakili",
+      "copied": "Imenakiliwa",
+      "repeat": "Uliza tena",
+      "goodAnswer": "Jibu zuri",
+      "poorAnswer": "Jibu duni",
+      "exportPdf": "Hamisha kwa PDF",
+      "share": "Shiriki"
+    },
+    "export": {
+      "heading": "Jibu la Mifos Copilot",
+      "question": "Swali",
+      "client": "Mteja",
+      "askedBy": "Aliyeuliza",
+      "disclaimer": "Limetayarishwa na Mifos Copilot kutoka kumbukumbu za Fineract. Linganisha na kumbukumbu asili kabla ya kuchukua hatua.",
+      "shareTitle": "Jibu la Mifos Copilot",
+      "copiedToClipboard": "Jibu na kiungo vimenakiliwa",
+      "failed": "PDF haikuweza kutengenezwa. Tafadhali jaribu tena.",
+      "fileNameFallback": "copilot"
     }
   }
 }

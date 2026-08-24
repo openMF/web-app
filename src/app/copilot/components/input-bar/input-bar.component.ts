@@ -24,10 +24,18 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class InputBarComponent {
   @Input() isStreaming = false;
+  /**
+   * What is in the composer, owned by the panel.
+   *
+   * <p>The bar used to hold this itself and empty it on every send, including the sends that
+   * were refused for being too long or looking like an injection attempt. The officer was then
+   * shown a complaint about text they could no longer see. The panel clears this when a
+   * question is actually on its way, and leaves it alone when it is not.
+   */
+  @Input() text = '';
+  @Output() textChange = new EventEmitter<string>();
   @Output() send = new EventEmitter<string>();
   @Output() stop = new EventEmitter<void>();
-
-  userInput = '';
 
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -37,11 +45,10 @@ export class InputBarComponent {
   }
 
   submit(): void {
-    const text = this.userInput.trim();
-    if (!text || this.isStreaming) {
+    const trimmed = this.text.trim();
+    if (!trimmed || this.isStreaming) {
       return;
     }
-    this.send.emit(text);
-    this.userInput = '';
+    this.send.emit(trimmed);
   }
 }

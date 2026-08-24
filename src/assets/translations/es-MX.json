@@ -5526,6 +5526,8 @@
     "currentSession": "Sesión actual",
     "newChat": "Nuevo chat",
     "close": "Cerrar",
+    "fullScreen": "Pantalla completa",
+    "exitFullScreen": "Salir de pantalla completa",
     "greeting": {
       "morning": "Buenos días",
       "afternoon": "Buenas tardes",
@@ -5552,7 +5554,23 @@
       "preferences": "Preferencias",
       "helpCenter": "Centro de ayuda"
     },
-    "preferencesHeading": "Preferencias",
+    "preferences": {
+      "panelTitle": "Panel",
+      "fullScreen": "Abrir en pantalla completa",
+      "fullScreenHint": "Ocupa la ventana en lugar de quedar dentro de la página.",
+      "historyTitle": "Historial de conversaciones",
+      "keepHistory": "Guardar conversaciones en este dispositivo",
+      "keepHistoryHint": "Se guarda solo en este navegador, nunca en el servidor. Desactívelo en un equipo compartido.",
+      "clearHistory": "Conversaciones guardadas",
+      "savedCount": "{{count}} guardadas en este dispositivo",
+      "clearHistoryAction": "Eliminar todas",
+      "clearHistoryConfirm": "Eliminar definitivamente",
+      "cancel": "Cancelar",
+      "aboutTitle": "Cómo funciona el Copilot",
+      "aboutPermissions": "Solo puede ver y hacer lo que permiten sus propios permisos de Fineract.",
+      "aboutConfirmation": "Todo lo que modifica un registro espera primero su aprobación.",
+      "aboutStorage": "Sus conversaciones quedan en este navegador y nunca se guardan en el servidor del asistente."
+    },
     "recent": {
       "emptyTitle": "No hay conversaciones recientes",
       "emptySubtitle": "Tu historial de chat aparecerá aquí",
@@ -5656,6 +5674,28 @@
         "disburse": "Desembolsar este préstamo",
         "backToClient": "Volver al perfil del cliente"
       }
+    },
+    "actions": {
+      "tryAgain": "Intentar de nuevo",
+      "groupLabel": "Acciones de la respuesta",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "repeat": "Preguntar de nuevo",
+      "goodAnswer": "Buena respuesta",
+      "poorAnswer": "Mala respuesta",
+      "exportPdf": "Exportar a PDF",
+      "share": "Compartir"
+    },
+    "export": {
+      "heading": "Respuesta de Mifos Copilot",
+      "question": "Pregunta",
+      "client": "Cliente",
+      "askedBy": "Preguntado por",
+      "disclaimer": "Generado por Mifos Copilot a partir de registros de Fineract. Verifique con el registro original antes de actuar.",
+      "shareTitle": "Respuesta de Mifos Copilot",
+      "copiedToClipboard": "Respuesta y enlace copiados al portapapeles",
+      "failed": "No se pudo generar el PDF. Int\u00e9ntelo de nuevo.",
+      "fileNameFallback": "copilot"
     }
   }
 }
