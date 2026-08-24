@@ -5502,6 +5502,8 @@
     "currentSession": "हालको सत्र",
     "newChat": "नयाँ कुराकानी",
     "close": "बन्द गर्नुहोस्",
+    "fullScreen": "पूरा स्क्रिन",
+    "exitFullScreen": "पूरा स्क्रिनबाट बाहिर निस्कनुहोस्",
     "greeting": {
       "morning": "शुभ प्रभात",
       "afternoon": "शुभ अपराह्न",
@@ -5528,7 +5530,23 @@
       "preferences": "प्राथमिकताहरू",
       "helpCenter": "सहायता केन्द्र"
     },
-    "preferencesHeading": "प्राथमिकताहरू",
+    "preferences": {
+      "panelTitle": "प्यानल",
+      "fullScreen": "पूरा स्क्रिनमा खोल्नुहोस्",
+      "fullScreenHint": "पृष्ठभित्र नबसी सिंगो विन्डो ढाक्छ।",
+      "historyTitle": "कुराकानीको इतिहास",
+      "keepHistory": "यो उपकरणमा कुराकानी राख्नुहोस्",
+      "keepHistoryHint": "यही ब्राउजरमा मात्र सुरक्षित हुन्छ, सर्भरमा कहिल्यै होइन। साझा कम्प्युटरमा बन्द गर्नुहोस्।",
+      "clearHistory": "सुरक्षित कुराकानीहरू",
+      "savedCount": "यो उपकरणमा {{count}} सुरक्षित",
+      "clearHistoryAction": "सबै मेट्नुहोस्",
+      "clearHistoryConfirm": "सधैंका लागि मेट्नुहोस्",
+      "cancel": "रद्द गर्नुहोस्",
+      "aboutTitle": "Copilot कसरी काम गर्छ",
+      "aboutPermissions": "तपाईंको आफ्नै Fineract अनुमतिले दिएको कुरा मात्र देख्छ र गर्छ।",
+      "aboutConfirmation": "अभिलेख परिवर्तन गर्ने जुनसुकै काम पहिले तपाईंको स्वीकृति पर्खन्छ।",
+      "aboutStorage": "तपाईंका कुराकानी यही ब्राउजरमा रहन्छन् र सहायक सर्भरमा कहिल्यै राखिँदैनन्।"
+    },
     "recent": {
       "emptyTitle": "कुनै हालैको कुराकानी छैन",
       "emptySubtitle": "तपाईंको कुराकानी इतिहास यहाँ देखिनेछ",
@@ -5632,6 +5650,28 @@
         "disburse": "यो ऋण वितरण गर्नुहोस्",
         "backToClient": "ग्राहक प्रोफाइलमा फर्कनुहोस्"
       }
+    },
+    "actions": {
+      "tryAgain": "\u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+      "groupLabel": "\u091c\u0935\u093e\u092b\u0915\u093e \u0915\u093e\u0930\u094d\u092f\u0939\u0930\u0942",
+      "copy": "\u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+      "copied": "\u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u092d\u092f\u094b",
+      "repeat": "\u092b\u0947\u0930\u093f \u0938\u094b\u0927\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+      "goodAnswer": "\u0930\u093e\u092e\u094d\u0930\u094b \u091c\u0935\u093e\u092b",
+      "poorAnswer": "\u0915\u092e\u091c\u094b\u0930 \u091c\u0935\u093e\u092b",
+      "exportPdf": "PDF \u092e\u093e \u0928\u093f\u0930\u094d\u092f\u093e\u0924 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+      "share": "\u0938\u093e\u091d\u0947\u0926\u093e\u0930\u0940 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d"
+    },
+    "export": {
+      "heading": "Mifos Copilot \u0915\u094b \u091c\u0935\u093e\u092b",
+      "question": "\u092a\u094d\u0930\u0936\u094d\u0928",
+      "client": "\u0917\u094d\u0930\u093e\u0939\u0915",
+      "askedBy": "\u0938\u094b\u0927\u094d\u0928\u0947",
+      "disclaimer": "Fineract \u0905\u092d\u093f\u0932\u0947\u0916\u092c\u093e\u091f Mifos Copilot \u0932\u0947 \u0924\u092f\u093e\u0930 \u0917\u0930\u0947\u0915\u094b\u0964 \u0915\u093e\u0930\u092c\u093e\u0939\u0940 \u0917\u0930\u094d\u0928\u0941\u0905\u0918\u093f \u0938\u094d\u0930\u094b\u0924 \u0905\u092d\u093f\u0932\u0947\u0916\u0938\u0901\u0917 \u092e\u093f\u0932\u093e\u090f\u0930 \u0939\u0947\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
+      "shareTitle": "Mifos Copilot \u0915\u094b \u091c\u0935\u093e\u092b",
+      "copiedToClipboard": "\u091c\u0935\u093e\u092b \u0930 \u0932\u093f\u0902\u0915 \u0915\u094d\u0932\u093f\u092a\u092c\u094b\u0930\u094d\u0921\u092e\u093e \u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u092d\u092f\u094b",
+      "failed": "PDF \u092c\u0928\u093e\u0909\u0928 \u0938\u0915\u093f\u090f\u0928\u0964 \u0915\u0943\u092a\u092f\u093e \u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
+      "fileNameFallback": "copilot"
     }
   }
 }

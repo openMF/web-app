@@ -68,7 +68,20 @@ $mifosx-app-theme: mat.m2-define-light-theme(
 @include shares-account-view-component-theme($mifosx-app-theme);
 @include account-view-component-theme($mifosx-app-theme);
 @include view-account-transfer-component-theme($mifosx-app-theme);
-@include copilot-component-theme($mifosx-app-theme);
+// Scoped, where the other component themes above are not, and deliberately.
+// The Copilot carries its structural stylesheet on the component with ViewEncapsulation.None,
+// so Angular injects it at runtime and it lands after this file in the cascade. That sheet
+// uses `border: 1px solid transparent` as a placeholder for every border the theme is meant
+// to colour. At equal specificity the later sheet wins, so in light mode those placeholders
+// stood and the panel rendered with no rule under its topbar, no outline on its buttons and
+// no line between its rows. Dark mode looked right only because it is already scoped under
+// .dark-theme and so outranked them.
+// The body always carries exactly one of light-theme or dark-theme (ThemingService sets one
+// and removes the other on startup), so matching that scope here puts the two modes on the
+// same footing without changing which one applies.
+.light-theme {
+  @include copilot-component-theme($mifosx-app-theme);
+}
 
 /* ################################## Dark theme ################################### */
 
