@@ -5502,6 +5502,8 @@
     "currentSession": "Pašreizējā sesija",
     "newChat": "Jauna saruna",
     "close": "Aizvērt",
+    "fullScreen": "Pilnekrāna režīms",
+    "exitFullScreen": "Iziet no pilnekrāna režīma",
     "greeting": {
       "morning": "Labrīt",
       "afternoon": "Labdien",
@@ -5528,7 +5530,23 @@
       "preferences": "Iestatījumi",
       "helpCenter": "Palīdzības centrs"
     },
-    "preferencesHeading": "Iestatījumi",
+    "preferences": {
+      "panelTitle": "Panelis",
+      "fullScreen": "Atvērt pilnekrāna režīmā",
+      "fullScreenHint": "Aizpilda logu, nevis paliek lapas iekšpusē.",
+      "historyTitle": "Sarunu vēsture",
+      "keepHistory": "Saglabāt sarunas šajā ierīcē",
+      "keepHistoryHint": "Saglabā tikai šajā pārlūkā, nekad serverī. Koplietotā datorā izslēdziet.",
+      "clearHistory": "Saglabātās sarunas",
+      "savedCount": "Šajā ierīcē saglabātas: {{count}}",
+      "clearHistoryAction": "Dzēst visas",
+      "clearHistoryConfirm": "Dzēst neatgriezeniski",
+      "cancel": "Atcelt",
+      "aboutTitle": "Kā darbojas Copilot",
+      "aboutPermissions": "Tas redz un dara tikai to, ko atļauj jūsu pašu Fineract atļaujas.",
+      "aboutConfirmation": "Viss, kas maina ierakstu, vispirms gaida jūsu apstiprinājumu.",
+      "aboutStorage": "Jūsu sarunas paliek šajā pārlūkā un nekad netiek glabātas asistenta serverī."
+    },
     "recent": {
       "emptyTitle": "Nav nesenu sarunu",
       "emptySubtitle": "Jūsu sarunu vēsture parādīsies šeit",
@@ -5632,6 +5650,28 @@
         "disburse": "Izmaksājiet šo aizdevumu",
         "backToClient": "Atpakaļ uz klienta profilu"
       }
+    },
+    "actions": {
+      "tryAgain": "M\u0113\u0123in\u0101t v\u0113lreiz",
+      "groupLabel": "Darb\u012bbas ar atbildi",
+      "copy": "Kop\u0113t",
+      "copied": "Nokop\u0113ts",
+      "repeat": "Jaut\u0101t v\u0113lreiz",
+      "goodAnswer": "Laba atbilde",
+      "poorAnswer": "Slikta atbilde",
+      "exportPdf": "Eksport\u0113t uz PDF",
+      "share": "Kop\u012bgot"
+    },
+    "export": {
+      "heading": "Mifos Copilot atbilde",
+      "question": "Jaut\u0101jums",
+      "client": "Klients",
+      "askedBy": "Jaut\u0101ja",
+      "disclaimer": "Sagatavojis Mifos Copilot no Fineract ierakstiem. Pirms r\u012bkoties, sal\u012bdziniet ar s\u0101kotn\u0113jo ierakstu.",
+      "shareTitle": "Mifos Copilot atbilde",
+      "copiedToClipboard": "Atbilde un saite nokop\u0113tas starpliktuv\u0113",
+      "failed": "PDF neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
+      "fileNameFallback": "copilot"
     }
   }
 }

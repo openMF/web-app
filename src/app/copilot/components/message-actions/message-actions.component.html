@@ -1,0 +1,102 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="msg-actions" role="group" [attr.aria-label]="'copilot.actions.groupLabel' | translate">
+  <button
+    type="button"
+    class="msg-actions__button"
+    [class.msg-actions__button--done]="copied"
+    (click)="copy()"
+    [attr.aria-label]="(copied ? 'copilot.actions.copied' : 'copilot.actions.copy') | translate"
+    [title]="(copied ? 'copilot.actions.copied' : 'copilot.actions.copy') | translate"
+  >
+    <svg *ngIf="!copied" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"
+      />
+    </svg>
+    <svg *ngIf="copied" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="msg-actions__button"
+    (click)="repeat()"
+    [attr.aria-label]="'copilot.actions.repeat' | translate"
+    [title]="'copilot.actions.repeat' | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+      />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="msg-actions__button"
+    (click)="exportPdf()"
+    [attr.aria-label]="'copilot.actions.exportPdf' | translate"
+    [title]="'copilot.actions.exportPdf' | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16z"
+      />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="msg-actions__button"
+    (click)="share()"
+    [attr.aria-label]="'copilot.actions.share' | translate"
+    [title]="'copilot.actions.share' | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 1 0-3-3c0 .24.04.47.09.7L8.04 9.81A3 3 0 1 0 6 15c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 1 0 2.92-2.92z"
+      />
+    </svg>
+  </button>
+
+  <span class="msg-actions__divider" aria-hidden="true"></span>
+
+  <button
+    type="button"
+    class="msg-actions__button"
+    [class.msg-actions__button--on]="message.vote === 'up'"
+    [attr.aria-pressed]="message.vote === 'up'"
+    (click)="vote('up')"
+    [attr.aria-label]="'copilot.actions.goodAnswer' | translate"
+    [title]="'copilot.actions.goodAnswer' | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M1 21h4V9H1v12zm22-11a2 2 0 0 0-2-2h-6.31l.95-4.57.03-.32a1.5 1.5 0 0 0-.44-1.06L14.17 1 7.59 7.59A2 2 0 0 0 7 9v10a2 2 0 0 0 2 2h9a2 2 0 0 0 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
+      />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="msg-actions__button"
+    [class.msg-actions__button--on]="message.vote === 'down'"
+    [attr.aria-pressed]="message.vote === 'down'"
+    (click)="vote('down')"
+    [attr.aria-label]="'copilot.actions.poorAnswer' | translate"
+    [title]="'copilot.actions.poorAnswer' | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M23 3h-4v12h4V3zM1 14a2 2 0 0 0 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59A2 2 0 0 0 17 15V5a2 2 0 0 0-2-2H6a2 2 0 0 0-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2z"
+      />
+    </svg>
+  </button>
+</div>

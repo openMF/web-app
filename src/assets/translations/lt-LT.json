@@ -5503,6 +5503,8 @@
     "currentSession": "Dabartinė sesija",
     "newChat": "Naujas pokalbis",
     "close": "Uždaryti",
+    "fullScreen": "Visas ekranas",
+    "exitFullScreen": "Išjungti visą ekraną",
     "greeting": {
       "morning": "Labas rytas",
       "afternoon": "Laba diena",
@@ -5529,7 +5531,23 @@
       "preferences": "Nuostatos",
       "helpCenter": "Pagalbos centras"
     },
-    "preferencesHeading": "Nuostatos",
+    "preferences": {
+      "panelTitle": "Skydelis",
+      "fullScreen": "Atverti per visą ekraną",
+      "fullScreenHint": "Užima visą langą, o ne lieka puslapio viduje.",
+      "historyTitle": "Pokalbių istorija",
+      "keepHistory": "Išsaugoti pokalbius šiame įrenginyje",
+      "keepHistoryHint": "Saugoma tik šioje naršyklėje, niekada serveryje. Bendrame kompiuteryje išjunkite.",
+      "clearHistory": "Išsaugoti pokalbiai",
+      "savedCount": "Šiame įrenginyje išsaugota: {{count}}",
+      "clearHistoryAction": "Ištrinti viską",
+      "clearHistoryConfirm": "Ištrinti visam laikui",
+      "cancel": "Atšaukti",
+      "aboutTitle": "Kaip veikia Copilot",
+      "aboutPermissions": "Mato ir daro tik tai, ką leidžia jūsų pačių Fineract teisės.",
+      "aboutConfirmation": "Viskas, kas keičia įrašą, pirma laukia jūsų patvirtinimo.",
+      "aboutStorage": "Jūsų pokalbiai lieka šioje naršyklėje ir niekada nesaugomi asistento serveryje."
+    },
     "recent": {
       "emptyTitle": "Nėra naujausių pokalbių",
       "emptySubtitle": "Jūsų pokalbių istorija bus rodoma čia",
@@ -5633,6 +5651,28 @@
         "disburse": "Išmokėkite šią paskolą",
         "backToClient": "Grįžkite į kliento profilį"
       }
+    },
+    "actions": {
+      "tryAgain": "Bandyti dar kart\u0105",
+      "groupLabel": "Atsakymo veiksmai",
+      "copy": "Kopijuoti",
+      "copied": "Nukopijuota",
+      "repeat": "Klausti dar kart\u0105",
+      "goodAnswer": "Geras atsakymas",
+      "poorAnswer": "Prastas atsakymas",
+      "exportPdf": "Eksportuoti \u012f PDF",
+      "share": "Bendrinti"
+    },
+    "export": {
+      "heading": "Mifos Copilot atsakymas",
+      "question": "Klausimas",
+      "client": "Klientas",
+      "askedBy": "Klaus\u0117",
+      "disclaimer": "Pareng\u0117 Mifos Copilot pagal Fineract \u012fra\u0161us. Prie\u0161 imdamiesi veiksm\u0173 palyginkite su pirminiu \u012fra\u0161u.",
+      "shareTitle": "Mifos Copilot atsakymas",
+      "copiedToClipboard": "Atsakymas ir nuoroda nukopijuoti \u012f i\u0161karpin\u0119",
+      "failed": "Nepavyko sukurti PDF. Bandykite dar kart\u0105.",
+      "fileNameFallback": "copilot"
     }
   }
 }
