@@ -21,11 +21,18 @@
   <div
     *ngIf="isEnabled && isOpen"
     class="chat-page"
-    [class.chat-page--sidebar-full]="!sidenavCollapsed && !isHandset"
+    [class.chat-page--sidebar-full]="!sidenavCollapsed && !isHandset && !isFullScreen"
     [class.chat-page--handset]="isHandset"
+    [class.chat-page--full]="isFullScreen && !isHandset"
   >
     <!-- Topbar -->
-    <mifosx-copilot-header [contextLabel]="contextLabel" (newChat)="clearChat()" (closePanel)="togglePanel()">
+    <mifosx-copilot-header
+      [contextLabel]="contextLabel"
+      [isFullScreen]="isFullScreen"
+      (newChat)="clearChat()"
+      (closePanel)="togglePanel()"
+      (fullScreenToggled)="toggleFullScreen()"
+    >
     </mifosx-copilot-header>
 
     <!-- Chat tab -->
@@ -37,6 +44,11 @@
       [emptySuggestions]="emptySuggestions"
       [pendingCard]="pendingCard"
       (promptSelected)="sendSuggestedPrompt($event)"
+      (retryRequested)="retryPrompt($event)"
+      (repeatRequested)="repeatMessage($event)"
+      (voteChanged)="rateMessage($event)"
+      (exportRequested)="exportExchange($event)"
+      (shareRequested)="shareExchange($event)"
       (cardAction)="onActionClick($event)"
       (cardRoute)="onRouteClick($event)"
       (confirmPending)="confirmPendingAction()"
@@ -53,12 +65,17 @@
     >
     </mifosx-recent-chats>
 
-    <!-- Preferences tab (placeholder) -->
-    <div class="chat-body" *ngIf="activeTab === 'preferences'">
-      <div class="welcome">
-        <h1 class="welcome__heading">{{ 'copilot.preferencesHeading' | translate }}</h1>
-      </div>
-    </div>
+    <!-- Preferences tab -->
+    <mifosx-copilot-preferences
+      *ngIf="activeTab === 'preferences'"
+      [isFullScreen]="isFullScreen"
+      [historyEnabled]="historyEnabled"
+      [savedConversations]="conversations.length"
+      (fullScreenToggled)="toggleFullScreen()"
+      (historyToggled)="setHistoryEnabled($event)"
+      (historyCleared)="clearAllHistory()"
+    >
+    </mifosx-copilot-preferences>
 
     <!-- Help Center tab -->
     <div class="chat-body help-center" *ngIf="activeTab === 'help'">
@@ -165,6 +182,7 @@
     <mifosx-input-bar
       [hidden]="activeTab !== 'chat'"
       [isStreaming]="isStreaming"
+      [(text)]="composerText"
       (send)="sendMessage($event)"
       (stop)="stopStreaming()"
     >
