@@ -5502,6 +5502,8 @@
     "currentSession": "Sessão atual",
     "newChat": "Nova conversa",
     "close": "Fechar",
+    "fullScreen": "Ecrã inteiro",
+    "exitFullScreen": "Sair do ecrã inteiro",
     "greeting": {
       "morning": "Bom dia",
       "afternoon": "Boa tarde",
@@ -5528,7 +5530,23 @@
       "preferences": "Preferências",
       "helpCenter": "Centro de ajuda"
     },
-    "preferencesHeading": "Preferências",
+    "preferences": {
+      "panelTitle": "Painel",
+      "fullScreen": "Abrir em ecrã inteiro",
+      "fullScreenHint": "Ocupa a janela em vez de ficar dentro da página.",
+      "historyTitle": "Histórico de conversas",
+      "keepHistory": "Guardar conversas neste dispositivo",
+      "keepHistoryHint": "Guardado apenas neste navegador, nunca no servidor. Desligue num computador partilhado.",
+      "clearHistory": "Conversas guardadas",
+      "savedCount": "{{count}} guardadas neste dispositivo",
+      "clearHistoryAction": "Eliminar todas",
+      "clearHistoryConfirm": "Eliminar definitivamente",
+      "cancel": "Cancelar",
+      "aboutTitle": "Como funciona o Copilot",
+      "aboutPermissions": "Só vê e faz aquilo que as suas próprias permissões do Fineract permitem.",
+      "aboutConfirmation": "Tudo o que altera um registo aguarda primeiro a sua aprovação.",
+      "aboutStorage": "As suas conversas ficam neste navegador e nunca são guardadas no servidor do assistente."
+    },
     "recent": {
       "emptyTitle": "Sem conversas recentes",
       "emptySubtitle": "O seu histórico de conversas aparecerá aqui",
@@ -5632,6 +5650,28 @@
         "disburse": "Desembolse este empréstimo",
         "backToClient": "Voltar ao perfil do cliente"
       }
+    },
+    "actions": {
+      "tryAgain": "Tentar novamente",
+      "groupLabel": "A\u00e7\u00f5es da resposta",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "repeat": "Perguntar novamente",
+      "goodAnswer": "Boa resposta",
+      "poorAnswer": "Resposta fraca",
+      "exportPdf": "Exportar para PDF",
+      "share": "Partilhar"
+    },
+    "export": {
+      "heading": "Resposta do Mifos Copilot",
+      "question": "Pergunta",
+      "client": "Cliente",
+      "askedBy": "Perguntado por",
+      "disclaimer": "Produzido pelo Mifos Copilot a partir de registos do Fineract. Confirme com o registo de origem antes de agir.",
+      "shareTitle": "Resposta do Mifos Copilot",
+      "copiedToClipboard": "Resposta e liga\u00e7\u00e3o copiadas para a \u00e1rea de transfer\u00eancia",
+      "failed": "N\u00e3o foi poss\u00edvel criar o PDF. Tente novamente.",
+      "fileNameFallback": "copilot"
     }
   }
 }

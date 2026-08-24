@@ -29,6 +29,7 @@ import { MarkdownPipe } from '../../pipes/markdown.pipe';
 import { ActionCardComponent } from '../action-card/action-card.component';
 import { ConfirmationCardComponent } from '../confirmation-card/confirmation-card.component';
 import { QuickChipsComponent } from '../quick-chips/quick-chips.component';
+import { MessageActionsComponent } from '../message-actions/message-actions.component';
 
 /** Breathing room left above a confirmation card once it is scrolled into view. */
 const CARD_TOP_GAP_PX = 12;
@@ -42,7 +43,8 @@ const CARD_TOP_GAP_PX = 12;
     MarkdownPipe,
     ActionCardComponent,
     ConfirmationCardComponent,
-    QuickChipsComponent
+    QuickChipsComponent,
+    MessageActionsComponent
   ],
   templateUrl: './chat-area.component.html',
   styleUrls: ['./chat-area.component.scss']
@@ -57,6 +59,16 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked {
   @Input() pendingCard: ActionCard | null = null;
 
   @Output() promptSelected = new EventEmitter<string>();
+  /** The officer asked to send a failed question again. */
+  @Output() retryRequested = new EventEmitter<string>();
+  /** The officer asked for the question behind a reply to be put again. Carries its id. */
+  @Output() repeatRequested = new EventEmitter<string>();
+  /** The officer rated a reply, or took the rating back. */
+  @Output() voteChanged = new EventEmitter<{ messageId: string; vote: 'up' | 'down' | null }>();
+  /** The officer asked for an exchange as a PDF. Carries the id of the reply. */
+  @Output() exportRequested = new EventEmitter<string>();
+  /** The officer asked to pass an exchange on. Carries the id of the reply. */
+  @Output() shareRequested = new EventEmitter<string>();
   @Output() cardAction = new EventEmitter<string | undefined>();
   @Output() cardRoute = new EventEmitter<string | undefined>();
   @Output() confirmPending = new EventEmitter<void>();
