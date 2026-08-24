@@ -580,100 +580,102 @@
     border-color: rgb(255 255 255 / 4%);
   }
 
-  .leaflet-map-element {
-    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-  }
-
-  .leaflet-custom-popup {
-    .leaflet-popup-content-wrapper {
-      background: rgb(30 30 30 / 85%);
-      border-color: rgb(255 255 255 / 8%);
-      box-shadow:
-        0 10px 25px -5px rgb(0 0 0 / 40%),
-        0 8px 10px -6px rgb(0 0 0 / 40%);
+  ::ng-deep {
+    .leaflet-tile-pane {
+      filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
     }
 
-    .leaflet-popup-tip {
-      background: rgb(30 30 30 / 85%);
-      border-color: rgb(255 255 255 / 8%);
-    }
-
-    .map-tooltip {
-      .tooltip-header {
-        .tooltip-icon {
-          color: #38bdf8;
-        }
-
-        .tooltip-title {
-          color: #f8fafc;
-        }
-
-        .tooltip-subtitle {
-          color: #94a3b8;
-        }
+    .leaflet-custom-popup {
+      .leaflet-popup-content-wrapper {
+        background: rgb(30 30 30 / 85%);
+        border-color: rgb(255 255 255 / 8%);
+        box-shadow:
+          0 10px 25px -5px rgb(0 0 0 / 40%),
+          0 8px 10px -6px rgb(0 0 0 / 40%);
       }
 
-      .tooltip-divider {
-        background: rgb(255 255 255 / 8%);
+      .leaflet-popup-tip {
+        background: rgb(30 30 30 / 85%);
+        border-color: rgb(255 255 255 / 8%);
       }
 
-      .tooltip-row {
-        .tooltip-label {
-          color: #94a3b8;
+      .map-tooltip {
+        .tooltip-header {
+          .tooltip-icon {
+            color: #38bdf8;
+          }
+
+          .tooltip-title {
+            color: #f8fafc;
+          }
+
+          .tooltip-subtitle {
+            color: #94a3b8;
+          }
         }
 
-        .tooltip-value {
-          color: #e2e8f0;
+        .tooltip-divider {
+          background: rgb(255 255 255 / 8%);
         }
-      }
-    }
-  }
 
-  .custom-map-pin {
-    .pin-pulse {
-      background: rgb(56 189 248 / 24%);
-    }
+        .tooltip-row {
+          .tooltip-label {
+            color: #94a3b8;
+          }
 
-    &:hover {
-      .pin-svg {
-        filter: drop-shadow(0 3px 6px rgb(56 189 248 / 45%));
+          .tooltip-value {
+            color: #e2e8f0;
+          }
+        }
       }
     }
 
-    &.active {
+    .custom-map-pin {
       .pin-pulse {
-        background: rgb(249 115 22 / 30%);
+        background: rgb(56 189 248 / 24%);
+      }
+
+      &:hover {
+        .pin-svg {
+          filter: drop-shadow(0 3px 6px rgb(56 189 248 / 45%));
+        }
+      }
+
+      &.active {
+        .pin-pulse {
+          background: rgb(249 115 22 / 30%);
+        }
       }
     }
-  }
 
-  .custom-marker-cluster {
-    .cluster-inner {
-      background: rgb(56 189 248 / 20%);
-      border-color: rgb(56 189 248 / 40%);
-      box-shadow: 0 4px 14px rgb(56 189 248 / 35%);
+    .custom-marker-cluster {
+      .cluster-inner {
+        background: rgb(56 189 248 / 20%);
+        border-color: rgb(56 189 248 / 40%);
+        box-shadow: 0 4px 14px rgb(56 189 248 / 35%);
 
-      span {
-        background: #38bdf8;
-        color: #0f172a !important;
-        border: 2px solid #fff;
-        outline: 2px solid rgb(56 189 248 / 60%);
-        font-weight: 800;
+        span {
+          background: #38bdf8;
+          color: #0f172a !important;
+          border: 2px solid #fff;
+          outline: 2px solid rgb(56 189 248 / 60%);
+          font-weight: 800;
+        }
       }
     }
-  }
 
-  .custom-leaflet-tooltip {
-    background: rgb(30 30 30 / 90%) !important;
-    border-color: rgb(255 255 255 / 8%) !important;
-    color: #e2e8f0 !important;
-    box-shadow: 0 4px 10px rgb(0 0 0 / 30%) !important;
-  }
+    .custom-leaflet-tooltip {
+      background: rgb(30 30 30 / 90%) !important;
+      border-color: rgb(255 255 255 / 8%) !important;
+      color: #e2e8f0 !important;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 30%) !important;
+    }
 
-  .leaflet-tooltip.custom-tooltip-card {
-    background: #1e293b !important;
-    border-color: rgb(255 255 255 / 12%) !important;
-    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 50%) !important;
+    .leaflet-tooltip.custom-tooltip-card {
+      background: #1e293b !important;
+      border-color: rgb(255 255 255 / 12%) !important;
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 50%) !important;
+    }
   }
 
   .map-empty-state {
