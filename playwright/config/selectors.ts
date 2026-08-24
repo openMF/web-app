@@ -1099,8 +1099,8 @@ export const CREATE_GROUP_SELECTORS: CreateGroupSelectors = {
   externalIdInput: 'input[formcontrolname="externalId"]',
   clientSearchInput: 'mifosx-create-group input[role="combobox"]',
   addClientButton: 'mifosx-create-group .mat-table .mat-header-row button',
-  selectedClientItem: 'mifosx-create-group mat-nav-list div[mat-list-item]',
-  removeClientButton: 'mifosx-create-group mat-nav-list div[mat-list-item] button',
+  selectedClientItem: 'mifosx-create-group .selected-clients .member-row',
+  removeClientButton: 'button',
   submitButton: 'Submit',
   cancelButton: 'Cancel'
 };
@@ -1208,7 +1208,7 @@ export interface ManageGroupMembersSelectors {
 export const MANAGE_GROUP_MEMBERS_SELECTORS: ManageGroupMembersSelectors = {
   clientSearchInput: 'mifosx-manage-group-members input[role="combobox"]',
   addClientButton: 'mifosx-manage-group-members .mat-table .mat-header-row button',
-  memberItem: 'mifosx-manage-group-members mat-nav-list div[mat-list-item]',
-  removeMemberButton: 'mifosx-manage-group-members mat-nav-list div[mat-list-item] button',
+  memberItem: 'mifosx-manage-group-members .member-list .member-row',
+  removeMemberButton: 'button',
   confirmButton: 'Confirm'
 };
