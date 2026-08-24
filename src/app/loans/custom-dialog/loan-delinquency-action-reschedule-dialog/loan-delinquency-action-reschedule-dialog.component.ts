@@ -37,20 +37,29 @@ import { positiveIntegerValidator } from 'app/shared/validators/positive-integer
  * Cross-field validator that mirrors the backend rules for a WC delinquency reschedule
  * so the user gets immediate feedback instead of relying on the 400 round-trip:
  *  - a value is "provided" only when it is a number greater than zero;
- *  - when a minimum payment is provided, its type is mandatory;
+ *  - an entered minimum payment of exactly zero is rejected (the backend does too);
+ *  - each field of the minimum payment group requires its counterpart;
  *  - when a frequency is provided, its type is mandatory;
  *  - at least one group (payment or frequency) must be provided.
  */
 export function rescheduleGroupsValidator(): ValidatorFn {
   return (group: AbstractControl): ValidationErrors | null => {
-    const hasPayment = Number(group.get('minimumPayment')?.value) > 0;
+    const paymentValue = group.get('minimumPayment')?.value;
+    const paymentEntered = paymentValue !== null && paymentValue !== undefined && paymentValue !== '';
+    const hasPayment = paymentEntered && Number(paymentValue) > 0;
     const hasPaymentType = !!group.get('minimumPaymentType')?.value;
     const hasFrequency = Number(group.get('frequency')?.value) > 0;
     const hasFrequencyType = !!group.get('frequencyType')?.value;
 
     const errors: ValidationErrors = {};
+    if (paymentEntered && Number(paymentValue) === 0) {
+      errors['minimumPaymentNotPositive'] = true;
+    }
     if (hasPayment && !hasPaymentType) {
       errors['minimumPaymentTypeRequired'] = true;
+    }
+    if (hasPaymentType && !paymentEntered) {
+      errors['minimumPaymentRequired'] = true;
     }
     if (hasFrequency && !hasFrequencyType) {
       errors['frequencyTypeRequired'] = true;
@@ -62,12 +71,19 @@ export function rescheduleGroupsValidator(): ValidatorFn {
   };
 }
 
-/** Surfaces a group-level error under a specific field (mat-error only shows on control-level errors). */
+/**
+ * Surfaces group-level errors under a specific field (mat-error only shows on
+ * control-level errors) while still honoring the control's own validators.
+ */
 export class GroupErrorStateMatcher implements ErrorStateMatcher {
-  constructor(private readonly errorKey: string) {}
+  private readonly errorKeys: string[];
+
+  constructor(...errorKeys: string[]) {
+    this.errorKeys = errorKeys;
+  }
 
   isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control?.touched && form?.form?.hasError(this.errorKey));
+    return !!(control?.touched && (control.invalid || this.errorKeys.some((key) => form?.form?.hasError(key))));
   }
 }
 
@@ -96,6 +112,7 @@ export class LoanDelinquencyActionRescheduleDialogComponent {
   frequencyTypeOptions: StringEnumOptionData[] = [];
   minimumPaymentTypeOptions: StringEnumOptionData[] = [];
 
+  minimumPaymentMatcher = new GroupErrorStateMatcher('minimumPaymentRequired', 'minimumPaymentNotPositive');
   minimumPaymentTypeMatcher = new GroupErrorStateMatcher('minimumPaymentTypeRequired');
   frequencyTypeMatcher = new GroupErrorStateMatcher('frequencyTypeRequired');
 

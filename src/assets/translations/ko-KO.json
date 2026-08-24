@@ -1145,6 +1145,7 @@
       "every": "매",
       "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
       "Must be a positive integer": "양의 정수여야 합니다",
+      "Must be greater than 0": "0보다 커야 합니다",
       "Must be at least": "최소한이어야 합니다",
       "Must be less or equal to": "이보다 작거나 같아야 합니다.",
       "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다",
@@ -3341,6 +3342,8 @@
       "Withhold Tax is Applicable": "원천징수세 적용 가능",
       "Within Bank": "은행 내",
       "Workflow Jobs": "워크플로 작업",
+      "Working Capital Loan Account": "운전자본 대출 계좌",
+      "Working Capital Loan Product": "운전자본 대출 상품",
       "Working Days": "일하는 날",
       "Write Off Date": "상각 날짜",
       "Write off on": "에 상각",
@@ -5499,6 +5502,8 @@
     "currentSession": "현재 세션",
     "newChat": "새 채팅",
     "close": "닫기",
+    "fullScreen": "전체 화면",
+    "exitFullScreen": "전체 화면 종료",
     "greeting": {
       "morning": "좋은 아침입니다",
       "afternoon": "좋은 오후입니다",
@@ -5525,7 +5530,23 @@
       "preferences": "환경설정",
       "helpCenter": "도움말 센터"
     },
-    "preferencesHeading": "환경설정",
+    "preferences": {
+      "panelTitle": "패널",
+      "fullScreen": "전체 화면으로 열기",
+      "fullScreenHint": "페이지 안에 머무르지 않고 창을 가득 채웁니다.",
+      "historyTitle": "대화 기록",
+      "keepHistory": "이 기기에 대화 보관",
+      "keepHistoryHint": "이 브라우저에만 저장되며 서버에는 저장되지 않습니다. 공용 컴퓨터에서는 꺼 두십시오.",
+      "clearHistory": "저장된 대화",
+      "savedCount": "이 기기에 {{count}}건 저장됨",
+      "clearHistoryAction": "모두 삭제",
+      "clearHistoryConfirm": "영구 삭제",
+      "cancel": "취소",
+      "aboutTitle": "Copilot 작동 방식",
+      "aboutPermissions": "본인의 Fineract 권한이 허용하는 범위만 보고 실행합니다.",
+      "aboutConfirmation": "기록을 변경하는 작업은 먼저 승인을 기다립니다.",
+      "aboutStorage": "대화는 이 브라우저에 남으며 어시스턴트 서버에 저장되지 않습니다."
+    },
     "recent": {
       "emptyTitle": "최근 대화 없음",
       "emptySubtitle": "채팅 기록이 여기에 표시됩니다",
@@ -5629,6 +5650,28 @@
         "disburse": "이 대출을 지급해 주세요",
         "backToClient": "고객 프로필로 돌아가기"
       }
+    },
+    "actions": {
+      "tryAgain": "\ub2e4\uc2dc \uc2dc\ub3c4",
+      "groupLabel": "\uc751\ub2f5 \uc791\uc5c5",
+      "copy": "\ubcf5\uc0ac",
+      "copied": "\ubcf5\uc0ac\ub428",
+      "repeat": "\ub2e4\uc2dc \uc9c8\ubb38",
+      "goodAnswer": "\uc88b\uc740 \ub2f5\ubcc0",
+      "poorAnswer": "\ubd80\uc871\ud55c \ub2f5\ubcc0",
+      "exportPdf": "PDF\ub85c \ub0b4\ubcf4\ub0b4\uae30",
+      "share": "\uacf5\uc720"
+    },
+    "export": {
+      "heading": "Mifos Copilot \ub2f5\ubcc0",
+      "question": "\uc9c8\ubb38",
+      "client": "\uace0\uac1d",
+      "askedBy": "\uc9c8\ubb38\uc790",
+      "disclaimer": "Fineract \uae30\ub85d\uc744 \ubc14\ud0d5\uc73c\ub85c Mifos Copilot\uc774 \uc791\uc131\ud588\uc2b5\ub2c8\ub2e4. \uc870\uce58\ud558\uae30 \uc804\uc5d0 \uc6d0\ubcf8 \uae30\ub85d\uacfc \ub300\uc870\ud558\uc2ed\uc2dc\uc624.",
+      "shareTitle": "Mifos Copilot \ub2f5\ubcc0",
+      "copiedToClipboard": "\ub2f5\ubcc0\uacfc \ub9c1\ud06c\ub97c \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ud588\uc2b5\ub2c8\ub2e4",
+      "failed": "PDF\ub97c \ub9cc\ub4e4\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4. \ub2e4\uc2dc \uc2dc\ub3c4\ud574 \uc8fc\uc138\uc694.",
+      "fileNameFallback": "copilot"
     }
   }
 }

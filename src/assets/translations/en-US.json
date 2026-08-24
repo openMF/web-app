@@ -1154,6 +1154,7 @@
       "every": "every",
       "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces.",
       "Must be a positive integer": "Must be a positive integer",
+      "Must be greater than 0": "Must be greater than 0",
       "Must be at least": "Must be at least",
       "Must be less or equal to": "Must be less or equal to",
       "must be after or equal to start date": "must be after or equal to start date",
@@ -3391,6 +3392,8 @@
       "Withhold Tax is Applicable": "Withhold Tax is Applicable",
       "Within Bank": "Within Bank",
       "Workflow Jobs": "Workflow Jobs",
+      "Working Capital Loan Account": "Working Capital Loan Account",
+      "Working Capital Loan Product": "Working Capital Loan Product",
       "Working Days": "Working Days",
       "Working Hours": "Working Hours",
       "Write Off Date": "Write Off Date",
@@ -5653,6 +5656,8 @@
     "currentSession": "Current session",
     "newChat": "New chat",
     "close": "Close",
+    "fullScreen": "Full screen",
+    "exitFullScreen": "Exit full screen",
     "greeting": {
       "morning": "Good morning",
       "afternoon": "Good afternoon",
@@ -5679,7 +5684,23 @@
       "preferences": "Preferences",
       "helpCenter": "Help"
     },
-    "preferencesHeading": "Preferences",
+    "preferences": {
+      "panelTitle": "Panel",
+      "fullScreen": "Open full screen",
+      "fullScreenHint": "Fill the window instead of sitting inside the page.",
+      "historyTitle": "Chat history",
+      "keepHistory": "Keep chats on this device",
+      "keepHistoryHint": "Saved in this browser only, never on the server. Turn this off on a shared machine.",
+      "clearHistory": "Saved chats",
+      "savedCount": "{{count}} saved on this device",
+      "clearHistoryAction": "Delete all",
+      "clearHistoryConfirm": "Delete permanently",
+      "cancel": "Cancel",
+      "aboutTitle": "How the Copilot works",
+      "aboutPermissions": "It can only see and do what your own Fineract permissions allow.",
+      "aboutConfirmation": "Anything that changes a record waits for you to approve it first.",
+      "aboutStorage": "Your conversations stay in this browser and are never stored on the assistant server."
+    },
     "recent": {
       "emptyTitle": "No recent conversations",
       "emptySubtitle": "Your chat history will appear here",
@@ -5783,6 +5804,28 @@
         "disburse": "Disburse this loan",
         "backToClient": "Back to the client profile"
       }
+    },
+    "actions": {
+      "tryAgain": "Try again",
+      "groupLabel": "Response actions",
+      "copy": "Copy",
+      "copied": "Copied",
+      "repeat": "Ask again",
+      "goodAnswer": "Good answer",
+      "poorAnswer": "Poor answer",
+      "exportPdf": "Export to PDF",
+      "share": "Share"
+    },
+    "export": {
+      "heading": "Mifos Copilot answer",
+      "question": "Question",
+      "client": "Client",
+      "askedBy": "Asked by",
+      "disclaimer": "Produced by Mifos Copilot from Fineract records. Check against the source record before acting on it.",
+      "shareTitle": "Mifos Copilot answer",
+      "copiedToClipboard": "Answer and link copied to the clipboard",
+      "failed": "The PDF could not be produced. Please try again.",
+      "fileNameFallback": "copilot"
     }
   }
 }
