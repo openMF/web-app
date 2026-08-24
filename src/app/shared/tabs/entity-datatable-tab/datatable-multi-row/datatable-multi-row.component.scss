@@ -36,7 +36,6 @@
     min-width: 100%;
     width: max-content;
     border-radius: 4px;
-    overflow: hidden;
     table-layout: auto;
 
     th {
@@ -50,6 +49,7 @@
       max-width: 24rem;
       white-space: normal;
       overflow-wrap: anywhere;
+      vertical-align: top;
     }
 
     td {
@@ -60,6 +60,7 @@
       max-width: 24rem;
       white-space: normal;
       overflow-wrap: anywhere;
+      vertical-align: top;
     }
 
     ::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container {
@@ -71,7 +72,9 @@
     }
 
     .cell-value {
+      display: block;
       min-width: 0;
+      max-width: 24rem;
       overflow-wrap: anywhere;
       white-space: normal;
     }
@@ -96,6 +99,18 @@
       width: 60px;
       min-width: 60px;
       max-width: 60px;
+    }
+
+    .actions-column,
+    .mat-column-actions {
+      width: 72px;
+      min-width: 72px;
+      max-width: 72px;
+      text-align: center;
+    }
+
+    .actions-cell {
+      text-align: center;
     }
   }
 }
@@ -141,7 +156,6 @@
         display: block;
         width: 100%;
         margin-bottom: 16px;
-        overflow: hidden;
         border: 1px solid rgb(0 0 0 / 12%);
         border-radius: 8px;
         background: var(--mat-card-background-color, var(--card-background, #fff));
@@ -159,6 +173,18 @@
       .mat-column-select {
         display: flex;
         justify-content: flex-end;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        padding: 8px 16px;
+        background-color: rgb(0 0 0 / 3%);
+      }
+
+      .actions-cell,
+      .mat-column-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
         max-width: none;
         min-width: 0;
@@ -185,6 +211,7 @@
 
       .cell-value {
         min-width: 0;
+        max-width: none;
         line-height: 1.45;
       }
     }
@@ -201,7 +228,9 @@
         }
 
         .selection-cell,
-        .mat-column-select {
+        .mat-column-select,
+        .actions-cell,
+        .mat-column-actions {
           background-color: rgb(255 255 255 / 8%);
         }
 

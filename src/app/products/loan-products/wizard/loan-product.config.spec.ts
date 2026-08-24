@@ -8,12 +8,21 @@
 
 import { LoanProducts } from '../loan-products';
 import {
-  buildPayload,
   INITIAL_FORM_STATE,
   LoanWizardProfileMode,
   PRODUCT_CARDS,
+  PROFILE_EXTRA_VISIBLE_FIELDS,
   PROFILE_INITIAL_OVERRIDES,
-  profileForRoutePath
+  PROFILE_LABEL_KEYS,
+  buildPayload,
+  dropsDisabledOverAppliedFields,
+  hiddenDefaultsFor,
+  profileForRoutePath,
+  rendersBorrowerCycleStep,
+  rendersDeferredIncomeStep,
+  rendersInterestRefundStep,
+  sendsMultiDisburseFields,
+  sendsOutstandingLoanBalance
 } from './loan-product.config';
 
 describe('loan-product.config buildPayload', () => {
@@ -488,7 +497,7 @@ describe('loan-product.config buildPayload golden parity', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 50000,
       numberOfRepayments: 12,
@@ -681,7 +690,7 @@ describe('loan-product.config buildPayload for the two-wheeler profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 80000,
       numberOfRepayments: 36,
@@ -828,7 +837,7 @@ describe('loan-product.config buildPayload for the education profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 500000,
       numberOfRepayments: 120,
@@ -989,7 +998,7 @@ describe('loan-product.config buildPayload for the agriculture profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 100000,
       numberOfRepayments: 1,
@@ -1138,7 +1147,7 @@ describe('loan-product.config buildPayload for the home and mortgage profiles', 
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 2500000,
       numberOfRepayments: 240,
@@ -1350,7 +1359,7 @@ describe('loan-product.config buildPayload for the gold profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 200000,
       numberOfRepayments: 12,
@@ -1543,7 +1552,7 @@ describe('loan-product.config buildPayload for the auto profile', () => {
       currencyCode: 'INR',
       digitsAfterDecimal: 2,
       inMultiplesOf: 1,
-      installmentAmountInMultiplesOf: 10,
+      installmentAmountInMultiplesOf: 1,
       useBorrowerCycle: false,
       principal: 800000,
       numberOfRepayments: 60,
@@ -1691,6 +1700,846 @@ describe('loan-product.config buildPayload for the auto profile', () => {
   });
 });
 
+describe('loan-product.config buildPayload for the jlg profile', () => {
+  /**
+   * The raw form value the wizard submits for JLG: the shared seed, the profile's prefills (the
+   * Progressive + advanced-allocation stack, both borrower-cycle toggles and the sheet's day counts),
+   * plus the fields the user must type.
+   */
+  function jlgFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['jlg'],
+      name: 'JLG Loan – Standard',
+      shortName: 'JLG',
+      currencyCode: 'INR',
+      principal: 30000,
+      interestRatePerPeriod: 24,
+      numberOfRepayments: 24,
+      ...edits
+    };
+  }
+
+  it('produces the exact JLG create payload for an untouched wizard form', () => {
+    // JLG L rows 7/12 seed both borrower-cycle toggles on, row 67 pins the down payment off (so the
+    // sanitize step drops its two dependents), and rows 54-58 keep the tranche family out. The three
+    // variation arrays are deliberately absent here: they are removed from the hidden defaults so the
+    // borrower-cycle step's rows can win, and the wizard folds them in at submit time — see the
+    // component spec's coverage of `buildPayloadForSubmit`.
+    expect(buildPayload(jlgFormState(), 'jlg')).toEqual({
+      name: 'JLG Loan – Standard',
+      shortName: 'JLG',
+      externalId: '',
+      description: 'JLG Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: true,
+      principal: 30000,
+      numberOfRepayments: 24,
+      interestRatePerPeriod: 24,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: false,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('seeds both borrower-cycle toggles on, per rows 7 and 12', () => {
+    // These two are what make the profile a cycle-based product: the counter must be kept, and the
+    // terms must be allowed to vary against it.
+    expect(PROFILE_INITIAL_OVERRIDES['jlg']!.useBorrowerCycle).toBe(true);
+    expect(PROFILE_INITIAL_OVERRIDES['jlg']!.includeInBorrowerCycle).toBe(true);
+  });
+
+  it('leaves the variation arrays out of the hidden defaults so the step can supply them', () => {
+    // If any of the three stayed pinned, the guided merge — which spreads the defaults LAST — would
+    // overwrite the operator's rows with the base empty array.
+    const defaults = hiddenDefaultsFor('jlg');
+
+    [
+      'principalVariationsForBorrowerCycle',
+      'numberOfRepaymentVariationsForBorrowerCycle',
+      'interestRateVariationsForBorrowerCycle'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in defaults
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('keeps the arrays pinned for every other profile', () => {
+    // Only JLG's sheet marks rows 26/27/29 Applicable; the rest must keep sending the empty arrays.
+    ([
+        'personal',
+        'two-wheeler',
+        'education',
+        'agriculture',
+        'bnpl',
+        'home',
+        'mortgage',
+        'gold'
+      ] as LoanWizardProfileMode[]).forEach((profile) => {
+      expect([
+        profile,
+        hiddenDefaultsFor(profile).principalVariationsForBorrowerCycle
+      ]).toEqual([
+        profile,
+        []
+      ]);
+    });
+  });
+
+  it('pins the down payment off, dropping its dependents', () => {
+    // Row 67 is Not Applicable with an explicit FALSE — the group guarantee is the security, so there
+    // is no margin money — and the base hidden default is TRUE, so this must be an override.
+    const payload = buildPayload(jlgFormState({ enableDownPayment: true }), 'jlg');
+
+    expect(payload.enableDownPayment).toBe(false);
+    expect('disbursedAmountPercentageForDownPayment' in payload).toBe(false);
+    expect('enableAutoRepaymentForDownPayment' in payload).toBe(false);
+  });
+
+  it('omits the whole multi-disburse family, which the sheet marks Not Applicable', () => {
+    const payload = buildPayload(jlgFormState(), 'jlg');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      jlgFormState({
+        includeInBorrowerCycle: false,
+        useBorrowerCycle: false,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        isInterestRecalculationEnabled: false
+      }),
+      'jlg'
+    );
+
+    expect(payload.includeInBorrowerCycle).toBe(false);
+    expect(payload.useBorrowerCycle).toBe(false);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+  });
+
+  it('keeps the floating rate link pinned off, which the sheet marks Not Applicable', () => {
+    expect(
+      buildPayload(jlgFormState({ isLinkedToFloatingInterestRates: true }), 'jlg').isLinkedToFloatingInterestRates
+    ).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(buildPayload(jlgFormState({ delinquencyBucketId: '' }), 'jlg').delinquencyBucketId).toBeNull();
+  });
+});
+
+describe('loan-product.config rendersBorrowerCycleStep', () => {
+  it('renders the step for JLG only', () => {
+    expect(rendersBorrowerCycleStep('jlg')).toBe(true);
+    ([
+        'personal',
+        'custom-advanced',
+        'two-wheeler',
+        'education',
+        'agriculture',
+        'bnpl',
+        'home',
+        'mortgage',
+        'gold'
+      ] as LoanWizardProfileMode[]).forEach((profile) => {
+      expect([
+        profile,
+        rendersBorrowerCycleStep(profile)
+      ]).toEqual([
+        profile,
+        false
+      ]);
+    });
+  });
+});
+
+describe('loan-product.config buildPayload for the consumer durable profile', () => {
+  /**
+   * The raw form value the wizard submits for Consumer Durable: the shared seed, the profile's
+   * prefills (the Progressive + advanced-allocation stack, the down-payment trio and the sheet's day
+   * counts), plus the fields the user must type.
+   */
+  function consumerDurableFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['consumer-durable'],
+      name: 'Consumer Durable \u2013 Standard',
+      shortName: 'CDL',
+      currencyCode: 'INR',
+      principal: 60000,
+      interestRatePerPeriod: 16,
+      numberOfRepayments: 9,
+      ...edits
+    };
+  }
+
+  it('produces the exact Consumer Durable create payload for an untouched wizard form', () => {
+    // Row 11 pins the installment multiple to 1 (not the base 10), rows 67-69 make the whole
+    // down-payment trio editable and seeded on, row 51 exposes top-up, and rows 54-58 keep the tranche
+    // family out of the payload entirely.
+    expect(buildPayload(consumerDurableFormState(), 'consumer-durable')).toEqual({
+      name: 'Consumer Durable \u2013 Standard',
+      shortName: 'CDL',
+      externalId: '',
+      description: 'Consumer Durable Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 60000,
+      numberOfRepayments: 9,
+      interestRatePerPeriod: 16,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('pins the installment multiple to 1, per row 11', () => {
+    // The base default is 10. A point-of-sale instalment is a plain split of the item price, so
+    // rounding it up to the nearest 10 would misstate the plan. Same call the BNPL sheet makes.
+    expect(buildPayload(consumerDurableFormState(), 'consumer-durable').installmentAmountInMultiplesOf).toBe(1);
+    expect(hiddenDefaultsFor('consumer-durable').installmentAmountInMultiplesOf).toBe(1);
+  });
+
+  it('omits the whole multi-disburse family, which the sheet marks Not Applicable', () => {
+    const payload = buildPayload(consumerDurableFormState(), 'consumer-durable');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('seeds the down payment trio on, per rows 67-69', () => {
+    const overrides = PROFILE_INITIAL_OVERRIDES['consumer-durable']!;
+
+    expect(overrides.enableDownPayment).toBe(true);
+    expect(overrides.disbursedAmountPercentageForDownPayment).toBe(35);
+    expect(overrides.enableAutoRepaymentForDownPayment).toBe(true);
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    // Each is REMOVED from the profile's hidden defaults, so the guided "defaults win" merge must not
+    // clobber the visible control's value.
+    const payload = buildPayload(
+      consumerDurableFormState({
+        canUseForTopup: true,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        disbursedAmountPercentageForDownPayment: 20,
+        enableAutoRepaymentForDownPayment: false
+      }),
+      'consumer-durable'
+    );
+
+    expect(payload.canUseForTopup).toBe(true);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+    expect(payload.enableAutoRepaymentForDownPayment).toBe(false);
+  });
+
+  it('drops the down payment dependents when the operator turns the toggle off', () => {
+    // Classic removes both controls with the toggle; the sanitize step reproduces that.
+    const payload = buildPayload(consumerDurableFormState({ enableDownPayment: false }), 'consumer-durable');
+
+    expect(payload.enableDownPayment).toBe(false);
+    expect('disbursedAmountPercentageForDownPayment' in payload).toBe(false);
+    expect('enableAutoRepaymentForDownPayment' in payload).toBe(false);
+  });
+
+  it('keeps the fields the sheet marks Not Applicable pinned against user input', () => {
+    // Rows 15 and 17 are Not Applicable with an explicit FALSE, so the hidden defaults must win even
+    // if a stale form value says otherwise.
+    const payload = buildPayload(
+      consumerDurableFormState({
+        isLinkedToFloatingInterestRates: true,
+        allowApprovedDisbursedAmountsOverApplied: true
+      }),
+      'consumer-durable'
+    );
+
+    expect(payload.isLinkedToFloatingInterestRates).toBe(false);
+    expect(payload.allowApprovedDisbursedAmountsOverApplied).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(
+      buildPayload(consumerDurableFormState({ delinquencyBucketId: '' }), 'consumer-durable').delinquencyBucketId
+    ).toBeNull();
+  });
+
+  it('drops a grace period that is not shorter than the tenure', () => {
+    // Fineract requires grace < numberOfRepayments; the sheet samples 120 against 12 repayments.
+    expect(
+      buildPayload(consumerDurableFormState({ graceOnPrincipalPayment: 3 }), 'consumer-durable').graceOnPrincipalPayment
+    ).toBe(3);
+    expect(
+      buildPayload(
+        consumerDurableFormState({ numberOfRepayments: 9, graceOnPrincipalPayment: 120 }),
+        'consumer-durable'
+      ).graceOnPrincipalPayment
+    ).toBeUndefined();
+  });
+});
+
+describe('loan-product.config buildPayload for the credit card EMI profile', () => {
+  /**
+   * The raw form value the wizard submits for Credit Card EMI: the shared seed, the profile's prefills
+   * (the Progressive + advanced-allocation stack, the tranche family, the down-payment trio and the
+   * promotional interest-free window), plus the fields the user must type.
+   */
+  function cardFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['credit-card-emi'],
+      name: 'Card EMI \u2013 Standard',
+      shortName: 'CCE',
+      currencyCode: 'INR',
+      principal: 50000,
+      interestRatePerPeriod: 14,
+      numberOfRepayments: 12,
+      ...edits
+    };
+  }
+
+  it('produces the exact Credit Card EMI create payload for an untouched wizard form', () => {
+    // Card L rows 54-58 transmit the tranche family (a card EMI draws against a limit rather than
+    // disbursing once), row 40 seeds the interest-free window, row 11 pins the installment multiple to
+    // 1, and rows 77-78 keep the deferred income flags on the master defaults.
+    expect(buildPayload(cardFormState(), 'credit-card-emi')).toEqual({
+      name: 'Card EMI \u2013 Standard',
+      shortName: 'CCE',
+      externalId: '',
+      description: 'Credit Card EMI Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 50000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 14,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 1,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      multiDisburseLoan: true,
+      maxTrancheCount: 4,
+      outstandingLoanBalance: 100000,
+      disallowExpectedDisbursements: true,
+      allowFullTermForTranche: false,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('transmits the tranche family, which the sheet marks Applicable', () => {
+    // Rows 54-58. This is the structural difference from Gold, Auto and Consumer Durable, which drop
+    // the whole family: a card EMI draws against an available limit rather than disbursing once.
+    const payload = buildPayload(cardFormState(), 'credit-card-emi');
+
+    expect(payload.multiDisburseLoan).toBe(true);
+    expect(payload.maxTrancheCount).toBe(4);
+    expect(payload.outstandingLoanBalance).toBe(100000);
+    expect(payload.disallowExpectedDisbursements).toBe(true);
+    expect(payload.allowFullTermForTranche).toBe(false);
+  });
+
+  it("reproduces Classic's reset when multiple disbursals are switched off", () => {
+    // Otherwise the payload trips "Allow Multiple Disbursals Not Set - Disallow Expected Disbursals
+    // Can't Be Set".
+    const payload = buildPayload(cardFormState({ multiDisburseLoan: false }), 'credit-card-emi');
+
+    expect(payload.multiDisburseLoan).toBe(false);
+    expect('maxTrancheCount' in payload).toBe(false);
+    expect('outstandingLoanBalance' in payload).toBe(false);
+    expect(payload.disallowExpectedDisbursements).toBe(false);
+    expect(payload.allowFullTermForTranche).toBe(false);
+  });
+
+  it('omits the over-applied pair while its toggle is off, and sends it when on', () => {
+    // Rows 17-19 are all Applicable, so the profile opts into Classic's disabled-control behaviour.
+    const off = buildPayload(cardFormState(), 'credit-card-emi');
+    expect('overAppliedCalculationType' in off).toBe(false);
+    expect('overAppliedNumber' in off).toBe(false);
+
+    const on = buildPayload(
+      cardFormState({
+        allowApprovedDisbursedAmountsOverApplied: true,
+        overAppliedCalculationType: 'Percentage',
+        overAppliedNumber: 10
+      }),
+      'credit-card-emi'
+    );
+    expect(on.allowApprovedDisbursedAmountsOverApplied).toBe(true);
+    expect(on.overAppliedCalculationType).toBe('Percentage');
+    expect(on.overAppliedNumber).toBe(10);
+  });
+
+  it('seeds the promotional interest-free window from row 40', () => {
+    // Mapped to the backend's `graceOnInterestCharged`. Rows 38/39 sample 120 against 12 repayments,
+    // which Fineract rejects, so those two keep the neutral 0 seed — the same call BNPL made.
+    expect(buildPayload(cardFormState(), 'credit-card-emi').graceOnInterestCharged).toBe(1);
+    expect(buildPayload(cardFormState(), 'credit-card-emi').graceOnPrincipalPayment).toBe(0);
+  });
+
+  it('keeps the deferred income flags on the master defaults (rows 77-78 are Hidden)', () => {
+    // This is what separates Card from BNPL: it takes the Interest Refund step without the Deferred
+    // Income one, so both flags stay pinned rather than being driven by a step.
+    const defaults = hiddenDefaultsFor('credit-card-emi');
+
+    expect(defaults.enableIncomeCapitalization).toBe(false);
+    expect(defaults.enableBuydownFees).toBe(false);
+  });
+
+  it('pins the installment multiple to 1, per row 11', () => {
+    expect(hiddenDefaultsFor('credit-card-emi').installmentAmountInMultiplesOf).toBe(1);
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      cardFormState({
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        maxTrancheCount: 6,
+        outstandingLoanBalance: 250000,
+        disbursedAmountPercentageForDownPayment: 20
+      }),
+      'credit-card-emi'
+    );
+
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.maxTrancheCount).toBe(6);
+    expect(payload.outstandingLoanBalance).toBe(250000);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(buildPayload(cardFormState({ delinquencyBucketId: '' }), 'credit-card-emi').delinquencyBucketId).toBeNull();
+  });
+});
+
+describe('loan-product.config step predicates for the credit card EMI profile', () => {
+  it('renders the Interest Refund step but not the Deferred Income one', () => {
+    // Card L marks row 76 Applicable and rows 77-78 Hidden, making this the first profile to take one
+    // of the pair without the other.
+    expect(rendersInterestRefundStep('credit-card-emi')).toBe(true);
+    expect(rendersDeferredIncomeStep('credit-card-emi')).toBe(false);
+    // BNPL, the only other profile with an Interest Refund step, still takes both.
+    expect(rendersInterestRefundStep('bnpl')).toBe(true);
+    expect(rendersDeferredIncomeStep('bnpl')).toBe(true);
+  });
+
+  it('transmits the multi-disburse family and the outstanding balance cap', () => {
+    expect(sendsMultiDisburseFields('credit-card-emi')).toBe(true);
+    expect(sendsOutstandingLoanBalance('credit-card-emi')).toBe(true);
+  });
+
+  it('opts into dropping the disabled over-applied fields', () => {
+    expect(dropsDisabledOverAppliedFields('credit-card-emi')).toBe(true);
+  });
+});
+
+describe('loan-product.config buildPayload for the loan against securities profile', () => {
+  /**
+   * The raw form value the wizard submits for Loan vs Securities / FD: the shared seed, the profile's
+   * prefills (the Progressive + advanced-allocation stack and the sheet's day counts), plus the fields
+   * the user must type.
+   */
+  function lasFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['loan-against-securities'],
+      name: 'LAS \u2013 Standard',
+      shortName: 'LAS',
+      currencyCode: 'INR',
+      principal: 500000,
+      interestRatePerPeriod: 10,
+      numberOfRepayments: 12,
+      ...edits
+    };
+  }
+
+  it('produces the exact Loan vs Securities create payload for an untouched wizard form', () => {
+    // LAS L rows 54-58: the tranche family is Not Applicable and absent from the payload. Row 11 pins
+    // the installment multiple to 1, rows 15 and 52 expose the floating-rate link and guarantee funds,
+    // and rows 67-69 keep the down payment on the master defaults.
+    expect(buildPayload(lasFormState(), 'loan-against-securities')).toEqual({
+      name: 'LAS \u2013 Standard',
+      shortName: 'LAS',
+      externalId: '',
+      description: 'Loan vs Securities / FD Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 500000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 10,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('omits the whole multi-disburse family, including the contradictory row 58', () => {
+    // Rows 54-57 are Not Applicable while row 58 (`allowFullTermForTranche`) is marked Applicable. A
+    // tranche flag cannot apply to a product with no tranches, so the family is treated as Not
+    // Applicable as a whole and none of it reaches the payload.
+    const payload = buildPayload(lasFormState(), 'loan-against-securities');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('does not expose the contradictory tranche flag as an editable control', () => {
+    // It must stay in the hidden defaults; removing it would render a control that cannot affect the
+    // product, since the whole family is dropped from the payload for this profile.
+    expect('allowFullTermForTranche' in hiddenDefaultsFor('loan-against-securities')).toBe(true);
+    expect(sendsMultiDisburseFields('loan-against-securities')).toBe(false);
+    expect(sendsOutstandingLoanBalance('loan-against-securities')).toBe(false);
+  });
+
+  it('pins the installment multiple to 1, per row 11', () => {
+    expect(hiddenDefaultsFor('loan-against-securities').installmentAmountInMultiplesOf).toBe(1);
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      lasFormState({
+        isLinkedToFloatingInterestRates: true,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        holdGuaranteeFunds: true,
+        mandatoryGuarantee: 100
+      }),
+      'loan-against-securities'
+    );
+
+    expect(payload.isLinkedToFloatingInterestRates).toBe(true);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.holdGuaranteeFunds).toBe(true);
+    expect(payload.mandatoryGuarantee).toBe(100);
+  });
+
+  it('omits the guarantee inputs while guarantee funds are not held', () => {
+    const payload = buildPayload(lasFormState(), 'loan-against-securities');
+
+    expect(payload.holdGuaranteeFunds).toBe(false);
+    expect('mandatoryGuarantee' in payload).toBe(false);
+    expect('minimumGuaranteeFromOwnFunds' in payload).toBe(false);
+    expect('minimumGuaranteeFromGuarantor' in payload).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(
+      buildPayload(lasFormState({ delinquencyBucketId: '' }), 'loan-against-securities').delinquencyBucketId
+    ).toBeNull();
+  });
+
+  it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+    expect(rendersInterestRefundStep('loan-against-securities')).toBe(false);
+    expect(rendersDeferredIncomeStep('loan-against-securities')).toBe(false);
+  });
+});
+
 describe('loan-product.config profileForRoutePath', () => {
   it('maps each wizard route to its profile and page title key', () => {
     expect(profileForRoutePath('personal-loan')).toEqual({
@@ -1728,6 +2577,22 @@ describe('loan-product.config profileForRoutePath', () => {
     expect(profileForRoutePath('auto-loan')).toEqual({
       profileMode: 'auto',
       pageTitle: 'labels.heading.Create Auto Loan'
+    });
+    expect(profileForRoutePath('jlg-loan')).toEqual({
+      profileMode: 'jlg',
+      pageTitle: 'labels.heading.Create JLG Loan'
+    });
+    expect(profileForRoutePath('consumer-durable-loan')).toEqual({
+      profileMode: 'consumer-durable',
+      pageTitle: 'labels.heading.Create Consumer Durable Loan'
+    });
+    expect(profileForRoutePath('credit-card-emi-loan')).toEqual({
+      profileMode: 'credit-card-emi',
+      pageTitle: 'labels.heading.Create Credit Card EMI Loan'
+    });
+    expect(profileForRoutePath('loan-against-securities')).toEqual({
+      profileMode: 'loan-against-securities',
+      pageTitle: 'labels.heading.Create Loan vs Securities / FD'
     });
   });
 
@@ -1802,6 +2667,52 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('auto-loan');
   });
 
+  it('activates the JLG Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.JLG Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('jlg-loan');
+  });
+
+  it('activates the Consumer Durable Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Consumer Durable Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('consumer-durable-loan');
+  });
+
+  it('activates the Credit Card EMI card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Credit Card EMI')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('credit-card-emi-loan');
+  });
+
+  it('activates the Loan vs Securities / FD card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Loan vs Securities / FD')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('loan-against-securities');
+  });
+
+  it('gives every product card a unique, non-empty translation key as its description', () => {
+    // The selection UI renders `card.description` through the `translate` pipe, so a literal English
+    // sentence silently falls through the missing-translation handler and stays English in every
+    // locale. Assert the key form here rather than trusting review to catch a literal.
+    const descriptions = PRODUCT_CARDS.map((product) => product.description);
+
+    descriptions.forEach((description) => {
+      expect(typeof description).toBe('string');
+      expect(description.startsWith('labels.text.')).toBe(true);
+      expect(description.length).toBeGreaterThan('labels.text.'.length);
+    });
+    expect(new Set(descriptions).size).toBe(PRODUCT_CARDS.length);
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -1816,7 +2727,11 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'home-loan',
         'mortgage-loan',
         'gold-loan',
-        'auto-loan'
+        'auto-loan',
+        'jlg-loan',
+        'consumer-durable-loan',
+        'credit-card-emi-loan',
+        'loan-against-securities'
       ]).toContain(product.route);
     });
   });
@@ -1834,7 +2749,11 @@ describe('loan-product.config PRODUCT_CARDS', () => {
       'home',
       'mortgage',
       'gold',
-      'auto'
+      'auto',
+      'jlg',
+      'consumer-durable',
+      'credit-card-emi',
+      'loan-against-securities'
     ];
 
     function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
@@ -1902,7 +2821,11 @@ describe('loan-product.config PRODUCT_CARDS', () => {
           'home',
           'mortgage',
           'gold',
-          'auto'
+          'auto',
+          'jlg',
+          'consumer-durable',
+          'credit-card-emi',
+          'loan-against-securities'
         ] as LoanWizardProfileMode[]).forEach((profile) => {
         const payload = payloadFor(profile, applicable);
         expect([
@@ -1914,5 +2837,103 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         ]);
       });
     });
+  });
+});
+
+/**
+ * Cross-profile structural invariants.
+ *
+ * The guided merge in `buildPayload` spreads `hiddenDefaultsFor(profile)` LAST, so a hidden default
+ * beats whatever the operator typed. That is deliberate for pinned fields, but it means every field
+ * a profile exposes as editable MUST have been deleted from its hidden defaults — otherwise the
+ * control renders, accepts input, and is silently overwritten on submit.
+ *
+ * The per-profile suites above assert this one field at a time for the fields they happen to cover.
+ * These tests assert it exhaustively, for every profile and every exposed field at once, so a new
+ * product template that forgets the `delete` fails here rather than shipping a dead control.
+ */
+describe('loan-product.config profile invariants', () => {
+  const allProfiles = Object.keys(PROFILE_LABEL_KEYS) as LoanWizardProfileMode[];
+
+  it('exposes no field that its own hidden defaults would clobber', () => {
+    const violations: string[] = [];
+    allProfiles.forEach((profile) => {
+      const hidden = hiddenDefaultsFor(profile);
+      (PROFILE_EXTRA_VISIBLE_FIELDS[profile] ?? []).forEach((field) => {
+        if (field in hidden) {
+          violations.push(`${profile}: ${field}`);
+        }
+      });
+    });
+    expect(violations).toEqual([]);
+  });
+
+  it('never seeds a visible control with a value its hidden defaults would overwrite', () => {
+    const violations: string[] = [];
+    allProfiles.forEach((profile) => {
+      const hidden = hiddenDefaultsFor(profile);
+      Object.entries(PROFILE_INITIAL_OVERRIDES[profile] ?? {}).forEach(
+        ([
+          field,
+          seeded
+        ]) => {
+          if (field in hidden && JSON.stringify(hidden[field]) !== JSON.stringify(seeded)) {
+            violations.push(
+              `${profile}: ${field} seeded ${JSON.stringify(seeded)} but pinned ${JSON.stringify(hidden[field])}`
+            );
+          }
+        }
+      );
+    });
+    expect(violations).toEqual([]);
+  });
+
+  it('returns a fresh hidden-defaults object per call rather than a shared mutable one', () => {
+    const first = hiddenDefaultsFor('bnpl');
+    // Snapshot BEFORE mutating: if `hiddenDefaultsFor` ever did return a shared object, mutating it
+    // would also mutate a `baseline` that merely referenced it, and the comparison below would
+    // compare the poisoned object with itself and pass. Deep, because a shallow `{ ...first }` would
+    // still share HIDDEN_DEFAULTS' mutable arrays and miss the nested case entirely.
+    // JSON round-trip rather than `structuredClone`: the defaults are plain JSON data, and the Jest
+    // environment does not expose `structuredClone`.
+    const baseline = JSON.parse(JSON.stringify(first));
+    const mutated = hiddenDefaultsFor('bnpl') as Record<string, unknown>;
+
+    // Top level: a distinct object per call.
+    expect(mutated).not.toBe(first);
+    mutated.injected = 'poison';
+    delete mutated.description;
+
+    // Nested: the variation arrays must not be one instance shared across every call and profile.
+    const arrayKey = 'principalVariationsForBorrowerCycle';
+    expect(mutated[arrayKey]).not.toBe(first[arrayKey]);
+    (mutated[arrayKey] as unknown[]).push('poison');
+    // Checked against a DIFFERENT profile that still pins the array — JLG exposes the borrower-cycle
+    // rows as editable controls, so it deletes the key from its own defaults entirely.
+    expect(hiddenDefaultsFor('personal')[arrayKey]).toEqual([]);
+
+    expect(hiddenDefaultsFor('bnpl')).toEqual(baseline);
+  });
+
+  it('sends the workbook instalment multiple of 1 for every profile', () => {
+    // Row 11 of all 13 product sheets carries `Default Value = 1`; the 10 in the sample column is the
+    // `All Params` boilerplate. This drifted once already — four profiles pinned 1 locally while the
+    // base default still sent 10 — so assert it across every profile at once.
+    const offenders = allProfiles.filter(
+      (profile) => buildPayload({ ...INITIAL_FORM_STATE }, profile).installmentAmountInMultiplesOf !== 1
+    );
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('gives every guided profile its own product description', () => {
+    // Custom/Advanced is excluded by design: it is the only mode whose merge lets the form win, and
+    // `description` is one of its visible controls (INITIAL_FORM_STATE seeds it ''), so the
+    // inherited HIDDEN_DEFAULTS description is never reachable in its payload.
+    const guided = allProfiles.filter((profile) => profile !== 'custom-advanced');
+    const descriptions = guided.map((profile) => hiddenDefaultsFor(profile).description);
+
+    expect(new Set(descriptions).size).toBe(guided.length);
+    expect(descriptions.every((description) => typeof description === 'string' && description !== '')).toBe(true);
   });
 });

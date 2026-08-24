@@ -178,15 +178,15 @@ export class ClientGeneralStepComponent implements OnInit {
             'firstname',
             new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
-          this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-z]).*')));
+          this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-Za-z]).*')));
           this.createClientForm.addControl(
             'lastname',
             new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
         } else {
@@ -197,7 +197,7 @@ export class ClientGeneralStepComponent implements OnInit {
             'fullname',
             new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
           this.createClientForm.addControl(

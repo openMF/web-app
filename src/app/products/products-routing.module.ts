@@ -281,11 +281,48 @@ const routes: Routes = [
               }
             },
             {
+              path: 'jlg-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create JLG Loan', breadcrumb: 'JLG Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'consumer-durable-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Consumer Durable Loan', breadcrumb: 'Consumer Durable Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'credit-card-emi-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Credit Card EMI Loan', breadcrumb: 'Credit Card EMI' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'loan-against-securities',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Loan vs Securities / FD', breadcrumb: 'Loan vs Securities / FD' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {
                 loanProductDatatables: LoanProductDatatablesResolver
               },
+              runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
               data: { title: 'View Loan Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
               children: [
                 {
@@ -297,6 +334,7 @@ const routes: Routes = [
                   path: 'general',
                   data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   component: GeneralTabComponent,
+                  runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
                   resolve: {
                     loanProduct: LoanProductResolver
                   }
@@ -308,6 +346,7 @@ const routes: Routes = [
                       path: ':datatableName',
                       component: DatatableTabComponent,
                       data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
                       resolve: {
                         loanProductDatatable: LoanProductDatatableResolver
                       }
@@ -318,6 +357,7 @@ const routes: Routes = [
                   path: 'edit',
                   component: EditLoanProductComponent,
                   data: { title: 'Edit Loan Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
                   resolve: {
                     loanProductAndTemplate: LoanProductAndTemplateResolver,
                     configurations: GlobalConfigurationsResolver

@@ -1154,6 +1154,7 @@
       "every": "every",
       "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces.",
       "Must be a positive integer": "Must be a positive integer",
+      "Must be greater than 0": "Must be greater than 0",
       "Must be at least": "Must be at least",
       "Must be less or equal to": "Must be less or equal to",
       "must be after or equal to start date": "must be after or equal to start date",
@@ -1177,9 +1178,13 @@
       "Create Agriculture Loan": "Create Agriculture Loan",
       "Create Auto Loan": "Create Auto Loan",
       "Create BNPL Loan": "Create BNPL Loan",
+      "Create Consumer Durable Loan": "Create Consumer Durable Loan",
+      "Create Credit Card EMI Loan": "Create Credit Card EMI Loan",
       "Create Education Loan": "Create Education Loan",
       "Create Gold Loan": "Create Gold Loan",
       "Create Home Loan": "Create Home Loan",
+      "Create JLG Loan": "Create JLG Loan",
+      "Create Loan vs Securities / FD": "Create Loan vs Securities / FD",
       "Create Mortgage Loan": "Create Mortgage Loan",
       "Create Personal Loan": "Create Personal Loan",
       "Create Two Wheeler Loan": "Create Two Wheeler Loan",
@@ -1213,6 +1218,7 @@
       "Active Client Members": "Active Client Members",
       "AdHocQuery": "AdHocQuery",
       "Add Account": "Add Account",
+      "Client Identifier": "Client Identifier",
       "Add Client Identifier": "Add Client Identifier",
       "Add Currency Form": "Add Currency Form",
       "Add Journal Entry Form": "Add Journal Entry Form",
@@ -2314,6 +2320,7 @@
       "Expense Account (DR)": "Expense Account (DR)",
       "Expenses from Goodwill Credit": "Expenses from Goodwill Credit",
       "Expired document": "Expired document",
+      "Issuance Date": "Issuance Date",
       "Expiry Date": "Expiry Date",
       "Export to File": "Export to File",
       "Extend Repayment Period": "Extend Repayment Period",
@@ -2587,6 +2594,7 @@
       "Late": "Late",
       "Leave": "Leave",
       "Legal Entity": "Legal Entity",
+      "Leader": "Leader",
       "Legal Form": "Legal Form",
       "Legal Id": "Legal ID",
       "Length": "Length",
@@ -2602,6 +2610,8 @@
       "List of Accounts": "List of Accounts",
       "Loading vendors...": "Loading vendors...",
       "Loading clients": "Loading clients...",
+      "Loading groups": "Loading groups...",
+      "Loading centers": "Loading centers...",
       "Loading datatables": "Loading data tables...",
       "Loading savings transactions": "Loading savings transactions...",
       "Loading loans": "Loading loans...",
@@ -3382,6 +3392,8 @@
       "Withhold Tax is Applicable": "Withhold Tax is Applicable",
       "Within Bank": "Within Bank",
       "Workflow Jobs": "Workflow Jobs",
+      "Working Capital Loan Account": "Working Capital Loan Account",
+      "Working Capital Loan Product": "Working Capital Loan Product",
       "Working Days": "Working Days",
       "Working Hours": "Working Hours",
       "Write Off Date": "Write Off Date",
@@ -3743,8 +3755,11 @@
       "Auto Loan": "Auto Loan",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Financing for new or used car purchases with structured EMIs over a chosen tenure.",
       "BNPL": "BNPL",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.",
       "Consumer Durable Loan": "Consumer Durable Loan",
+      "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.",
       "Credit Card EMI": "Credit Card EMI",
+      "Converts card spends or available credit limit into structured EMIs": "Converts card spends or available credit limit into structured EMIs.",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles.",
       "Education Loan": "Education Loan",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.",
@@ -3752,15 +3767,25 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.",
       "Home Loan": "Home Loan",
       "Invoice Discounting": "Invoice Discounting",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due.",
       "JLG Loan": "JLG Loan",
+      "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities.",
       "Line of Credit": "Line of Credit",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Loan against property where an existing residential or commercial asset is pledged as collateral.",
       "Loan vs Securities / FD": "Loan vs Securities / FD",
+      "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Long-tenure financing to purchase, construct, or renovate a residential property.",
       "Merchant Cash Advance": "Merchant Cash Advance",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions.",
       "Mortgage Loan (LAP)": "Mortgage Loan (LAP)",
       "No resets have been recorded for this loan": "No resets have been recorded for this loan.",
+      "No variations added yet": "No variations added yet",
+      "Rows with the equals condition must be numbered consecutively from 1": "Rows with the equals condition must be numbered consecutively from 1",
+      "A row with the greater than condition must repeat the cycle number above it": "A row with the greater than condition must repeat the cycle number above it",
+      "Fix the loan cycle variations before creating the product": "Fix the loan cycle variations before creating the product",
       "Personal Loan": "Personal Loan",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation.",
       "Custom / Advanced": "Custom / Advanced",
       "Two Wheeler Loan": "Two Wheeler Loan",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Finance for new or used two-wheelers with quick approval and flexible down payment options.",
@@ -4372,6 +4397,8 @@
       "No checker inbox data available for this account": "No checker inbox data available for this account.",
       "No checker inbox data available for this search": "No checker inbox data available for this search.",
       "No client was found": "No client was found",
+      "No group was found": "No group was found",
+      "No center was found": "No center was found",
       "No data found": "No data found",
       "No exchange rates found": "No exchange rates found",
       "No loan locked available": "No loan locked available.",
@@ -4409,6 +4436,10 @@
       "Original Schedule": "Original Schedule",
       "Overdue Charges": "Overdue Charges",
       "Page": "Page",
+      "First Page": "First Page",
+      "Previous Page": "Previous Page",
+      "Next Page": "Next Page",
+      "Last Page": "Last Page",
       "Password Preferences": "Password Preferences",
       "Passwords": "Passwords",
       "Pay Charge": "Pay Charge",
@@ -4788,7 +4819,8 @@
       "Search by account number, name, external ID or transaction ID": "Search by account number, name, external ID or transaction ID",
       "No results found": "No results found",
       "Check the account number, external ID or transaction ID, or search across all entity types.": "Check the account number, external ID or transaction ID, or search across all entity types.",
-      "Result limit reached. Refine your query to narrow the results.": "Result limit reached. Refine your query to narrow the results."
+      "Result limit reached. Refine your query to narrow the results.": "Result limit reached. Refine your query to narrow the results.",
+      "Global Financial Dashboard": "Global Financial Dashboard"
     },
     "permissions": {
       "actions": {
@@ -5237,6 +5269,8 @@
   },
   "not_found_subtitle": "Oops.. Looks like this page doesn't exist.",
   "tooltips": {
+    "Edit Meeting": "Edit Meeting",
+    "Only pending groups can be deleted": "Only pending groups can be deleted",
     "A borrower loan counter (cycle)": "A borrower loan counter (cycle) is used for tracking how many time the client has taken this particular product.",
     "A loan is in arrears once the number of days": "A loan is in arrears once the number of days entered into this field is exceeded. If this field is blank, the loan will be in arrears the day after a scheduled payment is missed.",
     "A period of time during which a fixed deposit account": "A period of time during which a fixed deposit account based on this fixed deposit product will be locked-in after it is opened.",
@@ -5618,35 +5652,35 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
-    "currentSession": "Current Session",
-    "newChat": "New Chat",
+    "brand": "Mifos X Copilot",
+    "currentSession": "Current session",
+    "newChat": "New chat",
     "close": "Close",
     "greeting": {
       "morning": "Good morning",
       "afternoon": "Good afternoon",
       "evening": "Good evening"
     },
-    "welcomeHeading": "How can I help you support your clients today?",
+    "welcomeHeading": "What would you like to do?",
     "suggestions": {
-      "clientDetails": "Show me details for client John Doe",
-      "repaymentSchedule": "What is the repayment schedule for loan #107?",
-      "savingsBalance": "Show savings account balance for client #52",
-      "overdueLoans": "How many loans are overdue this week?"
+      "clientDetails": "Show me this client's profile",
+      "repaymentSchedule": "What is the repayment schedule for this loan?",
+      "savingsBalance": "What is this client's savings balance?",
+      "overdueLoans": "Which loans are overdue this week?"
     },
     "input": {
-      "placeholder": "Ask about clients, loans, or accounts...",
+      "placeholder": "Ask about a client, a loan or an account",
       "attach": "Attach file",
       "voice": "Voice input",
       "send": "Send message",
       "stop": "Stop generating"
     },
-    "disclaimer": "Mifos Intelligence AI is designed to assist, not replace, human decision making.",
+    "disclaimer": "Mifos X Copilot helps you find answers. Anything that moves money still needs your approval.",
     "nav": {
-      "recentChats": "Recent Chats",
+      "recentChats": "Recent chats",
       "chat": "Chat",
       "preferences": "Preferences",
-      "helpCenter": "Help Center"
+      "helpCenter": "Help"
     },
     "preferencesHeading": "Preferences",
     "recent": {
@@ -5656,20 +5690,20 @@
       "delete": "Delete conversation"
     },
     "help": {
-      "capabilitiesTitle": "What can Mifos Intelligence AI do?",
+      "capabilitiesTitle": "What Mifos X Copilot can do",
       "capabilities": {
-        "lookup": "Look up client information and profiles",
-        "loans": "View loan details and repayment schedules",
-        "savings": "Check savings account balances",
-        "portfolio": "Get insights on client portfolios",
-        "navigate": "Navigate to specific pages in Mifos X"
+        "lookup": "Find a client and show their profile",
+        "loans": "Show loan details and repayment schedules",
+        "savings": "Check a savings balance",
+        "portfolio": "Summarize a client's portfolio",
+        "navigate": "Take you to the right page"
       },
-      "examplesTitle": "Example prompts",
-      "importantTitle": "Important",
+      "examplesTitle": "Things to try",
+      "importantTitle": "Worth knowing",
       "important": {
-        "assist": "AI responses are for assistance only, not final decisions",
-        "verify": "Always verify critical financial data before taking action",
-        "noExecute": "The AI does not execute transactions on its own"
+        "assist": "Answers help you decide. They are not the decision.",
+        "verify": "Check the figures before you act on them.",
+        "noExecute": "Nothing moves money until you confirm it."
       }
     },
     "cardType": {
@@ -5679,18 +5713,79 @@
       "insight": "Insight",
       "confirmation": "Confirmation"
     },
-    "confirmWarning": "This action involves real money. Please confirm.",
-    "openAssistant": "Open AI Assistant",
+    "confirmWarning": "This moves real money. Check the details, then confirm.",
+    "openAssistant": "Open Mifos X Copilot",
     "newChatTitle": "New conversation",
     "errors": {
       "invalidLength": "That message is empty or too long. Please shorten it and try again.",
       "injectionBlocked": "That message looks like an instruction-override attempt, so it was not sent. Please rephrase it.",
-      "streamFailed": "Something went wrong while contacting the assistant. Please try again."
+      "streamFailed": "Could not reach Mifos X Copilot. Please try again."
     },
     "confirm": {
       "reference": "Reference",
-      "pendingAnnouncement": "Confirmation required before this action runs."
+      "pendingAnnouncement": "Confirm the details before this action runs."
     },
-    "assistantAvatarAlt": "Mifos AI assistant"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Activation date",
+      "activeLoans": "Active loans",
+      "amount": "Amount",
+      "appliedFor": "Applied for",
+      "approvalDate": "Approval date",
+      "approvedAmount": "Approved amount",
+      "approvedBy": "Approved by",
+      "client": "Client",
+      "clientAccount": "Client account",
+      "disbursementDate": "Disbursement date",
+      "expectedDisbursement": "Expected disbursement",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "loanAccount": "Loan account",
+      "mobileNumber": "Mobile number",
+      "nextInstalment": "Next installment",
+      "office": "Office",
+      "outstanding": "Outstanding",
+      "principal": "Principal",
+      "product": "Product",
+      "reference": "Reference",
+      "repaymentAmount": "Repayment amount",
+      "repayments": "Repayments",
+      "savingsAccount": "Savings account",
+      "savingsBalance": "Savings balance",
+      "search": "Search",
+      "status": "Status",
+      "submittedOn": "Submitted on",
+      "transactionDate": "Transaction date"
+    },
+    "demo": {
+      "product": "Agriculture Term Loan",
+      "office": "Head Office",
+      "statusActive": "Active",
+      "statusApproved": "Approved",
+      "writeIntro": "I can do that. Please review the details below and confirm before I run it.",
+      "approveSummary": "Approve {{product}} for {{client}}",
+      "loanIntro": "Here is the active loan for **{{client}}**:",
+      "loanTitle": "{{product}}, active",
+      "nextInstalment": "{{amount}}, due in {{days}} days",
+      "clientIntro": "I found this client:",
+      "modeNotice": "I am running in **demo mode**, with no gateway connected yet, but everything you see here (the streaming reply, the cards, the confirmation step) is the real thing.",
+      "approved": "Approved. The loan is now recorded against your user in the audit trail.",
+      "approvedTitle": "Loan approved",
+      "approvedByYou": "You, under your own permissions",
+      "cancelled": "Cancelled. Nothing was executed.",
+      "suggest": {
+        "schedule": "Show the repayment schedule",
+        "recordRepayment": "Record a repayment",
+        "overdue": "Show overdue loans",
+        "theirLoans": "Show their loans",
+        "kyc": "Show KYC documents",
+        "savings": "Check the savings balance",
+        "clientLoans": "Show loans for this client",
+        "approve": "Approve this loan",
+        "searchClient": "Search for a client",
+        "disburse": "Disburse this loan",
+        "backToClient": "Back to the client profile"
+      }
+    }
   }
 }

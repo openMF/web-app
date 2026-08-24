@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -56,7 +56,10 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
   styleUrls: ['./copilot-panel.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CopilotPanelComponent implements OnInit {
+// Deliberately no ngOnInit. The shell creates this panel as soon as the feature is on,
+// which can be before the officer's credentials are written, and reading the transcript
+// then would list the previous officer's conversations. Recent Chats loads when it opens.
+export class CopilotPanelComponent {
   private readonly featureService = inject(CopilotFeatureService);
   private readonly translate = inject(TranslateService);
   private readonly chatService = inject(ChatService);
@@ -99,7 +102,7 @@ export class CopilotPanelComponent implements OnInit {
   ];
 
   // markForCheck() on every mirror update: this panel is created dynamically by the shell,
-  // and streaming callbacks arrive outside a template event — without it, an OnPush ancestor
+  // and streaming callbacks arrive outside a template event, and without it an OnPush ancestor
   // chain would never repaint the incoming tokens.
   constructor() {
     const cdr = inject(ChangeDetectorRef);
@@ -131,7 +134,12 @@ export class CopilotPanelComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  /**
+   * Recent Chats is read at the moment it is shown rather than when the session starts.
+   * A login is announced before the new credentials are written, so anything loaded on
+   * that event would belong to whoever was signed in a moment earlier.
+   */
+  private refreshHistory(): void {
     this.chatService.loadHistory();
   }
 
@@ -153,6 +161,9 @@ export class CopilotPanelComponent implements OnInit {
 
   switchTab(tab: CopilotTab): void {
     this.activeTab = tab;
+    if (tab === 'recent') {
+      this.refreshHistory();
+    }
   }
 
   clearChat(): void {
@@ -183,12 +194,12 @@ export class CopilotPanelComponent implements OnInit {
     this.chatService.stopStreaming();
   }
 
-  /** Officer confirmed the pending write — the gateway executes it now. */
+  /** Officer confirmed the pending write, so the gateway executes it now. */
   confirmPendingAction(): void {
     this.chatService.decideAction('approve');
   }
 
-  /** Officer rejected the pending write — nothing executes. */
+  /** Officer rejected the pending write, so nothing executes. */
   cancelPendingAction(): void {
     this.chatService.decideAction('reject');
   }
@@ -222,22 +233,49 @@ export class CopilotPanelComponent implements OnInit {
     }
   }
 
-  /** Flatten the pending action into the confirmation card the officer reviews. */
+  /**
+   * Build the card the officer reads before money moves.
+   *
+   * The gateway sends ready-to-read rows: it looked the account up first, so the card can
+   * say "Client: Aisha Bello / Loan account: 000000012 / Approved amount: USD 28,000.00"
+   * rather than echoing back the arguments the model produced. Falling back to those raw
+   * arguments only matters against a gateway too old to send rows.
+   */
   private toConfirmationCard(pending: PendingAction): ActionCard {
     const data: Record<string, string> = {};
-    for (const [
-      key,
-      value
-    ] of Object.entries(pending.args ?? {})) {
-      data[key] = value != null && typeof value === 'object' ? JSON.stringify(value) : String(value ?? '');
+    for (const row of pending.display ?? []) {
+      data[row.label] = row.value;
+    }
+    if (Object.keys(data).length === 0) {
+      for (const [
+        key,
+        value
+      ] of Object.entries(pending.args ?? {})) {
+        if (value == null || String(value).trim().length === 0) {
+          continue;
+        }
+        data[this.humanizeKey(key)] = typeof value === 'object' ? JSON.stringify(value) : String(value);
+      }
     }
     if (pending.idempotencyKey) {
-      data[this.translate.instant('copilot.confirm.reference')] = pending.idempotencyKey;
+      // A short reference reads like the receipt number on a teller slip; the gateway keeps
+      // the full key for the audit trail.
+      data[this.translate.instant('copilot.confirm.reference')] = pending.idempotencyKey.slice(0, 8).toUpperCase();
     }
     return {
       type: 'confirmation',
-      title: pending.humanSummary || pending.tool,
+      title: pending.humanSummary || this.humanizeKey(pending.tool),
       data
     };
+  }
+
+  /** Last-resort label: "approvedLoanAmount" reads as "Approved loan amount". */
+  private humanizeKey(key: string): string {
+    const spaced = key
+      .replace(/^mifos_/, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+      .trim();
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1).toLowerCase();
   }
 }

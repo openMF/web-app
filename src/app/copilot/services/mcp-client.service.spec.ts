@@ -7,6 +7,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { describe, it, expect, beforeEach } from '@jest/globals';
@@ -43,7 +44,13 @@ describe('McpClientService', () => {
         McpClientService,
         { provide: COPILOT_CONFIG, useValue: { ...DEFAULT_COPILOT_CONFIG, mcpBaseUrl: 'mock' } },
         { provide: AuthenticationService, useValue: { getCredentials: () => credentials } },
-        { provide: SettingsService, useValue: { tenantIdentifier: 'default' } }
+        { provide: SettingsService, useValue: { tenantIdentifier: 'default' } },
+        // Demo mode resolves its copy through the translation files, so the key comes
+        // back as-is here and the assertions stay about behaviour, not wording.
+        {
+          provide: TranslateService,
+          useValue: { instant: (key: string) => key, currentLang: 'en-US' }
+        }
       ]
     });
     service = TestBed.inject(McpClientService);
@@ -66,8 +73,8 @@ describe('McpClientService', () => {
     const events = await lastValueFrom(service.chat(request('Approve this loan')).pipe(toArray()));
 
     const pending = events.find((event) => event.pendingAction);
-    expect(pending?.pendingAction?.tool).toBe('fineract_loan_approve');
-    // The stream pauses for confirmation — no done event yet.
+    expect(pending?.pendingAction?.tool).toBe('mifos_loan_approve');
+    // The stream pauses for confirmation, so no done event yet.
     expect(events.map((event) => event.type)).not.toContain('done');
   });
 
@@ -93,4 +100,27 @@ describe('McpClientService', () => {
     expect(headers['Authorization']).toBeUndefined();
     expect(headers['Fineract-Platform-TenantId']).toBe('default');
   });
+
+  it('gives two demo approvals raised together distinguishable ids', async () => {
+    // The decision endpoint keys on this id, so two cards sharing one would make the
+    // actions indistinguishable. Date.now() alone is not enough inside one millisecond.
+    const now = jest.spyOn(Date, 'now').mockReturnValue(1_800_000_000_000);
+    try {
+      const first = await firstCard();
+      const second = await firstCard();
+
+      expect(first).not.toBe(second);
+      expect(first.startsWith('mock-card-')).toBe(true);
+    } finally {
+      now.mockRestore();
+    }
+  });
+
+  /** Runs a demo write turn and returns the card id it paused with. */
+  async function firstCard(): Promise<string> {
+    const events = await lastValueFrom(service.chat(request('Approve this loan')).pipe(toArray()));
+    const card = events.find((event) => event.pendingAction)?.pendingAction;
+    expect(card).toBeDefined();
+    return card!.cardId;
+  }
 });

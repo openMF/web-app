@@ -64,9 +64,8 @@
 th.mat-mdc-header-cell:first-child,
 td.mat-mdc-cell:first-child {
   max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 th.mat-mdc-header-cell:not(.actions-column, :first-child),

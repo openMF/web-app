@@ -70,6 +70,7 @@
     <div class="msg__content">
       <div class="cards">
         <mifosx-confirmation-card
+          #confirmCard
           [card]="pendingCard"
           (confirmed)="confirmPending.emit()"
           (cancelled)="cancelPending.emit()"

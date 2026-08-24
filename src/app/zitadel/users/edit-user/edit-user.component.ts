@@ -124,14 +124,14 @@ export class EditUserComponent implements OnInit {
         profile.firstName || '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       lastname: [
         profile.lastName || '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       countryCode: [

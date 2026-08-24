@@ -62,7 +62,25 @@
                   </mat-checkbox>
                 </td>
               }
-              @if (i > 0) {
+              @if (datatableColumn === ACTIONS_NAME_FIELD) {
+                <th mat-header-cell *matHeaderCellDef class="actions-column"></th>
+                <td mat-cell *matCellDef="let data" class="actions-cell">
+                  <span *mifosxHasPermission="'UPDATE_' + datatableName">
+                    <span class="mobile-cell-label">{{ 'labels.buttons.Edit' | translate }}</span>
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      type="button"
+                      [attr.aria-label]="'labels.buttons.Edit' | translate"
+                      [matTooltip]="'labels.buttons.Edit' | translate"
+                      (click)="edit(data); $event.stopPropagation()"
+                    >
+                      <fa-icon icon="edit"></fa-icon>
+                    </button>
+                  </span>
+                </td>
+              }
+              @if (i > 0 && datatableColumn !== ACTIONS_NAME_FIELD) {
                 <th mat-header-cell class="right" *matHeaderCellDef mat-sort-header>
                   {{ getInputName(datatableColumn) }}
                 </th>

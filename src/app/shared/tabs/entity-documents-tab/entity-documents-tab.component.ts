@@ -26,8 +26,10 @@ import type { LightGallery } from 'lightgallery/lightgallery';
 import type { GalleryItem } from 'lightgallery/lg-utils';
 import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { Observable, throwError } from 'rxjs';
@@ -51,6 +53,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   private savingsService = inject(SavingsService);
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
   private documentPreviewService = inject(DocumentPreviewService);
 
   @ViewChild('lightboxRoot', { static: true }) lightboxRoot: ElementRef<HTMLElement>;
@@ -97,6 +100,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
         formData.append('description', dialogResponse.description);
+        formData.append('dateFormat', Dates.DEFAULT_DATEFORMAT);
+        formData.append('locale', this.settingsService.language.code);
+        this.appendOptionalDate(formData, 'issuanceDate', dialogResponse.issuanceDate);
+        this.appendOptionalDate(formData, 'expiryDate', dialogResponse.expiryDate);
         this.callbackUpload(formData).subscribe((res: any) => {
           const newDocument = {
             id: res.resourceId,
@@ -104,6 +111,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
             parentEntityId: this.entityId,
             name: dialogResponse.fileName,
             description: dialogResponse.description,
+            issuanceDate: this.formatDocumentDate(dialogResponse.issuanceDate),
+            expiryDate: this.formatDocumentDate(dialogResponse.expiryDate),
             fileName: dialogResponse.file.name
           };
           this.entityDocuments.push(newDocument);
@@ -225,6 +234,25 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     return value
       ? value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
       : '';
+  }
+
+  private appendOptionalDate(formData: FormData, key: string, value: Date | string | null | undefined): void {
+    const formattedDate = this.formatDocumentDate(value);
+    if (formattedDate) {
+      formData.append(key, formattedDate);
+    }
+  }
+
+  private formatDocumentDate(value: Date | string | null | undefined): string {
+    if (!value) {
+      return '';
+    }
+    if (value instanceof Date) {
+      const month = `${value.getMonth() + 1}`.padStart(2, '0');
+      const day = `${value.getDate()}`.padStart(2, '0');
+      return `${value.getFullYear()}-${month}-${day}`;
+    }
+    return value;
   }
 
   private setThumbnail(document: any): void {

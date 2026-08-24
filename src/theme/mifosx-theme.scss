@@ -12,8 +12,6 @@
 @use 'material-palette' as *;
 
 // Plus imports for other components in your app.
-@use '../app/groups/groups-view/groups-view.component-theme.scss' as *;
-@use '../app/centers/centers-view/centers-view.component-theme.scss' as *;
 @use '../app/home/dashboard/dashboard.component-theme.scss' as *;
 @use '../app/shares/shares-account-view/shares-account-view.component-theme.scss' as *;
 @use '../app/account-transfers/view-account-transfer/view-account-transfer.component-theme.scss' as *;
@@ -66,8 +64,6 @@ $mifosx-app-theme: mat.m2-define-light-theme(
 
 @include mat.typography-hierarchy($mifosx-typography);
 @include mat.all-component-themes($mifosx-app-theme);
-@include groups-view-component-theme($mifosx-app-theme);
-@include centers-view-component-theme($mifosx-app-theme);
 @include dashboard-component-theme($mifosx-app-theme);
 @include shares-account-view-component-theme($mifosx-app-theme);
 @include account-view-component-theme($mifosx-app-theme);
@@ -90,8 +86,6 @@ $mifosx-app-dark-theme: mat.m2-define-dark-theme(
 
 .dark-theme {
   @include mat.all-component-colors($mifosx-app-dark-theme);
-  @include groups-view-component-theme($mifosx-app-dark-theme);
-  @include centers-view-component-theme($mifosx-app-dark-theme);
   @include dashboard-component-theme($mifosx-app-dark-theme);
   @include shares-account-view-component-theme($mifosx-app-dark-theme);
   @include account-view-component-dark-theme($mifosx-app-dark-theme);

@@ -279,222 +279,236 @@
 }
 
 /* Custom Marker Styling */
-.custom-map-pin {
-  position: relative;
-  cursor: pointer;
-  outline: none;
+:host ::ng-deep {
+  .custom-map-pin {
+    position: relative;
+    cursor: pointer;
+    outline: none;
 
-  .pin-svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -14px;
-    margin-top: -38px;
-    filter: drop-shadow(0 3px 6px rgb(0 0 0 / 25%));
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .pin-pulse {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    margin-left: -20px;
-    margin-top: -20px;
-    border-radius: 50%;
-    background: rgb(2 132 199 / 24%);
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.4);
-    transform-origin: center;
-  }
-
-  &:hover {
     .pin-svg {
-      transform: scale(1.15);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -14px;
+      margin-top: -38px;
+      filter: drop-shadow(0 3px 6px rgb(0 0 0 / 25%));
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .pin-pulse {
-      opacity: 1;
-      animation: pulse-ring 1.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-    }
-  }
-
-  &.active {
-    .pin-svg {
-      transform: scale(1.25);
-    }
-
-    .pin-pulse {
-      background: rgb(234 88 12 / 30%);
-      opacity: 1;
-      animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-    }
-  }
-}
-
-/* Custom Marker Cluster Styling */
-.custom-marker-cluster {
-  background: transparent;
-
-  .cluster-inner {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgb(2 132 199 / 15%);
-    border: 2px solid #0284c7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      margin-left: -20px;
+      margin-top: -20px;
       border-radius: 50%;
-      background: #0284c7;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
+      background: rgb(2 132 199 / 24%);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.4);
+      transform-origin: center;
     }
 
     &:hover {
-      transform: scale(1.1);
+      .pin-svg {
+        transform: scale(1.15);
+      }
+
+      .pin-pulse {
+        opacity: 1;
+        animation: pulse-ring 1.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      }
     }
-  }
-}
 
-@keyframes pulse-ring {
-  0% {
-    transform: scale(0.4);
-    opacity: 1;
-  }
+    &.active {
+      .pin-svg {
+        transform: scale(1.25);
 
-  80%,
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
+        path {
+          fill: #ea580c !important;
+        }
+      }
 
-/* Custom Popup Styling */
-.leaflet-custom-popup {
-  .leaflet-popup-content-wrapper {
-    background: rgb(255 255 255 / 85%);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 10px;
-    box-shadow:
-      0 10px 25px -5px rgb(0 0 0 / 8%),
-      0 8px 10px -6px rgb(0 0 0 / 8%);
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .leaflet-popup-content {
-    margin: 0;
-    font-family: inherit;
-    width: auto !important;
-  }
-
-  .leaflet-popup-tip-container {
-    .leaflet-popup-tip {
-      background: rgb(255 255 255 / 85%);
-      box-shadow: 0 8px 10px -6px rgb(0 0 0 / 8%);
-      border: 1px solid rgb(0 0 0 / 8%);
+      .pin-pulse {
+        background: rgb(234 88 12 / 30%);
+        opacity: 1;
+        animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      }
     }
   }
 
-  .map-tooltip {
-    position: static;
-    transform: none;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    backdrop-filter: none;
-    animation: none;
-    padding: 14px 18px;
-    min-width: 220px;
-    display: block;
-    pointer-events: auto;
+  /* Custom Marker Cluster Styling */
+  .custom-marker-cluster {
+    background: transparent !important;
+    border: none !important;
 
-    .tooltip-header {
+    .cluster-inner {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgb(2 132 199 / 20%);
+      border: 2px solid rgb(2 132 199 / 40%);
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgb(2 132 199 / 35%);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-      .tooltip-icon {
-        color: #0284c7;
-        font-size: 13px;
-      }
-
-      .tooltip-title-container {
+      span {
         display: flex;
-        flex-direction: column;
-        line-height: 1.25;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #0284c7;
+        color: #fff !important;
+        font-size: 13px;
+        font-weight: 800;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+        border: 2px solid #fff;
+        outline: 2px solid rgb(2 132 199 / 60%);
       }
 
-      .tooltip-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: #0f172a;
-      }
-
-      .tooltip-subtitle {
-        font-size: 11px;
-        font-weight: 500;
-        color: #64748b;
-      }
-
-      .tooltip-flag {
-        vertical-align: middle;
-        border-radius: 2px;
-        margin-right: 3px;
-        box-shadow: 0 0 2px rgb(0 0 0 / 20%);
-      }
-    }
-
-    .tooltip-divider {
-      height: 1px;
-      background: rgb(0 0 0 / 6%);
-      margin-bottom: 8px;
-    }
-
-    .tooltip-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      margin-bottom: 6px;
-
-      .tooltip-label {
-        color: #64748b;
-      }
-
-      .tooltip-value {
-        font-weight: 600;
-        color: #334155;
+      &:hover {
+        transform: scale(1.18);
+        background: rgb(2 132 199 / 35%);
       }
     }
   }
-}
 
-.custom-leaflet-tooltip {
-  background: rgb(255 255 255 / 90%) !important;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgb(0 0 0 / 8%) !important;
-  border-radius: 6px !important;
-  padding: 5px 10px !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  color: #334155 !important;
-  box-shadow: 0 4px 10px rgb(0 0 0 / 5%) !important;
-  white-space: nowrap;
+  /* Custom Popup Styling */
+  .leaflet-custom-popup {
+    .leaflet-popup-content-wrapper {
+      background: #fff !important;
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: 10px;
+      box-shadow:
+        0 10px 25px -5px rgb(0 0 0 / 18%),
+        0 8px 10px -6px rgb(0 0 0 / 10%);
+      padding: 0;
+      overflow: hidden;
+    }
 
-  &::before {
-    display: none !important;
+    .leaflet-popup-content {
+      margin: 0;
+      font-family: inherit;
+      width: auto !important;
+    }
+
+    .leaflet-popup-tip-container {
+      .leaflet-popup-tip {
+        background: #fff !important;
+        box-shadow: 0 8px 10px -6px rgb(0 0 0 / 10%);
+        border: 1px solid rgb(0 0 0 / 10%);
+      }
+    }
+
+    .map-tooltip {
+      position: static;
+      transform: none;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      animation: none;
+      padding: 14px 18px;
+      min-width: 220px;
+      display: block;
+      pointer-events: auto;
+
+      .tooltip-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+
+        .tooltip-icon {
+          color: #0284c7;
+          font-size: 13px;
+        }
+
+        .tooltip-title-container {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.25;
+        }
+
+        .tooltip-title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .tooltip-subtitle {
+          font-size: 11px;
+          font-weight: 500;
+          color: #64748b;
+        }
+
+        .tooltip-flag {
+          vertical-align: middle;
+          border-radius: 2px;
+          margin-right: 3px;
+          box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+        }
+      }
+
+      .tooltip-divider {
+        height: 1px;
+        background: rgb(0 0 0 / 6%);
+        margin-bottom: 8px;
+      }
+
+      .tooltip-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 6px;
+
+        .tooltip-label {
+          color: #64748b;
+        }
+
+        .tooltip-value {
+          font-weight: 600;
+          color: #334155;
+        }
+      }
+    }
+  }
+
+  .custom-leaflet-tooltip {
+    background: #fff !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgb(0 0 0 / 12%) !important;
+    border-radius: 6px !important;
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 10%) !important;
+    white-space: nowrap;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .leaflet-tooltip.custom-tooltip-card {
+    background: #fff !important;
+    border: 1px solid rgb(0 0 0 / 12%) !important;
+    border-radius: 10px !important;
+    box-shadow:
+      0 10px 25px -5px rgb(0 0 0 / 18%),
+      0 8px 10px -6px rgb(0 0 0 / 10%) !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    white-space: normal;
+
+    &::before {
+      display: none !important;
+    }
   }
 }
 
@@ -635,12 +649,16 @@
 
   .custom-marker-cluster {
     .cluster-inner {
-      background: rgb(56 189 248 / 15%);
-      border-color: #38bdf8;
+      background: rgb(56 189 248 / 20%);
+      border-color: rgb(56 189 248 / 40%);
+      box-shadow: 0 4px 14px rgb(56 189 248 / 35%);
 
       span {
         background: #38bdf8;
-        color: #1a1a1a;
+        color: #0f172a !important;
+        border: 2px solid #fff;
+        outline: 2px solid rgb(56 189 248 / 60%);
+        font-weight: 800;
       }
     }
   }
@@ -650,6 +668,12 @@
     border-color: rgb(255 255 255 / 8%) !important;
     color: #e2e8f0 !important;
     box-shadow: 0 4px 10px rgb(0 0 0 / 30%) !important;
+  }
+
+  .leaflet-tooltip.custom-tooltip-card {
+    background: #1e293b !important;
+    border-color: rgb(255 255 255 / 12%) !important;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 50%) !important;
   }
 
   .map-empty-state {

@@ -63,6 +63,9 @@
         [display]="'right'"
         [hideCopy]="complianceHideClientData"
       ></mifosx-entity-name>
+      <span class="account-status-pill" [ngClass]="clientViewData.status.code | statusLookup">
+        {{ 'labels.status.' + clientViewData.status.value | translate }}
+      </span>
     </ng-container>
 
     <!-- Actions menu trigger -->
@@ -137,7 +140,9 @@
                   <td>
                     @for (group of clientViewData.groups; track group) {
                       <span>
-                        <span class="m-r-3">{{ group.name }}</span>
+                        <a class="m-r-3 entity-link" [routerLink]="['/groups', group.id, 'general']">{{
+                          group.name
+                        }}</a>
                       </span>
                     }
                   </td>

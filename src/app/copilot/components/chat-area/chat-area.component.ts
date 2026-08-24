@@ -20,15 +20,18 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import moment from 'moment';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { relativeTime } from '../../core/relative-time';
 import { ChatMessage } from '../../core/models/chat-message.model';
 import { ActionCard } from '../../core/models/action-card.model';
 import { MarkdownPipe } from '../../pipes/markdown.pipe';
 import { ActionCardComponent } from '../action-card/action-card.component';
 import { ConfirmationCardComponent } from '../confirmation-card/confirmation-card.component';
 import { QuickChipsComponent } from '../quick-chips/quick-chips.component';
+
+/** Breathing room left above a confirmation card once it is scrolled into view. */
+const CARD_TOP_GAP_PX = 12;
 
 /** Scrollable chat body: welcome state, message bubbles, cards, typing indicator. */
 @Component({
@@ -49,7 +52,7 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked {
   @Input() isStreaming = false;
   @Input() greetingTime = '';
   @Input() emptySuggestions: string[] = [];
-  /** Write action awaiting confirmation — rendered INSIDE the chat flow so it scrolls
+  /** Write action awaiting confirmation, rendered INSIDE the chat flow so it scrolls
    *  with the conversation and can never overlap other messages. */
   @Input() pendingCard: ActionCard | null = null;
 
@@ -60,6 +63,8 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked {
   @Output() cancelPending = new EventEmitter<void>();
 
   @ViewChild('messageContainer') private messageContainer?: ElementRef<HTMLElement>;
+  /** The confirmation card, so it can be shown from its top rather than from its buttons. */
+  @ViewChild('confirmCard', { read: ElementRef }) private confirmCard?: ElementRef<HTMLElement>;
 
   /** How close to the bottom (px) still counts as "following the conversation". */
   private static readonly STICK_THRESHOLD_PX = 160;
@@ -87,11 +92,21 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.pendingScroll && this.messageContainer) {
-      const container = this.messageContainer.nativeElement;
-      container.scrollTop = container.scrollHeight;
-      this.pendingScroll = false;
+    if (!this.pendingScroll || !this.messageContainer) {
+      return;
     }
+    const container = this.messageContainer.nativeElement;
+    const card = this.confirmCard?.nativeElement;
+    if (card) {
+      // Show a confirmation card from its top edge. Scrolling to the bottom of the
+      // conversation puts Confirm on screen and pushes the client and the amount above
+      // the fold, which is the wrong half of a money decision to hide.
+      const offset = card.getBoundingClientRect().top - container.getBoundingClientRect().top;
+      container.scrollTop = Math.max(0, container.scrollTop + offset - CARD_TOP_GAP_PX);
+    } else {
+      container.scrollTop = container.scrollHeight;
+    }
+    this.pendingScroll = false;
   }
 
   trackByMessageId(_index: number, msg: ChatMessage): string {
@@ -101,13 +116,8 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked {
   private readonly settingsService = inject(SettingsService);
   private readonly dateUtils = inject(Dates);
 
-  /**
-   * Relative time localized to the USER'S CHOSEN app language — resolved per
-   * call (instance locale), never trusting moment's global locale, which other
-   * pipes mutate as a side effect and may point at a different language.
-   */
+  /** "3 minutes ago", in the language the officer chose. See core/relative-time.ts. */
   relativeTime(timestamp: number): string {
-    const locale = this.dateUtils.getMomentLocale(this.settingsService.language);
-    return moment(timestamp).locale(locale).fromNow();
+    return relativeTime(timestamp, this.dateUtils.getMomentLocale(this.settingsService.language));
   }
 }

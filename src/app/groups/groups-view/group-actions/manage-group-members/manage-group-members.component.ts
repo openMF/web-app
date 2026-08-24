@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -21,8 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
-import { MatLine } from '@angular/material/grid-list';
+import { MatListSubheaderCssMatStyler } from '@angular/material/list';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -40,8 +39,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatIconButton,
     FaIconComponent,
     MatListSubheaderCssMatStyler,
-    MatNavList,
-    MatLine,
     MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -50,6 +47,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private groupsService = inject(GroupsService);
   private clientsService = inject(ClientsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
 
   /** Group Data */
@@ -85,8 +83,13 @@ export class ManageGroupMembersComponent implements AfterViewInit {
           .getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
+            // Results arrive outside any template event: notify OnPush change detection.
+            this.changeDetectorRef.markForCheck();
           });
       }
+      // Selecting an autocomplete option happens in the CDK overlay, which does
+      // not mark this OnPush component dirty; refresh the client details panel.
+      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -99,6 +102,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
         .executeGroupCommand(this.groupData.id, 'associateClients', { clientMembers: [this.clientChoice.value.id] })
         .subscribe(() => {
           this.clientMembers.push(this.clientChoice.value);
+          this.changeDetectorRef.markForCheck();
         });
     }
   }
@@ -118,6 +122,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
           .executeGroupCommand(this.groupData.id, 'disassociateClients', { clientMembers: [client.id] })
           .subscribe(() => {
             this.clientMembers.splice(index, 1);
+            this.changeDetectorRef.markForCheck();
           });
       }
     });

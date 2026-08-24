@@ -33,10 +33,7 @@ export class ViewLoanProductComponent extends LoanProductBaseComponent {
 
   constructor() {
     super();
-    const productType = this.route.snapshot.queryParamMap.get('productType') || null;
-    if (productType) {
-      this.loanProductService.initialize(productType);
-    }
+    this.loanProductService.initialize(this.route.snapshot.queryParamMap.get('productType'));
 
     this.route.data.subscribe((data: { loanProductDatatables: any }) => {
       this.loanProductDatatables = data.loanProductDatatables;

@@ -1917,6 +1917,574 @@ describe('LoanProductWizardComponent', () => {
     });
   });
 
+  describe('JLG profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function jlgComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'jlg';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        valueConditionTypeOptions: [
+          { id: 2, code: 'loanProduct.valueConditionType.equal', value: 'equals' },
+          { id: 3, code: 'loanProduct.valueConditionType.greterthan', value: 'greater than' }
+        ],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    const SAMPLE_VARIATIONS = {
+      principalVariationsForBorrowerCycle: [{ valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 20000 }],
+      numberOfRepaymentVariationsForBorrowerCycle: [
+        { valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 12 }
+      ],
+      interestRateVariationsForBorrowerCycle: [{ valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 22 }]
+    } as any;
+
+    it('exposes the borrower-cycle toggles the sheet marks Applicable (rows 7 and 12)', () => {
+      // Both sit in the wizard's custom-only list, which hides them for every other guided profile.
+      const keys = visibleKeys(jlgComponent());
+      expect(keys).toContain('includeInBorrowerCycle');
+      expect(keys).toContain('useBorrowerCycle');
+    });
+
+    it('renders the Loan Cycle Variations step, gated on useBorrowerCycle like Classic', () => {
+      const component = jlgComponent();
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Loan Cycle Variations');
+
+      component.form.get('useBorrowerCycle')!.setValue(false);
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+    });
+
+    it('does not render the step for any other profile', () => {
+      // Only the JLG sheet marks rows 26/27/29 Applicable.
+      const gold = createComponent();
+      gold.profileMode = 'gold';
+      gold.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+      gold.ngOnInit();
+      gold.form.get('useBorrowerCycle')?.setValue(true);
+
+      expect(gold.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+    });
+
+    it('folds the collected variation rows into the submitted payload', () => {
+      const component = jlgComponent();
+      component.setBorrowerCycleVariations(SAMPLE_VARIATIONS);
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.principalVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.principalVariationsForBorrowerCycle
+      );
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.numberOfRepaymentVariationsForBorrowerCycle
+      );
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.interestRateVariationsForBorrowerCycle
+      );
+    });
+
+    it('sends empty arrays when the operator never opens the step', () => {
+      // The keys are removed from JLG's hidden defaults, so without this fold they would go missing
+      // from the payload entirely rather than arriving empty.
+      const payload = jlgComponent().buildPayloadForSubmit();
+
+      expect(payload.principalVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual([]);
+    });
+
+    it('discards collected rows when the operator switches the cycle feature back off', () => {
+      // Classic removes all three controls when `useBorrowerCycle` goes off, so stale rows must not
+      // survive on a product that no longer varies by cycle.
+      const component = jlgComponent();
+      component.setBorrowerCycleVariations(SAMPLE_VARIATIONS);
+      component.form.get('useBorrowerCycle')!.setValue(false);
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.useBorrowerCycle).toBe(false);
+      expect(payload.principalVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual([]);
+    });
+
+    it('pins the down payment off and keeps its dependents hidden (row 67)', () => {
+      const component = jlgComponent();
+      const keys = visibleKeys(component);
+
+      expect(keys).not.toContain('enableDownPayment');
+      expect(keys).not.toContain('disbursedAmountPercentageForDownPayment');
+      expect(component.buildPayloadForSubmit().enableDownPayment).toBe(false);
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = jlgComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = jlgComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+  });
+
+  describe('Consumer Durable profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function consumerDurableComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'consumer-durable';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** Consumer Durable L `is Applicable = Y` rows that the other guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      // Row 51 — unique to this sheet among the profiles shipped so far.
+      'canUseForTopup',
+      'isInterestRecalculationEnabled',
+      // Rows 67-69, the whole trio editable, same as Auto.
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'delinquencyBucketId'
+    ];
+
+    /**
+     * `is Hidden = Y` rows that must stay hidden. The tranche family (rows 54-58), the floating-rate
+     * link (row 15) and guarantee funds (row 52) are what separate this profile from Home and Auto.
+     */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'isLinkedToFloatingInterestRates',
+      'holdGuaranteeFunds',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche',
+      'inArrearsTolerance',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      'loanChargeOffBehaviour',
+      'enableInstallmentLevelDelinquency',
+      'allowApprovedDisbursedAmountsOverApplied',
+      'interestRecognitionOnDisbursementDate'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = consumerDurableComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+
+      // Some hidden keys also sit behind a parent display condition, so the assertion above would pass
+      // for the wrong reason while that parent is unset. Satisfy each parent and confirm the field is
+      // still hidden — i.e. hidden by the profile, not merely by its gate.
+      component.form.get('delinquencyBucketId')!.setValue('1'); // gates enableInstallmentLevelDelinquency
+      const withParentsOn = visibleKeys(component);
+      expect(withParentsOn).not.toContain('enableInstallmentLevelDelinquency');
+      expect(withParentsOn).not.toContain('loanChargeOffBehaviour');
+    });
+
+    it('seeds the down payment trio on and gates its dependents on the toggle', () => {
+      const component = consumerDurableComponent();
+      expect(component.form.get('enableDownPayment')!.value).toBe(true);
+      expect(visibleKeys(component)).toContain('disbursedAmountPercentageForDownPayment');
+
+      component.form.get('enableDownPayment')!.setValue(false);
+      const keys = visibleKeys(component);
+      expect(keys).not.toContain('disbursedAmountPercentageForDownPayment');
+      expect(keys).not.toContain('enableAutoRepaymentForDownPayment');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = consumerDurableComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = consumerDurableComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+
+    it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+      const titles = consumerDurableComponent().visibleSteps.map((step) => step.title);
+      expect(titles).not.toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+  });
+
+  describe('Credit Card EMI profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function cardComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'credit-card-emi';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        chargeOffBehaviourOptions: [{ id: 'REGULAR', value: 'Regular' }],
+        supportedInterestRefundTypes: [{ id: 'MERCHANT_ISSUED_REFUND', value: 'Merchant issued refund' }],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** Card L `is Applicable = Y` rows that most guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'allowApprovedDisbursedAmountsOverApplied',
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      'isInterestRecalculationEnabled',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche',
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'delinquencyBucketId'
+    ];
+
+    /** `is Hidden = Y` rows that must stay hidden. */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'isLinkedToFloatingInterestRates',
+      'holdGuaranteeFunds',
+      'canUseForTopup',
+      'inArrearsTolerance',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      // Rows 77-78: the deferred income flags stay pinned for this profile.
+      'enableIncomeCapitalization',
+      'enableBuydownFees'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = cardComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+    });
+
+    it('renders the Interest Refund step but not the Deferred Income one', () => {
+      // The defining structural difference from BNPL, which renders both.
+      const titles = cardComponent().visibleSteps.map((step) => step.title);
+      expect(titles).toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+
+    it('hides the Interest Refund step when the strategy is not advanced payment allocation', () => {
+      // Same gate Classic applies.
+      const component = cardComponent();
+      component.form.get('transactionProcessingStrategyCode')!.setValue('mifos-standard-strategy');
+
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Interest Refunds');
+    });
+
+    it('gates the over-applied pair on its toggle, like Classic', () => {
+      const component = cardComponent();
+      expect(visibleKeys(component)).not.toContain('overAppliedCalculationType');
+
+      component.form.get('allowApprovedDisbursedAmountsOverApplied')!.setValue(true);
+      const keys = visibleKeys(component);
+      expect(keys).toContain('overAppliedCalculationType');
+      expect(keys).toContain('overAppliedNumber');
+    });
+
+    it('gates the tranche family on multiDisburseLoan and resets it like Classic', () => {
+      const component = cardComponent();
+      expect(visibleKeys(component)).toContain('maxTrancheCount');
+
+      component.form.get('multiDisburseLoan')!.setValue(false);
+      const keys = visibleKeys(component);
+      expect(keys).not.toContain('maxTrancheCount');
+      expect(keys).not.toContain('outstandingLoanBalance');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = cardComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = cardComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+  });
+
+  describe('Loan vs Securities / FD profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function lasComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'loan-against-securities';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** LAS L `is Applicable = Y` rows that most guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'isLinkedToFloatingInterestRates',
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      'holdGuaranteeFunds',
+      'isInterestRecalculationEnabled',
+      'delinquencyBucketId'
+    ];
+
+    /**
+     * `is Hidden = Y` rows that must stay hidden. The tranche family is the structural difference from
+     * Home, which this profile otherwise closely resembles.
+     */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      // Row 58 is marked Applicable but depends on rows 54-57, which are not — see the config note.
+      'allowFullTermForTranche',
+      'inArrearsTolerance',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'canUseForTopup',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'enableAutoRepaymentForDownPayment',
+      'loanChargeOffBehaviour',
+      'enableInstallmentLevelDelinquency',
+      'allowApprovedDisbursedAmountsOverApplied',
+      'interestRecognitionOnDisbursementDate'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = lasComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+
+      // Some hidden keys sit behind a parent display condition, so satisfy each parent and confirm the
+      // field is still hidden — i.e. hidden by the profile, not merely by its gate.
+      component.form.get('delinquencyBucketId')!.setValue('1'); // gates enableInstallmentLevelDelinquency
+      component.form.get('holdGuaranteeFunds')!.setValue(true); // gates the guarantee trio
+      const withParentsOn = visibleKeys(component);
+      expect(withParentsOn).toContain('mandatoryGuarantee'); // control: the gate really did open
+      expect(withParentsOn).not.toContain('enableInstallmentLevelDelinquency');
+      expect(withParentsOn).not.toContain('allowFullTermForTranche');
+    });
+
+    it('keeps the guarantee inputs hidden until guarantee funds are held', () => {
+      const component = lasComponent();
+      expect(visibleKeys(component)).not.toContain('mandatoryGuarantee');
+
+      component.form.get('holdGuaranteeFunds')!.setValue(true);
+      const keys = visibleKeys(component);
+      expect(keys).toContain('mandatoryGuarantee');
+      expect(keys).toContain('minimumGuaranteeFromOwnFunds');
+      expect(keys).toContain('minimumGuaranteeFromGuarantor');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = lasComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = lasComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+
+    it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+      const titles = lasComponent().visibleSteps.map((step) => step.title);
+      expect(titles).not.toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+  });
+
   describe('BNPL profile (spreadsheet-driven, Classic-parity conditionals)', () => {
     function bnplComponent(): LoanProductWizardComponent {
       const component = createComponent();
@@ -2312,7 +2880,11 @@ describe('LoanProductWizardComponent', () => {
       'home',
       'mortgage',
       'gold',
-      'auto'
+      'auto',
+      'jlg',
+      'consumer-durable',
+      'credit-card-emi',
+      'loan-against-securities'
     ];
 
     function componentFor(profile: LoanWizardProfileMode): LoanProductWizardComponent {
