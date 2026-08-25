@@ -651,12 +651,15 @@
             {{ 'labels.inputs.External Asset Owner' | translate }}
           </a>
         }
-        @if (loanProductService.isLoanProduct && datatablesReady) {
+        @if (datatablesReady) {
           @for (loanDatatable of loanDatatables; track loanDatatable) {
             <a
               mat-tab-link
               *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName"
               [routerLink]="['./datatables', loanDatatable.registeredTableName]"
+              [queryParams]="{
+                productType: loanProductService.productType.value
+              }"
               routerLinkActive
               #datatable="routerLinkActive"
               [active]="datatable.isActive"

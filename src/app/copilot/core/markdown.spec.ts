@@ -6,22 +6,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { describe, it, expect, beforeEach } from '@jest/globals';
+import { describe, it, expect } from '@jest/globals';
 
-import { MarkdownPipe } from './markdown.pipe';
+import { renderMarkdown as render } from './markdown';
 
-describe('MarkdownPipe', () => {
-  let pipe: MarkdownPipe;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    pipe = TestBed.runInInjectionContext(() => new MarkdownPipe());
-  });
-
-  /** The pipe escapes first; render() operates on escaped text. */
-  const render = (raw: string): string => (pipe as any).render((pipe as any).escapeHtml(raw));
-
+describe('renderMarkdown', () => {
   it('renders a markdown table as real rows and columns', () => {
     const raw =
       '| Client ID | Name | Status |\n|:---|:---|:---|\n| 1 | Anita Desai | Active |\n| 2 | Sunita Verma | Active |';

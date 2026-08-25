@@ -1145,6 +1145,7 @@
       "every": "ogni",
       "Password validation": "La password deve contenere almeno {{minchar}} caratteri, di cui 1 carattere maiuscolo, minuscolo e speciale e non deve essere composta da caratteri ripetuti o spazi bianchi",
       "Must be a positive integer": "Deve essere un numero intero positivo",
+      "Must be greater than 0": "Deve essere maggiore di 0",
       "Must be at least": "Deve essere almeno",
       "Must be less or equal to": "Deve essere minore o uguale a",
       "must be after or equal to start date": "deve essere successiva o uguale alla data di inizio",
@@ -3341,6 +3342,8 @@
       "Withhold Tax is Applicable": "È applicabile la ritenuta d'acconto",
       "Within Bank": "All'interno della Banca",
       "Workflow Jobs": "Lavori del flusso di lavoro",
+      "Working Capital Loan Account": "Conto di prestito per capitale circolante",
+      "Working Capital Loan Product": "Prodotto di prestito per capitale circolante",
       "Working Days": "Giorni lavorativi",
       "Write Off Date": "Cancellare la data",
       "Write off on": "Cancellare",
@@ -5500,6 +5503,8 @@
     "currentSession": "Sessione corrente",
     "newChat": "Nuova chat",
     "close": "Chiudi",
+    "fullScreen": "Schermo intero",
+    "exitFullScreen": "Esci da schermo intero",
     "greeting": {
       "morning": "Buongiorno",
       "afternoon": "Buon pomeriggio",
@@ -5526,7 +5531,23 @@
       "preferences": "Preferenze",
       "helpCenter": "Centro assistenza"
     },
-    "preferencesHeading": "Preferenze",
+    "preferences": {
+      "panelTitle": "Pannello",
+      "fullScreen": "Apri a schermo intero",
+      "fullScreenHint": "Riempie la finestra invece di restare dentro la pagina.",
+      "historyTitle": "Cronologia delle conversazioni",
+      "keepHistory": "Conserva le conversazioni su questo dispositivo",
+      "keepHistoryHint": "Salvate solo in questo browser, mai sul server. Da disattivare su una postazione condivisa.",
+      "clearHistory": "Conversazioni salvate",
+      "savedCount": "{{count}} salvate su questo dispositivo",
+      "clearHistoryAction": "Elimina tutte",
+      "clearHistoryConfirm": "Elimina definitivamente",
+      "cancel": "Annulla",
+      "aboutTitle": "Come funziona il Copilot",
+      "aboutPermissions": "Vede e fa soltanto ciò che consentono i suoi permessi Fineract.",
+      "aboutConfirmation": "Tutto ciò che modifica un record attende prima la sua approvazione.",
+      "aboutStorage": "Le sue conversazioni restano in questo browser e non vengono mai salvate sul server dell’assistente."
+    },
     "recent": {
       "emptyTitle": "Nessuna conversazione recente",
       "emptySubtitle": "La cronologia delle chat apparirà qui",
@@ -5630,6 +5651,28 @@
         "disburse": "Eroga questo prestito",
         "backToClient": "Torna al profilo del cliente"
       }
+    },
+    "actions": {
+      "tryAgain": "Riprova",
+      "groupLabel": "Azioni sulla risposta",
+      "copy": "Copia",
+      "copied": "Copiato",
+      "repeat": "Chiedi di nuovo",
+      "goodAnswer": "Buona risposta",
+      "poorAnswer": "Risposta scadente",
+      "exportPdf": "Esporta in PDF",
+      "share": "Condividi"
+    },
+    "export": {
+      "heading": "Risposta di Mifos Copilot",
+      "question": "Domanda",
+      "client": "Cliente",
+      "askedBy": "Richiesto da",
+      "disclaimer": "Prodotto da Mifos Copilot a partire dai dati Fineract. Verificare sul record di origine prima di agire.",
+      "shareTitle": "Risposta di Mifos Copilot",
+      "copiedToClipboard": "Risposta e link copiati negli appunti",
+      "failed": "Non \u00e8 stato possibile creare il PDF. Riprovare.",
+      "fileNameFallback": "copilot"
     }
   }
 }

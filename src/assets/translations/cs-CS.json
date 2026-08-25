@@ -1146,6 +1146,7 @@
       "every": "každý",
       "Password validation": "Heslo by mělo obsahovat minimálně {{minchar}} znaků, které by měly obsahovat 1 velké písmeno, malé písmeno a speciální znak a nemělo by se skládat z opakujících se znaků nebo mezer.",
       "Must be a positive integer": "Musí být kladné celé číslo",
+      "Must be greater than 0": "Musí být větší než 0",
       "Must be at least": "Musí být alespoň",
       "Must be less or equal to": "Musí být menší nebo rovno",
       "must be after or equal to start date": "musí být po nebo rovno datu zahájení",
@@ -3341,6 +3342,8 @@
       "Withhold Tax is Applicable": "Platí srážková daň",
       "Within Bank": "V rámci banky",
       "Workflow Jobs": "Úlohy pracovního postupu",
+      "Working Capital Loan Account": "Účet úvěru provozního kapitálu",
+      "Working Capital Loan Product": "Produkt úvěru provozního kapitálu",
       "Working Days": "Pracovní dny",
       "Write Off Date": "Datum odepsání",
       "Write off on": "Odepiš dál",
@@ -5789,6 +5792,8 @@
     "currentSession": "Aktuální relace",
     "newChat": "Nový chat",
     "close": "Zavřít",
+    "fullScreen": "Na celou obrazovku",
+    "exitFullScreen": "Ukončit celou obrazovku",
     "greeting": {
       "morning": "Dobré ráno",
       "afternoon": "Dobré odpoledne",
@@ -5815,7 +5820,23 @@
       "preferences": "Předvolby",
       "helpCenter": "Centrum nápovědy"
     },
-    "preferencesHeading": "Předvolby",
+    "preferences": {
+      "panelTitle": "Panel",
+      "fullScreen": "Otevřít na celou obrazovku",
+      "fullScreenHint": "Vyplní okno místo umístění uvnitř stránky.",
+      "historyTitle": "Historie konverzací",
+      "keepHistory": "Uchovávat konverzace v tomto zařízení",
+      "keepHistoryHint": "Ukládá se pouze v tomto prohlížeči, nikdy na serveru. Na sdíleném počítači vypněte.",
+      "clearHistory": "Uložené konverzace",
+      "savedCount": "Uloženo v tomto zařízení: {{count}}",
+      "clearHistoryAction": "Smazat vše",
+      "clearHistoryConfirm": "Trvale smazat",
+      "cancel": "Zrušit",
+      "aboutTitle": "Jak Copilot funguje",
+      "aboutPermissions": "Vidí a dělá pouze to, co dovolují vaše oprávnění ve Fineractu.",
+      "aboutConfirmation": "Cokoli, co mění záznam, čeká na vaše schválení.",
+      "aboutStorage": "Vaše konverzace zůstávají v tomto prohlížeči a nikdy se neukládají na server asistenta."
+    },
     "recent": {
       "emptyTitle": "Žádné nedávné konverzace",
       "emptySubtitle": "Zde se zobrazí historie vašich chatů",
@@ -5919,6 +5940,28 @@
         "disburse": "Vyplaťte tento úvěr",
         "backToClient": "Zpět na profil klienta"
       }
+    },
+    "actions": {
+      "tryAgain": "Zkusit znovu",
+      "groupLabel": "Akce k odpov\u011bdi",
+      "copy": "Kop\u00edrovat",
+      "copied": "Zkop\u00edrov\u00e1no",
+      "repeat": "Zeptat se znovu",
+      "goodAnswer": "Dobr\u00e1 odpov\u011b\u010f",
+      "poorAnswer": "\u0160patn\u00e1 odpov\u011b\u010f",
+      "exportPdf": "Exportovat do PDF",
+      "share": "Sd\u00edlet"
+    },
+    "export": {
+      "heading": "Odpov\u011b\u010f asistenta Mifos Copilot",
+      "question": "Dotaz",
+      "client": "Klient",
+      "askedBy": "Dotaz zadal(a)",
+      "disclaimer": "Vygenerov\u00e1no asistentem Mifos Copilot ze z\u00e1znam\u016f ve Fineractu. P\u0159ed rozhodnut\u00edm ov\u011b\u0159te proti zdrojov\u00e9mu z\u00e1znamu.",
+      "shareTitle": "Odpov\u011b\u010f asistenta Mifos Copilot",
+      "copiedToClipboard": "Odpov\u011b\u010f a odkaz zkop\u00edrov\u00e1ny do schr\u00e1nky",
+      "failed": "PDF se nepoda\u0159ilo vytvo\u0159it. Zkuste to pros\u00edm znovu.",
+      "fileNameFallback": "copilot"
     }
   }
 }

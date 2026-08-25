@@ -1147,6 +1147,7 @@
       "every": "jeden",
       "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
       "Must be a positive integer": "Muss eine positive ganze Zahl sein",
+      "Must be greater than 0": "Muss größer als 0 sein",
       "Must be at least": "Muss mindestens",
       "Must be less or equal to": "Muss kleiner oder gleich sein",
       "must be after or equal to start date": "muss nach oder gleich dem Startdatum sein",
@@ -3343,6 +3344,8 @@
       "Withhold Tax is Applicable": "Es fällt eine Quellensteuer an",
       "Within Bank": "Innerhalb der Bank",
       "Workflow Jobs": "Workflow-Jobs",
+      "Working Capital Loan Account": "Betriebsmittelkreditkonto",
+      "Working Capital Loan Product": "Betriebsmittelkreditprodukt",
       "Working Days": "Arbeitstage",
       "Write Off Date": "Abschreibungsdatum",
       "Write off on": "Abschreiben am",
@@ -5789,6 +5792,8 @@
     "currentSession": "Aktuelle Sitzung",
     "newChat": "Neuer Chat",
     "close": "Schließen",
+    "fullScreen": "Vollbild",
+    "exitFullScreen": "Vollbild beenden",
     "greeting": {
       "morning": "Guten Morgen",
       "afternoon": "Guten Tag",
@@ -5815,7 +5820,23 @@
       "preferences": "Einstellungen",
       "helpCenter": "Hilfecenter"
     },
-    "preferencesHeading": "Einstellungen",
+    "preferences": {
+      "panelTitle": "Panel",
+      "fullScreen": "Im Vollbild öffnen",
+      "fullScreenHint": "Füllt das Fenster, statt in der Seite zu sitzen.",
+      "historyTitle": "Chatverlauf",
+      "keepHistory": "Chats auf diesem Gerät behalten",
+      "keepHistoryHint": "Nur in diesem Browser gespeichert, nie auf dem Server. Auf gemeinsam genutzten Rechnern ausschalten.",
+      "clearHistory": "Gespeicherte Chats",
+      "savedCount": "{{count}} auf diesem Gerät gespeichert",
+      "clearHistoryAction": "Alle löschen",
+      "clearHistoryConfirm": "Endgültig löschen",
+      "cancel": "Abbrechen",
+      "aboutTitle": "So arbeitet der Copilot",
+      "aboutPermissions": "Er sieht und tut nur das, was Ihre eigenen Fineract-Berechtigungen zulassen.",
+      "aboutConfirmation": "Alles, was einen Datensatz ändert, wartet zuerst auf Ihre Freigabe.",
+      "aboutStorage": "Ihre Unterhaltungen bleiben in diesem Browser und werden nie auf dem Assistenzserver gespeichert."
+    },
     "recent": {
       "emptyTitle": "Keine kürzlichen Unterhaltungen",
       "emptySubtitle": "Ihr Chatverlauf wird hier angezeigt",
@@ -5919,6 +5940,28 @@
         "disburse": "Zahlen Sie diesen Kredit aus",
         "backToClient": "Zurück zum Kundenprofil"
       }
+    },
+    "actions": {
+      "tryAgain": "Erneut versuchen",
+      "groupLabel": "Aktionen zur Antwort",
+      "copy": "Kopieren",
+      "copied": "Kopiert",
+      "repeat": "Erneut fragen",
+      "goodAnswer": "Gute Antwort",
+      "poorAnswer": "Schlechte Antwort",
+      "exportPdf": "Als PDF exportieren",
+      "share": "Teilen"
+    },
+    "export": {
+      "heading": "Mifos Copilot Antwort",
+      "question": "Frage",
+      "client": "Kunde",
+      "askedBy": "Gefragt von",
+      "disclaimer": "Von Mifos Copilot aus Fineract-Daten erstellt. Vor einer Entscheidung mit dem Originaldatensatz abgleichen.",
+      "shareTitle": "Mifos Copilot Antwort",
+      "copiedToClipboard": "Antwort und Link in die Zwischenablage kopiert",
+      "failed": "Das PDF konnte nicht erstellt werden. Bitte erneut versuchen.",
+      "fileNameFallback": "copilot"
     }
   }
 }

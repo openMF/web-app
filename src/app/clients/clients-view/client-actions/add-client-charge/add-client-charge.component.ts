@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -39,6 +39,7 @@ export class AddClientChargeComponent implements OnInit {
   private readonly settingsService = inject(SettingsService);
   private readonly notifier = inject(ClientActionNotifierService);
   private destroyRef = inject(DestroyRef);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -108,6 +109,11 @@ export class AddClientChargeComponent implements OnInit {
             chargeCalculationType: data.chargeCalculationType.id,
             chargeTimeType: data.chargeTimeType.id
           });
+          // OnPush component mutating a field inside an async HTTP
+          // subscribe: nothing marks the view dirty, so the
+          // `@if (chargeDetails)` block (amount, dates, echoes) never
+          // renders. Mark for check.
+          this.changeDetectorRef.markForCheck();
         });
       });
   }
