@@ -472,8 +472,11 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
           this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          ' ' +
           `${transaction.type.value}` +
+          ' ' +
           this.translateService.instant('labels.dialogContext.with id') +
+          ' ' +
           `${transaction.id}`
       }
     });

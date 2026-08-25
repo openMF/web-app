@@ -307,6 +307,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           heading: this.translateService.instant('labels.heading.Undo Transaction'),
           dialogContext:
             this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') +
+            ' ' +
             `${this.transactionData.id}`
         }
       });
