@@ -180,16 +180,16 @@ describe('DatatableMultiRowComponent', () => {
     );
 
     expect(labels).toEqual([
-      'Id',
-      'First name',
-      'Last name',
-      'Amount',
-      'Is active',
-      'Is verified',
-      'Empty value',
+      'id',
+      'First Name',
+      'Last Name',
+      'amount',
+      'Is Active',
+      'Is Verified',
+      'Empty Value',
       'Creado en',
       'Actualizado en',
-      'Date of birth',
+      'Date Of Birth',
       'Relationship'
     ]);
     expect(mobileLabels).toEqual(labels);
@@ -277,7 +277,7 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('keeps empty values renderable inside labeled responsive cells', () => {
-    const emptyValueCell = fixture.nativeElement.querySelector('td[data-label="Empty value"]');
+    const emptyValueCell = fixture.nativeElement.querySelector('td[data-label="Empty Value"]');
     const emptyValue = emptyValueCell.querySelector('.cell-value');
 
     expect(emptyValueCell).toBeTruthy();
@@ -306,7 +306,7 @@ describe('DatatableMultiRowComponent', () => {
       ]
     });
 
-    const expectedLabel = 'Very long customer information field name that should wrap completely';
+    const expectedLabel = 'Very Long Customer Information Field Name That Should Wrap Completely';
     const headerCells = Array.from(fixture.nativeElement.querySelectorAll('th[mat-header-cell]')) as HTMLElement[];
     const longValueCell = fixture.nativeElement.querySelector(`td[data-label="${expectedLabel}"]`) as HTMLElement;
     const mobileLabel = longValueCell.querySelector('.mobile-cell-label') as HTMLElement;
@@ -324,15 +324,15 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('renders boolean values as translated Yes and No labels', () => {
-    const activeCell = fixture.nativeElement.querySelector('td[data-label="Is active"] .cell-value');
-    const verifiedCell = fixture.nativeElement.querySelector('td[data-label="Is verified"] .cell-value');
+    const activeCell = fixture.nativeElement.querySelector('td[data-label="Is Active"] .cell-value');
+    const verifiedCell = fixture.nativeElement.querySelector('td[data-label="Is Verified"] .cell-value');
 
     expect(activeCell.textContent.trim()).toBe('Sí');
     expect(verifiedCell.textContent.trim()).toBe('No');
   });
 
   it('keeps multi-row Code Value column labels unchanged', () => {
-    expect(component.getInputName('Marital Status_cd_Estado Civil')).toBe('Marital status');
+    expect(component.getInputName('Marital Status_cd_Estado Civil')).toBe('Marital Status');
   });
 
   it('renders a paginator for multi row data tables', () => {

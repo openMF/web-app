@@ -1,0 +1,42 @@
+{
+  "datatableName": "entity_pep_related_individuals",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "relationship",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "position",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "public_office",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "is_pep",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "details",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}
