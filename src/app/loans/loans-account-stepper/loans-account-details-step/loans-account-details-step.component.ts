@@ -160,9 +160,15 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         this.originatorCreationEnabled = config?.enabled ?? false;
         this.cdr.markForCheck();
       });
-    this.productList = this.loanProductsBasicDetails
-      ? this.loanProductsBasicDetails.sort(this.commons.dynamicSort('name'))
-      : [];
+    // Modifying an existing account cannot change the product type: term loans and working capital
+    // loans are different backend resources, so only products of the account's own type are offered.
+    const selectableProducts =
+      this.loanId != null
+        ? (this.loanProductsBasicDetails ?? []).filter(
+            (product: LoanProductBasicDetails) => product.productType === this.loanProductService.productType.value
+          )
+        : this.loanProductsBasicDetails;
+    this.productList = selectableProducts ? selectableProducts.sort(this.commons.dynamicSort('name')) : [];
     if (this.loansAccountTemplate) {
       this.addFormControlsBasedOnProductType();
       let loanProductId: number | null = null;
