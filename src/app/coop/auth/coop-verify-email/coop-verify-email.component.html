@@ -1,0 +1,64 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="verify-container">
+  <div class="verify-card">
+    <h1>Verify Your Email</h1>
+
+    <p class="description">
+      We have sent a 6-digit OTP to your registered email address. Please enter it below to verify your email.
+    </p>
+
+    <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+      <!-- OTP -->
+      <div class="form-group">
+        <label for="otp"> OTP </label>
+
+        <input
+          id="otp"
+          type="text"
+          formControlName="otp"
+          maxlength="6"
+          inputmode="numeric"
+          placeholder="Enter 6-digit OTP"
+        />
+
+        @if (verifyForm.controls.otp.touched && verifyForm.controls.otp.invalid) {
+          <div class="error-text">
+            @if (verifyForm.controls.otp.errors?.['required']) {
+              <span>OTP is required.</span>
+            }
+
+            @if (verifyForm.controls.otp.errors?.['pattern']) {
+              <span>OTP must contain exactly 6 digits.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Error -->
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Success -->
+      @if (successMessage) {
+        <div class="success-message">
+          {{ successMessage }}
+        </div>
+      }
+
+      <!-- Submit -->
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Verifying...' : 'Verify Email' }}
+      </button>
+    </form>
+  </div>
+</div>

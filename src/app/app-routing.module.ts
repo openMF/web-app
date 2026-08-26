@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then((m) => m.LoginModule)
   },
   {
+    path: 'coop',
+    loadChildren: () => import('./coop/coop.module').then((m) => m.CoopModule)
+  },
+  {
     path: 'accounting',
     loadChildren: () => import('./accounting/accounting.module').then((m) => m.AccountingModule)
   },

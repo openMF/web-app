@@ -1,0 +1,170 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.coop-login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #f5f8fa;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 8%);
+}
+
+/* Header */
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h1 {
+  margin: 0 0 10px;
+  color: #1074b9;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.login-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Form */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #d5dce1;
+  border-radius: 7px;
+  font-size: 15px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #1074b9;
+  box-shadow: 0 0 0 2px rgb(16 116 185 / 10%);
+}
+
+/* Field Error */
+
+.field-error {
+  display: block;
+  margin-top: 6px;
+  color: #d32f2f;
+  font-size: 13px;
+}
+
+/* Login Button */
+
+.login-button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 7px;
+  background: #1074b9;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #0c619d;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success */
+
+.success-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 6px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 14px;
+}
+
+/* Error */
+
+.error-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 6px;
+  background: #ffebee;
+  color: #c62828;
+  font-size: 14px;
+}
+
+/* Register */
+
+.register-section {
+  margin-top: 25px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.register-section a {
+  margin-left: 5px;
+  color: #1074b9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-section a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (width <= 500px) {
+  .coop-login-page {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 25px 20px;
+  }
+
+  .login-header h1 {
+    font-size: 24px;
+  }
+}

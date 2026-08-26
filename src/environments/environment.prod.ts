@@ -35,6 +35,10 @@ export const environment = {
   apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/api',
   apiVersion: loadedEnv['apiVersion'] || '/v1',
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
+
+  //new
+  coopApiUrl: loadedEnv['coopApiUrl'] || 'https://103.175.192.233/fineract-provider/api',
+
   serverUrl: '',
   oauth: {
     enabled: loadedEnv.oauthServerEnabled === true,

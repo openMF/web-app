@@ -1,0 +1,297 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="profile-page">
+  <!-- =========================
+       PAGE HEADER
+  ========================== -->
+
+  <div class="page-header">
+    <div>
+      <h1>Cooperative Profile</h1>
+      <p>Manage your cooperative's registration and contact information.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+    <!-- =========================
+         COOPERATIVE INFORMATION
+    ========================== -->
+
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+
+        <div>
+          <h2>Cooperative Information</h2>
+        </div>
+      </div>
+
+      <div class="form-grid three-column">
+        <mat-form-field appearance="outline">
+          <mat-label>Cooperative Registration No.</mat-label>
+
+          <input matInput formControlName="coopRegdNo" />
+
+          <mat-error *ngIf="profileForm.get('coopRegdNo')?.hasError('required')">
+            Registration number is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cooperative Name (English)</mat-label>
+
+          <input matInput formControlName="nameEn" />
+
+          <mat-error *ngIf="profileForm.get('nameEn')?.hasError('required')"> English name is required. </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cooperative Name (Nepali)</mat-label>
+
+          <input matInput formControlName="nameNp" />
+
+          <mat-error *ngIf="profileForm.get('nameNp')?.hasError('required')"> Nepali name is required. </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Registration</mat-label>
+
+          <input matInput type="date" formControlName="dateOfRegistered" />
+
+          <mat-error *ngIf="profileForm.get('dateOfRegistered')?.hasError('required')">
+            Registration date is required.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>PAN Number</mat-label>
+
+          <input matInput formControlName="panNo" />
+
+          <mat-error *ngIf="profileForm.get('panNo')?.hasError('required')"> PAN number is required. </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- =========================
+     ADDRESS INFORMATION
+========================== -->
+
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+
+        <div>
+          <h2>Address Information</h2>
+        </div>
+      </div>
+
+      <div class="form-grid three-column">
+        <!-- PROVINCE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Province</mat-label>
+
+          <mat-select formControlName="provinceId" (selectionChange)="onProvinceChange($event.value)">
+            <mat-option *ngFor="let province of provinces" [value]="province.id">
+              {{ province.provinceNameEn }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="profileForm.get('provinceId')?.hasError('required')"> Province is required. </mat-error>
+        </mat-form-field>
+
+        <!-- DISTRICT -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>District</mat-label>
+
+          <mat-select formControlName="districtId" (selectionChange)="onDistrictChange($event.value)">
+            <mat-option *ngFor="let district of districts" [value]="district.id">
+              {{ district.districtNameEn }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="profileForm.get('districtId')?.hasError('required')"> District is required. </mat-error>
+        </mat-form-field>
+
+        <!-- LOCAL LEVEL -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Local Level</mat-label>
+
+          <mat-select formControlName="localLevelId" (selectionChange)="onLocalLevelChange($event.value)">
+            <mat-option *ngFor="let localLevel of localLevels" [value]="localLevel.id">
+              {{ localLevel.localLevelNameEn }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="profileForm.get('localLevelId')?.hasError('required')">
+            Local level is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- WARD -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ward No.</mat-label>
+
+          <mat-select formControlName="wardNo">
+            <mat-option *ngFor="let ward of wards" [value]="ward">
+              {{ ward }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- TOLE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tole</mat-label>
+
+          <input matInput formControlName="tole" />
+        </mat-form-field>
+
+        <!-- HOUSE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>House No.</mat-label>
+
+          <input matInput formControlName="houseNo" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- =========================
+         CONTACT + ONLINE
+    ========================== -->
+
+    <div class="two-section-grid">
+      <!-- CONTACT -->
+
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon">📞</div>
+
+          <div>
+            <h2>Contact Information</h2>
+          </div>
+        </div>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile Phone</mat-label>
+
+            <input matInput type="tel" formControlName="mobilePhone" />
+
+            <mat-error *ngIf="profileForm.get('mobilePhone')?.hasError('required')">
+              Mobile phone is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Office Phone</mat-label>
+
+            <input matInput type="tel" formControlName="officePhone" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- ONLINE -->
+
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon">🌐</div>
+
+          <div>
+            <h2>Online Information</h2>
+          </div>
+        </div>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Logo URL</mat-label>
+
+            <input matInput type="url" formControlName="logoUrl" placeholder="https://example.com/logo.png" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Website URL</mat-label>
+
+            <input matInput type="url" formControlName="webUrl" placeholder="https://example.com" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+     ABOUT + REMARKS
+========================== -->
+
+    <div class="two-section-grid">
+      <!-- ABOUT -->
+
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon">ℹ️</div>
+
+          <div>
+            <h2>About Cooperative</h2>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>About Cooperative</mat-label>
+
+          <input matInput formControlName="about" placeholder="Enter information about the cooperative" />
+        </mat-form-field>
+      </div>
+
+      <!-- REMARKS -->
+
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon">📝</div>
+
+          <div>
+            <h2>Remarks</h2>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Remarks</mat-label>
+
+          <input matInput formControlName="remarks" placeholder="Enter remarks" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- =========================
+         MESSAGES
+    ========================== -->
+
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <!-- =========================
+         ACTION
+    ========================== -->
+
+    <div class="form-actions">
+      <button mat-raised-button type="submit" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting && !isEditMode">Save Profile</span>
+        <span *ngIf="!isSubmitting && isEditMode">Update Profile</span>
+
+        <span *ngIf="isSubmitting && !isEditMode">Saving...</span>
+        <span *ngIf="isSubmitting && isEditMode">Updating...</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,199 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.coop-registration-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+  box-sizing: border-box;
+}
+
+.registration-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.registration-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.registration-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  height: 46px;
+  padding: 0 13px;
+  border: 1px solid #d5d5d5;
+  border-radius: 7px;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #1074b9;
+}
+
+.field-error {
+  display: block;
+  margin-top: 5px;
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.register-button,
+.login-button {
+  flex: 1;
+  height: 46px;
+  padding: 0 13px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* Create Account */
+
+.register-button {
+  border: none;
+  background: #1074b9;
+  color: #fff;
+}
+
+.register-button:hover:not(:disabled) {
+  background: #0c619d;
+}
+
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Login */
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1074b9;
+  background: #fff;
+  color: #1074b9;
+  text-decoration: none;
+}
+
+.login-button:hover {
+  background: #1074b9;
+  color: #fff;
+}
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
+
+.success-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 7px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 14px;
+}
+
+/* =========================
+   ERROR MESSAGE
+========================= */
+
+.error-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 7px;
+  background: #ffebee;
+  color: #c62828;
+  font-size: 14px;
+}
+
+/* Login button inside error message */
+
+.inline-login-btn {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 6px 15px;
+  background-color: #c62828;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.inline-login-btn:hover {
+  background-color: #b71c1c;
+  text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (width <= 480px) {
+  .registration-card {
+    padding: 24px 20px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .register-button,
+  .login-button {
+    width: 100%;
+  }
+}

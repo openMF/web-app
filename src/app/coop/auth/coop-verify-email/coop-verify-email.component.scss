@@ -1,0 +1,106 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.verify-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: #f5f8fb;
+}
+
+.verify-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+}
+
+.verify-card h1 {
+  margin: 0 0 12px;
+  text-align: center;
+  color: #1074b9;
+}
+
+.description {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #666;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #1074b9;
+}
+
+.error-text {
+  margin-top: 6px;
+  color: #d32f2f;
+  font-size: 13px;
+}
+
+.error-message {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fdeaea;
+  color: #c62828;
+}
+
+.success-message {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 6px;
+  background: #1074b9;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #0d609b;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

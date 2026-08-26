@@ -1,0 +1,214 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.profile-page {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden auto;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #f5f7fb;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 22px 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1565c0;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* =========================
+   SECTION CARD
+========================= */
+
+.form-section {
+  background: white;
+  padding: 22px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 7%);
+  box-sizing: border-box;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #eaf2ff;
+  font-size: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #1565c0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.section-header p {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 13px;
+}
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.three-column {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.two-section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+textarea {
+  resize: vertical;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.success-message {
+  padding: 13px 16px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 14px;
+}
+
+.error-message {
+  padding: 13px 16px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background: #ffebee;
+  color: #c62828;
+  font-size: 14px;
+}
+
+/* =========================
+   ACTION BUTTON
+========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 0 30px;
+}
+
+.form-actions button {
+  min-width: 150px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (width <= 1000px) {
+  .three-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .two-section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width <= 650px) {
+  .profile-page {
+    padding: 12px;
+  }
+
+  .page-header {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .three-column {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section {
+    padding: 16px;
+  }
+}

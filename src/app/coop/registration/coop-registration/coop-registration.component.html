@@ -1,0 +1,111 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="coop-registration-page">
+  <div class="registration-card">
+    <div class="registration-header">
+      <h1>Create Account</h1>
+
+      <p>Register to create your cooperative account.</p>
+    </div>
+
+    @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+        <!-- if email already exists-->
+        @if (errorMessage.includes('already exists')) {
+          <div style="margin-top: 10px">
+            <a routerLink="/coop/login" class="inline-login-btn">Log In Here</a>
+          </div>
+        }
+      </div>
+    }
+
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Email -->
+
+      <div class="form-group">
+        <label for="email"> Email </label>
+
+        <input id="email" type="email" formControlName="email" placeholder="Enter your email" autocomplete="email" />
+
+        @if (registrationForm.controls.email.touched && registrationForm.controls.email.hasError('required')) {
+          <span class="field-error"> Email is required. </span>
+        }
+
+        @if (registrationForm.controls.email.touched && registrationForm.controls.email.hasError('email')) {
+          <span class="field-error"> Please enter a valid email address. </span>
+        }
+      </div>
+      <!-- Password -->
+
+      <div class="form-group">
+        <label for="password"> Password </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          autocomplete="new-password"
+        />
+
+        @if (registrationForm.controls.password.touched && registrationForm.controls.password.hasError('required')) {
+          <span class="field-error"> Password is required. </span>
+        }
+
+        @if (registrationForm.controls.password.touched && registrationForm.controls.password.hasError('minlength')) {
+          <span class="field-error"> Password must be at least 8 characters. </span>
+        }
+      </div>
+
+      <!-- Phone -->
+
+      <div class="form-group">
+        <label for="phone"> Phone Number </label>
+
+        <input
+          id="phone"
+          type="tel"
+          formControlName="phone"
+          placeholder="Enter your 10-digit phone number"
+          autocomplete="tel"
+          maxlength="10"
+        />
+
+        @if (registrationForm.controls.phone.touched && registrationForm.controls.phone.hasError('required')) {
+          <span class="field-error"> Phone number is required. </span>
+        }
+
+        @if (registrationForm.controls.phone.touched && registrationForm.controls.phone.hasError('pattern')) {
+          <span class="field-error"> Enter a valid 10-digit phone number. </span>
+        }
+      </div>
+
+      <!-- Submit -->
+
+      <div class="action-buttons">
+        <button type="submit" class="register-button" [disabled]="isSubmitting">
+          @if (isSubmitting) {
+            Creating Account...
+          } @else {
+            Create Account
+          }
+        </button>
+
+        <a routerLink="/coop/login" class="login-button"> Login </a>
+      </div>
+    </form>
+  </div>
+</div>

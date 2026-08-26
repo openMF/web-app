@@ -8,13 +8,7 @@
 
 /** Angular Imports */
 import { NgModule, Optional, Injector, inject } from '@angular/core';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpHandler,
-  provideHttpClient,
-  withInterceptorsFromDi
-} from '@angular/common/http';
+
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
@@ -48,7 +42,16 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpHandler,
+  provideHttpClient,
+  withInterceptors,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
+import { coopAuthInterceptor } from 'app/coop/auth/interceptors/coop-auth.interceptor';
 /**
  * Core Module
  *
@@ -115,7 +118,12 @@ import { ContentComponent } from './shell/content/content.component';
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
     },
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(
+      withInterceptors([
+        coopAuthInterceptor
+      ]),
+      withInterceptorsFromDi()
+    )
   ]
 })
 export class CoreModule {
