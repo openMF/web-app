@@ -264,10 +264,19 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
         this.datatablesReady = true;
       },
-      error: () => {
-        // If API fails, keep all datatables (fallback to current behavior)
-        this.datatablesReady = true;
-      }
+      error: (err) => {
+  this.datatablesReady = true;
+
+  const errors = err.error?.errors;
+
+  if (errors && errors.length > 0) {
+    const message = errors
+      .map(e => this.translate.instant(e.userMessageGlobalisationCode))
+      .join(' ');
+
+    alert(message); // or notification service if exists
+  }
+}
     });
   }
 
