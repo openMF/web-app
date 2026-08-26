@@ -106,21 +106,19 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         : nestedMessage
       : topLevelMessage;
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        if (
-          response.error.errors[0].userMessageGlobalisationCode &&
-          this.databaseErrorCodes.indexOf(response.error.errors[0].userMessageGlobalisationCode) > -1
-        ) {
-          errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
-        } else {
-          errorMessage =
-            response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-            response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-        }
+    if (errorBody?.errors?.[0]) {
+      const firstError = errorBody.errors[0];
+      if (
+        firstError.userMessageGlobalisationCode &&
+        this.databaseErrorCodes.indexOf(firstError.userMessageGlobalisationCode) > -1
+      ) {
+        errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
+      } else {
+        errorMessage =
+          firstError.defaultUserMessage?.replace(/\\./g, ' ') || firstError.developerMessage?.replace(/\\./g, ' ');
       }
-      if ('parameterName' in errorBody.errors[0]) {
-        parameterName = errorBody.errors[0].parameterName;
+      if ('parameterName' in firstError) {
+        parameterName = firstError.parameterName;
       }
     }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
