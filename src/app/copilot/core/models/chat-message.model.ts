@@ -49,6 +49,13 @@ export interface ChatMessage {
    * of anything, and the panel labels it so.
    */
   workingNotes?: string;
+  /**
+   * How long the whole turn took, from asking to answered.
+   *
+   * <p>Wall clock, not a sum of the parts: thinking and a tool call can overlap, and the answer
+   * still has to stream after both. This is the wait the officer actually sat through.
+   */
+  turnMs?: number;
   /** How long the model spent on those notes. */
   notesElapsedMs?: number;
   /** Client discussed in this message, for the audit trail. */

@@ -130,16 +130,26 @@ describe('ThinkingTrailComponent', () => {
   });
 
   /**
-   * A turn that spent four seconds thinking and eleven waiting on Fineract took fifteen, and
-   * fifteen is the number the officer sat through.
+   * Wall clock, not a sum of the parts. Thinking and a call can overlap, and the answer still
+   * has to stream after both, so adding them up is wrong in both directions at once.
    */
-  it('counts the whole turn, not just the thinking', () => {
+  it('shows the wait the officer actually sat through', () => {
     component.message = reply({
+      turnMs: 15000,
       notesElapsedMs: 4000,
       steps: [{ label: 'Looked up the client', readOnly: true, done: true, durationMs: 11000 }]
     });
 
     expect(component.elapsed).toBe('15s');
+  });
+
+  /** One panel per reply, or aria-controls names several elements at once. */
+  it('gives each reply its own disclosure id', () => {
+    component.message = reply({ id: 'm-7', workingNotes: 'thought' });
+    expect(component.bodyId).toBe('copilot-thinking-m-7');
+
+    component.message = reply({ id: 'm-8', workingNotes: 'thought' });
+    expect(component.bodyId).toBe('copilot-thinking-m-8');
   });
 
   it('says a duration in seconds', () => {
