@@ -133,6 +133,13 @@
       </div>
     }
 
+    @if (loansAccount.delinquencyBucketId) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
+        <span class="flex-60">{{ getDelinquencyBucket(loansAccount.delinquencyBucketId)?.name }}</span>
+      </div>
+    }
+
     @if (loansAccount.breachId) {
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Breach' | translate }}:</span>
