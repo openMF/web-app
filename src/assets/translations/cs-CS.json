@@ -6222,6 +6222,11 @@
         "backToClient": "Zpět na profil klienta"
       }
     },
+    "trail": {
+      "stepsNote": "Toto jsou záznamy, které asistent přečetl. Podklad pro jakékoli rozhodnutí o tomto klientovi je ve Fineractu: pravidla úvěrového produktu, splátkový kalendář a úvěrová politika vaší instituce.",
+      "thinking": "Přemýšlení",
+      "notesCaution": "Vlastní pracovní text asistenta. Není to záznam o tom, jak odpověď vznikla, ani úvěrové hodnocení. Ověřte každou částku podle záznamu klienta."
+    },
     "actions": {
       "tryAgain": "Zkusit znovu",
       "groupLabel": "Akce k odpov\u011bdi",

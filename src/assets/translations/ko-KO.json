@@ -5931,6 +5931,11 @@
         "backToClient": "고객 프로필로 돌아가기"
       }
     },
+    "trail": {
+      "stepsNote": "어시스턴트가 읽은 기록입니다. 이 고객에 대한 결정의 근거는 Fineract에 있습니다. 대출 상품 규칙, 상환 일정, 그리고 기관의 여신 정책입니다.",
+      "thinking": "생각 과정",
+      "notesCaution": "어시스턴트가 작업 중 남긴 글입니다. 답변이 어떻게 만들어졌는지에 대한 기록이 아니며, 신용 평가도 아닙니다. 모든 수치는 고객 기록과 대조하십시오."
+    },
     "actions": {
       "tryAgain": "\ub2e4\uc2dc \uc2dc\ub3c4",
       "groupLabel": "\uc751\ub2f5 \uc791\uc5c5",

@@ -6221,6 +6221,11 @@
         "backToClient": "Zurück zum Kundenprofil"
       }
     },
+    "trail": {
+      "stepsNote": "Dies sind die Datensätze, die der Assistent gelesen hat. Die Grundlage jeder Entscheidung zu diesem Kunden liegt in Fineract: die Regeln des Kreditprodukts, der Tilgungsplan und die Kreditrichtlinie Ihres Instituts.",
+      "thinking": "Denkprozess",
+      "notesCaution": "Der Arbeitstext des Assistenten. Kein Nachweis darüber, wie die Antwort entstanden ist, und keine Kreditbewertung. Prüfen Sie jede Zahl anhand der Kundenakte."
+    },
     "actions": {
       "tryAgain": "Erneut versuchen",
       "groupLabel": "Aktionen zur Antwort",

@@ -366,6 +366,65 @@ $copilot-warning: #f59e0b;
       }
     }
 
+    /* How the answer was reached. Quiet enough not to compete with the answer, legible
+       enough to read on a branch monitor under fluorescent light: a real muted token rather
+       than opacity, which compounds unpredictably with the theme. */
+    .trail__live {
+      color: $text-2;
+    }
+
+    .trail__spinner {
+      border-color: $border;
+      border-top-color: $brand-text;
+    }
+
+    .trail__section {
+      background: $muted;
+    }
+
+    .trail__summary {
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .trail__chevron {
+      fill: $text-3;
+    }
+
+    .trail__count {
+      color: $text-3;
+    }
+
+    .trail__step {
+      color: $text-2;
+    }
+
+    .trail__tick svg {
+      fill: $success-text;
+    }
+
+    .trail__step-time {
+      color: $text-3;
+    }
+
+    .trail__note,
+    .trail__caution {
+      color: $text-3;
+    }
+
+    .trail__notes {
+      color: $text-2;
+    }
+
     /* Copy / repeat / rate, under a finished reply */
     .msg-actions {
       &__button {

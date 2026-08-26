@@ -5932,6 +5932,11 @@
         "backToClient": "Grįžkite į kliento profilį"
       }
     },
+    "trail": {
+      "stepsNote": "Tai įrašai, kuriuos perskaitė asistentas. Bet kokio sprendimo dėl šio kliento pagrindas yra Fineract sistemoje: paskolos produkto taisyklės, grąžinimo grafikas ir jūsų įstaigos kreditavimo politika.",
+      "thinking": "Mąstymas",
+      "notesCaution": "Paties asistento darbinis tekstas. Tai nėra įrašas apie tai, kaip buvo gautas atsakymas, ir tai nėra kredito vertinimas. Patikrinkite kiekvieną skaičių kliento byloje."
+    },
     "actions": {
       "tryAgain": "Bandyti dar kart\u0105",
       "groupLabel": "Atsakymo veiksmai",

@@ -36,6 +36,7 @@ const CARD_ID_PATTERN = /^[A-Za-z0-9_-]+$/;
 
 const VALID_EVENT_TYPES: ReadonlyArray<McpStreamEventType> = [
   'token',
+  'thinking',
   'tool_call',
   'action_card',
   'suggest',
@@ -219,12 +220,25 @@ export class McpClient {
     switch (type) {
       case 'token':
         return { type, token: String(payload['delta'] ?? payload['token'] ?? '') };
+      case 'thinking': {
+        const phase = payload['phase'];
+        return {
+          type,
+          thinkingPhase: phase === 'start' || phase === 'end' ? phase : 'delta',
+          thinking: payload['delta'] != null ? String(payload['delta']) : undefined,
+          thinkingElapsedMs: typeof payload['elapsed_ms'] === 'number' ? payload['elapsed_ms'] : undefined
+        };
+      }
       case 'tool_call':
         return {
           type,
           toolName: payload['tool'] != null ? String(payload['tool']) : undefined,
+          // The gateway names the step; falling back to the raw tool id keeps an older
+          // gateway working rather than showing the officer an empty row.
+          toolLabel: payload['label'] != null ? String(payload['label']) : undefined,
           toolPhase: payload['phase'] === 'finished' ? 'finished' : 'started',
           readOnly: payload['read_only'] === true,
+          durationMs: typeof payload['duration_ms'] === 'number' ? payload['duration_ms'] : undefined,
           summary: payload['summary'] != null ? String(payload['summary']) : undefined
         };
       case 'action_card':

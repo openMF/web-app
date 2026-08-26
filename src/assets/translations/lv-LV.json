@@ -5931,6 +5931,11 @@
         "backToClient": "Atpakaļ uz klienta profilu"
       }
     },
+    "trail": {
+      "stepsNote": "Šie ir ieraksti, ko asistents izlasīja. Jebkura lēmuma pamatojums par šo klientu ir Fineract sistēmā: aizdevuma produkta noteikumi, atmaksas grafiks un jūsu iestādes kredītpolitika.",
+      "thinking": "Domāšana",
+      "notesCaution": "Paša asistenta darba teksts. Tas nav ieraksts par to, kā atbilde tika iegūta, un tas nav kredīta novērtējums. Pārbaudiet katru skaitli klienta lietā."
+    },
     "actions": {
       "tryAgain": "M\u0113\u0123in\u0101t v\u0113lreiz",
       "groupLabel": "Darb\u012bbas ar atbildi",

@@ -10,6 +10,17 @@ import { ActionCard } from './action-card.model';
 
 export type ChatRole = 'user' | 'assistant' | 'system';
 
+/** One thing the assistant did, as the officer reads it. */
+export interface CopilotStep {
+  /** Banking wording from the gateway's manifest, never model-generated. */
+  label: string;
+  /** False for a step that changes a record; those still pause for approval. */
+  readOnly: boolean;
+  /** Set once the step has returned. */
+  durationMs?: number;
+  done: boolean;
+}
+
 /** A single message in a conversation. */
 export interface ChatMessage {
   id: string;
@@ -24,6 +35,22 @@ export interface ChatMessage {
   suggestedPrompts?: string[];
   /** Which MCP tool produced this message, if any. */
   toolUsed?: string;
+  /**
+   * What the assistant actually did, in order.
+   *
+   * <p>A record rather than a narrative: each entry is a call the gateway made, named by its
+   * manifest. This is the part of the answer that can honestly be called an explanation.
+   */
+  steps?: CopilotStep[];
+  /**
+   * What the model wrote to itself while working.
+   *
+   * <p>Kept apart from {@link steps} on purpose. It is text the model produced, not a record
+   * of anything, and the panel labels it so.
+   */
+  workingNotes?: string;
+  /** How long the model spent on those notes. */
+  notesElapsedMs?: number;
   /** Client discussed in this message, for the audit trail. */
   clientId?: number | null;
   /**

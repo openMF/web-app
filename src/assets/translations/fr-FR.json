@@ -5935,6 +5935,11 @@
         "backToClient": "Retour au profil du client"
       }
     },
+    "trail": {
+      "stepsNote": "Voici les enregistrements consultés par l'assistant. La base de toute décision concernant ce client se trouve dans Fineract : les règles du produit de prêt, l'échéancier de remboursement et la politique de crédit de votre institution.",
+      "thinking": "Réflexion",
+      "notesCaution": "Texte de travail de l'assistant. Ce n'est ni un compte rendu de la manière dont la réponse a été produite, ni une évaluation de crédit. Vérifiez chaque chiffre dans la fiche du client."
+    },
     "actions": {
       "tryAgain": "R\u00e9essayer",
       "groupLabel": "Actions sur la r\u00e9ponse",
