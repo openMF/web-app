@@ -5931,6 +5931,11 @@
         "backToClient": "Voltar ao perfil do cliente"
       }
     },
+    "trail": {
+      "stepsNote": "Estes são os registos que o assistente consultou. A base de qualquer decisão sobre este cliente está no Fineract: as regras do produto de crédito, o plano de reembolso e a política de crédito da sua instituição.",
+      "thinking": "Raciocínio",
+      "notesCaution": "Texto de trabalho do próprio assistente. Não é um registo de como a resposta foi produzida, nem uma avaliação de crédito. Verifique cada valor no processo do cliente."
+    },
     "actions": {
       "tryAgain": "Tentar novamente",
       "groupLabel": "A\u00e7\u00f5es da resposta",

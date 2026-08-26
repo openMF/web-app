@@ -5928,6 +5928,11 @@
         "backToClient": "Rudi kwenye wasifu wa mteja"
       }
     },
+    "trail": {
+      "stepsNote": "Haya ni makumbukumbu ambayo msaidizi alisoma. Msingi wa uamuzi wowote kuhusu mteja huyu uko katika Fineract: kanuni za bidhaa ya mkopo, ratiba ya marejesho, na sera ya mikopo ya taasisi yako.",
+      "thinking": "Kufikiri",
+      "notesCaution": "Maandishi ya kazi ya msaidizi mwenyewe. Si kumbukumbu ya jinsi jibu lilivyopatikana, wala si tathmini ya mkopo. Hakiki kila takwimu dhidi ya kumbukumbu ya mteja."
+    },
     "actions": {
       "tryAgain": "Jaribu tena",
       "groupLabel": "Vitendo vya jibu",

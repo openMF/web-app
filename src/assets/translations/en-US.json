@@ -6085,6 +6085,11 @@
         "backToClient": "Back to the client profile"
       }
     },
+    "trail": {
+      "stepsNote": "These are the records the assistant read. The basis for any decision on this client is in Fineract: the loan product rules, the repayment schedule, and your institution's credit policy.",
+      "thinking": "Thinking",
+      "notesCaution": "The assistant's own working text. Not a record of how the answer was produced, and not a credit assessment. Check every figure against the client record."
+    },
     "actions": {
       "tryAgain": "Try again",
       "groupLabel": "Response actions",
