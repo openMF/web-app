@@ -102,6 +102,27 @@
       </mat-form-field>
 
       <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyBucketId">
+          @for (delinquencyBucket of delinquencyBucketOptions; track delinquencyBucket) {
+            <mat-option [value]="delinquencyBucket.id">
+              {{ delinquencyBucket.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (loansAccountTermsForm.controls.delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'delinquencyBucketId')"
+          >
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>
         <mat-select formControlName="breachId" class="breach-id-select" panelClass="breach-select-panel">
           <mat-select-trigger>
