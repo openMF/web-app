@@ -38,8 +38,9 @@ export function renderMarkdown(markdown: string | null | undefined): string {
  */
 function withoutHalfWrittenMarkup(markdown: string): string {
   const withoutSuggestions = markdown
-    // Closed, and any prompts the gateway sent as an event rather than prose.
-    .replace(/```suggest\s*[\s\S]*?```/gi, '')
+    // Closed. The closing fence has to open a line of its own, or a prompt that itself mentions
+    // three backticks ends the block early and spills the rest of the prompts into the answer.
+    .replace(/```suggest\b[\s\S]*?^[ \t]*```[ \t]*$/gim, '')
     // Opened mid-stream and not closed yet. This is what was on screen.
     .replace(/```suggest[\s\S]*$/i, '')
     // The opener itself, arriving a character at a time.

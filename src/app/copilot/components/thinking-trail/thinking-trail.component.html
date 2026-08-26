@@ -20,7 +20,7 @@
       type="button"
       class="trail__summary"
       [attr.aria-expanded]="open"
-      aria-controls="copilot-thinking"
+      [attr.aria-controls]="bodyId"
       (click)="toggle()"
     >
       <svg class="trail__chevron" [class.trail__chevron--open]="open" viewBox="0 0 24 24" aria-hidden="true">
@@ -30,7 +30,7 @@
       <span class="trail__count" *ngIf="elapsed">{{ elapsed }}</span>
     </button>
 
-    <div class="trail__body" id="copilot-thinking" *ngIf="open">
+    <div class="trail__body" [id]="bodyId" *ngIf="open">
       <!-- What it actually did. This is the part that is a record. -->
       <ol class="trail__steps" *ngIf="steps.length">
         <li *ngFor="let step of steps" class="trail__step">

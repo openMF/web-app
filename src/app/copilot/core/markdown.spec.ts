@@ -88,6 +88,21 @@ describe('renderMarkdown', () => {
       expect(closed).toContain('&quot;a&quot;');
     });
 
+    /**
+     * A prompt is free text and may mention three backticks. Treating the first later fence as
+     * the close ended the block early and spilled the rest of the prompts into the answer.
+     */
+    it('is not closed early by backticks inside a prompt', () => {
+      const html = render(
+        lines('Here you go.', '```suggest', 'Show me a ```json example', 'List loan products', '```', 'Anything else?')
+      );
+
+      expect(html).not.toContain('List loan products');
+      expect(html).not.toContain('suggest');
+      expect(html).toContain('Here you go.');
+      expect(html).toContain('Anything else?');
+    });
+
     /** A real code block is not a suggest block and must survive untouched. */
     it('leaves other fenced blocks alone', () => {
       const html = render(lines('```json', '{"principal": 5000}', '```'));

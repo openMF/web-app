@@ -95,6 +95,9 @@ export class ChatService {
   /** The last question sent, so a retryable failure can offer to send it again. */
   private lastPrompt: string | null = null;
 
+  /** When the turn in flight began, for the wall-clock duration the panel shows. */
+  private turnStartedAt = 0;
+
   /** Whether conversations are kept on this device, seeded from the officer's last choice. */
   private historyOn = ChatService.readHistoryPreference();
 
@@ -410,6 +413,10 @@ export class ChatService {
 
   private startStream(events: Observable<McpStreamEvent>): void {
     this.isStreaming$.next(true);
+    // Stamped here so the panel can say how long the officer waited. Summing the model's timer
+    // and each call's duration would count any overlap twice and miss the answer streaming
+    // after both, so the turn is measured end to end instead.
+    this.turnStartedAt = Date.now();
     this.pushMessage({
       id: this.nextId(),
       role: 'assistant',
@@ -503,6 +510,7 @@ export class ChatService {
    * is deliberately NOT turned into an approvable card.
    */
   private finalizeDraft(): void {
+    const turnMs = this.turnStartedAt ? Date.now() - this.turnStartedAt : undefined;
     this.updateDraft((draft) => {
       const suggestions = draft.suggestedPrompts?.length
         ? draft.suggestedPrompts
@@ -515,6 +523,7 @@ export class ChatService {
         ...draft,
         content,
         suggestedPrompts: suggestions.length ? suggestions : undefined,
+        turnMs,
         isStreaming: false
       };
     });

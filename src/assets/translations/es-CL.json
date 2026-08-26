@@ -5935,7 +5935,7 @@
     },
     "trail": {
       "stepsNote": "Estos son los registros que consultó el asistente. La base de cualquier decisión sobre este cliente está en Fineract: las reglas del producto de crédito, el calendario de pagos y la política crediticia de su institución.",
-      "thinking": "Razonamiento",
+      "thinking": "Pensamiento",
       "notesCaution": "Texto de trabajo del propio asistente. No es un registro de cómo se produjo la respuesta, ni una evaluación crediticia. Verifique cada cifra con el expediente del cliente."
     },
     "actions": {
