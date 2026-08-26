@@ -70,4 +70,16 @@ describe('ErrorHandlerInterceptor', () => {
     intercept('/fineract-provider/api/v1/configurations/name/enable-business-date', 404);
     expect(alert).toHaveBeenCalled();
   });
+
+  it('does not alert when no business date has been set on the instance', () => {
+    // Configuration enabled but the date was never created: the footer falls back to the system date.
+    const result = intercept('/fineract-provider/api/v1/businessdate/BUSINESS_DATE', 404);
+    expect(alert).not.toHaveBeenCalled();
+    expect(result).toBe('errored');
+  });
+
+  it('still alerts when the business date list is missing', () => {
+    intercept('/fineract-provider/api/v1/businessdate', 404);
+    expect(alert).toHaveBeenCalled();
+  });
 });
