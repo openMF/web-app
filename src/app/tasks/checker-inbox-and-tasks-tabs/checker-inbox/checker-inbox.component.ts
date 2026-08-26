@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -74,6 +74,7 @@ export class CheckerInboxComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Data to be displayed */
   searchData: any;
@@ -103,7 +104,8 @@ export class CheckerInboxComponent implements OnInit {
     'status',
     'user',
     'action',
-    'entity'
+    'entity',
+    'resourceId'
   ];
 
   /**
@@ -120,7 +122,7 @@ export class CheckerInboxComponent implements OnInit {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { makerCheckerResource: any; makerCheckerTemplate: any }) => {
-        this.searchData = data.makerCheckerResource;
+        this.searchData = this.transformDates(data.makerCheckerResource);
         if (this.searchData.length > 0) {
           this.checkerData = true;
         }
@@ -140,7 +142,7 @@ export class CheckerInboxComponent implements OnInit {
   createMakerCheckerSearchForm() {
     this.makerCheckerSearchForm = this.formBuilder.group({
       makerDateTimeFrom: [''],
-      makerDateTimeto: [''],
+      makerDateTimeTo: [''],
       actionName: [''],
       entityName: [''],
       resourceId: ['']
@@ -159,17 +161,43 @@ export class CheckerInboxComponent implements OnInit {
     const makerCheckerSearchParams = {
       ...this.makerCheckerSearchForm.value,
       makerDateTimeFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
-      makerDateTimeto: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
+      makerDateTimeTo: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeTo, dateFormat)
     };
     this.tasksService.getMakerCheckerData(makerCheckerSearchParams).subscribe((response: any) => {
-      this.searchData = response;
+      this.searchData = this.transformDates(response);
       if (this.searchData.length === 0) {
         this.noSearchedData = true;
       } else {
         this.noSearchedData = false;
+        this.checkerData = true;
       }
       this.dataSource = new MatTableDataSource(this.searchData);
       this.selection = new SelectionModel(true, []);
+      // OnPush: the response arrives asynchronously, so mark the view for re-check
+      // to reflect the updated results without requiring a second click.
+      this.cdr.markForCheck();
+    });
+  }
+
+  /**
+   * Clears all filters and reloads the unfiltered checker inbox.
+   */
+  resetFilters() {
+    this.makerCheckerSearchForm.reset();
+    this.search();
+  }
+
+  /**
+   * The backend returns `madeOnDate` as an epoch value in seconds, whereas the date pipe
+   * expects milliseconds. Multiply by 1000 so the date renders correctly (e.g. avoids
+   * showing dates like "21 January 1970").
+   */
+  private transformDates(data: any[]): any[] {
+    return (data || []).map((item: any) => {
+      if (item.madeOnDate && typeof item.madeOnDate === 'number' && item.madeOnDate < 1e12) {
+        item.madeOnDate = item.madeOnDate * 1000;
+      }
+      return item;
     });
   }
 
