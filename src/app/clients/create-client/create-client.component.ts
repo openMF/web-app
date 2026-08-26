@@ -34,6 +34,7 @@ import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/mate
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ClientPreviewStepComponent } from '../client-stepper/client-preview-step/client-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { Datatables } from 'app/core/utils/datatables';
 
 /**
  * Create Client Component.
@@ -63,6 +64,7 @@ export class CreateClientComponent {
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
   private destroyRef = inject(DestroyRef);
+  private datatablesService = inject(Datatables);
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
@@ -155,6 +157,10 @@ export class CreateClientComponent {
   legalFormChange(eventData: { legalForm: number }) {
     this.legalFormType = eventData.legalForm;
     this.setDatatables();
+  }
+
+  datatableLabel(datatable: any): string {
+    return this.datatablesService.getDisplayLabel(datatable.registeredTableName);
   }
 
   /**

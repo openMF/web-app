@@ -1,7 +1,7 @@
 {
-  "datatableName": "dt_kyc_validation",
+  "datatableName": "dt_kyc_validation_entity",
   "apptableName": "m_client",
-  "entitySubType": "Person",
+  "entitySubType": "Entity",
   "multiRow": false,
   "columns": [
     {

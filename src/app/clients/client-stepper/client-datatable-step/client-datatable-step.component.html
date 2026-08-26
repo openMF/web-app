@@ -12,7 +12,7 @@
       <div class="flex-48">
         @if (!isBoolean(datatableInput.columnDisplayType)) {
           <mat-form-field class="flex-100">
-            <mat-label>{{ getInputName(datatableInput) }}</mat-label>
+            <mat-label>{{ getDisplayLabel(datatableInput) }}</mat-label>
             @if (isDropdown(datatableInput.columnDisplayType)) {
               <mat-select formControlName="{{ datatableInput.controlName }}">
                 @for (code of datatableInput.columnValues; track code) {
@@ -47,7 +47,7 @@
         }
         @if (isBoolean(datatableInput.columnDisplayType)) {
           <mat-checkbox formControlName="{{ datatableInput.controlName }}" labelPosition="before" class="margin-v">
-            {{ getInputName(datatableInput) }}
+            {{ getDisplayLabel(datatableInput) }}
           </mat-checkbox>
         }
       </div>
