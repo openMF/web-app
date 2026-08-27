@@ -60,6 +60,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../loan-transaction-type.helper';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -317,6 +318,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * BUY_DOWN_FEE_ADJUSTMENT:41
    * BUY_DOWN_FEE_AMORTIZATION:42
    * DISCOUNT_FEE:44
+   * DISCOUNT_FEE_AMORTIZATION:45
+   * DISCOUNT_FEE_ADJUSTMENT:46
+   * DISCOUNT_FEE_AMORTIZATION_ADJUSTMENT:47
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -343,7 +347,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       40,
       41,
       42,
-      44
+      44,
+      45,
+      46,
+      47
     ].includes(transactionsData.type.id);
   }
 
@@ -372,6 +379,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isChargeOff(transaction.type)) return 'badge-chargeoff';
     if (this.isReAge(transaction.type)) return 'badge-reage';
     if (this.isReAmortize(transaction.type)) return 'badge-reamortize';
+    if (isDiscountFeeKindTransaction(transaction.type)) return 'badge-discount';
     if (transaction.transactionRelations?.length > 0) return 'badge-linked';
     return 'badge-repayment';
   }
@@ -423,6 +431,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isReAmortize(transaction.type)) {
       return 'row-reamortize';
     }
+    if (isDiscountFeeKindTransaction(transaction.type)) {
+      return 'row-discount';
+    }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'row-linked';
     }
@@ -472,8 +483,11 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
           this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          ' ' +
           `${transaction.type.value}` +
+          ' ' +
           this.translateService.instant('labels.dialogContext.with id') +
+          ' ' +
           `${transaction.id}`
       }
     });
@@ -562,10 +576,6 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     });
   }
 
-  private isAccrual(transactionType: LoanTransactionType): boolean {
-    return transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge';
-  }
-
   private isChargeOff(transactionType: LoanTransactionType): boolean {
     return transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff';
   }
@@ -590,26 +600,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
   }
 
-  private isBuyDownFeeAmortization(transactionType: LoanTransactionType): boolean {
-    return (
-      transactionType.buyDownFeeAmortizationAdjustment ||
-      transactionType.code === 'loanTransactionType.buyDownFeeAmortizationAdjustment'
-    );
-  }
-
   private isAccrualKindOf(transactionType: LoanTransactionType): boolean {
-    return (
-      this.isAccrual(transactionType) ||
-      this.isCapitalizedIncomeAmortization(transactionType) ||
-      this.isBuyDownFeeAmortization(transactionType)
-    );
-  }
-
-  private isCapitalizedIncomeAmortization(transactionType: LoanTransactionType): boolean {
-    return (
-      transactionType.capitalizedIncomeAmortization ||
-      transactionType.code === 'loanTransactionType.capitalizedIncomeAmortization'
-    );
+    return isAccrualKindTransaction(transactionType);
   }
 
   private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {
