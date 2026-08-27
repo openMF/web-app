@@ -749,6 +749,43 @@ mifosx-notifications-page td {
   margin-right: 4px;
 }
 
+// ===== Semantic action buttons =====
+// Approve / Reject need to be told apart at a glance on maker-checker screens,
+// where the two sit side by side and a mis-click acts on a real loan.
+// These live here rather than in each component because eight had drifted into
+// their own copies. Nine of the eleven blocks removed were already inert: they
+// targeted `.mat-raised-button`, the pre-MDC host class, gone since Material 15.
+// The two in checker-inbox were live and deliberately neutral; replacing them is
+// an intentional part of this change, not cleanup. `color="success"` is not a
+// valid MatButton input either, so the class form below is the only hook left.
+// ---
+// Feed Material's own tokens rather than overriding `background-color`. The
+// component paints its fill from `.mat-mdc-raised-button:not(:disabled)`, which
+// carries the same (0,2,0) specificity as `.mat-mdc-raised-button.mat-success`
+// and is injected into <head> at runtime -- so it lands after this file and wins
+// the tie on any plain background-color override, leaving the colour visible
+// only on hover where the extra pseudo-classes break the tie. Setting the token
+// sidesteps the race entirely and matches how the theme colours `.mat-warn`.
+// Hover, focus, press and disabled then come from Material's own state layers.
+// ---
+// `_loan-product-tokens.scss` reaches the same conclusion for its themed
+// buttons; see the `primary-button` mixin there. Worth folding the two together
+// if a third caller appears.
+.mat-mdc-raised-button.mat-success,
+.mat-mdc-raised-button.mat-reject {
+  --mat-button-protected-label-text-color: var(--ds-action-on-fill);
+  --mat-button-protected-state-layer-color: var(--ds-action-on-fill);
+  --mat-button-protected-ripple-color: color-mix(in srgb, var(--ds-action-on-fill) 12%, transparent);
+}
+
+.mat-mdc-raised-button.mat-success {
+  --mat-button-protected-container-color: var(--ds-action-approve);
+}
+
+.mat-mdc-raised-button.mat-reject {
+  --mat-button-protected-container-color: var(--ds-action-reject);
+}
+
 .full-width-flex {
   display: flex;
   justify-content: flex-start;
