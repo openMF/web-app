@@ -402,6 +402,75 @@ describe('ChatService', () => {
     expect(service.messages$.value.at(-1)).not.toHaveProperty('vote');
   });
 
+  /** The step log is a record of what the gateway did, so it has to survive the turn. */
+  it('records each step with the wording the gateway gave it', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        {
+          type: 'tool_call',
+          toolName: 'mifos_client_search',
+          toolLabel: 'Looking up the client',
+          toolPhase: 'started',
+          readOnly: true
+        },
+        {
+          type: 'tool_call',
+          toolName: 'mifos_client_search',
+          toolLabel: 'Looked up the client',
+          toolPhase: 'finished',
+          readOnly: true,
+          durationMs: 3079
+        },
+        { type: 'token', token: 'Found her.' },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('find aisha');
+
+    expect(service.messages$.value.at(-1)?.steps).toEqual([
+      { label: 'Looked up the client', readOnly: true, done: true, durationMs: 3079 }
+    ]);
+  });
+
+  it('keeps the working notes apart from the answer', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'thinking', thinkingPhase: 'start' },
+        { type: 'thinking', thinkingPhase: 'delta', thinking: 'The officer wants ' },
+        { type: 'thinking', thinkingPhase: 'delta', thinking: 'the balance.' },
+        { type: 'thinking', thinkingPhase: 'end', thinkingElapsedMs: 8567 },
+        { type: 'token', token: 'The balance is USD 500.' },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('what is her balance');
+
+    const reply = service.messages$.value.at(-1);
+    expect(reply?.workingNotes).toBe('The officer wants the balance.');
+    expect(reply?.notesElapsedMs).toBe(8567);
+    // The deliberation must never end up in what the officer is told.
+    expect(reply?.content).toBe('The balance is USD 500.');
+  });
+
+  /** An older gateway sends no label; showing an empty row would be worse than the raw id. */
+  it('falls back to the tool name when the gateway named no step', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'tool_call', toolName: 'mifos_client_search', toolPhase: 'finished', readOnly: true },
+        // A turn that produces no text at all is dropped rather than left as an empty bubble,
+        // so this carries an answer as every real turn does.
+        { type: 'token', token: 'Found her.' },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('find aisha');
+
+    expect(service.messages$.value.at(-1)?.steps?.[0].label).toBe('mifos_client_search');
+  });
+
   it('stop aborts the in-flight stream and finalizes the draft', () => {
     const stream = new Subject<McpStreamEvent>();
     mcpMock.chat.mockReturnValue(stream.asObservable());

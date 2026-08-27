@@ -26,6 +26,8 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { environment } from 'environments/environment';
 import {
   CustomerDataValidation,
   KYC_VALIDATION_DATATABLE,
@@ -35,6 +37,10 @@ import {
   emptyCustomerDataValidation
 } from 'app/clients/models/document-validation.model';
 import { ValidateCustomerDataDialogComponent } from '../custom-dialogs/validate-customer-data-dialog/validate-customer-data-dialog.component';
+import { PersonalDataViewService } from './personal-data-view.service';
+import { PersonalDataViewModel } from './personal-data-view.model';
+import { PersonProductionPersonalDataComponent } from './person-production-personal-data/person-production-personal-data.component';
+import { EntityProductionPersonalDataComponent } from './entity-production-personal-data/entity-production-personal-data.component';
 
 /** Interfaces */
 interface ClientViewData {
@@ -55,7 +61,7 @@ interface ClientViewData {
   gender?: { id: number; name: string; active?: boolean };
   clientType?: { id: number; name: string; active?: boolean };
   clientClassification?: { id: number; name: string; active?: boolean };
-  legalForm?: { id: number; code: string; name: string };
+  legalForm?: { id?: number | string; code?: string; name?: string; value?: string };
   officeId?: number;
   officeName?: string;
   staffId?: number;
@@ -77,7 +83,9 @@ interface ClientViewData {
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
-    MatIcon
+    MatIcon,
+    PersonProductionPersonalDataComponent,
+    EntityProductionPersonalDataComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -89,12 +97,17 @@ export class PersonalDataTabComponent implements OnDestroy {
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
   private systemService = inject(SystemService);
+  private personalDataViewService = inject(PersonalDataViewService);
   private translateService = inject(TranslateService);
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
 
   /** Client View Data */
   clientViewData!: ClientViewData;
+  /** Production mode flag */
+  productionMode = environment.productionMode === true;
+  /** Consolidated production Personal Data view model */
+  productionViewModel$: Observable<PersonalDataViewModel | null> = of(null);
   /** PDF Display Control */
   showPdf = false;
   pdfUrl: SafeResourceUrl | null = null;
@@ -111,7 +124,6 @@ export class PersonalDataTabComponent implements OnDestroy {
 
   /** Whether the global config check has completed */
   private configLoaded = false;
-
   constructor() {
     this.systemService
       .getConfigurations()
@@ -131,14 +143,25 @@ export class PersonalDataTabComponent implements OnDestroy {
 
     this.route.parent.data
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientViewData: ClientViewData }) => {
+      .subscribe((data: { clientViewData: ClientViewData; clientDatatables?: any[] }) => {
         this.clientViewData = data.clientViewData;
         this.validationData = null;
         this.hasDatatableEntry = false;
+        this.loadProductionViewModel(data.clientDatatables || []);
         if (this.configLoaded) {
           this.loadValidationData();
         }
       });
+  }
+
+  private loadProductionViewModel(clientDatatables: any[]) {
+    if (!this.productionMode || !this.clientViewData?.id) {
+      this.productionViewModel$ = of(null);
+      return;
+    }
+    this.productionViewModel$ = this.personalDataViewService
+      .load(this.clientViewData.id.toString(), clientDatatables, this.isLegalEntity())
+      .pipe(catchError(() => of(null)));
   }
 
   /** Returns the correct datatable name based on the client's legal form */
@@ -292,14 +315,23 @@ export class PersonalDataTabComponent implements OnDestroy {
    * Check if client is a person (individual)
    */
   isPerson(): boolean {
-    return this.clientViewData?.legalForm?.id === LegalFormId.PERSON;
+    const legalForm = this.clientViewData?.legalForm;
+    const legalFormId = Number(legalForm?.id);
+    const legalFormValue = `${legalForm?.code || legalForm?.value || legalForm?.name || ''}`.toLowerCase();
+    if (legalFormId === LegalFormId.ENTITY || legalFormValue.includes('entity')) {
+      return false;
+    }
+    return legalFormId === LegalFormId.PERSON || legalFormValue.includes('person');
   }
 
   /**
    * Check if client is a legal entity (organization)
    */
   isLegalEntity(): boolean {
-    return this.clientViewData?.legalForm?.id === LegalFormId.ENTITY;
+    const legalForm = this.clientViewData?.legalForm;
+    const legalFormId = Number(legalForm?.id);
+    const legalFormValue = `${legalForm?.code || legalForm?.value || legalForm?.name || ''}`.toLowerCase();
+    return legalFormId === LegalFormId.ENTITY || legalFormValue.includes('entity');
   }
 
   /**

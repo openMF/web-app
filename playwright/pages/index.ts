@@ -63,3 +63,16 @@ export { TransferClientPage } from './client-actions/transfer-client.page';
 export { AddChargePage } from './charges/add-charge.page';
 export { ClientChargesPage } from './charges/client-charges.page';
 export { ChargeViewPage } from './charges/charge-view.page';
+
+// ── Loan account page objects ──────────────────────────────────────
+
+export { CreateLoanAccountPage } from './loans/create-loan-account.page';
+export { LoanAccountViewPage } from './loans/loan-account-view.page';
+export { LoanAccountActionPage, type LoanAccountAction } from './loans/loan-account-action.page';
+
+// ── Savings account page objects ───────────────────────────────────
+
+export { CreateSavingsAccountPage } from './savings/create-savings-account.page';
+export { SavingsAccountViewPage } from './savings/savings-account-view.page';
+export { SavingsAccountActionPage, type SavingsAccountAction } from './savings/savings-account-action.page';
+export { SavingsTransactionPage, type SavingsTransactionType } from './savings/savings-transaction.page';

@@ -60,7 +60,7 @@
 
     @for (datatable of datatables; track datatable) {
       <mat-step>
-        <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
+        <ng-template matStepLabel>{{ datatableLabel(datatable) }}</ng-template>
         <mifosx-client-datatable-step [datatableData]="datatable" #dtclient></mifosx-client-datatable-step>
       </mat-step>
     }

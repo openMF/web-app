@@ -60,6 +60,11 @@
           <span>{{ 'copilot.actions.tryAgain' | translate }}</span>
         </button>
 
+        <!-- How the answer was reached, below it rather than above: a preamble frames an
+             answer before it is read, and this is meant to be scrutiny, not framing. -->
+        <mifosx-thinking-trail *ngIf="msg.role === 'assistant'" [message]="msg" [isStreaming]="!!msg.isStreaming">
+        </mifosx-thinking-trail>
+
         <!-- What can be done with a finished reply: take it, ask again, rate it.
              Withheld while a card is pending, when the turn is not over yet. -->
         <mifosx-message-actions
@@ -109,8 +114,10 @@
     </div>
   </div>
 
-  <!-- Typing indicator -->
-  <div *ngIf="isStreaming" class="typing">
+  <!-- Typing indicator, only until the reply starts arriving. Once there are words on screen
+       the message is its own progress, and a second avatar with dots underneath reads as a
+       second assistant answering at the same time. -->
+  <div *ngIf="isStreaming && !hasVisibleDraft" class="typing">
     <div class="msg__avatar">
       <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
     </div>

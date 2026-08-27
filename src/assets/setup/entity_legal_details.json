@@ -1,0 +1,67 @@
+{
+  "datatableName": "entity_legal_details",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "tax_id",
+      "type": "String",
+      "length": 80,
+      "mandatory": false
+    },
+    {
+      "name": "digital_id",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "deed_number",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "date_of_deed",
+      "type": "Date",
+      "mandatory": false
+    },
+    {
+      "name": "notary_office",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "name_of_notary",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "electronic_reference_number",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "registration_data",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "din_folio",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "nationality",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    }
+  ]
+}

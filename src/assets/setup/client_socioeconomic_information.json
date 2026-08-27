@@ -1,0 +1,63 @@
+{
+  "datatableName": "client_socioeconomic_information",
+  "apptableName": "m_client",
+  "entitySubType": "Person",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "occupation",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "economic_activity",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "age_of_business",
+      "type": "Number",
+      "mandatory": false
+    },
+    {
+      "name": "work_phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "company_where_you_work",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "company_address",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "average_monthly_income",
+      "type": "Decimal",
+      "mandatory": false
+    },
+    {
+      "name": "average_monthly_expenses",
+      "type": "Decimal",
+      "mandatory": false
+    },
+    {
+      "name": "period",
+      "type": "String",
+      "length": 50,
+      "mandatory": false
+    },
+    {
+      "name": "number_of_economic_dependents",
+      "type": "Number",
+      "mandatory": false
+    }
+  ]
+}
