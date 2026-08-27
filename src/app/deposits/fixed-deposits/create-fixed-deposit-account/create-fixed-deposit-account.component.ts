@@ -150,6 +150,9 @@ export class CreateFixedDepositAccountComponent {
     const fixedDepositAccount = {
       ...this.fixedDepositAccount,
       clientId: this.fixedDepositsAccountTemplate.clientId,
+      ...(this.fixedDepositsAccountProductTemplate.accountChart?.id && {
+        chartId: this.fixedDepositsAccountProductTemplate.accountChart.id
+      }),
       charges: this.fixedDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -159,7 +162,6 @@ export class CreateFixedDepositAccountComponent {
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.fixedDepositAccount.submittedOnDate, dateFormat),
-      charts: [{ chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs }],
       dateFormat,
       monthDayFormat,
       locale
