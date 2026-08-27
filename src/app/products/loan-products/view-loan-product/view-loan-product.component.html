@@ -12,6 +12,7 @@
       <a
         mat-tab-link
         [routerLink]="['./general']"
+        [queryParams]="{ productType: loanProductService.productType.value }"
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
@@ -22,6 +23,7 @@
         <a
           mat-tab-link
           [routerLink]="['./datatables', loanProductDatatable.registeredTableName]"
+          [queryParams]="{ productType: loanProductService.productType.value }"
           routerLinkActive
           #datatable="routerLinkActive"
           [active]="datatable.isActive"

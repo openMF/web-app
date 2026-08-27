@@ -92,6 +92,15 @@ export class ChatService {
   private wireConversationId?: string;
   /** Local id used for the Recent Chats archive, never sent to the gateway. */
   private archiveId?: string;
+  /** The last question sent, so a retryable failure can offer to send it again. */
+  private lastPrompt: string | null = null;
+
+  /** When the turn in flight began, for the wall-clock duration the panel shows. */
+  private turnStartedAt = 0;
+
+  /** Whether conversations are kept on this device, seeded from the officer's last choice. */
+  private historyOn = ChatService.readHistoryPreference();
+
   /** Pending action backed up during a decision, restored if the decision fails retryably. */
   private decisionBackup: PendingAction | null = null;
   /**
@@ -142,10 +151,83 @@ export class ChatService {
   }
 
   /** Send a user message and stream the assistant reply. */
-  sendMessage(content: string): void {
+  /**
+   * Send the question that just failed, again.
+   *
+   * <p>Deliberately the same path as typing it: a chat turn is not idempotent, so a retry is
+   * a new turn the officer asked for rather than something the client does behind them.
+   */
+  retry(prompt: string): void {
+    this.sendMessage(prompt);
+  }
+
+  /**
+   * Ask again the question that produced a given reply.
+   *
+   * <p>The question is read back out of the conversation rather than remembered separately,
+   * so this works on any reply still on screen and not only the most recent one. A write is
+   * not repeated by doing this: a write turn stops at a confirmation card, so asking again
+   * produces another card to decide on, never a second execution.
+   */
+  repeat(messageId: string): void {
+    const messages = this.messages$.value;
+    const index = messages.findIndex((message) => message.id === messageId);
+    if (index < 0) {
+      return;
+    }
+    for (let i = index - 1; i >= 0; i--) {
+      if (messages[i].role === 'user') {
+        this.sendMessage(messages[i].content);
+        return;
+      }
+    }
+  }
+
+  /**
+   * A reply together with the question that produced it, which is the unit worth filing.
+   *
+   * <p>Returns null for a reply that is no longer on screen rather than a half-populated
+   * exchange, so a caller cannot file a page with the wrong question at the top of it.
+   */
+  exchangeFor(messageId: string): { question: ChatMessage | null; reply: ChatMessage } | null {
+    const messages = this.messages$.value;
+    const index = messages.findIndex((message) => message.id === messageId);
+    if (index < 0) {
+      return null;
+    }
+    for (let i = index - 1; i >= 0; i--) {
+      if (messages[i].role === 'user') {
+        return { question: messages[i], reply: messages[index] };
+      }
+    }
+    return { question: null, reply: messages[index] };
+  }
+
+  /** Record what the officer made of a reply, or clear it when they take the rating back. */
+  setVote(messageId: string, vote: 'up' | 'down' | null): void {
+    const messages = this.messages$.value;
+    const index = messages.findIndex((message) => message.id === messageId);
+    if (index < 0) {
+      return;
+    }
+    const updated = [...messages];
+    const { vote: _previous, ...rest } = updated[index];
+    updated[index] = vote ? { ...rest, vote } : rest;
+    this.messages$.next(updated);
+    // The rating belongs to the conversation, so it has to survive closing the panel.
+    this.archiveCurrentConversation();
+  }
+
+  /**
+   * Send a question.
+   *
+   * @returns whether it was accepted, so the caller knows whether to empty the composer.
+   *   A refusal complains about text the officer can no longer see if it was cleared anyway.
+   */
+  sendMessage(content: string): boolean {
     this.ensureCurrentUser();
     if (this.isStreaming$.value) {
-      return;
+      return false;
     }
     const result = this.sanitizer.sanitize(content ?? '');
     if (result.blocked || !result.text) {
@@ -157,7 +239,7 @@ export class ChatService {
         ),
         timestamp: Date.now()
       });
-      return;
+      return false;
     }
 
     // A new turn supersedes any card still awaiting confirmation.
@@ -165,12 +247,17 @@ export class ChatService {
     this.decisionBackup = null;
 
     const context = { ...this.contextService.getContextSnapshot(), backendOrigin: this.backendOrigin() };
+    // Kept so a failure can offer to send it again rather than asking for it to be retyped.
+    this.lastPrompt = result.text;
     this.pushMessage({
       id: this.nextId(),
       role: 'user',
       content: result.text,
       timestamp: Date.now(),
-      clientId: context.clientId
+      clientId: context.clientId,
+      // Recorded now because sharing the answer later should point at the record it came
+      // from, and by then the officer may be several screens away.
+      contextUrl: this.contextService.currentRoute()
     });
 
     this.startStream(
@@ -181,6 +268,33 @@ export class ChatService {
         context
       })
     );
+    return true;
+  }
+
+  /**
+   * Add a step to the running record, or close the one already open.
+   *
+   * <p>Matched on the label rather than the tool name, because the same tool can legitimately
+   * be called twice in one turn and each call is its own step in what the officer reads.
+   */
+  private recordStep(event: McpStreamEvent): void {
+    const label = event.toolLabel ?? event.toolName;
+    if (!label) {
+      return;
+    }
+    this.updateDraft((draft) => {
+      const steps = [...(draft.steps ?? [])];
+      if (event.toolPhase === 'finished') {
+        for (let i = steps.length - 1; i >= 0; i--) {
+          if (!steps[i].done) {
+            steps[i] = { ...steps[i], label, done: true, durationMs: event.durationMs };
+            return { ...draft, steps };
+          }
+        }
+      }
+      steps.push({ label, readOnly: event.readOnly !== false, done: event.toolPhase === 'finished' });
+      return { ...draft, steps };
+    });
   }
 
   /** Approve or reject the pending write action; the reply continues streaming. */
@@ -217,6 +331,43 @@ export class ChatService {
     this.decisionBackup = null;
     this.wireConversationId = undefined;
     this.archiveId = undefined;
+  }
+
+  /**
+   * Whether conversations are kept on this device between sessions.
+   *
+   * <p>Branch machines are shared, and a transcript naming clients and balances is the kind
+   * of thing that should be the officer's decision rather than a default they never saw.
+   */
+  historyEnabled(): boolean {
+    return this.historyOn;
+  }
+
+  /**
+   * Turn on-device history on or off.
+   *
+   * <p>Turning it off erases what is already stored rather than only stopping new writes: a
+   * setting that leaves yesterday's transcripts on a shared machine has not done what it says.
+   * The conversation on screen is untouched, since the officer is still in the middle of it.
+   */
+  setHistoryEnabled(enabled: boolean): void {
+    this.historyOn = enabled;
+    try {
+      localStorage.setItem(ChatService.HISTORY_OFF_KEY, String(!enabled));
+    } catch {
+      // Storage unavailable: nothing is being persisted anyway.
+    }
+    if (!enabled) {
+      this.clearAllHistory();
+    } else {
+      this.archiveCurrentConversation();
+    }
+  }
+
+  /** Erase every saved conversation for this user, on this device. */
+  clearAllHistory(): void {
+    this.conversations$.next([]);
+    this.clearPersistedHistory(this.storageKey());
   }
 
   /** Load persisted conversations for the current user + tenant, and bind state to them. */
@@ -262,6 +413,10 @@ export class ChatService {
 
   private startStream(events: Observable<McpStreamEvent>): void {
     this.isStreaming$.next(true);
+    // Stamped here so the panel can say how long the officer waited. Summing the model's timer
+    // and each call's duration would count any overlap twice and miss the answer streaming
+    // after both, so the turn is measured end to end instead.
+    this.turnStartedAt = Date.now();
     this.pushMessage({
       id: this.nextId(),
       role: 'assistant',
@@ -285,10 +440,23 @@ export class ChatService {
       case 'token':
         this.appendToDraft(event.token ?? '');
         break;
+      case 'thinking':
+        // Opened lazily by the gateway, so a model with thinking off produces no panel at all
+        // rather than an empty one. Nothing to do on start beyond letting the deltas arrive.
+        if (event.thinkingPhase === 'delta' && event.thinking) {
+          this.updateDraft((draft) => ({
+            ...draft,
+            workingNotes: (draft.workingNotes ?? '') + event.thinking
+          }));
+        } else if (event.thinkingPhase === 'end') {
+          this.updateDraft((draft) => ({ ...draft, notesElapsedMs: event.thinkingElapsedMs }));
+        }
+        break;
       case 'tool_call':
         if (event.toolPhase === 'started' && event.toolName) {
           this.updateDraft((draft) => ({ ...draft, toolUsed: event.toolName }));
         }
+        this.recordStep(event);
         break;
       case 'action_card':
         if (event.pendingAction) {
@@ -319,6 +487,11 @@ export class ChatService {
         this.appendToDraft(
           `${this.draftContent() ? '\n\n' : ''}${event.message ?? this.translate.instant('copilot.errors.streamFailed')}`
         );
+        // The gateway has already worked out whether waiting will help. Offer the question
+        // back when it will, so a rate limit costs a click instead of retyping.
+        if (event.retryable && this.lastPrompt) {
+          this.updateDraft((draft) => ({ ...draft, retryPrompt: this.lastPrompt ?? undefined }));
+        }
         // Restore the card ONLY on AUTH_EXPIRED, the one code the gateway pairs with a
         // server-side card restore. Restoring on other retryable errors (e.g. the LLM
         // summarization failing AFTER a successful write) would offer the officer a dead
@@ -337,6 +510,7 @@ export class ChatService {
    * is deliberately NOT turned into an approvable card.
    */
   private finalizeDraft(): void {
+    const turnMs = this.turnStartedAt ? Date.now() - this.turnStartedAt : undefined;
     this.updateDraft((draft) => {
       const suggestions = draft.suggestedPrompts?.length
         ? draft.suggestedPrompts
@@ -349,6 +523,7 @@ export class ChatService {
         ...draft,
         content,
         suggestedPrompts: suggestions.length ? suggestions : undefined,
+        turnMs,
         isStreaming: false
       };
     });
@@ -436,6 +611,11 @@ export class ChatService {
   }
 
   private archiveCurrentConversation(): void {
+    if (!this.historyOn) {
+      // Gated here rather than at the write, so Recent Chats and the count in Preferences
+      // agree with the setting instead of listing conversations that are not being kept.
+      return;
+    }
     const messages = this.messages$.value;
     const firstUserMessage = messages.find((message) => message.role === 'user');
     if (!firstUserMessage) {
@@ -460,6 +640,23 @@ export class ChatService {
     ].slice(0, MAX_STORED_CONVERSATIONS);
     this.conversations$.next(updated);
     this.persistConversations(updated);
+  }
+
+  private static readonly HISTORY_OFF_KEY = 'mifosXCopilotHistoryOff';
+
+  /**
+   * Read once and then held.
+   *
+   * <p>Every archived turn asks this question, and storage is not free; more to the point, a
+   * setting that is re-read on each write can disagree with itself part way through a
+   * conversation if anything else on the origin touches the key.
+   */
+  private static readHistoryPreference(): boolean {
+    try {
+      return localStorage.getItem(ChatService.HISTORY_OFF_KEY) !== 'true';
+    } catch {
+      return true; // Cannot ask, so behave as the default says.
+    }
   }
 
   private persistConversations(conversations: Conversation[]): void {

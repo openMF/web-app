@@ -1,0 +1,69 @@
+{
+  "datatableName": "client_pep_pld",
+  "apptableName": "m_client",
+  "entitySubType": "Person",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "client_type",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "is_pep",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "pep_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "related_to_pep",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "related_pep_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "acts_on_behalf_of_third_party",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "third_party_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "uses_public_resources",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "public_resources_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "high_risk_activity",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "high_risk_activity_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "pld_observations",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}

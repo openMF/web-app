@@ -38,6 +38,11 @@ $shadow-xl: 0 20px 50px -12px rgb(0 0 0 / 15%);
 // Motion
 $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
+// How wide the conversation column is allowed to get. Prose wants a limit; the tables a
+// repayment schedule arrives as want room, and full screen is asked for to get it.
+$content-width: 1040px;
+$content-width-full: 1440px;
+
 .mifos-copilot {
   /* ── FAB ── */
   .ai-fab {
@@ -97,6 +102,19 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 0;
       box-shadow: none;
     }
+
+    /* Declared after --sidebar-full so it wins the `left` they both set. */
+    &--full {
+      inset: 0;
+      border-radius: 0;
+      box-shadow: none;
+
+      .chat-body,
+      .chat-footer,
+      .prefs {
+        max-width: $content-width-full;
+      }
+    }
   }
 
   /* ── Child-component host layout (panel is a flex column) ── */
@@ -111,6 +129,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   mifosx-chat-area:not([hidden]),
+  mifosx-copilot-preferences,
   mifosx-recent-chats {
     display: flex;
     flex-direction: column;
@@ -233,7 +252,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     flex: 1;
     overflow-y: auto;
     padding: ($u * 4) ($u * 8);
-    max-width: 860px;
+    max-width: $content-width;
     width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
@@ -654,6 +673,123 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
+  /* ── Preferences ── */
+  .prefs {
+    padding: ($u * 3) ($u * 8);
+    overflow-y: auto;
+    max-width: $content-width;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    &__section {
+      margin-bottom: $u * 4;
+    }
+
+    &__section-title {
+      margin: 0 0 ($u + 4px);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    &__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $u * 3;
+      padding: ($u * 2) 0;
+      border-bottom: 1px solid transparent;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    &__label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    &__label-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    &__label-hint {
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    /* A switch built here rather than borrowed from Material, so it follows the panel's
+       own tokens like everything else in it. */
+    &__switch {
+      flex-shrink: 0;
+      position: relative;
+      width: 40px;
+      height: 22px;
+      padding: 0;
+      border: none;
+      border-radius: $r-pill;
+      cursor: pointer;
+      transition: background 0.2s $ease;
+
+      &:focus-visible {
+        outline-offset: 2px;
+      }
+    }
+
+    &__switch-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      transition: transform 0.2s $ease;
+    }
+
+    &__switch--on .prefs__switch-thumb {
+      transform: translateX(18px);
+    }
+
+    &__actions {
+      display: flex;
+      gap: $u;
+      flex-shrink: 0;
+    }
+
+    &__button {
+      padding: ($u - 1px) ($u * 2);
+      border: 1px solid transparent;
+      border-radius: $r-md;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s $ease;
+
+      &:disabled {
+        cursor: default;
+        opacity: 0.5;
+      }
+    }
+
+    &__facts {
+      margin: 0;
+      padding-left: $u * 2;
+      font-size: 13px;
+      line-height: 1.7;
+
+      li {
+        margin-bottom: $u - 2px;
+      }
+    }
+  }
+
   /* ── Prompt chips ── */
   .chips {
     margin-top: $u * 2;
@@ -678,11 +814,185 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
+  /* ── Try again, on a failure the gateway said was worth retrying ── */
+  .retry-button {
+    margin-top: $u * 2;
+    display: inline-flex;
+    align-items: center;
+    gap: $u - 2px;
+    padding: ($u - 1px) ($u * 2);
+    border: 1px solid transparent;
+    border-radius: $r-pill;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    transition: all 0.15s $ease;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  /* ── How the answer was reached ── */
+  .trail {
+    margin-top: $u + 2px;
+    display: flex;
+    flex-direction: column;
+    gap: $u - 2px;
+  }
+
+  .trail__live {
+    display: flex;
+    align-items: center;
+    gap: $u;
+    font-size: 12.5px;
+  }
+
+  .trail__spinner {
+    width: 11px;
+    height: 11px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: trail-spin 0.7s linear infinite;
+  }
+
+  @keyframes trail-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .trail__section {
+    border-radius: $r-sm;
+    overflow: hidden;
+  }
+
+  .trail__summary {
+    display: flex;
+    align-items: center;
+    gap: $u - 2px;
+    width: 100%;
+    padding: ($u - 3px) ($u);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    text-align: left;
+    transition: background 0.15s $ease;
+  }
+
+  .trail__chevron {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    transition: transform 0.18s $ease;
+  }
+
+  .trail__chevron--open {
+    transform: rotate(90deg);
+  }
+
+  .trail__count {
+    margin-left: auto;
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .trail__body {
+    padding: 0 ($u) ($u) ($u * 3);
+  }
+
+  .trail__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $u - 3px;
+  }
+
+  .trail__step {
+    display: flex;
+    align-items: center;
+    gap: $u - 2px;
+    font-size: 12.5px;
+  }
+
+  .trail__tick svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .trail__step-time {
+    margin-left: auto;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .trail__note,
+  .trail__caution {
+    margin: ($u) 0 0;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .trail__caution {
+    margin: 0 0 ($u - 2px);
+  }
+
+  /* Capped and scrollable: a long deliberation must never push the answer off screen. */
+  .trail__notes {
+    max-height: 14rem;
+    overflow-y: auto;
+    font-size: 12.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  /* ── What can be done with a finished reply ── */
+  .msg-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: $u;
+
+    &__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: none;
+      border-radius: $r-sm;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s $ease;
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    &__divider {
+      width: 1px;
+      height: 14px;
+      margin: 0 ($u - 4px);
+    }
+  }
+
   /* ── Footer / input bar ── */
   .chat-footer {
     flex-shrink: 0;
     padding: ($u * 2) ($u * 8) ($u + 4px);
-    max-width: 860px;
+    max-width: $content-width;
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;

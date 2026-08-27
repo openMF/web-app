@@ -22,6 +22,10 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CopilotHeaderComponent {
   @Input() contextLabel: string | null = null;
+  /** Whether the panel currently fills the window. */
+  @Input() isFullScreen = false;
   @Output() newChat = new EventEmitter<void>();
   @Output() closePanel = new EventEmitter<void>();
+  /** The officer asked for the panel to fill the window, or to stop. */
+  @Output() fullScreenToggled = new EventEmitter<void>();
 }

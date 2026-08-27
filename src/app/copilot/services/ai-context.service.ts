@@ -52,6 +52,16 @@ export class AiContextService {
     };
   }
 
+  /**
+   * The route the officer is on, for recording alongside a question they ask from it.
+   *
+   * <p>Kept out of {@link CopilotContext}, which travels to the gateway: the gateway is
+   * already told which client is in focus and has no use for the screen it was on.
+   */
+  currentRoute(): string {
+    return this.router.url;
+  }
+
   /** Only true on a single-client detail page; drives prompt disambiguation. */
   hasSpecificClient(): boolean {
     return this.getContextSnapshot().clientId !== null;

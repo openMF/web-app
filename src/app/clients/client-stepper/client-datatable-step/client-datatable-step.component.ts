@@ -62,6 +62,10 @@ export class ClientDatatableStepComponent implements OnInit {
     return this.datatableService.getInputName(datatableInput);
   }
 
+  getDisplayLabel(datatableInput: any): string {
+    return this.datatableService.getDisplayLabel(datatableInput.columnName);
+  }
+
   isNumeric(columnType: string) {
     return this.datatableService.isNumeric(columnType);
   }

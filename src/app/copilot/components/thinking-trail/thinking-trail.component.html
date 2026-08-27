@@ -1,0 +1,58 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="trail" *ngIf="hasAnything">
+  <!-- While the turn runs, one line naming what is happening right now. An officer waiting on a
+       slow branch connection needs to tell working apart from hung, and this is what does it. -->
+  <div class="trail__live" *ngIf="isStreaming && currentStep as step">
+    <span class="trail__spinner" aria-hidden="true"></span>
+    <span>{{ step.label }}</span>
+  </div>
+
+  <!-- One disclosure, not two. What it did and what it wrote both belong to the same question,
+       and two collapsed strips under every answer is more furniture than it is worth. -->
+  <div class="trail__section" *ngIf="!isStreaming">
+    <button
+      type="button"
+      class="trail__summary"
+      [attr.aria-expanded]="open"
+      [attr.aria-controls]="bodyId"
+      (click)="toggle()"
+    >
+      <svg class="trail__chevron" [class.trail__chevron--open]="open" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+      </svg>
+      <span>{{ 'copilot.trail.thinking' | translate }}</span>
+      <span class="trail__count" *ngIf="elapsed">{{ elapsed }}</span>
+    </button>
+
+    <div class="trail__body" [id]="bodyId" *ngIf="open">
+      <!-- What it actually did. This is the part that is a record. -->
+      <ol class="trail__steps" *ngIf="steps.length">
+        <li *ngFor="let step of steps" class="trail__step">
+          <span class="trail__tick" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
+          </span>
+          <span class="trail__step-label">{{ step.label }}</span>
+          <span class="trail__step-time" *ngIf="step.durationMs !== null && step.durationMs !== undefined">{{
+            seconds(step.durationMs)
+          }}</span>
+        </li>
+      </ol>
+
+      <!-- What it wrote while doing it, which is not a record. The caution sits with it, read
+           at the moment the text is, rather than floating where it will be scrolled past. -->
+      <div class="trail__notes-block" *ngIf="notes">
+        <p class="trail__caution">{{ 'copilot.trail.notesCaution' | translate }}</p>
+        <div class="trail__notes">{{ notes }}</div>
+      </div>
+
+      <!-- Points at where the decision basis actually lives, so this is never mistaken for it. -->
+      <p class="trail__note">{{ 'copilot.trail.stepsNote' | translate }}</p>
+    </div>
+  </div>
+</div>

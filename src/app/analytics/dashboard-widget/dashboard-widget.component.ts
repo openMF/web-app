@@ -288,22 +288,25 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
       const savingsVal = pin.savings ? pin.savings.toLocaleString('en-US') : '0';
       const collectedVal = pin.collected ? pin.collected.toLocaleString('en-US') : '0';
 
+      const safeOfficeName = this.escapeHtml(pin.officeName);
+      const safeCountry = this.escapeHtml(pin.country);
+
       const popupHtml = `
         <div class="map-tooltip">
           <div class="tooltip-header">
             <i class="fa fa-globe tooltip-icon"></i>
             <div class="tooltip-title-container">
-              <span class="tooltip-title">${pin.officeName}</span>
+              <span class="tooltip-title">${safeOfficeName}</span>
               <span class="tooltip-subtitle">
                 ${flagUrl ? `<img src="${flagUrl}" class="tooltip-flag" width="16" height="12" />` : ''}
-                ${pin.country || ''}
+                ${safeCountry}
               </span>
             </div>
           </div>
           <div class="tooltip-divider"></div>
           <div class="tooltip-row">
             <span class="tooltip-label">${countryLabel}:</span>
-            <span class="tooltip-value">${pin.country || ''}</span>
+            <span class="tooltip-value">${safeCountry}</span>
           </div>
           <div class="tooltip-row">
             <span class="tooltip-label">${activeClientsLabel}:</span>
@@ -351,7 +354,7 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
         marker.closeTooltip();
       });
 
-      marker.on('click', (e: any) => {
+      marker.on('click', (e: L.LeafletMouseEvent) => {
         if (e && e.originalEvent) {
           L.DomEvent.stopPropagation(e.originalEvent);
         }
@@ -398,14 +401,22 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
     });
 
     if (this.selectedOfficeId !== null && this.markersMap.has(this.selectedOfficeId) && this.map) {
-      const marker = this.markersMap.get(this.selectedOfficeId);
+      const targetOfficeId = this.selectedOfficeId;
+      const marker = this.markersMap.get(targetOfficeId);
       if (marker) {
-        setTimeout(() => {
-          if (this.map && marker) {
-            marker.openPopup();
-            this.map.panTo(marker.getLatLng());
+        const showMarkerPopup = () => {
+          if (this.selectedOfficeId !== targetOfficeId || !this.map || !marker) {
+            return;
           }
-        }, 50);
+          marker.openPopup();
+          this.map.panTo(marker.getLatLng());
+        };
+
+        if (this.markerClusterGroup) {
+          this.markerClusterGroup.zoomToShowLayer(marker, showMarkerPopup);
+        } else {
+          setTimeout(showMarkerPopup, 50);
+        }
       }
     }
   }
@@ -426,6 +437,16 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
    * - Percent adapters: format as 12.3%
    * - Default: plain integer
    */
+  private escapeHtml(text?: string | null): string {
+    if (!text) return '';
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   formatMetricValue(widgetId: string, value?: number): string {
     if (value === undefined || value === null) {
       return '—';

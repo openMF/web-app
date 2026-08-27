@@ -193,9 +193,11 @@ export class EditDataTableComponent implements OnInit {
       m_center: 'center_id',
       m_office: 'office_id',
       m_loan: 'loan_id',
+      m_wc_loan: 'wc_loan_id',
       m_savings_account: 'savings_account_id',
       m_savings_account_transaction: 'savings_transaction_id',
       m_product_loan: 'product_loan_id',
+      m_wc_loan_product: 'wc_product_loan_id',
       m_savings_product: 'savings_product_id',
       m_share_product: 'share_product_id'
     };
