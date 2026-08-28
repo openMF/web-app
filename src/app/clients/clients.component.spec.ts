@@ -116,7 +116,7 @@ describe('ClientsComponent — debounce search', () => {
   });
 
   it('should not search during IME composition but should search on compositionend', () => {
-    const inputEl: HTMLInputElement = fixture.nativeElement.querySelector('input[matInput]');
+    const inputEl: HTMLInputElement = fixture.nativeElement.querySelector('.search input');
 
     inputEl.dispatchEvent(new CompositionEvent('compositionstart'));
     fixture.detectChanges();
@@ -139,7 +139,7 @@ describe('ClientsComponent — debounce search', () => {
 
   it('should not fire debounced search after component is destroyed', () => {
     component.onSearchInput('carol');
-    component.ngOnDestroy();
+    fixture.destroy();
     jest.advanceTimersByTime(DEBOUNCE_MS);
     expect(clientsService.searchByText).not.toHaveBeenCalled();
   });
