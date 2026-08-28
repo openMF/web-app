@@ -8,13 +8,45 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
 
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { ValidationStatus } from 'app/clients/models/document-validation.model';
 import { EntityProductionPersonalDataComponent } from './entity-production-personal-data.component';
+
+const translationsDirectory = join(process.cwd(), 'src/assets/translations');
+const generalDataTranslationKeys = [
+  'labels.heading.Legal Entity Details',
+  'labels.heading.Tax Address',
+  'labels.inputs.Name or Corporate Name',
+  'labels.inputs.Tax Id',
+  'labels.inputs.Digital Id',
+  'labels.inputs.Deed Number',
+  'labels.inputs.Date of Deed',
+  'labels.inputs.Notary Office',
+  'labels.inputs.Name of the Notary',
+  'labels.inputs.Electronic Reference Number',
+  'labels.inputs.Date of Incorporation',
+  'labels.inputs.Registration Date',
+  'labels.inputs.Nature of business, business activity, or corporate purpose',
+  'labels.inputs.No Ext',
+  'labels.inputs.No Int',
+  'labels.inputs.Neighborhood',
+  'labels.inputs.Zip code'
+];
+
+function translationValue(translations: Record<string, any>, key: string): unknown {
+  const [
+    root,
+    section,
+    ...leafParts
+  ] = key.split('.');
+  return translations[root]?.[section]?.[leafParts.join('.')];
+}
 
 describe('EntityProductionPersonalDataComponent', () => {
   let fixture: ComponentFixture<EntityProductionPersonalDataComponent>;
@@ -150,6 +182,40 @@ describe('EntityProductionPersonalDataComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('labels.heading.Legal Entity');
     expect(fixture.nativeElement.textContent).toContain('labels.heading.Natural Person');
   });
+
+  it('resolves all General Data labels in es-MX', () => {
+    const translateService = TestBed.inject(TranslateService);
+    const translations = JSON.parse(readFileSync(join(translationsDirectory, 'es-MX.json'), 'utf8'));
+    translateService.setTranslation('es-MX', translations);
+    translateService.use('es-MX');
+
+    fixture.detectChanges();
+
+    generalDataTranslationKeys.forEach((key) => {
+      expect(translateService.instant(key)).not.toBe(key);
+      expect(fixture.nativeElement.textContent).not.toContain(key);
+    });
+    expect(fixture.nativeElement.textContent).toContain('Detalles de persona moral');
+    expect(fixture.nativeElement.textContent).toContain('Domicilio fiscal');
+    expect(fixture.nativeElement.textContent).toContain('Nombre del notario');
+    expect(fixture.nativeElement.textContent).toContain('Fecha de registro');
+  });
+
+  it.each(readdirSync(translationsDirectory).filter((file) => file.endsWith('.json')))(
+    'defines every Entity General Data key in %s',
+    (localeFile) => {
+      const translations = JSON.parse(readFileSync(join(translationsDirectory, localeFile), 'utf8'));
+
+      generalDataTranslationKeys.forEach((key) => {
+        const value = translationValue(translations, key);
+
+        expect(typeof value).toBe('string');
+        expect((value as string).trim()).toBeTruthy();
+        expect(value).not.toBe(key);
+        expect(value).not.toMatch(/^labels\./i);
+      });
+    }
+  );
 
   it('renders real entity, tax address, identifier, and representative datatable values', () => {
     fixture.detectChanges();
