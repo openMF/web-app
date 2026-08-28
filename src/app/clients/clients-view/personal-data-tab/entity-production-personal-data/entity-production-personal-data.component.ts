@@ -317,7 +317,7 @@ export class EntityProductionPersonalDataComponent {
             'date of incorporation',
             'incorporation date'
           ], date: true },
-        { label: 'labels.inputs.No. of Shares', patterns: [
+        { label: 'labels.inputs.Number of Shares', patterns: [
             'no of shares',
             'number of shares'
           ] },
@@ -480,7 +480,7 @@ export class EntityProductionPersonalDataComponent {
           ])
       },
       {
-        label: 'Digital Id',
+        label: 'labels.inputs.Digital Id',
         value: () =>
           this.readClientOrDatatableValue(
             [
@@ -494,7 +494,7 @@ export class EntityProductionPersonalDataComponent {
           )
       },
       {
-        label: 'Deed No.',
+        label: 'labels.inputs.Deed Number',
         value: () =>
           this.readClientOrDatatableValue(
             [
@@ -508,7 +508,7 @@ export class EntityProductionPersonalDataComponent {
           )
       },
       {
-        label: 'Date of Deed',
+        label: 'labels.inputs.Date of Deed',
         value: () =>
           this.readClientOrDatatableValue(
             [
@@ -523,11 +523,11 @@ export class EntityProductionPersonalDataComponent {
         date: true
       },
       {
-        label: 'Notary Office',
+        label: 'labels.inputs.Notary Office',
         value: () => this.readClientOrDatatableValue(['notaryOffice'], ['notary office'])
       },
       {
-        label: 'Name of the Notary',
+        label: 'labels.inputs.Name of the Notary',
         value: () =>
           this.readClientOrDatatableValue(
             [
@@ -541,7 +541,7 @@ export class EntityProductionPersonalDataComponent {
           )
       },
       {
-        label: 'Electronic Reference Number',
+        label: 'labels.inputs.Electronic Reference Number',
         value: () =>
           this.readClientOrDatatableValue(
             ['electronicReferenceNumber'],
@@ -568,7 +568,7 @@ export class EntityProductionPersonalDataComponent {
         date: true
       },
       {
-        label: 'Registration Date',
+        label: 'labels.inputs.Registration Date',
         value: () =>
           this.readClientOrDatatableValue(
             ['registrationDate'],
@@ -581,7 +581,7 @@ export class EntityProductionPersonalDataComponent {
         date: true
       },
       {
-        label: 'Nature of business, business activity, or corporate purpose',
+        label: 'labels.inputs.Nature of business, business activity, or corporate purpose',
         value: () =>
           this.readClientOrDatatableValue(
             [
@@ -603,7 +603,7 @@ export class EntityProductionPersonalDataComponent {
         value: () => this.readClientOrDatatableValue(['nationality'], ['nationality'])
       },
       {
-        label: 'Phone',
+        label: 'labels.inputs.Phone',
         value: () =>
           this.readClientValue([
             'mobileNo',
@@ -625,7 +625,7 @@ export class EntityProductionPersonalDataComponent {
     const address = this.taxAddress;
     return this.fixedFields([
       {
-        label: 'Street',
+        label: 'labels.inputs.Street',
         value: () =>
           this.readObjectValue(address, [
             'street',
@@ -633,7 +633,7 @@ export class EntityProductionPersonalDataComponent {
           ])
       },
       {
-        label: 'No Ext',
+        label: 'labels.inputs.No Ext',
         value: () =>
           this.readObjectValue(address, [
             'streetNumber',
@@ -642,7 +642,7 @@ export class EntityProductionPersonalDataComponent {
           ])
       },
       {
-        label: 'No Int',
+        label: 'labels.inputs.No Int',
         value: () =>
           this.readObjectValue(address, [
             'apartmentNumber',
