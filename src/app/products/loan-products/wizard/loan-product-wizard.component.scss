@@ -299,3 +299,76 @@ mat-checkbox {
   color: var(--mat-sys-error, #b3261e);
   font-size: 0.875rem;
 }
+
+// Shown on the Review step while the hosted Classic steps are still incomplete, in place of the
+// product summary (which cannot render a partial product).
+.review-pending {
+  padding: var(--lp-space-16) var(--lp-space-24);
+  border: 1px dashed var(--lp-outline);
+  border-radius: var(--lp-radius);
+
+  &__title {
+    margin: 0 0 var(--lp-space-8);
+    font-weight: 600;
+    color: var(--lp-text);
+  }
+
+  &__steps {
+    margin: 0;
+    padding-left: var(--lp-space-24);
+    color: var(--lp-text-muted);
+  }
+}
+
+/* =================== Hosted Classic steps (Custom/Advanced) =================== */
+
+/**
+ * Custom/Advanced hosts Classic's Details / Currency / Terms / Settings components, and Classic's
+ * summary on the Review step.
+ *
+ * Deliberately TYPOGRAPHY ONLY. Classic's layout classes (`flex-48`, `layout-row-wrap`, ...) are
+ * global utilities in `src/main.scss`, so they already apply inside these components and lay them
+ * out exactly as they do in the Classic flow. An earlier attempt here re-flowed those cells to match
+ * `.field-grid`; because an attribute selector outranks an element selector, it also beat the
+ * heading rule below and left section headings sharing a row with the first field while every
+ * checkbox stretched into its own column. Restyling the type is enough to make the two flows read
+ * alike, and it cannot break a layout it does not touch.
+ */
+.wizard-classic-step,
+.wizard-classic-review {
+  display: block;
+
+  /* Classic's section headings are page-level (h2/h3/h4); inside a wizard step they read as
+     oversized field labels unless toned down to the shell's eyebrow treatment. */
+  ::ng-deep h2,
+  ::ng-deep h3,
+  ::ng-deep h4 {
+    color: var(--lp-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+.wizard-classic-step {
+  /* Classic ships a Previous/Next row per step; the wizard shell already renders unified step
+     actions, so the embedded nav would be a second, conflicting set of buttons. Same reason, and
+     same remedy, as the reused Charges step above. */
+  ::ng-deep .stepper-buttons {
+    display: none;
+  }
+}
+
+.wizard-classic-review {
+  /* Classic's summary pairs a `.flex-40` label with a `.flex-60` value; colour them like
+     `.review-row__label` / `.review-row__value` so the facts read the same as the guided Review. */
+  ::ng-deep .flex-40 {
+    color: var(--lp-text-muted);
+  }
+
+  ::ng-deep .flex-60 {
+    color: var(--lp-text);
+    font-weight: 500;
+  }
+}

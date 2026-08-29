@@ -129,12 +129,42 @@ export type FormStepKind =
   | 'deferred-income'
   | 'borrower-cycle'
   | 'review';
+/**
+ * The four Classic step components the wizard can host INSTEAD of rendering a step's `fields`
+ * config: `LoanProductDetailsStepComponent`, `LoanProductCurrencyStepComponent`,
+ * `LoanProductTermsStepComponent` and `LoanProductSettingsStepComponent`.
+ *
+ * The wizard already reuses Classic's other six steps (payment allocation, charges, accounting,
+ * interest refund, deferred income, borrower cycle) for every profile. These four were the only ones
+ * re-declared as config fields, and that re-declaration was the sole source of the
+ * Custom/Advanced-vs-Classic divergence. Custom/Advanced now hosts the real components, so its field
+ * set, validation and payload are Classic's by construction rather than by maintenance.
+ *
+ * Guided profiles keep rendering the `fields` config: their whole purpose is to expose a curated
+ * subset, which the full Classic steps would defeat.
+ */
+export type ClassicStep = 'details' | 'currency' | 'terms' | 'settings';
+
 export interface FormStep {
   id: number;
   title: string;
   icon: string;
   fields: FormField[];
   kind?: FormStepKind;
+  /**
+   * The Classic component that replaces this step's `fields` rendering when the profile uses the
+   * Classic steps (see {@link usesClassicSteps}). Absent for steps with no Classic counterpart.
+   */
+  classicStep?: ClassicStep;
+}
+
+/**
+ * Profiles that host Classic's four step components instead of the config-driven field grid.
+ * Custom/Advanced is the only one: it is the "complete control" mode, so its surface must be exactly
+ * Classic's. Every guided template renders its curated `fields` config instead.
+ */
+export function usesClassicSteps(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'custom-advanced';
 }
 
 export const PRODUCT_CARDS: ProductCard[] = [
@@ -345,6 +375,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 1,
     title: 'Details',
+    classicStep: 'details',
     icon: 'ti-id',
     fields: [
       {
@@ -393,6 +424,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 2,
     title: 'Currency',
+    classicStep: 'currency',
     icon: 'ti-currency-dollar',
     fields: [
       // The tenant's configured currencies, sourced from the backend template at render time exactly
@@ -429,6 +461,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 3,
     title: 'Terms',
+    classicStep: 'terms',
     icon: 'ti-calculator',
     fields: [
       {
@@ -544,6 +577,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 4,
     title: 'Settings',
+    classicStep: 'settings',
     icon: 'ti-settings',
     fields: [
       {
