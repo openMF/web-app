@@ -43,7 +43,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
 import { LongTextComponent } from 'app/shared/long-text/long-text.component';
-import { Breach, NearBreach } from 'app/products/loan-products/models/loan-product.model';
+import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
 import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
 
@@ -204,6 +204,17 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
       return '';
     }
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  getDelinquencyBucket(delinquencyBucketId: number | null | undefined): DelinquencyBucket | null {
+    if (delinquencyBucketId === null || delinquencyBucketId === undefined) {
+      return null;
+    }
+    return (
+      this.loansAccountProductTemplate.options?.delinquencyBucketOptions?.find(
+        (b: DelinquencyBucket) => b.id === delinquencyBucketId
+      ) || null
+    );
   }
 
   getBreach(breachId: number | null | undefined): Breach | null {

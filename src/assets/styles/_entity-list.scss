@@ -282,7 +282,10 @@
   .list-header,
   .list-row {
     display: grid;
-    grid-template-columns: 4px 36px minmax(220px, 32%) 110px minmax(120px, 16%) minmax(120px, 16%) minmax(150px, 18%);
+
+    /* Name takes every pixel the other columns don't need, so long names stay readable. */
+    /* stylelint-disable-next-line unit-allowed-list */
+    grid-template-columns: 4px 36px minmax(220px, 1fr) 148px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%);
     align-items: center;
     gap: 14px;
     padding: 8px 16px;
@@ -399,12 +402,18 @@
   }
 
   .name {
+    display: -webkit-box;
     font-size: 13.5px;
     font-weight: 600;
+    line-height: 1.3;
     color: var(--loan-text-1);
-    white-space: nowrap;
+
+    /* Wrap onto a second line when the column is too narrow, rather than
+       hiding the rest of the name behind an ellipsis. */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
   }
 
   .name-meta {
@@ -428,12 +437,26 @@
     letter-spacing: 0.04em;
     white-space: nowrap;
     width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .status-pill .label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    // Flex items default to min-width: auto, which with the inherited
+    // white-space: nowrap floors the label at its full text width — it would
+    // hard-clip at the pill edge instead of ellipsising. Allow it to shrink.
+    min-width: 0;
   }
 
   .status-pill .dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
+    flex-shrink: 0;
   }
 
   .status-pill.active {

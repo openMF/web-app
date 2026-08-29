@@ -303,7 +303,7 @@
                     {{ 'labels.buttons.Pay Charge' | translate }}
                   </button>
                 }
-                @if (!charge.actionFlag) {
+                @if (allowWaive(charge)) {
                   <button mat-menu-item (click)="waiveCharge(charge.id)">
                     <mat-icon matMenuItemIcon>check_circle</mat-icon>
                     {{ 'labels.buttons.Waive Charge' | translate }}

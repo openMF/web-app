@@ -314,12 +314,19 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         delete payload['breachId'];
         delete payload['nearBreachId'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+      }
     }
 
     // No Empty values to be sent
     [
       'delinquencyGraceDays',
-      'delinquencyStartType'
+      'delinquencyStartType',
+      'delinquencyBucketId'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {
         delete payload[attr];

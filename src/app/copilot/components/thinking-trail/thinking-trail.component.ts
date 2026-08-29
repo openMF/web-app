@@ -45,6 +45,17 @@ export class ThinkingTrailComponent {
 
   open = false;
 
+  /**
+   * The id this disclosure controls, one per reply.
+   *
+   * <p>A conversation renders this component once per answer. A fixed id would put the same one
+   * on every panel, and each aria-controls would then name several elements at once, which is
+   * the situation the attribute exists to avoid.
+   */
+  get bodyId(): string {
+    return `copilot-thinking-${this.message.id}`;
+  }
+
   get steps(): CopilotStep[] {
     return this.message.steps ?? [];
   }
@@ -67,16 +78,15 @@ export class ThinkingTrailComponent {
   }
 
   /**
-   * How long the whole turn took, thinking and calls together.
+   * How long the officer waited, wall clock.
    *
-   * <p>Summed rather than taken from the model's own timer alone, because a turn that spent
-   * four seconds thinking and eleven waiting on Fineract took fifteen, and fifteen is the
-   * number the officer sat through.
+   * <p>Taken from the turn itself rather than summed from its parts. Adding the model's timer
+   * to each call's duration counts any overlap between the two twice and leaves out the time
+   * spent streaming the answer, so the figure could be wrong in both directions at once. What
+   * is wanted here is the wait, and the wait is from when the turn started to when it ended.
    */
   get elapsed(): string {
-    const total =
-      (this.message.notesElapsedMs ?? 0) + this.steps.reduce((sum, step) => sum + (step.durationMs ?? 0), 0);
-    return total > 0 ? this.seconds(total) : '';
+    return this.message.turnMs ? this.seconds(this.message.turnMs) : '';
   }
 
   /**

@@ -157,8 +157,14 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     this.selection.changed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.cdr.detectChanges());
   }
 
+  /** Working Capital loans do not support the waive charge command. */
+  allowWaive(charge: LoanCharge): boolean {
+    return !charge.actionFlag && !this.loanProductService.isWorkingCapital;
+  }
+
   private buildColumns(): void {
-    const hasMultiple = this.chargesData.length > 1;
+    // Selection only exists to bulk-waive, which Working Capital does not support.
+    const hasMultiple = this.chargesData.length > 1 && !this.loanProductService.isWorkingCapital;
     this.displayedColumns = [
       ...(hasMultiple ? ['select'] : []),
       'name',
