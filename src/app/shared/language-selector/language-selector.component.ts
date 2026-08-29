@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { SubscriptSizing } from '@angular/material/form-field';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +40,13 @@ export class LanguageSelectorComponent {
 
   /** Show label in the form field. Defaults to true. */
   @Input() showLabel: boolean = true;
+
+  /**
+   * Whether the hint/error row below the control reserves space when empty.
+   * Defaults to 'fixed', matching Angular Material. Pass 'dynamic' where the
+   * selector sits in a row that has to align with something else.
+   */
+  @Input() subscriptSizing: SubscriptSizing = 'fixed';
 
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
