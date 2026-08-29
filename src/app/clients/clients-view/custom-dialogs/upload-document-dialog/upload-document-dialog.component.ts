@@ -11,6 +11,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatDialogTitle,
+  MatDialogContent,
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
@@ -26,6 +27,7 @@ import { Dates } from 'app/core/utils/dates';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
+    MatDialogContent,
     FileUploadComponent,
     MatDialogActions,
     MatDialogClose
