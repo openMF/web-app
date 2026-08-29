@@ -51,6 +51,11 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint "src" --config .htmlhintrc
 
+      - name: Verify git repository
+        run: |
+          git fsck --full || true
+          git gc --aggressive || true
+
       - name: Check file headers
         run: |
           echo "Checking for MPL-2.0 license headers in changed files..."
@@ -71,9 +76,6 @@ jobs:
           fi
 
           echo "📋 Checking $(echo "$CHANGED_FILES" | wc -l) changed file(s)..."
-          echo "$CHANGED_FILES"
-
-          # Run header check on changed files
           echo "$CHANGED_FILES" | xargs node scripts/check-file-headers.js
 
       - name: Run production build
