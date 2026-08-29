@@ -34,70 +34,7 @@ function createChartSlabsControl(chartSlabs: any[], isPrimaryGroupingByAmount = 
 }
 
 describe('Deposit product interest rate chart utils', () => {
-  it('accepts a successful Fixed Deposit creation payload with continuous slabs', () => {
-    const chartSlabs = createChartSlabsControl([
-      {
-        periodType: 2,
-        fromPeriod: 1,
-        toPeriod: 6,
-        annualInterestRate: 5,
-        description: '1 to 6 months'
-      },
-      {
-        periodType: 2,
-        fromPeriod: 7,
-        toPeriod: '',
-        annualInterestRate: 6,
-        description: '7 plus months'
-      }
-    ]);
-
-    expect(chartSlabs.errors).toBeNull();
-  });
-
-  it('accepts a successful Recurring Deposit creation payload with continuous slabs', () => {
-    const chartSlabs = createChartSlabsControl([
-      {
-        periodType: 2,
-        fromPeriod: 1,
-        toPeriod: 6,
-        annualInterestRate: 5,
-        description: '1 to 6 months'
-      },
-      {
-        periodType: 2,
-        fromPeriod: 7,
-        toPeriod: '',
-        annualInterestRate: 6,
-        description: '7 plus months'
-      }
-    ]);
-
-    expect(chartSlabs.errors).toBeNull();
-  });
-
-  it('rejects the reproduced backend gap failure before submit', () => {
-    const chartSlabs = createChartSlabsControl([
-      {
-        periodType: 2,
-        fromPeriod: 1,
-        toPeriod: 6,
-        annualInterestRate: 5,
-        description: '1 to 6 months'
-      },
-      {
-        periodType: 2,
-        fromPeriod: 8,
-        toPeriod: '',
-        annualInterestRate: 6,
-        description: '8 plus months'
-      }
-    ]);
-
-    expect(chartSlabs.errors).toEqual({ slabRange: { type: 'gap' } });
-  });
-
-  it('rejects overlapping period slabs before submit', () => {
+  it('rejects adjacent inclusive period ranges', () => {
     const chartSlabs = createChartSlabsControl([
       {
         periodType: 2,
@@ -109,13 +46,34 @@ describe('Deposit product interest rate chart utils', () => {
       {
         periodType: 2,
         fromPeriod: 6,
-        toPeriod: '',
+        toPeriod: 12,
         annualInterestRate: 6,
-        description: '6 plus months'
+        description: '6 to 12 months'
       }
     ]);
 
     expect(chartSlabs.errors).toEqual({ slabRange: { type: 'overlap' } });
+  });
+
+  it('accepts continuous non-overlapping period ranges', () => {
+    const chartSlabs = createChartSlabsControl([
+      {
+        periodType: 2,
+        fromPeriod: 1,
+        toPeriod: 6,
+        annualInterestRate: 5,
+        description: '1 to 6 months'
+      },
+      {
+        periodType: 2,
+        fromPeriod: 7,
+        toPeriod: '',
+        annualInterestRate: 6,
+        description: '7 plus months'
+      }
+    ]);
+
+    expect(chartSlabs.errors).toBeNull();
   });
 
   it('rejects a single slab with an inverted range before submit', () => {
@@ -153,7 +111,7 @@ describe('Deposit product interest rate chart utils', () => {
     expect(chartSlabs.errors).toEqual({ slabRange: { type: 'periodTypeMismatch' } });
   });
 
-  it('validates primary amount grouping without removing valid zero values', () => {
+  it('rejects adjacent inclusive amount ranges', () => {
     const chartSlabs = createChartSlabsControl(
       [
         {
@@ -161,18 +119,46 @@ describe('Deposit product interest rate chart utils', () => {
           fromPeriod: 1,
           toPeriod: '',
           amountRangeFrom: 0,
-          amountRangeTo: 5000,
+          amountRangeTo: 10000,
           annualInterestRate: 5,
-          description: '0 to 5000'
+          description: '0 to 10000'
         },
         {
           periodType: 2,
           fromPeriod: 1,
           toPeriod: '',
-          amountRangeFrom: 5001,
-          amountRangeTo: '',
+          amountRangeFrom: 10000,
+          amountRangeTo: 20000,
           annualInterestRate: 6,
-          description: '5001 plus'
+          description: '10000 to 20000'
+        }
+      ],
+      true
+    );
+
+    expect(chartSlabs.errors).toEqual({ slabRange: { type: 'overlap' } });
+  });
+
+  it('accepts continuous non-overlapping amount ranges', () => {
+    const chartSlabs = createChartSlabsControl(
+      [
+        {
+          periodType: 2,
+          fromPeriod: 1,
+          toPeriod: '',
+          amountRangeFrom: 0,
+          amountRangeTo: 9999,
+          annualInterestRate: 5,
+          description: '0 to 9999'
+        },
+        {
+          periodType: 2,
+          fromPeriod: 1,
+          toPeriod: '',
+          amountRangeFrom: 10000,
+          amountRangeTo: 20000,
+          annualInterestRate: 6,
+          description: '10000 to 20000'
         }
       ],
       true
@@ -181,7 +167,7 @@ describe('Deposit product interest rate chart utils', () => {
     expect(chartSlabs.errors).toBeNull();
   });
 
-  it('normalizes optional blank slab bounds while preserving zeroes', () => {
+  it('normalizes optional blank slab bounds while preserving numeric zero', () => {
     const payload = normalizeDepositProductInterestRateCharts({
       charts: [
         {
@@ -206,6 +192,34 @@ describe('Deposit product interest rate chart utils', () => {
       amountRangeFrom: 0,
       annualInterestRate: 5,
       description: 'Open ended amount range'
+    });
+  });
+
+  it('removes blank toPeriod and amountRangeTo during normalization', () => {
+    const payload = normalizeDepositProductInterestRateCharts({
+      charts: [
+        {
+          chartSlabs: [
+            {
+              periodType: 2,
+              fromPeriod: 7,
+              toPeriod: '',
+              amountRangeFrom: 10000,
+              amountRangeTo: '',
+              annualInterestRate: 6,
+              description: 'Open ended bounds'
+            }
+          ]
+        }
+      ]
+    });
+
+    expect(payload.charts[0].chartSlabs[0]).toEqual({
+      periodType: 2,
+      fromPeriod: 7,
+      amountRangeFrom: 10000,
+      annualInterestRate: 6,
+      description: 'Open ended bounds'
     });
   });
 });

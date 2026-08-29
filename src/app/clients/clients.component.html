@@ -103,7 +103,7 @@
           {{ initials(row.displayName) }}
         </div>
         <div class="name-block">
-          <span class="name">{{ hideClientData ? maskName(row.displayName) : row.displayName }}</span>
+          <span class="name" [title]="displayedName(row)">{{ displayedName(row) }}</span>
           @if (metaDate(row); as date) {
             <span class="name-meta">
               {{ legalFormLabel(row) | translate }} · {{ metaDateLabel(row) | translate }} {{ date | dateFormat }}
