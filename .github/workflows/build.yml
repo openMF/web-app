@@ -51,6 +51,26 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint "src" --config .htmlhintrc
 
+      - name: Run unit tests with coverage
+        id: unit-tests
+        continue-on-error: true
+        run: |
+          npm run test:ci -- \
+            --coverageReporters=lcov \
+            --coverageReporters=text-summary
+
+      - name: Upload coverage to Codecov
+        if: ${{ always() && steps.unit-tests.outcome != 'skipped' }}
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage/lcov.info
+          disable_search: true
+          flags: unit-tests
+          handle_no_reports_found: true
+          name: web-app
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
       - name: Check file headers
         run: |
           echo "Checking for MPL-2.0 license headers in changed files..."
