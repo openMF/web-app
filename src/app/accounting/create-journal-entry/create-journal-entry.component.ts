@@ -15,7 +15,8 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -61,6 +62,10 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   private dialog = inject(MatDialog);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private cdr = inject(ChangeDetectorRef);
+
+  isSubmitting = false;
+  submitIdempotencyKey?: string;
 
   onAmountInput(event: Event): void {
     const target = event.target;
@@ -217,6 +222,17 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created transaction.
    */
   submit() {
+    if (this.journalEntryForm.invalid || this.isSubmitting) {
+      return;
+    }
+
+    if (!this.submitIdempotencyKey) {
+      this.submitIdempotencyKey = crypto.randomUUID();
+    }
+
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const journalEntry = this.journalEntryForm.value;
     // TODO: Update once language and date settings are setup
     journalEntry.locale = this.settingsService.language.code;
@@ -230,14 +246,32 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     if (!journalEntry['externalAssetOwner']) {
       delete journalEntry['externalAssetOwner'];
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
-      this.router.navigate(
-        [
-          '../transactions/view',
-          response.transactionId
-        ],
-        { relativeTo: this.route }
-      );
+    this.accountingService.createJournalEntry(journalEntry, this.submitIdempotencyKey).subscribe({
+      next: (response) => {
+        this.submitIdempotencyKey = undefined;
+        this.router
+          .navigate(
+            [
+              '../transactions/view',
+              response.transactionId
+            ],
+            { relativeTo: this.route }
+          )
+          .then((navigated) => {
+            if (!navigated) {
+              this.isSubmitting = false;
+              this.cdr.markForCheck();
+            }
+          })
+          .catch(() => {
+            this.isSubmitting = false;
+            this.cdr.markForCheck();
+          });
+      },
+      error: () => {
+        this.isSubmitting = false;
+        this.cdr.markForCheck();
+      }
     });
   }
 

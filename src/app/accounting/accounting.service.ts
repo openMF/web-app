@@ -10,7 +10,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -62,8 +62,12 @@ export class AccountingService {
    * @param {any} journalEntry Journal entry to be created.
    * @returns {Observable<any>}
    */
-  createJournalEntry(journalEntry: any): Observable<any> {
-    return this.http.post('/journalentries', journalEntry);
+  createJournalEntry(journalEntry: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post('/journalentries', journalEntry, { headers });
   }
 
   /**
