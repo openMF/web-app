@@ -26,7 +26,19 @@ services:
         -c maintenance_work_mem=64MB
 
   fineract:
-    image: apache/fineract:latest
+    # Pinned by digest, not by tag. `apache/fineract` publishes ~8 tags a day
+    # and `latest` follows them, so an unpinned tag means a local run and a CI
+    # run can silently exercise different backend builds — and Fineract's seed
+    # data is part of what we test against. A build whose GroupSummaryCounts
+    # stretchy report is missing its `stretchy_report_parameter` row leaves
+    # `${groupId}` unsubstituted, which surfaces as a 403, a failed group-view
+    # resolver, and a redirect to `#/` — i.e. a red group spec whose cause is
+    # nowhere near the spec. Pinning makes "same code, same result" true again.
+    #
+    # This is the multi-arch manifest LIST digest, so amd64 (CI) and arm64
+    # (Apple Silicon) each still resolve their own platform image.
+    # Override FINERACT_IMAGE to test against a moving tag on purpose.
+    image: ${FINERACT_IMAGE:-apache/fineract:7ac780192@sha256:c3722d8475e140949b6bbec505833f0b5e5a6c27f8f8bd8d2ac38ff7df20fa05}
     container_name: e2e-fineract
     depends_on:
       db:
