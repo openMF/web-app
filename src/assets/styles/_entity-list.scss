@@ -282,7 +282,10 @@
   .list-header,
   .list-row {
     display: grid;
-    grid-template-columns: 4px 36px minmax(220px, 32%) 148px minmax(120px, 16%) minmax(120px, 16%) minmax(150px, 18%);
+
+    /* Name takes every pixel the other columns don't need, so long names stay readable. */
+    /* stylelint-disable-next-line unit-allowed-list */
+    grid-template-columns: 4px 36px minmax(220px, 1fr) 148px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%);
     align-items: center;
     gap: 14px;
     padding: 8px 16px;
@@ -399,12 +402,18 @@
   }
 
   .name {
+    display: -webkit-box;
     font-size: 13.5px;
     font-weight: 600;
+    line-height: 1.3;
     color: var(--loan-text-1);
-    white-space: nowrap;
+
+    /* Wrap onto a second line when the column is too narrow, rather than
+       hiding the rest of the name behind an ellipsis. */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
   }
 
   .name-meta {

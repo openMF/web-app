@@ -100,7 +100,7 @@
           {{ initials(row.name) }}
         </div>
         <div class="name-block">
-          <span class="name">{{ row.name }}</span>
+          <span class="name" [title]="row.name">{{ row.name }}</span>
         </div>
         @if (row.status?.value) {
           <span class="status-pill" [ngClass]="severity(row)" [title]="'labels.status.' + row.status.value | translate">

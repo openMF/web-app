@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
@@ -60,6 +61,7 @@ import { StatusLookupPipe } from '@pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { SystemService } from 'app/system/system.service';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -99,18 +101,19 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private errorHandler = inject(ErrorHandlerService);
+  private systemService = inject(SystemService);
   dialog = inject(MatDialog);
 
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
-  loanDatatables: any;
+  loanDatatables: any[] = [];
   /** Whether datatable filtering has completed */
   datatablesReady = false;
   /** Recalculate Interest */
   recalculateInterest: any;
   /** loan Arrears Delinquency config value */
-  loanDisplayArrearsDelinquency: number;
+  loanDisplayArrearsDelinquency = 0;
   /** Status */
   status: string;
   entityType: string;
@@ -135,39 +138,68 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     const loansService = this.loansService;
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
-        this.loanDetailsData = data.loanDetailsData;
-        if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
-        }
-        this.loanDatatables = data.loanDatatables || [];
-        this.loanStatus = this.loanDetailsData.status;
-        this.currency = this.loanDetailsData.currency;
-        if (this.loanProductService.isLoanProduct) {
-          this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-          this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-          loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
-          if (this.loanStatus.active) {
-            this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-              if (!lt.manuallyReversed) {
-                if (lt.type.reAge) {
-                  this.loanReAged = true;
-                } else if (lt.type.reAmortize) {
-                  this.loanReAmortized = true;
-                }
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetailsData = data.loanDetailsData;
+      if (!this.loanDetailsData.loanProductName) {
+        this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
+      }
+      this.loanStatus = this.loanDetailsData.status;
+      this.currency = this.loanDetailsData.currency;
+      if (this.loanProductService.isLoanProduct) {
+        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+        loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
+        if (this.loanStatus.active) {
+          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+            if (!lt.manuallyReversed) {
+              if (lt.type.reAge) {
+                this.loanReAged = true;
+              } else if (lt.type.reAmortize) {
+                this.loanReAmortized = true;
               }
-            });
-          }
-          // Filter datatables based on entity datatable checks
+            }
+          });
+        }
+      }
+      this.loadDeferredRouteData();
+      this.setConditionalButtons();
+    });
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
+
+  /**
+   * Loads account metadata that is not required to activate the General route.
+   * This keeps the account header and General tab responsive while the optional
+   * datatable navigation and arrears display configuration are retrieved.
+   */
+  loadDeferredRouteData(): void {
+    this.datatablesReady = false;
+    const appTable = this.loanProductService.isWorkingCapital ? 'm_wc_loan' : 'm_loan';
+
+    this.loansService
+      .getLoanDataTables(appTable)
+      .pipe(
+        catchError(() => of([])),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanDatatables: any) => {
+        this.loanDatatables = loanDatatables || [];
+
+        if (this.loanProductService.isLoanProduct) {
           this.filterDatatablesByProduct();
         } else {
           this.datatablesReady = true;
         }
-        this.setConditionalButtons();
       });
-    this.loanId = this.route.snapshot.params['loanId'];
+
+    this.systemService
+      .getConfigurationByName('loan-arrears-delinquency-display-data')
+      .pipe(
+        catchError(() => of({ value: 0 })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanArrearsDelinquencyConfig) => {
+        this.loanDisplayArrearsDelinquency = loanArrearsDelinquencyConfig?.value || 0;
+      });
   }
 
   ngOnInit() {
