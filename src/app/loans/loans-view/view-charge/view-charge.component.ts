@@ -82,7 +82,8 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
       .subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
         this.chargeData = data.loansAccountCharge;
         this.allowPayCharge = this.chargeData.chargePayable && !this.chargeData.paid;
-        this.allowWaive = !this.chargeData.chargeTimeType.waived;
+        // Working Capital loans do not support the waive charge command.
+        this.allowWaive = !this.chargeData.chargeTimeType.waived && !this.loanProductService.isWorkingCapital;
         this.loansAccountData = data.loanDetailsData;
       });
   }

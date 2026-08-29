@@ -3546,9 +3546,9 @@
       "Registration Data": "Datos de registro",
       "DIN/Folio": "DIN/Folio",
       "Record": "Registro",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "Nombre del notario",
+      "Registration Date": "Fecha de registro",
+      "Nature of business, business activity, or corporate purpose": "Naturaleza del negocio, actividad comercial u objeto social",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -5954,6 +5954,11 @@
         "disburse": "Desembolsar este préstamo",
         "backToClient": "Volver al perfil del cliente"
       }
+    },
+    "trail": {
+      "stepsNote": "Estos son los registros que consultó el asistente. La base de cualquier decisión sobre este cliente está en Fineract: las reglas del producto de crédito, el calendario de pagos y la política crediticia de su institución.",
+      "thinking": "Pensamiento",
+      "notesCaution": "Texto de trabajo del propio asistente. No es un registro de cómo se produjo la respuesta, ni una evaluación crediticia. Verifique cada cifra con el expediente del cliente."
     },
     "actions": {
       "tryAgain": "Intentar de nuevo",

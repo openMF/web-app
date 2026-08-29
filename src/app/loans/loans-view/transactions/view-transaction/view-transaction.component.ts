@@ -50,6 +50,7 @@ import { TransactionPaymentDetailComponent } from '../../../../shared/transactio
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan-account-actions-base.component';
+import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../../loan-transaction-type.helper';
 
 /** Custom Dialogs */
 
@@ -307,6 +308,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           heading: this.translateService.instant('labels.heading.Undo Transaction'),
           dialogContext:
             this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') +
+            ' ' +
             `${this.transactionData.id}`
         }
       });
@@ -447,12 +449,13 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     if (!this.transactionType) return 'badge-repayment';
     const t = this.transactionType;
     if (this.transactionData.manuallyReversed || this.transactionData.reversed) return 'badge-reversed';
-    if (t.accrual || t.code === 'loanTransactionType.overdueCharge') return 'badge-accrual';
+    if (isAccrualKindTransaction(t)) return 'badge-accrual';
     if (t.disbursement) return 'badge-disbursement';
     if (t.downPayment || t.code === 'loanTransactionType.downPayment') return 'badge-downpayment';
     if (t.chargeoff || t.code === 'loanTransactionType.chargeOff') return 'badge-chargeoff';
     if (t.reAge) return 'badge-reage';
     if (t.reAmortize) return 'badge-reamortize';
+    if (isDiscountFeeKindTransaction(t)) return 'badge-discount';
     if (this.existTransactionRelations) return 'badge-linked';
     return 'badge-repayment';
   }
@@ -461,12 +464,13 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     if (!this.transactionType) return 'card-tx--repayment';
     const t = this.transactionType;
     if (this.transactionData.manuallyReversed || this.transactionData.reversed) return 'card-tx--reversed';
-    if (t.accrual || t.code === 'loanTransactionType.overdueCharge') return 'card-tx--accrual';
+    if (isAccrualKindTransaction(t)) return 'card-tx--accrual';
     if (t.disbursement) return 'card-tx--disbursement';
     if (t.downPayment || t.code === 'loanTransactionType.downPayment') return 'card-tx--downpayment';
     if (t.chargeoff || t.code === 'loanTransactionType.chargeOff') return 'card-tx--chargeoff';
     if (t.reAge) return 'card-tx--reage';
     if (t.reAmortize) return 'card-tx--reamortize';
+    if (isDiscountFeeKindTransaction(t)) return 'card-tx--discount';
     if (this.existTransactionRelations) return 'card-tx--linked';
     return 'card-tx--repayment';
   }

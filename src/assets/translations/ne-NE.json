@@ -3538,9 +3538,9 @@
       "Registration Data": "दर्ता विवरण",
       "DIN/Folio": "DIN/Folio",
       "Record": "रेकर्ड",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "नोटरीको नाम",
+      "Registration Date": "दर्ता मिति",
+      "Nature of business, business activity, or corporate purpose": "व्यवसायको प्रकृति, व्यावसायिक गतिविधि वा संस्थागत उद्देश्य",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -3714,7 +3714,7 @@
       "Municipality City": "Municipality/City",
       "Locality Borough Town": "Locality/Borough/Town",
       "Representative Name": "Representative Name",
-      "Deed Number": "Deed Number",
+      "Deed Number": "दस्तावेज नम्बर",
       "Date Of Deed": "Date of Deed",
       "Name Of Notary": "Name of Notary",
       "Din Folio": "DIN/Folio",
@@ -5930,6 +5930,11 @@
         "disburse": "यो ऋण वितरण गर्नुहोस्",
         "backToClient": "ग्राहक प्रोफाइलमा फर्कनुहोस्"
       }
+    },
+    "trail": {
+      "stepsNote": "यी सहायकले पढेका अभिलेखहरू हुन्। यस ग्राहकसम्बन्धी कुनै पनि निर्णयको आधार Fineract मा छ: ऋण उत्पादनका नियम, भुक्तानी तालिका, र तपाईंको संस्थाको ऋण नीति।",
+      "thinking": "सोचाइ",
+      "notesCaution": "सहायकले काम गर्दा लेखेको पाठ। जवाफ कसरी बन्यो भन्ने अभिलेख होइन, र ऋण मूल्याङ्कन पनि होइन। हरेक अङ्क ग्राहकको अभिलेखसँग मिलाएर हेर्नुहोस्।"
     },
     "actions": {
       "tryAgain": "\u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",

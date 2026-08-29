@@ -3540,9 +3540,9 @@
       "Registration Data": "Registrační údaje",
       "DIN/Folio": "DIN/Folio",
       "Record": "Záznam",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "Jméno notáře",
+      "Registration Date": "Datum registrace",
+      "Nature of business, business activity, or corporate purpose": "Povaha podnikání, obchodní činnost nebo účel společnosti",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -3716,7 +3716,7 @@
       "Municipality City": "Municipality/City",
       "Locality Borough Town": "Locality/Borough/Town",
       "Representative Name": "Representative Name",
-      "Deed Number": "Deed Number",
+      "Deed Number": "Číslo listiny",
       "Date Of Deed": "Date of Deed",
       "Name Of Notary": "Name of Notary",
       "Din Folio": "DIN/Folio",
@@ -6221,6 +6221,11 @@
         "disburse": "Vyplaťte tento úvěr",
         "backToClient": "Zpět na profil klienta"
       }
+    },
+    "trail": {
+      "stepsNote": "Toto jsou záznamy, které asistent přečetl. Podklad pro jakékoli rozhodnutí o tomto klientovi je ve Fineractu: pravidla úvěrového produktu, splátkový kalendář a úvěrová politika vaší instituce.",
+      "thinking": "Přemýšlení",
+      "notesCaution": "Vlastní pracovní text asistenta. Není to záznam o tom, jak odpověď vznikla, ani úvěrové hodnocení. Ověřte každou částku podle záznamu klienta."
     },
     "actions": {
       "tryAgain": "Zkusit znovu",

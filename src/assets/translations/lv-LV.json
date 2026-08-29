@@ -3539,9 +3539,9 @@
       "Registration Data": "Reģistrācijas dati",
       "DIN/Folio": "DIN/Folio",
       "Record": "Ieraksts",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "Notāra vārds",
+      "Registration Date": "Reģistrācijas datums",
+      "Nature of business, business activity, or corporate purpose": "Uzņēmējdarbības veids, komercdarbība vai sabiedrības mērķis",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -3715,7 +3715,7 @@
       "Municipality City": "Municipality/City",
       "Locality Borough Town": "Locality/Borough/Town",
       "Representative Name": "Representative Name",
-      "Deed Number": "Deed Number",
+      "Deed Number": "Akta numurs",
       "Date Of Deed": "Date of Deed",
       "Name Of Notary": "Name of Notary",
       "Din Folio": "DIN/Folio",
@@ -5930,6 +5930,11 @@
         "disburse": "Izmaksājiet šo aizdevumu",
         "backToClient": "Atpakaļ uz klienta profilu"
       }
+    },
+    "trail": {
+      "stepsNote": "Šie ir ieraksti, ko asistents izlasīja. Jebkura lēmuma pamatojums par šo klientu ir Fineract sistēmā: aizdevuma produkta noteikumi, atmaksas grafiks un jūsu iestādes kredītpolitika.",
+      "thinking": "Domāšana",
+      "notesCaution": "Paša asistenta darba teksts. Tas nav ieraksts par to, kā atbilde tika iegūta, un tas nav kredīta novērtējums. Pārbaudiet katru skaitli klienta lietā."
     },
     "actions": {
       "tryAgain": "M\u0113\u0123in\u0101t v\u0113lreiz",

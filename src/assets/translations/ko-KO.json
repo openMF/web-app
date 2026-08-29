@@ -3539,9 +3539,9 @@
       "Registration Data": "등록 정보",
       "DIN/Folio": "DIN/Folio",
       "Record": "기록",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "공증인 성명",
+      "Registration Date": "등록일",
+      "Nature of business, business activity, or corporate purpose": "사업의 성격, 사업 활동 또는 법인 목적",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -3715,7 +3715,7 @@
       "Municipality City": "Municipality/City",
       "Locality Borough Town": "Locality/Borough/Town",
       "Representative Name": "Representative Name",
-      "Deed Number": "Deed Number",
+      "Deed Number": "증서 번호",
       "Date Of Deed": "Date of Deed",
       "Name Of Notary": "Name of Notary",
       "Din Folio": "DIN/Folio",
@@ -5930,6 +5930,11 @@
         "disburse": "이 대출을 지급해 주세요",
         "backToClient": "고객 프로필로 돌아가기"
       }
+    },
+    "trail": {
+      "stepsNote": "어시스턴트가 읽은 기록입니다. 이 고객에 대한 결정의 근거는 Fineract에 있습니다. 대출 상품 규칙, 상환 일정, 그리고 기관의 여신 정책입니다.",
+      "thinking": "생각 과정",
+      "notesCaution": "어시스턴트가 작업 중 남긴 글입니다. 답변이 어떻게 만들어졌는지에 대한 기록이 아니며, 신용 평가도 아닙니다. 모든 수치는 고객 기록과 대조하십시오."
     },
     "actions": {
       "tryAgain": "\ub2e4\uc2dc \uc2dc\ub3c4",

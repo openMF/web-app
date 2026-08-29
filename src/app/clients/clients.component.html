@@ -103,7 +103,7 @@
           {{ initials(row.displayName) }}
         </div>
         <div class="name-block">
-          <span class="name">{{ hideClientData ? maskName(row.displayName) : row.displayName }}</span>
+          <span class="name" [title]="displayedName(row)">{{ displayedName(row) }}</span>
           @if (metaDate(row); as date) {
             <span class="name-meta">
               {{ legalFormLabel(row) | translate }} · {{ metaDateLabel(row) | translate }} {{ date | dateFormat }}
@@ -113,9 +113,9 @@
           }
         </div>
         @if (row.status?.value) {
-          <span class="status-pill" [ngClass]="severity(row)">
+          <span class="status-pill" [ngClass]="severity(row)" [title]="'labels.status.' + row.status.value | translate">
             <span class="dot"></span>
-            {{ 'labels.status.' + row.status.value | translate }}
+            <span class="label">{{ 'labels.status.' + row.status.value | translate }}</span>
           </span>
         } @else {
           <span class="muted-dash">—</span>

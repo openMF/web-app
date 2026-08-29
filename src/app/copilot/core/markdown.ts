@@ -19,7 +19,38 @@
  * would eventually disagree.
  */
 export function renderMarkdown(markdown: string | null | undefined): string {
-  return render(escapeHtml(markdown ?? ''));
+  return render(escapeHtml(withoutHalfWrittenMarkup(markdown ?? '')));
+}
+
+/**
+ * Remove what is markup rather than answer, including the parts of it that have only half
+ * arrived.
+ *
+ * <p>Everything here exists because a reply is rendered while it is still being written. A
+ * fence that has opened and not closed, or an opener still being spelled out a character at a
+ * time, was reaching the screen verbatim: an officer watched ```suggest and the follow-up
+ * prompts appear as though the assistant were talking to itself, then saw them vanish and come
+ * back as buttons. That was only tidied once the turn ended.
+ *
+ * <p>The suggest block is instruction to this panel, so it never belongs in the answer at any
+ * point. Any other fence still belongs, but its bare opener does not until there is something
+ * inside it.
+ */
+function withoutHalfWrittenMarkup(markdown: string): string {
+  const withoutSuggestions = markdown
+    // Closed. The closing fence has to open a line of its own, or a prompt that itself mentions
+    // three backticks ends the block early and spills the rest of the prompts into the answer.
+    .replace(/```suggest\b[\s\S]*?^[ \t]*```[ \t]*$/gim, '')
+    // Opened mid-stream and not closed yet. This is what was on screen.
+    .replace(/```suggest[\s\S]*$/i, '')
+    // The opener itself, arriving a character at a time.
+    .replace(/`{3}s(?:u(?:g(?:g(?:e(?:s(?:t)?)?)?)?)?)?\s*$/i, '');
+
+  // A trailing fence opener of any other kind: hold it until it has content. Counted rather
+  // than matched, because the same three characters close a block, and stripping the close of
+  // a finished one would spill the code into the prose around it.
+  const fences = (withoutSuggestions.match(/```/g) ?? []).length;
+  return fences % 2 === 1 ? withoutSuggestions.replace(/```[a-z0-9_-]*[ \t]*\n?$/i, '') : withoutSuggestions;
 }
 
 function escapeHtml(text: string): string {

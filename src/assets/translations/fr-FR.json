@@ -3542,9 +3542,9 @@
       "Registration Data": "Données d'enregistrement",
       "DIN/Folio": "DIN/Folio",
       "Record": "Enregistrement",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "Nom du notaire",
+      "Registration Date": "Date d’enregistrement",
+      "Nature of business, business activity, or corporate purpose": "Nature de l’entreprise, activité commerciale ou objet social",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -5934,6 +5934,11 @@
         "disburse": "Décaissez ce prêt",
         "backToClient": "Retour au profil du client"
       }
+    },
+    "trail": {
+      "stepsNote": "Voici les enregistrements consultés par l'assistant. La base de toute décision concernant ce client se trouve dans Fineract : les règles du produit de prêt, l'échéancier de remboursement et la politique de crédit de votre institution.",
+      "thinking": "Réflexion",
+      "notesCaution": "Texte de travail de l'assistant. Ce n'est ni un compte rendu de la manière dont la réponse a été produite, ni une évaluation de crédit. Vérifiez chaque chiffre dans la fiche du client."
     },
     "actions": {
       "tryAgain": "R\u00e9essayer",

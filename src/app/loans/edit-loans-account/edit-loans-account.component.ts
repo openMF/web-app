@@ -89,9 +89,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
         } else if (this.loanProductService.isWorkingCapital) {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+          // The WC loan GET-by-id response has no `client`/`product` objects (they're only populated
+          // on the template-retrieval path) — the ids are the flat `clientId`/`loanProductId` fields.
           this.getWorkingCapitalLoanProductTemplate(
-            this.loansAccountProductTemplate.client.id,
-            this.loansAccountProductTemplate.product.id
+            this.loansAccountProductTemplate.clientId,
+            this.loansAccountProductTemplate.loanProductId
           );
         }
         this.loanProductsBasicDetails = data.loanProductsBasicDetails;
@@ -317,9 +319,22 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       ) {
         delete payload['discount'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+      }
     }
 
-    // No Empty values to be sent
+    // No Empty values to be sent.
     [
       'delinquencyGraceDays',
       'delinquencyStartType'
@@ -328,6 +343,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         delete payload[attr];
       }
     });
+    if (payload['delinquencyBucketId'] === '') {
+      payload['delinquencyBucketId'] = null;
+    }
 
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)

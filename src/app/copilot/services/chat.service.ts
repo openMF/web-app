@@ -95,6 +95,9 @@ export class ChatService {
   /** The last question sent, so a retryable failure can offer to send it again. */
   private lastPrompt: string | null = null;
 
+  /** When the turn in flight began, for the wall-clock duration the panel shows. */
+  private turnStartedAt = 0;
+
   /** Whether conversations are kept on this device, seeded from the officer's last choice. */
   private historyOn = ChatService.readHistoryPreference();
 
@@ -268,6 +271,32 @@ export class ChatService {
     return true;
   }
 
+  /**
+   * Add a step to the running record, or close the one already open.
+   *
+   * <p>Matched on the label rather than the tool name, because the same tool can legitimately
+   * be called twice in one turn and each call is its own step in what the officer reads.
+   */
+  private recordStep(event: McpStreamEvent): void {
+    const label = event.toolLabel ?? event.toolName;
+    if (!label) {
+      return;
+    }
+    this.updateDraft((draft) => {
+      const steps = [...(draft.steps ?? [])];
+      if (event.toolPhase === 'finished') {
+        for (let i = steps.length - 1; i >= 0; i--) {
+          if (!steps[i].done) {
+            steps[i] = { ...steps[i], label, done: true, durationMs: event.durationMs };
+            return { ...draft, steps };
+          }
+        }
+      }
+      steps.push({ label, readOnly: event.readOnly !== false, done: event.toolPhase === 'finished' });
+      return { ...draft, steps };
+    });
+  }
+
   /** Approve or reject the pending write action; the reply continues streaming. */
   decideAction(decision: 'approve' | 'reject'): void {
     this.ensureCurrentUser(); // A card must never be approved under a different login.
@@ -384,6 +413,10 @@ export class ChatService {
 
   private startStream(events: Observable<McpStreamEvent>): void {
     this.isStreaming$.next(true);
+    // Stamped here so the panel can say how long the officer waited. Summing the model's timer
+    // and each call's duration would count any overlap twice and miss the answer streaming
+    // after both, so the turn is measured end to end instead.
+    this.turnStartedAt = Date.now();
     this.pushMessage({
       id: this.nextId(),
       role: 'assistant',
@@ -407,10 +440,23 @@ export class ChatService {
       case 'token':
         this.appendToDraft(event.token ?? '');
         break;
+      case 'thinking':
+        // Opened lazily by the gateway, so a model with thinking off produces no panel at all
+        // rather than an empty one. Nothing to do on start beyond letting the deltas arrive.
+        if (event.thinkingPhase === 'delta' && event.thinking) {
+          this.updateDraft((draft) => ({
+            ...draft,
+            workingNotes: (draft.workingNotes ?? '') + event.thinking
+          }));
+        } else if (event.thinkingPhase === 'end') {
+          this.updateDraft((draft) => ({ ...draft, notesElapsedMs: event.thinkingElapsedMs }));
+        }
+        break;
       case 'tool_call':
         if (event.toolPhase === 'started' && event.toolName) {
           this.updateDraft((draft) => ({ ...draft, toolUsed: event.toolName }));
         }
+        this.recordStep(event);
         break;
       case 'action_card':
         if (event.pendingAction) {
@@ -464,6 +510,7 @@ export class ChatService {
    * is deliberately NOT turned into an approvable card.
    */
   private finalizeDraft(): void {
+    const turnMs = this.turnStartedAt ? Date.now() - this.turnStartedAt : undefined;
     this.updateDraft((draft) => {
       const suggestions = draft.suggestedPrompts?.length
         ? draft.suggestedPrompts
@@ -476,6 +523,7 @@ export class ChatService {
         ...draft,
         content,
         suggestedPrompts: suggestions.length ? suggestions : undefined,
+        turnMs,
         isStreaming: false
       };
     });

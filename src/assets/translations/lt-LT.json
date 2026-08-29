@@ -3538,9 +3538,9 @@
       "Registration Data": "Registracijos duomenys",
       "DIN/Folio": "DIN/Folio",
       "Record": "Įrašas",
-      "Name of the Notary": "Name of the Notary",
-      "Registration Date": "Registration Date",
-      "Nature of business, business activity, or corporate purpose": "Nature of business, business activity, or corporate purpose",
+      "Name of the Notary": "Notaro vardas",
+      "Registration Date": "Registracijos data",
+      "Nature of business, business activity, or corporate purpose": "Verslo pobūdis, verslo veikla arba įmonės tikslas",
       "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
       "Yes / No": "Yes / No",
       "Affiliation": "Affiliation",
@@ -3714,7 +3714,7 @@
       "Municipality City": "Municipality/City",
       "Locality Borough Town": "Locality/Borough/Town",
       "Representative Name": "Representative Name",
-      "Deed Number": "Deed Number",
+      "Deed Number": "Akto numeris",
       "Date Of Deed": "Date of Deed",
       "Name Of Notary": "Name of Notary",
       "Din Folio": "DIN/Folio",
@@ -5931,6 +5931,11 @@
         "disburse": "Išmokėkite šią paskolą",
         "backToClient": "Grįžkite į kliento profilį"
       }
+    },
+    "trail": {
+      "stepsNote": "Tai įrašai, kuriuos perskaitė asistentas. Bet kokio sprendimo dėl šio kliento pagrindas yra Fineract sistemoje: paskolos produkto taisyklės, grąžinimo grafikas ir jūsų įstaigos kreditavimo politika.",
+      "thinking": "Mąstymas",
+      "notesCaution": "Paties asistento darbinis tekstas. Tai nėra įrašas apie tai, kaip buvo gautas atsakymas, ir tai nėra kredito vertinimas. Patikrinkite kiekvieną skaičių kliento byloje."
     },
     "actions": {
       "tryAgain": "Bandyti dar kart\u0105",

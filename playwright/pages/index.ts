@@ -69,3 +69,10 @@ export { ChargeViewPage } from './charges/charge-view.page';
 export { CreateLoanAccountPage } from './loans/create-loan-account.page';
 export { LoanAccountViewPage } from './loans/loan-account-view.page';
 export { LoanAccountActionPage, type LoanAccountAction } from './loans/loan-account-action.page';
+
+// ── Savings account page objects ───────────────────────────────────
+
+export { CreateSavingsAccountPage } from './savings/create-savings-account.page';
+export { SavingsAccountViewPage } from './savings/savings-account-view.page';
+export { SavingsAccountActionPage, type SavingsAccountAction } from './savings/savings-account-action.page';
+export { SavingsTransactionPage, type SavingsTransactionType } from './savings/savings-transaction.page';

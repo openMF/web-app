@@ -24,7 +24,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
-import { Breach, LoanProduct, NearBreach } from 'app/products/loan-products/models/loan-product.model';
+import {
+  Breach,
+  DelinquencyBucket,
+  LoanProduct,
+  NearBreach
+} from 'app/products/loan-products/models/loan-product.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -191,9 +196,11 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   allowAttributeOverrides: any | null = null;
 
   delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+  delinquencyBucketOptions: DelinquencyBucket[] = [];
   breachOptions: Breach[] = [];
   nearBreachOptions: NearBreach[] = [];
   allowAttributeOverridesBreach: boolean = true;
+  allowAttributeOverridesDelinquencyBucket: boolean = true;
 
   constructor() {
     super();
@@ -346,6 +353,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.currency = this.resolveCurrency(this.loansAccountTermsData);
       this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
       this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
+      this.delinquencyBucketOptions = this.loansAccountTermsData.options?.delinquencyBucketOptions ?? [];
       this.breachOptions = this.loansAccountTermsData.options?.breachOptions ?? [];
       this.nearBreachOptions = this.loansAccountTermsData.options?.nearBreachOptions ?? [];
       const templateChange = changes['loansAccountProductTemplate'];
@@ -357,14 +365,19 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       if (this.loanId != null && 'accountNo' in this.loansAccountTemplate) {
         this.loansAccountTermsData = this.loansAccountTemplate;
         this.loansAccountTermsForm.patchValue({
-          discount: this.loansAccountTermsData.discountProposed || this.loansAccountTermsData.discount || '',
+          discount:
+            this.loansAccountTermsData.proposedDiscountFee ||
+            this.loansAccountTermsData.approvedDiscountFee ||
+            this.loansAccountTermsData.discountFee ||
+            '',
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
-          periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
+          periodPaymentRate: this.loansAccountTermsData.paymentRate,
           totalPaymentVolume: this.loansAccountTermsData.totalPaymentVolume,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: this.loansAccountTermsData.delinquencyGraceDays,
           delinquencyStartType: this.loansAccountTermsData.delinquencyStartType?.code,
+          delinquencyBucketId: this.loansAccountTermsData.delinquencyBucket?.id,
           breachId: this.loansAccountTermsData.breach?.id,
           nearBreachId: this.loansAccountTermsData.nearBreach?.id,
           breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0
@@ -376,33 +389,60 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           principalAmount: this.loansAccountTermsData.product.principal,
           delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays || '',
           delinquencyStartType: this.loansAccountTermsData.product.delinquencyStartType?.code || '',
+          delinquencyBucketId: this.loansAccountTermsData.product.delinquencyBucket?.id || '',
           breachId: this.loansAccountTermsData.product.breach?.id || '',
           nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || '',
           breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0
         });
         this.cdr.markForCheck();
       }
-      this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
-      if (
-        !this.allowAttributeOverrides.periodPaymentFrequency ||
-        this.allowAttributeOverrides.periodPaymentFrequency === false
-      ) {
-        this.loansAccountTermsForm.controls.repaymentEvery.disable();
-      }
-      if (
-        !this.allowAttributeOverrides.periodPaymentFrequencyType ||
-        this.allowAttributeOverrides.periodPaymentFrequencyType === false
-      ) {
-        this.loansAccountTermsForm.controls.repaymentFrequencyType.disable();
-      }
-      if (!this.allowAttributeOverrides.discountDefault || this.allowAttributeOverrides.discountDefault === false) {
-        this.loansAccountTermsForm.controls.discount.disable();
-      }
-      if (!this.allowAttributeOverrides.breach || this.allowAttributeOverrides.breach === false) {
-        this.allowAttributeOverridesBreach = false;
-        this.loansAccountTermsForm.controls.breachId.disable();
-        this.loansAccountTermsForm.controls.nearBreachId.disable();
-        this.loansAccountTermsForm.controls.breachGraceDays.disable();
+      // On the first change, loansAccountProductTemplate is still the raw account-details response
+      // (no `product`) — the WC template with `product.allowAttributeOverrides` arrives asynchronously
+      // and triggers a second ngOnChanges once loaded.
+      if (this.loansAccountProductTemplate.product) {
+        this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
+        if (
+          !this.allowAttributeOverrides.periodPaymentFrequency ||
+          this.allowAttributeOverrides.periodPaymentFrequency === false
+        ) {
+          this.loansAccountTermsForm.controls.repaymentEvery.disable();
+        } else {
+          this.loansAccountTermsForm.controls.repaymentEvery.enable();
+        }
+        if (
+          !this.allowAttributeOverrides.periodPaymentFrequencyType ||
+          this.allowAttributeOverrides.periodPaymentFrequencyType === false
+        ) {
+          this.loansAccountTermsForm.controls.repaymentFrequencyType.disable();
+        } else {
+          this.loansAccountTermsForm.controls.repaymentFrequencyType.enable();
+        }
+        if (!this.allowAttributeOverrides.discountDefault || this.allowAttributeOverrides.discountDefault === false) {
+          this.loansAccountTermsForm.controls.discount.disable();
+        } else {
+          this.loansAccountTermsForm.controls.discount.enable();
+        }
+        if (
+          !this.allowAttributeOverrides.delinquencyBucketClassification ||
+          this.allowAttributeOverrides.delinquencyBucketClassification === false
+        ) {
+          this.allowAttributeOverridesDelinquencyBucket = false;
+          this.loansAccountTermsForm.controls.delinquencyBucketId.disable();
+        } else {
+          this.allowAttributeOverridesDelinquencyBucket = true;
+          this.loansAccountTermsForm.controls.delinquencyBucketId.enable();
+        }
+        if (!this.allowAttributeOverrides.breach || this.allowAttributeOverrides.breach === false) {
+          this.allowAttributeOverridesBreach = false;
+          this.loansAccountTermsForm.controls.breachId.disable();
+          this.loansAccountTermsForm.controls.nearBreachId.disable();
+          this.loansAccountTermsForm.controls.breachGraceDays.disable();
+        } else {
+          this.allowAttributeOverridesBreach = true;
+          this.loansAccountTermsForm.controls.breachId.enable();
+          this.loansAccountTermsForm.controls.nearBreachId.enable();
+          this.loansAccountTermsForm.controls.breachGraceDays.enable();
+        }
       }
     }
   }
@@ -490,21 +530,44 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         );
       }
     } else if (this.loanProductService.isWorkingCapital) {
+      // Editing an existing account: read from the account-specific input, not the product
+      // template — loansAccountProductTemplate is still the raw account response at this point
+      // only by timing coincidence (the async WC template hasn't loaded yet), and once it does
+      // load its `loanData` is blank product-default data for a new loan, not this account's values.
+      const isEditingAccount = this.loanId != null && this.loansAccountTemplate?.accountNo;
+      if (isEditingAccount) {
+        this.loansAccountTermsData = this.loansAccountTemplate;
+      }
       if (this.loansAccountTermsData) {
+        // Creating a new account: fall back to the product default for anything not yet set.
         this.loansAccountTermsForm.patchValue({
-          principalAmount: this.loansAccountTermsData.principal || this.loansAccountTermsData.product.principal,
+          principalAmount: isEditingAccount
+            ? this.loansAccountTermsData.principal
+            : this.loansAccountTermsData.principal || this.loansAccountTermsData.product?.principal,
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
-          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType.id,
-          delinquencyGraceDays:
-            this.loansAccountTermsData.delinquencyGraceDays || this.loansAccountTermsData.product.delinquencyGraceDays,
-          delinquencyStartType:
-            this.loansAccountTermsData.delinquencyStartType?.id ||
-            this.loansAccountTermsData.product.delinquencyStartType?.id,
-          breachId: this.loansAccountTermsData.breach?.id || this.loansAccountTermsData.product.breach?.id,
-          nearBreachId: this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product.nearBreach?.id,
-          breachGraceDays:
-            this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product.breachGraceDays ?? ''
+          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
+          delinquencyGraceDays: isEditingAccount
+            ? this.loansAccountTermsData.delinquencyGraceDays
+            : this.loansAccountTermsData.delinquencyGraceDays ||
+              this.loansAccountTermsData.product?.delinquencyGraceDays,
+          delinquencyStartType: isEditingAccount
+            ? this.loansAccountTermsData.delinquencyStartType?.id
+            : this.loansAccountTermsData.delinquencyStartType?.id ||
+              this.loansAccountTermsData.product?.delinquencyStartType?.id,
+          delinquencyBucketId: isEditingAccount
+            ? this.loansAccountTermsData.delinquencyBucket?.id
+            : this.loansAccountTermsData.delinquencyBucket?.id ||
+              this.loansAccountTermsData.product?.delinquencyBucket?.id,
+          breachId: isEditingAccount
+            ? this.loansAccountTermsData.breach?.id
+            : this.loansAccountTermsData.breach?.id || this.loansAccountTermsData.product?.breach?.id,
+          nearBreachId: isEditingAccount
+            ? this.loansAccountTermsData.nearBreach?.id
+            : this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product?.nearBreach?.id,
+          breachGraceDays: isEditingAccount
+            ? (this.loansAccountTermsData.breachGraceDays ?? '')
+            : (this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product?.breachGraceDays ?? '')
         });
       }
     }
@@ -815,6 +878,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           ]
         ],
         delinquencyStartType: [''],
+        delinquencyBucketId: [''],
         breachId: [''],
         nearBreachId: [''],
         breachGraceDays: ['']
@@ -1021,7 +1085,11 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   }
 
   clearProperty($event: Event, propertyName: string): void {
-    if (propertyName === 'breachId') {
+    if (propertyName === 'delinquencyBucketId') {
+      this.loansAccountTermsForm.patchValue({
+        delinquencyBucketId: ''
+      });
+    } else if (propertyName === 'breachId') {
       this.loansAccountTermsForm.patchValue({
         breachId: '',
         nearBreachId: '',
