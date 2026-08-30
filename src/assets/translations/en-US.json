@@ -5719,6 +5719,8 @@
     "Specific days before when repayment": "Specific days before when repayment due notification should be sent.",
     "Specific days when after the repayment Overdue": "Specific days when after the repayment Overdue notification should be sent.",
     "Successful": "Successful",
+    "Switch to dark theme": "Switch to dark theme",
+    "Switch to light theme": "Switch to light theme",
     "The Amortization value": "The Amortization value is input to calculating the repayment amounts for repayment of the loan.",
     "The Interest method value": "The Interest method value is input to calculating the payments amount for repayment of the loan.",
     "The currency in which the deposit will be disbursed": "The currency in which the deposit will be disbursed.",
