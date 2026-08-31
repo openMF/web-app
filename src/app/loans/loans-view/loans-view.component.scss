@@ -24,7 +24,7 @@
   font-weight: 400;
 }
 
-// Written-off pill shown in the account header for Working Capital loans.
+// Written-off pill shown in the write-off banner for Working Capital loans.
 .written-off-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -33,7 +33,49 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  color: #fff;
   background-color: var(--md-sys-color-error, #b3261e);
+}
+
+// Banner marking a written-off account. A written-off loan is closed with a
+// zero balance, exactly like a settled one, so the state gets its own strip
+// under the header instead of a line lost inside the metadata table.
+.written-off-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 16px 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border-left: 4px solid var(--md-sys-color-error, #b3261e);
+  background-color: rgb(179 38 30 / 8%);
+  font-size: 14px;
+}
+
+.banner-item {
+  font-weight: 500;
+}
+
+// Wrapper carrying the tooltip of a blocked menu action. Needs to be a block so
+// the menu item inside keeps the full width of the panel.
+.menu-item-wrapper {
+  display: block;
+}
+
+// Reason a menu action is blocked, read by screen readers only: the tooltip on
+// the wrapper needs a hover the disabled item never receives.
+.menu-item-reason {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .datatable-scroll-x {

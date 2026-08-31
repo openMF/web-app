@@ -100,18 +100,6 @@
                       </td>
                     </tr>
                   }
-                  @if (loanProductService.isWorkingCapital && loanDetailsData.writtenOffOnDate) {
-                    <tr>
-                      <td>{{ 'labels.inputs.Written Off On' | translate }}:</td>
-                      <td>
-                        <span class="written-off-badge">{{ 'labels.status.Written Off' | translate }}</span>
-                        <span class="m-l-10">{{ loanDetailsData.writtenOffOnDate | dateFormat }}</span>
-                        @if (loanDetailsData.writeOffReason?.name) {
-                          <span class="m-l-10">· {{ loanDetailsData.writeOffReason.name }}</span>
-                        }
-                      </td>
-                    </tr>
-                  }
                 </tbody>
               </table>
             </div>
@@ -256,14 +244,41 @@
       </div>
     </mifosx-account-header>
 
+    @if (isWorkingCapitalWrittenOff) {
+      <div class="written-off-banner">
+        <span class="written-off-badge">{{ 'labels.status.Written Off' | translate }}</span>
+        <span class="banner-item">
+          {{ 'labels.inputs.Written Off On' | translate }}: {{ loanDetailsData.writtenOffOnDate | dateFormat }}
+        </span>
+        @if (loanDetailsData.writeOffReason?.name) {
+          <span class="banner-item">
+            {{ 'labels.inputs.Reason for Write-Off' | translate }}: {{ loanDetailsData.writeOffReason.name }}
+          </span>
+        }
+      </div>
+    }
+
     <mat-menu #accountMenu="matMenu">
       @for (item of buttonConfig.singleButtons; track item) {
-        <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
-          <mat-icon matListIcon>
-            <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.menus.' + item.name | translate }}</span>
-        </button>
+        <!-- The tooltip lives on the wrapper: a disabled button fires no mouse events. -->
+        <span
+          class="menu-item-wrapper"
+          *mifosxHasPermission="item.taskPermissionName"
+          [matTooltip]="item.disabledTooltip | translate"
+          [matTooltipDisabled]="!item.disabled"
+        >
+          <button mat-menu-item [disabled]="item.disabled" (click)="loanAction(item.name)">
+            <mat-icon matListIcon>
+              <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
+            </mat-icon>
+            <span>{{ 'labels.menus.' + item.name | translate }}</span>
+            <!-- The tooltip above is mouse-only: a screen reader gets the same
+                 reason from here, since a disabled item takes no hover. -->
+            @if (item.disabled) {
+              <span class="menu-item-reason">{{ item.disabledTooltip | translate }}</span>
+            }
+          </button>
+        </span>
       }
 
       @if (buttonConfig.optionsPayment.length) {

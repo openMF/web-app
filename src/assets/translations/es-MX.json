@@ -444,6 +444,18 @@
       "noBreachConfiguration": "Este préstamo no tiene configuración de incumplimiento.",
       "loanIsNotActive": "La evaluación de incumplimiento solo se puede cambiar mientras el préstamo está activo.",
       "breachIsDisabled": "La evaluación de incumplimiento está deshabilitada para este préstamo. Habilítala para ejecutar esta acción."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Esta recuperación ya fue reversada.",
+      "amountMustBePositive": "El monto debe ser mayor que cero.",
+      "beforeLastTransactionDate": "La fecha de la recuperación no puede ser anterior a la última transacción del préstamo.",
+      "beforeWriteOffDate": "La fecha de la recuperación no puede ser anterior a la fecha del castigo.",
+      "dateOutOfRange": "La fecha del pago de recuperación está fuera del rango permitido para este préstamo.",
+      "futureDate": "La fecha de la recuperación no puede ser futura.",
+      "greaterThanRemaining": "El monto no puede ser mayor al monto por recuperar.",
+      "loanNotWrittenOff": "Este préstamo no está castigado, por lo que no admite una recuperación.",
+      "reversalForbidden": "No tiene permiso para reversar transacciones de Capital de Trabajo. Solicite a un administrador que realice la reversión.",
+      "undoWriteOffWithRecoveries": "No se puede reversar el castigo mientras el préstamo tenga recuperaciones. Revérselas primero."
     }
   },
   "labels": {
@@ -1788,7 +1800,8 @@
       "Natural Person": "Natural Person",
       "Personal References (2 Family Members, 1 Acquaintance)": "Referencias personales (2 familiares, 1 conocido)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaración de beneficiarios finales - personas morales",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaración de beneficiarios finales - personas físicas"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaración de beneficiarios finales - personas físicas",
+      "Recovery": "Recuperación"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
@@ -3744,7 +3757,10 @@
       "Submitted Date": "Fecha de envío",
       "No Ext": "Núm. ext.",
       "No Int": "Núm. int.",
-      "Age of the business": "Antigüedad del negocio"
+      "Age of the business": "Antigüedad del negocio",
+      "Written Off Amount": "Monto castigado",
+      "Total Recovered": "Total recuperado",
+      "Pending Recovery": "Por recuperar"
     },
     "links": {
       "Community": "Comunidad",
@@ -4987,7 +5003,9 @@
       "Person PEP PLD Question 3": "Tiene alguna relación familiar (2) con algún accionista, empleado o funcionario de la entidad?",
       "the contents of": "el contenido de",
       "the": "los",
-      "items selected of": "elementos seleccionados de"
+      "items selected of": "elementos seleccionados de",
+      "Recovery Completed": "Recuperación completa",
+      "Recovery Payment Description": "Registra dinero cobrado después del castigo. El préstamo sigue cerrado y su saldo sigue en cero; solo cambia el total recuperado."
     },
     "permissions": {
       "actions": {
@@ -5620,7 +5638,9 @@
     "Withdraw": "Retirar",
     "Yes": "Sí",
     "loan product will be active and available to clients": "La fecha en que el producto de Crédito estará activo y disponible para los clientes. Si está en blanco, el producto de Crédito estará activo tan pronto como se cree.",
-    "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de Crédito nunca quedará inactivo."
+    "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de Crédito nunca quedará inactivo.",
+    "Nothing left to recover": "No queda nada por recuperar en este préstamo.",
+    "Reverse the recovery payments first": "No se puede reversar el castigo mientras el préstamo tenga recuperaciones. Revérselas primero."
   },
   "countries": {
     "AF": "Afganistán",

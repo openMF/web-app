@@ -78,6 +78,8 @@
     --tx-discount-bg: #efebe9;
     --tx-linked: var(--ch-paid);
     --tx-linked-bg: var(--ch-paid-bg);
+    --tx-recovery: #00838f;
+    --tx-recovery-bg: #e0f7fa;
   }
 
   :host-context(.dark-theme) {
@@ -89,6 +91,8 @@
     --tx-reamortize-bg: #002f2b;
     --tx-discount: #bcaaa4;
     --tx-discount-bg: #231613;
+    --tx-recovery: #4dd0e1;
+    --tx-recovery-bg: #06282e;
   }
 }
 

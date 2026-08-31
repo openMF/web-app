@@ -51,6 +51,18 @@
         </div>
       }
 
+      @if (loanProductService.isWorkingCapital && loanDetails.writtenOffOnDate) {
+        <div class="section">
+          <div class="section-head">
+            <h3 class="section-title">{{ 'labels.heading.Recovery' | translate }}</h3>
+          </div>
+          <mifosx-working-capital-recovery-panel
+            [balance]="loanDetails.balance"
+            [currencyCode]="currencyCode"
+          ></mifosx-working-capital-recovery-panel>
+        </div>
+      }
+
       @if (hasNumberOfRepayments() || loanDetails.timeline?.expectedMaturityDate) {
         <div class="section">
           <div class="section-head">

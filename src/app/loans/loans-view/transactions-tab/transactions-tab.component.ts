@@ -43,6 +43,7 @@ import {
   buildWorkingCapitalUndoChargeOffPayload
 } from '../working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { resolveRecoveryPaymentErrorMessage } from '../working-capital/recovery-payment-error.helper';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -380,6 +381,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isReAge(transaction.type)) return 'badge-reage';
     if (this.isReAmortize(transaction.type)) return 'badge-reamortize';
     if (isDiscountFeeKindTransaction(transaction.type)) return 'badge-discount';
+    if (this.isRecoveryRepayment(transaction.type)) return 'badge-recovery';
     if (transaction.transactionRelations?.length > 0) return 'badge-linked';
     return 'badge-repayment';
   }
@@ -402,6 +404,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     }
     if (this.isReAmortize(transaction.type)) {
       return 'reamortize';
+    }
+    if (this.isRecoveryRepayment(transaction.type)) {
+      return 'recovery';
     }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'linked';
@@ -433,6 +438,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     }
     if (isDiscountFeeKindTransaction(transaction.type)) {
       return 'row-discount';
+    }
+    if (this.isRecoveryRepayment(transaction.type)) {
+      return 'row-recovery';
     }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'row-linked';
@@ -505,12 +513,13 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               this.reload();
             });
         } else {
-          this.loansService
-            .applyWorkingCapitalLoanActionCommand(loanId, payload, command, transactionId)
-            .subscribe((responseCmd: any) => {
+          this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, command, transactionId).subscribe({
+            next: () => {
               transaction.reversed = true;
               this.reload();
-            });
+            },
+            error: (error: unknown) => this.reportWorkingCapitalUndoError(error)
+          });
         }
       }
     });
@@ -548,9 +557,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         }
         const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
         // The undo charge-off command targets the loan, not a single transaction.
-        this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, 'undoChargeOff').subscribe(() => {
-          transaction.reversed = true;
-          this.reload();
+        this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, 'undoChargeOff').subscribe({
+          next: () => {
+            transaction.reversed = true;
+            this.reload();
+          },
+          error: (error: unknown) => this.reportWorkingCapitalUndoError(error)
         });
       });
   }
@@ -582,6 +594,14 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
 
   isWriteOff(transactionType: LoanTransactionType): boolean {
     return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
+  }
+
+  /**
+   * A recovery payment is money collected after a write-off. It is recognised as
+   * income instead of reducing debt, so it is marked apart from a repayment.
+   */
+  isRecoveryRepayment(transactionType: LoanTransactionType): boolean {
+    return transactionType.recoveryRepayment || transactionType.code === 'loanTransactionType.recoveryRepayment';
   }
 
   private isDownPayment(transactionType: LoanTransactionType): boolean {
@@ -707,6 +727,21 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           }
         });
       });
+  }
+
+  /**
+   * Reports a failed Working Capital reversal with the backend's own rule.
+   *
+   * HTTP 403 is expected for anyone but a super user: the generic undo command
+   * is authorized with a permission derived at runtime that is not seeded, so
+   * the message says so instead of showing a bare error.
+   * @param error Failed HTTP response
+   */
+  private reportWorkingCapitalUndoError(error: unknown): void {
+    const alert = resolveRecoveryPaymentErrorMessage(error, this.translateService);
+    if (alert) {
+      this.alertService.alert(alert);
+    }
   }
 
   displaySubMenu(transaction: LoanTransaction): boolean {

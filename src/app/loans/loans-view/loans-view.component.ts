@@ -37,6 +37,7 @@ import {
   WorkingCapitalMarkAsFraudDialogResult
 } from './working-capital/loan-account-actions/mark-as-fraud-dialog/mark-as-fraud-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
+import { mapWorkingCapitalWriteOffBalance } from '../models/working-capital/working-capital-loan-account.model';
 import { Currency } from 'app/shared/models/general.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
@@ -144,6 +145,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
       }
       this.loanStatus = this.loanDetailsData.status;
+      // The action menu is rebuilt at the end of this block, so the status it
+      // reads has to come from the details that were just resolved: ngOnInit
+      // does not run again when the route reuses this component.
+      this.status = this.loanDetailsData.status?.value;
       this.currency = this.loanDetailsData.currency;
       if (this.loanProductService.isLoanProduct) {
         this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
@@ -507,6 +512,22 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
     }
 
+    // Recovery gating for a written-off Working Capital loan. Both rules read
+    // the same figures, so they are mapped once here.
+    if (this.loanProductService.isWorkingCapital && this.status === 'Closed (written off)') {
+      const writeOffBalance = mapWorkingCapitalWriteOffBalance(this.loanDetailsData.balance);
+      if (writeOffBalance) {
+        if (writeOffBalance.writtenOffOutstanding <= 0) {
+          this.buttonConfig.disableButton('Recovery Payment', 'tooltips.Nothing left to recover');
+        }
+        // Undoing the write-off would restore the full balance while the money
+        // already recovered stays booked as income: the same money counted twice.
+        if (writeOffBalance.totalRecovered > 0) {
+          this.buttonConfig.disableButton('Undo Write-off', 'tooltips.Reverse the recovery payments first');
+        }
+      }
+    }
+
     // Fraud flag for Working Capital loans. It sits outside the status branches
     // above because the backend only restricts marking: the loan must be active
     // to be flagged, but clearing the flag stays valid in every status, and
@@ -526,6 +547,16 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     }
+  }
+
+  /**
+   * Whether the account is a written-off Working Capital loan.
+   *
+   * A written-off loan looks exactly like a settled one - closed, zero balance -
+   * so the header needs an explicit marker to tell them apart.
+   */
+  get isWorkingCapitalWrittenOff(): boolean {
+    return this.loanProductService.isWorkingCapital && !!this.loanDetailsData?.writtenOffOnDate;
   }
 
   loanAction(actionName: string) {

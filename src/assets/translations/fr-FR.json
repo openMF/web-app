@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Ce prêt n'a aucune configuration de manquement.",
       "loanIsNotActive": "L'évaluation des manquements ne peut être modifiée que lorsque le prêt est actif.",
       "breachIsDisabled": "L'évaluation des manquements est désactivée pour ce prêt. Activez-la pour exécuter cette action."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Ce recouvrement a déjà été annulé.",
+      "amountMustBePositive": "Le montant doit être supérieur à zéro.",
+      "beforeLastTransactionDate": "La date du recouvrement ne peut pas être antérieure à la dernière transaction du prêt.",
+      "beforeWriteOffDate": "La date du recouvrement ne peut pas être antérieure à la date du passage en perte.",
+      "dateOutOfRange": "La date du paiement de recouvrement est en dehors de la plage autorisée pour ce prêt.",
+      "futureDate": "La date du recouvrement ne peut pas être dans le futur.",
+      "greaterThanRemaining": "Le montant ne peut pas dépasser le montant restant à recouvrer.",
+      "loanNotWrittenOff": "Ce prêt n'est pas passé en perte : il ne peut pas recevoir de recouvrement.",
+      "reversalForbidden": "Vous n'avez pas la permission d'annuler des transactions de fonds de roulement. Demandez à un administrateur d'effectuer cette annulation.",
+      "undoWriteOffWithRecoveries": "Le passage en perte ne peut pas être annulé tant que le prêt comporte des recouvrements. Annulez-les d’abord."
     }
   },
   "labels": {
@@ -1785,7 +1797,8 @@
       "Resource Provider / Beneficial Owner": "Fournisseur de ressources / Bénéficiaire effectif",
       "Personal References (2 Family Members, 1 Acquaintance)": "Références personnelles (2 membres de la famille, 1 connaissance)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Déclaration des bénéficiaires effectifs ultimes - personnes morales",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Déclaration des bénéficiaires effectifs ultimes - personnes physiques"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Déclaration des bénéficiaires effectifs ultimes - personnes physiques",
+      "Recovery": "Recouvrement"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Le compte ne sort du statut NPA qu'après apurement des arriérés",
@@ -3741,7 +3754,10 @@
       "Submitted Date": "Date de soumission",
       "No Ext": "N° ext.",
       "No Int": "N° int.",
-      "Age of the business": "Ancienneté de l’activité"
+      "Age of the business": "Ancienneté de l’activité",
+      "Written Off Amount": "Montant passé en perte",
+      "Total Recovered": "Total recouvré",
+      "Pending Recovery": "Reste à recouvrer"
     },
     "links": {
       "Community": "Communauté",
@@ -4964,7 +4980,9 @@
       "Person PEP PLD Question 3": "Avez-vous un lien familial (2) avec un actionnaire, employé ou dirigeant de l’entité ?",
       "the contents of": "le contenu de",
       "the": "les",
-      "items selected of": "éléments sélectionnés de"
+      "items selected of": "éléments sélectionnés de",
+      "Recovery Completed": "Recouvrement terminé",
+      "Recovery Payment Description": "Enregistre l'argent encaissé après le passage en perte. Le prêt reste clôturé et son solde reste à zéro ; seul le total recouvré change."
     },
     "permissions": {
       "actions": {
@@ -5597,7 +5615,9 @@
     "Withdraw": "Retirer",
     "Yes": "Oui",
     "loan product will be active and available to clients": "La date à laquelle le produit de prêt sera actif et disponible pour les clients. Si ce champ est vide, le produit de prêt sera actif dès sa création.",
-    "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit ne deviendra jamais inactif."
+    "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit ne deviendra jamais inactif.",
+    "Nothing left to recover": "Il ne reste rien à recouvrer sur ce prêt.",
+    "Reverse the recovery payments first": "L'annulation du passage en perte est bloquée tant que le prêt comporte des recouvrements. Annulez-les d'abord."
   },
   "countries": {
     "AF": "Afghanistan",
