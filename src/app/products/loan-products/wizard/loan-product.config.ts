@@ -395,17 +395,15 @@ export const FORM_STEPS: FormStep[] = [
     title: 'Currency',
     icon: 'ti-currency-dollar',
     fields: [
+      // The tenant's configured currencies, sourced from the backend template at render time exactly
+      // like Classic, via TEMPLATE_OPTION_SOURCES. Left empty here rather than carrying a hardcoded
+      // four-currency list, which offered choices the tenant may not have and hid the ones it does.
       {
         label: 'labels.inputs.CURRENCY',
         key: 'currencyCode',
         type: 'select',
         required: true,
-        options: [
-          { value: 'INR', label: 'INR – Indian Rupee' },
-          { value: 'USD', label: 'USD – US Dollar' },
-          { value: 'EUR', label: 'EUR – Euro' },
-          { value: 'GBP', label: 'GBP – British Pound' }
-        ]
+        options: []
       },
       {
         label: 'labels.inputs.Decimal Places',
@@ -1312,6 +1310,9 @@ export const INTEREST_RECALCULATION_FIELDS: readonly string[] = [
  * `visibleFields`, so the wizard and Classic always offer the identical choices.
  */
 export const TEMPLATE_OPTION_SOURCES: Record<string, string> = {
+  // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions`
+  // (loan-product-currency-step.component.ts), i.e. the currencies actually configured on the tenant.
+  currencyCode: 'currencyOptions',
   preClosureInterestCalculationStrategy: 'preClosureInterestCalculationStrategyOptions',
   rescheduleStrategyMethod: 'rescheduleStrategyTypeOptions',
   interestRecalculationCompoundingMethod: 'interestRecalculationCompoundingTypeOptions',
