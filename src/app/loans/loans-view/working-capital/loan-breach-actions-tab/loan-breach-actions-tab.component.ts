@@ -155,7 +155,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     'action',
     'threshold',
     'frequency',
-    'createdDate'
+    'submittedOnDate'
   ];
 
   rows = computed<BreachActionRow[]>(() => {
