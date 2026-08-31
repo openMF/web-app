@@ -19,6 +19,38 @@
       <ng-template matStepLabel>{{ step.title }}</ng-template>
 
       <div [formGroup]="form" class="step-panel">
+        <!--
+          Classic mode (Custom/Advanced): host Classic's own Details / Currency / Terms / Settings
+          components instead of the config-driven field grid, so the field set, its conditional
+          visibility, its validators and its payload are Classic's by construction. Every other step
+          below is already shared with Classic and needs no branch.
+        -->
+        <ng-container *ngIf="usesClassicSteps && step.classicStep && loanProductsTemplate">
+          <div class="wizard-classic-step">
+            <mifosx-loan-product-details-step
+              *ngIf="step.classicStep === 'details'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-details-step>
+
+            <mifosx-loan-product-currency-step
+              *ngIf="step.classicStep === 'currency'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-currency-step>
+
+            <mifosx-loan-product-terms-step
+              *ngIf="step.classicStep === 'terms'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-terms-step>
+
+            <mifosx-loan-product-settings-step
+              *ngIf="step.classicStep === 'settings'"
+              [loanProductsTemplate]="loanProductsTemplate"
+              [isLinkedToFloatingInterestRates]="floatingRatesMirrorControl"
+              (advancePaymentStrategy)="onClassicAdvancePaymentStrategy($event)"
+            ></mifosx-loan-product-settings-step>
+          </div>
+        </ng-container>
+
         <ng-container *ngIf="step.kind === 'payment-allocation' && loanProductsTemplate">
           <mifosx-loan-product-payment-strategy-step
             [advancedPaymentAllocations]="advancedPaymentAllocations"
@@ -48,7 +80,8 @@
             <mifosx-loan-product-accounting-step
               [loanProductsTemplate]="loanProductsTemplate"
               [accountingRuleData]="accountingRuleData"
-              [loanProductFormValid]="form.valid"
+              [loanProductFormValid]="usesClassicSteps ? classicFormsValid : form.valid"
+              [deferredIncomeRecognition]="deferredIncomeRecognition"
             ></mifosx-loan-product-accounting-step>
           </div>
         </ng-container>
@@ -88,7 +121,8 @@
             step.kind !== 'interest-refund' &&
             step.kind !== 'deferred-income' &&
             step.kind !== 'borrower-cycle' &&
-            step.kind !== 'review'
+            step.kind !== 'review' &&
+            !(usesClassicSteps && step.classicStep)
           "
         >
           <div class="field-grid">
@@ -147,6 +181,12 @@
           </div>
         </ng-container>
 
+        <!--
+          Classic mode reviews through Classic's own preview component, which renders the full
+          `mifosx-loan-product-summary` — charges, payment allocation and the terms tables the
+          wizard's field-driven summary cannot show. Its submit event is the wizard's submit.
+        -->
+        <!-- Shared Review header: identical banner in both modes, sourced through reviewValue(). -->
         <ng-container *ngIf="step.kind === 'review'">
           <div class="review-banner">
             <div>
@@ -175,7 +215,36 @@
               </div>
             </div>
           </div>
+        </ng-container>
 
+        <ng-container *ngIf="step.kind === 'review' && usesClassicSteps">
+          <!--
+            The summary itself waits for a complete product: LoanProductSummaryComponent dereferences
+            it in ngOnChanges and throws on a partial one (which is why Classic hides its whole
+            preview step until then). The STEP stays visible either way, naming what is still missing
+            rather than silently disappearing from the stepper.
+          -->
+          <div class="wizard-classic-review" *ngIf="loanProductsTemplate && classicFormsValid">
+            <mifosx-loan-product-preview-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [accountingRuleData]="accountingRuleData"
+              [loanProduct]="classicPreviewProduct"
+              [isValid]="classicFormsValid"
+              (submitEvent)="submit()"
+            ></mifosx-loan-product-preview-step>
+          </div>
+
+          <div class="review-pending" *ngIf="!classicFormsValid">
+            <p class="review-pending__title">
+              {{ 'labels.text.Complete these steps to preview the product' | translate }}
+            </p>
+            <ul class="review-pending__steps">
+              <li *ngFor="let stepTitle of incompleteClassicSteps">{{ stepTitle | translate }}</li>
+            </ul>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'review' && !usesClassicSteps">
           <ng-container *ngFor="let group of reviewGroups; trackBy: trackBySectionTitle">
             <div class="review-section">
               <p class="review-section__title">{{ group.title }}</p>
@@ -231,7 +300,12 @@
           <button mat-raised-button color="primary" matStepperNext *ngIf="i < visibleSteps.length - 1">
             {{ 'labels.buttons.Next' | translate }}
           </button>
-          <button mat-raised-button color="primary" *ngIf="i === visibleSteps.length - 1" (click)="submit()">
+          <button
+            mat-raised-button
+            color="primary"
+            *ngIf="i === visibleSteps.length - 1 && !usesClassicSteps"
+            (click)="submit()"
+          >
             {{ 'labels.buttons.Create Loan Product' | translate }}
           </button>
         </div>
