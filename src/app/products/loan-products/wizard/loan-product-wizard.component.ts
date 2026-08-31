@@ -40,6 +40,7 @@ import {
   TEMPLATE_OPTION_SOURCES,
   NTH_DAY_ON_DAY_OPTION,
   ON_DAY_OF_MONTH_OPTIONS,
+  DELINQUENCY_BUCKET_NONE_OPTION,
   VALUE_MAP,
   SelectOption,
   LoanWizardProfileMode,
@@ -47,6 +48,7 @@ import {
   FormStep
 } from './loan-product.config';
 import { ProductsService } from '../../products.service';
+import { DelinquencyBucket } from '../models/loan-product.model';
 import { LoanProducts } from '../loan-products';
 import {
   AdvancedCreditAllocation,
@@ -871,6 +873,19 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         value: option.code,
         label: option.name ?? option.displayLabel ?? option.code
       }));
+    }
+    // `delinquencyBucketOptions` is keyed `id`/`name` (DelinquencyBucket in models/loan-product.model.ts),
+    // so the generic `option.value ?? option.code` mapping below would label every bucket `undefined`.
+    // Classic binds `[value]="delinquencyBucket.id"` and renders `delinquencyBucket.name`. The "None"
+    // choice leads the list because the wizard renders it as an option where Classic uses a clear button.
+    if (key === 'delinquencyBucketId') {
+      return [
+        DELINQUENCY_BUCKET_NONE_OPTION,
+        ...(rawOptions as DelinquencyBucket[]).map((bucket) => ({
+          value: bucket.id,
+          label: bucket.name ?? String(bucket.id)
+        }))
+      ];
     }
     // Classic's reschedule strategy list is filtered by schedule type in `setRescheduleStrategies`,
     // keyed off `advancedTransactionProcessingStrategyDisabled` — which its `loanScheduleType`
@@ -2015,7 +2030,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         canUseForTopup: this.loanProductsTemplate.canUseForTopup ?? INITIAL_FORM_STATE.canUseForTopup,
         isInterestRecalculationEnabled:
           this.loanProductsTemplate.isInterestRecalculationEnabled ?? INITIAL_FORM_STATE.isInterestRecalculationEnabled,
-        delinquencyBucketId: this.loanProductsTemplate.delinquencyBucketId ?? INITIAL_FORM_STATE.delinquencyBucketId,
+        delinquencyBucketId: this.getDefaultDelinquencyBucketId(),
         canDefineInstallmentAmount:
           this.loanProductsTemplate.canDefineInstallmentAmount ?? INITIAL_FORM_STATE.canDefineInstallmentAmount,
         // Fineract rejects multiDisburseLoan/allowVariableInstallments unless the product uses daily
@@ -2100,5 +2115,22 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   private getDefaultCurrencyCode(): string {
     return this.loanProductsTemplate?.currencyOptions?.[0]?.code || INITIAL_FORM_STATE.currencyCode;
+  }
+
+  /**
+   * The bucket currently assigned on the template, mirroring Classic's own seed
+   * (`this.loanProductsTemplate.delinquencyBucket.id > 0 ? ... : null` in
+   * loan-product-settings-step.component.ts). The template nests the assigned bucket under
+   * `delinquencyBucket` — not a flat `delinquencyBucketId` — so reading the flat key here (as this
+   * used to) always missed it and reset the select to None even when the template had a bucket
+   * assigned. `delinquencyBucketId` is kept as a fallback for a template shape that does carry the
+   * flat key; on the real API response it never does, so this degrades to the previous behaviour.
+   */
+  private getDefaultDelinquencyBucketId(): number | string | null {
+    const delinquencyBucket = this.loanProductsTemplate?.delinquencyBucket;
+    if (delinquencyBucket) {
+      return delinquencyBucket.id > 0 ? delinquencyBucket.id : null;
+    }
+    return this.loanProductsTemplate?.delinquencyBucketId ?? INITIAL_FORM_STATE.delinquencyBucketId;
   }
 }

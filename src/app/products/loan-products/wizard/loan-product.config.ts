@@ -339,7 +339,11 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   isInterestRecalculationEnabled: { true: 'Enabled', false: 'Disabled' },
   allowPartialPeriodInterestCalculation: { true: 'Yes', false: 'No' },
   isEqualAmortization: { true: 'Yes', false: 'No' },
-  delinquencyBucketId: { '': 'None', '1': 'Bucket 1 – Standard', '2': 'Bucket 2 – Aggressive' },
+  // Only the "None" choice: every real bucket is named by the tenant, so the Review resolves its
+  // label from the field's template-sourced options (`formatFieldValue`) rather than from a static
+  // map that could only ever guess. The two invented entries that used to live here
+  // ('Bucket 1 – Standard', 'Bucket 2 – Aggressive') named buckets that exist on no tenant.
+  delinquencyBucketId: { '': 'None' },
   canDefineInstallmentAmount: { true: 'Yes', false: 'No' },
   allowVariableInstallments: { true: 'Yes', false: 'No' },
   multiDisburseLoan: { true: 'Yes', false: 'No' },
@@ -370,6 +374,18 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   enableBuydownFees: { true: 'Yes', false: 'No' },
   overAppliedCalculationType: { '': 'None', Percentage: 'Percentage', Amount: 'Amount' }
 };
+
+/**
+ * The "no bucket" choice on the delinquency bucket select. Classic offers this as a clear button next
+ * to its dropdown (`clearProperty('delinquencyBucketId')` in loan-product-settings-step.component.ts,
+ * which also resets `enableInstallmentLevelDelinquency`); the wizard renders it as an option instead,
+ * so the empty value has to be declared rather than sourced from the template. `buildPayload`
+ * normalizes '' to null, and the same guard clears the installment-level flag.
+ *
+ * Declared above {@link FORM_STEPS} because that array literal references it at module-evaluation
+ * time — moving it down beside NTH_DAY_ON_DAY_OPTION would put it in the temporal dead zone.
+ */
+export const DELINQUENCY_BUCKET_NONE_OPTION: SelectOption = { value: '', label: 'None' };
 
 export const FORM_STEPS: FormStep[] = [
   {
@@ -816,14 +832,14 @@ export const FORM_STEPS: FormStep[] = [
         type: 'checkbox'
       },
       {
+        // The tenant's own delinquency buckets, sourced from the backend template at render time
+        // exactly like Classic, via TEMPLATE_OPTION_SOURCES. Only the "None" choice is declared here:
+        // it is the wizard's equivalent of Classic's clear button, not a bucket, so it has no template
+        // counterpart and must survive a template-less render.
         label: 'labels.inputs.Delinquency Bucket',
         key: 'delinquencyBucketId',
         type: 'select',
-        options: [
-          { value: '', label: 'None' },
-          { value: '1', label: 'Bucket 1 – Standard' },
-          { value: '2', label: 'Bucket 2 – Aggressive' }
-        ]
+        options: [DELINQUENCY_BUCKET_NONE_OPTION]
       },
       { label: 'labels.inputs.Define installment amount', key: 'canDefineInstallmentAmount', type: 'checkbox' },
       { label: 'labels.inputs.Allow variable installments', key: 'allowVariableInstallments', type: 'checkbox' },
@@ -1347,6 +1363,9 @@ export const TEMPLATE_OPTION_SOURCES: Record<string, string> = {
   // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions`
   // (loan-product-currency-step.component.ts), i.e. the currencies actually configured on the tenant.
   currencyCode: 'currencyOptions',
+  // Classic's settings step fills its bucket dropdown from `loanProductsTemplate.delinquencyBucketOptions`
+  // (loan-product-settings-step.component.ts), i.e. the buckets actually configured on the tenant.
+  delinquencyBucketId: 'delinquencyBucketOptions',
   preClosureInterestCalculationStrategy: 'preClosureInterestCalculationStrategyOptions',
   rescheduleStrategyMethod: 'rescheduleStrategyTypeOptions',
   interestRecalculationCompoundingMethod: 'interestRecalculationCompoundingTypeOptions',
