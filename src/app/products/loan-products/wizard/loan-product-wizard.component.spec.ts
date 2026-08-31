@@ -374,11 +374,148 @@ describe('LoanProductWizardComponent', () => {
     expect(component.currencySymbol).toBe('KSh');
   });
 
+  describe('delinquency bucket options come from the tenant template', () => {
+    // Two Wheeler is one of the profiles that drops `delinquencyBucketId` from its hidden defaults, so
+    // the select is a visible, editable control there. Bucket ids are deliberately NOT 1 or 2: the
+    // select used to offer a hardcoded `'1' -> 'Bucket 1 – Standard'` / `'2' -> 'Bucket 2 – Aggressive'`
+    // pair, so a fixture using those ids would pass against the old fabricated list too.
+    const templateWithBuckets = {
+      currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling' }],
+      delinquencyBucketOptions: [
+        { id: 7, name: 'Retail 30/60/90' },
+        { id: 9, name: 'SME 15/30/60' }
+      ]
+    };
+
+    function bucketField(component: LoanProductWizardComponent) {
+      const settingsStep = component.steps.find((step) =>
+        step.fields.some((field) => field.key === 'delinquencyBucketId')
+      )!;
+      return component.visibleFields(settingsStep).find((field) => field.key === 'delinquencyBucketId');
+    }
+
+    it("offers the tenant's own buckets, led by None", () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+
+      expect(bucketField(component)!.options).toEqual([
+        { value: '', label: 'None' },
+        { value: 7, label: 'Retail 30/60/90' },
+        { value: 9, label: 'SME 15/30/60' }
+      ]);
+    });
+
+    it('submits the selected bucket id as the number the backend issued', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+      component.form.patchValue({ delinquencyBucketId: 7 });
+
+      // Not the string '7': the select binds the template's numeric `id`, exactly as Classic's
+      // `[value]="delinquencyBucket.id"` does.
+      expect(component.buildPayloadForSubmit().delinquencyBucketId).toBe(7);
+    });
+
+    it('keeps None selectable, and clears installment-level delinquency with it', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+      component.form.patchValue({ delinquencyBucketId: '', enableInstallmentLevelDelinquency: true });
+
+      const payload = component.buildPayloadForSubmit();
+
+      // buildPayload normalizes the None option to null and resets the dependent flag, mirroring
+      // Classic's clear button.
+      expect(payload.delinquencyBucketId).toBeNull();
+      expect(payload.enableInstallmentLevelDelinquency).toBe(false);
+    });
+
+    it('falls back to None alone when the template carries no buckets', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = { currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling' }] };
+
+      component.ngOnInit();
+
+      // No invented buckets: a tenant with none configured is offered none.
+      expect(bucketField(component)!.options).toEqual([{ value: '', label: 'None' }]);
+    });
+
+    it('seeds the currently-assigned bucket from the template, like Classic', () => {
+      // The template nests the assigned bucket under `delinquencyBucket` (`{ id, name, ranges }`),
+      // not a flat `delinquencyBucketId` — `loanProductSettingsForm` seeds from
+      // `this.loanProductsTemplate.delinquencyBucket.id` (loan-product-settings-step.component.ts).
+      // Reading a flat key here previously left the control at '' even when the template carried a
+      // bucket, silently resetting it to None on every load.
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = {
+        ...templateWithBuckets,
+        delinquencyBucket: { id: 7, name: 'Retail 30/60/90' }
+      };
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBe(7);
+      expect(component.buildPayloadForSubmit().delinquencyBucketId).toBe(7);
+    });
+
+    it('seeds null, not None-as-empty-string, for a non-positive assigned bucket id', () => {
+      // Mirrors Classic's `delinquencyBucket.id > 0 ? ... : null` exactly: an assigned-but-invalid id
+      // (Fineract's sentinel for "no bucket") maps to null, not to the wizard's own '' None value.
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = { ...templateWithBuckets, delinquencyBucket: { id: 0, name: 'None' } };
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBeNull();
+    });
+
+    it('falls back to the initial None default when the template carries no assigned bucket', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBe('');
+    });
+  });
+
   it('exposes deferredIncomeRecognition so the Accounting step can reveal its GL accounts', () => {
     // The Accounting step gates four GL account fields on this input — Income from Capitalization,
     // Income from Buy Down, Buy Down Expense and Deferred Income Liability. Classic's host passes it;
     // the wizard did not, so those accounts never appeared and a capitalized-income product could not
     // supply the mappings Fineract requires.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'INR' }],
+      enableIncomeCapitalization: true,
+      capitalizedIncomeCalculationTypeOptions: [{ id: 'FLAT' }],
+      capitalizedIncomeStrategyOptions: [{ id: 'EQUAL_AMORTIZATION' }],
+      capitalizedIncomeTypeOptions: [{ id: 'FEE' }],
+      enableBuyDownFee: false
+    };
+    component.ngOnInit();
+
+    component.onClassicAdvancePaymentStrategy(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization).toBe(true);
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.capitalizedIncomeCalculationType).toEqual({
+      id: 'FLAT'
+    });
+  });
+
+  it('produces a Classic-equivalent payload for Custom/Advanced once the advanced strategy is selected', () => {
     const component = createComponent();
     component.profileMode = 'custom-advanced';
     component.loanProductsTemplate = {
