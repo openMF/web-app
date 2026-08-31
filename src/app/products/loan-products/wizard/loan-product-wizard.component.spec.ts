@@ -330,6 +330,47 @@ describe('LoanProductWizardComponent', () => {
     ).toBe(true);
   });
 
+  it('sources the guided currency dropdown from the tenant template, like Classic', () => {
+    // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions` and binds
+    // `code` -> `name`. The guided templates used to carry a hardcoded INR/USD/EUR/GBP list, so a tenant
+    // configured on any other currency could not pick it — and was offered three it does not have.
+    const component = createComponent();
+    component.profileMode = 'personal';
+    component.loanProductsTemplate = {
+      currencyOptions: [
+        { code: 'KES', name: 'Kenyan Shilling', displaySymbol: 'KSh' },
+        { code: 'UGX', name: 'Uganda Shilling', displaySymbol: 'USh' }
+      ]
+    };
+
+    component.ngOnInit();
+
+    const currencyStep = component.steps.find((step) => step.fields.some((field) => field.key === 'currencyCode'))!;
+    const currencyField = component.visibleFields(currencyStep).find((field) => field.key === 'currencyCode')!;
+
+    expect(currencyField.options).toEqual([
+      { value: 'KES', label: 'Kenyan Shilling' },
+      { value: 'UGX', label: 'Uganda Shilling' }
+    ]);
+    // ...and the first template currency is the seeded default, exactly as Classic patches it.
+    expect(component.form.get('currencyCode')!.value).toBe('KES');
+  });
+
+  it('names the Review currency and its symbol from the tenant template', () => {
+    const component = createComponent();
+    component.profileMode = 'personal';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling', displaySymbol: 'KSh' }]
+    };
+
+    component.ngOnInit();
+
+    // The banner chip and the principal symbol must follow the same tenant list the dropdown offers;
+    // the static four-code maps only ever covered INR/USD/EUR/GBP.
+    expect(component.formatValue('currencyCode', 'KES')).toBe('Kenyan Shilling');
+    expect(component.currencySymbol).toBe('KSh');
+  });
+
   it('produces a Classic-equivalent payload for Custom/Advanced once the advanced strategy is selected', () => {
     const component = createComponent();
     component.profileMode = 'custom-advanced';

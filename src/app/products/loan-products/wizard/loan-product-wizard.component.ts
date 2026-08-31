@@ -66,7 +66,10 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
-/** Currency symbols rendered in the Review banner, keyed by ISO currency code. */
+/**
+ * Fallback currency symbols for the Review banner, keyed by ISO currency code. Used only when the
+ * backend template has no `displaySymbol` for the selected currency (or has not loaded yet).
+ */
 const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '€', GBP: '£' };
 
 /**
@@ -629,6 +632,15 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     if (!Array.isArray(rawOptions)) {
       return undefined;
     }
+    // `currencyOptions` is the one template list keyed by ISO `code`/`name` instead of `id`/`value`:
+    // Classic binds `[value]="currency.code"` and renders `currency.name`
+    // (loan-product-currency-step.component.html), so the wizard maps the same pair.
+    if (key === 'currencyCode') {
+      return rawOptions.map((option: any) => ({
+        value: option.code,
+        label: option.name ?? option.displayLabel ?? option.code
+      }));
+    }
     // Classic's reschedule strategy list is filtered by schedule type in `setRescheduleStrategies`,
     // keyed off `advancedTransactionProcessingStrategyDisabled` — which its `loanScheduleType`
     // handler sets to TRUE on Progressive and FALSE on Cumulative. So Progressive keeps ids > 3 and
@@ -972,6 +984,17 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       return this.getTransactionProcessingStrategyLabel(String(normalizedValue));
     }
 
+    // The Review chip names the currency the way Classic's dropdown does — from the tenant's own
+    // `currencyOptions` — falling through to VALUE_MAP for a template-less render.
+    if (key === 'currencyCode') {
+      const currencyLabel = this.getTemplateSourcedOptions('currencyCode')?.find(
+        (option) => String(option.value) === String(normalizedValue)
+      )?.label;
+      if (currencyLabel) {
+        return String(currencyLabel);
+      }
+    }
+
     const map = this.valueMap[key];
     if (map) {
       const result = map[String(normalizedValue)];
@@ -1172,7 +1195,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   get currencySymbol(): string {
-    return CURRENCY_SYMBOLS[this.reviewCurrencyCode] || '';
+    // The tenant's own symbol for the selected currency first (`displaySymbol`, e.g. 'KSh'); the
+    // static map only covers four codes and cannot cover every currency Fineract may be configured with.
+    const templateSymbol = (this.loanProductsTemplate?.currencyOptions ?? []).find(
+      (option: any) => option.code === this.reviewCurrencyCode
+    )?.displaySymbol;
+    return templateSymbol || CURRENCY_SYMBOLS[this.reviewCurrencyCode] || '';
   }
 
   get formattedPrincipal(): string {
