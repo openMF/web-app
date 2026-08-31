@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 /**
  * Interface for version information.
@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
@@ -136,7 +137,18 @@ export class LoginComponent implements OnInit {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        // Fall back to the dashboard if navigating to the returnUrl fails or is rejected
+        // (e.g. the target route is guarded), so the user is never stranded on the login page.
+        void this.router
+          .navigateByUrl(this.getReturnUrl(), { replaceUrl: true })
+          .then((navigated) => {
+            if (!navigated) {
+              void this.router.navigateByUrl('/', { replaceUrl: true });
+            }
+          })
+          .catch(() => {
+            void this.router.navigateByUrl('/', { replaceUrl: true });
+          });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }
@@ -226,5 +238,25 @@ export class LoginComponent implements OnInit {
 
   onLogoErrorDark(): void {
     this.logoPathDark = 'assets/images/white-mifos.png';
+  }
+
+  /**
+   * Returns the originally requested page captured by the authentication guard,
+   * falling back to the dashboard. Ignores anything that is not a safe in-app
+   * path, that would loop back to the login flow, or that is a protocol-relative
+   * URL (e.g. `//evil.com` or `/\evil.com`) which could redirect off-site.
+   */
+  private getReturnUrl(): string {
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    if (
+      typeof returnUrl !== 'string' ||
+      !returnUrl.startsWith('/') ||
+      returnUrl.startsWith('//') ||
+      returnUrl.startsWith('/\\') ||
+      returnUrl.startsWith('/login')
+    ) {
+      return '/';
+    }
+    return returnUrl;
   }
 }
