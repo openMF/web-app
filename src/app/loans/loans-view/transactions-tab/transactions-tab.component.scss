@@ -153,6 +153,12 @@
     border-left: 3px solid var(--tx-chargeoff);
   }
 
+  // Recovery payments are income after a write-off, not debt reduction, so the
+  // row is marked apart from a plain repayment.
+  .row-recovery .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-recovery);
+  }
+
   .row-reage .mat-mdc-cell:first-child {
     border-left: 3px solid var(--tx-reage);
   }

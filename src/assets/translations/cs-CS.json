@@ -445,6 +445,18 @@
       "noBreachConfiguration": "Tento úvěr nemá konfiguraci porušení.",
       "loanIsNotActive": "Hodnocení porušení lze změnit pouze tehdy, když je úvěr aktivní.",
       "breachIsDisabled": "Hodnocení porušení je pro tento úvěr zakázáno. Povolte je, abyste mohli tuto akci provést."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Tato vymožená platba už byla stornována.",
+      "amountMustBePositive": "Částka musí být větší než nula.",
+      "beforeLastTransactionDate": "Datum vymožené platby nemůže předcházet poslední transakci úvěru.",
+      "beforeWriteOffDate": "Datum vymožené platby nemůže předcházet datu odpisu.",
+      "dateOutOfRange": "Datum platby z vymáhání je mimo rozsah povolený pro tento úvěr.",
+      "futureDate": "Datum vymožené platby nemůže být v budoucnosti.",
+      "greaterThanRemaining": "Částka nemůže být vyšší než zbývající částka k vymožení.",
+      "loanNotWrittenOff": "Tento úvěr není odepsaný, proto nemůže přijmout vymoženou platbu.",
+      "reversalForbidden": "Nemáte oprávnění stornovat transakce provozního kapitálu. Požádejte administrátora, aby storno provedl.",
+      "undoWriteOffWithRecoveries": "Odpis nelze vrátit zpět, dokud má úvěr vymožené platby. Nejprve je stornujte."
     }
   },
   "labels": {
@@ -1783,7 +1795,8 @@
       "Natural Person": "Natural Person",
       "Personal References (2 Family Members, 1 Acquaintance)": "Osobní reference (2 rodinní příslušníci, 1 známý)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Prohlášení konečných skutečných majitelů - právnické osoby",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Prohlášení konečných skutečných majitelů - fyzické osoby"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Prohlášení konečných skutečných majitelů - fyzické osoby",
+      "Recovery": "Vymáhání"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -3739,7 +3752,10 @@
       "Submitted Date": "Datum odeslání",
       "No Ext": "Č. ext.",
       "No Int": "Č. int.",
-      "Age of the business": "Stáří podniku"
+      "Age of the business": "Stáří podniku",
+      "Written Off Amount": "Odepsaná částka",
+      "Total Recovered": "Celkem vymoženo",
+      "Pending Recovery": "Zbývá vymoci"
     },
     "links": {
       "Community": "Společenství",
@@ -4963,7 +4979,9 @@
       "Person PEP PLD Question 3": "Máte rodinný vztah (2) s akcionářem, zaměstnancem nebo funkcionářem subjektu?",
       "the contents of": "obsah",
       "the": "vybrané",
-      "items selected of": "položky z"
+      "items selected of": "položky z",
+      "Recovery Completed": "Vymáhání dokončeno",
+      "Recovery Payment Description": "Eviduje peníze přijaté po odpisu. Úvěr zůstává uzavřený a jeho zůstatek zůstává nulový; mění se pouze celková vymožená částka."
     },
     "permissions": {
       "actions": {
@@ -5885,7 +5903,9 @@
     "Yes": "Ano",
     "loan product will be active and available to clients": "Datum, kdy bude úvěrový produkt aktivní a dostupný klientům. Pokud nevyplníte, bude úvěrový produkt aktivní, jakmile bude vytvořen.",
     "loan product will become inactive and unavailable to clients": "Datum, kdy se úvěrový produkt stane neaktivním a nedostupným pro klienty. Pokud je prázdné, produkt zatížení se nikdy nestane neaktivním.",
-    "to": "do"
+    "to": "do",
+    "Nothing left to recover": "U tohoto úvěru už není co vymáhat.",
+    "Reverse the recovery payments first": "Odpis nelze vrátit zpět, dokud má úvěr vymožené platby. Nejprve je stornujte."
   },
   "countries": {
     "AF": "Afghánistán",

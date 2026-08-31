@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Este empréstimo não tem configuração de violações.",
       "loanIsNotActive": "A avaliação de violações só pode ser alterada enquanto o empréstimo estiver ativo.",
       "breachIsDisabled": "A avaliação de violações está desativada para este empréstimo. Ative-a para executar esta ação."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Esta recuperação já foi revertida.",
+      "amountMustBePositive": "O montante deve ser superior a zero.",
+      "beforeLastTransactionDate": "A data da recuperação não pode ser anterior à última transação do empréstimo.",
+      "beforeWriteOffDate": "A data da recuperação não pode ser anterior à data do abate.",
+      "dateOutOfRange": "A data do pagamento de recuperação está fora do intervalo permitido para este empréstimo.",
+      "futureDate": "A data da recuperação não pode ser futura.",
+      "greaterThanRemaining": "O montante não pode ser superior ao montante por recuperar.",
+      "loanNotWrittenOff": "Este empréstimo não está abatido, pelo que não aceita uma recuperação.",
+      "reversalForbidden": "Não tem permissão para reverter transações de Fundo de Maneio. Peça a um administrador que execute a reversão.",
+      "undoWriteOffWithRecoveries": "O abate não pode ser anulado enquanto o empréstimo tiver recuperações. Reverta-as primeiro."
     }
   },
   "labels": {
@@ -1781,7 +1793,8 @@
       "Resource Provider / Beneficial Owner": "Fornecedor de recursos / Beneficiário efetivo",
       "Personal References (2 Family Members, 1 Acquaintance)": "Referências pessoais (2 familiares, 1 conhecido)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaração dos beneficiários efetivos finais - pessoas coletivas",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaração dos beneficiários efetivos finais - pessoas singulares"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaração dos beneficiários efetivos finais - pessoas singulares",
+      "Recovery": "Recuperação"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
@@ -3737,7 +3750,10 @@
       "Submitted Date": "Data de submissão",
       "No Ext": "N.º ext.",
       "No Int": "N.º int.",
-      "Age of the business": "Antiguidade do negócio"
+      "Age of the business": "Antiguidade do negócio",
+      "Written Off Amount": "Montante abatido",
+      "Total Recovered": "Total recuperado",
+      "Pending Recovery": "Por recuperar"
     },
     "links": {
       "Community": "Comunidade",
@@ -4961,7 +4977,9 @@
       "Person PEP PLD Question 3": "Tem alguma relação familiar (2) com algum acionista, colaborador ou dirigente da entidade?",
       "the contents of": "o conteúdo de",
       "the": "os",
-      "items selected of": "itens selecionados de"
+      "items selected of": "itens selecionados de",
+      "Recovery Completed": "Recuperação concluída",
+      "Recovery Payment Description": "Regista dinheiro cobrado após o abate. O empréstimo permanece fechado e o saldo permanece a zero; apenas muda o total recuperado."
     },
     "permissions": {
       "actions": {
@@ -5594,7 +5612,9 @@
     "Withdraw": "Retirar",
     "Yes": "Sim",
     "loan product will be active and available to clients": "A data em que o produto de empréstimo estará ativo e disponível para os clientes. Se estiver em branco, o produto de empréstimo estará ativo assim que for criado.",
-    "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de empréstimo nunca ficará inativo."
+    "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de empréstimo nunca ficará inativo.",
+    "Nothing left to recover": "Não há nada por recuperar neste empréstimo.",
+    "Reverse the recovery payments first": "Não é possível anular o abate enquanto o empréstimo tiver recuperações. Reverta-as primeiro."
   },
   "countries": {
     "AF": "Afeganistão",

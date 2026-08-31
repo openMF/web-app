@@ -447,6 +447,18 @@
       "noBreachConfiguration": "This loan has no breach configuration.",
       "loanIsNotActive": "Breach evaluation can only be changed while the loan is active.",
       "breachIsDisabled": "Breach evaluation is disabled for this loan. Enable it to run this action."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "This recovery payment was already reversed.",
+      "amountMustBePositive": "The amount must be greater than zero.",
+      "beforeLastTransactionDate": "The recovery payment date cannot be earlier than the last transaction on the loan.",
+      "beforeWriteOffDate": "The recovery payment date cannot be earlier than the write-off date.",
+      "dateOutOfRange": "The recovery payment date is outside the range allowed for this loan.",
+      "futureDate": "The recovery payment date cannot be in the future.",
+      "greaterThanRemaining": "The amount cannot be greater than the pending recovery amount.",
+      "loanNotWrittenOff": "This loan is not written off, so it cannot take a recovery payment.",
+      "reversalForbidden": "You do not have permission to reverse Working Capital transactions. Ask an administrator to run this reversal.",
+      "undoWriteOffWithRecoveries": "The write-off cannot be undone while the loan has recovery payments. Reverse them first."
     }
   },
   "labels": {
@@ -1796,7 +1808,8 @@
       "Natural Person": "Natural Person",
       "Personal References (2 Family Members, 1 Acquaintance)": "Personal References (2 Family Members, 1 Acquaintance)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaration of Ultimate Beneficial Owners - Legal Entities",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaration of Ultimate Beneficial Owners - Natural Persons"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaration of Ultimate Beneficial Owners - Natural Persons",
+      "Recovery": "Recovery"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -3761,7 +3774,10 @@
       "Submitted Date": "Submitted Date",
       "No Ext": "No Ext.",
       "No Int": "No Int.",
-      "Age of the business": "Age of the business"
+      "Age of the business": "Age of the business",
+      "Written Off Amount": "Written Off Amount",
+      "Total Recovered": "Total Recovered",
+      "Pending Recovery": "Pending Recovery"
     },
     "links": {
       "Community": "Community",
@@ -5100,7 +5116,9 @@
       "Person PEP PLD Question 3": "Do you have any family relationship (2) with any shareholder, employee, or officer of the Entity?",
       "the contents of": "the contents of",
       "the": "the",
-      "items selected of": "items selected of"
+      "items selected of": "items selected of",
+      "Recovery Completed": "Recovery completed",
+      "Recovery Payment Description": "Records money collected after the write-off. The loan stays closed and its balance stays at zero; only the recovered total changes."
     },
     "permissions": {
       "actions": {
@@ -5758,7 +5776,9 @@
     "Yes": "Yes",
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
-    "Reporting Dashboard": "CB-ILD Reporting Dashboard"
+    "Reporting Dashboard": "CB-ILD Reporting Dashboard",
+    "Nothing left to recover": "There is nothing left to recover on this loan.",
+    "Reverse the recovery payments first": "Undo write-off is blocked while the loan has recovery payments. Reverse them first."
   },
   "countries": {
     "AF": "Afghanistan",

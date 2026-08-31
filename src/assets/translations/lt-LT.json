@@ -443,6 +443,18 @@
       "noBreachConfiguration": "Ši paskola neturi pažeidimų konfigūracijos.",
       "loanIsNotActive": "Pažeidimų vertinimą galima keisti tik tada, kai paskola aktyvi.",
       "breachIsDisabled": "Šios paskolos pažeidimų vertinimas išjungtas. Įjunkite jį, kad galėtumėte atlikti šį veiksmą."
+    },
+    "recoveryPayment": {
+      "alreadyUndone": "Šis susigrąžinimo mokėjimas jau buvo atšauktas.",
+      "amountMustBePositive": "Suma turi būti didesnė už nulį.",
+      "beforeLastTransactionDate": "Susigrąžinimo data negali būti ankstesnė nei paskutinės paskolos operacijos data.",
+      "beforeWriteOffDate": "Susigrąžinimo data negali būti ankstesnė nei nurašymo data.",
+      "dateOutOfRange": "Susigrąžinimo mokėjimo data yra už šiai paskolai leidžiamo intervalo ribų.",
+      "futureDate": "Susigrąžinimo data negali būti ateityje.",
+      "greaterThanRemaining": "Suma negali viršyti likusios susigrąžinti sumos.",
+      "loanNotWrittenOff": "Ši paskola nėra nurašyta, todėl negali priimti susigrąžinimo mokėjimo.",
+      "reversalForbidden": "Neturite teisės atšaukti apyvartinio kapitalo operacijų. Paprašykite administratoriaus atlikti atšaukimą.",
+      "undoWriteOffWithRecoveries": "Nurašymo negalima atšaukti, kol paskola turi susigrąžinimo mokėjimų. Pirmiausia juos stornuokite."
     }
   },
   "labels": {
@@ -1781,7 +1793,8 @@
       "Resource Provider / Beneficial Owner": "Lėšų teikėjas / tikrasis naudos gavėjas",
       "Personal References (2 Family Members, 1 Acquaintance)": "Asmeninės rekomendacijos (2 šeimos nariai, 1 pažįstamas)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Galutinių naudos gavėjų deklaracija - juridiniai asmenys",
-      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Galutinių naudos gavėjų deklaracija - fiziniai asmenys"
+      "Declaration of Ultimate Beneficial Owners - Natural Persons": "Galutinių naudos gavėjų deklaracija - fiziniai asmenys",
+      "Recovery": "Susigrąžinimas"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -3737,7 +3750,10 @@
       "Submitted Date": "Pateikimo data",
       "No Ext": "Išor. Nr.",
       "No Int": "Vid. Nr.",
-      "Age of the business": "Verslo amžius"
+      "Age of the business": "Verslo amžius",
+      "Written Off Amount": "Nurašyta suma",
+      "Total Recovered": "Iš viso susigrąžinta",
+      "Pending Recovery": "Liko susigrąžinti"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4962,7 +4978,9 @@
       "Person PEP PLD Question 3": "Ar turite šeiminį ryšį (2) su juridinio asmens akcininku, darbuotoju ar pareigūnu?",
       "the contents of": "turinį",
       "the": "pasirinkti",
-      "items selected of": "elementai iš"
+      "items selected of": "elementai iš",
+      "Recovery Completed": "Susigrąžinimas baigtas",
+      "Recovery Payment Description": "Registruoja pinigus, surinktus po nurašymo. Paskola lieka uždaryta, o jos likutis lieka nulinis; keičiasi tik susigrąžinta suma."
     },
     "permissions": {
       "actions": {
@@ -5595,7 +5613,9 @@
     "Withdraw": "Atsitraukti",
     "Yes": "Taip",
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
-    "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus."
+    "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, paskolos produktas niekada netaps neaktyvus.",
+    "Nothing left to recover": "Šioje paskoloje nebėra ko susigrąžinti.",
+    "Reverse the recovery payments first": "Nurašymo negalima atšaukti, kol paskola turi susigrąžinimo mokėjimų. Pirmiausia juos stornuokite."
   },
   "countries": {
     "AF": "Afganistanas",

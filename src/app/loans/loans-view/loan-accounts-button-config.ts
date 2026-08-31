@@ -8,23 +8,28 @@
 
 import { OptionData } from 'app/shared/models/option-data.model';
 
+/**
+ * One entry of the account actions menu.
+ *
+ * `disabled` and `disabledTooltip` let an action stay visible while being
+ * blocked by a business rule, so the user reads why instead of discovering it
+ * through a rejected request.
+ */
+export interface LoansAccountButton {
+  name: string;
+  icon?: string;
+  taskPermissionName?: string;
+  disabled?: boolean;
+  disabledTooltip?: string;
+}
+
 /** Loan/Working Capital Account Buttons Configuration */
 export class LoansAccountButtonConfiguration {
-  optionArray: {
-    name: string;
-    taskPermissionName?: string;
-  }[];
+  optionArray: LoansAccountButton[];
 
-  optionPaymentArray: {
-    name: string;
-    taskPermissionName?: string;
-  }[];
+  optionPaymentArray: LoansAccountButton[];
 
-  buttonsArray: {
-    name: string;
-    icon: string;
-    taskPermissionName?: string;
-  }[];
+  buttonsArray: LoansAccountButton[];
 
   private readonly isWorkingCapital: boolean;
 
@@ -253,8 +258,14 @@ export class LoansAccountButtonConfiguration {
         ];
         break;
       case 'Closed (written off)':
-        // Terminal state: only Undo Write-off remains available.
+        // The loan stays closed: a recovery payment records money collected
+        // after the write-off without reopening it.
         this.buttonsArray = [
+          {
+            name: 'Recovery Payment',
+            icon: 'briefcase',
+            taskPermissionName: 'RECOVERYPAYMENT_WORKINGCAPITALLOAN'
+          },
           {
             name: 'Undo Write-off',
             icon: 'undo',
@@ -431,12 +442,29 @@ export class LoansAccountButtonConfiguration {
     }
   }
 
-  addOption(option: { name: string; icon?: string; taskPermissionName?: string }) {
+  addOption(option: LoansAccountButton) {
     this.optionArray.push(option);
   }
 
-  addButton(option: { name: string; icon: string; taskPermissionName?: string }) {
+  addButton(option: LoansAccountButton) {
     this.buttonsArray.push(option);
+  }
+
+  /**
+   * Blocks an action that is visible but not allowed right now.
+   *
+   * The button is kept in the menu on purpose: hiding it would leave the user
+   * wondering where the action went, while a disabled entry with a tooltip
+   * states the rule.
+   * @param name Action name as declared in the configuration
+   * @param tooltipKey Translation key explaining why it is blocked
+   */
+  disableButton(name: string, tooltipKey: string) {
+    const button = this.buttonsArray?.find((item) => item.name === name);
+    if (button) {
+      button.disabled = true;
+      button.disabledTooltip = tooltipKey;
+    }
   }
 
   private isContractTermination(substatus: OptionData): boolean {
