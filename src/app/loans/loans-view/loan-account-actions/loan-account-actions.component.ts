@@ -49,6 +49,7 @@ import { BreachConfigComponent } from '../working-capital/loan-account-actions/b
 import { WorkingCapitalChargeOffComponent } from '../working-capital/loan-account-actions/charge-off/charge-off.component';
 import { WorkingCapitalWriteOffComponent } from '../working-capital/loan-account-actions/write-off/write-off.component';
 import { WorkingCapitalUndoWriteOffComponent } from '../working-capital/loan-account-actions/undo-write-off/undo-write-off.component';
+import { WorkingCapitalRecoveryPaymentComponent } from '../working-capital/loan-account-actions/recovery-payment/recovery-payment.component';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
@@ -96,7 +97,8 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     BreachConfigComponent,
     WorkingCapitalChargeOffComponent,
     WorkingCapitalWriteOffComponent,
-    WorkingCapitalUndoWriteOffComponent
+    WorkingCapitalUndoWriteOffComponent,
+    WorkingCapitalRecoveryPaymentComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

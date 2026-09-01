@@ -90,7 +90,7 @@ import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.componen
 })
 export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   formatTabLabel(label: string): string {
-    return formatDatatableDisplayLabel(label);
+    return this.translateDatatableLabel(label, formatDatatableDisplayLabel(label));
   }
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
@@ -258,7 +258,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   }
 
   getAddDialogTitle(): string {
-    return `${this.translateService.instant('labels.buttons.Add')} ${formatDatatableDisplayLabel(
+    return `${this.translateService.instant('labels.buttons.Add')} ${this.formatTabLabel(
       this.datatableName
     )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
   }
@@ -326,7 +326,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   }
 
   getEditDialogTitle(): string {
-    return `${this.translateService.instant('labels.buttons.Edit')} ${formatDatatableDisplayLabel(
+    return `${this.translateService.instant('labels.buttons.Edit')} ${this.formatTabLabel(
       this.datatableName
     )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
   }
@@ -343,7 +343,11 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
    */
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `the contents of ${formatDatatableDisplayLabel(this.datatableName)}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.text.the contents of')} ${this.formatTabLabel(
+          this.datatableName
+        )}`
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -362,7 +366,9 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   deleteSelected() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
-        deleteContext: `the ${this.selection.selected.length} items selected of ${formatDatatableDisplayLabel(this.datatableName)}`
+        deleteContext: `${this.translateService.instant('labels.text.the')} ${
+          this.selection.selected.length
+        } ${this.translateService.instant('labels.text.items selected of')} ${this.formatTabLabel(this.datatableName)}`
       }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
@@ -526,6 +532,18 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     if (translationKey) {
       return this.translateService.instant(translationKey);
     }
-    return formatDatatableDisplayLabel(this.datatables.getName(attr));
+    const label = this.datatables.getName(attr);
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
+  }
+
+  private translateDatatableLabel(rawLabel: string, displayLabel: string): string {
+    const rawKey = `labels.inputs.${rawLabel}`;
+    const translatedRawLabel = this.translateService.instant(rawKey);
+    if (translatedRawLabel !== rawKey) {
+      return translatedRawLabel;
+    }
+    const displayKey = `labels.inputs.${displayLabel}`;
+    const translatedDisplayLabel = this.translateService.instant(displayKey);
+    return translatedDisplayLabel === displayKey ? displayLabel : translatedDisplayLabel;
   }
 }

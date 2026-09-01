@@ -1,0 +1,123 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography production-personal-data">
+  @if (isKycEnabled) {
+    <div class="button-header">
+      <button mat-raised-button class="export-kyc-button" (click)="exportKyc.emit()">
+        <mat-icon>download</mat-icon>
+        {{ 'labels.buttons.Export KYC' | translate }}
+      </button>
+      <button mat-raised-button color="primary" class="validate-docs-button" (click)="validateDocumentation.emit()">
+        <mat-icon>fact_check</mat-icon>
+        {{ 'labels.buttons.Validate Documentation' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (isKycEnabled && validationData?.validationStatus) {
+    <div
+      class="validation-status-banner"
+      [class.status-complete]="validationData.validationStatus === ValidationStatus.COMPLETE"
+      [class.status-incomplete]="validationData.validationStatus === ValidationStatus.INCOMPLETE"
+    >
+      <mat-icon>{{
+        validationData.validationStatus === ValidationStatus.COMPLETE ? 'check_circle' : 'warning'
+      }}</mat-icon>
+      <span>
+        {{ 'labels.inputs.Validation Status' | translate }}:
+        <strong>{{ 'labels.inputs.' + validationData.validationStatus | translate }}</strong>
+      </span>
+    </div>
+  }
+
+  <section class="section">
+    <h3>{{ 'labels.heading.Legal Entity Details' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="fieldGrid; context: { fields: legalEntityFields }"></ng-container>
+  </section>
+
+  <section class="section">
+    <h3>{{ 'labels.heading.Tax Address' | translate }}</h3>
+    <ng-container *ngTemplateOutlet="fieldGrid; context: { fields: taxAddressFields }"></ng-container>
+  </section>
+
+  @for (sectionConfig of entityDisplaySections; track sectionConfig.key; let sectionIndex = $index) {
+    <section class="section">
+      @if (showSectionHeading(sectionConfig, sectionIndex)) {
+        <h3>{{ translationKey(sectionConfig.title, 'labels.heading') | translate }}</h3>
+      }
+      @for (group of displayGroups(sectionConfig); track group) {
+        @if (group.subtitle) {
+          <h4>{{ translationKey(group.subtitle, 'labels.heading') | translate }}</h4>
+        }
+        @for (questionKey of group.questionKeys || []; track questionKey) {
+          <p class="question-text">{{ translationKey(questionKey, 'labels.text') | translate }}</p>
+        }
+        @for (textKey of group.explanatoryTextKeys || []; track textKey) {
+          <p class="helper-text">{{ translationKey(textKey, 'labels.text') | translate }}</p>
+        }
+        <ng-container *ngTemplateOutlet="datatableSection; context: { records: group.records }"></ng-container>
+      }
+    </section>
+  }
+</div>
+
+<ng-template #fieldGrid let-fields="fields">
+  <div class="data-grid">
+    @for (field of fields; track field.label) {
+      <div class="data-item" [ngClass]="field.className">
+        <span class="label">{{
+          field.rawLabel ? field.label : (translationKey(field.label, 'labels.inputs') | translate)
+        }}</span>
+        @if (isYesNoField(field)) {
+          <span
+            class="yes-no-indicator"
+            role="group"
+            [attr.aria-label]="translationKey(field.label, 'labels.inputs') | translate"
+          >
+            <button
+              type="button"
+              mat-stroked-button
+              tabindex="-1"
+              class="yes-no-option"
+              [class.selected]="isYesNoSelected(field, 'Yes')"
+              [attr.aria-pressed]="isYesNoSelected(field, 'Yes')"
+            >
+              {{ 'labels.buttons.Yes' | translate }}
+            </button>
+            <button
+              type="button"
+              mat-stroked-button
+              tabindex="-1"
+              class="yes-no-option"
+              [class.selected]="isYesNoSelected(field, 'No')"
+              [attr.aria-pressed]="isYesNoSelected(field, 'No')"
+            >
+              {{ 'labels.buttons.No' | translate }}
+            </button>
+          </span>
+        } @else {
+          <span class="value">{{
+            field.date ? (field.value | dateFormat) : hasValue(field.value) ? field.value : '-'
+          }}</span>
+        }
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #datatableSection let-records="records">
+  @for (recordFields of records; track recordFields; let index = $index) {
+    <div class="record-panel datatable-record">
+      @if (records.length > 1) {
+        <div class="record-title">{{ 'labels.inputs.Record' | translate }} {{ index + 1 }}</div>
+      }
+      <ng-container *ngTemplateOutlet="fieldGrid; context: { fields: recordFields }"></ng-container>
+    </div>
+  }
+</ng-template>

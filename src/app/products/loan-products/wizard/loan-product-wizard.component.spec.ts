@@ -7,7 +7,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -237,8 +237,11 @@ describe('LoanProductWizardComponent', () => {
   });
 
   it('shows the payment allocation step only for the advanced strategy', () => {
+    // Driven through a guided profile: Custom/Advanced now hosts Classic's Settings step, so its
+    // strategy arrives via `onClassicAdvancePaymentStrategy` rather than the flat FormGroup (see the
+    // Classic-mode specs below).
     const component = createComponent();
-    component.profileMode = 'custom-advanced';
+    component.profileMode = 'bnpl';
     component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
 
     component.ngOnInit();
@@ -330,42 +333,503 @@ describe('LoanProductWizardComponent', () => {
     ).toBe(true);
   });
 
+  it('sources the guided currency dropdown from the tenant template, like Classic', () => {
+    // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions` and binds
+    // `code` -> `name`. The guided templates used to carry a hardcoded INR/USD/EUR/GBP list, so a tenant
+    // configured on any other currency could not pick it — and was offered three it does not have.
+    const component = createComponent();
+    component.profileMode = 'personal';
+    component.loanProductsTemplate = {
+      currencyOptions: [
+        { code: 'KES', name: 'Kenyan Shilling', displaySymbol: 'KSh' },
+        { code: 'UGX', name: 'Uganda Shilling', displaySymbol: 'USh' }
+      ]
+    };
+
+    component.ngOnInit();
+
+    const currencyStep = component.steps.find((step) => step.fields.some((field) => field.key === 'currencyCode'))!;
+    const currencyField = component.visibleFields(currencyStep).find((field) => field.key === 'currencyCode')!;
+
+    expect(currencyField.options).toEqual([
+      { value: 'KES', label: 'Kenyan Shilling' },
+      { value: 'UGX', label: 'Uganda Shilling' }
+    ]);
+    // ...and the first template currency is the seeded default, exactly as Classic patches it.
+    expect(component.form.get('currencyCode')!.value).toBe('KES');
+  });
+
+  it('names the Review currency and its symbol from the tenant template', () => {
+    const component = createComponent();
+    component.profileMode = 'personal';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling', displaySymbol: 'KSh' }]
+    };
+
+    component.ngOnInit();
+
+    // The banner chip and the principal symbol must follow the same tenant list the dropdown offers;
+    // the static four-code maps only ever covered INR/USD/EUR/GBP.
+    expect(component.formatValue('currencyCode', 'KES')).toBe('Kenyan Shilling');
+    expect(component.currencySymbol).toBe('KSh');
+  });
+
+  describe('delinquency bucket options come from the tenant template', () => {
+    // Two Wheeler is one of the profiles that drops `delinquencyBucketId` from its hidden defaults, so
+    // the select is a visible, editable control there. Bucket ids are deliberately NOT 1 or 2: the
+    // select used to offer a hardcoded `'1' -> 'Bucket 1 – Standard'` / `'2' -> 'Bucket 2 – Aggressive'`
+    // pair, so a fixture using those ids would pass against the old fabricated list too.
+    const templateWithBuckets = {
+      currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling' }],
+      delinquencyBucketOptions: [
+        { id: 7, name: 'Retail 30/60/90' },
+        { id: 9, name: 'SME 15/30/60' }
+      ]
+    };
+
+    function bucketField(component: LoanProductWizardComponent) {
+      const settingsStep = component.steps.find((step) =>
+        step.fields.some((field) => field.key === 'delinquencyBucketId')
+      )!;
+      return component.visibleFields(settingsStep).find((field) => field.key === 'delinquencyBucketId');
+    }
+
+    it("offers the tenant's own buckets, led by None", () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+
+      expect(bucketField(component)!.options).toEqual([
+        { value: '', label: 'None' },
+        { value: 7, label: 'Retail 30/60/90' },
+        { value: 9, label: 'SME 15/30/60' }
+      ]);
+    });
+
+    it('submits the selected bucket id as the number the backend issued', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+      component.form.patchValue({ delinquencyBucketId: 7 });
+
+      // Not the string '7': the select binds the template's numeric `id`, exactly as Classic's
+      // `[value]="delinquencyBucket.id"` does.
+      expect(component.buildPayloadForSubmit().delinquencyBucketId).toBe(7);
+    });
+
+    it('keeps None selectable, and clears installment-level delinquency with it', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+      component.form.patchValue({ delinquencyBucketId: '', enableInstallmentLevelDelinquency: true });
+
+      const payload = component.buildPayloadForSubmit();
+
+      // buildPayload normalizes the None option to null and resets the dependent flag, mirroring
+      // Classic's clear button.
+      expect(payload.delinquencyBucketId).toBeNull();
+      expect(payload.enableInstallmentLevelDelinquency).toBe(false);
+    });
+
+    it('falls back to None alone when the template carries no buckets', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = { currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling' }] };
+
+      component.ngOnInit();
+
+      // No invented buckets: a tenant with none configured is offered none.
+      expect(bucketField(component)!.options).toEqual([{ value: '', label: 'None' }]);
+    });
+
+    it('seeds the currently-assigned bucket from the template, like Classic', () => {
+      // The template nests the assigned bucket under `delinquencyBucket` (`{ id, name, ranges }`),
+      // not a flat `delinquencyBucketId` — `loanProductSettingsForm` seeds from
+      // `this.loanProductsTemplate.delinquencyBucket.id` (loan-product-settings-step.component.ts).
+      // Reading a flat key here previously left the control at '' even when the template carried a
+      // bucket, silently resetting it to None on every load.
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = {
+        ...templateWithBuckets,
+        delinquencyBucket: { id: 7, name: 'Retail 30/60/90' }
+      };
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBe(7);
+      expect(component.buildPayloadForSubmit().delinquencyBucketId).toBe(7);
+    });
+
+    it('seeds null, not None-as-empty-string, for a non-positive assigned bucket id', () => {
+      // Mirrors Classic's `delinquencyBucket.id > 0 ? ... : null` exactly: an assigned-but-invalid id
+      // (Fineract's sentinel for "no bucket") maps to null, not to the wizard's own '' None value.
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = { ...templateWithBuckets, delinquencyBucket: { id: 0, name: 'None' } };
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBeNull();
+    });
+
+    it('falls back to the initial None default when the template carries no assigned bucket', () => {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = templateWithBuckets;
+
+      component.ngOnInit();
+
+      expect(component.form.get('delinquencyBucketId')!.value).toBe('');
+    });
+  });
+
+  it('exposes deferredIncomeRecognition so the Accounting step can reveal its GL accounts', () => {
+    // The Accounting step gates four GL account fields on this input — Income from Capitalization,
+    // Income from Buy Down, Buy Down Expense and Deferred Income Liability. Classic's host passes it;
+    // the wizard did not, so those accounts never appeared and a capitalized-income product could not
+    // supply the mappings Fineract requires.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'INR' }],
+      enableIncomeCapitalization: true,
+      capitalizedIncomeCalculationTypeOptions: [{ id: 'FLAT' }],
+      capitalizedIncomeStrategyOptions: [{ id: 'EQUAL_AMORTIZATION' }],
+      capitalizedIncomeTypeOptions: [{ id: 'FEE' }],
+      enableBuyDownFee: false
+    };
+    component.ngOnInit();
+
+    component.onClassicAdvancePaymentStrategy(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization).toBe(true);
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.capitalizedIncomeCalculationType).toEqual({
+      id: 'FLAT'
+    });
+  });
+
   it('produces a Classic-equivalent payload for Custom/Advanced once the advanced strategy is selected', () => {
     const component = createComponent();
     component.profileMode = 'custom-advanced';
     component.loanProductsTemplate = {
       currencyOptions: [{ code: 'INR' }],
-      transactionProcessingStrategyOptions: [
-        { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
-      ],
-      advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
-      advancedPaymentAllocationTypes: [
-        { id: 1, code: 'PENALTY', value: 'Penalty' },
-        { id: 2, code: 'FEE', value: 'Fee' }
-      ],
-      advancedPaymentAllocationFutureInstallmentAllocationRules: [
-        { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
-      ],
-      supportedInterestRefundTypes: [{ id: 'MERCHANT_ISSUED_REFUND' }]
+      enableIncomeCapitalization: true,
+      capitalizedIncomeCalculationTypeOptions: [{ id: 'FLAT' }],
+      capitalizedIncomeStrategyOptions: [{ id: 'EQUAL_AMORTIZATION' }],
+      capitalizedIncomeTypeOptions: [{ id: 'FEE' }],
+      enableBuyDownFee: false
     };
-
     component.ngOnInit();
-    component.form.patchValue({
-      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
-      loanScheduleType: 'Progressive'
+
+    component.onClassicAdvancePaymentStrategy(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization).toBe(true);
+    expect(component.deferredIncomeRecognition?.capitalizedIncome?.capitalizedIncomeCalculationType).toEqual({
+      id: 'FLAT'
     });
+  });
+
+  it('sources the Review banner from the hosted Classic forms', () => {
+    // The banner is the shared header across every template, so Custom/Advanced must fill it too.
+    // Its keys are spread across three hosted steps, and none of them is the flat FormGroup.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    component.loanProductDetailsStep = {
+      loanProductDetailsForm: new FormGroup({
+        name: new UntypedFormControl('Advance Loan Demo'),
+        shortName: new UntypedFormControl('ADB'),
+        externalId: new UntypedFormControl('ADB01')
+      })
+    } as any;
+    component.loanProductCurrencyStep = {
+      loanProductCurrencyForm: new FormGroup({ currencyCode: new UntypedFormControl('INR') })
+    } as any;
+    component.loanProductTermsStep = {
+      loanProductTermsForm: new FormGroup({
+        principal: new UntypedFormControl(90000),
+        numberOfRepayments: new UntypedFormControl(40),
+        repaymentFrequencyType: new UntypedFormControl(2),
+        interestRatePerPeriod: new UntypedFormControl(9),
+        interestRateFrequencyType: new UntypedFormControl(2)
+      })
+    } as any;
+
+    expect(component.reviewName).toBe('Advance Loan Demo');
+    expect(component.reviewShortName).toBe('ADB');
+    expect(component.reviewExternalId).toBe('ADB01');
+    expect(component.reviewCurrencyCode).toBe('INR');
+    expect(component.formattedPrincipal).toContain('90,000');
+    expect(component.scheduleLabel).toContain('40');
+    expect(component.interestLabel).toContain('9%');
+  });
+
+  it('keeps the Review step visible and names the steps still blocking the summary', () => {
+    // The step must never disappear from the stepper. Only the SUMMARY waits for a complete product:
+    // LoanProductSummaryComponent dereferences it in ngOnChanges (`codeValue.name`) and throws on a
+    // partial one, which is why Classic hides its whole preview step. The wizard shows the step and
+    // lists what is outstanding instead.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    expect(component.visibleSteps.some((step) => step.kind === 'review')).toBe(true);
+    expect(component.classicFormsValid).toBe(false);
+    // Translation keys, not display text — the template pipes them through `translate`.
+    expect(component.incompleteClassicSteps).toEqual([
+      'labels.heading.Details',
+      'labels.heading.Currency',
+      'labels.heading.Terms',
+      'labels.heading.Settings',
+      'labels.heading.Accounting'
+    ]);
+
+    // A real (empty, therefore valid) FormGroup rather than a `{ valid: true }` literal: the component
+    // also reads controls off these forms, so the stub has to behave like one.
+    const validForm = () => new FormGroup({});
+    component.loanProductDetailsStep = { loanProductDetailsForm: validForm() } as any;
+    component.loanProductCurrencyStep = { loanProductCurrencyForm: validForm() } as any;
+    component.loanProductTermsStep = { loanProductTermsForm: validForm() } as any;
+    component.loanProductSettingsStep = { loanProductSettingsForm: validForm() } as any;
+    component.loanProductAccountingStep = { loanProductAccountingForm: validForm() } as any;
+
+    expect(component.incompleteClassicSteps).toEqual([]);
+    expect(component.classicFormsValid).toBe(true);
+    // Review was visible throughout.
+    expect(component.visibleSteps.some((step) => step.kind === 'review')).toBe(true);
+  });
+
+  it('gives the sibling steps stable controls that exist before their ngOnInit', () => {
+    // Regression: these were bound to @ViewChild getters, which are undefined during the first change
+    // detection. The Charges step reads `currencyCode.value` in its template (TypeError) AND captures
+    // the control once in ngOnInit, so a later-resolving getter would leave it on a stale instance.
+    // The Settings step captures `isLinkedToFloatingInterestRates` the same way, but with `?.` — it
+    // failed silently, never forcing interest recalculation on when a floating rate was linked.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    // No hosted step has been created yet — exactly the state the sibling steps initialise in.
+    expect(component.loanProductCurrencyStep).toBeUndefined();
+    expect(component.chargesCurrencyControl).toBeDefined();
+    expect(component.chargesMultiDisburseControl).toBeDefined();
+    expect(component.floatingRatesMirrorControl).toBeDefined();
+  });
+
+  it('mirrors the hosted Classic values into the controls the sibling steps subscribed to', async () => {
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    const hostedCurrency = new UntypedFormControl('USD');
+    const hostedMultiDisburse = new UntypedFormControl(false);
+    const hostedFloatingRates = new UntypedFormControl(false);
+    component.loanProductCurrencyStep = {
+      loanProductCurrencyForm: new FormGroup({ currencyCode: hostedCurrency })
+    } as any;
+    component.loanProductSettingsStep = {
+      loanProductSettingsForm: new FormGroup({ multiDisburseLoan: hostedMultiDisburse })
+    } as any;
+    component.loanProductTermsStep = {
+      loanProductTermsForm: new FormGroup({ isLinkedToFloatingInterestRates: hostedFloatingRates })
+    } as any;
+
+    component.ngAfterViewChecked();
+    await Promise.resolve();
+
+    // Seeded from the hosted forms...
+    expect(component.chargesCurrencyControl.value).toBe('USD');
+
+    // ...and kept in step afterwards, which is what makes the siblings react.
+    hostedCurrency.setValue('EUR');
+    hostedFloatingRates.setValue(true);
+    await Promise.resolve();
+
+    expect(component.chargesCurrencyControl.value).toBe('EUR');
+    expect(component.floatingRatesMirrorControl?.value).toBe(true);
+  });
+
+  it('assembles the Custom/Advanced payload from the hosted Classic steps', () => {
+    // Classic mode reads each hosted step's own getter instead of the flat FormGroup, so the test
+    // stands the steps in directly — the same contract `CreateLoanProductClassicComponent` consumes.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    component.loanProductDetailsStep = { loanProductDetails: { name: 'Custom LP', shortName: 'CLP' } } as any;
+    component.loanProductCurrencyStep = { loanProductCurrency: { currencyCode: 'INR' } } as any;
+    component.loanProductTermsStep = { loanProductTerms: { principal: 50000, minPrincipal: 1000 } } as any;
+    component.loanProductSettingsStep = {
+      loanProductSettings: { amortizationType: 1, useDueForRepaymentsConfigurations: false }
+    } as any;
+    component.loanProductChargesStep = { loanProductCharges: { charges: [{ id: 7 }] } } as any;
+    component.loanProductAccountingStep = { loanProductAccounting: { accountingRule: 1 } } as any;
 
     const payload = component.buildPayloadForSubmit();
-    const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
 
-    // Same DEFAULT allocation the reused AdvancedPaymentStrategy service builds for Personal Loan / Classic.
-    expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
-    expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
-      { order: 1, paymentAllocationRule: 'PENALTY' },
-      { order: 2, paymentAllocationRule: 'FEE' }
-    ]);
-    // Same template-default forwarding Classic/Personal use; no dedicated Interest Refund UI in either wizard.
-    expect(payload.supportedInterestRefundTypes).toEqual([{ id: 'MERCHANT_ISSUED_REFUND' }]);
+    // Every hosted step contributes, in Classic's spread order.
+    expect(payload).toMatchObject({
+      name: 'Custom LP',
+      shortName: 'CLP',
+      currencyCode: 'INR',
+      principal: 50000,
+      minPrincipal: 1000,
+      amortizationType: 1,
+      accountingRule: 1
+    });
+    expect(payload.charges).toEqual([{ id: 7 }]);
+    // UI-only key, dropped exactly as Classic's submitLoanProduct drops it.
+    expect(payload).not.toHaveProperty('useDueForRepaymentsConfigurations');
+    // Advanced-allocation extras stay out while the standard strategy is selected.
+    expect(payload).not.toHaveProperty('paymentAllocation');
+    expect(payload).not.toHaveProperty('supportedInterestRefundTypes');
+  });
+
+  it('re-wires the mirrors if the hosted Classic forms are replaced', async () => {
+    // The wiring is keyed on control instances, not a one-shot flag: were the hosted steps ever torn
+    // down and recreated, a boolean guard would leave the wizard subscribed to the destroyed forms
+    // and the Charges step would silently stop reacting to currency changes.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    const hostSteps = (currency: string) => {
+      component.loanProductCurrencyStep = {
+        loanProductCurrencyForm: new FormGroup({ currencyCode: new UntypedFormControl(currency) })
+      } as any;
+      component.loanProductSettingsStep = {
+        loanProductSettingsForm: new FormGroup({ multiDisburseLoan: new UntypedFormControl(false) })
+      } as any;
+      component.loanProductTermsStep = {
+        loanProductTermsForm: new FormGroup({ isLinkedToFloatingInterestRates: new UntypedFormControl(false) })
+      } as any;
+    };
+
+    hostSteps('USD');
+    component.ngAfterViewChecked();
+    await Promise.resolve();
+    expect(component.chargesCurrencyControl.value).toBe('USD');
+
+    // Steps replaced with brand-new form instances — the mirrors must follow them.
+    hostSteps('EUR');
+    component.ngAfterViewChecked();
+    await Promise.resolve();
+    expect(component.chargesCurrencyControl.value).toBe('EUR');
+
+    const replacedCurrency = component.loanProductCurrencyStep!.loanProductCurrencyForm.get('currencyCode')!;
+    replacedCurrency.setValue('GBP');
+    await Promise.resolve();
+    expect(component.chargesCurrencyControl.value).toBe('GBP');
+  });
+
+  it('reads the advanced strategy from the hosted Settings form, not just the emitted flag', () => {
+    // The Settings step emits `advancePaymentStrategy` from a valueChanges subscription registered in
+    // its constructor, so its ngOnInit patch does fire it. Not relying on that ordering: the three
+    // conditional steps and their payload extras all hang off this boolean, so it is derived from the
+    // control that owns it and degrades to the emitted flag only before the @ViewChild resolves.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+    component.ngOnInit();
+
+    // No hosted step yet, and no emission: falls back to the flag.
+    expect(component.isAdvancedPaymentStrategy).toBe(false);
+
+    // Hosted form says advanced, but the output never fired — still detected.
+    component.loanProductSettingsStep = {
+      loanProductSettingsForm: new FormGroup({
+        transactionProcessingStrategyCode: new UntypedFormControl(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY)
+      })
+    } as any;
+
+    expect(component.isAdvancedPaymentStrategy).toBe(true);
+    expect(component.visibleSteps.some((step) => step.kind === 'payment-allocation')).toBe(true);
+    expect(component.visibleSteps.some((step) => step.kind === 'interest-refund')).toBe(true);
+  });
+
+  it('previews the same configuration it submits', () => {
+    // Regression: the advanced-allocation extras were assembled inside the payload builder, so the
+    // Review summary showed a product WITHOUT the payment allocation, credit allocation, refund types
+    // and deferred-income settings that were then sent. An operator could approve one configuration
+    // and create another. Preview and payload must come from a single model.
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'INR' }],
+      enableIncomeCapitalization: true,
+      capitalizedIncomeCalculationTypeOptions: [{ id: 'FLAT' }],
+      capitalizedIncomeStrategyOptions: [{ id: 'EQUAL_AMORTIZATION' }],
+      capitalizedIncomeTypeOptions: [{ id: 'FEE' }],
+      enableBuyDownFee: false
+    };
+    component.ngOnInit();
+    component.loanProductDetailsStep = { loanProductDetails: { name: 'Custom LP' } } as any;
+    component.loanProductAccountingStep = { loanProductAccounting: { accountingRule: 1 } } as any;
+
+    component.onClassicAdvancePaymentStrategy(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+    component.setPaymentAllocation([{ transactionType: 'DEFAULT' }] as any);
+    component.setCreditAllocation([{ transactionType: 'CHARGEBACK' }] as any);
+    component.setSupportedInterestRefundTypes([{ id: 'MERCHANT_ISSUED_REFUND' }] as any);
+
+    const preview = component.classicPreviewProduct;
+    const payload = component.buildPayloadForSubmit();
+
+    // Everything the operator is asked to approve is present in the preview...
+    expect(preview.paymentAllocation).toEqual([{ transactionType: 'DEFAULT' }]);
+    expect(preview.creditAllocation).toEqual([{ transactionType: 'CHARGEBACK' }]);
+    expect(preview.supportedInterestRefundTypes).toEqual([{ id: 'MERCHANT_ISSUED_REFUND' }]);
+    expect(preview.enableIncomeCapitalization).toBe(true);
+    expect(preview.capitalizedIncomeCalculationType).toEqual({ id: 'FLAT' });
+
+    // ...and reaches the payload unchanged, bar the id-mapping Classic also applies at submit time.
+    expect(payload.paymentAllocation).toEqual(preview.paymentAllocation);
+    expect(payload.creditAllocation).toEqual(preview.creditAllocation);
+    expect(payload.enableIncomeCapitalization).toBe(preview.enableIncomeCapitalization);
+    expect(payload.capitalizedIncomeCalculationType).toEqual(preview.capitalizedIncomeCalculationType);
+    expect(payload.supportedInterestRefundTypes).toEqual(['MERCHANT_ISSUED_REFUND']);
+  });
+
+  it('adds the advanced-allocation extras once the Classic Settings step reports that strategy', () => {
+    const component = createComponent();
+    component.profileMode = 'custom-advanced';
+    component.loanProductsTemplate = {
+      currencyOptions: [{ code: 'INR' }],
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false
+    };
+    component.ngOnInit();
+    component.loanProductDetailsStep = { loanProductDetails: { name: 'Custom LP' } } as any;
+    component.loanProductAccountingStep = { loanProductAccounting: { accountingRule: 1 } } as any;
+
+    // The strategy arrives through the hosted Settings step's output, as it does in Classic.
+    component.onClassicAdvancePaymentStrategy(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+    expect(component.isAdvancedPaymentStrategy).toBe(true);
+
+    component.setPaymentAllocation([{ transactionType: 'DEFAULT' }] as any);
+    component.setSupportedInterestRefundTypes([{ id: 'MERCHANT_ISSUED_REFUND' }] as any);
+
+    const payload = component.buildPayloadForSubmit();
+
+    expect(payload.paymentAllocation).toEqual([{ transactionType: 'DEFAULT' }]);
+    // Mapped to the id list Classic submits, not the raw option objects.
+    expect(payload.supportedInterestRefundTypes).toEqual(['MERCHANT_ISSUED_REFUND']);
+    // The template disables both deferred-income halves, so only the flags travel.
+    expect(payload.enableIncomeCapitalization).toBe(false);
+    expect(payload.enableBuyDownFee).toBe(false);
   });
 
   it('seeds daysInYearType/daysInMonthType from the template id, not the display value (numeric enum)', () => {
@@ -374,7 +838,7 @@ describe('LoanProductWizardComponent', () => {
     // longer masked by HIDDEN_DEFAULTS in the custom-advanced merge, that string reached the payload
     // and the backend rejected `daysInYearType = "Actual"`. The form/payload must carry the integer id.
     const component = createComponent();
-    component.profileMode = 'custom-advanced';
+    component.profileMode = 'bnpl';
     component.loanProductsTemplate = {
       currencyOptions: [{ code: 'INR' }],
       transactionProcessingStrategyOptions: [{ code: 'mifos-standard-strategy', name: 'Mifos standard' }],
@@ -461,9 +925,9 @@ describe('LoanProductWizardComponent', () => {
   });
 
   describe('reduces required input to profile/strategy-determined fields (Item 3)', () => {
-    function customAdvancedComponent(): LoanProductWizardComponent {
+    function fieldGridComponent(): LoanProductWizardComponent {
       const component = createComponent();
-      component.profileMode = 'custom-advanced';
+      component.profileMode = 'bnpl';
       component.loanProductsTemplate = {
         currencyOptions: [{ code: 'INR' }],
         transactionProcessingStrategyOptions: [
@@ -483,14 +947,18 @@ describe('LoanProductWizardComponent', () => {
       return component.visibleFields(stepOwning(component, key)).map((field) => field.key);
     }
 
-    it('hides single-option and strategy-determined selects in Custom/Advanced by default', () => {
-      const component = customAdvancedComponent();
+    it('hides single-option and strategy-determined selects on a non-advanced strategy', () => {
+      const component = fieldGridComponent();
+      // Set the strategy explicitly rather than leaning on a profile default: this profile seeds the
+      // advanced stack, and the rule under test is "these fields are determined by the strategy",
+      // not "this profile happens to start non-advanced".
+      component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
 
       // Single-option selects: nothing for the user to choose.
       expect(visibleKeysFor(component, 'repaymentStartDateType')).not.toContain('repaymentStartDateType');
+      // Charge-off behaviour is Progressive + advanced only, so the standard strategy hides it.
       expect(visibleKeysFor(component, 'loanChargeOffBehaviour')).not.toContain('loanChargeOffBehaviour');
 
-      // Advanced-strategy-only fields, hidden while the default (non-advanced) strategy is selected.
       const settingsKeys = visibleKeysFor(component, 'loanScheduleProcessingType');
       expect(settingsKeys).not.toContain('loanScheduleProcessingType');
       expect(settingsKeys).not.toContain('daysInYearCustomStrategy');
@@ -502,7 +970,7 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('reveals loanScheduleProcessingType only for the advanced strategy (mirrors Classic)', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
 
       component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
       expect(visibleKeysFor(component, 'loanScheduleProcessingType')).not.toContain('loanScheduleProcessingType');
@@ -514,7 +982,7 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('reveals daysInYearCustomStrategy only for the advanced strategy AND ACTUAL days-in-year', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
       component.form.patchValue({
         transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
         daysInYearType: 360
@@ -526,7 +994,7 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('keeps complete payload parity — hidden fields are still emitted with their defaults', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
 
       // Default (non-advanced) strategy: the same values the wizard emitted before the fields were hidden.
       const before = component.buildPayloadForSubmit();
@@ -610,15 +1078,18 @@ describe('LoanProductWizardComponent', () => {
       };
 
       component.ngOnInit();
-      component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
+      component.loanProductDetailsStep = { loanProductDetails: { name: 'Custom LP' } } as any;
+      component.loanProductSettingsStep = {
+        loanProductSettings: { transactionProcessingStrategyCode: 'mifos-standard-strategy' }
+      } as any;
       const payload = component.buildPayloadForSubmit();
 
       expect(payload.transactionProcessingStrategyCode).toBe('mifos-standard-strategy');
       // Non-advanced strategy: Classic Edit's non-advanced path expects no payment allocation.
       expect(payload.paymentAllocation).toBeUndefined();
       expect(payload.creditAllocation).toBeUndefined();
-      expect(typeof payload.allowAttributeOverrides).toBe('object');
-      expect(Object.keys(payload).some((key) => key.startsWith('allowAttributeOverrides.'))).toBe(false);
+      // The wizard-only helper keys never existed in Classic mode: the hosted steps emit Classic's
+      // own field names, so there is nothing to rename or strip.
       WIZARD_ONLY_KEYS.forEach((key) => expect(payload[key]).toBeUndefined());
     });
   });
@@ -637,9 +1108,9 @@ describe('LoanProductWizardComponent', () => {
       return component;
     }
 
-    function customAdvancedComponent(): LoanProductWizardComponent {
+    function fieldGridComponent(): LoanProductWizardComponent {
       const component = createComponent();
-      component.profileMode = 'custom-advanced';
+      component.profileMode = 'bnpl';
       component.loanProductsTemplate = {
         currencyOptions: [{ code: 'INR' }],
         transactionProcessingStrategyOptions: [
@@ -656,7 +1127,7 @@ describe('LoanProductWizardComponent', () => {
     }
 
     it('every Review row corresponds to a currently-visible wizard field (single source of truth)', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
       const visibleLabels = new Set(
         component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.label)
       );
@@ -664,7 +1135,7 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('omits hidden defaults, backend-only params and buildPayload-injected values', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
       const labels = reviewLabels(component);
       // Profile/strategy-determined fields hidden from the wizard must not appear in its Review either.
       expect(labels).not.toContain('Repayment start date type');
@@ -685,7 +1156,7 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('reflects a user select via the field option label (form-driven, not payload-driven)', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
       component.form.patchValue({ amortizationType: 0 });
       const row = component.reviewGroups
         .flatMap((group) => group.rows)
@@ -694,17 +1165,17 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('renders visible checkboxes as Yes/No and drops empty optional fields', () => {
-      const component = customAdvancedComponent();
-      const topup = component.reviewGroups
+      const component = fieldGridComponent();
+      const equalAmortization = component.reviewGroups
         .flatMap((g) => g.rows)
-        .find((r) => r.label === 'labels.inputs.Allow top-up loans');
-      expect(topup?.display).toBe('No');
+        .find((r) => r.label === 'labels.inputs.Is Equal Amortization');
+      expect(equalAmortization?.display).toBe('No');
       // externalId is visible but empty by default → dropped from the summary.
       expect(reviewLabels(component)).not.toContain('labels.inputs.External ID');
     });
 
     it('sources the banner from the form state', () => {
-      const component = customAdvancedComponent();
+      const component = fieldGridComponent();
       component.form.patchValue({ name: 'My LP', shortName: 'MLP', principal: 60000, currencyCode: 'USD' });
       expect(component.reviewName).toBe('My LP');
       expect(component.reviewShortName).toBe('MLP');
@@ -786,88 +1257,10 @@ describe('LoanProductWizardComponent', () => {
       });
     });
 
-    it('locks the Custom/Advanced visible field set', () => {
-      // Five controls that used to appear unconditionally are now gated on their controlling field,
-      // matching the Classic Settings/Terms steps. On an untouched Custom/Advanced form every one of
-      // those controllers is off, so none of the five is listed here; ticking the controller reveals
-      // them again (see the conditional-visibility specs below).
-      //   multiDisburseLoan (default false) -> outstandingLoanBalance, disallowExpectedDisbursements
-      //   delinquencyBucketId (default none) -> enableInstallmentLevelDelinquency
-      //   allowApprovedDisbursedAmountsOverApplied (default false)
-      //     -> overAppliedCalculationType, overAppliedNumber
-      expect(visibleKeysByStep(customAdvancedComponent())).toEqual({
-        Details: [
-          'name',
-          'shortName',
-          'externalId',
-          'description',
-          'startDate',
-          'closeDate',
-          'includeInBorrowerCycle'
-        ],
-        Currency: [
-          'currencyCode',
-          'digitsAfterDecimal',
-          'inMultiplesOf',
-          'installmentAmountInMultiplesOf',
-          'useBorrowerCycle'
-        ],
-        Terms: [
-          'principal',
-          'numberOfRepayments',
-          'interestRatePerPeriod',
-          'interestRateFrequencyType',
-          'repaymentEvery',
-          'repaymentFrequencyType',
-          'isLinkedToFloatingInterestRates',
-          'allowApprovedDisbursedAmountsOverApplied',
-          'minimumDaysBetweenDisbursalAndFirstRepayment',
-          'interestRecognitionOnDisbursementDate'
-        ],
-        Settings: [
-          'amortizationType',
-          'interestType',
-          'allowPartialPeriodInterestCalculation',
-          'isEqualAmortization',
-          'interestCalculationPeriodType',
-          'loanScheduleType',
-          'transactionProcessingStrategyCode',
-          'graceOnPrincipalPayment',
-          'graceOnInterestPayment',
-          'interestFreePeriod',
-          'daysInYearType',
-          'daysInMonthType',
-          'principalThresholdForLastInstallment',
-          'canUseForTopup',
-          'isInterestRecalculationEnabled',
-          'delinquencyBucketId',
-          'canDefineInstallmentAmount',
-          'allowVariableInstallments',
-          'multiDisburseLoan',
-          'inArrearsTolerance',
-          'graceOnArrearsAgeing',
-          'overdueDaysForNPA',
-          'accountMovesOutOfNPAOnlyOnArrearsCompletion',
-          'holdGuaranteeFunds',
-          'allowAttributeOverrides.amortizationType',
-          'allowAttributeOverrides.interestType',
-          'allowAttributeOverrides.transactionProcessingStrategyCode',
-          'allowAttributeOverrides.interestCalculationPeriodType',
-          'allowAttributeOverrides.inArrearsTolerance',
-          'allowAttributeOverrides.repaymentEvery',
-          'allowAttributeOverrides.graceOnPrincipalAndInterestPayment',
-          'allowAttributeOverrides.graceOnArrearsAgeing',
-          'enableDownPayment',
-          'enableIncomeCapitalization',
-          'enableBuydownFees'
-        ],
-        'Advanced Configuration': [
-          'useGlobalConfigForRepaymentEvent',
-          'dueDaysForRepaymentEvent',
-          'overDueDaysForRepaymentEvent'
-        ]
-      });
-    });
+    // NOTE: the Custom/Advanced visible-field-set and flat-form seeding goldens were removed when
+    // this profile moved to Classic's hosted step components — the config field grid and the flat
+    // FormGroup no longer drive it. Its surface is now locked by the step-sequence golden above and
+    // by Classic's own step specs; the field-grid engine stays covered through the guided profiles.
 
     it('locks the Personal Loan visible step sequence', () => {
       expect(personalComponent().visibleSteps.map((step) => step.title)).toEqual([
@@ -883,6 +1276,9 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('locks the Custom/Advanced visible step sequence', () => {
+      // Custom/Advanced hosts Classic's own step components, so two steps disappear because Classic
+      // already contains them: Loan Cycle Variations lives inside Classic's Terms step, and the
+      // Advanced Configuration fields are Classic's Event Settings block inside its Settings step.
       expect(customAdvancedComponent().visibleSteps.map((step) => step.title)).toEqual([
         'Details',
         'Currency',
@@ -890,8 +1286,20 @@ describe('LoanProductWizardComponent', () => {
         'Settings',
         'Charges',
         'Accounting',
-        'Advanced Configuration',
         'Review'
+      ]);
+    });
+
+    it('renders Custom/Advanced through Classic step components, not the field grid', () => {
+      const component = customAdvancedComponent();
+
+      expect(component.usesClassicSteps).toBe(true);
+      // The four steps that were re-declared as config fields now delegate to Classic's components.
+      expect(component.visibleSteps.filter((step) => step.classicStep).map((step) => step.classicStep)).toEqual([
+        'details',
+        'currency',
+        'terms',
+        'settings'
       ]);
     });
 
@@ -910,21 +1318,6 @@ describe('LoanProductWizardComponent', () => {
         loanScheduleType: 'Progressive',
         multiDisburseLoan: true,
         allowVariableInstallments: true,
-        enableDownPayment: false,
-        disbursedAmountPercentageForDownPayment: 35,
-        currencyCode: 'INR'
-      });
-    });
-
-    it('locks the Custom/Advanced form seeding when the template omits the seeded fields', () => {
-      expect(customAdvancedComponent().form.getRawValue()).toMatchObject({
-        principal: '',
-        numberOfRepayments: 12,
-        interestRatePerPeriod: '',
-        transactionProcessingStrategyCode: 'interest-principal-penalties-fees-order-strategy',
-        loanScheduleType: 'Progressive',
-        multiDisburseLoan: false,
-        allowVariableInstallments: false,
         enableDownPayment: false,
         disbursedAmountPercentageForDownPayment: 35,
         currencyCode: 'INR'

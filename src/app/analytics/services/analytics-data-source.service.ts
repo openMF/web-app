@@ -1164,8 +1164,13 @@ export class AnalyticsDataSourceService {
     };
   }
 
+  private normalizeOfficeId(officeId: number): number {
+    const id = Math.abs(Math.floor(Number(officeId)));
+    return Number.isSafeInteger(id) && id > 0 ? id : 1;
+  }
+
   private getOfficeClients(officeId: number, filters: AnalyticsFilters): number {
-    const safeId = Math.abs(Number(officeId)) || 1;
+    const safeId = this.normalizeOfficeId(officeId);
     const base = ((safeId * 149) % 300) + 150;
     const scale = filters.productId ? 0.25 : 1.0;
     return Math.max(50, Math.floor(base * scale));
@@ -1178,14 +1183,16 @@ export class AnalyticsDataSourceService {
 
   private getOfficeSavings(officeId: number, filters: AnalyticsFilters): number {
     const clients = this.getOfficeClients(officeId, filters);
-    const basePerClient = ((officeId * 73) % 500) + 800;
+    const safeId = this.normalizeOfficeId(officeId);
+    const basePerClient = ((safeId * 73) % 500) + 800;
     const productScale = filters.productId ? 0.4 : 1.0;
     return Math.floor(clients * basePerClient * productScale);
   }
 
   private getOfficeCollected(officeId: number, filters: AnalyticsFilters): number {
     const loansCount = this.getOfficeLoans(officeId, filters);
-    const avgLoanSize = ((officeId * 41) % 1000) + 1500;
+    const safeId = this.normalizeOfficeId(officeId);
+    const avgLoanSize = ((safeId * 41) % 1000) + 1500;
     const basePortfolio = loansCount * avgLoanSize;
 
     let periodScale = 0.08;

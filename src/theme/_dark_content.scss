@@ -184,6 +184,21 @@ body.dark-theme {
     color: white !important;
   }
 
+  // A focused field is painted with the primary hue, and the dark palette carries the same dark
+  // blue as the light one, so against the dark field surface the label and the underline fall to
+  // about 1.6:1. Lighten the brand hue the way the loan product tokens do for their accent, using
+  // Material's own tokens so the label, the underline and the outlined border all follow.
+  // The tokens have to sit on the field itself: `mat.all-component-colors` emits the same ones on
+  // `.dark-theme`, and being included later it would win a tie there. Screens that supply their own
+  // accent do so through `--lp-accent` on their host, so read that first and fall back to ours.
+  .mat-mdc-form-field {
+    --mifosx-field-focus: #{color-mix(in srgb, var(--brand-primary-100, #5ba2ec) 50%, var(--mat-app-text-color, #fff))};
+    --mat-form-field-filled-focus-label-text-color: var(--lp-accent, var(--mifosx-field-focus));
+    --mat-form-field-filled-focus-active-indicator-color: var(--lp-accent, var(--mifosx-field-focus));
+    --mat-form-field-outlined-focus-label-text-color: var(--lp-accent, var(--mifosx-field-focus));
+    --mat-form-field-outlined-focus-outline-color: var(--lp-accent, var(--mifosx-field-focus));
+  }
+
   // Override Material typography heading colors for dark theme
   h2.mat-h2,
   h3.mat-h3,

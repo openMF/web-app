@@ -8,6 +8,7 @@
 
 import { Injectable, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { DateTimepickerBase } from 'app/shared/form-dialog/formfield/model/datetimepicker-base';
@@ -21,6 +22,7 @@ import { Dates } from './dates';
 export class Datatables {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService, { optional: true });
 
   systemFields: string[] = [
     'id',
@@ -33,17 +35,19 @@ export class Datatables {
     'savings_account_id',
     'savings_transaction_id',
     'loan_id',
+    'wc_loan_id',
     'group_id',
     'center_id',
     'office_id',
     'product_loan_id',
+    'wc_product_loan_id',
     'savings_product_id',
     'share_product_id'
   ];
 
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {
-      const displayLabel = this.toDisplayLabel(column.columnName);
+      const displayLabel = this.getDisplayLabel(column.columnName);
       const colName = column.columnName ? column.columnName.toLowerCase().replace(/[_\s]+/g, '') : '';
       const isMinSavingsAmount = colName.includes('minimumsavingsamountpermeeting');
       const isPriceOneShare = colName.includes('priceofoneshare');
@@ -231,6 +235,19 @@ export class Datatables {
       );
     }
     return columnName;
+  }
+
+  public getDisplayLabel(columnName: string): string {
+    const normalizedColumnName = this.getName(columnName);
+    const rawKey = `labels.inputs.${normalizedColumnName}`;
+    const translatedRawLabel = this.translateService?.instant(rawKey) ?? rawKey;
+    if (translatedRawLabel !== rawKey) {
+      return translatedRawLabel;
+    }
+    const displayLabel = this.toDisplayLabel(columnName);
+    const displayKey = `labels.inputs.${displayLabel}`;
+    const translatedDisplayLabel = this.translateService?.instant(displayKey) ?? displayKey;
+    return translatedDisplayLabel === displayKey ? displayLabel : translatedDisplayLabel;
   }
 
   public getCodeLookupValue(columnHeader: any, id: number): string {

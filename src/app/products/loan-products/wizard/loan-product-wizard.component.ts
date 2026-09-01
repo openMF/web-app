@@ -6,8 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { FormBuilder, FormGroup, UntypedFormControl, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AfterViewChecked,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  inject
+} from '@angular/core';
+import { FormBuilder, FormGroup, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -20,6 +30,8 @@ import {
   forcesProgressiveStack,
   hiddenDefaultsFor,
   isGuidedProfileMode,
+  usesClassicSteps,
+  ClassicStep,
   rendersDeferredIncomeStep,
   rendersBorrowerCycleStep,
   rendersInterestRefundStep,
@@ -28,6 +40,7 @@ import {
   TEMPLATE_OPTION_SOURCES,
   NTH_DAY_ON_DAY_OPTION,
   ON_DAY_OF_MONTH_OPTIONS,
+  DELINQUENCY_BUCKET_NONE_OPTION,
   VALUE_MAP,
   SelectOption,
   LoanWizardProfileMode,
@@ -35,6 +48,7 @@ import {
   FormStep
 } from './loan-product.config';
 import { ProductsService } from '../../products.service';
+import { DelinquencyBucket } from '../models/loan-product.model';
 import { LoanProducts } from '../loan-products';
 import {
   AdvancedCreditAllocation,
@@ -57,6 +71,13 @@ import {
   BorrowerCycleVariations
 } from './borrower-cycle-step/loan-product-borrower-cycle-step.component';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+// The four Classic step components Custom/Advanced hosts in place of the config-driven field grid,
+// plus Classic's own preview so its Review shows the same summary Classic's does.
+import { LoanProductDetailsStepComponent } from '../loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
+import { LoanProductCurrencyStepComponent } from '../loan-product-stepper/loan-product-currency-step/loan-product-currency-step.component';
+import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-product-terms-step/loan-product-terms-step.component';
+import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
+import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-product-preview-step/loan-product-preview-step.component';
 import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -66,7 +87,10 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
-/** Currency symbols rendered in the Review banner, keyed by ISO currency code. */
+/**
+ * Fallback currency symbols for the Review banner, keyed by ISO currency code. Used only when the
+ * backend template has no `displaySymbol` for the selected currency (or has not loaded yet).
+ */
 const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '€', GBP: '£' };
 
 /**
@@ -167,12 +191,17 @@ const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> 
     LoanProductInterestRefundStepComponent,
     LoanProductDeferredIncomeRecognitionStepComponent,
     LoanProductBorrowerCycleStepComponent,
+    LoanProductDetailsStepComponent,
+    LoanProductCurrencyStepComponent,
+    LoanProductTermsStepComponent,
+    LoanProductSettingsStepComponent,
+    LoanProductPreviewStepComponent,
     GlAccountDisplayComponent
   ],
   templateUrl: './loan-product-wizard.component.html',
   styleUrls: ['./loan-product-wizard.component.scss']
 })
-export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy {
+export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewChecked, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly productsService = inject(ProductsService);
   private readonly loanProducts = inject(LoanProducts);
@@ -228,6 +257,22 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   @ViewChild(LoanProductBorrowerCycleStepComponent)
   loanProductBorrowerCycleStep?: LoanProductBorrowerCycleStepComponent;
 
+  // The four Classic step components hosted for Custom/Advanced. Each owns its own typed FormGroup
+  // and exposes a payload getter, exactly as in Classic's create flow — the wizard reads them at
+  // submit time instead of assembling those fields from its flat FormGroup.
+  @ViewChild(LoanProductDetailsStepComponent) loanProductDetailsStep?: LoanProductDetailsStepComponent;
+  @ViewChild(LoanProductCurrencyStepComponent) loanProductCurrencyStep?: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductTermsStepComponent) loanProductTermsStep?: LoanProductTermsStepComponent;
+  @ViewChild(LoanProductSettingsStepComponent) loanProductSettingsStep?: LoanProductSettingsStepComponent;
+
+  /**
+   * Whether the Classic Settings step has reported the advanced payment allocation strategy. In
+   * Classic mode the strategy lives in that step's own FormGroup, not the wizard's flat one, so it
+   * arrives through the step's `advancePaymentStrategy` output — the same signal Classic's host
+   * listens to.
+   */
+  private classicAdvancedPaymentStrategy = false;
+
   /** Selected refund types, mirroring Classic's `supportedInterestRefundTypes` field. */
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
   /** Deferred income state the reused step binds to, mirroring Classic's field of the same name. */
@@ -266,6 +311,11 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   // `patchValue` reset — see `syncDependentResets`.
   private lastSeenMultiDisburseLoan?: boolean;
   private lastSeenProgressiveSchedule?: boolean;
+  // Classic-mode bridge between the hosted Classic forms and the controls the Charges step binds to.
+  private readonly classicMirrorSubscriptions: Subscription[] = [];
+  // Bridge between the hosted Classic forms and the wizard controls its sibling steps bind to.
+  // Holds the control instances currently mirrored, so re-created hosted steps are re-wired.
+  private wiredClassicControls?: { currency: unknown; multiDisburse: unknown; floatingRates: unknown };
 
   ngOnInit(): void {
     this.initializeForm();
@@ -278,8 +328,96 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     }
   }
 
+  ngAfterViewChecked(): void {
+    // The hosted Classic steps live inside *ngFor/*ngIf, so their @ViewChild refs cannot be `static`
+    // and are not guaranteed by ngAfterViewInit. Retry each pass until wired, then never again.
+    this.wireClassicControlMirrors();
+  }
+
   ngOnDestroy(): void {
     this.formValueChangesSubscription?.unsubscribe();
+    this.classicMirrorSubscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  /**
+   * In Classic mode the authoritative values live in the hosted Classic forms, but three of them are
+   * consumed by SIBLING steps that capture their control once, in `ngOnInit`, before any `@ViewChild`
+   * has resolved:
+   *   - `currencyCode` / `multiDisburseLoan` -> the Charges step, which clears its selections on change;
+   *   - `isLinkedToFloatingInterestRates` -> the Settings step, which forces interest recalculation and
+   *     partial-period interest on when it becomes true (and subscribes with `?.`, so a missing control
+   *     fails silently rather than loudly).
+   * Each sibling is therefore bound to the wizard's own stable control, and this mirrors the hosted
+   * value into it — reproducing what Classic gets for free by passing its own step forms directly.
+   *
+   * Runs once, as soon as both hosted forms exist. The patches are deferred to a microtask because
+   * they happen during the after-view phase, and writing a value the template already read in the
+   * same tick raises ExpressionChangedAfterItHasBeenCheckedError in dev mode.
+   */
+  private wireClassicControlMirrors(): void {
+    if (!this.usesClassicSteps) {
+      return;
+    }
+    const currencyControl = this.loanProductCurrencyStep?.loanProductCurrencyForm?.get('currencyCode');
+    const multiDisburseControl = this.loanProductSettingsStep?.loanProductSettingsForm?.get('multiDisburseLoan');
+    const floatingRatesControl = this.loanProductTermsStep?.loanProductTermsForm?.get(
+      'isLinkedToFloatingInterestRates'
+    );
+    if (!currencyControl || !multiDisburseControl || !floatingRatesControl) {
+      return;
+    }
+
+    // Keyed on the CONTROL INSTANCES rather than a one-shot boolean. If Angular ever tears down and
+    // recreates the hosted steps, the wizard would otherwise stay subscribed to the destroyed forms'
+    // controls and the Charges step would silently stop reacting to currency / multi-disbursal
+    // changes — the same stale-subscription failure this mirror exists to prevent. Comparing
+    // instances makes the wiring self-correcting: it re-subscribes to whatever is current, and is a
+    // no-op on every other change-detection pass.
+    if (
+      this.wiredClassicControls?.currency === currencyControl &&
+      this.wiredClassicControls?.multiDisburse === multiDisburseControl &&
+      this.wiredClassicControls?.floatingRates === floatingRatesControl
+    ) {
+      return;
+    }
+    this.classicMirrorSubscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.classicMirrorSubscriptions.length = 0;
+    this.wiredClassicControls = {
+      currency: currencyControl,
+      multiDisburse: multiDisburseControl,
+      floatingRates: floatingRatesControl
+    };
+
+    const mirror = (key: string, value: unknown): void => {
+      // emitEvent stays TRUE: the consuming steps react through their own valueChanges subscriptions,
+      // which is the entire point of the mirror.
+      Promise.resolve().then(() => this.form?.get(key)?.setValue(value));
+    };
+
+    (
+      [
+        [
+          'currencyCode',
+          currencyControl
+        ],
+        [
+          'multiDisburseLoan',
+          multiDisburseControl
+        ],
+        [
+          'isLinkedToFloatingInterestRates',
+          floatingRatesControl
+        ]
+      ] as const
+    ).forEach(
+      ([
+        key,
+        control
+      ]) => {
+        mirror(key, control.value);
+        this.classicMirrorSubscriptions.push(control.valueChanges.subscribe((value) => mirror(key, value)));
+      }
+    );
   }
 
   /** Translation key for the active profile's name, shown in the wizard header. */
@@ -315,9 +453,79 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
    * selected repayment strategy is the advanced payment allocation strategy — exactly like the
    * `@if (isAdvancedPaymentStrategy)` guard in the Classic stepper template.
    */
+  /**
+   * Whether this profile hosts Classic's four step components instead of the config-driven field
+   * grid. The single seam between the two rendering modes: it selects the template branch, the
+   * source of `isAdvancedPaymentStrategy`, the validity check and the payload assembly.
+   */
+  get usesClassicSteps(): boolean {
+    return usesClassicSteps(this.profileMode);
+  }
+
   get isAdvancedPaymentStrategy(): boolean {
+    if (this.usesClassicSteps) {
+      // Derived from the hosted Settings form, which owns the control, rather than trusting the
+      // cached flag alone. The flag is only as good as the `advancePaymentStrategy` emission that
+      // sets it, and this profile's payment allocation, interest-refund and deferred-income steps —
+      // plus the payload extras they contribute — all hang off this one boolean. Reading the source
+      // of truth means a missed emission degrades to "reads the form" instead of silently building
+      // a product without its allocation data. The flag remains the fallback for the window before
+      // the step's @ViewChild resolves.
+      const strategy = this.loanProductSettingsStep?.loanProductSettingsForm?.get(
+        'transactionProcessingStrategyCode'
+      )?.value;
+      return typeof strategy === 'string'
+        ? LoanProducts.isAdvancedPaymentAllocationStrategy(strategy)
+        : this.classicAdvancedPaymentStrategy;
+    }
     const strategyCode = this.form?.get('transactionProcessingStrategyCode')?.value;
     return typeof strategyCode === 'string' && LoanProducts.isAdvancedPaymentAllocationStrategy(strategyCode);
+  }
+
+  /** The Classic Terms form, exposed for the hosted steps' cross-references. */
+  get classicTermsForm(): UntypedFormGroup | undefined {
+    return this.loanProductTermsStep?.loanProductTermsForm;
+  }
+
+  /**
+   * The stable control the hosted Settings step binds to. See {@link wireClassicControlMirrors} for
+   * why it cannot be the Terms form's control directly.
+   */
+  get floatingRatesMirrorControl(): UntypedFormControl | null {
+    return (this.form?.get('isLinkedToFloatingInterestRates') as UntypedFormControl) ?? null;
+  }
+
+  /**
+   * Mirrors Classic's host: the Settings step reports the selected repayment strategy, which gates the
+   * Payment Allocation, Interest Refund and Deferred Income steps and seeds the deferred-income
+   * defaults. Copied from `CreateLoanProductClassicComponent.advancePaymentStrategy` so both flows
+   * derive the same starting state from the same template options.
+   */
+  onClassicAdvancePaymentStrategy(value: string): void {
+    this.classicAdvancedPaymentStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(value);
+    if (!this.classicAdvancedPaymentStrategy || !this.loanProductsTemplate) {
+      return;
+    }
+    const template = this.loanProductsTemplate;
+    this.deferredIncomeRecognition = {
+      capitalizedIncome: template.enableIncomeCapitalization
+        ? {
+            enableIncomeCapitalization: true,
+            capitalizedIncomeCalculationType: template.capitalizedIncomeCalculationTypeOptions?.[0],
+            capitalizedIncomeStrategy: template.capitalizedIncomeStrategyOptions?.[0],
+            capitalizedIncomeType: template.capitalizedIncomeTypeOptions?.[0]
+          }
+        : { enableIncomeCapitalization: false },
+      buyDownFee: template.enableBuyDownFee
+        ? {
+            enableBuyDownFee: true,
+            buyDownFeeCalculationType: template.buyDownFeeCalculationTypeOptions?.[0],
+            buyDownFeeStrategy: template.buyDownFeeStrategyOptions?.[0],
+            buyDownFeeIncomeType: template.buyDownFeeIncomeTypeOptions?.[0],
+            merchantBuyDownFee: true
+          }
+        : { enableBuyDownFee: false }
+    };
   }
 
   /**
@@ -335,6 +543,21 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
 
   get visibleSteps(): FormStep[] {
     return this.steps.filter((step) => {
+      // Classic mode renders the four hosted components unconditionally: each owns its own internal
+      // show/hide rules, which is the whole point of hosting them.
+      if (this.usesClassicSteps && step.classicStep) {
+        return true;
+      }
+      if (this.usesClassicSteps) {
+        // Two steps become duplicates once Classic's own components are hosted:
+        //   - Loan Cycle Variations: Classic's Terms step owns the three variation FormArrays and
+        //     renders them inline under `useBorrowerCycle`.
+        //   - Advanced Configuration: Classic's Settings step owns the same Event Settings block
+        //     (`useDueForRepaymentsConfigurations` plus the due / overdue day inputs).
+        if (step.kind === 'borrower-cycle' || step.title === 'Advanced Configuration') {
+          return false;
+        }
+      }
       if (step.kind === 'review') {
         return true;
       }
@@ -350,11 +573,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       // Same gate Classic puts on both steps (`@if (isAdvancedPaymentStrategy)` in
       // create-loan-product-classic.component.html), plus the profile opt-in: only profiles whose
       // sheet marks these groups Applicable render them.
+      // Classic renders both for ANY advanced-payment-allocation product, so Classic mode drops the
+      // per-profile opt-in and keeps only Classic's own strategy gate.
       if (step.kind === 'interest-refund') {
-        return rendersInterestRefundStep(this.profileMode) && this.isAdvancedPaymentStrategy;
+        return (this.usesClassicSteps || rendersInterestRefundStep(this.profileMode)) && this.isAdvancedPaymentStrategy;
       }
       if (step.kind === 'deferred-income') {
-        return rendersDeferredIncomeStep(this.profileMode) && this.isAdvancedPaymentStrategy;
+        return (this.usesClassicSteps || rendersDeferredIncomeStep(this.profileMode)) && this.isAdvancedPaymentStrategy;
       }
       // Same gate Classic puts on the block (`@if (loanProductTermsForm.value.useBorrowerCycle)` in
       // loan-product-terms-step.component.html), plus the profile opt-in: only JLG's sheet marks the
@@ -370,6 +595,17 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
    * Controls handed to the reused Classic Charges step. It expects plain `UntypedFormControl`s (it
    * subscribes to their `valueChanges` to clear the selected charges when currency / multi-disbursal
    * changes), so the wizard exposes its own form controls under the same shapes Classic passes.
+   */
+  /**
+   * ALWAYS the wizard's own control, in both modes.
+   *
+   * The reused Charges step reads `currencyCode.value` on every change detection AND captures the
+   * control once in its `ngOnInit` (`this.currencyCode.valueChanges.subscribe(...)`). A `@ViewChild`
+   * is still undefined during that first pass, so handing it the hosted Classic form's control threw
+   * `Cannot read properties of undefined (reading 'value')` and, had it resolved later, would have
+   * left the step subscribed to a stale instance. The wizard's flat control exists from
+   * `initializeForm()`, so it is a stable target; {@link wireClassicChargeControlMirrors} keeps its
+   * value in step with the hosted Classic forms.
    */
   get chargesCurrencyControl(): UntypedFormControl {
     return this.form?.get('currencyCode') as UntypedFormControl;
@@ -629,6 +865,28 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     if (!Array.isArray(rawOptions)) {
       return undefined;
     }
+    // `currencyOptions` is the one template list keyed by ISO `code`/`name` instead of `id`/`value`:
+    // Classic binds `[value]="currency.code"` and renders `currency.name`
+    // (loan-product-currency-step.component.html), so the wizard maps the same pair.
+    if (key === 'currencyCode') {
+      return rawOptions.map((option: any) => ({
+        value: option.code,
+        label: option.name ?? option.displayLabel ?? option.code
+      }));
+    }
+    // `delinquencyBucketOptions` is keyed `id`/`name` (DelinquencyBucket in models/loan-product.model.ts),
+    // so the generic `option.value ?? option.code` mapping below would label every bucket `undefined`.
+    // Classic binds `[value]="delinquencyBucket.id"` and renders `delinquencyBucket.name`. The "None"
+    // choice leads the list because the wizard renders it as an option where Classic uses a clear button.
+    if (key === 'delinquencyBucketId') {
+      return [
+        DELINQUENCY_BUCKET_NONE_OPTION,
+        ...(rawOptions as DelinquencyBucket[]).map((bucket) => ({
+          value: bucket.id,
+          label: bucket.name ?? String(bucket.id)
+        }))
+      ];
+    }
     // Classic's reschedule strategy list is filtered by schedule type in `setRescheduleStrategies`,
     // keyed off `advancedTransactionProcessingStrategyDisabled` — which its `loanScheduleType`
     // handler sets to TRUE on Progressive and FALSE on Cumulative. So Progressive keeps ids > 3 and
@@ -691,7 +949,151 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     ].includes(key);
   }
 
+  /**
+   * Classic's `loanProductFormValid`: the four hosted steps plus accounting, and — on the advanced
+   * payment allocation strategy — the deferred income step, whose dependents carry `required`.
+   * The Charges step has no validators in either flow.
+   */
+  get classicFormsValid(): boolean {
+    const forms = [
+      this.loanProductDetailsStep?.loanProductDetailsForm,
+      this.loanProductCurrencyStep?.loanProductCurrencyForm,
+      this.loanProductTermsStep?.loanProductTermsForm,
+      this.loanProductSettingsStep?.loanProductSettingsForm,
+      this.loanProductAccountingStep?.loanProductAccountingForm
+    ];
+    if (forms.some((form) => !form || form.invalid)) {
+      return false;
+    }
+    if (this.isAdvancedPaymentStrategy) {
+      const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
+      return !!deferredIncomeForm && deferredIncomeForm.valid;
+    }
+    return true;
+  }
+
+  /**
+   * Titles of the hosted steps that are not yet valid, in wizard order.
+   *
+   * Classic hides its preview step entirely until the whole product is valid
+   * (`@if (loanProductFormValid)`), which is a hard requirement rather than a stylistic one: the
+   * summary dereferences the assembled product in `ngOnChanges` (`codeValue.name` in
+   * `setCurrentValues`) and throws on an incomplete one. The wizard keeps the Review step visible at
+   * all times — a step that vanishes from the stepper is worse than one that explains itself — and
+   * gates only the summary, telling the operator exactly which steps still need attention.
+   */
+  get incompleteClassicSteps(): string[] {
+    // Translation KEYS, not labels: this list is rendered to the operator, so the template pipes each
+    // through `translate`. All six already exist, so no new keys are introduced.
+    const steps: Array<{ title: string; form?: { invalid: boolean } }> = [
+      { title: 'labels.heading.Details', form: this.loanProductDetailsStep?.loanProductDetailsForm },
+      { title: 'labels.heading.Currency', form: this.loanProductCurrencyStep?.loanProductCurrencyForm },
+      { title: 'labels.heading.Terms', form: this.loanProductTermsStep?.loanProductTermsForm },
+      { title: 'labels.heading.Settings', form: this.loanProductSettingsStep?.loanProductSettingsForm },
+      { title: 'labels.heading.Accounting', form: this.loanProductAccountingStep?.loanProductAccountingForm }
+    ];
+    // Only required on the advanced payment allocation strategy, which is the only case where the
+    // step renders at all (and where Classic also demands its validity).
+    if (this.isAdvancedPaymentStrategy) {
+      steps.push({
+        // No sentence-case key exists for the full step name; this is the closest existing one.
+        title: 'labels.inputs.Deferred income',
+        form: this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm
+      });
+    }
+    return steps.filter(({ form }) => !form || form.invalid).map(({ title }) => title);
+  }
+
+  /**
+   * The payload for Classic mode, assembled the way `CreateLoanProductClassicComponent` assembles it:
+   * spread each hosted step's own getter, then apply the advanced-payment-allocation extras and the
+   * two create-time fixups from its `submitLoanProduct`. Deliberately does NOT go through the config
+   * `buildPayload` — the hidden defaults and profile transforms there exist to complete a curated
+   * guided form, and Classic's steps already emit a complete product.
+   */
+  /**
+   * The assembled-but-not-yet-built product, mirroring Classic's `loanProduct` getter. Classic feeds
+   * exactly this shape to its preview step (before `LoanProducts.buildPayload` stamps dateFormat /
+   * locale and strips the UI-only keys), so the wizard's Classic-mode Review shows what Classic shows.
+   */
+  get classicPreviewProduct(): Record<string, any> {
+    const loanProduct: Record<string, any> = {
+      ...this.loanProductDetailsStep?.loanProductDetails,
+      ...this.loanProductCurrencyStep?.loanProductCurrency,
+      ...this.loanProductTermsStep?.loanProductTerms,
+      ...this.loanProductSettingsStep?.loanProductSettings,
+      ...this.loanProductChargesStep?.loanProductCharges,
+      ...this.loanProductAccountingStep?.loanProductAccounting
+    };
+
+    // The advanced-allocation extras belong to the PRODUCT, not to the submit step: Classic's own
+    // `loanProduct` getter adds them here and feeds that same object to its preview. Assembling them
+    // later, inside the payload builder, would have let the Review present a configuration the create
+    // request then contradicted — the operator could approve a product without the payment allocation,
+    // credit allocation, interest-refund types or deferred-income settings that were actually sent.
+    if (this.isAdvancedPaymentStrategy) {
+      loanProduct['paymentAllocation'] = this.paymentAllocation;
+      loanProduct['creditAllocation'] = this.creditAllocation;
+      // Raw option objects here, exactly as Classic holds them; `buildClassicPayload` maps them to the
+      // id list the create contract wants, mirroring Classic's `mapStringEnumOptionToIdList`.
+      loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+
+      const capitalizedIncome = this.deferredIncomeRecognition?.capitalizedIncome;
+      if (capitalizedIncome) {
+        loanProduct['enableIncomeCapitalization'] = capitalizedIncome.enableIncomeCapitalization;
+        if (capitalizedIncome.enableIncomeCapitalization) {
+          loanProduct['capitalizedIncomeCalculationType'] = capitalizedIncome.capitalizedIncomeCalculationType;
+          loanProduct['capitalizedIncomeStrategy'] = capitalizedIncome.capitalizedIncomeStrategy;
+          loanProduct['capitalizedIncomeType'] = capitalizedIncome.capitalizedIncomeType;
+        }
+      }
+
+      const buyDownFee = this.deferredIncomeRecognition?.buyDownFee;
+      if (buyDownFee) {
+        loanProduct['enableBuyDownFee'] = buyDownFee.enableBuyDownFee;
+        if (buyDownFee.enableBuyDownFee) {
+          loanProduct['buyDownFeeCalculationType'] = buyDownFee.buyDownFeeCalculationType;
+          loanProduct['buyDownFeeStrategy'] = buyDownFee.buyDownFeeStrategy;
+          loanProduct['buyDownFeeIncomeType'] = buyDownFee.buyDownFeeIncomeType;
+          loanProduct['merchantBuyDownFee'] = buyDownFee.merchantBuyDownFee;
+        }
+      }
+    }
+
+    return loanProduct;
+  }
+
+  /**
+   * The create payload for Classic mode: {@link classicPreviewProduct} — the exact model the Review
+   * shows — passed through `LoanProducts.buildPayload`, then Classic's two create-time fixups from
+   * `submitLoanProduct`. One model, so preview and submission can never disagree.
+   */
+  private buildClassicPayload(): any {
+    const payload = this.loanProducts.buildPayload(this.classicPreviewProduct, this.itemsByDefault || []);
+
+    // The global-configuration toggle nulls the explicit repayment-event days and is itself UI-only.
+    if (payload['useDueForRepaymentsConfigurations'] === true) {
+      payload['dueDaysForRepaymentEvent'] = null;
+      payload['overDueDaysForRepaymentEvent'] = null;
+    }
+    delete payload['useDueForRepaymentsConfigurations'];
+
+    // Refund types are only meaningful — and only accepted — on the advanced payment allocation
+    // strategy, and travel as an id list rather than the option objects the preview renders.
+    if (this.isAdvancedPaymentStrategy) {
+      payload['supportedInterestRefundTypes'] = (this.supportedInterestRefundTypes ?? []).map((type) => type.id);
+    } else {
+      delete payload['supportedInterestRefundTypes'];
+      delete payload['daysInYearCustomStrategy'];
+    }
+
+    return payload;
+  }
+
   buildPayloadForSubmit(): any {
+    if (this.usesClassicSteps) {
+      return this.buildClassicPayload();
+    }
     const formValue = this.getRawFormValueWithFormattedDates();
     // Fold the charges selected in the reused Classic step into the same `charges` key the payload
     // builder reads (`buildChargeReferences` -> `LoanProducts.buildPayload` map them to `[{ id }]`).
@@ -972,6 +1374,17 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       return this.getTransactionProcessingStrategyLabel(String(normalizedValue));
     }
 
+    // The Review chip names the currency the way Classic's dropdown does — from the tenant's own
+    // `currencyOptions` — falling through to VALUE_MAP for a template-less render.
+    if (key === 'currencyCode') {
+      const currencyLabel = this.getTemplateSourcedOptions('currencyCode')?.find(
+        (option) => String(option.value) === String(normalizedValue)
+      )?.label;
+      if (currencyLabel) {
+        return String(currencyLabel);
+      }
+    }
+
     const map = this.valueMap[key];
     if (map) {
       const result = map[String(normalizedValue)];
@@ -1155,46 +1568,79 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     return String(value);
   }
 
+  /**
+   * Value lookup for the Review banner, mode-aware so both flows show the identical header.
+   *
+   * Guided profiles read the flat FormGroup. Classic mode reads whichever hosted step owns the
+   * control — the banner keys (name, shortName, externalId, currencyCode, principal, the repayment
+   * pair and the interest pair) are spread across Details, Currency and Terms.
+   */
+  private reviewValue(key: string): unknown {
+    if (!this.usesClassicSteps) {
+      return this.form?.get(key)?.value;
+    }
+    const hostedForms = [
+      this.loanProductDetailsStep?.loanProductDetailsForm,
+      this.loanProductCurrencyStep?.loanProductCurrencyForm,
+      this.loanProductTermsStep?.loanProductTermsForm,
+      this.loanProductSettingsStep?.loanProductSettingsForm
+    ];
+    for (const form of hostedForms) {
+      const control = form?.get(key);
+      if (control) {
+        return control.value;
+      }
+    }
+    return undefined;
+  }
+
   get reviewName(): string {
-    return (this.form?.get('name')?.value as string) || '';
+    return (this.reviewValue('name') as string) || '';
   }
 
   get reviewShortName(): string {
-    return (this.form?.get('shortName')?.value as string) || '';
+    return (this.reviewValue('shortName') as string) || '';
   }
 
   get reviewExternalId(): string {
-    return (this.form?.get('externalId')?.value as string) || '';
+    return (this.reviewValue('externalId') as string) || '';
   }
 
   get reviewCurrencyCode(): string {
-    return (this.form?.get('currencyCode')?.value as string) || '';
+    return (this.reviewValue('currencyCode') as string) || '';
   }
 
   get currencySymbol(): string {
-    return CURRENCY_SYMBOLS[this.reviewCurrencyCode] || '';
+    // The tenant's own symbol for the selected currency first (`displaySymbol`, e.g. 'KSh'); the
+    // static map only covers four codes and cannot cover every currency Fineract may be configured with.
+    const templateSymbol = (this.loanProductsTemplate?.currencyOptions ?? []).find(
+      (option: any) => option.code === this.reviewCurrencyCode
+    )?.displaySymbol;
+    return templateSymbol || CURRENCY_SYMBOLS[this.reviewCurrencyCode] || '';
   }
 
   get formattedPrincipal(): string {
-    const principal = this.form?.get('principal')?.value;
+    const principal = this.reviewValue('principal');
     if (!principal && principal !== 0) {
       return '—';
     }
-    return `${this.currencySymbol}${Number(principal).toLocaleString('en-IN')}`;
+    // The operator's active locale, not a hardcoded one: `en-IN` groups digits in the Indian
+    // system (1,00,000), which is wrong for every other locale the app ships.
+    return `${this.currencySymbol}${Number(principal).toLocaleString(this.settingsService.languageCode)}`;
   }
 
   get scheduleLabel(): string {
-    const repaymentCount = this.form?.get('numberOfRepayments')?.value;
-    const repaymentPeriod = this.formatValue('repaymentFrequencyType', this.form?.get('repaymentFrequencyType')?.value);
+    const repaymentCount = this.reviewValue('numberOfRepayments');
+    const repaymentPeriod = this.formatValue('repaymentFrequencyType', this.reviewValue('repaymentFrequencyType'));
     return `${repaymentCount || '—'} × ${repaymentPeriod}`;
   }
 
   get interestLabel(): string {
-    const rate = this.form?.get('interestRatePerPeriod')?.value;
+    const rate = this.reviewValue('interestRatePerPeriod');
     if (!rate && rate !== 0) {
       return '—';
     }
-    const period = this.formatValue('interestRateFrequencyType', this.form?.get('interestRateFrequencyType')?.value);
+    const period = this.formatValue('interestRateFrequencyType', this.reviewValue('interestRateFrequencyType'));
     return `${rate}% ${period.toLowerCase()}`;
   }
 
@@ -1437,6 +1883,24 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     // own FormGroup (with the mandatory GL account validators for Cash/Accrual), so it must be checked
     // alongside the wizard form — otherwise a Cash product with unselected accounts would POST and the
     // backend would reject it with "fundSourceAccountId is mandatory". Surface the errors instead.
+    // In Classic mode the flat FormGroup holds none of the product's data — the four hosted steps do
+    // — so validity and the "mark everything touched" pass run against their forms instead.
+    if (this.usesClassicSteps) {
+      if (!this.classicFormsValid) {
+        [
+          this.loanProductDetailsStep?.loanProductDetailsForm,
+          this.loanProductCurrencyStep?.loanProductCurrencyForm,
+          this.loanProductTermsStep?.loanProductTermsForm,
+          this.loanProductSettingsStep?.loanProductSettingsForm,
+          this.loanProductAccountingStep?.loanProductAccountingForm,
+          this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm
+        ].forEach((form) => form?.markAllAsTouched());
+        return;
+      }
+      this.postLoanProduct(this.buildPayloadForSubmit());
+      return;
+    }
+
     const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
     // Classic's `loanProductFormValid` additionally requires `loanIncomeCapitalizationForm.valid`
     // whenever the advanced payment allocation strategy is selected: the reused Deferred Income
@@ -1452,9 +1916,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       deferredIncomeForm?.markAllAsTouched();
       return;
     }
-    const final = this.buildPayloadForSubmit();
+    this.postLoanProduct(this.buildPayloadForSubmit());
+  }
+
+  /** The create call and success navigation, shared by both rendering modes. */
+  private postLoanProduct(payload: any): void {
     this.productsService
-      .createLoanProduct(this.loanProductService.loanProductPath, final)
+      .createLoanProduct(this.loanProductService.loanProductPath, payload)
       .subscribe((response: any) => {
         this.router.navigate(
           [
@@ -1562,7 +2030,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         canUseForTopup: this.loanProductsTemplate.canUseForTopup ?? INITIAL_FORM_STATE.canUseForTopup,
         isInterestRecalculationEnabled:
           this.loanProductsTemplate.isInterestRecalculationEnabled ?? INITIAL_FORM_STATE.isInterestRecalculationEnabled,
-        delinquencyBucketId: this.loanProductsTemplate.delinquencyBucketId ?? INITIAL_FORM_STATE.delinquencyBucketId,
+        delinquencyBucketId: this.getDefaultDelinquencyBucketId(),
         canDefineInstallmentAmount:
           this.loanProductsTemplate.canDefineInstallmentAmount ?? INITIAL_FORM_STATE.canDefineInstallmentAmount,
         // Fineract rejects multiDisburseLoan/allowVariableInstallments unless the product uses daily
@@ -1610,6 +2078,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   private refreshReviewPayload(): void {
+    // Classic mode previews through Classic's own preview step, fed by buildClassicPayload().
+    if (this.usesClassicSteps) {
+      return;
+    }
     if (!this.form) {
       this.reviewPayload = {};
       return;
@@ -1643,5 +2115,22 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
 
   private getDefaultCurrencyCode(): string {
     return this.loanProductsTemplate?.currencyOptions?.[0]?.code || INITIAL_FORM_STATE.currencyCode;
+  }
+
+  /**
+   * The bucket currently assigned on the template, mirroring Classic's own seed
+   * (`this.loanProductsTemplate.delinquencyBucket.id > 0 ? ... : null` in
+   * loan-product-settings-step.component.ts). The template nests the assigned bucket under
+   * `delinquencyBucket` — not a flat `delinquencyBucketId` — so reading the flat key here (as this
+   * used to) always missed it and reset the select to None even when the template had a bucket
+   * assigned. `delinquencyBucketId` is kept as a fallback for a template shape that does carry the
+   * flat key; on the real API response it never does, so this degrades to the previous behaviour.
+   */
+  private getDefaultDelinquencyBucketId(): number | string | null {
+    const delinquencyBucket = this.loanProductsTemplate?.delinquencyBucket;
+    if (delinquencyBucket) {
+      return delinquencyBucket.id > 0 ? delinquencyBucket.id : null;
+    }
+    return this.loanProductsTemplate?.delinquencyBucketId ?? INITIAL_FORM_STATE.delinquencyBucketId;
   }
 }

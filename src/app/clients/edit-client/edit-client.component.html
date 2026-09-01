@@ -8,8 +8,12 @@
 
 <div class="container">
   <mat-card>
-    <form [formGroup]="editClientForm">
+    <form [formGroup]="editClientForm" (ngSubmit)="submit()">
       <mat-card-content>
+        @if (productionMode) {
+          <h3 class="form-section-title">{{ 'labels.heading.' + productionGeneralHeading | translate }}</h3>
+        }
+
         <!-- First Row: Office, Legal Form, Account No, External ID -->
         <div class="responsive-row">
           <mat-form-field class="flex-24">
@@ -317,6 +321,304 @@
           </mat-form-field>
         </div>
 
+        @if (productionMode) {
+          @if (hasIdentifierRows) {
+            <div class="identifier-edit-section">
+              <h4>{{ 'labels.heading.Identities' | translate }}</h4>
+              @for (identifier of productionViewModel?.identifiers; track identifier.id; let index = $index) {
+                @if (identifierForms[identifierFormKey(identifier)]) {
+                  <div class="datatable-edit-record">
+                    <div class="record-title">{{ 'labels.inputs.Identification' | translate }} {{ index + 1 }}</div>
+                    <div [formGroup]="identifierForms[identifierFormKey(identifier)]" class="responsive-row">
+                      <mat-form-field class="flex-24">
+                        <mat-label>{{ 'labels.inputs.Document Type' | translate }}</mat-label>
+                        @if (clientIdentifierTemplate?.allowedDocumentTypes?.length) {
+                          <mat-select formControlName="documentTypeId">
+                            @for (documentType of clientIdentifierTemplate.allowedDocumentTypes; track documentType) {
+                              <mat-option [value]="documentType.id">
+                                {{ documentType.name }}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        } @else {
+                          <input
+                            matInput
+                            [value]="identifier.documentType?.name || identifier.documentType?.id || ''"
+                            [placeholder]="'labels.inputs.Document Type' | translate"
+                            [title]="'labels.inputs.Document Type' | translate"
+                            readonly
+                          />
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field class="flex-24">
+                        <mat-label>{{ 'labels.inputs.Document Key' | translate }}</mat-label>
+                        <input
+                          matInput
+                          formControlName="documentKey"
+                          [placeholder]="'labels.inputs.Document Key' | translate"
+                          [title]="'labels.inputs.Document Key' | translate"
+                          required
+                        />
+                      </mat-form-field>
+
+                      <mat-form-field class="flex-24">
+                        <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+                        <input
+                          matInput
+                          formControlName="description"
+                          [placeholder]="'labels.inputs.Description' | translate"
+                          [title]="'labels.inputs.Description' | translate"
+                        />
+                      </mat-form-field>
+
+                      <mat-form-field class="flex-24">
+                        <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+                        <mat-select formControlName="status">
+                          <mat-option value="Active">{{ 'labels.catalogs.Active' | translate }}</mat-option>
+                          <mat-option value="Inactive">{{ 'labels.catalogs.Inactive' | translate }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field class="flex-24" (click)="identifierIssuanceDatePicker.open()">
+                        <mat-label>{{ 'labels.inputs.Issuance Date' | translate }}</mat-label>
+                        <input matInput [matDatepicker]="identifierIssuanceDatePicker" formControlName="issuanceDate" />
+                        <mat-datepicker-toggle matSuffix [for]="identifierIssuanceDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #identifierIssuanceDatePicker></mat-datepicker>
+                      </mat-form-field>
+
+                      <mat-form-field class="flex-24" (click)="identifierExpiryDatePicker.open()">
+                        <mat-label>{{ 'labels.inputs.Expiry Date' | translate }}</mat-label>
+                        <input matInput [matDatepicker]="identifierExpiryDatePicker" formControlName="expiryDate" />
+                        <mat-datepicker-toggle matSuffix [for]="identifierExpiryDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #identifierExpiryDatePicker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          }
+
+          <mat-divider class="section-divider"></mat-divider>
+          <h3 class="form-section-title">{{ 'labels.heading.' + productionAddressHeading | translate }}</h3>
+
+          @if (personalDataAddressForm) {
+            <div [formGroup]="personalDataAddressForm" class="responsive-row">
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Address Type' | translate }}</mat-label>
+                <mat-select formControlName="addressTypeId">
+                  @for (addressType of clientAddressTemplate?.addressTypeIdOptions || []; track addressType) {
+                    <mat-option [value]="addressType.id">
+                      {{ addressType.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Street' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="street"
+                  [placeholder]="'labels.inputs.Street' | translate"
+                  [title]="'labels.inputs.Street' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Address Line 1' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="addressLine1"
+                  [placeholder]="'labels.inputs.Address Line 1' | translate"
+                  [title]="'labels.inputs.Address Line 1' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Address Line 2' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="addressLine2"
+                  [placeholder]="'labels.inputs.Address Line 2' | translate"
+                  [title]="'labels.inputs.Address Line 2' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Address Line 3' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="addressLine3"
+                  [placeholder]="'labels.inputs.Address Line 3' | translate"
+                  [title]="'labels.inputs.Address Line 3' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Postal Code' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="postalCode"
+                  [placeholder]="'labels.inputs.Postal Code' | translate"
+                  [title]="'labels.inputs.Postal Code' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Town / Village' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="townVillage"
+                  [placeholder]="'labels.inputs.Town / Village' | translate"
+                  [title]="'labels.inputs.Town / Village' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.City' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="city"
+                  [placeholder]="'labels.inputs.City' | translate"
+                  [title]="'labels.inputs.City' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.State / Province' | translate }}</mat-label>
+                @if (clientAddressTemplate?.stateProvinceIdOptions?.length) {
+                  <mat-select formControlName="stateProvinceId">
+                    @for (state of clientAddressTemplate.stateProvinceIdOptions; track state) {
+                      <mat-option [value]="state.id">
+                        {{ state.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                } @else {
+                  <input
+                    matInput
+                    [value]="addressCodeValue('stateProvinceId')"
+                    [placeholder]="'labels.inputs.State / Province' | translate"
+                    [title]="'labels.inputs.State / Province' | translate"
+                    readonly
+                  />
+                }
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.County / District' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="countyDistrict"
+                  [placeholder]="'labels.inputs.County / District' | translate"
+                  [title]="'labels.inputs.County / District' | translate"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="flex-24">
+                <mat-label>{{ 'labels.inputs.Country' | translate }}</mat-label>
+                @if (clientAddressTemplate?.countryIdOptions?.length) {
+                  <mat-select formControlName="countryId">
+                    @for (country of clientAddressTemplate.countryIdOptions; track country) {
+                      <mat-option [value]="country.id">
+                        {{ country.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                } @else {
+                  <input
+                    matInput
+                    [value]="addressCodeValue('countryId')"
+                    [placeholder]="'labels.inputs.Country' | translate"
+                    [title]="'labels.inputs.Country' | translate"
+                    readonly
+                  />
+                }
+              </mat-form-field>
+            </div>
+          } @else if (!loadingProductionEditData) {
+            <p class="empty-state">{{ 'labels.text.No Data' | translate }}</p>
+          }
+
+          @for (sectionConfig of productionDatatableSectionConfigs; track sectionConfig.key) {
+            <mat-divider class="section-divider"></mat-divider>
+            <h3 class="form-section-title">{{ translationKey(sectionConfig.title, 'labels.heading') | translate }}</h3>
+
+            @if (hasDatatableSchema(sectionConfig.key)) {
+              @for (section of datatableSections(sectionConfig.key); track section.sourceName) {
+                @if (section.columns.length) {
+                  <div class="datatable-edit-section">
+                    <div class="datatable-section-header">
+                      <h4>{{ translationKey(section.title, 'labels.heading') | translate }}</h4>
+                      @if (section.isMultiRow) {
+                        <button
+                          type="button"
+                          mat-stroked-button
+                          color="primary"
+                          (click)="addDatatableBlankRow(section)"
+                        >
+                          {{ 'labels.buttons.Add' | translate }}
+                          {{ translationKey(sectionConfig.title, 'labels.heading') | translate }}
+                        </button>
+                      }
+                    </div>
+                    @for (record of section.records; track record; let index = $index) {
+                      @if (personalDataTableForms[datatableFormKey(section, record)]) {
+                        <div class="datatable-edit-record">
+                          @if (section.records.length > 1) {
+                            <div class="record-title">{{ 'labels.inputs.Record' | translate }} {{ index + 1 }}</div>
+                          }
+                          <div
+                            [formGroup]="personalDataTableForms[datatableFormKey(section, record)]"
+                            class="responsive-row"
+                          >
+                            <ng-container
+                              *ngTemplateOutlet="
+                                datatableControls;
+                                context: {
+                                  columns: section.columns,
+                                  form: personalDataTableForms[datatableFormKey(section, record)]
+                                }
+                              "
+                            ></ng-container>
+                          </div>
+                        </div>
+                      }
+                    }
+                    @for (newRowIndex of datatableNewRowIndexes(section); track newRowIndex) {
+                      @if (personalDataTableForms[datatableNewFormKey(section, newRowIndex)]) {
+                        <div class="datatable-edit-record">
+                          <div class="record-title">
+                            {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Record' | translate }}
+                          </div>
+                          <div
+                            [formGroup]="personalDataTableForms[datatableNewFormKey(section, newRowIndex)]"
+                            class="responsive-row"
+                          >
+                            <ng-container
+                              *ngTemplateOutlet="
+                                datatableControls;
+                                context: {
+                                  columns: section.columns,
+                                  form: personalDataTableForms[datatableNewFormKey(section, newRowIndex)]
+                                }
+                              "
+                            ></ng-container>
+                          </div>
+                        </div>
+                      }
+                    }
+                  </div>
+                }
+              }
+            } @else if (!loadingProductionEditData) {
+              <p class="empty-state">{{ 'labels.text.No Data' | translate }}</p>
+            }
+          }
+        }
+
         <!-- Submitted On and Activated On Row -->
         <div class="responsive-row">
           <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()">
@@ -362,10 +664,70 @@
         <button type="button" mat-raised-button [routerLink]="['../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button type="submit" mat-raised-button color="primary" [disabled]="!editClientForm.valid" (click)="submit()">
+        <button type="submit" mat-raised-button color="primary" [disabled]="isSubmitDisabled">
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>
     </form>
   </mat-card>
 </div>
+
+<ng-template #datatableControls let-columns="columns" let-form="form">
+  <ng-container [formGroup]="form">
+    @for (column of columns; track column.columnName) {
+      @if (isDatatableYesNo(column)) {
+        <div class="datatable-yes-no flex-24">
+          <label>{{ datatableColumnLabel(column) }}</label>
+          <mat-button-toggle-group [formControlName]="datatableControlName(column)">
+            @for (option of datatableYesNoValues(column); track option.label) {
+              <mat-button-toggle [value]="option.value">
+                {{ 'labels.buttons.' + option.label | translate }}
+              </mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </div>
+      } @else if (isDatatableDropdown(column)) {
+        <mat-form-field class="flex-24">
+          <mat-label>{{ datatableColumnLabel(column) }}</mat-label>
+          <mat-select [formControlName]="datatableControlName(column)">
+            @for (option of datatableColumnValues(column); track option.id) {
+              <mat-option [value]="option.id">
+                {{ option.value }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      } @else if (isDatatableDate(column)) {
+        <mat-form-field class="flex-24" (click)="datatableDatePicker.open()">
+          <mat-label>{{ datatableColumnLabel(column) }}</mat-label>
+          <input matInput [matDatepicker]="datatableDatePicker" [formControlName]="datatableControlName(column)" />
+          <mat-datepicker-toggle matSuffix [for]="datatableDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #datatableDatePicker></mat-datepicker>
+        </mat-form-field>
+      } @else if (isDatatableText(column)) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ datatableColumnLabel(column) }}</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            [formControlName]="datatableControlName(column)"
+            [placeholder]="datatableColumnLabel(column)"
+            [title]="datatableColumnLabel(column)"
+          ></textarea>
+        </mat-form-field>
+      } @else {
+        <mat-form-field class="flex-24">
+          <mat-label>{{ datatableColumnLabel(column) }}</mat-label>
+          <input
+            matInput
+            [type]="isDatatableNumeric(column) ? 'number' : 'text'"
+            [formControlName]="datatableControlName(column)"
+            [placeholder]="datatableColumnLabel(column)"
+            [title]="datatableColumnLabel(column)"
+          />
+        </mat-form-field>
+      }
+    }
+  </ng-container>
+</ng-template>

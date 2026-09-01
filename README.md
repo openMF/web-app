@@ -45,6 +45,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - [Production Mode](#production-mode)
 - [Interbank Transfer Menu](#interbank-transfer-menu)
 - [Role-Based Access Control](#role-based-access-control-rbac)
+- [Mifos Copilot](#mifos-copilot)
 - [Releases](#releases)
 - [Contributing](#contributing)
 - [Related Projects](#related-projects)
@@ -56,6 +57,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
 - [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
+- [Financial Analytics Dashboards Documentation](./Dashboard.md)
 - [AI Assistance Test Results](./AI.md)
 
 ## Installation Guide
@@ -576,6 +578,27 @@ Set `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true` to activate permission-based UI con
 - **KYC Officer**: Client identity verification
 - **PLD Officer (AML)**: Anti-money laundering monitoring
 - **Product Owner**: Product and system configuration
+
+## Mifos Copilot
+
+Mifos Copilot is an AI assistant panel inside the web app. An officer types what they need in
+plain language, and the Copilot finds clients, reads repayment schedules, and submits, approves
+and disburses loans. Anything that changes a record pauses first: the reply stops and shows a
+confirmation card naming the client, the product and the amount, and nothing runs until a human
+approves it.
+
+The web app never holds an LLM key and never calls a model directly. It talks only to the
+Copilot Gateway, which keeps the key server-side and runs every banking action with the
+logged-in officer's own Fineract credential, so existing permissions and the audit trail still
+apply.
+
+- **[Copilot Gateway documentation](https://github.com/openMF/mcp-mifosx/blob/main/gateway/README.md)** covers how it works, the tools it can use, the confirmation flow, and how to run and deploy the gateway.
+- **[Gateway repository](https://github.com/openMF/mcp-mifosx)** is where the gateway lives.
+- [Mifos Copilot Settings](#mifos-copilot-settings) lists the two environment variables that turn the panel on and point it at a gateway.
+
+The panel is off by default. With `MIFOS_COPILOT_MCP_BASE_URL` empty it answers from built-in
+mock responses and contacts no server, which is enough for demos and UI work without running a
+gateway.
 
 ## Releases
 

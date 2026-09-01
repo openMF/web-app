@@ -42,7 +42,6 @@ import { LoanAccountDashboardComponent } from './loans-view/loan-account-dashboa
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
 import { LoanNotesResolver } from './common-resolvers/loan-notes.resolver';
-import { LoanDatatablesResolver } from './common-resolvers/loan-datatables.resolver';
 import { LoanDatatableResolver } from './common-resolvers/loan-datatable.resolver';
 import { LoanActionButtonResolver } from './common-resolvers/loan-action-button.resolver';
 import { LoansAccountTemplateResolver } from './common-resolvers/loans-account-template.resolver';
@@ -63,7 +62,6 @@ import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-t
 import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.resolver';
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
-import { LoanArrearDelinquencyResolver } from './common-resolvers/loan-arrear-delinquency.resolver';
 import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
@@ -114,9 +112,7 @@ const routes: Routes = [
         data: { title: 'Loan View', routeParamBreadcrumb: 'loanId' },
         component: LoansViewComponent,
         resolve: {
-          loanDetailsData: LoanDetailsResolver,
-          loanDatatables: LoanDatatablesResolver,
-          loanArrearsDelinquencyConfig: LoanArrearDelinquencyResolver
+          loanDetailsData: LoanDetailsResolver
         },
         children: [
           {
@@ -491,7 +487,6 @@ const routes: Routes = [
   providers: [
     LoanDetailsResolver,
     LoanNotesResolver,
-    LoanDatatablesResolver,
     LoanDatatableResolver,
     LoanDelinquencyTagsResolver,
     LoanActionButtonResolver,

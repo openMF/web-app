@@ -16,6 +16,7 @@ import { Dates } from 'app/core/utils/dates';
 import { Currency, PaymentType } from 'app/shared/models/general.model';
 import { PenaltyManagementService } from 'app/loans/services/penalty-management.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
@@ -44,6 +45,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
   private alertService = inject(AlertService);
+  private translate = inject(TranslateService);
 
   /** Payment Type Options */
   paymentTypes: PaymentType[] = [];
@@ -225,9 +227,11 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       .subscribe({
         next: (penalties: any[]) => {
           this.penalties = penalties;
+          this.cdr.markForCheck();
         },
         error: () => {
           this.penalties = [];
+          this.cdr.markForCheck();
         }
       });
   }
@@ -316,7 +320,9 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     });
 
     // Calculate new transaction amount
-    const newAmount = Math.max(0, baseAmount - totalWaived);
+    const decimalPlaces = this.currency?.decimalPlaces ?? 2;
+    const multiplier = Math.pow(10, decimalPlaces);
+    const newAmount = Math.max(0, Math.round((baseAmount - totalWaived) * multiplier) / multiplier);
 
     // Allow zero when fully waived
     this.updateTransactionAmountValidators(this.waivePenalties && newAmount === 0);
@@ -410,8 +416,10 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
             error: () => {
               this.alertService.alert({
                 type: 'Warning',
-                message: 'Some penalties could not be waived. Proceeding with repayment.'
+                message: this.translate.instant('Failed to waive penalties. Please try again.')
               });
+              this.isSubmitting = false;
+              this.cdr.markForCheck();
             }
           });
       } else {

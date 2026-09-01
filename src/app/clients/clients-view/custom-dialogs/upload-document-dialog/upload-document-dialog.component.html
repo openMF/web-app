@@ -17,7 +17,7 @@
     {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
   }
 </h1>
-<div class="m-l-10 m-r-10">
+<mat-dialog-content>
   <form [formGroup]="uploadDocumentForm" class="layout-column">
     <!-- Identity-specific fields -->
     @if (documentIdentifier) {
@@ -114,25 +114,25 @@
     }
 
     <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
-
-    <mat-dialog-actions align="end">
-      <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!uploadDocumentForm.valid"
-        [mat-dialog-close]="uploadDocumentForm.value"
-      >
-        @if (documentIdentifier) {
-          @if (editIdentifier) {
-            {{ 'labels.buttons.Edit' | translate }}
-          } @else {
-            {{ 'labels.buttons.Add' | translate }}
-          }
-        } @else {
-          {{ 'labels.buttons.Upload' | translate }}
-        }
-      </button>
-    </mat-dialog-actions>
   </form>
-</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!uploadDocumentForm.valid"
+    [mat-dialog-close]="uploadDocumentForm.value"
+  >
+    @if (documentIdentifier) {
+      @if (editIdentifier) {
+        {{ 'labels.buttons.Edit' | translate }}
+      } @else {
+        {{ 'labels.buttons.Add' | translate }}
+      }
+    } @else {
+      {{ 'labels.buttons.Upload' | translate }}
+    }
+  </button>
+</mat-dialog-actions>

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Currency } from 'app/shared/models/general.model';
+import { Currency, PaymentType } from 'app/shared/models/general.model';
 
 /** Code value option used to populate the charge-off reason dropdown. */
 export interface WorkingCapitalChargeOffReasonOption {
@@ -88,6 +88,17 @@ export interface WorkingCapitalBalances {
   unrealizedIncome: number;
   overpaymentAmount: number;
   breachPastDueAmount: number | null | undefined;
+  /** Gross amount written off. It does not go down as recoveries come in. */
+  totalWrittenOff?: number;
+  principalWrittenOff?: number;
+  feeWrittenOff?: number;
+  penaltyWrittenOff?: number;
+  /** Amount collected after the write-off. See mapWorkingCapitalWriteOffBalance for the field name caveat. */
+  totalRecovered?: number;
+  /** Alternative name the backend may adopt for totalRecovered. */
+  totalRecoveryPayment?: number;
+  /** totalWrittenOff - totalRecovered: what can still be recovered. */
+  writtenOffOutstanding?: number;
 }
 
 export interface WorkingCapitalLoanDiscountUpdateRequest {
@@ -165,7 +176,7 @@ export interface WorkingCapitalNearBreachActions {
   threshold: number;
   frequency: number;
   frequencyType: string;
-  createdDate: Date;
+  submittedOnDate: number[];
 }
 
 export interface WorkingCapitalWriteOffRequest {
@@ -182,4 +193,110 @@ export interface WorkingCapitalUndoWriteOffRequest {
   reversalExternalId?: string;
   note?: string;
   locale: string;
+}
+
+/** Payment data accepted by the Working Capital transaction commands. */
+export interface WorkingCapitalPaymentDetails {
+  paymentTypeId?: number;
+  accountNumber?: string;
+  checkNumber?: string;
+  routingCode?: string;
+  receiptNumber?: string;
+  bankNumber?: string;
+}
+
+/**
+ * Response of GET /working-capital-loans/{loanId}/template?templateType=recoveryPayment.
+ *
+ * `expectedAmount` is the remaining recoverable amount, not the gross written-off
+ * one: on a loan written off for 100 with 30 already recovered it returns 70.
+ */
+export interface WorkingCapitalRecoveryPaymentTemplate {
+  expectedAmount: number;
+  currency: Currency;
+  paymentTypeOptions: PaymentType[];
+}
+
+/**
+ * Request body for POST /working-capital-loans/{loanId}/transactions?command=recoveryPayment.
+ *
+ * `classificationId` is deliberately absent: a recovery has no allocation, and
+ * sending it makes the backend reject the whole request.
+ */
+export interface WorkingCapitalRecoveryPaymentRequest {
+  transactionDate: string;
+  transactionAmount: number;
+  note?: string;
+  externalId?: string;
+  paymentDetails?: WorkingCapitalPaymentDetails;
+  locale: string;
+  dateFormat: string;
+}
+
+/**
+ * Request body for POST /working-capital-loans/{loanId}/transactions/{transactionId}?command=undo,
+ * the generic reversal shared by repayment, goodwill credit, payout refund and recovery payment.
+ */
+export interface WorkingCapitalUndoTransactionRequest {
+  reversalExternalId?: string;
+  note?: string;
+  locale: string;
+}
+
+/** Write-off and recovery figures derived from the loan balance, ready to render. */
+export interface WorkingCapitalWriteOffBalance {
+  /** Gross written-off amount. Stays put as recoveries come in. */
+  totalWrittenOff: number;
+  principalWrittenOff: number;
+  feeWrittenOff: number;
+  penaltyWrittenOff: number;
+  /** Amount already recovered after the write-off. */
+  totalRecovered: number;
+  /** Amount still recoverable. Drives both the panel and the action availability. */
+  writtenOffOutstanding: number;
+  /** Share of the written-off amount already recovered, 0-100. */
+  recoveredPercentage: number;
+  /** True once there is nothing left to recover. */
+  fullyRecovered: boolean;
+}
+
+/** Reads an amount that may arrive as null, undefined or a string. */
+function toAmount(value: unknown): number {
+  const amount = Number(value ?? 0);
+  return Number.isFinite(amount) ? amount : 0;
+}
+
+/**
+ * Single mapping point between the loan balance payload and the write-off /
+ * recovery figures the UI renders.
+ *
+ * `totalRecovered` is read together with `totalRecoveryPayment` because the
+ * backend has an open decision to rename it; accepting both names here means
+ * the rename costs nothing anywhere else. `writtenOffOutstanding` is recomputed
+ * when the payload omits it so the panel never shows a blank remainder.
+ * @param balance The `balance` block of GET /working-capital-loans/{loanId}
+ * @returns Derived figures, or null when there is no balance to read
+ */
+export function mapWorkingCapitalWriteOffBalance(
+  balance: WorkingCapitalBalances | null | undefined
+): WorkingCapitalWriteOffBalance | null {
+  if (!balance) {
+    return null;
+  }
+  const totalWrittenOff = toAmount(balance.totalWrittenOff);
+  const totalRecovered = toAmount(balance.totalRecovered ?? balance.totalRecoveryPayment);
+  const writtenOffOutstanding =
+    balance.writtenOffOutstanding != null
+      ? toAmount(balance.writtenOffOutstanding)
+      : Math.max(totalWrittenOff - totalRecovered, 0);
+  return {
+    totalWrittenOff,
+    principalWrittenOff: toAmount(balance.principalWrittenOff),
+    feeWrittenOff: toAmount(balance.feeWrittenOff),
+    penaltyWrittenOff: toAmount(balance.penaltyWrittenOff),
+    totalRecovered,
+    writtenOffOutstanding,
+    recoveredPercentage: totalWrittenOff > 0 ? Math.min(100, (totalRecovered / totalWrittenOff) * 100) : 0,
+    fullyRecovered: totalWrittenOff > 0 && writtenOffOutstanding <= 0
+  };
 }

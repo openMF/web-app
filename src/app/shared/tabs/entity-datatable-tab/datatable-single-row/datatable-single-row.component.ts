@@ -86,11 +86,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   resolvedUserNames = new Map<number, string>();
 
   formatTabLabel(label: string): string {
-    return formatDatatableDisplayLabel(label);
+    return this.translateDatatableLabel(label, formatDatatableDisplayLabel(label));
   }
 
   formatDisplayLabel(label: string): string {
-    return this.datatables.toDisplayLabel(label);
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
   }
 
   getSystemColumnTranslationKey(columnName: string): string | null {
@@ -206,7 +206,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   }
 
   getAddDialogTitle(): string {
-    return `${this.translateService.instant('labels.buttons.Add')} ${formatDatatableDisplayLabel(
+    return `${this.translateService.instant('labels.buttons.Add')} ${this.formatTabLabel(
       this.datatableName
     )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
   }
@@ -246,7 +246,9 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       return formfield;
     });
     const data = {
-      title: 'Edit ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
+      title: `${this.translateService.instant('labels.buttons.Edit')} ${this.formatTabLabel(
+        this.datatableName
+      )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`,
       formfields: formfields,
       layout: { addButtonText: 'Submit' },
       pristine: false
@@ -279,7 +281,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
 
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the contents of ${formatDatatableDisplayLabel(this.datatableName)}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.text.the contents of')} ${this.formatTabLabel(
+          this.datatableName
+        )}`
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
@@ -346,7 +352,8 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   }
 
   getInputName(attr: string): string {
-    return this.datatables.getName(attr);
+    const label = this.datatables.getName(attr);
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
   }
 
   formatValue(value: any): any {
@@ -363,5 +370,16 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
 
   openSite(siteUrl: string) {
     window.open(siteUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  private translateDatatableLabel(rawLabel: string, displayLabel: string): string {
+    const rawKey = `labels.inputs.${rawLabel}`;
+    const translatedRawLabel = this.translateService.instant(rawKey);
+    if (translatedRawLabel !== rawKey) {
+      return translatedRawLabel;
+    }
+    const displayKey = `labels.inputs.${displayLabel}`;
+    const translatedDisplayLabel = this.translateService.instant(displayKey);
+    return translatedDisplayLabel === displayKey ? displayLabel : translatedDisplayLabel;
   }
 }

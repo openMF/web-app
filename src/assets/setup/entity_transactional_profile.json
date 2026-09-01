@@ -1,0 +1,47 @@
+{
+  "datatableName": "entity_transactional_profile",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "transaction_type",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "monthly_number_of_transactions",
+      "type": "Number",
+      "mandatory": false
+    },
+    {
+      "name": "monthly_transaction_amount",
+      "type": "Decimal",
+      "mandatory": false
+    },
+    {
+      "name": "origin_of_resources",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "destination_of_resources",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "payment_method",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "observations",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}

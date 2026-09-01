@@ -398,8 +398,8 @@ export class LoansService {
   /**
    * Get Loan Datatables
    */
-  getLoanDataTables() {
-    const httpParams = new HttpParams().set('apptable', 'm_loan');
+  getLoanDataTables(appTable = 'm_loan') {
+    const httpParams = new HttpParams().set('apptable', appTable);
     return this.http.get(`/datatables`, { params: httpParams });
   }
 

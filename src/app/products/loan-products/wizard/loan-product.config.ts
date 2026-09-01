@@ -129,12 +129,42 @@ export type FormStepKind =
   | 'deferred-income'
   | 'borrower-cycle'
   | 'review';
+/**
+ * The four Classic step components the wizard can host INSTEAD of rendering a step's `fields`
+ * config: `LoanProductDetailsStepComponent`, `LoanProductCurrencyStepComponent`,
+ * `LoanProductTermsStepComponent` and `LoanProductSettingsStepComponent`.
+ *
+ * The wizard already reuses Classic's other six steps (payment allocation, charges, accounting,
+ * interest refund, deferred income, borrower cycle) for every profile. These four were the only ones
+ * re-declared as config fields, and that re-declaration was the sole source of the
+ * Custom/Advanced-vs-Classic divergence. Custom/Advanced now hosts the real components, so its field
+ * set, validation and payload are Classic's by construction rather than by maintenance.
+ *
+ * Guided profiles keep rendering the `fields` config: their whole purpose is to expose a curated
+ * subset, which the full Classic steps would defeat.
+ */
+export type ClassicStep = 'details' | 'currency' | 'terms' | 'settings';
+
 export interface FormStep {
   id: number;
   title: string;
   icon: string;
   fields: FormField[];
   kind?: FormStepKind;
+  /**
+   * The Classic component that replaces this step's `fields` rendering when the profile uses the
+   * Classic steps (see {@link usesClassicSteps}). Absent for steps with no Classic counterpart.
+   */
+  classicStep?: ClassicStep;
+}
+
+/**
+ * Profiles that host Classic's four step components instead of the config-driven field grid.
+ * Custom/Advanced is the only one: it is the "complete control" mode, so its surface must be exactly
+ * Classic's. Every guided template renders its curated `fields` config instead.
+ */
+export function usesClassicSteps(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'custom-advanced';
 }
 
 export const PRODUCT_CARDS: ProductCard[] = [
@@ -309,7 +339,11 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   isInterestRecalculationEnabled: { true: 'Enabled', false: 'Disabled' },
   allowPartialPeriodInterestCalculation: { true: 'Yes', false: 'No' },
   isEqualAmortization: { true: 'Yes', false: 'No' },
-  delinquencyBucketId: { '': 'None', '1': 'Bucket 1 – Standard', '2': 'Bucket 2 – Aggressive' },
+  // Only the "None" choice: every real bucket is named by the tenant, so the Review resolves its
+  // label from the field's template-sourced options (`formatFieldValue`) rather than from a static
+  // map that could only ever guess. The two invented entries that used to live here
+  // ('Bucket 1 – Standard', 'Bucket 2 – Aggressive') named buckets that exist on no tenant.
+  delinquencyBucketId: { '': 'None' },
   canDefineInstallmentAmount: { true: 'Yes', false: 'No' },
   allowVariableInstallments: { true: 'Yes', false: 'No' },
   multiDisburseLoan: { true: 'Yes', false: 'No' },
@@ -341,10 +375,23 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   overAppliedCalculationType: { '': 'None', Percentage: 'Percentage', Amount: 'Amount' }
 };
 
+/**
+ * The "no bucket" choice on the delinquency bucket select. Classic offers this as a clear button next
+ * to its dropdown (`clearProperty('delinquencyBucketId')` in loan-product-settings-step.component.ts,
+ * which also resets `enableInstallmentLevelDelinquency`); the wizard renders it as an option instead,
+ * so the empty value has to be declared rather than sourced from the template. `buildPayload`
+ * normalizes '' to null, and the same guard clears the installment-level flag.
+ *
+ * Declared above {@link FORM_STEPS} because that array literal references it at module-evaluation
+ * time — moving it down beside NTH_DAY_ON_DAY_OPTION would put it in the temporal dead zone.
+ */
+export const DELINQUENCY_BUCKET_NONE_OPTION: SelectOption = { value: '', label: 'None' };
+
 export const FORM_STEPS: FormStep[] = [
   {
     id: 1,
     title: 'Details',
+    classicStep: 'details',
     icon: 'ti-id',
     fields: [
       {
@@ -393,19 +440,18 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 2,
     title: 'Currency',
+    classicStep: 'currency',
     icon: 'ti-currency-dollar',
     fields: [
+      // The tenant's configured currencies, sourced from the backend template at render time exactly
+      // like Classic, via TEMPLATE_OPTION_SOURCES. Left empty here rather than carrying a hardcoded
+      // four-currency list, which offered choices the tenant may not have and hid the ones it does.
       {
         label: 'labels.inputs.CURRENCY',
         key: 'currencyCode',
         type: 'select',
         required: true,
-        options: [
-          { value: 'INR', label: 'INR – Indian Rupee' },
-          { value: 'USD', label: 'USD – US Dollar' },
-          { value: 'EUR', label: 'EUR – Euro' },
-          { value: 'GBP', label: 'GBP – British Pound' }
-        ]
+        options: []
       },
       {
         label: 'labels.inputs.Decimal Places',
@@ -431,6 +477,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 3,
     title: 'Terms',
+    classicStep: 'terms',
     icon: 'ti-calculator',
     fields: [
       {
@@ -546,6 +593,7 @@ export const FORM_STEPS: FormStep[] = [
   {
     id: 4,
     title: 'Settings',
+    classicStep: 'settings',
     icon: 'ti-settings',
     fields: [
       {
@@ -784,14 +832,14 @@ export const FORM_STEPS: FormStep[] = [
         type: 'checkbox'
       },
       {
+        // The tenant's own delinquency buckets, sourced from the backend template at render time
+        // exactly like Classic, via TEMPLATE_OPTION_SOURCES. Only the "None" choice is declared here:
+        // it is the wizard's equivalent of Classic's clear button, not a bucket, so it has no template
+        // counterpart and must survive a template-less render.
         label: 'labels.inputs.Delinquency Bucket',
         key: 'delinquencyBucketId',
         type: 'select',
-        options: [
-          { value: '', label: 'None' },
-          { value: '1', label: 'Bucket 1 – Standard' },
-          { value: '2', label: 'Bucket 2 – Aggressive' }
-        ]
+        options: [DELINQUENCY_BUCKET_NONE_OPTION]
       },
       { label: 'labels.inputs.Define installment amount', key: 'canDefineInstallmentAmount', type: 'checkbox' },
       { label: 'labels.inputs.Allow variable installments', key: 'allowVariableInstallments', type: 'checkbox' },
@@ -1312,6 +1360,12 @@ export const INTEREST_RECALCULATION_FIELDS: readonly string[] = [
  * `visibleFields`, so the wizard and Classic always offer the identical choices.
  */
 export const TEMPLATE_OPTION_SOURCES: Record<string, string> = {
+  // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions`
+  // (loan-product-currency-step.component.ts), i.e. the currencies actually configured on the tenant.
+  currencyCode: 'currencyOptions',
+  // Classic's settings step fills its bucket dropdown from `loanProductsTemplate.delinquencyBucketOptions`
+  // (loan-product-settings-step.component.ts), i.e. the buckets actually configured on the tenant.
+  delinquencyBucketId: 'delinquencyBucketOptions',
   preClosureInterestCalculationStrategy: 'preClosureInterestCalculationStrategyOptions',
   rescheduleStrategyMethod: 'rescheduleStrategyTypeOptions',
   interestRecalculationCompoundingMethod: 'interestRecalculationCompoundingTypeOptions',

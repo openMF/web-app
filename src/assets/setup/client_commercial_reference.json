@@ -1,0 +1,37 @@
+{
+  "datatableName": "client_commercial_reference",
+  "apptableName": "m_client",
+  "entitySubType": "Person",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "business_name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "relationship",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "address",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}

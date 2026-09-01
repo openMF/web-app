@@ -43,6 +43,40 @@
           </mifosx-action-card>
         </div>
 
+        <!-- Try again. The gateway says whether waiting will help; without this the only
+             way to act on that was to type the question out a second time. -->
+        <button
+          *ngIf="msg.retryPrompt && !isStreaming"
+          type="button"
+          class="retry-button"
+          (click)="retryRequested.emit(msg.retryPrompt!)"
+          [attr.aria-label]="'copilot.actions.tryAgain' | translate"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+            />
+          </svg>
+          <span>{{ 'copilot.actions.tryAgain' | translate }}</span>
+        </button>
+
+        <!-- How the answer was reached, below it rather than above: a preamble frames an
+             answer before it is read, and this is meant to be scrutiny, not framing. -->
+        <mifosx-thinking-trail *ngIf="msg.role === 'assistant'" [message]="msg" [isStreaming]="!!msg.isStreaming">
+        </mifosx-thinking-trail>
+
+        <!-- What can be done with a finished reply: take it, ask again, rate it.
+             Withheld while a card is pending, when the turn is not over yet. -->
+        <mifosx-message-actions
+          *ngIf="msg.role === 'assistant' && !msg.isStreaming && msg.content?.trim() && !isStreaming"
+          [message]="msg"
+          (repeatRequested)="repeatRequested.emit($event)"
+          (voted)="voteChanged.emit({ messageId: msg.id, vote: $event })"
+          (exportRequested)="exportRequested.emit($event)"
+          (shareRequested)="shareRequested.emit($event)"
+        >
+        </mifosx-message-actions>
+
         <!-- Follow-up chips -->
         <mifosx-quick-chips
           *ngIf="msg.suggestedPrompts?.length && !isStreaming"
@@ -80,8 +114,10 @@
     </div>
   </div>
 
-  <!-- Typing indicator -->
-  <div *ngIf="isStreaming" class="typing">
+  <!-- Typing indicator, only until the reply starts arriving. Once there are words on screen
+       the message is its own progress, and a second avatar with dots underneath reads as a
+       second assistant answering at the same time. -->
+  <div *ngIf="isStreaming && !hasVisibleDraft" class="typing">
     <div class="msg__avatar">
       <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
     </div>

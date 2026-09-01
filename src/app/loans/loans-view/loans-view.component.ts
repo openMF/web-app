@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
@@ -36,6 +37,7 @@ import {
   WorkingCapitalMarkAsFraudDialogResult
 } from './working-capital/loan-account-actions/mark-as-fraud-dialog/mark-as-fraud-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
+import { mapWorkingCapitalWriteOffBalance } from '../models/working-capital/working-capital-loan-account.model';
 import { Currency } from 'app/shared/models/general.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
@@ -60,6 +62,7 @@ import { StatusLookupPipe } from '@pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { SystemService } from 'app/system/system.service';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -99,18 +102,19 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private errorHandler = inject(ErrorHandlerService);
+  private systemService = inject(SystemService);
   dialog = inject(MatDialog);
 
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
-  loanDatatables: any;
+  loanDatatables: any[] = [];
   /** Whether datatable filtering has completed */
   datatablesReady = false;
   /** Recalculate Interest */
   recalculateInterest: any;
   /** loan Arrears Delinquency config value */
-  loanDisplayArrearsDelinquency: number;
+  loanDisplayArrearsDelinquency = 0;
   /** Status */
   status: string;
   entityType: string;
@@ -135,37 +139,72 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     const loansService = this.loansService;
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
-        this.loanDetailsData = data.loanDetailsData;
-        if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
-        }
-        this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
-        this.loanStatus = this.loanDetailsData.status;
-        this.currency = this.loanDetailsData.currency;
-        if (this.loanProductService.isLoanProduct) {
-          this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-          this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-          loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
-          if (this.loanStatus.active) {
-            this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-              if (!lt.manuallyReversed) {
-                if (lt.type.reAge) {
-                  this.loanReAged = true;
-                } else if (lt.type.reAmortize) {
-                  this.loanReAmortized = true;
-                }
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetailsData = data.loanDetailsData;
+      if (!this.loanDetailsData.loanProductName) {
+        this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
+      }
+      this.loanStatus = this.loanDetailsData.status;
+      // The action menu is rebuilt at the end of this block, so the status it
+      // reads has to come from the details that were just resolved: ngOnInit
+      // does not run again when the route reuses this component.
+      this.status = this.loanDetailsData.status?.value;
+      this.currency = this.loanDetailsData.currency;
+      if (this.loanProductService.isLoanProduct) {
+        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+        loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
+        if (this.loanStatus.active) {
+          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+            if (!lt.manuallyReversed) {
+              if (lt.type.reAge) {
+                this.loanReAged = true;
+              } else if (lt.type.reAmortize) {
+                this.loanReAmortized = true;
               }
-            });
-          }
-          // Filter datatables based on entity datatable checks
-          this.filterDatatablesByProduct();
+            }
+          });
         }
-        this.setConditionalButtons();
-      });
+      }
+      this.loadDeferredRouteData();
+      this.setConditionalButtons();
+    });
     this.loanId = this.route.snapshot.params['loanId'];
+  }
+
+  /**
+   * Loads account metadata that is not required to activate the General route.
+   * This keeps the account header and General tab responsive while the optional
+   * datatable navigation and arrears display configuration are retrieved.
+   */
+  loadDeferredRouteData(): void {
+    this.datatablesReady = false;
+    const appTable = this.loanProductService.isWorkingCapital ? 'm_wc_loan' : 'm_loan';
+
+    this.loansService
+      .getLoanDataTables(appTable)
+      .pipe(
+        catchError(() => of([])),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanDatatables: any) => {
+        this.loanDatatables = loanDatatables || [];
+
+        if (this.loanProductService.isLoanProduct) {
+          this.filterDatatablesByProduct();
+        } else {
+          this.datatablesReady = true;
+        }
+      });
+
+    this.systemService
+      .getConfigurationByName('loan-arrears-delinquency-display-data')
+      .pipe(
+        catchError(() => of({ value: 0 })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanArrearsDelinquencyConfig) => {
+        this.loanDisplayArrearsDelinquency = loanArrearsDelinquencyConfig?.value || 0;
+      });
   }
 
   ngOnInit() {
@@ -473,6 +512,22 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
     }
 
+    // Recovery gating for a written-off Working Capital loan. Both rules read
+    // the same figures, so they are mapped once here.
+    if (this.loanProductService.isWorkingCapital && this.status === 'Closed (written off)') {
+      const writeOffBalance = mapWorkingCapitalWriteOffBalance(this.loanDetailsData.balance);
+      if (writeOffBalance) {
+        if (writeOffBalance.writtenOffOutstanding <= 0) {
+          this.buttonConfig.disableButton('Recovery Payment', 'tooltips.Nothing left to recover');
+        }
+        // Undoing the write-off would restore the full balance while the money
+        // already recovered stays booked as income: the same money counted twice.
+        if (writeOffBalance.totalRecovered > 0) {
+          this.buttonConfig.disableButton('Undo Write-off', 'tooltips.Reverse the recovery payments first');
+        }
+      }
+    }
+
     // Fraud flag for Working Capital loans. It sits outside the status branches
     // above because the backend only restricts marking: the loan must be active
     // to be flagged, but clearing the flag stays valid in every status, and
@@ -492,6 +547,16 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     }
+  }
+
+  /**
+   * Whether the account is a written-off Working Capital loan.
+   *
+   * A written-off loan looks exactly like a settled one - closed, zero balance -
+   * so the header needs an explicit marker to tell them apart.
+   */
+  get isWorkingCapitalWrittenOff(): boolean {
+    return this.loanProductService.isWorkingCapital && !!this.loanDetailsData?.writtenOffOnDate;
   }
 
   loanAction(actionName: string) {
