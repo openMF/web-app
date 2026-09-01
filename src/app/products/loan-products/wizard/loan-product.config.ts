@@ -111,6 +111,21 @@ export interface FormField {
   placeholder?: string;
   hint?: string;
   maxLength?: number;
+  /**
+   * Lower bound for a `number` field. Emitted as `Validators.min` and mirrored onto the input's
+   * `min` attribute. Mirrors the floors Classic declares on the same control.
+   */
+  min?: number;
+  /**
+   * Maximum number of decimal places a `number` field accepts; `0` means whole numbers only.
+   * Emitted as the same `Validators.pattern` Classic uses (`^\d+([.,]\d{1,N})?$`, `^\d+$` for 0),
+   * so the guided form rejects exactly what the Classic step rejects.
+   *
+   * Classic expresses every numeric constraint it has as a floor, a decimal-place pattern, or both —
+   * there is no upper bound outside the down-payment percentage, which `syncConditionalValidators`
+   * already covers with the shared `rangeValidator(0, 100)`. Hence no `max` here.
+   */
+  decimals?: number;
   options?: SelectOption[];
 }
 /**
@@ -399,7 +414,8 @@ export const FORM_STEPS: FormStep[] = [
         key: 'name',
         type: 'text',
         required: true,
-        placeholder: 'labels.placeholders.Example loan product name'
+        placeholder: 'labels.placeholders.Example loan product name',
+        maxLength: 100
       },
       {
         label: 'labels.inputs.Short Name',
@@ -420,7 +436,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Description',
         key: 'description',
         type: 'textarea',
-        placeholder: 'labels.placeholders.Example description'
+        placeholder: 'labels.placeholders.Example description',
+        maxLength: 500
       },
       {
         label: 'labels.inputs.Start Date',
@@ -457,19 +474,24 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Decimal Places',
         key: 'digitsAfterDecimal',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 2'
+        required: true,
+        placeholder: 'labels.placeholders.Example 2',
+        min: 0
       },
       {
         label: 'labels.inputs.Currency In Multiples Of',
         key: 'inMultiplesOf',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
+        required: true,
+        placeholder: 'labels.placeholders.Example 1',
+        min: 0
       },
       {
         label: 'labels.inputs.Installment in multiples of',
         key: 'installmentAmountInMultiplesOf',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 10'
+        placeholder: 'labels.placeholders.Example 10',
+        min: 0
       },
       { label: 'labels.inputs.Use borrower cycle', key: 'useBorrowerCycle', type: 'checkbox' }
     ]
@@ -485,21 +507,26 @@ export const FORM_STEPS: FormStep[] = [
         key: 'principal',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 50000'
+        placeholder: 'labels.placeholders.Example 50000',
+        min: 1
       },
       {
         label: 'labels.inputs.Number of Repayments',
         key: 'numberOfRepayments',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 12'
+        placeholder: 'labels.placeholders.Example 12',
+        min: 1,
+        decimals: 0
       },
       {
         label: 'labels.inputs.Annual interest rate',
         key: 'interestRatePerPeriod',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 12'
+        placeholder: 'labels.placeholders.Example 12',
+        min: 0,
+        decimals: 6
       },
       {
         label: 'labels.inputs.Interest rate frequency',
@@ -516,7 +543,8 @@ export const FORM_STEPS: FormStep[] = [
         key: 'repaymentEvery',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 1'
+        placeholder: 'labels.placeholders.Example 1',
+        min: 1
       },
       {
         label: 'labels.inputs.Repaid every – period',
@@ -559,7 +587,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Minimum days between disbursal and first repayment',
         key: 'minimumDaysBetweenDisbursalAndFirstRepayment',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 5'
+        placeholder: 'labels.placeholders.Example 5',
+        min: 0
       },
       {
         label: 'labels.inputs.Interest recognition on disbursement date',
@@ -677,19 +706,22 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Grace on principal payment (months)',
         key: 'graceOnPrincipalPayment',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0
       },
       {
         label: 'labels.inputs.Grace on interest payment (months)',
         key: 'graceOnInterestPayment',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0
       },
       {
         label: 'labels.inputs.Interest free period (months)',
         key: 'interestFreePeriod',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0
       },
       {
         label: 'labels.inputs.Days in Year',
@@ -727,7 +759,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Principal threshold (%) for last installment',
         key: 'principalThresholdForLastInstallment',
         type: 'number',
-        placeholder: '5'
+        placeholder: '5',
+        min: 0
       },
       { label: 'labels.inputs.Allow top-up loans', key: 'canUseForTopup', type: 'checkbox' },
       { label: 'labels.inputs.Recalculate Interest', key: 'isInterestRecalculationEnabled', type: 'checkbox' },
@@ -859,19 +892,22 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.In arrears tolerance',
         key: 'inArrearsTolerance',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 50'
+        placeholder: 'labels.placeholders.Example 50',
+        min: 0
       },
       {
         label: 'labels.inputs.Grace on Arrears Ageing',
         key: 'graceOnArrearsAgeing',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 5'
+        placeholder: 'labels.placeholders.Example 5',
+        min: 0
       },
       {
         label: 'labels.inputs.Overdue days for NPA',
         key: 'overdueDaysForNPA',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 90'
+        placeholder: 'labels.placeholders.Example 90',
+        min: 0
       },
       {
         label: 'labels.inputs.Account moves out of NPA only on arrears completion',
@@ -1054,13 +1090,15 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Due days for repayment event',
         key: 'dueDaysForRepaymentEvent',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
+        placeholder: 'labels.placeholders.Example 1',
+        min: 0
       },
       {
         label: 'labels.inputs.OverDue days for repayment event',
         key: 'overDueDaysForRepaymentEvent',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
+        placeholder: 'labels.placeholders.Example 1',
+        min: 0
       }
     ]
   },

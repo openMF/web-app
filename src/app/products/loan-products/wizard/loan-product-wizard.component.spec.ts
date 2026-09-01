@@ -3414,4 +3414,278 @@ describe('LoanProductWizardComponent', () => {
       });
     });
   });
+  describe('numeric validation mirrors the Classic steps', () => {
+    // The guided form used to model only `required` and `maxLength`, so every numeric field accepted
+    // anything the browser would hand it: a negative principal, a fractional repayment count, a rate
+    // with nine decimal places. The form reported itself valid and POSTed, leaving Fineract to reject
+    // the payload — or worse, to accept a product that misprices every loan booked against it.
+    //
+    // Each expectation below names the Classic control it mirrors, so a future change to either side
+    // shows up as a parity failure rather than a silent divergence.
+    function guidedComponent(): LoanProductWizardComponent {
+      TestBed.resetTestingModule();
+      const component = createComponent();
+      component.profileMode = 'personal';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'KES', name: 'Kenyan Shilling' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    // key -> value the Classic step rejects and the guided form used to accept.
+    const REJECTED_BY_CLASSIC: [
+      string,
+      number
+    ][] = [
+      // Terms step: principal min(1), numberOfRepayments pattern ^[1-9]\d*$, repaymentEvery min(1),
+      // interestRatePerPeriod min(0) + pattern ^\d+([.,]\d{1,6})?$.
+      [
+        'principal',
+        -50000
+      ],
+      [
+        'principal',
+        0
+      ],
+      [
+        'numberOfRepayments',
+        0
+      ],
+      [
+        'numberOfRepayments',
+        2.5
+      ],
+      [
+        'interestRatePerPeriod',
+        -8
+      ],
+      [
+        'interestRatePerPeriod',
+        1.0000001
+      ],
+      [
+        'repaymentEvery',
+        0
+      ],
+      // Currency step: digitsAfterDecimal / inMultiplesOf / installmentAmountInMultiplesOf min(0).
+      [
+        'digitsAfterDecimal',
+        -1
+      ],
+      [
+        'inMultiplesOf',
+        -1
+      ],
+      [
+        'installmentAmountInMultiplesOf',
+        -1
+      ],
+      // Settings step: the grace, tolerance and NPA counters are all min(0) in Classic.
+      [
+        'graceOnPrincipalPayment',
+        -1
+      ],
+      [
+        'graceOnInterestPayment',
+        -1
+      ],
+      [
+        'interestFreePeriod',
+        -1
+      ],
+      [
+        'inArrearsTolerance',
+        -50
+      ],
+      [
+        'graceOnArrearsAgeing',
+        -1
+      ],
+      [
+        'overdueDaysForNPA',
+        -1
+      ],
+      [
+        'principalThresholdForLastInstallment',
+        -1
+      ],
+      [
+        'dueDaysForRepaymentEvent',
+        -1
+      ],
+      [
+        'overDueDaysForRepaymentEvent',
+        -1
+      ]
+    ];
+
+    // Values Classic accepts — the floors themselves, and a rate at exactly six decimal places.
+    const ACCEPTED_BY_CLASSIC: [
+      string,
+      number
+    ][] = [
+      [
+        'principal',
+        1
+      ],
+      [
+        'numberOfRepayments',
+        1
+      ],
+      [
+        'interestRatePerPeriod',
+        0
+      ],
+      [
+        'interestRatePerPeriod',
+        1.123456
+      ],
+      [
+        'repaymentEvery',
+        1
+      ],
+      [
+        'digitsAfterDecimal',
+        0
+      ],
+      [
+        'inMultiplesOf',
+        0
+      ],
+      [
+        'graceOnArrearsAgeing',
+        0
+      ],
+      [
+        'inArrearsTolerance',
+        0
+      ]
+    ];
+
+    it('rejects every value the matching Classic control rejects', () => {
+      const component = guidedComponent();
+
+      REJECTED_BY_CLASSIC.forEach(
+        ([
+          key,
+          value
+        ]) => {
+          const control = component.form.get(key)!;
+          control.setValue(value);
+          expect([
+            key,
+            value,
+            control.invalid
+          ]).toEqual([
+            key,
+            value,
+            true
+          ]);
+        }
+      );
+    });
+
+    it('accepts every value the matching Classic control accepts', () => {
+      const component = guidedComponent();
+
+      ACCEPTED_BY_CLASSIC.forEach(
+        ([
+          key,
+          value
+        ]) => {
+          const control = component.form.get(key)!;
+          control.setValue(value);
+          expect([
+            key,
+            value,
+            control.errors
+          ]).toEqual([
+            key,
+            value,
+            null
+          ]);
+        }
+      );
+    });
+
+    it('applies every floor and decimal cap declared in the field config to its control', () => {
+      // Guards the wiring rather than the numbers: a `min`/`decimals` added to FORM_STEPS but not
+      // emitted by validatorsFor() would leave the config documenting a constraint nothing enforces.
+      const component = guidedComponent();
+
+      component.steps
+        .flatMap((step) => step.fields)
+        .forEach((field) => {
+          const control = component.form.get(field.key);
+          if (!control) {
+            return;
+          }
+          if (typeof field.min === 'number') {
+            control.setValue(field.min - 1);
+            expect([
+              field.key,
+              control.hasError('min')
+            ]).toEqual([
+              field.key,
+              true
+            ]);
+            control.setValue(field.min);
+            expect([
+              field.key,
+              control.hasError('min')
+            ]).toEqual([
+              field.key,
+              false
+            ]);
+          }
+          if (typeof field.decimals === 'number') {
+            control.setValue(Number(`1.${'1'.repeat(field.decimals + 1)}`));
+            expect([
+              field.key,
+              control.hasError('pattern')
+            ]).toEqual([
+              field.key,
+              true
+            ]);
+          }
+        });
+    });
+
+    it('caps the product name and description at the lengths the Classic Details step uses', () => {
+      const component = guidedComponent();
+
+      component.form.get('name')!.setValue('n'.repeat(101));
+      expect(component.form.get('name')!.hasError('maxlength')).toBe(true);
+      component.form.get('name')!.setValue('n'.repeat(100));
+      expect(component.form.get('name')!.hasError('maxlength')).toBe(false);
+
+      component.form.get('description')!.setValue('d'.repeat(501));
+      expect(component.form.get('description')!.hasError('maxlength')).toBe(true);
+      component.form.get('description')!.setValue('d'.repeat(500));
+      expect(component.form.get('description')!.hasError('maxlength')).toBe(false);
+    });
+
+    it('does not POST a product whose numbers Fineract would reject', () => {
+      // The end of the gap: an otherwise complete form carrying a negative principal used to satisfy
+      // `form.valid` and reach `createLoanProduct`.
+      const component = guidedComponent();
+      component.form.patchValue({
+        name: 'Personal Loan',
+        shortName: 'PL01',
+        principal: -50000,
+        numberOfRepayments: 12,
+        interestRatePerPeriod: 12
+      });
+      productsServiceStub.createLoanProduct.mockClear();
+
+      component.submit();
+
+      expect(component.form.get('principal')!.hasError('min')).toBe(true);
+      expect(productsServiceStub.createLoanProduct).not.toHaveBeenCalled();
+    });
+  });
 });

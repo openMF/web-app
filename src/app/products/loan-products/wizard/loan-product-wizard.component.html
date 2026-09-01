@@ -138,6 +138,7 @@
                   [placeholder]="field.placeholder | translate"
                   [required]="!!field.required"
                   [attr.maxlength]="field.maxLength || null"
+                  [attr.min]="field.min ?? null"
                 />
                 <ng-container *ngIf="field.type === 'date'">
                   <input
@@ -156,6 +157,7 @@
                   [formControlName]="field.key"
                   [placeholder]="field.placeholder | translate"
                   [required]="!!field.required"
+                  [attr.maxlength]="field.maxLength || null"
                   rows="3"
                 ></textarea>
                 @if (field.key === 'interestRatePerPeriod') {
@@ -169,9 +171,44 @@
                 </mat-select>
 
                 <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
-                <mat-error *ngIf="form.get(field.key)?.hasError('required')">
-                  {{ field.label | translate }} <span>{{ 'labels.commons.is required' | translate }}</span>
-                </mat-error>
+                <!--
+                  One `@if` per message, each with the `<mat-error>` at its root: that is what lets the
+                  compiler infer the `mat-error` projection selector, so Material renders these in the
+                  subscript below the field and only once the control is touched, dirty or submitted.
+                  Nesting them under a shared `@if` drops them into the default slot instead.
+                -->
+                @if (fieldErrorKey(field) === 'required') {
+                  <mat-error>
+                    {{ field.label | translate }} <span>{{ 'labels.commons.is required' | translate }}</span>
+                  </mat-error>
+                }
+                @if (fieldErrorKey(field) === 'min') {
+                  <mat-error>
+                    {{ field.label | translate }} — {{ 'labels.commons.Minimum Value must be' | translate }}
+                    <strong>{{ field.min }}</strong>
+                  </mat-error>
+                }
+                <!--
+                  Format only, with no claim about sign: the floor is a separate validator with its own
+                  message above, and a field can legitimately have `decimals` with `min: 0` — the
+                  interest rate does, and accepts zero.
+                -->
+                @if (fieldErrorKey(field) === 'pattern') {
+                  <mat-error>
+                    {{ field.label | translate }} —
+                    @if (field.decimals === 0) {
+                      {{ 'errors.validation.wholeNumber' | translate }}
+                    } @else {
+                      {{ 'errors.validation.maxDecimals' | translate: { decimals: field.decimals } }}
+                    }
+                  </mat-error>
+                }
+                @if (fieldErrorKey(field) === 'maxlength') {
+                  <mat-error>
+                    {{ field.label | translate }} —
+                    {{ 'errors.validation.maxLength' | translate: { requiredLength: field.maxLength } }}
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.key">
