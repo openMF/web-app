@@ -3961,6 +3961,7 @@
       "Transfer in progress": "Převod",
       "Transfer on hold": "Přenesejte na pozastavení",
       "Withdrawn": "Stažený",
+      "Withdrawn by applicant": "Staženo žadatelem",
       "Written Off": "Odepsáno"
     },
     "dialogContext": {

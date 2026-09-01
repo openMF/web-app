@@ -80,6 +80,11 @@
     --tx-linked-bg: var(--ch-paid-bg);
     --tx-recovery: #00838f;
     --tx-recovery-bg: #e0f7fa;
+
+    /* Neutral fallback for transaction types without a dedicated badge class.
+       Built on the secondary text/surface tokens so it follows both themes. */
+    --tx-default: var(--ch-text-2);
+    --tx-default-bg: var(--ch-surface-h);
   }
 
   :host-context(.dark-theme) {
@@ -99,7 +104,7 @@
 /* ── Transaction-type badges (same system as charges-tab) ──── */
 $transaction-type-keys:
   'repayment', 'disbursement', 'accrual', 'reversed', 'downpayment', 'chargeoff', 'reage', 'reamortize', 'discount',
-  'linked';
+  'linked', 'recovery';
 
 @mixin transaction-badges {
   .badge {
@@ -110,14 +115,20 @@ $transaction-type-keys:
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
-    border: 1px solid transparent;
     white-space: nowrap;
+
+    /* Neutral default so a type without a generated badge-* class still
+       renders as an intentional pill instead of unstyled text. */
+    background: var(--tx-default-bg);
+    color: var(--tx-default);
+    border: 1px solid var(--tx-default);
 
     .badge-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
       flex-shrink: 0;
+      background: var(--tx-default);
     }
   }
 

@@ -3959,6 +3959,7 @@
       "Transfer in progress": "진행중인 양도",
       "Transfer on hold": "보류에 이체하십시오",
       "Withdrawn": "빼는",
+      "Withdrawn by applicant": "신청자에 의해 철회됨",
       "Written Off": "상각됨"
     },
     "dialogContext": {

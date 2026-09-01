@@ -3984,6 +3984,7 @@
       "Transfer in progress": "Transfer in progress",
       "Transfer on hold": "Transfer on hold",
       "Withdrawn": "Withdrawn",
+      "Withdrawn by applicant": "Withdrawn by applicant",
       "Written Off": "Written Off"
     },
     "dialogContext": {
