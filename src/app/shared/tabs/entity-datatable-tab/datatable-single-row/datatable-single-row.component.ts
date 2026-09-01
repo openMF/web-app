@@ -25,6 +25,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
+import { UsersService } from 'app/users/users.service';
 import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -71,13 +72,18 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   private settingsService = inject(SettingsService);
   public datatables = inject(Datatables);
   private systemService = inject(SystemService);
+  private usersService = inject(UsersService);
   private translateService = inject(TranslateService);
 
-  @Input() dataObject: any;
+  @Input() dataObject: {
+    columnHeaders: { columnName: string; columnDisplayType?: string; columnType?: string }[];
+    data: { row: any[] }[];
+  };
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
   isLoading = false;
+  resolvedUserNames = new Map<number, string>();
 
   formatTabLabel(label: string): string {
     return this.translateDatatableLabel(label, formatDatatableDisplayLabel(label));
@@ -107,8 +113,55 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.dataObject) {
+      this.resolveUserNames();
       this.changeDetectorRef.markForCheck();
     }
+  }
+
+  private resolveUserNames(): void {
+    if (!this.dataObject || !this.dataObject.data || !this.dataObject.data[0]) {
+      return;
+    }
+    const row = this.dataObject.data[0].row;
+
+    this.dataObject.columnHeaders.forEach((column: { columnName: string }, index: number) => {
+      const lowerName = column.columnName.toLowerCase();
+      if (
+        lowerName === 'createdby_id' ||
+        lowerName === 'created_by_id' ||
+        lowerName === 'lastmodifiedby_id' ||
+        lowerName === 'last_modified_by_id'
+      ) {
+        const userId = row[index] as number;
+        if (userId && !this.resolvedUserNames.has(userId)) {
+          this.usersService.getUser(userId.toString()).subscribe({
+            next: (user: { firstname?: string; lastname?: string }) => {
+              if (user && user.firstname && user.lastname) {
+                this.resolvedUserNames.set(userId, `${user.firstname} ${user.lastname}`);
+                this.changeDetectorRef.markForCheck();
+              }
+            },
+            error: (err) => {
+              console.warn(`Could not resolve user name for ID ${userId}. Falling back to numeric ID.`, err);
+            }
+          });
+        }
+      }
+    });
+  }
+
+  getResolvedUserName(columnName: string, value: number | null | undefined): string | null {
+    if (!value) return null;
+    const lowerName = columnName.toLowerCase();
+    if (
+      lowerName === 'createdby_id' ||
+      lowerName === 'created_by_id' ||
+      lowerName === 'lastmodifiedby_id' ||
+      lowerName === 'last_modified_by_id'
+    ) {
+      return this.resolvedUserNames.get(value) || null;
+    }
+    return null;
   }
 
   add() {
@@ -143,6 +196,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
             this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.resolveUserNames();
               this.isLoading = false;
               this.changeDetectorRef.markForCheck();
             });
@@ -216,6 +270,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
             this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.resolveUserNames();
               this.isLoading = false;
               this.changeDetectorRef.markForCheck();
             });
