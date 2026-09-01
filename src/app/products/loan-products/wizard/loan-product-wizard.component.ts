@@ -132,6 +132,19 @@ const CONDITIONALLY_REQUIRED_FIELDS: readonly string[] = [
   'mandatoryGuarantee'
 ];
 
+/**
+ * The pattern Classic applies to a numeric control that accepts at most `decimals` decimal places:
+ * `^\d+([.,]\d{1,6})?$` for the interest-rate inputs, and the whole-number equivalent for controls
+ * Classic pins with `^[1-9]\d*$` (whose floor is expressed separately as `Validators.min`).
+ *
+ * The comma branch is Classic's, kept so the two flows accept the same strings; `<input type=number>`
+ * never yields one. Rejecting the empty value is `Validators.required`'s job, and `Validators.pattern`
+ * already passes an empty control, so this only ever fires on a value the operator actually entered.
+ */
+function decimalPlacesPattern(decimals: number): RegExp {
+  return decimals > 0 ? new RegExp(`^\\d+([.,]\\d{1,${decimals}})?$`) : /^\d+$/;
+}
+
 /** `daysInYearType` id for the ACTUAL option — the only type `daysInYearCustomStrategy` applies to. */
 const DAYS_IN_YEAR_ACTUAL = 1;
 
@@ -646,6 +659,38 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   trackByAccountTitle(_index: number, account: { title: string }): string {
     return account.title;
+  }
+
+  /**
+   * The one message the field grid renders for a control, in the order the constraints are worth
+   * reporting: a blank required field first, then its floor, its decimal places, its length.
+   *
+   * Resolved here rather than in the template because `mat-form-field` projects on the `mat-error`
+   * selector, and the compiler can only infer that selector for a control-flow block whose single
+   * root node is the element itself (`ingestControlFlowInsertionPoint`). A branch nested inside an
+   * outer `@if` has another block at its root, so every error lands in the field's default slot
+   * instead — rendering inside the box, and ignoring the touched/dirty gating that normally keeps a
+   * required message hidden until the user has actually visited the control. Keeping this a flat key
+   * lets each `@if` in the template stay one level deep with a `<mat-error>` at its root.
+   */
+  fieldErrorKey(field: FormField): 'required' | 'min' | 'pattern' | 'maxlength' | null {
+    const control = this.form?.get(field.key);
+    if (!control) {
+      return null;
+    }
+    if (control.hasError('required')) {
+      return 'required';
+    }
+    if (control.hasError('min')) {
+      return 'min';
+    }
+    if (control.hasError('pattern')) {
+      return 'pattern';
+    }
+    if (control.hasError('maxlength')) {
+      return 'maxlength';
+    }
+    return null;
   }
 
   visibleFields(step: FormStep): FormField[] {
@@ -1849,9 +1894,17 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   }
 
   /**
-   * Translates a field's FORM_STEPS metadata (`required`, `maxLength`) into Angular Validators so the
-   * FormGroup — not just the template — actually rejects invalid input. Keys with no config entry
-   * (UI-only helpers such as `charges`) get no validators.
+   * Translates a field's FORM_STEPS metadata (`required`, `maxLength`, `min`, `decimals`) into
+   * Angular Validators so the FormGroup — not just the template — actually rejects invalid input.
+   * Keys with no config entry (UI-only helpers such as `charges`) get no validators.
+   *
+   * `min` and `decimals` mirror the constraints the matching Classic step declares on the same
+   * control, so a value the Classic form rejects is rejected here too — see {@link FormField}.
+   * Fields whose Classic constraints are attached only while a controlling toggle is on
+   * (`overAppliedNumber`, `maxTrancheCount`, `outstandingLoanBalance`, the guarantee inputs and
+   * `disbursedAmountPercentageForDownPayment`) deliberately carry no `min` in the config: their
+   * bounds come from {@link syncConditionalValidators} instead, which is also where Classic's
+   * `addControl` attaches them.
    *
    * `required` in the field config means "required whenever this field is shown". For a field that is
    * always shown the two readings coincide, but for a conditionally-shown one a static
@@ -1873,6 +1926,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     }
     if (typeof field.maxLength === 'number') {
       validators.push(Validators.maxLength(field.maxLength));
+    }
+    if (typeof field.min === 'number') {
+      validators.push(Validators.min(field.min));
+    }
+    if (typeof field.decimals === 'number') {
+      validators.push(Validators.pattern(decimalPlacesPattern(field.decimals)));
     }
     return validators;
   }
