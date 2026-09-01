@@ -31,6 +31,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
+import { AlertService } from 'app/core/alert/alert.service';
 import { OrganizationService } from '../../organization.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
@@ -66,6 +67,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
   private route = inject(ActivatedRoute);
   private formBuilder = inject(FormBuilder);
   private organizationservice = inject(OrganizationService);
+  private alertService = inject(AlertService);
   dialog = inject(MatDialog);
   private router = inject(Router);
   private translateService = inject(TranslateService);
@@ -157,20 +159,26 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
   addCurrency() {
     const newCurrency = this.currencyForm.value.currency;
     const selectedCurrencyCodes: any[] = this.selectedCurrencies.map((currency) => currency.code);
-    if (!selectedCurrencyCodes.includes(newCurrency.code)) {
-      selectedCurrencyCodes.push(newCurrency.code);
-      this.organizationservice
-        .updateCurrencies(selectedCurrencyCodes)
-        .pipe(take(1))
-        .subscribe((response: any) => {
-          this.selectedCurrencies.push(newCurrency);
-          this.formRef.resetForm();
-          if (this.configurationWizardService.showCurrencyForm) {
-            this.configurationWizardService.showCurrencyForm = false;
-            this.openDialog();
-          }
-        });
+    if (selectedCurrencyCodes.includes(newCurrency.code)) {
+      this.alertService.alert({
+        type: 'error',
+        message: this.translateService.instant('labels.text.This currency has already been added')
+      });
+      this.formRef.resetForm();
+      return;
     }
+    selectedCurrencyCodes.push(newCurrency.code);
+    this.organizationservice
+      .updateCurrencies(selectedCurrencyCodes)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.selectedCurrencies.push(newCurrency);
+        this.formRef.resetForm();
+        if (this.configurationWizardService.showCurrencyForm) {
+          this.configurationWizardService.showCurrencyForm = false;
+          this.openDialog();
+        }
+      });
   }
 
   /**
