@@ -13,7 +13,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    name: Run Lint, Build and Deploy
+    name: Run Lint and Build
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -80,16 +80,3 @@ jobs:
 
       - name: Run production build
         run: npm run build:prod
-
-      - name: Deploy to github pages
-        if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/web-app/browser
-          #without preserve it only builds if you have untracked files
-          PRESERVE: true
-          # github user name and email shows up in the logs,
-          # so it would be better to make it silent.
-          SILENT: true
