@@ -17,6 +17,8 @@ import { activities } from '../activities';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
+import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
+import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
 
 /**
  * Dashboard component.
@@ -28,7 +30,11 @@ import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.confi
   styleUrls: ['./dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    DashboardEngineComponent
+    DashboardEngineComponent,
+    MatTab,
+    MatTabContent,
+    MatTabGroup,
+    OnboardingBoardComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
