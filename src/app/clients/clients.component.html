@@ -35,8 +35,15 @@
       }
     </div>
 
-    <label class="toggle" (click)="toggleShowClosed()">
-      <span class="switch" [class.on]="showClosedAccounts"></span>
+    <label class="toggle">
+      <input
+        type="checkbox"
+        class="toggle-input"
+        [checked]="showClosedAccounts"
+        (change)="toggleShowClosed()"
+        (keydown.enter)="toggleShowClosed()"
+      />
+      <span class="switch" [class.on]="showClosedAccounts" aria-hidden="true"></span>
       {{ 'labels.buttons.Show Closed Accounts' | translate }}
     </label>
 
