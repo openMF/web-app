@@ -3959,6 +3959,7 @@
       "Transfer in progress": "Iepriekšējā pārnešana",
       "Transfer on hold": "Pārnešana aizturēta",
       "Withdrawn": "Atsaukts",
+      "Withdrawn by applicant": "Pieteikuma iesniedzēja atsaukts",
       "Written Off": "Norakstīts"
     },
     "dialogContext": {

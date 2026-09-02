@@ -3959,6 +3959,7 @@
       "Transfer in progress": "Trasferimento in corso",
       "Transfer on hold": "Trasferimento in attesa",
       "Withdrawn": "Ritirato",
+      "Withdrawn by applicant": "Ritirato dal richiedente",
       "Written Off": "Stralciato"
     },
     "dialogContext": {
