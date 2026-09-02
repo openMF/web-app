@@ -5570,6 +5570,8 @@
     "Specific days before when repayment": "Giorni specifici prima dell'invio della notifica di scadenza del rimborso.",
     "Specific days when after the repayment Overdue": "Giorni specifici in cui dopo il rimborso deve essere inviata la notifica di ritardo.",
     "Successful": "Riuscito",
+    "Switch to dark theme": "Passa al tema scuro",
+    "Switch to light theme": "Passa al tema chiaro",
     "The Amortization value": "Il valore di ammortamento viene utilizzato per calcolare gli importi di rimborso per il rimborso del prestito.",
     "The Interest method value": "Il valore del metodo degli interessi viene immesso per calcolare l'importo dei pagamenti per il rimborso del prestito.",
     "The currency in which the deposit will be disbursed": "La valuta in cui verrà erogato il deposito.",

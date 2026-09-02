@@ -5,6 +5,12 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<button mat-icon-button (click)="toggleTheme()" class="m-l-5 m-r-5">
+<button
+  mat-icon-button
+  class="m-l-5 m-r-5"
+  (click)="toggleTheme()"
+  [matTooltip]="themeToggleLabel | translate"
+  [attr.aria-label]="themeToggleLabel | translate"
+>
   <mifosx-m3-icon [name]="darkModeOn ? 'wb_sunny' : 'nights_stay'"></mifosx-m3-icon>
 </button>

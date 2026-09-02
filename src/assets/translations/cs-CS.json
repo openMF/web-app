@@ -5858,6 +5858,8 @@
     "Specific days before when repayment": "Konkrétní dny předem, kdy by mělo být zasláno oznámení o splatnosti.",
     "Specific days when after the repayment Overdue": "Konkrétní dny, kdy po splacení má být zasláno oznámení o prodlení.",
     "Successful": "Úspěšný",
+    "Switch to dark theme": "Přepnout na tmavý motiv",
+    "Switch to light theme": "Přepnout na světlý motiv",
     "Tenant": "Nájemce",
     "The Amortization value": "Hodnota amortizace je vstupem pro výpočet výše splátky pro splacení úvěru.",
     "The Interest method value": "Hodnota úrokové metody je vstupem pro výpočet výše plateb za splacení úvěru.",

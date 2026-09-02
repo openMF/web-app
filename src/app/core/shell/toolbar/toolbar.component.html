@@ -124,8 +124,15 @@
   </div>
 
   <div #appMenu>
-    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" tabindex="0">
-      <img src="assets/images/user_placeholder.png" [alt]="'labels.headings.User Profile' | translate" />
+    <button
+      mat-icon-button
+      class="ml-1 img-button"
+      [matMenuTriggerFor]="applicationMenu"
+      tabindex="0"
+      [attr.aria-label]="'labels.heading.User Profile' | translate"
+      matTooltip="{{ 'labels.heading.User Profile' | translate }}"
+    >
+      <img src="assets/images/user_placeholder.png" [alt]="'labels.heading.User Profile' | translate" />
     </button>
   </div>
 </mat-toolbar>

@@ -5569,6 +5569,8 @@
     "Specific days before when repayment": "상환 기한 통지를 발송해야 하는 특정 날짜 전.",
     "Specific days when after the repayment Overdue": "상환 연체 통지가 전송되어야 하는 특정 날짜.",
     "Successful": "성공적인",
+    "Switch to dark theme": "다크 테마로 전환",
+    "Switch to light theme": "라이트 테마로 전환",
     "The Amortization value": "상각 가치는 대출 상환을 위한 상환 금액을 계산하는 데 입력됩니다.",
     "The Interest method value": "이자법 값은 대출 상환을 위한 지불 금액을 계산하는 데 입력됩니다.",
     "The currency in which the deposit will be disbursed": "입금액이 지급될 통화입니다.",
