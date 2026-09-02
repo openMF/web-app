@@ -3961,6 +3961,7 @@
       "Transfer in progress": "Iepriekšējā pārnešana",
       "Transfer on hold": "Pārnešana aizturēta",
       "Withdrawn": "Atsaukts",
+      "Withdrawn by applicant": "Pieteikuma iesniedzēja atsaukts",
       "Written Off": "Norakstīts"
     },
     "dialogContext": {
@@ -4695,6 +4696,7 @@
       "The usage of stronger passwords": "Definējiet standartus spēcīgāku paroļu izmantošanai",
       "These are predefined postings": "Tie ir iepriekš noteikti ziņojumi",
       "This allows you to manage funds associated with loans.": "Tas ļauj pārvaldīt ar aizdevumiem saistītos līdzekļus.",
+      "This currency has already been added": "Šī valūta jau ir pievienota",
       "This option allows you to create new loan product.": "Šī opcija ļauj izveidot jaunu aizdevuma produktu.",
       "This option allows you to create new recurring product.": "Šī opcija ļauj izveidot jaunu periodisku produktu.",
       "This option allows you to create new savings product.": "Šī opcija ļauj izveidot jaunu uzkrājumu produktu.",

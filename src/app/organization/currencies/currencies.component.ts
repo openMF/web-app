@@ -32,7 +32,8 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatNoDataRow
 } from '@angular/material/table';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -64,6 +65,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatNoDataRow,
     MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -84,6 +86,8 @@ export class CurrenciesComponent implements OnInit, AfterViewInit {
   ];
   /** Data source for currencies table. */
   dataSource: MatTableDataSource<any>;
+  /** Filter currently applied to the table, used to word the empty state. */
+  filterValue = '';
 
   /** Paginator for currencies table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -117,7 +121,8 @@ export class CurrenciesComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterValue = filterValue.trim();
+    this.dataSource.filter = this.filterValue.toLowerCase();
   }
 
   /**

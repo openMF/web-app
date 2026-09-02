@@ -3961,6 +3961,7 @@
       "Transfer in progress": "Transferência em andamento",
       "Transfer on hold": "Transferência em espera",
       "Withdrawn": "Retirado",
+      "Withdrawn by applicant": "Retirado pelo requerente",
       "Written Off": "Baixado"
     },
     "dialogContext": {
@@ -4695,6 +4696,7 @@
       "The usage of stronger passwords": "Defina padrões para impor o uso de senhas mais fortes",
       "These are predefined postings": "Estas são postagens predefinidas",
       "This allows you to manage funds associated with loans.": "Isso permite que você gerencie fundos associados a empréstimos.",
+      "This currency has already been added": "Esta moeda já foi adicionada",
       "This option allows you to create new loan product.": "Esta opção permite criar um novo produto de empréstimo.",
       "This option allows you to create new recurring product.": "Esta opção permite criar novos produtos recorrentes.",
       "This option allows you to create new savings product.": "Esta opção permite criar um novo produto de poupança.",

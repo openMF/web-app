@@ -3963,6 +3963,7 @@
       "Transfer in progress": "Převod",
       "Transfer on hold": "Přenesejte na pozastavení",
       "Withdrawn": "Stažený",
+      "Withdrawn by applicant": "Staženo žadatelem",
       "Written Off": "Odepsáno"
     },
     "dialogContext": {
@@ -4697,6 +4698,7 @@
       "The usage of stronger passwords": "Definujte standardy pro vynucení používání silnějších hesel",
       "These are predefined postings": "Jedná se o předdefinované příspěvky",
       "This allows you to manage funds associated with loans.": "To vám umožní spravovat finanční prostředky spojené s půjčkami.",
+      "This currency has already been added": "Tato měna již byla přidána",
       "This option allows you to create new loan product.": "Tato možnost umožňuje vytvořit nový úvěrový produkt.",
       "This option allows you to create new recurring product.": "Tato možnost umožňuje vytvořit nový opakující se produkt.",
       "This option allows you to create new savings product.": "Tato možnost umožňuje vytvořit nový spořicí produkt.",

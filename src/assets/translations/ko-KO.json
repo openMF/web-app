@@ -3961,6 +3961,7 @@
       "Transfer in progress": "진행중인 양도",
       "Transfer on hold": "보류에 이체하십시오",
       "Withdrawn": "빼는",
+      "Withdrawn by applicant": "신청자에 의해 철회됨",
       "Written Off": "상각됨"
     },
     "dialogContext": {
@@ -4695,6 +4696,7 @@
       "The usage of stronger passwords": "더 강력한 비밀번호 사용을 시행하기 위한 표준 정의",
       "These are predefined postings": "사전 정의된 게시물입니다.",
       "This allows you to manage funds associated with loans.": "이를 통해 대출과 관련된 자금을 관리할 수 있습니다.",
+      "This currency has already been added": "이 통화는 이미 추가되었습니다",
       "This option allows you to create new loan product.": "이 옵션을 사용하면 새로운 대출 상품을 생성할 수 있습니다.",
       "This option allows you to create new recurring product.": "이 옵션을 사용하면 새로운 반복 제품을 생성할 수 있습니다.",
       "This option allows you to create new savings product.": "이 옵션을 사용하면 새로운 저축 상품을 만들 수 있습니다.",
