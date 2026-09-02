@@ -43,10 +43,7 @@
   }
 
   .language {
-    min-width: 80px;
-    width: 80px;
     font-size: 0.875rem;
-    margin-top: 0.375rem;
   }
 
   .img-button {
@@ -83,11 +80,38 @@
 
 .white-text-language ::ng-deep mifosx-language-selector {
   color: white !important;
-  /* stylelint-disable-next-line selector-max-universal */
-  * {
+
+  // Target only Material form-field internals — leave custom elements free to set their own backgrounds
+  /* stylelint-disable selector-class-pattern */
+  .mat-mdc-form-field {
+    // Cancel the global form-field bottom margin so the toolbar can centre the
+    // control instead of it being nudged into place.
+    margin-bottom: 0;
+  }
+
+  // Material reserves a fixed-width infix that overflows the space the toolbar
+  // gives the selector, so the control is sized from the infix outwards.
+  .mat-mdc-form-field-infix {
+    width: 100px;
+  }
+
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-form-field-flex,
+  .mat-mdc-form-field-infix {
     background-color: transparent !important;
+  }
+
+  .mat-mdc-floating-label,
+  .mdc-floating-label,
+  mat-label,
+  .mat-mdc-select,
+  .mat-mdc-select-value,
+  .mat-mdc-select-min-line,
+  .mat-mdc-select-arrow,
+  .mat-mdc-select-trigger {
     color: white !important;
   }
+  /* stylelint-enable selector-class-pattern */
 }
 
 .white-text-search ::ng-deep mifosx-search-tool {
@@ -113,8 +137,4 @@
     color: white !important;
   }
   /* stylelint-enable selector-class-pattern */
-}
-
-.white-text-language {
-  margin-top: 27px;
 }
