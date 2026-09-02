@@ -5814,6 +5814,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Kipindi cha sasa",
     "newChat": "Mazungumzo mapya",
@@ -5864,6 +5874,10 @@
       "aboutStorage": "Mazungumzo yako hubaki kwenye kivinjari hiki na hayahifadhiwi kamwe kwenye seva ya msaidizi."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Hakuna mazungumzo ya hivi karibuni",
       "emptySubtitle": "Historia yako ya mazungumzo itaonekana hapa",
       "messages": "ujumbe",
@@ -5897,6 +5911,7 @@
     "openAssistant": "Fungua Mifos X Copilot",
     "newChatTitle": "Mazungumzo mapya",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Ujumbe ni tupu au mrefu sana. Tafadhali ufupishe na ujaribu tena.",
       "injectionBlocked": "Ujumbe unaonekana kama jaribio la kukiuka maelekezo, hivyo haukutumwa. Tafadhali uandike upya.",
       "streamFailed": "Imeshindwa kufikia Mifos X Copilot. Tafadhali jaribu tena."
@@ -5968,11 +5983,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Haya ni makumbukumbu ambayo msaidizi alisoma. Msingi wa uamuzi wowote kuhusu mteja huyu uko katika Fineract: kanuni za bidhaa ya mkopo, ratiba ya marejesho, na sera ya mikopo ya taasisi yako.",
       "thinking": "Kufikiri",
       "notesCaution": "Maandishi ya kazi ya msaidizi mwenyewe. Si kumbukumbu ya jinsi jibu lilivyopatikana, wala si tathmini ya mkopo. Hakiki kila takwimu dhidi ya kumbukumbu ya mteja."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Jaribu tena",
       "groupLabel": "Vitendo vya jibu",
       "copy": "Nakili",

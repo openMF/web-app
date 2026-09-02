@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectorRef, Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  ViewChild,
+  ViewEncapsulation,
+  inject
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,6 +42,8 @@ import { ChatAreaComponent } from '../chat-area/chat-area.component';
 import { RecentChatsComponent } from '../recent-chats/recent-chats.component';
 import { InputBarComponent } from '../input-bar/input-bar.component';
 import { CopilotPreferencesComponent } from '../copilot-preferences/copilot-preferences.component';
+import { PromptNavComponent } from '../prompt-nav/prompt-nav.component';
+import { InputBarComponent as InputBar } from '../input-bar/input-bar.component';
 
 export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
 
@@ -54,11 +65,13 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
     ChatAreaComponent,
     RecentChatsComponent,
     InputBarComponent,
-    CopilotPreferencesComponent
+    CopilotPreferencesComponent,
+    PromptNavComponent
   ],
   templateUrl: './copilot-panel.component.html',
   styleUrls: ['./copilot-panel.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 // Deliberately no ngOnInit. The shell creates this panel as soon as the feature is on,
 // which can be before the officer's credentials are written, and reading the transcript
@@ -106,6 +119,11 @@ export class CopilotPanelComponent {
 
   /** Conversation state, mirrored from ChatService. */
   messages: ChatMessage[] = [];
+  /** The question whose answer is on screen, mirrored for the prompt rail. */
+  activeQuestionId: string | null = null;
+
+  @ViewChild(ChatAreaComponent) private chatArea?: ChatAreaComponent;
+  @ViewChild(InputBar) private inputBar?: InputBar;
   conversations: Conversation[] = [];
   isStreaming = false;
   /** Write action awaiting confirmation, rendered as a confirmation card. */
@@ -195,6 +213,72 @@ export class CopilotPanelComponent {
       return 'copilot.greeting.afternoon';
     }
     return 'copilot.greeting.evening';
+  }
+
+  /**
+   * Keyboard shortcuts, active only while the panel is open.
+   *
+   * <p>Bound on the document because the panel is an overlay the officer may not have focused,
+   * and every branch of this returns early unless the panel is open, so nothing here changes
+   * how the rest of the application behaves.
+   */
+  @HostListener('document:keydown', ['$event'])
+  onShortcut(event: KeyboardEvent): void {
+    if (!this.isEnabled || !this.isOpen || this.activeTab !== 'chat') {
+      return;
+    }
+    const target = event.target as HTMLElement | null;
+    const typing =
+      !!target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable === true);
+
+    // "/" jumps to the composer, the convention almost every chat application uses. Never
+    // while the officer is typing, where it is just a slash.
+    if (event.key === '/' && !typing) {
+      event.preventDefault();
+      this.inputBar?.focusInput();
+      return;
+    }
+    // Alt+Up / Alt+Down move between the questions asked this session. Alt, because the
+    // arrows alone belong to the composer and to the scroll container.
+    if (event.altKey && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+      event.preventDefault();
+      this.stepThroughQuestions(event.key === 'ArrowUp' ? -1 : 1);
+      return;
+    }
+    // Escape closes the panel, but only from outside the composer, where it stops the reply.
+    if (event.key === 'Escape' && !typing && !this.isStreaming) {
+      event.preventDefault();
+      this.togglePanel();
+    }
+  }
+
+  /** Move to the question before or after the one on screen, and stop at the ends. */
+  private stepThroughQuestions(direction: -1 | 1): void {
+    const questions = this.messages.filter((message) => message.role === 'user');
+    if (questions.length === 0) {
+      return;
+    }
+    const current = questions.findIndex((message) => message.id === this.activeQuestionId);
+    // From nowhere in particular, Up goes to the last question and Down to the first.
+    const from = current < 0 ? (direction === -1 ? questions.length : -1) : current;
+    const next = Math.min(Math.max(from + direction, 0), questions.length - 1);
+    this.jumpToQuestion(questions[next].id);
+  }
+
+  /** Put the last question back in the composer to be reworded. */
+  editLastQuestion(): void {
+    const question = this.chatService.editLastQuestion();
+    if (question === null) {
+      return;
+    }
+    this.composerText = question;
+    this.inputBar?.focusInput();
+  }
+
+  /** The rail asked to go back to a question. */
+  jumpToQuestion(id: string): void {
+    this.activeQuestionId = id;
+    this.chatArea?.scrollToQuestion(id);
   }
 
   togglePanel(): void {

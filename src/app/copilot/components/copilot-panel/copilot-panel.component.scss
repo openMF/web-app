@@ -418,6 +418,46 @@ $content-width-full: 1440px;
         }
       }
 
+      .md-list--numbered {
+        list-style: decimal;
+      }
+
+      /* Headings inside a bubble. Sized by weight and spacing rather than by growing the type:
+         a reply is a paragraph or two, and 24px text in a chat bubble reads as shouting. */
+      .md-heading {
+        margin: ($u * 2) 0 ($u);
+        font-weight: 700;
+        line-height: 1.35;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      .md-heading--1 {
+        font-size: 15.5px;
+      }
+
+      .md-heading--2 {
+        font-size: 14.5px;
+      }
+
+      .md-heading--3 {
+        font-size: 13.5px;
+      }
+
+      .md-quote {
+        margin: ($u) 0;
+        padding: ($u - 2px) 0 ($u - 2px) ($u * 2);
+        border-left: 2px solid;
+        font-style: italic;
+      }
+
+      .md-link {
+        text-decoration: underline;
+        overflow-wrap: anywhere;
+      }
+
       // Markdown tables (e.g. client lists): real rows and columns, scrolling
       // horizontally inside their own box when narrow.
       .md-table-wrap {
@@ -445,11 +485,65 @@ $content-width-full: 1440px;
         }
       }
 
+      /* A fenced block and the bar that names it are one object, so the corners are rounded
+         on the wrapper and the block itself is left square inside it. */
+      .md-code-wrap {
+        margin: $u 0;
+        border-radius: $r-sm;
+        overflow: hidden;
+        max-width: 100%;
+      }
+
+      .md-code__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $u;
+        padding: (0.5 * $u) ($u * 2);
+        font-size: 11px;
+      }
+
+      .md-code__lang {
+        font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+        text-transform: lowercase;
+        letter-spacing: 0.02em;
+      }
+
+      /* Reveals itself on hover or focus, but never disappears for keyboards or touch, where
+         hover does not exist and a control that only appears on hover cannot be reached. */
+      .md-code__copy {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: none;
+        border-radius: $r-xs;
+        background: transparent;
+        cursor: pointer;
+        opacity: 0.55;
+        transition: opacity 0.15s $ease;
+
+        svg {
+          width: 13px;
+          height: 13px;
+        }
+      }
+
+      .md-code-wrap:hover .md-code__copy,
+      .md-code__copy:focus-visible {
+        opacity: 1;
+      }
+
+      .md-code__copy--done {
+        opacity: 1;
+      }
+
       // Fenced code blocks: scroll inside their own box, never widen the bubble.
       .md-code {
-        margin: $u 0;
+        margin: 0;
         padding: $u ($u * 2);
-        border-radius: $r-sm;
         max-width: 100%;
         overflow-x: auto;
         font-size: 12.5px;
@@ -835,6 +929,186 @@ $content-width-full: 1440px;
     }
   }
 
+  /* Announced but not drawn: the live region tells a screen reader the state of the reply,
+     which sighted officers read from the indicator and the words appearing instead.
+     Not `display: none`, which would take it out of the accessibility tree as well. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Each token fades in as it lands. Short, and opacity only: at streaming speed anything
+     longer overlaps the next word, and anything that moves makes the line jitter as it grows. */
+  .md-token {
+    animation: copilot-token-in 0.18s ease-out;
+  }
+
+  /* A caret at the tail of the reply, so the answer looks like it is being written rather
+     than having stopped. Drawn with a border on ::after, so it needs no element of its own
+     inside markup that is rebuilt every token. */
+  .msg__text--streaming::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: copilot-caret 1s step-end infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .md-token {
+      animation: none;
+    }
+
+    .msg__text--streaming::after {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  .show-earlier {
+    align-self: center;
+    margin: 0 auto ($u);
+    padding: (0.5 * $u) ($u * 2);
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+  }
+
+  /* ── The questions asked this session ── */
+
+  /* Sits over the conversation rather than beside it: taking a column would narrow the
+     answers, and the answers are what the panel is for. Pinned to the right edge, out of the
+     way of the text, which is set left. */
+  .prompt-nav {
+    position: absolute;
+    top: 88px;
+    right: $u;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    max-height: 46%;
+    padding: ($u - 2px);
+    border-radius: $r-sm;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .prompt-nav__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: $r-xs;
+    background: transparent;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s $ease;
+
+    svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  .prompt-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .prompt-nav__item {
+    display: flex;
+    align-items: center;
+    gap: $u - 2px;
+    width: 100%;
+    padding: 3px ($u - 2px);
+    border: none;
+    border-radius: $r-xs;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+    text-align: left;
+    transition:
+      background 0.15s $ease,
+      color 0.15s $ease;
+  }
+
+  /* The rule is what a collapsed rail is made of, and what marks position in an expanded one. */
+  .prompt-nav__rule {
+    width: 12px;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  .prompt-nav__index {
+    min-width: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prompt-nav__label {
+    overflow: hidden;
+    max-width: 168px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Collapsed, it is a strip of rules: still enough to see how far through the conversation
+     the officer is, and to click back to a point in it. */
+  .prompt-nav--collapsed {
+    .prompt-nav__index,
+    .prompt-nav__label {
+      display: none;
+    }
+
+    .prompt-nav__item {
+      width: auto;
+      padding: 3px;
+    }
+  }
+
+  /* On a narrow panel the rail would sit on top of the answers, so it goes away entirely.
+     Recent Chats still reaches every conversation, and the questions are still on screen. */
+  @media (width <= 620px) {
+    .prompt-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-nav__item,
+    .prompt-nav__toggle {
+      transition: none;
+    }
+  }
+
   /* ── How the answer was reached ── */
   .trail {
     margin-top: $u + 2px;
@@ -850,19 +1124,47 @@ $content-width-full: 1440px;
     font-size: 12.5px;
   }
 
-  .trail__spinner {
-    width: 11px;
-    height: 11px;
-    border: 2px solid transparent;
+  /* A dot that breathes rather than a spinner that races. A spinner claims the wait is
+     indeterminate and demands the eye; the label beside it is the part worth reading, so the
+     motion is kept quiet enough to sit under it. */
+  .trail__live-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     flex-shrink: 0;
-    animation: trail-spin 0.7s linear infinite;
+    animation: copilot-trail-pulse 1.6s ease-in-out infinite;
   }
 
-  @keyframes trail-spin {
-    to {
-      transform: rotate(360deg);
+  /* The label pulses with the dot, on opacity only: no transform, so text never reflows and
+     sub-pixel shifts never blur it mid-animation. */
+  .trail__live-label {
+    animation: copilot-trail-pulse 1.6s ease-in-out infinite;
+  }
+
+  .trail__live-time {
+    margin-left: auto;
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Motion is the whole point of this line, so when it is unwanted the line still has to say
+     the same thing. The label and the counter stay; only the breathing stops. */
+  @media (prefers-reduced-motion: reduce) {
+    .trail__live-dot,
+    .trail__live-label {
+      animation: none;
+      opacity: 1;
     }
+
+    .trail__chevron {
+      transition: none;
+    }
+  }
+
+  /* The animated body needs its padding on an inner element: animating height on a padded box
+     leaves the padding visible at the collapsed keyframe, so the closed panel keeps a stripe. */
+  .trail__body-inner {
+    padding: 0 ($u) ($u) ($u * 3);
   }
 
   .trail__section {
@@ -903,7 +1205,7 @@ $content-width-full: 1440px;
   }
 
   .trail__body {
-    padding: 0 ($u) ($u) ($u * 3);
+    overflow: hidden;
   }
 
   .trail__steps {
@@ -1417,6 +1719,38 @@ $content-width-full: 1440px;
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes copilot-token-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes copilot-caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes copilot-trail-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
   }
 }
 

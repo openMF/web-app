@@ -22,6 +22,7 @@ import { environment } from '../../../environments/environment';
 import { ChatMessage, Conversation } from '../core/models/chat-message.model';
 import { McpStreamEvent, PendingAction } from '../core/models/mcp-response.model';
 import { ActionCard } from '../core/models/action-card.model';
+import { translateStepLabel } from '../core/step-label';
 import { InputSanitizer } from '../core/input-sanitizer';
 import { ResponseParser } from '../core/response-parser';
 import { COPILOT_CONFIG } from '../copilot.config';
@@ -219,6 +220,37 @@ export class ChatService {
   }
 
   /**
+   * Take back the last exchange and hand the question back for editing.
+   *
+   * <p>Rephrasing a question is the ordinary way out of a reply that missed the point, and
+   * doing it by hand means retyping. The exchange is removed rather than left above the new
+   * one, because two answers to nearly the same question is a transcript that invites reading
+   * the wrong one.
+   *
+   * <p>Refused mid-turn: the reply being withdrawn is still arriving, and stopping is a
+   * separate, visible act.
+   *
+   * @returns the question, for the composer; null when there is nothing to take back.
+   */
+  editLastQuestion(): string | null {
+    this.ensureCurrentUser();
+    if (this.isStreaming$.value) {
+      return null;
+    }
+    const messages = this.messages$.value;
+    const index = messages.map((message) => message.role).lastIndexOf('user');
+    if (index < 0) {
+      return null;
+    }
+    // Everything from the question onward goes: the question, its reply, and any card or
+    // follow-up that belonged to it.
+    this.messages$.next(messages.slice(0, index));
+    this.pendingAction$.next(null);
+    this.archiveCurrentConversation();
+    return messages[index].content;
+  }
+
+  /**
    * Send a question.
    *
    * @returns whether it was accepted, so the caller knows whether to empty the composer.
@@ -277,8 +309,31 @@ export class ChatService {
    * <p>Matched on the label rather than the tool name, because the same tool can legitimately
    * be called twice in one turn and each call is its own step in what the officer reads.
    */
+  /**
+   * What the officer reads when a turn fails.
+   *
+   * <p>The gateway's own message is preferred, because it knows what went wrong. When there is
+   * none the code is turned into copy from the translation files, rather than whatever string
+   * the transport happened to throw: "Failed to fetch" is what a blocked CORS preflight, a DNS
+   * failure and an unreachable host all look like from the browser, and it tells a loan officer
+   * nothing they can act on. The technical detail is logged for whoever is configuring the
+   * deployment.
+   */
+  private errorText(event: McpStreamEvent): string {
+    const fromGateway = event.message?.trim();
+    if (fromGateway) {
+      return fromGateway;
+    }
+    const key = event.errorCode === 'LLM_UNAVAILABLE' ? 'copilot.errors.timedOut' : 'copilot.errors.streamFailed';
+    return this.translate.instant(key);
+  }
+
   private recordStep(event: McpStreamEvent): void {
-    const label = event.toolLabel ?? event.toolName;
+    // Resolved here rather than in the template: a step log is part of the record of what was
+    // done on a client's account, so the wording is fixed at the moment the step happened.
+    // Unknown tools fall back to the gateway's own English, which reads better than a
+    // missing-translation placeholder (see core/step-label.ts).
+    const label = translateStepLabel(event.toolName, event.toolLabel, (key) => this.translate.instant(key));
     if (!label) {
       return;
     }
@@ -484,9 +539,7 @@ export class ChatService {
         this.decisionBackup = null;
         break;
       case 'error':
-        this.appendToDraft(
-          `${this.draftContent() ? '\n\n' : ''}${event.message ?? this.translate.instant('copilot.errors.streamFailed')}`
-        );
+        this.appendToDraft(`${this.draftContent() ? '\n\n' : ''}${this.errorText(event)}`);
         // The gateway has already worked out whether waiting will help. Offer the question
         // back when it will, so a rate limit costs a click instead of retyping.
         if (event.retryable && this.lastPrompt) {

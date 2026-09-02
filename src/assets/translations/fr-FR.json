@@ -5821,6 +5821,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Afficher {{count}} messages précédents",
+    "a11y": {
+      "replyReady": "Réponse prête",
+      "working": "Traitement de votre question"
+    },
+    "promptNav": {
+      "label": "Questions de cette conversation",
+      "expand": "Afficher les questions",
+      "collapse": "Masquer les questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Session actuelle",
     "newChat": "Nouvelle discussion",
@@ -5871,6 +5881,10 @@
       "aboutStorage": "Vos conversations restent dans ce navigateur et ne sont jamais stockées sur le serveur de l’assistant."
     },
     "recent": {
+      "noMatchSubtitle": "Rien d'enregistré ne correspond à \"{{query}}\".",
+      "noMatchTitle": "Aucune conversation trouvée",
+      "searchClear": "Effacer la recherche",
+      "searchPlaceholder": "Rechercher",
       "emptyTitle": "Aucune conversation récente",
       "emptySubtitle": "Votre historique de discussion apparaîtra ici",
       "messages": "messages",
@@ -5904,6 +5918,7 @@
     "openAssistant": "Ouvrir Mifos X Copilot",
     "newChatTitle": "Nouvelle conversation",
     "errors": {
+      "timedOut": "L'assistant a mis trop de temps à répondre. Veuillez réessayer.",
       "invalidLength": "Le message est vide ou trop long. Veuillez le raccourcir et réessayer.",
       "injectionBlocked": "Le message ressemble à une tentative de contournement des instructions, il n'a donc pas été envoyé. Veuillez le reformuler.",
       "streamFailed": "Mifos X Copilot est injoignable. Veuillez réessayer."
@@ -5975,11 +5990,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "a modifié",
+      "thoughtFor": "A réfléchi pendant {{seconds}}",
+      "live": {
+        "reading": "Lecture de votre question",
+        "thinking": "Réflexion"
+      },
+      "steps": {
+        "loanDetails": "Consultation du compte de prêt",
+        "clientSearch": "Recherche dans le registre des clients",
+        "clientDetails": "Consultation du profil client",
+        "repaymentSchedule": "Vérification de l'échéancier",
+        "savingsBalance": "Consultation du solde d'épargne",
+        "loanApprove": "Approbation du prêt"
+      },
       "stepsNote": "Voici les enregistrements consultés par l'assistant. La base de toute décision concernant ce client se trouve dans Fineract : les règles du produit de prêt, l'échéancier de remboursement et la politique de crédit de votre institution.",
       "thinking": "Réflexion",
       "notesCaution": "Texte de travail de l'assistant. Ce n'est ni un compte rendu de la manière dont la réponse a été produite, ni une évaluation de crédit. Vérifiez chaque chiffre dans la fiche du client."
     },
     "actions": {
+      "copyCode": "Copier le code",
       "tryAgain": "R\u00e9essayer",
       "groupLabel": "Actions sur la r\u00e9ponse",
       "copy": "Copier",

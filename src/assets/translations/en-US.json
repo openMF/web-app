@@ -5971,6 +5971,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Current session",
     "newChat": "New chat",
@@ -6021,6 +6031,10 @@
       "aboutStorage": "Your conversations stay in this browser and are never stored on the assistant server."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "No recent conversations",
       "emptySubtitle": "Your chat history will appear here",
       "messages": "messages",
@@ -6054,6 +6068,7 @@
     "openAssistant": "Open Mifos X Copilot",
     "newChatTitle": "New conversation",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "That message is empty or too long. Please shorten it and try again.",
       "injectionBlocked": "That message looks like an instruction-override attempt, so it was not sent. Please rephrase it.",
       "streamFailed": "Could not reach Mifos X Copilot. Please try again."
@@ -6125,11 +6140,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "These are the records the assistant read. The basis for any decision on this client is in Fineract: the loan product rules, the repayment schedule, and your institution's credit policy.",
       "thinking": "Thinking",
       "notesCaution": "The assistant's own working text. Not a record of how the answer was produced, and not a credit assessment. Check every figure against the client record."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Try again",
       "groupLabel": "Response actions",
       "copy": "Copy",

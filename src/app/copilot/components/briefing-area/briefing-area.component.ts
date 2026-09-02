@@ -6,12 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /** Proactive briefing: auto-surfaced insight cards (urgent / opportunity / info). */
 @Component({
   selector: 'mifosx-briefing-area',
   templateUrl: './briefing-area.component.html',
-  styleUrls: ['./briefing-area.component.scss']
+  styleUrls: ['./briefing-area.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BriefingAreaComponent {}

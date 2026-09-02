@@ -5817,6 +5817,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "현재 세션",
     "newChat": "새 채팅",
@@ -5867,6 +5877,10 @@
       "aboutStorage": "대화는 이 브라우저에 남으며 어시스턴트 서버에 저장되지 않습니다."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "최근 대화 없음",
       "emptySubtitle": "채팅 기록이 여기에 표시됩니다",
       "messages": "개의 메시지",
@@ -5900,6 +5914,7 @@
     "openAssistant": "Mifos X Copilot 열기",
     "newChatTitle": "새 대화",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "메시지가 비어 있거나 너무 깁니다. 줄여서 다시 시도해 주세요.",
       "injectionBlocked": "메시지가 지시 무시 시도로 보여 전송되지 않았습니다. 다시 작성해 주세요.",
       "streamFailed": "Mifos X Copilot에 연결할 수 없습니다. 다시 시도해 주세요."
@@ -5971,11 +5986,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "어시스턴트가 읽은 기록입니다. 이 고객에 대한 결정의 근거는 Fineract에 있습니다. 대출 상품 규칙, 상환 일정, 그리고 기관의 여신 정책입니다.",
       "thinking": "생각 과정",
       "notesCaution": "어시스턴트가 작업 중 남긴 글입니다. 답변이 어떻게 만들어졌는지에 대한 기록이 아니며, 신용 평가도 아닙니다. 모든 수치는 고객 기록과 대조하십시오."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "\ub2e4\uc2dc \uc2dc\ub3c4",
       "groupLabel": "\uc751\ub2f5 \uc791\uc5c5",
       "copy": "\ubcf5\uc0ac",

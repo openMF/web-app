@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,7 +31,8 @@ import { toPlainText } from '../../core/plain-text';
     TranslateModule
   ],
   templateUrl: './message-actions.component.html',
-  styleUrls: ['./message-actions.component.scss']
+  styleUrls: ['./message-actions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageActionsComponent implements OnDestroy {
   @Input({ required: true }) message!: ChatMessage;

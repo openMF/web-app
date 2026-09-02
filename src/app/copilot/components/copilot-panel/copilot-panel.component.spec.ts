@@ -50,7 +50,7 @@ describe('CopilotPanelComponent', () => {
   function build(): void {
     fixture = TestBed.createComponent(CopilotPanelComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.autoDetectChanges(true);
   }
 
   beforeEach(() => {
@@ -113,10 +113,13 @@ describe('CopilotPanelComponent', () => {
       expect(component.isFullScreen).toBe(false);
     });
 
-    it('fills the window when asked, and drops the frame that was in the way', () => {
-      component.togglePanel();
-      component.toggleFullScreen();
-      fixture.detectChanges();
+    it('fills the window when asked, and drops the frame that was in the way', async () => {
+      // Driven through the controls an officer actually uses. The panel is OnPush, and a
+      // template event is what marks it dirty; state poked in from a test never repaints.
+      fixture.nativeElement.querySelector('.ai-fab').click();
+      await fixture.whenStable();
+      fixture.nativeElement.querySelectorAll('.topbar__btn')[0].click();
+      await fixture.whenStable();
 
       const page = fixture.nativeElement.querySelector('.chat-page');
       expect(page.classList).toContain('chat-page--full');
@@ -175,10 +178,12 @@ describe('CopilotPanelComponent', () => {
   });
 
   describe('preferences', () => {
-    it('renders the tab as settings rather than a heading with nothing under it', () => {
-      component.togglePanel();
-      component.switchTab('preferences');
-      fixture.detectChanges();
+    it('renders the tab as settings rather than a heading with nothing under it', async () => {
+      fixture.nativeElement.querySelector('.ai-fab').click();
+      await fixture.whenStable();
+      const tabs = Array.from(fixture.nativeElement.querySelectorAll('.bottom-nav__item') as NodeListOf<HTMLElement>);
+      tabs.find((tab) => tab.textContent?.includes('preferences'))?.click();
+      await fixture.whenStable();
 
       const switches = fixture.nativeElement.querySelectorAll('.prefs__switch[role="switch"]');
       expect(switches.length).toBeGreaterThan(0);

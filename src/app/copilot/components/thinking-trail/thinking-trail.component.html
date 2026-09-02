@@ -7,10 +7,17 @@
 -->
 <div class="trail" *ngIf="hasAnything">
   <!-- While the turn runs, one line naming what is happening right now. An officer waiting on a
-       slow branch connection needs to tell working apart from hung, and this is what does it. -->
-  <div class="trail__live" *ngIf="isStreaming && currentStep as step">
-    <span class="trail__spinner" aria-hidden="true"></span>
-    <span>{{ step.label }}</span>
+       slow branch connection needs to tell working apart from hung, and this is what does it.
+       aria-live announces it, because a silent wait is the same wait for a screen reader. -->
+  <div class="trail__live" *ngIf="isStreaming" role="status" aria-live="polite">
+    <span class="trail__live-dot" aria-hidden="true"></span>
+    <span class="trail__live-label">
+      <ng-container *ngIf="currentStep as step">{{ step.label }}</ng-container>
+      <ng-container *ngIf="!currentStep">{{ liveLabelKey | translate }}</ng-container>
+    </span>
+    <!-- Written to directly by the component; never bound, so a tick costs no change
+         detection. Starts at 0s so the slot never reflows when the first second lands. -->
+    <span class="trail__live-time" #liveTimer aria-hidden="true">0s</span>
   </div>
 
   <!-- One disclosure, not two. What it did and what it wrote both belong to the same question,
@@ -26,33 +33,53 @@
       <svg class="trail__chevron" [class.trail__chevron--open]="open" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
       </svg>
-      <span>{{ 'copilot.trail.thinking' | translate }}</span>
-      <span class="trail__count" *ngIf="elapsed">{{ elapsed }}</span>
+      <span *ngIf="elapsed">{{ 'copilot.trail.thoughtFor' | translate: { seconds: elapsed } }}</span>
+      <span *ngIf="!elapsed">{{ 'copilot.trail.thinking' | translate }}</span>
     </button>
 
-    <div class="trail__body" [id]="bodyId" *ngIf="open">
-      <!-- What it actually did. This is the part that is a record. -->
-      <ol class="trail__steps" *ngIf="steps.length">
-        <li *ngFor="let step of steps" class="trail__step">
-          <span class="trail__tick" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
-          </span>
-          <span class="trail__step-label">{{ step.label }}</span>
-          <span class="trail__step-time" *ngIf="step.durationMs !== null && step.durationMs !== undefined">{{
-            seconds(step.durationMs)
-          }}</span>
-        </li>
-      </ol>
+    <!-- Animated rather than removed, so opening it does not jump the conversation. The answer
+         above keeps its position either way: this block is the last thing in the bubble. -->
+    <div class="trail__body" [id]="bodyId" [@expandBody]="open ? 'expanded' : 'collapsed'">
+      <div class="trail__body-inner">
+        <!-- What it actually did. This is the part that is a record. -->
+        <ol class="trail__steps" *ngIf="steps.length">
+          <li *ngFor="let step of steps" class="trail__step" [class.trail__step--write]="isWrite(step)">
+            <!-- A step that changed a record is marked as one. Reading and writing are not the
+                 same act, and a log that renders them identically hides the difference that
+                 matters most when an officer is checking what was done. -->
+            <span class="trail__tick" aria-hidden="true">
+              <svg *ngIf="!isWrite(step)" viewBox="0 0 24 24">
+                <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
+              <svg *ngIf="isWrite(step)" viewBox="0 0 24 24">
+                <path
+                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                />
+              </svg>
+            </span>
+            <span class="trail__step-kind" *ngIf="isWrite(step)">{{ 'copilot.trail.wrote' | translate }}</span>
+            <span class="trail__step-label">{{ step.label }}</span>
+            <span class="trail__step-time" *ngIf="step.durationMs !== null && step.durationMs !== undefined">{{
+              seconds(step.durationMs)
+            }}</span>
+          </li>
+        </ol>
 
-      <!-- What it wrote while doing it, which is not a record. The caution sits with it, read
-           at the moment the text is, rather than floating where it will be scrolled past. -->
-      <div class="trail__notes-block" *ngIf="notes">
-        <p class="trail__caution">{{ 'copilot.trail.notesCaution' | translate }}</p>
-        <div class="trail__notes">{{ notes }}</div>
+        <!-- What it wrote while doing it, which is not a record. The caution sits with it, read
+             at the moment the text is, rather than floating where it will be scrolled past. -->
+        <div class="trail__notes-block" *ngIf="notes">
+          <p class="trail__caution">
+            {{ 'copilot.trail.notesCaution' | translate }}
+            <span class="trail__notes-time" *ngIf="notesElapsed">{{
+              'copilot.trail.notesTook' | translate: { seconds: notesElapsed }
+            }}</span>
+          </p>
+          <div class="trail__notes">{{ notes }}</div>
+        </div>
+
+        <!-- Points at where the decision basis actually lives, so this is never mistaken for it. -->
+        <p class="trail__note">{{ 'copilot.trail.stepsNote' | translate }}</p>
       </div>
-
-      <!-- Points at where the decision basis actually lives, so this is never mistaken for it. -->
-      <p class="trail__note">{{ 'copilot.trail.stepsNote' | translate }}</p>
     </div>
   </div>
 </div>

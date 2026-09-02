@@ -6,6 +6,45 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 <div class="chat-body recent-chats">
+  <!-- Shown once there are enough conversations that scanning them stops being quicker
+       than typing. Below that the box is another thing to look past. -->
+  <div class="recent-chats__search" *ngIf="conversations.length > 4">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+      />
+    </svg>
+    <input
+      type="search"
+      class="recent-chats__search-input"
+      [ngModel]="query"
+      (ngModelChange)="onSearch($event)"
+      [placeholder]="'copilot.recent.searchPlaceholder' | translate"
+      [attr.aria-label]="'copilot.recent.searchPlaceholder' | translate"
+    />
+    <button
+      type="button"
+      class="recent-chats__search-clear"
+      *ngIf="hasQuery"
+      (click)="clearSearch()"
+      [attr.aria-label]="'copilot.recent.searchClear' | translate"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Nothing matched, which is not the same as nothing saved and does not say so. -->
+  <div *ngIf="conversations.length > 0 && visible.length === 0" class="recent-chats__empty">
+    <p class="recent-chats__empty-title">{{ 'copilot.recent.noMatchTitle' | translate }}</p>
+    <p class="recent-chats__empty-subtitle">
+      {{ 'copilot.recent.noMatchSubtitle' | translate: { query: query } }}
+    </p>
+  </div>
+
   <div *ngIf="conversations.length === 0" class="recent-chats__empty">
     <svg viewBox="0 0 24 24" class="recent-chats__empty-icon">
       <path
@@ -15,8 +54,8 @@
     <p class="recent-chats__empty-title">{{ 'copilot.recent.emptyTitle' | translate }}</p>
     <p class="recent-chats__empty-subtitle">{{ 'copilot.recent.emptySubtitle' | translate }}</p>
   </div>
-  <div *ngIf="conversations.length > 0" class="recent-chats__list">
-    <div *ngFor="let conv of conversations; trackBy: trackByConversationId" class="recent-chats__item">
+  <div *ngIf="visible.length > 0" class="recent-chats__list">
+    <div *ngFor="let conv of visible; trackBy: trackByConversationId" class="recent-chats__item">
       <button type="button" class="recent-chats__item-main" (click)="open.emit(conv)">
         <span class="recent-chats__item-icon">
           <svg viewBox="0 0 24 24">

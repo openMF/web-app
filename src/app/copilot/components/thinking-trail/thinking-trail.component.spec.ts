@@ -7,14 +7,15 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { describe, it, expect, beforeEach } from '@jest/globals';
+import { describe, it, expect, beforeEach, jest, afterEach } from '@jest/globals';
 
 import { ThinkingTrailComponent } from './thinking-trail.component';
-import { ChatMessage } from '../../core/models/chat-message.model';
+import { CopilotStep } from '../../core/models/chat-message.model';
 
-function reply(overrides: Partial<ChatMessage> = {}): ChatMessage {
-  return { id: 'm-1', role: 'assistant', content: 'One active loan.', timestamp: 0, ...overrides };
+function step(label: string, done = true, durationMs?: number): CopilotStep {
+  return { label, readOnly: true, done, durationMs };
 }
 
 describe('ThinkingTrailComponent', () => {
@@ -25,142 +26,214 @@ describe('ThinkingTrailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ThinkingTrailComponent,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ThinkingTrailComponent);
     component = fixture.componentInstance;
-    component.message = reply();
+    fixture.componentRef.setInput('messageId', 'm-1');
     fixture.detectChanges();
   });
 
-  /** A reply that used no tools and produced no notes gets no panel at all. */
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  /** A finished reply that used no tools and produced no notes gets no panel at all. */
   it('shows nothing when there is nothing to show', () => {
     expect(component.hasAnything).toBe(false);
     expect(fixture.nativeElement.querySelector('.trail')).toBeNull();
   });
 
   it('lists the steps the assistant actually took', () => {
-    component.message = reply({
-      steps: [
-        { label: 'Looked up the client', readOnly: true, done: true, durationMs: 3079 },
-        { label: 'Read the loan account', readOnly: true, done: true, durationMs: 412 }
-      ]
-    });
+    fixture.componentRef.setInput('steps', [
+      step('Reading the loan account'),
+      step('Checking the repayment schedule')
+    ]);
     fixture.detectChanges();
-    component.toggle();
+    fixture.nativeElement.querySelector('.trail__summary').click();
     fixture.detectChanges();
 
-    const labels = Array.from(fixture.nativeElement.querySelectorAll('.trail__step-label')).map((n) =>
-      (n as HTMLElement).textContent?.trim()
-    );
+    const labels = Array.from(
+      fixture.nativeElement.querySelectorAll('.trail__step-label') as NodeListOf<HTMLElement>
+    ).map((node) => node.textContent?.trim());
     expect(labels).toEqual([
-      'Looked up the client',
-      'Read the loan account'
+      'Reading the loan account',
+      'Checking the repayment schedule'
     ]);
   });
 
-  /** One disclosure, so the officer is not asked to open two things to see one answer. */
-  it('puts what it did and what it wrote in the same panel', () => {
-    component.message = reply({
-      steps: [{ label: 'Looked up the client', readOnly: true, done: true }],
-      workingNotes: 'Deciding which tool to use.'
-    });
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('.trail__summary').length).toBe(1);
+  // ─── State transitions ─────────────────────────────────────────────────────
 
-    component.toggle();
+  it('shows the live line while streaming and the disclosure once complete', () => {
+    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('steps', [step('Reading the loan account', false)]);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.trail__step-label')).not.toBeNull();
-    expect(fixture.nativeElement.querySelector('.trail__notes').textContent).toContain('Deciding which tool');
+
+    expect(fixture.nativeElement.querySelector('.trail__live')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.trail__summary')).toBeNull();
+
+    fixture.componentRef.setInput('isStreaming', false);
+    fixture.componentRef.setInput('turnMs', 3200);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.trail__live')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.trail__summary')).not.toBeNull();
   });
 
   /**
-   * Reading it has to be a choice. Detailed explanations increase reliance on a recommendation
-   * including when it is wrong, so the panel never opens itself.
+   * The gap before the first tool call is a wait like any other. It used to render nothing,
+   * which is the state an officer cannot tell apart from a hung panel.
    */
-  it('stays closed until the officer opens it', () => {
-    component.message = reply({ workingNotes: 'The officer wants the balance.' });
+  it('names the wait even before the first step arrives', () => {
+    fixture.componentRef.setInput('isStreaming', true);
+    fixture.detectChanges();
+
+    expect(component.currentStep).toBeNull();
+    expect(component.liveLabelKey).toBe('copilot.trail.live.reading');
+    expect(fixture.nativeElement.querySelector('.trail__live')).not.toBeNull();
+  });
+
+  it('says it is thinking once notes have started arriving', () => {
+    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('workingNotes', 'Checking the schedule before quoting a figure.');
+    fixture.detectChanges();
+
+    expect(component.liveLabelKey).toBe('copilot.trail.live.thinking');
+  });
+
+  it('names the step in flight while streaming', () => {
+    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('steps', [
+      step('Reading the loan account'),
+      step('Checking the repayment schedule', false)
+    ]);
+    fixture.detectChanges();
+
+    expect(component.currentStep?.label).toBe('Checking the repayment schedule');
+    expect(fixture.nativeElement.querySelector('.trail__live-label').textContent).toContain(
+      'Checking the repayment schedule'
+    );
+  });
+
+  // ─── Collapsed by default ──────────────────────────────────────────────────
+
+  it('is collapsed when the turn completes', () => {
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
+    fixture.componentRef.setInput('turnMs', 4100);
     fixture.detectChanges();
 
     expect(component.open).toBe(false);
-    expect(fixture.nativeElement.querySelector('.trail__notes')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.trail__summary').getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('stays closed until the officer opens it', () => {
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
+    fixture.detectChanges();
+    expect(component.open).toBe(false);
+
+    fixture.nativeElement.querySelector('.trail__summary').click();
+    fixture.detectChanges();
+    expect(component.open).toBe(true);
   });
 
   it('reports its open state to a screen reader', () => {
-    component.message = reply({ steps: [{ label: 'Looked up the client', readOnly: true, done: true }] });
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
     fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('.trail__summary');
 
-    const summary = fixture.nativeElement.querySelector('.trail__summary');
-    expect(summary.getAttribute('aria-expanded')).toBe('false');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(button.getAttribute('aria-controls')).toBe('copilot-thinking-m-1');
 
-    summary.click();
+    fixture.nativeElement.querySelector('.trail__summary').click();
     fixture.detectChanges();
-    expect(summary.getAttribute('aria-expanded')).toBe('true');
+    expect(button.getAttribute('aria-expanded')).toBe('true');
   });
 
-  /** The caution belongs with the text, read at the moment the text is. */
+  it('gives each reply its own disclosure id', () => {
+    fixture.componentRef.setInput('messageId', 'm-2');
+    expect(component.bodyId).toBe('copilot-thinking-m-2');
+  });
+
   it('carries its caution beside the notes', () => {
-    component.message = reply({ workingNotes: 'Deciding which tool to use.' });
+    fixture.componentRef.setInput('workingNotes', 'It looked overdue at first glance.');
     fixture.detectChanges();
-    component.toggle();
+    fixture.nativeElement.querySelector('.trail__summary').click();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.trail__caution')).not.toBeNull();
-    expect(fixture.nativeElement.querySelector('.trail__note')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.trail__notes').textContent).toContain('overdue');
   });
 
-  /** While the turn runs, the officer needs to tell working apart from hung. */
-  it('names the step in flight while streaming', () => {
-    component.message = reply({
-      steps: [
-        { label: 'Looked up the client', readOnly: true, done: true },
-        { label: 'Fetching the repayment schedule', readOnly: true, done: false }
-      ]
-    });
-    component.isStreaming = true;
-    fixture.detectChanges();
-
-    expect(component.currentStep?.label).toBe('Fetching the repayment schedule');
-    expect(fixture.nativeElement.querySelector('.trail__live').textContent).toContain(
-      'Fetching the repayment schedule'
-    );
-    expect(fixture.nativeElement.querySelectorAll('.trail__summary').length).toBe(0);
-  });
-
-  /**
-   * Wall clock, not a sum of the parts. Thinking and a call can overlap, and the answer still
-   * has to stream after both, so adding them up is wrong in both directions at once.
-   */
-  it('shows the wait the officer actually sat through', () => {
-    component.message = reply({
-      turnMs: 15000,
-      notesElapsedMs: 4000,
-      steps: [{ label: 'Looked up the client', readOnly: true, done: true, durationMs: 11000 }]
-    });
-
-    expect(component.elapsed).toBe('15s');
-  });
-
-  /** One panel per reply, or aria-controls names several elements at once. */
-  it('gives each reply its own disclosure id', () => {
-    component.message = reply({ id: 'm-7', workingNotes: 'thought' });
-    expect(component.bodyId).toBe('copilot-thinking-m-7');
-
-    component.message = reply({ id: 'm-8', workingNotes: 'thought' });
-    expect(component.bodyId).toBe('copilot-thinking-m-8');
-  });
+  // ─── Elapsed-time formatting ───────────────────────────────────────────────
 
   it('says a duration in seconds', () => {
-    expect(component.seconds(3079)).toBe('3.1s');
-    expect(component.seconds(412)).toBe('0.4s');
-    expect(component.seconds(23400)).toBe('23s');
-    expect(component.seconds(undefined)).toBe('');
+    expect(component.seconds(3200)).toBe('3.2s');
+    expect(component.seconds(800)).toBe('0.8s');
+  });
+
+  it('drops the decimal once the wait passes ten seconds', () => {
+    expect(component.seconds(9900)).toBe('9.9s');
+    expect(component.seconds(10_000)).toBe('10s');
+    expect(component.seconds(64_400)).toBe('64s');
   });
 
   it('shows no duration when nothing was timed', () => {
-    component.message = reply({ workingNotes: 'thought' });
+    expect(component.seconds(undefined)).toBe('');
     expect(component.elapsed).toBe('');
+  });
+
+  it('shows the wait the officer actually sat through', () => {
+    fixture.componentRef.setInput('turnMs', 8567);
+    expect(component.elapsed).toBe('8.6s');
+  });
+
+  // ─── The live counter ──────────────────────────────────────────────────────
+
+  /**
+   * The counter is written to the text node rather than bound, so that a tick never runs
+   * change detection. This checks the writing actually happens.
+   */
+  it('counts the wait up without binding a ticking value', () => {
+    jest.useFakeTimers();
+    fixture.componentRef.setInput('isStreaming', true);
+    component.ngOnChanges({
+      isStreaming: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false }
+    });
+    fixture.detectChanges();
+
+    jest.advanceTimersByTime(3000);
+    expect(fixture.nativeElement.querySelector('.trail__live-time').textContent).toBe('3s');
+  });
+
+  it('stops counting when the turn ends', () => {
+    jest.useFakeTimers();
+    const cleared = jest.spyOn(globalThis, 'clearInterval');
+    fixture.componentRef.setInput('isStreaming', true);
+    fixture.detectChanges();
+    jest.advanceTimersByTime(2000);
+
+    fixture.componentRef.setInput('isStreaming', false);
+    fixture.detectChanges();
+
+    expect(cleared).toHaveBeenCalled();
+    cleared.mockRestore();
+  });
+
+  // ─── Input normalisation (what keeps OnPush from re-checking) ──────────────
+
+  it('treats an absent step list as the same empty array every time', () => {
+    fixture.componentRef.setInput('steps', undefined);
+    const first = component.steps;
+    fixture.componentRef.setInput('steps', undefined);
+    expect(component.steps).toBe(first);
+  });
+
+  it('treats absent notes as an empty string', () => {
+    fixture.componentRef.setInput('workingNotes', undefined);
+    expect(component.workingNotes).toBe('');
+    expect(component.notes).toBe('');
   });
 });

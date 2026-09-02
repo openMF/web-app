@@ -81,7 +81,7 @@ export class McpClient {
 
   private async *singleErrorStream(
     code: McpErrorCode,
-    message: string,
+    message: string | undefined,
     retryable: boolean
   ): AsyncGenerator<McpStreamEvent> {
     yield this.errorEvent(code, message, retryable);
@@ -169,10 +169,16 @@ export class McpClient {
         return; // User pressed stop, so end silently.
       }
       if (timedOut) {
-        yield this.errorEvent('LLM_UNAVAILABLE', 'Timed out waiting for the assistant to respond.', true);
+        yield this.errorEvent('LLM_UNAVAILABLE', undefined, true);
         return;
       }
-      yield this.errorEvent('INTERNAL', error instanceof Error ? error.message : String(error), false);
+      // The detail goes to the console, not to the officer. A transport failure surfaces from
+      // the browser as "Failed to fetch", which is what a blocked CORS preflight, a DNS
+      // failure and an unreachable host all look like from here: it tells whoever is
+      // configuring the deployment something, and tells a loan officer nothing at all. The
+      // panel says it could not reach the assistant, which is the part that is true and useful.
+      console.error('Copilot transport failed', error);
+      yield this.errorEvent('INTERNAL', undefined, false);
     } finally {
       clearTimeout(timeout);
       signal?.removeEventListener('abort', onOuterAbort);
@@ -363,7 +369,7 @@ export class McpClient {
     return codes.includes(value as McpErrorCode) ? (value as McpErrorCode) : 'INTERNAL';
   }
 
-  private errorEvent(errorCode: McpErrorCode, message: string, retryable: boolean): McpStreamEvent {
+  private errorEvent(errorCode: McpErrorCode, message: string | undefined, retryable: boolean): McpStreamEvent {
     return { type: 'error', errorCode, message, retryable };
   }
 

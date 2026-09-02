@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -24,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   templateUrl: './copilot-preferences.component.html',
-  styleUrls: ['./copilot-preferences.component.scss']
+  styleUrls: ['./copilot-preferences.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CopilotPreferencesComponent {
   /** Whether the panel opens filling the window. */

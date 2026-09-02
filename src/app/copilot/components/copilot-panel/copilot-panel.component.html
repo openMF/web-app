@@ -53,8 +53,20 @@
       (cardRoute)="onRouteClick($event)"
       (confirmPending)="confirmPendingAction()"
       (cancelPending)="cancelPendingAction()"
+      (visibleQuestionChanged)="activeQuestionId = $event"
     >
     </mifosx-chat-area>
+
+    <!-- The questions asked this session, for getting back to one. Appears at the second
+         question and hides itself on a narrow panel, where a column of its own would take
+         the space the conversation needs. -->
+    <mifosx-prompt-nav
+      *ngIf="activeTab === 'chat'"
+      [messages]="messages"
+      [activeId]="activeQuestionId"
+      (jumpTo)="jumpToQuestion($event)"
+    >
+    </mifosx-prompt-nav>
 
     <!-- Recent Chats tab -->
     <mifosx-recent-chats
@@ -185,6 +197,7 @@
       [(text)]="composerText"
       (send)="sendMessage($event)"
       (stop)="stopStreaming()"
+      (editLast)="editLastQuestion()"
     >
     </mifosx-input-bar>
 
