@@ -6108,6 +6108,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Aktuální relace",
     "newChat": "Nový chat",
@@ -6158,6 +6168,10 @@
       "aboutStorage": "Vaše konverzace zůstávají v tomto prohlížeči a nikdy se neukládají na server asistenta."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Žádné nedávné konverzace",
       "emptySubtitle": "Zde se zobrazí historie vašich chatů",
       "messages": "zpráv",
@@ -6191,6 +6205,7 @@
     "openAssistant": "Otevřít Mifos X Copilot",
     "newChatTitle": "Nová konverzace",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Zpráva je prázdná nebo příliš dlouhá. Zkraťte ji prosím a zkuste to znovu.",
       "injectionBlocked": "Zpráva vypadá jako pokus o obejití pokynů, proto nebyla odeslána. Přeformulujte ji prosím.",
       "streamFailed": "Mifos X Copilot je nedostupný. Zkuste to prosím znovu."
@@ -6262,11 +6277,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Toto jsou záznamy, které asistent přečetl. Podklad pro jakékoli rozhodnutí o tomto klientovi je ve Fineractu: pravidla úvěrového produktu, splátkový kalendář a úvěrová politika vaší instituce.",
       "thinking": "Přemýšlení",
       "notesCaution": "Vlastní pracovní text asistenta. Není to záznam o tom, jak odpověď vznikla, ani úvěrové hodnocení. Ověřte každou částku podle záznamu klienta."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Zkusit znovu",
       "groupLabel": "Akce k odpov\u011bdi",
       "copy": "Kop\u00edrovat",

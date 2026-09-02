@@ -26,7 +26,7 @@ describe('CopilotPreferencesComponent', () => {
 
     fixture = TestBed.createComponent(CopilotPreferencesComponent);
     component = fixture.componentInstance;
-    component.savedConversations = 3;
+    fixture.componentRef.setInput('savedConversations', 3);
     fixture.detectChanges();
   });
 
@@ -38,8 +38,8 @@ describe('CopilotPreferencesComponent', () => {
   });
 
   it('reports the switches as on or off for a screen reader', () => {
-    component.isFullScreen = true;
-    component.historyEnabled = false;
+    fixture.componentRef.setInput('isFullScreen', true);
+    fixture.componentRef.setInput('historyEnabled', false);
     fixture.detectChanges();
 
     const switches = fixture.nativeElement.querySelectorAll('.prefs__switch');
@@ -91,7 +91,7 @@ describe('CopilotPreferencesComponent', () => {
     });
 
     it('offers nothing to erase when nothing is saved', () => {
-      component.savedConversations = 0;
+      fixture.componentRef.setInput('savedConversations', 0);
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('.prefs__button--danger');

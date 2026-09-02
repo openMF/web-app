@@ -5818,6 +5818,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Dabartinė sesija",
     "newChat": "Naujas pokalbis",
@@ -5868,6 +5878,10 @@
       "aboutStorage": "Jūsų pokalbiai lieka šioje naršyklėje ir niekada nesaugomi asistento serveryje."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Nėra naujausių pokalbių",
       "emptySubtitle": "Jūsų pokalbių istorija bus rodoma čia",
       "messages": "žinutės",
@@ -5901,6 +5915,7 @@
     "openAssistant": "Atidaryti Mifos X Copilot",
     "newChatTitle": "Naujas pokalbis",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Žinutė tuščia arba per ilga. Sutrumpinkite ją ir bandykite dar kartą.",
       "injectionBlocked": "Žinutė atrodo kaip bandymas apeiti nurodymus, todėl nebuvo išsiųsta. Perfrazuokite ją.",
       "streamFailed": "Nepavyko pasiekti Mifos X Copilot. Bandykite dar kartą."
@@ -5972,11 +5987,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Tai įrašai, kuriuos perskaitė asistentas. Bet kokio sprendimo dėl šio kliento pagrindas yra Fineract sistemoje: paskolos produkto taisyklės, grąžinimo grafikas ir jūsų įstaigos kreditavimo politika.",
       "thinking": "Mąstymas",
       "notesCaution": "Paties asistento darbinis tekstas. Tai nėra įrašas apie tai, kaip buvo gautas atsakymas, ir tai nėra kredito vertinimas. Patikrinkite kiekvieną skaičių kliento byloje."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Bandyti dar kart\u0105",
       "groupLabel": "Atsakymo veiksmai",
       "copy": "Kopijuoti",

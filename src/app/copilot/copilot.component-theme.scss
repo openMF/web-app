@@ -179,7 +179,80 @@ $copilot-warning: #f59e0b;
 
       &__bubble .md-code {
         background: rgba(if($is-dark, #fff, #000), 0.06);
+      }
+
+      /* The border lives on the wrapper now, so the bar and the code read as one object. */
+      &__bubble .md-code-wrap {
         border: 1px solid $border;
+      }
+
+      &__bubble .md-code__bar {
+        background: rgba(if($is-dark, #fff, #000), 0.1);
+        border-bottom: 1px solid $border;
+        color: $text-3;
+      }
+
+      &__bubble .md-code__copy {
+        color: $text-2;
+
+        svg {
+          fill: currentcolor;
+        }
+
+        &:hover {
+          background: rgba(if($is-dark, #fff, #000), 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: -2px;
+        }
+      }
+
+      &__bubble .md-code__copy--done svg {
+        fill: $success-text;
+      }
+
+      &__text--streaming::after {
+        border-left: 2px solid $brand-text;
+      }
+
+      /* Syntax colour. Held to four roles: more than that in a chat bubble reads as noise,
+         and these four are what make a payload skimmable. Both sets are checked for contrast
+         against the code block's own ground, which is a tint of the bubble rather than white. */
+      &__bubble .hl-keyword {
+        color: if($is-dark, #c4a7fb, #6d28d9);
+      }
+
+      &__bubble .hl-string {
+        color: if($is-dark, #86efac, #047857);
+      }
+
+      &__bubble .hl-number {
+        color: if($is-dark, #fbbf24, #b45309);
+      }
+
+      &__bubble .hl-comment {
+        color: $text-3;
+        font-style: italic;
+      }
+
+      &__bubble .md-heading {
+        color: $text-1;
+      }
+
+      &__bubble .md-quote {
+        border-left-color: $border;
+        color: $text-2;
+      }
+
+      &__bubble .md-link {
+        color: $brand-text;
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: 2px;
+        }
       }
 
       &__bubble .md-table {
@@ -369,13 +442,80 @@ $copilot-warning: #f59e0b;
     /* How the answer was reached. Quiet enough not to compete with the answer, legible
        enough to read on a branch monitor under fluorescent light: a real muted token rather
        than opacity, which compounds unpredictably with the theme. */
+
+    .show-earlier {
+      background: $muted;
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: 2px;
+      }
+    }
+
+    /* The questions asked this session. Reads as a quiet overlay: it sits above the
+       conversation, so it needs its own ground to stay legible over text. */
+    .prompt-nav {
+      background: $surface;
+      border: 1px solid $border;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, if($is-dark, 0.4, 0.08));
+    }
+
+    .prompt-nav__toggle {
+      color: $text-2;
+
+      svg {
+        fill: currentcolor;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item {
+      color: $text-2;
+
+      .prompt-nav__rule {
+        background: $border;
+      }
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item--active {
+      color: $brand-text;
+      font-weight: 600;
+
+      .prompt-nav__rule {
+        background: $brand-text;
+      }
+    }
+
     .trail__live {
       color: $text-2;
     }
 
-    .trail__spinner {
-      border-color: $border;
-      border-top-color: $brand-text;
+    .trail__live-dot {
+      background: $brand-text;
+    }
+
+    .trail__live-time {
+      color: $text-3;
     }
 
     .trail__section {

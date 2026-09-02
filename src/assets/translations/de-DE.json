@@ -6107,6 +6107,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Aktuelle Sitzung",
     "newChat": "Neuer Chat",
@@ -6157,6 +6167,10 @@
       "aboutStorage": "Ihre Unterhaltungen bleiben in diesem Browser und werden nie auf dem Assistenzserver gespeichert."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Keine kürzlichen Unterhaltungen",
       "emptySubtitle": "Ihr Chatverlauf wird hier angezeigt",
       "messages": "Nachrichten",
@@ -6190,6 +6204,7 @@
     "openAssistant": "Mifos X Copilot öffnen",
     "newChatTitle": "Neue Unterhaltung",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Die Nachricht ist leer oder zu lang. Bitte kürzen Sie sie und versuchen Sie es erneut.",
       "injectionBlocked": "Die Nachricht sieht wie ein Versuch aus, die Anweisungen zu umgehen, und wurde daher nicht gesendet. Bitte formulieren Sie sie um.",
       "streamFailed": "Mifos X Copilot ist nicht erreichbar. Bitte versuchen Sie es erneut."
@@ -6261,11 +6276,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Dies sind die Datensätze, die der Assistent gelesen hat. Die Grundlage jeder Entscheidung zu diesem Kunden liegt in Fineract: die Regeln des Kreditprodukts, der Tilgungsplan und die Kreditrichtlinie Ihres Instituts.",
       "thinking": "Denkprozess",
       "notesCaution": "Der Arbeitstext des Assistenten. Kein Nachweis darüber, wie die Antwort entstanden ist, und keine Kreditbewertung. Prüfen Sie jede Zahl anhand der Kundenakte."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Erneut versuchen",
       "groupLabel": "Aktionen zur Antwort",
       "copy": "Kopieren",

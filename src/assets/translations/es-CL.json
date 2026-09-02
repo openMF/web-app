@@ -5819,6 +5819,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Mostrar {{count}} mensajes anteriores",
+    "a11y": {
+      "replyReady": "Respuesta lista",
+      "working": "Trabajando en su pregunta"
+    },
+    "promptNav": {
+      "label": "Preguntas de este chat",
+      "expand": "Mostrar las preguntas",
+      "collapse": "Ocultar las preguntas"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Sesión actual",
     "newChat": "Nuevo chat",
@@ -5869,6 +5879,10 @@
       "aboutStorage": "Sus conversaciones quedan en este navegador y nunca se guardan en el servidor del asistente."
     },
     "recent": {
+      "noMatchSubtitle": "Nada de lo guardado coincide con \"{{query}}\".",
+      "noMatchTitle": "No se encontraron chats",
+      "searchClear": "Borrar búsqueda",
+      "searchPlaceholder": "Buscar chats",
       "emptyTitle": "No hay conversaciones recientes",
       "emptySubtitle": "Tu historial de chat aparecerá aquí",
       "messages": "mensajes",
@@ -5902,6 +5916,7 @@
     "openAssistant": "Abrir Mifos X Copilot",
     "newChatTitle": "Nueva conversación",
     "errors": {
+      "timedOut": "El asistente tardó demasiado en responder. Inténtelo de nuevo.",
       "invalidLength": "El mensaje está vacío o es demasiado largo. Por favor acórtalo e inténtalo de nuevo.",
       "injectionBlocked": "El mensaje parece un intento de anular las instrucciones, por lo que no se envió. Por favor reformúlalo.",
       "streamFailed": "No se pudo contactar con Mifos X Copilot. Inténtalo de nuevo."
@@ -5973,11 +5988,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "modificó",
+      "thoughtFor": "Pensó durante {{seconds}}",
+      "live": {
+        "reading": "Leyendo su pregunta",
+        "thinking": "Pensando"
+      },
+      "steps": {
+        "loanDetails": "Consultando la cuenta del préstamo",
+        "clientSearch": "Buscando en el registro de clientes",
+        "clientDetails": "Consultando el perfil del cliente",
+        "repaymentSchedule": "Revisando el plan de pagos",
+        "savingsBalance": "Consultando el saldo de ahorros",
+        "loanApprove": "Aprobando el préstamo"
+      },
       "stepsNote": "Estos son los registros que consultó el asistente. La base de cualquier decisión sobre este cliente está en Fineract: las reglas del producto de crédito, el calendario de pagos y la política crediticia de su institución.",
       "thinking": "Pensamiento",
       "notesCaution": "Texto de trabajo del propio asistente. No es un registro de cómo se produjo la respuesta, ni una evaluación crediticia. Verifique cada cifra con el expediente del cliente."
     },
     "actions": {
+      "copyCode": "Copiar código",
       "tryAgain": "Intentar de nuevo",
       "groupLabel": "Acciones de la respuesta",
       "copy": "Copiar",

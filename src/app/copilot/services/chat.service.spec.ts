@@ -739,4 +739,59 @@ describe('ChatService', () => {
       expect(localStorage.getItem(keyFor('priya'))).not.toBeNull();
     });
   });
+  describe('taking back the last question', () => {
+    it('hands the question back and removes the exchange it belonged to', () => {
+      service.sendMessage('Show me the loan');
+      expect(service.messages$.value.some((message) => message.content === 'Show me the loan')).toBe(true);
+
+      const question = service.editLastQuestion();
+
+      expect(question).toBe('Show me the loan');
+      expect(service.messages$.value).toEqual([]);
+    });
+
+    /**
+     * Leaving the old exchange above the new one produces two answers to nearly the same
+     * question, which is a transcript that invites reading the wrong one.
+     */
+    it('leaves earlier exchanges alone', () => {
+      service.sendMessage('First question');
+      service.sendMessage('Second question');
+      const before = service.messages$.value.length;
+
+      const question = service.editLastQuestion();
+
+      expect(question).toBe('Second question');
+      expect(service.messages$.value.length).toBeLessThan(before);
+      expect(service.messages$.value[0].content).toBe('First question');
+      expect(service.messages$.value.some((message) => message.content === 'Second question')).toBe(false);
+    });
+
+    it('has nothing to take back in an empty conversation', () => {
+      expect(service.editLastQuestion()).toBeNull();
+    });
+
+    /** The reply being withdrawn is still arriving; stopping is a separate, visible act. */
+    it('refuses while a reply is still streaming', () => {
+      service.isStreaming$.next(true);
+      service.sendMessage('Show me the loan');
+
+      expect(service.editLastQuestion()).toBeNull();
+    });
+
+    it('drops any card that was waiting on the withdrawn question', () => {
+      service.sendMessage('Approve the loan');
+      service.pendingAction$.next({
+        cardId: 'card-1',
+        tool: 'mifos_loan_approve',
+        args: {},
+        display: [],
+        humanSummary: 'Approve'
+      });
+
+      service.editLastQuestion();
+
+      expect(service.pendingAction$.value).toBeNull();
+    });
+  });
 });

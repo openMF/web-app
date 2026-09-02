@@ -5,7 +5,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<div class="chat-body" #messageContainer>
+<div class="chat-body" #messageContainer (click)="onBodyClick($event)" (scroll)="onScroll()">
   <!-- Empty / welcome state -->
   <div *ngIf="messages.length === 0" class="welcome">
     <span class="welcome__badge">{{ greetingTime | translate }}</span>
@@ -19,16 +19,32 @@
     </mifosx-quick-chips>
   </div>
 
+  <!-- Older messages are held back rather than rendered and hidden, so a long conversation
+       does not cost DOM that is re-checked on every token of the reply at the bottom. -->
+  <button type="button" class="show-earlier" *ngIf="hiddenCount > 0" (click)="revealEarlier()">
+    {{ 'copilot.showEarlier' | translate: { count: hiddenCount } }}
+  </button>
+
   <!-- Message list -->
-  <ng-container *ngFor="let msg of messages; trackBy: trackByMessageId">
-    <div class="msg" [class.msg--user]="msg.role === 'user'" [class.msg--ai]="msg.role === 'assistant'">
+  <ng-container *ngFor="let msg of visibleMessages; trackBy: trackByMessageId">
+    <div
+      class="msg"
+      [class.msg--user]="msg.role === 'user'"
+      [class.msg--ai]="msg.role === 'assistant'"
+      [attr.data-message-id]="msg.role === 'user' ? msg.id : null"
+    >
       <div *ngIf="msg.role === 'assistant' && !(msg.isStreaming && !msg.content?.trim())" class="msg__avatar">
         <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
       </div>
       <div class="msg__content">
         <div class="msg__bubble" *ngIf="msg.content?.trim() || msg.role === 'user'">
           <span *ngIf="msg.role === 'user'">{{ msg.content }}</span>
-          <span *ngIf="msg.role === 'assistant'" [innerHTML]="msg.content | markdown"></span>
+          <span
+            *ngIf="msg.role === 'assistant'"
+            class="msg__text"
+            [class.msg__text--streaming]="msg.isStreaming"
+            [innerHTML]="msg.content | markdown: !!msg.isStreaming"
+          ></span>
         </div>
         <span class="msg__time">{{ relativeTime(msg.timestamp) }}</span>
 
@@ -62,7 +78,15 @@
 
         <!-- How the answer was reached, below it rather than above: a preamble frames an
              answer before it is read, and this is meant to be scrutiny, not framing. -->
-        <mifosx-thinking-trail *ngIf="msg.role === 'assistant'" [message]="msg" [isStreaming]="!!msg.isStreaming">
+        <mifosx-thinking-trail
+          *ngIf="msg.role === 'assistant'"
+          [messageId]="msg.id"
+          [steps]="msg.steps"
+          [workingNotes]="msg.workingNotes"
+          [turnMs]="msg.turnMs"
+          [notesElapsedMs]="msg.notesElapsedMs"
+          [isStreaming]="!!msg.isStreaming"
+        >
         </mifosx-thinking-trail>
 
         <!-- What can be done with a finished reply: take it, ask again, rate it.
@@ -113,6 +137,14 @@
       </div>
     </div>
   </div>
+
+  <!-- What a screen reader is told about the reply.
+       Announcing the answer as it streams would read it a word at a time and repeat every
+       partial sentence, so only the state is announced live; the finished answer is read from
+       the bubble itself, which is ordinary document text. -->
+  <p class="sr-only" role="status" aria-live="polite">
+    {{ (isStreaming ? 'copilot.a11y.working' : lastReplyDone ? 'copilot.a11y.replyReady' : '') | translate }}
+  </p>
 
   <!-- Typing indicator, only until the reply starts arriving. Once there are words on screen
        the message is its own progress, and a second avatar with dots underneath reads as a

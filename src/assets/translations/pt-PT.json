@@ -5817,6 +5817,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Sessão atual",
     "newChat": "Nova conversa",
@@ -5867,6 +5877,10 @@
       "aboutStorage": "As suas conversas ficam neste navegador e nunca são guardadas no servidor do assistente."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Sem conversas recentes",
       "emptySubtitle": "O seu histórico de conversas aparecerá aqui",
       "messages": "mensagens",
@@ -5900,6 +5914,7 @@
     "openAssistant": "Abrir o Mifos X Copilot",
     "newChatTitle": "Nova conversa",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "A mensagem está vazia ou é demasiado longa. Por favor, encurte-a e tente novamente.",
       "injectionBlocked": "A mensagem parece uma tentativa de contornar as instruções, por isso não foi enviada. Por favor, reformule-a.",
       "streamFailed": "Não foi possível contactar o Mifos X Copilot. Tente novamente."
@@ -5971,11 +5986,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Estes são os registos que o assistente consultou. A base de qualquer decisão sobre este cliente está no Fineract: as regras do produto de crédito, o plano de reembolso e a política de crédito da sua instituição.",
       "thinking": "Pensamento",
       "notesCaution": "Texto de trabalho do próprio assistente. Não é um registo de como a resposta foi produzida, nem uma avaliação de crédito. Verifique cada valor no processo do cliente."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Tentar novamente",
       "groupLabel": "A\u00e7\u00f5es da resposta",
       "copy": "Copiar",
