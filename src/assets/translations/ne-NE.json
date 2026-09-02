@@ -4015,6 +4015,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "उत्पादनको पूर्वावलोकन गर्न यी चरणहरू पूरा गर्नुहोस्",
+      "Complete these steps before creating the product": "उत्पादन सिर्जना गर्नु अघि यी चरणहरू पूरा गर्नुहोस्",
+      "Check the highlighted fields before creating the product": "उत्पादन सिर्जना गर्नु अघि हाइलाइट गरिएका फिल्डहरू जाँच गर्नुहोस्",
       "Agriculture Loan": "कृषि ऋण",
       "Auto Loan": "सवारी साधन ऋण",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "नयाँ वा प्रयोग भएका कार खरिदका लागि वित्तपोषण, छनोट गरिएको अवधिभर नियमित मासिक किस्तासहित।",

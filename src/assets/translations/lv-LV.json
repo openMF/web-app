@@ -4015,6 +4015,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "Izpildiet šīs darbības, lai priekšskatītu produktu",
+      "Complete these steps before creating the product": "Izpildiet šīs darbības pirms produkta izveides",
+      "Check the highlighted fields before creating the product": "Pārbaudiet iezīmētos laukus pirms produkta izveides",
       "Agriculture Loan": "Lauksaimniecības aizdevums",
       "Auto Loan": "Auto aizdevums",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finansējums jaunu vai lietotu automobiļu iegādei ar fiksētiem ikmēneša maksājumiem izvēlētajā termiņā.",
