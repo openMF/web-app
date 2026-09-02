@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 /** rxjs Imports */
 import { BehaviorSubject, Observable, of, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -21,6 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Interceptors */
 import { AuthenticationInterceptor } from './authentication.interceptor';
+import { SessionSyncService } from './session-sync.service';
 
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
@@ -40,6 +43,9 @@ export class AuthenticationService {
   private authenticationInterceptor = inject(AuthenticationInterceptor);
   private oauthService = inject(OAuthService);
   private translateService = inject(TranslateService);
+  private sessionSyncService = inject(SessionSyncService);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /**
    * Updates the password for the specified user.
@@ -64,7 +70,7 @@ export class AuthenticationService {
    *
    * Local Storage: User credentials should persist through sessions.
    */
-  private storage: Storage = sessionStorage;
+  private storage: Storage = localStorage;
   private credentials: Credentials;
   private dialogShown = false;
   private authMode: AuthMode = AuthMode.Basic;
@@ -93,15 +99,37 @@ export class AuthenticationService {
     }
 
     this.restoreSession();
+    this.subscribeToCrossTabEvents();
   }
 
   /**
    * Configures the OAuth service with runtime settings and hooks up token listeners.
    */
   private initializeOAuthService(): void {
+    const sessionKeys = [
+      'nonce',
+      'PKCE_verifier',
+      'state'
+    ];
     this.oauthService.configure(getOAuthConfig());
-    const oauthStorage = environment.enableRememberMe ? localStorage : sessionStorage;
-    this.oauthService.setStorage(oauthStorage);
+    this.oauthService.setStorage({
+      getItem: (key: string) =>
+        sessionKeys.some((k) => key.includes(k)) ? sessionStorage.getItem(key) : localStorage.getItem(key),
+      setItem: (key: string, value: string) => {
+        if (sessionKeys.some((k) => key.includes(k))) {
+          sessionStorage.setItem(key, value);
+        } else {
+          localStorage.setItem(key, value);
+        }
+      },
+      removeItem: (key: string) => {
+        if (sessionKeys.some((k) => key.includes(k))) {
+          sessionStorage.removeItem(key);
+        } else {
+          localStorage.removeItem(key);
+        }
+      }
+    });
 
     // Load the OIDC discovery document so the library knows the authorization/token endpoints.
     // This must complete before initCodeFlow() or tryLoginCodeFlow() can work.
@@ -128,15 +156,12 @@ export class AuthenticationService {
   /**
    * Restores persisted credentials/tokens from storage and rehydrates the session state.
    */
-  private restoreSession(): void {
-    const savedCredentials = this.getSavedCredentials();
+  private restoreSession(sourceStorage?: Storage): void {
+    const savedCredentials = this.getSavedCredentials(sourceStorage);
     if (!savedCredentials) return;
 
-    if (savedCredentials.rememberMe) {
-      this.rememberMe = true;
-      this.storage = localStorage;
-      this.oauthService.setStorage(this.storage);
-    }
+    this.rememberMe = !!savedCredentials.rememberMe;
+    this.storage = this.authMode !== AuthMode.Basic || this.rememberMe ? localStorage : sessionStorage;
 
     if (this.authMode !== AuthMode.Basic) {
       // OAuth2/OIDC: Wait for discovery document before attempting token refresh
@@ -144,6 +169,7 @@ export class AuthenticationService {
         if (!loaded) return;
         if (this.oauthService.hasValidAccessToken()) {
           this.authenticationInterceptor.setAuthorizationToken(this.oauthService.getAccessToken());
+          this.oauthService.setupAutomaticSilentRefresh();
           this.userLoggedIn$.next(true);
         } else if (this.oauthService.getRefreshToken()) {
           this.oauthService
@@ -165,6 +191,34 @@ export class AuthenticationService {
     }
   }
 
+  /** Reacts to login/logout/token-refresh events from other tabs. */
+  private subscribeToCrossTabEvents(): void {
+    this.sessionSyncService.onCrossTabLogin$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((sourceStorage) => {
+      this.restoreSession(sourceStorage);
+      if (this.router.url.startsWith('/login')) {
+        const returnUrl = this.router.parseUrl(this.router.url).queryParams['returnUrl'] || '/';
+        this.router.navigateByUrl(returnUrl, { replaceUrl: true });
+      }
+    });
+
+    this.sessionSyncService.onCrossTabLogout$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.authenticationInterceptor.removeAuthorization();
+      this.authenticationInterceptor.removeTwoFactorAuthorization();
+      this.setCredentials(undefined, false);
+      if (this.authMode !== AuthMode.Basic) {
+        this.oauthService.logOut(true);
+      }
+      this.userLoggedIn$.next(false);
+      this.router.navigate(['/login'], { replaceUrl: true, queryParams: { returnUrl: this.router.url } });
+    });
+
+    this.sessionSyncService.onCrossTabTokenRefresh$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((sourceStorage) => {
+        this.restoreSession(sourceStorage);
+      });
+  }
+
   /**
    * Persists the latest OAuth access token in both the interceptor and stored credentials.
    */
@@ -177,7 +231,15 @@ export class AuthenticationService {
     const credentials = this.getCredentials();
     if (credentials) {
       credentials.accessToken = accessToken;
-      this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+      const payload = JSON.stringify(credentials);
+      this.storage.setItem(this.credentialsStorageKey, payload);
+
+      if (this.storage === sessionStorage) {
+        this.sessionSyncService.broadcastSessionStorageChange('REFRESH', {
+          creds: payload,
+          twoFactor: this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey)
+        });
+      }
     }
   }
 
@@ -185,7 +247,11 @@ export class AuthenticationService {
    * Reads the cached credentials from session or local storage, if present.
    * @returns {Credentials | null} Stored credentials or null when absent.
    */
-  private getSavedCredentials(): Credentials | null {
+  private getSavedCredentials(sourceStorage?: Storage): Credentials | null {
+    if (sourceStorage) {
+      const stored = sourceStorage.getItem(this.credentialsStorageKey);
+      return stored ? JSON.parse(stored) : null;
+    }
     const stored =
       sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey);
     return stored ? JSON.parse(stored) : null;
@@ -358,9 +424,10 @@ export class AuthenticationService {
 
   /**
    * Logs out the authenticated user and clears the credentials from storage.
+   * @param {string} returnUrl Optional deep link to preserve after login.
    * @returns {Observable<boolean>} True if the user was logged out successfully.
    */
-  logout(): Observable<boolean> {
+  logout(returnUrl?: string): Observable<boolean> {
     const twoFactorToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
     if (twoFactorToken) {
       this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe();
@@ -377,6 +444,10 @@ export class AuthenticationService {
 
     if (this.authMode === AuthMode.OIDC) {
       // OIDC: Use library to handle logout (redirects to OIDC provider)
+      const baseRedirectUrl = `${window.location.origin}/#/login`;
+      this.oauthService.postLogoutRedirectUri = returnUrl
+        ? `${baseRedirectUrl}?returnUrl=${encodeURIComponent(returnUrl)}`
+        : baseRedirectUrl;
       this.oauthService.logOut();
     } else if (this.authMode === AuthMode.OAuth2) {
       // OAuth2 (Fineract): Clear library tokens and server session
@@ -388,7 +459,11 @@ export class AuthenticationService {
         if (logoutWindow) {
           logoutWindow.close();
         }
-        window.location.href = `${window.location.origin}/#/login`;
+        let targetUrl = `${window.location.origin}/#/login`;
+        if (returnUrl) {
+          targetUrl += `?returnUrl=${encodeURIComponent(returnUrl)}`;
+        }
+        window.location.href = targetUrl;
       }, 500);
     }
     return of(true);
@@ -432,14 +507,25 @@ export class AuthenticationService {
    * Otherwise, the credentials are only persisted for the current session.
    *
    * @param {Credentials} credentials Authenticated user credentials.
+   * @param {boolean} broadcast Whether to broadcast storage changes to other tabs.
    */
-  private setCredentials(credentials?: Credentials): void {
+  private setCredentials(credentials?: Credentials, broadcast = true): void {
     if (credentials) {
       credentials.rememberMe = this.rememberMe;
-      // Make sure we're using the correct storage based on rememberMe value
-      this.storage = credentials.rememberMe ? localStorage : sessionStorage;
-      this.oauthService.setStorage(this.storage);
-      this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+      if (this.authMode !== AuthMode.Basic) {
+        this.storage = localStorage;
+      } else {
+        this.storage = this.rememberMe ? localStorage : sessionStorage;
+      }
+      const payload = JSON.stringify(credentials);
+      this.storage.setItem(this.credentialsStorageKey, payload);
+
+      if (broadcast && this.storage === sessionStorage) {
+        this.sessionSyncService.broadcastSessionStorageChange('LOGIN', {
+          creds: payload,
+          twoFactor: this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey)
+        });
+      }
     } else {
       // Clear credentials from both storage types to ensure complete logout
       [
@@ -450,6 +536,10 @@ export class AuthenticationService {
         store.removeItem(this.twoFactorAuthenticationTokenStorageKey);
       });
       this.cleanupLegacyStorage();
+
+      if (broadcast && this.storage === sessionStorage) {
+        this.sessionSyncService.broadcastSessionStorageChange('LOGOUT');
+      }
     }
   }
 
@@ -533,13 +623,13 @@ export class AuthenticationService {
         message: this.translateService.instant('errors.auth.passwordExpired.message')
       });
     } else {
+      this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
       this.setCredentials(this.credentials);
       this.alertService.alert({
         type: this.translateService.instant('errors.auth.success.type'),
         message: this.translateService.instant('errors.auth.success.message', { username: this.credentials.username })
       });
       delete this.credentials;
-      this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
     }
   }
 
