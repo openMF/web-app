@@ -4015,6 +4015,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "제품을 미리 보려면 이 단계를 완료하세요",
+      "Complete these steps before creating the product": "제품을 만들기 전에 이 단계를 완료하세요",
+      "Check the highlighted fields before creating the product": "제품을 만들기 전에 강조 표시된 필드를 확인하세요",
       "Agriculture Loan": "농업 대출",
       "Auto Loan": "자동차 대출",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "신차 또는 중고차 구매를 위한 금융으로, 선택한 기간 동안 매월 일정한 할부금을 상환합니다.",

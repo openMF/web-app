@@ -300,6 +300,47 @@ mat-checkbox {
   font-size: 0.875rem;
 }
 
+// Guided mode's answer to a blocked "Create Loan Product" click: the steps that still hold something
+// invalid, each a button that jumps to it. Deliberately error-toned rather than the dashed neutral of
+// `.review-pending` below — that block explains a summary that is merely not ready yet, this one
+// explains a button the operator just pressed and that refused.
+.submit-blocked {
+  padding: var(--lp-space-16) var(--lp-space-24);
+  margin-bottom: var(--lp-space-16);
+  border: 1px solid var(--mat-sys-error, #b3261e);
+  border-radius: var(--lp-radius);
+
+  &__title {
+    margin: 0 0 var(--lp-space-8);
+    font-weight: 600;
+    color: var(--mat-sys-error, #b3261e);
+  }
+
+  &__steps {
+    margin: 0;
+    padding-left: var(--lp-space-24);
+    color: var(--lp-text);
+  }
+
+  // A link in a list, not a control in a toolbar: it names a step and takes you there. Underlined
+  // rather than coloured alone, so it does not rely on colour to read as actionable.
+  &__step {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__generic {
+    margin: 0;
+    color: var(--lp-text);
+  }
+}
+
 // Shown on the Review step while the hosted Classic steps are still incomplete, in place of the
 // product summary (which cannot render a partial product).
 .review-pending {

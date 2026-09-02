@@ -219,4 +219,120 @@ describe('LoanProductWizardComponent (rendered)', () => {
     expect(control.errors).toBeNull();
     expect(fieldByLabel('labels.inputs.Annual interest rate').querySelectorAll('mat-error').length).toBe(0);
   });
+
+  /**
+   * C4: "Create Loan Product" used to be a silent dead button — the guided branch of `submit()` called
+   * `markAllAsTouched()` and returned, with no message, no stepper move and no disabled state. Since
+   * the stepper is `[linear]="false"`, the operator reaches Review with an earlier step incomplete and
+   * the offending control is usually not on screen, so the field-level messages that pass revealed
+   * were invisible to them. These tests are DOM-level on purpose: the defect was that nothing
+   * RENDERED, which the `new LoanProductWizardComponent()` specs in the sibling file cannot see.
+   */
+  describe('blocked submit on the guided Review step', () => {
+    function createButton(): HTMLButtonElement {
+      return Array.from(
+        fixture.nativeElement.querySelectorAll('.step-actions button') as NodeListOf<HTMLButtonElement>
+      ).find((button) => button.textContent?.trim() === 'labels.buttons.Create Loan Product')!;
+    }
+
+    function summary(): HTMLElement | null {
+      return fixture.nativeElement.querySelector('.submit-blocked');
+    }
+
+    function listedSteps(): string[] {
+      return Array.from(fixture.nativeElement.querySelectorAll('.submit-blocked__step') as NodeListOf<HTMLElement>).map(
+        (step) => step.textContent!.trim()
+      );
+    }
+
+    function clickCreate(): void {
+      createButton().click();
+      detect();
+    }
+
+    it('says nothing until the operator actually presses Create', () => {
+      // The form is invalid from the first render (`name` is required and empty). A wizard that opens
+      // by listing every step the operator has not reached yet is noise, not feedback.
+      expect(component.guidedSubmitBlocked).toBe(true);
+      expect(summary()).toBeNull();
+    });
+
+    it('names the steps that block the create instead of doing nothing', () => {
+      clickCreate();
+
+      expect(summary()).not.toBeNull();
+      // Details owns the required, empty `name`, so it must be named. The wording of the whole list is
+      // not pinned here — which other steps start incomplete is a property of the profile config.
+      expect(listedSteps()).toContain('Details');
+    });
+
+    it('announces the summary to a screen reader', () => {
+      // The accessibility face of C4: `markAllAsTouched()` reveals messages silently, so a
+      // screen-reader user got no signal at all that the click had been rejected.
+      clickCreate();
+
+      expect(summary()!.getAttribute('role')).toBe('alert');
+    });
+
+    it('does not attempt the create while blocked', () => {
+      const productsService = TestBed.inject(ProductsService);
+      clickCreate();
+
+      expect(productsService.createLoanProduct).not.toHaveBeenCalled();
+    });
+
+    it('jumps the stepper to a step named in the summary', () => {
+      clickCreate();
+
+      const details = component.incompleteGuidedSteps.find((step) => step.title === 'Details')!;
+      const detailsButton = Array.from(
+        fixture.nativeElement.querySelectorAll('.submit-blocked__step') as NodeListOf<HTMLButtonElement>
+      ).find((button) => button.textContent!.trim() === 'Details')!;
+
+      detailsButton.click();
+      detect();
+
+      expect(component.stepper!.selectedIndex).toBe(details.index);
+    });
+
+    it('keeps the step buttons across change detection so focus survives', () => {
+      // `incompleteGuidedSteps` is a getter returning fresh objects, so without a trackBy Angular's
+      // identity diffing rebuilds every button on each pass — and a button replaced under the
+      // operator's focus is the same class of defect as the dead button this whole block fixes.
+      clickCreate();
+      const before = fixture.nativeElement.querySelector('.submit-blocked__step') as HTMLButtonElement;
+      before.focus();
+
+      detect();
+      detect();
+
+      const after = fixture.nativeElement.querySelector('.submit-blocked__step') as HTMLButtonElement;
+      expect(after).toBe(before);
+      expect(document.activeElement).toBe(before);
+    });
+
+    it('drops a step from the list once its fields are filled', () => {
+      clickCreate();
+      expect(listedSteps()).toContain('Details');
+
+      // Every visible Details control that is currently invalid — the step is only listed because one
+      // of its own fields is, so satisfying them all must remove it and leave the rest of the list.
+      // Details is all text/date/checkbox, and its two required controls are `name` and `shortName`;
+      // the filler is kept inside `shortName`'s 4-character limit so it satisfies rather than trades
+      // one error for another.
+      const detailsStep = component.visibleSteps.find((step) => step.title === 'Details')!;
+      component.visibleFields(detailsStep).forEach((field) => {
+        const control = component.form.get(field.key)!;
+        if (control.invalid) {
+          control.setValue('ABCD');
+        }
+      });
+      detect();
+
+      expect(component.visibleFields(detailsStep).every((field) => component.form.get(field.key)!.valid)).toBe(true);
+
+      expect(listedSteps()).not.toContain('Details');
+      expect(summary()).not.toBeNull();
+    });
+  });
 });
