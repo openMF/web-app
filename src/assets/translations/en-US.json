@@ -838,7 +838,8 @@
       "Disable Breach": "Disable Breach",
       "Enable Breach": "Enable Breach",
       "Save Changes": "Save Changes",
-      "Save": "Save"
+      "Save": "Save",
+      "Upload Report Design": "Upload Report Design"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1812,7 +1813,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Personal References (2 Family Members, 1 Acquaintance)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaration of Ultimate Beneficial Owners - Legal Entities",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaration of Ultimate Beneficial Owners - Natural Persons",
-      "Recovery": "Recovery"
+      "Recovery": "Recovery",
+      "Upload Report Design": "Upload Report Design"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -5122,7 +5124,14 @@
       "the": "the",
       "items selected of": "items selected of",
       "Recovery Completed": "Recovery completed",
-      "Recovery Payment Description": "Records money collected after the write-off. The loan stays closed and its balance stays at zero; only the recovered total changes."
+      "Recovery Payment Description": "Records money collected after the write-off. The loan stays closed and its balance stays at zero; only the recovered total changes.",
+      "Upload a BIRT report design": "Select an Eclipse BIRT report design (.rptdesign) to install for this tenant. A design with the same name is replaced.",
+      "Only Eclipse BIRT report designs can be uploaded": "Only Eclipse BIRT report designs (.rptdesign) can be uploaded.",
+      "The selected report design is empty": "The selected report design is empty.",
+      "The selected report design is too large": "The selected report design is larger than 5 MB.",
+      "Report design uploaded": "Report design {{fileName}} was uploaded.",
+      "Report design replaced": "Report design {{fileName}} was replaced.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

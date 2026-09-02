@@ -832,7 +832,8 @@
       "Delink Client": "Dissocier le client",
       "Disable Breach": "Désactiver le Manquement",
       "Enable Breach": "Activer le Manquement",
-      "Save": "Enregistrer"
+      "Save": "Enregistrer",
+      "Upload Report Design": "Télécharger un modèle de rapport"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1801,7 +1802,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Références personnelles (2 membres de la famille, 1 connaissance)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Déclaration des bénéficiaires effectifs ultimes - personnes morales",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Déclaration des bénéficiaires effectifs ultimes - personnes physiques",
-      "Recovery": "Recouvrement"
+      "Recovery": "Recouvrement",
+      "Upload Report Design": "Télécharger un modèle de rapport"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Le compte ne sort du statut NPA qu'après apurement des arriérés",
@@ -4986,7 +4988,14 @@
       "the": "les",
       "items selected of": "éléments sélectionnés de",
       "Recovery Completed": "Recouvrement terminé",
-      "Recovery Payment Description": "Enregistre l'argent encaissé après le passage en perte. Le prêt reste clôturé et son solde reste à zéro ; seul le total recouvré change."
+      "Recovery Payment Description": "Enregistre l'argent encaissé après le passage en perte. Le prêt reste clôturé et son solde reste à zéro ; seul le total recouvré change.",
+      "Upload a BIRT report design": "Sélectionnez un modèle de rapport Eclipse BIRT (.rptdesign) à installer pour ce locataire. Un modèle portant le même nom sera remplacé.",
+      "Only Eclipse BIRT report designs can be uploaded": "Seuls les modèles de rapport Eclipse BIRT (.rptdesign) peuvent être téléchargés.",
+      "The selected report design is empty": "Le modèle de rapport sélectionné est vide.",
+      "The selected report design is too large": "Le modèle de rapport sélectionné dépasse 5 MB.",
+      "Report design uploaded": "Le modèle de rapport {{fileName}} a été téléchargé.",
+      "Report design replaced": "Le modèle de rapport {{fileName}} a été remplacé.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

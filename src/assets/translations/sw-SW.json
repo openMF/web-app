@@ -832,7 +832,8 @@
       "Delink Client": "Tenganisha mteja",
       "Disable Breach": "Zima Ukiukaji",
       "Enable Breach": "Washa Ukiukaji",
-      "Save": "Hifadhi"
+      "Save": "Hifadhi",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1795,7 +1796,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Marejeleo binafsi (wanafamilia 2, mtu 1 anayefahamiana nawe)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Tamko la wamiliki wanufaika wa mwisho - taasisi za kisheria",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi",
-      "Recovery": "Urejeshaji"
+      "Recovery": "Urejeshaji",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -4980,7 +4982,14 @@
       "the": "vipengee",
       "items selected of": "vilivyochaguliwa vya",
       "Recovery Completed": "Urejeshaji umekamilika",
-      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee."
+      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee.",
+      "Upload a BIRT report design": "Chagua muundo wa ripoti wa Eclipse BIRT (.rptdesign) wa kusakinisha kwa mpangaji huyu. Muundo wenye jina lilelile utabadilishwa.",
+      "Only Eclipse BIRT report designs can be uploaded": "Ni miundo ya ripoti ya Eclipse BIRT (.rptdesign) pekee inayoweza kupakiwa.",
+      "The selected report design is empty": "Muundo wa ripoti uliochaguliwa hauna maudhui.",
+      "The selected report design is too large": "Muundo wa ripoti uliochaguliwa unazidi 5 MB.",
+      "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
+      "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

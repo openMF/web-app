@@ -832,7 +832,8 @@
       "Delink Client": "고객 연결 해제",
       "Disable Breach": "위반 비활성화",
       "Enable Breach": "위반 활성화",
-      "Save": "저장"
+      "Save": "저장",
+      "Upload Report Design": "보고서 디자인 업로드"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1799,7 +1800,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "개인 참고인(가족 2명, 지인 1명)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "최종 실소유자 선언 - 법인",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "최종 실소유자 선언 - 자연인",
-      "Recovery": "회수"
+      "Recovery": "회수",
+      "Upload Report Design": "보고서 디자인 업로드"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -4983,7 +4985,14 @@
       "the": "선택된",
       "items selected of": "개 항목:",
       "Recovery Completed": "회수 완료",
-      "Recovery Payment Description": "상각 이후 수령한 금액을 기록합니다. 대출은 마감 상태로 유지되고 잔액도 0으로 유지되며, 총 회수액만 변경됩니다."
+      "Recovery Payment Description": "상각 이후 수령한 금액을 기록합니다. 대출은 마감 상태로 유지되고 잔액도 0으로 유지되며, 총 회수액만 변경됩니다.",
+      "Upload a BIRT report design": "이 임차인에 설치할 Eclipse BIRT 보고서 디자인(.rptdesign)을 선택하세요. 이름이 같은 디자인은 대체됩니다.",
+      "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT 보고서 디자인(.rptdesign)만 업로드할 수 있습니다.",
+      "The selected report design is empty": "선택한 보고서 디자인이 비어 있습니다.",
+      "The selected report design is too large": "선택한 보고서 디자인이 5 MB를 초과합니다.",
+      "Report design uploaded": "보고서 디자인 {{fileName}}이(가) 업로드되었습니다.",
+      "Report design replaced": "보고서 디자인 {{fileName}}이(가) 대체되었습니다.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

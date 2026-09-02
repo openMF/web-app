@@ -832,7 +832,8 @@
       "Delink Client": "ग्राहक विच्छेद गर्नुहोस्",
       "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
-      "Save": "सुरक्षित गर्नुहोस्"
+      "Save": "सुरक्षित गर्नुहोस्",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1797,7 +1798,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "व्यक्तिगत सन्दर्भहरू (२ परिवारका सदस्य, १ परिचित)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "अन्तिम लाभग्राही मालिकहरूको घोषणा - कानुनी संस्थाहरू",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू",
-      "Recovery": "असुली"
+      "Recovery": "असुली",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -4983,7 +4985,14 @@
       "the": "चयन गरिएका",
       "items selected of": "वस्तुहरू",
       "Recovery Completed": "असुली पूरा भयो",
-      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।"
+      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।",
+      "Upload a BIRT report design": "यस किरायेदारका लागि स्थापना गर्न Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) छान्नुहोस्। उही नाम भएको डिजाइन प्रतिस्थापन हुनेछ।",
+      "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) मात्र अपलोड गर्न सकिन्छ।",
+      "The selected report design is empty": "छानिएको रिपोर्ट डिजाइन खाली छ।",
+      "The selected report design is too large": "छानिएको रिपोर्ट डिजाइन 5 MB भन्दा ठूलो छ।",
+      "Report design uploaded": "रिपोर्ट डिजाइन {{fileName}} अपलोड गरियो।",
+      "Report design replaced": "रिपोर्ट डिजाइन {{fileName}} प्रतिस्थापन गरियो।",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

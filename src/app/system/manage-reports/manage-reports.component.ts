@@ -35,12 +35,17 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
+import { TranslateService } from '@ngx-translate/core';
+
 /* Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import { SystemService } from '../system.service';
+import { AlertService } from '../../core/alert/alert.service';
 
 /** Custom Dialog Component */
 import { CompletionDialogComponent } from '../../configuration-wizard/completion-dialog/completion-dialog.component';
+import { UploadReportFileDialogComponent } from './upload-report-file-dialog/upload-report-file-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -78,6 +83,9 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private dialog = inject(MatDialog);
+  private systemService = inject(SystemService);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
 
   /** Reports Data. */
   reportsData: any;
@@ -139,6 +147,31 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  /**
+   * Installs an Eclipse BIRT report design on the server.
+   *
+   * Only the success case is announced here. Every failure the server returns already reaches the
+   * user through the global error interceptor, with the server's own message, so reporting it again
+   * would show the same problem twice.
+   */
+  uploadReportDesign(): void {
+    const dialogRef = this.dialog.open(UploadReportFileDialogComponent, { width: '33rem' });
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (!response?.file) {
+        return;
+      }
+      this.systemService.uploadBirtReportFile(response.file).subscribe((result: any) => {
+        this.alertService.alert({
+          type: 'Report Design Uploaded',
+          message: this.translateService.instant(
+            result?.overwritten ? 'labels.text.Report design replaced' : 'labels.text.Report design uploaded',
+            { fileName: result?.fileName ?? response.file.name }
+          )
+        });
+      });
+    });
   }
 
   /**

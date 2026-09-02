@@ -832,7 +832,8 @@
       "Delink Client": "Scollega cliente",
       "Disable Breach": "Disabilita Violazione",
       "Enable Breach": "Abilita Violazione",
-      "Save": "Salva"
+      "Save": "Salva",
+      "Upload Report Design": "Carica modello di rapporto"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1798,7 +1799,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Referenze personali (2 familiari, 1 conoscente)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Dichiarazione dei titolari effettivi ultimi - persone giuridiche",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Dichiarazione dei titolari effettivi ultimi - persone fisiche",
-      "Recovery": "Recupero"
+      "Recovery": "Recupero",
+      "Upload Report Design": "Carica modello di rapporto"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Il conto esce da NPA solo dopo il saldo di tutti gli arretrati",
@@ -4984,7 +4986,14 @@
       "the": "gli",
       "items selected of": "elementi selezionati di",
       "Recovery Completed": "Recupero completato",
-      "Recovery Payment Description": "Registra il denaro incassato dopo lo stralcio. Il prestito resta chiuso e il saldo resta a zero; cambiano sia il totale recuperato sia l'importo ancora da recuperare."
+      "Recovery Payment Description": "Registra il denaro incassato dopo lo stralcio. Il prestito resta chiuso e il saldo resta a zero; cambiano sia il totale recuperato sia l'importo ancora da recuperare.",
+      "Upload a BIRT report design": "Seleziona un modello di rapporto Eclipse BIRT (.rptdesign) da installare per questo inquilino. Un modello con lo stesso nome verrà sostituito.",
+      "Only Eclipse BIRT report designs can be uploaded": "È possibile caricare solo modelli di rapporto Eclipse BIRT (.rptdesign).",
+      "The selected report design is empty": "Il modello di rapporto selezionato è vuoto.",
+      "The selected report design is too large": "Il modello di rapporto selezionato supera i 5 MB.",
+      "Report design uploaded": "Il modello di rapporto {{fileName}} è stato caricato.",
+      "Report design replaced": "Il modello di rapporto {{fileName}} è stato sostituito.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
