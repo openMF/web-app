@@ -1,0 +1,83 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="onboarding-board">
+  <mat-card-content>
+    <div class="board-header">
+      <h2>{{ 'labels.heading.Onboarding Board' | translate }}</h2>
+      @if (!loading && !loadError && tasks.length > 0) {
+        <mat-form-field class="search-field">
+          <mat-label>{{ 'labels.text.Filter by name' | translate }}</mat-label>
+          <input matInput [formControl]="searchControl" />
+        </mat-form-field>
+      }
+    </div>
+
+    @if (loading) {
+      <div class="state" role="status">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>{{ 'labels.text.Loading data' | translate }}</p>
+      </div>
+    } @else if (loadError) {
+      <div class="state" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ 'labels.text.Failed to load' | translate }}</p>
+        <button mat-stroked-button color="primary" (click)="loadTasks()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </div>
+    } @else if (tasks.length === 0) {
+      <div class="state">
+        <mat-icon>task_alt</mat-icon>
+        <p>{{ 'labels.text.No data found' | translate }}</p>
+      </div>
+    } @else if (filteredTasks.length === 0) {
+      <div class="state">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ 'labels.inputs.No records match the selected filter' | translate }}</p>
+      </div>
+    } @else {
+      <div class="table-container">
+        <table mat-table [dataSource]="filteredTasks">
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Task' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              {{ task.typeLabel | translate }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="customer">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+            <td mat-cell *matCellDef="let task">{{ task.customer }}</td>
+          </ng-container>
+          <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
+            <td mat-cell *matCellDef="let task">{{ task.reference }}</td>
+          </ng-container>
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
+            <td mat-cell *matCellDef="let task">{{ task.office }}</td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let task">{{ task.status }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              <a mat-button color="primary" [routerLink]="task.route">
+                {{ 'labels.buttons.View' | translate }}
+              </a>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
