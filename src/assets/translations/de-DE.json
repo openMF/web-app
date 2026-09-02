@@ -834,7 +834,8 @@
       "Delink Client": "Kunde trennen",
       "Disable Breach": "Verstoß deaktivieren",
       "Enable Breach": "Verstoß aktivieren",
-      "Save": "Speichern"
+      "Save": "Speichern",
+      "Upload Report Design": "Berichtsdesign hochladen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1801,7 +1802,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Persönliche Referenzen (2 Familienmitglieder, 1 Bekannter)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Erklärung der wirtschaftlich Berechtigten - juristische Personen",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Erklärung der wirtschaftlich Berechtigten - natürliche Personen",
-      "Recovery": "Einbringung"
+      "Recovery": "Einbringung",
+      "Upload Report Design": "Berichtsdesign hochladen"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -4989,7 +4991,14 @@
       "the": "die",
       "items selected of": "ausgewählten Elemente von",
       "Recovery Completed": "Einbringung abgeschlossen",
-      "Recovery Payment Description": "Erfasst Geld, das nach der Abschreibung eingegangen ist. Das Darlehen bleibt geschlossen und der Saldo bleibt bei null; nur der Gesamtbetrag der Einbringung ändert sich."
+      "Recovery Payment Description": "Erfasst Geld, das nach der Abschreibung eingegangen ist. Das Darlehen bleibt geschlossen und der Saldo bleibt bei null; nur der Gesamtbetrag der Einbringung ändert sich.",
+      "Upload a BIRT report design": "Wählen Sie ein Eclipse-BIRT-Berichtsdesign (.rptdesign) aus, das für diesen Mandanten installiert werden soll. Ein Design mit demselben Namen wird ersetzt.",
+      "Only Eclipse BIRT report designs can be uploaded": "Es können nur Eclipse-BIRT-Berichtsdesigns (.rptdesign) hochgeladen werden.",
+      "The selected report design is empty": "Das ausgewählte Berichtsdesign ist leer.",
+      "The selected report design is too large": "Das ausgewählte Berichtsdesign ist größer als 5 MB.",
+      "Report design uploaded": "Berichtsdesign {{fileName}} wurde hochgeladen.",
+      "Report design replaced": "Berichtsdesign {{fileName}} wurde ersetzt.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
