@@ -832,7 +832,8 @@
       "Delink Client": "ग्राहक विच्छेद गर्नुहोस्",
       "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
-      "Save": "सुरक्षित गर्नुहोस्"
+      "Save": "सुरक्षित गर्नुहोस्",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1547,6 +1548,7 @@
       "Peak Outstanding": "अधिकतम बक्यौता",
       "Penalties to Specific Income Accounts": "विशिष्ट आय खाताहरूमा दण्ड",
       "Pending Tasks": "बाँकी कार्यहरू",
+      "Onboarding Board": "अनबोर्डिङ बोर्ड",
       "Performance History": "प्रदर्शन इतिहास",
       "Personal Information": "व्यक्तिगत जानकारी",
       "Post Interest": "पोस्ट ब्याज",
@@ -1797,7 +1799,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "व्यक्तिगत सन्दर्भहरू (२ परिवारका सदस्य, १ परिचित)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "अन्तिम लाभग्राही मालिकहरूको घोषणा - कानुनी संस्थाहरू",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू",
-      "Recovery": "असुली"
+      "Recovery": "असुली",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -3201,6 +3204,7 @@
       "State": "प्रदेश",
       "State / Province": "राज्य / प्रदेश",
       "Status": "स्थिति",
+      "Task": "कार्य",
       "Step Name": "चरणको नाम",
       "Street": "सडक",
       "String": "स्ट्रिङ",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "प्रगतिमा स्थानान्तरण",
       "Transfer on hold": "होल्डमा स्थानान्तरण गर्नुहोस्",
       "Withdrawn": "फिर्ता लिन",
+      "Withdrawn by applicant": "आवेदकद्वारा फिर्ता लिइएको",
       "Written Off": "राइट अफ"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "बलियो पासवर्डहरूको प्रयोग लागू गर्न मापदण्डहरू परिभाषित गर्नुहोस्",
       "These are predefined postings": "यी पूर्वनिर्धारित पोस्टहरू हुन्",
       "This allows you to manage funds associated with loans.": "यसले तपाईंलाई ऋणसँग सम्बन्धित कोषहरू व्यवस्थापन गर्न अनुमति दिन्छ।",
+      "This currency has already been added": "यो मुद्रा पहिले नै थपिएको छ",
       "This option allows you to create new loan product.": "यो विकल्पले तपाईंलाई नयाँ ऋण उत्पादन सिर्जना गर्न अनुमति दिन्छ।",
       "This option allows you to create new recurring product.": "यो विकल्पले तपाईंलाई नयाँ पुनरावर्ती उत्पादन सिर्जना गर्न अनुमति दिन्छ।",
       "This option allows you to create new savings product.": "यो विकल्पले तपाईंलाई नयाँ बचत उत्पादन सिर्जना गर्न अनुमति दिन्छ।",
@@ -4983,7 +4989,14 @@
       "the": "चयन गरिएका",
       "items selected of": "वस्तुहरू",
       "Recovery Completed": "असुली पूरा भयो",
-      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।"
+      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।",
+      "Upload a BIRT report design": "यस किरायेदारका लागि स्थापना गर्न Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) छान्नुहोस्। उही नाम भएको डिजाइन प्रतिस्थापन हुनेछ।",
+      "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) मात्र अपलोड गर्न सकिन्छ।",
+      "The selected report design is empty": "छानिएको रिपोर्ट डिजाइन खाली छ।",
+      "The selected report design is too large": "छानिएको रिपोर्ट डिजाइन 5 MB भन्दा ठूलो छ।",
+      "Report design uploaded": "रिपोर्ट डिजाइन {{fileName}} अपलोड गरियो।",
+      "Report design replaced": "रिपोर्ट डिजाइन {{fileName}} प्रतिस्थापन गरियो।",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

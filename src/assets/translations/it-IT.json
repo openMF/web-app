@@ -832,7 +832,8 @@
       "Delink Client": "Scollega cliente",
       "Disable Breach": "Disabilita Violazione",
       "Enable Breach": "Abilita Violazione",
-      "Save": "Salva"
+      "Save": "Salva",
+      "Upload Report Design": "Carica modello di rapporto"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1548,6 +1549,7 @@
       "Peak Outstanding": "Saldo Massimo Insoluto",
       "Penalties to Specific Income Accounts": "Sanzioni per conti di reddito specifici",
       "Pending Tasks": "Attività in sospeso",
+      "Onboarding Board": "Pannello di onboarding",
       "Performance History": "Cronologia delle prestazioni",
       "Personal Information": "Informazioni personali",
       "Post Interest": "Pubblica interesse",
@@ -1798,7 +1800,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Referenze personali (2 familiari, 1 conoscente)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Dichiarazione dei titolari effettivi ultimi - persone giuridiche",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Dichiarazione dei titolari effettivi ultimi - persone fisiche",
-      "Recovery": "Recupero"
+      "Recovery": "Recupero",
+      "Upload Report Design": "Carica modello di rapporto"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Il conto esce da NPA solo dopo il saldo di tutti gli arretrati",
@@ -3202,6 +3205,7 @@
       "State": "Stato",
       "State / Province": "Stato/Provincia",
       "Status": "Stato",
+      "Task": "Attività",
       "Step Name": "Nome del passaggio",
       "Street": "Strada",
       "String": "Corda",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "Trasferimento in corso",
       "Transfer on hold": "Trasferimento in attesa",
       "Withdrawn": "Ritirato",
+      "Withdrawn by applicant": "Ritirato dal richiedente",
       "Written Off": "Stralciato"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "Definire standard per imporre l'uso di password più forti",
       "These are predefined postings": "Questi sono messaggi predefiniti",
       "This allows you to manage funds associated with loans.": "Ciò consente di gestire i fondi associati ai prestiti.",
+      "This currency has already been added": "Questa valuta è già stata aggiunta",
       "This option allows you to create new loan product.": "Questa opzione ti consente di creare un nuovo prodotto di prestito.",
       "This option allows you to create new recurring product.": "Questa opzione ti consente di creare un nuovo prodotto ricorrente.",
       "This option allows you to create new savings product.": "Questa opzione ti consente di creare un nuovo prodotto di risparmio.",
@@ -4984,7 +4990,14 @@
       "the": "gli",
       "items selected of": "elementi selezionati di",
       "Recovery Completed": "Recupero completato",
-      "Recovery Payment Description": "Registra il denaro incassato dopo lo stralcio. Il prestito resta chiuso e il saldo resta a zero; cambiano sia il totale recuperato sia l'importo ancora da recuperare."
+      "Recovery Payment Description": "Registra il denaro incassato dopo lo stralcio. Il prestito resta chiuso e il saldo resta a zero; cambiano sia il totale recuperato sia l'importo ancora da recuperare.",
+      "Upload a BIRT report design": "Seleziona un modello di rapporto Eclipse BIRT (.rptdesign) da installare per questo inquilino. Un modello con lo stesso nome verrà sostituito.",
+      "Only Eclipse BIRT report designs can be uploaded": "È possibile caricare solo modelli di rapporto Eclipse BIRT (.rptdesign).",
+      "The selected report design is empty": "Il modello di rapporto selezionato è vuoto.",
+      "The selected report design is too large": "Il modello di rapporto selezionato supera i 5 MB.",
+      "Report design uploaded": "Il modello di rapporto {{fileName}} è stato caricato.",
+      "Report design replaced": "Il modello di rapporto {{fileName}} è stato sostituito.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

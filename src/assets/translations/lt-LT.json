@@ -832,7 +832,8 @@
       "Delink Client": "Atsieti klientą",
       "Disable Breach": "Išjungti pažeidimą",
       "Enable Breach": "Įjungti pažeidimą",
-      "Save": "Išsaugoti"
+      "Save": "Išsaugoti",
+      "Upload Report Design": "Įkelti ataskaitos maketą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1547,6 +1548,7 @@
       "Peak Outstanding": "Didžiausia Negrąžinta Suma",
       "Penalties to Specific Income Accounts": "Baudos į konkrečias pajamų sąskaitas",
       "Pending Tasks": "Laukiamos užduotys",
+      "Onboarding Board": "Klientų įtraukimo lenta",
       "Performance History": "Spektaklio istorija",
       "Personal Information": "Asmens informacija",
       "Post Interest": "Paskelbti susidomėjimą",
@@ -1797,7 +1799,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Asmeninės rekomendacijos (2 šeimos nariai, 1 pažįstamas)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Galutinių naudos gavėjų deklaracija - juridiniai asmenys",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Galutinių naudos gavėjų deklaracija - fiziniai asmenys",
-      "Recovery": "Susigrąžinimas"
+      "Recovery": "Susigrąžinimas",
+      "Upload Report Design": "Įkelti ataskaitos maketą"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -3201,6 +3204,7 @@
       "State": "Valstija",
       "State / Province": "Valstybė / provincija",
       "Status": "Būsena",
+      "Task": "Užduotis",
       "Step Name": "Žingsnio pavadinimas",
       "Street": "Gatvė",
       "String": "Styga",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "Vykdomas perkėlimas",
       "Transfer on hold": "Perkelti sustabdytas",
       "Withdrawn": "Pasitraukė",
+      "Withdrawn by applicant": "Pareiškėjo atsiimta",
       "Written Off": "Nurašyta"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "Apibrėžkite stipresnių slaptažodžių naudojimo standartus",
       "These are predefined postings": "Tai yra iš anksto nustatyti skelbimai",
       "This allows you to manage funds associated with loans.": "Tai leidžia valdyti su paskolomis susijusias lėšas.",
+      "This currency has already been added": "Ši valiuta jau pridėta",
       "This option allows you to create new loan product.": "Ši parinktis leidžia sukurti naują paskolos produktą.",
       "This option allows you to create new recurring product.": "Ši parinktis leidžia sukurti naują pasikartojantį produktą.",
       "This option allows you to create new savings product.": "Ši parinktis leidžia sukurti naują taupymo produktą.",
@@ -4984,7 +4990,14 @@
       "the": "pasirinkti",
       "items selected of": "elementai iš",
       "Recovery Completed": "Susigrąžinimas baigtas",
-      "Recovery Payment Description": "Registruoja pinigus, surinktus po nurašymo. Paskola lieka uždaryta, o jos likutis lieka nulinis; keičiasi tik susigrąžinta suma."
+      "Recovery Payment Description": "Registruoja pinigus, surinktus po nurašymo. Paskola lieka uždaryta, o jos likutis lieka nulinis; keičiasi tik susigrąžinta suma.",
+      "Upload a BIRT report design": "Pasirinkite Eclipse BIRT ataskaitos maketą (.rptdesign), kurį norite įdiegti šiam nuomininkui. Tokiu pačiu pavadinimu esantis maketas bus pakeistas.",
+      "Only Eclipse BIRT report designs can be uploaded": "Galima įkelti tik Eclipse BIRT ataskaitų maketus (.rptdesign).",
+      "The selected report design is empty": "Pasirinktas ataskaitos maketas yra tuščias.",
+      "The selected report design is too large": "Pasirinktas ataskaitos maketas viršija 5 MB.",
+      "Report design uploaded": "Ataskaitos maketas {{fileName}} įkeltas.",
+      "Report design replaced": "Ataskaitos maketas {{fileName}} pakeistas.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

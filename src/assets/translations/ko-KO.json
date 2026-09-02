@@ -832,7 +832,8 @@
       "Delink Client": "고객 연결 해제",
       "Disable Breach": "위반 비활성화",
       "Enable Breach": "위반 활성화",
-      "Save": "저장"
+      "Save": "저장",
+      "Upload Report Design": "보고서 디자인 업로드"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1548,6 +1549,7 @@
       "Peak Outstanding": "최대 미결제 잔액",
       "Penalties to Specific Income Accounts": "특정 소득 계정에 대한 처벌",
       "Pending Tasks": "보류 중인 작업",
+      "Onboarding Board": "온보딩 보드",
       "Performance History": "실적 내역",
       "Personal Information": "개인 정보",
       "Post Interest": "관심 게시",
@@ -1799,7 +1801,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "개인 참고인(가족 2명, 지인 1명)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "최종 실소유자 선언 - 법인",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "최종 실소유자 선언 - 자연인",
-      "Recovery": "회수"
+      "Recovery": "회수",
+      "Upload Report Design": "보고서 디자인 업로드"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -3202,6 +3205,7 @@
       "State": "도/주",
       "State / Province": "주/도",
       "Status": "상태",
+      "Task": "작업",
       "Step Name": "단계 이름",
       "Street": "거리",
       "String": "끈",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "진행중인 양도",
       "Transfer on hold": "보류에 이체하십시오",
       "Withdrawn": "빼는",
+      "Withdrawn by applicant": "신청자에 의해 철회됨",
       "Written Off": "상각됨"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "더 강력한 비밀번호 사용을 시행하기 위한 표준 정의",
       "These are predefined postings": "사전 정의된 게시물입니다.",
       "This allows you to manage funds associated with loans.": "이를 통해 대출과 관련된 자금을 관리할 수 있습니다.",
+      "This currency has already been added": "이 통화는 이미 추가되었습니다",
       "This option allows you to create new loan product.": "이 옵션을 사용하면 새로운 대출 상품을 생성할 수 있습니다.",
       "This option allows you to create new recurring product.": "이 옵션을 사용하면 새로운 반복 제품을 생성할 수 있습니다.",
       "This option allows you to create new savings product.": "이 옵션을 사용하면 새로운 저축 상품을 만들 수 있습니다.",
@@ -4983,7 +4989,14 @@
       "the": "선택된",
       "items selected of": "개 항목:",
       "Recovery Completed": "회수 완료",
-      "Recovery Payment Description": "상각 이후 수령한 금액을 기록합니다. 대출은 마감 상태로 유지되고 잔액도 0으로 유지되며, 총 회수액만 변경됩니다."
+      "Recovery Payment Description": "상각 이후 수령한 금액을 기록합니다. 대출은 마감 상태로 유지되고 잔액도 0으로 유지되며, 총 회수액만 변경됩니다.",
+      "Upload a BIRT report design": "이 임차인에 설치할 Eclipse BIRT 보고서 디자인(.rptdesign)을 선택하세요. 이름이 같은 디자인은 대체됩니다.",
+      "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT 보고서 디자인(.rptdesign)만 업로드할 수 있습니다.",
+      "The selected report design is empty": "선택한 보고서 디자인이 비어 있습니다.",
+      "The selected report design is too large": "선택한 보고서 디자인이 5 MB를 초과합니다.",
+      "Report design uploaded": "보고서 디자인 {{fileName}}이(가) 업로드되었습니다.",
+      "Report design replaced": "보고서 디자인 {{fileName}}이(가) 대체되었습니다.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

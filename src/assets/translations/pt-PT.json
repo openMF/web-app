@@ -832,7 +832,8 @@
       "Delink Client": "Desassociar cliente",
       "Disable Breach": "Desativar Violação",
       "Enable Breach": "Ativar Violação",
-      "Save": "Guardar"
+      "Save": "Guardar",
+      "Upload Report Design": "Carregar modelo de relatório"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1547,6 +1548,7 @@
       "Peak Outstanding": "Saldo Máximo em Aberto",
       "Penalties to Specific Income Accounts": "Penalidades para contas de receitas específicas",
       "Pending Tasks": "Tarefas Pendentes",
+      "Onboarding Board": "Painel de integração",
       "Performance History": "Histórico de desempenho",
       "Personal Information": "Informações Pessoais",
       "Post Interest": "Publicar interesse",
@@ -1797,7 +1799,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Referências pessoais (2 familiares, 1 conhecido)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaração dos beneficiários efetivos finais - pessoas coletivas",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaração dos beneficiários efetivos finais - pessoas singulares",
-      "Recovery": "Recuperação"
+      "Recovery": "Recuperação",
+      "Upload Report Design": "Carregar modelo de relatório"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
@@ -3201,6 +3204,7 @@
       "State": "Estado",
       "State / Province": "Estado/Província",
       "Status": "Estado",
+      "Task": "Tarefa",
       "Step Name": "Nome da etapa",
       "Street": "Rua",
       "String": "Corda",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "Transferência em andamento",
       "Transfer on hold": "Transferência em espera",
       "Withdrawn": "Retirado",
+      "Withdrawn by applicant": "Retirado pelo requerente",
       "Written Off": "Baixado"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "Defina padrões para impor o uso de senhas mais fortes",
       "These are predefined postings": "Estas são postagens predefinidas",
       "This allows you to manage funds associated with loans.": "Isso permite que você gerencie fundos associados a empréstimos.",
+      "This currency has already been added": "Esta moeda já foi adicionada",
       "This option allows you to create new loan product.": "Esta opção permite criar um novo produto de empréstimo.",
       "This option allows you to create new recurring product.": "Esta opção permite criar novos produtos recorrentes.",
       "This option allows you to create new savings product.": "Esta opção permite criar um novo produto de poupança.",
@@ -4983,7 +4989,14 @@
       "the": "os",
       "items selected of": "itens selecionados de",
       "Recovery Completed": "Recuperação concluída",
-      "Recovery Payment Description": "Regista dinheiro cobrado após o abate. O empréstimo permanece fechado e o saldo permanece a zero; apenas muda o total recuperado."
+      "Recovery Payment Description": "Regista dinheiro cobrado após o abate. O empréstimo permanece fechado e o saldo permanece a zero; apenas muda o total recuperado.",
+      "Upload a BIRT report design": "Selecione um modelo de relatório do Eclipse BIRT (.rptdesign) para instalar neste inquilino. Um modelo com o mesmo nome será substituído.",
+      "Only Eclipse BIRT report designs can be uploaded": "Somente modelos de relatório do Eclipse BIRT (.rptdesign) podem ser carregados.",
+      "The selected report design is empty": "O modelo de relatório selecionado está vazio.",
+      "The selected report design is too large": "O modelo de relatório selecionado excede 5 MB.",
+      "Report design uploaded": "O modelo de relatório {{fileName}} foi carregado.",
+      "Report design replaced": "O modelo de relatório {{fileName}} foi substituído.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

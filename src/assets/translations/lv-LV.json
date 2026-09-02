@@ -832,7 +832,8 @@
       "Delink Client": "Atsaistīt klientu",
       "Disable Breach": "Atspējot pārkāpumu",
       "Enable Breach": "Iespējot pārkāpumu",
-      "Save": "Saglabāt"
+      "Save": "Saglabāt",
+      "Upload Report Design": "Augšupielādēt pārskata veidni"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1548,6 +1549,7 @@
       "Peak Outstanding": "Maksimālais Atlikums",
       "Penalties to Specific Income Accounts": "Sodi konkrētiem ienākumu kontiem",
       "Pending Tasks": "Nepabeigti uzdevumi",
+      "Onboarding Board": "Klientu uzņemšanas panelis",
       "Performance History": "Izpildes vēsture",
       "Personal Information": "Personīgā informācija",
       "Post Interest": "Post Interese",
@@ -1798,7 +1800,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Personīgās atsauksmes (2 ģimenes locekļi, 1 paziņa)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Patieso labuma guvēju deklarācija - juridiskas personas",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Patieso labuma guvēju deklarācija - fiziskas personas",
-      "Recovery": "Atgūšana"
+      "Recovery": "Atgūšana",
+      "Upload Report Design": "Augšupielādēt pārskata veidni"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -3202,6 +3205,7 @@
       "State": "Valsts",
       "State / Province": "Valsts/province",
       "Status": "Statuss",
+      "Task": "Uzdevums",
       "Step Name": "Soļa nosaukums",
       "Street": "Iela",
       "String": "Stīga",
@@ -3959,6 +3963,7 @@
       "Transfer in progress": "Iepriekšējā pārnešana",
       "Transfer on hold": "Pārnešana aizturēta",
       "Withdrawn": "Atsaukts",
+      "Withdrawn by applicant": "Pieteikuma iesniedzēja atsaukts",
       "Written Off": "Norakstīts"
     },
     "dialogContext": {
@@ -4693,6 +4698,7 @@
       "The usage of stronger passwords": "Definējiet standartus spēcīgāku paroļu izmantošanai",
       "These are predefined postings": "Tie ir iepriekš noteikti ziņojumi",
       "This allows you to manage funds associated with loans.": "Tas ļauj pārvaldīt ar aizdevumiem saistītos līdzekļus.",
+      "This currency has already been added": "Šī valūta jau ir pievienota",
       "This option allows you to create new loan product.": "Šī opcija ļauj izveidot jaunu aizdevuma produktu.",
       "This option allows you to create new recurring product.": "Šī opcija ļauj izveidot jaunu periodisku produktu.",
       "This option allows you to create new savings product.": "Šī opcija ļauj izveidot jaunu uzkrājumu produktu.",
@@ -4983,7 +4989,14 @@
       "the": "atlasītie",
       "items selected of": "vienumi no",
       "Recovery Completed": "Atgūšana pabeigta",
-      "Recovery Payment Description": "Reģistrē naudu, kas saņemta pēc norakstīšanas. Aizdevums paliek slēgts un tā atlikums paliek nulle; mainās tikai atgūtā kopsumma."
+      "Recovery Payment Description": "Reģistrē naudu, kas saņemta pēc norakstīšanas. Aizdevums paliek slēgts un tā atlikums paliek nulle; mainās tikai atgūtā kopsumma.",
+      "Upload a BIRT report design": "Atlasiet Eclipse BIRT pārskata veidni (.rptdesign), ko instalēt šim īrniekam. Veidne ar tādu pašu nosaukumu tiks aizstāta.",
+      "Only Eclipse BIRT report designs can be uploaded": "Var augšupielādēt tikai Eclipse BIRT pārskatu veidnes (.rptdesign).",
+      "The selected report design is empty": "Atlasītā pārskata veidne ir tukša.",
+      "The selected report design is too large": "Atlasītā pārskata veidne pārsniedz 5 MB.",
+      "Report design uploaded": "Pārskata veidne {{fileName}} ir augšupielādēta.",
+      "Report design replaced": "Pārskata veidne {{fileName}} ir aizstāta.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

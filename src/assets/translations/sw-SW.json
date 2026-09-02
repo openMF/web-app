@@ -832,7 +832,8 @@
       "Delink Client": "Tenganisha mteja",
       "Disable Breach": "Zima Ukiukaji",
       "Enable Breach": "Washa Ukiukaji",
-      "Save": "Hifadhi"
+      "Save": "Hifadhi",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1545,6 +1546,7 @@
       "Peak Outstanding": "Salio la Juu Lililobaki",
       "Penalties to Specific Income Accounts": "Adhabu kwa Akaunti Maalum za Mapato",
       "Pending Tasks": "Kazi Zinazongoja",
+      "Onboarding Board": "Bodi ya uandikishaji",
       "Performance History": "Historia ya Utendaji",
       "Personal Information": "Taarifa za Kibinafsi",
       "Post Interest": "Chapisha Maslahi",
@@ -1795,7 +1797,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Marejeleo binafsi (wanafamilia 2, mtu 1 anayefahamiana nawe)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Tamko la wamiliki wanufaika wa mwisho - taasisi za kisheria",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi",
-      "Recovery": "Urejeshaji"
+      "Recovery": "Urejeshaji",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -3199,6 +3202,7 @@
       "State": "Jimbo",
       "State / Province": "Jimbo / Mkoa",
       "Status": "Hali",
+      "Task": "Kazi",
       "Step Name": "Jina la Hatua",
       "Street": "Mtaa",
       "String": "Kamba",
@@ -3956,6 +3960,7 @@
       "Transfer in progress": "Uhamisho unaendelea",
       "Transfer on hold": "Uhamisho juu ya kushikilia",
       "Withdrawn": "Kutolewa",
+      "Withdrawn by applicant": "Imeondolewa na mwombaji",
       "Written Off": "Imefutwa"
     },
     "dialogContext": {
@@ -4690,6 +4695,7 @@
       "The usage of stronger passwords": "Bainisha viwango vya kutekeleza utumiaji wa manenosiri yenye nguvu zaidi",
       "These are predefined postings": "Haya ni machapisho yaliyofafanuliwa awali",
       "This allows you to manage funds associated with loans.": "Hii inakuwezesha kudhibiti fedha zinazohusiana na mikopo.",
+      "This currency has already been added": "Sarafu hii tayari imeongezwa",
       "This option allows you to create new loan product.": "Chaguo hili hukuruhusu kuunda bidhaa mpya ya mkopo.",
       "This option allows you to create new recurring product.": "Chaguo hili hukuruhusu kuunda bidhaa mpya ya mara kwa mara.",
       "This option allows you to create new savings product.": "Chaguo hili hukuruhusu kuunda bidhaa mpya ya akiba.",
@@ -4980,7 +4986,14 @@
       "the": "vipengee",
       "items selected of": "vilivyochaguliwa vya",
       "Recovery Completed": "Urejeshaji umekamilika",
-      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee."
+      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee.",
+      "Upload a BIRT report design": "Chagua muundo wa ripoti wa Eclipse BIRT (.rptdesign) wa kusakinisha kwa mpangaji huyu. Muundo wenye jina lilelile utabadilishwa.",
+      "Only Eclipse BIRT report designs can be uploaded": "Ni miundo ya ripoti ya Eclipse BIRT (.rptdesign) pekee inayoweza kupakiwa.",
+      "The selected report design is empty": "Muundo wa ripoti uliochaguliwa hauna maudhui.",
+      "The selected report design is too large": "Muundo wa ripoti uliochaguliwa unazidi 5 MB.",
+      "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
+      "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {

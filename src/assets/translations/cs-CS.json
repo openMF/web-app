@@ -833,7 +833,8 @@
       "Delink Client": "Odpojit klienta",
       "Disable Breach": "Zakázat porušení",
       "Enable Breach": "Povolit porušení",
-      "Save": "Uložit"
+      "Save": "Uložit",
+      "Upload Report Design": "Nahrát návrh zprávy"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1550,6 +1551,7 @@
       "Peak Outstanding": "Maximální Nesplacený Zůstatek",
       "Penalties to Specific Income Accounts": "Sankce na konkrétní příjmové účty",
       "Pending Tasks": "Čekající úkoly",
+      "Onboarding Board": "Přehled onboardingu",
       "Performance History": "Historie výkonu",
       "Authorized Representative": "Oprávněný zástupce",
       "Customer Transactional Profile": "Transakční profil zákazníka",
@@ -1799,7 +1801,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Osobní reference (2 rodinní příslušníci, 1 známý)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Prohlášení konečných skutečných majitelů - právnické osoby",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Prohlášení konečných skutečných majitelů - fyzické osoby",
-      "Recovery": "Vymáhání"
+      "Recovery": "Vymáhání",
+      "Upload Report Design": "Nahrát návrh zprávy"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -3203,6 +3206,7 @@
       "State": "Stát",
       "State / Province": "Stát / provincie",
       "Status": "Postavení",
+      "Task": "Úkol",
       "Step Name": "Název kroku",
       "Street": "ulice",
       "String": "Tětiva",
@@ -3961,6 +3965,7 @@
       "Transfer in progress": "Převod",
       "Transfer on hold": "Přenesejte na pozastavení",
       "Withdrawn": "Stažený",
+      "Withdrawn by applicant": "Staženo žadatelem",
       "Written Off": "Odepsáno"
     },
     "dialogContext": {
@@ -4695,6 +4700,7 @@
       "The usage of stronger passwords": "Definujte standardy pro vynucení používání silnějších hesel",
       "These are predefined postings": "Jedná se o předdefinované příspěvky",
       "This allows you to manage funds associated with loans.": "To vám umožní spravovat finanční prostředky spojené s půjčkami.",
+      "This currency has already been added": "Tato měna již byla přidána",
       "This option allows you to create new loan product.": "Tato možnost umožňuje vytvořit nový úvěrový produkt.",
       "This option allows you to create new recurring product.": "Tato možnost umožňuje vytvořit nový opakující se produkt.",
       "This option allows you to create new savings product.": "Tato možnost umožňuje vytvořit nový spořicí produkt.",
@@ -4985,7 +4991,14 @@
       "the": "vybrané",
       "items selected of": "položky z",
       "Recovery Completed": "Vymáhání dokončeno",
-      "Recovery Payment Description": "Eviduje peníze přijaté po odpisu. Úvěr zůstává uzavřený a jeho zůstatek zůstává nulový; mění se pouze celková vymožená částka."
+      "Recovery Payment Description": "Eviduje peníze přijaté po odpisu. Úvěr zůstává uzavřený a jeho zůstatek zůstává nulový; mění se pouze celková vymožená částka.",
+      "Upload a BIRT report design": "Vyberte návrh zprávy Eclipse BIRT (.rptdesign), který se má nainstalovat pro tohoto nájemce. Návrh se stejným názvem bude nahrazen.",
+      "Only Eclipse BIRT report designs can be uploaded": "Nahrát lze pouze návrhy zpráv Eclipse BIRT (.rptdesign).",
+      "The selected report design is empty": "Vybraný návrh zprávy je prázdný.",
+      "The selected report design is too large": "Vybraný návrh zprávy je větší než 5 MB.",
+      "Report design uploaded": "Návrh zprávy {{fileName}} byl nahrán.",
+      "Report design replaced": "Návrh zprávy {{fileName}} byl nahrazen.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
