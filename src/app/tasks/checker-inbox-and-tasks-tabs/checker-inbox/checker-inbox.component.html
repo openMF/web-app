@@ -28,13 +28,29 @@
     >
       <mat-icon>{{ showAdvancedSearch ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
     </button>
-    <button mat-raised-button class="mat-success tasks-action-btn" (click)="approveChecker()">
+    <button
+      mat-raised-button
+      class="mat-success tasks-action-btn"
+      (click)="approveChecker()"
+      [disabled]="!selection?.hasValue() || processing"
+    >
       <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
     </button>
-    <button mat-raised-button color="warn" (click)="deleteChecker()" class="action-button">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="deleteChecker()"
+      class="action-button"
+      [disabled]="!selection?.hasValue() || processing"
+    >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
     </button>
-    <button mat-raised-button class="mat-reject tasks-action-btn" (click)="rejectChecker()">
+    <button
+      mat-raised-button
+      class="mat-reject tasks-action-btn"
+      (click)="rejectChecker()"
+      [disabled]="!selection?.hasValue() || processing"
+    >
       <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
     </button>
   </div>
@@ -53,17 +69,30 @@
           <mat-datepicker-toggle matSuffix [for]="makerDateTimeFromPicker"></mat-datepicker-toggle>
           <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field class="search-field" (click)="makerDateTimetoPicker.open()">
+        <mat-form-field class="search-field" (click)="makerDateTimeToPicker.open()">
           <mat-label>{{ 'labels.inputs.To date' | translate }}</mat-label>
           <input
             matInput
             [min]="minDate"
             [max]="maxDate"
-            [matDatepicker]="makerDateTimetoPicker"
-            formControlName="makerDateTimeto"
+            [matDatepicker]="makerDateTimeToPicker"
+            formControlName="makerDateTimeTo"
           />
-          <mat-datepicker-toggle matSuffix [for]="makerDateTimetoPicker"></mat-datepicker-toggle>
-          <mat-datepicker #makerDateTimetoPicker></mat-datepicker>
+          <mat-datepicker-toggle matSuffix [for]="makerDateTimeToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #makerDateTimeToPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="search-field">
+          <mat-label>{{ 'labels.inputs.Customer' | translate }}</mat-label>
+          <input matInput [formControl]="customerControl" [matAutocomplete]="customerAutocomplete" />
+          <mat-autocomplete #customerAutocomplete="matAutocomplete" [displayWith]="displayCustomer">
+            @for (customer of customers; track customer.id) {
+              <mat-option [value]="customer"
+                >{{ customer.displayName }}
+                {{ customer.accountNumber ? '(' + customer.accountNumber + ')' : '' }}</mat-option
+              >
+            }
+          </mat-autocomplete>
+          <mat-hint>Search by customer name or account number, then select a customer.</mat-hint>
         </mat-form-field>
         <mat-form-field class="search-field">
           <mat-label>{{ 'labels.inputs.Select action' | translate }}</mat-label>
@@ -95,7 +124,29 @@
       </div>
     </form>
   }
-  @if (checkerData && !noSearchedData) {
+  @if (processing) {
+    <div class="alert" role="status">Processing {{ processingCount }} checker item(s)…</div>
+  }
+  @if (actionResult) {
+    <div class="alert" role="status">
+      {{ actionResult.succeeded + actionResult.failed.length }} tasks processed: {{ actionResult.succeeded }} succeeded,
+      {{ actionResult.failed.length }} failed.
+      @if (actionResult.failed.length) {
+        Failed record IDs:
+        @for (failure of actionResult.failed; track failure.id) {
+          {{ failure.id }}{{ failure.error ? ': ' + failure.error : '' }};
+        }
+      }
+    </div>
+  }
+  @if (loading) {
+    <div class="alert" role="status">Loading checker inbox…</div>
+  } @else if (searchError) {
+    <div class="alert" role="alert">Unable to load checker inbox. Please try your search again.</div>
+  } @else if (checkerData && !noSearchedData) {
+    @if (!hasActionableRows()) {
+      <div class="alert" role="status">You do not have permission to action the checker items in this list.</div>
+    }
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
@@ -104,11 +155,13 @@
             [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()"
             [aria-label]="checkboxLabel()"
+            [disabled]="!hasActionableRows()"
           >
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-checkbox
+            *mifosxHasPermission="checkerPermission(row)"
             (click)="$event.stopPropagation()"
             (change)="$event ? selection.toggle(row) : null"
             [checked]="selection.isSelected(row)"
@@ -122,7 +175,7 @@
         <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.id }}</td>
       </ng-container>
       <ng-container matColumnDef="madeOnDate">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Made on Date' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Submitted On' | translate }}</th>
         <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.madeOnDate | dateFormat }}</td>
       </ng-container>
       <ng-container matColumnDef="status">
@@ -149,17 +202,14 @@
         class="select-row"
       ></tr>
     </table>
-  }
-  @if (checkerData && noSearchedData) {
+  } @else if (noSearchedData) {
     <div class="alert">
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check fa-2x"></i>
         {{ 'labels.text.No checker inbox data available for this search' | translate }}
       </div>
     </div>
-  }
-
-  @if (!checkerData) {
+  } @else if (!checkerData && !loading && !searchError) {
     <div class="alert">
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check fa-2x"></i>
