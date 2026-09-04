@@ -16,3 +16,9 @@
     }
   }
 }
+
+// Plain text templates keep their line breaks
+.plain-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

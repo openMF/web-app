@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
+import { isHtmlText } from '../template-text.utils';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -42,6 +43,11 @@ export class ViewTemplateComponent {
 
   /** Template Data */
   templateData: any;
+
+  /** Whether the template text is HTML markup (rendered) or plain text (shown verbatim). */
+  get isHtml(): boolean {
+    return isHtmlText(this.templateData?.text);
+  }
 
   /**
    * Retrieves the template data from `resolve`.
