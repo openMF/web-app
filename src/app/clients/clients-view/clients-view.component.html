@@ -287,7 +287,11 @@
   </mat-menu>
 
   <mat-menu #Actions="matMenu">
-    <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
+    @if (clientViewData.status.value === 'Active') {
+      <span
+        ><button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button></span
+      >
+    }
     <button mat-menu-item (click)="doAction('Transfer Client')">
       {{ 'labels.buttons.Transfer Client' | translate }}
     </button>
