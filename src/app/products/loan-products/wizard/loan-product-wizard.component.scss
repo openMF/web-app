@@ -294,6 +294,14 @@ mat-checkbox {
   display: none;
 }
 
+// Same duplicate, same remedy, for the reused Classic Accounting step: its own trailing nav row
+// carries `layout-row` + `margin-t` too (`loan-product-accounting-step.component.html`), but the
+// Charges rule above is scoped to `.wizard-charges` and never reaches it. Renders in BOTH guided and
+// Custom/Advanced mode, since `.wizard-accounting` wraps the step regardless of profile.
+.wizard-accounting ::ng-deep .layout-row.margin-t {
+  display: none;
+}
+
 .step-actions__blocked {
   margin: 0 0 0.75rem;
   color: var(--mat-sys-error, #b3261e);
