@@ -338,17 +338,17 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   interestRateFrequencyType: { '2': 'Per month', '3': 'Per year' },
   repaymentFrequencyType: { '0': 'Days', '1': 'Weeks', '2': 'Months' },
   amortizationType: { '0': 'Equal principal payments', '1': 'Equal installments' },
-  interestType: { '0': 'Declining balance', '1': 'Flat' },
+  interestType: { '0': 'Declining Balance', '1': 'Flat' },
   interestCalculationPeriodType: { '0': 'Daily', '1': 'Same as repayment period' },
-  daysInYearType: { '1': 'Actual', '360': '360 days', '364': '364 days', '365': '365 days' },
-  daysInMonthType: { '1': 'Same as in year', '30': '30 days' },
-  accountingRule: { '1': 'None', '2': 'Cash-based', '3': 'Accrual (periodic)', '4': 'Accrual (upfront)' },
+  daysInYearType: { '1': 'Actual', '360': '360 Days', '364': '364 Days', '365': '365 Days' },
+  daysInMonthType: { '1': 'Actual', '30': '30 Days' },
+  accountingRule: { '1': 'None', '2': 'Cash', '3': 'Accrual (periodic)', '4': 'Accrual (upfront)' },
   currencyCode: { INR: 'Indian Rupee (₹)', USD: 'US Dollar ($)', EUR: 'Euro (€)', GBP: 'British Pound (£)' },
   transactionProcessingStrategyCode: {
-    'interest-principal-penalties-fees-order-strategy': 'Interest → Principal → Penalties → Fees',
-    'principal-interest-penalties-fees-order-strategy': 'Principal → Interest → Penalties → Fees',
-    'mifos-standard-strategy': 'Mifos standard',
-    'early-repayment-strategy': 'Early repayment'
+    'interest-principal-penalties-fees-order-strategy': 'Interest, Principal, Penalties, Fees Order',
+    'principal-interest-penalties-fees-order-strategy': 'Principal, Interest, Penalties, Fees Order',
+    'mifos-standard-strategy': 'Penalties, Fees, Interest, Principal order',
+    'early-repayment-strategy': 'Early Repayment Strategy'
   },
   canUseForTopup: { true: 'Yes', false: 'No' },
   isInterestRecalculationEnabled: { true: 'Enabled', false: 'Disabled' },
@@ -405,7 +405,7 @@ export const DELINQUENCY_BUCKET_NONE_OPTION: SelectOption = { value: '', label: 
 export const FORM_STEPS: FormStep[] = [
   {
     id: 1,
-    title: 'Details',
+    title: 'labels.heading.Details',
     classicStep: 'details',
     icon: 'ti-id',
     fields: [
@@ -424,7 +424,7 @@ export const FORM_STEPS: FormStep[] = [
         required: true,
         placeholder: 'labels.placeholders.Example short name',
         maxLength: 4,
-        hint: 'max 4 chars'
+        hint: 'labels.text.max 4 chars'
       },
       {
         label: 'labels.inputs.External ID',
@@ -456,7 +456,7 @@ export const FORM_STEPS: FormStep[] = [
   },
   {
     id: 2,
-    title: 'Currency',
+    title: 'labels.heading.Currency',
     classicStep: 'currency',
     icon: 'ti-currency-dollar',
     fields: [
@@ -498,7 +498,7 @@ export const FORM_STEPS: FormStep[] = [
   },
   {
     id: 3,
-    title: 'Terms',
+    title: 'labels.heading.Terms',
     classicStep: 'terms',
     icon: 'ti-calculator',
     fields: [
@@ -599,7 +599,7 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Repayment start date type',
         key: 'repaymentStartDateType',
         type: 'select',
-        options: [{ value: 1, label: 'Disbursement date' }]
+        options: [{ value: 1, label: 'Disbursement Date' }]
       }
     ]
   },
@@ -614,14 +614,14 @@ export const FORM_STEPS: FormStep[] = [
     // renders the same block inside its Terms step. Declaration order is what `visibleSteps`
     // preserves, so this is what fixes the operator-facing ordering.
     id: 12,
-    title: 'Loan Cycle Variations',
+    title: 'labels.inputs.Terms vary based on loan cycle',
     icon: 'ti-repeat',
     kind: 'borrower-cycle',
     fields: []
   },
   {
     id: 4,
-    title: 'Settings',
+    title: 'labels.heading.Settings',
     classicStep: 'settings',
     icon: 'ti-settings',
     fields: [
@@ -641,7 +641,7 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         required: true,
         options: [
-          { value: 0, label: 'Declining balance' },
+          { value: 0, label: 'Declining Balance' },
           { value: 1, label: 'Flat' }
         ]
       },
@@ -681,16 +681,20 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         required: true,
         options: [
+          // Fineract's own names for these strategies, which is what the backend template supplies
+          // and what `labels.catalogs` is keyed by. They were full translation keys, from before the
+          // options were rendered through the catalogs namespace — a key here now resolves to itself
+          // and puts `labels.inputs.…` on screen.
           {
             value: 'interest-principal-penalties-fees-order-strategy',
-            label: 'labels.inputs.Interest → Principal → Penalties → Fees'
+            label: 'Interest, Principal, Penalties, Fees Order'
           },
           {
             value: 'principal-interest-penalties-fees-order-strategy',
-            label: 'labels.inputs.Principal → Interest → Penalties → Fees'
+            label: 'Principal, Interest, Penalties, Fees Order'
           },
-          { value: 'mifos-standard-strategy', label: 'Mifos standard' },
-          { value: 'early-repayment-strategy', label: 'Early repayment' }
+          { value: 'mifos-standard-strategy', label: 'Penalties, Fees, Interest, Principal order' },
+          { value: 'early-repayment-strategy', label: 'Early Repayment Strategy' }
         ]
       },
       {
@@ -729,9 +733,9 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         options: [
           { value: 1, label: 'Actual' },
-          { value: 360, label: '360 days' },
-          { value: 364, label: '364 days' },
-          { value: 365, label: '365 days' }
+          { value: 360, label: '360 Days' },
+          { value: 364, label: '364 Days' },
+          { value: 365, label: '365 Days' }
         ]
       },
       {
@@ -751,8 +755,8 @@ export const FORM_STEPS: FormStep[] = [
         key: 'daysInMonthType',
         type: 'select',
         options: [
-          { value: 1, label: 'Same as in year' },
-          { value: 30, label: '30 days' }
+          { value: 1, label: 'Actual' },
+          { value: 30, label: '30 Days' }
         ]
       },
       {
@@ -1022,7 +1026,7 @@ export const FORM_STEPS: FormStep[] = [
     // Reuses the Classic Payment Allocation UI (see loan-product-wizard.component.html). Carries no
     // config-driven fields; visibility is driven by the selected repayment strategy in the component.
     id: 9,
-    title: 'Payment Allocation',
+    title: 'labels.heading.Payment Allocation',
     icon: 'ti-arrows-sort',
     kind: 'payment-allocation',
     fields: []
@@ -1033,7 +1037,7 @@ export const FORM_STEPS: FormStep[] = [
     // — identical dropdowns, filters and payload as Classic — instead of free-text names. The selected
     // full charge objects are folded into the backend `charges` array by `buildChargeReferences`.
     id: 5,
-    title: 'Charges',
+    title: 'labels.heading.Charges',
     icon: 'ti-coin',
     kind: 'charges',
     fields: []
@@ -1046,7 +1050,7 @@ export const FORM_STEPS: FormStep[] = [
     // in buildPayloadForSubmit, mirroring Classic's `...loanProductAccountingStep.loanProductAccounting`
     // spread, so Cash / Accrual (periodic) / Accrual (upfront) all send every required account id.
     id: 6,
-    title: 'Accounting',
+    title: 'labels.heading.Accounting',
     icon: 'ti-report',
     kind: 'accounting',
     fields: []
@@ -1057,7 +1061,7 @@ export const FORM_STEPS: FormStep[] = [
     // strategy, which is the same gate Classic applies, so the wizard shows this step under exactly
     // that condition (see `visibleSteps`).
     id: 10,
-    title: 'Interest Refunds',
+    title: 'labels.heading.Interest Refunds',
     icon: 'ti-receipt-refund',
     kind: 'interest-refund',
     fields: []
@@ -1071,14 +1075,14 @@ export const FORM_STEPS: FormStep[] = [
     // add/removeControl logic and `Validators.required`, so the conditional behaviour is reused
     // rather than reimplemented.
     id: 11,
-    title: 'Deferred Income Recognition',
+    title: 'labels.heading.Deferred Income Recognition',
     icon: 'ti-cash-banknote',
     kind: 'deferred-income',
     fields: []
   },
   {
     id: 7,
-    title: 'Advanced Configuration',
+    title: 'labels.heading.Advanced Configuration',
     icon: 'ti-panel',
     fields: [
       {
@@ -1102,7 +1106,7 @@ export const FORM_STEPS: FormStep[] = [
       }
     ]
   },
-  { id: 8, title: 'Review', icon: 'ti-eye', kind: 'review', fields: [] }
+  { id: 8, title: 'labels.buttons.Preview', icon: 'ti-eye', kind: 'review', fields: [] }
 ];
 
 export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null> = {

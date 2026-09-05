@@ -1111,7 +1111,9 @@
       "transaction_loan": "Aizdevuma Darījumi",
       "transaction_savings": "Uzkrājumu Darījumi",
       "unmarried": "neprecējies",
-      "xbrlmapping": "XBRL Kartēšana"
+      "xbrlmapping": "XBRL Kartēšana",
+      "Enabled": "Iespējots",
+      "Disabled": "Atspējots"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1801,7 +1803,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Patieso labuma guvēju deklarācija - juridiskas personas",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Patieso labuma guvēju deklarācija - fiziskas personas",
       "Recovery": "Atgūšana",
-      "Upload Report Design": "Augšupielādēt pārskata veidni"
+      "Upload Report Design": "Augšupielādēt pārskata veidni",
+      "Payment Allocation": "Maksājumu piešķiršana",
+      "Interest Refunds": "Procentu atmaksāšana",
+      "Deferred Income Recognition": "Atliktā ienākuma atzīšana",
+      "Advanced Configuration": "Papildu konfigurācija"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -5001,7 +5007,8 @@
       "The selected report design is too large": "Atlasītā pārskata veidne pārsniedz 5 MB.",
       "Report design uploaded": "Pārskata veidne {{fileName}} ir augšupielādēta.",
       "Report design replaced": "Pārskata veidne {{fileName}} ir aizstāta.",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "maks. 4 rakstzīmes"
     },
     "permissions": {
       "actions": {

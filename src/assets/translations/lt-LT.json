@@ -1110,7 +1110,9 @@
       "transaction_loan": "Paskolos Sandoriai",
       "transaction_savings": "Taupymo Sandoriai",
       "unmarried": "nevedęs",
-      "xbrlmapping": "XBRL Žemėlapis"
+      "xbrlmapping": "XBRL Žemėlapis",
+      "Enabled": "Įjungtas",
+      "Disabled": "Išjungta"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1800,7 +1802,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Galutinių naudos gavėjų deklaracija - juridiniai asmenys",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Galutinių naudos gavėjų deklaracija - fiziniai asmenys",
       "Recovery": "Susigrąžinimas",
-      "Upload Report Design": "Įkelti ataskaitos maketą"
+      "Upload Report Design": "Įkelti ataskaitos maketą",
+      "Payment Allocation": "Mokėjimo skirstymas",
+      "Interest Refunds": "Palūkanų grąžinimas",
+      "Deferred Income Recognition": "Atidėtųjų pajamų pripažinimas",
+      "Advanced Configuration": "Išplėstinė konfigūracija"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -5002,7 +5008,8 @@
       "The selected report design is too large": "Pasirinktas ataskaitos maketas viršija 5 MB.",
       "Report design uploaded": "Ataskaitos maketas {{fileName}} įkeltas.",
       "Report design replaced": "Ataskaitos maketas {{fileName}} pakeistas.",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "daugiausia 4 simboliai"
     },
     "permissions": {
       "actions": {

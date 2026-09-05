@@ -9,7 +9,8 @@
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, MissingTranslationHandlerParams } from '@ngx-translate/core';
+import { CustomMissingTranslationHandler } from 'app/core/translation/missing-translation.handler';
 import { Router } from '@angular/router';
 import { buildPayload, LoanWizardProfileMode } from './loan-product.config';
 import { LoanProductWizardComponent } from './loan-product-wizard.component';
@@ -33,8 +34,23 @@ describe('LoanProductWizardComponent', () => {
     navigate: jest.fn()
   };
 
+  /**
+   * Mirrors how the app itself resolves a key: `app.module` wires this very handler, so a
+   * `labels.catalogs` miss falls back to the bare value — which is what lets a tenant-named currency
+   * or delinquency bucket render as its own name instead of a key. Only the entries these
+   * assertions read are listed; everything else falls through, exactly as en-US.json's identity
+   * mappings do. Constructing the real handler rather than restating its rule keeps the two from
+   * drifting apart.
+   */
+  const missingTranslationHandler = new CustomMissingTranslationHandler();
+  const translations: Record<string, string> = {
+    'labels.buttons.Yes': 'Yes',
+    'labels.buttons.No': 'No',
+    'labels.accounting.Cash': 'Cash'
+  };
   const translateServiceStub = {
-    instant: (key: string) => key
+    instant: (key: string) =>
+      translations[key] ?? missingTranslationHandler.handle({ key } as MissingTranslationHandlerParams)
   };
 
   const settingsServiceStub = {
@@ -1230,13 +1246,13 @@ describe('LoanProductWizardComponent', () => {
 
     it('locks the Personal Loan visible field set', () => {
       expect(visibleKeysByStep(personalComponent())).toEqual({
-        Details: [
+        'labels.heading.Details': [
           'name',
           'shortName',
           'externalId'
         ],
-        Currency: ['currencyCode'],
-        Terms: [
+        'labels.heading.Currency': ['currencyCode'],
+        'labels.heading.Terms': [
           'principal',
           'numberOfRepayments',
           'interestRatePerPeriod',
@@ -1244,7 +1260,7 @@ describe('LoanProductWizardComponent', () => {
           'repaymentEvery',
           'repaymentFrequencyType'
         ],
-        Settings: [
+        'labels.heading.Settings': [
           'amortizationType',
           'interestType',
           'interestCalculationPeriodType',
@@ -1253,7 +1269,7 @@ describe('LoanProductWizardComponent', () => {
           'graceOnInterestPayment',
           'interestFreePeriod'
         ],
-        'Advanced Configuration': []
+        'labels.heading.Advanced Configuration': []
       });
     });
 
@@ -1264,14 +1280,14 @@ describe('LoanProductWizardComponent', () => {
 
     it('locks the Personal Loan visible step sequence', () => {
       expect(personalComponent().visibleSteps.map((step) => step.title)).toEqual([
-        'Details',
-        'Currency',
-        'Terms',
-        'Settings',
-        'Payment Allocation',
-        'Charges',
-        'Accounting',
-        'Review'
+        'labels.heading.Details',
+        'labels.heading.Currency',
+        'labels.heading.Terms',
+        'labels.heading.Settings',
+        'labels.heading.Payment Allocation',
+        'labels.heading.Charges',
+        'labels.heading.Accounting',
+        'labels.buttons.Preview'
       ]);
     });
 
@@ -1280,13 +1296,13 @@ describe('LoanProductWizardComponent', () => {
       // already contains them: Loan Cycle Variations lives inside Classic's Terms step, and the
       // Advanced Configuration fields are Classic's Event Settings block inside its Settings step.
       expect(customAdvancedComponent().visibleSteps.map((step) => step.title)).toEqual([
-        'Details',
-        'Currency',
-        'Terms',
-        'Settings',
-        'Charges',
-        'Accounting',
-        'Review'
+        'labels.heading.Details',
+        'labels.heading.Currency',
+        'labels.heading.Terms',
+        'labels.heading.Settings',
+        'labels.heading.Charges',
+        'labels.heading.Accounting',
+        'labels.buttons.Preview'
       ]);
     });
 
@@ -1363,13 +1379,13 @@ describe('LoanProductWizardComponent', () => {
 
     it('locks the Two Wheeler visible field set: Personal plus the editable down payment %', () => {
       expect(visibleKeysByStep(twoWheelerComponent())).toEqual({
-        Details: [
+        'labels.heading.Details': [
           'name',
           'shortName',
           'externalId'
         ],
-        Currency: ['currencyCode'],
-        Terms: [
+        'labels.heading.Currency': ['currencyCode'],
+        'labels.heading.Terms': [
           'principal',
           'numberOfRepayments',
           'interestRatePerPeriod',
@@ -1377,7 +1393,7 @@ describe('LoanProductWizardComponent', () => {
           'repaymentEvery',
           'repaymentFrequencyType'
         ],
-        Settings: [
+        'labels.heading.Settings': [
           'amortizationType',
           'interestType',
           'interestCalculationPeriodType',
@@ -1388,12 +1404,12 @@ describe('LoanProductWizardComponent', () => {
           'delinquencyBucketId',
           'disbursedAmountPercentageForDownPayment'
         ],
-        'Advanced Configuration': []
+        'labels.heading.Advanced Configuration': []
       });
     });
 
     it('keeps the down payment toggle and auto-repayment flag hidden (forced by the profile)', () => {
-      const settingsKeys = visibleKeysByStep(twoWheelerComponent()).Settings;
+      const settingsKeys = visibleKeysByStep(twoWheelerComponent())['labels.heading.Settings'];
 
       expect(settingsKeys).not.toContain('enableDownPayment');
       expect(settingsKeys).not.toContain('enableAutoRepaymentForDownPayment');
@@ -1401,14 +1417,14 @@ describe('LoanProductWizardComponent', () => {
 
     it('shows the same guided step sequence as Personal, including Payment Allocation', () => {
       expect(twoWheelerComponent().visibleSteps.map((step) => step.title)).toEqual([
-        'Details',
-        'Currency',
-        'Terms',
-        'Settings',
-        'Payment Allocation',
-        'Charges',
-        'Accounting',
-        'Review'
+        'labels.heading.Details',
+        'labels.heading.Currency',
+        'labels.heading.Terms',
+        'labels.heading.Settings',
+        'labels.heading.Payment Allocation',
+        'labels.heading.Charges',
+        'labels.heading.Accounting',
+        'labels.buttons.Preview'
       ]);
     });
 
@@ -1516,13 +1532,13 @@ describe('LoanProductWizardComponent', () => {
 
     it('locks the Education visible field set: the moratorium and tranche controls headline Settings', () => {
       expect(visibleKeysByStep(educationComponent())).toEqual({
-        Details: [
+        'labels.heading.Details': [
           'name',
           'shortName',
           'externalId'
         ],
-        Currency: ['currencyCode'],
-        Terms: [
+        'labels.heading.Currency': ['currencyCode'],
+        'labels.heading.Terms': [
           'principal',
           'numberOfRepayments',
           'interestRatePerPeriod',
@@ -1530,13 +1546,13 @@ describe('LoanProductWizardComponent', () => {
           'repaymentEvery',
           'repaymentFrequencyType'
         ],
-        Settings: [
+        'labels.heading.Settings': [
           'graceOnPrincipalPayment',
           'graceOnInterestPayment',
           'delinquencyBucketId',
           'maxTrancheCount'
         ],
-        'Advanced Configuration': []
+        'labels.heading.Advanced Configuration': []
       });
     });
 
@@ -1545,13 +1561,13 @@ describe('LoanProductWizardComponent', () => {
 
       expect(component.isAdvancedPaymentStrategy).toBe(false);
       expect(component.visibleSteps.map((step) => step.title)).toEqual([
-        'Details',
-        'Currency',
-        'Terms',
-        'Settings',
-        'Charges',
-        'Accounting',
-        'Review'
+        'labels.heading.Details',
+        'labels.heading.Currency',
+        'labels.heading.Terms',
+        'labels.heading.Settings',
+        'labels.heading.Charges',
+        'labels.heading.Accounting',
+        'labels.buttons.Preview'
       ]);
     });
 
@@ -1649,13 +1665,13 @@ describe('LoanProductWizardComponent', () => {
 
     it('locks the Agriculture visible field set: the season terms plus the NPA clock', () => {
       expect(visibleKeysByStep(agricultureComponent())).toEqual({
-        Details: [
+        'labels.heading.Details': [
           'name',
           'shortName',
           'externalId'
         ],
-        Currency: ['currencyCode'],
-        Terms: [
+        'labels.heading.Currency': ['currencyCode'],
+        'labels.heading.Terms': [
           'principal',
           'numberOfRepayments',
           'interestRatePerPeriod',
@@ -1663,11 +1679,11 @@ describe('LoanProductWizardComponent', () => {
           'repaymentEvery',
           'repaymentFrequencyType'
         ],
-        Settings: [
+        'labels.heading.Settings': [
           'delinquencyBucketId',
           'overdueDaysForNPA'
         ],
-        'Advanced Configuration': []
+        'labels.heading.Advanced Configuration': []
       });
     });
 
@@ -1676,13 +1692,13 @@ describe('LoanProductWizardComponent', () => {
 
       expect(component.isAdvancedPaymentStrategy).toBe(false);
       expect(component.visibleSteps.map((step) => step.title)).toEqual([
-        'Details',
-        'Currency',
-        'Terms',
-        'Settings',
-        'Charges',
-        'Accounting',
-        'Review'
+        'labels.heading.Details',
+        'labels.heading.Currency',
+        'labels.heading.Terms',
+        'labels.heading.Settings',
+        'labels.heading.Charges',
+        'labels.heading.Accounting',
+        'labels.buttons.Preview'
       ]);
     });
 
@@ -1829,7 +1845,7 @@ describe('LoanProductWizardComponent', () => {
 
       const review = component.accountingReview;
 
-      expect(review?.ruleLabel).toBe('Cash-based');
+      expect(review?.ruleLabel).toBe('Cash');
       expect(review?.accounts).toEqual([
         { title: 'Fund source', glAccount: { id: 4, name: 'Fund', glCode: '1001' } },
         { title: 'Losses written off', glAccount: { id: 9, name: 'Write off', glCode: '5001' } }
@@ -1983,7 +1999,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a paymentAllocation collection in the submitted payload', () => {
@@ -1995,8 +2011,8 @@ describe('LoanProductWizardComponent', () => {
 
     it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
       const titles = homeComponent().visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
   });
 
@@ -2125,7 +2141,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2149,8 +2165,8 @@ describe('LoanProductWizardComponent', () => {
 
     it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
       const titles = goldComponent().visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
   });
 
@@ -2281,7 +2297,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2305,8 +2321,8 @@ describe('LoanProductWizardComponent', () => {
 
     it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
       const titles = autoComponent().visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
   });
 
@@ -2367,10 +2383,14 @@ describe('LoanProductWizardComponent', () => {
 
     it('renders the Loan Cycle Variations step, gated on useBorrowerCycle like Classic', () => {
       const component = jlgComponent();
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Loan Cycle Variations');
+      expect(component.visibleSteps.map((step) => step.title)).toContain(
+        'labels.inputs.Terms vary based on loan cycle'
+      );
 
       component.form.get('useBorrowerCycle')!.setValue(false);
-      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain(
+        'labels.inputs.Terms vary based on loan cycle'
+      );
     });
 
     it('does not render the step for any other profile', () => {
@@ -2381,7 +2401,7 @@ describe('LoanProductWizardComponent', () => {
       gold.ngOnInit();
       gold.form.get('useBorrowerCycle')?.setValue(true);
 
-      expect(gold.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+      expect(gold.visibleSteps.map((step) => step.title)).not.toContain('labels.inputs.Terms vary based on loan cycle');
     });
 
     it('folds the collected variation rows into the submitted payload', () => {
@@ -2441,7 +2461,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2572,7 +2592,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2591,8 +2611,8 @@ describe('LoanProductWizardComponent', () => {
 
     it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
       const titles = consumerDurableComponent().visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
   });
 
@@ -2684,8 +2704,8 @@ describe('LoanProductWizardComponent', () => {
     it('renders the Interest Refund step but not the Deferred Income one', () => {
       // The defining structural difference from BNPL, which renders both.
       const titles = cardComponent().visibleSteps.map((step) => step.title);
-      expect(titles).toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
 
     it('hides the Interest Refund step when the strategy is not advanced payment allocation', () => {
@@ -2693,7 +2713,7 @@ describe('LoanProductWizardComponent', () => {
       const component = cardComponent();
       component.form.get('transactionProcessingStrategyCode')!.setValue('mifos-standard-strategy');
 
-      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Interest Refunds');
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain('labels.heading.Interest Refunds');
     });
 
     it('gates the over-applied pair on its toggle, like Classic', () => {
@@ -2722,7 +2742,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2854,7 +2874,7 @@ describe('LoanProductWizardComponent', () => {
       expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
         LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
       );
-      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+      expect(component.visibleSteps.map((step) => step.title)).toContain('labels.heading.Payment Allocation');
     });
 
     it('carries a populated paymentAllocation collection in the submitted payload', () => {
@@ -2873,8 +2893,8 @@ describe('LoanProductWizardComponent', () => {
 
     it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
       const titles = lasComponent().visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
   });
 
@@ -2957,16 +2977,16 @@ describe('LoanProductWizardComponent', () => {
 
     it('renders the highlighted Interest Refunds and Deferred Income groups as reused Classic steps', () => {
       const titles = bnplComponent().visibleSteps.map((step) => step.title);
-      expect(titles).toContain('Interest Refunds');
-      expect(titles).toContain('Deferred Income Recognition');
+      expect(titles).toContain('labels.heading.Interest Refunds');
+      expect(titles).toContain('labels.heading.Deferred Income Recognition');
     });
 
     it('hides both reused steps when the strategy is not advanced payment allocation, like Classic', () => {
       const component = bnplComponent();
       component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
       const titles = component.visibleSteps.map((step) => step.title);
-      expect(titles).not.toContain('Interest Refunds');
-      expect(titles).not.toContain('Deferred Income Recognition');
+      expect(titles).not.toContain('labels.heading.Interest Refunds');
+      expect(titles).not.toContain('labels.heading.Deferred Income Recognition');
     });
 
     it('gates the over-applied pair on its toggle, with Classic validators and payload exclusion', () => {
