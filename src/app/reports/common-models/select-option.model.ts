@@ -13,6 +13,7 @@ export class SelectOption {
 
   constructor(options: any[]) {
     this.id = options[0];
-    this.name = options[1];
+    // Office hierarchy is prefixed with leading dots (e.g. "...Branch Name") by the report SQL to denote nesting depth.
+    this.name = typeof options[1] === 'string' ? options[1].replace(/^\.+/, '') : options[1];
   }
 }
