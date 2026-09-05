@@ -162,6 +162,7 @@
   }
 
   .toggle {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -171,6 +172,29 @@
     user-select: none;
     padding: 6px 4px;
     margin: 0;
+  }
+
+  // The real checkbox carries the state, the keyboard behaviour and the
+  // announcement; .switch below is only its painted stand-in. Hide it without
+  // display: none or visibility: hidden, either of which would drop it from the
+  // tab order and the accessibility tree and leave the switch unusable again.
+  .toggle-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  // Keyboard focus has to be visible on the stand-in, since the input it
+  // belongs to cannot be seen. :focus-visible keeps the ring off mouse clicks.
+  .toggle-input:focus-visible + .switch {
+    outline: 2px solid var(--loan-blue-700);
+    outline-offset: 2px;
   }
 
   .switch {
