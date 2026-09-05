@@ -7,7 +7,8 @@
  */
 
 .container {
-  max-width: 37rem;
+  // Wide enough to show a 600px email, the usual width of HTML email templates, without scrolling
+  max-width: 40rem;
 
   .content {
     div {
@@ -17,8 +18,28 @@
   }
 }
 
+// The Text label sits above the template text, which takes the full width
+.text-label {
+  margin-bottom: 0.5rem;
+}
+
 // Plain text templates keep their line breaks
 .plain-text {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+// HTML templates render in their own document so their styles apply and the app's do not
+.html-preview {
+  display: block;
+  min-height: 6rem;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px;
+
+  // Emails are designed for a light background, whatever the app theme
+  background: #fff;
+}
+
+:host-context(.dark-theme) .html-preview {
+  border-color: rgb(255 255 255 / 12%);
 }

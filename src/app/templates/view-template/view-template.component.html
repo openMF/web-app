@@ -46,14 +46,22 @@
           {{ templateData.type }}
         </div>
 
-        <div class="flex-50 mat-body-strong">
+        <div class="flex-100 mat-body-strong text-label">
           {{ 'labels.inputs.Text' | translate }}
         </div>
 
         @if (isHtml) {
-          <div class="flex-50" [innerHTML]="templateData.text"></div>
+          <!-- Sandboxed: the template's own styles apply while its scripts never run -->
+          <iframe
+            #preview
+            class="flex-100 html-preview"
+            sandbox="allow-same-origin"
+            [srcdoc]="htmlPreview"
+            [title]="'labels.inputs.Text' | translate"
+            (load)="onPreviewLoad(preview)"
+          ></iframe>
         } @else {
-          <div class="flex-50 plain-text">{{ templateData.text }}</div>
+          <div class="flex-100 plain-text">{{ templateData.text }}</div>
         }
       </div>
     </mat-card-content>
