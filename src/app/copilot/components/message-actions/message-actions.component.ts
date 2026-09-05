@@ -9,9 +9,18 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChatMessage } from '../../core/models/chat-message.model';
 import { toPlainText } from '../../core/plain-text';
+import { CopilotExportFormat, CopilotExportService } from '../../services/copilot-export.service';
+
+/** What each format is called and drawn as, so the template holds no format-specific markup. */
+const FORMAT_LABELS: Record<CopilotExportFormat, string> = {
+  pdf: 'copilot.actions.export.pdf',
+  csv: 'copilot.actions.export.csv',
+  png: 'copilot.actions.export.png'
+};
 
 /**
  * What an officer can do with a reply once it has finished arriving.
@@ -28,6 +37,7 @@ import { toPlainText } from '../../core/plain-text';
   selector: 'mifosx-message-actions',
   imports: [
     CommonModule,
+    MatMenuModule,
     TranslateModule
   ],
   templateUrl: './message-actions.component.html',
@@ -35,14 +45,37 @@ import { toPlainText } from '../../core/plain-text';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageActionsComponent implements OnDestroy {
-  @Input({ required: true }) message!: ChatMessage;
+  /**
+   * The reply these actions belong to.
+   *
+   * <p>Set through a setter so the formats are worked out once, when the reply arrives, rather
+   * than on every change detection. Working them out means parsing the answer for tables, and
+   * this component is rendered once per reply in the conversation.
+   */
+  @Input({ required: true })
+  set message(value: ChatMessage) {
+    this.reply = value;
+    this.exportFormats = this.exportService.formatsFor(value);
+  }
+  get message(): ChatMessage {
+    return this.reply;
+  }
+  private reply!: ChatMessage;
+
+  /**
+   * The exports this particular reply supports, in the order they are offered.
+   *
+   * <p>Context-aware on purpose: a spreadsheet is only offered for an answer that has rows and
+   * columns in it. A CSV of a sentence is a file with a sentence in cell A1.
+   */
+  exportFormats: CopilotExportFormat[] = [];
 
   /** Ask the same question again. Carries the message whose question is to be repeated. */
   @Output() repeatRequested = new EventEmitter<string>();
   /** A rating for this reply, or null when the officer takes one back. */
   @Output() voted = new EventEmitter<'up' | 'down' | null>();
-  /** File this exchange as a PDF. Carries the message the exchange ends with. */
-  @Output() exportRequested = new EventEmitter<string>();
+  /** Take this exchange out of the panel, in the format the officer picked. */
+  @Output() exportRequested = new EventEmitter<{ messageId: string; format: CopilotExportFormat }>();
   /** Pass this exchange on. Carries the message the exchange ends with. */
   @Output() shareRequested = new EventEmitter<string>();
 
@@ -50,6 +83,7 @@ export class MessageActionsComponent implements OnDestroy {
   copied = false;
 
   private readonly clipboard = inject(Clipboard);
+  private readonly exportService = inject(CopilotExportService);
   private copiedTimer: ReturnType<typeof setTimeout> | null = null;
 
   copy(): void {
@@ -68,8 +102,13 @@ export class MessageActionsComponent implements OnDestroy {
     this.repeatRequested.emit(this.message.id);
   }
 
-  exportPdf(): void {
-    this.exportRequested.emit(this.message.id);
+  exportAs(format: CopilotExportFormat): void {
+    this.exportRequested.emit({ messageId: this.message.id, format });
+  }
+
+  /** The translation key naming a format in the menu. */
+  labelFor(format: CopilotExportFormat): string {
+    return FORMAT_LABELS[format];
   }
 
   share(): void {

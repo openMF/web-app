@@ -5917,6 +5917,10 @@
     },
     "confirmWarning": "실제 자금이 움직입니다. 내용을 확인한 후 승인하세요.",
     "openAssistant": "Mifos X Copilot 열기",
+    "launcher": {
+      "working": "Mifos X Copilot\uc774 \uc694\uccad\uc744 \ucc98\ub9ac\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4. Copilot \uc5f4\uae30.",
+      "replying": "Mifos X Copilot\uc774 \ub2f5\ubcc0\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4. Copilot \uc5f4\uae30."
+    },
     "newChatTitle": "새 대화",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6019,7 +6023,12 @@
       "repeat": "\ub2e4\uc2dc \uc9c8\ubb38",
       "goodAnswer": "\uc88b\uc740 \ub2f5\ubcc0",
       "poorAnswer": "\ubd80\uc871\ud55c \ub2f5\ubcc0",
-      "exportPdf": "PDF\ub85c \ub0b4\ubcf4\ub0b4\uae30",
+      "export": {
+        "label": "\ub0b4\ubcf4\ub0b4\uae30",
+        "pdf": "PDF \ubb38\uc11c",
+        "csv": "CSV \uc2a4\ud504\ub808\ub4dc\uc2dc\ud2b8",
+        "png": "PNG \uc774\ubbf8\uc9c0"
+      },
       "share": "\uacf5\uc720"
     },
     "export": {
@@ -6030,8 +6039,10 @@
       "disclaimer": "Fineract \uae30\ub85d\uc744 \ubc14\ud0d5\uc73c\ub85c Mifos Copilot\uc774 \uc791\uc131\ud588\uc2b5\ub2c8\ub2e4. \uc870\uce58\ud558\uae30 \uc804\uc5d0 \uc6d0\ubcf8 \uae30\ub85d\uacfc \ub300\uc870\ud558\uc2ed\uc2dc\uc624.",
       "shareTitle": "Mifos Copilot \ub2f5\ubcc0",
       "copiedToClipboard": "\ub2f5\ubcc0\uacfc \ub9c1\ud06c\ub97c \ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ud588\uc2b5\ub2c8\ub2e4",
-      "failed": "PDF\ub97c \ub9cc\ub4e4\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4. \ub2e4\uc2dc \uc2dc\ub3c4\ud574 \uc8fc\uc138\uc694.",
-      "fileNameFallback": "copilot"
+      "failed": "\ud30c\uc77c\uc744 \ub9cc\ub4e4\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4. \ub2e4\uc2dc \uc2dc\ub3c4\ud574 \uc8fc\uc138\uc694.",
+      "fileNameFallback": "copilot",
+      "cardField": "\ud56d\ubaa9",
+      "cardValue": "\uac12"
     }
   }
 }

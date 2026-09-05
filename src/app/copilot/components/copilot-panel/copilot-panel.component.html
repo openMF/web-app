@@ -6,15 +6,65 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 <div class="mifos-copilot">
-  <!-- ─── Floating bubble toggle ─── -->
+  <!-- ─── Floating bubble toggle ───
+       Closing the panel does not stop a turn, so the launcher has to be able to say that one is
+       still running. It carries the same two states the avatar inside does, and says which in
+       its label as well as its animation: an icon that is merely pulsing tells a screen reader
+       nothing. -->
   <button
     type="button"
     *ngIf="isEnabled && !isOpen"
     class="ai-fab"
+    [class.ai-fab--thinking]="turnPhase === 'thinking'"
+    [class.ai-fab--streaming]="turnPhase === 'streaming'"
+    [class.ai-fab--intro]="playIntro"
     (click)="togglePanel()"
-    [attr.aria-label]="'copilot.openAssistant' | translate"
+    [attr.aria-label]="launcherLabelKey | translate"
   >
-    <img src="assets/images/MifosX_logo.png" alt="Mifos AI" class="ai-fab__icon" />
+    <!--
+      The mark, inline rather than an <img> so the four wedges can be animated apart.
+      Traced from MifosX_logo.png: a backing disc plus the four blue segments the X
+      cuts it into, with the crossing left of centre exactly as the original has it.
+      The white strokes are the gaps between the wedges, so the X forms as they land.
+    -->
+    <svg class="ai-fab__mark" viewBox="0 0 184 184" aria-hidden="true" focusable="false">
+      <g class="ai-fab__disc">
+        <path
+          class="ai-fab__disc-fill"
+          d="M0 0 C8.19409244 6.88579196 12.70410527 15.99872471 13.6484375 26.671875 C13.75616743 37.57414356 12.41700877 47.11277251 5.3125 55.875 C4.6525 55.875 3.9925 55.875 3.3125 55.875 C3.0753125 56.4628125 2.838125 57.050625 2.59375 57.65625 C-1.47484868 64.70187211 -11.22792694 68.54309985 -18.6875 70.875 C-30.1779683 73.66394862 -42.61874235 72.10235315 -53.1875 66.875 C-65.02629517 59.62939858 -72.13349352 51.15510754 -76.31640625 37.87890625 C-78.34139859 26.94394759 -76.41721051 16.01572896 -70.19140625 6.81640625 C-62.57692478 -3.01319711 -52.90022836 -8.87299974 -40.875 -11.8125 C-24.90522027 -13.37816468 -12.71335674 -9.59498622 0 0 Z"
+          transform="translate(124.6875,61.125)"
+        />
+      </g>
+      <g class="ai-fab__seg ai-fab__seg--right">
+        <path
+          d="M0 0 C8.40426234 4.05785199 12.24494529 9.56243731 16 18 C19.52211731 28.32675213 19.42479583 39.66085237 15.1484375 49.71484375 C13.62958052 52.73705917 12.13432673 55.3676637 10 58 C9.34 58 8.68 58 8 58 C7.731875 58.639375 7.46375 59.27875 7.1875 59.9375 C6 62 6 62 3 63 C-5.24708288 60.58989359 -12.29473621 56.26436954 -19 51 C-19.71027344 50.443125 -20.42054687 49.88625 -21.15234375 49.3125 C-26.21809417 45.1121081 -30.14381436 40.31430583 -34 35 C-30.68294577 28.36589154 -26.0884975 23.35252331 -21 18 C-20.20078125 17.14792969 -19.4015625 16.29585937 -18.578125 15.41796875 C-12.87142173 9.50226202 -6.79083511 4.62189918 0 0 Z"
+          fill="#1072BA"
+          transform="translate(120,59)"
+        />
+      </g>
+      <g class="ai-fab__seg ai-fab__seg--left">
+        <path
+          d="M0 0 C0.66 0.33 1.32 0.66 2 1 C2.4921875 3.08203125 2.4921875 3.08203125 2.875 5.8125 C4.19972557 13.78155226 6.48672983 21.36474006 10.3125 28.5 C12.22947402 32.47594612 12.22947402 32.47594612 11 36 C9.74285629 39.38835301 8.2399244 42.55191984 6.5625 45.75 C4.21400791 50.37750216 2.47614063 55.03152664 1 60 C-6.97640213 56.34063581 -9.94024086 48.79061751 -13 41 C-16.04297895 31.49069077 -14.31573438 20.57267914 -9.8984375 11.81640625 C-7.19028788 7.19507997 -3.91159139 3.63868966 0 0 Z"
+          fill="#1072BA"
+          transform="translate(62,60)"
+        />
+      </g>
+      <g class="ai-fab__seg ai-fab__seg--top">
+        <path
+          d="M0 0 C0 0.99 0 1.98 0 3 C-1.984375 4.83984375 -1.984375 4.83984375 -4.75 6.9375 C-13.94916484 14.22561253 -22.2970731 22.31799448 -29 32 C-32.05909783 29.46531894 -32.94050057 26.86503364 -34.125 23.125 C-34.45757812 22.09632812 -34.79015625 21.06765625 -35.1328125 20.0078125 C-36.4975133 15.27439081 -37.12193825 11.12087492 -37.0625 6.1875 C-37.05347656 5.21167969 -37.04445313 4.23585938 -37.03515625 3.23046875 C-37.02355469 2.49441406 -37.01195313 1.75835937 -37 1 C-24.15340643 -4.09433883 -13.23550339 -3.88056644 0 0 Z"
+          fill="#1072BA"
+          transform="translate(110,52)"
+        />
+      </g>
+      <g class="ai-fab__seg ai-fab__seg--bottom">
+        <path
+          d="M0 0 C2.76089006 2.0509469 4.96062446 3.94869248 7.0625 6.6875 C13.02102211 14.08880891 22.01566587 19.27279673 30.234375 23.80859375 C30.81703125 24.20175781 31.3996875 24.59492187 32 25 C32 25.66 32 26.32 32 27 C18.77047092 31.45402983 5.40845251 31.512105 -7.34765625 25.39453125 C-8.22292969 24.93433594 -9.09820312 24.47414063 -10 24 C-7.37969677 15.53697807 -4.79732957 7.53282814 0 0 Z"
+          fill="#1072BA"
+          transform="translate(80,103)"
+        />
+      </g>
+    </svg>
+    <span class="ai-fab__sheen" aria-hidden="true"></span>
   </button>
 
   <!-- ─── Main chat panel ─── -->
@@ -40,6 +90,7 @@
       [hidden]="activeTab !== 'chat'"
       [messages]="messages"
       [isStreaming]="isStreaming"
+      [turnPhase]="turnPhase"
       [greetingTime]="greetingTime"
       [emptySuggestions]="emptySuggestions"
       [pendingCard]="pendingCard"

@@ -5918,6 +5918,10 @@
     },
     "confirmWarning": "Čia juda tikri pinigai. Patikrinkite duomenis ir patvirtinkite.",
     "openAssistant": "Atidaryti Mifos X Copilot",
+    "launcher": {
+      "working": "\u201eMifos X Copilot\u201c vykdo j\u016bs\u0173 u\u017eklaus\u0105. Atverti \u201eCopilot\u201c.",
+      "replying": "\u201eMifos X Copilot\u201c atsako. Atverti \u201eCopilot\u201c."
+    },
     "newChatTitle": "Naujas pokalbis",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6020,7 +6024,12 @@
       "repeat": "Klausti dar kart\u0105",
       "goodAnswer": "Geras atsakymas",
       "poorAnswer": "Prastas atsakymas",
-      "exportPdf": "Eksportuoti \u012f PDF",
+      "export": {
+        "label": "Eksportuoti",
+        "pdf": "PDF dokumentas",
+        "csv": "CSV skai\u010diuokl\u0117",
+        "png": "PNG paveiksl\u0117lis"
+      },
       "share": "Bendrinti"
     },
     "export": {
@@ -6031,8 +6040,10 @@
       "disclaimer": "Pareng\u0117 Mifos Copilot pagal Fineract \u012fra\u0161us. Prie\u0161 imdamiesi veiksm\u0173 palyginkite su pirminiu \u012fra\u0161u.",
       "shareTitle": "Mifos Copilot atsakymas",
       "copiedToClipboard": "Atsakymas ir nuoroda nukopijuoti \u012f i\u0161karpin\u0119",
-      "failed": "Nepavyko sukurti PDF. Bandykite dar kart\u0105.",
-      "fileNameFallback": "copilot"
+      "failed": "Nepavyko sukurti failo. Bandykite dar kart\u0105.",
+      "fileNameFallback": "copilot",
+      "cardField": "Laukas",
+      "cardValue": "Reik\u0161m\u0117"
     }
   }
 }

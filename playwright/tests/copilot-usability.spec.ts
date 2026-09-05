@@ -188,7 +188,7 @@ test.describe('Copilot panel', () => {
     for (const label of [
       'Copy',
       'Ask again',
-      'Export to PDF',
+      'Export',
       'Share',
       'Good answer',
       'Poor answer'
@@ -210,9 +210,19 @@ test.describe('Copilot panel', () => {
     await good.click();
     await expect(good).toHaveAttribute('aria-pressed', 'false');
 
-    // Export hands the browser a PDF to save.
+    // Export is one button opening a menu of the formats this reply supports. The menu opens
+    // into the CDK overlay, which is a sibling of the panel rather than inside it, so the
+    // items are located at page level.
+    await byLabel('Export').click();
+    const exportMenu = page.locator('.mat-mdc-menu-panel');
+    await expect(exportMenu).toBeVisible();
+
+    // An answer of prose gets no spreadsheet offered: a CSV of a sentence is a file with a
+    // sentence in cell A1.
+    await expect(exportMenu.getByRole('menuitem', { name: 'CSV spreadsheet' })).toHaveCount(0);
+
     const download = page.waitForEvent('download', { timeout: 90000 });
-    await byLabel('Export to PDF').click();
+    await exportMenu.getByRole('menuitem', { name: 'PDF document' }).click();
     expect((await download).suggestedFilename()).toMatch(/\.pdf$/);
 
     // No share sheet here, so sharing falls back to the clipboard. Polled on the clipboard

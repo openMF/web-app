@@ -5914,6 +5914,10 @@
     },
     "confirmWarning": "Hii inahamisha pesa halisi. Kagua maelezo, kisha thibitisha.",
     "openAssistant": "Fungua Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot inashughulikia ombi lako. Fungua Copilot.",
+      "replying": "Mifos X Copilot inajibu. Fungua Copilot."
+    },
     "newChatTitle": "Mazungumzo mapya",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6016,7 +6020,12 @@
       "repeat": "Uliza tena",
       "goodAnswer": "Jibu zuri",
       "poorAnswer": "Jibu duni",
-      "exportPdf": "Hamisha kwa PDF",
+      "export": {
+        "label": "Hamisha",
+        "pdf": "Hati ya PDF",
+        "csv": "Lahajedwali la CSV",
+        "png": "Picha ya PNG"
+      },
       "share": "Shiriki"
     },
     "export": {
@@ -6027,8 +6036,10 @@
       "disclaimer": "Limetayarishwa na Mifos Copilot kutoka kumbukumbu za Fineract. Linganisha na kumbukumbu asili kabla ya kuchukua hatua.",
       "shareTitle": "Jibu la Mifos Copilot",
       "copiedToClipboard": "Jibu na kiungo vimenakiliwa",
-      "failed": "PDF haikuweza kutengenezwa. Tafadhali jaribu tena.",
-      "fileNameFallback": "copilot"
+      "failed": "Faili haikuweza kutengenezwa. Tafadhali jaribu tena.",
+      "fileNameFallback": "copilot",
+      "cardField": "Sehemu",
+      "cardValue": "Thamani"
     }
   }
 }

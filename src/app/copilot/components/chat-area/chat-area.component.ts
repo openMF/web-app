@@ -28,6 +28,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { relativeTime } from '../../core/relative-time';
 import { ChatMessage } from '../../core/models/chat-message.model';
+import { CopilotTurnPhase } from '../../core/turn-phase';
+import { CopilotExportFormat } from '../../services/copilot-export.service';
 import { ActionCard } from '../../core/models/action-card.model';
 import { MarkdownPipe } from '../../pipes/markdown.pipe';
 import { ActionCardComponent } from '../action-card/action-card.component';
@@ -76,6 +78,8 @@ const WINDOW_SIZE = 40;
 export class ChatAreaComponent implements OnChanges, AfterViewChecked, OnDestroy {
   @Input() messages: ChatMessage[] = [];
   @Input() isStreaming = false;
+  /** Where the turn in flight has got to, which decides what progress is drawn and where. */
+  @Input() turnPhase: CopilotTurnPhase = 'idle';
   @Input() greetingTime = '';
   @Input() emptySuggestions: string[] = [];
   /** Write action awaiting confirmation, rendered INSIDE the chat flow so it scrolls
@@ -90,7 +94,7 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked, OnDestroy
   /** The officer rated a reply, or took the rating back. */
   @Output() voteChanged = new EventEmitter<{ messageId: string; vote: 'up' | 'down' | null }>();
   /** The officer asked for an exchange as a PDF. Carries the id of the reply. */
-  @Output() exportRequested = new EventEmitter<string>();
+  @Output() exportRequested = new EventEmitter<{ messageId: string; format: CopilotExportFormat }>();
   /** The officer asked to pass an exchange on. Carries the id of the reply. */
   @Output() shareRequested = new EventEmitter<string>();
   @Output() cardAction = new EventEmitter<string | undefined>();
@@ -192,15 +196,14 @@ export class ChatAreaComponent implements OnChanges, AfterViewChecked, OnDestroy
   }
 
   /**
-   * Whether the reply being streamed has anything on screen yet.
+   * The phase that belongs to one message, which is 'idle' for all but the draft.
    *
-   * <p>Drives the typing indicator away the moment it has served its purpose. A turn that has
-   * already written a sentence does not also need three dots below it, and the second avatar
-   * that carries them looks like a second assistant.
+   * <p>The panel has a single turn in flight and the trail is rendered once per reply, so the
+   * phase has to be narrowed to the one reply it is actually about. Returns a primitive, so an
+   * OnPush trail is only re-checked when its own state really changed.
    */
-  get hasVisibleDraft(): boolean {
-    const last = this.messages[this.messages.length - 1];
-    return !!last && last.role === 'assistant' && !!last.content?.trim();
+  phaseFor(msg: ChatMessage): CopilotTurnPhase {
+    return msg.isStreaming ? this.turnPhase : 'idle';
   }
 
   /**

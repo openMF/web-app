@@ -5917,6 +5917,10 @@
     },
     "confirmWarning": "Šeit kustas reāla nauda. Pārbaudiet datus un tad apstipriniet.",
     "openAssistant": "Atvērt Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot apstr\u0101d\u0101 j\u016bsu piepras\u012bjumu. Atv\u0113rt Copilot.",
+      "replying": "Mifos X Copilot atbild. Atv\u0113rt Copilot."
+    },
     "newChatTitle": "Jauna saruna",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6019,7 +6023,12 @@
       "repeat": "Jaut\u0101t v\u0113lreiz",
       "goodAnswer": "Laba atbilde",
       "poorAnswer": "Slikta atbilde",
-      "exportPdf": "Eksport\u0113t uz PDF",
+      "export": {
+        "label": "Eksport\u0113t",
+        "pdf": "PDF dokuments",
+        "csv": "CSV izkl\u0101jlapa",
+        "png": "PNG att\u0113ls"
+      },
       "share": "Kop\u012bgot"
     },
     "export": {
@@ -6030,8 +6039,10 @@
       "disclaimer": "Sagatavojis Mifos Copilot no Fineract ierakstiem. Pirms r\u012bkoties, sal\u012bdziniet ar s\u0101kotn\u0113jo ierakstu.",
       "shareTitle": "Mifos Copilot atbilde",
       "copiedToClipboard": "Atbilde un saite nokop\u0113tas starpliktuv\u0113",
-      "failed": "PDF neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
-      "fileNameFallback": "copilot"
+      "failed": "Failu neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
+      "fileNameFallback": "copilot",
+      "cardField": "Lauks",
+      "cardValue": "V\u0113rt\u012bba"
     }
   }
 }

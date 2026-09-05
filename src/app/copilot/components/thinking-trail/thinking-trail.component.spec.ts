@@ -68,14 +68,14 @@ describe('ThinkingTrailComponent', () => {
   // ─── State transitions ─────────────────────────────────────────────────────
 
   it('shows the live line while streaming and the disclosure once complete', () => {
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     fixture.componentRef.setInput('steps', [step('Reading the loan account', false)]);
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.trail__live')).not.toBeNull();
     expect(fixture.nativeElement.querySelector('.trail__summary')).toBeNull();
 
-    fixture.componentRef.setInput('isStreaming', false);
+    fixture.componentRef.setInput('phase', 'idle');
     fixture.componentRef.setInput('turnMs', 3200);
     fixture.detectChanges();
 
@@ -88,7 +88,7 @@ describe('ThinkingTrailComponent', () => {
    * which is the state an officer cannot tell apart from a hung panel.
    */
   it('names the wait even before the first step arrives', () => {
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     fixture.detectChanges();
 
     expect(component.currentStep).toBeNull();
@@ -97,7 +97,7 @@ describe('ThinkingTrailComponent', () => {
   });
 
   it('says it is thinking once notes have started arriving', () => {
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     fixture.componentRef.setInput('workingNotes', 'Checking the schedule before quoting a figure.');
     fixture.detectChanges();
 
@@ -105,7 +105,7 @@ describe('ThinkingTrailComponent', () => {
   });
 
   it('names the step in flight while streaming', () => {
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     fixture.componentRef.setInput('steps', [
       step('Reading the loan account'),
       step('Checking the repayment schedule', false)
@@ -198,9 +198,9 @@ describe('ThinkingTrailComponent', () => {
    */
   it('counts the wait up without binding a ticking value', () => {
     jest.useFakeTimers();
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     component.ngOnChanges({
-      isStreaming: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false }
+      phase: { currentValue: 'thinking', previousValue: 'idle', firstChange: false, isFirstChange: () => false }
     });
     fixture.detectChanges();
 
@@ -211,11 +211,11 @@ describe('ThinkingTrailComponent', () => {
   it('stops counting when the turn ends', () => {
     jest.useFakeTimers();
     const cleared = jest.spyOn(globalThis, 'clearInterval');
-    fixture.componentRef.setInput('isStreaming', true);
+    fixture.componentRef.setInput('phase', 'thinking');
     fixture.detectChanges();
     jest.advanceTimersByTime(2000);
 
-    fixture.componentRef.setInput('isStreaming', false);
+    fixture.componentRef.setInput('phase', 'idle');
     fixture.detectChanges();
 
     expect(cleared).toHaveBeenCalled();
