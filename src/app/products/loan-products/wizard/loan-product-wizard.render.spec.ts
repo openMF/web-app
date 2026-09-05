@@ -335,4 +335,44 @@ describe('LoanProductWizardComponent (rendered)', () => {
       expect(summary()).not.toBeNull();
     });
   });
+
+  /**
+   * C5: the reused Classic Accounting step ships its own trailing Previous/Next row
+   * (`loan-product-accounting-step.component.html`), and the wizard shell renders a second, unified
+   * one for every step via `.step-actions`. The Charges step has the identical row and was already
+   * hidden with a `.wizard-charges ::ng-deep .layout-row.margin-t` rule; `.wizard-accounting` had no
+   * matching rule, so the Accounting step showed both pairs stacked, in both guided and Custom/Advanced
+   * mode. This is DOM-level for the same reason the C3 `mat-error` specs are: the defect is a second
+   * set of buttons actually rendering, which the `new LoanProductWizardComponent()` specs cannot see.
+   */
+  it('does not stack a second Previous/Next pair on the Accounting step', () => {
+    const accountingIndex = component.visibleSteps.findIndex((step) => step.kind === 'accounting');
+    expect(accountingIndex).toBeGreaterThanOrEqual(0);
+    component.stepper!.selectedIndex = accountingIndex;
+    detect();
+
+    // Vertical mat-stepper renders every step's content into the DOM at once (toggling visibility
+    // rather than instantiating on demand), so `.step-actions` appears once per visible step — the
+    // Accounting step's own row has to be picked out by position, matching `visibleSteps` order.
+    // The wizard's own nav labels its buttons 'Back'/'Next'; the embedded step's labels its
+    // 'Previous'/'Next' — different keys, so this also confirms which row is which.
+    const wizardNav = fixture.nativeElement.querySelectorAll('.step-actions')[accountingIndex] as HTMLElement;
+    const wizardNavLabels = Array.from(wizardNav.querySelectorAll('button') as NodeListOf<HTMLElement>).map((button) =>
+      button.textContent!.trim()
+    );
+    expect(wizardNavLabels).toContain('labels.buttons.Back');
+    expect(wizardNavLabels).toContain('labels.buttons.Next');
+
+    // The embedded step still renders its own row in the DOM (it is a shared component, used
+    // undecorated by Classic's own create flow) — this only asserts it is not visually shown here.
+    // Confirms the hide selector still has something to target: jest-preset-angular does not compile
+    // or inject component SCSS into this test's DOM (verified — no `<style>` in this suite ever
+    // carries a `.wizard-accounting` or `.wizard-charges` rule, including the pre-existing Charges
+    // one), so `getComputedStyle` on this element would read as visible whether or not the SCSS hide
+    // rule exists. `loan-product-wizard.scss.spec.ts` covers the rule itself, from source; this half
+    // covers the other way the fix could silently break — the embedded template dropping the
+    // `layout-row`/`margin-t` classes the rule is written to match.
+    const embeddedNav = fixture.nativeElement.querySelector('.wizard-accounting .layout-row.margin-t');
+    expect(embeddedNav).not.toBeNull();
+  });
 });

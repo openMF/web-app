@@ -7,13 +7,31 @@
 -->
 
 <div class="layout-row align-end gap-1percent layout-lt-md-column container m-b-20">
-  <button mat-raised-button class="mat-success" (click)="approveChecker()">
+  <button
+    *mifosxHasPermission="checkerPermission()"
+    mat-raised-button
+    class="mat-success"
+    (click)="approveChecker()"
+    [disabled]="processing"
+  >
     <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteChecker()">
+  <button
+    *mifosxHasPermission="checkerPermission()"
+    mat-raised-button
+    color="warn"
+    (click)="deleteChecker()"
+    [disabled]="processing"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
   </button>
-  <button mat-raised-button class="mat-reject" (click)="rejectChecker()">
+  <button
+    *mifosxHasPermission="checkerPermission()"
+    mat-raised-button
+    class="mat-reject"
+    (click)="rejectChecker()"
+    [disabled]="processing"
+  >
     <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
   </button>
 </div>
