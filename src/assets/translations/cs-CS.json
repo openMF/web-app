@@ -1112,7 +1112,9 @@
       "transaction_loan": "Transakce Půjčky",
       "transaction_savings": "Transakce Úspor",
       "unmarried": "svobodný",
-      "xbrlmapping": "XBRL Mapování"
+      "xbrlmapping": "XBRL Mapování",
+      "Enabled": "Povoleno",
+      "Disabled": "Zakázáno"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1802,7 +1804,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Prohlášení konečných skutečných majitelů - právnické osoby",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Prohlášení konečných skutečných majitelů - fyzické osoby",
       "Recovery": "Vymáhání",
-      "Upload Report Design": "Nahrát návrh zprávy"
+      "Upload Report Design": "Nahrát návrh zprávy",
+      "Payment Allocation": "Přidělení platby",
+      "Interest Refunds": "Vrácení úroku",
+      "Deferred Income Recognition": "Vykazování odložených výnosů",
+      "Advanced Configuration": "Pokročilá konfigurace"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -5003,7 +5009,8 @@
       "The selected report design is too large": "Vybraný návrh zprávy je větší než 5 MB.",
       "Report design uploaded": "Návrh zprávy {{fileName}} byl nahrán.",
       "Report design replaced": "Návrh zprávy {{fileName}} byl nahrazen.",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "max. 4 znaky"
     },
     "permissions": {
       "actions": {

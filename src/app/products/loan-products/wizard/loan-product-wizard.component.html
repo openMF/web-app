@@ -16,7 +16,7 @@
 
   <mat-stepper orientation="vertical" [linear]="false" class="wizard-stepper">
     <mat-step *ngFor="let step of visibleSteps; trackBy: trackByStepId; let i = index">
-      <ng-template matStepLabel>{{ step.title }}</ng-template>
+      <ng-template matStepLabel>{{ step.title | translate }}</ng-template>
 
       <div [formGroup]="form" class="step-panel">
         <!--
@@ -166,11 +166,11 @@
 
                 <mat-select *ngIf="field.type === 'select'" [formControlName]="field.key" [required]="!!field.required">
                   <mat-option *ngFor="let option of field.options; trackBy: trackByOptionValue" [value]="option.value">
-                    {{ option.label }}
+                    {{ option.label | translateKey: 'catalogs' }}
                   </mat-option>
                 </mat-select>
 
-                <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+                <mat-hint *ngIf="field.hint">{{ field.hint | translate }}</mat-hint>
                 <!--
                   One `@if` per message, each with the `<mat-error>` at its root: that is what lets the
                   compiler infer the `mat-error` projection selector, so Material renders these in the
@@ -284,7 +284,7 @@
         <ng-container *ngIf="step.kind === 'review' && !usesClassicSteps">
           <ng-container *ngFor="let group of reviewGroups; trackBy: trackBySectionTitle">
             <div class="review-section">
-              <p class="review-section__title">{{ group.title }}</p>
+              <p class="review-section__title">{{ group.title | translate }}</p>
               <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
                 <span class="review-row__label">{{ row.label | translate }}</span>
                 <span class="review-row__value">{{ row.display }}</span>
@@ -358,13 +358,11 @@
             -->
             <li *ngFor="let incompleteStep of incompleteGuidedSteps; trackBy: trackByIncompleteStepTitle">
               <!--
-                `step.title` unpiped, matching the stepper headers exactly — the operator has to be able
-                to find the step this names. Those headers are raw English today (review finding I1,
-                wizard chrome untranslated); translating them is one wholesale change across the chrome,
-                and half-translating it here would break the match that makes the list useful.
+                Piped through the same key as the stepper header renders, so this list keeps naming the
+                steps with the exact words the operator has to go and find.
               -->
               <button type="button" class="submit-blocked__step" (click)="goToStep(incompleteStep.index)">
-                {{ incompleteStep.title }}
+                {{ incompleteStep.title | translate }}
               </button>
             </li>
           </ul>

@@ -582,7 +582,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         //     renders them inline under `useBorrowerCycle`.
         //   - Advanced Configuration: Classic's Settings step owns the same Event Settings block
         //     (`useDueForRepaymentsConfigurations` plus the due / overdue day inputs).
-        if (step.kind === 'borrower-cycle' || step.title === 'Advanced Configuration') {
+        if (step.kind === 'borrower-cycle' || step.title === 'labels.heading.Advanced Configuration') {
           return false;
         }
       }
@@ -1523,6 +1523,35 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     };
   }
 
+  /**
+   * Renders a Review value with the same words the control showed.
+   *
+   * Selects are translated through `labels.catalogs`, the namespace Classic pipes every enum value
+   * through, so guided and Classic name a value identically. Labels with no catalogs entry — the
+   * tenant's own currency and delinquency-bucket names, which only the backend can supply — come back
+   * unchanged, because `CustomMissingTranslationHandler` strips the `labels.catalogs.` prefix and
+   * returns the rest. Booleans read from `labels.buttons`, the pair the shared `yesNo` pipe uses.
+   *
+   * `namespace` names a bundle to prefer over `labels.catalogs` — accounting rules live in
+   * `labels.accounting`, which is where Classic's accounting step reads them from. The handler only
+   * rescues the catalogs prefix, so a miss in any other namespace would surface as a raw key; the
+   * lookup therefore falls back to catalogs rather than trusting it. That is not hypothetical here:
+   * `labels.accounting` carries Cash and both Accrual rules but no 'None', which catalogs does have.
+   */
+  private translateDisplayLabel(label: string, namespace?: 'accounting'): string {
+    if (label === 'Yes' || label === 'No') {
+      return this.translateService.instant(`labels.buttons.${label}`);
+    }
+    if (namespace) {
+      const namespacedKey = `labels.${namespace}.${label}`;
+      const translated = this.translateService.instant(namespacedKey);
+      if (translated !== namespacedKey) {
+        return translated;
+      }
+    }
+    return this.translateService.instant(`labels.catalogs.${label}`);
+  }
+
   formatValue(key: string, val: unknown): string {
     if (val === '' || val === null || val === undefined) {
       return '—';
@@ -1540,7 +1569,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         (option) => String(option.value) === String(normalizedValue)
       )?.label;
       if (currencyLabel) {
-        return String(currencyLabel);
+        return this.translateDisplayLabel(String(currencyLabel));
       }
     }
 
@@ -1548,12 +1577,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     if (map) {
       const result = map[String(normalizedValue)];
       if (result !== undefined) {
-        return result;
+        return this.translateDisplayLabel(result, key === 'accountingRule' ? 'accounting' : undefined);
       }
     }
 
     if (typeof normalizedValue === 'boolean') {
-      return normalizedValue ? 'Yes' : 'No';
+      return this.translateDisplayLabel(normalizedValue ? 'Yes' : 'No');
     }
 
     if (normalizedValue instanceof Date) {
@@ -1595,7 +1624,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
           ...options,
           {
             value: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
-            label: this.translateService.instant('Advanced payment allocation strategy')
+            label: 'Advanced payment allocation strategy'
           }
         ];
 
@@ -1620,7 +1649,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     const matchingOption = this.getTransactionProcessingStrategyOptions().find(
       (option: SelectOption) => option.value === code
     );
-    return matchingOption?.label ?? code;
+    return matchingOption ? this.translateDisplayLabel(String(matchingOption.label)) : code;
   }
 
   private normalizeValueForDisplay(val: unknown): unknown {
@@ -1716,12 +1745,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       return '—';
     }
     if (field.type === 'checkbox') {
-      return value ? 'Yes' : 'No';
+      return this.translateDisplayLabel(value ? 'Yes' : 'No');
     }
     if (field.type === 'select' && field.options) {
       const match = field.options.find((option) => String(option.value) === String(value));
       if (match) {
-        return String(match.label);
+        return this.translateDisplayLabel(String(match.label));
       }
     }
     return String(value);

@@ -1109,7 +1109,9 @@
       "transaction_loan": "Miamala ya Mkopo",
       "transaction_savings": "Miamala ya Akiba",
       "unmarried": "bila kuolewa",
-      "xbrlmapping": "Ramani ya XBRL"
+      "xbrlmapping": "Ramani ya XBRL",
+      "Enabled": "Imewashwa",
+      "Disabled": "Imezimwa"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1798,7 +1800,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Tamko la wamiliki wanufaika wa mwisho - taasisi za kisheria",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi",
       "Recovery": "Urejeshaji",
-      "Upload Report Design": "Pakia Muundo wa Ripoti"
+      "Upload Report Design": "Pakia Muundo wa Ripoti",
+      "Payment Allocation": "Mgao wa malipo",
+      "Interest Refunds": "Marejesho ya riba",
+      "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
+      "Advanced Configuration": "Usanidi wa kina"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -4998,7 +5004,8 @@
       "The selected report design is too large": "Muundo wa ripoti uliochaguliwa unazidi 5 MB.",
       "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
       "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "herufi 4 kwa juu"
     },
     "permissions": {
       "actions": {
