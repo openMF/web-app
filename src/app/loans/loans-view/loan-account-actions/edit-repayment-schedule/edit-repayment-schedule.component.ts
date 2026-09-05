@@ -109,7 +109,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
     addDialogRef
       .afterClosed()
       .subscribe((response: { data?: { value?: { fromPeriod: number; toPeriod: number; amount: number } } }) => {
-        if (response.data?.value && this.repaymentScheduleDetails) {
+        if (response?.data?.value && this.repaymentScheduleDetails) {
           const fromPeriod = response.data.value.fromPeriod;
           const toPeriod = response.data.value.toPeriod;
           const amount = response.data.value.amount;
@@ -141,7 +141,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
       }
     });
     recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: { confirm?: boolean }) => {
-      if (responseConfirmation.confirm) {
+      if (responseConfirmation?.confirm) {
         this.loanService.applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {}).subscribe({
           next: () => {
             this.getRepaymentSchedule();

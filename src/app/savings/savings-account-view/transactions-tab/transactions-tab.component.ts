@@ -264,7 +264,7 @@ export class TransactionsTabComponent implements OnInit {
   undoTransaction(transactionData: SavingsAccountTransaction): void {
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
