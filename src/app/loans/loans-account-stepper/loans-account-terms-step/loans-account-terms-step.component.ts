@@ -934,7 +934,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
     disbursementDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= currentPrincipalAmount) {
           this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
@@ -956,7 +956,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       data: { deleteContext: `this` }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         const principal = this.disbursementDataSource[index]['principal'] * 1;
         this.disbursementDataSource.splice(index, 1);
         this.disbursementDataSource = this.disbursementDataSource.concat([]);
@@ -974,7 +974,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       data: { collateralOptions: this.collateralOptions }
     });
     addCollateralDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const collateralData = {
           type: response.data.value.collateral,
           value: response.data.value.quantity
@@ -1002,7 +1002,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       data: { deleteContext: `collateral` }
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         const removed: any = this.collateralDataSource.splice(id, 1);
         this.collateralOptions = this.collateralOptions.concat(removed[0].type);
         this.totalCollateralValue -= (removed[0].type.pctToBase * removed[0].type.basePrice * removed[0].value) / 100;

@@ -208,7 +208,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
     disbursementDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= this.currentPrincipalAmount) {
           this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
@@ -235,7 +235,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
     disbursementDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const newPrincipal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed - principal + newPrincipal <= this.currentPrincipalAmount) {
           this.disbursementDataSource[index]['principal'] = newPrincipal;
@@ -251,7 +251,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
       data: { deleteContext: `this` }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         const principal = this.disbursementDataSource[index]['principal'] * 1;
         this.disbursementDataSource.splice(index, 1);
         this.disbursementDataSource = this.disbursementDataSource.concat([]);

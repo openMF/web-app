@@ -379,7 +379,7 @@ export class IdentitiesTabComponent implements OnDestroy {
       data: { deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}` }
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe((res) => {
           this.clientIdentities.splice(index, 1);
           this.identifiersTable.renderRows();

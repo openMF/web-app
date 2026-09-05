@@ -376,6 +376,9 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       }
     });
     loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (!response?.data) {
+        return;
+      }
       const startDate: Date = response.data.value.startDate;
       const endDate: Date = response.data.value.endDate;
 
@@ -393,6 +396,9 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       }
     });
     loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (!response?.data) {
+        return;
+      }
       const minimumPayment: number = response.data.value.minimumPayment;
       const minimumPaymentType: string = response.data.value.minimumPaymentType;
       const frequency: number = response.data.value.frequency;
@@ -439,7 +445,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       }
     });
     loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.sendDelinquencyAction(action, null, null, null, null, null, null, null);
       }
     });
@@ -492,7 +498,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       }
     });
     removePauseDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         if (this.loanProductService.isLoanProduct) {
           this.sendDelinquencyAction('resume', null, null, null, null, null, null, null);
         } else {

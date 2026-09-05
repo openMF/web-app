@@ -80,7 +80,7 @@ export class FamilyMembersTabComponent {
       data: { deleteContext: `Family member id:${id} name : ${name} ${index}` }
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientsService.deleteFamilyMember(clientId, id).subscribe(() => {
           this.clientFamilyMembers.splice(index, 1);
         });
