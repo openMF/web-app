@@ -19,6 +19,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 import {
   MatTableDataSource,
   MatTable,
@@ -74,6 +75,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
 
   /** Savings Account Product Template */
   @Input() savingsAccountProductTemplate: any;
@@ -180,13 +182,20 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {any} charge Charge
    */
   editChargeDate(charge: any) {
+    const chargeTimeType = charge.chargeTimeType.value;
+    const isFutureDateAllowed =
+      chargeTimeType === 'Specified due date' ||
+      chargeTimeType === 'Weekly Fee' ||
+      chargeTimeType === 'Monthly Fee' ||
+      chargeTimeType === 'Annual Fee';
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'date',
         label: this.translateService.instant('labels.inputs.Date'),
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
-        required: false
+        required: false,
+        maxDate: isFutureDateAllowed ? new Date(2100, 11, 31) : this.settingsService.businessDate
       })
     ];
     const data = {
