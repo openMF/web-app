@@ -5921,6 +5921,10 @@
     },
     "confirmWarning": "Cette opération déplace de l'argent réel. Vérifiez les détails, puis confirmez.",
     "openAssistant": "Ouvrir Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot traite votre demande. Ouvrir Copilot.",
+      "replying": "Mifos X Copilot r\u00e9pond. Ouvrir Copilot."
+    },
     "newChatTitle": "Nouvelle conversation",
     "errors": {
       "timedOut": "L'assistant a mis trop de temps à répondre. Veuillez réessayer.",
@@ -6023,7 +6027,12 @@
       "repeat": "Redemander",
       "goodAnswer": "Bonne r\u00e9ponse",
       "poorAnswer": "Mauvaise r\u00e9ponse",
-      "exportPdf": "Exporter en PDF",
+      "export": {
+        "label": "Exporter",
+        "pdf": "Document PDF",
+        "csv": "Tableur CSV",
+        "png": "Image PNG"
+      },
       "share": "Partager"
     },
     "export": {
@@ -6034,8 +6043,10 @@
       "disclaimer": "Produit par Mifos Copilot \u00e0 partir des donn\u00e9es Fineract. V\u00e9rifiez aupr\u00e8s de la fiche source avant d\u2019agir.",
       "shareTitle": "R\u00e9ponse de Mifos Copilot",
       "copiedToClipboard": "R\u00e9ponse et lien copi\u00e9s dans le presse-papiers",
-      "failed": "Le PDF n\u2019a pas pu \u00eatre produit. Veuillez r\u00e9essayer.",
-      "fileNameFallback": "copilot"
+      "failed": "Le fichier n\u2019a pas pu \u00eatre produit. Veuillez r\u00e9essayer.",
+      "fileNameFallback": "copilot",
+      "cardField": "Champ",
+      "cardValue": "Valeur"
     }
   }
 }

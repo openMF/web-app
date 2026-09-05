@@ -5917,6 +5917,10 @@
     },
     "confirmWarning": "Isto movimenta dinheiro real. Verifique os dados e depois confirme.",
     "openAssistant": "Abrir o Mifos X Copilot",
+    "launcher": {
+      "working": "O Mifos X Copilot est\u00e1 a processar o seu pedido. Abrir Copilot.",
+      "replying": "O Mifos X Copilot est\u00e1 a responder. Abrir Copilot."
+    },
     "newChatTitle": "Nova conversa",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6019,7 +6023,12 @@
       "repeat": "Perguntar novamente",
       "goodAnswer": "Boa resposta",
       "poorAnswer": "Resposta fraca",
-      "exportPdf": "Exportar para PDF",
+      "export": {
+        "label": "Exportar",
+        "pdf": "Documento PDF",
+        "csv": "Folha de c\u00e1lculo CSV",
+        "png": "Imagem PNG"
+      },
       "share": "Partilhar"
     },
     "export": {
@@ -6030,8 +6039,10 @@
       "disclaimer": "Produzido pelo Mifos Copilot a partir de registos do Fineract. Confirme com o registo de origem antes de agir.",
       "shareTitle": "Resposta do Mifos Copilot",
       "copiedToClipboard": "Resposta e liga\u00e7\u00e3o copiadas para a \u00e1rea de transfer\u00eancia",
-      "failed": "N\u00e3o foi poss\u00edvel criar o PDF. Tente novamente.",
-      "fileNameFallback": "copilot"
+      "failed": "N\u00e3o foi poss\u00edvel criar o ficheiro. Tente novamente.",
+      "fileNameFallback": "copilot",
+      "cardField": "Campo",
+      "cardValue": "Valor"
     }
   }
 }

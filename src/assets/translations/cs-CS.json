@@ -6208,6 +6208,10 @@
     },
     "confirmWarning": "Tato akce pohybuje skutečnými penězi. Zkontrolujte údaje a potvrďte.",
     "openAssistant": "Otevřít Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot pracuje na va\u0161em po\u017eadavku. Otev\u0159\u00edt Copilot.",
+      "replying": "Mifos X Copilot odpov\u00edd\u00e1. Otev\u0159\u00edt Copilot."
+    },
     "newChatTitle": "Nová konverzace",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6310,7 +6314,12 @@
       "repeat": "Zeptat se znovu",
       "goodAnswer": "Dobr\u00e1 odpov\u011b\u010f",
       "poorAnswer": "\u0160patn\u00e1 odpov\u011b\u010f",
-      "exportPdf": "Exportovat do PDF",
+      "export": {
+        "label": "Exportovat",
+        "pdf": "Dokument PDF",
+        "csv": "Tabulka CSV",
+        "png": "Obr\u00e1zek PNG"
+      },
       "share": "Sd\u00edlet"
     },
     "export": {
@@ -6321,8 +6330,10 @@
       "disclaimer": "Vygenerov\u00e1no asistentem Mifos Copilot ze z\u00e1znam\u016f ve Fineractu. P\u0159ed rozhodnut\u00edm ov\u011b\u0159te proti zdrojov\u00e9mu z\u00e1znamu.",
       "shareTitle": "Odpov\u011b\u010f asistenta Mifos Copilot",
       "copiedToClipboard": "Odpov\u011b\u010f a odkaz zkop\u00edrov\u00e1ny do schr\u00e1nky",
-      "failed": "PDF se nepoda\u0159ilo vytvo\u0159it. Zkuste to pros\u00edm znovu.",
-      "fileNameFallback": "copilot"
+      "failed": "Soubor se nepoda\u0159ilo vytvo\u0159it. Zkuste to pros\u00edm znovu.",
+      "fileNameFallback": "copilot",
+      "cardField": "Pole",
+      "cardValue": "Hodnota"
     }
   }
 }

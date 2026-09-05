@@ -87,16 +87,16 @@ describe('MessageActionsComponent', () => {
     ]);
   });
 
-  it('asks for this exchange to be filed or passed on, naming the reply', () => {
-    const exported: string[] = [];
+  it('asks for this exchange to be filed or passed on, naming the reply and the format', () => {
+    const exported: { messageId: string; format: string }[] = [];
     const shared: string[] = [];
-    component.exportRequested.subscribe((id) => exported.push(id));
+    component.exportRequested.subscribe((request) => exported.push(request));
     component.shareRequested.subscribe((id) => shared.push(id));
 
-    component.exportPdf();
+    component.exportAs('pdf');
     component.share();
 
-    expect(exported).toEqual(['m-1']);
+    expect(exported).toEqual([{ messageId: 'm-1', format: 'pdf' }]);
     expect(shared).toEqual(['m-1']);
   });
 
@@ -110,5 +110,47 @@ describe('MessageActionsComponent', () => {
 
     expect(jest.getTimerCount()).toBe(0);
     jest.useRealTimers();
+  });
+  describe('offering only the exports that make sense', () => {
+    it('leaves a spreadsheet off a reply that is only prose', () => {
+      component.message = reply();
+
+      expect(component.exportFormats).toEqual([
+        'pdf',
+        'png'
+      ]);
+    });
+
+    it('offers a spreadsheet once the reply has a table in it', () => {
+      component.message = reply({
+        content: '| Due date | Amount |\n| --- | ---: |\n| 2026-01-05 | 1,000.00 |'
+      });
+
+      expect(component.exportFormats).toContain('csv');
+    });
+
+    /** One trigger for all of them, so the row does not change width from reply to reply. */
+    it('puts every format behind a single menu button', () => {
+      // setInput rather than assignment: this component is OnPush, and only setInput marks it
+      // dirty, so a plain assignment would assert against the view the previous test rendered.
+      fixture.componentRef.setInput(
+        'message',
+        reply({
+          content: '| Due date | Amount |\n| --- | ---: |\n| 2026-01-05 | 1,000.00 |'
+        })
+      );
+      fixture.detectChanges();
+
+      const triggers = fixture.nativeElement.querySelectorAll('[aria-haspopup="menu"]');
+      expect(triggers.length).toBe(1);
+    });
+
+    it('withholds the export button entirely when there is nothing to export', () => {
+      fixture.componentRef.setInput('message', reply({ content: '   ' }));
+      fixture.detectChanges();
+
+      expect(component.exportFormats).toEqual([]);
+      expect(fixture.nativeElement.querySelector('[aria-haspopup="menu"]')).toBeNull();
+    });
   });
 });

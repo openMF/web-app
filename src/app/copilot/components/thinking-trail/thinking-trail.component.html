@@ -9,7 +9,7 @@
   <!-- While the turn runs, one line naming what is happening right now. An officer waiting on a
        slow branch connection needs to tell working apart from hung, and this is what does it.
        aria-live announces it, because a silent wait is the same wait for a screen reader. -->
-  <div class="trail__live" *ngIf="isStreaming" role="status" aria-live="polite">
+  <div class="trail__live" *ngIf="showLive" role="status" aria-live="polite">
     <span class="trail__live-dot" aria-hidden="true"></span>
     <span class="trail__live-label">
       <ng-container *ngIf="currentStep as step">{{ step.label }}</ng-container>
@@ -22,7 +22,7 @@
 
   <!-- One disclosure, not two. What it did and what it wrote both belong to the same question,
        and two collapsed strips under every answer is more furniture than it is worth. -->
-  <div class="trail__section" *ngIf="!isStreaming">
+  <div class="trail__section" *ngIf="!isLive">
     <button
       type="button"
       class="trail__summary"

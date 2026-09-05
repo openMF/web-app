@@ -6071,6 +6071,10 @@
     },
     "confirmWarning": "This moves real money. Check the details, then confirm.",
     "openAssistant": "Open Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot is working on your request. Open Copilot.",
+      "replying": "Mifos X Copilot is replying. Open Copilot."
+    },
     "newChatTitle": "New conversation",
     "errors": {
       "timedOut": "The assistant took too long to respond. Please try again.",
@@ -6173,7 +6177,12 @@
       "repeat": "Ask again",
       "goodAnswer": "Good answer",
       "poorAnswer": "Poor answer",
-      "exportPdf": "Export to PDF",
+      "export": {
+        "label": "Export",
+        "pdf": "PDF document",
+        "csv": "CSV spreadsheet",
+        "png": "PNG image"
+      },
       "share": "Share"
     },
     "export": {
@@ -6184,8 +6193,10 @@
       "disclaimer": "Produced by Mifos Copilot from Fineract records. Check against the source record before acting on it.",
       "shareTitle": "Mifos Copilot answer",
       "copiedToClipboard": "Answer and link copied to the clipboard",
-      "failed": "The PDF could not be produced. Please try again.",
-      "fileNameFallback": "copilot"
+      "failed": "The file could not be produced. Please try again.",
+      "fileNameFallback": "copilot",
+      "cardField": "Field",
+      "cardValue": "Value"
     }
   }
 }

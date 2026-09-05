@@ -108,6 +108,66 @@ describe('CopilotExportService', () => {
       expect(renderedNode?.innerHTML).toContain('<strong>Aisha Bello</strong>');
     });
 
+    /**
+     * The figures live on the card, not in the prose above it. A printed export that carried
+     * only the prose showed the sentence introducing an answer and then stopped.
+     */
+    it('puts the figures from an action card on the page', async () => {
+      const reply = {
+        ...exchange().reply,
+        content: 'Here is the active loan:',
+        actionCards: [
+          {
+            type: 'loan' as const,
+            title: 'Agriculture Term Loan',
+            data: { 'Loan account': '000000004521', Outstanding: 'INR 31,250.00' }
+          }
+        ]
+      };
+
+      await service.exportToPdf(exchange({ reply }));
+
+      expect(renderedNode?.innerHTML).toContain('Agriculture Term Loan');
+      expect(renderedNode?.innerHTML).toContain('Loan account');
+      expect(renderedNode?.innerHTML).toContain('000000004521');
+      expect(renderedNode?.innerHTML).toContain('INR 31,250.00');
+    });
+
+    /**
+     * The app's dark theme paints alternate table rows #303135 with !important, and the page
+     * is built inside the live document where that rule reaches it. Photographed, that put
+     * black bands through the table.
+     */
+    it('keeps table rows white whatever theme the app is in', async () => {
+      document.body.classList.add('dark-theme');
+      try {
+        await service.exportToPdf(exchange());
+
+        const sheet = renderedNode?.innerHTML ?? '';
+        expect(renderedNode?.className).toContain('copilot-export-page');
+        // Doubled deliberately: it has to outrank body.dark-theme ... tr:nth-child(even).
+        expect(sheet).toContain('.copilot-export-page.copilot-export-page table tbody tr');
+        expect(sheet).toContain('background-color: #ffffff !important');
+      } finally {
+        document.body.classList.remove('dark-theme');
+      }
+    });
+
+    /** A card is gateway-supplied text, and it goes through the same escaping as anything else. */
+    it('escapes card values rather than rendering them', async () => {
+      const reply = {
+        ...exchange().reply,
+        actionCards: [
+          { type: 'loan' as const, title: 'T', data: { Field: '<img src=x onerror=alert(1)>' } }
+        ]
+      };
+
+      await service.exportToPdf(exchange({ reply }));
+
+      expect(renderedNode?.innerHTML).not.toContain('<img src=x');
+      expect(renderedNode?.innerHTML).toContain('&lt;img src=x');
+    });
+
     /** The question is text somebody typed. Rendering it as markup would be an injection. */
     it('escapes the question rather than rendering it', async () => {
       const typed = { ...exchange().question!, content: '<img src=x onerror=alert(1)>' };
@@ -191,6 +251,133 @@ describe('CopilotExportService', () => {
       Object.assign(navigator, { clipboard: { writeText: jest.fn(() => Promise.reject(new Error('denied'))) } });
 
       expect(await service.share(exchange())).toBe('failed');
+    });
+  });
+  describe('which exports a reply can support', () => {
+    it('offers a spreadsheet only for an answer that has rows and columns', () => {
+      expect(service.formatsFor(exchange().reply)).toEqual([
+        'pdf',
+        'png'
+      ]);
+
+      const tabular = exchange().reply;
+      tabular.content = '| Due date | Amount |\n| --- | --- |\n| 2026-01-05 | 1,000.00 |';
+      expect(service.formatsFor(tabular)).toEqual([
+        'pdf',
+        'csv',
+        'png'
+      ]);
+    });
+
+    it('counts an action card as something a spreadsheet can hold', () => {
+      const carded = exchange().reply;
+      carded.actionCards = [
+        { type: 'loan', title: 'Loan 000042', data: { Outstanding: '12,400.00' } }
+      ];
+
+      expect(service.formatsFor(carded)).toContain('csv');
+    });
+
+    it('offers nothing at all for a reply with nothing in it', () => {
+      const empty = exchange().reply;
+      empty.content = '   ';
+
+      expect(service.formatsFor(empty)).toEqual([]);
+    });
+  });
+
+  describe('writing the figures out as a spreadsheet', () => {
+    /** Captures the blob the browser was handed, so its text can be read back. */
+    function captureDownload(): { name: () => string; text: () => Promise<string> } {
+      const anchor = document.createElement('a');
+      const click = jest.spyOn(anchor, 'click').mockImplementation(() => undefined);
+      jest.spyOn(document, 'createElement').mockReturnValue(anchor);
+      const blobs: Blob[] = [];
+      (URL.createObjectURL as unknown as jest.Mock) = jest.fn((blob: Blob) => {
+        blobs.push(blob);
+        return 'blob:x';
+      });
+      (URL.revokeObjectURL as unknown as jest.Mock) = jest.fn();
+      return {
+        name: () => (click.mock.calls.length ? anchor.download : ''),
+        // Read through a FileReader: jsdom's Blob has no text() of its own.
+        text: () =>
+          new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result));
+            reader.onerror = () => reject(reader.error);
+            reader.readAsText(blobs[0]);
+          })
+      };
+    }
+
+    it('writes the table the officer read, header row and all', async () => {
+      const captured = captureDownload();
+      const tabular = exchange();
+      tabular.reply.content = [
+        '## Repayment schedule',
+        '',
+        '| Due date | Amount |',
+        '| --- | ---: |',
+        '| 2026-01-05 | 1,000.00 |'
+      ].join('\n');
+
+      await service.exportToCsv(tabular);
+
+      const csv = await captured.text();
+      expect(csv).toContain('"Repayment schedule"');
+      expect(csv).toContain('"Due date","Amount"');
+      expect(csv).toContain('"2026-01-05","1,000.00"');
+    });
+
+    /**
+     * A spreadsheet runs a cell that starts with '='. A reply is model output, so it is not
+     * a place to find out whether that matters.
+     */
+    it('defuses a cell a spreadsheet would otherwise execute', async () => {
+      const captured = captureDownload();
+      const tabular = exchange();
+      tabular.reply.content = [
+        '| Name | Note |',
+        '| --- | --- |',
+        '| Aisha | =SUM(A1:A9) |'
+      ].join('\n');
+
+      await service.exportToCsv(tabular);
+
+      expect(await captured.text()).toContain(`"'=SUM(A1:A9)"`);
+    });
+
+    it('escapes a quote inside a cell rather than ending the field early', async () => {
+      const captured = captureDownload();
+      const tabular = exchange();
+      tabular.reply.content = [
+        '| Name | Note |',
+        '| --- | --- |',
+        '| Aisha | said "yes" |'
+      ].join('\n');
+
+      await service.exportToCsv(tabular);
+
+      expect(await captured.text()).toContain(`"said ""yes"""`);
+    });
+
+    it('names the file for the client and the day, not the tool', async () => {
+      const captured = captureDownload();
+      const tabular = exchange();
+      tabular.reply.content = '| A | B |\n| --- | --- |\n| 1 | 2 |';
+
+      await service.exportToCsv(tabular);
+
+      expect(captured.name()).toBe('aisha-bello-2026-03-14.csv');
+    });
+
+    it('writes nothing at all when there is nothing tabular to write', async () => {
+      const captured = captureDownload();
+
+      await service.exportToCsv(exchange());
+
+      expect(captured.name()).toBe('');
     });
   });
 });

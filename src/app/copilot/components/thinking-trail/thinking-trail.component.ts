@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { CopilotStep } from '../../core/models/chat-message.model';
+import { CopilotTurnPhase } from '../../core/turn-phase';
 
 /** Below this many seconds the figure carries a decimal, above it does not. */
 const DECIMAL_BELOW_SECONDS = 10;
@@ -109,8 +110,16 @@ export class ThinkingTrailComponent implements OnChanges, OnDestroy {
    * in the same line would invite reading one as the other.
    */
   @Input() notesElapsedMs?: number;
-  /** True while the turn is still running, which changes the wording from past to present. */
-  @Input() isStreaming = false;
+  /**
+   * Where the turn this trail belongs to has got to.
+   *
+   * <p>Replaced a plain "is it running" flag. That flag could not tell waiting apart from
+   * answering, so this component claimed the live line for the whole turn while the chat area
+   * separately claimed a typing indicator for the part of it with no text yet — and against a
+   * model that reasons at length before answering, both were on screen together for most of
+   * the wait. One value decides, so only one of them can be showing.
+   */
+  @Input() phase: CopilotTurnPhase = 'idle';
 
   /** The live seconds counter, written to directly so a tick never runs change detection. */
   @ViewChild('liveTimer') private liveTimer?: ElementRef<HTMLElement>;
@@ -137,7 +146,24 @@ export class ThinkingTrailComponent implements OnChanges, OnDestroy {
   }
 
   get hasAnything(): boolean {
-    return this.steps.length > 0 || this.notes.length > 0 || this.isStreaming;
+    return this.steps.length > 0 || this.notes.length > 0 || this.isLive;
+  }
+
+  /** Whether the turn is still going, which is what the timer counts. */
+  get isLive(): boolean {
+    return this.phase === 'thinking' || this.phase === 'streaming';
+  }
+
+  /**
+   * Whether to name what is happening right now.
+   *
+   * <p>While waiting, always: the officer needs to tell working apart from hung, and there is
+   * nothing else on screen saying so. Once the answer is arriving, only when a tool call is
+   * genuinely in flight. Words appearing are their own evidence of progress, and a spinning
+   * label above them claims the panel is still waiting for something it already has.
+   */
+  get showLive(): boolean {
+    return this.phase === 'thinking' || (this.phase === 'streaming' && !!this.currentStep);
   }
 
   /** The step in flight, which is what the officer wants to see while waiting. */
@@ -197,8 +223,11 @@ export class ThinkingTrailComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isStreaming']) {
-      this.isStreaming ? this.startTimer() : this.stopTimer();
+    if (changes['phase']) {
+      // Tied to the turn, not to whether the label happens to be showing. A tool call starting
+      // midway through an answer brings the line back, and it has to come back reading the
+      // wait so far rather than restarting from zero.
+      this.isLive ? this.startTimer() : this.stopTimer();
     }
   }
 

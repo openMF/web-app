@@ -83,9 +83,18 @@ $copilot-warning: #f59e0b;
   .mifos-copilot {
     /* FAB */
     .ai-fab {
-      background: linear-gradient(135deg, $p500, $p700);
+      /* A light from above over the brand gradient, so the launcher reads as a raised object
+         rather than a flat disc. The highlight is the only thing added; the blue underneath is
+         the same brand ramp it has always been. */
+      background:
+        radial-gradient(circle at 50% 0%, rgb(255 255 255 / 22%), rgb(255 255 255 / 0%) 62%),
+        linear-gradient(135deg, $p500, $p700);
       color: $on-primary;
       box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+
+      /* The idle halo, kept fainter in dark mode: the same alpha that reads as a soft glow on
+         a light page reads as a hard rim on a dark one. */
+      --copilot-fab-aura: #{mat.m2-get-color-from-palette($primary, 500, if($is-dark, 0.38, 0.45))};
 
       &:hover {
         box-shadow: 0 8px 28px mat.m2-get-color-from-palette($primary, 500, 0.5);
@@ -284,13 +293,20 @@ $copilot-warning: #f59e0b;
       }
     }
 
-    .typing__dots {
-      background: $surface;
-      border-color: $border;
+    /* The waiting ring, in brand blue at both ends of the theme. Handed to the structural
+       sheet as custom properties because they are consumed inside keyframes, which cannot read
+       Sass variables scoped to this mixin. The launcher carries the same ring as the avatar
+       inside the panel, so the two states read as one feature rather than two. */
+    .msg__avatar--thinking,
+    .msg__avatar--streaming,
+    .ai-fab {
+      --copilot-thinking-ring: #{$brand-ring};
+      --copilot-fab-focus: #{$brand-ring};
 
-      span {
-        background: $p500;
-      }
+      /* The disc the X is cut out of, following the mode rather than opposing it: dark on a
+         dark page, light on a light one, so the launcher sits in its surroundings instead of
+         punching a bright hole in them. The wedges stay brand blue in both. */
+      --copilot-mark-disc: #{if($is-dark, #14304a, #f6f9fb)};
     }
 
     /* Action cards */

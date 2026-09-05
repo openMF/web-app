@@ -23,6 +23,7 @@ import { ChatMessage, Conversation } from '../core/models/chat-message.model';
 import { McpStreamEvent, PendingAction } from '../core/models/mcp-response.model';
 import { ActionCard } from '../core/models/action-card.model';
 import { translateStepLabel } from '../core/step-label';
+import { CopilotTurnPhase, isTurnActive, nextTurnPhase } from '../core/turn-phase';
 import { InputSanitizer } from '../core/input-sanitizer';
 import { ResponseParser } from '../core/response-parser';
 import { COPILOT_CONFIG } from '../copilot.config';
@@ -71,6 +72,15 @@ export class ChatService {
   readonly conversations$ = new BehaviorSubject<Conversation[]>([]);
   /** True while a response is streaming in. */
   readonly isStreaming$ = new BehaviorSubject<boolean>(false);
+  /**
+   * Where the turn in flight has got to.
+   *
+   * <p>Sits alongside {@link isStreaming$} rather than replacing it: that flag answers "may I
+   * send another question", which is one bit and stays one bit. This answers "what should the
+   * panel be showing", which is not, and which two booleans were previously asked to cover
+   * between them. See core/turn-phase.ts.
+   */
+  readonly turnPhase$ = new BehaviorSubject<CopilotTurnPhase>('idle');
   /** Write action awaiting the officer's confirmation, if any. */
   readonly pendingAction$ = new BehaviorSubject<PendingAction | null>(null);
 
@@ -245,6 +255,7 @@ export class ChatService {
     // Everything from the question onward goes: the question, its reply, and any card or
     // follow-up that belonged to it.
     this.messages$.next(messages.slice(0, index));
+    this.turnPhase$.next('idle');
     this.pendingAction$.next(null);
     this.archiveCurrentConversation();
     return messages[index].content;
@@ -381,6 +392,9 @@ export class ChatService {
     this.ensureCurrentUser();
     this.stopStreaming();
     this.archiveCurrentConversation();
+    // A failure and a paused write both outlive their stream on purpose, because the reply
+    // explaining them is still on screen. Once that reply is gone, so is the reason to say so.
+    this.turnPhase$.next('idle');
     this.messages$.next([]);
     this.pendingAction$.next(null);
     this.decisionBackup = null;
@@ -448,6 +462,7 @@ export class ChatService {
     }
     this.stopStreaming();
     this.archiveCurrentConversation();
+    this.turnPhase$.next('idle');
     this.messages$.next(conversation.messages ?? []);
     this.pendingAction$.next(null);
     this.decisionBackup = null;
@@ -468,6 +483,9 @@ export class ChatService {
 
   private startStream(events: Observable<McpStreamEvent>): void {
     this.isStreaming$.next(true);
+    // The turn opens in thinking, always. Nothing of the answer has arrived at this point,
+    // and the phase is only moved on by an event that says otherwise.
+    this.turnPhase$.next('thinking');
     // Stamped here so the panel can say how long the officer waited. Summing the model's timer
     // and each call's duration would count any overlap twice and miss the answer streaming
     // after both, so the turn is measured end to end instead.
@@ -491,6 +509,13 @@ export class ChatService {
   }
 
   private handleEvent(event: McpStreamEvent): void {
+    // Advanced before the event is acted on, so every branch below writes into a message list
+    // the panel is already drawing in the right state for.
+    const phase = nextTurnPhase(this.turnPhase$.value, event);
+    if (phase !== this.turnPhase$.value) {
+      this.turnPhase$.next(phase);
+    }
+
     switch (event.type) {
       case 'token':
         this.appendToDraft(event.token ?? '');
@@ -582,6 +607,12 @@ export class ChatService {
     });
     this.dropEmptyDraft();
     this.isStreaming$.next(false);
+    // An error and a paused write both outlive the stream that produced them: the reply on
+    // screen is explaining one or the other, and the panel keeps saying so until the next
+    // turn starts. Anything else has genuinely finished.
+    if (isTurnActive(this.turnPhase$.value)) {
+      this.turnPhase$.next('idle');
+    }
     this.subscription = null;
     this.archiveCurrentConversation();
   }
@@ -608,6 +639,7 @@ export class ChatService {
     this.subscription?.unsubscribe();
     this.subscription = null;
     this.isStreaming$.next(false);
+    this.turnPhase$.next('idle');
     this.messages$.next([]);
     this.conversations$.next([]);
     this.pendingAction$.next(null);
