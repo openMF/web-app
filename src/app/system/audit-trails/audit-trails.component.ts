@@ -236,15 +236,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.user.valueChanges
-      .pipe(
-        map((value) => (value.id ? value.id : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'makerId');
-        })
-      )
-      .subscribe();
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => this.applyOptionFilter(value, 'makerId'));
 
     this.fromDate.valueChanges
       .pipe(
@@ -337,37 +330,20 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       .subscribe();
 
     this.actionName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'actionName');
-        })
-      )
-      .subscribe();
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) =>
+        this.applyStringOptionFilter(value, 'actionName', this.auditTrailSearchTemplateData?.actionNames)
+      );
 
     this.entityName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'entityName');
-        })
-      )
-      .subscribe();
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) =>
+        this.applyStringOptionFilter(value, 'entityName', this.auditTrailSearchTemplateData?.entityNames)
+      );
 
     this.checker.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue.id, 'checkerId');
-        })
-      )
-      .subscribe();
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => this.applyOptionFilter(value, 'checkerId'));
 
     //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -414,6 +390,43 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
     this.filterAuditTrailsBy[findIndex].value = filterValue;
     this.loadAuditTrailsPage();
+  }
+
+  /**
+   * Applies an autocomplete filter backed by option objects (User, Checker).
+   * Only fires a request when the user actually selected an option (an object) or cleared the
+   * field — never for partially-typed free text, which would submit an incomplete filter and
+   * momentarily clear the results before a valid option is chosen.
+   * @param {unknown} value Current form control value.
+   * @param {string} property Filter property to update.
+   */
+  private applyOptionFilter(value: unknown, property: string): void {
+    if (value == null || value === '') {
+      this.applyFilter('', property);
+    } else if (typeof value === 'object' && value !== null && 'id' in value) {
+      const id = (value as { id: number | string }).id;
+      if (id === 0 || id) {
+        this.applyFilter(id.toString(), property);
+      }
+    }
+    // Partially-typed text: ignore until a valid option is selected.
+  }
+
+  /**
+   * Applies an autocomplete filter backed by plain string options (Action, Entity).
+   * Only fires a request when the value exactly matches a valid option (i.e. the user selected
+   * one) or the field was cleared — never for partial text, which returns no records.
+   * @param {unknown} value Current form control value.
+   * @param {string} property Filter property to update.
+   * @param {string[]} options Valid options for this filter.
+   */
+  private applyStringOptionFilter(value: unknown, property: string, options: string[]): void {
+    if (value == null || value === '') {
+      this.applyFilter('', property);
+    } else if (typeof value === 'string' && options && options.includes(value)) {
+      this.applyFilter(value, property);
+    }
+    // Partially-typed text: ignore until a valid option is selected.
   }
 
   /**
