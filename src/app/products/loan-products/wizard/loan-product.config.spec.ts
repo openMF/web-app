@@ -14,6 +14,7 @@ import {
   PROFILE_EXTRA_VISIBLE_FIELDS,
   PROFILE_INITIAL_OVERRIDES,
   PROFILE_LABEL_KEYS,
+  FORM_STEPS,
   buildPayload,
   dropsDisabledOverAppliedFields,
   hiddenDefaultsFor,
@@ -2935,5 +2936,40 @@ describe('loan-product.config profile invariants', () => {
 
     expect(new Set(descriptions).size).toBe(guided.length);
     expect(descriptions.every((description) => typeof description === 'string' && description !== '')).toBe(true);
+  });
+});
+
+describe('loan-product.config translation keys', () => {
+  /**
+   * I1. The two halves of the config address the translator differently, and mixing them up is
+   * silent: a field `label`/`placeholder`/`hint` is a full key rendered with the `translate` pipe,
+   * while a select option's `label` is Fineract's own enum value, rendered with
+   * `translateKey: 'catalogs'` — which prefixes it. Put a full key in an option and the prefixed
+   * lookup misses, `CustomMissingTranslationHandler` strips only `labels.catalogs.`, and the
+   * operator reads `labels.inputs.…` off the dropdown. Two option labels were exactly that.
+   */
+  it('never uses a full translation key as a select option label', () => {
+    const offenders = FORM_STEPS.flatMap((step) =>
+      step.fields.flatMap((field) =>
+        (field.options ?? [])
+          .filter((option) => String(option.label).startsWith('labels.'))
+          .map((option) => `${field.key}: ${option.label}`)
+      )
+    );
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('addresses every step header and field hint by a full translation key', () => {
+    // The mirror of the rule above: these DO go through the plain `translate` pipe, so a bare English
+    // string here renders as itself in all 13 locales — the defect I1 names.
+    const offenders = FORM_STEPS.flatMap((step) => [
+      ...(step.title.startsWith('labels.') ? [] : [`step ${step.id}: ${step.title}`]),
+      ...step.fields
+        .filter((field) => field.hint && !field.hint.startsWith('labels.'))
+        .map((field) => `${field.key} hint: ${field.hint}`)
+    ]);
+
+    expect(offenders).toEqual([]);
   });
 });

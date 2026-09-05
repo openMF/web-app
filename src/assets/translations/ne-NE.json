@@ -1110,7 +1110,9 @@
       "transaction_loan": "ऋण लेनदेन",
       "transaction_savings": "बचत लेनदेन",
       "unmarried": "अविवाहित",
-      "xbrlmapping": "XBRL म्यापिङ"
+      "xbrlmapping": "XBRL म्यापिङ",
+      "Enabled": "सक्षम गरियो",
+      "Disabled": "अक्षम"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1800,7 +1802,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "अन्तिम लाभग्राही मालिकहरूको घोषणा - कानुनी संस्थाहरू",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू",
       "Recovery": "असुली",
-      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
+      "Payment Allocation": "भुक्तान विनियोजन",
+      "Interest Refunds": "व्याज परतावा",
+      "Deferred Income Recognition": "स्थगित आय पहिचान",
+      "Advanced Configuration": "उन्नत कन्फिगरेसन"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -5001,7 +5007,8 @@
       "The selected report design is too large": "छानिएको रिपोर्ट डिजाइन 5 MB भन्दा ठूलो छ।",
       "Report design uploaded": "रिपोर्ट डिजाइन {{fileName}} अपलोड गरियो।",
       "Report design replaced": "रिपोर्ट डिजाइन {{fileName}} प्रतिस्थापन गरियो।",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "बढीमा ४ अक्षर"
     },
     "permissions": {
       "actions": {

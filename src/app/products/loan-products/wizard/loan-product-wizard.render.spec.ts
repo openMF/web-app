@@ -14,6 +14,8 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { MissingTranslationHandler } from '@ngx-translate/core';
+import { CustomMissingTranslationHandler } from 'app/core/translation/missing-translation.handler';
 
 import { LoanProductWizardComponent } from './loan-product-wizard.component';
 import { LoanProducts } from '../loan-products';
@@ -41,7 +43,12 @@ describe('LoanProductWizardComponent (rendered)', () => {
       imports: [
         LoanProductWizardComponent,
         NoopAnimationsModule,
-        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+          // The wizard chrome leans on the app's own fallback rule: a `labels.catalogs` key the
+          // bundles do not carry renders as the bare value. Registering the real handler is what
+          // makes the option-label assertions below mean anything.
+          missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomMissingTranslationHandler }
+        }),
         // The wizard chrome renders <fa-icon>s; the testing module stubs them out.
         FontAwesomeTestingModule
       ],
@@ -152,6 +159,44 @@ describe('LoanProductWizardComponent (rendered)', () => {
    * an interpolated value, so those assertions need the resolved string — the key alone would prove
    * neither. Values here mirror en-US.json.
    */
+  /**
+   * The chrome's own keys: step headers and the enum values the selects render. Only the entries the
+   * assertions below read are loaded — `labels.catalogs` is deliberately given just two of them, so
+   * the tenant-named values (the KES currency) exercise the fallback instead of a translation.
+   * Values mirror en-US.json.
+   */
+  function loadChromeCopy(): void {
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation(
+      'en',
+      {
+        labels: {
+          heading: {
+            Details: 'Details',
+            Currency: 'Currency',
+            Terms: 'Terms',
+            Settings: 'Settings',
+            Charges: 'Charges',
+            Accounting: 'Accounting',
+            'Payment Allocation': 'Payment Allocation',
+            'Interest Refunds': 'Interest Refunds',
+            'Deferred Income Recognition': 'Deferred Income Recognition',
+            'Advanced Configuration': 'Advanced Configuration'
+          },
+          inputs: { 'Terms vary based on loan cycle': 'Terms vary based on loan cycle' },
+          text: { 'max 4 chars': 'no more than 4 characters' },
+          buttons: { Preview: 'Preview', Yes: 'Yes', No: 'No' },
+          // Deliberately NOT the English these keys carry in en-US.json: a value that matched its own
+          // key would pass whether or not the template pipes it, which is exactly the hole these
+          // assertions exist to close.
+          catalogs: { 'Per month': 'Monthly rate', 'Declining Balance': 'Reducing balance' }
+        }
+      },
+      true
+    );
+    translate.use('en');
+  }
+
   function loadValidationCopy(): void {
     const translate = TestBed.inject(TranslateService);
     translate.setTranslation(
@@ -263,7 +308,7 @@ describe('LoanProductWizardComponent (rendered)', () => {
       expect(summary()).not.toBeNull();
       // Details owns the required, empty `name`, so it must be named. The wording of the whole list is
       // not pinned here — which other steps start incomplete is a property of the profile config.
-      expect(listedSteps()).toContain('Details');
+      expect(listedSteps()).toContain('labels.heading.Details');
     });
 
     it('announces the summary to a screen reader', () => {
@@ -284,10 +329,10 @@ describe('LoanProductWizardComponent (rendered)', () => {
     it('jumps the stepper to a step named in the summary', () => {
       clickCreate();
 
-      const details = component.incompleteGuidedSteps.find((step) => step.title === 'Details')!;
+      const details = component.incompleteGuidedSteps.find((step) => step.title === 'labels.heading.Details')!;
       const detailsButton = Array.from(
         fixture.nativeElement.querySelectorAll('.submit-blocked__step') as NodeListOf<HTMLButtonElement>
-      ).find((button) => button.textContent!.trim() === 'Details')!;
+      ).find((button) => button.textContent!.trim() === 'labels.heading.Details')!;
 
       detailsButton.click();
       detect();
@@ -313,14 +358,14 @@ describe('LoanProductWizardComponent (rendered)', () => {
 
     it('drops a step from the list once its fields are filled', () => {
       clickCreate();
-      expect(listedSteps()).toContain('Details');
+      expect(listedSteps()).toContain('labels.heading.Details');
 
       // Every visible Details control that is currently invalid — the step is only listed because one
       // of its own fields is, so satisfying them all must remove it and leave the rest of the list.
       // Details is all text/date/checkbox, and its two required controls are `name` and `shortName`;
       // the filler is kept inside `shortName`'s 4-character limit so it satisfies rather than trades
       // one error for another.
-      const detailsStep = component.visibleSteps.find((step) => step.title === 'Details')!;
+      const detailsStep = component.visibleSteps.find((step) => step.title === 'labels.heading.Details')!;
       component.visibleFields(detailsStep).forEach((field) => {
         const control = component.form.get(field.key)!;
         if (control.invalid) {
@@ -331,7 +376,7 @@ describe('LoanProductWizardComponent (rendered)', () => {
 
       expect(component.visibleFields(detailsStep).every((field) => component.form.get(field.key)!.valid)).toBe(true);
 
-      expect(listedSteps()).not.toContain('Details');
+      expect(listedSteps()).not.toContain('labels.heading.Details');
       expect(summary()).not.toBeNull();
     });
   });
@@ -374,5 +419,72 @@ describe('LoanProductWizardComponent (rendered)', () => {
     // `layout-row`/`margin-t` classes the rule is written to match.
     const embeddedNav = fixture.nativeElement.querySelector('.wizard-accounting .layout-row.margin-t');
     expect(embeddedNav).not.toBeNull();
+  });
+
+  /**
+   * I1: the wizard chrome bypassed i18n. Field labels and placeholders were keys, but everything
+   * around them — the step headers, the select options, the field hints, the Review's section titles
+   * and its Yes/No — was raw English hardcoded in the config, so a non-English operator got a
+   * half-translated form. These are DOM-level because the defect is what the template does with the
+   * string, which the `new LoanProductWizardComponent()` specs cannot see.
+   */
+  describe('translated wizard chrome', () => {
+    beforeEach(() => {
+      loadChromeCopy();
+      detect();
+    });
+
+    it('translates the step headers', () => {
+      const headers = Array.from(
+        fixture.nativeElement.querySelectorAll('.mat-step-label') as NodeListOf<HTMLElement>
+      ).map((header) => header.textContent!.trim());
+
+      expect(headers).toContain('Details');
+      expect(headers).toContain('Currency');
+      // The last step is Classic's Preview, named from the key Classic already ships translated.
+      expect(headers).toContain('Preview');
+      // A raw key reaching the header is the exact defect; none may survive.
+      expect(headers.some((header) => header.startsWith('labels.'))).toBe(false);
+    });
+
+    /**
+     * `mat-select` renders its options lazily, into the CDK overlay attached to the document body —
+     * so they exist nowhere until the trigger is clicked, and never inside the fixture's own element.
+     */
+    function openedOptions(labelKey: string): string[] {
+      (fieldByLabel(labelKey).querySelector('.mat-mdc-select-trigger') as HTMLElement).click();
+      detect();
+      return Array.from(document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>).map((option) =>
+        option.textContent!.trim()
+      );
+    }
+
+    it('translates select options through the catalogs namespace', () => {
+      expect(openedOptions('labels.inputs.Interest rate frequency')).toContain('Monthly rate');
+    });
+
+    it('shows a tenant-named option as its own name rather than a key', () => {
+      // The other half of the catalogs rule: 'Kenyan Shilling' is the tenant's currency, named by the
+      // backend, and no bundle can carry a key for it. Without the fallback this select would read
+      // 'labels.catalogs.Kenyan Shilling' — a worse result than the untranslated string it replaced.
+      expect(openedOptions('labels.inputs.CURRENCY')).toContain('Kenyan Shilling');
+    });
+
+    it('translates the field hint', () => {
+      const hint = fieldByLabel('labels.inputs.Short Name').querySelector('mat-hint');
+
+      expect(hint!.textContent!.trim()).toBe('no more than 4 characters');
+    });
+
+    it('translates a checkbox value in the Review', () => {
+      // `formatFieldValue` returned the literals 'Yes'/'No' from TypeScript, where no pipe could reach
+      // them; they now resolve through `labels.buttons`, the pair the shared `yesNo` pipe uses.
+      expect(component.formatValue('canUseForTopup', true)).toBe('Yes');
+      expect(component.formatValue('canUseForTopup', false)).toBe('No');
+    });
+
+    it('names an enum value in the Review the way Classic names it', () => {
+      expect(component.formatValue('interestType', 0)).toBe('Reducing balance');
+    });
   });
 });

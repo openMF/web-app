@@ -1113,7 +1113,9 @@
       "transaction_loan": "Darlehenstransaktionen",
       "transaction_savings": "Spartransaktionen",
       "unmarried": "unverheiratet",
-      "xbrlmapping": "XBRL Zuordnung"
+      "xbrlmapping": "XBRL Zuordnung",
+      "Enabled": "Ermöglicht",
+      "Disabled": "Deaktiviert"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -1803,7 +1805,11 @@
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Erklärung der wirtschaftlich Berechtigten - juristische Personen",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Erklärung der wirtschaftlich Berechtigten - natürliche Personen",
       "Recovery": "Einbringung",
-      "Upload Report Design": "Berichtsdesign hochladen"
+      "Upload Report Design": "Berichtsdesign hochladen",
+      "Payment Allocation": "Zahlungsverteilung",
+      "Interest Refunds": "Zinsrückerstattung",
+      "Deferred Income Recognition": "Erfassung abgegrenzter Erträge",
+      "Advanced Configuration": "Erweiterte Konfiguration"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -5003,7 +5009,8 @@
       "The selected report design is too large": "Das ausgewählte Berichtsdesign ist größer als 5 MB.",
       "Report design uploaded": "Berichtsdesign {{fileName}} wurde hochgeladen.",
       "Report design replaced": "Berichtsdesign {{fileName}} wurde ersetzt.",
-      "KB": "KB"
+      "KB": "KB",
+      "max 4 chars": "max. 4 Zeichen"
     },
     "permissions": {
       "actions": {
