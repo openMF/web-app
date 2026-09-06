@@ -142,13 +142,21 @@ export class FooterComponent implements OnInit, OnDestroy {
    * Get the Business Date data
    */
   setBusinessDate(): void {
-    this.systemService.getBusinessDate(SettingsService.businessDateType).subscribe((data: any) => {
-      this.businessDate = new Date(data.date);
-      this.settingsService.setBusinessDate(
-        this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)
-      );
-      this.isBusinessDateDefined = true;
-      this.cdr.markForCheck();
+    this.systemService.getBusinessDate(SettingsService.businessDateType).subscribe({
+      next: (data: any) => {
+        this.businessDate = new Date(data.date);
+        this.settingsService.setBusinessDate(
+          this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)
+        );
+        this.isBusinessDateDefined = true;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        // The configuration is enabled but no business date has been set on this instance yet,
+        // so the footer hides it and the application keeps using the system date.
+        this.isBusinessDateDefined = false;
+        this.cdr.markForCheck();
+      }
     });
   }
 }

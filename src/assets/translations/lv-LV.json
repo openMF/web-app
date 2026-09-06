@@ -832,7 +832,8 @@
       "Delink Client": "Atsaistīt klientu",
       "Disable Breach": "Atspējot pārkāpumu",
       "Enable Breach": "Iespējot pārkāpumu",
-      "Save": "Saglabāt"
+      "Save": "Saglabāt",
+      "Upload Report Design": "Augšupielādēt pārskata veidni"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1548,6 +1549,7 @@
       "Peak Outstanding": "Maksimālais Atlikums",
       "Penalties to Specific Income Accounts": "Sodi konkrētiem ienākumu kontiem",
       "Pending Tasks": "Nepabeigti uzdevumi",
+      "Onboarding Board": "Klientu uzņemšanas panelis",
       "Performance History": "Izpildes vēsture",
       "Personal Information": "Personīgā informācija",
       "Post Interest": "Post Interese",
@@ -1789,8 +1791,8 @@
       "Politically Exposed Persons and Related Individuals": "Politiski nozīmīgas personas un saistītās personas",
       "Declaration of Ultimate Beneficial Owners": "Patieso labuma guvēju deklarācija",
       "Controlling Person / PEP Related Questions": "Kontrolējošā persona / ar PEP saistīti jautājumi",
-      "Legal Entity": "Legal Entity",
-      "Natural Person": "Natural Person",
+      "Legal Entity": "Juridiska persona",
+      "Natural Person": "Fiziska persona",
       "Legal Entity Details": "Juridiskās personas dati",
       "Legal Representative": "Juridiskais pārstāvis",
       "Authorized Representative": "Pilnvarotais pārstāvis",
@@ -1798,7 +1800,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Personīgās atsauksmes (2 ģimenes locekļi, 1 paziņa)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Patieso labuma guvēju deklarācija - juridiskas personas",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Patieso labuma guvēju deklarācija - fiziskas personas",
-      "Recovery": "Atgūšana"
+      "Recovery": "Atgūšana",
+      "Upload Report Design": "Augšupielādēt pārskata veidni"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -2460,6 +2463,7 @@
       "Host": "Uzņēmēja",
       "Host Name": "Saimniekdatora nosaukums",
       "Hour": "Stunda",
+      "HTML": "HTML",
       "ID": "ID",
       "In arrears tolerance": "Parādu pielaide",
       "INCOME CAPITALIZATION": "IENĀKUMU KAPITALIZĀCIJA",
@@ -2952,6 +2956,7 @@
       "Personal Data": "Personīgie dati",
       "Phone Number": "Telefona numurs",
       "Place Guarantee Funds On-Hold": "Vietas garantijas fondu aizturēšana",
+      "Plain Text": "Vienkāršs teksts",
       "Please enter a valid number": "Lūdzu, ievadiet derīgu skaitli",
       "Port": "Osta",
       "Port Number": "Porta numurs",
@@ -3202,6 +3207,7 @@
       "State": "Valsts",
       "State / Province": "Valsts/province",
       "Status": "Statuss",
+      "Task": "Uzdevums",
       "Step Name": "Soļa nosaukums",
       "Street": "Iela",
       "String": "Stīga",
@@ -3245,6 +3251,7 @@
       "Terms": "Noteikumi",
       "Terms vary based on loan cycle": "Noteikumi atšķiras atkarībā no aizdevuma cikla",
       "Text": "Teksts",
+      "Text Format": "Teksta formāts",
       "The current password is not correct": "Pašreizējā parole nav pareiza",
       "Theme": "Tēma",
       "Theme and Font": "Motīvs un fonts",
@@ -3558,27 +3565,27 @@
       "Name of the Notary": "Notāra vārds",
       "Registration Date": "Reģistrācijas datums",
       "Nature of business, business activity, or corporate purpose": "Uzņēmējdarbības veids, komercdarbība vai sabiedrības mērķis",
-      "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
-      "Yes / No": "Yes / No",
-      "Affiliation": "Affiliation",
+      "Borough / City / Delegation / Municipality / Locality / Town": "Rajons / pilsēta / delegācija / pašvaldība / apdzīvota vieta / ciems",
+      "Yes / No": "Jā / Nē",
+      "Affiliation": "Saistība",
       "Reporting period": "Pārskata periods",
-      "Main Activities": "Main Activities",
-      "Period reported": "Period reported",
-      "Monthly Income Amount": "Monthly Income Amount",
-      "Monthly Expenditure Amount": "Monthly Expenditure Amount",
-      "Where do the funds to open the account come from?": "Where do the funds to open the account come from?",
-      "Allocation of resources for operations": "Allocation of resources for operations",
-      "Number of Shares": "Number of Shares",
-      "% of Shares": "% of Shares",
-      "Use: Single family residential building": "Use: Single family residential building",
-      "Spouse Full Name": "Spouse Full Name",
-      "No. of Shares": "No. of Shares",
-      "% Shares": "% Shares",
-      "Level of Control": "Level of Control",
-      "Position within the Entity": "Position within the Entity",
-      "Institution": "Institution",
-      "Level and charge": "Level and charge",
-      "Key Functions": "Key Functions",
+      "Main Activities": "Galvenās darbības",
+      "Period reported": "Pārskata periods",
+      "Monthly Income Amount": "Mēneša ienākumu summa",
+      "Monthly Expenditure Amount": "Mēneša izdevumu summa",
+      "Where do the funds to open the account come from?": "No kurienes nāk līdzekļi konta atvēršanai?",
+      "Allocation of resources for operations": "Resursu piešķiršana operācijām",
+      "Number of Shares": "Akciju skaits",
+      "% of Shares": "Akciju %",
+      "Use: Single family residential building": "Izmantošana: vienas ģimenes dzīvojamā ēka",
+      "Spouse Full Name": "Laulātā pilns vārds",
+      "No. of Shares": "Akciju skaits",
+      "% Shares": "Akciju %",
+      "Level of Control": "Kontroles līmenis",
+      "Position within the Entity": "Amats juridiskajā personā",
+      "Institution": "Institūcija",
+      "Level and charge": "Līmenis un amats",
+      "Key Functions": "Galvenās funkcijas",
       "Home phone 1": "Home phone 1",
       "Spouse's Name": "Spouse's Name",
       "Spouse's Occupation": "Spouse's Occupation",
@@ -3835,7 +3842,7 @@
       "Help": "Palīdzība",
       "Hold Amount": "Aizturēšanas summa",
       "Individual Collection Sheet": "Individuāla kolekcijas lapa",
-      "Institution": "Iestāde",
+      "Institution": "Institūcija",
       "Keyboard Shortcuts": "Tastatūras īsinājumtaustiņi",
       "Language Selector": "Valodas atlasītājs",
       "Loan Screen Report": "Aizdevuma ekrāna pārskats",
@@ -4011,6 +4018,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "Izpildiet šīs darbības, lai priekšskatītu produktu",
+      "Complete these steps before creating the product": "Izpildiet šīs darbības pirms produkta izveides",
+      "Check the highlighted fields before creating the product": "Pārbaudiet iezīmētos laukus pirms produkta izveides",
       "Agriculture Loan": "Lauksaimniecības aizdevums",
       "Auto Loan": "Auto aizdevums",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finansējums jaunu vai lietotu automobiļu iegādei ar fiksētiem ikmēneša maksājumiem izvēlētajā termiņā.",
@@ -4969,15 +4978,15 @@
       "Additional Filters": "Papildu filtri",
       "No additional filters": "Nav papildu filtru",
       "Global Financial Dashboard": "Globālais finanšu panelis",
-      "Entity PEP Related Intro": "Please indicate whether any of the shareholders or authorized representatives of the legal entity meet any of the following conditions:",
-      "Entity PEP Related Question 1": "Does the legal representative or any of the partners or shareholders of the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office in Mexico or abroad?",
-      "Entity PEP Related Question 2": "Does the spouse, or any relative by blood or affinity up to the second degree, of the Legal Representative or of any partner or shareholder of the legal entity currently hold—or did they hold during the immediately preceding year—any prominent public office at the federal, state, municipal, or district level in Mexico or in any foreign country?",
-      "Entity Resource Provider Question 1": "Do you declare, under penalty of perjury, that the transactions you intend to carry out with INSTITUTION NAME are being conducted on your own behalf and that said transactions are not being executed for the account or on behalf of a third party, whether an individual or a legal entity?",
-      "Entity Ultimate Beneficial Owner Interview Text": "Interview for Ultimate Beneficial Owners: collect the information of individuals or legal entities that directly or indirectly own or control the legal entity.",
-      "Entity Resource Provider Question 2": "Will any third party regularly contribute funds to the account opened with the Entity—or towards the fulfillment of obligations arising from the contract established with it—without being the holder of said contract or receiving the economic benefits derived therefrom?",
-      "Entity Resource Provider Interview Text": "Interview for Resource Providers: collect the information of third parties who regularly contribute resources to the account or contract.",
-      "Entity Controlling Person PEP Question 1": "Do any of the partners or shareholders identified by the legal representative as individuals exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
-      "Entity Controlling Person PEP Question 2": "Does the spouse—or any relative by blood or affinity up to the second degree—of any of the partners or shareholders identified by the legal representative as the natural persons exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, a prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
+      "Entity PEP Related Intro": "Norādiet, vai kāds no juridiskās personas akcionāriem vai pilnvarotajiem pārstāvjiem atbilst kādam no šiem nosacījumiem:",
+      "Entity PEP Related Question 1": "Vai juridiskās personas likumiskais pārstāvis vai kāds no partneriem vai akcionāriem pašlaik ieņem, vai iepriekšējā gada laikā ieņēma, nozīmīgu publisku amatu Meksikā vai ārvalstīs?",
+      "Entity PEP Related Question 2": "Vai juridiskās personas likumiskā pārstāvja vai jebkura partnera vai akcionāra laulātais vai radinieks pēc asinsradniecības vai svainības līdz otrajai pakāpei pašlaik ieņem, vai iepriekšējā gada laikā ieņēma, nozīmīgu publisku amatu federālā, štata, pašvaldības vai apgabala līmenī Meksikā vai jebkurā ārvalstī?",
+      "Entity Resource Provider Question 1": "Vai, apzinoties atbildību par nepatiesu liecību, deklarējat, ka darījumi, kurus plānojat veikt ar INSTITŪCIJAS NOSAUKUMS, tiek veikti jūsu pašu vārdā un netiek izpildīti trešās personas, fiziskas vai juridiskas, kontā vai vārdā?",
+      "Entity Ultimate Beneficial Owner Interview Text": "Intervija patiesajiem labuma guvējiem: apkopojiet informāciju par fiziskām vai juridiskām personām, kurām tieši vai netieši pieder juridiskā persona vai kuras to kontrolē.",
+      "Entity Resource Provider Question 2": "Vai kāda trešā persona regulāri iemaksās līdzekļus juridiskajā personā atvērtajā kontā vai ar to noslēgtā līguma saistību izpildei, nebūdama šī līguma turētāja un nesaņemot no tā izrietošos ekonomiskos labumus?",
+      "Entity Resource Provider Interview Text": "Intervija resursu nodrošinātājiem: apkopojiet informāciju par trešajām personām, kas regulāri nodrošina resursus kontam vai līgumam.",
+      "Entity Controlling Person PEP Question 1": "Vai kāds no partneriem vai akcionāriem, kurus likumiskais pārstāvis identificējis kā fiziskas personas, kas īsteno kontroli pār juridisko personu, pašlaik ieņem, vai iepriekšējā gada laikā ieņēma, nozīmīgu publisku amatu federālā, štata vai pašvaldības līmenī Meksikā vai ārvalstī?",
+      "Entity Controlling Person PEP Question 2": "Vai kāda partnera vai akcionāra, kuru likumiskais pārstāvis identificējis kā fizisku personu, kas īsteno kontroli pār juridisko personu, laulātais vai radinieks pēc asinsradniecības vai svainības līdz otrajai pakāpei pašlaik ieņem, vai iepriekšējā gada laikā ieņēma, nozīmīgu publisku amatu federālā, štata vai pašvaldības līmenī Meksikā vai ārvalstī?",
       "Person PEP PLD Question 1": "Vai pašlaik pildāt vai iepriekšējā gada laikā pildījāt nozīmīgu publisku amatu (1) Meksikā vai ārvalstīs?",
       "Person PEP PLD Question 2": "Vai jums ir ģimenes attiecības (2) ar personu, kas ieņem šo amatu?",
       "Person PEP PLD Question 3": "Vai jums ir ģimenes attiecības (2) ar juridiskās personas akcionāru, darbinieku vai amatpersonu?",
@@ -4985,7 +4994,14 @@
       "the": "atlasītie",
       "items selected of": "vienumi no",
       "Recovery Completed": "Atgūšana pabeigta",
-      "Recovery Payment Description": "Reģistrē naudu, kas saņemta pēc norakstīšanas. Aizdevums paliek slēgts un tā atlikums paliek nulle; mainās tikai atgūtā kopsumma."
+      "Recovery Payment Description": "Reģistrē naudu, kas saņemta pēc norakstīšanas. Aizdevums paliek slēgts un tā atlikums paliek nulle; mainās tikai atgūtā kopsumma.",
+      "Upload a BIRT report design": "Atlasiet Eclipse BIRT pārskata veidni (.rptdesign), ko instalēt šim īrniekam. Veidne ar tādu pašu nosaukumu tiks aizstāta.",
+      "Only Eclipse BIRT report designs can be uploaded": "Var augšupielādēt tikai Eclipse BIRT pārskatu veidnes (.rptdesign).",
+      "The selected report design is empty": "Atlasītā pārskata veidne ir tukša.",
+      "The selected report design is too large": "Atlasītā pārskata veidne pārsniedz 5 MB.",
+      "Report design uploaded": "Pārskata veidne {{fileName}} ir augšupielādēta.",
+      "Report design replaced": "Pārskata veidne {{fileName}} ir aizstāta.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
@@ -5558,6 +5574,8 @@
     "Specific days before when repayment": "Konkrētas dienas pirms tam, kad jānosūta paziņojums par atmaksas termiņu.",
     "Specific days when after the repayment Overdue": "Konkrētas dienas, kad pēc atmaksas jānosūta Kavējuma paziņojums.",
     "Successful": "Veiksmīgi",
+    "Switch to dark theme": "Pārslēgt uz tumšo tēmu",
+    "Switch to light theme": "Pārslēgt uz gaišo tēmu",
     "The Amortization value": "Amortizācijas vērtība tiek ievadīta, lai aprēķinātu atmaksas summas kredīta atmaksai.",
     "The Interest method value": "Procentu metodes vērtība tiek ievadīta, lai aprēķinātu maksājumu summu aizdevuma atmaksai.",
     "The currency in which the deposit will be disbursed": "Valūta, kurā tiks izmaksāts depozīts.",
@@ -5804,6 +5822,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Pašreizējā sesija",
     "newChat": "Jauna saruna",
@@ -5854,6 +5882,10 @@
       "aboutStorage": "Jūsu sarunas paliek šajā pārlūkā un nekad netiek glabātas asistenta serverī."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Nav nesenu sarunu",
       "emptySubtitle": "Jūsu sarunu vēsture parādīsies šeit",
       "messages": "ziņojumi",
@@ -5885,8 +5917,13 @@
     },
     "confirmWarning": "Šeit kustas reāla nauda. Pārbaudiet datus un tad apstipriniet.",
     "openAssistant": "Atvērt Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot apstr\u0101d\u0101 j\u016bsu piepras\u012bjumu. Atv\u0113rt Copilot.",
+      "replying": "Mifos X Copilot atbild. Atv\u0113rt Copilot."
+    },
     "newChatTitle": "Jauna saruna",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Ziņojums ir tukšs vai pārāk garš. Lūdzu, saīsiniet to un mēģiniet vēlreiz.",
       "injectionBlocked": "Ziņojums izskatās pēc mēģinājuma apiet norādījumus, tāpēc tas netika nosūtīts. Lūdzu, pārformulējiet to.",
       "streamFailed": "Neizdevās sasniegt Mifos X Copilot. Lūdzu, mēģiniet vēlreiz."
@@ -5958,11 +5995,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Šie ir ieraksti, ko asistents izlasīja. Jebkura lēmuma pamatojums par šo klientu ir Fineract sistēmā: aizdevuma produkta noteikumi, atmaksas grafiks un jūsu iestādes kredītpolitika.",
       "thinking": "Domāšana",
       "notesCaution": "Paša asistenta darba teksts. Tas nav ieraksts par to, kā atbilde tika iegūta, un tas nav kredīta novērtējums. Pārbaudiet katru skaitli klienta lietā."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "M\u0113\u0123in\u0101t v\u0113lreiz",
       "groupLabel": "Darb\u012bbas ar atbildi",
       "copy": "Kop\u0113t",
@@ -5970,7 +6023,12 @@
       "repeat": "Jaut\u0101t v\u0113lreiz",
       "goodAnswer": "Laba atbilde",
       "poorAnswer": "Slikta atbilde",
-      "exportPdf": "Eksport\u0113t uz PDF",
+      "export": {
+        "label": "Eksport\u0113t",
+        "pdf": "PDF dokuments",
+        "csv": "CSV izkl\u0101jlapa",
+        "png": "PNG att\u0113ls"
+      },
       "share": "Kop\u012bgot"
     },
     "export": {
@@ -5981,8 +6039,10 @@
       "disclaimer": "Sagatavojis Mifos Copilot no Fineract ierakstiem. Pirms r\u012bkoties, sal\u012bdziniet ar s\u0101kotn\u0113jo ierakstu.",
       "shareTitle": "Mifos Copilot atbilde",
       "copiedToClipboard": "Atbilde un saite nokop\u0113tas starpliktuv\u0113",
-      "failed": "PDF neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
-      "fileNameFallback": "copilot"
+      "failed": "Failu neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
+      "fileNameFallback": "copilot",
+      "cardField": "Lauks",
+      "cardValue": "V\u0113rt\u012bba"
     }
   }
 }

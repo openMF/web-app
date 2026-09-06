@@ -126,8 +126,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
     // Analytics dashboard reports that don't exist on this server are silently handled by the data service fallbacks
     const isAnalyticsReport404 = status === 404 && request.url.includes('/runreports/');
+    // A business date exists only once it has been set on this instance, so its absence is a valid
+    // state: the footer falls back to the system date instead of interrupting the user with an
+    // alert. The trailing slash keeps the business date list lookup out of this exception.
+    const isBusinessDate404 = status === 404 && request.method === 'GET' && request.url.includes('/businessdate/');
 
-    if (!environment.production && !isClientImage404 && !isAnalyticsReport404) {
+    if (!environment.production && !isClientImage404 && !isAnalyticsReport404 && !isBusinessDate404) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
@@ -157,7 +161,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
       });
     } else if (status === 404) {
-      if (isClientImage404 || isAnalyticsReport404) {
+      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({

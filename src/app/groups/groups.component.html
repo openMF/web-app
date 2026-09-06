@@ -35,8 +35,15 @@
       }
     </div>
 
-    <label class="toggle" (click)="toggleShowClosed()">
-      <span class="switch" [class.on]="showClosedGroups"></span>
+    <label class="toggle">
+      <input
+        type="checkbox"
+        class="toggle-input"
+        [checked]="showClosedGroups"
+        (change)="toggleShowClosed()"
+        (keydown.enter)="toggleShowClosed()"
+      />
+      <span class="switch" [class.on]="showClosedGroups" aria-hidden="true"></span>
       {{ 'labels.inputs.Show Closed Groups' | translate }}
     </label>
 

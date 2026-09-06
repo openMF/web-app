@@ -219,4 +219,160 @@ describe('LoanProductWizardComponent (rendered)', () => {
     expect(control.errors).toBeNull();
     expect(fieldByLabel('labels.inputs.Annual interest rate').querySelectorAll('mat-error').length).toBe(0);
   });
+
+  /**
+   * C4: "Create Loan Product" used to be a silent dead button — the guided branch of `submit()` called
+   * `markAllAsTouched()` and returned, with no message, no stepper move and no disabled state. Since
+   * the stepper is `[linear]="false"`, the operator reaches Review with an earlier step incomplete and
+   * the offending control is usually not on screen, so the field-level messages that pass revealed
+   * were invisible to them. These tests are DOM-level on purpose: the defect was that nothing
+   * RENDERED, which the `new LoanProductWizardComponent()` specs in the sibling file cannot see.
+   */
+  describe('blocked submit on the guided Review step', () => {
+    function createButton(): HTMLButtonElement {
+      return Array.from(
+        fixture.nativeElement.querySelectorAll('.step-actions button') as NodeListOf<HTMLButtonElement>
+      ).find((button) => button.textContent?.trim() === 'labels.buttons.Create Loan Product')!;
+    }
+
+    function summary(): HTMLElement | null {
+      return fixture.nativeElement.querySelector('.submit-blocked');
+    }
+
+    function listedSteps(): string[] {
+      return Array.from(fixture.nativeElement.querySelectorAll('.submit-blocked__step') as NodeListOf<HTMLElement>).map(
+        (step) => step.textContent!.trim()
+      );
+    }
+
+    function clickCreate(): void {
+      createButton().click();
+      detect();
+    }
+
+    it('says nothing until the operator actually presses Create', () => {
+      // The form is invalid from the first render (`name` is required and empty). A wizard that opens
+      // by listing every step the operator has not reached yet is noise, not feedback.
+      expect(component.guidedSubmitBlocked).toBe(true);
+      expect(summary()).toBeNull();
+    });
+
+    it('names the steps that block the create instead of doing nothing', () => {
+      clickCreate();
+
+      expect(summary()).not.toBeNull();
+      // Details owns the required, empty `name`, so it must be named. The wording of the whole list is
+      // not pinned here — which other steps start incomplete is a property of the profile config.
+      expect(listedSteps()).toContain('Details');
+    });
+
+    it('announces the summary to a screen reader', () => {
+      // The accessibility face of C4: `markAllAsTouched()` reveals messages silently, so a
+      // screen-reader user got no signal at all that the click had been rejected.
+      clickCreate();
+
+      expect(summary()!.getAttribute('role')).toBe('alert');
+    });
+
+    it('does not attempt the create while blocked', () => {
+      const productsService = TestBed.inject(ProductsService);
+      clickCreate();
+
+      expect(productsService.createLoanProduct).not.toHaveBeenCalled();
+    });
+
+    it('jumps the stepper to a step named in the summary', () => {
+      clickCreate();
+
+      const details = component.incompleteGuidedSteps.find((step) => step.title === 'Details')!;
+      const detailsButton = Array.from(
+        fixture.nativeElement.querySelectorAll('.submit-blocked__step') as NodeListOf<HTMLButtonElement>
+      ).find((button) => button.textContent!.trim() === 'Details')!;
+
+      detailsButton.click();
+      detect();
+
+      expect(component.stepper!.selectedIndex).toBe(details.index);
+    });
+
+    it('keeps the step buttons across change detection so focus survives', () => {
+      // `incompleteGuidedSteps` is a getter returning fresh objects, so without a trackBy Angular's
+      // identity diffing rebuilds every button on each pass — and a button replaced under the
+      // operator's focus is the same class of defect as the dead button this whole block fixes.
+      clickCreate();
+      const before = fixture.nativeElement.querySelector('.submit-blocked__step') as HTMLButtonElement;
+      before.focus();
+
+      detect();
+      detect();
+
+      const after = fixture.nativeElement.querySelector('.submit-blocked__step') as HTMLButtonElement;
+      expect(after).toBe(before);
+      expect(document.activeElement).toBe(before);
+    });
+
+    it('drops a step from the list once its fields are filled', () => {
+      clickCreate();
+      expect(listedSteps()).toContain('Details');
+
+      // Every visible Details control that is currently invalid — the step is only listed because one
+      // of its own fields is, so satisfying them all must remove it and leave the rest of the list.
+      // Details is all text/date/checkbox, and its two required controls are `name` and `shortName`;
+      // the filler is kept inside `shortName`'s 4-character limit so it satisfies rather than trades
+      // one error for another.
+      const detailsStep = component.visibleSteps.find((step) => step.title === 'Details')!;
+      component.visibleFields(detailsStep).forEach((field) => {
+        const control = component.form.get(field.key)!;
+        if (control.invalid) {
+          control.setValue('ABCD');
+        }
+      });
+      detect();
+
+      expect(component.visibleFields(detailsStep).every((field) => component.form.get(field.key)!.valid)).toBe(true);
+
+      expect(listedSteps()).not.toContain('Details');
+      expect(summary()).not.toBeNull();
+    });
+  });
+
+  /**
+   * C5: the reused Classic Accounting step ships its own trailing Previous/Next row
+   * (`loan-product-accounting-step.component.html`), and the wizard shell renders a second, unified
+   * one for every step via `.step-actions`. The Charges step has the identical row and was already
+   * hidden with a `.wizard-charges ::ng-deep .layout-row.margin-t` rule; `.wizard-accounting` had no
+   * matching rule, so the Accounting step showed both pairs stacked, in both guided and Custom/Advanced
+   * mode. This is DOM-level for the same reason the C3 `mat-error` specs are: the defect is a second
+   * set of buttons actually rendering, which the `new LoanProductWizardComponent()` specs cannot see.
+   */
+  it('does not stack a second Previous/Next pair on the Accounting step', () => {
+    const accountingIndex = component.visibleSteps.findIndex((step) => step.kind === 'accounting');
+    expect(accountingIndex).toBeGreaterThanOrEqual(0);
+    component.stepper!.selectedIndex = accountingIndex;
+    detect();
+
+    // Vertical mat-stepper renders every step's content into the DOM at once (toggling visibility
+    // rather than instantiating on demand), so `.step-actions` appears once per visible step — the
+    // Accounting step's own row has to be picked out by position, matching `visibleSteps` order.
+    // The wizard's own nav labels its buttons 'Back'/'Next'; the embedded step's labels its
+    // 'Previous'/'Next' — different keys, so this also confirms which row is which.
+    const wizardNav = fixture.nativeElement.querySelectorAll('.step-actions')[accountingIndex] as HTMLElement;
+    const wizardNavLabels = Array.from(wizardNav.querySelectorAll('button') as NodeListOf<HTMLElement>).map((button) =>
+      button.textContent!.trim()
+    );
+    expect(wizardNavLabels).toContain('labels.buttons.Back');
+    expect(wizardNavLabels).toContain('labels.buttons.Next');
+
+    // The embedded step still renders its own row in the DOM (it is a shared component, used
+    // undecorated by Classic's own create flow) — this only asserts it is not visually shown here.
+    // Confirms the hide selector still has something to target: jest-preset-angular does not compile
+    // or inject component SCSS into this test's DOM (verified — no `<style>` in this suite ever
+    // carries a `.wizard-accounting` or `.wizard-charges` rule, including the pre-existing Charges
+    // one), so `getComputedStyle` on this element would read as visible whether or not the SCSS hide
+    // rule exists. `loan-product-wizard.scss.spec.ts` covers the rule itself, from source; this half
+    // covers the other way the fix could silently break — the embedded template dropping the
+    // `layout-row`/`margin-t` classes the rule is written to match.
+    const embeddedNav = fixture.nativeElement.querySelector('.wizard-accounting .layout-row.margin-t');
+    expect(embeddedNav).not.toBeNull();
+  });
 });

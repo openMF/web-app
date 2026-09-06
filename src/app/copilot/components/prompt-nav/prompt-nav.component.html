@@ -1,0 +1,46 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<nav
+  class="prompt-nav"
+  [class.prompt-nav--collapsed]="collapsed"
+  *ngIf="hasEntries"
+  [attr.aria-label]="'copilot.promptNav.label' | translate"
+>
+  <button
+    type="button"
+    class="prompt-nav__toggle"
+    (click)="toggle()"
+    [attr.aria-expanded]="!collapsed"
+    [attr.aria-label]="(collapsed ? 'copilot.promptNav.expand' : 'copilot.promptNav.collapse') | translate"
+    [title]="(collapsed ? 'copilot.promptNav.expand' : 'copilot.promptNav.collapse') | translate"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+    </svg>
+  </button>
+
+  <!-- The list is always in the DOM: collapsing shrinks each row to a rule, so the officer
+       keeps the sense of how far through the conversation they are. Labels are hidden from
+       assistive technology only while collapsed, where they are not readable anyway. -->
+  <ol class="prompt-nav__list">
+    <li *ngFor="let entry of entries; trackBy: trackById">
+      <button
+        type="button"
+        class="prompt-nav__item"
+        [class.prompt-nav__item--active]="entry.id === activeId"
+        [attr.aria-current]="entry.id === activeId ? 'true' : null"
+        (click)="jumpTo.emit(entry.id)"
+        [title]="entry.label"
+      >
+        <span class="prompt-nav__rule" aria-hidden="true"></span>
+        <span class="prompt-nav__index" aria-hidden="true">{{ entry.index }}</span>
+        <span class="prompt-nav__label">{{ entry.label }}</span>
+      </button>
+    </li>
+  </ol>
+</nav>

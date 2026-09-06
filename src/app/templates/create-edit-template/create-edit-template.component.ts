@@ -7,13 +7,23 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Imports */
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
+import { TemplateTextFormat, htmlToPlainText, isHtmlText, plainTextToHtml } from '../template-text.utils';
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
@@ -27,6 +37,12 @@ import {
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** A template type offered by the backend for the Type select. */
+interface TemplateTypeOption {
+  id: number;
+  name: string;
+}
 
 /**
  * Create Template Component.
@@ -59,11 +75,17 @@ export class CreateEditComponent implements OnInit {
   private templateService = inject(TemplatesService);
   private themingService = inject(ThemingService);
   private destroyRef = inject(DestroyRef);
+  private changeDetector = inject(ChangeDetectorRef);
 
-  themeKey = 'light';
+  themeKey = 'light-theme';
+  /** Set once the theme active on load has been received; only later emissions re-create the editor. */
+  private themeInitialized = false;
 
   editorVisible = true;
 
+  /**
+   * TinyMCE configuration for the HTML editor. Read whenever the editor is created, so the skin follows the theme.
+   */
   get tinymceConfig() {
     const isDark = this.themeKey === 'dark-theme';
     return {
@@ -72,7 +94,6 @@ export class CreateEditComponent implements OnInit {
       menubar: false,
       branding: false,
       height: 320,
-      forced_root_block: false,
       statusbar: false,
       elementpath: false,
       resize: false,
@@ -80,13 +101,15 @@ export class CreateEditComponent implements OnInit {
       content_css: isDark ? 'dark' : 'default',
       content_style: isDark ? 'body { background-color: transparent !important; }' : '',
       body_class: isDark ? 'dark-theme' : '',
-      plugins: 'lists link table media codesample',
+      plugins: 'lists link table media codesample code',
       toolbar:
-        'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat'
+        'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat | code'
     };
   }
   /** TinyMCE component reference */
   @ViewChild('tinymceEditor', { static: false }) tinymceEditor: EditorComponent;
+  /** Plain text editor reference */
+  @ViewChild('plainTextEditor', { static: false }) plainTextEditor: ElementRef<HTMLTextAreaElement>;
 
   /** Template form. */
   templateForm: FormGroup;
@@ -98,6 +121,13 @@ export class CreateEditComponent implements OnInit {
   showAdvanceOptions = false;
   /** mode */
   mode: 'create' | 'edit';
+  /** Format the template text is authored in: HTML through TinyMCE or plain text stored verbatim. */
+  textFormat: TemplateTextFormat = 'html';
+  /** Text format choices offered above the editor. */
+  textFormatOptions: { value: TemplateTextFormat; label: string }[] = [
+    { value: 'plain', label: 'labels.inputs.Plain Text' },
+    { value: 'html', label: 'labels.inputs.HTML' }
+  ];
 
   /** Client Parameter Labels */
   clientParameterLabels: string[] = clientParameterLabels;
@@ -125,13 +155,25 @@ export class CreateEditComponent implements OnInit {
             mapperskey: new FormControl(mapper.mapperkey),
             mappersvalue: new FormControl(mapper.mappervalue)
           }));
+          this.textFormat = isHtmlText(this.templateData.template.text) ? 'html' : 'plain';
         }
       });
 
     this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
+      const themeChanged = this.themeInitialized && theme !== this.themeKey;
+      this.themeInitialized = true;
       this.themeKey = theme;
+      if (!themeChanged) {
+        return;
+      }
+      // TinyMCE only reads its skin when it is created, so re-create the editor on theme change.
+      // The component is OnPush: without markForCheck the re-created editor would not render until the next event.
       this.editorVisible = false;
-      setTimeout(() => (this.editorVisible = true));
+      this.changeDetector.markForCheck();
+      setTimeout(() => {
+        this.editorVisible = true;
+        this.changeDetector.markForCheck();
+      });
     });
   }
 
@@ -186,7 +228,8 @@ export class CreateEditComponent implements OnInit {
   }
 
   /**
-   * Subscribe to value changes of entity to set default mapper.
+   * Subscribe to value changes of entity to set default mapper,
+   * and of type to pick a sensible text format while the text is still empty.
    */
   buildDependencies() {
     const tenantIdentifier = 'default'; // update once global settings are setup.
@@ -209,12 +252,45 @@ export class CreateEditComponent implements OnInit {
             mappersvalue: new FormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
           });
         }
-        this.setEditorContent('');
         this.templateForm.get('text').setValue('');
+      });
+    this.templateForm
+      .get('type')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((typeId: number | null) => {
+        if (!this.templateForm.get('text').value) {
+          this.textFormat = this.isSmsType(typeId) ? 'plain' : 'html';
+        }
       });
     if (this.mode === 'create') {
       this.templateForm.get('entity').patchValue(0);
     }
+  }
+
+  /**
+   * Tells whether a template type id refers to the SMS type.
+   * @param {number | null} typeId Template type id.
+   */
+  isSmsType(typeId: number | null): boolean {
+    const types: TemplateTypeOption[] = this.templateData?.types ?? [];
+    const type = types.find((templateType) => templateType.id === typeId);
+    return /sms/i.test(type?.name ?? '');
+  }
+
+  /**
+   * Switches the text editor between plain text and HTML.
+   * The current text is converted so that nothing visible is lost.
+   * @param {TemplateTextFormat} format Target text format.
+   */
+  setTextFormat(format: TemplateTextFormat) {
+    if (format === this.textFormat) {
+      return;
+    }
+    const current = this.getEditorContent();
+    const converted = format === 'plain' ? htmlToPlainText(current) : plainTextToHtml(current);
+    // The editor for the old format is about to be destroyed, so only the control needs the new value.
+    this.templateForm.get('text').setValue(converted, { emitModelToViewChange: false });
+    this.textFormat = format;
   }
 
   /**
@@ -241,25 +317,33 @@ export class CreateEditComponent implements OnInit {
    * @param {string} label Template parameter label.
    */
   addText(label: string) {
-    this.tinymceEditor?.editor?.insertContent(label);
-  }
-
-  /**
-   * Gets the contents of the editor.
-   */
-  getEditorContent() {
-    return this.tinymceEditor?.editor?.getContent({ format: 'html' }) || '';
-  }
-
-  /**
-   * Sets the contents of the editor.
-   * @param {string} content Editor Content
-   */
-  setEditorContent(content: string) {
-    if (this.tinymceEditor?.editor) {
-      this.tinymceEditor.editor.setContent(content || '');
+    if (this.textFormat === 'html') {
+      this.tinymceEditor?.editor?.insertContent(label);
+      return;
     }
-    return '';
+    const textControl = this.templateForm.get('text');
+    const textarea = this.plainTextEditor?.nativeElement;
+    const current: string = textControl.value || '';
+    const start = textarea?.selectionStart ?? current.length;
+    const end = textarea?.selectionEnd ?? current.length;
+    textControl.setValue(current.slice(0, start) + label + current.slice(end));
+    if (textarea) {
+      const cursor = start + label.length;
+      textarea.focus();
+      textarea.setSelectionRange(cursor, cursor);
+    }
+  }
+
+  /**
+   * Gets the template text as it will be submitted.
+   * Plain text comes straight from the form control; HTML is read from TinyMCE when it is available.
+   */
+  getEditorContent(): string {
+    const formValue: string = this.templateForm.get('text').value || '';
+    if (this.textFormat === 'plain') {
+      return formValue;
+    }
+    return this.tinymceEditor?.editor?.getContent({ format: 'html' }) || formValue;
   }
 
   /**

@@ -52,6 +52,51 @@ async function* tokens(text: string): AsyncGenerator<McpStreamEvent> {
   }
 }
 
+/**
+ * How long a demo tool call appears to take.
+ *
+ * <p>Long enough that the live line is legible rather than a flicker, short enough that the
+ * demo does not feel broken. The real gateway takes seconds on a tool call, so a demo that
+ * returns instantly misrepresents the wait the reasoning block exists to explain.
+ */
+const STEP_DELAY_MS = 900;
+
+/** Pause between working-note fragments as the model writes them. */
+const NOTE_DELAY_MS = 12;
+
+/**
+ * A 'thinking' start → delta* → end sequence, the shape chat.service.ts reduces into
+ * `workingNotes` + `notesElapsedMs`.
+ */
+async function* thinking(text: string): AsyncGenerator<McpStreamEvent> {
+  const startedAt = Date.now();
+  yield { type: 'thinking', thinkingPhase: 'start' };
+  for (const word of text.match(/\S+\s*|\s+/g) ?? []) {
+    await sleep(NOTE_DELAY_MS);
+    yield { type: 'thinking', thinkingPhase: 'delta', thinking: word };
+  }
+  yield { type: 'thinking', thinkingPhase: 'end', thinkingElapsedMs: Date.now() - startedAt };
+}
+
+/**
+ * One tool call, started → finished, carrying the banking `toolLabel` the manifest
+ * supplies. Awaits between the two phases, so only ever one step is in flight —
+ * which is what recordStep() in chat.service.ts assumes.
+ */
+async function* step(toolName: string, toolLabel: string, readOnly = true): AsyncGenerator<McpStreamEvent> {
+  const startedAt = Date.now();
+  yield { type: 'tool_call', toolName, toolLabel, toolPhase: 'started', readOnly };
+  await sleep(STEP_DELAY_MS);
+  yield {
+    type: 'tool_call',
+    toolName,
+    toolLabel,
+    toolPhase: 'finished',
+    readOnly,
+    durationMs: Date.now() - startedAt
+  };
+}
+
 /** One-line helper so suggestion lists read clearly at each call site. */
 function suggest(...items: string[]): McpStreamEvent {
   return { type: 'suggest', suggestions: items };
@@ -112,6 +157,12 @@ export async function* mockChatStream(
 
   if (/(approve|disburse|repay|repayment|record|transfer|waive)/.test(message)) {
     // Write intent, so the gateway pauses with an approval card and nothing executes yet.
+    yield* thinking(
+      `This asks me to change a record, so nothing executes without the officer approving it. ` +
+        `I will read the loan first so the card states the real figures rather than echoing ` +
+        `back what was typed.`
+    );
+    yield* step('mifos_loan_details', 'Reading the loan account');
     yield* tokens(t('copilot.demo.writeIntro'));
     await sleep(120);
     yield {
@@ -143,9 +194,14 @@ export async function* mockChatStream(
   }
 
   if (/loan/.test(message)) {
-    yield { type: 'tool_call', toolName: 'mifos_loan_details', toolPhase: 'started', readOnly: true };
-    await sleep(350);
-    yield { type: 'tool_call', toolName: 'mifos_loan_details', toolPhase: 'finished', readOnly: true };
+    yield* thinking(
+      `The officer is asking about ${client}'s loan. I should find the client record first, ` +
+        `then read the loan account itself, and check the repayment schedule before I say ` +
+        `anything about what is outstanding. I will not quote a figure I have not read.`
+    );
+    yield* step('mifos_client_search', 'Finding the client');
+    yield* step('mifos_loan_details', 'Reading the loan account');
+    yield* step('mifos_repayment_schedule', 'Checking the repayment schedule');
     yield* tokens(t('copilot.demo.loanIntro', { client }));
     yield {
       type: 'action_card',
@@ -172,9 +228,13 @@ export async function* mockChatStream(
   }
 
   if (/(client|search|who is)/.test(message)) {
-    yield { type: 'tool_call', toolName: 'mifos_client_search', toolPhase: 'started', readOnly: true };
-    await sleep(300);
-    yield { type: 'tool_call', toolName: 'mifos_client_search', toolPhase: 'finished', readOnly: true };
+    yield* thinking(
+      `A client lookup. I will search the client register, then read the profile and the ` +
+        `savings balance so the summary is complete rather than partly guessed.`
+    );
+    yield* step('mifos_client_search', 'Searching the client register');
+    yield* step('mifos_client_details', 'Reading the client profile');
+    yield* step('mifos_savings_balance', 'Reading the savings balance');
     yield* tokens(t('copilot.demo.clientIntro'));
     yield {
       type: 'action_card',
@@ -199,6 +259,14 @@ export async function* mockChatStream(
     return;
   }
 
+  // The fallback answers with a trail too. Without one, any prompt outside the three intents
+  // above showed no reasoning at all, which made the demo look like the feature was missing
+  // rather than like the question had no account to read.
+  yield* thinking(
+    `Nothing in this asks for a specific loan or client by name, so I have no account to ` +
+      `read. I will say what I can actually do rather than guess at what was meant.`
+  );
+  yield* step('mifos_client_search', 'Searching the client register');
   yield* tokens(t('copilot.demo.modeNotice'));
   yield suggest(
     t('copilot.demo.suggest.clientLoans'),
@@ -216,9 +284,7 @@ export async function* mockDecisionStream(
 ): AsyncGenerator<McpStreamEvent> {
   await sleep(250);
   if (decision === 'approve') {
-    yield { type: 'tool_call', toolName: 'mifos_loan_approve', toolPhase: 'started', readOnly: false };
-    await sleep(600);
-    yield { type: 'tool_call', toolName: 'mifos_loan_approve', toolPhase: 'finished', readOnly: false };
+    yield* step('mifos_loan_approve', 'Approving the loan', false);
     yield* tokens(t('copilot.demo.approved'));
     yield {
       type: 'action_card',

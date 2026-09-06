@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { highlightCode } from './highlight';
+
 /**
  * The assistant's markdown, as the HTML the panel shows.
  *
@@ -18,8 +20,30 @@
  * PDF is built from: a filed document has to say what the officer read, and two renderers
  * would eventually disagree.
  */
-export function renderMarkdown(markdown: string | null | undefined): string {
-  return render(escapeHtml(withoutHalfWrittenMarkup(markdown ?? '')));
+export function renderMarkdown(markdown: string | null | undefined, copyLabel = '', streaming = false): string {
+  const html = render(escapeHtml(withoutHalfWrittenMarkup(markdown ?? '')), copyLabel);
+  return streaming ? markNewestWord(html) : html;
+}
+
+/**
+ * Wrap the word that has just arrived, so it can fade in rather than snap on.
+ *
+ * <p>The bubble is rebuilt from the whole reply on every token, so there is no diff to work
+ * from and no way to know which nodes are new. What is knowable is that the LAST word is the
+ * one that was not there a moment ago. Marking it means each token gets a fresh element with
+ * the animation on it, and the words before it are plain — which is exactly the effect wanted,
+ * for the cost of one regex per token.
+ *
+ * <p>Skipped when the reply currently ends inside a fenced block or a table: those are
+ * rebuilt wholesale as the rows arrive, and a word fading inside them flickers rather than
+ * settles.
+ */
+function markNewestWord(html: string): string {
+  if (/<\/(?:pre|table)>\s*(?:<\/[a-z]+>\s*)*$/i.test(html)) {
+    return html;
+  }
+  // The final run of non-space, non-markup characters, ignoring any tags that close after it.
+  return html.replace(/([^\s<>]+)((?:\s|<\/[a-z]+>|<br\/?>)*)$/i, '<span class="md-token">$1</span>$2');
 }
 
 /**
@@ -66,25 +90,60 @@ function escapeHtml(text: string): string {
  * Fenced ```code``` blocks first (content is already escaped, so it is inserted
  * verbatim inside <pre>), then line-based rendering for the prose between them.
  */
-function render(escaped: string): string {
-  const segments = escaped.split(/```[a-zA-Z0-9_-]*\n?([\s\S]*?)```/g);
+function render(escaped: string, copyLabel: string): string {
+  // Capture the language as well as the body: it is what labels the block on screen, and
+  // discarding it was why every block read as anonymous text.
+  const segments = escaped.split(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)```/g);
   const out: string[] = [];
-  segments.forEach((segment, index) => {
-    if (index % 2 === 1) {
+  for (let i = 0; i < segments.length; i++) {
+    // Each fence contributes two capture groups, so a matched block occupies i+1 and i+2.
+    if (i % 3 === 1) {
+      const language = segments[i] ?? '';
       // No trim: leading indentation and trailing blank lines are meaningful in
       // Python/YAML/nested JSON, so fenced content is rendered verbatim.
-      out.push(`<pre class="md-code"><code>${segment}</code></pre>`);
-    } else if (segment.trim().length > 0 || segments.length === 1) {
+      const body = segments[i + 1] ?? '';
+      out.push(renderCode(language, body, copyLabel));
+      i++;
+      continue;
+    }
+    const segment = segments[i];
+    if (segment.trim().length > 0 || segments.length === 1) {
       out.push(renderText(segment));
     }
-  });
+  }
   return out.join('\n');
+}
+
+/**
+ * A fenced block, with its language named and a control to take the code.
+ *
+ * <p>The language is shown because an officer pasting a snippet needs to know what it is, and
+ * the copy button exists because selecting many lines of pre-formatted text inside a scrolling
+ * chat panel is genuinely awkward. The body is already escaped, so it is inserted verbatim;
+ * the language is escaped again on its way into the attribute because it reaches here from the
+ * model and only the body has been through escapeHtml.
+ */
+function renderCode(language: string, body: string, copyLabel: string): string {
+  const safeLanguage = escapeHtml(language).slice(0, 24);
+  const label = safeLanguage
+    ? `<span class="md-code__lang">${safeLanguage}</span>`
+    : '<span class="md-code__lang md-code__lang--none"></span>';
+  return (
+    `<div class="md-code-wrap">` +
+    `<div class="md-code__bar">${label}` +
+    `<button type="button" class="md-code__copy" data-copy aria-label="${escapeHtml(copyLabel)}" title="${escapeHtml(copyLabel)}">` +
+    `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>` +
+    `</button></div>` +
+    `<pre class="md-code"><code>${highlightCode(body, language)}</code></pre>` +
+    `</div>`
+  );
 }
 
 function renderText(escaped: string): string {
   const lines = escaped.split('\n');
   const out: string[] = [];
   let listOpen = false;
+  let numberedOpen = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -101,12 +160,20 @@ function renderText(escaped: string): string {
         out.push('</ul>');
         listOpen = false;
       }
+      if (numberedOpen) {
+        out.push('</ol>');
+        numberedOpen = false;
+      }
       out.push(renderTable(table));
       continue;
     }
 
     const bullet = /^\s*[-*]\s+(.*)$/.exec(line);
     if (bullet) {
+      if (numberedOpen) {
+        out.push('</ol>');
+        numberedOpen = false;
+      }
       if (!listOpen) {
         out.push('<ul class="md-list">');
         listOpen = true;
@@ -114,9 +181,54 @@ function renderText(escaped: string): string {
       out.push(`<li>${inline(bullet[1])}</li>`);
       continue;
     }
+
+    // "1." / "2)" — a model asked for steps answers with these constantly, and they were
+    // reaching the screen as literal digits followed by a full stop.
+    const numbered = /^\s*\d{1,3}[.)]\s+(.*)$/.exec(line);
+    if (numbered) {
+      if (listOpen) {
+        out.push('</ul>');
+        listOpen = false;
+      }
+      if (!numberedOpen) {
+        out.push('<ol class="md-list md-list--numbered">');
+        numberedOpen = true;
+      }
+      out.push(`<li>${inline(numbered[1])}</li>`);
+      continue;
+    }
+
     if (listOpen) {
       out.push('</ul>');
       listOpen = false;
+    }
+    if (numberedOpen) {
+      out.push('</ol>');
+      numberedOpen = false;
+    }
+
+    // Headings. Capped at three levels: a chat bubble has no room for a six-level hierarchy,
+    // and deeper hashes read better flattened than rendered as ever-smaller text.
+    const heading = /^\s*(#{1,6})\s+(.*)$/.exec(line);
+    if (heading) {
+      const level = Math.min(heading[1].length, 3);
+      out.push(`<h${level} class="md-heading md-heading--${level}">${inline(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    // Blockquote. Consecutive lines join into one quote rather than stacking separate ones.
+    const quote = /^\s*&gt;\s?(.*)$/.exec(line);
+    if (quote) {
+      const quoted: string[] = [];
+      let next = /^\s*&gt;\s?(.*)$/.exec(lines[i]);
+      while (i < lines.length && next) {
+        quoted.push(inline(next[1]));
+        i++;
+        next = i < lines.length ? /^\s*&gt;\s?(.*)$/.exec(lines[i]) : null;
+      }
+      i--;
+      out.push(`<blockquote class="md-quote">${quoted.join('<br/>')}</blockquote>`);
+      continue;
     }
     if (line.trim().length === 0) {
       out.push('<br/>');
@@ -126,6 +238,9 @@ function renderText(escaped: string): string {
   }
   if (listOpen) {
     out.push('</ul>');
+  }
+  if (numberedOpen) {
+    out.push('</ol>');
   }
   return out.join('\n');
 }
@@ -164,8 +279,18 @@ function renderTable(rows: string[]): string {
 
 /** Inline markdown: **bold**, *italic*, `code`. Operates on already-escaped text. */
 function inline(text: string): string {
-  return text
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
-    .replace(/`([^`]+)`/g, '<code class="md-inline-code">$1</code>');
+  return (
+    text
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+      .replace(/`([^`]+)`/g, '<code class="md-inline-code">$1</code>')
+      // [text](url). Only http(s) survives: the text arrives from a model, and javascript:
+      // or data: in an href is the one thing in a link that can act rather than navigate.
+      // rel="noopener" because target="_blank" without it hands the opener to the new page.
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        (_match, label: string, href: string) =>
+          `<a class="md-link" href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`
+      )
+  );
 }

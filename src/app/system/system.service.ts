@@ -574,6 +574,23 @@ export class SystemService {
   }
 
   /**
+   * Installs an Eclipse BIRT report design in the reports directory of the tenant the session is
+   * authenticated against. The destination is the server's to decide, so nothing but the file is
+   * sent.
+   *
+   * No Content-Type is set: the browser has to write the multipart boundary itself, and setting the
+   * header by hand would send one without it.
+   *
+   * @param {File} file The .rptdesign file to upload.
+   * @returns {Observable<any>} The stored file name, its size and whether it replaced a design.
+   */
+  uploadBirtReportFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post('/birt/reports', formData);
+  }
+
+  /**
    * @param {any} filterBy Properties by which entries should be filtered.
    * @param {string} orderBy Property by which entries should be sorted.
    * @param {string} sortOrder Sort order: ascending or descending.
