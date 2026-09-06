@@ -832,7 +832,8 @@
       "Delink Client": "ग्राहक विच्छेद गर्नुहोस्",
       "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
-      "Save": "सुरक्षित गर्नुहोस्"
+      "Save": "सुरक्षित गर्नुहोस्",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1547,6 +1548,7 @@
       "Peak Outstanding": "अधिकतम बक्यौता",
       "Penalties to Specific Income Accounts": "विशिष्ट आय खाताहरूमा दण्ड",
       "Pending Tasks": "बाँकी कार्यहरू",
+      "Onboarding Board": "अनबोर्डिङ बोर्ड",
       "Performance History": "प्रदर्शन इतिहास",
       "Personal Information": "व्यक्तिगत जानकारी",
       "Post Interest": "पोस्ट ब्याज",
@@ -1788,8 +1790,8 @@
       "Politically Exposed Persons and Related Individuals": "राजनीतिक रूपमा उजागर भएका व्यक्ति र सम्बन्धित व्यक्ति",
       "Declaration of Ultimate Beneficial Owners": "अन्तिम लाभग्राही मालिकहरूको घोषणा",
       "Controlling Person / PEP Related Questions": "नियन्त्रण गर्ने व्यक्ति / PEP सम्बन्धित प्रश्नहरू",
-      "Legal Entity": "Legal Entity",
-      "Natural Person": "Natural Person",
+      "Legal Entity": "कानुनी संस्था",
+      "Natural Person": "प्राकृतिक व्यक्ति",
       "Legal Entity Details": "कानूनी संस्थाको विवरण",
       "Legal Representative": "कानूनी प्रतिनिधि",
       "Authorized Representative": "अधिकृत प्रतिनिधि",
@@ -1797,7 +1799,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "व्यक्तिगत सन्दर्भहरू (२ परिवारका सदस्य, १ परिचित)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "अन्तिम लाभग्राही मालिकहरूको घोषणा - कानुनी संस्थाहरू",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "अन्तिम लाभग्राही मालिकहरूको घोषणा - प्राकृतिक व्यक्तिहरू",
-      "Recovery": "असुली"
+      "Recovery": "असुली",
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -2459,6 +2462,7 @@
       "Host": "होस्ट",
       "Host Name": "होस्ट नाम",
       "Hour": "घण्टा",
+      "HTML": "HTML",
       "ID": "ID",
       "In arrears tolerance": "बक्यौता सहनशीलता",
       "INCOME CAPITALIZATION": "आय पूंजीकरण",
@@ -2600,7 +2604,7 @@
       "Last name is required": "थर आवश्यक छ",
       "Late": "ढिलो",
       "Leave": "छोड",
-      "Legal Entity": "कानूनी संस्था",
+      "Legal Entity": "कानुनी संस्था",
       "Leader": "नेता",
       "Legal Form": "कानुनी फारम",
       "Legal Id": "कानूनी परिचयपत्र",
@@ -2951,6 +2955,7 @@
       "Personal Data": "व्यक्तिगत डाटा",
       "Phone Number": "फोन नम्बर",
       "Place Guarantee Funds On-Hold": "ग्यारेन्टी कोष अन-होल्ड राख्नुहोस्",
+      "Plain Text": "सादा पाठ",
       "Please enter a valid number": "कृपया मान्य संख्या प्रविष्ट गर्नुहोस्",
       "Port": "पोर्ट",
       "Port Number": "पोर्ट नम्बर",
@@ -3201,6 +3206,7 @@
       "State": "प्रदेश",
       "State / Province": "राज्य / प्रदेश",
       "Status": "स्थिति",
+      "Task": "कार्य",
       "Step Name": "चरणको नाम",
       "Street": "सडक",
       "String": "स्ट्रिङ",
@@ -3244,6 +3250,7 @@
       "Terms": "सर्तहरू",
       "Terms vary based on loan cycle": "ऋण चक्रको आधारमा सर्तहरू भिन्न हुन्छन्",
       "Text": "पाठ",
+      "Text Format": "पाठ ढाँचा",
       "The current password is not correct": "हालको पासवर्ड सही छैन",
       "Theme": "विषयवस्तु",
       "Theme and Font": "विषयवस्तु र फन्ट",
@@ -3557,27 +3564,27 @@
       "Name of the Notary": "नोटरीको नाम",
       "Registration Date": "दर्ता मिति",
       "Nature of business, business activity, or corporate purpose": "व्यवसायको प्रकृति, व्यावसायिक गतिविधि वा संस्थागत उद्देश्य",
-      "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
-      "Yes / No": "Yes / No",
-      "Affiliation": "Affiliation",
+      "Borough / City / Delegation / Municipality / Locality / Town": "बरो / सहर / प्रतिनिधि क्षेत्र / नगरपालिका / स्थानीयता / टाउन",
+      "Yes / No": "हो / होइन",
+      "Affiliation": "आबद्धता",
       "Reporting period": "रिपोर्टिङ अवधि",
-      "Main Activities": "Main Activities",
-      "Period reported": "Period reported",
-      "Monthly Income Amount": "Monthly Income Amount",
-      "Monthly Expenditure Amount": "Monthly Expenditure Amount",
-      "Where do the funds to open the account come from?": "Where do the funds to open the account come from?",
-      "Allocation of resources for operations": "Allocation of resources for operations",
-      "Number of Shares": "Number of Shares",
-      "% of Shares": "% of Shares",
-      "Use: Single family residential building": "Use: Single family residential building",
-      "Spouse Full Name": "Spouse Full Name",
-      "No. of Shares": "No. of Shares",
-      "% Shares": "% Shares",
-      "Level of Control": "Level of Control",
-      "Position within the Entity": "Position within the Entity",
-      "Institution": "Institution",
-      "Level and charge": "Level and charge",
-      "Key Functions": "Key Functions",
+      "Main Activities": "मुख्य गतिविधिहरू",
+      "Period reported": "रिपोर्ट गरिएको अवधि",
+      "Monthly Income Amount": "मासिक आम्दानी रकम",
+      "Monthly Expenditure Amount": "मासिक खर्च रकम",
+      "Where do the funds to open the account come from?": "खाता खोल्नका लागि रकम कहाँबाट आउँछ?",
+      "Allocation of resources for operations": "सञ्चालनका लागि स्रोतहरूको विनियोजन",
+      "Number of Shares": "शेयर संख्या",
+      "% of Shares": "शेयरको %",
+      "Use: Single family residential building": "प्रयोग: एकल परिवार आवासीय भवन",
+      "Spouse Full Name": "जीवनसाथीको पूरा नाम",
+      "No. of Shares": "शेयर संख्या",
+      "% Shares": "शेयर %",
+      "Level of Control": "नियन्त्रणको स्तर",
+      "Position within the Entity": "संस्थाभित्रको पद",
+      "Institution": "संस्था",
+      "Level and charge": "स्तर र पदभार",
+      "Key Functions": "मुख्य कार्यहरू",
       "Home phone 1": "Home phone 1",
       "Spouse's Name": "Spouse's Name",
       "Spouse's Occupation": "Spouse's Occupation",
@@ -4011,6 +4018,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "उत्पादनको पूर्वावलोकन गर्न यी चरणहरू पूरा गर्नुहोस्",
+      "Complete these steps before creating the product": "उत्पादन सिर्जना गर्नु अघि यी चरणहरू पूरा गर्नुहोस्",
+      "Check the highlighted fields before creating the product": "उत्पादन सिर्जना गर्नु अघि हाइलाइट गरिएका फिल्डहरू जाँच गर्नुहोस्",
       "Agriculture Loan": "कृषि ऋण",
       "Auto Loan": "सवारी साधन ऋण",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "नयाँ वा प्रयोग भएका कार खरिदका लागि वित्तपोषण, छनोट गरिएको अवधिभर नियमित मासिक किस्तासहित।",
@@ -4969,15 +4978,15 @@
       "Additional Filters": "थप फिल्टरहरू",
       "No additional filters": "कुनै थप फिल्टर छैन",
       "Global Financial Dashboard": "विश्वव्यापी वित्तीय ड्यासबोर्ड",
-      "Entity PEP Related Intro": "Please indicate whether any of the shareholders or authorized representatives of the legal entity meet any of the following conditions:",
-      "Entity PEP Related Question 1": "Does the legal representative or any of the partners or shareholders of the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office in Mexico or abroad?",
-      "Entity PEP Related Question 2": "Does the spouse, or any relative by blood or affinity up to the second degree, of the Legal Representative or of any partner or shareholder of the legal entity currently hold—or did they hold during the immediately preceding year—any prominent public office at the federal, state, municipal, or district level in Mexico or in any foreign country?",
-      "Entity Resource Provider Question 1": "Do you declare, under penalty of perjury, that the transactions you intend to carry out with INSTITUTION NAME are being conducted on your own behalf and that said transactions are not being executed for the account or on behalf of a third party, whether an individual or a legal entity?",
-      "Entity Ultimate Beneficial Owner Interview Text": "Interview for Ultimate Beneficial Owners: collect the information of individuals or legal entities that directly or indirectly own or control the legal entity.",
-      "Entity Resource Provider Question 2": "Will any third party regularly contribute funds to the account opened with the Entity—or towards the fulfillment of obligations arising from the contract established with it—without being the holder of said contract or receiving the economic benefits derived therefrom?",
-      "Entity Resource Provider Interview Text": "Interview for Resource Providers: collect the information of third parties who regularly contribute resources to the account or contract.",
-      "Entity Controlling Person PEP Question 1": "Do any of the partners or shareholders identified by the legal representative as individuals exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
-      "Entity Controlling Person PEP Question 2": "Does the spouse—or any relative by blood or affinity up to the second degree—of any of the partners or shareholders identified by the legal representative as the natural persons exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, a prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
+      "Entity PEP Related Intro": "कानुनी संस्थाका कुनै शेयरधनी वा अधिकृत प्रतिनिधिले तलका कुनै अवस्था पूरा गर्छन् कि गर्दैनन् संकेत गर्नुहोस्:",
+      "Entity PEP Related Question 1": "कानुनी प्रतिनिधि वा कानुनी संस्थाका कुनै साझेदार वा शेयरधनीले हाल मेक्सिको वा विदेशमा कुनै प्रमुख सार्वजनिक पद धारण गरेका छन्, वा तुरुन्त अघिल्लो वर्षमा धारण गरेका थिए?",
+      "Entity PEP Related Question 2": "कानुनी प्रतिनिधि वा कानुनी संस्थाका कुनै साझेदार वा शेयरधनीका जीवनसाथी, वा रक्तसम्बन्ध वा वैवाहिक सम्बन्धबाट दोस्रो तहसम्मका कुनै नातेदारले हाल मेक्सिकोको संघीय, राज्य, नगरपालिका वा जिल्ला तहमा वा कुनै विदेशी देशमा प्रमुख सार्वजनिक पद धारण गरेका छन्, वा तुरुन्त अघिल्लो वर्षमा धारण गरेका थिए?",
+      "Entity Resource Provider Question 1": "के तपाईं झुटो बयान दिएमा सजाय हुने जानकारीसहित घोषणा गर्नुहुन्छ कि INSTITUTION NAME सँग गर्न चाहेका कारोबारहरू आफ्नै तर्फबाट गरिँदैछन् र ती कारोबार कुनै तेस्रो पक्ष, चाहे व्यक्ति होस् वा कानुनी संस्था, को खातामा वा तर्फबाट गरिएका होइनन्?",
+      "Entity Ultimate Beneficial Owner Interview Text": "अन्तिम लाभग्राही मालिकहरूको अन्तर्वार्ता: कानुनी संस्थालाई प्रत्यक्ष वा अप्रत्यक्ष रूपमा स्वामित्व वा नियन्त्रण गर्ने व्यक्ति वा कानुनी संस्थाहरूको जानकारी संकलन गर्नुहोस्।",
+      "Entity Resource Provider Question 2": "के कुनै तेस्रो पक्षले उक्त सम्झौताको धारक नभई वा त्यसबाट उत्पन्न आर्थिक लाभ नलिई, संस्थासँग खोलिएको खातामा वा त्यससँग गरिएको सम्झौताबाट उत्पन्न दायित्व पूरा गर्न नियमित रूपमा रकम योगदान गर्नेछ?",
+      "Entity Resource Provider Interview Text": "स्रोत प्रदायकहरूको अन्तर्वार्ता: खाता वा सम्झौतामा नियमित रूपमा स्रोत योगदान गर्ने तेस्रो पक्षहरूको जानकारी संकलन गर्नुहोस्।",
+      "Entity Controlling Person PEP Question 1": "कानुनी प्रतिनिधिले कानुनी संस्थामाथि नियन्त्रण गर्ने प्राकृतिक व्यक्तिका रूपमा पहिचान गरेका कुनै साझेदार वा शेयरधनीले हाल मेक्सिकोको संघीय, राज्य वा नगरपालिका तहमा वा विदेशी देशमा प्रमुख सार्वजनिक पद धारण गरेका छन्, वा तुरुन्त अघिल्लो वर्षमा धारण गरेका थिए?",
+      "Entity Controlling Person PEP Question 2": "कानुनी प्रतिनिधिले कानुनी संस्थामाथि नियन्त्रण गर्ने प्राकृतिक व्यक्तिका रूपमा पहिचान गरेका कुनै साझेदार वा शेयरधनीका जीवनसाथी, वा रक्तसम्बन्ध वा वैवाहिक सम्बन्धबाट दोस्रो तहसम्मका कुनै नातेदारले हाल मेक्सिकोको संघीय, राज्य वा नगरपालिका तहमा वा विदेशी देशमा प्रमुख सार्वजनिक पद धारण गरेका छन्, वा तुरुन्त अघिल्लो वर्षमा धारण गरेका थिए?",
       "Person PEP PLD Question 1": "के तपाईं हाल वा तुरुन्त अघिल्लो वर्षमा मेक्सिको वा विदेशमा कुनै प्रमुख सार्वजनिक पद (1) मा कार्यरत हुनुहुन्थ्यो?",
       "Person PEP PLD Question 2": "के तपाईंको यो पद धारण गर्ने कसैसँग पारिवारिक सम्बन्ध (2) छ?",
       "Person PEP PLD Question 3": "के तपाईंको संस्थाका कुनै शेयरधनी, कर्मचारी वा पदाधिकारीसँग पारिवारिक सम्बन्ध (2) छ?",
@@ -4985,7 +4994,14 @@
       "the": "चयन गरिएका",
       "items selected of": "वस्तुहरू",
       "Recovery Completed": "असुली पूरा भयो",
-      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।"
+      "Recovery Payment Description": "मिनाहा पछि संकलित रकम अभिलेख गर्छ। ऋण बन्द नै रहन्छ र मौज्दात शून्य नै रहन्छ; कुल असुली मात्र परिवर्तन हुन्छ।",
+      "Upload a BIRT report design": "यस किरायेदारका लागि स्थापना गर्न Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) छान्नुहोस्। उही नाम भएको डिजाइन प्रतिस्थापन हुनेछ।",
+      "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT रिपोर्ट डिजाइन (.rptdesign) मात्र अपलोड गर्न सकिन्छ।",
+      "The selected report design is empty": "छानिएको रिपोर्ट डिजाइन खाली छ।",
+      "The selected report design is too large": "छानिएको रिपोर्ट डिजाइन 5 MB भन्दा ठूलो छ।",
+      "Report design uploaded": "रिपोर्ट डिजाइन {{fileName}} अपलोड गरियो।",
+      "Report design replaced": "रिपोर्ट डिजाइन {{fileName}} प्रतिस्थापन गरियो।",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
@@ -5558,6 +5574,8 @@
     "Specific days before when repayment": "विशेष दिन अघि जब भुक्तानीको कारण सूचना पठाउनुपर्छ।",
     "Specific days when after the repayment Overdue": "विशेष दिनहरू जब भुक्तानी पछि ओभरड्यू सूचना पठाइनुपर्छ।",
     "Successful": "सफल",
+    "Switch to dark theme": "अँध्यारो विषयवस्तुमा बदल्नुहोस्",
+    "Switch to light theme": "उज्यालो विषयवस्तुमा बदल्नुहोस्",
     "The Amortization value": "परिशोधन मूल्य ऋणको पुन: भुक्तानीको लागि चुक्ता रकम गणना गर्न इनपुट हो।",
     "The Interest method value": "ब्याज विधि मान भनेको ऋणको भुक्तानीको लागि भुक्तानी रकम गणना गर्न इनपुट हो।",
     "The currency in which the deposit will be disbursed": "निक्षेप वितरण गरिने मुद्रा।",
@@ -5804,6 +5822,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "हालको सत्र",
     "newChat": "नयाँ कुराकानी",
@@ -5854,6 +5882,10 @@
       "aboutStorage": "तपाईंका कुराकानी यही ब्राउजरमा रहन्छन् र सहायक सर्भरमा कहिल्यै राखिँदैनन्।"
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "कुनै हालैको कुराकानी छैन",
       "emptySubtitle": "तपाईंको कुराकानी इतिहास यहाँ देखिनेछ",
       "messages": "सन्देशहरू",
@@ -5885,8 +5917,13 @@
     },
     "confirmWarning": "यसले वास्तविक पैसा चलाउँछ। विवरण जाँच गरेर मात्र पुष्टि गर्नुहोस्।",
     "openAssistant": "Mifos X Copilot खोल्नुहोस्",
+    "launcher": {
+      "working": "Mifos X Copilot \u0932\u0947 \u0924\u092a\u093e\u0908\u0902\u0915\u094b \u0905\u0928\u0941\u0930\u094b\u0927\u092e\u093e \u0915\u093e\u092e \u0917\u0930\u094d\u0926\u0948\u091b\u0964 Copilot \u0916\u094b\u0932\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
+      "replying": "Mifos X Copilot \u091c\u0935\u093e\u092b \u0926\u093f\u0901\u0926\u0948\u091b\u0964 Copilot \u0916\u094b\u0932\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964"
+    },
     "newChatTitle": "नयाँ कुराकानी",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "सन्देश खाली छ वा धेरै लामो छ। कृपया छोटो पारेर फेरि प्रयास गर्नुहोस्।",
       "injectionBlocked": "सन्देश निर्देशन उल्लंघन गर्ने प्रयास जस्तो देखिन्छ, त्यसैले पठाइएन। कृपया फरक तरिकाले लेख्नुहोस्।",
       "streamFailed": "Mifos X Copilot मा पुग्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
@@ -5958,11 +5995,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "यी सहायकले पढेका अभिलेखहरू हुन्। यस ग्राहकसम्बन्धी कुनै पनि निर्णयको आधार Fineract मा छ: ऋण उत्पादनका नियम, भुक्तानी तालिका, र तपाईंको संस्थाको ऋण नीति।",
       "thinking": "सोचाइ",
       "notesCaution": "सहायकले काम गर्दा लेखेको पाठ। जवाफ कसरी बन्यो भन्ने अभिलेख होइन, र ऋण मूल्याङ्कन पनि होइन। हरेक अङ्क ग्राहकको अभिलेखसँग मिलाएर हेर्नुहोस्।"
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "\u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
       "groupLabel": "\u091c\u0935\u093e\u092b\u0915\u093e \u0915\u093e\u0930\u094d\u092f\u0939\u0930\u0942",
       "copy": "\u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
@@ -5970,7 +6023,12 @@
       "repeat": "\u092b\u0947\u0930\u093f \u0938\u094b\u0927\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
       "goodAnswer": "\u0930\u093e\u092e\u094d\u0930\u094b \u091c\u0935\u093e\u092b",
       "poorAnswer": "\u0915\u092e\u091c\u094b\u0930 \u091c\u0935\u093e\u092b",
-      "exportPdf": "PDF \u092e\u093e \u0928\u093f\u0930\u094d\u092f\u093e\u0924 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+      "export": {
+        "label": "\u0928\u093f\u0930\u094d\u092f\u093e\u0924 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+        "pdf": "PDF \u0915\u093e\u0917\u091c\u093e\u0924",
+        "csv": "CSV \u0938\u094d\u092a\u094d\u0930\u0947\u0921\u0938\u093f\u091f",
+        "png": "PNG \u091b\u0935\u093f"
+      },
       "share": "\u0938\u093e\u091d\u0947\u0926\u093e\u0930\u0940 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d"
     },
     "export": {
@@ -5981,8 +6039,10 @@
       "disclaimer": "Fineract \u0905\u092d\u093f\u0932\u0947\u0916\u092c\u093e\u091f Mifos Copilot \u0932\u0947 \u0924\u092f\u093e\u0930 \u0917\u0930\u0947\u0915\u094b\u0964 \u0915\u093e\u0930\u092c\u093e\u0939\u0940 \u0917\u0930\u094d\u0928\u0941\u0905\u0918\u093f \u0938\u094d\u0930\u094b\u0924 \u0905\u092d\u093f\u0932\u0947\u0916\u0938\u0901\u0917 \u092e\u093f\u0932\u093e\u090f\u0930 \u0939\u0947\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
       "shareTitle": "Mifos Copilot \u0915\u094b \u091c\u0935\u093e\u092b",
       "copiedToClipboard": "\u091c\u0935\u093e\u092b \u0930 \u0932\u093f\u0902\u0915 \u0915\u094d\u0932\u093f\u092a\u092c\u094b\u0930\u094d\u0921\u092e\u093e \u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u092d\u092f\u094b",
-      "failed": "PDF \u092c\u0928\u093e\u0909\u0928 \u0938\u0915\u093f\u090f\u0928\u0964 \u0915\u0943\u092a\u092f\u093e \u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
-      "fileNameFallback": "copilot"
+      "failed": "\u092b\u093e\u0907\u0932 \u092c\u0928\u093e\u0909\u0928 \u0938\u0915\u093f\u090f\u0928\u0964 \u0915\u0943\u092a\u092f\u093e \u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
+      "fileNameFallback": "copilot",
+      "cardField": "\u0915\u094d\u0937\u0947\u0924\u094d\u0930",
+      "cardValue": "\u092e\u093e\u0928"
     }
   }
 }

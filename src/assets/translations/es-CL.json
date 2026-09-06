@@ -832,7 +832,8 @@
       "Create Transfer Fee": "Crear comisión de transferencia",
       "Disable Breach": "Deshabilitar Incumplimiento",
       "Enable Breach": "Habilitar Incumplimiento",
-      "Save": "Guardar"
+      "Save": "Guardar",
+      "Upload Report Design": "Subir diseño de reporte"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1548,6 +1549,7 @@
       "Peak Outstanding": "Saldo Máximo Pendiente",
       "Penalties to Specific Income Accounts": "Penalizaciones a Cuentas de Ingresos Específicas",
       "Pending Tasks": "Tareas pendientes",
+      "Onboarding Board": "Panel de incorporación",
       "Performance History": "Historial de rendimiento",
       "Personal Information": "Información Personal",
       "Post Interest": "Publicar interés",
@@ -1789,8 +1791,8 @@
       "Politically Exposed Persons and Related Individuals": "Personas políticamente expuestas y relacionadas",
       "Declaration of Ultimate Beneficial Owners": "Declaración de beneficiarios finales",
       "Controlling Person / PEP Related Questions": "Persona controladora / preguntas relacionadas con PEP",
-      "Legal Entity": "Legal Entity",
-      "Natural Person": "Natural Person",
+      "Legal Entity": "Persona jurídica",
+      "Natural Person": "Persona natural",
       "Legal Entity Details": "Detalles de la entidad legal",
       "Legal Representative": "Representante legal",
       "Authorized Representative": "Representante autorizado",
@@ -1798,7 +1800,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Referencias personales (2 familiares, 1 conocido)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaración de beneficiarios finales - personas jurídicas",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaración de beneficiarios finales - personas naturales",
-      "Recovery": "Recuperación"
+      "Recovery": "Recuperación",
+      "Upload Report Design": "Subir diseño de reporte"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
@@ -2460,6 +2463,7 @@
       "Host": "Anfitrión",
       "Host Name": "Nombre del anfitrión",
       "Hour": "Hora",
+      "HTML": "HTML",
       "ID": "IDENTIFICACIÓN",
       "In arrears tolerance": "Tolerancia de atrasos",
       "INCOME CAPITALIZATION": "CAPITALIZACIÓN DE INGRESOS",
@@ -2601,7 +2605,7 @@
       "Last name is required": "El apellido es obligatorio",
       "Late": "Tarde",
       "Leave": "Dejar",
-      "Legal Entity": "Persona Jurídica",
+      "Legal Entity": "Persona jurídica",
       "Leader": "Líder",
       "Legal Form": "Forma jurídica",
       "Legal Id": "ID Legal",
@@ -2955,6 +2959,7 @@
       "Phone": "Teléfono",
       "Phone Number": "Número de teléfono",
       "Place Guarantee Funds On-Hold": "Poner los fondos de garantía en espera",
+      "Plain Text": "Texto sin formato",
       "Please enter a valid number": "Por favor, introduzca un número válido",
       "Port": "Puerto",
       "Port Number": "Número de puerto",
@@ -3206,6 +3211,7 @@
       "State": "Estado",
       "State / Province": "Estado o Provincia",
       "Status": "Estado",
+      "Task": "Tarea",
       "Step Name": "Nombre del paso",
       "Street": "Calle",
       "String": "Cadena",
@@ -3249,6 +3255,7 @@
       "Terms": "Términos",
       "Terms vary based on loan cycle": "Los términos varían según el ciclo del Crédito.",
       "Text": "Texto",
+      "Text Format": "Formato de texto",
       "The current password is not correct": "La contraseña actual no es correcta",
       "Theme": "Tema",
       "Theme and Font": "Tema y fuente",
@@ -3559,27 +3566,27 @@
       "Name of the Notary": "Nombre del notario",
       "Registration Date": "Fecha de registro",
       "Nature of business, business activity, or corporate purpose": "Naturaleza del negocio, actividad comercial u objeto social",
-      "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
-      "Yes / No": "Yes / No",
-      "Affiliation": "Affiliation",
+      "Borough / City / Delegation / Municipality / Locality / Town": "Comuna / ciudad / delegación / municipio / localidad / pueblo",
+      "Yes / No": "Sí / No",
+      "Affiliation": "Afiliación",
       "Reporting period": "Periodo de reporte",
-      "Main Activities": "Main Activities",
-      "Period reported": "Period reported",
-      "Monthly Income Amount": "Monthly Income Amount",
-      "Monthly Expenditure Amount": "Monthly Expenditure Amount",
-      "Where do the funds to open the account come from?": "Where do the funds to open the account come from?",
-      "Allocation of resources for operations": "Allocation of resources for operations",
-      "Number of Shares": "Number of Shares",
-      "% of Shares": "% of Shares",
-      "Use: Single family residential building": "Use: Single family residential building",
-      "Spouse Full Name": "Spouse Full Name",
-      "No. of Shares": "No. of Shares",
-      "% Shares": "% Shares",
-      "Level of Control": "Level of Control",
-      "Position within the Entity": "Position within the Entity",
-      "Institution": "Institution",
-      "Level and charge": "Level and charge",
-      "Key Functions": "Key Functions",
+      "Main Activities": "Actividades principales",
+      "Period reported": "Periodo reportado",
+      "Monthly Income Amount": "Monto de ingresos mensuales",
+      "Monthly Expenditure Amount": "Monto de gastos mensuales",
+      "Where do the funds to open the account come from?": "¿De dónde provienen los fondos para abrir la cuenta?",
+      "Allocation of resources for operations": "Asignación de recursos para operaciones",
+      "Number of Shares": "Número de acciones",
+      "% of Shares": "% de acciones",
+      "Use: Single family residential building": "Uso: vivienda unifamiliar",
+      "Spouse Full Name": "Nombre completo del cónyuge",
+      "No. of Shares": "N.º de acciones",
+      "% Shares": "% acciones",
+      "Level of Control": "Nivel de control",
+      "Position within the Entity": "Cargo dentro de la entidad",
+      "Institution": "Institución",
+      "Level and charge": "Nivel y cargo",
+      "Key Functions": "Funciones principales",
       "Home phone 1": "Home phone 1",
       "Spouse's Name": "Spouse's Name",
       "Spouse's Occupation": "Spouse's Occupation",
@@ -4013,6 +4020,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "Complete estos pasos para ver la vista previa del producto",
+      "Complete these steps before creating the product": "Complete estos pasos antes de crear el producto",
+      "Check the highlighted fields before creating the product": "Revise los campos resaltados antes de crear el producto",
       "Agriculture Loan": "Crédito Agrícola",
       "Auto Loan": "Crédito Automotriz",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Financiamiento para la compra de autos nuevos o usados con cuotas mensuales fijas durante el plazo elegido.",
@@ -4971,15 +4980,15 @@
       "Additional Filters": "Filtros adicionales",
       "No additional filters": "No hay filtros adicionales",
       "Global Financial Dashboard": "Panel Financiero Global",
-      "Entity PEP Related Intro": "Please indicate whether any of the shareholders or authorized representatives of the legal entity meet any of the following conditions:",
-      "Entity PEP Related Question 1": "Does the legal representative or any of the partners or shareholders of the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office in Mexico or abroad?",
-      "Entity PEP Related Question 2": "Does the spouse, or any relative by blood or affinity up to the second degree, of the Legal Representative or of any partner or shareholder of the legal entity currently hold—or did they hold during the immediately preceding year—any prominent public office at the federal, state, municipal, or district level in Mexico or in any foreign country?",
-      "Entity Resource Provider Question 1": "Do you declare, under penalty of perjury, that the transactions you intend to carry out with INSTITUTION NAME are being conducted on your own behalf and that said transactions are not being executed for the account or on behalf of a third party, whether an individual or a legal entity?",
-      "Entity Ultimate Beneficial Owner Interview Text": "Interview for Ultimate Beneficial Owners: collect the information of individuals or legal entities that directly or indirectly own or control the legal entity.",
-      "Entity Resource Provider Question 2": "Will any third party regularly contribute funds to the account opened with the Entity—or towards the fulfillment of obligations arising from the contract established with it—without being the holder of said contract or receiving the economic benefits derived therefrom?",
-      "Entity Resource Provider Interview Text": "Interview for Resource Providers: collect the information of third parties who regularly contribute resources to the account or contract.",
-      "Entity Controlling Person PEP Question 1": "Do any of the partners or shareholders identified by the legal representative as individuals exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
-      "Entity Controlling Person PEP Question 2": "Does the spouse—or any relative by blood or affinity up to the second degree—of any of the partners or shareholders identified by the legal representative as the natural persons exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, a prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
+      "Entity PEP Related Intro": "Indique si alguno de los accionistas o representantes autorizados de la persona jurídica cumple alguna de las siguientes condiciones:",
+      "Entity PEP Related Question 1": "¿El representante legal o alguno de los socios o accionistas de la persona jurídica ocupa actualmente, u ocupó durante el año inmediatamente anterior, algún cargo público destacado en México o en el extranjero?",
+      "Entity PEP Related Question 2": "¿El cónyuge, o algún pariente por consanguinidad o afinidad hasta el segundo grado, del representante legal o de algún socio o accionista de la persona jurídica ocupa actualmente, u ocupó durante el año inmediatamente anterior, algún cargo público destacado a nivel federal, estatal, municipal o distrital en México o en cualquier país extranjero?",
+      "Entity Resource Provider Question 1": "¿Declara, bajo juramento, que las operaciones que pretende realizar con NOMBRE DE LA INSTITUCIÓN se efectúan por cuenta propia y que no se ejecutan por cuenta o en nombre de un tercero, sea persona natural o jurídica?",
+      "Entity Ultimate Beneficial Owner Interview Text": "Entrevista para beneficiarios finales: recopile la información de las personas naturales o jurídicas que directa o indirectamente son propietarias o controlan a la persona jurídica.",
+      "Entity Resource Provider Question 2": "¿Algún tercero aportará regularmente fondos a la cuenta abierta con la entidad, o al cumplimiento de obligaciones derivadas del contrato celebrado con ella, sin ser titular de dicho contrato ni recibir los beneficios económicos derivados del mismo?",
+      "Entity Resource Provider Interview Text": "Entrevista para proveedores de recursos: recopile la información de terceros que aportan recursos regularmente a la cuenta o contrato.",
+      "Entity Controlling Person PEP Question 1": "¿Alguno de los socios o accionistas identificados por el representante legal como personas naturales que ejercen control sobre la persona jurídica ocupa actualmente, u ocupó durante el año inmediatamente anterior, algún cargo público destacado a nivel federal, estatal o municipal en México o en un país extranjero?",
+      "Entity Controlling Person PEP Question 2": "¿El cónyuge, o algún pariente por consanguinidad o afinidad hasta el segundo grado, de alguno de los socios o accionistas identificados por el representante legal como las personas naturales que ejercen control sobre la persona jurídica ocupa actualmente, u ocupó durante el año inmediatamente anterior, algún cargo público destacado a nivel federal, estatal o municipal en México o en un país extranjero?",
       "Person PEP PLD Question 1": "Actualmente desempeña o desempeñó durante el año inmediatamente anterior algún cargo público destacado (1) en México o en el extranjero?",
       "Person PEP PLD Question 2": "Tiene alguna relación familiar (2) con alguien que ocupe este cargo?",
       "Person PEP PLD Question 3": "Tiene alguna relación familiar (2) con algún accionista, empleado o directivo de la entidad?",
@@ -4987,7 +4996,14 @@
       "the": "los",
       "items selected of": "elementos seleccionados de",
       "Recovery Completed": "Recuperación completa",
-      "Recovery Payment Description": "Registra dinero cobrado después del castigo. El préstamo sigue cerrado y su saldo sigue en cero; solo cambia el total recuperado."
+      "Recovery Payment Description": "Registra dinero cobrado después del castigo. El préstamo sigue cerrado y su saldo sigue en cero; solo cambia el total recuperado.",
+      "Upload a BIRT report design": "Seleccione un diseño de reporte de Eclipse BIRT (.rptdesign) para instalarlo en este inquilino. Se reemplazará un diseño con el mismo nombre.",
+      "Only Eclipse BIRT report designs can be uploaded": "Solo se pueden subir diseños de reporte de Eclipse BIRT (.rptdesign).",
+      "The selected report design is empty": "El diseño de reporte seleccionado está vacío.",
+      "The selected report design is too large": "El diseño de reporte seleccionado supera los 5 MB.",
+      "Report design uploaded": "Se subió el diseño de reporte {{fileName}}.",
+      "Report design replaced": "Se reemplazó el diseño de reporte {{fileName}}.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
@@ -5560,6 +5576,8 @@
     "Specific days before when repayment": "Días concretos antes de los que se debe enviar la notificación de vencimiento del pago.",
     "Specific days when after the repayment Overdue": "Días específicos en los que después del pago se debe enviar la notificación de Vencido.",
     "Successful": "Exitoso",
+    "Switch to dark theme": "Cambiar a tema oscuro",
+    "Switch to light theme": "Cambiar a tema claro",
     "The Amortization value": "El valor de amortización se ingresa para calcular los montos de reembolso para el reembolso del Crédito.",
     "The Interest method value": "El valor del método de interés se ingresa para calcular el monto de los pagos para el reembolso del Crédito.",
     "The currency in which the deposit will be disbursed": "La moneda en la que se desembolsará el depósito.",
@@ -5806,6 +5824,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Mostrar {{count}} mensajes anteriores",
+    "a11y": {
+      "replyReady": "Respuesta lista",
+      "working": "Trabajando en su pregunta"
+    },
+    "promptNav": {
+      "label": "Preguntas de este chat",
+      "expand": "Mostrar las preguntas",
+      "collapse": "Ocultar las preguntas"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Sesión actual",
     "newChat": "Nuevo chat",
@@ -5856,6 +5884,10 @@
       "aboutStorage": "Sus conversaciones quedan en este navegador y nunca se guardan en el servidor del asistente."
     },
     "recent": {
+      "noMatchSubtitle": "Nada de lo guardado coincide con \"{{query}}\".",
+      "noMatchTitle": "No se encontraron chats",
+      "searchClear": "Borrar búsqueda",
+      "searchPlaceholder": "Buscar chats",
       "emptyTitle": "No hay conversaciones recientes",
       "emptySubtitle": "Tu historial de chat aparecerá aquí",
       "messages": "mensajes",
@@ -5887,8 +5919,13 @@
     },
     "confirmWarning": "Esto mueve dinero real. Revisa los datos y luego confirma.",
     "openAssistant": "Abrir Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot est\u00e1 trabajando en su solicitud. Abrir Copilot.",
+      "replying": "Mifos X Copilot est\u00e1 respondiendo. Abrir Copilot."
+    },
     "newChatTitle": "Nueva conversación",
     "errors": {
+      "timedOut": "El asistente tardó demasiado en responder. Inténtelo de nuevo.",
       "invalidLength": "El mensaje está vacío o es demasiado largo. Por favor acórtalo e inténtalo de nuevo.",
       "injectionBlocked": "El mensaje parece un intento de anular las instrucciones, por lo que no se envió. Por favor reformúlalo.",
       "streamFailed": "No se pudo contactar con Mifos X Copilot. Inténtalo de nuevo."
@@ -5960,11 +5997,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "modificó",
+      "thoughtFor": "Pensó durante {{seconds}}",
+      "live": {
+        "reading": "Leyendo su pregunta",
+        "thinking": "Pensando"
+      },
+      "steps": {
+        "loanDetails": "Consultando la cuenta del préstamo",
+        "clientSearch": "Buscando en el registro de clientes",
+        "clientDetails": "Consultando el perfil del cliente",
+        "repaymentSchedule": "Revisando el plan de pagos",
+        "savingsBalance": "Consultando el saldo de ahorros",
+        "loanApprove": "Aprobando el préstamo"
+      },
       "stepsNote": "Estos son los registros que consultó el asistente. La base de cualquier decisión sobre este cliente está en Fineract: las reglas del producto de crédito, el calendario de pagos y la política crediticia de su institución.",
       "thinking": "Pensamiento",
       "notesCaution": "Texto de trabajo del propio asistente. No es un registro de cómo se produjo la respuesta, ni una evaluación crediticia. Verifique cada cifra con el expediente del cliente."
     },
     "actions": {
+      "copyCode": "Copiar código",
       "tryAgain": "Intentar de nuevo",
       "groupLabel": "Acciones de la respuesta",
       "copy": "Copiar",
@@ -5972,7 +6025,12 @@
       "repeat": "Preguntar de nuevo",
       "goodAnswer": "Buena respuesta",
       "poorAnswer": "Mala respuesta",
-      "exportPdf": "Exportar a PDF",
+      "export": {
+        "label": "Exportar",
+        "pdf": "Documento PDF",
+        "csv": "Hoja de c\u00e1lculo CSV",
+        "png": "Imagen PNG"
+      },
       "share": "Compartir"
     },
     "export": {
@@ -5983,8 +6041,10 @@
       "disclaimer": "Generado por Mifos Copilot a partir de registros de Fineract. Verifique con el registro original antes de actuar.",
       "shareTitle": "Respuesta de Mifos Copilot",
       "copiedToClipboard": "Respuesta y enlace copiados al portapapeles",
-      "failed": "No se pudo generar el PDF. Int\u00e9ntelo de nuevo.",
-      "fileNameFallback": "copilot"
+      "failed": "No se pudo generar el archivo. Int\u00e9ntelo de nuevo.",
+      "fileNameFallback": "copilot",
+      "cardField": "Campo",
+      "cardValue": "Valor"
     }
   }
 }

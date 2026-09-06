@@ -38,6 +38,9 @@ $shadow-xl: 0 20px 50px -12px rgb(0 0 0 / 15%);
 // Motion
 $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
+// Overshoots slightly before settling, so the launcher arrives rather than merely appears.
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
 // How wide the conversation column is allowed to get. Prose wants a limit; the tables a
 // repayment schedule arrives as want room, and full screen is asked for to get it.
 $content-width: 1040px;
@@ -47,6 +50,7 @@ $content-width-full: 1440px;
   /* ── FAB ── */
   .ai-fab {
     position: fixed;
+    isolation: isolate;
     bottom: $u * 3;
     right: $u * 3;
     z-index: 1000;
@@ -70,11 +74,177 @@ $content-width-full: 1440px;
       transform: translateY(0) scale(0.96);
     }
 
-    &__icon {
-      width: 28px;
-      height: 28px;
+    /*
+     * Idle: a slow halo breathing outwards, at a fraction of the opacity the working states
+     * use. It says the assistant is there without competing with anything on the page, and it
+     * radiates on box-shadow alone, so it never touches layout.
+     */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
       border-radius: 50%;
-      object-fit: contain;
+      pointer-events: none;
+      animation: copilot-fab-aura 4.5s $ease infinite;
+    }
+
+    /* Once a turn is running the state ring below is the thing to read, so the idle halo
+       stands down rather than pulsing against it. */
+    &--thinking::before,
+    &--streaming::before {
+      animation: none;
+      opacity: 0;
+    }
+
+    /* Keyboard focus has to be as obvious as hover. The ring sits outside the circle so it
+       reads against both the page and the button's own shadow. */
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--copilot-fab-focus, rgb(0 0 0 / 45%));
+    }
+
+    /*
+     * The two states a turn can be in, drawn on the ring rather than on the logo.
+     *
+     * Closing the panel leaves the turn running, so this is the only thing on screen saying so.
+     * Waiting pulses outward, which reads as expectancy; answering holds a steady ring and
+     * breathes gently, which reads as work in progress rather than a wait. Both animate only
+     * box-shadow and transform, so neither lays out anything or repaints the page behind it.
+     */
+    &--thinking::after,
+    &--streaming::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    &--thinking::after {
+      animation: copilot-thinking-ring 1.8s $ease infinite;
+    }
+
+    &--streaming::after {
+      box-shadow: 0 0 0 3px var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+      animation: copilot-breathe 2.4s $ease infinite;
+    }
+
+    &__mark {
+      width: 34px;
+      height: 34px;
+      overflow: visible;
+    }
+
+    /*
+     * The wedges, animated apart rather than the strokes drawn in.
+     *
+     * <p>The two white strokes of the X are negative space: they exist only where the four
+     * blue segments do not. So the mark forms by the segments arriving, and scaling them from
+     * the middle of the viewBox rather than each from its own centre is what makes the strokes
+     * open out from the crossing instead of four shapes independently fading up.
+     *
+     * <p>Every animated part is a wrapping <g>, never the path: each path carries its own
+     * transform attribute placing it in the viewBox, and a CSS transform on that same element
+     * replaces the attribute rather than composing with it, dropping the shape at the viewBox
+     * origin for as long as the animation runs.
+     */
+    &__seg,
+    &__disc {
+      transform-box: view-box;
+      transform-origin: 50% 50%;
+    }
+
+    /* Themed: the disc behind the wedges is the one part of the mark that follows the mode.
+       Defaults to the traced value so the mark stands alone without the theme sheet. */
+    &__disc-fill {
+      fill: var(--copilot-mark-disc, #f6f9fb);
+    }
+
+    /*
+     * The highlight that crosses the disc as it arrives.
+     *
+     * <p>Clipped with clip-path rather than overflow:hidden, because the launcher's halo and
+     * state rings are pseudo-element box-shadows drawn outside the button, and an overflow
+     * clip on the button would cut every one of them off.
+     */
+    &__sheen {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      clip-path: circle(50% at 50% 50%);
+      pointer-events: none;
+      opacity: 0;
+      background: linear-gradient(
+        115deg,
+        rgb(255 255 255 / 0%) 38%,
+        rgb(255 255 255 / 55%) 50%,
+        rgb(255 255 255 / 0%) 62%
+      );
+      background-size: 280% 100%;
+      background-position: 130% 0;
+    }
+
+    /*
+     * Arrival, on first paint of the page only.
+     *
+     * <p>Three staggered parts: the disc springs in, the mark resolves into place behind it,
+     * and a highlight crosses the whole thing as it settles. Everything animates on transform
+     * and opacity, so the whole sequence stays off the layout path.
+     */
+    &--intro {
+      animation: copilot-fab-intro 620ms $ease-spring both;
+
+      .ai-fab__disc {
+        animation: copilot-fab-seg 460ms $ease-spring 120ms both;
+      }
+
+      /*
+       * Opposite wedges together, so one stroke opens and then the other: the pair either
+       * side of the '/' lands first, the pair either side of the '\\' just behind it.
+       */
+      .ai-fab__seg--top,
+      .ai-fab__seg--bottom {
+        animation: copilot-fab-seg 520ms $ease-spring 260ms both;
+      }
+
+      .ai-fab__seg--left,
+      .ai-fab__seg--right {
+        animation: copilot-fab-seg 520ms $ease-spring 400ms both;
+      }
+
+      .ai-fab__sheen {
+        animation: copilot-fab-sheen 900ms $ease 560ms both;
+      }
+    }
+
+    /* The halo is the resting state, so it waits until the arrival is over. */
+    &--intro::before {
+      animation-delay: 900ms;
+    }
+
+    /*
+     * The same arrival, replayed on hover.
+     *
+     * <p>The mark and the highlight only: the disc does not pop again, because it is already
+     * on screen and re-launching it on every pass of the cursor reads as a glitch rather than
+     * a flourish. Suppressed while a turn is running, where the ring is carrying meaning and a
+     * spinning logo over the top of it would just be noise, and during the arrival itself,
+     * which is already animating both.
+     */
+    &:hover:not(.ai-fab--intro, .ai-fab--thinking, .ai-fab--streaming) {
+      .ai-fab__seg--top,
+      .ai-fab__seg--bottom {
+        animation: copilot-fab-seg 460ms $ease-spring;
+      }
+
+      .ai-fab__seg--left,
+      .ai-fab__seg--right {
+        animation: copilot-fab-seg 460ms $ease-spring 110ms;
+      }
+
+      .ai-fab__sheen {
+        animation: copilot-fab-sheen 760ms $ease 80ms;
+      }
     }
   }
 
@@ -343,6 +513,7 @@ $content-width-full: 1440px;
     }
 
     &__avatar {
+      position: relative;
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -353,12 +524,35 @@ $content-width-full: 1440px;
       flex-shrink: 0;
       margin-top: 2px;
       box-shadow: $shadow-sm;
-      overflow: hidden;
 
       img {
         width: 24px;
         height: 24px;
+        border-radius: 50%;
         object-fit: contain;
+      }
+
+      /* The wait, on the avatar that is already there. A ring breathing outwards rather than
+         anything that spins or bounces: it reads as attention rather than as a progress bar,
+         and it animates only box-shadow, so it never reflows the conversation beside it. */
+      &--thinking::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: 50%;
+        animation: copilot-thinking-ring 1.8s $ease infinite;
+      }
+
+      /* Answering, which is not the same as waiting and must not look like it. The ring holds
+         its shape and breathes gently instead of pulsing outwards, so the icon reads as busy
+         with something rather than still queueing for it. */
+      &--streaming::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+        animation: copilot-breathe 2.4s $ease infinite;
       }
 
       &--sm {
@@ -418,6 +612,46 @@ $content-width-full: 1440px;
         }
       }
 
+      .md-list--numbered {
+        list-style: decimal;
+      }
+
+      /* Headings inside a bubble. Sized by weight and spacing rather than by growing the type:
+         a reply is a paragraph or two, and 24px text in a chat bubble reads as shouting. */
+      .md-heading {
+        margin: ($u * 2) 0 ($u);
+        font-weight: 700;
+        line-height: 1.35;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      .md-heading--1 {
+        font-size: 15.5px;
+      }
+
+      .md-heading--2 {
+        font-size: 14.5px;
+      }
+
+      .md-heading--3 {
+        font-size: 13.5px;
+      }
+
+      .md-quote {
+        margin: ($u) 0;
+        padding: ($u - 2px) 0 ($u - 2px) ($u * 2);
+        border-left: 2px solid;
+        font-style: italic;
+      }
+
+      .md-link {
+        text-decoration: underline;
+        overflow-wrap: anywhere;
+      }
+
       // Markdown tables (e.g. client lists): real rows and columns, scrolling
       // horizontally inside their own box when narrow.
       .md-table-wrap {
@@ -445,11 +679,65 @@ $content-width-full: 1440px;
         }
       }
 
+      /* A fenced block and the bar that names it are one object, so the corners are rounded
+         on the wrapper and the block itself is left square inside it. */
+      .md-code-wrap {
+        margin: $u 0;
+        border-radius: $r-sm;
+        overflow: hidden;
+        max-width: 100%;
+      }
+
+      .md-code__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $u;
+        padding: (0.5 * $u) ($u * 2);
+        font-size: 11px;
+      }
+
+      .md-code__lang {
+        font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+        text-transform: lowercase;
+        letter-spacing: 0.02em;
+      }
+
+      /* Reveals itself on hover or focus, but never disappears for keyboards or touch, where
+         hover does not exist and a control that only appears on hover cannot be reached. */
+      .md-code__copy {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: none;
+        border-radius: $r-xs;
+        background: transparent;
+        cursor: pointer;
+        opacity: 0.55;
+        transition: opacity 0.15s $ease;
+
+        svg {
+          width: 13px;
+          height: 13px;
+        }
+      }
+
+      .md-code-wrap:hover .md-code__copy,
+      .md-code__copy:focus-visible {
+        opacity: 1;
+      }
+
+      .md-code__copy--done {
+        opacity: 1;
+      }
+
       // Fenced code blocks: scroll inside their own box, never widen the bubble.
       .md-code {
-        margin: $u 0;
+        margin: 0;
         padding: $u ($u * 2);
-        border-radius: $r-sm;
         max-width: 100%;
         overflow-x: auto;
         font-size: 12.5px;
@@ -484,38 +772,6 @@ $content-width-full: 1440px;
 
     &:hover .msg__time {
       opacity: 1;
-    }
-  }
-
-  /* ── Typing indicator ── */
-  .typing {
-    display: flex;
-    align-items: center;
-    gap: $u + 4px;
-    padding: 4px 0;
-
-    &__dots {
-      display: flex;
-      gap: 5px;
-      padding: ($u + 2px) ($u * 2);
-      border-radius: $r-md;
-      border: 1px solid transparent;
-      box-shadow: $shadow-sm;
-
-      span {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        animation: copilot-bounce 1.4s ease-in-out infinite;
-
-        &:nth-child(2) {
-          animation-delay: 0.15s;
-        }
-
-        &:nth-child(3) {
-          animation-delay: 0.3s;
-        }
-      }
     }
   }
 
@@ -835,6 +1091,244 @@ $content-width-full: 1440px;
     }
   }
 
+  /* Announced but not drawn: the live region tells a screen reader the state of the reply,
+     which sighted officers read from the indicator and the words appearing instead.
+     Not `display: none`, which would take it out of the accessibility tree as well. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Each token fades in as it lands. Short, and opacity only: at streaming speed anything
+     longer overlaps the next word, and anything that moves makes the line jitter as it grows. */
+  .md-token {
+    animation: copilot-token-in 0.18s ease-out;
+  }
+
+  /* A caret at the tail of the reply, so the answer looks like it is being written rather
+     than having stopped. Drawn with a border on ::after, so it needs no element of its own
+     inside markup that is rebuilt every token. */
+  .msg__text--streaming::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: copilot-caret 1s step-end infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .md-token {
+      animation: none;
+    }
+
+    .msg__text--streaming::after {
+      animation: none;
+      opacity: 1;
+    }
+
+    /* Held at the first frame rather than removed: the ring is the only thing marking the
+       avatar as waiting, so it has to stay visible once it stops moving. */
+    .msg__avatar--thinking::after {
+      animation: none;
+      box-shadow: 0 0 0 3px var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+      opacity: 1;
+    }
+
+    /* Same reasoning on the launcher, which may be the only thing on screen saying a turn is
+       still running. The ring stays; only the movement goes. */
+    .msg__avatar--streaming::after {
+      animation: none;
+      box-shadow: 0 0 0 2px var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+      opacity: 1;
+    }
+
+    /* The idle halo is decoration, not state, so it is the one thing that simply goes. */
+    .ai-fab::before {
+      animation: none;
+      opacity: 0;
+    }
+
+    /*
+     * No arrival. `both` fill on those keyframes means a cancelled animation would otherwise
+     * strand the button at scale(0.2) and invisible, so each part is reset explicitly rather
+     * than merely switched off.
+     */
+    .ai-fab--intro,
+    .ai-fab--intro .ai-fab__disc,
+    .ai-fab--intro .ai-fab__seg,
+    .ai-fab--intro .ai-fab__sheen {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .ai-fab--intro .ai-fab__sheen {
+      opacity: 0;
+    }
+
+    /* No replay on hover either. */
+    .ai-fab:hover .ai-fab__seg,
+    .ai-fab:hover .ai-fab__sheen {
+      animation: none;
+    }
+
+    .ai-fab--thinking::after,
+    .ai-fab--streaming::after {
+      animation: none;
+      box-shadow: 0 0 0 3px var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+      opacity: 1;
+      transform: none;
+    }
+
+    .ai-fab:hover {
+      transform: none;
+    }
+  }
+
+  .show-earlier {
+    align-self: center;
+    margin: 0 auto ($u);
+    padding: (0.5 * $u) ($u * 2);
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+  }
+
+  /* ── The questions asked this session ── */
+
+  /* Sits over the conversation rather than beside it: taking a column would narrow the
+     answers, and the answers are what the panel is for. Pinned to the right edge, out of the
+     way of the text, which is set left. */
+  .prompt-nav {
+    position: absolute;
+    top: 88px;
+    right: $u;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    max-height: 46%;
+    padding: ($u - 2px);
+    border-radius: $r-sm;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .prompt-nav__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: $r-xs;
+    background: transparent;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s $ease;
+
+    svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  .prompt-nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .prompt-nav__item {
+    display: flex;
+    align-items: center;
+    gap: $u - 2px;
+    width: 100%;
+    padding: 3px ($u - 2px);
+    border: none;
+    border-radius: $r-xs;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+    text-align: left;
+    transition:
+      background 0.15s $ease,
+      color 0.15s $ease;
+  }
+
+  /* The rule is what a collapsed rail is made of, and what marks position in an expanded one. */
+  .prompt-nav__rule {
+    width: 12px;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  .prompt-nav__index {
+    min-width: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prompt-nav__label {
+    overflow: hidden;
+    max-width: 168px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Collapsed, it is a strip of rules: still enough to see how far through the conversation
+     the officer is, and to click back to a point in it. */
+  .prompt-nav--collapsed {
+    .prompt-nav__index,
+    .prompt-nav__label {
+      display: none;
+    }
+
+    .prompt-nav__item {
+      width: auto;
+      padding: 3px;
+    }
+  }
+
+  /* On a narrow panel the rail would sit on top of the answers, so it goes away entirely.
+     Recent Chats still reaches every conversation, and the questions are still on screen. */
+  @media (width <= 620px) {
+    .prompt-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-nav__item,
+    .prompt-nav__toggle {
+      transition: none;
+    }
+  }
+
   /* ── How the answer was reached ── */
   .trail {
     margin-top: $u + 2px;
@@ -850,19 +1344,47 @@ $content-width-full: 1440px;
     font-size: 12.5px;
   }
 
-  .trail__spinner {
-    width: 11px;
-    height: 11px;
-    border: 2px solid transparent;
+  /* A dot that breathes rather than a spinner that races. A spinner claims the wait is
+     indeterminate and demands the eye; the label beside it is the part worth reading, so the
+     motion is kept quiet enough to sit under it. */
+  .trail__live-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     flex-shrink: 0;
-    animation: trail-spin 0.7s linear infinite;
+    animation: copilot-trail-pulse 1.6s ease-in-out infinite;
   }
 
-  @keyframes trail-spin {
-    to {
-      transform: rotate(360deg);
+  /* The label pulses with the dot, on opacity only: no transform, so text never reflows and
+     sub-pixel shifts never blur it mid-animation. */
+  .trail__live-label {
+    animation: copilot-trail-pulse 1.6s ease-in-out infinite;
+  }
+
+  .trail__live-time {
+    margin-left: auto;
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Motion is the whole point of this line, so when it is unwanted the line still has to say
+     the same thing. The label and the counter stay; only the breathing stops. */
+  @media (prefers-reduced-motion: reduce) {
+    .trail__live-dot,
+    .trail__live-label {
+      animation: none;
+      opacity: 1;
     }
+
+    .trail__chevron {
+      transition: none;
+    }
+  }
+
+  /* The animated body needs its padding on an inner element: animating height on a padded box
+     leaves the padding visible at the collapsed keyframe, so the closed panel keeps a stripe. */
+  .trail__body-inner {
+    padding: 0 ($u) ($u) ($u * 3);
   }
 
   .trail__section {
@@ -903,7 +1425,7 @@ $content-width-full: 1440px;
   }
 
   .trail__body {
-    padding: 0 ($u) ($u) ($u * 3);
+    overflow: hidden;
   }
 
   .trail__steps {
@@ -1420,23 +1942,134 @@ $content-width-full: 1440px;
   }
 }
 
+@keyframes copilot-token-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes copilot-caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes copilot-trail-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
 @keyframes copilot-blink {
   50% {
     opacity: 0;
   }
 }
 
-@keyframes copilot-bounce {
-  0%,
-  60%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.25;
+@keyframes copilot-fab-intro {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
   }
 
-  30% {
-    transform: translateY(-6px);
+  60% {
     opacity: 1;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* A wedge arriving: pulled in toward the crossing, then settling out into its own quarter. */
+@keyframes copilot-fab-seg {
+  0% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes copilot-fab-sheen {
+  0% {
+    opacity: 0;
+    background-position: 130% 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    background-position: -60% 0;
+  }
+}
+
+@keyframes copilot-fab-aura {
+  0% {
+    box-shadow: 0 0 0 0 var(--copilot-fab-aura, rgb(0 0 0 / 18%));
+    opacity: 0.85;
+  }
+
+  70% {
+    box-shadow: 0 0 0 14px rgb(0 0 0 / 0%);
+    opacity: 0;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes copilot-breathe {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes copilot-thinking-ring {
+  0% {
+    box-shadow: 0 0 0 0 var(--copilot-thinking-ring, rgb(0 0 0 / 25%));
+    opacity: 1;
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px transparent;
+    opacity: 0;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    opacity: 0;
   }
 }
 

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   templateUrl: './input-bar.component.html',
-  styleUrls: ['./input-bar.component.scss']
+  styleUrls: ['./input-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputBarComponent {
   @Input() isStreaming = false;
@@ -36,11 +37,33 @@ export class InputBarComponent {
   @Output() textChange = new EventEmitter<string>();
   @Output() send = new EventEmitter<string>();
   @Output() stop = new EventEmitter<void>();
+  /** Up arrow in an empty composer: put the last question back to be reworded. */
+  @Output() editLast = new EventEmitter<void>();
+
+  @ViewChild('messageInput') private messageInput?: ElementRef<HTMLInputElement>;
+
+  /** Put the caret in the composer, for the panel's keyboard shortcuts. */
+  focusInput(): void {
+    this.messageInput?.nativeElement.focus();
+  }
 
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.submit();
+      return;
+    }
+    // Only from an empty composer, so it can never eat a caret movement in text the officer
+    // is still writing. This is the shell convention, and the one people try first.
+    if (event.key === 'ArrowUp' && !this.text && !this.isStreaming) {
+      event.preventDefault();
+      this.editLast.emit();
+      return;
+    }
+    // Escape stops a reply that is going the wrong way, without reaching for the button.
+    if (event.key === 'Escape' && this.isStreaming) {
+      event.preventDefault();
+      this.stop.emit();
     }
   }
 

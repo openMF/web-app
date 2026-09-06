@@ -81,7 +81,7 @@ import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-pr
 import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
@@ -247,6 +247,21 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   // reused Classic accounting step renders as radio options — resolved by the host from the shared
   // `Accounting` util, identical to Classic.
   @Input() accountingRuleData: any[] = [];
+
+  // The stepper itself, so a failed guided submit can send the operator to the step that blocked it.
+  // `[linear]="false"` lets them reach Review with an earlier step still incomplete, which is exactly
+  // when the offending control is on a step they are not looking at.
+  @ViewChild(MatStepper) stepper?: MatStepper;
+
+  /**
+   * Whether the operator has already pressed "Create Loan Product" on an invalid guided form.
+   *
+   * Gates the incomplete-steps summary so the wizard does not open by listing everything the operator
+   * has not filled in yet. Classic's `review-pending` block needs no such flag because it stands in
+   * for a summary that genuinely cannot render; this one answers a click that would otherwise do
+   * nothing, so it appears when — and only when — that click happens.
+   */
+  guidedSubmitAttempted = false;
 
   // Reused Classic Charges step. Rendered for the `kind: 'charges'` step; read at submit time to fold the
   // selected charge objects into the payload — mirrors Classic's `@ViewChild(LoanProductChargesStepComponent)`.
@@ -662,6 +677,17 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   }
 
   /**
+   * Keyed on the title, NOT on the `index` the entry carries. That index is a position in
+   * {@link visibleSteps}, and the visible set changes under the operator — Payment Allocation and
+   * Deferred Income Recognition appear and disappear with the repayment strategy — so every later
+   * index shifts when one is inserted. Tracking on it would rebind a rendered row to a different
+   * step, which is the churn the trackBy exists to prevent. Step titles are unique and stable.
+   */
+  trackByIncompleteStepTitle(_index: number, step: { index: number; title: string }): string {
+    return step.title;
+  }
+
+  /**
    * The one message the field grid renders for a control, in the order the constraints are worth
    * reporting: a blank required field first, then its floor, its decimal places, its length.
    *
@@ -1047,6 +1073,94 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       });
     }
     return steps.filter(({ form }) => !form || form.invalid).map(({ title }) => title);
+  }
+
+  /**
+   * Whether "Create Loan Product" is currently blocked in guided mode.
+   *
+   * The single source of truth for the guided submit gate: {@link submit} returns early on exactly
+   * this condition, and the template renders the incomplete-steps summary on exactly this condition.
+   * Keeping them one expression is the point — a summary that can disagree with the gate is the same
+   * dead button with extra steps.
+   */
+  get guidedSubmitBlocked(): boolean {
+    if (!this.form) {
+      return false;
+    }
+    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
+    const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
+    return (
+      this.form.invalid || !!accountingForm?.invalid || !!deferredIncomeForm?.invalid || this.borrowerCycleStepInvalid
+    );
+  }
+
+  /**
+   * The visible guided steps that still hold something invalid, each with its index in
+   * {@link visibleSteps} so the summary can offer a jump straight to it.
+   *
+   * Guided mode's counterpart to {@link incompleteClassicSteps}, and it has to work differently.
+   * Classic hosts one FormGroup per step, so "which step is incomplete" is a property of the step.
+   * The guided flow holds every field in one flat FormGroup, so the mapping only exists via
+   * {@link visibleFields} — the same visibility source of truth the Review and the field grid use, so
+   * a control the operator was never shown can never be blamed here.
+   *
+   * The four reused Classic steps are checked the way {@link classicFormsValid} checks them: only
+   * Accounting and Deferred Income Recognition carry validators, and the borrower-cycle step reports
+   * its own rules through {@link borrowerCycleStepInvalid}. Charges, Payment Allocation and Interest
+   * Refunds have no validators in either flow, so they can never appear.
+   */
+  get incompleteGuidedSteps(): Array<{ index: number; title: string }> {
+    if (!this.form) {
+      return [];
+    }
+    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
+    const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
+
+    return this.visibleSteps
+      .map((step, index) => ({ step, index }))
+      .filter(({ step }) => {
+        switch (step.kind ?? 'fields') {
+          case 'fields':
+            return this.visibleFields(step).some((field) => !!this.form.get(field.key)?.invalid);
+          case 'accounting':
+            return !!accountingForm?.invalid;
+          case 'deferred-income':
+            return !!deferredIncomeForm?.invalid;
+          case 'borrower-cycle':
+            return this.borrowerCycleStepInvalid;
+          default:
+            return false;
+        }
+      })
+      .map(({ step, index }) => ({ index, title: step.title }));
+  }
+
+  /**
+   * Whether the submit is blocked by something the step summary cannot name — an invalid control that
+   * no visible step owns (a conditional field whose gate closed while it held a bad value, say).
+   *
+   * Without this the summary would render empty and the operator would be back at C4's dead button,
+   * so the template falls back to a generic "check your entries" line. It should be unreachable in
+   * practice; it exists so that "blocked" and "explained" cannot come apart.
+   */
+  get guidedSubmitBlockedWithoutCause(): boolean {
+    return this.guidedSubmitBlocked && this.incompleteGuidedSteps.length === 0;
+  }
+
+  /**
+   * Whether the Review step should render the incomplete-steps summary: guided mode only, after a
+   * create attempt, and only while something still blocks it. It disappears on its own as the
+   * operator fixes the last offending control, so the page never claims a problem that is solved.
+   */
+  get showGuidedIncompleteSummary(): boolean {
+    return !this.usesClassicSteps && this.guidedSubmitAttempted && this.guidedSubmitBlocked;
+  }
+
+  /** Jumps the stepper to a step named in the incomplete-steps summary. */
+  goToStep(index: number): void {
+    if (this.stepper) {
+      this.stepper.selectedIndex = index;
+    }
   }
 
   /**
@@ -1960,19 +2074,26 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       return;
     }
 
-    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
     // Classic's `loanProductFormValid` additionally requires `loanIncomeCapitalizationForm.valid`
     // whenever the advanced payment allocation strategy is selected: the reused Deferred Income
     // Recognition step attaches `Validators.required` to each dependent it registers, so an
-    // incomplete capitalized-income / buydown-fee configuration must block submit here too.
-    const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
-    // The borrower-cycle step holds FormArrays of objects rather than a FormGroup, so its rules cannot
-    // ride on `form.invalid`. It renders inline messages on its own step, and the Review step shows a
-    // notice next to the button, so there is nothing extra to mark as touched here.
-    if (this.form.invalid || accountingForm?.invalid || deferredIncomeForm?.invalid || this.borrowerCycleStepInvalid) {
+    // incomplete capitalized-income / buydown-fee configuration must block submit here too. The
+    // borrower-cycle step holds FormArrays of objects rather than a FormGroup, so its rules cannot
+    // ride on `form.invalid`; it reports them through `borrowerCycleStepInvalid` instead. All of that
+    // is folded into `guidedSubmitBlocked`, which the template reads too.
+    if (this.guidedSubmitBlocked) {
+      const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
+      const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
       this.form.markAllAsTouched();
       accountingForm?.markAllAsTouched();
       deferredIncomeForm?.markAllAsTouched();
+      // Marking everything touched only reveals the field-level messages, and only on the step the
+      // operator happens to be looking at. This is what turns the click into an answer: the Review
+      // step renders `incompleteGuidedSteps` in a live region, naming each step that still blocks the
+      // create and offering a jump to it. The stepper is deliberately NOT moved for them — the
+      // summary they just asked for is on this step, and yanking them away from it before they can
+      // read it trades one confusing outcome for another.
+      this.guidedSubmitAttempted = true;
       return;
     }
     this.postLoanProduct(this.buildPayloadForSubmit());

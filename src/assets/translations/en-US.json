@@ -838,7 +838,8 @@
       "Disable Breach": "Disable Breach",
       "Enable Breach": "Enable Breach",
       "Save Changes": "Save Changes",
-      "Save": "Save"
+      "Save": "Save",
+      "Upload Report Design": "Upload Report Design"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1562,6 +1563,7 @@
       "Peak Outstanding": "Peak Outstanding",
       "Penalties to Specific Income Accounts": "Penalties to Specific Income Accounts",
       "Pending Tasks": "Pending Tasks",
+      "Onboarding Board": "Onboarding Board",
       "Performance History": "Performance History",
       "Authorized Representative": "Authorized Representative",
       "Customer Transactional Profile": "Customer Transactional Profile",
@@ -1812,7 +1814,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Personal References (2 Family Members, 1 Acquaintance)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Declaration of Ultimate Beneficial Owners - Legal Entities",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Declaration of Ultimate Beneficial Owners - Natural Persons",
-      "Recovery": "Recovery"
+      "Recovery": "Recovery",
+      "Upload Report Design": "Upload Report Design"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -2494,6 +2497,7 @@
       "Host": "Host",
       "Host Name": "Host Name",
       "Hour": "Hour",
+      "HTML": "HTML",
       "ID": "ID",
       "In arrears tolerance": "In arrears tolerance",
       "INCOME CAPITALIZATION": "INCOME CAPITALIZATION",
@@ -2990,6 +2994,7 @@
       "Phone": "Phone",
       "Phone Number": "Phone Number",
       "Place Guarantee Funds On-Hold": "Place Guarantee Funds On-Hold",
+      "Plain Text": "Plain Text",
       "Please enter a valid number": "Please enter a valid number",
       "Port": "Port",
       "Port Number": "Port Number",
@@ -3245,6 +3250,7 @@
       "State": "State",
       "State / Province": "State / Province",
       "Status": "Status",
+      "Task": "Task",
       "Sell Indicator": "Sell Indicator",
       "Sell Rate": "Sell Rate",
       "Source Currency": "Source Currency",
@@ -3292,6 +3298,7 @@
       "Terms": "Terms",
       "Terms vary based on loan cycle": "Terms vary based on loan cycle",
       "Text": "Text",
+      "Text Format": "Text Format",
       "The current password is not correct": "The current password is not correct",
       "Theme": "Theme",
       "Theme and Font": "Theme and Font",
@@ -4036,6 +4043,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "Complete these steps to preview the product",
+      "Complete these steps before creating the product": "Complete these steps before creating the product",
+      "Check the highlighted fields before creating the product": "Check the highlighted fields before creating the product",
       "Country": "Country",
       "Agriculture Loan": "Agriculture Loan",
       "Auto Loan": "Auto Loan",
@@ -5124,7 +5133,14 @@
       "the": "the",
       "items selected of": "items selected of",
       "Recovery Completed": "Recovery completed",
-      "Recovery Payment Description": "Records money collected after the write-off. The loan stays closed and its balance stays at zero; only the recovered total changes."
+      "Recovery Payment Description": "Records money collected after the write-off. The loan stays closed and its balance stays at zero; only the recovered total changes.",
+      "Upload a BIRT report design": "Select an Eclipse BIRT report design (.rptdesign) to install for this tenant. A design with the same name is replaced.",
+      "Only Eclipse BIRT report designs can be uploaded": "Only Eclipse BIRT report designs (.rptdesign) can be uploaded.",
+      "The selected report design is empty": "The selected report design is empty.",
+      "The selected report design is too large": "The selected report design is larger than 5 MB.",
+      "Report design uploaded": "Report design {{fileName}} was uploaded.",
+      "Report design replaced": "Report design {{fileName}} was replaced.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
@@ -5721,6 +5737,8 @@
     "Specific days before when repayment": "Specific days before when repayment due notification should be sent.",
     "Specific days when after the repayment Overdue": "Specific days when after the repayment Overdue notification should be sent.",
     "Successful": "Successful",
+    "Switch to dark theme": "Switch to dark theme",
+    "Switch to light theme": "Switch to light theme",
     "The Amortization value": "The Amortization value is input to calculating the repayment amounts for repayment of the loan.",
     "The Interest method value": "The Interest method value is input to calculating the payments amount for repayment of the loan.",
     "The currency in which the deposit will be disbursed": "The currency in which the deposit will be disbursed.",
@@ -5958,6 +5976,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Current session",
     "newChat": "New chat",
@@ -6008,6 +6036,10 @@
       "aboutStorage": "Your conversations stay in this browser and are never stored on the assistant server."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "No recent conversations",
       "emptySubtitle": "Your chat history will appear here",
       "messages": "messages",
@@ -6039,8 +6071,13 @@
     },
     "confirmWarning": "This moves real money. Check the details, then confirm.",
     "openAssistant": "Open Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot is working on your request. Open Copilot.",
+      "replying": "Mifos X Copilot is replying. Open Copilot."
+    },
     "newChatTitle": "New conversation",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "That message is empty or too long. Please shorten it and try again.",
       "injectionBlocked": "That message looks like an instruction-override attempt, so it was not sent. Please rephrase it.",
       "streamFailed": "Could not reach Mifos X Copilot. Please try again."
@@ -6112,11 +6149,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "These are the records the assistant read. The basis for any decision on this client is in Fineract: the loan product rules, the repayment schedule, and your institution's credit policy.",
       "thinking": "Thinking",
       "notesCaution": "The assistant's own working text. Not a record of how the answer was produced, and not a credit assessment. Check every figure against the client record."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Try again",
       "groupLabel": "Response actions",
       "copy": "Copy",
@@ -6124,7 +6177,12 @@
       "repeat": "Ask again",
       "goodAnswer": "Good answer",
       "poorAnswer": "Poor answer",
-      "exportPdf": "Export to PDF",
+      "export": {
+        "label": "Export",
+        "pdf": "PDF document",
+        "csv": "CSV spreadsheet",
+        "png": "PNG image"
+      },
       "share": "Share"
     },
     "export": {
@@ -6135,8 +6193,10 @@
       "disclaimer": "Produced by Mifos Copilot from Fineract records. Check against the source record before acting on it.",
       "shareTitle": "Mifos Copilot answer",
       "copiedToClipboard": "Answer and link copied to the clipboard",
-      "failed": "The PDF could not be produced. Please try again.",
-      "fileNameFallback": "copilot"
+      "failed": "The file could not be produced. Please try again.",
+      "fileNameFallback": "copilot",
+      "cardField": "Field",
+      "cardValue": "Value"
     }
   }
 }

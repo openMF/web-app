@@ -59,8 +59,15 @@
       }
     </div>
 
-    <label class="toggle" (click)="toggleShowClosed()">
-      <span class="switch" [class.on]="showClosedCenters"></span>
+    <label class="toggle">
+      <input
+        type="checkbox"
+        class="toggle-input"
+        [checked]="showClosedCenters"
+        (change)="toggleShowClosed()"
+        (keydown.enter)="toggleShowClosed()"
+      />
+      <span class="switch" [class.on]="showClosedCenters" aria-hidden="true"></span>
       {{ 'labels.inputs.Show Closed Centers' | translate }}
     </label>
 
