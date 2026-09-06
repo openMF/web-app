@@ -25,6 +25,7 @@ import { SystemService } from 'app/system/system.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { UsersService } from 'app/users/users.service';
 import { DatatableSingleRowComponent } from './datatable-single-row.component';
 
 describe('DatatableSingleRowComponent', () => {
@@ -125,6 +126,7 @@ describe('DatatableSingleRowComponent', () => {
             datetimeFormat: 'dd MMMM yyyy HH:mm'
           }
         },
+        { provide: UsersService, useValue: { getUser: jest.fn(() => of({ firstname: 'Test', lastname: 'User' })) } },
         { provide: TranslateService, useValue: translateService }
       ]
     }).compileComponents();

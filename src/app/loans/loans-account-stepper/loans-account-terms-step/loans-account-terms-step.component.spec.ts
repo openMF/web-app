@@ -149,4 +149,16 @@ describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
     expect(terms().periodPaymentRate).toBe(18);
     expect(terms().totalPaymentVolume).toBe(360);
   });
+
+  it('preserves an explicit 0 discount fee on edit', () => {
+    const accountWithZeroDiscount = { ...WC_LOAN_DETAILS, proposedDiscountFee: 0 };
+    component.loansAccountProductTemplate = WC_LOAN_DETAILS;
+    component.loansAccountTemplate = accountWithZeroDiscount;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_LOAN_DETAILS, true)
+    });
+    component.ngOnInit();
+
+    expect(terms().discount).toBe(0);
+  });
 });
