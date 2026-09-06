@@ -6,6 +6,17 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 <div class="trail" *ngIf="hasAnything">
+  <!-- What it has already done, while it is still working. Held back until the turn ended, the
+       whole wait was one unchanging line: an officer watching a slow turn could not tell a model
+       reading three accounts apart from one stuck on the first. These rows are the record part
+       of the trail — named by the tool manifest, never by a model — so showing them as they land
+       costs nothing in credibility, and they are the only progress there is to show. The model's
+       own working text is not here; it stays in the disclosure below, read after the answer
+       rather than in front of it. -->
+  <ol class="trail__steps trail__steps--live" *ngIf="isLive && doneSteps.length">
+    <ng-container *ngTemplateOutlet="stepRows; context: { $implicit: doneSteps }"></ng-container>
+  </ol>
+
   <!-- While the turn runs, one line naming what is happening right now. An officer waiting on a
        slow branch connection needs to tell working apart from hung, and this is what does it.
        aria-live announces it, because a silent wait is the same wait for a screen reader. -->
@@ -43,26 +54,7 @@
       <div class="trail__body-inner">
         <!-- What it actually did. This is the part that is a record. -->
         <ol class="trail__steps" *ngIf="steps.length">
-          <li *ngFor="let step of steps" class="trail__step" [class.trail__step--write]="isWrite(step)">
-            <!-- A step that changed a record is marked as one. Reading and writing are not the
-                 same act, and a log that renders them identically hides the difference that
-                 matters most when an officer is checking what was done. -->
-            <span class="trail__tick" aria-hidden="true">
-              <svg *ngIf="!isWrite(step)" viewBox="0 0 24 24">
-                <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-              </svg>
-              <svg *ngIf="isWrite(step)" viewBox="0 0 24 24">
-                <path
-                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                />
-              </svg>
-            </span>
-            <span class="trail__step-kind" *ngIf="isWrite(step)">{{ 'copilot.trail.wrote' | translate }}</span>
-            <span class="trail__step-label">{{ step.label }}</span>
-            <span class="trail__step-time" *ngIf="step.durationMs !== null && step.durationMs !== undefined">{{
-              seconds(step.durationMs)
-            }}</span>
-          </li>
+          <ng-container *ngTemplateOutlet="stepRows; context: { $implicit: steps }"></ng-container>
         </ol>
 
         <!-- What it wrote while doing it, which is not a record. The caution sits with it, read
@@ -83,3 +75,28 @@
     </div>
   </div>
 </div>
+
+<!-- One definition of a step row, rendered both while the turn runs and inside the disclosure
+     afterwards, so the record cannot come to read differently depending on when it is read. -->
+<ng-template #stepRows let-list>
+  <li *ngFor="let step of list; trackBy: trackByStep" class="trail__step" [class.trail__step--write]="isWrite(step)">
+    <!-- A step that changed a record is marked as one. Reading and writing are not the
+         same act, and a log that renders them identically hides the difference that
+         matters most when an officer is checking what was done. -->
+    <span class="trail__tick" aria-hidden="true">
+      <svg *ngIf="!isWrite(step)" viewBox="0 0 24 24">
+        <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+      </svg>
+      <svg *ngIf="isWrite(step)" viewBox="0 0 24 24">
+        <path
+          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+        />
+      </svg>
+    </span>
+    <span class="trail__step-kind" *ngIf="isWrite(step)">{{ 'copilot.trail.wrote' | translate }}</span>
+    <span class="trail__step-label">{{ step.label }}</span>
+    <span class="trail__step-time" *ngIf="step.durationMs !== null && step.durationMs !== undefined">{{
+      seconds(step.durationMs)
+    }}</span>
+  </li>
+</ng-template>

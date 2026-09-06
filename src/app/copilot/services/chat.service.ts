@@ -26,6 +26,7 @@ import { translateStepLabel } from '../core/step-label';
 import { CopilotTurnPhase, isTurnActive, nextTurnPhase } from '../core/turn-phase';
 import { InputSanitizer } from '../core/input-sanitizer';
 import { ResponseParser } from '../core/response-parser';
+import { fallbackFollowUps } from '../core/follow-ups';
 import { COPILOT_CONFIG } from '../copilot.config';
 import { McpClientService } from './mcp-client.service';
 import { AiContextService } from './ai-context.service';
@@ -339,6 +340,23 @@ export class ChatService {
     return this.translate.instant(key);
   }
 
+  /**
+   * Follow-up chips for an answer that suggested none of its own.
+   *
+   * <p>Withheld from a turn that did not produce an answer. After an error the officer needs
+   * the retry the reply already offers, and after a confirmation card they need to decide;
+   * a row of unrelated questions under either one is the panel changing the subject.
+   *
+   * <p>Read from the screen at the moment the turn ends rather than when it started, because
+   * a turn that navigated the officer somewhere should suggest what fits where they now are.
+   */
+  private followUpsFor(content: string): string[] | undefined {
+    if (!content || this.turnPhase$.value === 'error' || this.turnPhase$.value === 'awaitingApproval') {
+      return undefined;
+    }
+    return fallbackFollowUps(this.contextService.getContextSnapshot().screen);
+  }
+
   private recordStep(event: McpStreamEvent): void {
     // Resolved here rather than in the template: a step log is part of the record of what was
     // done on a client's account, so the wording is fixed at the moment the step happened.
@@ -600,7 +618,7 @@ export class ChatService {
       return {
         ...draft,
         content,
-        suggestedPrompts: suggestions.length ? suggestions : undefined,
+        suggestedPrompts: suggestions.length ? suggestions : this.followUpsFor(content),
         turnMs,
         isStreaming: false
       };

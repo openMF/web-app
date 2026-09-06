@@ -118,6 +118,89 @@ describe('ThinkingTrailComponent', () => {
     );
   });
 
+  // ─── What is visible while the turn runs ───────────────────────────────────
+
+  /**
+   * The steps used to be sealed in the disclosure until the turn ended, so a long turn showed
+   * one unchanging line and an officer could not tell three accounts being read from one call
+   * hanging. Finished rows now land as they happen.
+   */
+  it('lists the finished steps while the turn is still running', () => {
+    fixture.componentRef.setInput('phase', 'thinking');
+    fixture.componentRef.setInput('steps', [
+      step('Reading the client profile'),
+      step('Reading the loan account'),
+      step('Checking the repayment schedule', false)
+    ]);
+    fixture.detectChanges();
+
+    const live = Array.from(
+      fixture.nativeElement.querySelectorAll('.trail__steps--live .trail__step-label') as NodeListOf<HTMLElement>
+    ).map((node) => node.textContent?.trim());
+    expect(live).toEqual([
+      'Reading the client profile',
+      'Reading the loan account'
+    ]);
+  });
+
+  /** The running step is named on the live line, so listing it above would double it. */
+  it('leaves the step in flight to the live line', () => {
+    fixture.componentRef.setInput('phase', 'thinking');
+    fixture.componentRef.setInput('steps', [step('Checking the repayment schedule', false)]);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.trail__steps--live')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.trail__live-label').textContent).toContain(
+      'Checking the repayment schedule'
+    );
+  });
+
+  /** The answer arriving does not end the turn, and the record so far stays on screen for it. */
+  it('keeps the steps visible while the answer streams', () => {
+    fixture.componentRef.setInput('phase', 'streaming');
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.trail__steps--live')).not.toBeNull();
+    // No tool in flight, so the live line has nothing to name and stands down.
+    expect(fixture.nativeElement.querySelector('.trail__live')).toBeNull();
+  });
+
+  /** Once the turn ends the same rows are in the disclosure, and nowhere else. */
+  it('folds the live list into the disclosure when the turn ends', () => {
+    fixture.componentRef.setInput('phase', 'streaming');
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.trail__steps--live')).not.toBeNull();
+
+    fixture.componentRef.setInput('phase', 'idle');
+    fixture.componentRef.setInput('turnMs', 5200);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.trail__steps--live')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.trail__step-label').length).toBe(1);
+  });
+
+  /**
+   * The model's own prose is not a record and stays where it was: behind the disclosure, read
+   * after the answer rather than streaming in front of it.
+   */
+  it('keeps the working notes out of the live view', () => {
+    fixture.componentRef.setInput('phase', 'thinking');
+    fixture.componentRef.setInput('steps', [step('Reading the loan account')]);
+    fixture.componentRef.setInput('workingNotes', 'Checking the schedule before quoting a figure.');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.trail__notes')).toBeNull();
+  });
+
+  it('treats a turn with nothing finished yet as the same empty list every time', () => {
+    fixture.componentRef.setInput('steps', [step('Reading the loan account', false)]);
+    const first = component.doneSteps;
+    fixture.componentRef.setInput('steps', [step('Checking the repayment schedule', false)]);
+    expect(component.doneSteps).toBe(first);
+  });
+
   // ─── Collapsed by default ──────────────────────────────────────────────────
 
   it('is collapsed when the turn completes', () => {

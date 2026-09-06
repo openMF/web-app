@@ -172,6 +172,20 @@ export class ThinkingTrailComponent implements OnChanges, OnDestroy {
   }
 
   /**
+   * The steps already finished, which is what the live list shows.
+   *
+   * <p>Only the finished ones: the step still running is named on the live line right below,
+   * and a row that says the same thing twice reads as two calls rather than one.
+   */
+  get doneSteps(): CopilotStep[] {
+    const done = this.steps.filter((step) => step.done);
+    // A fresh [] every check would be a changed reference for the *ngFor above it, on a
+    // component that is otherwise built to be skipped. Empty is the common case, so it gets
+    // the shared constant and only a non-empty list allocates.
+    return done.length ? done : NO_STEPS;
+  }
+
+  /**
    * What to call what is happening right now.
    *
    * <p>Before the first tool call there is still a wait, and it used to be shown by nothing at
@@ -206,6 +220,17 @@ export class ThinkingTrailComponent implements OnChanges, OnDestroy {
   /** A step that changes a record, which does not look like one that only read. */
   isWrite(step: CopilotStep): boolean {
     return step.readOnly === false;
+  }
+
+  /**
+   * Steps are identified by position, because that is what they are.
+   *
+   * <p>A step has no id and its label is not unique — the same account can honestly be read
+   * twice in one turn. Position is stable for the life of the list: rows are appended, and the
+   * only edit is the running step being marked finished in place, which position survives.
+   */
+  trackByStep(index: number): number {
+    return index;
   }
 
   /**
