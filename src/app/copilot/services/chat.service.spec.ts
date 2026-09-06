@@ -487,6 +487,96 @@ describe('ChatService', () => {
     expect(stream.observed).toBe(false); // Unsubscribed -> underlying fetch aborted.
   });
 
+  describe('how far the turn has got', () => {
+    /**
+     * The progression the panel draws from. Before this was one value the panel worked it out
+     * from two booleans that were both true for the whole gap between asking and the first
+     * token, and drew an indicator for each.
+     */
+    it('runs idle -> thinking -> streaming -> idle over a turn', () => {
+      const stream = new Subject<McpStreamEvent>();
+      mcpMock.chat.mockReturnValue(stream.asObservable());
+      const seen: string[] = [];
+      service.turnPhase$.subscribe((phase) => seen.push(phase));
+
+      service.sendMessage('Show loans');
+      stream.next({ type: 'thinking', thinkingPhase: 'delta', thinking: 'Checking.' });
+      stream.next({ type: 'token', token: 'One' });
+      stream.complete();
+
+      expect(seen).toEqual([
+        'idle',
+        'thinking',
+        'streaming',
+        'idle'
+      ]);
+    });
+
+    /**
+     * A local runtime holds the connection open with empty frames while it reasons. Each one
+     * used to be indistinguishable from the answer starting.
+     */
+    it('stays in thinking through empty keep-alive tokens', () => {
+      const stream = new Subject<McpStreamEvent>();
+      mcpMock.chat.mockReturnValue(stream.asObservable());
+
+      service.sendMessage('Show loans');
+      stream.next({ type: 'token', token: '' });
+      stream.next({ type: 'token', token: '\n' });
+
+      expect(service.turnPhase$.value).toBe('thinking');
+
+      stream.next({ type: 'token', token: 'One active loan.' });
+      expect(service.turnPhase$.value).toBe('streaming');
+    });
+
+    it('holds at the error once a turn has failed', () => {
+      mcpMock.chat.mockReturnValue(
+        from([
+          { type: 'error', errorCode: 'LLM_UNAVAILABLE', message: 'Model unreachable.' },
+          { type: 'done' }
+        ] as McpStreamEvent[])
+      );
+
+      service.sendMessage('Show loans');
+
+      expect(service.turnPhase$.value).toBe('error');
+      expect(service.isStreaming$.value).toBe(false);
+    });
+
+    it('settles on the pending write rather than going idle behind it', () => {
+      mcpMock.chat.mockReturnValue(
+        from([
+          {
+            type: 'action_card',
+            pendingAction: {
+              cardId: 'c-1',
+              tool: 'repay_loan',
+              args: {},
+              display: [],
+              humanSummary: 'Post a repayment of 500.'
+            }
+          }
+        ] as McpStreamEvent[])
+      );
+
+      service.sendMessage('Repay 500');
+
+      expect(service.turnPhase$.value).toBe('awaitingApproval');
+    });
+
+    it('goes back to idle when the officer stops a turn', () => {
+      const stream = new Subject<McpStreamEvent>();
+      mcpMock.chat.mockReturnValue(stream.asObservable());
+
+      service.sendMessage('Show loans');
+      stream.next({ type: 'token', token: 'Par' });
+      service.stopStreaming();
+
+      expect(service.turnPhase$.value).toBe('idle');
+    });
+  });
+
   it('archives completed conversations under a tenant+user storage key', () => {
     const setItem = jest.spyOn(window.localStorage, 'setItem');
     mcpMock.chat.mockReturnValue(

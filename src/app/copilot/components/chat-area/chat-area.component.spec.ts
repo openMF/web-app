@@ -136,4 +136,114 @@ describe('ChatAreaComponent', () => {
       expect(component.lastReplyDone).toBe(false);
     });
   });
+  /**
+   * The regression this suite exists to hold. Two indicators used to answer two different
+   * questions about the same turn, and both were true for the whole gap between asking and the
+   * first token. Against a hosted model that gap is a second; against a local one that reasons
+   * first it is most of the wait, and the officer watched a bouncing typing indicator and a
+   * pulsing thinking line at the same time.
+   */
+  describe('showing progress exactly once', () => {
+    /** A turn that has been asked and has produced nothing yet. */
+    function waiting(): ChatMessage[] {
+      return [
+        { id: 'u-1', role: 'user', content: 'How many loans?', timestamp: 0 },
+        { id: 'a-1', role: 'assistant', content: '', timestamp: 0, isStreaming: true }
+      ];
+    }
+
+    it('draws one indicator while waiting, not two', () => {
+      fixture.componentRef.setInput('messages', waiting());
+      fixture.componentRef.setInput('isStreaming', true);
+      fixture.componentRef.setInput('turnPhase', 'thinking');
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelectorAll('.trail__live').length).toBe(1);
+      expect(fixture.nativeElement.querySelector('.typing')).toBeNull();
+    });
+
+    it('keeps the avatar in place when the first token lands, so nothing jumps', () => {
+      fixture.componentRef.setInput('messages', waiting());
+      fixture.componentRef.setInput('isStreaming', true);
+      fixture.componentRef.setInput('turnPhase', 'thinking');
+      fixture.detectChanges();
+
+      const waitingAvatars = fixture.nativeElement.querySelectorAll('.msg__avatar');
+      expect(waitingAvatars.length).toBe(1);
+      expect(waitingAvatars[0].classList).toContain('msg__avatar--thinking');
+
+      fixture.componentRef.setInput('messages', [
+        { id: 'u-1', role: 'user', content: 'How many loans?', timestamp: 0 },
+        { id: 'a-1', role: 'assistant', content: 'One active loan.', timestamp: 0, isStreaming: true }
+      ]);
+      fixture.componentRef.setInput('turnPhase', 'streaming');
+      fixture.detectChanges();
+
+      const streamingAvatars = fixture.nativeElement.querySelectorAll('.msg__avatar');
+      expect(streamingAvatars.length).toBe(1);
+      expect(streamingAvatars[0].classList).not.toContain('msg__avatar--thinking');
+      // Still animated, but as answering rather than waiting: the icon keeps saying the
+      // assistant is busy without claiming it is still queueing.
+      expect(streamingAvatars[0].classList).toContain('msg__avatar--streaming');
+    });
+
+    /** The two working states are drawn differently, and a settled reply is drawn as neither. */
+    it('leaves the avatar unmarked once the reply has landed', () => {
+      fixture.componentRef.setInput('messages', [
+        { id: 'u-1', role: 'user', content: 'How many loans?', timestamp: 0 },
+        { id: 'a-1', role: 'assistant', content: 'One active loan.', timestamp: 0 }
+      ]);
+      fixture.componentRef.setInput('isStreaming', false);
+      fixture.componentRef.setInput('turnPhase', 'idle');
+      fixture.detectChanges();
+
+      const settled = fixture.nativeElement.querySelector('.msg__avatar');
+      expect(settled.classList).not.toContain('msg__avatar--thinking');
+      expect(settled.classList).not.toContain('msg__avatar--streaming');
+    });
+
+    /** Words arriving are their own progress; a live label over them claims otherwise. */
+    it('drops the live line once the answer is arriving with no tool call running', () => {
+      fixture.componentRef.setInput('messages', [
+        { id: 'u-1', role: 'user', content: 'How many loans?', timestamp: 0 },
+        { id: 'a-1', role: 'assistant', content: 'One active loan.', timestamp: 0, isStreaming: true }
+      ]);
+      fixture.componentRef.setInput('isStreaming', true);
+      fixture.componentRef.setInput('turnPhase', 'streaming');
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.trail__live')).toBeNull();
+    });
+
+    it('brings the live line back for a tool call that starts mid-answer', () => {
+      fixture.componentRef.setInput('messages', [
+        { id: 'u-1', role: 'user', content: 'How many loans?', timestamp: 0 },
+        {
+          id: 'a-1',
+          role: 'assistant',
+          content: 'Checking that now.',
+          timestamp: 0,
+          isStreaming: true,
+          steps: [
+            { label: 'Reading the loan account', readOnly: true, done: false }
+          ]
+        }
+      ]);
+      fixture.componentRef.setInput('isStreaming', true);
+      fixture.componentRef.setInput('turnPhase', 'streaming');
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.trail__live')).not.toBeNull();
+    });
+
+    it('shows no live indicator at all once the turn is over', () => {
+      fixture.componentRef.setInput('messages', conversation(1));
+      fixture.componentRef.setInput('isStreaming', false);
+      fixture.componentRef.setInput('turnPhase', 'idle');
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.trail__live')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.typing')).toBeNull();
+    });
+  });
 });

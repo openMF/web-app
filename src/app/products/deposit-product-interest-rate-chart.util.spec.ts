@@ -67,13 +67,34 @@ describe('Deposit product interest rate chart utils', () => {
       {
         periodType: 2,
         fromPeriod: 7,
-        toPeriod: '',
+        toPeriod: 12,
         annualInterestRate: 6,
-        description: '7 plus months'
+        description: '7 to 12 months'
       }
     ]);
 
     expect(chartSlabs.errors).toBeNull();
+  });
+
+  it('rejects period ranges with a gap', () => {
+    const chartSlabs = createChartSlabsControl([
+      {
+        periodType: 2,
+        fromPeriod: 1,
+        toPeriod: 6,
+        annualInterestRate: 5,
+        description: '1 to 6 months'
+      },
+      {
+        periodType: 2,
+        fromPeriod: 8,
+        toPeriod: 12,
+        annualInterestRate: 6,
+        description: '8 to 12 months'
+      }
+    ]);
+
+    expect(chartSlabs.errors).toEqual({ slabRange: { type: 'gap' } });
   });
 
   it('rejects a single slab with an inverted range before submit', () => {
@@ -195,7 +216,7 @@ describe('Deposit product interest rate chart utils', () => {
     });
   });
 
-  it('removes blank toPeriod and amountRangeTo during normalization', () => {
+  it('removes blank optional slab bounds during normalization', () => {
     const payload = normalizeDepositProductInterestRateCharts({
       charts: [
         {
@@ -204,7 +225,7 @@ describe('Deposit product interest rate chart utils', () => {
               periodType: 2,
               fromPeriod: 7,
               toPeriod: '',
-              amountRangeFrom: 10000,
+              amountRangeFrom: '',
               amountRangeTo: '',
               annualInterestRate: 6,
               description: 'Open ended bounds'
@@ -217,7 +238,6 @@ describe('Deposit product interest rate chart utils', () => {
     expect(payload.charts[0].chartSlabs[0]).toEqual({
       periodType: 2,
       fromPeriod: 7,
-      amountRangeFrom: 10000,
       annualInterestRate: 6,
       description: 'Open ended bounds'
     });

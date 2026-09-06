@@ -7,20 +7,21 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, EMPTY, of } from 'rxjs';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
-import { CopilotPanelComponent } from './copilot-panel.component';
+import { CopilotPanelComponent, LAUNCHER_INTRO_MS } from './copilot-panel.component';
 import { ChatService } from '../../services/chat.service';
 import { AiContextService } from '../../services/ai-context.service';
 import { CopilotExportService } from '../../services/copilot-export.service';
 import { CopilotFeatureService } from '../../services/copilot-feature.service';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { ChatMessage } from '../../core/models/chat-message.model';
+import { CopilotTurnPhase } from '../../core/turn-phase';
 
 const REPLY: ChatMessage = { id: 'm-2', role: 'assistant', content: 'One active loan.', timestamp: 0 };
 const QUESTION: ChatMessage = { id: 'm-1', role: 'user', content: 'how many loans?', timestamp: 0 };
@@ -32,6 +33,7 @@ describe('CopilotPanelComponent', () => {
     messages$: BehaviorSubject<ChatMessage[]>;
     conversations$: BehaviorSubject<unknown[]>;
     isStreaming$: BehaviorSubject<boolean>;
+    turnPhase$: BehaviorSubject<CopilotTurnPhase>;
     pendingAction$: BehaviorSubject<null>;
     loadHistory: jest.Mock;
     exchangeFor: jest.Mock;
@@ -42,7 +44,7 @@ describe('CopilotPanelComponent', () => {
     setHistoryEnabled: jest.Mock;
     clearAllHistory: jest.Mock;
   };
-  let exporter: { exportToPdf: jest.Mock; share: jest.Mock };
+  let exporter: { export: jest.Mock; share: jest.Mock };
   /** Stands in for the one preference this panel keeps; the suite stubs storage out. */
   let stored: string | null = null;
   let snackBar: { open: jest.Mock };
@@ -63,6 +65,7 @@ describe('CopilotPanelComponent', () => {
       messages$: new BehaviorSubject<ChatMessage[]>([]),
       conversations$: new BehaviorSubject<unknown[]>([]),
       isStreaming$: new BehaviorSubject<boolean>(false),
+      turnPhase$: new BehaviorSubject<CopilotTurnPhase>('idle'),
       pendingAction$: new BehaviorSubject<null>(null),
       loadHistory: jest.fn(),
       exchangeFor: jest.fn(() => ({ question: QUESTION, reply: REPLY })),
@@ -74,7 +77,7 @@ describe('CopilotPanelComponent', () => {
       clearAllHistory: jest.fn()
     };
     exporter = {
-      exportToPdf: jest.fn(() => Promise.resolve()),
+      export: jest.fn(() => Promise.resolve()),
       share: jest.fn(() => Promise.resolve('copied'))
     };
     snackBar = { open: jest.fn() };
@@ -215,17 +218,25 @@ describe('CopilotPanelComponent', () => {
 
   describe('reply actions', () => {
     it('files an exchange with who asked and which client it was about', async () => {
-      await component.exportExchange('m-2');
+      await component.exportExchange({ messageId: 'm-2', format: 'pdf' });
 
-      expect(exporter.exportToPdf).toHaveBeenCalledWith(
+      expect(exporter.export).toHaveBeenCalledWith(
+        'pdf',
         expect.objectContaining({ question: QUESTION, reply: REPLY, askedBy: 'priya', clientName: 'Aisha Bello' })
       );
     });
 
-    it('says so when an export could not be produced, rather than looking like a blocked download', async () => {
-      exporter.exportToPdf.mockReturnValue(Promise.reject(new Error('canvas failed')));
+    /** The format the officer picked is the one that runs; the menu offers only what fits. */
+    it('files an exchange in the format that was asked for', async () => {
+      await component.exportExchange({ messageId: 'm-2', format: 'csv' });
 
-      await component.exportExchange('m-2');
+      expect(exporter.export).toHaveBeenCalledWith('csv', expect.objectContaining({ reply: REPLY }));
+    });
+
+    it('says so when an export could not be produced, rather than looking like a blocked download', async () => {
+      exporter.export.mockReturnValue(Promise.reject(new Error('canvas failed')));
+
+      await component.exportExchange({ messageId: 'm-2', format: 'pdf' });
 
       expect(snackBar.open).toHaveBeenCalled();
     });
@@ -248,11 +259,103 @@ describe('CopilotPanelComponent', () => {
     it('does nothing for a reply that has since gone', async () => {
       chat.exchangeFor.mockReturnValue(null);
 
-      await component.exportExchange('gone');
+      await component.exportExchange({ messageId: 'gone', format: 'pdf' });
       await component.shareExchange('gone');
 
-      expect(exporter.exportToPdf).not.toHaveBeenCalled();
+      expect(exporter.export).not.toHaveBeenCalled();
       expect(exporter.share).not.toHaveBeenCalled();
+    });
+  });
+  /**
+   * Closing the panel does not stop the turn, so the launcher is then the only thing on screen
+   * that can say one is still running.
+   */
+  describe('the launcher while a turn runs', () => {
+    function launcher(): HTMLElement | null {
+      return fixture.nativeElement.querySelector('button.ai-fab');
+    }
+
+    beforeEach(() => {
+      component.isOpen = false;
+      fixture.detectChanges();
+    });
+
+    it('sits idle with nothing to report', () => {
+      chat.turnPhase$.next('idle');
+      fixture.detectChanges();
+
+      expect(launcher()?.classList).not.toContain('ai-fab--thinking');
+      expect(launcher()?.classList).not.toContain('ai-fab--streaming');
+      expect(component.launcherLabelKey).toBe('copilot.openAssistant');
+    });
+
+    it('marks itself as waiting, and says so rather than only pulsing', () => {
+      chat.turnPhase$.next('thinking');
+      fixture.detectChanges();
+
+      expect(launcher()?.classList).toContain('ai-fab--thinking');
+      expect(component.launcherLabelKey).toBe('copilot.launcher.working');
+    });
+
+    /** Waiting and answering are different things, and the launcher draws them differently. */
+    it('switches to answering once the reply starts arriving', () => {
+      chat.turnPhase$.next('streaming');
+      fixture.detectChanges();
+
+      expect(launcher()?.classList).toContain('ai-fab--streaming');
+      expect(launcher()?.classList).not.toContain('ai-fab--thinking');
+      expect(component.launcherLabelKey).toBe('copilot.launcher.replying');
+    });
+
+    it('goes quiet again when the turn ends', () => {
+      chat.turnPhase$.next('streaming');
+      fixture.detectChanges();
+      chat.turnPhase$.next('idle');
+      fixture.detectChanges();
+
+      expect(launcher()?.classList).not.toContain('ai-fab--streaming');
+      expect(component.launcherLabelKey).toBe('copilot.openAssistant');
+    });
+  });
+
+  /**
+   * The launcher is removed from the DOM while the panel is open, so a CSS-only intro would
+   * replay on every close. It is an arrival, and there is only one of those per page load.
+   */
+  describe('the launcher arriving', () => {
+    function launcher(): HTMLElement | null {
+      return fixture.nativeElement.querySelector('button.ai-fab');
+    }
+
+    // One of these tests runs on a fake clock, and jest keeps it installed once set. Left in
+    // place it stalls autoDetectChanges for whatever runs next, which looks like a template
+    // bug rather than a leaked timer.
+    beforeEach(() => {
+      jest.useRealTimers();
+    });
+
+    it('plays on first paint', () => {
+      component.isOpen = false;
+      fixture.detectChanges();
+
+      expect(component.playIntro).toBe(true);
+      expect(launcher()?.classList).toContain('ai-fab--intro');
+    });
+
+    it('stops once the arrival is over', () => {
+      // Built under the fake clock: the timer is started in the constructor, so a component
+      // made before this point would already be on the real one.
+      jest.useFakeTimers();
+      build();
+      component.isOpen = false;
+      fixture.detectChanges();
+      expect(component.playIntro).toBe(true);
+
+      jest.advanceTimersByTime(LAUNCHER_INTRO_MS);
+      fixture.detectChanges();
+
+      expect(component.playIntro).toBe(false);
+      expect(launcher()?.classList).not.toContain('ai-fab--intro');
     });
   });
 });

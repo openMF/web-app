@@ -23,8 +23,6 @@ The deployment uses:
 - Artifact directory: `dist/web-app/browser`
 - Build cache: `.npm/**/*`
 
-Do not use `npm run build:prod` for Amplify root hosting. That script sets `--base-href=/web-app/` for the GitHub Pages deployment.
-
 The build does not set a custom `NODE_OPTIONS` memory limit by default. Add one in Amplify only if build logs show an out-of-memory failure and the selected build instance has enough memory.
 
 ## Runtime env.js Generation

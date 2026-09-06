@@ -38,19 +38,27 @@
     </svg>
   </button>
 
+  <!-- One button rather than a row of them. The formats a reply supports depend on what is in
+       it, so a fixed row would either be mostly disabled or would change width from one answer
+       to the next. Withheld entirely when there is nothing worth taking out. -->
   <button
+    *ngIf="exportFormats.length"
     type="button"
     class="msg-actions__button"
-    (click)="exportPdf()"
-    [attr.aria-label]="'copilot.actions.exportPdf' | translate"
-    [title]="'copilot.actions.exportPdf' | translate"
+    [matMenuTriggerFor]="exportMenu"
+    [attr.aria-label]="'copilot.actions.export.label' | translate"
+    [title]="'copilot.actions.export.label' | translate"
   >
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16z"
-      />
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
     </svg>
   </button>
+
+  <mat-menu #exportMenu="matMenu" class="copilot-export-menu">
+    <button *ngFor="let format of exportFormats" type="button" mat-menu-item (click)="exportAs(format)">
+      {{ labelFor(format) | translate }}
+    </button>
+  </mat-menu>
 
   <button
     type="button"

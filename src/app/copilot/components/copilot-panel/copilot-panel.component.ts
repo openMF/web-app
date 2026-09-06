@@ -21,11 +21,13 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timer } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 /** Models */
 import { ChatMessage, Conversation } from '../../core/models/chat-message.model';
+import { CopilotTurnPhase } from '../../core/turn-phase';
 import { ActionCard } from '../../core/models/action-card.model';
 import { PendingAction } from '../../core/models/mcp-response.model';
 
@@ -34,7 +36,7 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
 import { CopilotFeatureService } from '../../services/copilot-feature.service';
 import { ChatService } from '../../services/chat.service';
 import { AiContextService } from '../../services/ai-context.service';
-import { CopilotExportService } from '../../services/copilot-export.service';
+import { CopilotExportFormat, CopilotExportService } from '../../services/copilot-export.service';
 
 /** Child components */
 import { CopilotHeaderComponent } from '../copilot-header/copilot-header.component';
@@ -56,6 +58,13 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
  * ViewEncapsulation.None, scoped under the `.mifos-copilot` root class so it
  * also styles the child components nested in its template without leaking.
  */
+/**
+ * How long the launcher's arrival animation runs, in step with the keyframes in
+ * copilot-panel.component.scss. Kept here as the one number the component asserts against, so
+ * a change to the animation shows up as a failing test rather than a class left on the button.
+ */
+export const LAUNCHER_INTRO_MS = 1500;
+
 @Component({
   selector: 'mifosx-copilot-panel',
   imports: [
@@ -126,6 +135,35 @@ export class CopilotPanelComponent {
   @ViewChild(InputBar) private inputBar?: InputBar;
   conversations: Conversation[] = [];
   isStreaming = false;
+  /** Where the turn in flight has got to, for the parts of the panel that show progress. */
+  turnPhase: CopilotTurnPhase = 'idle';
+
+  /**
+   * Whether the launcher is still playing its arrival animation.
+   *
+   * <p>Held on the component rather than left to CSS because the launcher is removed from the
+   * DOM whenever the panel is open. A CSS-only intro would replay every time an officer closed
+   * the panel, which is not an arrival at all. Cleared once, so it plays on page load and never
+   * again for the life of the tab.
+   */
+  playIntro = true;
+
+  /**
+   * What the launcher announces, which depends on what it is doing.
+   *
+   * <p>The animation distinguishes waiting from answering for anyone who can see it. This is
+   * the same distinction for anyone who cannot, and it is the reason the states are named in
+   * the label rather than left to a pulsing ring nobody is told about.
+   */
+  get launcherLabelKey(): string {
+    if (this.turnPhase === 'thinking') {
+      return 'copilot.launcher.working';
+    }
+    if (this.turnPhase === 'streaming') {
+      return 'copilot.launcher.replying';
+    }
+    return 'copilot.openAssistant';
+  }
   /** Write action awaiting confirmation, rendered as a confirmation card. */
   pendingCard: ActionCard | null = null;
 
@@ -145,6 +183,16 @@ export class CopilotPanelComponent {
   // chain would never repaint the incoming tokens.
   constructor() {
     const cdr = inject(ChangeDetectorRef);
+
+    // Cleared on a timer rather than an animationend handler: the animation does not run at
+    // all under prefers-reduced-motion, so there would be no event to listen for and the
+    // class would never come off.
+    timer(LAUNCHER_INTRO_MS)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.playIntro = false;
+        cdr.markForCheck();
+      });
     this.chatService.messages$.pipe(takeUntilDestroyed()).subscribe((messages) => {
       this.messages = messages;
       cdr.markForCheck();
@@ -155,6 +203,10 @@ export class CopilotPanelComponent {
     });
     this.chatService.isStreaming$.pipe(takeUntilDestroyed()).subscribe((streaming) => {
       this.isStreaming = streaming;
+      cdr.markForCheck();
+    });
+    this.chatService.turnPhase$.pipe(takeUntilDestroyed()).subscribe((phase) => {
+      this.turnPhase = phase;
       cdr.markForCheck();
     });
     this.chatService.pendingAction$.pipe(takeUntilDestroyed()).subscribe((pending) => {
@@ -340,13 +392,13 @@ export class CopilotPanelComponent {
   }
 
   /** File an exchange as a PDF. */
-  async exportExchange(messageId: string): Promise<void> {
-    const exchange = this.chatService.exchangeFor(messageId);
+  async exportExchange(request: { messageId: string; format: CopilotExportFormat }): Promise<void> {
+    const exchange = this.chatService.exchangeFor(request.messageId);
     if (!exchange) {
       return;
     }
     try {
-      await this.exportService.exportToPdf({
+      await this.exportService.export(request.format, {
         ...exchange,
         askedBy: this.authenticationService.getCredentials()?.username,
         clientName: this.contextService.getContextSnapshot().clientName

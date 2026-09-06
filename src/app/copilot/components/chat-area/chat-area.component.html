@@ -33,7 +33,16 @@
       [class.msg--ai]="msg.role === 'assistant'"
       [attr.data-message-id]="msg.role === 'user' ? msg.id : null"
     >
-      <div *ngIf="msg.role === 'assistant' && !(msg.isStreaming && !msg.content?.trim())" class="msg__avatar">
+      <!-- Mounted for the whole reply, waiting included. It used to appear only once the first
+           token landed, so the answer arriving swapped one avatar for another and shifted the
+           conversation as it did. The same element now carries the wait and the answer, and the
+           state it is in is a class rather than a different element. -->
+      <div
+        *ngIf="msg.role === 'assistant'"
+        class="msg__avatar"
+        [class.msg__avatar--thinking]="phaseFor(msg) === 'thinking'"
+        [class.msg__avatar--streaming]="phaseFor(msg) === 'streaming'"
+      >
         <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
       </div>
       <div class="msg__content">
@@ -85,7 +94,7 @@
           [workingNotes]="msg.workingNotes"
           [turnMs]="msg.turnMs"
           [notesElapsedMs]="msg.notesElapsedMs"
-          [isStreaming]="!!msg.isStreaming"
+          [phase]="phaseFor(msg)"
         >
         </mifosx-thinking-trail>
 
@@ -146,13 +155,10 @@
     {{ (isStreaming ? 'copilot.a11y.working' : lastReplyDone ? 'copilot.a11y.replyReady' : '') | translate }}
   </p>
 
-  <!-- Typing indicator, only until the reply starts arriving. Once there are words on screen
-       the message is its own progress, and a second avatar with dots underneath reads as a
-       second assistant answering at the same time. -->
-  <div *ngIf="isStreaming && !hasVisibleDraft" class="typing">
-    <div class="msg__avatar">
-      <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
-    </div>
-    <div class="typing__dots"><span></span><span></span><span></span></div>
-  </div>
+  <!-- The typing indicator that used to sit here is gone. It answered "is a turn running and
+       is the bubble still empty", which is true for the whole reasoning phase, while the trail
+       inside the draft answered "is a turn running" and drew its own live line: against a local
+       model that thinks for half a minute before answering, an officer watched bouncing dots
+       and a pulsing timer at once. The trail's line is now the only one, and the draft's own
+       avatar carries the waiting state. -->
 </div>
