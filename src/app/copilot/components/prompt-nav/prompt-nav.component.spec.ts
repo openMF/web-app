@@ -144,7 +144,8 @@ describe('PromptNavComponent', () => {
     expect(jumped).toBe('u-2');
   });
 
-  it('collapses to a strip of rules and back', () => {
+  /** Expanded, the rail is wide enough to cover the questions it lists, so it never starts there. */
+  it('arrives collapsed to a strip of rules, and expands only when asked', () => {
     fixture.componentRef.setInput('messages', [
       ask('u-1', 'One'),
       ask('u-2', 'Two')
@@ -152,13 +153,15 @@ describe('PromptNavComponent', () => {
     fixture.detectChanges();
 
     const toggle = fixture.nativeElement.querySelector('.prompt-nav__toggle');
-    expect(toggle.getAttribute('aria-expanded')).toBe('true');
-
-    toggle.click();
-    fixture.detectChanges();
     expect(component.collapsed).toBe(true);
     expect(toggle.getAttribute('aria-expanded')).toBe('false');
     expect(fixture.nativeElement.querySelector('.prompt-nav').classList).toContain('prompt-nav--collapsed');
+
+    toggle.click();
+    fixture.detectChanges();
+    expect(component.collapsed).toBe(false);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(fixture.nativeElement.querySelector('.prompt-nav').classList).not.toContain('prompt-nav--collapsed');
   });
 
   /** Collapsing must not drop the list: it is what the officer clicks to move about. */
@@ -167,8 +170,6 @@ describe('PromptNavComponent', () => {
       ask('u-1', 'One'),
       ask('u-2', 'Two')
     ]);
-    fixture.detectChanges();
-    fixture.nativeElement.querySelector('.prompt-nav__toggle').click();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelectorAll('.prompt-nav__item').length).toBe(2);

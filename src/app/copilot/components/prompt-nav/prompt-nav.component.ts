@@ -70,8 +70,17 @@ export class PromptNavComponent {
 
   entries: PromptEntry[] = NO_ENTRIES;
 
-  /** Collapsed to a strip of rules, which keeps the position readable at a glance. */
-  collapsed = false;
+  /**
+   * Starts collapsed to a strip of rules, which keeps the position readable at a glance.
+   *
+   * <p>It used to open expanded, and expanded it is wide enough to sit on top of the questions
+   * themselves: an officer's own message came back to them with its right-hand half behind the
+   * rail listing that same message. A rail is for getting back to something, so covering the
+   * thing it points at is the one thing it must not do. Collapsed it is a column of rules
+   * narrower than the gutter, and widening it is then the officer's decision, taken when they
+   * want to read the labels and are not reading anything else.
+   */
+  collapsed = true;
 
   get hasEntries(): boolean {
     return this.entries.length > 0;

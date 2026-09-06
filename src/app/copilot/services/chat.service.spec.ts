@@ -166,6 +166,94 @@ describe('ChatService', () => {
     );
   });
 
+  // ─── Follow-up chips ───────────────────────────────────────────────────────
+
+  /**
+   * The chips used to exist only when the model remembered to write a ```suggest``` block, so
+   * the row under an answer was there on one turn and gone on the next — which an officer
+   * reads as the panel breaking, not as the model declining to suggest anything.
+   */
+  it('offers follow-ups for the screen when the reply suggests none', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'token', token: 'Her balance is 4,200.' },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('what is her savings balance');
+
+    expect(service.messages$.value[1].suggestedPrompts).toEqual([
+      'copilot.suggestions.savingsBalance',
+      'copilot.suggestions.repaymentSchedule',
+      'copilot.suggestions.overdueLoans'
+    ]);
+  });
+
+  /** The model knows what was just discussed; a fixed list never beats that when there is one. */
+  it('prefers what the reply suggested to the fallback', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'token', token: 'Here it is.' },
+        { type: 'suggest', suggestions: ['Show the arrears'] },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('show me the schedule');
+
+    expect(service.messages$.value[1].suggestedPrompts).toEqual(['Show the arrears']);
+  });
+
+  it('prefers a fenced suggest block to the fallback', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'token', token: 'Here it is.\n\n```suggest\nShow the arrears\n```' },
+        { type: 'done' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('show me the schedule');
+
+    expect(service.messages$.value[1].suggestedPrompts).toEqual(['Show the arrears']);
+  });
+
+  /** After a failure the officer needs the retry the reply offers, not a change of subject. */
+  it('offers no follow-ups when the turn failed', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'error', errorCode: 'TOOL_FAILED', message: 'The loan service did not answer.' }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('show me the schedule');
+
+    expect(service.messages$.value[1].suggestedPrompts).toBeUndefined();
+  });
+
+  /** A paused write is a decision to take, and a row of unrelated questions under it is noise. */
+  it('offers no follow-ups while a write is awaiting approval', () => {
+    mcpMock.chat.mockReturnValue(
+      from([
+        { type: 'token', token: 'This will approve the loan.' },
+        {
+          type: 'action_card',
+          pendingAction: {
+            cardId: 'card-1',
+            tool: 'approveLoan',
+            args: {},
+            display: [],
+            humanSummary: 'Approve loan #4521'
+          }
+        }
+      ] as McpStreamEvent[])
+    );
+
+    service.sendMessage('approve loan 4521');
+
+    expect(service.messages$.value[1].suggestedPrompts).toBeUndefined();
+  });
+
   it('attaches display cards to the streaming message', () => {
     mcpMock.chat.mockReturnValue(
       from([
