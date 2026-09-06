@@ -280,7 +280,7 @@
         <span class="flex-30">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
         <span class="flex-60"
           >{{ loansAccount.interestRatePerPeriod }}&nbsp;&nbsp;{{
-            loansAccountProductTemplate.interestRateFrequencyType.value
+            loansAccountProductTemplate.interestRateFrequencyType.value | translateKey: 'catalogs'
           }}</span
         >
       </div>
@@ -422,7 +422,7 @@
           <ng-container matColumnDef="chargeCalculationType">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeCalculationType.value }}
+              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="amount">
@@ -434,7 +434,7 @@
           <ng-container matColumnDef="chargeTimeType">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeTimeType.value }}
+              {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="date">
@@ -483,7 +483,9 @@
           </ng-container>
           <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+            </td>
           </ng-container>
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
@@ -491,7 +493,7 @@
           </ng-container>
           <ng-container matColumnDef="collectedon">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
+            <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="overdueChargesDisplayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: overdueChargesDisplayedColumns"></tr>
