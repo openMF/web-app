@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ActionCard } from '../../core/models/action-card.model';
@@ -20,7 +20,8 @@ import { translateCardLabel } from '../../core/card-label';
     TranslateModule
   ],
   templateUrl: './confirmation-card.component.html',
-  styleUrls: ['./confirmation-card.component.scss']
+  styleUrls: ['./confirmation-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmationCardComponent {
   private readonly translate = inject(TranslateService);

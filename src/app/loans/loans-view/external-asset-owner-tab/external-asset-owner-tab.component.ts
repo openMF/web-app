@@ -147,7 +147,7 @@ export class ExternalAssetOwnerTabComponent extends LoanAccountTabBaseComponent 
       data: { cancelContext: `the Asset Transfer with the Owner External Id ${this.currentItem.owner.externalId} ` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.cancel) {
+      if (response?.cancel) {
         const payload: any = {
           transferExternalId: this.currentItem.transferExternalId
         };

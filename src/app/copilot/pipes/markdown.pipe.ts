@@ -8,6 +8,7 @@
 
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { renderMarkdown } from '../core/markdown';
 
 /**
@@ -20,8 +21,13 @@ import { renderMarkdown } from '../core/markdown';
 @Pipe({ name: 'markdown' })
 export class MarkdownPipe implements PipeTransform {
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly translate = inject(TranslateService);
 
-  transform(value: string | null | undefined): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(renderMarkdown(value));
+  transform(value: string | null | undefined, streaming = false): SafeHtml {
+    // The copy control inside a fenced block is built as raw markup, so it cannot reach the
+    // translate pipe. Its label is resolved here instead, where a TranslateService is at hand.
+    return this.sanitizer.bypassSecurityTrustHtml(
+      renderMarkdown(value, this.translate.instant('copilot.actions.copyCode'), streaming)
+    );
   }
 }

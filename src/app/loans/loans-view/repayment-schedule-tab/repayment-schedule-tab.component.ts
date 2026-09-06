@@ -315,7 +315,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addDialogRef.afterClosed().subscribe((response: { data?: { value?: Record<string, unknown> } }) => {
-      if (response.data) {
+      if (response?.data) {
       }
     });
   }

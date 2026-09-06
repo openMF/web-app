@@ -326,9 +326,52 @@
           </div>
         </ng-container>
 
-        <p *ngIf="i === visibleSteps.length - 1 && borrowerCycleStepInvalid" class="step-actions__blocked">
+        <!--
+          Suppressed once the summary below is up: the loan-cycle step is one of the entries it lists,
+          and two messages stacked on the same problem read as two problems. This one stays for the
+          pre-attempt case, where it is the only warning the operator gets.
+        -->
+        <p
+          *ngIf="i === visibleSteps.length - 1 && borrowerCycleStepInvalid && !showGuidedIncompleteSummary"
+          class="step-actions__blocked"
+        >
           {{ 'labels.text.Fix the loan cycle variations before creating the product' | translate }}
         </p>
+
+        <!--
+          C4: the answer to a "Create Loan Product" click that cannot go through. `role="alert"` is not
+          decoration — `markAllAsTouched()` alone reveals field messages silently and only on the step
+          in view, so a screen-reader user got no signal at all. The live region announces the whole
+          list; the buttons make each named step reachable in one click, since `[linear]="false"` means
+          the offending control is usually not on the step being looked at.
+        -->
+        <div class="submit-blocked" role="alert" *ngIf="i === visibleSteps.length - 1 && showGuidedIncompleteSummary">
+          <p class="submit-blocked__title">
+            {{ 'labels.text.Complete these steps before creating the product' | translate }}
+          </p>
+          <ul class="submit-blocked__steps" *ngIf="incompleteGuidedSteps.length">
+            <!--
+              trackBy is not optional here: `incompleteGuidedSteps` is a getter that returns fresh
+              objects on every access, so identity diffing would destroy and recreate each button on
+              every change-detection pass — dropping focus out from under a keyboard user mid-list,
+              inside the very alert added to make this flow accessible.
+            -->
+            <li *ngFor="let incompleteStep of incompleteGuidedSteps; trackBy: trackByIncompleteStepTitle">
+              <!--
+                `step.title` unpiped, matching the stepper headers exactly — the operator has to be able
+                to find the step this names. Those headers are raw English today (review finding I1,
+                wizard chrome untranslated); translating them is one wholesale change across the chrome,
+                and half-translating it here would break the match that makes the list useful.
+              -->
+              <button type="button" class="submit-blocked__step" (click)="goToStep(incompleteStep.index)">
+                {{ incompleteStep.title }}
+              </button>
+            </li>
+          </ul>
+          <p class="submit-blocked__generic" *ngIf="guidedSubmitBlockedWithoutCause">
+            {{ 'labels.text.Check the highlighted fields before creating the product' | translate }}
+          </p>
+        </div>
 
         <div class="step-actions">
           <button mat-stroked-button matStepperPrevious *ngIf="i > 0">

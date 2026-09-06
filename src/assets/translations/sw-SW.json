@@ -832,7 +832,8 @@
       "Delink Client": "Tenganisha mteja",
       "Disable Breach": "Zima Ukiukaji",
       "Enable Breach": "Washa Ukiukaji",
-      "Save": "Hifadhi"
+      "Save": "Hifadhi",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1545,6 +1546,7 @@
       "Peak Outstanding": "Salio la Juu Lililobaki",
       "Penalties to Specific Income Accounts": "Adhabu kwa Akaunti Maalum za Mapato",
       "Pending Tasks": "Kazi Zinazongoja",
+      "Onboarding Board": "Bodi ya uandikishaji",
       "Performance History": "Historia ya Utendaji",
       "Personal Information": "Taarifa za Kibinafsi",
       "Post Interest": "Chapisha Maslahi",
@@ -1786,8 +1788,8 @@
       "Politically Exposed Persons and Related Individuals": "Watu walio katika nafasi za kisiasa na watu wanaohusiana",
       "Declaration of Ultimate Beneficial Owners": "Tamko la wamiliki wanufaika wa mwisho",
       "Controlling Person / PEP Related Questions": "Mtu mwenye udhibiti / maswali yanayohusiana na PEP",
-      "Legal Entity": "Legal Entity",
-      "Natural Person": "Natural Person",
+      "Legal Entity": "Taasisi ya kisheria",
+      "Natural Person": "Mtu binafsi",
       "Legal Entity Details": "Maelezo ya taasisi ya kisheria",
       "Legal Representative": "Mwakilishi wa kisheria",
       "Authorized Representative": "Mwakilishi aliyeidhinishwa",
@@ -1795,7 +1797,8 @@
       "Personal References (2 Family Members, 1 Acquaintance)": "Marejeleo binafsi (wanafamilia 2, mtu 1 anayefahamiana nawe)",
       "Declaration of Ultimate Beneficial Owners - Legal Entities": "Tamko la wamiliki wanufaika wa mwisho - taasisi za kisheria",
       "Declaration of Ultimate Beneficial Owners - Natural Persons": "Tamko la wamiliki wanufaika wa mwisho - watu binafsi",
-      "Recovery": "Urejeshaji"
+      "Recovery": "Urejeshaji",
+      "Upload Report Design": "Pakia Muundo wa Ripoti"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -2457,6 +2460,7 @@
       "Host": "Mwenyeji",
       "Host Name": "Jina la mwenyeji",
       "Hour": "Saa",
+      "HTML": "HTML",
       "ID": "ID",
       "In arrears tolerance": "Uvumilivu wa madeni yaliyochelewa",
       "INCOME CAPITALIZATION": "MTAJI WA KIPATO",
@@ -2949,6 +2953,7 @@
       "Personal Data": "Taarifa za Kibinafsi",
       "Phone Number": "Nambari ya simu",
       "Place Guarantee Funds On-Hold": "Weka Pesa za Dhamana Kwa Muda",
+      "Plain Text": "Maandishi wazi",
       "Please enter a valid number": "Tafadhali weka namba halali",
       "Port": "Bandari",
       "Port Number": "Nambari ya bandari",
@@ -3199,6 +3204,7 @@
       "State": "Jimbo",
       "State / Province": "Jimbo / Mkoa",
       "Status": "Hali",
+      "Task": "Kazi",
       "Step Name": "Jina la Hatua",
       "Street": "Mtaa",
       "String": "Kamba",
@@ -3242,6 +3248,7 @@
       "Terms": "Masharti",
       "Terms vary based on loan cycle": "Masharti yanatofautiana kulingana na mzunguko wa mkopo",
       "Text": "Maandishi",
+      "Text Format": "Umbizo la maandishi",
       "The current password is not correct": "Nenosiri la sasa si sahihi",
       "Theme": "Mandhari",
       "Theme and Font": "Mandhari na Fonti",
@@ -3555,27 +3562,27 @@
       "Name of the Notary": "Jina la mthibitishaji",
       "Registration Date": "Tarehe ya usajili",
       "Nature of business, business activity, or corporate purpose": "Asili ya biashara, shughuli za biashara, au madhumuni ya kampuni",
-      "Borough / City / Delegation / Municipality / Locality / Town": "Borough / City / Delegation / Municipality / Locality / Town",
-      "Yes / No": "Yes / No",
-      "Affiliation": "Affiliation",
+      "Borough / City / Delegation / Municipality / Locality / Town": "Wilaya / jiji / ujumbe / manispaa / eneo / mji",
+      "Yes / No": "Ndiyo / Hapana",
+      "Affiliation": "Uhusiano wa taasisi",
       "Reporting period": "Kipindi cha kuripoti",
-      "Main Activities": "Main Activities",
-      "Period reported": "Period reported",
-      "Monthly Income Amount": "Monthly Income Amount",
-      "Monthly Expenditure Amount": "Monthly Expenditure Amount",
-      "Where do the funds to open the account come from?": "Where do the funds to open the account come from?",
-      "Allocation of resources for operations": "Allocation of resources for operations",
-      "Number of Shares": "Number of Shares",
-      "% of Shares": "% of Shares",
-      "Use: Single family residential building": "Use: Single family residential building",
-      "Spouse Full Name": "Spouse Full Name",
-      "No. of Shares": "No. of Shares",
-      "% Shares": "% Shares",
-      "Level of Control": "Level of Control",
-      "Position within the Entity": "Position within the Entity",
-      "Institution": "Institution",
-      "Level and charge": "Level and charge",
-      "Key Functions": "Key Functions",
+      "Main Activities": "Shughuli kuu",
+      "Period reported": "Kipindi kilichoripotiwa",
+      "Monthly Income Amount": "Kiasi cha mapato ya mwezi",
+      "Monthly Expenditure Amount": "Kiasi cha matumizi ya mwezi",
+      "Where do the funds to open the account come from?": "Fedha za kufungua akaunti zinatoka wapi?",
+      "Allocation of resources for operations": "Ugawaji wa rasilimali kwa shughuli",
+      "Number of Shares": "Idadi ya hisa",
+      "% of Shares": "% ya hisa",
+      "Use: Single family residential building": "Matumizi: jengo la makazi la familia moja",
+      "Spouse Full Name": "Jina kamili la mwenzi",
+      "No. of Shares": "Idadi ya hisa",
+      "% Shares": "% hisa",
+      "Level of Control": "Kiwango cha udhibiti",
+      "Position within the Entity": "Nafasi ndani ya taasisi",
+      "Institution": "Taasisi",
+      "Level and charge": "Ngazi na cheo",
+      "Key Functions": "Majukumu muhimu",
       "Home phone 1": "Home phone 1",
       "Spouse's Name": "Spouse's Name",
       "Spouse's Occupation": "Spouse's Occupation",
@@ -4008,6 +4015,8 @@
     },
     "text": {
       "Complete these steps to preview the product": "Kamilisha hatua hizi ili kuona onyesho la awali la bidhaa",
+      "Complete these steps before creating the product": "Kamilisha hatua hizi kabla ya kuunda bidhaa",
+      "Check the highlighted fields before creating the product": "Kagua sehemu zilizoangaziwa kabla ya kuunda bidhaa",
       "Agriculture Loan": "Mkopo wa Kilimo",
       "Auto Loan": "Mkopo wa Gari",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Ufadhili wa ununuzi wa magari mapya au yaliyotumika kwa malipo ya kila mwezi yaliyopangwa katika muda uliochaguliwa.",
@@ -4966,15 +4975,15 @@
       "Additional Filters": "Vichujio vya ziada",
       "No additional filters": "Hakuna vichujio vya ziada",
       "Global Financial Dashboard": "Dashibodi ya Kifedha ya Kimataifa",
-      "Entity PEP Related Intro": "Please indicate whether any of the shareholders or authorized representatives of the legal entity meet any of the following conditions:",
-      "Entity PEP Related Question 1": "Does the legal representative or any of the partners or shareholders of the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office in Mexico or abroad?",
-      "Entity PEP Related Question 2": "Does the spouse, or any relative by blood or affinity up to the second degree, of the Legal Representative or of any partner or shareholder of the legal entity currently hold—or did they hold during the immediately preceding year—any prominent public office at the federal, state, municipal, or district level in Mexico or in any foreign country?",
-      "Entity Resource Provider Question 1": "Do you declare, under penalty of perjury, that the transactions you intend to carry out with INSTITUTION NAME are being conducted on your own behalf and that said transactions are not being executed for the account or on behalf of a third party, whether an individual or a legal entity?",
-      "Entity Ultimate Beneficial Owner Interview Text": "Interview for Ultimate Beneficial Owners: collect the information of individuals or legal entities that directly or indirectly own or control the legal entity.",
-      "Entity Resource Provider Question 2": "Will any third party regularly contribute funds to the account opened with the Entity—or towards the fulfillment of obligations arising from the contract established with it—without being the holder of said contract or receiving the economic benefits derived therefrom?",
-      "Entity Resource Provider Interview Text": "Interview for Resource Providers: collect the information of third parties who regularly contribute resources to the account or contract.",
-      "Entity Controlling Person PEP Question 1": "Do any of the partners or shareholders identified by the legal representative as individuals exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, any prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
-      "Entity Controlling Person PEP Question 2": "Does the spouse—or any relative by blood or affinity up to the second degree—of any of the partners or shareholders identified by the legal representative as the natural persons exercising control over the legal entity currently hold, or did they hold during the immediately preceding year, a prominent public office at the federal, state, or municipal level in Mexico or in a foreign country?",
+      "Entity PEP Related Intro": "Tafadhali onyesha kama yeyote kati ya wanahisa au wawakilishi walioidhinishwa wa taasisi ya kisheria anakidhi mojawapo ya masharti yafuatayo:",
+      "Entity PEP Related Question 1": "Je, mwakilishi wa kisheria au yeyote kati ya washirika au wanahisa wa taasisi ya kisheria kwa sasa anashikilia, au alishikilia katika mwaka uliotangulia mara moja, wadhifa muhimu wa umma nchini Meksiko au nje ya nchi?",
+      "Entity PEP Related Question 2": "Je, mwenzi, au jamaa wa damu au kindugu hadi daraja la pili, wa mwakilishi wa kisheria au mshirika au mwanahisa yeyote wa taasisi ya kisheria kwa sasa anashikilia, au alishikilia katika mwaka uliotangulia mara moja, wadhifa muhimu wa umma katika ngazi ya shirikisho, jimbo, manispaa au wilaya nchini Meksiko au katika nchi yoyote ya kigeni?",
+      "Entity Resource Provider Question 1": "Je, unatamka, chini ya adhabu ya kutoa ushahidi wa uongo, kwamba miamala unayokusudia kufanya na JINA LA TAASISI inafanywa kwa niaba yako mwenyewe na haitafanywa kwa akaunti au kwa niaba ya mtu wa tatu, awe mtu binafsi au taasisi ya kisheria?",
+      "Entity Ultimate Beneficial Owner Interview Text": "Mahojiano kwa wamiliki wanufaika wa mwisho: kusanya taarifa za watu binafsi au taasisi za kisheria zinazomiliki au kudhibiti moja kwa moja au kwa njia isiyo ya moja kwa moja taasisi ya kisheria.",
+      "Entity Resource Provider Question 2": "Je, mtu wa tatu atachangia fedha mara kwa mara kwenye akaunti iliyofunguliwa na taasisi, au katika kutimiza wajibu unaotokana na mkataba ulioanzishwa nayo, bila kuwa mmiliki wa mkataba huo au kupokea manufaa ya kiuchumi yanayotokana nao?",
+      "Entity Resource Provider Interview Text": "Mahojiano kwa watoa rasilimali: kusanya taarifa za watu wa tatu wanaochangia rasilimali mara kwa mara kwenye akaunti au mkataba.",
+      "Entity Controlling Person PEP Question 1": "Je, yeyote kati ya washirika au wanahisa waliotambuliwa na mwakilishi wa kisheria kama watu binafsi wanaodhibiti taasisi ya kisheria kwa sasa anashikilia, au alishikilia katika mwaka uliotangulia mara moja, wadhifa muhimu wa umma katika ngazi ya shirikisho, jimbo au manispaa nchini Meksiko au katika nchi ya kigeni?",
+      "Entity Controlling Person PEP Question 2": "Je, mwenzi, au jamaa wa damu au kindugu hadi daraja la pili, wa yeyote kati ya washirika au wanahisa waliotambuliwa na mwakilishi wa kisheria kama watu binafsi wanaodhibiti taasisi ya kisheria kwa sasa anashikilia, au alishikilia katika mwaka uliotangulia mara moja, wadhifa muhimu wa umma katika ngazi ya shirikisho, jimbo au manispaa nchini Meksiko au katika nchi ya kigeni?",
       "Person PEP PLD Question 1": "Je, kwa sasa unashikilia au ulishikilia katika mwaka uliotangulia nafasi muhimu ya umma (1) nchini Meksiko au nje ya nchi?",
       "Person PEP PLD Question 2": "Je, una uhusiano wa kifamilia (2) na mtu anayeshikilia nafasi hii?",
       "Person PEP PLD Question 3": "Je, una uhusiano wa kifamilia (2) na mwanahisa, mfanyakazi au afisa wa taasisi?",
@@ -4982,7 +4991,14 @@
       "the": "vipengee",
       "items selected of": "vilivyochaguliwa vya",
       "Recovery Completed": "Urejeshaji umekamilika",
-      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee."
+      "Recovery Payment Description": "Husajili fedha zilizokusanywa baada ya kufuta deni. Mkopo unabaki umefungwa na salio lake linabaki sifuri; kinachobadilika ni jumla iliyorejeshwa pekee.",
+      "Upload a BIRT report design": "Chagua muundo wa ripoti wa Eclipse BIRT (.rptdesign) wa kusakinisha kwa mpangaji huyu. Muundo wenye jina lilelile utabadilishwa.",
+      "Only Eclipse BIRT report designs can be uploaded": "Ni miundo ya ripoti ya Eclipse BIRT (.rptdesign) pekee inayoweza kupakiwa.",
+      "The selected report design is empty": "Muundo wa ripoti uliochaguliwa hauna maudhui.",
+      "The selected report design is too large": "Muundo wa ripoti uliochaguliwa unazidi 5 MB.",
+      "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
+      "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
+      "KB": "KB"
     },
     "permissions": {
       "actions": {
@@ -5555,6 +5571,8 @@
     "Specific days before when repayment": "Siku mahususi kabla ya wakati arifa ya malipo inapaswa kutumwa.",
     "Specific days when after the repayment Overdue": "Siku mahususi ambapo baada ya ulipaji Arifa ya Kuchelewa inapaswa kutumwa.",
     "Successful": "Imefanikiwa",
+    "Switch to dark theme": "Badili hadi mandhari meusi",
+    "Switch to light theme": "Badili hadi mandhari angavu",
     "The Amortization value": "Thamani ya Ulipaji Madeni inaingizwa katika kukokotoa kiasi cha ulipaji kwa ajili ya ulipaji wa mkopo.",
     "The Interest method value": "Thamani ya njia ya riba inaingizwa katika kukokotoa kiasi cha malipo kwa ajili ya ulipaji wa mkopo.",
     "The currency in which the deposit will be disbursed": "Sarafu ambayo amana itatolewa.",
@@ -5801,6 +5819,16 @@
     }
   },
   "copilot": {
+    "showEarlier": "Show {{count}} earlier messages",
+    "a11y": {
+      "replyReady": "Reply ready",
+      "working": "Working on your question"
+    },
+    "promptNav": {
+      "label": "Questions in this chat",
+      "expand": "Show the questions",
+      "collapse": "Hide the questions"
+    },
     "brand": "Mifos X Copilot",
     "currentSession": "Kipindi cha sasa",
     "newChat": "Mazungumzo mapya",
@@ -5851,6 +5879,10 @@
       "aboutStorage": "Mazungumzo yako hubaki kwenye kivinjari hiki na hayahifadhiwi kamwe kwenye seva ya msaidizi."
     },
     "recent": {
+      "noMatchSubtitle": "Nothing saved matches \"{{query}}\".",
+      "noMatchTitle": "No chats found",
+      "searchClear": "Clear search",
+      "searchPlaceholder": "Search chats",
       "emptyTitle": "Hakuna mazungumzo ya hivi karibuni",
       "emptySubtitle": "Historia yako ya mazungumzo itaonekana hapa",
       "messages": "ujumbe",
@@ -5882,8 +5914,13 @@
     },
     "confirmWarning": "Hii inahamisha pesa halisi. Kagua maelezo, kisha thibitisha.",
     "openAssistant": "Fungua Mifos X Copilot",
+    "launcher": {
+      "working": "Mifos X Copilot inashughulikia ombi lako. Fungua Copilot.",
+      "replying": "Mifos X Copilot inajibu. Fungua Copilot."
+    },
     "newChatTitle": "Mazungumzo mapya",
     "errors": {
+      "timedOut": "The assistant took too long to respond. Please try again.",
       "invalidLength": "Ujumbe ni tupu au mrefu sana. Tafadhali ufupishe na ujaribu tena.",
       "injectionBlocked": "Ujumbe unaonekana kama jaribio la kukiuka maelekezo, hivyo haukutumwa. Tafadhali uandike upya.",
       "streamFailed": "Imeshindwa kufikia Mifos X Copilot. Tafadhali jaribu tena."
@@ -5955,11 +5992,27 @@
       }
     },
     "trail": {
+      "notesTook": "({{seconds}})",
+      "wrote": "changed",
+      "thoughtFor": "Thought for {{seconds}}",
+      "live": {
+        "reading": "Reading your question",
+        "thinking": "Thinking"
+      },
+      "steps": {
+        "loanDetails": "Reading the loan account",
+        "clientSearch": "Searching the client register",
+        "clientDetails": "Reading the client profile",
+        "repaymentSchedule": "Checking the repayment schedule",
+        "savingsBalance": "Reading the savings balance",
+        "loanApprove": "Approving the loan"
+      },
       "stepsNote": "Haya ni makumbukumbu ambayo msaidizi alisoma. Msingi wa uamuzi wowote kuhusu mteja huyu uko katika Fineract: kanuni za bidhaa ya mkopo, ratiba ya marejesho, na sera ya mikopo ya taasisi yako.",
       "thinking": "Kufikiri",
       "notesCaution": "Maandishi ya kazi ya msaidizi mwenyewe. Si kumbukumbu ya jinsi jibu lilivyopatikana, wala si tathmini ya mkopo. Hakiki kila takwimu dhidi ya kumbukumbu ya mteja."
     },
     "actions": {
+      "copyCode": "Copy code",
       "tryAgain": "Jaribu tena",
       "groupLabel": "Vitendo vya jibu",
       "copy": "Nakili",
@@ -5967,7 +6020,12 @@
       "repeat": "Uliza tena",
       "goodAnswer": "Jibu zuri",
       "poorAnswer": "Jibu duni",
-      "exportPdf": "Hamisha kwa PDF",
+      "export": {
+        "label": "Hamisha",
+        "pdf": "Hati ya PDF",
+        "csv": "Lahajedwali la CSV",
+        "png": "Picha ya PNG"
+      },
       "share": "Shiriki"
     },
     "export": {
@@ -5978,8 +6036,10 @@
       "disclaimer": "Limetayarishwa na Mifos Copilot kutoka kumbukumbu za Fineract. Linganisha na kumbukumbu asili kabla ya kuchukua hatua.",
       "shareTitle": "Jibu la Mifos Copilot",
       "copiedToClipboard": "Jibu na kiungo vimenakiliwa",
-      "failed": "PDF haikuweza kutengenezwa. Tafadhali jaribu tena.",
-      "fileNameFallback": "copilot"
+      "failed": "Faili haikuweza kutengenezwa. Tafadhali jaribu tena.",
+      "fileNameFallback": "copilot",
+      "cardField": "Sehemu",
+      "cardValue": "Thamani"
     }
   }
 }

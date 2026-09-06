@@ -227,7 +227,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
       data: { deleteContext: `interest pause from ${variation.startDate} to ${variation.endDate}` }
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
           this.reload();
         });
@@ -262,7 +262,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         if (response.data.value.startDate <= response.data.value.endDate) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;

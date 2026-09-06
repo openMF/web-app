@@ -124,7 +124,7 @@ export class StandingInstructionsTabComponent implements OnInit {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
       }
     });

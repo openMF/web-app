@@ -265,7 +265,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
@@ -297,7 +297,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       }
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.loansService
           .executeLoansAccountChargesCommand(
             this.loanProductService.loanAccountPath,
@@ -328,7 +328,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         this.loansService
@@ -348,7 +348,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       data: { deleteContext: `charge id:${chargeId}` }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService
           .deleteLoansAccountCharge(this.loanProductService.loanAccountPath, this.loanDetails.id, chargeId)
           .subscribe(() => this.reload());

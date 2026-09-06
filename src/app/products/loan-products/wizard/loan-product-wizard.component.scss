@@ -294,10 +294,59 @@ mat-checkbox {
   display: none;
 }
 
+// Same duplicate, same remedy, for the reused Classic Accounting step: its own trailing nav row
+// carries `layout-row` + `margin-t` too (`loan-product-accounting-step.component.html`), but the
+// Charges rule above is scoped to `.wizard-charges` and never reaches it. Renders in BOTH guided and
+// Custom/Advanced mode, since `.wizard-accounting` wraps the step regardless of profile.
+.wizard-accounting ::ng-deep .layout-row.margin-t {
+  display: none;
+}
+
 .step-actions__blocked {
   margin: 0 0 0.75rem;
   color: var(--mat-sys-error, #b3261e);
   font-size: 0.875rem;
+}
+
+// Guided mode's answer to a blocked "Create Loan Product" click: the steps that still hold something
+// invalid, each a button that jumps to it. Deliberately error-toned rather than the dashed neutral of
+// `.review-pending` below — that block explains a summary that is merely not ready yet, this one
+// explains a button the operator just pressed and that refused.
+.submit-blocked {
+  padding: var(--lp-space-16) var(--lp-space-24);
+  margin-bottom: var(--lp-space-16);
+  border: 1px solid var(--mat-sys-error, #b3261e);
+  border-radius: var(--lp-radius);
+
+  &__title {
+    margin: 0 0 var(--lp-space-8);
+    font-weight: 600;
+    color: var(--mat-sys-error, #b3261e);
+  }
+
+  &__steps {
+    margin: 0;
+    padding-left: var(--lp-space-24);
+    color: var(--lp-text);
+  }
+
+  // A link in a list, not a control in a toolbar: it names a step and takes you there. Underlined
+  // rather than coloured alone, so it does not rely on colour to read as actionable.
+  &__step {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__generic {
+    margin: 0;
+    color: var(--lp-text);
+  }
 }
 
 // Shown on the Review step while the hosted Classic steps are still incomplete, in place of the

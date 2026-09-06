@@ -284,7 +284,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       };
       const undoTransactionAccountDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
       undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-        if (response.data) {
+        if (response?.data) {
           const payload = {
             note: response.data.value.note,
             reversalExternalId: response.data.value.reversalExternalId
@@ -313,7 +313,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         }
       });
       undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-        if (response.confirm) {
+        if (response?.confirm) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;
           const data = this.loanProductService.isLoanProduct
@@ -403,7 +403,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     };
     const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
     chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
-      if (response.data) {
+      if (response?.data) {
         if (response.data.value.amount <= this.amountRelationsAllowed) {
           const locale = this.settingsService.language.code;
           const payload = {

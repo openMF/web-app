@@ -132,7 +132,7 @@ export class AddressTabComponent {
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(addAddressDialogRef);
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         this.clientService
           .createClientAddress(this.clientId, normalizedAddressData.addressType, normalizedAddressData)
@@ -169,7 +169,7 @@ export class AddressTabComponent {
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(editAddressDialogRef);
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.addressId = address.addressId;
         normalizedAddressData.isActive = address.isActive;

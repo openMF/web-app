@@ -500,7 +500,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         let transactionId = transaction.id;
         if (command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
           transactionId = null;
@@ -579,7 +579,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
         this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
           this.reload();
@@ -796,7 +796,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
-            if (response.data) {
+            if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
               if (response.data.value.amount <= transactionAmount) {
@@ -877,7 +877,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
-            if (response.data) {
+            if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
               if (response.data.value.amount <= transactionAmount) {

@@ -97,7 +97,7 @@ export class ClientAddressStepComponent {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = false;
         for (const key in normalizedAddressData) {
@@ -128,7 +128,7 @@ export class ClientAddressStepComponent {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = address.isActive;
         for (const key in normalizedAddressData) {
@@ -152,7 +152,7 @@ export class ClientAddressStepComponent {
       }
     });
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientAddressData.splice(index, 1);
       }
     });

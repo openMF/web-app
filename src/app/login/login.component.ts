@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 /**
  * Interface for version information.
@@ -26,6 +26,7 @@ export interface VersionInfo {
 import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { AlertService } from '../core/alert/alert.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -83,9 +84,11 @@ export class LoginComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  private authenticationService = inject(AuthenticationService);
 
   public environment = environment;
 
@@ -113,6 +116,12 @@ export class LoginComponent implements OnInit {
    * Subscribes to alert event of alert service and theme changes.
    */
   ngOnInit() {
+    if (this.authenticationService.isAuthenticated()) {
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+      this.router.navigateByUrl(returnUrl, { replaceUrl: true });
+      return;
+    }
+
     this.showTenantSelector = this.calculateTenantSelectorVisibility();
     this.updateLogo();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
@@ -136,7 +145,8 @@ export class LoginComponent implements OnInit {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+        this.router.navigateByUrl(returnUrl, { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }

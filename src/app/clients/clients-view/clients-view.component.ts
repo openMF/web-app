@@ -414,7 +414,7 @@ export class ClientsViewComponent implements OnInit {
       data: { deleteContext: `the profile image of ${this.clientViewData.displayName}` }
     });
     deleteClientImageDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientsService.deleteClientProfileImage(this.clientViewData.id).subscribe(() => {
           this.reload();
         });
