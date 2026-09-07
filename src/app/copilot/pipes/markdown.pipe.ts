@@ -23,11 +23,33 @@ export class MarkdownPipe implements PipeTransform {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly translate = inject(TranslateService);
 
+  /**
+   * The last markup produced, and the trusted wrapper handed out for it.
+   *
+   * <p>One pair per pipe instance, and Angular builds one instance per binding, so this is
+   * per message rather than shared between them.
+   */
+  private lastHtml: string | null = null;
+  private lastSafe: SafeHtml | null = null;
+
   transform(value: string | null | undefined, streaming = false): SafeHtml {
     // The copy control inside a fenced block is built as raw markup, so it cannot reach the
     // translate pipe. Its label is resolved here instead, where a TranslateService is at hand.
-    return this.sanitizer.bypassSecurityTrustHtml(
-      renderMarkdown(value, this.translate.instant('copilot.actions.copyCode'), streaming)
-    );
+    const html = renderMarkdown(value, this.translate.instant('copilot.actions.copyCode'), streaming);
+
+    // Hand back the SAME wrapper when the markup has not changed, because [innerHTML] compares
+    // by reference and bypassSecurityTrustHtml mints a new object every call. A token that
+    // changes nothing on screen — every token of a ```suggest``` block, which is stripped as it
+    // arrives — otherwise rewrites the bubble anyway, and rewriting it rebuilds the element
+    // carrying the newest-word fade. That restarted the animation on whatever word happened to
+    // be last, so the tail of the answer blinked for as long as the stripped block took to
+    // stream. Comparing the markup covers the language and the streaming flag too, since both
+    // are already baked into it.
+    if (html === this.lastHtml && this.lastSafe !== null) {
+      return this.lastSafe;
+    }
+    this.lastHtml = html;
+    this.lastSafe = this.sanitizer.bypassSecurityTrustHtml(html);
+    return this.lastSafe;
   }
 }
