@@ -22,22 +22,34 @@ import { Observable } from 'rxjs';
 export class TasksService {
   private http = inject(HttpClient);
 
+  private buildHttpParams(paramsData?: any): HttpParams {
+    let httpParams = new HttpParams();
+    if (paramsData) {
+      const propNames = Object.getOwnPropertyNames(paramsData);
+      for (let i = 0; i < propNames.length; i++) {
+        const propName = propNames[i];
+        if (!(paramsData[propName] === '' || paramsData[propName] === undefined || paramsData[propName] === null)) {
+          httpParams = httpParams.set(propName, paramsData[propName]);
+        }
+      }
+    }
+    return httpParams;
+  }
+
   /**
    * Get Maker Checker Data
    * @param {searchData} SearchData search the maker checker data.
    */
   getMakerCheckerData(searchData?: any): Observable<any> {
-    let httpParams = new HttpParams();
-    if (searchData) {
-      const propNames = Object.getOwnPropertyNames(searchData);
-      for (let i = 0; i < propNames.length; i++) {
-        const propName = propNames[i];
-        if (!(searchData[propName] === '' || searchData[propName] === undefined || searchData[propName] === null)) {
-          httpParams = httpParams.set(propName, searchData[propName]);
-        }
-      }
-    }
-    return this.http.get('/makercheckers', { params: httpParams });
+    return this.http.get('/makercheckers', { params: this.buildHttpParams(searchData) });
+  }
+
+  /**
+   * Get Credit Applications Data.
+   * @param {any} searchData Credit applications search and paging parameters.
+   */
+  getCreditApplications(searchData?: any): Observable<any> {
+    return this.http.get('/v2/credit-applications', { params: this.buildHttpParams(searchData) });
   }
 
   /**

@@ -3772,7 +3772,17 @@
       "Age of the business": "Alter des Unternehmens",
       "Written Off Amount": "Abgeschriebener Betrag",
       "Total Recovered": "Gesamtbetrag der Einbringung",
-      "Pending Recovery": "Ausstehender Betrag der Einbringung"
+      "Pending Recovery": "Ausstehender Betrag der Einbringung",
+      "Application / Account No.": "Antrag / Kontonr.",
+      "Requests": "Anfragen",
+      "Customer": "Kunde",
+      "Customer Type": "Kundentyp",
+      "Minimum Amount": "Mindestbetrag",
+      "Maximum Amount": "Höchstbetrag",
+      "State / Municipality": "Bundesland / Gemeinde",
+      "Submitted and pending approval": "Eingereicht und wartet auf Genehmigung",
+      "Rejected": "Abgelehnt",
+      "Withdrawn by applicant": "Vom Antragsteller zurückgezogen"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5010,6 +5020,13 @@
       "Report design uploaded": "Berichtsdesign {{fileName}} wurde hochgeladen.",
       "Report design replaced": "Berichtsdesign {{fileName}} wurde ersetzt.",
       "KB": "KB",
+      "No credit applications found": "Keine Kreditanträge gefunden.",
+      "Loading credit applications": "Kreditanträge werden geladen.",
+      "Unable to load credit applications": "Kreditanträge konnten nicht geladen werden.",
+      "From Date cannot be after To Date": "Das Von-Datum darf nicht nach dem Bis-Datum liegen.",
+      "Amounts cannot be negative": "Beträge dürfen nicht negativ sein.",
+      "Minimum Amount cannot be greater than Maximum Amount": "Der Mindestbetrag darf nicht größer als der Höchstbetrag sein.",
+      "Currency is required when filtering by amount": "Beim Filtern nach Betrag ist eine Währung erforderlich.",
       "max 4 chars": "max. 4 Zeichen"
     },
     "permissions": {
