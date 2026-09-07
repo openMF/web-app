@@ -3769,7 +3769,17 @@
       "Age of the business": "Verslo amžius",
       "Written Off Amount": "Nurašyta suma",
       "Total Recovered": "Iš viso susigrąžinta",
-      "Pending Recovery": "Liko susigrąžinti"
+      "Pending Recovery": "Liko susigrąžinti",
+      "Application / Account No.": "Paraiška / sąskaitos nr.",
+      "Requests": "Užklausos",
+      "Customer": "Klientas",
+      "Customer Type": "Kliento tipas",
+      "Minimum Amount": "Minimali suma",
+      "Maximum Amount": "Maksimali suma",
+      "State / Municipality": "Apskritis / savivaldybė",
+      "Submitted and pending approval": "Pateikta ir laukiama patvirtinimo",
+      "Rejected": "Atmesta",
+      "Withdrawn by applicant": "Atsiėmė pareiškėjas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -5009,6 +5019,13 @@
       "Report design uploaded": "Ataskaitos maketas {{fileName}} įkeltas.",
       "Report design replaced": "Ataskaitos maketas {{fileName}} pakeistas.",
       "KB": "KB",
+      "No credit applications found": "Kredito paraiškų nerasta.",
+      "Loading credit applications": "Įkeliamos kredito paraiškos.",
+      "Unable to load credit applications": "Nepavyko įkelti kredito paraiškų.",
+      "From Date cannot be after To Date": "Data nuo negali būti vėlesnė nei data iki.",
+      "Amounts cannot be negative": "Sumos negali būti neigiamos.",
+      "Minimum Amount cannot be greater than Maximum Amount": "Minimali suma negali būti didesnė už maksimalią sumą.",
+      "Currency is required when filtering by amount": "Filtruojant pagal sumą būtina nurodyti valiutą.",
       "max 4 chars": "daugiausia 4 simboliai"
     },
     "permissions": {
@@ -5926,8 +5943,8 @@
     "confirmWarning": "Čia juda tikri pinigai. Patikrinkite duomenis ir patvirtinkite.",
     "openAssistant": "Atidaryti Mifos X Copilot",
     "launcher": {
-      "working": "\u201eMifos X Copilot\u201c vykdo j\u016bs\u0173 u\u017eklaus\u0105. Atverti \u201eCopilot\u201c.",
-      "replying": "\u201eMifos X Copilot\u201c atsako. Atverti \u201eCopilot\u201c."
+      "working": "„Mifos X Copilot“ vykdo jūsų užklausą. Atverti „Copilot“.",
+      "replying": "„Mifos X Copilot“ atsako. Atverti „Copilot“."
     },
     "newChatTitle": "Naujas pokalbis",
     "errors": {
@@ -6024,18 +6041,18 @@
     },
     "actions": {
       "copyCode": "Copy code",
-      "tryAgain": "Bandyti dar kart\u0105",
+      "tryAgain": "Bandyti dar kartą",
       "groupLabel": "Atsakymo veiksmai",
       "copy": "Kopijuoti",
       "copied": "Nukopijuota",
-      "repeat": "Klausti dar kart\u0105",
+      "repeat": "Klausti dar kartą",
       "goodAnswer": "Geras atsakymas",
       "poorAnswer": "Prastas atsakymas",
       "export": {
         "label": "Eksportuoti",
         "pdf": "PDF dokumentas",
-        "csv": "CSV skai\u010diuokl\u0117",
-        "png": "PNG paveiksl\u0117lis"
+        "csv": "CSV skaičiuoklė",
+        "png": "PNG paveikslėlis"
       },
       "share": "Bendrinti"
     },
@@ -6043,14 +6060,14 @@
       "heading": "Mifos Copilot atsakymas",
       "question": "Klausimas",
       "client": "Klientas",
-      "askedBy": "Klaus\u0117",
-      "disclaimer": "Pareng\u0117 Mifos Copilot pagal Fineract \u012fra\u0161us. Prie\u0161 imdamiesi veiksm\u0173 palyginkite su pirminiu \u012fra\u0161u.",
+      "askedBy": "Klausė",
+      "disclaimer": "Parengė Mifos Copilot pagal Fineract įrašus. Prieš imdamiesi veiksmų palyginkite su pirminiu įrašu.",
       "shareTitle": "Mifos Copilot atsakymas",
-      "copiedToClipboard": "Atsakymas ir nuoroda nukopijuoti \u012f i\u0161karpin\u0119",
-      "failed": "Nepavyko sukurti failo. Bandykite dar kart\u0105.",
+      "copiedToClipboard": "Atsakymas ir nuoroda nukopijuoti į iškarpinę",
+      "failed": "Nepavyko sukurti failo. Bandykite dar kartą.",
       "fileNameFallback": "copilot",
       "cardField": "Laukas",
-      "cardValue": "Reik\u0161m\u0117"
+      "cardValue": "Reikšmė"
     }
   }
 }

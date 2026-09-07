@@ -3770,7 +3770,17 @@
       "Age of the business": "Anzianità dell’attività",
       "Written Off Amount": "Importo stralciato",
       "Total Recovered": "Totale recuperato",
-      "Pending Recovery": "Da recuperare"
+      "Pending Recovery": "Da recuperare",
+      "Application / Account No.": "Domanda / n. conto",
+      "Requests": "Richieste",
+      "Customer": "Cliente",
+      "Customer Type": "Tipo cliente",
+      "Minimum Amount": "Importo minimo",
+      "Maximum Amount": "Importo massimo",
+      "State / Municipality": "Regione / comune",
+      "Submitted and pending approval": "Inviata e in attesa di approvazione",
+      "Rejected": "Rifiutata",
+      "Withdrawn by applicant": "Ritirata dal richiedente"
     },
     "links": {
       "Community": "Comunità",
@@ -5009,6 +5019,13 @@
       "Report design uploaded": "Il modello di rapporto {{fileName}} è stato caricato.",
       "Report design replaced": "Il modello di rapporto {{fileName}} è stato sostituito.",
       "KB": "KB",
+      "No credit applications found": "Nessuna richiesta di credito trovata.",
+      "Loading credit applications": "Caricamento delle richieste di credito.",
+      "Unable to load credit applications": "Impossibile caricare le richieste di credito.",
+      "From Date cannot be after To Date": "La data di inizio non può essere successiva alla data di fine.",
+      "Amounts cannot be negative": "Gli importi non possono essere negativi.",
+      "Minimum Amount cannot be greater than Maximum Amount": "L’importo minimo non può essere maggiore dell’importo massimo.",
+      "Currency is required when filtering by amount": "La valuta è obbligatoria quando si filtra per importo.",
       "max 4 chars": "max 4 caratteri"
     },
     "permissions": {
@@ -6047,7 +6064,7 @@
       "disclaimer": "Prodotto da Mifos Copilot a partire dai dati Fineract. Verificare sul record di origine prima di agire.",
       "shareTitle": "Risposta di Mifos Copilot",
       "copiedToClipboard": "Risposta e link copiati negli appunti",
-      "failed": "Non \u00e8 stato possibile creare il file. Riprovare.",
+      "failed": "Non è stato possibile creare il file. Riprovare.",
       "fileNameFallback": "copilot",
       "cardField": "Campo",
       "cardValue": "Valore"
