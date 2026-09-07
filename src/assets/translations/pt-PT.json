@@ -3769,7 +3769,17 @@
       "Age of the business": "Antiguidade do negócio",
       "Written Off Amount": "Montante abatido",
       "Total Recovered": "Total recuperado",
-      "Pending Recovery": "Por recuperar"
+      "Pending Recovery": "Por recuperar",
+      "Application / Account No.": "Pedido / n.º de conta",
+      "Requests": "Pedidos",
+      "Customer": "Cliente",
+      "Customer Type": "Tipo de cliente",
+      "Minimum Amount": "Montante mínimo",
+      "Maximum Amount": "Montante máximo",
+      "State / Municipality": "Distrito / município",
+      "Submitted and pending approval": "Submetido e pendente de aprovação",
+      "Rejected": "Rejeitado",
+      "Withdrawn by applicant": "Retirado pelo requerente"
     },
     "links": {
       "Community": "Comunidade",
@@ -5008,6 +5018,13 @@
       "Report design uploaded": "O modelo de relatório {{fileName}} foi carregado.",
       "Report design replaced": "O modelo de relatório {{fileName}} foi substituído.",
       "KB": "KB",
+      "No credit applications found": "Não foram encontrados pedidos de crédito.",
+      "Loading credit applications": "A carregar pedidos de crédito.",
+      "Unable to load credit applications": "Não foi possível carregar os pedidos de crédito.",
+      "From Date cannot be after To Date": "A data inicial não pode ser posterior à data final.",
+      "Amounts cannot be negative": "Os montantes não podem ser negativos.",
+      "Minimum Amount cannot be greater than Maximum Amount": "O montante mínimo não pode ser superior ao montante máximo.",
+      "Currency is required when filtering by amount": "A moeda é obrigatória ao filtrar por montante.",
       "max 4 chars": "máx. 4 caracteres"
     },
     "permissions": {
@@ -5925,8 +5942,8 @@
     "confirmWarning": "Isto movimenta dinheiro real. Verifique os dados e depois confirme.",
     "openAssistant": "Abrir o Mifos X Copilot",
     "launcher": {
-      "working": "O Mifos X Copilot est\u00e1 a processar o seu pedido. Abrir Copilot.",
-      "replying": "O Mifos X Copilot est\u00e1 a responder. Abrir Copilot."
+      "working": "O Mifos X Copilot está a processar o seu pedido. Abrir Copilot.",
+      "replying": "O Mifos X Copilot está a responder. Abrir Copilot."
     },
     "newChatTitle": "Nova conversa",
     "errors": {
@@ -6024,7 +6041,7 @@
     "actions": {
       "copyCode": "Copy code",
       "tryAgain": "Tentar novamente",
-      "groupLabel": "A\u00e7\u00f5es da resposta",
+      "groupLabel": "Ações da resposta",
       "copy": "Copiar",
       "copied": "Copiado",
       "repeat": "Perguntar novamente",
@@ -6033,7 +6050,7 @@
       "export": {
         "label": "Exportar",
         "pdf": "Documento PDF",
-        "csv": "Folha de c\u00e1lculo CSV",
+        "csv": "Folha de cálculo CSV",
         "png": "Imagem PNG"
       },
       "share": "Partilhar"
@@ -6045,8 +6062,8 @@
       "askedBy": "Perguntado por",
       "disclaimer": "Produzido pelo Mifos Copilot a partir de registos do Fineract. Confirme com o registo de origem antes de agir.",
       "shareTitle": "Resposta do Mifos Copilot",
-      "copiedToClipboard": "Resposta e liga\u00e7\u00e3o copiadas para a \u00e1rea de transfer\u00eancia",
-      "failed": "N\u00e3o foi poss\u00edvel criar o ficheiro. Tente novamente.",
+      "copiedToClipboard": "Resposta e ligação copiadas para a área de transferência",
+      "failed": "Não foi possível criar o ficheiro. Tente novamente.",
       "fileNameFallback": "copilot",
       "cardField": "Campo",
       "cardValue": "Valor"

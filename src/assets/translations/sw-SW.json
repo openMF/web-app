@@ -3767,7 +3767,17 @@
       "Age of the business": "Umri wa biashara",
       "Written Off Amount": "Kiasi kilichofutwa",
       "Total Recovered": "Jumla iliyorejeshwa",
-      "Pending Recovery": "Kinachosalia kurejeshwa"
+      "Pending Recovery": "Kinachosalia kurejeshwa",
+      "Application / Account No.": "Ombi / namba ya akaunti",
+      "Requests": "Maombi",
+      "Customer": "Mteja",
+      "Customer Type": "Aina ya mteja",
+      "Minimum Amount": "Kiasi cha chini",
+      "Maximum Amount": "Kiasi cha juu",
+      "State / Municipality": "Jimbo / manispaa",
+      "Submitted and pending approval": "Imewasilishwa na inasubiri idhini",
+      "Rejected": "Imekataliwa",
+      "Withdrawn by applicant": "Imeondolewa na mwombaji"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5005,6 +5015,13 @@
       "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
       "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
       "KB": "KB",
+      "No credit applications found": "Hakuna maombi ya mkopo yaliyopatikana.",
+      "Loading credit applications": "Inapakia maombi ya mkopo.",
+      "Unable to load credit applications": "Imeshindwa kupakia maombi ya mkopo.",
+      "From Date cannot be after To Date": "Tarehe ya kuanzia haiwezi kuwa baada ya tarehe ya mwisho.",
+      "Amounts cannot be negative": "Kiasi hakiwezi kuwa hasi.",
+      "Minimum Amount cannot be greater than Maximum Amount": "Kiasi cha chini hakiwezi kuzidi kiasi cha juu.",
+      "Currency is required when filtering by amount": "Sarafu inahitajika unapochuja kwa kiasi.",
       "max 4 chars": "herufi 4 kwa juu"
     },
     "permissions": {

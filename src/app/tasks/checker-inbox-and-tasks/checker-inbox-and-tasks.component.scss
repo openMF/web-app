@@ -21,3 +21,25 @@
 mat-divider {
   margin-bottom: 16px;
 }
+
+:host ::ng-deep .navigation-tabs {
+  .mat-mdc-tab-header-pagination {
+    display: none;
+  }
+
+  .mat-mdc-tab-link-container {
+    overflow: visible;
+  }
+
+  .mat-mdc-tab-list {
+    transform: none !important;
+  }
+
+  .mat-mdc-tab-links {
+    flex-wrap: wrap;
+  }
+
+  .mat-mdc-tab-link {
+    flex-grow: 0;
+  }
+}

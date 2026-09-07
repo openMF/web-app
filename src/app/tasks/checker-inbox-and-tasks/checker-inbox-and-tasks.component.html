@@ -11,7 +11,7 @@
     <mat-card-content>
       <div class="card-heading pending-tasks-heading">{{ 'labels.heading.Pending Tasks' | translate }}</div>
       <mat-divider></mat-divider>
-      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
+      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel" [disablePagination]="true">
         <a
           mat-tab-link
           [routerLink]="['./checker-inbox']"
@@ -71,6 +71,15 @@
           *mifosxHasPermission="'RESCHEDULE_LOAN'"
         >
           {{ 'labels.inputs.Reschedule Loan' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./requests']"
+          routerLinkActive
+          #creditApplications="routerLinkActive"
+          [active]="creditApplications.isActive"
+        >
+          {{ 'labels.inputs.Requests' | translate }}
         </a>
       </nav>
 
