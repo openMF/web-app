@@ -42,4 +42,32 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.has('makerDateTimeto')).toBe(false);
     request.flush([]);
   });
+
+  it('requests credit applications with only populated server-side parameters', () => {
+    service
+      .getCreditApplications({
+        submittedFrom: '2026-01-01',
+        submittedTo: '',
+        productId: 7,
+        minAmount: 1000,
+        currencyCode: 'USD',
+        offset: 20,
+        limit: 10,
+        orderBy: 'submittedOnDate',
+        sortOrder: 'DESC'
+      })
+      .subscribe();
+
+    const request = httpMock.expectOne((req) => req.url === '/v2/credit-applications');
+    expect(request.request.params.get('submittedFrom')).toBe('2026-01-01');
+    expect(request.request.params.has('submittedTo')).toBe(false);
+    expect(request.request.params.get('productId')).toBe('7');
+    expect(request.request.params.get('minAmount')).toBe('1000');
+    expect(request.request.params.get('currencyCode')).toBe('USD');
+    expect(request.request.params.get('offset')).toBe('20');
+    expect(request.request.params.get('limit')).toBe('10');
+    expect(request.request.params.get('orderBy')).toBe('submittedOnDate');
+    expect(request.request.params.get('sortOrder')).toBe('DESC');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
 });

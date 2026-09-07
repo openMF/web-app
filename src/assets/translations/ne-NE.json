@@ -3769,7 +3769,17 @@
       "Age of the business": "व्यवसायको उमेर",
       "Written Off Amount": "मिनाहा रकम",
       "Total Recovered": "कुल असुली",
-      "Pending Recovery": "असुल गर्न बाँकी"
+      "Pending Recovery": "असुल गर्न बाँकी",
+      "Application / Account No.": "आवेदन / खाता नं.",
+      "Requests": "अनुरोधहरू",
+      "Customer": "ग्राहक",
+      "Customer Type": "ग्राहक प्रकार",
+      "Minimum Amount": "न्यूनतम रकम",
+      "Maximum Amount": "अधिकतम रकम",
+      "State / Municipality": "प्रदेश / नगरपालिका",
+      "Submitted and pending approval": "पेश गरिएको र स्वीकृतिको प्रतीक्षामा",
+      "Rejected": "अस्वीकृत",
+      "Withdrawn by applicant": "आवेदकले फिर्ता लिएको"
     },
     "links": {
       "Community": "समुदाय",
@@ -5008,6 +5018,13 @@
       "Report design uploaded": "रिपोर्ट डिजाइन {{fileName}} अपलोड गरियो।",
       "Report design replaced": "रिपोर्ट डिजाइन {{fileName}} प्रतिस्थापन गरियो।",
       "KB": "KB",
+      "No credit applications found": "कुनै क्रेडिट आवेदन फेला परेन।",
+      "Loading credit applications": "क्रेडिट आवेदनहरू लोड हुँदैछन्।",
+      "Unable to load credit applications": "क्रेडिट आवेदनहरू लोड गर्न सकिएन।",
+      "From Date cannot be after To Date": "सुरु मिति अन्त्य मितिभन्दा पछि हुन सक्दैन।",
+      "Amounts cannot be negative": "रकम ऋणात्मक हुन सक्दैन।",
+      "Minimum Amount cannot be greater than Maximum Amount": "न्यूनतम रकम अधिकतम रकमभन्दा ठूलो हुन सक्दैन।",
+      "Currency is required when filtering by amount": "रकम अनुसार फिल्टर गर्दा मुद्रा आवश्यक हुन्छ।",
       "max 4 chars": "बढीमा ४ अक्षर"
     },
     "permissions": {
@@ -5925,8 +5942,8 @@
     "confirmWarning": "यसले वास्तविक पैसा चलाउँछ। विवरण जाँच गरेर मात्र पुष्टि गर्नुहोस्।",
     "openAssistant": "Mifos X Copilot खोल्नुहोस्",
     "launcher": {
-      "working": "Mifos X Copilot \u0932\u0947 \u0924\u092a\u093e\u0908\u0902\u0915\u094b \u0905\u0928\u0941\u0930\u094b\u0927\u092e\u093e \u0915\u093e\u092e \u0917\u0930\u094d\u0926\u0948\u091b\u0964 Copilot \u0916\u094b\u0932\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
-      "replying": "Mifos X Copilot \u091c\u0935\u093e\u092b \u0926\u093f\u0901\u0926\u0948\u091b\u0964 Copilot \u0916\u094b\u0932\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964"
+      "working": "Mifos X Copilot ले तपाईंको अनुरोधमा काम गर्दैछ। Copilot खोल्नुहोस्।",
+      "replying": "Mifos X Copilot जवाफ दिँदैछ। Copilot खोल्नुहोस्।"
     },
     "newChatTitle": "नयाँ कुराकानी",
     "errors": {
@@ -6023,33 +6040,33 @@
     },
     "actions": {
       "copyCode": "Copy code",
-      "tryAgain": "\u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
-      "groupLabel": "\u091c\u0935\u093e\u092b\u0915\u093e \u0915\u093e\u0930\u094d\u092f\u0939\u0930\u0942",
-      "copy": "\u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
-      "copied": "\u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u092d\u092f\u094b",
-      "repeat": "\u092b\u0947\u0930\u093f \u0938\u094b\u0927\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
-      "goodAnswer": "\u0930\u093e\u092e\u094d\u0930\u094b \u091c\u0935\u093e\u092b",
-      "poorAnswer": "\u0915\u092e\u091c\u094b\u0930 \u091c\u0935\u093e\u092b",
+      "tryAgain": "फेरि प्रयास गर्नुहोस्",
+      "groupLabel": "जवाफका कार्यहरू",
+      "copy": "प्रतिलिपि गर्नुहोस्",
+      "copied": "प्रतिलिपि भयो",
+      "repeat": "फेरि सोध्नुहोस्",
+      "goodAnswer": "राम्रो जवाफ",
+      "poorAnswer": "कमजोर जवाफ",
       "export": {
-        "label": "\u0928\u093f\u0930\u094d\u092f\u093e\u0924 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
-        "pdf": "PDF \u0915\u093e\u0917\u091c\u093e\u0924",
-        "csv": "CSV \u0938\u094d\u092a\u094d\u0930\u0947\u0921\u0938\u093f\u091f",
-        "png": "PNG \u091b\u0935\u093f"
+        "label": "निर्यात गर्नुहोस्",
+        "pdf": "PDF कागजात",
+        "csv": "CSV स्प्रेडसिट",
+        "png": "PNG छवि"
       },
-      "share": "\u0938\u093e\u091d\u0947\u0926\u093e\u0930\u0940 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d"
+      "share": "साझेदारी गर्नुहोस्"
     },
     "export": {
-      "heading": "Mifos Copilot \u0915\u094b \u091c\u0935\u093e\u092b",
-      "question": "\u092a\u094d\u0930\u0936\u094d\u0928",
-      "client": "\u0917\u094d\u0930\u093e\u0939\u0915",
-      "askedBy": "\u0938\u094b\u0927\u094d\u0928\u0947",
-      "disclaimer": "Fineract \u0905\u092d\u093f\u0932\u0947\u0916\u092c\u093e\u091f Mifos Copilot \u0932\u0947 \u0924\u092f\u093e\u0930 \u0917\u0930\u0947\u0915\u094b\u0964 \u0915\u093e\u0930\u092c\u093e\u0939\u0940 \u0917\u0930\u094d\u0928\u0941\u0905\u0918\u093f \u0938\u094d\u0930\u094b\u0924 \u0905\u092d\u093f\u0932\u0947\u0916\u0938\u0901\u0917 \u092e\u093f\u0932\u093e\u090f\u0930 \u0939\u0947\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
-      "shareTitle": "Mifos Copilot \u0915\u094b \u091c\u0935\u093e\u092b",
-      "copiedToClipboard": "\u091c\u0935\u093e\u092b \u0930 \u0932\u093f\u0902\u0915 \u0915\u094d\u0932\u093f\u092a\u092c\u094b\u0930\u094d\u0921\u092e\u093e \u092a\u094d\u0930\u0924\u093f\u0932\u093f\u092a\u093f \u092d\u092f\u094b",
-      "failed": "\u092b\u093e\u0907\u0932 \u092c\u0928\u093e\u0909\u0928 \u0938\u0915\u093f\u090f\u0928\u0964 \u0915\u0943\u092a\u092f\u093e \u092b\u0947\u0930\u093f \u092a\u094d\u0930\u092f\u093e\u0938 \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d\u0964",
+      "heading": "Mifos Copilot को जवाफ",
+      "question": "प्रश्न",
+      "client": "ग्राहक",
+      "askedBy": "सोध्ने",
+      "disclaimer": "Fineract अभिलेखबाट Mifos Copilot ले तयार गरेको। कारबाही गर्नुअघि स्रोत अभिलेखसँग मिलाएर हेर्नुहोस्।",
+      "shareTitle": "Mifos Copilot को जवाफ",
+      "copiedToClipboard": "जवाफ र लिंक क्लिपबोर्डमा प्रतिलिपि भयो",
+      "failed": "फाइल बनाउन सकिएन। कृपया फेरि प्रयास गर्नुहोस्।",
       "fileNameFallback": "copilot",
-      "cardField": "\u0915\u094d\u0937\u0947\u0924\u094d\u0930",
-      "cardValue": "\u092e\u093e\u0928"
+      "cardField": "क्षेत्र",
+      "cardValue": "मान"
     }
   }
 }

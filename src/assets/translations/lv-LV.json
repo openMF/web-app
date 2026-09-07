@@ -3770,7 +3770,17 @@
       "Age of the business": "Uzņēmējdarbības ilgums",
       "Written Off Amount": "Norakstītā summa",
       "Total Recovered": "Kopā atgūts",
-      "Pending Recovery": "Vēl atgūstams"
+      "Pending Recovery": "Vēl atgūstams",
+      "Application / Account No.": "Pieteikums / konta Nr.",
+      "Requests": "Pieprasījumi",
+      "Customer": "Klients",
+      "Customer Type": "Klienta tips",
+      "Minimum Amount": "Minimālā summa",
+      "Maximum Amount": "Maksimālā summa",
+      "State / Municipality": "Novads / pašvaldība",
+      "Submitted and pending approval": "Iesniegts un gaida apstiprinājumu",
+      "Rejected": "Noraidīts",
+      "Withdrawn by applicant": "Pieteicējs atsaucis"
     },
     "links": {
       "Community": "kopiena",
@@ -5008,6 +5018,13 @@
       "Report design uploaded": "Pārskata veidne {{fileName}} ir augšupielādēta.",
       "Report design replaced": "Pārskata veidne {{fileName}} ir aizstāta.",
       "KB": "KB",
+      "No credit applications found": "Kredīta pieteikumi nav atrasti.",
+      "Loading credit applications": "Notiek kredīta pieteikumu ielāde.",
+      "Unable to load credit applications": "Neizdevās ielādēt kredīta pieteikumus.",
+      "From Date cannot be after To Date": "Sākuma datums nevar būt pēc beigu datuma.",
+      "Amounts cannot be negative": "Summas nevar būt negatīvas.",
+      "Minimum Amount cannot be greater than Maximum Amount": "Minimālā summa nevar būt lielāka par maksimālo summu.",
+      "Currency is required when filtering by amount": "Filtrējot pēc summas, jānorāda valūta.",
       "max 4 chars": "maks. 4 rakstzīmes"
     },
     "permissions": {
@@ -5925,8 +5942,8 @@
     "confirmWarning": "Šeit kustas reāla nauda. Pārbaudiet datus un tad apstipriniet.",
     "openAssistant": "Atvērt Mifos X Copilot",
     "launcher": {
-      "working": "Mifos X Copilot apstr\u0101d\u0101 j\u016bsu piepras\u012bjumu. Atv\u0113rt Copilot.",
-      "replying": "Mifos X Copilot atbild. Atv\u0113rt Copilot."
+      "working": "Mifos X Copilot apstrādā jūsu pieprasījumu. Atvērt Copilot.",
+      "replying": "Mifos X Copilot atbild. Atvērt Copilot."
     },
     "newChatTitle": "Jauna saruna",
     "errors": {
@@ -6023,33 +6040,33 @@
     },
     "actions": {
       "copyCode": "Copy code",
-      "tryAgain": "M\u0113\u0123in\u0101t v\u0113lreiz",
-      "groupLabel": "Darb\u012bbas ar atbildi",
-      "copy": "Kop\u0113t",
-      "copied": "Nokop\u0113ts",
-      "repeat": "Jaut\u0101t v\u0113lreiz",
+      "tryAgain": "Mēģināt vēlreiz",
+      "groupLabel": "Darbības ar atbildi",
+      "copy": "Kopēt",
+      "copied": "Nokopēts",
+      "repeat": "Jautāt vēlreiz",
       "goodAnswer": "Laba atbilde",
       "poorAnswer": "Slikta atbilde",
       "export": {
-        "label": "Eksport\u0113t",
+        "label": "Eksportēt",
         "pdf": "PDF dokuments",
-        "csv": "CSV izkl\u0101jlapa",
-        "png": "PNG att\u0113ls"
+        "csv": "CSV izklājlapa",
+        "png": "PNG attēls"
       },
-      "share": "Kop\u012bgot"
+      "share": "Kopīgot"
     },
     "export": {
       "heading": "Mifos Copilot atbilde",
-      "question": "Jaut\u0101jums",
+      "question": "Jautājums",
       "client": "Klients",
-      "askedBy": "Jaut\u0101ja",
-      "disclaimer": "Sagatavojis Mifos Copilot no Fineract ierakstiem. Pirms r\u012bkoties, sal\u012bdziniet ar s\u0101kotn\u0113jo ierakstu.",
+      "askedBy": "Jautāja",
+      "disclaimer": "Sagatavojis Mifos Copilot no Fineract ierakstiem. Pirms rīkoties, salīdziniet ar sākotnējo ierakstu.",
       "shareTitle": "Mifos Copilot atbilde",
-      "copiedToClipboard": "Atbilde un saite nokop\u0113tas starpliktuv\u0113",
-      "failed": "Failu neizdev\u0101s izveidot. L\u016bdzu, m\u0113\u0123iniet v\u0113lreiz.",
+      "copiedToClipboard": "Atbilde un saite nokopētas starpliktuvē",
+      "failed": "Failu neizdevās izveidot. Lūdzu, mēģiniet vēlreiz.",
       "fileNameFallback": "copilot",
       "cardField": "Lauks",
-      "cardValue": "V\u0113rt\u012bba"
+      "cardValue": "Vērtība"
     }
   }
 }
