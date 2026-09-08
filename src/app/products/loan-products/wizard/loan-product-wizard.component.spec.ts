@@ -1200,6 +1200,237 @@ describe('LoanProductWizardComponent', () => {
     });
   });
 
+  describe('Review covers the reused Classic steps, not just the field-driven ones', () => {
+    /**
+     * Charges, Payment Allocation, Interest Refunds, Deferred Income Recognition and Loan Cycle
+     * Variations are reused Classic components, so they carry no `fields` config and were invisible to
+     * the `kind: 'fields'` walk the Review was built on. These specs pin what the operator now sees —
+     * and, just as importantly, what a step they never reached must NOT put in front of them.
+     */
+    function chargesComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'personal';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function bnplComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'bnpl';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ]
+      };
+      component.ngOnInit();
+      component.form.patchValue({
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      });
+      return component;
+    }
+
+    function jlgComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'jlg';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        valueConditionTypeOptions: [
+          { id: 2, code: 'loanProduct.valueConditionType.equal', value: 'equals' },
+          { id: 3, code: 'loanProduct.valueConditionType.greaterthan', value: 'greater than' }
+        ]
+      };
+      component.ngOnInit();
+      component.form.patchValue({ useBorrowerCycle: true });
+      return component;
+    }
+
+    function chargesStepStub(charges: any[]): any {
+      return { loanProductCharges: { charges } };
+    }
+
+    function section(component: LoanProductWizardComponent, title: string) {
+      return component.reusedStepReviewGroups.find((group) => group.title === title);
+    }
+
+    function sectionTitles(component: LoanProductWizardComponent): string[] {
+      return component.reusedStepReviewGroups.map((group) => group.title);
+    }
+
+    it('lists the selected fees and the overdue penalties as the two sections Classic splits them into', () => {
+      const component = chargesComponent();
+      component.loanProductChargesStep = chargesStepStub([
+        {
+          name: 'Processing Fee',
+          penalty: false,
+          amount: 1500,
+          chargeCalculationType: { value: 'Flat' },
+          chargeTimeType: { value: 'Disbursement' }
+        },
+        {
+          name: 'Late Payment Penalty',
+          penalty: true,
+          amount: 2,
+          chargeCalculationType: { value: '% Loan Amount' },
+          chargeTimeType: { value: 'Overdue Fees' }
+        }
+      ]);
+
+      expect(section(component, 'labels.heading.Charges')?.rows).toEqual([
+        { label: 'Processing Fee', display: 'Flat · 1,500 · Disbursement' }
+      ]);
+      expect(section(component, 'labels.inputs.Overdue Charges')?.rows).toEqual([
+        { label: 'Late Payment Penalty', display: '% Loan Amount · 2 · Overdue Fees' }
+      ]);
+    });
+
+    it('keeps a charge with no penalty flag in the fee section instead of dropping it', () => {
+      // The `chargesPenaltyFilter` pipe compares `penalty` strictly, so such a charge falls out of
+      // both of its lists. A charge the operator selected must never be missing from the Review.
+      const component = chargesComponent();
+      component.loanProductChargesStep = chargesStepStub([{ name: 'Unflagged charge', amount: 10 }]);
+
+      expect(section(component, 'labels.heading.Charges')?.rows).toEqual([
+        { label: 'Unflagged charge', display: '10' }
+      ]);
+    });
+
+    it('shows no charge section at all when none were selected', () => {
+      const component = chargesComponent();
+      component.loanProductChargesStep = chargesStepStub([]);
+
+      expect(sectionTitles(component)).not.toContain('labels.heading.Charges');
+      expect(sectionTitles(component)).not.toContain('labels.inputs.Overdue Charges');
+    });
+
+    it('names the refund types the interest-refund step collected', () => {
+      const component = bnplComponent();
+      component.setSupportedInterestRefundTypes([
+        { id: '1', code: 'MERCHANT_ISSUED_REFUND', value: 'Merchant Issued Refund' },
+        { id: '2', code: 'PAYOUT_REFUND', value: 'Payout Refund' }
+      ]);
+
+      expect(section(component, 'labels.heading.Interest Refunds')?.rows).toEqual([
+        {
+          label: 'labels.inputs.Supported Interest Refund Types',
+          display: 'Merchant Issued Refund, Payout Refund'
+        }
+      ]);
+    });
+
+    it('drops a reused step from the Review as soon as the strategy stops rendering it', () => {
+      // The Review reports what the operator configured on the steps they actually walked. Switching
+      // the strategy back hides Interest Refunds and Deferred Income Recognition, and the state those
+      // steps left behind must go with them — `buildPayload` discards it for the same reason.
+      const component = bnplComponent();
+      component.setSupportedInterestRefundTypes([
+        { id: '1', code: 'MERCHANT_ISSUED_REFUND', value: 'Merchant Issued Refund' }
+      ]);
+      expect(sectionTitles(component)).toContain('labels.heading.Interest Refunds');
+
+      component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
+
+      expect(sectionTitles(component)).not.toContain('labels.heading.Interest Refunds');
+    });
+
+    it('reports capitalized income and buy-down fees the way Classic summarizes them', () => {
+      const component = bnplComponent();
+      component.deferredIncomeRecognition = {
+        capitalizedIncome: {
+          enableIncomeCapitalization: true,
+          capitalizedIncomeCalculationType: { value: 'Flat' } as any,
+          capitalizedIncomeStrategy: { value: 'Equal amortization' } as any,
+          capitalizedIncomeType: { value: 'Fee' } as any
+        },
+        buyDownFee: { enableBuyDownFee: false }
+      };
+
+      expect(section(component, 'labels.heading.Deferred Income Recognition')?.rows).toEqual([
+        { label: 'labels.inputs.Enable income capitalization', display: 'Yes' },
+        { label: 'labels.inputs.Income capitalization calculation type', display: 'Flat' },
+        { label: 'labels.inputs.Income capitalization strategy', display: 'Equal amortization' },
+        { label: 'labels.inputs.Income type', display: 'Fee' },
+        // Off is a decision worth confirming, so the toggle reports either way — but its three
+        // dependent values stay hidden, exactly as Classic's `@if (enableBuyDownFee)` does.
+        { label: 'labels.inputs.Enable Buy down fee', display: 'No' }
+      ]);
+    });
+
+    it('lists each loan-cycle variation with its condition and bounds', () => {
+      const component = jlgComponent();
+      component.setBorrowerCycleVariations({
+        principalVariationsForBorrowerCycle: [
+          { valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 5000 },
+          { valueConditionType: 3, borrowerCycleNumber: 3, minValue: 10000, defaultValue: 20000, maxValue: 30000 }
+        ],
+        numberOfRepaymentVariationsForBorrowerCycle: [],
+        interestRateVariationsForBorrowerCycle: []
+      });
+
+      expect(section(component, 'labels.inputs.Terms vary based on loan cycle')?.rows).toEqual([
+        {
+          label: 'labels.inputs.Principal by loan cycle',
+          display: 'equals 1: 5,000 · greater than 3: 20,000 (10,000–30,000)'
+        }
+      ]);
+    });
+
+    it('shows the payment allocation panels only once the step is visible and the template can name the codes', () => {
+      const component = bnplComponent();
+      component.setPaymentAllocation([
+        {
+          transactionType: 'DEFAULT',
+          futureInstallmentAllocationRule: 'NEXT_INSTALLMENT',
+          paymentAllocationOrder: [{ paymentAllocationRule: 'PAST_DUE_PENALTY', order: 1 }]
+        }
+      ]);
+
+      // The reused panel dereferences the option lists for every code it renders, so without them the
+      // Review would throw rather than degrade.
+      expect(component.advancePaymentAllocationData).toBeNull();
+      expect(component.showPaymentAllocationReview).toBe(false);
+
+      component.loanProductsTemplate = {
+        ...component.loanProductsTemplate,
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [{ id: 1, code: 'PAST_DUE_PENALTY', value: 'Past due penalty' }],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ],
+        creditAllocationTransactionTypes: [{ id: 2, code: 'CHARGEBACK', value: 'Chargeback' }],
+        creditAllocationAllocationTypes: [{ id: 2, code: 'PRINCIPAL', value: 'Principal' }]
+      };
+
+      expect(component.showPaymentAllocationReview).toBe(true);
+      // Both allocation vocabularies in one lookup, exactly as Classic's summary assembles them.
+      expect(component.advancePaymentAllocationData?.transactionTypes.map((type) => type.code)).toEqual([
+        'DEFAULT',
+        'CHARGEBACK'
+      ]);
+      expect(component.advancePaymentAllocationData?.allocationTypes.map((type) => type.code)).toEqual([
+        'PAST_DUE_PENALTY',
+        'PRINCIPAL'
+      ]);
+      // Memoised on the template it came from: the panels take it as an @Input, and a fresh object per
+      // change-detection pass would re-render them every cycle.
+      expect(component.advancePaymentAllocationData).toBe(component.advancePaymentAllocationData);
+
+      component.form.patchValue({ transactionProcessingStrategyCode: 'mifos-standard-strategy' });
+
+      expect(component.showPaymentAllocationReview).toBe(false);
+    });
+  });
+
   describe('golden parity: visible fields, steps and seeded form state per profile', () => {
     // These locks pin the exact wizard surface (which fields/steps render) and the exact form
     // seeding (what getInitialFormState + syncTemplateDefaults leave in the controls) for the

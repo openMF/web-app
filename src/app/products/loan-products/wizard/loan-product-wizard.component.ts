@@ -54,6 +54,7 @@ import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
   AdvancedPaymentStrategy,
+  AdvancePaymentAllocationData,
   BuyDownFee,
   CapitalizedIncome,
   CreditAllocation,
@@ -68,9 +69,14 @@ import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/
 import { LoanProductDeferredIncomeRecognitionStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-deferred-income-recognition-step.component';
 import {
   LoanProductBorrowerCycleStepComponent,
+  BorrowerCycleVariation,
+  BorrowerCycleVariationKey,
   BorrowerCycleVariations
 } from './borrower-cycle-step/loan-product-borrower-cycle-step.component';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+// The panel Classic's own summary renders for each configured allocation, reused here so the guided
+// Review shows the allocation order the same way the rest of the app does.
+import { ViewAdvancePaymenyAllocationComponent } from '../view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
 // The four Classic step components Custom/Advanced hosts in place of the config-driven field grid,
 // plus Classic's own preview so its Review shows the same summary Classic's does.
 import { LoanProductDetailsStepComponent } from '../loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
@@ -83,6 +89,7 @@ import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
+import { MatAccordion } from '@angular/material/expansion';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
@@ -191,6 +198,54 @@ const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> 
   { key: 'overpaymentLiabilityAccountId', title: 'Over payment liability' }
 ];
 
+/** One `label: value` line in the guided Review. */
+interface ReviewRow {
+  label: string;
+  display: string;
+}
+
+/**
+ * One titled block of the guided Review.
+ *
+ * `title` is always a translation key, resolved by the template exactly like the step label it names.
+ * `label` inside a row is NOT: rows built from the reused Classic steps mix fixed captions with
+ * values the backend named (a tenant's charge, an allocation rule), so they are resolved in
+ * TypeScript — see {@link LoanProductWizardComponent.reusedStepReviewGroups}. The `fields`-driven
+ * {@link LoanProductWizardComponent.reviewGroups} keeps its labels as keys, because every one of them
+ * is a `FormField.label` the form itself renders through the same pipe.
+ */
+interface ReviewSection {
+  title: string;
+  rows: ReviewRow[];
+}
+
+/**
+ * The three borrower-cycle variation lists, each paired with the heading its own step renders
+ * (`LoanProductBorrowerCycleStepComponent.sections`) so the Review names them identically.
+ */
+const BORROWER_CYCLE_REVIEW_SECTIONS: ReadonlyArray<{ key: BorrowerCycleVariationKey; heading: string }> = [
+  { key: 'principalVariationsForBorrowerCycle', heading: 'labels.inputs.Principal by loan cycle' },
+  { key: 'numberOfRepaymentVariationsForBorrowerCycle', heading: 'labels.inputs.Number of repayments by loan cycle' },
+  { key: 'interestRateVariationsForBorrowerCycle', heading: 'labels.inputs.Nominal interest rate by loan cycle' }
+];
+
+/**
+ * The capitalized-income and buy-down-fee values the reused Deferred Income Recognition step
+ * collects, each with the caption Classic's summary gives it. Both lists are enum-valued, so the
+ * Review resolves them through the `labels.catalogs` namespace like every other backend enum.
+ */
+const CAPITALIZED_INCOME_REVIEW_FIELDS: ReadonlyArray<{ key: keyof CapitalizedIncome; label: string }> = [
+  { key: 'capitalizedIncomeCalculationType', label: 'labels.inputs.Income capitalization calculation type' },
+  { key: 'capitalizedIncomeStrategy', label: 'labels.inputs.Income capitalization strategy' },
+  { key: 'capitalizedIncomeType', label: 'labels.inputs.Income type' }
+];
+
+const BUY_DOWN_FEE_REVIEW_FIELDS: ReadonlyArray<{ key: keyof BuyDownFee; label: string }> = [
+  { key: 'buyDownFeeCalculationType', label: 'labels.inputs.Buy down fee calculation type' },
+  { key: 'buyDownFeeStrategy', label: 'labels.inputs.Buy down fee strategy' },
+  { key: 'buyDownFeeIncomeType', label: 'labels.inputs.Buy down fee income type' }
+];
+
 @Component({
   selector: 'mifosx-loan-product-wizard',
   standalone: true,
@@ -209,7 +264,9 @@ const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> 
     LoanProductTermsStepComponent,
     LoanProductSettingsStepComponent,
     LoanProductPreviewStepComponent,
-    GlAccountDisplayComponent
+    GlAccountDisplayComponent,
+    ViewAdvancePaymenyAllocationComponent,
+    MatAccordion
   ],
   templateUrl: './loan-product-wizard.component.html',
   styleUrls: ['./loan-product-wizard.component.scss']
@@ -323,6 +380,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   // The strategy list depends on the schedule type too (Classic rebuilds it per type), so the cache
   // must invalidate when the user switches between Progressive and Cumulative.
   private transactionProcessingStrategyOptionsCacheProgressive?: boolean;
+  // See `advancePaymentAllocationData`: memoised on the template it was derived from, because it is
+  // bound as an @Input on the Review.
+  private advancePaymentAllocationDataCache?: { template: unknown; data: AdvancePaymentAllocationData | null };
 
   // Editable Payment Allocation state, reused wholesale from the Classic flow. `advancedPaymentAllocations`
   // seeds the reused step's tabs/drag-and-drop; `paymentAllocation`/`creditAllocation` hold the payload-shaped
@@ -674,6 +734,15 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   trackByAccountTitle(_index: number, account: { title: string }): string {
     return account.title;
+  }
+
+  /**
+   * Keyed on the transaction type, which is what a payment or credit allocation IS one of: the step
+   * emits at most one allocation per type, and re-emits the whole list on every edit, so the type is
+   * both unique and stable while the index is neither.
+   */
+  trackByAllocationTransactionType(_index: number, allocation: PaymentAllocation | CreditAllocation): string {
+    return allocation.transactionType;
   }
 
   /**
@@ -1677,8 +1746,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
    * and profile/strategy-determined fields are all excluded exactly as they were during the wizard.
    * Values are read straight from the FormGroup; nothing the user never saw can appear here. It is
    * intentionally NOT derived from {@link reviewPayload}/`buildPayload`.
+   *
+   * The reused Classic steps carry no `fields` config and so cannot be summarised this way; they are
+   * covered by {@link reusedStepReviewGroups}, {@link showPaymentAllocationReview} and
+   * {@link accountingReview}.
    */
-  get reviewGroups(): Array<{ title: string; rows: Array<{ label: string; display: string }> }> {
+  get reviewGroups(): ReviewSection[] {
     if (!this.form) {
       return [];
     }
@@ -1694,6 +1767,278 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
           .filter((row) => row.display !== '—')
       }))
       .filter((group) => group.rows.length > 0);
+  }
+
+  /**
+   * The Review sections for the steps the wizard does not drive from `fields` config: the reused
+   * Classic Charges, Interest Refunds, Deferred Income Recognition and Loan Cycle Variations steps.
+   *
+   * {@link reviewGroups} walks `kind: 'fields'` steps only, so everything configured on those four
+   * was absent from the summary — a confirmation screen that omitted the fees the borrower pays.
+   * Every section is built from the same state the payload assembly reads at submit time
+   * ({@link selectedCharges}, {@link supportedInterestRefundTypes},
+   * {@link deferredIncomeRecognition}, {@link borrowerCycleVariations}), so the Review and the POST
+   * cannot disagree.
+   *
+   * Driven by {@link visibleSteps} rather than `steps`, for the same reason the field sections are: a
+   * step the profile or the repayment strategy hides is one the operator never filled in, and the
+   * state a hidden step left behind must not surface here. Payment Allocation and Accounting are the
+   * two reused steps missing from this list — an allocation order and a GL account mapping are
+   * structures rather than rows, and each keeps the component the rest of the app renders it with
+   * ({@link showPaymentAllocationReview}, {@link accountingReview}).
+   */
+  get reusedStepReviewGroups(): ReviewSection[] {
+    return this.visibleSteps
+      .flatMap((step) => this.reviewSectionsFor(step))
+      .filter((section) => section.rows.length > 0);
+  }
+
+  private reviewSectionsFor(step: FormStep): ReviewSection[] {
+    switch (step.kind) {
+      case 'charges':
+        return this.chargesReviewSections();
+      case 'interest-refund':
+        return [{ title: step.title, rows: this.interestRefundReviewRows() }];
+      case 'deferred-income':
+        return [{ title: step.title, rows: this.deferredIncomeReviewRows() }];
+      case 'borrower-cycle':
+        return [{ title: step.title, rows: this.borrowerCycleReviewRows() }];
+      default:
+        return [];
+    }
+  }
+
+  /**
+   * Fees and penalties as two sections, the split Classic's summary makes — an overdue penalty is
+   * charged on a different event from a disbursement fee, and stacking them under one heading hides
+   * that.
+   *
+   * The partition is `penalty` truthy / not, NOT the strict `=== true` / `=== false` of the
+   * `chargesPenaltyFilter` pipe the tables use: a charge whose `penalty` flag is missing would fall
+   * out of both of the pipe's lists, and a charge silently absent from the Review is the defect this
+   * section exists to fix.
+   */
+  private chargesReviewSections(): ReviewSection[] {
+    const charges = this.selectedCharges;
+    return [
+      {
+        title: 'labels.heading.Charges',
+        rows: charges.filter((charge) => !charge?.penalty).map((charge) => this.chargeReviewRow(charge))
+      },
+      {
+        title: 'labels.inputs.Overdue Charges',
+        rows: charges.filter((charge) => !!charge?.penalty).map((charge) => this.chargeReviewRow(charge))
+      }
+    ];
+  }
+
+  /**
+   * One charge, carrying the three facts Classic's charge table shows beside its name, in that order:
+   * calculation type, amount, and the event it is collected on.
+   *
+   * The amount is deliberately unadorned, exactly as Classic renders it: the same column holds a
+   * currency amount for a Flat charge and a percentage for a `% Approved Amount` one, so a currency
+   * symbol would be wrong half the time. The calculation type it sits next to says which it is.
+   */
+  private chargeReviewRow(charge: any): ReviewRow {
+    const details = [
+      this.enumDisplay(charge?.chargeCalculationType),
+      this.formatReviewNumber(charge?.amount),
+      this.enumDisplay(charge?.chargeTimeType)
+    ].filter((detail) => detail !== '');
+    return { label: String(charge?.name ?? ''), display: details.join(' · ') };
+  }
+
+  private interestRefundReviewRows(): ReviewRow[] {
+    if (this.supportedInterestRefundTypes.length === 0) {
+      return [];
+    }
+    return [
+      {
+        label: this.reviewLabel('labels.inputs.Supported Interest Refund Types'),
+        display: this.supportedInterestRefundTypes.map((refundType) => this.enumDisplay(refundType)).join(', ')
+      }
+    ];
+  }
+
+  /**
+   * Capitalized income and buy-down fees, in the order and with the captions Classic's summary uses.
+   * Each block reports its own on/off row first — "off" is a decision worth confirming — and its
+   * enum values only while it is on, mirroring Classic's `@if (enable…)` guards.
+   */
+  private deferredIncomeReviewRows(): ReviewRow[] {
+    const deferredIncome = this.deferredIncomeRecognition;
+    if (!deferredIncome) {
+      return [];
+    }
+    const rows: ReviewRow[] = [];
+    const capitalizedIncome = deferredIncome.capitalizedIncome;
+    if (capitalizedIncome) {
+      rows.push(
+        this.yesNoReviewRow(
+          'labels.inputs.Enable income capitalization',
+          !!capitalizedIncome.enableIncomeCapitalization
+        )
+      );
+      if (capitalizedIncome.enableIncomeCapitalization) {
+        rows.push(...this.enumReviewRows(capitalizedIncome, CAPITALIZED_INCOME_REVIEW_FIELDS));
+      }
+    }
+    const buyDownFee = deferredIncome.buyDownFee;
+    if (buyDownFee) {
+      rows.push(this.yesNoReviewRow('labels.inputs.Enable Buy down fee', !!buyDownFee.enableBuyDownFee));
+      if (buyDownFee.enableBuyDownFee) {
+        rows.push(...this.enumReviewRows(buyDownFee, BUY_DOWN_FEE_REVIEW_FIELDS));
+        rows.push(this.yesNoReviewRow('labels.inputs.Merchant Buy down fee', !!buyDownFee.merchantBuyDownFee));
+      }
+    }
+    return rows;
+  }
+
+  /**
+   * One row per populated variation list, listing each cycle's default value (with its bounds where
+   * the operator set any) against the condition that selects it — "equals 1: 5,000 · greater than
+   * 3: 20,000 (10,000–30,000)".
+   *
+   * The values rather than a count: "3 variations" says nothing about the amounts a repeat borrower
+   * will actually be offered, which is the only reason to configure the step at all. The step's own
+   * tables remain the place to edit them.
+   */
+  private borrowerCycleReviewRows(): ReviewRow[] {
+    const variations = this.borrowerCycleVariations;
+    if (!variations) {
+      return [];
+    }
+    return BORROWER_CYCLE_REVIEW_SECTIONS.flatMap((section) => {
+      const rows = variations[section.key] ?? [];
+      if (rows.length === 0) {
+        return [];
+      }
+      return [
+        {
+          label: this.reviewLabel(section.heading),
+          display: rows.map((variation) => this.variationDisplay(variation)).join(' · ')
+        }
+      ];
+    });
+  }
+
+  private variationDisplay(variation: BorrowerCycleVariation): string {
+    const condition = this.valueConditionLabel(variation.valueConditionType);
+    const minValue = this.formatReviewNumber(variation.minValue);
+    const maxValue = this.formatReviewNumber(variation.maxValue);
+    // Both bounds are optional and either can stand alone, so an absent one shows as a dash rather
+    // than collapsing the pair into something that reads like the other bound.
+    const bounds = minValue === '' && maxValue === '' ? '' : ` (${minValue || '—'}–${maxValue || '—'})`;
+    const cycle = [
+      condition,
+      variation.borrowerCycleNumber
+    ]
+      .filter((part) => part !== '' && part !== null && part !== undefined)
+      .join(' ');
+    return `${cycle}: ${this.formatReviewNumber(variation.defaultValue)}${bounds}`;
+  }
+
+  /**
+   * The condition's own name from the template (`equals` / `greater than`), read from the very option
+   * list the borrower-cycle step builds its dialog select from. Falls back to the raw id, which is
+   * all a template-less render can honestly show.
+   */
+  private valueConditionLabel(valueConditionType: number | string): string {
+    const option = (this.loanProductsTemplate?.valueConditionTypeOptions ?? []).find(
+      (candidate: any) => String(candidate?.id) === String(valueConditionType)
+    );
+    return option ? this.enumDisplay(option) : String(valueConditionType ?? '');
+  }
+
+  private enumReviewRows<T>(source: T, fields: ReadonlyArray<{ key: keyof T & string; label: string }>): ReviewRow[] {
+    return fields
+      .map((field) => ({ label: this.reviewLabel(field.label), display: this.enumDisplay(source[field.key]) }))
+      .filter((row) => row.display !== '');
+  }
+
+  private yesNoReviewRow(labelKey: string, value: boolean): ReviewRow {
+    return { label: this.reviewLabel(labelKey), display: this.translateDisplayLabel(value ? 'Yes' : 'No') };
+  }
+
+  private reviewLabel(labelKey: string): string {
+    return this.translateService.instant(labelKey);
+  }
+
+  /**
+   * A backend-named value — a Fineract enum, a charge's calculation type, a tenant's own condition —
+   * resolved through `labels.catalogs`, where a key the bundles do not carry falls back to the value
+   * itself. Empty for a value the step never set, so the caller can drop the row.
+   */
+  private enumDisplay(value: unknown): string {
+    if (value === null || value === undefined || value === '') {
+      return '';
+    }
+    return this.translateDisplayLabel(String(this.normalizeValueForDisplay(value)));
+  }
+
+  /** Grouped in the operator's own locale, like the Review banner's principal. */
+  private formatReviewNumber(value: unknown): string {
+    if (value === null || value === undefined || value === '') {
+      return '';
+    }
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric.toLocaleString(this.settingsService.languageCode) : String(value);
+  }
+
+  /**
+   * Whether the Review shows the payment allocation panels: the step has to be one the operator
+   * actually walked, the allocations have to exist, and the template has to carry the option lists
+   * the panel resolves its codes against.
+   *
+   * That last condition is not defensive noise — the reused panel dereferences the match for every
+   * code it renders, so an allocation whose transaction type is missing from the data would throw
+   * inside the Review rather than degrade.
+   */
+  get showPaymentAllocationReview(): boolean {
+    return (
+      this.paymentAllocation.length > 0 &&
+      !!this.advancePaymentAllocationData &&
+      this.visibleSteps.some((step) => step.kind === 'payment-allocation')
+    );
+  }
+
+  get showCreditAllocationReview(): boolean {
+    return this.showPaymentAllocationReview && this.creditAllocation.length > 0;
+  }
+
+  /**
+   * The transaction types, allocation types and future-installment rules the reused panel resolves
+   * its payload codes against, assembled from the template exactly as Classic's summary assembles it
+   * for a product that does not exist yet.
+   *
+   * Memoised on the template's identity because it is bound as an `@Input`: a fresh object on every
+   * change-detection pass would re-render the panels each cycle and trip the dev-mode
+   * check-no-changes pass.
+   */
+  get advancePaymentAllocationData(): AdvancePaymentAllocationData | null {
+    if (this.advancePaymentAllocationDataCache?.template === this.loanProductsTemplate) {
+      return this.advancePaymentAllocationDataCache.data;
+    }
+    const template = this.loanProductsTemplate;
+    const data: AdvancePaymentAllocationData | null =
+      template?.advancedPaymentAllocationTransactionTypes &&
+      template?.advancedPaymentAllocationTypes &&
+      template?.advancedPaymentAllocationFutureInstallmentAllocationRules
+        ? {
+            transactionTypes: [
+              ...template.advancedPaymentAllocationTransactionTypes,
+              ...(template.creditAllocationTransactionTypes ?? [])
+            ],
+            allocationTypes: [
+              ...template.advancedPaymentAllocationTypes,
+              ...(template.creditAllocationAllocationTypes ?? [])
+            ],
+            futureInstallmentAllocationRules: template.advancedPaymentAllocationFutureInstallmentAllocationRules
+          }
+        : null;
+    this.advancePaymentAllocationDataCache = { template, data };
+    return data;
   }
 
   /**
