@@ -35,7 +35,7 @@ import { MakerCheckerTemplate } from './common-resolvers/makerCheckerTemplate.re
 import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInboxDetail.resolver';
 
 /** Tasks Routes */
-const routes: Routes = [
+export const routes: Routes = [
   Route.withShell([
     {
       path: '',
@@ -72,6 +72,11 @@ const routes: Routes = [
           path: 'requests',
           component: CreditApplicationsComponent,
           data: { title: 'Requests' }
+        },
+        {
+          path: 'credit',
+          component: CreditApplicationsComponent,
+          data: { title: 'Credit' }
         },
         {
           path: 'council-approval',

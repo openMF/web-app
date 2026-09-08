@@ -76,10 +76,20 @@
           mat-tab-link
           [routerLink]="['./requests']"
           routerLinkActive
-          #creditApplications="routerLinkActive"
-          [active]="creditApplications.isActive"
+          #creditRequests="routerLinkActive"
+          [active]="creditRequests.isActive"
         >
           {{ 'labels.inputs.Requests' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./credit']"
+          routerLinkActive
+          #creditTaskSection="routerLinkActive"
+          [active]="creditTaskSection.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.inputs.Credit' | translate }}
         </a>
       </nav>
 
