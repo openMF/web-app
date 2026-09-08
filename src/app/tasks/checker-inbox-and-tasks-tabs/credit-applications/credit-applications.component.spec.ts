@@ -203,6 +203,17 @@ describe('CreditApplicationsComponent', () => {
     );
   });
 
+  it('resets paging without emitting a duplicate paginator request', () => {
+    component.pageIndex = 2;
+    component.paginator = { pageIndex: 2, firstPage: jest.fn() } as any;
+
+    component.applyFilters();
+
+    expect(component.paginator.pageIndex).toBe(0);
+    expect(component.paginator.firstPage).not.toHaveBeenCalled();
+    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+  });
+
   it('requests the server again when sorting changes', () => {
     component.sortData({ active: 'amount', direction: 'asc' });
 
@@ -211,6 +222,18 @@ describe('CreditApplicationsComponent', () => {
       expect.objectContaining({
         orderBy: 'amount',
         sortOrder: 'ASC',
+        offset: 0
+      })
+    );
+  });
+
+  it('resets to the default server sort when sorting is cleared', () => {
+    component.sortData({ active: 'amount', direction: '' });
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(
+      expect.objectContaining({
+        orderBy: 'submittedOnDate',
+        sortOrder: 'DESC',
         offset: 0
       })
     );

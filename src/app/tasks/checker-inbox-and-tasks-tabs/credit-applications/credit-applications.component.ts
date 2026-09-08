@@ -151,16 +151,14 @@ export class CreditApplicationsComponent implements OnInit {
     if (!this.validateFilters()) {
       return;
     }
-    this.pageIndex = 0;
-    this.paginator?.firstPage();
+    this.resetPage();
     this.loadCreditApplications();
   }
 
   clearFilters(): void {
     this.creditApplicationsForm.reset();
     this.filterError = '';
-    this.pageIndex = 0;
-    this.paginator?.firstPage();
+    this.resetPage();
     this.loadCreditApplications();
   }
 
@@ -171,10 +169,9 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   sortData(sort: Sort): void {
-    this.orderBy = sort.active || 'submittedOnDate';
+    this.orderBy = sort.direction ? sort.active : 'submittedOnDate';
     this.sortOrder = sort.direction === 'asc' ? 'ASC' : 'DESC';
-    this.pageIndex = 0;
-    this.paginator?.firstPage();
+    this.resetPage();
     this.loadCreditApplications();
   }
 
@@ -311,5 +308,12 @@ export class CreditApplicationsComponent implements OnInit {
 
   private formatApiDate(date: Date | string): string {
     return date ? this.dateUtils.formatDate(date, Dates.DEFAULT_DATEFORMAT) : '';
+  }
+
+  private resetPage(): void {
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
   }
 }

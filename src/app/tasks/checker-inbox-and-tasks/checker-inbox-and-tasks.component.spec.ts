@@ -8,12 +8,14 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { Route as AngularRoute, provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
+import { CreditApplicationsComponent } from '../checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
+import { routes } from '../tasks-routing.module';
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks.component';
 
 describe('CheckerInboxAndTasksComponent', () => {
@@ -73,7 +75,18 @@ describe('CheckerInboxAndTasksComponent', () => {
     environment.productionModeEnableRBAC = rbacEnabled;
   });
 
-  it('shows the Requests tab without a tab-level permission gate', () => {
+  it('shows the Credit tab for users who can read loans', () => {
+    createComponent(['READ_LOAN']);
+
+    const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
+      tab.textContent?.trim()
+    );
+
+    expect(tabLabels).toContain('labels.inputs.Requests');
+    expect(tabLabels).toContain('labels.inputs.Credit');
+  });
+
+  it('keeps Requests visible and hides Credit for users who cannot read loans', () => {
     createComponent([]);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
@@ -81,9 +94,10 @@ describe('CheckerInboxAndTasksComponent', () => {
     );
 
     expect(tabLabels).toContain('labels.inputs.Requests');
+    expect(tabLabels).not.toContain('labels.inputs.Credit');
   });
 
-  it('places the Requests tab after Reschedule Loan', () => {
+  it('places Requests and Credit after Reschedule Loan', () => {
     createComponent(['ALL_FUNCTIONS']);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
@@ -91,11 +105,13 @@ describe('CheckerInboxAndTasksComponent', () => {
     );
     const rescheduleLoanIndex = tabLabels.indexOf('labels.inputs.Reschedule Loan');
     const requestsIndex = tabLabels.indexOf('labels.inputs.Requests');
+    const creditIndex = tabLabels.indexOf('labels.inputs.Credit');
 
     expect(requestsIndex).toBe(rescheduleLoanIndex + 1);
+    expect(creditIndex).toBe(requestsIndex + 1);
   });
 
-  it('routes Requests to the credit applications page', async () => {
+  it('routes Requests to the existing credit applications page', async () => {
     const routeElement = await navigateToComponent();
 
     const requestsTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
@@ -103,5 +119,25 @@ describe('CheckerInboxAndTasksComponent', () => {
     ) as HTMLAnchorElement;
 
     expect(requestsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/requests');
+  });
+
+  it('routes Credit to the credit applications page', async () => {
+    const routeElement = await navigateToComponent(['READ_LOAN']);
+
+    const creditTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
+      tab.textContent?.includes('labels.inputs.Credit')
+    ) as HTMLAnchorElement;
+
+    expect(creditTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/credit');
+  });
+
+  it('uses CreditApplicationsComponent for both Requests and Credit routes', () => {
+    const shellRoute = routes[0] as AngularRoute;
+    const taskRoute = shellRoute.children?.find((route: AngularRoute) => route.path === '');
+    const requestsRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'requests');
+    const creditRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'credit');
+
+    expect(requestsRoute?.component).toBe(CreditApplicationsComponent);
+    expect(creditRoute?.component).toBe(CreditApplicationsComponent);
   });
 });
