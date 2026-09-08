@@ -106,8 +106,62 @@
     </div>
   }
 
+  @if (rejectionResultMessage) {
+    <div class="alert" [class.error]="rejectionResultType === 'error'">
+      <div class="message">
+        <i
+          class="fa alert-check"
+          [class.fa-check-circle]="rejectionResultType === 'success'"
+          [class.fa-exclamation-circle]="rejectionResultType === 'error'"
+        ></i>
+        {{ rejectionResultMessage | translate: rejectionResultParams }}
+      </div>
+    </div>
+  }
+
+  <div class="mass-actions" *mifosxHasPermission="'REJECT_LOAN'">
+    <span>
+      {{ 'labels.text.Selected credit applications' | translate }}:
+      {{ selectedApplicationIds.size }}
+    </span>
+    <button
+      mat-raised-button
+      color="warn"
+      type="button"
+      [disabled]="selectedApplicationIds.size === 0 || rejecting"
+      (click)="massReject()"
+    >
+      @if (rejecting) {
+        <i class="fa fa-circle-notch fa-spin"></i>
+      }
+      {{ 'labels.buttons.Mass Reject' | translate }}
+    </button>
+  </div>
+
   <div class="table-wrapper">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            [checked]="allVisibleSelected()"
+            [indeterminate]="partiallyVisibleSelected()"
+            [disabled]="visibleRejectableApplications().length === 0 || rejecting"
+            (click)="$event.stopPropagation()"
+            (change)="toggleVisibleSelection($event.checked)"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let application">
+          <mat-checkbox
+            [checked]="isSelected(application)"
+            [disabled]="!isRejectable(application) || rejecting"
+            (click)="$event.stopPropagation()"
+            (change)="toggleSelection(application, $event.checked)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="accountNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="accountNo">
           {{ 'labels.inputs.Application / Account No.' | translate }}

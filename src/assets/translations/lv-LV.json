@@ -833,7 +833,8 @@
       "Disable Breach": "Atspējot pārkāpumu",
       "Enable Breach": "Iespējot pārkāpumu",
       "Save": "Saglabāt",
-      "Upload Report Design": "Augšupielādēt pārskata veidni"
+      "Upload Report Design": "Augšupielādēt pārskata veidni",
+      "Mass Reject": "Noraidīt masveidā"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1807,7 +1808,8 @@
       "Payment Allocation": "Maksājumu piešķiršana",
       "Interest Refunds": "Procentu atmaksāšana",
       "Deferred Income Recognition": "Atliktā ienākuma atzīšana",
-      "Advanced Configuration": "Papildu konfigurācija"
+      "Advanced Configuration": "Papildu konfigurācija",
+      "Mass Reject Credit Applications": "Masveida kredīta pieteikumu noraidīšana"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -5025,7 +5027,13 @@
       "Amounts cannot be negative": "Summas nevar būt negatīvas.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimālā summa nevar būt lielāka par maksimālo summu.",
       "Currency is required when filtering by amount": "Filtrējot pēc summas, jānorāda valūta.",
-      "max 4 chars": "maks. 4 rakstzīmes"
+      "max 4 chars": "maks. 4 rakstzīmes",
+      "Selected credit applications": "Atlasītie kredīta pieteikumi",
+      "Selected credit applications will be rejected": "Atlasītie kredīta pieteikumi tiks noraidīti",
+      "Select at least one credit application to reject": "Atlasiet vismaz vienu kredīta pieteikumu noraidīšanai.",
+      "All selected credit applications were rejected successfully": "Visi atlasītie kredīta pieteikumi tika veiksmīgi noraidīti.",
+      "No selected credit applications could be rejected": "Nevienu atlasīto kredīta pieteikumu neizdevās noraidīt.",
+      "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās."
     },
     "permissions": {
       "actions": {

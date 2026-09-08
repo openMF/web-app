@@ -833,7 +833,8 @@
       "Disable Breach": "Išjungti pažeidimą",
       "Enable Breach": "Įjungti pažeidimą",
       "Save": "Išsaugoti",
-      "Upload Report Design": "Įkelti ataskaitos maketą"
+      "Upload Report Design": "Įkelti ataskaitos maketą",
+      "Mass Reject": "Atmesti masiškai"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1806,7 +1807,8 @@
       "Payment Allocation": "Mokėjimo skirstymas",
       "Interest Refunds": "Palūkanų grąžinimas",
       "Deferred Income Recognition": "Atidėtųjų pajamų pripažinimas",
-      "Advanced Configuration": "Išplėstinė konfigūracija"
+      "Advanced Configuration": "Išplėstinė konfigūracija",
+      "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -5026,7 +5028,13 @@
       "Amounts cannot be negative": "Sumos negali būti neigiamos.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimali suma negali būti didesnė už maksimalią sumą.",
       "Currency is required when filtering by amount": "Filtruojant pagal sumą būtina nurodyti valiutą.",
-      "max 4 chars": "daugiausia 4 simboliai"
+      "max 4 chars": "daugiausia 4 simboliai",
+      "Selected credit applications": "Pasirinktos kredito paraiškos",
+      "Selected credit applications will be rejected": "Pasirinktos kredito paraiškos bus atmestos",
+      "Select at least one credit application to reject": "Pasirinkite bent vieną kredito paraišką atmetimui.",
+      "All selected credit applications were rejected successfully": "Visos pasirinktos kredito paraiškos sėkmingai atmestos.",
+      "No selected credit applications could be rejected": "Nepavyko atmesti nė vienos pasirinktos kredito paraiškos.",
+      "Selected credit applications rejection partial result": "Atmesta {{succeeded}} iš {{total}} pasirinktų kredito paraiškų. {{failed}} nepavyko."
     },
     "permissions": {
       "actions": {

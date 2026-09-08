@@ -833,7 +833,8 @@
       "Disable Breach": "Zima Ukiukaji",
       "Enable Breach": "Washa Ukiukaji",
       "Save": "Hifadhi",
-      "Upload Report Design": "Pakia Muundo wa Ripoti"
+      "Upload Report Design": "Pakia Muundo wa Ripoti",
+      "Mass Reject": "Kataa kwa wingi"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1804,7 +1805,8 @@
       "Payment Allocation": "Mgao wa malipo",
       "Interest Refunds": "Marejesho ya riba",
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
-      "Advanced Configuration": "Usanidi wa kina"
+      "Advanced Configuration": "Usanidi wa kina",
+      "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -5022,7 +5024,13 @@
       "Amounts cannot be negative": "Kiasi hakiwezi kuwa hasi.",
       "Minimum Amount cannot be greater than Maximum Amount": "Kiasi cha chini hakiwezi kuzidi kiasi cha juu.",
       "Currency is required when filtering by amount": "Sarafu inahitajika unapochuja kwa kiasi.",
-      "max 4 chars": "herufi 4 kwa juu"
+      "max 4 chars": "herufi 4 kwa juu",
+      "Selected credit applications": "Maombi ya mkopo yaliyochaguliwa",
+      "Selected credit applications will be rejected": "Maombi ya mkopo yaliyochaguliwa yatakataliwa",
+      "Select at least one credit application to reject": "Chagua angalau ombi moja la mkopo la kukataa.",
+      "All selected credit applications were rejected successfully": "Maombi yote ya mkopo yaliyochaguliwa yamekataliwa kwa mafanikio.",
+      "No selected credit applications could be rejected": "Hakuna ombi la mkopo lililochaguliwa lililoweza kukataliwa.",
+      "Selected credit applications rejection partial result": "{{succeeded}} kati ya {{total}} maombi ya mkopo yaliyochaguliwa yamekataliwa. {{failed}} yameshindwa."
     },
     "permissions": {
       "actions": {

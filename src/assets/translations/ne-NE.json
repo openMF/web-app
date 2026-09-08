@@ -833,7 +833,8 @@
       "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
       "Save": "सुरक्षित गर्नुहोस्",
-      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
+      "Mass Reject": "सामूहिक अस्वीकार"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1806,7 +1807,8 @@
       "Payment Allocation": "भुक्तान विनियोजन",
       "Interest Refunds": "व्याज परतावा",
       "Deferred Income Recognition": "स्थगित आय पहिचान",
-      "Advanced Configuration": "उन्नत कन्फिगरेसन"
+      "Advanced Configuration": "उन्नत कन्फिगरेसन",
+      "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -5025,7 +5027,13 @@
       "Amounts cannot be negative": "रकम ऋणात्मक हुन सक्दैन।",
       "Minimum Amount cannot be greater than Maximum Amount": "न्यूनतम रकम अधिकतम रकमभन्दा ठूलो हुन सक्दैन।",
       "Currency is required when filtering by amount": "रकम अनुसार फिल्टर गर्दा मुद्रा आवश्यक हुन्छ।",
-      "max 4 chars": "बढीमा ४ अक्षर"
+      "max 4 chars": "बढीमा ४ अक्षर",
+      "Selected credit applications": "चयन गरिएका क्रेडिट आवेदनहरू",
+      "Selected credit applications will be rejected": "चयन गरिएका क्रेडिट आवेदनहरू अस्वीकार गरिनेछन्",
+      "Select at least one credit application to reject": "अस्वीकार गर्न कम्तीमा एउटा क्रेडिट आवेदन चयन गर्नुहोस्।",
+      "All selected credit applications were rejected successfully": "सबै चयन गरिएका क्रेडिट आवेदनहरू सफलतापूर्वक अस्वीकार गरिए।",
+      "No selected credit applications could be rejected": "चयन गरिएका कुनै पनि क्रेडिट आवेदन अस्वीकार गर्न सकिएन।",
+      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।"
     },
     "permissions": {
       "actions": {

@@ -833,7 +833,8 @@
       "Disable Breach": "Désactiver le Manquement",
       "Enable Breach": "Activer le Manquement",
       "Save": "Enregistrer",
-      "Upload Report Design": "Télécharger un modèle de rapport"
+      "Upload Report Design": "Télécharger un modèle de rapport",
+      "Mass Reject": "Rejeter en masse"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1810,7 +1811,8 @@
       "Payment Allocation": "Allocation de paiement",
       "Interest Refunds": "Remboursement des intérêts",
       "Deferred Income Recognition": "Comptabilisation des produits différés",
-      "Advanced Configuration": "Configuration avancée"
+      "Advanced Configuration": "Configuration avancée",
+      "Mass Reject Credit Applications": "Rejet groupé des demandes de crédit"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Le compte ne sort du statut NPA qu'après apurement des arriérés",
@@ -5028,7 +5030,13 @@
       "Amounts cannot be negative": "Les montants ne peuvent pas être négatifs.",
       "Minimum Amount cannot be greater than Maximum Amount": "Le montant minimum ne peut pas être supérieur au montant maximum.",
       "Currency is required when filtering by amount": "La devise est obligatoire lors du filtrage par montant.",
-      "max 4 chars": "4 caractères max."
+      "max 4 chars": "4 caractères max.",
+      "Selected credit applications": "Demandes de crédit sélectionnées",
+      "Selected credit applications will be rejected": "Les demandes de crédit sélectionnées seront rejetées",
+      "Select at least one credit application to reject": "Sélectionnez au moins une demande de crédit à rejeter.",
+      "All selected credit applications were rejected successfully": "Toutes les demandes de crédit sélectionnées ont été rejetées avec succès.",
+      "No selected credit applications could be rejected": "Aucune demande de crédit sélectionnée n’a pu être rejetée.",
+      "Selected credit applications rejection partial result": "{{succeeded}} sur {{total}} demandes de crédit sélectionnées ont été rejetées. {{failed}} ont échoué."
     },
     "permissions": {
       "actions": {
