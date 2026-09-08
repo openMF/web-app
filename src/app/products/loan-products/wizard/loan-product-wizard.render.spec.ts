@@ -487,4 +487,82 @@ describe('LoanProductWizardComponent (rendered)', () => {
       expect(component.formatValue('interestType', 0)).toBe('Reducing balance');
     });
   });
+
+  /**
+   * I2: the Review walked `kind: 'fields'` steps only, so nothing configured on the reused Classic
+   * steps reached it — a confirmation screen that named every term of the loan except the fees the
+   * borrower pays. DOM-level because the defect is a section that never rendered, and because the
+   * rows come from the reused step component's own state rather than from the wizard's FormGroup.
+   */
+  describe('Review sections for the reused Classic steps', () => {
+    function reviewRows(sectionTitle: string): Array<{ label: string; value: string }> {
+      return Array.from(fixture.nativeElement.querySelectorAll('.review-section') as NodeListOf<HTMLElement>)
+        .filter((section) => section.querySelector('.review-section__title')?.textContent?.trim() === sectionTitle)
+        .flatMap((section) =>
+          Array.from(section.querySelectorAll('.review-row') as NodeListOf<HTMLElement>).map((row) => ({
+            label: row.querySelector('.review-row__label')!.textContent!.trim(),
+            value: row.querySelector('.review-row__value')!.textContent!.trim()
+          }))
+        );
+    }
+
+    function selectCharges(charges: any[]): void {
+      // Written onto the reused step's own data source, the way its Add button does — so this
+      // exercises the same getter the payload assembly reads at submit time.
+      component.loanProductChargesStep!.chargesDataSource = charges;
+      detect();
+    }
+
+    beforeEach(() => {
+      loadChromeCopy();
+      detect();
+    });
+
+    it('lists a selected charge with its type, amount and collection event', () => {
+      selectCharges([
+        {
+          name: 'Processing Fee',
+          penalty: false,
+          amount: 1500,
+          currency: { displaySymbol: 'KSh' },
+          chargeCalculationType: { value: 'Flat' },
+          chargeTimeType: { value: 'Disbursement' }
+        }
+      ]);
+
+      // The charge is named by the tenant, so its label is resolved in TypeScript and rendered as-is:
+      // no bundle can carry a key for it, and piping it through `translate` would be a coin flip.
+      expect(reviewRows('Charges')).toEqual([{ label: 'Processing Fee', value: 'Flat · 1,500 · Disbursement' }]);
+    });
+
+    it('separates overdue penalties from fees, as Classic does', () => {
+      selectCharges([
+        {
+          name: 'Processing Fee',
+          penalty: false,
+          amount: 1500,
+          currency: { displaySymbol: 'KSh' },
+          chargeCalculationType: { value: 'Flat' },
+          chargeTimeType: { value: 'Disbursement' }
+        },
+        {
+          name: 'Late Payment Penalty',
+          penalty: true,
+          amount: 2,
+          currency: { displaySymbol: 'KSh' },
+          chargeCalculationType: { value: '% Loan Amount' },
+          chargeTimeType: { value: 'Overdue Fees' }
+        }
+      ]);
+
+      expect(reviewRows('Charges').map((row) => row.label)).toEqual(['Processing Fee']);
+      expect(reviewRows('labels.inputs.Overdue Charges').map((row) => row.label)).toEqual(['Late Payment Penalty']);
+    });
+
+    it('shows no charge section while nothing is selected', () => {
+      selectCharges([]);
+
+      expect(reviewRows('Charges')).toEqual([]);
+    });
+  });
 });
