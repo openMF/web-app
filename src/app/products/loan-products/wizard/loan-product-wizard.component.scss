@@ -421,3 +421,30 @@ mat-checkbox {
     font-weight: 500;
   }
 }
+
+.review-allocations {
+  /* The reused allocation panel is written for Classic's summary, at its type scale and with the
+     same `.flex-40` / `.flex-60` label-value pair. Bring both into line with the surrounding review
+     rows so one section does not read a size larger than the rest. */
+  font-size: 0.875rem;
+
+  ::ng-deep .flex-40 {
+    color: var(--lp-text-muted);
+  }
+
+  ::ng-deep .flex-60 {
+    color: var(--lp-text);
+    font-weight: 500;
+  }
+
+  ::ng-deep table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  ::ng-deep th {
+    color: var(--lp-text-muted);
+    font-weight: 600;
+  }
+}

@@ -293,6 +293,53 @@
           </ng-container>
 
           <!--
+            The allocation order the operator arranged, shown through the very panel the rest of the
+            app views a product's allocations with. An order is a structure, not a label/value row,
+            and reproducing it as one would be a third rendering of the same data.
+          -->
+          <div class="review-section" *ngIf="showPaymentAllocationReview">
+            <p class="review-section__title">
+              {{ 'labels.inputs.Advanced Payment Allocation Transactions' | translate }}
+            </p>
+            <mat-accordion class="review-allocations">
+              <mifosx-view-advance-paymeny-allocation
+                *ngFor="let allocation of paymentAllocation; trackBy: trackByAllocationTransactionType"
+                [paymentAllocation]="allocation"
+                [advancePaymentAllocationData]="advancePaymentAllocationData"
+              ></mifosx-view-advance-paymeny-allocation>
+            </mat-accordion>
+          </div>
+
+          <div class="review-section" *ngIf="showCreditAllocationReview">
+            <p class="review-section__title">
+              {{ 'labels.inputs.Advanced Credit Allocation Transactions' | translate }}
+            </p>
+            <mat-accordion class="review-allocations">
+              <mifosx-view-advance-paymeny-allocation
+                *ngFor="let allocation of creditAllocation; trackBy: trackByAllocationTransactionType"
+                [creditAllocation]="allocation"
+                [advancePaymentAllocationData]="advancePaymentAllocationData"
+              ></mifosx-view-advance-paymeny-allocation>
+            </mat-accordion>
+          </div>
+
+          <!--
+            Everything the operator configured on the reused Charges, Interest Refunds, Deferred Income
+            Recognition and Loan Cycle Variations steps. Section titles are translation keys, like the
+            step labels they repeat; the row labels are NOT — they are resolved in TypeScript because
+            they mix fixed captions with names the backend gave, and a tenant's charge is not a key.
+          -->
+          <ng-container *ngFor="let group of reusedStepReviewGroups; trackBy: trackBySectionTitle">
+            <div class="review-section">
+              <p class="review-section__title">{{ group.title | translate }}</p>
+              <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
+                <span class="review-row__label">{{ row.label }}</span>
+                <span class="review-row__value">{{ row.display }}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <!--
             Accounting summary, driven by the reused Classic accounting step and rendered with the same
             atomic mifosx-gl-account-display component Classic uses — so the selected GL accounts appear
             exactly as they do in the Classic preview.
