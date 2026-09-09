@@ -33,6 +33,9 @@ import { LoginContext } from './login-context.model';
 import { Credentials } from './credentials.model';
 import { getOAuthConfig, getActiveAuthMode, AuthMode } from './oauth.config';
 
+/** Custom Utilities */
+import { sanitizeReturnUrl } from '../utils/return-url.utils';
+
 /**
  * Authentication workflow.
  */
@@ -196,7 +199,7 @@ export class AuthenticationService {
     this.sessionSyncService.onCrossTabLogin$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((sourceStorage) => {
       this.restoreSession(sourceStorage);
       if (this.router.url.startsWith('/login')) {
-        const returnUrl = this.router.parseUrl(this.router.url).queryParams['returnUrl'] || '/';
+        const returnUrl = sanitizeReturnUrl(this.router.parseUrl(this.router.url).queryParams['returnUrl']);
         this.router.navigateByUrl(returnUrl, { replaceUrl: true });
       }
     });
