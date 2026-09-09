@@ -835,7 +835,8 @@
       "Disable Breach": "Deshabilitar Incumplimiento",
       "Enable Breach": "Habilitar Incumplimiento",
       "Save": "Guardar",
-      "Upload Report Design": "Subir diseño de reporte"
+      "Upload Report Design": "Subir diseño de reporte",
+      "Mass Reject": "Rechazar en masa"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1207,6 +1208,7 @@
       "Delinquency & Breach": "Morosidad e Incumplimiento",
       "Delete Self Service User": "Eliminar usuario de autoservicio",
       "Delink Client": "Desvincular cliente",
+      "Discard Changes": "Descartar cambios",
       "Inactivate Self Service User": "Inactivar usuario de autoservicio",
       "Interest": "Interés",
       "Mark as Fraud": "Marcar como Fraude",
@@ -1813,7 +1815,8 @@
       "Payment Allocation": "Prelación de pagos",
       "Interest Refunds": "Reembolso de intereses",
       "Deferred Income Recognition": "Ingresos diferidos",
-      "Advanced Configuration": "Configuración avanzada"
+      "Advanced Configuration": "Configuración avanzada",
+      "Mass Reject Credit Applications": "Rechazo masivo de solicitudes de crédito"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
@@ -4048,6 +4051,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financiamiento de compra ahora y paga después para compras de corto plazo, a menudo sin intereses, liquidado en cuotas fijas.",
       "Consumer Durable Loan": "Crédito para Bienes Duraderos",
+      "Pending changes": "Cambios pendientes",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Financiamiento en el punto de venta para electrónica, electrodomésticos y otros bienes duraderos, a menudo con mensualidades sin intereses.",
       "Credit Card EMI": "Mensualidades con Tarjeta de Crédito",
       "Converts card spends or available credit limit into structured EMIs": "Convierte los consumos con tarjeta o el límite de crédito disponible en cuotas mensuales fijas.",
@@ -4055,6 +4059,7 @@
       "Education Loan": "Crédito Educativo",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financiamiento de matrícula y gastos asociados para estudios nacionales o internacionales, con opciones de pago ajustadas a la duración de la carrera.",
       "Gold Loan": "Crédito con Garantía de Oro",
+      "Principal does not cover the loan amount": "El capital no cubre el monto del préstamo",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Crédito rápido con garantía de joyas o monedas de oro en prenda, con desembolso ágil y trámites mínimos.",
       "Home Loan": "Crédito de Vivienda",
       "Invoice Discounting": "Descuento de Facturas",
@@ -5051,7 +5056,13 @@
       "Amounts cannot be negative": "Los montos no pueden ser negativos.",
       "Minimum Amount cannot be greater than Maximum Amount": "El monto mínimo no puede ser mayor que el monto máximo.",
       "Currency is required when filtering by amount": "La moneda es obligatoria al filtrar por monto.",
-      "max 4 chars": "máx. 4 caracteres"
+      "max 4 chars": "máx. 4 caracteres",
+      "Selected credit applications": "Solicitudes de crédito seleccionadas",
+      "Selected credit applications will be rejected": "Las solicitudes de crédito seleccionadas serán rechazadas",
+      "Select at least one credit application to reject": "Seleccione al menos una solicitud de crédito para rechazar.",
+      "All selected credit applications were rejected successfully": "Todas las solicitudes de crédito seleccionadas se rechazaron correctamente.",
+      "No selected credit applications could be rejected": "No se pudo rechazar ninguna solicitud de crédito seleccionada.",
+      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} solicitudes de crédito seleccionadas fueron rechazadas. {{failed}} fallaron."
     },
     "permissions": {
       "actions": {

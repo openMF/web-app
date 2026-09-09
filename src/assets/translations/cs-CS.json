@@ -834,7 +834,8 @@
       "Disable Breach": "Zakázat porušení",
       "Enable Breach": "Povolit porušení",
       "Save": "Uložit",
-      "Upload Report Design": "Nahrát návrh zprávy"
+      "Upload Report Design": "Nahrát návrh zprávy",
+      "Mass Reject": "Hromadně zamítnout"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1204,6 +1205,7 @@
       "Delinquency & Breach": "Delikvence a porušení",
       "Delete Self Service User": "Odstranit samoobslužného uživatele",
       "Delink Client": "Odpojit klienta",
+      "Discard Changes": "Zahodit změny",
       "Inactivate Self Service User": "Deaktivovat samoobslužného uživatele",
       "Interest": "Úrok",
       "Mark as Fraud": "Označit jako podvod",
@@ -1808,7 +1810,8 @@
       "Payment Allocation": "Přidělení platby",
       "Interest Refunds": "Vrácení úroku",
       "Deferred Income Recognition": "Vykazování odložených výnosů",
-      "Advanced Configuration": "Pokročilá konfigurace"
+      "Advanced Configuration": "Pokročilá konfigurace",
+      "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -4044,6 +4047,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financování „kup teď, zaplať později“ pro krátkodobé, často bezúročné nákupy, splácené v pevných splátkách.",
       "Consumer Durable Loan": "Úvěr na spotřební zboží",
+      "Pending changes": "Čekající změny",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Financování přímo v prodejně pro elektroniku, spotřebiče a další zboží dlouhodobé spotřeby, často s bezúročnými splátkami.",
       "Credit Card EMI": "Splátky kreditní kartou",
       "Converts card spends or available credit limit into structured EMIs": "Převádí útraty kartou nebo dostupný úvěrový limit na pravidelné splátky.",
@@ -4051,6 +4055,7 @@
       "Education Loan": "Studentský úvěr",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financování školného a souvisejících výdajů při studiu v tuzemsku i zahraničí, se splácením přizpůsobeným délce studia.",
       "Gold Loan": "Úvěr proti zlatu",
+      "Principal does not cover the loan amount": "Jistina nepokrývá výši úvěru",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Rychlý zajištěný úvěr proti zastaveným zlatým šperkům nebo mincím, s rychlým vyplacením a minimem papírování.",
       "Home Loan": "Úvěr na bydlení",
       "Invoice Discounting": "Odkup faktur",
@@ -5027,7 +5032,13 @@
       "Amounts cannot be negative": "Částky nemohou být záporné.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimální částka nemůže být vyšší než maximální částka.",
       "Currency is required when filtering by amount": "Při filtrování podle částky je vyžadována měna.",
-      "max 4 chars": "max. 4 znaky"
+      "max 4 chars": "max. 4 znaky",
+      "Selected credit applications": "Vybrané žádosti o úvěr",
+      "Selected credit applications will be rejected": "Vybrané žádosti o úvěr budou zamítnuty",
+      "Select at least one credit application to reject": "Vyberte alespoň jednu žádost o úvěr k zamítnutí.",
+      "All selected credit applications were rejected successfully": "Všechny vybrané žádosti o úvěr byly úspěšně zamítnuty.",
+      "No selected credit applications could be rejected": "Žádné vybrané žádosti o úvěr se nepodařilo zamítnout.",
+      "Selected credit applications rejection partial result": "{{succeeded}} z {{total}} vybraných žádostí o úvěr bylo zamítnuto. {{failed}} selhalo."
     },
     "permissions": {
       "actions": {

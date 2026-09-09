@@ -839,7 +839,8 @@
       "Enable Breach": "Enable Breach",
       "Save Changes": "Save Changes",
       "Save": "Save",
-      "Upload Report Design": "Upload Report Design"
+      "Upload Report Design": "Upload Report Design",
+      "Mass Reject": "Mass Reject"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1212,6 +1213,7 @@
       "Delinquency & Breach": "Delinquency & Breach",
       "Delete Self Service User": "Delete Self Service User",
       "Delink Client": "Delink Client",
+      "Discard Changes": "Discard Changes",
       "Interest": "Interest",
       "Inactivate Self Service User": "Inactivate Self Service User",
       "Mark as Fraud": "Mark as Fraud",
@@ -1821,7 +1823,8 @@
       "Payment Allocation": "Payment Allocation",
       "Interest Refunds": "Interest Refunds",
       "Deferred Income Recognition": "Deferred Income Recognition",
-      "Advanced Configuration": "Advanced Configuration"
+      "Advanced Configuration": "Advanced Configuration",
+      "Mass Reject Credit Applications": "Mass Reject Credit Applications"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -4069,6 +4072,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.",
       "Consumer Durable Loan": "Consumer Durable Loan",
+      "Pending changes": "Pending changes",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.",
       "Credit Card EMI": "Credit Card EMI",
       "Converts card spends or available credit limit into structured EMIs": "Converts card spends or available credit limit into structured EMIs.",
@@ -4076,6 +4080,7 @@
       "Education Loan": "Education Loan",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.",
       "Gold Loan": "Gold Loan",
+      "Principal does not cover the loan amount": "Principal does not cover the loan amount",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.",
       "Home Loan": "Home Loan",
       "Invoice Discounting": "Invoice Discounting",
@@ -5165,7 +5170,13 @@
       "Amounts cannot be negative": "Amounts cannot be negative.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimum Amount cannot be greater than Maximum Amount.",
       "Currency is required when filtering by amount": "Currency is required when filtering by amount.",
-      "max 4 chars": "max 4 chars"
+      "max 4 chars": "max 4 chars",
+      "Selected credit applications": "Selected credit applications",
+      "Selected credit applications will be rejected": "Selected credit applications will be rejected",
+      "Select at least one credit application to reject": "Select at least one credit application to reject.",
+      "All selected credit applications were rejected successfully": "All selected credit applications were rejected successfully.",
+      "No selected credit applications could be rejected": "No selected credit applications could be rejected.",
+      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed."
     },
     "permissions": {
       "actions": {

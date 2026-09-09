@@ -833,7 +833,8 @@
       "Disable Breach": "Išjungti pažeidimą",
       "Enable Breach": "Įjungti pažeidimą",
       "Save": "Išsaugoti",
-      "Upload Report Design": "Įkelti ataskaitos maketą"
+      "Upload Report Design": "Įkelti ataskaitos maketą",
+      "Mass Reject": "Atmesti masiškai"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1202,6 +1203,7 @@
       "Delinquency & Breach": "Delinkvencija ir pažeidimas",
       "Delete Self Service User": "Ištrinti savitarnos naudotoją",
       "Delink Client": "Atsieti klientą",
+      "Discard Changes": "Atmesti pakeitimus",
       "Inactivate Self Service User": "Deaktyvuoti savitarnos naudotoją",
       "Interest": "Palūkanos",
       "Mark as Fraud": "Pažymėti kaip sukčiavimą",
@@ -1806,7 +1808,8 @@
       "Payment Allocation": "Mokėjimo skirstymas",
       "Interest Refunds": "Palūkanų grąžinimas",
       "Deferred Income Recognition": "Atidėtųjų pajamų pripažinimas",
-      "Advanced Configuration": "Išplėstinė konfigūracija"
+      "Advanced Configuration": "Išplėstinė konfigūracija",
+      "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -4042,6 +4045,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "„Pirk dabar, mokėk vėliau“ finansavimas trumpalaikiams, dažnai be palūkanų, pirkiniams, apmokamas fiksuotomis įmokomis.",
       "Consumer Durable Loan": "Ilgalaikio vartojimo prekių paskola",
+      "Pending changes": "Laukiantys pakeitimai",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finansavimas pardavimo vietoje elektronikai, buitinei technikai ir kitoms ilgalaikio vartojimo prekėms, dažnai su nemokamomis įmokomis.",
       "Credit Card EMI": "Kredito kortelės dalinis mokėjimas",
       "Converts card spends or available credit limit into structured EMIs": "Kortelės išlaidas arba turimą kredito limitą paverčia fiksuotomis mėnesinėmis įmokomis.",
@@ -4049,6 +4053,7 @@
       "Education Loan": "Studijų paskola",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Studijų mokesčio ir kitų susijusių išlaidų finansavimas mokantis šalyje ar užsienyje, su studijų trukmei pritaikytomis grąžinimo galimybėmis.",
       "Gold Loan": "Paskola už auksą",
+      "Principal does not cover the loan amount": "Pagrindinė suma nepadengia paskolos sumos",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Greita užtikrinta paskola už įkeistus aukso dirbinius ar monetas, su skubiu išmokėjimu ir minimaliais dokumentais.",
       "Home Loan": "Būsto paskola",
       "Invoice Discounting": "Sąskaitų faktūrų diskontavimas",
@@ -5026,7 +5031,13 @@
       "Amounts cannot be negative": "Sumos negali būti neigiamos.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimali suma negali būti didesnė už maksimalią sumą.",
       "Currency is required when filtering by amount": "Filtruojant pagal sumą būtina nurodyti valiutą.",
-      "max 4 chars": "daugiausia 4 simboliai"
+      "max 4 chars": "daugiausia 4 simboliai",
+      "Selected credit applications": "Pasirinktos kredito paraiškos",
+      "Selected credit applications will be rejected": "Pasirinktos kredito paraiškos bus atmestos",
+      "Select at least one credit application to reject": "Pasirinkite bent vieną kredito paraišką atmetimui.",
+      "All selected credit applications were rejected successfully": "Visos pasirinktos kredito paraiškos sėkmingai atmestos.",
+      "No selected credit applications could be rejected": "Nepavyko atmesti nė vienos pasirinktos kredito paraiškos.",
+      "Selected credit applications rejection partial result": "Atmesta {{succeeded}} iš {{total}} pasirinktų kredito paraiškų. {{failed}} nepavyko."
     },
     "permissions": {
       "actions": {

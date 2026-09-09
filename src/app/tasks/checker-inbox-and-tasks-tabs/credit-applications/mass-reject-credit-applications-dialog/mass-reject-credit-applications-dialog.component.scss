@@ -6,7 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.pending-changes {
-  font-weight: 500;
-  margin-right: 8px;
+.mass-reject-dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 320px;
 }

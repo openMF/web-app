@@ -835,7 +835,8 @@
       "Disable Breach": "Verstoß deaktivieren",
       "Enable Breach": "Verstoß aktivieren",
       "Save": "Speichern",
-      "Upload Report Design": "Berichtsdesign hochladen"
+      "Upload Report Design": "Berichtsdesign hochladen",
+      "Mass Reject": "Massenhaft ablehnen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1205,6 +1206,7 @@
       "Delinquency & Breach": "Verzug & Verstoß",
       "Delete Self Service User": "Self-Service-Benutzer löschen",
       "Delink Client": "Kunde trennen",
+      "Discard Changes": "Änderungen verwerfen",
       "Inactivate Self Service User": "Self-Service-Benutzer deaktivieren",
       "Interest": "Zinsen",
       "Mark as Fraud": "Als Betrug markieren",
@@ -1809,7 +1811,8 @@
       "Payment Allocation": "Zahlungsverteilung",
       "Interest Refunds": "Zinsrückerstattung",
       "Deferred Income Recognition": "Erfassung abgegrenzter Erträge",
-      "Advanced Configuration": "Erweiterte Konfiguration"
+      "Advanced Configuration": "Erweiterte Konfiguration",
+      "Mass Reject Credit Applications": "Kreditanträge massenhaft ablehnen"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -4045,6 +4048,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanzierung kurzfristiger, häufig zinsfreier Käufe nach dem Prinzip „Jetzt kaufen, später bezahlen“, die in festen Raten beglichen werden.",
       "Consumer Durable Loan": "Konsumgüterkredit",
+      "Pending changes": "Ausstehende Änderungen",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finanzierung direkt am Verkaufsort für Elektronik, Haushaltsgeräte und andere langlebige Güter, oft mit zinsfreien Ratenoptionen.",
       "Credit Card EMI": "Kreditkarten-Ratenzahlung",
       "Converts card spends or available credit limit into structured EMIs": "Wandelt Kartenumsätze oder den verfügbaren Kreditrahmen in feste Monatsraten um.",
@@ -4052,6 +4056,7 @@
       "Education Loan": "Bildungskredit",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Finanzierung von Studiengebühren und damit verbundenen Kosten für ein Studium im In- oder Ausland, mit an die Studiendauer angepassten Rückzahlungsoptionen.",
       "Gold Loan": "Goldkredit",
+      "Principal does not cover the loan amount": "Das Kapital deckt den Kreditbetrag nicht",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Schneller, durch verpfändeten Goldschmuck oder Goldmünzen besicherter Kredit mit zügiger Auszahlung und geringem bürokratischem Aufwand.",
       "Home Loan": "Wohnbaukredit",
       "Invoice Discounting": "Rechnungsvorfinanzierung",
@@ -5027,7 +5032,13 @@
       "Amounts cannot be negative": "Beträge dürfen nicht negativ sein.",
       "Minimum Amount cannot be greater than Maximum Amount": "Der Mindestbetrag darf nicht größer als der Höchstbetrag sein.",
       "Currency is required when filtering by amount": "Beim Filtern nach Betrag ist eine Währung erforderlich.",
-      "max 4 chars": "max. 4 Zeichen"
+      "max 4 chars": "max. 4 Zeichen",
+      "Selected credit applications": "Ausgewählte Kreditanträge",
+      "Selected credit applications will be rejected": "Ausgewählte Kreditanträge werden abgelehnt",
+      "Select at least one credit application to reject": "Wählen Sie mindestens einen Kreditantrag zum Ablehnen aus.",
+      "All selected credit applications were rejected successfully": "Alle ausgewählten Kreditanträge wurden erfolgreich abgelehnt.",
+      "No selected credit applications could be rejected": "Keiner der ausgewählten Kreditanträge konnte abgelehnt werden.",
+      "Selected credit applications rejection partial result": "{{succeeded}} von {{total}} ausgewählten Kreditanträgen wurden abgelehnt. {{failed}} fehlgeschlagen."
     },
     "permissions": {
       "actions": {

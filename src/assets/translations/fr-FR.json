@@ -833,7 +833,8 @@
       "Disable Breach": "Désactiver le Manquement",
       "Enable Breach": "Activer le Manquement",
       "Save": "Enregistrer",
-      "Upload Report Design": "Télécharger un modèle de rapport"
+      "Upload Report Design": "Télécharger un modèle de rapport",
+      "Mass Reject": "Rejeter en masse"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1206,6 +1207,7 @@
       "Delinquency & Breach": "Délinquance et violation",
       "Delete Self Service User": "Supprimer l’utilisateur libre-service",
       "Delink Client": "Dissocier le client",
+      "Discard Changes": "Abandonner les modifications",
       "Inactivate Self Service User": "Désactiver l’utilisateur libre-service",
       "Interest": "Intérêts",
       "Mark as Fraud": "Marquer comme fraude",
@@ -1810,7 +1812,8 @@
       "Payment Allocation": "Allocation de paiement",
       "Interest Refunds": "Remboursement des intérêts",
       "Deferred Income Recognition": "Comptabilisation des produits différés",
-      "Advanced Configuration": "Configuration avancée"
+      "Advanced Configuration": "Configuration avancée",
+      "Mass Reject Credit Applications": "Rejet groupé des demandes de crédit"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Le compte ne sort du statut NPA qu'après apurement des arriérés",
@@ -4046,6 +4049,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financement « achetez maintenant, payez plus tard » pour des achats à court terme, souvent sans intérêt, réglés en mensualités fixes.",
       "Consumer Durable Loan": "Prêt biens de consommation durables",
+      "Pending changes": "Modifications en attente",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Financement sur le lieu de vente pour l'électronique, l'électroménager et d'autres biens de consommation durables, souvent avec des mensualités sans intérêts.",
       "Credit Card EMI": "Paiement échelonné par carte de crédit",
       "Converts card spends or available credit limit into structured EMIs": "Convertit les dépenses effectuées par carte ou la limite de crédit disponible en mensualités fixes.",
@@ -4053,6 +4057,7 @@
       "Education Loan": "Prêt étudiant",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financement des frais de scolarité et des dépenses associées pour des études dans le pays ou à l'étranger, avec des options de remboursement adaptées à la durée du cursus.",
       "Gold Loan": "Prêt sur or",
+      "Principal does not cover the loan amount": "Le capital ne couvre pas le montant du prêt",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Prêt garanti rapide contre des bijoux ou des pièces en or mis en gage, avec un décaissement rapide et des formalités minimales.",
       "Home Loan": "Prêt immobilier",
       "Invoice Discounting": "Escompte de factures",
@@ -5028,7 +5033,13 @@
       "Amounts cannot be negative": "Les montants ne peuvent pas être négatifs.",
       "Minimum Amount cannot be greater than Maximum Amount": "Le montant minimum ne peut pas être supérieur au montant maximum.",
       "Currency is required when filtering by amount": "La devise est obligatoire lors du filtrage par montant.",
-      "max 4 chars": "4 caractères max."
+      "max 4 chars": "4 caractères max.",
+      "Selected credit applications": "Demandes de crédit sélectionnées",
+      "Selected credit applications will be rejected": "Les demandes de crédit sélectionnées seront rejetées",
+      "Select at least one credit application to reject": "Sélectionnez au moins une demande de crédit à rejeter.",
+      "All selected credit applications were rejected successfully": "Toutes les demandes de crédit sélectionnées ont été rejetées avec succès.",
+      "No selected credit applications could be rejected": "Aucune demande de crédit sélectionnée n’a pu être rejetée.",
+      "Selected credit applications rejection partial result": "{{succeeded}} sur {{total}} demandes de crédit sélectionnées ont été rejetées. {{failed}} ont échoué."
     },
     "permissions": {
       "actions": {

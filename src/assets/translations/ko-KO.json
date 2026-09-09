@@ -833,7 +833,8 @@
       "Disable Breach": "위반 비활성화",
       "Enable Breach": "위반 활성화",
       "Save": "저장",
-      "Upload Report Design": "보고서 디자인 업로드"
+      "Upload Report Design": "보고서 디자인 업로드",
+      "Mass Reject": "일괄 거절"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1203,6 +1204,7 @@
       "Delinquency & Breach": "연체 및 위반",
       "Delete Self Service User": "셀프 서비스 사용자 삭제",
       "Delink Client": "고객 연결 해제",
+      "Discard Changes": "변경 사항 취소",
       "Inactivate Self Service User": "셀프 서비스 사용자 비활성화",
       "Interest": "이자",
       "Mark as Fraud": "사기로 표시",
@@ -1808,7 +1810,8 @@
       "Payment Allocation": "지불 할당",
       "Interest Refunds": "이자환급",
       "Deferred Income Recognition": "이연수익 인식",
-      "Advanced Configuration": "고급 구성"
+      "Advanced Configuration": "고급 구성",
+      "Mass Reject Credit Applications": "신용 신청 일괄 거절"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -4042,6 +4045,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "단기 구매를 위한 후불 결제 방식의 금융으로, 대개 무이자이며 고정 할부로 상환합니다.",
       "Consumer Durable Loan": "내구소비재 대출",
+      "Pending changes": "대기 중인 변경 사항",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "전자제품, 가전제품 및 기타 내구재를 위한 판매 시점 금융으로, 무이자 할부 옵션이 제공되는 경우가 많습니다.",
       "Credit Card EMI": "신용카드 할부",
       "Converts card spends or available credit limit into structured EMIs": "카드 사용액이나 사용 가능한 신용 한도를 정해진 할부금으로 전환합니다.",
@@ -4049,6 +4053,7 @@
       "Education Loan": "교육 대출",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "국내외 학업의 등록금 및 관련 비용을 지원하며, 학업 기간에 맞춘 상환 옵션을 제공합니다.",
       "Gold Loan": "금 담보 대출",
+      "Principal does not cover the loan amount": "원금이 대출 금액을 충당하지 않습니다",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "담보로 맡긴 금 장신구나 금화를 이용한 신속한 담보 대출로, 빠른 지급과 최소한의 서류 절차를 제공합니다.",
       "Home Loan": "주택 대출",
       "Invoice Discounting": "매출채권 할인",
@@ -5025,7 +5030,13 @@
       "Amounts cannot be negative": "금액은 음수일 수 없습니다.",
       "Minimum Amount cannot be greater than Maximum Amount": "최소 금액은 최대 금액보다 클 수 없습니다.",
       "Currency is required when filtering by amount": "금액으로 필터링할 때 통화가 필요합니다.",
-      "max 4 chars": "최대 4자"
+      "max 4 chars": "최대 4자",
+      "Selected credit applications": "선택한 신용 신청",
+      "Selected credit applications will be rejected": "선택한 신용 신청이 거절됩니다",
+      "Select at least one credit application to reject": "거절할 신용 신청을 하나 이상 선택하세요.",
+      "All selected credit applications were rejected successfully": "선택한 모든 신용 신청이 성공적으로 거절되었습니다.",
+      "No selected credit applications could be rejected": "선택한 신용 신청을 거절할 수 없습니다.",
+      "Selected credit applications rejection partial result": "선택한 신용 신청 {{total}}건 중 {{succeeded}}건이 거절되었습니다. {{failed}}건은 실패했습니다."
     },
     "permissions": {
       "actions": {

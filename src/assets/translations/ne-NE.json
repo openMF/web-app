@@ -833,7 +833,8 @@
       "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
       "Save": "सुरक्षित गर्नुहोस्",
-      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्"
+      "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
+      "Mass Reject": "सामूहिक अस्वीकार"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1202,6 +1203,7 @@
       "Delinquency & Breach": "अपराध र उल्लंघन",
       "Delete Self Service User": "स्वयं सेवा प्रयोगकर्ता मेटाउनुहोस्",
       "Delink Client": "ग्राहक विच्छेद गर्नुहोस्",
+      "Discard Changes": "परिवर्तनहरू खारेज गर्नुहोस्",
       "Inactivate Self Service User": "स्वयं सेवा प्रयोगकर्ता निष्क्रिय गर्नुहोस्",
       "Interest": "ब्याज",
       "Mark as Fraud": "ठगीको रूपमा चिन्ह लगाउनुहोस्",
@@ -1806,7 +1808,8 @@
       "Payment Allocation": "भुक्तान विनियोजन",
       "Interest Refunds": "व्याज परतावा",
       "Deferred Income Recognition": "स्थगित आय पहिचान",
-      "Advanced Configuration": "उन्नत कन्फिगरेसन"
+      "Advanced Configuration": "उन्नत कन्फिगरेसन",
+      "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -4042,6 +4045,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "छोटो अवधिका, प्रायः ब्याजरहित खरिदका लागि अहिले किन्नुहोस्, पछि तिर्नुहोस् वित्तपोषण, निश्चित किस्तामा भुक्तानी गरिने।",
       "Consumer Durable Loan": "उपभोग्य वस्तु ऋण",
+      "Pending changes": "बाँकी परिवर्तनहरू",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "इलेक्ट्रोनिक्स, घरायसी उपकरण र अन्य उपभोग्य वस्तुका लागि बिक्री केन्द्रमै उपलब्ध वित्तपोषण, प्रायः शून्य ब्याज किस्ता विकल्पसहित।",
       "Credit Card EMI": "क्रेडिट कार्ड किस्ता",
       "Converts card spends or available credit limit into structured EMIs": "कार्डबाट भएको खर्च वा उपलब्ध क्रेडिट सीमालाई व्यवस्थित किस्तामा परिणत गर्छ।",
@@ -4049,6 +4053,7 @@
       "Education Loan": "शैक्षिक ऋण",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "स्वदेश वा विदेशमा अध्ययनका लागि शुल्क र सम्बन्धित खर्चको वित्तीय सहायता, पाठ्यक्रम अवधिअनुसार मिलाइएका भुक्तानी विकल्पसहित।",
       "Gold Loan": "सुन धितो ऋण",
+      "Principal does not cover the loan amount": "साँवा रकमले ऋण रकम पुग्दैन",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "धितो राखिएको सुनका गहना वा सिक्काविरुद्ध द्रुत सुरक्षित ऋण, छिटो ऋण वितरण र न्यूनतम कागजी प्रक्रियासहित।",
       "Home Loan": "घर ऋण",
       "Invoice Discounting": "बिजक छुट",
@@ -5025,7 +5030,13 @@
       "Amounts cannot be negative": "रकम ऋणात्मक हुन सक्दैन।",
       "Minimum Amount cannot be greater than Maximum Amount": "न्यूनतम रकम अधिकतम रकमभन्दा ठूलो हुन सक्दैन।",
       "Currency is required when filtering by amount": "रकम अनुसार फिल्टर गर्दा मुद्रा आवश्यक हुन्छ।",
-      "max 4 chars": "बढीमा ४ अक्षर"
+      "max 4 chars": "बढीमा ४ अक्षर",
+      "Selected credit applications": "चयन गरिएका क्रेडिट आवेदनहरू",
+      "Selected credit applications will be rejected": "चयन गरिएका क्रेडिट आवेदनहरू अस्वीकार गरिनेछन्",
+      "Select at least one credit application to reject": "अस्वीकार गर्न कम्तीमा एउटा क्रेडिट आवेदन चयन गर्नुहोस्।",
+      "All selected credit applications were rejected successfully": "सबै चयन गरिएका क्रेडिट आवेदनहरू सफलतापूर्वक अस्वीकार गरिए।",
+      "No selected credit applications could be rejected": "चयन गरिएका कुनै पनि क्रेडिट आवेदन अस्वीकार गर्न सकिएन।",
+      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।"
     },
     "permissions": {
       "actions": {

@@ -21,6 +21,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 /** Angular Material Imports */
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import {
@@ -47,16 +48,24 @@ import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
+import { ProductsService } from 'app/products/products.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { TasksService } from '../../tasks.service';
+import {
+  MassRejectCreditApplicationsDialogComponent,
+  MassRejectCreditApplicationsDialogData
+} from './mass-reject-credit-applications-dialog/mass-reject-credit-applications-dialog.component';
 
 interface OptionItem {
   id?: number | string;
   code?: string;
   value?: string;
   name?: string;
+  shortName?: string;
   displayLabel?: string;
   labelKey?: string;
+  productType?: string;
 }
 
 const CREDIT_APPLICATION_STATUS_OPTIONS: OptionItem[] = [
@@ -95,7 +104,10 @@ export class CreditApplicationsComponent implements OnInit {
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
   private organizationService = inject(OrganizationService);
+  private productsService = inject(ProductsService);
+  private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
   private router = inject(Router);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
@@ -117,6 +129,7 @@ export class CreditApplicationsComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = [
+    'select',
     'accountNo',
     'clientName',
     'clientType',
@@ -141,6 +154,12 @@ export class CreditApplicationsComponent implements OnInit {
   sortOrder = 'DESC';
   loading = false;
   filterError = '';
+  rejecting = false;
+  rejectionResultMessage = '';
+  rejectionResultParams: any = {};
+  rejectionResultType: 'success' | 'error' | '' = '';
+  selectedApplicationIds = new Set<number | string>();
+  selectedApplications = new Map<number | string, any>();
 
   ngOnInit(): void {
     this.loadFilterOptions();
@@ -151,6 +170,7 @@ export class CreditApplicationsComponent implements OnInit {
     if (!this.validateFilters()) {
       return;
     }
+    this.clearSelection();
     this.resetPage();
     this.loadCreditApplications();
   }
@@ -158,6 +178,7 @@ export class CreditApplicationsComponent implements OnInit {
   clearFilters(): void {
     this.creditApplicationsForm.reset();
     this.filterError = '';
+    this.clearSelection();
     this.resetPage();
     this.loadCreditApplications();
   }
@@ -171,6 +192,7 @@ export class CreditApplicationsComponent implements OnInit {
   sortData(sort: Sort): void {
     this.orderBy = sort.direction ? sort.active : 'submittedOnDate';
     this.sortOrder = sort.direction === 'asc' ? 'ASC' : 'DESC';
+    this.clearSelection();
     this.resetPage();
     this.loadCreditApplications();
   }
@@ -217,9 +239,227 @@ export class CreditApplicationsComponent implements OnInit {
     return option.id ?? option.code ?? option.value ?? option.name ?? '';
   }
 
+  isRejectable(application: any): boolean {
+    const status = application?.status;
+    const statusId = typeof status === 'object' && status !== null ? status.id : application?.statusId;
+    const statusCode = typeof status === 'object' && status !== null ? status.code : '';
+    const statusValue = `${this.statusLabel(status)}`.toLowerCase();
+
+    return (
+      !!application?.loanId &&
+      this.isSupportedApplicationProduct(application) &&
+      (statusId === 100 ||
+        statusCode === 'loanStatusType.submitted.and.pending.approval' ||
+        statusValue === 'submitted and pending approval' ||
+        statusValue === 'submitted')
+    );
+  }
+
+  isSelected(application: any): boolean {
+    return this.selectedApplicationIds.has(application?.loanId);
+  }
+
+  toggleSelection(application: any, checked: boolean): void {
+    if (!this.isRejectable(application)) {
+      return;
+    }
+    if (checked) {
+      this.selectedApplicationIds.add(application.loanId);
+      this.selectedApplications.set(application.loanId, application);
+    } else {
+      this.selectedApplicationIds.delete(application.loanId);
+      this.selectedApplications.delete(application.loanId);
+    }
+  }
+
+  visibleRejectableApplications(): any[] {
+    return this.dataSource.data.filter((application) => this.isRejectable(application));
+  }
+
+  allVisibleSelected(): boolean {
+    const visibleRejectableApplications = this.visibleRejectableApplications();
+    return (
+      visibleRejectableApplications.length > 0 &&
+      visibleRejectableApplications.every((application) => this.isSelected(application))
+    );
+  }
+
+  partiallyVisibleSelected(): boolean {
+    const visibleRejectableApplications = this.visibleRejectableApplications();
+    return (
+      visibleRejectableApplications.some((application) => this.isSelected(application)) && !this.allVisibleSelected()
+    );
+  }
+
+  toggleVisibleSelection(checked: boolean): void {
+    this.visibleRejectableApplications().forEach((application) => this.toggleSelection(application, checked));
+  }
+
+  clearSelection(): void {
+    this.selectedApplicationIds.clear();
+    this.selectedApplications.clear();
+  }
+
+  massReject(): void {
+    this.rejectionResultMessage = '';
+    this.rejectionResultParams = {};
+    this.rejectionResultType = '';
+
+    if (this.rejecting) {
+      return;
+    }
+
+    if (this.selectedApplicationIds.size === 0) {
+      this.rejectionResultMessage = 'labels.text.Select at least one credit application to reject';
+      this.rejectionResultType = 'error';
+      this.changeDetectorRef.markForCheck();
+      return;
+    }
+
+    const dialogRef = this.dialog.open(MassRejectCreditApplicationsDialogComponent, {
+      data: {
+        selectedCount: this.selectedApplicationIds.size,
+        rejectedOnDate: this.settingsService.businessDate || new Date()
+      } as MassRejectCreditApplicationsDialogData
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((dialogResult: any) => {
+        if (!dialogResult?.confirm) {
+          return;
+        }
+        this.rejectSelectedApplications(dialogResult.data);
+      });
+  }
+
+  private rejectSelectedApplications(formData: any): void {
+    if (this.rejecting || this.selectedApplicationIds.size === 0) {
+      return;
+    }
+
+    this.rejecting = true;
+    this.rejectionResultMessage = '';
+    this.rejectionResultParams = {};
+    this.rejectionResultType = '';
+    const rejectionPayload = this.buildRejectionPayload(formData);
+    const selectedLoanIds = Array.from(this.selectedApplicationIds);
+
+    forkJoin(
+      selectedLoanIds.map((loanId) => {
+        const application = this.selectedApplications.get(loanId);
+        const request$ = this.isWorkingCapitalApplication(application)
+          ? this.loansService.applyWorkingCapitalLoanAccountCommand(loanId, 'reject', rejectionPayload)
+          : this.loansService.loanActionButtons(loanId, 'reject', rejectionPayload);
+
+        return request$.pipe(
+          catchError((error) =>
+            of({
+              error,
+              loanId
+            })
+          )
+        );
+      })
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((results: any[]) => {
+        const failed = results.filter((result) => result?.error).length;
+        const succeeded = results.length - failed;
+
+        if (failed === 0) {
+          this.rejectionResultMessage = 'labels.text.All selected credit applications were rejected successfully';
+          this.rejectionResultType = 'success';
+          this.clearSelection();
+        } else if (succeeded === 0) {
+          this.rejectionResultMessage = 'labels.text.No selected credit applications could be rejected';
+          this.rejectionResultType = 'error';
+        } else {
+          this.rejectionResultMessage = 'labels.text.Selected credit applications rejection partial result';
+          this.rejectionResultParams = {
+            succeeded,
+            total: results.length,
+            failed
+          };
+          this.rejectionResultType = 'error';
+          results.forEach((result, index) => {
+            if (!result?.error) {
+              this.selectedApplicationIds.delete(selectedLoanIds[index]);
+              this.selectedApplications.delete(selectedLoanIds[index]);
+            }
+          });
+        }
+
+        this.rejecting = false;
+        this.loadCreditApplications();
+      });
+  }
+
+  private buildRejectionPayload(formData: any): any {
+    const dateFormat = this.settingsService.dateFormat;
+    const rejectedOnDate =
+      formData.rejectedOnDate instanceof Date
+        ? this.dateUtils.formatDate(formData.rejectedOnDate, dateFormat)
+        : formData.rejectedOnDate;
+
+    return {
+      rejectedOnDate,
+      note: formData.note,
+      dateFormat,
+      locale: this.settingsService.language.code
+    };
+  }
+
+  private isSupportedApplicationProduct(application: any): boolean {
+    return !!this.applicationProductType(application);
+  }
+
+  private isWorkingCapitalApplication(application: any): boolean {
+    return this.applicationProductType(application) === 'workingcapital';
+  }
+
+  private applicationProductType(application: any): 'loan' | 'workingcapital' | '' {
+    const productType =
+      application?.productType ??
+      application?.loanProductType ??
+      application?.product?.productType ??
+      this.productTypeFromLookup(application);
+    const productTypeValue =
+      typeof productType === 'object' && productType !== null
+        ? productType.value || productType.code || productType.name || productType.id
+        : productType;
+    const normalizedProductType = `${productTypeValue || ''}`.toLowerCase().replace(/[\s_-]/g, '');
+
+    if (normalizedProductType === 'workingcapital' || normalizedProductType === 'workingcapitalloans') {
+      return 'workingcapital';
+    }
+    if (normalizedProductType === 'loan' || normalizedProductType === 'loans') {
+      return 'loan';
+    }
+    return '';
+  }
+
+  private productTypeFromLookup(application: any): string {
+    const matches = this.loanProductOptions.filter((product) => `${product.id}` === `${application?.productId}`);
+    if (matches.length === 1) {
+      return matches[0].productType || '';
+    }
+
+    const productName = `${application?.productName || application?.product?.name || ''}`.toLowerCase();
+    const productShortName = `${application?.productShortName || application?.product?.shortName || ''}`.toLowerCase();
+    const matchedProduct = matches.find(
+      (product) =>
+        (!!productName && `${product.name || ''}`.toLowerCase() === productName) ||
+        (!!productShortName && `${product.shortName || ''}`.toLowerCase() === productShortName)
+    );
+
+    return matchedProduct?.productType || '';
+  }
+
   private loadFilterOptions(): void {
     forkJoin({
-      loanProducts: this.loansService.getLoanProducts().pipe(catchError(() => of([]))),
+      loanProducts: this.productsService.getLoanProductsBasicDetails().pipe(catchError(() => of([]))),
       clientTemplate: this.clientsService.getClientTemplate().pipe(catchError(() => of({}))),
       addressTemplate: this.clientsService.getClientAddressTemplate().pipe(catchError(() => of({}))),
       currencies: this.organizationService.getCurrencies().pipe(catchError(() => of({})))
@@ -244,7 +484,9 @@ export class CreditApplicationsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: any) => {
-          this.dataSource.data = data?.pageItems || [];
+          const pageItems = data?.pageItems || [];
+          this.dataSource.data = pageItems;
+          this.pruneSelectionWithRefreshedPage(pageItems);
           this.totalFilteredRecords = data?.totalFilteredRecords || 0;
           this.loading = false;
           this.changeDetectorRef.markForCheck();
@@ -315,5 +557,20 @@ export class CreditApplicationsComponent implements OnInit {
     if (this.paginator) {
       this.paginator.pageIndex = 0;
     }
+  }
+
+  private pruneSelectionWithRefreshedPage(pageItems: any[]): void {
+    this.selectedApplications.forEach((_application, loanId) => {
+      const refreshedApplication = pageItems.find((application) => `${application.loanId}` === `${loanId}`);
+      if (!refreshedApplication) {
+        return;
+      }
+      if (this.isRejectable(refreshedApplication)) {
+        this.selectedApplications.set(loanId, refreshedApplication);
+      } else {
+        this.selectedApplicationIds.delete(loanId);
+        this.selectedApplications.delete(loanId);
+      }
+    });
   }
 }

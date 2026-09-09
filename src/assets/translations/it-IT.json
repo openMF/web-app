@@ -833,7 +833,8 @@
       "Disable Breach": "Disabilita Violazione",
       "Enable Breach": "Abilita Violazione",
       "Save": "Salva",
-      "Upload Report Design": "Carica modello di rapporto"
+      "Upload Report Design": "Carica modello di rapporto",
+      "Mass Reject": "Rifiuta in massa"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1203,6 +1204,7 @@
       "Delinquency & Breach": "Delinquenza e violazione",
       "Delete Self Service User": "Elimina utente self-service",
       "Delink Client": "Scollega cliente",
+      "Discard Changes": "Annulla le modifiche",
       "Inactivate Self Service User": "Disattiva utente self-service",
       "Interest": "Interessi",
       "Mark as Fraud": "Contrassegna come frode",
@@ -1807,7 +1809,8 @@
       "Payment Allocation": "Ripartizione pagamento",
       "Interest Refunds": "Rimborso degli interessi",
       "Deferred Income Recognition": "Rilevazione dei risconti passivi",
-      "Advanced Configuration": "Configurazione avanzata"
+      "Advanced Configuration": "Configurazione avanzata",
+      "Mass Reject Credit Applications": "Rifiuto massivo delle richieste di credito"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Il conto esce da NPA solo dopo il saldo di tutti gli arretrati",
@@ -4042,6 +4045,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanziamento «compra ora, paga dopo» per acquisti a breve termine, spesso senza interessi, saldato in rate fisse.",
       "Consumer Durable Loan": "Prestito per beni durevoli",
+      "Pending changes": "Modifiche in sospeso",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finanziamento nel punto vendita per elettronica, elettrodomestici e altri beni durevoli, spesso con rate a interessi zero.",
       "Credit Card EMI": "Rateizzazione carta di credito",
       "Converts card spends or available credit limit into structured EMIs": "Converte le spese con carta o il limite di credito disponibile in rate mensili fisse.",
@@ -4049,6 +4053,7 @@
       "Education Loan": "Prestito per studi",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Finanziamento delle tasse scolastiche e delle spese correlate per studi in Italia o all'estero, con opzioni di rimborso allineate alla durata del corso.",
       "Gold Loan": "Prestito su oro",
+      "Principal does not cover the loan amount": "Il capitale non copre l'importo del prestito",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Prestito garantito rapido su gioielli o monete d'oro dati in pegno, con erogazione veloce e documentazione minima.",
       "Home Loan": "Mutuo casa",
       "Invoice Discounting": "Sconto fatture",
@@ -5026,7 +5031,13 @@
       "Amounts cannot be negative": "Gli importi non possono essere negativi.",
       "Minimum Amount cannot be greater than Maximum Amount": "L’importo minimo non può essere maggiore dell’importo massimo.",
       "Currency is required when filtering by amount": "La valuta è obbligatoria quando si filtra per importo.",
-      "max 4 chars": "max 4 caratteri"
+      "max 4 chars": "max 4 caratteri",
+      "Selected credit applications": "Richieste di credito selezionate",
+      "Selected credit applications will be rejected": "Le richieste di credito selezionate saranno rifiutate",
+      "Select at least one credit application to reject": "Selezionare almeno una richiesta di credito da rifiutare.",
+      "All selected credit applications were rejected successfully": "Tutte le richieste di credito selezionate sono state rifiutate correttamente.",
+      "No selected credit applications could be rejected": "Nessuna richiesta di credito selezionata può essere rifiutata.",
+      "Selected credit applications rejection partial result": "{{succeeded}} di {{total}} richieste di credito selezionate sono state rifiutate. {{failed}} non riuscite."
     },
     "permissions": {
       "actions": {

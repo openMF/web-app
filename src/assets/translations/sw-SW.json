@@ -833,7 +833,8 @@
       "Disable Breach": "Zima Ukiukaji",
       "Enable Breach": "Washa Ukiukaji",
       "Save": "Hifadhi",
-      "Upload Report Design": "Pakia Muundo wa Ripoti"
+      "Upload Report Design": "Pakia Muundo wa Ripoti",
+      "Mass Reject": "Kataa kwa wingi"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1201,6 +1202,7 @@
       "Delinquency & Breach": "Uhalifu na Ukiukaji",
       "Delete Self Service User": "Futa mtumiaji wa kujihudumia",
       "Delink Client": "Tenganisha mteja",
+      "Discard Changes": "Tupilia mbali mabadiliko",
       "Inactivate Self Service User": "Zima mtumiaji wa kujihudumia",
       "Interest": "Riba",
       "Mark as Fraud": "Weka Alama ya Ulaghai",
@@ -1804,7 +1806,8 @@
       "Payment Allocation": "Mgao wa malipo",
       "Interest Refunds": "Marejesho ya riba",
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
-      "Advanced Configuration": "Usanidi wa kina"
+      "Advanced Configuration": "Usanidi wa kina",
+      "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -4039,6 +4042,7 @@
       "BNPL": "BNPL",
       "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Ufadhili wa nunua sasa, lipa baadaye kwa manunuzi ya muda mfupi, mara nyingi bila riba, unaolipwa kwa awamu zisizobadilika.",
       "Consumer Durable Loan": "Mkopo wa Bidhaa za Kudumu",
+      "Pending changes": "Mabadiliko yanayosubiri",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Ufadhili wa papo hapo dukani kwa vifaa vya elektroniki, vifaa vya nyumbani na bidhaa nyingine za kudumu, mara nyingi wenye malipo ya awamu bila riba.",
       "Credit Card EMI": "Malipo ya Awamu kwa Kadi ya Mkopo",
       "Converts card spends or available credit limit into structured EMIs": "Hubadilisha matumizi ya kadi au kikomo cha mkopo kilichopo kuwa malipo ya awamu yaliyopangwa.",
@@ -4046,6 +4050,7 @@
       "Education Loan": "Mkopo wa Elimu",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Ufadhili wa ada na gharama zinazohusiana kwa masomo ya ndani au ya nje ya nchi, wenye chaguo za ulipaji zinazolingana na muda wa kozi.",
       "Gold Loan": "Mkopo wa Dhahabu",
+      "Principal does not cover the loan amount": "Mtaji haulingani na kiasi cha mkopo",
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Mkopo wa dhamana wa haraka dhidi ya mapambo au sarafu za dhahabu zilizowekwa rehani, wenye utoaji wa haraka wa fedha na karatasi chache.",
       "Home Loan": "Mkopo wa Nyumba",
       "Invoice Discounting": "Upunguzaji wa Ankara",
@@ -5022,7 +5027,13 @@
       "Amounts cannot be negative": "Kiasi hakiwezi kuwa hasi.",
       "Minimum Amount cannot be greater than Maximum Amount": "Kiasi cha chini hakiwezi kuzidi kiasi cha juu.",
       "Currency is required when filtering by amount": "Sarafu inahitajika unapochuja kwa kiasi.",
-      "max 4 chars": "herufi 4 kwa juu"
+      "max 4 chars": "herufi 4 kwa juu",
+      "Selected credit applications": "Maombi ya mkopo yaliyochaguliwa",
+      "Selected credit applications will be rejected": "Maombi ya mkopo yaliyochaguliwa yatakataliwa",
+      "Select at least one credit application to reject": "Chagua angalau ombi moja la mkopo la kukataa.",
+      "All selected credit applications were rejected successfully": "Maombi yote ya mkopo yaliyochaguliwa yamekataliwa kwa mafanikio.",
+      "No selected credit applications could be rejected": "Hakuna ombi la mkopo lililochaguliwa lililoweza kukataliwa.",
+      "Selected credit applications rejection partial result": "{{succeeded}} kati ya {{total}} maombi ya mkopo yaliyochaguliwa yamekataliwa. {{failed}} yameshindwa."
     },
     "permissions": {
       "actions": {
