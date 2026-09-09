@@ -19,6 +19,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 import {
   MatTableDataSource,
   MatTable,
@@ -74,6 +75,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
 
   /** Savings Account Product Template */
   @Input() savingsAccountProductTemplate: any;
@@ -186,6 +188,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
         label: this.translateService.instant('labels.inputs.Date'),
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
+        maxDate: this.settingsService.maxFutureDate,
         required: false
       })
     ];

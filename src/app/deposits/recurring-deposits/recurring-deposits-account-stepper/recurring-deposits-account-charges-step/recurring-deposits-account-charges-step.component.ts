@@ -176,6 +176,7 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
         label: 'Date',
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
+        maxDate: this.settingsService.maxFutureDate,
         required: false
       })
     ];

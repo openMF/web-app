@@ -76,7 +76,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
    * Creates the Recurring Deposits Charge form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createRecurringDepositsChargeForm();
     this.buildDependencies();
   }
