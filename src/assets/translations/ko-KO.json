@@ -833,7 +833,8 @@
       "Disable Breach": "위반 비활성화",
       "Enable Breach": "위반 활성화",
       "Save": "저장",
-      "Upload Report Design": "보고서 디자인 업로드"
+      "Upload Report Design": "보고서 디자인 업로드",
+      "Mass Reject": "일괄 거절"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1809,7 +1810,8 @@
       "Payment Allocation": "지불 할당",
       "Interest Refunds": "이자환급",
       "Deferred Income Recognition": "이연수익 인식",
-      "Advanced Configuration": "고급 구성"
+      "Advanced Configuration": "고급 구성",
+      "Mass Reject Credit Applications": "신용 신청 일괄 거절"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -5028,7 +5030,13 @@
       "Amounts cannot be negative": "금액은 음수일 수 없습니다.",
       "Minimum Amount cannot be greater than Maximum Amount": "최소 금액은 최대 금액보다 클 수 없습니다.",
       "Currency is required when filtering by amount": "금액으로 필터링할 때 통화가 필요합니다.",
-      "max 4 chars": "최대 4자"
+      "max 4 chars": "최대 4자",
+      "Selected credit applications": "선택한 신용 신청",
+      "Selected credit applications will be rejected": "선택한 신용 신청이 거절됩니다",
+      "Select at least one credit application to reject": "거절할 신용 신청을 하나 이상 선택하세요.",
+      "All selected credit applications were rejected successfully": "선택한 모든 신용 신청이 성공적으로 거절되었습니다.",
+      "No selected credit applications could be rejected": "선택한 신용 신청을 거절할 수 없습니다.",
+      "Selected credit applications rejection partial result": "선택한 신용 신청 {{total}}건 중 {{succeeded}}건이 거절되었습니다. {{failed}}건은 실패했습니다."
     },
     "permissions": {
       "actions": {

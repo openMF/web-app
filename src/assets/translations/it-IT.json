@@ -833,7 +833,8 @@
       "Disable Breach": "Disabilita Violazione",
       "Enable Breach": "Abilita Violazione",
       "Save": "Salva",
-      "Upload Report Design": "Carica modello di rapporto"
+      "Upload Report Design": "Carica modello di rapporto",
+      "Mass Reject": "Rifiuta in massa"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1808,7 +1809,8 @@
       "Payment Allocation": "Ripartizione pagamento",
       "Interest Refunds": "Rimborso degli interessi",
       "Deferred Income Recognition": "Rilevazione dei risconti passivi",
-      "Advanced Configuration": "Configurazione avanzata"
+      "Advanced Configuration": "Configurazione avanzata",
+      "Mass Reject Credit Applications": "Rifiuto massivo delle richieste di credito"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Il conto esce da NPA solo dopo il saldo di tutti gli arretrati",
@@ -5029,7 +5031,13 @@
       "Amounts cannot be negative": "Gli importi non possono essere negativi.",
       "Minimum Amount cannot be greater than Maximum Amount": "L’importo minimo non può essere maggiore dell’importo massimo.",
       "Currency is required when filtering by amount": "La valuta è obbligatoria quando si filtra per importo.",
-      "max 4 chars": "max 4 caratteri"
+      "max 4 chars": "max 4 caratteri",
+      "Selected credit applications": "Richieste di credito selezionate",
+      "Selected credit applications will be rejected": "Le richieste di credito selezionate saranno rifiutate",
+      "Select at least one credit application to reject": "Selezionare almeno una richiesta di credito da rifiutare.",
+      "All selected credit applications were rejected successfully": "Tutte le richieste di credito selezionate sono state rifiutate correttamente.",
+      "No selected credit applications could be rejected": "Nessuna richiesta di credito selezionata può essere rifiutata.",
+      "Selected credit applications rejection partial result": "{{succeeded}} di {{total}} richieste di credito selezionate sono state rifiutate. {{failed}} non riuscite."
     },
     "permissions": {
       "actions": {

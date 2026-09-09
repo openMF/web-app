@@ -835,7 +835,8 @@
       "Disable Breach": "Verstoß deaktivieren",
       "Enable Breach": "Verstoß aktivieren",
       "Save": "Speichern",
-      "Upload Report Design": "Berichtsdesign hochladen"
+      "Upload Report Design": "Berichtsdesign hochladen",
+      "Mass Reject": "Massenhaft ablehnen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1810,7 +1811,8 @@
       "Payment Allocation": "Zahlungsverteilung",
       "Interest Refunds": "Zinsrückerstattung",
       "Deferred Income Recognition": "Erfassung abgegrenzter Erträge",
-      "Advanced Configuration": "Erweiterte Konfiguration"
+      "Advanced Configuration": "Erweiterte Konfiguration",
+      "Mass Reject Credit Applications": "Kreditanträge massenhaft ablehnen"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -5030,7 +5032,13 @@
       "Amounts cannot be negative": "Beträge dürfen nicht negativ sein.",
       "Minimum Amount cannot be greater than Maximum Amount": "Der Mindestbetrag darf nicht größer als der Höchstbetrag sein.",
       "Currency is required when filtering by amount": "Beim Filtern nach Betrag ist eine Währung erforderlich.",
-      "max 4 chars": "max. 4 Zeichen"
+      "max 4 chars": "max. 4 Zeichen",
+      "Selected credit applications": "Ausgewählte Kreditanträge",
+      "Selected credit applications will be rejected": "Ausgewählte Kreditanträge werden abgelehnt",
+      "Select at least one credit application to reject": "Wählen Sie mindestens einen Kreditantrag zum Ablehnen aus.",
+      "All selected credit applications were rejected successfully": "Alle ausgewählten Kreditanträge wurden erfolgreich abgelehnt.",
+      "No selected credit applications could be rejected": "Keiner der ausgewählten Kreditanträge konnte abgelehnt werden.",
+      "Selected credit applications rejection partial result": "{{succeeded}} von {{total}} ausgewählten Kreditanträgen wurden abgelehnt. {{failed}} fehlgeschlagen."
     },
     "permissions": {
       "actions": {

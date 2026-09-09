@@ -833,7 +833,8 @@
       "Disable Breach": "Desativar Violação",
       "Enable Breach": "Ativar Violação",
       "Save": "Guardar",
-      "Upload Report Design": "Carregar modelo de relatório"
+      "Upload Report Design": "Carregar modelo de relatório",
+      "Mass Reject": "Rejeitar em massa"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1807,7 +1808,8 @@
       "Payment Allocation": "Alocação de pagamento",
       "Interest Refunds": "Reembolso de juros",
       "Deferred Income Recognition": "Reconhecimento de receita diferida",
-      "Advanced Configuration": "Configuração avançada"
+      "Advanced Configuration": "Configuração avançada",
+      "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
@@ -5028,7 +5030,13 @@
       "Amounts cannot be negative": "Os montantes não podem ser negativos.",
       "Minimum Amount cannot be greater than Maximum Amount": "O montante mínimo não pode ser superior ao montante máximo.",
       "Currency is required when filtering by amount": "A moeda é obrigatória ao filtrar por montante.",
-      "max 4 chars": "máx. 4 caracteres"
+      "max 4 chars": "máx. 4 caracteres",
+      "Selected credit applications": "Candidaturas de crédito selecionadas",
+      "Selected credit applications will be rejected": "As candidaturas de crédito selecionadas serão rejeitadas",
+      "Select at least one credit application to reject": "Selecione pelo menos uma candidatura de crédito para rejeitar.",
+      "All selected credit applications were rejected successfully": "Todas as candidaturas de crédito selecionadas foram rejeitadas com sucesso.",
+      "No selected credit applications could be rejected": "Não foi possível rejeitar nenhuma candidatura de crédito selecionada.",
+      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} candidaturas de crédito selecionadas foram rejeitadas. {{failed}} falharam."
     },
     "permissions": {
       "actions": {

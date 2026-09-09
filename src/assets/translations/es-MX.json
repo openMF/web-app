@@ -835,7 +835,8 @@
       "Disable Breach": "Deshabilitar Incumplimiento",
       "Enable Breach": "Habilitar Incumplimiento",
       "Save": "Guardar",
-      "Upload Report Design": "Subir diseño de reporte"
+      "Upload Report Design": "Subir diseño de reporte",
+      "Mass Reject": "Rechazar en masa"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1814,7 +1815,8 @@
       "Payment Allocation": "Prelación de pagos",
       "Interest Refunds": "Reembolso de intereses",
       "Deferred Income Recognition": "Ingresos diferidos",
-      "Advanced Configuration": "Configuración avanzada"
+      "Advanced Configuration": "Configuración avanzada",
+      "Mass Reject Credit Applications": "Rechazo masivo de solicitudes de crédito"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
@@ -5054,7 +5056,13 @@
       "Amounts cannot be negative": "Los montos no pueden ser negativos.",
       "Minimum Amount cannot be greater than Maximum Amount": "El monto mínimo no puede ser mayor que el monto máximo.",
       "Currency is required when filtering by amount": "La moneda es obligatoria al filtrar por monto.",
-      "max 4 chars": "máx. 4 caracteres"
+      "max 4 chars": "máx. 4 caracteres",
+      "Selected credit applications": "Solicitudes de crédito seleccionadas",
+      "Selected credit applications will be rejected": "Las solicitudes de crédito seleccionadas serán rechazadas",
+      "Select at least one credit application to reject": "Seleccione al menos una solicitud de crédito para rechazar.",
+      "All selected credit applications were rejected successfully": "Todas las solicitudes de crédito seleccionadas se rechazaron correctamente.",
+      "No selected credit applications could be rejected": "No se pudo rechazar ninguna solicitud de crédito seleccionada.",
+      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} solicitudes de crédito seleccionadas fueron rechazadas. {{failed}} fallaron."
     },
     "permissions": {
       "actions": {

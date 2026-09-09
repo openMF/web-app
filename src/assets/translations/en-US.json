@@ -839,7 +839,8 @@
       "Enable Breach": "Enable Breach",
       "Save Changes": "Save Changes",
       "Save": "Save",
-      "Upload Report Design": "Upload Report Design"
+      "Upload Report Design": "Upload Report Design",
+      "Mass Reject": "Mass Reject"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1822,7 +1823,8 @@
       "Payment Allocation": "Payment Allocation",
       "Interest Refunds": "Interest Refunds",
       "Deferred Income Recognition": "Deferred Income Recognition",
-      "Advanced Configuration": "Advanced Configuration"
+      "Advanced Configuration": "Advanced Configuration",
+      "Mass Reject Credit Applications": "Mass Reject Credit Applications"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -5168,7 +5170,13 @@
       "Amounts cannot be negative": "Amounts cannot be negative.",
       "Minimum Amount cannot be greater than Maximum Amount": "Minimum Amount cannot be greater than Maximum Amount.",
       "Currency is required when filtering by amount": "Currency is required when filtering by amount.",
-      "max 4 chars": "max 4 chars"
+      "max 4 chars": "max 4 chars",
+      "Selected credit applications": "Selected credit applications",
+      "Selected credit applications will be rejected": "Selected credit applications will be rejected",
+      "Select at least one credit application to reject": "Select at least one credit application to reject.",
+      "All selected credit applications were rejected successfully": "All selected credit applications were rejected successfully.",
+      "No selected credit applications could be rejected": "No selected credit applications could be rejected.",
+      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed."
     },
     "permissions": {
       "actions": {

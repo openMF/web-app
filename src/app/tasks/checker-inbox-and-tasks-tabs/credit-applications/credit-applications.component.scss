@@ -33,8 +33,20 @@
     overflow-x: auto;
   }
 
+  .mass-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin: 12px 0;
+  }
+
   table {
     width: 100%;
+  }
+
+  .mat-column-select {
+    width: 56px;
   }
 
   .view-details,
