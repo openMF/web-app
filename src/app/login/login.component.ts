@@ -47,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
+import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
 
 /**
  * Login component.
@@ -117,8 +118,7 @@ export class LoginComponent implements OnInit {
    */
   ngOnInit() {
     if (this.authenticationService.isAuthenticated()) {
-      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-      this.router.navigateByUrl(returnUrl, { replaceUrl: true });
+      this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
       return;
     }
 
@@ -145,8 +145,7 @@ export class LoginComponent implements OnInit {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-        this.router.navigateByUrl(returnUrl, { replaceUrl: true });
+        this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }
@@ -180,6 +179,14 @@ export class LoginComponent implements OnInit {
         }
       );
     this.server = this.settingsService.server;
+  }
+
+  /**
+   * Destination the authentication guard preserved before redirecting here.
+   * @returns {string} The requested route, or the dashboard when none is safe to restore.
+   */
+  private preservedReturnUrl(): string {
+    return sanitizeReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));
   }
 
   reloadSettings(): void {
