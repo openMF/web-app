@@ -20,6 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
+import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
@@ -698,6 +699,15 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 
+  /**
+   * Fetches the Working Capital Loan approval template.
+   *
+   * Approval is the only action still served by this endpoint; every other command, disburse included, goes through
+   * getWorkingCapitalLoanTransactionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {string} actionName 'approve'.
+   * @returns {Observable<any>} The action template.
+   */
   getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', actionName);
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
@@ -726,13 +736,32 @@ export class LoansService {
     );
   }
 
-  getWorkingCapitalLoanPayoutTemplate(loanId: string, actionName: string): Observable<any> {
-    const httpParams = new HttpParams().set('templateType', actionName);
-    return this.http.get(`/workingcapitalloans/${loanId}/template`, { params: httpParams });
-  }
-
-  getWorkingCapitalLoanTransactionTemplate(loanId: string, actionName: string): Observable<any> {
-    const httpParams = new HttpParams().set('command', actionName);
+  /**
+   * Fetches the template for one Working Capital Loan command: disburse, repayment, goodwillCredit,
+   * creditBalanceRefund, recoveryPayment, discountFee, discountFeeAdjustment, chargeOff or prepayLoan.
+   *
+   * Despite the endpoint name this also serves disburse, which is a lifecycle action rather than a transaction.
+   * Approval is the one command it does not serve; that goes through getWorkingCapitalLoanActionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {WorkingCapitalTransactionTemplateCommand} command The command whose template to fetch.
+   * @param {string} transactionDate Date to quote for. Only prepayLoan reads it; defaults to the business date.
+   * @returns {Observable<any>} The transaction template.
+   */
+  getWorkingCapitalLoanTransactionTemplate(
+    loanId: string,
+    command: WorkingCapitalTransactionTemplateCommand,
+    transactionDate?: string
+  ): Observable<any> {
+    let httpParams = new HttpParams().set('command', command);
+    if (command === 'prepayLoan') {
+      const quoteDate =
+        transactionDate ??
+        this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+      httpParams = httpParams
+        .set('transactionDate', quoteDate)
+        .set('locale', this.settingsService.language.code)
+        .set('dateFormat', this.settingsService.dateFormat);
+    }
     return this.http.get(`/working-capital-loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
