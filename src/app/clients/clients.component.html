@@ -83,19 +83,67 @@
     <div class="list-header">
       <span></span>
       <span></span>
-      <span class="sortable" [class.active]="sortAttribute === 'displayName'" (click)="setSort('displayName')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'displayName'"
+        [class.desc]="sortAttribute === 'displayName' && sortDirection === 'desc'"
+        (click)="setSort('displayName')"
+      >
         {{ 'labels.inputs.name' | translate }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
         </svg>
-      </span>
+      </button>
       <span>{{ 'labels.inputs.Status' | translate }}</span>
-      <span class="sortable" [class.active]="sortAttribute === 'accountNumber'" (click)="setSort('accountNumber')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'accountNumber'"
+        [class.desc]="sortAttribute === 'accountNumber' && sortDirection === 'desc'"
+        (click)="setSort('accountNumber')"
+      >
         {{ 'labels.inputs.Account No' | translate }}
-      </span>
-      <span class="sortable" [class.active]="sortAttribute === 'externalId'" (click)="setSort('externalId')">
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'externalId'"
+        [class.desc]="sortAttribute === 'externalId' && sortDirection === 'desc'"
+        (click)="setSort('externalId')"
+      >
         {{ 'labels.inputs.External Id' | translate }}
-      </span>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </button>
       <span>{{ 'labels.inputs.Office Name' | translate }}</span>
     </div>
 

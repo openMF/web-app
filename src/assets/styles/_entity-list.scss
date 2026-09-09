@@ -331,11 +331,28 @@
     white-space: nowrap;
   }
 
+  // Sortable headers are real buttons so they can be reached with Tab and fired
+  // with Enter/Space; the reset keeps them looking like the plain header text.
   .sortable {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    user-select: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+  }
+
+  .sortable:focus-visible {
+    outline: 2px solid var(--loan-blue-700);
+    outline-offset: 2px;
   }
 
   .sortable:hover {
@@ -346,9 +363,24 @@
     color: var(--loan-blue-700);
   }
 
-  .sortable svg {
-    width: 10px;
-    height: 10px;
+  // The arrow points up while ascending and flips over for descending, so the
+  // direction is readable at a glance. It stays dimmed on the columns that are
+  // not currently sorted, where it only advertises that the column can sort.
+  .sortable .sort-arrow {
+    width: 14px;
+    height: 14px;
+    opacity: 0.6;
+    transition:
+      opacity 0.14s ease,
+      transform 0.14s ease;
+  }
+
+  .sortable.active .sort-arrow {
+    opacity: 1;
+  }
+
+  .sortable.active.desc .sort-arrow {
+    transform: rotate(180deg);
   }
 
   .list-row {
