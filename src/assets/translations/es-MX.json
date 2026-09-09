@@ -459,6 +459,11 @@
       "loanNotWrittenOff": "Este préstamo no está castigado, por lo que no admite una recuperación.",
       "reversalForbidden": "No tiene permiso para reversar transacciones de Capital de Trabajo. Solicite a un administrador que realice la reversión.",
       "undoWriteOffWithRecoveries": "No se puede reversar el castigo mientras el préstamo tenga recuperaciones. Revérselas primero."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "La fecha del pago anticipado no puede ser futura.",
+      "dateOutOfRange": "La fecha del pago anticipado está fuera del rango permitido.",
+      "amountMustBePositive": "El monto de la transacción debe ser mayor que 0."
     }
   },
   "labels": {
