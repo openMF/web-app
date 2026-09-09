@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Questo prestito non è stralciato, quindi non può ricevere un recupero.",
       "reversalForbidden": "Non hai il permesso di stornare transazioni di capitale circolante. Chiedi a un amministratore di eseguire lo storno.",
       "undoWriteOffWithRecoveries": "Lo stralcio non può essere annullato finché il prestito ha recuperi. Stornali prima."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "La data del pagamento anticipato non può essere futura.",
+      "dateOutOfRange": "La data del pagamento anticipato è fuori dall’intervallo consentito.",
+      "amountMustBePositive": "L'importo della transazione deve essere maggiore di 0."
     }
   },
   "labels": {

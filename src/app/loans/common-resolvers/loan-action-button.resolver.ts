@@ -42,23 +42,23 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Make Repayment') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'repayment')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'repayment');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'goodwillCredit');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'goodwillCredit');
     } else if (loanActionButton === 'Interest Payment Waiver') {
       return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'payoutRefund')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'repayment');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Merchant Issued Refund') {
       return this.loansService.getLoanActionTemplate(loanId, 'merchantIssuedRefund');
     } else if (loanActionButton === 'Credit Balance Refund') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'creditBalanceRefund')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'creditBalanceRefund');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'creditBalanceRefund');
     } else if (loanActionButton === 'Waive Interest') {
       return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
     } else if (loanActionButton === 'Write Off') {
@@ -72,7 +72,9 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Reschedule') {
       return this.loansService.rescheduleLoanTemplate();
     } else if (loanActionButton === 'Prepay Loan') {
-      return this.loansService.getLoanPrepayLoanActionTemplate(loanId, null);
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanPrepayLoanActionTemplate(loanId, null)
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'prepayLoan');
     } else if (loanActionButton === 'Add Collateral') {
       return this.loansService.getLoanCollateralTemplate(loanId);
     } else if (loanActionButton === 'Disburse to Savings') {
@@ -80,7 +82,7 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Recovery Payment') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'recoverypayment')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'recoveryPayment');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'recoveryPayment');
     } else if (loanActionButton === 'View Guarantors') {
       return this.loansService.getGuarantors(loanId).pipe(catchError(() => of([])));
     } else if (loanActionButton === 'Create Guarantor') {
@@ -88,7 +90,7 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Disburse') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, loanActionButton.toLowerCase())
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, loanActionButton.toLowerCase());
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'disburse');
     } else if (loanActionButton === 'Loan Screen Reports') {
       return this.loansService.getLoanScreenReportsData();
     } else if (loanActionButton === 'Approve') {
@@ -102,7 +104,7 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Charge-Off') {
       return this.loanProductService.isLoanProduct
         ? this.loansService.getLoanActionTemplate(loanId, 'charge-off')
-        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'chargeOff');
+        : this.loansService.getWorkingCapitalLoanTransactionTemplate(loanId, 'chargeOff');
     } else if (loanActionButton === 'Capitalized Income') {
       return this.loansService.getLoanActionTemplate(loanId, 'capitalizedIncome');
     } else if (loanActionButton === 'Contract Termination') {

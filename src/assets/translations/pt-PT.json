@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Este empréstimo não está abatido, pelo que não aceita uma recuperação.",
       "reversalForbidden": "Não tem permissão para reverter transações de Fundo de Maneio. Peça a um administrador que execute a reversão.",
       "undoWriteOffWithRecoveries": "O abate não pode ser anulado enquanto o empréstimo tiver recuperações. Reverta-as primeiro."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "A data do pagamento antecipado não pode ser futura.",
+      "dateOutOfRange": "A data do pagamento antecipado está fora do intervalo permitido.",
+      "amountMustBePositive": "O montante da transação deve ser superior a 0."
     }
   },
   "labels": {

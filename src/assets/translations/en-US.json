@@ -462,6 +462,11 @@
       "loanNotWrittenOff": "This loan is not written off, so it cannot take a recovery payment.",
       "reversalForbidden": "You do not have permission to reverse Working Capital transactions. Ask an administrator to run this reversal.",
       "undoWriteOffWithRecoveries": "The write-off cannot be undone while the loan has recovery payments. Reverse them first."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "The prepayment date cannot be in the future.",
+      "dateOutOfRange": "The prepayment date is outside the allowed range.",
+      "amountMustBePositive": "The transaction amount must be greater than 0."
     }
   },
   "labels": {

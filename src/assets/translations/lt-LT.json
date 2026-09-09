@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Ši paskola nėra nurašyta, todėl negali priimti susigrąžinimo mokėjimo.",
       "reversalForbidden": "Neturite teisės atšaukti apyvartinio kapitalo operacijų. Paprašykite administratoriaus atlikti atšaukimą.",
       "undoWriteOffWithRecoveries": "Nurašymo negalima atšaukti, kol paskola turi susigrąžinimo mokėjimų. Pirmiausia juos stornuokite."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Išankstinio mokėjimo data negali būti ateityje.",
+      "dateOutOfRange": "Išankstinio mokėjimo data yra už leidžiamo intervalo ribų.",
+      "amountMustBePositive": "Operacijos suma turi būti didesnė už 0."
     }
   },
   "labels": {

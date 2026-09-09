@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Ce prêt n'est pas passé en perte : il ne peut pas recevoir de recouvrement.",
       "reversalForbidden": "Vous n'avez pas la permission d'annuler des transactions de fonds de roulement. Demandez à un administrateur d'effectuer cette annulation.",
       "undoWriteOffWithRecoveries": "Le passage en perte ne peut pas être annulé tant que le prêt comporte des recouvrements. Annulez-les d’abord."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "La date du remboursement anticipé ne peut pas être dans le futur.",
+      "dateOutOfRange": "La date du remboursement anticipé est en dehors de la plage autorisée.",
+      "amountMustBePositive": "Le montant de la transaction doit être supérieur à 0."
     }
   },
   "labels": {

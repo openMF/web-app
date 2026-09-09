@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "이 대출은 상각되지 않았으므로 회수 거래를 등록할 수 없습니다.",
       "reversalForbidden": "운전자본 거래를 취소할 권한이 없습니다. 관리자에게 취소를 요청하세요.",
       "undoWriteOffWithRecoveries": "대출에 회수 거래가 있는 동안에는 상각을 취소할 수 없습니다. 먼저 회수 거래를 취소하세요."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "조기 상환 거래일은 미래일 수 없습니다.",
+      "dateOutOfRange": "조기 상환 일자가 허용된 범위를 벗어났습니다.",
+      "amountMustBePositive": "거래 금액은 0보다 커야 합니다."
     }
   },
   "labels": {

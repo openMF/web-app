@@ -460,6 +460,11 @@
       "loanNotWrittenOff": "Dieses Darlehen ist nicht abgeschrieben und kann daher keine Einbringung verbuchen.",
       "reversalForbidden": "Sie haben keine Berechtigung, Betriebsmittelkredit-Transaktionen zu stornieren. Bitten Sie einen Administrator, die Stornierung durchzuführen.",
       "undoWriteOffWithRecoveries": "Die Abschreibung kann nicht rückgängig gemacht werden, solange eine Einbringung vorhanden ist. Stornieren Sie diese zuerst."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Das Datum der vorzeitigen Rückzahlung darf nicht in der Zukunft liegen.",
+      "dateOutOfRange": "Das Datum der vorzeitigen Rückzahlung liegt außerhalb des zulässigen Bereichs.",
+      "amountMustBePositive": "Der Transaktionsbetrag muss größer als 0 sein."
     }
   },
   "labels": {

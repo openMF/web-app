@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Mkopo huu haujafutwa, hivyo hauwezi kupokea malipo ya urejeshaji.",
       "reversalForbidden": "Huna ruhusa ya kutengua miamala ya Mtaji wa Kufanya Kazi. Muombe msimamizi atengue muamala huu.",
       "undoWriteOffWithRecoveries": "Kufuta deni hakuwezi kutenguliwa wakati mkopo una malipo ya urejeshaji. Tengua malipo hayo kwanza."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Tarehe ya malipo ya mapema haiwezi kuwa ya baadaye.",
+      "dateOutOfRange": "Tarehe ya malipo ya mapema iko nje ya kipindi kinachoruhusiwa.",
+      "amountMustBePositive": "Kiasi cha muamala lazima kiwe kikubwa kuliko 0."
     }
   },
   "labels": {
