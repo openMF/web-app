@@ -15,13 +15,20 @@
             class="flex-100"
             [repaymentScheduleDetails]="repaymentScheduleDetails"
             [forEditing]="true"
+            (editPeriod)="onInstallmentEdited($event)"
+            (deletePeriod)="onInstallmentDeleteToggled($event)"
           >
           </mifosx-repayment-schedule-tab>
         }
       </div>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-        <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+        @if (pendingChangesCount > 0) {
+          <span class="pending-changes"
+            >{{ 'labels.text.Pending changes' | translate }}: {{ pendingChangesCount }}</span
+          >
+        }
+        <button type="button" mat-raised-button (click)="cancel()">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
         <button type="button" mat-raised-button (click)="reset()">{{ 'labels.buttons.Reset' | translate }}</button>
