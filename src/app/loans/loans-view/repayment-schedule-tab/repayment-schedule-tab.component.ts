@@ -8,6 +8,7 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -23,9 +24,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import {
+  EditablePeriod,
   RepaymentSchedule,
   RepaymentSchedulePeriod,
-  RepaymentScheduleEditCache
+  RepaymentScheduleEditCache,
+  ScheduleChangeRecord,
+  ScheduleDeleteRecord
 } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -94,6 +98,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Currency Code */
   @Input() currencyCode: string;
@@ -143,8 +148,10 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     'actions'
   ];
 
-  /** Form functions event */
-  @Output() editPeriod = new EventEmitter();
+  /** Emits the installment change so the editing parent can build the schedule variations payload. */
+  @Output() editPeriod = new EventEmitter<ScheduleChangeRecord>();
+  /** Emits the delete/restore toggle of an installment for `exceptions.deletedinstallments`. */
+  @Output() deletePeriod = new EventEmitter<ScheduleDeleteRecord>();
 
   businessDate: Date = new Date();
 
@@ -288,57 +295,137 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   }
 
   editInstallment(period: RepaymentSchedulePeriod): void {
-    if (!period.period) {
+    const periods = this.repaymentScheduleDetails?.periods;
+    if (!period.period || !periods) {
       return;
     }
-    this.editCache[period.period].edit = true;
+    const editable = period as EditablePeriod;
+    if (editable.deleted) {
+      return;
+    }
+    // The variations API identifies installments by their unmodified due date,
+    // so keep the original values across repeated edits of the same row.
+    editable.originalDueDate ??= this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+    editable.originalTotalDueForPeriod ??= period.totalDueForPeriod;
+    editable.originalDueDateValue ??= period.dueDate;
+
+    // Fineract requires distinct, ascending due dates, so bound the picker between neighbors.
+    const index = periods.indexOf(period);
+    const previousPeriod = index > 0 ? periods[index - 1] : null;
+    const nextPeriod = index >= 0 && index < periods.length - 1 ? periods[index + 1] : null;
+    const minDate = previousPeriod ? this.shiftDays(this.dateUtils.parseDate(previousPeriod.dueDate), 1) : undefined;
+    const maxDate = nextPeriod
+      ? this.shiftDays(this.dateUtils.parseDate(nextPeriod.dueDate), -1)
+      : this.shiftDays(this.dateUtils.parseDate(period.dueDate), 366);
+
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'dueDate',
         label: 'Due Date',
         value: this.dateUtils.parseDate(period.dueDate),
         type: 'date',
-        required: true
+        required: true,
+        minDate: minDate,
+        maxDate: maxDate
       }),
       new InputBase({
-        controlName: 'principalDue',
-        label: 'Amount',
-        value: period.principalDue,
+        controlName: 'installmentAmount',
+        label: 'Installment Amount',
+        value: period.totalDueForPeriod,
         type: 'number',
         required: true
       })
     ];
 
     const data = {
-      title: 'Period',
+      title: `Period ${period.period} - ${editable.originalDueDate}`,
       formfields: formfields
     };
-    const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    addDialogRef.afterClosed().subscribe((response: { data?: { value?: Record<string, unknown> } }) => {
-      if (response?.data) {
+    const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
+    editDialogRef
+      .afterClosed()
+      .subscribe((response: { data?: { value?: { dueDate?: Date; installmentAmount?: number } } }) => {
+        const value = response?.data?.value;
+        if (!value) {
+          return;
+        }
+        const amount = Number(value.installmentAmount);
+        if (Number.isFinite(amount) && amount > 0) {
+          period.totalDueForPeriod = amount;
+        }
+        if (value.dueDate instanceof Date) {
+          period.dueDate = [
+            value.dueDate.getFullYear(),
+            value.dueDate.getMonth() + 1,
+            value.dueDate.getDate()
+          ];
+        }
+
+        const displayDueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+        const change: ScheduleChangeRecord = { dueDate: editable.originalDueDate };
+        if (period.totalDueForPeriod !== editable.originalTotalDueForPeriod) {
+          change.installmentAmount = period.totalDueForPeriod;
+        }
+        if (displayDueDate !== editable.originalDueDate) {
+          change.modifiedDueDate = displayDueDate;
+        }
+        editable.changed = change.installmentAmount !== undefined;
+        editable.dueDateChanged = change.modifiedDueDate !== undefined;
+        this.editPeriod.emit(change);
+        // Dialog close happens outside this component's template events, so OnPush needs an explicit mark.
+        this.cdr.markForCheck();
+      });
+  }
+
+  private shiftDays(date: Date, days: number): Date {
+    const shifted = new Date(date);
+    shifted.setDate(shifted.getDate() + days);
+    return shifted;
+  }
+
+  /**
+   * Marks an installment for deletion (or restores it). Deleting reverts any
+   * pending row edit first so a due date never appears in both the
+   * `modifiedinstallments` and `deletedinstallments` variation arrays.
+   */
+  toggleDeleteInstallment(period: RepaymentSchedulePeriod): void {
+    if (!period.period) {
+      return;
+    }
+    const editable = period as EditablePeriod;
+    editable.originalDueDate ??= this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+    editable.originalTotalDueForPeriod ??= period.totalDueForPeriod;
+    editable.originalDueDateValue ??= period.dueDate;
+
+    if (!editable.deleted) {
+      period.totalDueForPeriod = editable.originalTotalDueForPeriod;
+      period.dueDate = editable.originalDueDateValue;
+      editable.changed = false;
+      editable.dueDateChanged = false;
+    }
+    editable.deleted = !editable.deleted;
+    this.deletePeriod.emit({ dueDate: editable.originalDueDate, deleted: editable.deleted });
+    this.cdr.markForCheck();
+  }
+
+  /** Totals of the editable schedule, excluding installments marked for deletion. */
+  editTotals(): { principal: number; interest: number; fees: number; due: number } {
+    const totals = { principal: 0, interest: 0, fees: 0, due: 0 };
+    (this.repaymentScheduleDetails?.periods ?? []).forEach((period) => {
+      if (!period.period || (period as EditablePeriod).deleted) {
+        return;
       }
+      totals.principal += period.principalDue || 0;
+      totals.interest += period.interestOriginalDue || 0;
+      totals.fees += period.feeChargesDue || 0;
+      totals.due += period.totalDueForPeriod || 0;
     });
+    return totals;
   }
 
-  cancelEdit(id: string): void {
-    const index = this.listOfData.findIndex((item) => item.period?.toString() === id);
-    if (index === -1) {
-      return;
-    }
-    this.editCache[id] = {
-      data: { ...this.listOfData[index] },
-      edit: false
-    };
-  }
-
-  saveEdit(period: string): void {
-    const index = this.listOfData.findIndex((item) => item.period?.toString() === period);
-    if (index === -1) {
-      return;
-    }
-    Object.assign(this.listOfData[index], this.editCache[period].data);
-    this.editCache[period].edit = false;
-    this.editPeriod.emit(period);
+  /** True when the principal spread across the remaining installments covers the loan amount. */
+  principalCoversLoan(): boolean {
+    return Math.abs(this.editTotals().principal - (this.repaymentScheduleDetails?.totalPrincipalExpected ?? 0)) < 0.005;
   }
 
   updateEditCache(): void {

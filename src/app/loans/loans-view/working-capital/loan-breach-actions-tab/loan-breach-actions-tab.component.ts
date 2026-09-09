@@ -40,7 +40,6 @@ import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/lo
 import { LoansService } from 'app/loans/loans.service';
 import { LoanDelinquencyAction } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
-import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
@@ -112,7 +111,6 @@ const MS_PER_DAY = 86_400_000;
     MatRowDef,
     MatRow,
     FaIconComponent,
-    DatetimeFormatPipe,
     FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
