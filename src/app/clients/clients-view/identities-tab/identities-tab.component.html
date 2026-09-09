@@ -66,6 +66,7 @@
                   <div
                     class="thumb"
                     [class.clickable]="isPreviewable(document)"
+                    [class.has-pdf]="!!pdfThumbnails[document.id]"
                     role="button"
                     tabindex="0"
                     [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
@@ -80,6 +81,15 @@
                         [title]="document.name"
                         loading="lazy"
                       />
+                    } @else if (pdfThumbnails[document.id]) {
+                      <iframe
+                        class="pdf-thumb"
+                        [src]="pdfThumbnails[document.id]"
+                        [title]="document.name"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        loading="lazy"
+                      ></iframe>
                     } @else {
                       <div class="placeholder">
                         <fa-icon icon="file"></fa-icon>

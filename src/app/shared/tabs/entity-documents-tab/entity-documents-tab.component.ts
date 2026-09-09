@@ -18,6 +18,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import lightGallery from 'lightgallery';
 import lgFullscreen from 'lightgallery/plugins/fullscreen';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
@@ -31,7 +32,7 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
+import { DocumentPreviewService, PDF_GALLERY_THUMBNAIL } from 'app/shared/services/document-preview.service';
 import { Observable, throwError } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -55,6 +56,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
   private documentPreviewService = inject(DocumentPreviewService);
+  private sanitizer = inject(DomSanitizer);
 
   @ViewChild('lightboxRoot', { static: true }) lightboxRoot: ElementRef<HTMLElement>;
 
@@ -66,6 +68,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   @Input() callbackDelete: (documentId: string) => void;
 
   previewThumbnails: Record<string, string> = {};
+  pdfThumbnails: Record<string, SafeResourceUrl> = {};
   private lightboxInstance: LightGallery | null = null;
   private readonly lightboxPlugins = [
     lgZoom,
@@ -140,6 +143,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         this.documentPreviewService.release(documentId);
         this.previewThumbnails = { ...this.previewThumbnails };
         delete this.previewThumbnails[documentId];
+        this.pdfThumbnails = { ...this.pdfThumbnails };
+        delete this.pdfThumbnails[documentId];
         this.cdr.markForCheck();
       }
     });
@@ -168,7 +173,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           }
           galleryItems.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
+            thumb: preview.type === 'image' ? preview.url : PDF_GALLERY_THUMBNAIL,
             subHtml: this.buildSubHtml(item),
             iframe: preview.type === 'pdf'
           });
@@ -265,9 +270,20 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         if (preview.type === 'image') {
           this.previewThumbnails = { ...this.previewThumbnails, [document.id]: preview.url };
           this.cdr.markForCheck();
+        } else if (preview.type === 'pdf') {
+          this.pdfThumbnails = { ...this.pdfThumbnails, [document.id]: this.buildPdfThumbnailUrl(preview.url) };
+          this.cdr.markForCheck();
         }
       })
       .catch((): void => undefined);
+  }
+
+  /**
+   * Point the card's iframe at the PDF with the browser viewer's chrome switched off, fitted to
+   * the card width. The URL is trusted because it is an object URL this app created itself.
+   */
+  private buildPdfThumbnailUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`);
   }
 
   private prefetchThumbnails(): void {
