@@ -19,6 +19,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {
   MatTable,
   MatColumnDef,
@@ -48,7 +49,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgZoom from 'lightgallery/plugins/zoom';
 import type { LightGallery } from 'lightgallery/lightgallery';
 import type { GalleryItem } from 'lightgallery/lg-utils';
-import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
+import { DocumentPreviewService, PDF_GALLERY_THUMBNAIL } from 'app/shared/services/document-preview.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientIdentifierPayload, ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -127,6 +128,7 @@ export class IdentitiesTabComponent implements OnDestroy {
   private translateService = inject(TranslateService);
   private documentPreviewService = inject(DocumentPreviewService);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private sanitizer = inject(DomSanitizer);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
@@ -159,6 +161,7 @@ export class IdentitiesTabComponent implements OnDestroy {
 
   /** Cached thumbnails for previewable docs */
   previewThumbnails: Record<string, string> = {};
+  pdfThumbnails: Record<string, SafeResourceUrl> = {};
   private lightboxInstance: LightGallery | null = null;
   private readonly lightboxPlugins = [
     lgZoom,
@@ -409,7 +412,7 @@ export class IdentitiesTabComponent implements OnDestroy {
           }
           items.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
+            thumb: preview.type === 'image' ? preview.url : PDF_GALLERY_THUMBNAIL,
             subHtml: this.buildSubHtml(doc, identity),
             iframe: preview.type === 'pdf'
           });
@@ -479,6 +482,14 @@ export class IdentitiesTabComponent implements OnDestroy {
       .then((preview) => {
         if (preview.type === 'image') {
           this.setPreviewThumbnail(document.id, preview.url);
+        } else if (preview.type === 'pdf') {
+          this.pdfThumbnails = {
+            ...this.pdfThumbnails,
+            [document.id]: this.sanitizer.bypassSecurityTrustResourceUrl(
+              `${preview.url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`
+            )
+          };
+          this.changeDetectorRef.markForCheck();
         }
       })
       .catch((): void => undefined);

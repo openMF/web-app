@@ -106,6 +106,35 @@ describe('EntityDocumentsTabComponent', () => {
     expect(clientsService.downloadClientDocument).toHaveBeenCalledWith('3616', 45);
   });
 
+  it('shows a PDF card as an embedded viewer with the browser chrome switched off', async () => {
+    component.entityId = '3616';
+    component.entityDocuments = [{ id: 51, name: 'Statement', fileName: 'statement.pdf' }];
+    clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['%PDF-1.4'])));
+    documentPreviewService.resolvePreviewUrl.mockResolvedValue({ url: 'blob:statement', type: 'pdf' } as never);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const iframe = fixture.nativeElement.querySelector('iframe.pdf-thumb');
+    expect(iframe).toBeTruthy();
+    expect(iframe.getAttribute('src')).toBe('blob:statement#toolbar=0&navpanes=0&scrollbar=0&view=FitH');
+    // The card, not the viewer, must receive the click that opens the lightbox.
+    expect(fixture.nativeElement.querySelector('.thumb.has-pdf')).toBeTruthy();
+  });
+
+  it('falls back to the placeholder for file types that cannot be previewed', async () => {
+    component.entityDocuments = [{ id: 52, name: 'Ledger', fileName: 'ledger.xlsx' }];
+    documentPreviewService.isPreviewable.mockReturnValue(false);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('iframe.pdf-thumb')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.placeholder')).toBeTruthy();
+  });
+
   it('uploads a document with issuance and expiry dates', () => {
     const file = new File(['content'], 'statement.pdf', { type: 'application/pdf' });
     component.entityDocuments = [];
