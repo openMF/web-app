@@ -4741,6 +4741,10 @@
       "No transaction was found": "No transaction was found.",
       "No transactional profile entries yet. Add one below.": "No transactional profile entries yet. Add one below.",
       "NoDocuments": "No documents available.",
+      "PreviewNotAvailable": "Preview is not available for this file type. Use Download to open it.",
+      "SpreadsheetPreviewEmpty": "This spreadsheet has no data to preview.",
+      "SpreadsheetPreviewFailed": "This spreadsheet could not be read. Download the file to open it.",
+      "SpreadsheetPreviewTruncated": "Showing the first {{rows}} rows and {{columns}} columns of each sheet. Download the file to see all of it.",
       "NoFileSelected": "No file selected",
       "NoNotesAvailable": "No notes available",
       "NonTriggered": "NonTriggered",
@@ -4970,7 +4974,7 @@
       "Unassigned": "Unassigned",
       "Undo Write-off Description": "This action will reverse the write-off transaction and restore the loan to its previous active status. Please provide a note explaining the reason for this action.",
       "Undo approval of shares account with ID": "Are you sure you want to undo approval of shares account with ID",
-      "UploadDocumentHint": "Upload a PDF or image to generate a preview.",
+      "UploadDocumentHint": "Upload a PDF, image or spreadsheet to generate a preview.",
       "Used Add Fund": "This form will be used to add fund. If you would like to add fund click on add funds button and fill the fund name then click on + button else click Next or Back. For more details click",
       "Used to add currency": "This form will be used to add a currency. To add a currency, click on \"add currency\" and fill the form. For more details click",
       "User Dashboard Component": "This will navigate the user to the dashboard component.",
@@ -5183,7 +5187,8 @@
       "Select at least one credit application to reject": "Select at least one credit application to reject.",
       "All selected credit applications were rejected successfully": "All selected credit applications were rejected successfully.",
       "No selected credit applications could be rejected": "No selected credit applications could be rejected.",
-      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed."
+      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed.",
+      "Counted in repayment periods": "Counted in repayment periods ({{unit}})"
     },
     "permissions": {
       "actions": {

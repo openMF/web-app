@@ -4568,6 +4568,10 @@
       "No transaction was found": "Darījums netika atrasts.",
       "No transactional profile entries yet. Add one below.": "Vēl nav darījumu profila ierakstu. Pievienojiet vienu zemāk.",
       "NoDocuments": "Nav pieejamu dokumentu.",
+      "PreviewNotAvailable": "Šim faila tipam priekšskatījums nav pieejams. Izmantojiet Lejupielādēt, lai to atvērtu.",
+      "SpreadsheetPreviewEmpty": "Šajā izklājlapā nav datu priekšskatīšanai.",
+      "SpreadsheetPreviewFailed": "Šo izklājlapu nevarēja nolasīt. Lejupielādējiet failu, lai to atvērtu.",
+      "SpreadsheetPreviewTruncated": "Tiek parādītas katras lapas pirmās {{rows}} rindas un {{columns}} kolonnas. Lejupielādējiet failu, lai redzētu visu.",
       "NoFileSelected": "Nav izvēlēts fails",
       "NoNotesAvailable": "Nav pieejamas piezīmes",
       "NonTriggered": "Nav izraisīts",
@@ -4764,7 +4768,7 @@
       "Unassigned": "Nav piešķirts",
       "Undo Write-off Description": "Šī darbība atcels norakstīšanas darījumu un atjaunos aizdevumu tā iepriekšējā aktīvajā statusā. Lūdzu, norādiet piezīmi, kurā paskaidrots šīs darbības iemesls.",
       "Undo approval of shares account with ID": "Vai tiešām vēlaties atsaukt akciju konta apstiprināšanu ar ID?",
-      "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu.",
+      "UploadDocumentHint": "Augšupielādējiet PDF, attēlu vai izklājlapu, lai izveidotu priekšskatījumu.",
       "Used Add Fund": "Šī veidlapa tiks izmantota, lai pievienotu finansējumu. Ja vēlaties pievienot fondu, noklikšķiniet uz pogas Pievienot līdzekļus un ievadiet fonda nosaukumu, pēc tam noklikšķiniet uz pogas +, pretējā gadījumā noklikšķiniet uz Tālāk vai Atpakaļ. Lai iegūtu sīkāku informāciju, noklikšķiniet",
       "Used to add currency": "Šī veidlapa tiks izmantota, lai pievienotu valūtu. Lai pievienotu valūtu, noklikšķiniet uz Pievienot valūtu un aizpildiet veidlapu un pēc tam noklikšķiniet uz Pievienot cits noklikšķiniet uz Atpakaļ vai Nākamais. Lai iegūtu sīkāku informāciju, noklikšķiniet",
       "User Dashboard Component": "Tādējādi lietotājs tiks novirzīts uz informācijas paneļa komponentu.",
@@ -5043,7 +5047,8 @@
       "Select at least one credit application to reject": "Atlasiet vismaz vienu kredīta pieteikumu noraidīšanai.",
       "All selected credit applications were rejected successfully": "Visi atlasītie kredīta pieteikumi tika veiksmīgi noraidīti.",
       "No selected credit applications could be rejected": "Nevienu atlasīto kredīta pieteikumu neizdevās noraidīt.",
-      "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās."
+      "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās.",
+      "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})"
     },
     "permissions": {
       "actions": {

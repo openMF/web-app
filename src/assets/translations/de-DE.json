@@ -4570,6 +4570,10 @@
       "No transaction was found": "Es wurde keine Transaktion gefunden.",
       "No transactional profile entries yet. Add one below.": "Noch keine Transaktionsprofileinträge. Fügen Sie unten einen hinzu.",
       "NoDocuments": "Keine Dokumente gefunden.",
+      "PreviewNotAvailable": "Für diesen Dateityp ist keine Vorschau verfügbar. Verwenden Sie Herunterladen, um sie zu öffnen.",
+      "SpreadsheetPreviewEmpty": "Diese Tabelle enthält keine Daten für eine Vorschau.",
+      "SpreadsheetPreviewFailed": "Diese Tabelle konnte nicht gelesen werden. Laden Sie die Datei herunter, um sie zu öffnen.",
+      "SpreadsheetPreviewTruncated": "Es werden die ersten {{rows}} Zeilen und {{columns}} Spalten jedes Blattes angezeigt. Laden Sie die Datei herunter, um alles zu sehen.",
       "NoFileSelected": "Keine Datei ausgewählt",
       "NoNotesAvailable": "Keine Notizen gefunden",
       "NonTriggered": "Nicht ausgelöst",
@@ -4766,7 +4770,7 @@
       "Unassigned": "Nicht zugewiesen",
       "Undo Write-off Description": "Diese Aktion macht die Abschreibungstransaktion rückgängig und stellt den Kredit auf seinen vorherigen aktiven Status wieder her. Bitte geben Sie eine Notiz an, die den Grund für diese Aktion erklärt.",
       "Undo approval of shares account with ID": "Sind Sie sicher, dass Sie die Genehmigung des Aktienkontos mit der ID rückgängig machen möchten?",
-      "UploadDocumentHint": "Laden Sie ein PDF oder Bild hoch, um eine Vorschau zu erstellen.",
+      "UploadDocumentHint": "Laden Sie ein PDF, Bild oder eine Tabelle hoch, um eine Vorschau zu erstellen.",
       "Used Add Fund": "Dieses Formular wird zum Hinzufügen von Mitteln verwendet. Wenn Sie einen Fonds hinzufügen möchten, klicken Sie auf die Schaltfläche „Fonds hinzufügen“ und geben Sie den Namen des Fonds ein. Klicken Sie dann auf die Schaltfläche „+“, andernfalls klicken Sie auf „Weiter“ oder „Zurück“. Für weitere Details klicken Sie",
       "Used to add currency": "Dieses Formular wird zum Hinzufügen von Währungen verwendet. Um eine Währung hinzuzufügen, klicken Sie auf „Währung hinzufügen“, füllen Sie das Formular aus und klicken Sie dann auf „Hinzufügen“, andernfalls klicken Sie auf „Zurück“ oder „Weiter“. Für weitere Details klicken Sie",
       "User Dashboard Component": "Dadurch wird der Benutzer zur Dashboard-Komponente navigiert.",
@@ -5045,7 +5049,8 @@
       "Select at least one credit application to reject": "Wählen Sie mindestens einen Kreditantrag zum Ablehnen aus.",
       "All selected credit applications were rejected successfully": "Alle ausgewählten Kreditanträge wurden erfolgreich abgelehnt.",
       "No selected credit applications could be rejected": "Keiner der ausgewählten Kreditanträge konnte abgelehnt werden.",
-      "Selected credit applications rejection partial result": "{{succeeded}} von {{total}} ausgewählten Kreditanträgen wurden abgelehnt. {{failed}} fehlgeschlagen."
+      "Selected credit applications rejection partial result": "{{succeeded}} von {{total}} ausgewählten Kreditanträgen wurden abgelehnt. Fehlgeschlagen: {{failed}}.",
+      "Counted in repayment periods": "Wird in Rückzahlungsperioden gezählt ({{unit}})"
     },
     "permissions": {
       "actions": {

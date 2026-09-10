@@ -9,9 +9,37 @@
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
 
-export type DocumentPreviewType = 'image' | 'pdf' | 'other';
+export type DocumentPreviewType = 'image' | 'pdf' | 'spreadsheet' | 'other';
 
 const PDF_MIME_TYPE = 'application/pdf';
+
+/**
+ * Content types that identify a spreadsheet we can actually parse. `application/vnd.ms-excel` is
+ * deliberately absent: it is the legacy binary .xls format, which the reader cannot open, and some
+ * servers also hang it on .csv files — so for spreadsheets the file extension is the authority and
+ * only these unambiguous types are trusted.
+ */
+const SPREADSHEET_MIME_TYPES = [
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'text/csv',
+  'application/csv'
+];
+
+/** Extensions the spreadsheet reader supports. Legacy .xls is not one of them. */
+const SPREADSHEET_EXTENSIONS = [
+  'xlsx',
+  'csv'
+];
+
+const IMAGE_EXTENSIONS = [
+  'jpg',
+  'jpeg',
+  'png',
+  'gif',
+  'bmp',
+  'webp',
+  'svg'
+];
 
 /** Content types that say nothing about the payload, so they must not shadow a better source. */
 const GENERIC_MIME_TYPES = [
@@ -52,7 +80,24 @@ export class DocumentPreviewService {
    * Determine whether the document can be previewed inline.
    */
   isPreviewable(document: DocumentDescriptor): boolean {
-    const type = this.detectType(document.mimeType, document.fileName, document.fileData);
+    return this.getPreviewType(document) !== 'other';
+  }
+
+  /**
+   * Classify a document from its metadata alone, without downloading it. Callers need this up
+   * front because the three previewable kinds are rendered by different machinery: images and
+   * PDFs go to the lightbox gallery, spreadsheets have to be parsed and drawn as a grid.
+   */
+  getPreviewType(document: DocumentDescriptor): DocumentPreviewType {
+    return this.detectType(document.mimeType, document.fileName, document.fileData);
+  }
+
+  /**
+   * Whether the document belongs in the lightbox carousel. A spreadsheet is previewable but not
+   * a gallery slide, so it must not be swept into the image/PDF items.
+   */
+  isGalleryPreviewable(document: DocumentDescriptor): boolean {
+    const type = this.getPreviewType(document);
     return type === 'image' || type === 'pdf';
   }
 
@@ -122,27 +167,28 @@ export class DocumentPreviewService {
   }
 
   private detectType(mimeType?: string, fileName?: string, fileData?: string): DocumentPreviewType {
-    const normalizedMime = (mimeType || this.extractMimeFromData(fileData) || '').toLowerCase();
+    const normalizedMime = this.toMediaType(mimeType || this.extractMimeFromData(fileData) || '');
+    const extension = (fileName || '').split('.').pop()?.toLowerCase();
+
+    // The extension wins for spreadsheets: it is the only way to tell a readable .csv from the
+    // legacy .xls that shares its content type on some servers.
+    if (extension && SPREADSHEET_EXTENSIONS.includes(extension)) {
+      return 'spreadsheet';
+    }
     if (normalizedMime.includes('pdf')) {
       return 'pdf';
     }
     if (normalizedMime.startsWith('image/')) {
       return 'image';
     }
+    if (SPREADSHEET_MIME_TYPES.includes(normalizedMime)) {
+      return 'spreadsheet';
+    }
 
-    const extension = (fileName || '').split('.').pop()?.toLowerCase();
     if (extension === 'pdf') {
       return 'pdf';
     }
-    if (extension && [
-        'jpg',
-        'jpeg',
-        'png',
-        'gif',
-        'bmp',
-        'webp',
-        'svg'
-      ].includes(extension)) {
+    if (extension && IMAGE_EXTENSIONS.includes(extension)) {
       return 'image';
     }
 

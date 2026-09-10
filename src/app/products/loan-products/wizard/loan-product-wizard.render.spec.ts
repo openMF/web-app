@@ -184,12 +184,22 @@ describe('LoanProductWizardComponent (rendered)', () => {
             'Advanced Configuration': 'Advanced Configuration'
           },
           inputs: { 'Terms vary based on loan cycle': 'Terms vary based on loan cycle' },
-          text: { 'max 4 chars': 'no more than 4 characters' },
+          text: {
+            'max 4 chars': 'no more than 4 characters',
+            'Counted in repayment periods': 'Counted in repayment periods ({{unit}})'
+          },
           buttons: { Preview: 'Preview', Yes: 'Yes', No: 'No' },
           // Deliberately NOT the English these keys carry in en-US.json: a value that matched its own
           // key would pass whether or not the template pipes it, which is exactly the hole these
           // assertions exist to close.
-          catalogs: { 'Per month': 'Monthly rate', 'Declining Balance': 'Reducing balance' }
+          // The two repayment units are given their German names for the same reason: a hint that
+          // read 'Weeks' would pass whether or not the unit went through `labels.catalogs`.
+          catalogs: {
+            'Per month': 'Monthly rate',
+            'Declining Balance': 'Reducing balance',
+            Weeks: 'Wochen',
+            Months: 'Monate'
+          }
         }
       },
       true
@@ -248,7 +258,7 @@ describe('LoanProductWizardComponent (rendered)', () => {
     control.markAsTouched();
     detect();
 
-    const error = fieldByLabel('labels.inputs.Annual interest rate').querySelector('mat-error')!;
+    const error = fieldByLabel('labels.inputs.Nominal interest rate').querySelector('mat-error')!;
     expect(error.textContent).toContain('Up to 6 decimal places allowed');
     expect(error.textContent!.toLowerCase()).not.toContain('positive');
   });
@@ -262,7 +272,7 @@ describe('LoanProductWizardComponent (rendered)', () => {
     detect();
 
     expect(control.errors).toBeNull();
-    expect(fieldByLabel('labels.inputs.Annual interest rate').querySelectorAll('mat-error').length).toBe(0);
+    expect(fieldByLabel('labels.inputs.Nominal interest rate').querySelectorAll('mat-error').length).toBe(0);
   });
 
   /**
@@ -474,6 +484,51 @@ describe('LoanProductWizardComponent (rendered)', () => {
       const hint = fieldByLabel('labels.inputs.Short Name').querySelector('mat-hint');
 
       expect(hint!.textContent!.trim()).toBe('no more than 4 characters');
+    });
+
+    /**
+     * I3(b): the three moratorium fields were labelled "(months)" while Fineract counts them in
+     * repayment periods, so on a weekly product the label was wrong by a factor of four. The label
+     * now matches Classic — which states no unit at all — and the hint names the unit the operator
+     * actually picked. DOM-level because the defect is what reaches the operator's eye.
+     */
+    describe('grace fields counted in repayment periods', () => {
+      function graceField(): HTMLElement {
+        return fieldByLabel('labels.inputs.Grace on principal payment');
+      }
+
+      function graceHint(): string {
+        return graceField().querySelector('mat-hint')!.textContent!.trim();
+      }
+
+      it('names the unit of the repayment frequency the operator selected', () => {
+        component.form.get('repaymentFrequencyType')!.setValue(1);
+        detect();
+
+        expect(graceHint()).toBe('Counted in repayment periods (Wochen)');
+      });
+
+      it('follows a change of repayment frequency', () => {
+        // The hint is memoised per value and language; a cache keyed any more loosely would leave the
+        // operator reading the unit they just moved away from.
+        component.form.get('repaymentFrequencyType')!.setValue(1);
+        detect();
+        component.form.get('repaymentFrequencyType')!.setValue(2);
+        detect();
+
+        expect(graceHint()).toBe('Counted in repayment periods (Monate)');
+      });
+
+      it('carries the unit in the hint and not in the label', () => {
+        component.form.get('repaymentFrequencyType')!.setValue(1);
+        detect();
+
+        const label = graceField().querySelector('mat-label')!.textContent!;
+        expect(label).not.toContain('months');
+        // `mat-form-field` renders at most one hint in a subscript slot and throws on a second, so
+        // the static and period-unit hints have to resolve to one element rather than two bindings.
+        expect(graceField().querySelectorAll('mat-hint').length).toBe(1);
+      });
     });
 
     it('translates a checkbox value in the Review', () => {

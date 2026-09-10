@@ -4568,6 +4568,10 @@
       "No transaction was found": "कुनै लेनदेन फेला परेन।",
       "No transactional profile entries yet. Add one below.": "अझै लेनदेन प्रोफाइल प्रविष्टिहरू छैनन्। तल एउटा थप्नुहोस्।",
       "NoDocuments": "कुनै कागजात उपलब्ध छैन।",
+      "PreviewNotAvailable": "यो फाइल प्रकारको पूर्वावलोकन उपलब्ध छैन। खोल्न डाउनलोड गर्नुहोस् प्रयोग गर्नुहोस्।",
+      "SpreadsheetPreviewEmpty": "यो स्प्रेडसिटमा पूर्वावलोकन गर्न कुनै डेटा छैन।",
+      "SpreadsheetPreviewFailed": "यो स्प्रेडसिट पढ्न सकिएन। खोल्न फाइल डाउनलोड गर्नुहोस्।",
+      "SpreadsheetPreviewTruncated": "प्रत्येक सिटको पहिलो {{rows}} पङ्क्ति र {{columns}} स्तम्भ देखाइँदै छ। सबै हेर्न फाइल डाउनलोड गर्नुहोस्।",
       "NoFileSelected": "कुनै फाइल छानिएको छैन",
       "NoNotesAvailable": "कुनै नोटहरू फेला परेन",
       "NonTriggered": "ट्रिगर नगरिएको",
@@ -4764,7 +4768,7 @@
       "Unassigned": "तोकिएको छैन",
       "Undo Write-off Description": "यो कार्यले राइट-अफ ट्रान्जेक्सन फिर्ता गर्नेछ र ऋणलाई यसको अघिल्लो सक्रिय अवस्थामा पुनर्स्थापित गर्नेछ। कृपया यस कार्यको कारण बताउने नोट प्रदान गर्नुहोस्।",
       "Undo approval of shares account with ID": "के तपाइँ निश्चित हुनुहुन्छ कि तपाइँ आईडी संग शेयर खाता को अनुमोदन अनडू गर्न चाहनुहुन्छ?",
-      "UploadDocumentHint": "पूर्वावलोकन उत्पन्न गर्न PDF वा छवि अपलोड गर्नुहोस्।",
+      "UploadDocumentHint": "पूर्वावलोकन उत्पन्न गर्न PDF, छवि वा स्प्रेडसिट अपलोड गर्नुहोस्।",
       "Used Add Fund": "यो फारम कोष थप्न प्रयोग गरिनेछ। यदि तपाइँ फन्ड थप्न चाहनुहुन्छ भने add funds बटनमा क्लिक गर्नुहोस् र कोषको नाम भर्नुहोस् त्यसपछि + बटनमा क्लिक गर्नुहोस् अन्यथा Next वा पछाडि क्लिक गर्नुहोस्। थप विवरणहरूको लागि क्लिक गर्नुहोस्",
       "Used to add currency": "यो फारम मुद्रा थप्न प्रयोग गरिनेछ। मुद्रा थप्नको लागि add currency मा क्लिक गर्नुहोस् र फारम भर्नुहोस् र त्यसपछि add else मा क्लिक गर्नुहोस् पछाडि वा अर्को क्लिक गर्नुहोस्। थप विवरणहरूको लागि क्लिक गर्नुहोस्",
       "User Dashboard Component": "यसले प्रयोगकर्तालाई ड्यासबोर्ड कम्पोनेन्टमा नेभिगेट गर्नेछ।",
@@ -5043,7 +5047,8 @@
       "Select at least one credit application to reject": "अस्वीकार गर्न कम्तीमा एउटा क्रेडिट आवेदन चयन गर्नुहोस्।",
       "All selected credit applications were rejected successfully": "सबै चयन गरिएका क्रेडिट आवेदनहरू सफलतापूर्वक अस्वीकार गरिए।",
       "No selected credit applications could be rejected": "चयन गरिएका कुनै पनि क्रेडिट आवेदन अस्वीकार गर्न सकिएन।",
-      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।"
+      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।",
+      "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})"
     },
     "permissions": {
       "actions": {

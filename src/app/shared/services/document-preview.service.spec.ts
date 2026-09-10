@@ -116,4 +116,52 @@ describe('DocumentPreviewService', () => {
     expect(service.isPreviewable({ id: '7', fileName: 'statement.pdf' })).toBe(true);
     expect(service.isPreviewable({ id: '8', fileName: 'notes.txt' })).toBe(false);
   });
+
+  describe('spreadsheet detection', () => {
+    it.each([
+      'ledger.xlsx',
+      'ledger.csv',
+      'LEDGER.XLSX'
+    ])('classifies %s as a spreadsheet', (fileName) => {
+      expect(service.getPreviewType({ id: '11', fileName })).toBe('spreadsheet');
+      expect(service.isPreviewable({ id: '11', fileName })).toBe(true);
+    });
+
+    it('classifies a spreadsheet by content type when the name has no extension', () => {
+      const document = {
+        id: '12',
+        fileName: 'attachment',
+        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      };
+
+      expect(service.getPreviewType(document)).toBe('spreadsheet');
+    });
+
+    it('does not claim the legacy .xls format, which the reader cannot open', () => {
+      expect(service.getPreviewType({ id: '13', fileName: 'old.xls' })).toBe('other');
+      expect(service.isPreviewable({ id: '13', fileName: 'old.xls' })).toBe(false);
+    });
+
+    it('does not treat application/vnd.ms-excel as readable, since .csv is served with it too', () => {
+      expect(service.getPreviewType({ id: '14', fileName: 'mystery', mimeType: 'application/vnd.ms-excel' })).toBe(
+        'other'
+      );
+    });
+
+    it('trusts the .csv extension over a misleading legacy excel content type', () => {
+      const document = { id: '15', fileName: 'export.csv', mimeType: 'application/vnd.ms-excel' };
+
+      expect(service.getPreviewType(document)).toBe('spreadsheet');
+    });
+
+    it('keeps spreadsheets out of the lightbox carousel', () => {
+      expect(service.isGalleryPreviewable({ id: '16', fileName: 'ledger.xlsx' })).toBe(false);
+      expect(service.isGalleryPreviewable({ id: '17', fileName: 'statement.pdf' })).toBe(true);
+      expect(service.isGalleryPreviewable({ id: '18', fileName: 'photo.png' })).toBe(true);
+    });
+
+    it('still refuses word processor documents', () => {
+      expect(service.getPreviewType({ id: '19', fileName: 'contract.docx' })).toBe('other');
+    });
+  });
 });

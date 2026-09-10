@@ -7,29 +7,43 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgZone } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faEye, faFile, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEye, faFile, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 
 import { ClientsService } from 'app/clients/clients.service';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
+import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
+import { SpreadsheetPreviewService } from 'app/shared/services/spreadsheet-preview.service';
+import { SpreadsheetPreviewDialogComponent } from 'app/shared/documents/spreadsheet-preview-dialog/spreadsheet-preview-dialog.component';
 import { EntityDocumentsTabComponent } from './entity-documents-tab.component';
+
+jest.mock('app/core/utils/file-download.utils', () => ({
+  downloadBlob: jest.fn()
+}));
+
+/** Let a chain of awaited promises settle — whenStable() does not drain the parse's own chain. */
+const flushMicrotasks = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 describe('EntityDocumentsTabComponent', () => {
   let fixture: ComponentFixture<EntityDocumentsTabComponent>;
   let component: EntityDocumentsTabComponent;
   let clientsService: jest.Mocked<ClientsService>;
   let documentPreviewService: jest.Mocked<DocumentPreviewService>;
+  let spreadsheetPreviewService: jest.Mocked<SpreadsheetPreviewService>;
   let dialog: jest.Mocked<MatDialog>;
+  let alertService: { alert: jest.Mock };
 
   beforeEach(async () => {
     clientsService = {
@@ -38,8 +52,35 @@ describe('EntityDocumentsTabComponent', () => {
     dialog = {
       open: jest.fn(() => ({ afterClosed: () => of(null) }))
     } as any;
+    alertService = { alert: jest.fn() };
+    spreadsheetPreviewService = {
+      load: jest.fn(() =>
+        Promise.resolve({
+          sheets: [
+            {
+              name: 'Balances',
+              rows: [
+                [
+                  'Client',
+                  'Amount'
+                ],
+                [
+                  'Aisha',
+                  '1200'
+                ]
+              ],
+              hiddenRows: 0,
+              hiddenColumns: 0
+            }
+          ],
+          truncated: false
+        })
+      )
+    } as any;
     documentPreviewService = {
       isPreviewable: jest.fn(() => true),
+      getPreviewType: jest.fn(() => 'image'),
+      isGalleryPreviewable: jest.fn(() => true),
       resolvePreviewUrl: jest.fn((document: any, downloadFn: any) => {
         downloadFn(document);
         return Promise.resolve({ url: 'blob:document', type: 'image' });
@@ -60,12 +101,14 @@ describe('EntityDocumentsTabComponent', () => {
         { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
         DatePipe,
         { provide: DocumentPreviewService, useValue: documentPreviewService },
+        { provide: SpreadsheetPreviewService, useValue: spreadsheetPreviewService },
         { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions: ['ALL_FUNCTIONS'] }) } },
-        { provide: MatDialog, useValue: dialog }
+        { provide: MatDialog, useValue: dialog },
+        { provide: AlertService, useValue: alertService }
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faEye, faFile, faPlus, faTimes);
+    TestBed.inject(FaIconLibrary).addIcons(faDownload, faEye, faFile, faPlus, faTimes);
 
     fixture = TestBed.createComponent(EntityDocumentsTabComponent);
     component = fixture.componentInstance;
@@ -190,6 +233,187 @@ describe('EntityDocumentsTabComponent', () => {
     expect(formData.has('issuanceDate')).toBe(false);
     expect(formData.has('expiryDate')).toBe(false);
     expect(formData.get('file')).toBe(file);
+  });
+
+  it('saves a document that cannot be previewed under its stored file name', () => {
+    component.entityDocuments = [{ id: 52, name: 'Ledger', fileName: 'ledger.xlsx' }];
+    documentPreviewService.isPreviewable.mockReturnValue(false);
+    const blob = new Blob(['rows'], { type: 'application/vnd.ms-excel' });
+    clientsService.downloadClientDocument.mockReturnValue(of(blob) as any);
+
+    fixture.detectChanges();
+
+    const downloadButton: HTMLButtonElement = fixture.nativeElement.querySelector('.actions button[color="primary"]');
+    expect(downloadButton).toBeTruthy();
+    downloadButton.click();
+
+    expect(clientsService.downloadClientDocument).toHaveBeenCalledWith('3616', 52);
+    expect(downloadBlob).toHaveBeenCalledWith(blob, 'ledger.xlsx');
+  });
+
+  it('falls back to the document name when the stored file name is missing', () => {
+    component.entityDocuments = [{ id: 53, name: 'Ledger' }];
+    documentPreviewService.isPreviewable.mockReturnValue(false);
+    clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['rows'])) as any);
+
+    component.downloadDocument(component.entityDocuments[0]);
+
+    expect(downloadBlob).toHaveBeenCalledWith(expect.any(Blob), 'Ledger');
+  });
+
+  it('does not request an attachment for an invalid document id', () => {
+    component.downloadDocument({ id: -1, name: 'Ledger', fileName: 'ledger.xlsx' });
+
+    expect(clientsService.downloadClientDocument).not.toHaveBeenCalled();
+    expect(downloadBlob).not.toHaveBeenCalled();
+  });
+
+  it('explains that a file type has no preview rather than leaving the card inert', () => {
+    component.entityDocuments = [{ id: 54, name: 'Ledger', fileName: 'ledger.xlsx' }];
+    documentPreviewService.isPreviewable.mockReturnValue(false);
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.placeholder .hint').textContent).toContain('PreviewNotAvailable');
+    // A thumbnail that opens nothing must not be announced as a Preview button.
+    const thumb: HTMLElement = fixture.nativeElement.querySelector('.thumb');
+    expect(thumb.getAttribute('role')).toBeNull();
+    expect(thumb.getAttribute('tabindex')).toBeNull();
+    expect(thumb.getAttribute('aria-label')).toBeNull();
+  });
+
+  it('does not claim a previewable document has no preview while its thumbnail is still loading', () => {
+    component.entityDocuments = [{ id: 55, name: 'Statement', fileName: 'statement.pdf' }];
+    clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['%PDF-1.4'])) as any);
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.placeholder')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.placeholder .hint')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.thumb').getAttribute('role')).toBe('button');
+  });
+
+  describe('spreadsheet documents', () => {
+    const asSpreadsheet = () => {
+      documentPreviewService.getPreviewType.mockReturnValue('spreadsheet' as never);
+      documentPreviewService.isGalleryPreviewable.mockReturnValue(false);
+    };
+
+    it('parses the sheet and shows the first rows on the card', async () => {
+      asSpreadsheet();
+      component.entityDocuments = [{ id: 60, name: 'Ledger', fileName: 'ledger.xlsx' }];
+      const blob = new Blob(['xlsx-bytes']);
+      clientsService.downloadClientDocument.mockReturnValue(of(blob) as any);
+
+      fixture.detectChanges();
+      await flushMicrotasks();
+      fixture.detectChanges();
+
+      expect(spreadsheetPreviewService.load).toHaveBeenCalledWith(blob, 'ledger.xlsx');
+      const cells = Array.from(fixture.nativeElement.querySelectorAll('table.spreadsheet-thumb td')).map((cell: any) =>
+        cell.textContent.trim()
+      );
+      expect(cells).toEqual([
+        'Client',
+        'Amount',
+        'Aisha',
+        '1200'
+      ]);
+      // A spreadsheet is not a gallery slide, so no image or PDF frame should be built for it.
+      expect(documentPreviewService.resolvePreviewUrl).not.toHaveBeenCalled();
+      expect(fixture.nativeElement.querySelector('iframe.pdf-thumb')).toBeNull();
+    });
+
+    it('opens the viewer dialog instead of the lightbox carousel', async () => {
+      asSpreadsheet();
+      const document = { id: 61, name: 'Ledger', fileName: 'ledger.xlsx' };
+      component.entityDocuments = [document];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['xlsx-bytes'])) as any);
+
+      await component.openPreview(document);
+
+      expect(dialog.open).toHaveBeenCalledWith(
+        SpreadsheetPreviewDialogComponent,
+        expect.objectContaining({
+          data: expect.objectContaining({ name: 'ledger.xlsx' })
+        })
+      );
+    });
+
+    it('downloads and parses the document only once across the card and the dialog', async () => {
+      asSpreadsheet();
+      const document = { id: 62, name: 'Ledger', fileName: 'ledger.xlsx' };
+      component.entityDocuments = [document];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['xlsx-bytes'])) as any);
+
+      fixture.detectChanges();
+      await flushMicrotasks();
+      await component.openPreview(document);
+
+      expect(clientsService.downloadClientDocument).toHaveBeenCalledTimes(1);
+      expect(spreadsheetPreviewService.load).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not open a dialog when the spreadsheet cannot be read', async () => {
+      asSpreadsheet();
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+      const document = { id: 63, name: 'Broken', fileName: 'broken.xlsx' };
+      component.entityDocuments = [document];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['bad'])) as any);
+      spreadsheetPreviewService.load.mockRejectedValue(new Error('not a spreadsheet') as never);
+
+      await component.openPreview(document);
+
+      expect(dialog.open).not.toHaveBeenCalled();
+    });
+
+    it('publishes the parsed sheet inside the Angular zone so the view is actually flushed', async () => {
+      // The reader arrives through a dynamic import, whose promise zone.js does not patch: work
+      // resumed after that await lands outside the zone, where markForCheck() never gets flushed.
+      asSpreadsheet();
+      const document = { id: 65, name: 'Ledger', fileName: 'ledger.xlsx' };
+      component.entityDocuments = [document];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['xlsx-bytes'])) as any);
+      const zone = TestBed.inject(NgZone);
+      const insideZone: boolean[] = [];
+      jest.spyOn(zone, 'run').mockImplementation((fn: any) => {
+        insideZone.push(true);
+        return fn();
+      });
+
+      await component.openPreview(document);
+
+      // Once to publish the parsed grid, once to open the dialog.
+      expect(insideZone).toHaveLength(2);
+      expect(dialog.open).toHaveBeenCalled();
+    });
+
+    it('tells the user when a spreadsheet cannot be read instead of failing silently', async () => {
+      asSpreadsheet();
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+      const document = { id: 66, name: 'Broken', fileName: 'broken.xlsx' };
+      component.entityDocuments = [document];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['bad'])) as any);
+      spreadsheetPreviewService.load.mockRejectedValue(new Error('not a spreadsheet') as never);
+
+      await component.openPreview(document);
+
+      expect(alertService.alert).toHaveBeenCalledWith(
+        expect.objectContaining({ message: expect.stringContaining('SpreadsheetPreviewFailed') })
+      );
+    });
+
+    it('still offers a download for a spreadsheet', async () => {
+      asSpreadsheet();
+      component.entityDocuments = [{ id: 64, name: 'Ledger', fileName: 'ledger.xlsx' }];
+      clientsService.downloadClientDocument.mockReturnValue(of(new Blob(['xlsx-bytes'])) as any);
+
+      fixture.detectChanges();
+      await flushMicrotasks();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.actions button[color="primary"]')).toBeTruthy();
+    });
   });
 
   it('displays issuance and expiry dates with the date format pipe', () => {

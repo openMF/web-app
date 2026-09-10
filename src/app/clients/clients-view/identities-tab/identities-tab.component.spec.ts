@@ -14,17 +14,25 @@ import { of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 import { ClientsService } from '../../clients.service';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
+import { SpreadsheetPreviewService } from 'app/shared/services/spreadsheet-preview.service';
+import { SpreadsheetPreviewDialogComponent } from 'app/shared/documents/spreadsheet-preview-dialog/spreadsheet-preview-dialog.component';
 import { IdentitiesTabComponent } from './identities-tab.component';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+
+jest.mock('app/core/utils/file-download.utils', () => ({
+  downloadBlob: jest.fn()
+}));
 
 describe('IdentitiesTabComponent', () => {
   let component: IdentitiesTabComponent;
   let clientsService: jest.Mocked<ClientsService>;
   let documentPreviewService: jest.Mocked<DocumentPreviewService>;
+  let spreadsheetPreviewService: jest.Mocked<SpreadsheetPreviewService>;
   let markForCheck: jest.Mock;
   let dialog: { open: jest.Mock };
   let dateUtils: { formatDate: jest.Mock; parseDate: jest.Mock };
@@ -37,8 +45,20 @@ describe('IdentitiesTabComponent', () => {
       uploadClientIdentifierDocument: jest.fn(() => of({ resourceId: 'doc-3' })),
       downloadClientIdentificationDocument: jest.fn(() => of(new Blob(['image'], { type: 'image/png' })))
     } as any;
+    spreadsheetPreviewService = {
+      load: jest.fn(() =>
+        Promise.resolve({
+          sheets: [
+            { name: 'Sheet1', rows: [['A1']], hiddenRows: 0, hiddenColumns: 0 }
+          ],
+          truncated: false
+        })
+      )
+    } as any;
     documentPreviewService = {
       isPreviewable: jest.fn(() => true),
+      getPreviewType: jest.fn(() => 'image'),
+      isGalleryPreviewable: jest.fn(() => true),
       resolvePreviewUrl: jest.fn((document: any, downloadFn: any) => {
         downloadFn(document);
         return Promise.resolve({ url: `blob:${document.id}`, type: 'image' });
@@ -69,6 +89,7 @@ describe('IdentitiesTabComponent', () => {
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
         { provide: DocumentPreviewService, useValue: documentPreviewService },
+        { provide: SpreadsheetPreviewService, useValue: spreadsheetPreviewService },
         { provide: MatDialog, useValue: dialog },
         { provide: AlertService, useValue: alertService },
         { provide: Dates, useValue: dateUtils },
@@ -213,6 +234,79 @@ describe('IdentitiesTabComponent', () => {
       issuanceDate: null,
       expiryDate: null,
       status: 'clientIdentifierStatusType.active'
+    });
+  });
+
+  it('saves an identifier document under its stored file name', () => {
+    const blob = new Blob(['rows'], { type: 'application/vnd.ms-excel' });
+    clientsService.downloadClientIdentificationDocument.mockReturnValue(of(blob) as any);
+
+    component.downloadDocument({ id: 'identifier-6' }, { id: 'doc-6', fileName: 'ledger.xlsx' });
+
+    expect(clientsService.downloadClientIdentificationDocument).toHaveBeenCalledWith('identifier-6', 'doc-6');
+    expect(downloadBlob).toHaveBeenCalledWith(blob, 'ledger.xlsx');
+  });
+
+  it('downloads against the document parentEntityId rather than the client id', () => {
+    clientsService.downloadClientIdentificationDocument.mockReturnValue(of(new Blob(['rows'])) as any);
+
+    component.downloadDocument(
+      { id: 'identifier-7' },
+      { id: 'doc-7', parentEntityId: 'identifier-8', fileName: 'passport.docx' }
+    );
+
+    expect(clientsService.downloadClientIdentificationDocument).toHaveBeenCalledWith('identifier-8', 'doc-7');
+    expect(clientsService.downloadClientIdentificationDocument).not.toHaveBeenCalledWith('client-99', 'doc-7');
+  });
+
+  it('does not request an attachment when the identifier cannot be resolved', () => {
+    component.downloadDocument({}, { id: 'doc-9', fileName: 'ledger.xlsx' });
+
+    expect(clientsService.downloadClientIdentificationDocument).not.toHaveBeenCalled();
+    expect(downloadBlob).not.toHaveBeenCalled();
+  });
+
+  describe('spreadsheet identifier documents', () => {
+    beforeEach(() => {
+      documentPreviewService.getPreviewType.mockReturnValue('spreadsheet' as never);
+      documentPreviewService.isGalleryPreviewable.mockReturnValue(false);
+    });
+
+    it('parses the sheet against the identifier id and caches it for the card', async () => {
+      const blob = new Blob(['xlsx-bytes']);
+      clientsService.downloadClientIdentificationDocument.mockReturnValue(of(blob) as any);
+      const document = { id: 'doc-20', parentEntityId: 'identifier-20', fileName: 'ledger.xlsx' };
+
+      (component as any).setThumbnail(document);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(clientsService.downloadClientIdentificationDocument).toHaveBeenCalledWith('identifier-20', 'doc-20');
+      expect(spreadsheetPreviewService.load).toHaveBeenCalledWith(blob, 'ledger.xlsx');
+      expect(component.spreadsheetThumbnailRows(document)).toEqual([['A1']]);
+      // A spreadsheet must not be resolved as a gallery slide.
+      expect(documentPreviewService.resolvePreviewUrl).not.toHaveBeenCalled();
+    });
+
+    it('opens the viewer dialog rather than the lightbox', async () => {
+      clientsService.downloadClientIdentificationDocument.mockReturnValue(of(new Blob(['xlsx-bytes'])) as any);
+      const document = { id: 'doc-21', fileName: 'ledger.xlsx' };
+
+      await component.openDocumentPreview({ id: 'identifier-21', documents: [document] }, document);
+
+      expect(dialog.open).toHaveBeenCalledWith(
+        SpreadsheetPreviewDialogComponent,
+        expect.objectContaining({ data: expect.objectContaining({ name: 'ledger.xlsx' }) })
+      );
+    });
+
+    it('does not open a dialog when the identifier cannot be resolved', async () => {
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+      const document = { id: 'doc-22', fileName: 'ledger.xlsx' };
+
+      await component.openDocumentPreview({}, document);
+
+      expect(clientsService.downloadClientIdentificationDocument).not.toHaveBeenCalled();
+      expect(dialog.open).not.toHaveBeenCalled();
     });
   });
 

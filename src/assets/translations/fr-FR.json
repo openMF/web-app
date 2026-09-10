@@ -4572,6 +4572,10 @@
       "No transaction was found": "Aucune transaction n'a été trouvée.",
       "No transactional profile entries yet. Add one below.": "Aucune entrée de profil transactionnel pour l'instant. Ajoutez-en une ci-dessous.",
       "NoDocuments": "Aucun document trouvé.",
+      "PreviewNotAvailable": "L'aperçu n'est pas disponible pour ce type de fichier. Utilisez Télécharger pour l'ouvrir.",
+      "SpreadsheetPreviewEmpty": "Cette feuille de calcul ne contient aucune donnée à afficher.",
+      "SpreadsheetPreviewFailed": "Cette feuille de calcul n'a pas pu être lue. Téléchargez le fichier pour l'ouvrir.",
+      "SpreadsheetPreviewTruncated": "Affichage des {{rows}} premières lignes et des {{columns}} premières colonnes de chaque feuille. Téléchargez le fichier pour tout consulter.",
       "NoFileSelected": "Aucun fichier sélectionné",
       "NoNotesAvailable": "Aucune note trouvé",
       "NonTriggered": "Non déclenché",
@@ -4768,7 +4772,7 @@
       "Unassigned": "Non attribué",
       "Undo Write-off Description": "Cette action annulera la transaction d'abandon de créance et rétablira le prêt à son statut actif précédent. Veuillez fournir une note expliquant la raison de cette action.",
       "Undo approval of shares account with ID": "Êtes-vous sûr de vouloir annuler l'approbation du compte d'actions avec ID ?",
-      "UploadDocumentHint": "Téléchargez un PDF ou une image pour générer un aperçu.",
+      "UploadDocumentHint": "Téléchargez un PDF, une image ou une feuille de calcul pour générer un aperçu.",
       "Used Add Fund": "Ce formulaire sera utilisé pour ajouter des fonds. Si vous souhaitez ajouter un fonds, cliquez sur le bouton Ajouter des fonds et indiquez le nom du fonds, puis cliquez sur le bouton +, sinon cliquez sur Suivant ou Retour. Pour plus de détails cliquez",
       "Used to add currency": "Ce formulaire sera utilisé pour ajouter de la devise. Pour ajouter une devise, cliquez sur Ajouter une devise et remplissez le formulaire, puis cliquez sur Ajouter, sinon cliquez sur Précédent ou Suivant. Pour plus de détails cliquez",
       "User Dashboard Component": "Cela dirigera l'utilisateur vers le composant du tableau de bord.",
@@ -5046,7 +5050,8 @@
       "Select at least one credit application to reject": "Sélectionnez au moins une demande de crédit à rejeter.",
       "All selected credit applications were rejected successfully": "Toutes les demandes de crédit sélectionnées ont été rejetées avec succès.",
       "No selected credit applications could be rejected": "Aucune demande de crédit sélectionnée n’a pu être rejetée.",
-      "Selected credit applications rejection partial result": "{{succeeded}} sur {{total}} demandes de crédit sélectionnées ont été rejetées. {{failed}} ont échoué."
+      "Selected credit applications rejection partial result": "{{succeeded}} sur {{total}} demandes de crédit sélectionnées ont été rejetées. {{failed}} ont échoué.",
+      "Counted in repayment periods": "Compté en périodes de remboursement ({{unit}})"
     },
     "permissions": {
       "actions": {

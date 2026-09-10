@@ -4574,6 +4574,10 @@
       "No transaction was found": "No se encontró ninguna transacción.",
       "No transactional profile entries yet. Add one below.": "Aún no hay entradas en el perfil transaccional. Agregue una a continuación.",
       "NoDocuments": "No hay documentos encontradas.",
+      "PreviewNotAvailable": "La vista previa no está disponible para este tipo de archivo. Usa Descargar para abrirlo.",
+      "SpreadsheetPreviewEmpty": "Esta hoja de cálculo no tiene datos para previsualizar.",
+      "SpreadsheetPreviewFailed": "No se pudo leer esta hoja de cálculo. Descarga el archivo para abrirlo.",
+      "SpreadsheetPreviewTruncated": "Se muestran las primeras {{rows}} filas y {{columns}} columnas de cada hoja. Descarga el archivo para verlo completo.",
       "NoFileSelected": "No se ha seleccionado ningún archivo",
       "NoNotesAvailable": "No hay notas encontradas",
       "NonTriggered": "No disparado",
@@ -4781,7 +4785,7 @@
       "Unassigned": "No asignado",
       "Undo Write-off Description": "Esta acción revertirá la transacción de castigo contable y restaurará el préstamo a su estado activo anterior. Por favor, proporcione una nota explicando el motivo de esta acción.",
       "Undo approval of shares account with ID": "¿Está seguro de que desea deshacer la aprobación de la cuenta de acciones con ID?",
-      "UploadDocumentHint": "Sube un PDF o imagen para generar una vista previa.",
+      "UploadDocumentHint": "Sube un PDF, imagen u hoja de cálculo para generar una vista previa.",
       "Used Add Fund": "Este formulario se utilizará para agregar fondos. Si desea agregar fondos, haga clic en el botón Agregar fondos y complete el nombre del fondo, luego haga clic en el botón +; de lo contrario, haga clic en Siguiente o Atrás. Para más detalles haga clic",
       "Used to add currency": "Este formulario se utilizará para agregar moneda. Para agregar moneda, haga clic en agregar moneda y complete el formulario y luego haga clic en agregar; de lo contrario, haga clic en Atrás o Siguiente. Para más detalles haga clic",
       "User Dashboard Component": "Esto llevará al usuario al componente del tablero.",
@@ -5045,7 +5049,8 @@
       "Select at least one credit application to reject": "Seleccione al menos una solicitud de crédito para rechazar.",
       "All selected credit applications were rejected successfully": "Todas las solicitudes de crédito seleccionadas se rechazaron correctamente.",
       "No selected credit applications could be rejected": "No se pudo rechazar ninguna solicitud de crédito seleccionada.",
-      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} solicitudes de crédito seleccionadas fueron rechazadas. {{failed}} fallaron."
+      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} solicitudes de crédito seleccionadas fueron rechazadas. {{failed}} fallaron.",
+      "Counted in repayment periods": "Contado en períodos de pago ({{unit}})"
     },
     "permissions": {
       "actions": {
