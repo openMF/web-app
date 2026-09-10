@@ -61,7 +61,10 @@ interface MakerCheckerRecord {
   id: number;
   actionName: string;
   entityName: string;
-  madeOnDate?: string;
+  resourceId?: number;
+  /** Epoch milliseconds once `TasksService` has converted the seconds the endpoint sends;
+   *  anything non-numeric is passed through untouched. */
+  madeOnDate?: number | string;
   processingResult?: string;
   maker?: string;
 }
@@ -153,7 +156,8 @@ export class CheckerInboxComponent implements OnInit {
     'status',
     'user',
     'action',
-    'entity'
+    'entity',
+    'resourceId'
   ];
 
   /**
@@ -186,7 +190,9 @@ export class CheckerInboxComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((customers) => {
-        this.customers = customers;
+        // A reset empties the control while a lookup may still be in flight; the 300ms
+        // debounce delays switchMap's cancellation, so drop the late result here.
+        this.customers = this.customerControl.value ? customers : [];
         this.changeDetectorRef.markForCheck();
       });
   }
@@ -212,6 +218,14 @@ export class CheckerInboxComponent implements OnInit {
   }
 
   search() {
+    this.loadMakerCheckers();
+  }
+
+  /** Clears every advanced-search filter and reloads the unfiltered inbox. */
+  resetFilters() {
+    this.makerCheckerSearchForm.reset();
+    this.customerControl.setValue('');
+    this.customers = [];
     this.loadMakerCheckers();
   }
 

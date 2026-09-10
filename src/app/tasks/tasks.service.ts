@@ -11,7 +11,25 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+
+/**
+ * `/makercheckers` and `/audits/{id}` return the `AuditData` DTO straight from the
+ * resource, so Jackson serialises its `ZonedDateTime` as epoch seconds
+ * (`1789064261.492617`). The `/audits` list goes through Gson's `JodaDateTimeAdapter`
+ * and sends epoch milliseconds. The date pipes read a bare number as milliseconds, so
+ * the seconds form renders as a 1970 date.
+ *
+ * Converted here, where the endpoint fixes the unit, rather than in the shared pipe:
+ * a millisecond value from before September 2001 is numerically indistinguishable from
+ * a seconds value, so no magnitude check further down can tell them apart.
+ */
+function madeOnDateToMillis(record: any): any {
+  if (typeof record?.madeOnDate !== 'number') {
+    return record;
+  }
+  return { ...record, madeOnDate: Math.round(record.madeOnDate * 1000) };
+}
 
 /**
  * Tasks Service
@@ -41,7 +59,9 @@ export class TasksService {
    * @param {searchData} SearchData search the maker checker data.
    */
   getMakerCheckerData(searchData?: any): Observable<any> {
-    return this.http.get('/makercheckers', { params: this.buildHttpParams(searchData) });
+    return this.http
+      .get('/makercheckers', { params: this.buildHttpParams(searchData) })
+      .pipe(map((records: any[]) => (records || []).map(madeOnDateToMillis)));
   }
 
   /**
@@ -145,6 +165,6 @@ export class TasksService {
    * @param {makerCheckerId} MakerCheckerId
    */
   getCheckerInboxDetail(makerCheckerId: any): Observable<any> {
-    return this.http.get(`/audits/${makerCheckerId}`);
+    return this.http.get(`/audits/${makerCheckerId}`).pipe(map(madeOnDateToMillis));
   }
 }

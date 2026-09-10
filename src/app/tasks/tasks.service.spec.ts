@@ -145,4 +145,44 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('sortOrder')).toBe('DESC');
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
   });
+
+  it('converts the epoch-seconds madeOnDate served by /makercheckers to milliseconds', () => {
+    let records: any[];
+    service.getMakerCheckerData().subscribe((response: any[]) => (records = response));
+
+    httpMock
+      .expectOne((req) => req.url === '/makercheckers')
+      .flush([
+        { id: 23, madeOnDate: 1789064261.492617 },
+        { id: 24 }
+      ]);
+
+    expect(records[0].madeOnDate).toBe(1789064261493);
+    expect(records[1].madeOnDate).toBeUndefined();
+  });
+
+  it('converts the epoch-seconds madeOnDate served by /audits/{id} to milliseconds', () => {
+    let detail: any;
+    service.getCheckerInboxDetail(23).subscribe((response: any) => (detail = response));
+
+    httpMock.expectOne('/audits/23').flush({ id: 23, madeOnDate: 1789064261.492617 });
+
+    expect(detail.madeOnDate).toBe(1789064261493);
+  });
+
+  it('leaves a non-numeric madeOnDate and the rest of the record untouched', () => {
+    let records: any[];
+    service.getMakerCheckerData().subscribe((response: any[]) => (records = response));
+
+    httpMock
+      .expectOne((req) => req.url === '/makercheckers')
+      .flush([{ id: 23, madeOnDate: '2026-09-10T18:17:41Z', actionName: 'UPDATE', resourceId: 1 }]);
+
+    expect(records[0]).toEqual({
+      id: 23,
+      madeOnDate: '2026-09-10T18:17:41Z',
+      actionName: 'UPDATE',
+      resourceId: 1
+    });
+  });
 });
