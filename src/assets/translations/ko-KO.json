@@ -5047,7 +5047,8 @@
       "Select at least one credit application to reject": "거절할 신용 신청을 하나 이상 선택하세요.",
       "All selected credit applications were rejected successfully": "선택한 모든 신용 신청이 성공적으로 거절되었습니다.",
       "No selected credit applications could be rejected": "선택한 신용 신청을 거절할 수 없습니다.",
-      "Selected credit applications rejection partial result": "선택한 신용 신청 {{total}}건 중 {{succeeded}}건이 거절되었습니다. {{failed}}건은 실패했습니다."
+      "Selected credit applications rejection partial result": "선택한 신용 신청 {{total}}건 중 {{succeeded}}건이 거절되었습니다. {{failed}}건은 실패했습니다.",
+      "Counted in repayment periods": "상환 주기 단위로 계산됩니다 ({{unit}})"
     },
     "permissions": {
       "actions": {

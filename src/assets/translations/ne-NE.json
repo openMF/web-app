@@ -5047,7 +5047,8 @@
       "Select at least one credit application to reject": "अस्वीकार गर्न कम्तीमा एउटा क्रेडिट आवेदन चयन गर्नुहोस्।",
       "All selected credit applications were rejected successfully": "सबै चयन गरिएका क्रेडिट आवेदनहरू सफलतापूर्वक अस्वीकार गरिए।",
       "No selected credit applications could be rejected": "चयन गरिएका कुनै पनि क्रेडिट आवेदन अस्वीकार गर्न सकिएन।",
-      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।"
+      "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।",
+      "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})"
     },
     "permissions": {
       "actions": {

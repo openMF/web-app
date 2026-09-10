@@ -5049,7 +5049,8 @@
       "Select at least one credit application to reject": "Vyberte alespoň jednu žádost o úvěr k zamítnutí.",
       "All selected credit applications were rejected successfully": "Všechny vybrané žádosti o úvěr byly úspěšně zamítnuty.",
       "No selected credit applications could be rejected": "Žádné vybrané žádosti o úvěr se nepodařilo zamítnout.",
-      "Selected credit applications rejection partial result": "{{succeeded}} z {{total}} vybraných žádostí o úvěr bylo zamítnuto. {{failed}} selhalo."
+      "Selected credit applications rejection partial result": "{{succeeded}} z {{total}} vybraných žádostí o úvěr bylo zamítnuto. {{failed}} selhalo.",
+      "Counted in repayment periods": "Počítáno ve splátkových obdobích ({{unit}})"
     },
     "permissions": {
       "actions": {
