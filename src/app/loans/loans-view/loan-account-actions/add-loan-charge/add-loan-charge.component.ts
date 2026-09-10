@@ -49,6 +49,7 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       name: string;
     };
     chargeCalculationType: {
+      id: number;
       value: any;
     };
     chargeTimeType: {
@@ -70,6 +71,11 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
+  /** Whether `amount` is mandatory for the selected charge (false for WC disbursement charges). */
+  amountRequired = true;
+  /** Whether the amount entered is a percentage rate resolved at disbursement. */
+  isDisbursementRate = false;
+
   get requiredPermission(): string {
     return this.isWorkingCapital ? 'CREATE_WORKINGCAPITALLOANCHARGE' : 'CREATE_LOANCHARGE';
   }
@@ -90,6 +96,12 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
           } else {
             this.loanChargeForm.removeControl('dueDate');
           }
+          // A Working Capital disbursement charge is settled when the loan is disbursed: the amount
+          // falls back to the charge product when omitted, and for percentage charges it is the
+          // rate, with the money amount resolved against the disbursed amount.
+          const wcDisbursementCharge = this.isWorkingCapital && chargeDetails.chargeTimeType.id === 1;
+          this.setAmountRequired(!wcDisbursementCharge);
+          this.isDisbursementRate = wcDisbursementCharge && chargeDetails.chargeCalculationType.id === 2;
           this.loanChargeForm.patchValue({
             amount: chargeDetails.amount,
             chargeCalculation: chargeDetails.chargeCalculationType.value,
@@ -97,6 +109,18 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
           });
         }
       });
+  }
+
+  /** Toggles the required validator of `amount`, keeping the template's required marker in sync. */
+  private setAmountRequired(required: boolean): void {
+    this.amountRequired = required;
+    const amount = this.loanChargeForm.controls['amount'];
+    if (required) {
+      amount.addValidators(Validators.required);
+    } else {
+      amount.removeValidators(Validators.required);
+    }
+    amount.updateValueAndValidity({ emitEvent: false });
   }
 
   /**
@@ -132,6 +156,10 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       dateFormat,
       locale
     };
+    // An optional amount left blank must be absent, not an empty string the backend cannot parse.
+    if (data.amount === '' || data.amount === null) {
+      delete data.amount;
+    }
     this.loanService.createLoanCharge(this.loanProductService.loanAccountPath, this.loanId, data).subscribe({
       next: () => this.gotoLoanView('charges'),
       error: () => this.isSubmitting.set(false)

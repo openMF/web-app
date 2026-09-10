@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -33,6 +33,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { Dates } from 'app/core/utils/dates';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
@@ -80,6 +81,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
+  /** Overdue charges only exist for term loans; Working Capital hides that section. */
+  loanProductService = inject(LoanProductService);
 
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
@@ -249,6 +253,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        // OnPush: the update arrives from a dialog callback, so the view must be marked explicitly.
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -294,6 +300,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         }
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        // OnPush: the update arrives from a dialog callback, so the view must be marked explicitly.
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -324,6 +332,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        // OnPush: the update arrives from a dialog callback, so the view must be marked explicitly.
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -341,6 +351,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (response?.delete) {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        // OnPush: the update arrives from a dialog callback, so the view must be marked explicitly.
+        this.cdr.markForCheck();
         this.pristine = false;
       }
     });

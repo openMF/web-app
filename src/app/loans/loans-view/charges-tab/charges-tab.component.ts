@@ -162,6 +162,30 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     return !charge.actionFlag && !this.loanProductService.isWorkingCapital;
   }
 
+  /**
+   * Working Capital disbursement charges are not obligations before disbursement and are settled
+   * by the disbursement itself, so they are never paid or adjusted by hand.
+   */
+  isWcDisbursementCharge(charge: LoanCharge): boolean {
+    return this.loanProductService.isWorkingCapital && charge.chargeTimeType?.id === 1;
+  }
+
+  allowAdjust(charge: LoanCharge): boolean {
+    return this.status === 'Active' && !this.isWcDisbursementCharge(charge);
+  }
+
+  allowEdit(): boolean {
+    return this.status === 'Submitted and pending approval';
+  }
+
+  allowPay(charge: LoanCharge): boolean {
+    return charge.chargePayable && !charge.paid && this.status === 'Active' && !this.isWcDisbursementCharge(charge);
+  }
+
+  hasActions(charge: LoanCharge): boolean {
+    return this.allowAdjust(charge) || this.allowEdit() || this.allowPay(charge) || this.allowWaive(charge);
+  }
+
   private buildColumns(): void {
     // Selection only exists to bulk-waive, which Working Capital does not support.
     const hasMultiple = this.chargesData.length > 1 && !this.loanProductService.isWorkingCapital;

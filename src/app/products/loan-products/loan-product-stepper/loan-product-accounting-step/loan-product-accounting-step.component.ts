@@ -675,8 +675,14 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
           this.loanProductAccountingForm
             .get('advancedAccountingRules')
             .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+              // Mirror the Term Loan behaviour for charge-to-income mappings: expose the
+              // arrays while advanced rules are on and reset them when the toggle is off.
               if (advancedAccountingRules) {
+                this.loanProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
+                this.loanProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
               } else {
+                this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
+                this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
               }
             });
         }
