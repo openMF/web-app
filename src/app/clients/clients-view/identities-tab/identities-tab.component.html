@@ -67,9 +67,11 @@
                     class="thumb"
                     [class.clickable]="isPreviewable(document)"
                     [class.has-pdf]="!!pdfThumbnails[document.id]"
-                    role="button"
-                    tabindex="0"
-                    [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+                    [attr.role]="isPreviewable(document) ? 'button' : null"
+                    [attr.tabindex]="isPreviewable(document) ? 0 : null"
+                    [attr.aria-label]="
+                      isPreviewable(document) ? ('labels.buttons.Preview' | translate) + ': ' + document.name : null
+                    "
                     (keydown.enter)="isPreviewable(document) && openDocumentPreview(identity, document)"
                     (keydown.space)="isPreviewable(document) && openDocumentPreview(identity, document)"
                     (click)="isPreviewable(document) && openDocumentPreview(identity, document)"
@@ -90,10 +92,26 @@
                         aria-hidden="true"
                         loading="lazy"
                       ></iframe>
+                    } @else if (spreadsheetThumbnailRows(document).length) {
+                      <table class="spreadsheet-thumb" aria-hidden="true">
+                        @for (row of spreadsheetThumbnailRows(document); track $index) {
+                          <tr>
+                            @for (cell of row; track $index) {
+                              <td>{{ cell }}</td>
+                            }
+                          </tr>
+                        }
+                      </table>
                     } @else {
-                      <div class="placeholder">
+                      <div
+                        class="placeholder"
+                        [attr.title]="isPreviewable(document) ? null : ('labels.text.PreviewNotAvailable' | translate)"
+                      >
                         <fa-icon icon="file"></fa-icon>
                         <span>{{ document.fileName || document.name }}</span>
+                        @if (!isPreviewable(document)) {
+                          <span class="hint">{{ 'labels.text.PreviewNotAvailable' | translate }}</span>
+                        }
                       </div>
                     }
                     @if (isPreviewable(document)) {
@@ -107,6 +125,17 @@
                     @if (document.fileName) {
                       <div class="meta">{{ document.fileName }}</div>
                     }
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        (click)="downloadDocument(identity, document)"
+                        [title]="'labels.buttons.Download' | translate"
+                        [attr.aria-label]="('labels.buttons.Download' | translate) + ': ' + document.name"
+                      >
+                        <fa-icon icon="download"></fa-icon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               }
