@@ -47,16 +47,15 @@ import { environment } from 'environments/environment';
 
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
-import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
-import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { serializeMakerCheckerDate } from './maker-checker-date-serializer';
 
 interface MakerCheckerRecord {
   id: number;
@@ -108,10 +107,8 @@ type BulkActionOutcome =
 export class CheckerInboxComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
-  private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
   private tasksService = inject(TasksService);
-  private settingsService = inject(SettingsService);
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private clientsService = inject(ClientsService);
@@ -163,9 +160,7 @@ export class CheckerInboxComponent implements OnInit {
    * Retrieves the maker checker data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
-   * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
-   * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
@@ -222,12 +217,11 @@ export class CheckerInboxComponent implements OnInit {
 
   private loadMakerCheckers(): void {
     const requestId = ++this.searchRequestId;
-    const dateFormat = this.settingsService.dateFormat;
     const selectedCustomer = this.customerControl.value;
     const makerCheckerSearchParams = {
       ...this.makerCheckerSearchForm.value,
-      makerDateTimeFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
-      makerDateTimeTo: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeTo, dateFormat),
+      makerDateTimeFrom: serializeMakerCheckerDate(this.makerCheckerSearchForm.value.makerDateTimeFrom),
+      makerDateTimeTo: serializeMakerCheckerDate(this.makerCheckerSearchForm.value.makerDateTimeTo),
       clientId: typeof selectedCustomer === 'object' ? selectedCustomer?.id : undefined
     };
     this.loading = true;
