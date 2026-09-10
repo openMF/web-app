@@ -5043,7 +5043,8 @@
       "Select at least one credit application to reject": "Atlasiet vismaz vienu kredīta pieteikumu noraidīšanai.",
       "All selected credit applications were rejected successfully": "Visi atlasītie kredīta pieteikumi tika veiksmīgi noraidīti.",
       "No selected credit applications could be rejected": "Nevienu atlasīto kredīta pieteikumu neizdevās noraidīt.",
-      "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās."
+      "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās.",
+      "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})"
     },
     "permissions": {
       "actions": {

@@ -5040,7 +5040,8 @@
       "Select at least one credit application to reject": "Chagua angalau ombi moja la mkopo la kukataa.",
       "All selected credit applications were rejected successfully": "Maombi yote ya mkopo yaliyochaguliwa yamekataliwa kwa mafanikio.",
       "No selected credit applications could be rejected": "Hakuna ombi la mkopo lililochaguliwa lililoweza kukataliwa.",
-      "Selected credit applications rejection partial result": "{{succeeded}} kati ya {{total}} maombi ya mkopo yaliyochaguliwa yamekataliwa. {{failed}} yameshindwa."
+      "Selected credit applications rejection partial result": "{{succeeded}} kati ya {{total}} maombi ya mkopo yaliyochaguliwa yamekataliwa. {{failed}} yameshindwa.",
+      "Counted in repayment periods": "Huhesabiwa kwa vipindi vya marejesho ({{unit}})"
     },
     "permissions": {
       "actions": {

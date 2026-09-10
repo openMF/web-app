@@ -170,7 +170,9 @@
                   </mat-option>
                 </mat-select>
 
-                <mat-hint *ngIf="field.hint">{{ field.hint | translate }}</mat-hint>
+                @if (fieldHint(field); as hint) {
+                  <mat-hint>{{ hint }}</mat-hint>
+                }
                 <!--
                   One `@if` per message, each with the `<mat-error>` at its root: that is what lets the
                   compiler infer the `mat-error` projection selector, so Material renders these in the

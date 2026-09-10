@@ -5044,7 +5044,8 @@
       "Select at least one credit application to reject": "Pasirinkite bent vieną kredito paraišką atmetimui.",
       "All selected credit applications were rejected successfully": "Visos pasirinktos kredito paraiškos sėkmingai atmestos.",
       "No selected credit applications could be rejected": "Nepavyko atmesti nė vienos pasirinktos kredito paraiškos.",
-      "Selected credit applications rejection partial result": "Atmesta {{succeeded}} iš {{total}} pasirinktų kredito paraiškų. {{failed}} nepavyko."
+      "Selected credit applications rejection partial result": "Atmesta {{succeeded}} iš {{total}} pasirinktų kredito paraiškų. {{failed}} nepavyko.",
+      "Counted in repayment periods": "Skaičiuojama grąžinimo laikotarpiais ({{unit}})"
     },
     "permissions": {
       "actions": {

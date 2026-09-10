@@ -290,6 +290,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   private hiddenFieldKeysCache?: { profileMode: LoanWizardProfileMode; keys: Set<string> };
   // Single source of truth for each control's config, so the `required`/`maxLength` metadata declared
   // in FORM_STEPS is wired into real Angular Validators instead of only decorating the template.
+  // Resolved period-unit hints, keyed by frequency value and language — see `periodUnitHint`.
+  private readonly periodUnitHintCache = new Map<string, string>();
   private readonly fieldConfigByKey = new Map<string, FormField>(
     FORM_STEPS.flatMap((step) => step.fields).map((field) => [
       field.key,
@@ -786,6 +788,59 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       return 'maxlength';
     }
     return null;
+  }
+
+  /**
+   * The subscript hint under a field: the static `hint` declared in FORM_STEPS, or — for a field
+   * counted in repayment periods — one naming the unit currently selected in the frequency control
+   * it points at, so "3" on a weekly product reads as three weekly periods, not three months.
+   *
+   * The hint names the frequency and leaves the arithmetic alone on purpose: with `repaymentEvery`
+   * above 1 a period is several of those units, so stating "3 weeks" outright would trade one wrong
+   * claim for another.
+   *
+   * One method rather than two `<mat-hint>` bindings: `mat-form-field` rejects a second hint in the
+   * same subscript slot, and — like {@link fieldErrorKey} — a projected element only reaches that
+   * slot when it is the single root of its control-flow block.
+   */
+  fieldHint(field: FormField): string | null {
+    const periodUnitHint = field.periodUnitFrom ? this.periodUnitHint(field.periodUnitFrom) : null;
+    if (periodUnitHint) {
+      return periodUnitHint;
+    }
+    return field.hint ? this.translateService.instant(field.hint) : null;
+  }
+
+  /**
+   * Reads the unit off the frequency select the same way the grid renders it — template-sourced
+   * options first, the config's static list as the fallback — so the hint keeps naming the operator's
+   * own selection if those options ever move into `TEMPLATE_OPTION_SOURCES`. Memoised per
+   * value-and-language because the field grid asks for every field's hint on each change detection
+   * pass, while the answer only changes when one of those two does.
+   */
+  private periodUnitHint(frequencyKey: FormField['periodUnitFrom'] & string): string | null {
+    const selected = this.form?.get(frequencyKey)?.value;
+    if (selected === null || selected === undefined || selected === '') {
+      return null;
+    }
+
+    const cacheKey = `${frequencyKey}:${selected}:${this.translateService.currentLang}`;
+    const cached = this.periodUnitHintCache.get(cacheKey);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const options = this.getTemplateSourcedOptions(frequencyKey) ?? this.fieldConfigByKey.get(frequencyKey)?.options;
+    const option = options?.find((candidate) => String(candidate.value) === String(selected));
+    if (!option) {
+      return null;
+    }
+
+    const hint = this.translateService.instant('labels.text.Counted in repayment periods', {
+      unit: this.translateDisplayLabel(String(option.label))
+    });
+    this.periodUnitHintCache.set(cacheKey, hint);
+    return hint;
   }
 
   visibleFields(step: FormStep): FormField[] {
