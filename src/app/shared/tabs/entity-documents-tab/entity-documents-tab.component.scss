@@ -82,6 +82,27 @@
   pointer-events: none;
 }
 
+// A miniature of the first rows: enough to recognise the sheet from the card, not meant to be read.
+.spreadsheet-thumb {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  font-size: 9px;
+  color: $dark-grey;
+  background: $white;
+  // The card owns the click that opens the viewer; the grid must not swallow it.
+  pointer-events: none;
+
+  td {
+    border: 1px solid $silver;
+    padding: 1px 3px;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 .preview-overlay {
   position: absolute;
   bottom: 0.5rem;
@@ -103,7 +124,9 @@
 }
 
 .placeholder {
-  color: $light-grey;
+  // $light-grey is all but invisible against the $clouds thumbnail background, which is what made
+  // a card without a preview read as broken rather than as a file the browser cannot render.
+  color: $asbestos;
   text-align: center;
   padding: 0.875rem;
   display: flex;
@@ -119,6 +142,11 @@
   span {
     font-size: 12px;
     line-height: 1.2;
+  }
+
+  .hint {
+    font-size: 11px;
+    color: $concrete;
   }
 }
 
