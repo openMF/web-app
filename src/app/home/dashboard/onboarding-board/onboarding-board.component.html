@@ -66,6 +66,37 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
             <td mat-cell *matCellDef="let task">{{ task.status }}</td>
           </ng-container>
+          <ng-container matColumnDef="aging">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Aging' | translate }}</th>
+            <td mat-cell *matCellDef="let task">
+              @let agingLabel = task.aging.labelKey | translate;
+              @let agingDescription =
+                task.aging.daysElapsed === null
+                  ? (task.aging.descriptionKey | translate)
+                  : ((task.aging.daysElapsed === 1 ? 'labels.text.Aging day' : 'labels.text.Aging days')
+                    | translate
+                      : {
+                          label: agingLabel,
+                          count: task.aging.daysElapsed
+                        });
+              <span
+                class="aging-indicator"
+                [ngClass]="task.aging.cssClass"
+                [matTooltip]="agingDescription"
+                [attr.aria-label]="agingDescription"
+              >
+                <span class="aging-dot" aria-hidden="true"></span>
+                <span>
+                  @if (task.aging.daysElapsed === null || task.aging.daysElapsed === 0) {
+                    {{ agingLabel }}
+                  } @else {
+                    {{ task.aging.daysElapsed }}
+                    {{ (task.aging.daysElapsed === 1 ? 'labels.inputs.day' : 'labels.inputs.days') | translate }}
+                  }
+                </span>
+              </span>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
             <td mat-cell *matCellDef="let task">

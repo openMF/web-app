@@ -34,6 +34,66 @@ table {
   width: 100%;
 }
 
+.aging-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.aging-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.aging-neutral {
+  background-color: #f1f3f4;
+  border-color: #dadce0;
+  color: #5f6368;
+
+  .aging-dot {
+    background-color: #9aa0a6;
+  }
+}
+
+.aging-yellow {
+  background-color: #fff9c4;
+  border-color: #f6d743;
+  color: #7a6500;
+
+  .aging-dot {
+    background-color: #f6d743;
+  }
+}
+
+.aging-orange {
+  background-color: #ffe0b2;
+  border-color: #f2994a;
+  color: #9c4f00;
+
+  .aging-dot {
+    background-color: #f2994a;
+  }
+}
+
+.aging-red {
+  background-color: #fce8e6;
+  border-color: #d93025;
+  color: #b3261e;
+
+  .aging-dot {
+    background-color: #d93025;
+  }
+}
+
 .state {
   display: flex;
   min-height: 160px;
