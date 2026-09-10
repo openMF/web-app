@@ -624,6 +624,44 @@ export class LoansService {
     return this.http.get('/working-capital-loans/template', { params: httpParams });
   }
 
+  /**
+   * Shapes a Working Capital loan template so the shared charges step can consume it. Only the
+   * product's disbursement charges are offered, because those are the only ones the application
+   * accepts. A new application starts with that catalogue preloaded; an existing one keeps its own
+   * charges, which the step reads from the loan details instead.
+   */
+  applyWorkingCapitalChargeOptions(loanData: any, preloadCatalogue: boolean): void {
+    const disbursementCharges = (loanData?.product?.charges || []).filter(
+      (charge: any) => charge.chargeTimeType?.id === 1
+    );
+    loanData.chargeOptions = disbursementCharges;
+    loanData.charges = preloadCatalogue ? disbursementCharges : [];
+  }
+
+  /**
+   * Maps the charges step rows to the `charges` element of a Working Capital application request:
+   * `chargeId`, the optional `amount` (a rate for percentage charges) and, for a charge the loan
+   * already holds, its `id` so the backend updates it instead of adding a duplicate.
+   */
+  buildWorkingCapitalChargesPayload(charges: any[]): { id?: number; chargeId: number; amount?: number }[] {
+    const unique = new Map<number, any>();
+    (charges ?? []).forEach((charge: any) => {
+      if (charge.chargeId != null) {
+        unique.set(charge.chargeId, charge);
+      }
+    });
+    return Array.from(unique.values()).map((charge: any) => {
+      const element: { id?: number; chargeId: number; amount?: number } = { chargeId: charge.chargeId };
+      if (charge.amount !== '' && charge.amount != null) {
+        element.amount = charge.amount;
+      }
+      if (charge.id && charge.id !== charge.chargeId) {
+        element.id = charge.id;
+      }
+      return element;
+    });
+  }
+
   getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('associations', 'charges,collateral,meeting,multiDisburseDetails')

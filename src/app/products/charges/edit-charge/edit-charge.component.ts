@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -20,6 +21,10 @@ import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  WORKING_CAPITAL_CHARGE_TIME_TYPES,
+  workingCapitalCalculationTypes
+} from '../create-charge/create-charge.component';
 
 /**
  * Edit Charge component.
@@ -42,6 +47,7 @@ export class EditChargeComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Selected Data. */
   chargeData: any;
@@ -82,6 +88,15 @@ export class EditChargeComponent implements OnInit {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
+  }
+
+  /** Calculation types offered for the selected time type; Working Capital narrows them per time type. */
+  filteredChargeCalculationTypeOptions(): any[] {
+    if (this.chargeData.chargeAppliesTo.value !== 'Working Capital Loan') {
+      return this.chargeCalculationTypeOptions;
+    }
+    const allowed = workingCapitalCalculationTypes(this.chargeForm.get('chargeTimeType').value);
+    return (this.chargeCalculationTypeOptions || []).filter((option: any) => allowed.includes(option.id));
   }
 
   ngOnInit() {
@@ -165,9 +180,14 @@ export class EditChargeComponent implements OnInit {
       }
       case 'Working Capital Loan': {
         this.chargeTimeTypeOptions = this.chargeData.chargeTimeTypeOptions.filter((chargeTimeType: any) => {
-          return [2].includes(chargeTimeType.id); // Only Specific Due Date
+          return WORKING_CAPITAL_CHARGE_TIME_TYPES.includes(chargeTimeType.id);
         });
         this.chargeCalculationTypeOptions = this.chargeData.chargeCalculationTypeOptions;
+        // The allowed calculation types depend on the time type, so a previous choice must not linger.
+        this.chargeForm
+          .get('chargeTimeType')
+          .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => this.chargeForm.get('chargeCalculationType').reset());
         this.addFeeFrequency = false;
         this.chargePaymentMode = true;
         this.chargeForm.addControl(

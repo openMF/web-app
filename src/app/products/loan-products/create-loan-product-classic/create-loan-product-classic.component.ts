@@ -336,6 +336,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
         ...this.loanProductCurrencyStep.loanProductCurrency,
         ...this.loanProductTermsStep.loanProductTerms,
         ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductChargesStep.loanProductCharges,
         ...this.loanProductAccountingStep.loanProductAccounting
       };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
