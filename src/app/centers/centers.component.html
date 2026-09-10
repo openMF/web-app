@@ -107,21 +107,49 @@
     <div class="list-header">
       <span></span>
       <span></span>
-      <span class="sortable" [class.active]="sortAttribute === 'name'" (click)="setSort('name')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'name'"
+        [class.desc]="sortAttribute === 'name' && sortDirection === 'desc'"
+        (click)="setSort('name')"
+      >
         {{ 'labels.inputs.name' | translate }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
         </svg>
-      </span>
+      </button>
       <span>{{ 'labels.inputs.Status' | translate }}</span>
       <span>{{ 'labels.inputs.Account No' | translate }}</span>
       <span>{{ 'labels.inputs.External Id' | translate }}</span>
-      <span class="sortable" [class.active]="sortAttribute === 'officeName'" (click)="setSort('officeName')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'officeName'"
+        [class.desc]="sortAttribute === 'officeName' && sortDirection === 'desc'"
+        (click)="setSort('officeName')"
+      >
         {{ 'labels.inputs.Office Name' | translate }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
         </svg>
-      </span>
+      </button>
     </div>
 
     @for (row of dataSource.data; track row.id) {
