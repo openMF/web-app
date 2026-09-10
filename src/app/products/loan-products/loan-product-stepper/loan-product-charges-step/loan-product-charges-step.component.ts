@@ -88,7 +88,7 @@ export class LoanProductChargesStepComponent extends LoanProductBaseComponent im
   pristine = true;
 
   ngOnInit() {
-    this.chargeData = this.loanProductsTemplate.chargeOptions;
+    this.chargeData = this.loanProductsTemplate.chargeOptions || [];
     this.overdueChargeData = this.loanProductsTemplate.penaltyOptions
       ? this.loanProductsTemplate.penaltyOptions.filter(
           (penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment'

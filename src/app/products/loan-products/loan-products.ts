@@ -73,18 +73,14 @@ export class LoanProducts {
     const dateFormat: string = this.settingsService.dateFormat;
     const locale: string = this.settingsService.language.code;
 
-    const loanProduct = this.loanProductService.isLoanProduct
-      ? {
-          ...loanProductData,
-          charges: (loanProductData.charges || []).map((charge: any) => ({ id: charge.id })),
-          dateFormat,
-          locale
-        }
-      : {
-          ...loanProductData,
-          dateFormat,
-          locale
-        };
+    // Both product types accept the optional `charges` parameter as a list of `{ id }` references, and
+    // both replace the whole association list on update, so the mapping is shared.
+    const loanProduct = {
+      ...loanProductData,
+      charges: (loanProductData.charges || []).map((charge: any) => ({ id: charge.id })),
+      dateFormat,
+      locale
+    };
     // Remove unnecessary properties
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
