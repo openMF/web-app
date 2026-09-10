@@ -126,6 +126,15 @@ export interface FormField {
    * already covers with the shared `rangeValidator(0, 100)`. Hence no `max` here.
    */
   decimals?: number;
+  /**
+   * Marks a field Fineract counts in repayment periods rather than in a fixed calendar unit, naming
+   * the frequency control that decides what one period actually is. The wizard renders that unit as
+   * a hint, so a `3` on a weekly product reads as three weekly periods rather than three months.
+   *
+   * Typed to the one frequency control the config has today: widening it is a one-word change, and
+   * until then the compiler points at every caller that would need the hint text generalised.
+   */
+  periodUnitFrom?: 'repaymentFrequencyType';
   options?: SelectOption[];
 }
 /**
@@ -520,7 +529,10 @@ export const FORM_STEPS: FormStep[] = [
         decimals: 0
       },
       {
-        label: 'labels.inputs.Annual interest rate',
+        // Classic heads the same control "Annual interest rate" (loan-product-terms-step) while
+        // offering a Per month / Per year frequency select right beside it, so the guided form takes
+        // Fineract's own name for the field instead — the one its validators report errors under.
+        label: 'labels.inputs.Nominal interest rate',
         key: 'interestRatePerPeriod',
         type: 'number',
         required: true,
@@ -707,25 +719,28 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'labels.inputs.Grace on principal payment (months)',
+        label: 'labels.inputs.Grace on principal payment',
         key: 'graceOnPrincipalPayment',
         type: 'number',
         placeholder: '0',
-        min: 0
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
-        label: 'labels.inputs.Grace on interest payment (months)',
+        label: 'labels.inputs.Grace on interest payment',
         key: 'graceOnInterestPayment',
         type: 'number',
         placeholder: '0',
-        min: 0
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
-        label: 'labels.inputs.Interest free period (months)',
+        label: 'labels.inputs.Interest free period',
         key: 'interestFreePeriod',
         type: 'number',
         placeholder: '0',
-        min: 0
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
         label: 'labels.inputs.Days in Year',

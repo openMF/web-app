@@ -5043,7 +5043,8 @@
       "Select at least one credit application to reject": "Selecione pelo menos uma candidatura de crédito para rejeitar.",
       "All selected credit applications were rejected successfully": "Todas as candidaturas de crédito selecionadas foram rejeitadas com sucesso.",
       "No selected credit applications could be rejected": "Não foi possível rejeitar nenhuma candidatura de crédito selecionada.",
-      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} candidaturas de crédito selecionadas foram rejeitadas. {{failed}} falharam."
+      "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} candidaturas de crédito selecionadas foram rejeitadas. {{failed}} falharam.",
+      "Counted in repayment periods": "Contado em períodos de reembolso ({{unit}})"
     },
     "permissions": {
       "actions": {

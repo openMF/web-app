@@ -3000,3 +3000,60 @@ describe('loan-product.config translation keys', () => {
     expect(offenders).toEqual([]);
   });
 });
+
+/**
+ * I3. Two labels contradicted the control sitting next to them: the interest rate was called
+ * "Annual" beside a Per month / Per year frequency select, and the three moratorium fields were
+ * called "(months)" though Fineract counts them in repayment periods and the repayment frequency
+ * offers Days / Weeks / Months. A mislabelled rate on a weekly microfinance product is a 12×
+ * pricing error, so these are invariants rather than assertions on the current strings.
+ */
+describe('loan-product.config field labels vs the controls beside them', () => {
+  const fieldsByKey = new Map(
+    FORM_STEPS.flatMap((step) => step.fields).map((field) => [
+      field.key,
+      field
+    ])
+  );
+
+  it('names the interest rate without promising a period the frequency select can contradict', () => {
+    // Classic heads the same control "Annual interest rate" and offers the frequency select anyway,
+    // so Classic is not the authority here; Fineract's own name for the field is.
+    const label = fieldsByKey.get('interestRatePerPeriod')!.label;
+
+    expect(label).toBe('labels.inputs.Nominal interest rate');
+    expect(label).not.toMatch(/annual|month|year/i);
+  });
+
+  it('states no calendar unit on a field counted in repayment periods', () => {
+    const periodCounted = [
+      'graceOnPrincipalPayment',
+      'graceOnInterestPayment',
+      'interestFreePeriod'
+    ];
+
+    const offenders = periodCounted
+      .map((key) => fieldsByKey.get(key)!)
+      .filter((field) => /\b(day|week|month|year)s?\b/i.test(field.label))
+      .map((field) => `${field.key}: ${field.label}`);
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('points every period-counted field at a frequency select that exists and is selectable', () => {
+    // The hint reads its unit off this control's options; a key naming a control the config does not
+    // render (or one with no options) would silently drop the hint rather than fail.
+    const offenders = FORM_STEPS.flatMap((step) =>
+      step.fields
+        .filter((field) => field.periodUnitFrom)
+        .filter((field) => {
+          const source = fieldsByKey.get(field.periodUnitFrom!);
+          return !source || source.type !== 'select' || !source.options?.length;
+        })
+        .map((field) => `${field.key} → ${field.periodUnitFrom}`)
+    );
+
+    expect(offenders).toEqual([]);
+    expect(FORM_STEPS.flatMap((step) => step.fields).filter((field) => field.periodUnitFrom)).toHaveLength(3);
+  });
+});

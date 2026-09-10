@@ -5183,7 +5183,8 @@
       "Select at least one credit application to reject": "Select at least one credit application to reject.",
       "All selected credit applications were rejected successfully": "All selected credit applications were rejected successfully.",
       "No selected credit applications could be rejected": "No selected credit applications could be rejected.",
-      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed."
+      "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed.",
+      "Counted in repayment periods": "Counted in repayment periods ({{unit}})"
     },
     "permissions": {
       "actions": {
