@@ -14,6 +14,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'mifosx-client-datatable-step',
@@ -24,7 +25,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    CdkTextareaAutosize
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -48,9 +50,16 @@ export class ClientDatatableStepComponent implements OnInit {
       if (!input.isColumnNullable) {
         if (this.isNumeric(input.columnDisplayType)) {
           inputItems[input.controlName] = new FormControl(0, [Validators.required]);
+        } else if (this.isJson(input)) {
+          inputItems[input.controlName] = new FormControl('', [
+            Validators.required,
+            this.datatableService.jsonValidator
+          ]);
         } else {
           inputItems[input.controlName] = new FormControl('', [Validators.required]);
         }
+      } else if (this.isJson(input)) {
+        inputItems[input.controlName] = new FormControl('', [this.datatableService.jsonValidator]);
       } else {
         inputItems[input.controlName] = new FormControl('');
       }
@@ -88,6 +97,10 @@ export class ClientDatatableStepComponent implements OnInit {
 
   isText(columnType: string) {
     return this.datatableService.isText(columnType);
+  }
+
+  isJson(datatableInput: any) {
+    return this.datatableService.isJson(datatableInput.columnDisplayType, datatableInput.columnType);
   }
 
   get payload(): any {

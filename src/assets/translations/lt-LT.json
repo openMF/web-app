@@ -1987,6 +1987,8 @@
       "Beneficiary": "Naudos gavėjas",
       "Beneficiary Selection": "Gavėjo pasirinkimas",
       "Boolean": "Būlio",
+      "Invalid JSON": "Įveskite galiojantį JSON.",
+      "JSON": "JSON",
       "Branch": "Filialas",
       "Branch Office": "Filialas",
       "Breach": "Pažeidimas",

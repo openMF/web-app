@@ -1988,6 +1988,8 @@
       "Beneficiary": "Saņēmējs",
       "Beneficiary Selection": "Saņēmēja izvēle",
       "Boolean": "Būla",
+      "Invalid JSON": "Ievadiet derīgu JSON.",
+      "JSON": "JSON",
       "Branch": "Filiāle",
       "Branch Office": "Filiāle",
       "Breach": "Pārkāpums",

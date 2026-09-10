@@ -41,6 +41,7 @@ import { AccountNumberComponent } from '../shared/account-number/account-number.
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { nameInitials } from 'app/core/utils/name-initials';
 import { Dates } from 'app/core/utils/dates';
+import { Datatables } from 'app/core/utils/datatables';
 import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -178,6 +179,7 @@ export class LoansComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
+  private datatables = inject(Datatables);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
   private locale = inject(LOCALE_ID);
@@ -874,7 +876,9 @@ export class LoansComponent implements OnInit {
         .map((col: any) => ({
           name: col.columnName,
           label: humanizeName(col.columnName ?? ''),
-          type: (col.columnDisplayType ?? 'STRING').toUpperCase(),
+          type: this.datatables.isJson(col.columnDisplayType, col.columnType)
+            ? 'JSON'
+            : (col.columnDisplayType ?? 'STRING').toUpperCase(),
           codeValues: col.columnValues?.length
             ? new Map<number, string>(
                 col.columnValues.map((value: any) => [
@@ -1398,6 +1402,10 @@ export class LoansComponent implements OnInit {
       case 'CODELOOKUP':
       case 'CODEVALUE': {
         const text = col.codeValues?.get(Number(value)) ?? String(value);
+        return { text, raw: text.toLowerCase() };
+      }
+      case 'JSON': {
+        const text = this.datatables.formatJsonValue(value);
         return { text, raw: text.toLowerCase() };
       }
       default:

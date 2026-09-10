@@ -33,6 +33,7 @@
 .data-item {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   padding: 16px 24px;
   border-radius: var(--ds-radius);
   background-color: #fcfcfc;
@@ -106,16 +107,19 @@
   height: 30px;
 }
 
-.json-textarea {
+.json-value {
   width: 100%;
-  height: 100%;
+  max-height: 24rem;
+  margin: 0;
   padding: 12px;
   border: 1px solid rgb(0 0 0 / 12%);
   border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
   font-size: 0.875rem;
-  background-color: #f5f5f5;
-  resize: vertical;
+  background: var(--ds-surface-alt);
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 @media (width <= 768px) {

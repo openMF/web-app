@@ -92,7 +92,17 @@
                   [attr.data-label]="getInputName(datatableColumn)"
                 >
                   <span class="mobile-cell-label">{{ getInputName(datatableColumn) }}</span>
-                  <span class="cell-value">{{ formatValue(data, datatableColumn) }}</span>
+                  <span
+                    class="cell-value"
+                    [ngClass]="{
+                      'json-value': datatables.isJson(
+                        getColumnDisplayType(datatableColumn),
+                        getColumnType(datatableColumn)
+                      )
+                    }"
+                  >
+                    {{ formatValue(data, datatableColumn) }}
+                  </span>
                 </td>
               }
             </ng-container>

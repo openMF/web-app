@@ -92,14 +92,7 @@
                       </span>
                     }
                     @case ('JSON') {
-                      <textarea
-                        cdkTextareaAutosize="true"
-                        cdkAutosizeMaxRows="20"
-                        cdkAutosizeMinRows="1"
-                        class="json-textarea"
-                        [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-                      >
-                      </textarea>
+                      <pre class="json-value">{{ formatJsonValue(dataObject.data[0].row[i]) }}</pre>
                     }
                     @default {
                       <div class="default-value">
