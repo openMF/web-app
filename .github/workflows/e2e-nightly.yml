@@ -1,0 +1,180 @@
+name: Cron – Nightly Fineract Drift Canary
+
+on:
+  schedule:
+    # 02:00 UTC daily. GitHub delays scheduled runs under load and skips
+    # them on inactive repos; this canary has no deadline, so a late or
+    # missed run costs nothing.
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      fineract_image:
+        description: 'Fineract image to run the suite against'
+        required: true
+        default: 'apache/fineract:latest'
+        type: string
+
+permissions:
+  contents: read
+
+# Deliberately NOT the `e2e-${{ github.ref }}` group used by playwright.yml.
+# A scheduled run and a push to dev both resolve to refs/heads/dev, so a
+# shared group with cancel-in-progress would let this canary cancel the
+# required `Playwright E2E` check — or be cancelled by it.
+concurrency:
+  group: e2e-nightly
+  cancel-in-progress: false
+
+jobs:
+  canary:
+    name: E2E Drift Canary
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      CI: true
+      # Overrides the digest pinned in docker-compose.e2e.yml (WEB-1180) so
+      # this job deliberately tracks a moving tag. Until WEB-1180 lands the
+      # compose file still hard-codes `apache/fineract:latest`, so this is a
+      # no-op until then and the canary tests the same image either way.
+      FINERACT_IMAGE: ${{ inputs.fineract_image || 'apache/fineract:latest' }}
+      E2E_BASE_URL: http://localhost:4200
+      E2E_FINERACT_URL: https://localhost:8443
+      E2E_USERNAME: mifos
+      E2E_PASSWORD: password
+      E2E_TENANT_ID: default
+      NODE_TLS_REJECT_UNAUTHORIZED: '0'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.16.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start E2E infrastructure
+        run: docker compose -f docker-compose.e2e.yml up -d --build
+
+      - name: Record which Fineract build is under test
+        run: |
+          # The whole point of the canary is knowing WHICH upstream build
+          # broke us, so capture the resolved digest before anything runs.
+          IMAGE_ID=$(docker inspect e2e-fineract --format '{{.Image}}' 2>/dev/null || echo '')
+          {
+            echo "### Fineract build under test"
+            echo ""
+            echo "- Requested: \`${FINERACT_IMAGE}\`"
+            if [ -n "$IMAGE_ID" ]; then
+              echo "- Resolved digest(s):"
+              docker image inspect "$IMAGE_ID" --format '{{range .RepoDigests}}  - `{{.}}`{{"\n"}}{{end}}' 2>/dev/null || echo "  - (unavailable)"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Wait for PostgreSQL
+        run: |
+          timeout 60 bash -c '
+            until docker exec e2e-postgres pg_isready -U postgres 2>/dev/null; do
+              sleep 2
+            done
+          '
+          echo "✅ PostgreSQL ready"
+
+      - name: Wait for Fineract backend
+        run: |
+          timeout 300 bash -c '
+            until docker ps --filter "health=healthy" --filter "name=e2e-fineract" | grep -q healthy; do
+              echo "  … Fineract not healthy yet"
+              sleep 10
+            done
+          '
+          curl -fk --retry 30 --retry-all-errors --connect-timeout 10 --retry-delay 10 \
+            https://localhost:8443/fineract-provider/actuator/health
+          echo ""
+          echo "✅ Fineract ready"
+
+      - name: Verify Fineract initialization complete
+        run: |
+          AUTH_HEADER=$(echo -n "${E2E_USERNAME}:${E2E_PASSWORD}" | base64 | tr -d '\n')
+          timeout 120 bash -c "
+            until curl -fsk \
+              -H 'Fineract-Platform-TenantId: ${E2E_TENANT_ID}' \
+              -H 'Authorization: Basic ${AUTH_HEADER}' \
+              https://localhost:8443/fineract-provider/api/v1/offices 2>/dev/null | grep -q 'Head Office'; do
+              echo '  … waiting for seed data'
+              sleep 5
+            done
+          "
+          echo "✅ Fineract initialization complete"
+
+      - name: Wait for web-app
+        run: |
+          curl -f --retry 20 --retry-all-errors --connect-timeout 5 --retry-delay 5 \
+            http://localhost:4200 > /dev/null 2>&1
+          echo "✅ Web-app ready"
+
+      - name: Run Playwright tests (no retries)
+        # --retries=0 overrides `retries: process.env.CI ? 2 : 0`. Retries
+        # exist to keep PRs unblocked; here they would hide the signal, since
+        # a spec that only passes on attempt 2 is exactly what we want to see.
+        run: npx playwright test --reporter=html,github --workers=1 --retries=0
+
+      - name: Summarise failure
+        if: failure()
+        run: |
+          {
+            echo "### ❌ Canary failed"
+            echo ""
+            echo "Two things this can mean — check the pinned run to tell them apart:"
+            echo ""
+            echo "1. **Upstream drift.** The suite passes against the digest pinned in"
+            echo "   \`docker-compose.e2e.yml\` but fails here → Fineract changed under us"
+            echo "   and the next version bump will break, unless fixed first."
+            echo "2. **A real flake.** It also fails on the pinned image → retries were"
+            echo "   masking this in \`Playwright E2E\`, which runs with \`--retries=2\`."
+            echo ""
+            echo "GitHub Issues are disabled on this repo, so file a Jira ticket"
+            echo "(project WEB) with the run link and the resolved digest above."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Dump Docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Fineract ==="
+          docker logs e2e-fineract --tail 100 2>&1 || true
+          echo "=== PostgreSQL ==="
+          docker logs e2e-postgres --tail 50 2>&1 || true
+          echo "=== Web-App ==="
+          docker logs e2e-web-app --tail 50 2>&1 || true
+          echo "=== Memory ==="
+          docker stats --no-stream || true
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: playwright-report-nightly
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: test-results-nightly
+          path: test-results/
+          retention-days: 14
+
+      - name: Tear down E2E infrastructure
+        if: always()
+        run: |
+          docker compose -f docker-compose.e2e.yml down -v --remove-orphans
+          docker system prune -f
