@@ -2,6 +2,9 @@
   font-size: 14px;
 }
 
+// The loan status pill (.account-status-pill) is defined globally in
+// assets/styles/_status.scss and shared with the client/group/center headers.
+
 .account-overview {
   min-width: 80%;
   font-weight: 400;

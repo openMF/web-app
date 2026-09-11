@@ -298,6 +298,10 @@
         "payableDividends": "Dividendes payables"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Image de profil par défaut du centre",
+      "Group profile placeholder": "Image de profil par défaut du groupe"
+    },
     "breadcrumbs": {
       "Home": "Maison"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Changer le mot de passe",
       "Chargeback": "Rétrofacturation",
       "Charges Overview": "Aperçu des frais",
+      "Clear": "Effacer",
       "Client Screen Reports": "Rapports d'écran client",
       "Close": "Fermer",
       "Close Config. Wizard": "Fermez la configuration. Magicien",
@@ -501,6 +506,7 @@
       "Setup Products": "Produits d'installation",
       "Setup System": "Système de configuration",
       "Select All": "Tout sélectionner",
+      "Show Closed Accounts": "Afficher les Comptes Clôturés",
       "Show more": "Montre plus",
       "Show less": "Montrer moins",
       "Staff": "Personnel",
@@ -1193,7 +1199,8 @@
       "Not Yet Amortized Amount": "Montant pas encore amorti",
       "Adjusted Amount": "Montant ajusté",
       "Charged Off Amount": "Montant radié",
-      "Date": "Date"
+      "Date": "Date",
+      "Discard Changes": "Abandonner les modifications"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Revenus des commissions de rachat",
       "Buy down fee Expense": "Charges des commissions de rachat",
       "Skip Interest Refund Transaction Posting": "Ignorer la comptabilisation du remboursement des intérêts",
-      "Available Disbursement Amount (with Over Applied)": "Montant de décaissement disponible (avec sur-application)"
+      "Available Disbursement Amount (with Over Applied)": "Montant de décaissement disponible (avec sur-application)",
+      "Leader": "Leader",
+      "Loading centers": "Chargement des centres...",
+      "Loading clients": "Chargement des clients...",
+      "Loading groups": "Chargement des groupes..."
     },
     "links": {
       "Community": "Communauté",
@@ -3353,6 +3364,21 @@
       "To": "À",
       "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
       "Buy Down Fees": "Frais de rachat",
+      "First Page": "Première page",
+      "Last Page": "Dernière page",
+      "Next Page": "Page suivante",
+      "No center was found": "Aucun centre n'a été trouvé",
+      "No group was found": "Aucun groupe n'a été trouvé",
+      "of": "sur",
+      "Page": "Page",
+      "Pending changes": "Modifications en attente",
+      "Previous Page": "Page précédente",
+      "Principal does not cover the loan amount": "Le capital ne couvre pas le montant du prêt",
+      "Rows": "Lignes",
+      "SearchByClient": "Rechercher par nom de client, ID externe, mobile",
+      "SearchByExternalID": "Rechercher par ID externe",
+      "SearchByName": "Rechercher par nom",
+      "Showing": "Affichage",
       "UploadDocumentHint": "Téléchargez un PDF ou une image pour générer un aperçu."
     },
     "auditTrail": {
@@ -3623,7 +3649,9 @@
     "loan product will be active and available to clients": "La date à laquelle le produit de prêt sera actif et disponible pour les clients. Si ce champ est vide, le produit de prêt sera actif dès sa création.",
     "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit chargé ne deviendra jamais inactif.",
     "Refund transactions where interest refund will automatically be calculated": "Opérations de remboursement pour lesquelles le remboursement des intérêts sera automatiquement calculé",
-    "Create Interest Refund": "Créer un remboursement d’intérêts"
+    "Create Interest Refund": "Créer un remboursement d’intérêts",
+    "Edit Meeting": "Modifier la réunion",
+    "Only pending groups can be deleted": "Seuls les groupes en attente peuvent être supprimés"
   },
   "countries": {
     "AF": "Afghanistan",

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -32,6 +32,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private groupsService = inject(GroupsService);
   private settingsService = inject(SettingsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Transfer Clients form. */
   transferClientsForm: UntypedFormGroup;
@@ -71,8 +72,13 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
       if (value.length >= 2) {
         this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
           this.groupsData = data;
+          // Results arrive outside any template event: notify OnPush change detection.
+          this.changeDetectorRef.markForCheck();
         });
       }
+      // Selecting an autocomplete option happens in the CDK overlay, which does
+      // not mark this OnPush component dirty; refresh the dependent bindings.
+      this.changeDetectorRef.markForCheck();
     });
   }
 

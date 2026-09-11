@@ -26,6 +26,21 @@
   color: white;
   min-width: 85%;
   margin-left: 10px;
+
+  /* Links to related entities (member groups) on the blue header: the browser's
+     default link colours are unreadable there, so inherit the header's white
+     text and mark them as links with an underline instead. Matches the shared
+     entity-header treatment used by the group and centre headers. */
+  a.entity-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
 }
 
 .make-flex {

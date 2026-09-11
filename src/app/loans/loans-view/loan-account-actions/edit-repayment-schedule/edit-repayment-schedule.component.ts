@@ -1,10 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
-import { EditableRepaymentSchedule, EditablePeriod, ScheduleChangeRecord } from 'app/loans/models/loan-account.model';
+import {
+  EditableRepaymentSchedule,
+  EditablePeriod,
+  ScheduleChangeRecord,
+  ScheduleDeleteRecord
+} from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -31,6 +36,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
   private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Loan ID. */
   loanId: string;
@@ -42,6 +48,8 @@ export class EditRepaymentScheduleComponent implements OnInit {
   repaymentScheduleDetails: EditableRepaymentSchedule | null = null;
   /** Stores the Installments changed */
   repaymentScheduleChanges: Record<string, ScheduleChangeRecord> = {};
+  /** Stores the Installments marked for deletion, keyed by their unmodified due date */
+  deletedInstallments: Record<string, boolean> = {};
 
   /**
    * @param {LoansService} systemService Loan Service.
@@ -64,9 +72,60 @@ export class EditRepaymentScheduleComponent implements OnInit {
     this.loansService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe({
       next: (response: { repaymentSchedule: EditableRepaymentSchedule }) => {
         this.repaymentScheduleDetails = response.repaymentSchedule;
+        // Async HTTP response arrives outside template events, so OnPush needs an explicit mark.
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Failed to load repayment schedule:', err);
+      }
+    });
+  }
+
+  /** Number of installments with a pending modification or deletion. */
+  get pendingChangesCount(): number {
+    return Object.keys(this.repaymentScheduleChanges).length + Object.keys(this.deletedInstallments).length;
+  }
+
+  /** Registers a single-row installment change emitted by the schedule table. */
+  onInstallmentEdited(change: ScheduleChangeRecord): void {
+    if (change.installmentAmount === undefined && change.modifiedDueDate === undefined) {
+      // The row was edited back to its original values: drop it from the payload.
+      delete this.repaymentScheduleChanges[change.dueDate];
+    } else {
+      this.repaymentScheduleChanges[change.dueDate] = change;
+    }
+    this.wasChanged = this.pendingChangesCount > 0;
+  }
+
+  /** Registers the delete/restore toggle of an installment emitted by the schedule table. */
+  onInstallmentDeleteToggled(change: ScheduleDeleteRecord): void {
+    if (change.deleted) {
+      // The table already reverted the row edit; keep the payload consistent with it.
+      delete this.repaymentScheduleChanges[change.dueDate];
+      this.deletedInstallments[change.dueDate] = true;
+    } else {
+      delete this.deletedInstallments[change.dueDate];
+    }
+    this.wasChanged = this.pendingChangesCount > 0;
+  }
+
+  /** Asks for confirmation before leaving when there are pending changes. */
+  cancel(): void {
+    if (!this.wasChanged) {
+      this.router.navigate(['../../general'], { relativeTo: this.route });
+      return;
+    }
+    const cancelDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Discard Changes'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to leave this page and lose all inputted data'
+        )
+      }
+    });
+    cancelDialogRef.afterClosed().subscribe((responseConfirmation: { confirm?: boolean }) => {
+      if (responseConfirmation?.confirm) {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       }
     });
   }
@@ -133,7 +192,10 @@ export class EditRepaymentScheduleComponent implements OnInit {
             }
             periodsVariation.push(period);
           });
-          this.repaymentScheduleDetails.periods = periodsVariation;
+          // New object reference so the OnPush schedule table picks up the change via ngOnChanges;
+          // dialog afterClosed runs outside this component's template events, hence the explicit mark.
+          this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods: periodsVariation };
+          this.cdr.markForCheck();
         }
       });
   }
@@ -154,6 +216,9 @@ export class EditRepaymentScheduleComponent implements OnInit {
             this.getRepaymentSchedule();
             this.wasChanged = false;
             this.wasValidated = false;
+            this.repaymentScheduleChanges = {};
+            this.deletedInstallments = {};
+            this.cdr.markForCheck();
           },
           error: (err) => {
             console.error('Failed to delete schedule variations:', err);
@@ -173,12 +238,11 @@ export class EditRepaymentScheduleComponent implements OnInit {
       .subscribe({
         next: (response: EditableRepaymentSchedule) => {
           if (this.repaymentScheduleDetails) {
-            this.repaymentScheduleDetails.periods = [];
-            response.periods.forEach((period: EditablePeriod) => {
-              period.changed = true;
-              this.repaymentScheduleDetails!.periods.push(period);
-              this.wasValidated = true;
-            });
+            const periods = response.periods.map((period: EditablePeriod) => ({ ...period, changed: true }));
+            // New object reference so the OnPush schedule table re-renders the calculated periods.
+            this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods };
+            this.wasValidated = true;
+            this.cdr.markForCheck();
           }
         },
         error: (err) => {
@@ -199,7 +263,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
   }
 
   private getPayload(): {
-    exceptions: { modifiedinstallments: ScheduleChangeRecord[] };
+    exceptions: { modifiedinstallments: ScheduleChangeRecord[]; deletedinstallments?: { dueDate: string }[] };
     dateFormat: string;
     locale: string;
   } {
@@ -207,12 +271,17 @@ export class EditRepaymentScheduleComponent implements OnInit {
     Object.keys(this.repaymentScheduleChanges).forEach((key: string) => {
       modifiedinstallments.push(this.repaymentScheduleChanges[key]);
     });
+    const exceptions: { modifiedinstallments: ScheduleChangeRecord[]; deletedinstallments?: { dueDate: string }[] } = {
+      modifiedinstallments
+    };
+    const deletedinstallments = Object.keys(this.deletedInstallments).map((dueDate: string) => ({ dueDate }));
+    if (deletedinstallments.length > 0) {
+      exceptions.deletedinstallments = deletedinstallments;
+    }
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     return {
-      exceptions: {
-        modifiedinstallments
-      },
+      exceptions,
       dateFormat,
       locale
     };

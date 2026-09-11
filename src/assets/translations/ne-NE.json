@@ -298,6 +298,10 @@
         "payableDividends": "भुक्तानी योग्य लाभांश"
       }
     },
+    "alt": {
+      "Center profile placeholder": "केन्द्रको प्रोफाइल प्लेसहोल्डर",
+      "Group profile placeholder": "समूहको प्रोफाइल प्लेसहोल्डर"
+    },
     "breadcrumbs": {
       "Home": "घर"
     },
@@ -348,6 +352,7 @@
       "Change Password": "पासवर्ड परिवर्तन गर्नुहोस्",
       "Chargeback": "चार्जब्याक",
       "Charges Overview": "शुल्क अवलोकन",
+      "Clear": "मेटाउनुहोस्",
       "Client Screen Reports": "ग्राहक स्क्रिन रिपोर्टहरू",
       "Close": "बन्द गर्नुहोस्",
       "Close Config. Wizard": "कन्फिग बन्द गर्नुहोस्। जादूगर",
@@ -501,6 +506,7 @@
       "Setup Products": "उत्पादनहरू सेटअप गर्नुहोस्",
       "Setup System": "सेटअप प्रणाली",
       "Select All": "सबै छान्नु",
+      "Show Closed Accounts": "बन्द भएका खाताहरू देखाउनुहोस्",
       "Show more": "थप देखाउनुहोस्",
       "Show less": "कम देखाउनुहोस्",
       "Staff": "कर्मचारी",
@@ -1193,7 +1199,8 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "समायोजित रकम",
       "Charged Off Amount": "चार्ज गरिएको रकम",
-      "Date": "मिति"
+      "Date": "मिति",
+      "Discard Changes": "परिवर्तनहरू खारेज गर्नुहोस्"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "खरिद शुल्कबाट हुने आम्दानी",
       "Buy down fee Expense": "खरीद शुल्क खर्च",
       "Skip Interest Refund Transaction Posting": "ब्याज फिर्ता पोस्टिङ्ग छोड्नुहोस्",
-      "Available Disbursement Amount (with Over Applied)": "उपलब्ध भुक्तानी रकम (अधिक लागू रकम सहित)"
+      "Available Disbursement Amount (with Over Applied)": "उपलब्ध भुक्तानी रकम (अधिक लागू रकम सहित)",
+      "Leader": "नेता",
+      "Loading centers": "केन्द्रहरू लोड हुँदैछन्...",
+      "Loading clients": "ग्राहकहरू लोड हुँदैछन्...",
+      "Loading groups": "समूहहरू लोड हुँदैछन्..."
     },
     "links": {
       "Community": "समुदाय",
@@ -3353,6 +3364,21 @@
       "To": "लाई",
       "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
       "Buy Down Fees": "खरीद शुल्क",
+      "First Page": "पहिलो पृष्ठ",
+      "Last Page": "अन्तिम पृष्ठ",
+      "Next Page": "अर्को पृष्ठ",
+      "No center was found": "कुनै केन्द्र भेटिएन",
+      "No group was found": "कुनै समूह भेटिएन",
+      "of": "मध्ये",
+      "Page": "पृष्ठ",
+      "Pending changes": "बाँकी परिवर्तनहरू",
+      "Previous Page": "अघिल्लो पृष्ठ",
+      "Principal does not cover the loan amount": "साँवा रकमले ऋण रकम पुग्दैन",
+      "Rows": "पंक्तिहरू",
+      "SearchByClient": "ग्राहक नाम, बाह्य आईडी, मोबाइलले खोज्नुहोस्",
+      "SearchByExternalID": "बाह्य आईडीले खोज्नुहोस्",
+      "SearchByName": "नामले खोज्नुहोस्",
+      "Showing": "देखाइँदै",
       "UploadDocumentHint": "पूर्वावलोकन उत्पन्न गर्न PDF वा छवि अपलोड गर्नुहोस्।"
     },
     "auditTrail": {
@@ -3623,7 +3649,9 @@
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
     "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
     "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ",
-    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्"
+    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्",
+    "Edit Meeting": "बैठक सम्पादन गर्नुहोस्",
+    "Only pending groups can be deleted": "पेन्डिङ समूहहरू मात्र मेटाउन सकिन्छ"
   },
   "countries": {
     "AF": "अफगानिस्तान",

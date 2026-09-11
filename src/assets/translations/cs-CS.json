@@ -298,6 +298,10 @@
         "payableDividends": "splatné dividendy"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Zástupný obrázek profilu centra",
+      "Group profile placeholder": "Zástupný obrázek profilu skupiny"
+    },
     "breadcrumbs": {
       "Home": "Domov"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Změnit heslo",
       "Chargeback": "Zpětné zúčtování",
       "Charges Overview": "Přehled poplatků",
+      "Clear": "Vymazat",
       "Client Screen Reports": "Zprávy na obrazovce klienta",
       "Close": "Zavřít",
       "Close Config. Wizard": "Zavřete Config. kouzelník",
@@ -501,6 +506,7 @@
       "Setup Products": "Nastavení produktů",
       "Setup System": "Systém nastavení",
       "Select All": "Vybrat vše",
+      "Show Closed Accounts": "Zobrazit Uzavřené Účty",
       "Show more": "Zobrazit více",
       "Show less": "Ukaž méně",
       "Staff": "Personál",
@@ -1192,7 +1198,8 @@
       "Not Yet Amortized Amount": "Dosud neamortizovana castka",
       "Adjusted Amount": "Upravená částka",
       "Charged Off Amount": "Odepsaná částka",
-      "Date": "Datum"
+      "Date": "Datum",
+      "Discard Changes": "Zahodit změny"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Příjmy z poplatků za odkup",
       "Buy down fee Expense": "Náklady na poplatek za odkup",
       "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků",
-      "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)"
+      "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)",
+      "Leader": "Vedoucí",
+      "Loading centers": "Načítání středisek...",
+      "Loading clients": "Načítání klientů...",
+      "Loading groups": "Načítání skupin..."
     },
     "links": {
       "Community": "Společenství",
@@ -3350,6 +3361,21 @@
     "Write a note": "Napište poznámku",
     "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
     "Buy Down Fees": "Poplatky za odkup",
+    "First Page": "První stránka",
+    "Last Page": "Poslední stránka",
+    "Next Page": "Další stránka",
+    "No center was found": "Nebylo nalezeno žádné středisko",
+    "No group was found": "Nebyla nalezena žádná skupina",
+    "of": "z",
+    "Page": "Stránka",
+    "Pending changes": "Čekající změny",
+    "Previous Page": "Předchozí stránka",
+    "Principal does not cover the loan amount": "Jistina nepokrývá výši úvěru",
+    "Rows": "Řádky",
+    "SearchByClient": "Vyhledávání podle jména klienta, externího ID, mobilního telefonu",
+    "SearchByExternalID": "Vyhledávání podle externího ID",
+    "SearchByName": "Vyhledávání podle názvu",
+    "Showing": "Zobrazeno",
     "UploadDocumentHint": "Nahrajte PDF nebo obrázek pro vygenerování náhledu."
   },
   "auditTrail": {
@@ -3621,7 +3647,9 @@
     "loan product will be active and available to clients": "Datum, kdy bude úvěrový produkt aktivní a dostupný klientům. Pokud nevyplníte, bude úvěrový produkt aktivní, jakmile bude vytvořen.",
     "loan product will become inactive and unavailable to clients": "Datum, kdy se úvěrový produkt stane neaktivním a nedostupným pro klienty. Pokud je prázdné, produkt zatížení se nikdy nestane neaktivním.",
     "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků",
-    "Create Interest Refund": "Vytvořit vrácení úroků"
+    "Create Interest Refund": "Vytvořit vrácení úroků",
+    "Edit Meeting": "Upravit schůzku",
+    "Only pending groups can be deleted": "Smazat lze pouze čekající skupiny"
   },
   "countries": {
     "AF": "Afghánistán",

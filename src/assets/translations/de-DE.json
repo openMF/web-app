@@ -298,6 +298,10 @@
         "payableDividends": "zahlbare Dividenden"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Platzhalter für Center-Profilbild",
+      "Group profile placeholder": "Platzhalter für Gruppen-Profilbild"
+    },
     "breadcrumbs": {
       "Home": "Heim"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Kennwort ändern",
       "Chargeback": "Rückbuchung",
       "Charges Overview": "Gebührenübersicht",
+      "Clear": "Löschen",
       "Client Screen Reports": "Kundenbildschirmberichte",
       "Close": "Schließen",
       "Close Config. Wizard": "Konfiguration schließen. Magier",
@@ -501,6 +506,7 @@
       "Setup Products": "Setup-Produkte",
       "Setup System": "Setup-System",
       "Select All": "Wählen Sie Alle",
+      "Show Closed Accounts": "Geschlossene Konten anzeigen",
       "Show more": "Zeig mehr",
       "Show less": "Zeige weniger",
       "Staff": "Personal",
@@ -1193,7 +1199,8 @@
       "Not Yet Amortized Amount": "Noch nicht amortisierter Betrag",
       "Adjusted Amount": "Angepasster Betrag",
       "Charged Off Amount": "Abgeschriebener Betrag",
-      "Date": "Datum"
+      "Date": "Datum",
+      "Discard Changes": "Änderungen verwerfen"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Einnahmen aus Buy-Down-Gebühren",
       "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren",
       "Skip Interest Refund Transaction Posting": "Buchung der Zinsrückerstattung überspringen",
-      "Available Disbursement Amount (with Over Applied)": "Verfügbarer Auszahlungsbetrag (mit Überzahlung)"
+      "Available Disbursement Amount (with Over Applied)": "Verfügbarer Auszahlungsbetrag (mit Überzahlung)",
+      "Leader": "Leiter",
+      "Loading centers": "Zentren werden geladen...",
+      "Loading clients": "Kunden werden geladen...",
+      "Loading groups": "Gruppen werden geladen..."
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3351,6 +3362,21 @@
     "Write a note": "Schreib eine Notitz",
     "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
     "Buy Down Fees": "Kaufgebühren",
+    "First Page": "Erste Seite",
+    "Last Page": "Letzte Seite",
+    "Next Page": "Nächste Seite",
+    "No center was found": "Es wurde kein Zentrum gefunden",
+    "No group was found": "Es wurde keine Gruppe gefunden",
+    "of": "von",
+    "Page": "Seite",
+    "Pending changes": "Ausstehende Änderungen",
+    "Previous Page": "Vorherige Seite",
+    "Principal does not cover the loan amount": "Das Kapital deckt den Kreditbetrag nicht",
+    "Rows": "Zeilen",
+    "SearchByClient": "Suche nach Kundennamen, externer ID, Mobiltelefon",
+    "SearchByExternalID": "Suche nach externer ID",
+    "SearchByName": "Suche nach Namen",
+    "Showing": "Anzeigen",
     "UploadDocumentHint": "Laden Sie ein PDF oder Bild hoch, um eine Vorschau zu erstellen."
   },
   "auditTrail": {
@@ -3622,7 +3648,9 @@
     "loan product will be active and available to clients": "Das Datum, an dem das Kreditprodukt aktiv und für Kunden verfügbar sein wird. Wenn das Feld leer ist, ist das Kreditprodukt aktiv, sobald es erstellt wird.",
     "loan product will become inactive and unavailable to clients": "Das Datum, an dem das Kreditprodukt inaktiv wird und für Kunden nicht mehr verfügbar ist. Wenn es leer ist, wird das Ladeprodukt niemals inaktiv.",
     "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird",
-    "Create Interest Refund": "Zinsrückerstattung erstellen"
+    "Create Interest Refund": "Zinsrückerstattung erstellen",
+    "Edit Meeting": "Meeting bearbeiten",
+    "Only pending groups can be deleted": "Nur ausstehende Gruppen können gelöscht werden"
   },
   "countries": {
     "AF": "Afghanistan",

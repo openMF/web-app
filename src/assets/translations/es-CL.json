@@ -298,6 +298,10 @@
         "payableDividends": "Dividendos a pagar"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Imagen de perfil predeterminada del centro",
+      "Group profile placeholder": "Imagen de perfil predeterminada del grupo"
+    },
     "breadcrumbs": {
       "Home": "Inicio"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Cambiar la contraseña",
       "Chargeback": "Contracargo",
       "Charges Overview": "Resumen de cargos",
+      "Clear": "Borrar",
       "Client Screen Reports": "Reportes de pantalla del cliente",
       "Close": "Cerrar",
       "Close Config. Wizard": "Cerrar",
@@ -501,6 +506,7 @@
       "Setup Products": "Configuración de Productos",
       "Setup System": "Configuración de Sistema",
       "Select All": "Seleccionar todo",
+      "Show Closed Accounts": "Mostrar Cuentas Cerradas",
       "Show more": "Mostrar más",
       "Show less": "Muestra menos",
       "Staff": "Asesor",
@@ -1192,7 +1198,8 @@
       "Not Yet Amortized Amount": "Monto aun no amortizado",
       "Adjusted Amount": "Importe ajustado",
       "Charged Off Amount": "Importe cancelado",
-      "Date": "Fecha"
+      "Date": "Fecha",
+      "Discard Changes": "Descartar cambios"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
       "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
-      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)"
+      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)",
+      "Leader": "Líder",
+      "Loading centers": "Cargando centros...",
+      "Loading clients": "Cargando clientes...",
+      "Loading groups": "Cargando grupos..."
     },
     "links": {
       "Community": "Comunidad",
@@ -3354,6 +3365,21 @@
       "To": "a",
       "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Buy Down Fees": "Tarifas de compra",
+      "First Page": "Primera página",
+      "Last Page": "Última página",
+      "Next Page": "Página siguiente",
+      "No center was found": "No se encontró ningún centro",
+      "No group was found": "No se encontró ningún grupo",
+      "of": "de",
+      "Page": "Página",
+      "Pending changes": "Cambios pendientes",
+      "Previous Page": "Página anterior",
+      "Principal does not cover the loan amount": "El capital no cubre el monto del préstamo",
+      "Rows": "Filas",
+      "SearchByClient": "Buscar por nombre de cliente, ID externo, móvil",
+      "SearchByExternalID": "Buscar por ID externo",
+      "SearchByName": "Buscar por nombre",
+      "Showing": "Mostrando",
       "UploadDocumentHint": "Sube un PDF o imagen para generar una vista previa."
     },
     "auditTrail": {
@@ -3624,7 +3650,9 @@
     "loan product will be active and available to clients": "La fecha en que el producto de Crédito estará activo y disponible para los clientes. Si está en blanco, el producto de Crédito estará activo tan pronto como se cree.",
     "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de carga nunca quedará inactivo.",
     "Refund transactions where interest refund will automatically be calculated": "Transacciones de reembolso en las que el reembolso de intereses se calculará automáticamente",
-    "Create Interest Refund": "Crear reembolso de intereses"
+    "Create Interest Refund": "Crear reembolso de intereses",
+    "Edit Meeting": "Editar reunión",
+    "Only pending groups can be deleted": "Solo se pueden eliminar grupos pendientes"
   },
   "countries": {
     "AF": "Afganistán",

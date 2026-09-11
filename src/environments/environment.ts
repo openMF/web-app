@@ -29,6 +29,12 @@ export const environment = {
   apiVersion: loadedEnv.apiVersion || '/v1',
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
+  /**
+   * Masks client names in listings when compliance requires it.
+   * Set via MIFOS_COMPLIANCE_HIDE_CLIENT_DATA env var
+   */
+  complianceHideClientData:
+    loadedEnv.complianceHideClientData === 'true' || loadedEnv.complianceHideClientData === true || false,
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   oauth: {
