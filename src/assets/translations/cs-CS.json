@@ -835,7 +835,8 @@
       "Enable Breach": "Povolit porušení",
       "Save": "Uložit",
       "Upload Report Design": "Nahrát návrh zprávy",
-      "Mass Reject": "Hromadně zamítnout"
+      "Mass Reject": "Hromadně zamítnout",
+      "Hide": "Skrýt"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1811,7 +1812,8 @@
       "Interest Refunds": "Vrácení úroku",
       "Deferred Income Recognition": "Vykazování odložených výnosů",
       "Advanced Configuration": "Pokročilá konfigurace",
-      "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr"
+      "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr",
+      "Enrollment Details": "Podrobnosti registrace"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -1861,7 +1863,7 @@
       "Action Name": "Název akce",
       "Actions": "Akce",
       "Activated On": "Aktivováno Zapnuto",
-      "Aging": "Stáří",
+      "Aging": "Doba zpracování",
       "Activated On Date": "Aktivováno dne",
       "Activation Date": "Datum aktivace",
       "Activation date": "Datum aktivace",
@@ -3789,7 +3791,23 @@
       "State / Municipality": "Stát / obec",
       "Submitted and pending approval": "Odesláno a čeká na schválení",
       "Rejected": "Zamítnuto",
-      "Withdrawn by applicant": "Staženo žadatelem"
+      "Withdrawn by applicant": "Staženo žadatelem",
+      "AML Screening": "Kontrola AML",
+      "Activation": "Aktivace",
+      "Client Lifecycle Status": "Stav životního cyklu klienta",
+      "Commercial Registration": "Obchodní registrace",
+      "Compliance": "Soulad s předpisy",
+      "Derived KYC Status": "Odvozený stav KYC",
+      "Enrollment Status": "Stav registrace",
+      "Face Match": "Ověření shody obličeje",
+      "ID Verification": "Ověření totožnosti",
+      "KYC Level 1": "KYC úroveň 1",
+      "KYC Level 2": "KYC úroveň 2",
+      "KYC Level 3": "KYC úroveň 3",
+      "Provider KYC Decision": "Rozhodnutí poskytovatele KYC",
+      "Source": "Zdroj",
+      "Started": "Zahájeno",
+      "Verification Session": "Ověřovací relace"
     },
     "links": {
       "Community": "Společenství",
@@ -4043,6 +4061,7 @@
       "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen."
     },
     "text": {
+      "Select a client from the list": "Vyberte klienta ze seznamu",
       "Complete these steps to preview the product": "Dokončete tyto kroky, abyste zobrazili náhled produktu",
       "Complete these steps before creating the product": "Dokončete tyto kroky před vytvořením produktu",
       "Check the highlighted fields before creating the product": "Zkontrolujte zvýrazněná pole před vytvořením produktu",
@@ -5050,7 +5069,11 @@
       "All selected credit applications were rejected successfully": "Všechny vybrané žádosti o úvěr byly úspěšně zamítnuty.",
       "No selected credit applications could be rejected": "Žádné vybrané žádosti o úvěr se nepodařilo zamítnout.",
       "Selected credit applications rejection partial result": "{{succeeded}} z {{total}} vybraných žádostí o úvěr bylo zamítnuto. {{failed}} selhalo.",
-      "Counted in repayment periods": "Počítáno ve splátkových obdobích ({{unit}})"
+      "Counted in repayment periods": "Počítáno ve splátkových obdobích ({{unit}})",
+      "Loading enrollment status": "Načítá se stav registrace",
+      "No enrollment cases found": "Nebyly nalezeny žádné případy registrace",
+      "Select a client from the list": "Vyberte klienta ze seznamu",
+      "Unable to load enrollment status": "Nelze načíst stav registrace"
     },
     "permissions": {
       "actions": {

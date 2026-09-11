@@ -836,7 +836,8 @@
       "Enable Breach": "Verstoß aktivieren",
       "Save": "Speichern",
       "Upload Report Design": "Berichtsdesign hochladen",
-      "Mass Reject": "Massenhaft ablehnen"
+      "Mass Reject": "Massenhaft ablehnen",
+      "Hide": "Ausblenden"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1812,7 +1813,8 @@
       "Interest Refunds": "Zinsrückerstattung",
       "Deferred Income Recognition": "Erfassung abgegrenzter Erträge",
       "Advanced Configuration": "Erweiterte Konfiguration",
-      "Mass Reject Credit Applications": "Kreditanträge massenhaft ablehnen"
+      "Mass Reject Credit Applications": "Kreditanträge massenhaft ablehnen",
+      "Enrollment Details": "Registrierungsdetails"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -1861,7 +1863,7 @@
       "Action Name": "Aktionsname",
       "Actions": "Aktionen",
       "Activated On": "Aktiviert am",
-      "Aging": "Alterung",
+      "Aging": "Bearbeitungsdauer",
       "Activated On Date": "Aktiviert am Datum",
       "Activation Date": "Aktivierungs-Datum",
       "Activation date": "Aktivierungs-Datum",
@@ -3790,7 +3792,23 @@
       "State / Municipality": "Bundesland / Gemeinde",
       "Submitted and pending approval": "Eingereicht und wartet auf Genehmigung",
       "Rejected": "Abgelehnt",
-      "Withdrawn by applicant": "Vom Antragsteller zurückgezogen"
+      "Withdrawn by applicant": "Vom Antragsteller zurückgezogen",
+      "AML Screening": "AML-Prüfung",
+      "Activation": "Aktivierung",
+      "Client Lifecycle Status": "Status im Kundenlebenszyklus",
+      "Commercial Registration": "Handelsregistereintrag",
+      "Compliance": "Compliance",
+      "Derived KYC Status": "Abgeleiteter KYC-Status",
+      "Enrollment Status": "Registrierungsstatus",
+      "Face Match": "Gesichtsabgleich",
+      "ID Verification": "Identitätsprüfung",
+      "KYC Level 1": "KYC-Stufe 1",
+      "KYC Level 2": "KYC-Stufe 2",
+      "KYC Level 3": "KYC-Stufe 3",
+      "Provider KYC Decision": "KYC-Entscheidung des Anbieters",
+      "Source": "Quelle",
+      "Started": "Gestartet",
+      "Verification Session": "Verifizierungssitzung"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4044,6 +4062,7 @@
       "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet."
     },
     "text": {
+      "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
       "Complete these steps to preview the product": "Schließen Sie diese Schritte ab, um eine Vorschau des Produkts anzuzeigen",
       "Complete these steps before creating the product": "Schließen Sie diese Schritte ab, bevor Sie das Produkt erstellen",
       "Check the highlighted fields before creating the product": "Prüfen Sie die markierten Felder, bevor Sie das Produkt erstellen",
@@ -5050,7 +5069,11 @@
       "All selected credit applications were rejected successfully": "Alle ausgewählten Kreditanträge wurden erfolgreich abgelehnt.",
       "No selected credit applications could be rejected": "Keiner der ausgewählten Kreditanträge konnte abgelehnt werden.",
       "Selected credit applications rejection partial result": "{{succeeded}} von {{total}} ausgewählten Kreditanträgen wurden abgelehnt. Fehlgeschlagen: {{failed}}.",
-      "Counted in repayment periods": "Wird in Rückzahlungsperioden gezählt ({{unit}})"
+      "Counted in repayment periods": "Wird in Rückzahlungsperioden gezählt ({{unit}})",
+      "Loading enrollment status": "Registrierungsstatus wird geladen",
+      "No enrollment cases found": "Keine Registrierungsfälle gefunden",
+      "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
+      "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden"
     },
     "permissions": {
       "actions": {

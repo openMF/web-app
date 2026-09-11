@@ -834,7 +834,8 @@
       "Enable Breach": "Washa Ukiukaji",
       "Save": "Hifadhi",
       "Upload Report Design": "Pakia Muundo wa Ripoti",
-      "Mass Reject": "Kataa kwa wingi"
+      "Mass Reject": "Kataa kwa wingi",
+      "Hide": "Ficha"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1807,7 +1808,8 @@
       "Interest Refunds": "Marejesho ya riba",
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
       "Advanced Configuration": "Usanidi wa kina",
-      "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi"
+      "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi",
+      "Enrollment Details": "Maelezo ya usajili"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -1856,7 +1858,7 @@
       "Action Name": "Jina la Kitendo",
       "Actions": "Vitendo",
       "Activated On": "Imewashwa",
-      "Aging": "Umri",
+      "Aging": "Muda uliopita",
       "Activated On Date": "Imeamilishwa Tarehe",
       "Activation Date": "Tarehe ya Uanzishaji",
       "Activation date": "Tarehe ya kuwezesha",
@@ -3785,7 +3787,23 @@
       "State / Municipality": "Jimbo / manispaa",
       "Submitted and pending approval": "Imewasilishwa na inasubiri idhini",
       "Rejected": "Imekataliwa",
-      "Withdrawn by applicant": "Imeondolewa na mwombaji"
+      "Withdrawn by applicant": "Imeondolewa na mwombaji",
+      "AML Screening": "Ukaguzi wa AML",
+      "Activation": "Uanzishaji",
+      "Client Lifecycle Status": "Hali ya mzunguko wa maisha ya mteja",
+      "Commercial Registration": "Usajili wa biashara",
+      "Compliance": "Uzingatiaji",
+      "Derived KYC Status": "Hali iliyotokana ya KYC",
+      "Enrollment Status": "Hali ya usajili",
+      "Face Match": "Ulinganishaji wa uso",
+      "ID Verification": "Uthibitishaji wa utambulisho",
+      "KYC Level 1": "KYC kiwango cha 1",
+      "KYC Level 2": "KYC kiwango cha 2",
+      "KYC Level 3": "KYC kiwango cha 3",
+      "Provider KYC Decision": "Uamuzi wa KYC wa mtoa huduma",
+      "Source": "Chanzo",
+      "Started": "Imeanza",
+      "Verification Session": "Kikao cha uthibitishaji"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4038,6 +4056,7 @@
       "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo."
     },
     "text": {
+      "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
       "Complete these steps to preview the product": "Kamilisha hatua hizi ili kuona onyesho la awali la bidhaa",
       "Complete these steps before creating the product": "Kamilisha hatua hizi kabla ya kuunda bidhaa",
       "Check the highlighted fields before creating the product": "Kagua sehemu zilizoangaziwa kabla ya kuunda bidhaa",
@@ -5045,7 +5064,11 @@
       "All selected credit applications were rejected successfully": "Maombi yote ya mkopo yaliyochaguliwa yamekataliwa kwa mafanikio.",
       "No selected credit applications could be rejected": "Hakuna ombi la mkopo lililochaguliwa lililoweza kukataliwa.",
       "Selected credit applications rejection partial result": "{{succeeded}} kati ya {{total}} maombi ya mkopo yaliyochaguliwa yamekataliwa. {{failed}} yameshindwa.",
-      "Counted in repayment periods": "Huhesabiwa kwa vipindi vya marejesho ({{unit}})"
+      "Counted in repayment periods": "Huhesabiwa kwa vipindi vya marejesho ({{unit}})",
+      "Loading enrollment status": "Inapakia hali ya usajili",
+      "No enrollment cases found": "Hakuna kesi za usajili zilizopatikana",
+      "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
+      "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili"
     },
     "permissions": {
       "actions": {

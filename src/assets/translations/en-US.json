@@ -840,7 +840,8 @@
       "Save Changes": "Save Changes",
       "Save": "Save",
       "Upload Report Design": "Upload Report Design",
-      "Mass Reject": "Mass Reject"
+      "Mass Reject": "Mass Reject",
+      "Hide": "Hide"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1824,7 +1825,8 @@
       "Interest Refunds": "Interest Refunds",
       "Deferred Income Recognition": "Deferred Income Recognition",
       "Advanced Configuration": "Advanced Configuration",
-      "Mass Reject Credit Applications": "Mass Reject Credit Applications"
+      "Mass Reject Credit Applications": "Mass Reject Credit Applications",
+      "Enrollment Details": "Enrollment Details"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -3812,7 +3814,23 @@
       "Requests": "Requests",
       "Submitted and pending approval": "Submitted and pending approval",
       "Rejected": "Rejected",
-      "Withdrawn by applicant": "Withdrawn by applicant"
+      "Withdrawn by applicant": "Withdrawn by applicant",
+      "AML Screening": "AML Screening",
+      "Activation": "Activation",
+      "Client Lifecycle Status": "Client Lifecycle Status",
+      "Commercial Registration": "Commercial Registration",
+      "Compliance": "Compliance",
+      "Derived KYC Status": "Derived KYC Status",
+      "Enrollment Status": "Enrollment Status",
+      "Face Match": "Face Match",
+      "ID Verification": "ID Verification",
+      "KYC Level 1": "KYC Level 1",
+      "KYC Level 2": "KYC Level 2",
+      "KYC Level 3": "KYC Level 3",
+      "Provider KYC Decision": "Provider KYC Decision",
+      "Source": "Source",
+      "Started": "Started",
+      "Verification Session": "Verification Session"
     },
     "links": {
       "Community": "Community",
@@ -4067,6 +4085,7 @@
       "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date."
     },
     "text": {
+      "Select a client from the list": "Select a client from the list",
       "Complete these steps to preview the product": "Complete these steps to preview the product",
       "Complete these steps before creating the product": "Complete these steps before creating the product",
       "Check the highlighted fields before creating the product": "Check the highlighted fields before creating the product",
@@ -5188,7 +5207,11 @@
       "All selected credit applications were rejected successfully": "All selected credit applications were rejected successfully.",
       "No selected credit applications could be rejected": "No selected credit applications could be rejected.",
       "Selected credit applications rejection partial result": "{{succeeded}} of {{total}} selected credit applications were rejected. {{failed}} failed.",
-      "Counted in repayment periods": "Counted in repayment periods ({{unit}})"
+      "Counted in repayment periods": "Counted in repayment periods ({{unit}})",
+      "Loading enrollment status": "Loading enrollment status",
+      "No enrollment cases found": "No enrollment cases found",
+      "Select a client from the list": "Select a client from the list",
+      "Unable to load enrollment status": "Unable to load enrollment status"
     },
     "permissions": {
       "actions": {

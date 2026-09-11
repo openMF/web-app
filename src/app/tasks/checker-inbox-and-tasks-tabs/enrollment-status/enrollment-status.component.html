@@ -1,0 +1,207 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <form (ngSubmit)="applyClientFilter()" class="enrollment-filter">
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
+      <input matInput [formControl]="clientControl" [matAutocomplete]="clientAutocomplete" />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #clientAutocomplete="matAutocomplete"
+        [displayWith]="displayClient"
+        (optionSelected)="selectClient($event.option.value)"
+      >
+        @for (client of filteredClients$ | async; track client.id) {
+          <mat-option [value]="client">
+            {{ client.displayName }}
+            @if (client.accountNo) {
+              ({{ client.accountNo }})
+            }
+          </mat-option>
+        }
+      </mat-autocomplete>
+      @if (clientFilterError) {
+        <mat-error>{{ clientFilterError | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="filter-actions">
+      <button mat-raised-button color="primary" type="submit">{{ 'labels.buttons.Search' | translate }}</button>
+      <button mat-button type="button" (click)="clearClientFilter()">{{ 'labels.buttons.Clear' | translate }}</button>
+    </div>
+  </form>
+
+  @if (loadError) {
+    <div class="alert error">
+      <div class="message">
+        <i class="fa fa-exclamation-circle alert-check"></i>
+        {{ loadError | translate }}
+      </div>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="alert">
+      <div class="message">
+        <i class="fa fa-circle-notch fa-spin alert-check"></i>
+        {{ 'labels.text.Loading enrollment status' | translate }}
+      </div>
+    </div>
+  }
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase" class="client-cell">
+          <button mat-button type="button" (click)="viewClient(enrollmentCase); $event.stopPropagation()">
+            {{ enrollmentCase.clientName || '-' }}
+          </button>
+          <span class="client-id">{{ enrollmentCase.clientId || '-' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lifecycle">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Lifecycle Status' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(lifecycleStatus(enrollmentCase))">
+            {{ displayStatus(lifecycleStatus(enrollmentCase)) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="registration">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Commercial Registration' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'registration'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'registration')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="kycLevel1">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.KYC Level 1' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'kycLevel1'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'kycLevel1')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="kycLevel2">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.KYC Level 2' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'kycLevel2'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'kycLevel2')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="kycLevel3">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.KYC Level 3' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'kycLevel3'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'kycLevel3')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="compliance">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Compliance' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'compliance'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'compliance')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="activation">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Activation' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="status-chip" [ngClass]="statusClass(stageStatus(enrollmentCase, 'activation'))">
+            {{ displayStatus(stageStatus(enrollmentCase, 'activation')) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="aging">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Aging' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <span class="aging-chip" [ngClass]="agingClass(enrollmentCase)">{{ agingLabel(enrollmentCase) }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Details' | translate }}</th>
+        <td mat-cell *matCellDef="let enrollmentCase">
+          <button mat-button type="button" (click)="toggleDetails(enrollmentCase); $event.stopPropagation()">
+            {{ (isExpanded(enrollmentCase) ? 'labels.buttons.Hide' : 'labels.buttons.View') | translate }}
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  @for (enrollmentCase of dataSource.data; track enrollmentCase.clientId) {
+    @if (isExpanded(enrollmentCase)) {
+      <section class="details-panel">
+        <h3>{{ 'labels.heading.Enrollment Details' | translate }}</h3>
+        <div class="details-grid">
+          <div>
+            <span>{{ 'labels.inputs.Client Lifecycle Status' | translate }}</span>
+            <strong>{{ displayStatus(lifecycleStatus(enrollmentCase)) }}</strong>
+          </div>
+          @for (stage of enrollmentCase.enrollmentStages || []; track stage.name) {
+            <div>
+              <span>{{ stage.name || '-' }}</span>
+              <strong>{{ displayStatus(statusValue(stage.status)) }}</strong>
+              <small>
+                {{ 'labels.inputs.Started' | translate }}: {{ stage.startedAt ? (stage.startedAt | dateFormat) : '-' }}
+                |
+                {{ 'labels.inputs.Completed' | translate }}:
+                {{ stage.completedAt ? (stage.completedAt | dateFormat) : '-' }}
+                @if (stage.source) {
+                  | {{ 'labels.inputs.Source' | translate }}: {{ stage.source }}
+                }
+              </small>
+            </div>
+          }
+          @for (evidence of evidenceItems(enrollmentCase.kycEvidence); track evidence.label) {
+            <div>
+              <span>{{ evidence.label | translate }}</span>
+              <strong>{{ evidence.value }}</strong>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  }
+
+  @if (!loading && dataSource.data.length === 0) {
+    <div class="alert">
+      <div class="message">
+        <i class="fa fa-exclamation-circle alert-check"></i>
+        {{ 'labels.text.No enrollment cases found' | translate }}
+      </div>
+    </div>
+  }
+
+  <mat-paginator
+    [length]="totalFilteredRecords"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+    (page)="changePaging($event)"
+  >
+  </mat-paginator>
+</div>

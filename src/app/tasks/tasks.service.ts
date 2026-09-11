@@ -31,6 +31,56 @@ function madeOnDateToMillis(record: any): any {
   return { ...record, madeOnDate: Math.round(record.madeOnDate * 1000) };
 }
 
+export interface EnrollmentCasesSearchParams {
+  view: 'enrollment';
+  clientId?: number | string;
+  offset?: number;
+  limit?: number;
+}
+
+export interface EnrollmentCasesResponse {
+  totalFilteredRecords?: number;
+  pageItems?: EnrollmentCase[];
+}
+
+export interface EnrollmentCase {
+  clientId?: number | string;
+  clientName?: string;
+  officeId?: number | string;
+  clientLifecycleStatus?: string | { code?: string; value?: string; id?: number | string };
+  enrollmentStages?: EnrollmentStage[];
+  kycEvidence?: KycEvidence;
+}
+
+export interface EnrollmentStage {
+  name?: string;
+  status?: string | { code?: string; value?: string; id?: number | string };
+  startedAt?: string | number[];
+  completedAt?: string | number[];
+  source?: string;
+  aging?: Aging | null;
+}
+
+export interface Aging {
+  days?: number;
+  trafficLight?: string;
+  source?: string;
+}
+
+export interface KycEvidence {
+  verificationSessionId?: string | number;
+  sessionId?: string | number;
+  providerDecisionStatus?: string;
+  providerKycDecision?: string;
+  derivedKycStatus?: string;
+  faceMatchStatus?: string;
+  faceMatch?: { status?: string; decision?: string };
+  idVerificationStatus?: string;
+  idVerification?: { status?: string; decision?: string };
+  amlScreeningStatus?: string;
+  amlScreening?: { status?: string; decision?: string };
+}
+
 /**
  * Tasks Service
  */
@@ -70,6 +120,14 @@ export class TasksService {
    */
   getCreditApplications(searchData?: any): Observable<any> {
     return this.http.get('/v2/credit-applications', { params: this.buildHttpParams(searchData) });
+  }
+
+  /**
+   * Get enrollment status cases.
+   * @param {EnrollmentCasesSearchParams} searchData Enrollment case search and paging parameters.
+   */
+  getEnrollmentCases(searchData: EnrollmentCasesSearchParams): Observable<EnrollmentCasesResponse> {
+    return this.http.get<EnrollmentCasesResponse>('/v2/onboarding/cases', { params: this.buildHttpParams(searchData) });
   }
 
   /**

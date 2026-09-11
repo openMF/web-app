@@ -1,0 +1,164 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+
+  .enrollment-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: start;
+    margin-bottom: 16px;
+
+    mat-form-field {
+      flex: 1 1 260px;
+      max-width: 420px;
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 56px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .client-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 160px;
+  }
+
+  .client-id {
+    color: rgb(0 0 0 / 60%);
+    font-size: 0.75rem;
+    padding-left: 8px;
+  }
+
+  .status-chip,
+  .aging-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .status-completed {
+    background-color: #e6f4ea;
+    color: #137333;
+  }
+
+  .status-pending {
+    background-color: #fff8e1;
+    color: #8d6e00;
+  }
+
+  .status-rejected {
+    background-color: #fdecea;
+    color: #b3261e;
+  }
+
+  .status-withdrawn,
+  .status-closed {
+    background-color: #eceff1;
+    color: #455a64;
+  }
+
+  .status-unknown,
+  .aging-neutral {
+    background-color: #f1f3f4;
+    color: #5f6368;
+  }
+
+  .aging-yellow {
+    background-color: #fff9c4;
+    color: #7a6500;
+  }
+
+  .aging-orange {
+    background-color: #ffe0b2;
+    color: #9c4f00;
+  }
+
+  .aging-red {
+    background-color: #fce8e6;
+    color: #b3261e;
+  }
+
+  .details-panel {
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    margin: 12px 0;
+    padding: 16px;
+
+    h3 {
+      margin: 0 0 12px;
+    }
+  }
+
+  .details-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    div {
+      display: flex;
+      flex: 1 1 220px;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    span,
+    small {
+      color: rgb(0 0 0 / 60%);
+    }
+  }
+}
+
+.alert {
+  background-color: #e8f4fd;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  line-height: 1.43;
+  border-radius: 4px;
+  letter-spacing: normal;
+  margin: 10px 0;
+
+  &.error {
+    background-color: #fdecea;
+  }
+
+  .message {
+    padding: 8px 0;
+    font-size: 18px;
+  }
+
+  .alert-check {
+    color: #359ff4;
+    margin-right: 2px;
+    font-size: 1.4rem;
+  }
+}
