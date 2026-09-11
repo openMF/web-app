@@ -15,24 +15,24 @@
             <tr>
               <td>{{ 'labels.inputs.Disbursement Date' | translate }}</td>
               <td>
-                {{ loanData.timeline?.actualDisbursementDate }}
-                @if (!loanData.timeline?.actualDisbursementDate) {
+                {{ loanData?.timeline?.actualDisbursementDate | dateFormat }}
+                @if (!loanData?.timeline?.actualDisbursementDate) {
                   <span>{{ 'labels.inputs.Not Available' | translate }}</span>
                 }
               </td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Currency' | translate }}</td>
-              <td>{{ loanData.currency?.name }}</td>
+              <td>{{ loanData?.currency?.name }}</td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Loan Officer' | translate }}</td>
               <td>
-                {{ loanData.loanOfficerName }}
-                @if (!loanData.loanOfficerName) {
+                {{ loanData?.loanOfficerName }}
+                @if (!loanData?.loanOfficerName) {
                   <span>{{ 'labels.inputs.Unassigned' | translate }}</span>
                 }
-                @if (loanData.loanOfficerName) {
+                @if (loanData?.loanOfficerName) {
                   <span>
                     <fa-icon icon="times"></fa-icon>
                   </span>
@@ -42,7 +42,7 @@
             <tr>
               <td>{{ 'labels.inputs.External Id' | translate }}</td>
               <td>
-                <mifosx-external-identifier externalId="{{ loanData.externalId }}"></mifosx-external-identifier>
+                <mifosx-external-identifier externalId="{{ loanData?.externalId }}"></mifosx-external-identifier>
               </td>
             </tr>
           </tbody>
@@ -55,8 +55,8 @@
             <tr>
               <td>{{ 'labels.inputs.Loan Purpose' | translate }}</td>
               <td>
-                {{ loanData.loanPurposeName }}
-                @if (!loanData.loanPurposeName) {
+                {{ loanData?.loanPurposeName }}
+                @if (!loanData?.loanPurposeName) {
                   <span> {{ 'labels.inputs.Not Provided' | translate }} </span>
                 }
               </td>
@@ -64,20 +64,20 @@
             <tr>
               <td>{{ 'labels.inputs.Approved Amount' | translate }}</td>
               <td>
-                <span>{{ loanData.approvedPrincipal | formatNumber }}</span>
+                <span>{{ loanData?.approvedPrincipal | formatNumber }}</span>
               </td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Disburse Amount' | translate }}</td>
               <td>
-                <span>{{ loanData.principal | formatNumber }}</span>
+                <span>{{ loanData?.principal | formatNumber }}</span>
               </td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Arrears By' | translate }}</td>
               <td>
-                {{ loanData.summary?.totalOverdue | formatNumber }}
-                @if (loanData.summary?.totalOverdue < 0) {
+                {{ loanData?.summary?.totalOverdue | formatNumber }}
+                @if (loanData?.summary?.totalOverdue < 0) {
                   <span>{{ 'labels.inputs.Not Provided' | translate }}</span>
                 }
               </td>
@@ -99,7 +99,12 @@
           <div class="layout-column flex-50">
             <div class="layout-row align-flex-end">
               <button mat-raised-button class="f-right" color="primary" (click)="toggleGuarantorsDetailsOverview()">
-                {{ showDeletedGuarantorsAccounts ? 'Hide Deleted Guarantors' : 'Show Deleted Guarantors' }}
+                {{
+                  (showDeletedGuarantorsAccounts
+                    ? 'labels.buttons.Hide Deleted Guarantors'
+                    : 'labels.buttons.Show Deleted Guarantors'
+                  ) | translate
+                }}
               </button>
             </div>
           </div>
