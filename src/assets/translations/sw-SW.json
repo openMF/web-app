@@ -5051,6 +5051,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Ni miundo ya ripoti ya Eclipse BIRT (.rptdesign) pekee inayoweza kupakiwa.",
       "The selected report design is empty": "Muundo wa ripoti uliochaguliwa hauna maudhui.",
       "The selected report design is too large": "Muundo wa ripoti uliochaguliwa unazidi 5 MB.",
+      "This report format cannot be previewed in the browser": "Muundo huu wa ripoti hauwezi kuonyeshwa kwenye kivinjari. Pakua ili kuufungua.",
       "Report design uploaded": "Muundo wa ripoti {{fileName}} umepakiwa.",
       "Report design replaced": "Muundo wa ripoti {{fileName}} umebadilishwa.",
       "KB": "KB",

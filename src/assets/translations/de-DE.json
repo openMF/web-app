@@ -5056,6 +5056,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Es können nur Eclipse-BIRT-Berichtsdesigns (.rptdesign) hochgeladen werden.",
       "The selected report design is empty": "Das ausgewählte Berichtsdesign ist leer.",
       "The selected report design is too large": "Das ausgewählte Berichtsdesign ist größer als 5 MB.",
+      "This report format cannot be previewed in the browser": "Dieses Berichtsformat kann im Browser nicht angezeigt werden. Laden Sie es zum Öffnen herunter.",
       "Report design uploaded": "Berichtsdesign {{fileName}} wurde hochgeladen.",
       "Report design replaced": "Berichtsdesign {{fileName}} wurde ersetzt.",
       "KB": "KB",

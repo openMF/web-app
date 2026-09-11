@@ -5057,6 +5057,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Seuls les modèles de rapport Eclipse BIRT (.rptdesign) peuvent être téléchargés.",
       "The selected report design is empty": "Le modèle de rapport sélectionné est vide.",
       "The selected report design is too large": "Le modèle de rapport sélectionné dépasse 5 MB.",
+      "This report format cannot be previewed in the browser": "Ce format de rapport ne peut pas être prévisualisé dans le navigateur. Téléchargez-le pour l'ouvrir.",
       "Report design uploaded": "Le modèle de rapport {{fileName}} a été téléchargé.",
       "Report design replaced": "Le modèle de rapport {{fileName}} a été remplacé.",
       "KB": "KB",

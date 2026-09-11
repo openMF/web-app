@@ -5054,6 +5054,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Var augšupielādēt tikai Eclipse BIRT pārskatu veidnes (.rptdesign).",
       "The selected report design is empty": "Atlasītā pārskata veidne ir tukša.",
       "The selected report design is too large": "Atlasītā pārskata veidne pārsniedz 5 MB.",
+      "This report format cannot be previewed in the browser": "Šo pārskata formātu nevar priekšskatīt pārlūkprogrammā. Lejupielādējiet to, lai atvērtu.",
       "Report design uploaded": "Pārskata veidne {{fileName}} ir augšupielādēta.",
       "Report design replaced": "Pārskata veidne {{fileName}} ir aizstāta.",
       "KB": "KB",
