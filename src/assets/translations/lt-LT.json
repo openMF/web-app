@@ -834,7 +834,8 @@
       "Enable Breach": "Įjungti pažeidimą",
       "Save": "Išsaugoti",
       "Upload Report Design": "Įkelti ataskaitos maketą",
-      "Mass Reject": "Atmesti masiškai"
+      "Mass Reject": "Atmesti masiškai",
+      "Hide": "Slėpti"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1809,7 +1810,8 @@
       "Interest Refunds": "Palūkanų grąžinimas",
       "Deferred Income Recognition": "Atidėtųjų pajamų pripažinimas",
       "Advanced Configuration": "Išplėstinė konfigūracija",
-      "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas"
+      "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas",
+      "Enrollment Details": "Registracijos informacija"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
@@ -1858,7 +1860,7 @@
       "Action Name": "Veiksmo pavadinimas",
       "Actions": "Veiksmai",
       "Activated On": "Įjungta",
-      "Aging": "Senėjimas",
+      "Aging": "Trukmė",
       "Activated On Date": "Aktyvuota datą",
       "Activation Date": "Aktyvinimo data",
       "Activation date": "Aktyvinimo data",
@@ -3787,7 +3789,23 @@
       "State / Municipality": "Apskritis / savivaldybė",
       "Submitted and pending approval": "Pateikta ir laukiama patvirtinimo",
       "Rejected": "Atmesta",
-      "Withdrawn by applicant": "Atsiėmė pareiškėjas"
+      "Withdrawn by applicant": "Atsiėmė pareiškėjas",
+      "AML Screening": "AML patikra",
+      "Activation": "Aktyvinimas",
+      "Client Lifecycle Status": "Kliento gyvavimo ciklo būsena",
+      "Commercial Registration": "Komercinė registracija",
+      "Compliance": "Atitiktis",
+      "Derived KYC Status": "Išvestinė KYC būsena",
+      "Enrollment Status": "Registracijos būsena",
+      "Face Match": "Veido atitikimas",
+      "ID Verification": "Tapatybės patvirtinimas",
+      "KYC Level 1": "KYC 1 lygis",
+      "KYC Level 2": "KYC 2 lygis",
+      "KYC Level 3": "KYC 3 lygis",
+      "Provider KYC Decision": "Teikėjo KYC sprendimas",
+      "Source": "Šaltinis",
+      "Started": "Pradėta",
+      "Verification Session": "Patvirtinimo sesija"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4041,6 +4059,7 @@
       "Breach evaluation will resume": "Pažeidimų vertinimas atnaujinamas {{date}}. Nuo tos dienos paskola vėl vertinama."
     },
     "text": {
+      "Select a client from the list": "Pasirinkite klientą iš sąrašo",
       "Complete these steps to preview the product": "Atlikite šiuos veiksmus, kad peržiūrėtumėte produktą",
       "Complete these steps before creating the product": "Atlikite šiuos veiksmus prieš kurdami produktą",
       "Check the highlighted fields before creating the product": "Patikrinkite paryškintus laukus prieš kurdami produktą",
@@ -5049,7 +5068,11 @@
       "All selected credit applications were rejected successfully": "Visos pasirinktos kredito paraiškos sėkmingai atmestos.",
       "No selected credit applications could be rejected": "Nepavyko atmesti nė vienos pasirinktos kredito paraiškos.",
       "Selected credit applications rejection partial result": "Atmesta {{succeeded}} iš {{total}} pasirinktų kredito paraiškų. {{failed}} nepavyko.",
-      "Counted in repayment periods": "Skaičiuojama grąžinimo laikotarpiais ({{unit}})"
+      "Counted in repayment periods": "Skaičiuojama grąžinimo laikotarpiais ({{unit}})",
+      "Loading enrollment status": "Įkeliama registracijos būsena",
+      "No enrollment cases found": "Registracijos atvejų nerasta",
+      "Select a client from the list": "Pasirinkite klientą iš sąrašo",
+      "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos"
     },
     "permissions": {
       "actions": {

@@ -834,7 +834,8 @@
       "Enable Breach": "Iespējot pārkāpumu",
       "Save": "Saglabāt",
       "Upload Report Design": "Augšupielādēt pārskata veidni",
-      "Mass Reject": "Noraidīt masveidā"
+      "Mass Reject": "Noraidīt masveidā",
+      "Hide": "Paslēpt"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1810,7 +1811,8 @@
       "Interest Refunds": "Procentu atmaksāšana",
       "Deferred Income Recognition": "Atliktā ienākuma atzīšana",
       "Advanced Configuration": "Papildu konfigurācija",
-      "Mass Reject Credit Applications": "Masveida kredīta pieteikumu noraidīšana"
+      "Mass Reject Credit Applications": "Masveida kredīta pieteikumu noraidīšana",
+      "Enrollment Details": "Reģistrācijas informācija"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -1859,7 +1861,7 @@
       "Action Name": "Darbības nosaukums",
       "Actions": "Darbības",
       "Activated On": "Aktivizēts Ieslēgts",
-      "Aging": "Novecošana",
+      "Aging": "Ilgums",
       "Activated On Date": "Aktivizēts datumā",
       "Activation Date": "Aktivizācijas datums",
       "Activation date": "Aktivizācijas datums",
@@ -3788,7 +3790,23 @@
       "State / Municipality": "Novads / pašvaldība",
       "Submitted and pending approval": "Iesniegts un gaida apstiprinājumu",
       "Rejected": "Noraidīts",
-      "Withdrawn by applicant": "Pieteicējs atsaucis"
+      "Withdrawn by applicant": "Pieteicējs atsaucis",
+      "AML Screening": "AML pārbaude",
+      "Activation": "Aktivizēšana",
+      "Client Lifecycle Status": "Klienta dzīves cikla statuss",
+      "Commercial Registration": "Komercreģistrācija",
+      "Compliance": "Atbilstība",
+      "Derived KYC Status": "Atvasinātais KYC statuss",
+      "Enrollment Status": "Reģistrācijas statuss",
+      "Face Match": "Sejas atbilstības pārbaude",
+      "ID Verification": "Identitātes pārbaude",
+      "KYC Level 1": "KYC 1. līmenis",
+      "KYC Level 2": "KYC 2. līmenis",
+      "KYC Level 3": "KYC 3. līmenis",
+      "Provider KYC Decision": "Pakalpojumu sniedzēja KYC lēmums",
+      "Source": "Avots",
+      "Started": "Sākts",
+      "Verification Session": "Pārbaudes sesija"
     },
     "links": {
       "Community": "kopiena",
@@ -4041,6 +4059,7 @@
       "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti."
     },
     "text": {
+      "Select a client from the list": "Atlasiet klientu no saraksta",
       "Complete these steps to preview the product": "Izpildiet šīs darbības, lai priekšskatītu produktu",
       "Complete these steps before creating the product": "Izpildiet šīs darbības pirms produkta izveides",
       "Check the highlighted fields before creating the product": "Pārbaudiet iezīmētos laukus pirms produkta izveides",
@@ -5048,7 +5067,11 @@
       "All selected credit applications were rejected successfully": "Visi atlasītie kredīta pieteikumi tika veiksmīgi noraidīti.",
       "No selected credit applications could be rejected": "Nevienu atlasīto kredīta pieteikumu neizdevās noraidīt.",
       "Selected credit applications rejection partial result": "Noraidīti {{succeeded}} no {{total}} atlasītajiem kredīta pieteikumiem. {{failed}} neizdevās.",
-      "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})"
+      "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})",
+      "Loading enrollment status": "Notiek reģistrācijas statusa ielāde",
+      "No enrollment cases found": "Reģistrācijas gadījumi nav atrasti",
+      "Select a client from the list": "Atlasiet klientu no saraksta",
+      "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu"
     },
     "permissions": {
       "actions": {

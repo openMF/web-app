@@ -834,7 +834,8 @@
       "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्",
       "Save": "सुरक्षित गर्नुहोस्",
       "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
-      "Mass Reject": "सामूहिक अस्वीकार"
+      "Mass Reject": "सामूहिक अस्वीकार",
+      "Hide": "लुकाउनुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1809,7 +1810,8 @@
       "Interest Refunds": "व्याज परतावा",
       "Deferred Income Recognition": "स्थगित आय पहिचान",
       "Advanced Configuration": "उन्नत कन्फिगरेसन",
-      "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार"
+      "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार",
+      "Enrollment Details": "दर्ता विवरण"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
@@ -1858,7 +1860,7 @@
       "Action Name": "कार्य नाम",
       "Actions": "कार्यहरू",
       "Activated On": "सक्रिय गरियो",
-      "Aging": "अवधि",
+      "Aging": "बितेको अवधि",
       "Activated On Date": "मितिमा सक्रिय गरियो",
       "Activation Date": "सक्रियता मिति",
       "Activation date": "सक्रियता मिति",
@@ -3787,7 +3789,23 @@
       "State / Municipality": "प्रदेश / नगरपालिका",
       "Submitted and pending approval": "पेश गरिएको र स्वीकृतिको प्रतीक्षामा",
       "Rejected": "अस्वीकृत",
-      "Withdrawn by applicant": "आवेदकले फिर्ता लिएको"
+      "Withdrawn by applicant": "आवेदकले फिर्ता लिएको",
+      "AML Screening": "AML जाँच",
+      "Activation": "सक्रियता",
+      "Client Lifecycle Status": "ग्राहक जीवनचक्र स्थिति",
+      "Commercial Registration": "व्यावसायिक दर्ता",
+      "Compliance": "अनुपालन",
+      "Derived KYC Status": "व्युत्पन्न KYC स्थिति",
+      "Enrollment Status": "दर्ता स्थिति",
+      "Face Match": "अनुहार मिलान",
+      "ID Verification": "पहिचान प्रमाणीकरण",
+      "KYC Level 1": "KYC स्तर १",
+      "KYC Level 2": "KYC स्तर २",
+      "KYC Level 3": "KYC स्तर ३",
+      "Provider KYC Decision": "प्रदायकको KYC निर्णय",
+      "Source": "स्रोत",
+      "Started": "सुरु गरिएको",
+      "Verification Session": "प्रमाणीकरण सत्र"
     },
     "links": {
       "Community": "समुदाय",
@@ -4041,6 +4059,7 @@
       "Breach evaluation will resume": "{{date}} देखि उल्लंघन मूल्यांकन पुनः सुरु हुन्छ। त्यो मितिदेखि ऋणको पुनः मूल्यांकन गरिन्छ।"
     },
     "text": {
+      "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
       "Complete these steps to preview the product": "उत्पादनको पूर्वावलोकन गर्न यी चरणहरू पूरा गर्नुहोस्",
       "Complete these steps before creating the product": "उत्पादन सिर्जना गर्नु अघि यी चरणहरू पूरा गर्नुहोस्",
       "Check the highlighted fields before creating the product": "उत्पादन सिर्जना गर्नु अघि हाइलाइट गरिएका फिल्डहरू जाँच गर्नुहोस्",
@@ -5048,7 +5067,11 @@
       "All selected credit applications were rejected successfully": "सबै चयन गरिएका क्रेडिट आवेदनहरू सफलतापूर्वक अस्वीकार गरिए।",
       "No selected credit applications could be rejected": "चयन गरिएका कुनै पनि क्रेडिट आवेदन अस्वीकार गर्न सकिएन।",
       "Selected credit applications rejection partial result": "{{total}} चयन गरिएका क्रेडिट आवेदनमध्ये {{succeeded}} अस्वीकार गरिए। {{failed}} असफल भए।",
-      "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})"
+      "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})",
+      "Loading enrollment status": "दर्ता स्थिति लोड हुँदैछ",
+      "No enrollment cases found": "दर्ताका केसहरू फेला परेनन्",
+      "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
+      "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन"
     },
     "permissions": {
       "actions": {

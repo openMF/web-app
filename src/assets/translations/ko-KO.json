@@ -834,7 +834,8 @@
       "Enable Breach": "위반 활성화",
       "Save": "저장",
       "Upload Report Design": "보고서 디자인 업로드",
-      "Mass Reject": "일괄 거절"
+      "Mass Reject": "일괄 거절",
+      "Hide": "숨기기"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1811,7 +1812,8 @@
       "Interest Refunds": "이자환급",
       "Deferred Income Recognition": "이연수익 인식",
       "Advanced Configuration": "고급 구성",
-      "Mass Reject Credit Applications": "신용 신청 일괄 거절"
+      "Mass Reject Credit Applications": "신용 신청 일괄 거절",
+      "Enrollment Details": "등록 세부 정보"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -3788,7 +3790,23 @@
       "State / Municipality": "주 / 지방자치단체",
       "Submitted and pending approval": "제출됨 및 승인 대기 중",
       "Rejected": "거부됨",
-      "Withdrawn by applicant": "신청자가 철회함"
+      "Withdrawn by applicant": "신청자가 철회함",
+      "AML Screening": "AML 심사",
+      "Activation": "활성화",
+      "Client Lifecycle Status": "고객 생애주기 상태",
+      "Commercial Registration": "사업자 등록",
+      "Compliance": "규정 준수",
+      "Derived KYC Status": "파생 KYC 상태",
+      "Enrollment Status": "등록 상태",
+      "Face Match": "얼굴 일치 확인",
+      "ID Verification": "신원 확인",
+      "KYC Level 1": "KYC 1단계",
+      "KYC Level 2": "KYC 2단계",
+      "KYC Level 3": "KYC 3단계",
+      "Provider KYC Decision": "제공업체 KYC 결정",
+      "Source": "출처",
+      "Started": "시작됨",
+      "Verification Session": "확인 세션"
     },
     "links": {
       "Community": "지역 사회",
@@ -4041,6 +4059,7 @@
       "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다."
     },
     "text": {
+      "Select a client from the list": "목록에서 고객을 선택하세요",
       "Complete these steps to preview the product": "제품을 미리 보려면 이 단계를 완료하세요",
       "Complete these steps before creating the product": "제품을 만들기 전에 이 단계를 완료하세요",
       "Check the highlighted fields before creating the product": "제품을 만들기 전에 강조 표시된 필드를 확인하세요",
@@ -5048,7 +5067,11 @@
       "All selected credit applications were rejected successfully": "선택한 모든 신용 신청이 성공적으로 거절되었습니다.",
       "No selected credit applications could be rejected": "선택한 신용 신청을 거절할 수 없습니다.",
       "Selected credit applications rejection partial result": "선택한 신용 신청 {{total}}건 중 {{succeeded}}건이 거절되었습니다. {{failed}}건은 실패했습니다.",
-      "Counted in repayment periods": "상환 주기 단위로 계산됩니다 ({{unit}})"
+      "Counted in repayment periods": "상환 주기 단위로 계산됩니다 ({{unit}})",
+      "Loading enrollment status": "등록 상태를 불러오는 중",
+      "No enrollment cases found": "등록 사례를 찾을 수 없습니다",
+      "Select a client from the list": "목록에서 고객을 선택하세요",
+      "Unable to load enrollment status": "등록 상태를 불러올 수 없습니다"
     },
     "permissions": {
       "actions": {

@@ -185,4 +185,22 @@ describe('TasksService maker-checker search', () => {
       resourceId: 1
     });
   });
+
+  it('requests enrollment cases with only populated server-side parameters', () => {
+    service
+      .getEnrollmentCases({
+        view: 'enrollment',
+        clientId: 123,
+        offset: 20,
+        limit: 10
+      })
+      .subscribe();
+
+    const request = httpMock.expectOne((req) => req.url === '/v2/onboarding/cases');
+    expect(request.request.params.get('view')).toBe('enrollment');
+    expect(request.request.params.get('clientId')).toBe('123');
+    expect(request.request.params.get('offset')).toBe('20');
+    expect(request.request.params.get('limit')).toBe('10');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
 });

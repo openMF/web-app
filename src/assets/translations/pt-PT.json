@@ -834,7 +834,8 @@
       "Enable Breach": "Ativar Violação",
       "Save": "Guardar",
       "Upload Report Design": "Carregar modelo de relatório",
-      "Mass Reject": "Rejeitar em massa"
+      "Mass Reject": "Rejeitar em massa",
+      "Hide": "Ocultar"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1809,7 +1810,8 @@
       "Interest Refunds": "Reembolso de juros",
       "Deferred Income Recognition": "Reconhecimento de receita diferida",
       "Advanced Configuration": "Configuração avançada",
-      "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito"
+      "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito",
+      "Enrollment Details": "Detalhes da inscrição"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
@@ -3787,7 +3789,23 @@
       "State / Municipality": "Distrito / município",
       "Submitted and pending approval": "Submetido e pendente de aprovação",
       "Rejected": "Rejeitado",
-      "Withdrawn by applicant": "Retirado pelo requerente"
+      "Withdrawn by applicant": "Retirado pelo requerente",
+      "AML Screening": "Verificação AML",
+      "Activation": "Ativação",
+      "Client Lifecycle Status": "Estado do ciclo de vida do cliente",
+      "Commercial Registration": "Registo comercial",
+      "Compliance": "Conformidade",
+      "Derived KYC Status": "Estado KYC derivado",
+      "Enrollment Status": "Estado da inscrição",
+      "Face Match": "Correspondência facial",
+      "ID Verification": "Verificação de identidade",
+      "KYC Level 1": "KYC nível 1",
+      "KYC Level 2": "KYC nível 2",
+      "KYC Level 3": "KYC nível 3",
+      "Provider KYC Decision": "Decisão KYC do fornecedor",
+      "Source": "Origem",
+      "Started": "Iniciado",
+      "Verification Session": "Sessão de verificação"
     },
     "links": {
       "Community": "Comunidade",
@@ -4041,6 +4059,7 @@
       "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data."
     },
     "text": {
+      "Select a client from the list": "Selecione um cliente da lista",
       "Complete these steps to preview the product": "Conclua estes passos para pré-visualizar o produto",
       "Complete these steps before creating the product": "Conclua estes passos antes de criar o produto",
       "Check the highlighted fields before creating the product": "Verifique os campos destacados antes de criar o produto",
@@ -5048,7 +5067,11 @@
       "All selected credit applications were rejected successfully": "Todas as candidaturas de crédito selecionadas foram rejeitadas com sucesso.",
       "No selected credit applications could be rejected": "Não foi possível rejeitar nenhuma candidatura de crédito selecionada.",
       "Selected credit applications rejection partial result": "{{succeeded}} de {{total}} candidaturas de crédito selecionadas foram rejeitadas. {{failed}} falharam.",
-      "Counted in repayment periods": "Contado em períodos de reembolso ({{unit}})"
+      "Counted in repayment periods": "Contado em períodos de reembolso ({{unit}})",
+      "Loading enrollment status": "A carregar o estado da inscrição",
+      "No enrollment cases found": "Nenhum caso de inscrição encontrado",
+      "Select a client from the list": "Selecione um cliente da lista",
+      "Unable to load enrollment status": "Não foi possível carregar o estado da inscrição"
     },
     "permissions": {
       "actions": {
