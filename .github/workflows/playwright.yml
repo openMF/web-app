@@ -24,6 +24,11 @@ jobs:
       E2E_PASSWORD: password
       E2E_TENANT_ID: default
       NODE_TLS_REJECT_UNAUTHORIZED: '0'
+      # Written by the `json` reporter in `npm run playwright:ci`. It sits inside
+      # playwright-report/ so the existing upload keeps it on every run. That only
+      # holds while `json` is listed after `html`: reporters finish in the order
+      # listed, and the html reporter clears this folder when it finishes.
+      PLAYWRIGHT_JSON_OUTPUT_FILE: playwright-report/results.json
 
     steps:
       - name: Checkout code
@@ -52,6 +57,12 @@ jobs:
 
       - name: Run Playwright tests
         run: npm run playwright:ci
+
+      - name: Summarize flaky tests
+        if: always()
+        # Reporting only: a problem in this step must never change the job result.
+        continue-on-error: true
+        run: node scripts/summarize-flaky-tests.js "$PLAYWRIGHT_JSON_OUTPUT_FILE"
 
       - name: Dump Docker logs on failure
         if: failure()
