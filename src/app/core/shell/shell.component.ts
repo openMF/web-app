@@ -76,8 +76,14 @@ export class ShellComponent implements OnInit, AfterViewInit {
     .pipe(map((result) => result.matches));
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
-  /** Progress bar mode. */
-  progressBarMode: string;
+  /**
+   * Progress bar mode. Starts as 'none' so the bar stays hidden until a request
+   * actually begins. The service emits through a plain EventEmitter, so
+   * subscribing here yields nothing until the next emission, and a route that
+   * issues no requests of its own (Home) would otherwise leave this undefined
+   * and render the bar indefinitely.
+   */
+  progressBarMode = 'none';
 
   /**
    * Subscribes to progress bar to update its mode.
