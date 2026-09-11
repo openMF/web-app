@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges.pipe(
-      map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
+      map((activity: any) => (typeof activity === 'string' ? activity : activity?.activity)),
       map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
     );
   }
@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter((activity) => activity.activity.toLowerCase().includes(filterValue));
   }
 
   /**

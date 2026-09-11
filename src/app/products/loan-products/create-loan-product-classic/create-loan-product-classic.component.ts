@@ -388,12 +388,21 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
     this.productsService
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
       .subscribe((response: any) => {
-        this.router.navigate([
-          '/',
-          'products',
-          'loan-products',
-          response.resourceId
-        ]);
+        // WC and term products have independent id sequences, so the id alone is ambiguous: without
+        // `productType` the view resolver defaults to the term loan product with the same id.
+        this.router.navigate(
+          [
+            '/',
+            'products',
+            'loan-products',
+            response.resourceId
+          ],
+          {
+            queryParams: {
+              productType: this.loanProductService.productType.value
+            }
+          }
+        );
       });
   }
 
