@@ -5056,6 +5056,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Nahrát lze pouze návrhy zpráv Eclipse BIRT (.rptdesign).",
       "The selected report design is empty": "Vybraný návrh zprávy je prázdný.",
       "The selected report design is too large": "Vybraný návrh zprávy je větší než 5 MB.",
+      "This report format cannot be previewed in the browser": "Tento formát zprávy nelze zobrazit v prohlížeči. Stáhněte jej a otevřete.",
       "Report design uploaded": "Návrh zprávy {{fileName}} byl nahrán.",
       "Report design replaced": "Návrh zprávy {{fileName}} byl nahrazen.",
       "KB": "KB",

@@ -5054,6 +5054,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Eclipse BIRT 보고서 디자인(.rptdesign)만 업로드할 수 있습니다.",
       "The selected report design is empty": "선택한 보고서 디자인이 비어 있습니다.",
       "The selected report design is too large": "선택한 보고서 디자인이 5 MB를 초과합니다.",
+      "This report format cannot be previewed in the browser": "이 보고서 형식은 브라우저에서 미리 볼 수 없습니다. 다운로드하여 여십시오.",
       "Report design uploaded": "보고서 디자인 {{fileName}}이(가) 업로드되었습니다.",
       "Report design replaced": "보고서 디자인 {{fileName}}이(가) 대체되었습니다.",
       "KB": "KB",

@@ -5055,6 +5055,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "È possibile caricare solo modelli di rapporto Eclipse BIRT (.rptdesign).",
       "The selected report design is empty": "Il modello di rapporto selezionato è vuoto.",
       "The selected report design is too large": "Il modello di rapporto selezionato supera i 5 MB.",
+      "This report format cannot be previewed in the browser": "Questo formato di rapporto non può essere visualizzato nel browser. Scaricalo per aprirlo.",
       "Report design uploaded": "Il modello di rapporto {{fileName}} è stato caricato.",
       "Report design replaced": "Il modello di rapporto {{fileName}} è stato sostituito.",
       "KB": "KB",

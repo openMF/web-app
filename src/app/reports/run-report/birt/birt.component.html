@@ -7,12 +7,37 @@
 -->
 
 @if (!hideOutput) {
-  <iframe
-    [src]="birtUrl"
-    [title]="'BIRT report: ' + (dataObject?.report?.name || 'report')"
-    sandbox="allow-same-origin allow-forms"
-    frameborder="0"
-    width="100%"
-    height="750px;"
-  ></iframe>
+  @if (reportHtml) {
+    <iframe
+      [srcdoc]="reportHtml"
+      [title]="'BIRT report: ' + (dataObject?.report?.name || 'report')"
+      sandbox="allow-scripts"
+      frameborder="0"
+      width="100%"
+      height="750px"
+    ></iframe>
+  } @else if (birtUrl) {
+    <!--
+      Deliberately not sandboxed: Chrome refuses to run its built-in PDF viewer inside a frame that
+      carries a sandbox attribute, and shows "This page has been blocked by Chrome" instead. What
+      keeps this safe is the blob's type, which is pinned to application/pdf in the component, so the
+      document is always handed to the PDF viewer and never parsed as markup.
+    -->
+    <iframe
+      [src]="birtUrl"
+      [title]="'BIRT report: ' + (dataObject?.report?.name || 'report')"
+      frameborder="0"
+      width="100%"
+      height="750px"
+    ></iframe>
+  } @else if (downloadUrl) {
+    <div class="birt-download">
+      <p class="birt-download__note">
+        {{ 'labels.text.This report format cannot be previewed in the browser' | translate }}
+      </p>
+      <a class="birt-download__link" [href]="downloadUrl" [attr.download]="downloadName">
+        {{ 'labels.buttons.Download' | translate }}
+      </a>
+    </div>
+  }
 }

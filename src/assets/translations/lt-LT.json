@@ -5055,6 +5055,7 @@
       "Only Eclipse BIRT report designs can be uploaded": "Galima įkelti tik Eclipse BIRT ataskaitų maketus (.rptdesign).",
       "The selected report design is empty": "Pasirinktas ataskaitos maketas yra tuščias.",
       "The selected report design is too large": "Pasirinktas ataskaitos maketas viršija 5 MB.",
+      "This report format cannot be previewed in the browser": "Šio ataskaitos formato naršyklėje peržiūrėti negalima. Atsisiųskite, kad atidarytumėte.",
       "Report design uploaded": "Ataskaitos maketas {{fileName}} įkeltas.",
       "Report design replaced": "Ataskaitos maketas {{fileName}} pakeistas.",
       "KB": "KB",
