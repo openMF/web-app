@@ -282,7 +282,11 @@
       }
 
       @if (buttonConfig.optionsPayment.length) {
-        <ng-container class="loan-span">
+        <!-- Wrapped like the rows above on purpose. `MatMenu.items` is a *shallow* ContentChildren
+             query, and Material derives a sub-menu's vertical offset from `items.first`'s offsetTop.
+             Leaving these two triggers unwrapped made them the only entries in `items`, so the
+             offset came out as the 10th row's position and threw every sub-menu ~440px off. -->
+        <span class="menu-item-wrapper">
           <button mat-menu-item [matMenuTriggerFor]="Payments">{{ 'labels.menus.Payments' | translate }}</button>
           <mat-menu #Payments="matMenu">
             @for (item of buttonConfig.optionsPayment; track item) {
@@ -291,11 +295,11 @@
               </button>
             }
           </mat-menu>
-        </ng-container>
+        </span>
       }
 
       @if (buttonConfig.options.length) {
-        <ng-container class="loan-span">
+        <span class="menu-item-wrapper">
           <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
           <mat-menu #More="matMenu">
             @for (item of buttonConfig.options; track item) {
@@ -304,7 +308,7 @@
               </button>
             }
           </mat-menu>
-        </ng-container>
+        </span>
       }
     </mat-menu>
 
