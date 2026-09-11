@@ -207,6 +207,13 @@ export class LoansAccountButtonConfiguration {
             icon: 'coins',
             taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
           },
+          // A prepayment is posted as a repayment for the full outstanding
+          // balance, so it is the repayment permission that gates it.
+          {
+            name: 'Prepay Loan',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
           {
             name: 'Payout Refund',
             icon: 'coins',

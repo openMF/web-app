@@ -111,8 +111,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   loanDatatables: any[] = [];
   /** Whether datatable filtering has completed */
   datatablesReady = false;
-  /** Recalculate Interest */
-  recalculateInterest: any;
   /** loan Arrears Delinquency config value */
   loanDisplayArrearsDelinquency = 0;
   /** Status */
@@ -214,7 +212,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         this.reload();
       }
     });
-    this.recalculateInterest = this.loanDetailsData?.recalculateInterest || true;
     this.status = this.loanDetailsData?.status?.value;
     this.loanStatus = this.loanDetailsData?.status;
     this.loanSubStatus = this.loanDetailsData?.subStatus === undefined ? null : this.loanDetailsData?.subStatus;
@@ -387,7 +384,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           taskPermissionName: 'DISBURSALLASTUNDO_LOAN'
         });
       }
-      if (this.loanProductService.isLoanProduct && this.recalculateInterest) {
+      // An interest pause suspends interest accrual, which the backend only
+      // accepts on a loan that recalculates interest: without it the request is
+      // rejected with loan.must.have.recalculate.interest.enabled.
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.isInterestRecalculationEnabled) {
         this.buttonConfig.addButton({
           name: 'Add Interest Pause',
           icon: 'calendar',
@@ -404,7 +404,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
 
-      if (this.recalculateInterest) {
+      // Any active loan with a balance can be paid off, so this is unconditional.
+      // Working Capital declares its own Prepay Loan entry in the button
+      // configuration, with the Working Capital repayment permission.
+      if (this.loanProductService.isLoanProduct) {
         this.buttonConfig.addButton({
           name: 'Prepay Loan',
           icon: 'coins',
