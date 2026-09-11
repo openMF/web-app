@@ -66,7 +66,7 @@ export class ColumnDialogComponent implements OnInit {
           value: this.data
             ? this.data.columnDisplayType === ''
               ? ''
-              : this.getColumnType(this.data.columnDisplayType)
+              : this.getColumnType(this.data.columnDisplayType, this.data.columnType)
             : '',
           disabled: this.data.type === 'existing'
         },
@@ -75,7 +75,9 @@ export class ColumnDialogComponent implements OnInit {
       length: [
         {
           value: this.data ? +this.data.columnLength : '',
-          disabled: this.getColumnType(this.data.columnDisplayType) !== 'String' || this.data.type === 'existing'
+          disabled:
+            this.getColumnType(this.data.columnDisplayType, this.data.columnType) !== 'String' ||
+            this.data.type === 'existing'
         },
         [
           Validators.required,
@@ -90,7 +92,9 @@ export class ColumnDialogComponent implements OnInit {
       code: [
         {
           value: this.data ? this.data.columnCode : '',
-          disabled: this.getColumnType(this.data.columnDisplayType) !== 'Dropdown' || this.data.type === 'existing'
+          disabled:
+            this.getColumnType(this.data.columnDisplayType, this.data.columnType) !== 'Dropdown' ||
+            this.data.type === 'existing'
         },
         Validators.required
       ]
@@ -103,7 +107,10 @@ export class ColumnDialogComponent implements OnInit {
    * @param {string} columnDisplayType Column Display Type.
    * @returns {string} Column Type.
    */
-  getColumnType(columnDisplayType: string): string {
+  getColumnType(columnDisplayType: string, columnType?: string): string {
+    if (columnDisplayType === 'TEXT' && columnType && columnType.toString().toLowerCase() === 'json') {
+      return 'json';
+    }
     switch (columnDisplayType) {
       case undefined: {
         return '';
@@ -113,6 +120,10 @@ export class ColumnDialogComponent implements OnInit {
       }
       case 'CODELOOKUP': {
         return 'Dropdown';
+      }
+      case 'JSON':
+      case 'json': {
+        return 'json';
       }
       default: {
         return columnDisplayType[0] + columnDisplayType.substring(1).toLowerCase();

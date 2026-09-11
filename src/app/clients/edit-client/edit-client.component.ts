@@ -400,9 +400,13 @@ export class EditClientComponent implements OnInit {
 
   isDatatableText(column: PersonalDataTableColumn): boolean {
     return [
-      'STRING',
-      'TEXT'
-    ].includes(this.datatableColumnType(column));
+        'STRING',
+        'TEXT'
+      ].includes(this.datatableColumnType(column)) && !this.isDatatableJson(column);
+  }
+
+  isDatatableJson(column: PersonalDataTableColumn): boolean {
+    return this.datatables.isJson(column.columnDisplayType, column.columnType);
   }
 
   addDatatableBlankRow(section: PersonalDataTableSection): void {
@@ -495,6 +499,9 @@ export class EditClientComponent implements OnInit {
     const controls = section.columns.reduce((acc: Record<string, FormControl>, column) => {
       const field = record?.fields.find((recordField) => recordField.columnName === column.columnName);
       const validators = this.isDatatableColumnRequired(column) ? [Validators.required] : [];
+      if (this.isDatatableJson(column)) {
+        validators.push(this.datatables.jsonValidator);
+      }
       acc[this.datatableControlName(column)] = new FormControl(
         this.toDatatableControlValue(column, field?.value),
         validators
@@ -735,6 +742,8 @@ export class EditClientComponent implements OnInit {
         payload[column.columnName] = this.toDatatableDropdownPayloadValue(column, value);
       } else if (this.isDatatableBoolean(column)) {
         payload[column.columnName] = this.toDatatableBooleanPayloadValue(value);
+      } else if (this.isDatatableJson(column)) {
+        payload[column.columnName] = value === null || value === undefined ? '' : value.toString();
       } else {
         payload[column.columnName] = value === null || value === undefined ? '' : value.toString();
       }
@@ -813,6 +822,9 @@ export class EditClientComponent implements OnInit {
     if (this.isDatatableDropdown(column)) {
       return this.toDatatableDropdownControlValue(column, value);
     }
+    if (this.isDatatableJson(column)) {
+      return this.datatables.formatJsonValue(value);
+    }
     return value;
   }
 
@@ -858,7 +870,9 @@ export class EditClientComponent implements OnInit {
   }
 
   private datatableColumnType(column: PersonalDataTableColumn): string {
-    const type = (column.columnDisplayType || column.columnType || '').toString().trim().toUpperCase();
+    const type = this.isDatatableJson(column)
+      ? 'JSON'
+      : (column.columnDisplayType || column.columnType || '').toString().trim().toUpperCase();
     if (type === 'NUMBER') {
       return 'INTEGER';
     }

@@ -22,6 +22,7 @@ import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
+import { UsersService } from 'app/users/users.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -117,6 +118,7 @@ describe('DatatableSingleRowComponent', () => {
         DateFormatPipe,
         DatetimeFormatPipe,
         { provide: SystemService, useValue: { getEntityDatatable: jest.fn() } },
+        { provide: UsersService, useValue: { getUser: jest.fn(() => of({})) } },
         {
           provide: SettingsService,
           useValue: {
@@ -181,6 +183,39 @@ describe('DatatableSingleRowComponent', () => {
     expect(stylesheet).toContain('align-items: stretch;');
     expect(stylesheet).toContain('align-items: flex-start;');
     expect(stylesheet).toContain('min-width: 0;');
+  });
+
+  it('renders JSON values as formatted structured text', () => {
+    setDataObject({
+      columnHeaders: [{ columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON' }],
+      data: [{ row: ['{"customerType":"business","risk":{"score":12},"tags":["priority"]}'] }]
+    });
+
+    const jsonValue = fixture.nativeElement.querySelector('.json-value') as HTMLElement;
+
+    expect(jsonValue.textContent).toContain('"customerType": "business"');
+    expect(jsonValue.textContent).toContain('"score": 12');
+    expect(jsonValue.textContent).toContain('"tags": [');
+    expect(jsonValue.textContent).not.toContain('[object Object]');
+  });
+
+  it('uses a JSON textarea with validation for adding JSON fields', () => {
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON', isColumnNullable: false }
+      ],
+      data: []
+    });
+
+    component.add();
+
+    const dialogData = (matDialog.open.mock.calls[0][1] as any).data;
+    const jsonField = dialogData.formfields[0] as any;
+
+    expect(jsonField.controlType).toBe('textarea');
+    expect(jsonField.required).toBe(true);
+    expect(jsonField.validators[0]({ value: '{"name":"John",}' })).toEqual({ json: true });
+    expect(jsonField.validators[0]({ value: '{"name":"John"}' })).toBeNull();
   });
 
   it('translates single-row system timestamp labels', () => {

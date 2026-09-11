@@ -31,13 +31,11 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateService } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
-import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
 import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
@@ -54,13 +52,11 @@ import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.componen
     MatCard,
     MatCardContent,
     NgClass,
-    CdkTextareaAutosize,
     MatIconButton,
     MatTooltip,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    PrettyPrintPipe
+    FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -238,6 +234,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
         formfield.value = this.dataObject.data[0].row[columns[index].idx]
           ? this.dateUtils.parseDatetime(this.dataObject.data[0].row[columns[index].idx])
           : '';
+      } else if (
+        formfield.controlType === 'textarea' &&
+        this.datatables.isJson(columns[index].columnDisplayType, columns[index].columnType)
+      ) {
+        formfield.value = this.datatables.formatJsonValue(this.dataObject.data[0].row[columns[index].idx]);
       } else {
         formfield.value = this.dataObject.data[0].row[columns[index].idx]
           ? this.dataObject.data[0].row[columns[index].idx]
@@ -338,8 +339,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       case 'BOOLEAN': {
         return columnDisplayType;
       }
+      case 'JSON': {
+        return columnDisplayType;
+      }
       case 'TEXT': {
-        if (columnType === 'JSON') {
+        if (this.datatables.isJson(columnType)) {
           return 'JSON';
         } else {
           return columnDisplayType;
@@ -362,6 +366,10 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
     }
 
     return value;
+  }
+
+  formatJsonValue(value: any): string {
+    return this.datatables.formatJsonValue(value);
   }
 
   isValidUrl(urlString: string): boolean {

@@ -1987,6 +1987,8 @@
       "Beneficiary": "Beneficiário",
       "Beneficiary Selection": "Seleção de beneficiário",
       "Boolean": "boleano",
+      "Invalid JSON": "Introduza um JSON válido.",
+      "JSON": "JSON",
       "Branch": "Filial",
       "Branch Office": "Filial",
       "Breach": "Violação",

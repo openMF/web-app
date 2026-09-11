@@ -12,9 +12,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { DateTimepickerBase } from 'app/shared/form-dialog/formfield/model/datetimepicker-base';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { Dates } from './dates';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +60,11 @@ export class Datatables {
         'office_phone',
         'office phone'
       ].some((name) => colName.includes(name.replace(/[_\s]+/g, '')));
-      const isNumericField = column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL';
-      switch (column.columnDisplayType) {
+      const columnDisplayType = this.isJson(column.columnDisplayType, column.columnType)
+        ? 'JSON'
+        : this.normalizeColumnType(column.columnDisplayType);
+      const isNumericField = columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL';
+      switch (columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
         case 'DECIMAL':
@@ -68,7 +73,7 @@ export class Datatables {
             controlName: column.columnName,
             label: displayLabel,
             value: '',
-            type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
+            type: columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
           };
           if (isMinSavingsAmount || isPriceOneShare || isRestrictedField || isNumericField) {
@@ -116,6 +121,15 @@ export class Datatables {
             required: column.isColumnNullable ? false : true
           });
         }
+        case 'JSON':
+          return new FormfieldBase({
+            controlType: 'textarea',
+            controlName: column.columnName,
+            label: displayLabel,
+            value: '',
+            required: column.isColumnNullable ? false : true,
+            validators: [this.jsonValidator]
+          });
       }
     });
   }
@@ -168,8 +182,16 @@ export class Datatables {
     return this.isColumnType(columnType, 'TEXT');
   }
 
+  public isJson(columnType: string, columnTypeName?: string): boolean {
+    return this.isColumnType(columnType, 'JSON') || this.isColumnType(columnTypeName || '', 'JSON');
+  }
+
   public isColumnType(columnType: string, expectedType: string): boolean {
-    return columnType === expectedType;
+    return this.normalizeColumnType(columnType) === this.normalizeColumnType(expectedType);
+  }
+
+  public normalizeColumnType(columnType: string): string {
+    return (columnType || '').toString().trim().toUpperCase();
   }
 
   public buildPayload(datatableInputs: any, datatableDataValues: any, dateFormat: string, output: any): any {
@@ -256,6 +278,40 @@ export class Datatables {
     }
     const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === id);
     return codeValue ? codeValue.value : id.toString();
+  }
+
+  public jsonValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+    if (typeof value !== 'string') {
+      return null;
+    }
+    try {
+      JSON.parse(value);
+      return null;
+    } catch {
+      return { json: true };
+    }
+  }
+
+  public formatJsonValue(value: any): string {
+    if (value === null || value === undefined || value === '') {
+      return '';
+    }
+    if (typeof value === 'string') {
+      try {
+        return JSON.stringify(JSON.parse(value), null, 2);
+      } catch {
+        return value;
+      }
+    }
+    try {
+      return JSON.stringify(value, null, 2);
+    } catch {
+      return String(value);
+    }
   }
 
   public getCodeName(columnName: string): string {

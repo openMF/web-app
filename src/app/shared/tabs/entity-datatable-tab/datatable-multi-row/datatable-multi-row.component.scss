@@ -79,6 +79,20 @@
       white-space: normal;
     }
 
+    .json-value {
+      max-height: 18rem;
+      padding: 8px;
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: var(--ds-radius);
+      background: var(--ds-surface-alt);
+      font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      overflow: auto;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
     .data-row {
       transition: background-color 0.2s ease;
       cursor: pointer;

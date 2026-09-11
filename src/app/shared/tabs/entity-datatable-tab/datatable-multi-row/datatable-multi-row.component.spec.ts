@@ -331,6 +331,56 @@ describe('DatatableMultiRowComponent', () => {
     expect(verifiedCell.textContent.trim()).toBe('No');
   });
 
+  it('renders JSON values as formatted structured text in multi-row cells', () => {
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'id', columnDisplayType: 'INTEGER' },
+        { columnName: 'client_id', columnDisplayType: 'INTEGER' },
+        { columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON' }
+      ],
+      data: [{ row: [
+            7,
+            99,
+            { customerType: 'business', risk: { score: 12 }, tags: ['priority'] }
+          ] }]
+    });
+
+    const jsonCell = fixture.nativeElement.querySelector('td[data-label="profile"] .json-value') as HTMLElement;
+
+    expect(jsonCell.textContent).toContain('"customerType": "business"');
+    expect(jsonCell.textContent).toContain('"score": 12');
+    expect(jsonCell.textContent).toContain('"tags": [');
+    expect(jsonCell.textContent).not.toContain('[object Object]');
+  });
+
+  it('prefills JSON edit fields with formatted JSON text', () => {
+    const selectedRow = {
+      row: [
+        7,
+        99,
+        '{"customerType":"business","risk":{"score":12}}'
+      ]
+    };
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'id', columnDisplayType: 'INTEGER' },
+        { columnName: 'client_id', columnDisplayType: 'INTEGER' },
+        { columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON', isColumnNullable: false }
+      ],
+      data: [selectedRow]
+    });
+
+    component.edit(selectedRow);
+
+    const dialogData = (matDialog.open.mock.calls[0][1] as any).data;
+    const jsonField = dialogData.formfields[0] as any;
+
+    expect(jsonField.controlType).toBe('textarea');
+    expect(jsonField.value).toContain('"customerType": "business"');
+    expect(jsonField.value).toContain('"score": 12');
+    expect(jsonField.validators[0]({ value: '{"name":"John",}' })).toEqual({ json: true });
+  });
+
   it('keeps multi-row Code Value column labels unchanged', () => {
     expect(component.getInputName('Marital Status_cd_Estado Civil')).toBe('Marital Status');
   });

@@ -58,6 +58,13 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
+interface DatatableColumnHeader {
+  columnName: string;
+  columnDisplayType?: string;
+  columnType?: string;
+  columnValues?: { id: number; value: string }[];
+}
+
 @Component({
   selector: 'mifosx-datatable-multi-row',
   templateUrl: './datatable-multi-row.component.html',
@@ -98,7 +105,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
   private changeDetectorRef = inject(ChangeDetectorRef);
-  private datatables = inject(Datatables);
+  public datatables = inject(Datatables);
   private dateFormat = inject(DateFormatPipe);
   private dateTimeFormat = inject(DatetimeFormatPipe);
   private numberFormat = inject(DecimalPipe);
@@ -281,6 +288,11 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
           formfield.value = this.dateUtils.parseDate(value);
         } else if (formfield.controlType === 'datetimepicker') {
           formfield.value = this.dateUtils.parseDatetime(value);
+        } else if (
+          formfield.controlType === 'textarea' &&
+          this.datatables.isJson(column.columnDisplayType, column.columnType)
+        ) {
+          formfield.value = this.datatables.formatJsonValue(value);
         } else {
           formfield.value = value;
         }
@@ -424,6 +436,8 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
               const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === value);
               value = codeValue ? codeValue.value : value;
             }
+          } else if (this.datatables.isJson(columnDisplayType, columnHeader.columnType)) {
+            value = this.datatables.formatJsonValue(value);
           }
           return true;
         }
@@ -450,6 +464,9 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     const columnHeader = this.dataObject.columnHeaders[columnIndex];
     const value = data.row[columnIndex];
     const isMissingValue = value === null || value === undefined || value === '';
+    if (this.datatables.isJson(columnHeader.columnDisplayType, columnHeader.columnType)) {
+      return this.datatables.formatJsonValue(value).toLocaleLowerCase();
+    }
     switch (columnHeader.columnDisplayType) {
       case 'INTEGER':
       case 'DECIMAL': {
@@ -474,6 +491,20 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         }
         return value.toString().toLocaleLowerCase();
     }
+  }
+
+  getColumnDisplayType(columnName: string): string {
+    return this.getColumnHeader(columnName)?.columnDisplayType || '';
+  }
+
+  getColumnType(columnName: string): string {
+    return this.getColumnHeader(columnName)?.columnType || '';
+  }
+
+  private getColumnHeader(columnName: string): DatatableColumnHeader | undefined {
+    return this.dataObject?.columnHeaders?.find(
+      (columnHeader: DatatableColumnHeader) => columnHeader.columnName === columnName
+    );
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

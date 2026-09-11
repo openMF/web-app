@@ -716,6 +716,28 @@
             [title]="datatableColumnLabel(column)"
           ></textarea>
         </mat-form-field>
+      } @else if (isDatatableJson(column)) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ datatableColumnLabel(column) }}</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="6"
+            cdkAutosizeMaxRows="18"
+            [formControlName]="datatableControlName(column)"
+            [placeholder]="datatableColumnLabel(column)"
+            [title]="datatableColumnLabel(column)"
+          ></textarea>
+          @if (form.controls[datatableControlName(column)].hasError('required')) {
+            <mat-error>
+              {{ datatableColumnLabel(column) }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+          @if (form.controls[datatableControlName(column)].hasError('json')) {
+            <mat-error>{{ 'labels.inputs.Invalid JSON' | translate }}</mat-error>
+          }
+        </mat-form-field>
       } @else {
         <mat-form-field class="flex-24">
           <mat-label>{{ datatableColumnLabel(column) }}</mat-label>

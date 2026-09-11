@@ -1989,6 +1989,8 @@
       "Beneficiary": "수익자",
       "Beneficiary Selection": "수익자 선택",
       "Boolean": "부울",
+      "Invalid JSON": "유효한 JSON을 입력하세요.",
+      "JSON": "JSON",
       "Branch": "나뭇가지",
       "Branch Office": "지점",
       "Breach": "위반",
