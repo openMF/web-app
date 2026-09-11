@@ -154,7 +154,12 @@
 </mat-card>
 
 <!-- Autocomplete data -->
-<mat-autocomplete autoActiveFirstOption #userNameAutocomplete="matAutocomplete" [displayWith]="displayUserName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #userNameAutocomplete="matAutocomplete"
+  [displayWith]="displayUserName"
+  (optionSelected)="applyFilter($event.option.value.id ?? '', 'makerId')"
+>
   @for (user of filteredUserData | async; track user) {
     <mat-option [value]="{ id: user.id, name: user.username }">
       {{ user.username }}
@@ -162,7 +167,12 @@
   }
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #actionNameAutocomplete="matAutocomplete" [displayWith]="displayActionName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #actionNameAutocomplete="matAutocomplete"
+  [displayWith]="displayActionName"
+  (optionSelected)="applyFilter($event.option.value, 'actionName')"
+>
   @for (action of filteredActionData | async; track action) {
     <mat-option [value]="action">
       {{ action }}
@@ -170,7 +180,12 @@
   }
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #entityNameAutocomplete="matAutocomplete" [displayWith]="displayEntityName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #entityNameAutocomplete="matAutocomplete"
+  [displayWith]="displayEntityName"
+  (optionSelected)="applyFilter($event.option.value, 'entityName')"
+>
   @for (entity of filteredEntityData | async; track entity) {
     <mat-option [value]="entity">
       {{ entity }}
@@ -178,7 +193,12 @@
   }
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #checkerAutocomplete="matAutocomplete" [displayWith]="displayUserName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #checkerAutocomplete="matAutocomplete"
+  [displayWith]="displayUserName"
+  (optionSelected)="applyFilter($event.option.value.id ?? '', 'checkerId')"
+>
   @for (user of filteredCheckerData | async; track user) {
     <mat-option [value]="{ id: user.id, name: user.username }">
       {{ user.username }}
