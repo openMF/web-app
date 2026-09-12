@@ -20,6 +20,7 @@ import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-a
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
 import { EnrollmentStatusComponent } from './checker-inbox-and-tasks-tabs/enrollment-status/enrollment-status.component';
+import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
@@ -83,6 +84,11 @@ export const routes: Routes = [
           path: 'enrollment-status',
           component: EnrollmentStatusComponent,
           data: { title: 'Enrollment Status' }
+        },
+        {
+          path: 'pending-prospects',
+          component: PendingProspectsComponent,
+          data: { title: 'Pending Prospects', permissions: ['READ_PROSPECT'] }
         },
         {
           path: 'council-approval',

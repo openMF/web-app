@@ -1,0 +1,174 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <form [formGroup]="pendingProspectsForm" (ngSubmit)="applyFilters()" class="pending-prospects-filter">
+    <mat-form-field>
+      <mat-label>{{ 'labels.text.Search' | translate }}</mat-label>
+      <input matInput formControlName="q" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+      <input matInput [matDatepicker]="createdFromPicker" formControlName="createdFrom" />
+      <mat-datepicker-toggle matSuffix [for]="createdFromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #createdFromPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
+      <input matInput [matDatepicker]="createdToPicker" formControlName="createdTo" />
+      <mat-datepicker-toggle matSuffix [for]="createdToPicker"></mat-datepicker-toggle>
+      <mat-datepicker #createdToPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Registration Status' | translate }}</mat-label>
+      <mat-select formControlName="registrationStatus">
+        @for (status of registrationStatusOptions; track status.value) {
+          <mat-option [value]="status.value">{{ status.labelKey | translate }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="filter-actions">
+      <button mat-raised-button color="primary" type="submit">{{ 'labels.buttons.Search' | translate }}</button>
+      <button mat-button type="button" (click)="clearFilters()">{{ 'labels.buttons.Clear' | translate }}</button>
+    </div>
+  </form>
+
+  @if (filterError) {
+    <div class="alert error" role="alert">
+      <div class="message">
+        <mat-icon class="alert-check">error</mat-icon>
+        {{ filterError | translate }}
+      </div>
+    </div>
+  }
+
+  @if (loadError) {
+    <div class="alert error" role="alert">
+      <div class="message">
+        <mat-icon class="alert-check">error</mat-icon>
+        {{ loadError | translate }}
+      </div>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="alert">
+      <div class="message">
+        <mat-icon class="alert-check loading-icon">sync</mat-icon>
+        {{ 'labels.text.Loading pending prospects' | translate }}
+      </div>
+    </div>
+  }
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+      <ng-container matColumnDef="displayName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="displayName">
+          {{ 'labels.inputs.Prospect' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">
+          @if (hasClientLink(prospect)) {
+            <button mat-button type="button" (click)="viewClient(prospect); $event.stopPropagation()">
+              {{ prospect.displayName || '-' }}
+            </button>
+          } @else {
+            {{ prospect.displayName || '-' }}
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="externalRef">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="externalRef">
+          {{ 'labels.inputs.External Reference' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ prospect.externalRef || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="registrationStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="registrationStatus">
+          {{ 'labels.inputs.Registration Status' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">
+          <span class="status-chip" [ngClass]="'status-' + (prospect.registrationStatus || 'unknown').toLowerCase()">
+            {{ registrationStatusLabel(prospect.registrationStatus) | translate }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentStage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="currentStage">
+          {{ 'labels.inputs.Current Stage' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.currentStage) | translate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastCompletedStage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="lastCompletedStage">
+          {{ 'labels.inputs.Last Completed Stage' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.lastCompletedStage) | translate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="stoppedAtStage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="stoppedAtStage">
+          {{ 'labels.inputs.Stopped At' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.stoppedAtStage) | translate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="pendingCreditCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="pendingCreditCount">
+          {{ 'labels.inputs.Pending Credits' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ pendingCreditCount(prospect) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="createdAt">
+          {{ 'labels.inputs.Created' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">{{ prospect.createdAt ? (prospect.createdAt | dateFormat) : '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastUpdatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="lastUpdatedAt">
+          {{ 'labels.inputs.Last Updated' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let prospect">
+          {{ prospect.lastUpdatedAt ? (prospect.lastUpdatedAt | dateFormat) : '-' }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  @if (!loading && dataSource.data.length === 0) {
+    <div class="alert">
+      <div class="message">
+        <mat-icon class="alert-check">info</mat-icon>
+        {{ 'labels.text.No pending prospects found' | translate }}
+      </div>
+    </div>
+  }
+
+  <mat-paginator
+    [length]="totalFilteredRecords"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+    (page)="changePaging($event)"
+  >
+  </mat-paginator>
+</div>

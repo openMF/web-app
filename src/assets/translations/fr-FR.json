@@ -3813,7 +3813,22 @@
       "Provider KYC Decision": "Décision KYC du fournisseur",
       "Source": "Source",
       "Started": "Démarré",
-      "Verification Session": "Session de vérification"
+      "Verification Session": "Session de vérification",
+      "Pending Prospects": "Prospects en attente",
+      "Prospect": "Prospect",
+      "External Reference": "Référence externe",
+      "Current Stage": "Étape actuelle",
+      "Last Completed Stage": "Dernière étape terminée",
+      "Stopped At": "Arrêté à",
+      "Pending Credits": "Crédits en attente",
+      "Created": "Créé",
+      "Last Updated": "Dernière mise à jour",
+      "In Progress": "En cours",
+      "Submitted": "Soumis",
+      "Withdrawn": "Retiré",
+      "Registration Status": "Statut d’inscription",
+      "Unknown": "Inconnu",
+      "Pending": "En attente"
     },
     "links": {
       "Community": "Communauté",
@@ -5081,8 +5096,10 @@
       "Counted in repayment periods": "Compté en périodes de remboursement ({{unit}})",
       "Loading enrollment status": "Chargement du statut d'inscription",
       "No enrollment cases found": "Aucun dossier d'inscription trouvé",
-      "Select a client from the list": "Sélectionnez un client dans la liste",
-      "Unable to load enrollment status": "Impossible de charger le statut d'inscription"
+      "Unable to load enrollment status": "Impossible de charger le statut d'inscription",
+      "Loading pending prospects": "Chargement des prospects en attente",
+      "No pending prospects found": "Aucun prospect en attente trouvé",
+      "Unable to load pending prospects": "Impossible de charger les prospects en attente"
     },
     "permissions": {
       "actions": {

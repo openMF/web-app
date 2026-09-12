@@ -3812,7 +3812,22 @@
       "Provider KYC Decision": "KYC-Entscheidung des Anbieters",
       "Source": "Quelle",
       "Started": "Gestartet",
-      "Verification Session": "Verifizierungssitzung"
+      "Verification Session": "Verifizierungssitzung",
+      "Pending Prospects": "Ausstehende Interessenten",
+      "Prospect": "Interessent",
+      "External Reference": "Externe Referenz",
+      "Current Stage": "Aktuelle Phase",
+      "Last Completed Stage": "Letzte abgeschlossene Phase",
+      "Stopped At": "Angehalten bei",
+      "Pending Credits": "Ausstehende Kredite",
+      "Created": "Erstellt",
+      "Last Updated": "Zuletzt aktualisiert",
+      "In Progress": "In Bearbeitung",
+      "Submitted": "Eingereicht",
+      "Withdrawn": "Zurückgezogen",
+      "Registration Status": "Registrierungsstatus",
+      "Unknown": "Unbekannt",
+      "Pending": "Ausstehend"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5080,8 +5095,10 @@
       "Counted in repayment periods": "Wird in Rückzahlungsperioden gezählt ({{unit}})",
       "Loading enrollment status": "Registrierungsstatus wird geladen",
       "No enrollment cases found": "Keine Registrierungsfälle gefunden",
-      "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
-      "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden"
+      "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden",
+      "Loading pending prospects": "Ausstehende Interessenten werden geladen",
+      "No pending prospects found": "Keine ausstehenden Interessenten gefunden",
+      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden"
     },
     "permissions": {
       "actions": {
