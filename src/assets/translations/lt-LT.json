@@ -298,6 +298,10 @@
         "payableDividends": "mokėtini Dividendai"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Numatytasis centro profilio paveikslėlis",
+      "Group profile placeholder": "Numatytasis grupės profilio paveikslėlis"
+    },
     "breadcrumbs": {
       "Home": "Namai"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Pakeisti slaptažodį",
       "Chargeback": "Mokėjimo grąžinimas",
       "Charges Overview": "Mokesčių apžvalga",
+      "Clear": "Išvalyti",
       "Client Screen Reports": "Kliento ekrano ataskaitos",
       "Close": "Uždaryti",
       "Close Config. Wizard": "Uždaryti konfigūraciją. burtininkas",
@@ -501,6 +506,7 @@
       "Setup Products": "Sąrankos produktai",
       "Setup System": "Sistemos sąranka",
       "Select All": "Pasirinkti viską",
+      "Show Closed Accounts": "Rodyti Uždarytas Sąskaitas",
       "Show more": "Rodyti daugiau",
       "Show less": "Rodyti mažiau",
       "Staff": "Personalas",
@@ -1193,7 +1199,8 @@
       "Not Yet Amortized Amount": "Dar neamortizuota suma",
       "Adjusted Amount": "Koreguota suma",
       "Charged Off Amount": "Nurašyta suma",
-      "Date": "Data"
+      "Date": "Data",
+      "Discard Changes": "Atmesti pakeitimus"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Pajamos iš supirkimo mokesčių",
       "Buy down fee Expense": "Supirkimo mokesčio išlaidos",
       "Skip Interest Refund Transaction Posting": "Praleisti palūkanų grąžinimo įrašą",
-      "Available Disbursement Amount (with Over Applied)": "Galimas išmokėjimo kiekis (su pertekliumi)"
+      "Available Disbursement Amount (with Over Applied)": "Galimas išmokėjimo kiekis (su pertekliumi)",
+      "Leader": "Lyderis",
+      "Loading centers": "Kraunami centrai...",
+      "Loading clients": "Kraunami klientai...",
+      "Loading groups": "Kraunamos grupės..."
     },
     "links": {
       "Community": "bendruomenė",
@@ -3354,6 +3365,21 @@
       "To": "Kam",
       "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
       "Buy Down Fees": "Išpirkimo mokesčiai",
+      "First Page": "Pirmas puslapis",
+      "Last Page": "Paskutinis puslapis",
+      "Next Page": "Kitas puslapis",
+      "No center was found": "Centras nerastas",
+      "No group was found": "Grupė nerasta",
+      "of": "iš",
+      "Page": "Puslapis",
+      "Pending changes": "Laukiantys pakeitimai",
+      "Previous Page": "Ankstesnis puslapis",
+      "Principal does not cover the loan amount": "Pagrindinė suma nepadengia paskolos sumos",
+      "Rows": "Eilutės",
+      "SearchByClient": "Ieškoti pagal kliento vardą, išorinį ID, mobilųjį",
+      "SearchByExternalID": "Ieškoti pagal išorinį ID",
+      "SearchByName": "Ieškoti pagal vardą",
+      "Showing": "Rodoma",
       "UploadDocumentHint": "Įkelkite PDF arba vaizdą, kad sugeneruotumėte peržiūrą."
     },
     "auditTrail": {
@@ -3624,7 +3650,9 @@
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
     "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus.",
     "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski",
-    "Create Interest Refund": "Sukurti palūkanų grąžinimą"
+    "Create Interest Refund": "Sukurti palūkanų grąžinimą",
+    "Edit Meeting": "Redaguoti susitikimą",
+    "Only pending groups can be deleted": "Galima ištrinti tik laukiančias grupes"
   },
   "countries": {
     "AF": "Afganistanas",

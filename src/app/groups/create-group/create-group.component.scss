@@ -1,3 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/member-list';
+
 .container {
   max-width: 50rem;
 }
@@ -23,4 +33,65 @@
   flex: 1;
   overflow: hidden;
   word-wrap: break-word;
+}
+
+/* Rich autocomplete option: name | id | office
+   (same row pattern as the loan product breach dropdown). */
+
+/* mat-option renders its content inside a shrink-to-fit flex item, so the row
+   has no width to distribute unless that span is stretched to the full option.
+   The span belongs to Material, hence the deep selector scoped by panelClass. */
+::ng-deep .client-autocomplete-panel .mdc-list-item__primary-text {
+  width: 100%;
+}
+
+.client-option-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+
+  .client-col {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Name takes the leftover space; id and office keep their natural width so
+     they are never the ones truncated. */
+  .name-col {
+    flex: 1 1 auto;
+    font-weight: 500;
+  }
+
+  .id-col {
+    flex: 0 0 auto;
+  }
+
+  .office-col {
+    flex: 0 0 auto;
+    text-align: right;
+  }
+}
+
+/* Selected clients list, aligned with the details table on the left.
+   Row styles come from the shared member-list mixin. */
+@include member-list.member-list;
+
+.selected-clients {
+  flex: 1;
+  min-width: 0;
+  margin-left: 3rem;
+
+  .selected-clients-title {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    margin: 0;
+    padding: 0 8px;
+    font-size: inherit;
+    font-weight: 500;
+    border-bottom: 1px solid var(--mdc-outlined-text-field-outline-color, #e0e0e0);
+  }
 }

@@ -1,0 +1,162 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* ── Shared entity-view header styles ────────────────────────────
+   Reused by the client / group / center detail views so all entity
+   headers built on mifosx-account-header look and behave the same.
+   Include from a component stylesheet:
+
+     @use 'entity-header' as entity;
+     @include entity.tokens;          // charges-tab design tokens
+     @include entity.header-content;  // projected header content
+     @include entity.tabs;            // tabs-redesign nav bar
+──────────────────────────────────────────────────────────────── */
+
+/* Design tokens (charges-tab system), light + dark. */
+@mixin tokens {
+  :host {
+    --ch-blue-700: #1565c0;
+    --ch-blue-600: #1976d2;
+    --ch-blue-100: #bbdefb;
+    --ch-blue-50: #e3f2fd;
+    --ch-blue-20: #f0f7ff;
+    --ch-surface: #fff;
+    --ch-surface-alt: #f4f7fb;
+    --ch-surface-h: #ebf2fa;
+    --ch-border: #dde5f0;
+    --ch-text-1: #0d1b2a;
+    --ch-text-2: #4a6785;
+    --ch-text-3: #8fa5bc;
+  }
+
+  :host-context(.dark-theme) {
+    --ch-blue-700: #5b9bd5;
+    --ch-blue-600: #7ab3e0;
+    --ch-blue-100: #1a3a60;
+    --ch-blue-50: #0a2040;
+    --ch-blue-20: #0d1f35;
+    --ch-surface: #1a2535;
+    --ch-surface-alt: #101d2d;
+    --ch-surface-h: #132032;
+    --ch-border: #1e3050;
+    --ch-text-1: #e2ebf6;
+    --ch-text-2: #8baecf;
+    --ch-text-3: #6a8fad;
+  }
+}
+
+/* White text and icons for all content projected into the account
+   header. Works for both light (#1074b9) and dark (#5ba2ec) theme
+   primary backgrounds. */
+@mixin header-content {
+  mifosx-account-header {
+    td,
+    th,
+    b,
+    span:not(.status-dot),
+    h3,
+    p,
+    a {
+      color: var(--md-sys-color-on-primary, #fff);
+    }
+
+    /* Links to related entities (member groups, parent center, ...) */
+    a.entity-link {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+
+    /* Action button (hamburger menu) and its icon */
+    button.mat-mdc-icon-button {
+      color: var(--md-sys-color-on-primary, #fff);
+    }
+
+    /* Compact icon button for the inline edit-meeting action */
+    button.edit-meeting-button {
+      --mdc-icon-button-state-layer-size: 28px;
+
+      padding: 2px;
+      vertical-align: middle;
+    }
+
+    img.profile-image {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      background-color: var(--md-sys-color-on-primary, #fff);
+    }
+  }
+}
+
+/* Redesigned tab nav bar shared by the entity detail views. */
+@mixin tabs {
+  :host ::ng-deep .tabs-redesign.mat-mdc-tab-nav-bar {
+    background: var(--ch-surface);
+    border-bottom: 1px solid var(--ch-border);
+
+    /* hide the default ink bar — we use border-bottom on the active tab instead */
+    .mat-mdc-tab-link {
+      min-width: auto;
+      height: 46px;
+      padding: 0 18px;
+      opacity: 1;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ch-text-2);
+      letter-spacing: 0;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
+      transition:
+        color 0.14s ease,
+        border-color 0.14s ease,
+        background 0.14s ease;
+    }
+
+    .mat-mdc-tab-link .mdc-tab__text-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: inherit;
+    }
+
+    .mat-mdc-tab-link:hover {
+      color: var(--ch-blue-700);
+      background: var(--ch-blue-20);
+    }
+
+    .mat-mdc-tab-link.mdc-tab--active {
+      color: var(--ch-blue-700);
+      font-weight: 600;
+      border-bottom-color: var(--ch-blue-700);
+    }
+
+    .mat-mdc-tab-link.mdc-tab--active .mdc-tab__text-label {
+      color: var(--ch-blue-700);
+    }
+
+    /* hide MDC ink indicator (replaced by border-bottom) */
+    .mdc-tab-indicator__content {
+      display: none;
+    }
+
+    .tab-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+  }
+}

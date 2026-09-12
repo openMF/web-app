@@ -18,7 +18,7 @@ export const BulkImports = [
     name: 'Groups',
     entityType: 'groups',
     urlSuffix: '/groups',
-    permission: 'READ_CLIENT',
+    permission: 'READ_GROUP',
     formFields: 2
   },
   {

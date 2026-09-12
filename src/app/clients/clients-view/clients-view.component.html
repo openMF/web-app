@@ -52,6 +52,9 @@
             ></i>
             <b>{{ 'labels.inputs.Client Name' | translate }} :</b
             ><mifosx-entity-name entityName="{{ clientViewData.displayName }}"></mifosx-entity-name>
+            <span class="account-status-pill" [ngClass]="clientViewData.status.code | statusLookup">
+              {{ 'labels.status.' + clientViewData.status.value | translate }}
+            </span>
           </h3>
           <div class="flex-5 align-end-center">
             <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
@@ -123,7 +126,9 @@
                       <td>
                         @for (group of clientViewData.groups; track group) {
                           <span>
-                            <span class="m-r-3">{{ group.name }}</span>
+                            <a class="m-r-3 entity-link" [routerLink]="['/groups', group.id, 'general']">{{
+                              group.name
+                            }}</a>
                           </span>
                         }
                       </td>

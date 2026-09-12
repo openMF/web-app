@@ -22,7 +22,10 @@ export class JobStep {
 export class WorkflowDiagramComponent implements OnInit {
   @Input() jobStepsData: JobStep[] = [];
 
-  diagramSize: [number, number] = [
+  diagramSize: [
+    number,
+    number
+  ] = [
     1024,
     300
   ];

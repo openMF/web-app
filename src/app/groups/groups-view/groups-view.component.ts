@@ -9,15 +9,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
-import {
-  MatCard,
-  MatCardHeader,
-  MatCardTitleGroup,
-  MatCardMdImage,
-  MatCardTitle,
-  MatCardSubtitle,
-  MatCardContent
-} from '@angular/material/card';
+import { MatCardMdImage } from '@angular/material/card';
 import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton } from '@angular/material/button';
@@ -28,6 +20,11 @@ import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AccountHeaderComponent } from 'app/shared/account-header/account-header.component';
+import { EntityNameComponent } from '../../shared/entity-name/entity-name.component';
+import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
+import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
+import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
 /**
  * Groups View Component.
@@ -38,17 +35,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./groups-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatCardHeader,
-    MatCardTitleGroup,
+    AccountHeaderComponent,
     MatCardMdImage,
-    MatCardTitle,
     NgClass,
     MatTooltip,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
-    MatCardSubtitle,
+    EntityNameComponent,
+    AccountNumberComponent,
+    ExternalIdentifierComponent,
     MatMenu,
     MatMenuItem,
     MatTabNav,
@@ -118,12 +115,19 @@ export class GroupsViewComponent {
         this.unassignStaff();
         break;
       case 'Delete':
+        if (!this.canDeleteGroup()) {
+          return;
+        }
         this.deleteGroup();
         break;
     }
   }
   getGeneralTabComponent(): any {
     return null;
+  }
+
+  formatTabLabel(label: string): string {
+    return formatTabLabel(label);
   }
   /**
    * Checks if meeting is editable.
@@ -160,6 +164,14 @@ export class GroupsViewComponent {
           });
       }
     });
+  }
+
+  /**
+   * Checks if the group can be deleted.
+   * Only groups in Pending state are allowed to be deleted.
+   */
+  canDeleteGroup(): boolean {
+    return this.groupViewData?.status?.value === 'Pending';
   }
 
   /**

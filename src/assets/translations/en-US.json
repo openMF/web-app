@@ -299,6 +299,10 @@
         "payableDividends": "Payable Dividends"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Center profile placeholder",
+      "Group profile placeholder": "Group profile placeholder"
+    },
     "breadcrumbs": {
       "Home": "Home"
     },
@@ -349,6 +353,7 @@
       "Change Password": "Change Password",
       "Chargeback": "Chargeback",
       "Charges Overview": "Charges Overview",
+      "Clear": "Clear",
       "Client Screen Reports": "Client Screen Reports",
       "Close": "Close",
       "Close Config. Wizard": "Close Config. Wizard",
@@ -502,6 +507,7 @@
       "Setup Products": "Setup Products",
       "Setup System": "Setup System",
       "Select All": "Select All",
+      "Show Closed Accounts": "Show Closed Accounts",
       "Show less": "Show less",
       "Show more": "Show more",
       "Staff": "Staff",
@@ -1197,7 +1203,8 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "Adjusted Amount",
       "Charged Off Amount": "Charged Off Amount",
-      "Date": "Date"
+      "Date": "Date",
+      "Discard Changes": "Discard Changes"
     },
     "inputs": {
       "accounting": {
@@ -2541,7 +2548,11 @@
       "Income from Buy down fees": "Income from Buy down fees",
       "Buy down fee Expense": "Buy down fee Expense",
       "Skip Interest Refund Transaction Posting": "Skip Interest Refund Transaction Posting",
-      "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)"
+      "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)",
+      "Leader": "Leader",
+      "Loading centers": "Loading centers...",
+      "Loading clients": "Loading clients...",
+      "Loading groups": "Loading groups..."
     },
     "links": {
       "Community": "Community",
@@ -3462,7 +3473,22 @@
       "Buy Down Fees": "Buy Down Fees",
       "Undo Write-off Description": "This action will reverse the write-off transaction and restore the loan to its previous active status. Please provide a note explaining the reason for this action.",
       "UploadDocumentHint": "Upload a PDF or image to generate a preview.",
-      "Create Savings Product": "Create Savings Product"
+      "Create Savings Product": "Create Savings Product",
+      "First Page": "First Page",
+      "Last Page": "Last Page",
+      "Next Page": "Next Page",
+      "No center was found": "No center was found",
+      "No group was found": "No group was found",
+      "of": "of",
+      "Page": "Page",
+      "Pending changes": "Pending changes",
+      "Previous Page": "Previous Page",
+      "Principal does not cover the loan amount": "Principal does not cover the loan amount",
+      "Rows": "Rows",
+      "SearchByClient": "Search by client name, external Id, mobile",
+      "SearchByExternalID": "Search by ExternalID",
+      "SearchByName": "Search by Name",
+      "Showing": "Showing"
     },
     "auditTrail": {
       "actions": {
@@ -3733,7 +3759,9 @@
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
     "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated",
-    "Create Interest Refund": "Create Interest Refund"
+    "Create Interest Refund": "Create Interest Refund",
+    "Edit Meeting": "Edit Meeting",
+    "Only pending groups can be deleted": "Only pending groups can be deleted"
   },
   "countries": {
     "AF": "Afghanistan",

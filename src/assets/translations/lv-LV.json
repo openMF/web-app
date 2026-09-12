@@ -298,6 +298,10 @@
         "payableDividends": "izmaksājamās dividendes"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Centra profila noklusējuma attēls",
+      "Group profile placeholder": "Grupas profila noklusējuma attēls"
+    },
     "breadcrumbs": {
       "Home": "Mājas"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Mainīt paroli",
       "Chargeback": "Atmaksa",
       "Charges Overview": "Izmaksu pārskats",
+      "Clear": "Notīrīt",
       "Client Screen Reports": "Klienta ekrāna pārskati",
       "Close": "Aizvērt",
       "Close Config. Wizard": "Aizvērt konfigurāciju. Vednis",
@@ -501,6 +506,7 @@
       "Setup Products": "Iestatīšanas produkti",
       "Setup System": "Uzstādīšanas sistēma",
       "Select All": "Izvēlēties visus",
+      "Show Closed Accounts": "Rādīt Slēgtos Kontus",
       "Show more": "Parādīt vairāk",
       "Show less": "Rādīt mazāk",
       "Staff": "Personāls",
@@ -1193,7 +1199,8 @@
       "Not Yet Amortized Amount": "Vel nav amortizeta summa",
       "Adjusted Amount": "Koriģētā summa",
       "Charged Off Amount": "Norakstītā summa",
-      "Date": "Datums"
+      "Date": "Datums",
+      "Discard Changes": "Atmest izmaiņas"
     },
     "inputs": {
       "accounting": {
@@ -2533,7 +2540,11 @@
       "Income from Buy down fees": "Ienākumi no akciju izpirkšanas komisijas maksām",
       "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi",
       "Skip Interest Refund Transaction Posting": "Izlaist procentu atmaksas ierakstu",
-      "Available Disbursement Amount (with Over Applied)": "Pieejamā izmaksas summa (ar pārsniegumu)"
+      "Available Disbursement Amount (with Over Applied)": "Pieejamā izmaksas summa (ar pārsniegumu)",
+      "Leader": "Līderis",
+      "Loading centers": "Ielādē centrus...",
+      "Loading clients": "Ielādē klientus...",
+      "Loading groups": "Ielādē grupas..."
     },
     "links": {
       "Community": "kopiena",
@@ -3354,6 +3365,21 @@
       "To": "Līdz",
       "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
       "Buy Down Fees": "Izpirkšanas maksas",
+      "First Page": "Pirmā lapa",
+      "Last Page": "Pēdējā lapa",
+      "Next Page": "Nākamā lapa",
+      "No center was found": "Centrs netika atrasts",
+      "No group was found": "Grupa netika atrasta",
+      "of": "no",
+      "Page": "Lapa",
+      "Pending changes": "Gaidošās izmaiņas",
+      "Previous Page": "Iepriekšējā lapa",
+      "Principal does not cover the loan amount": "Pamatsumma nesedz aizdevuma summu",
+      "Rows": "Rindas",
+      "SearchByClient": "Meklēt pēc klienta vārda, ārējā ID, mobilā",
+      "SearchByExternalID": "Meklēt pēc ārējā ID",
+      "SearchByName": "Meklēt pēc vārda",
+      "Showing": "Tiek rādīts",
       "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu."
     },
     "auditTrail": {
@@ -3624,7 +3650,9 @@
     "loan product will be active and available to clients": "Datums, kad aizdevuma produkts būs aktīvs un pieejams klientiem. Ja lauks ir tukšs, aizdevuma produkts būs aktīvs, tiklīdz tas tiks izveidots.",
     "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs.",
     "Refund transactions where interest refund will automatically be calculated": "Grąžinimo operacijos, kai palūkanų grąžinimas bus skaičiuojamas automatiškai",
-    "Create Interest Refund": "Izveidot procentu atmaksu"
+    "Create Interest Refund": "Izveidot procentu atmaksu",
+    "Edit Meeting": "Rediģēt sapulci",
+    "Only pending groups can be deleted": "Dzēst var tikai gaidošās grupas"
   },
   "countries": {
     "AF": "Afganistāna",

@@ -149,6 +149,22 @@ export interface BuyDownFeeAmortizationDetails {
 
 export interface EditablePeriod extends RepaymentSchedulePeriod {
   changed?: boolean;
+  /** True when the due date differs from the unmodified schedule, to highlight the date cell. */
+  dueDateChanged?: boolean;
+  /** Formatted due date of the unmodified schedule, kept as the key for schedule variation records. */
+  originalDueDate?: string;
+  /** Installment amount of the unmodified schedule, to detect reverted edits. */
+  originalTotalDueForPeriod?: number;
+  /** Raw due date of the unmodified schedule, to restore the row when it is marked for deletion. */
+  originalDueDateValue?: number[];
+  /** True when the installment is marked for deletion via `exceptions.deletedinstallments`. */
+  deleted?: boolean;
+}
+
+/** Delete/restore toggle of one installment, keyed by its unmodified due date. */
+export interface ScheduleDeleteRecord {
+  dueDate: string;
+  deleted: boolean;
 }
 
 export interface EditableRepaymentSchedule extends RepaymentSchedule {
@@ -160,7 +176,13 @@ export interface RepaymentScheduleEditCache {
   data: RepaymentSchedulePeriod;
 }
 
+/**
+ * One entry of the `exceptions.modifiedinstallments` array of the Fineract
+ * loan schedule variations API. `dueDate` identifies the original installment;
+ * `installmentAmount` and `modifiedDueDate` carry the requested changes.
+ */
 export interface ScheduleChangeRecord {
   dueDate: string;
-  installmentAmount: number;
+  installmentAmount?: number;
+  modifiedDueDate?: string;
 }

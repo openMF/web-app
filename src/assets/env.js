@@ -1,22 +1,22 @@
-(function(window) {
-  window["env"] = window["env"] || {};
+(function (window) {
+  window['env'] = window['env'] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = '';
-  window["env"]["fineractApiUrl"]  = '';
+  window['env']['fineractApiUrls'] = '';
+  window['env']['fineractApiUrl'] = '';
 
-  window["env"]["apiProvider"] = '';
-  window["env"]["apiVersion"]  = '';
-  window["env"]["apiActuator"]  = '';
+  window['env']['apiProvider'] = '';
+  window['env']['apiVersion'] = '';
+  window['env']['apiActuator'] = '';
 
-  window["env"]["fineractPlatformTenantId"]  = '';
-  window["env"]["fineractPlatformTenantIds"]  = '';
+  window['env']['fineractPlatformTenantId'] = 'default';
+  window['env']['fineractPlatformTenantIds'] = 'default';
 
   window['env']['tenantLogoUrl'] = '';
-
+  
   // Language Environment variables
-  window["env"]["defaultLanguage"] = '';
-  window["env"]["supportedLanguages"] = '';
+  window['env']['defaultLanguage'] = '';
+  window['env']['supportedLanguages'] = '';
 
   window['env']['preloadClients'] = '';
 
@@ -25,7 +25,7 @@
 
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '';
-  
+
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
@@ -42,7 +42,7 @@
   window['env']['sessionIdleTimeout'] = '0';
 
   // OAuth Server Enabled
-  window['env']['oauthServerEnabled'] = false;
+  window['env']['oauthServerEnabled'] = '';
 
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '';
@@ -50,11 +50,21 @@
   // OAuth Client Id
   window['env']['oauthAppId'] = '';
 
-  // OIDC Plugin Environment variables
-  window['env']['oidcServerEnabled'] = false;
-  window['env']['oidcBaseUrl']       = '';
-  window['env']['oidcClientId']      = '';
-  window['env']['oidcApiUrl']        = '';
-  window['env']['oidcFrontUrl']      = '';
+  // Min Password length
+  window['env']['minPasswordLength'] = '';
 
+  // Enable or Disable HTTP Cache
+  window['env']['httpCacheEnabled'] = '';
+
+  window['env']['vNextApiUrl'] = '';
+  window['env']['vNextApiProvider'] = '';
+  window['env']['vNextApiVersion'] = '';
+  window['env']['interbankTransfers'] = '';
+
+  // OIDC Plugin Environment variables
+  window['env']['oidcServerEnabled'] = '';
+  window['env']['oidcBaseUrl'] = '';
+  window['env']['oidcClientId'] = '';
+  window['env']['oidcApiUrl'] = '';
+  window['env']['oidcFrontUrl'] = '';
 })(this);

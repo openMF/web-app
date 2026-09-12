@@ -64,7 +64,8 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
         Validators.required
       ],
       isDifferentialToBaseLendingRate: [
-        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
+        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }
+      ]
     });
   }
 

@@ -298,6 +298,10 @@
         "payableDividends": "Gawio linalolipwa"
       }
     },
+    "alt": {
+      "Center profile placeholder": "Nafasi ya picha ya wasifu wa kituo",
+      "Group profile placeholder": "Nafasi ya picha ya wasifu wa kikundi"
+    },
     "breadcrumbs": {
       "Home": "Nyumbani"
     },
@@ -348,6 +352,7 @@
       "Change Password": "Badilisha neno la siri",
       "Chargeback": "Urejeshaji malipo",
       "Charges Overview": "Muhtasari wa Gharama",
+      "Clear": "Futa",
       "Client Screen Reports": "Ripoti za Skrini ya Mteja",
       "Close": "Funga",
       "Close Config. Wizard": "Funga Usanidi. Mchawi",
@@ -501,6 +506,7 @@
       "Setup Products": "Weka Bidhaa",
       "Setup System": "Kuanzisha Mfumo",
       "Select All": "Chagua Zote",
+      "Show Closed Accounts": "Onyesha Akaunti Zilizofungwa",
       "Show more": "Onyesha zaidi",
       "Show less": "Onyesha kidogo",
       "Staff": "Wafanyakazi",
@@ -1191,7 +1197,8 @@
       "Not Yet Amortized Amount": "Kiasi Bado Kijaondolewa",
       "Adjusted Amount": "Kiasi Kilichorekebishwa",
       "Charged Off Amount": "Kiasi Kilichofutwa",
-      "Date": "Tarehe"
+      "Date": "Tarehe",
+      "Discard Changes": "Tupilia mbali mabadiliko"
     },
     "inputs": {
       "accounting": {
@@ -2531,7 +2538,11 @@
       "Income from Buy down fees": "Mapato kutoka kwa ada ya Kununua",
       "Buy down fee Expense": "Kununua ada ya chini Gharama",
       "Skip Interest Refund Transaction Posting": "Ruka uchapishaji wa muamala wa kurejesha riba",
-      "Available Disbursement Amount (with Over Applied)": "Tillgängligt utbetalningsbelopp (med överbetalning)"
+      "Available Disbursement Amount (with Over Applied)": "Tillgängligt utbetalningsbelopp (med överbetalning)",
+      "Leader": "Kiongozi",
+      "Loading centers": "Inapakia vituo...",
+      "Loading clients": "Inapakia wateja...",
+      "Loading groups": "Inapakia vikundi..."
     },
     "links": {
       "Community": "Jumuiya",
@@ -3351,6 +3362,21 @@
       "To": "Kwa",
       "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
       "Buy Down Fees": "Ada za Ununuzi",
+      "First Page": "Ukurasa wa kwanza",
+      "Last Page": "Ukurasa wa mwisho",
+      "Next Page": "Ukurasa unaofuata",
+      "No center was found": "Hakuna kituo kilichopatikana",
+      "No group was found": "Hakuna kikundi kilichopatikana",
+      "of": "ya",
+      "Page": "Ukurasa",
+      "Pending changes": "Mabadiliko yanayosubiri",
+      "Previous Page": "Ukurasa uliopita",
+      "Principal does not cover the loan amount": "Mtaji haulingani na kiasi cha mkopo",
+      "Rows": "Safu",
+      "SearchByClient": "Tafuta kwa jina la mteja, kitambulisho cha nje, simu",
+      "SearchByExternalID": "Tafuta kwa kitambulisho cha nje",
+      "SearchByName": "Tafuta kwa Jina",
+      "Showing": "Inaonyesha",
       "UploadDocumentHint": "Pakia PDF au picha ili kutoa hakikisho."
     },
     "auditTrail": {
@@ -3621,7 +3647,9 @@
     "loan product will be active and available to clients": "Tarehe ambayo bidhaa ya mkopo itaanza kutumika na inapatikana kwa wateja. Ikiwa tupu, bidhaa ya mkopo itaanza kutumika mara tu itakapoundwa.",
     "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe.",
     "Refund transactions where interest refund will automatically be calculated": "Shughuli za kurejesha pesa ambapo urejeshaji wa riba utahesabiwa kiotomatiki",
-    "Create Interest Refund": "Unda Marejesho ya Riba"
+    "Create Interest Refund": "Unda Marejesho ya Riba",
+    "Edit Meeting": "Hariri mkutano",
+    "Only pending groups can be deleted": "Vikundi vinavyosubiri pekee vinaweza kufutwa"
   },
   "countries": {
     "AF": "Afghanistani",

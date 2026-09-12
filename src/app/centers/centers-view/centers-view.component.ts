@@ -10,15 +10,9 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { CentersService } from '../centers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  MatCard,
-  MatCardHeader,
-  MatCardTitleGroup,
-  MatCardMdImage,
-  MatCardTitle,
-  MatCardSubtitle,
-  MatCardContent
-} from '@angular/material/card';
+
+/** UI Imports */
+import { MatCardMdImage } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
@@ -30,6 +24,11 @@ import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AccountHeaderComponent } from 'app/shared/account-header/account-header.component';
+import { EntityNameComponent } from '../../shared/entity-name/entity-name.component';
+import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
+import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
+
 /**
  * Create Center View
  */
@@ -39,17 +38,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./centers-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatCardHeader,
-    MatCardTitleGroup,
+    AccountHeaderComponent,
     MatCardMdImage,
-    MatCardTitle,
     MatTooltip,
     NgClass,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
-    MatCardSubtitle,
+    EntityNameComponent,
+    AccountNumberComponent,
     ExternalIdentifierComponent,
     MatMenu,
     MatMenuItem,
@@ -174,6 +172,10 @@ export class CentersViewComponent implements OnInit {
         });
       }
     });
+  }
+
+  formatTabLabel(label: string): string {
+    return formatTabLabel(label);
   }
 
   /**
