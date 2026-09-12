@@ -964,7 +964,8 @@
       }
     }
 
-    @if (loanProductService.isLoanProduct && loanProduct.charges.length) {
+    <!-- Working Capital products may come back with `charges` absent or null when none are associated. -->
+    @if (loanProduct.charges?.length) {
       <div class="flex-fill layout-row-wrap responsive-column">
         <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
         <mat-divider [inset]="true"></mat-divider>
@@ -1000,40 +1001,43 @@
           <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
         </table>
-        <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Overdue Charges' | translate }}</h3>
-        <mat-divider [inset]="true"></mat-divider>
-        <table
-          class="mat-elevation-z1 flex-100"
-          mat-table
-          [dataSource]="loanProduct.charges | chargesPenaltyFilter: true"
-        >
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
-            <td mat-cell *matCellDef="let overdueCharge">
-              {{ overdueCharge.name + ', ' + overdueCharge.currency.displaySymbol }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="chargeCalculationType">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge Type' | translate }}</th>
-            <td mat-cell *matCellDef="let overdueCharge">
-              {{ overdueCharge.chargeCalculationType.value | translateKey: 'catalogs' }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-            <td mat-cell *matCellDef="let overdueCharge">
-              {{ overdueCharge.amount | formatNumber }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="chargeTimeType">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-            <td mat-cell *matCellDef="let overdueCharge">
-              {{ overdueCharge.chargeTimeType.value | translateKey: 'catalogs' }}
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
-        </table>
+        <!-- Working Capital products do not support penalties yet. -->
+        @if (loanProductService.isLoanProduct) {
+          <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Overdue Charges' | translate }}</h3>
+          <mat-divider [inset]="true"></mat-divider>
+          <table
+            class="mat-elevation-z1 flex-100"
+            mat-table
+            [dataSource]="loanProduct.charges | chargesPenaltyFilter: true"
+          >
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+              <td mat-cell *matCellDef="let overdueCharge">
+                {{ overdueCharge.name + ', ' + overdueCharge.currency.displaySymbol }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="chargeCalculationType">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge Type' | translate }}</th>
+              <td mat-cell *matCellDef="let overdueCharge">
+                {{ overdueCharge.chargeCalculationType.value | translateKey: 'catalogs' }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+              <td mat-cell *matCellDef="let overdueCharge">
+                {{ overdueCharge.amount | formatNumber }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="chargeTimeType">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+              <td mat-cell *matCellDef="let overdueCharge">
+                {{ overdueCharge.chargeTimeType.value | translateKey: 'catalogs' }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
+          </table>
+        }
       </div>
     }
     @if (isAdvancedPaymentAllocation) {

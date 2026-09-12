@@ -336,6 +336,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         !this.loanProductCurrencyForm.pristine ||
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
+        !(this.loanProductChargesStep?.pristine ?? true) ||
         !(this.loanProductAccountingForm?.pristine ?? true) ||
         this.wasPaymentAllocationChanged
       );
@@ -397,6 +398,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         ...this.loanProductCurrencyStep.loanProductCurrency,
         ...this.loanProductTermsStep.loanProductTerms,
         ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductChargesStep.loanProductCharges,
         ...this.loanProductAccountingStep.loanProductAccounting
       };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
