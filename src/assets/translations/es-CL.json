@@ -3829,6 +3829,9 @@
       "Working with Code": "Trabajar con código"
     },
     "menus": {
+      "Apply Annual Fees": "Aplicar comisiones anuales",
+      "Disable Withhold Tax": "Desactivar retención de impuestos",
+      "Enable Withhold Tax": "Habilitar retención de impuestos",
       "Mark as Fraud": "Marcar como Fraude",
       "Unmark as Fraud": "Desmarcar como Fraude",
       "Update Breach": "Actualizar Incumplimiento",

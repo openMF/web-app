@@ -1346,7 +1346,7 @@
       "Deposit Period": "Kipindi cha Amana",
       "Details": "Maelezo",
       "Disable": "Zima",
-      "Disable Withhold Tax": "Lemaza Ushuru",
+      "Disable Withhold Tax": "Lemaza Kodi ya Kuzuia",
       "Do you want to mark the Customer Data as valid?": "Je, unataka kuweka alama data ya mteja kuwa halali?",
       "Documents": "Nyaraka",
       "Down Payment": "Malipo ya Chini",
@@ -1360,7 +1360,7 @@
       "Email External Service": "Barua pepe ya Huduma ya Nje",
       "Employees": "Wafanyakazi",
       "Enable": "Wezesha",
-      "Enable Withhold Tax": "Wezesha Ushuru",
+      "Enable Withhold Tax": "Wezesha Kodi ya Kuzuia",
       "Entity Data Table Checks": "Ukaguzi wa Jedwali la Data ya Huluki",
       "Entity Details": "Maelezo ya Huluki",
       "Entity to Entity Mapping": "Uchoraji wa Huluki kwa Huluki",
@@ -3825,6 +3825,9 @@
       "Working with Code": "Kufanya kazi na Kanuni"
     },
     "menus": {
+      "Apply Annual Fees": "Tumia Ada ya Mwaka",
+      "Disable Withhold Tax": "Lemaza Kodi ya Kuzuia",
+      "Enable Withhold Tax": "Wezesha Kodi ya Kuzuia",
       "Mark as Fraud": "Weka Alama ya Ulaghai",
       "Unmark as Fraud": "Ondoa Alama ya Ulaghai",
       "Update Breach": "Sasisha ukiukaji",

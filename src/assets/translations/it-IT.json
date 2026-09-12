@@ -1349,7 +1349,7 @@
       "Deposit Period": "Periodo di deposito",
       "Details": "Dettagli",
       "Disable": "disattivare",
-      "Disable Withhold Tax": "Disabilitare la ritenuta a trattenere l'imposta",
+      "Disable Withhold Tax": "Disabilita la ritenuta d'acconto",
       "Do you want to mark the Customer Data as valid?": "Vuoi contrassegnare i dati del cliente come validi?",
       "Documents": "Documenti",
       "Down Payment": "Acconto",
@@ -1363,7 +1363,7 @@
       "Email External Service": "Servizio esterno di posta elettronica",
       "Employees": "Dipendenti",
       "Enable": "Abilitare",
-      "Enable Withhold Tax": "Abilita la ritenuta a trattenere le tasse",
+      "Enable Withhold Tax": "Abilita la ritenuta d'acconto",
       "Entity Data Table Checks": "Verifiche della tabella dei dati dell'entità",
       "Entity Details": "Dettagli dell'entità",
       "Entity to Entity Mapping": "Mappatura da entità a entità",
@@ -3828,6 +3828,9 @@
       "Working with Code": "Lavorare con il codice"
     },
     "menus": {
+      "Apply Annual Fees": "Applica le commissioni annuali",
+      "Disable Withhold Tax": "Disabilita la ritenuta d'acconto",
+      "Enable Withhold Tax": "Abilita la ritenuta d'acconto",
       "Mark as Fraud": "Contrassegna come frode",
       "Unmark as Fraud": "Rimuovi contrassegno di frode",
       "Update Breach": "Aggiorna violazione",

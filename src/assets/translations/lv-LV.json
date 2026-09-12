@@ -1349,7 +1349,7 @@
       "Deposit Period": "Depozīta periods",
       "Details": "Sīkāka informācija",
       "Disable": "Atspējot",
-      "Disable Withhold Tax": "Atspējot aizturēšanas nodokli",
+      "Disable Withhold Tax": "Atspējot ieturējuma nodokli",
       "Do you want to mark the Customer Data as valid?": "Vai vēlaties atzīmēt klienta datus kā derīgus?",
       "Documents": "Dokumenti",
       "Down Payment": "Pirmā iemaksa",
@@ -1363,7 +1363,7 @@
       "Email External Service": "E-pasta ārējais pakalpojums",
       "Employees": "Darbinieki",
       "Enable": "Iespējot",
-      "Enable Withhold Tax": "Iespējot ieturēt nodokli",
+      "Enable Withhold Tax": "Iespējot ieturējuma nodokli",
       "Entity Data Table Checks": "Entītijas datu tabulu pārbaudes",
       "Entity Details": "Uzņēmuma detaļas",
       "Entity to Entity Mapping": "Entītiju kartēšana",
@@ -3828,6 +3828,9 @@
       "Working with Code": "Darbs ar kodu"
     },
     "menus": {
+      "Apply Annual Fees": "Piemērot gada maksu",
+      "Disable Withhold Tax": "Atspējot ieturējuma nodokli",
+      "Enable Withhold Tax": "Iespējot ieturējuma nodokli",
       "Mark as Fraud": "Atzīmēt kā krāpšanu",
       "Unmark as Fraud": "Noņemt krāpšanas atzīmi",
       "Update Breach": "Atjaunināt pārkāpumu",

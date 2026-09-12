@@ -1348,7 +1348,7 @@
       "Deposit Period": "जम्मा अवधि",
       "Details": "विवरणहरू",
       "Disable": "असक्षम गर्नुहोस्",
-      "Disable Withhold Tax": "प्रयोग गर्ने कर अक्षम गर्नुहोस्",
+      "Disable Withhold Tax": "कर रोक असक्षम गर्नुहोस्",
       "Do you want to mark the Customer Data as valid?": "के तपाईं ग्राहक डाटालाई मान्य भनी चिन्ह लगाउन चाहनुहुन्छ?",
       "Documents": "कागजातहरू",
       "Down Payment": "डाउन पेमेन्ट",
@@ -1362,7 +1362,7 @@
       "Email External Service": "इमेल बाह्य सेवा",
       "Employees": "कर्मचारीहरु",
       "Enable": "सक्षम गर्नुहोस्",
-      "Enable Withhold Tax": "सक्षम गर्न कर सक्षम गर्नुहोस्",
+      "Enable Withhold Tax": "कर रोक सक्षम गर्नुहोस्",
       "Entity Data Table Checks": "संस्था डेटा तालिका जाँच",
       "Entity Details": "संस्था विवरण",
       "Entity to Entity Mapping": "एकाई देखि इकाई म्यापिङ",
@@ -3827,6 +3827,9 @@
       "Working with Code": "Code मा काम गर्नुहुन्छ"
     },
     "menus": {
+      "Apply Annual Fees": "वार्षिक शुल्क लागू गर्नुहोस्",
+      "Disable Withhold Tax": "कर रोक असक्षम गर्नुहोस्",
+      "Enable Withhold Tax": "कर रोक सक्षम गर्नुहोस्",
       "Mark as Fraud": "ठगीको रूपमा चिन्ह लगाउनुहोस्",
       "Unmark as Fraud": "ठगी चिन्ह हटाउनुहोस्",
       "Update Breach": "उल्लंघन अद्यावधिक गर्नुहोस्",

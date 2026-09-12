@@ -1351,7 +1351,7 @@
       "Deposit Period": "Doba vkladu",
       "Details": "Podrobnosti",
       "Disable": "Zakázat",
-      "Disable Withhold Tax": "Zakázat zadržení daně",
+      "Disable Withhold Tax": "Zakázat srážkovou daň",
       "Do you want to mark the Customer Data as valid?": "Chcete označit údaje zákazníka jako platné?",
       "Documents": "Dokumenty",
       "Down Payment": "Záloha",
@@ -1365,7 +1365,7 @@
       "Email External Service": "E-mailová externí služba",
       "Employees": "Zaměstnanci",
       "Enable": "Umožnit",
-      "Enable Withhold Tax": "Povolit zadrženou daň",
+      "Enable Withhold Tax": "Povolit srážkovou daň",
       "Entity Data Table Checks": "Kontroly tabulky dat entit",
       "Entity Details": "Detaily entity",
       "Entity to Entity Mapping": "Mapování entity na entitu",
@@ -3829,6 +3829,9 @@
       "Working with Code": "Práce s kódem"
     },
     "menus": {
+      "Apply Annual Fees": "Uplatnit roční poplatky",
+      "Disable Withhold Tax": "Zakázat srážkovou daň",
+      "Enable Withhold Tax": "Povolit srážkovou daň",
       "Mark as Fraud": "Označit jako podvod",
       "Unmark as Fraud": "Zrušit označení podvodu",
       "Update Breach": "Aktualizovat porušení",
