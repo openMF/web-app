@@ -11,6 +11,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 
 import { ReportsService } from './reports.service';
+import { SelectOption } from './common-models/select-option.model';
 
 describe('ReportsService report output formats', () => {
   let service: ReportsService;
@@ -31,6 +32,76 @@ describe('ReportsService report output formats', () => {
 
   afterEach(() => {
     httpMock.verify();
+  });
+
+  it('strips the hierarchy dots Fineract prefixes onto office names', () => {
+    let options: SelectOption[];
+    service.getSelectOptions('OfficeIdSelectOne').subscribe((response) => (options = response));
+
+    httpMock
+      .expectOne((request) => request.url === '/runreports/OfficeIdSelectOne')
+      .flush({
+        data: [
+          { row: [
+              1,
+              'Head Office'
+            ] },
+          { row: [
+              2,
+              '....Saudi Branch'
+            ] },
+          { row: [
+              3,
+              '........Dubai Branch'
+            ] }
+        ]
+      });
+
+    expect(options.map((option) => option.name)).toEqual([
+      'Head Office',
+      'Saudi Branch',
+      'Dubai Branch'
+    ]);
+    expect(options.map((option) => option.id)).toEqual([
+      1,
+      2,
+      3
+    ]);
+  });
+
+  it('leaves names without leading dots and non-string names untouched', () => {
+    let options: SelectOption[];
+    service.getSelectOptions('currencyIdSelectAll').subscribe((response) => (options = response));
+
+    httpMock
+      .expectOne((request) => request.url === '/runreports/currencyIdSelectAll')
+      .flush({
+        data: [
+          { row: [
+              'USD',
+              'US Dollar'
+            ] },
+          { row: [
+              'XOF',
+              'CFA Franc B.C.E.A.O.'
+            ] },
+          { row: [
+              -10,
+              10
+            ] }
+        ]
+      });
+
+    expect(options.map((option) => option.name)).toEqual([
+      'US Dollar',
+      'CFA Franc B.C.E.A.O.',
+      10
+    ]);
+    expect(options.map((option) => option.id)).toEqual([
+      'USD',
+      'XOF',
+      -10
+    ]);
   });
 
   it('sends XML as the selected Pentaho output type', () => {
