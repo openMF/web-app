@@ -5378,7 +5378,9 @@
       "No Upcoming Charges Found": "Aucun frais à venir trouvé",
       "unableToUpdateDiscount": "Impossible de mettre à jour le rabais.",
       "validationSaved": "Données de validation enregistrées avec succès.",
-      "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès."
+      "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

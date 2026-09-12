@@ -5313,7 +5313,9 @@
       "No Upcoming Charges Found": "Žádné nadcházející poplatky nenalezeny",
       "unableToUpdateDiscount": "Slevu nelze aktualizovat.",
       "validationSaved": "Ověřovací data byla úspěšně uložena.",
-      "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována."
+      "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

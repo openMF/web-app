@@ -5375,7 +5375,9 @@
       "No Upcoming Charges Found": "예정된 요금이 없습니다",
       "unableToUpdateDiscount": "할인을 업데이트할 수 없습니다.",
       "validationSaved": "검증 데이터가 성공적으로 저장되었습니다.",
-      "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다."
+      "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

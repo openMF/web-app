@@ -5515,7 +5515,9 @@
       "No Upcoming Charges Found": "No Upcoming Charges Found",
       "unableToUpdateDiscount": "Unable to update discount.",
       "validationSaved": "Validation data saved successfully.",
-      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully."
+      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "cbild": {
       "fields": {

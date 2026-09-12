@@ -5375,7 +5375,9 @@
       "No Upcoming Charges Found": "Nav atrasts gaidāmo maksājumu",
       "unableToUpdateDiscount": "Neizdevās atjaunināt atlaidi.",
       "validationSaved": "Validācijas dati veiksmīgi saglabāti.",
-      "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta."
+      "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

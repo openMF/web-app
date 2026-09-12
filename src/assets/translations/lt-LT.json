@@ -5376,7 +5376,9 @@
       "No Upcoming Charges Found": "Nerasta artėjančių mokesčių",
       "unableToUpdateDiscount": "Nepavyko atnaujinti nuolaidos.",
       "validationSaved": "Patvirtinimo duomenys sėkmingai išsaugoti.",
-      "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta."
+      "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

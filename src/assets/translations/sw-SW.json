@@ -5372,7 +5372,9 @@
       "No Upcoming Charges Found": "Hakuna malipo yanayokuja yaliyopatikana",
       "unableToUpdateDiscount": "Haikuwezekana kusasisha punguzo.",
       "validationSaved": "Data ya uthibitishaji imehifadhiwa kwa mafanikio.",
-      "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa."
+      "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

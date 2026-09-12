@@ -20,6 +20,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-documents-tab',
   templateUrl: './documents-tab.component.html',
   styleUrls: ['./documents-tab.component.scss'],
+  standalone: true,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     EntityDocumentsTabComponent
