@@ -1,0 +1,29 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { Observable, catchError, of } from 'rxjs';
+import { LoansService } from '../loans.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoanGuarantorsResolver {
+  private loansService = inject(LoansService);
+
+  /**
+   * Returns the loan's guarantors. The loan details resolver excludes them from its
+   * `associations=all` call, so the tab fetches them itself.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
+    return this.loansService.getGuarantors(loanId).pipe(catchError(() => of([])));
+  }
+}

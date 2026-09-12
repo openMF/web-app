@@ -1,0 +1,33 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.tab-container {
+  padding: 1%;
+  margin: 1%;
+}
+
+.action-buttons {
+  flex-wrap: wrap;
+}
+
+table {
+  width: 100%;
+  margin-top: 1%;
+
+  .account-action-button {
+    min-width: 26px;
+    padding: 0 6px;
+    margin: 4px;
+    line-height: 25px;
+  }
+
+  .no-data-cell {
+    padding: 16px;
+    text-align: center;
+  }
+}

@@ -21,7 +21,7 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 
 /**
  * Fineract guarantor type ids, as served by `GET /loans/{loanId}/guarantors/template`.
- * `view-guarantors.component.html` already keys the edit action off `guarantorType.id === 3`,
+ * `loan-guarantors-tab.component.html` already keys the edit action off `guarantorType.id === 3`,
  * so the id - not the position in `guarantorTypeOptions` - is the stable identifier.
  */
 const EXISTING_CLIENT_GUARANTOR_TYPE_ID = 1;
@@ -258,7 +258,7 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
     });
 
     this.loanService.createNewGuarantor(this.loanId, data).subscribe(() => {
-      this.gotoLoanDefaultView();
+      this.gotoLoanView('guarantors');
     });
   }
 }
