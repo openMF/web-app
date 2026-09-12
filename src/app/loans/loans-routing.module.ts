@@ -66,6 +66,8 @@ import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owne
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
+import { LoanGuarantorsTabComponent } from './loans-view/loan-guarantors-tab/loan-guarantors-tab.component';
+import { LoanGuarantorsResolver } from './common-resolvers/loan-guarantors.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
 import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
@@ -257,6 +259,18 @@ const routes: Routes = [
             },
             resolve: {
               loanCollaterals: LoanCollateralsResolver
+            }
+          },
+          {
+            path: 'guarantors',
+            component: LoanGuarantorsTabComponent,
+            data: {
+              title: 'Guarantors',
+              breadcrumb: 'Guarantors',
+              routeParamBreadcrumb: false
+            },
+            resolve: {
+              loanGuarantors: LoanGuarantorsResolver
             }
           },
           {
