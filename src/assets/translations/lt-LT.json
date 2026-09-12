@@ -3809,7 +3809,22 @@
       "Provider KYC Decision": "Teikėjo KYC sprendimas",
       "Source": "Šaltinis",
       "Started": "Pradėta",
-      "Verification Session": "Patvirtinimo sesija"
+      "Verification Session": "Patvirtinimo sesija",
+      "Pending Prospects": "Laukiantys prospektai",
+      "Prospect": "Prospektas",
+      "External Reference": "Išorinė nuoroda",
+      "Current Stage": "Dabartinis etapas",
+      "Last Completed Stage": "Paskutinis užbaigtas etapas",
+      "Stopped At": "Sustota ties",
+      "Pending Credits": "Laukiantys kreditai",
+      "Created": "Sukurta",
+      "Last Updated": "Paskutinį kartą atnaujinta",
+      "In Progress": "Vykdoma",
+      "Submitted": "Pateikta",
+      "Withdrawn": "Atsiimta",
+      "Registration Status": "Registracijos būsena",
+      "Unknown": "Nežinoma",
+      "Pending": "Laukiama"
     },
     "links": {
       "Community": "bendruomenė",
@@ -5079,8 +5094,10 @@
       "Counted in repayment periods": "Skaičiuojama grąžinimo laikotarpiais ({{unit}})",
       "Loading enrollment status": "Įkeliama registracijos būsena",
       "No enrollment cases found": "Registracijos atvejų nerasta",
-      "Select a client from the list": "Pasirinkite klientą iš sąrašo",
-      "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos"
+      "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos",
+      "Loading pending prospects": "Įkeliami laukiantys prospektai",
+      "No pending prospects found": "Laukiančių prospektų nerasta",
+      "Unable to load pending prospects": "Nepavyko įkelti laukiančių prospektų"
     },
     "permissions": {
       "actions": {

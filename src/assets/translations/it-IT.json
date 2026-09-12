@@ -3810,7 +3810,22 @@
       "Provider KYC Decision": "Decisione KYC del provider",
       "Source": "Origine",
       "Started": "Avviato",
-      "Verification Session": "Sessione di verifica"
+      "Verification Session": "Sessione di verifica",
+      "Pending Prospects": "Prospect in sospeso",
+      "Prospect": "Prospect",
+      "External Reference": "Riferimento esterno",
+      "Current Stage": "Fase corrente",
+      "Last Completed Stage": "Ultima fase completata",
+      "Stopped At": "Interrotto a",
+      "Pending Credits": "Crediti in sospeso",
+      "Created": "Creato",
+      "Last Updated": "Ultimo aggiornamento",
+      "In Progress": "In corso",
+      "Submitted": "Inviato",
+      "Withdrawn": "Ritirato",
+      "Registration Status": "Stato registrazione",
+      "Unknown": "Sconosciuto",
+      "Pending": "In sospeso"
     },
     "links": {
       "Community": "Comunità",
@@ -5079,8 +5094,10 @@
       "Counted in repayment periods": "Conteggiato in periodi di rimborso ({{unit}})",
       "Loading enrollment status": "Caricamento dello stato registrazione",
       "No enrollment cases found": "Nessun caso di registrazione trovato",
-      "Select a client from the list": "Seleziona un cliente dall'elenco",
-      "Unable to load enrollment status": "Impossibile caricare lo stato registrazione"
+      "Unable to load enrollment status": "Impossibile caricare lo stato registrazione",
+      "Loading pending prospects": "Caricamento prospect in sospeso",
+      "No pending prospects found": "Nessun prospect in sospeso trovato",
+      "Unable to load pending prospects": "Impossibile caricare i prospect in sospeso"
     },
     "permissions": {
       "actions": {

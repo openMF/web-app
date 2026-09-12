@@ -3807,7 +3807,22 @@
       "Provider KYC Decision": "Uamuzi wa KYC wa mtoa huduma",
       "Source": "Chanzo",
       "Started": "Imeanza",
-      "Verification Session": "Kikao cha uthibitishaji"
+      "Verification Session": "Kikao cha uthibitishaji",
+      "Pending Prospects": "Watarajiwa wanaosubiri",
+      "Prospect": "Mtarajiwa",
+      "External Reference": "Rejeleo la nje",
+      "Current Stage": "Hatua ya sasa",
+      "Last Completed Stage": "Hatua ya mwisho iliyokamilika",
+      "Stopped At": "Ilisimama kwenye",
+      "Pending Credits": "Mikopo inayosubiri",
+      "Created": "Imeundwa",
+      "Last Updated": "Ilisasishwa mwisho",
+      "In Progress": "Inaendelea",
+      "Submitted": "Imewasilishwa",
+      "Withdrawn": "Imeondolewa",
+      "Registration Status": "Hali ya usajili",
+      "Unknown": "Haijulikani",
+      "Pending": "Inasubiri"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5075,8 +5090,10 @@
       "Counted in repayment periods": "Huhesabiwa kwa vipindi vya marejesho ({{unit}})",
       "Loading enrollment status": "Inapakia hali ya usajili",
       "No enrollment cases found": "Hakuna kesi za usajili zilizopatikana",
-      "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
-      "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili"
+      "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili",
+      "Loading pending prospects": "Inapakia watarajiwa wanaosubiri",
+      "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
+      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri"
     },
     "permissions": {
       "actions": {

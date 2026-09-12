@@ -3811,7 +3811,22 @@
       "Provider KYC Decision": "Rozhodnutí poskytovatele KYC",
       "Source": "Zdroj",
       "Started": "Zahájeno",
-      "Verification Session": "Ověřovací relace"
+      "Verification Session": "Ověřovací relace",
+      "Pending Prospects": "Nevyřízené prospekty",
+      "Prospect": "Prospekt",
+      "External Reference": "Externí reference",
+      "Current Stage": "Aktuální fáze",
+      "Last Completed Stage": "Poslední dokončená fáze",
+      "Stopped At": "Zastaveno ve fázi",
+      "Pending Credits": "Nevyřízené úvěry",
+      "Created": "Vytvořeno",
+      "Last Updated": "Naposledy aktualizováno",
+      "In Progress": "Probíhá",
+      "Submitted": "Odesláno",
+      "Withdrawn": "Staženo",
+      "Registration Status": "Stav registrace",
+      "Unknown": "Neznámé",
+      "Pending": "Nevyřízené"
     },
     "links": {
       "Community": "Společenství",
@@ -5080,8 +5095,10 @@
       "Counted in repayment periods": "Počítáno ve splátkových obdobích ({{unit}})",
       "Loading enrollment status": "Načítá se stav registrace",
       "No enrollment cases found": "Nebyly nalezeny žádné případy registrace",
-      "Select a client from the list": "Vyberte klienta ze seznamu",
-      "Unable to load enrollment status": "Nelze načíst stav registrace"
+      "Unable to load enrollment status": "Nelze načíst stav registrace",
+      "Loading pending prospects": "Načítání nevyřízených prospektů",
+      "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
+      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty"
     },
     "permissions": {
       "actions": {

@@ -203,4 +203,52 @@ describe('TasksService maker-checker search', () => {
     expect(request.request.params.get('limit')).toBe('10');
     request.flush({ totalFilteredRecords: 0, pageItems: [] });
   });
+
+  it('requests pending prospects with only populated server-side parameters', () => {
+    service
+      .getPendingProspects({
+        q: 'acme',
+        registrationStatus: 'IN_PROGRESS',
+        createdFrom: '2026-01-01',
+        createdTo: '2026-01-31',
+        offset: 20,
+        limit: 10,
+        orderBy: 'lastUpdatedAt',
+        sortOrder: 'DESC'
+      })
+      .subscribe();
+
+    const request = httpMock.expectOne((req) => req.url === '/v2/prospects');
+    expect(request.request.params.get('q')).toBe('acme');
+    expect(request.request.params.get('registrationStatus')).toBe('IN_PROGRESS');
+    expect(request.request.params.get('createdFrom')).toBe('2026-01-01');
+    expect(request.request.params.get('createdTo')).toBe('2026-01-31');
+    expect(request.request.params.get('offset')).toBe('20');
+    expect(request.request.params.get('limit')).toBe('10');
+    expect(request.request.params.get('orderBy')).toBe('lastUpdatedAt');
+    expect(request.request.params.get('sortOrder')).toBe('DESC');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
+
+  it('omits empty pending prospect filters', () => {
+    service
+      .getPendingProspects({
+        q: '',
+        registrationStatus: null as any,
+        createdFrom: undefined,
+        createdTo: '2026-01-31',
+        offset: 0,
+        limit: 10
+      })
+      .subscribe();
+
+    const request = httpMock.expectOne((req) => req.url === '/v2/prospects');
+    expect(request.request.params.has('q')).toBe(false);
+    expect(request.request.params.has('registrationStatus')).toBe(false);
+    expect(request.request.params.has('createdFrom')).toBe(false);
+    expect(request.request.params.get('createdTo')).toBe('2026-01-31');
+    expect(request.request.params.get('offset')).toBe('0');
+    expect(request.request.params.get('limit')).toBe('10');
+    request.flush({ totalFilteredRecords: 0, pageItems: [] });
+  });
 });

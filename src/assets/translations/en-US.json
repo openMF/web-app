@@ -3834,7 +3834,22 @@
       "Provider KYC Decision": "Provider KYC Decision",
       "Source": "Source",
       "Started": "Started",
-      "Verification Session": "Verification Session"
+      "Verification Session": "Verification Session",
+      "Pending Prospects": "Pending Prospects",
+      "Prospect": "Prospect",
+      "External Reference": "External Reference",
+      "Current Stage": "Current Stage",
+      "Last Completed Stage": "Last Completed Stage",
+      "Stopped At": "Stopped At",
+      "Pending Credits": "Pending Credits",
+      "Created": "Created",
+      "Last Updated": "Last Updated",
+      "In Progress": "In Progress",
+      "Submitted": "Submitted",
+      "Withdrawn": "Withdrawn",
+      "Registration Status": "Registration Status",
+      "Unknown": "Unknown",
+      "Pending": "Pending"
     },
     "links": {
       "Community": "Community",
@@ -5218,8 +5233,10 @@
       "Counted in repayment periods": "Counted in repayment periods ({{unit}})",
       "Loading enrollment status": "Loading enrollment status",
       "No enrollment cases found": "No enrollment cases found",
-      "Select a client from the list": "Select a client from the list",
-      "Unable to load enrollment status": "Unable to load enrollment status"
+      "Unable to load enrollment status": "Unable to load enrollment status",
+      "Loading pending prospects": "Loading pending prospects",
+      "No pending prospects found": "No pending prospects found",
+      "Unable to load pending prospects": "Unable to load pending prospects"
     },
     "permissions": {
       "actions": {
