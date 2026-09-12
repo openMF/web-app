@@ -1365,7 +1365,7 @@
       "Email External Service": "E-Mail an externen Dienst",
       "Employees": "Mitarbeiter",
       "Enable": "Aktivieren",
-      "Enable Withhold Tax": "Ermöglichen Sie die Quellensteuer",
+      "Enable Withhold Tax": "Aktivieren Sie die Quellensteuer",
       "Entity Data Table Checks": "Überprüfungen der Entitätsdatentabelle",
       "Entity Details": "Entitätsdetails",
       "Entity to Entity Mapping": "Zuordnung von Entität zu Entität",
@@ -3830,6 +3830,9 @@
       "Working with Code": "Arbeiten mit Code"
     },
     "menus": {
+      "Apply Annual Fees": "Jahresgebühren anwenden",
+      "Disable Withhold Tax": "Deaktivieren Sie die Quellensteuer",
+      "Enable Withhold Tax": "Aktivieren Sie die Quellensteuer",
       "Mark as Fraud": "Als Betrug markieren",
       "Unmark as Fraud": "Betrugsmarkierung aufheben",
       "Update Breach": "Verstoß aktualisieren",

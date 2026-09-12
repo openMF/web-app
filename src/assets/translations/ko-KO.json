@@ -3828,6 +3828,9 @@
       "Working with Code": "코드 작업"
     },
     "menus": {
+      "Apply Annual Fees": "연회비 적용",
+      "Disable Withhold Tax": "원천 징수 세금을 비활성화합니다",
+      "Enable Withhold Tax": "원천세를 활성화하십시오",
       "Mark as Fraud": "사기로 표시",
       "Unmark as Fraud": "사기 표시 해제",
       "Update Breach": "위반 업데이트",

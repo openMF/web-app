@@ -1348,7 +1348,7 @@
       "Deposit Period": "Período de Depósito",
       "Details": "Detalhes",
       "Disable": "Desativar",
-      "Disable Withhold Tax": "Desativar o imposto retido",
+      "Disable Withhold Tax": "Desativar retenção de impostos",
       "Do you want to mark the Customer Data as valid?": "Deseja marcar os dados do cliente como válidos?",
       "Documents": "Documentos",
       "Down Payment": "Pagamento inicial",
@@ -1362,7 +1362,7 @@
       "Email External Service": "Serviço externo de e-mail",
       "Employees": "Funcionários",
       "Enable": "Habilitar",
-      "Enable Withhold Tax": "Ativar imposto reter",
+      "Enable Withhold Tax": "Ativar retenção de impostos",
       "Entity Data Table Checks": "Verificações da tabela de dados da entidade",
       "Entity Details": "Detalhes da Entidade",
       "Entity to Entity Mapping": "Mapeamento de entidade para entidade",
@@ -3827,6 +3827,9 @@
       "Working with Code": "Trabalhando com código"
     },
     "menus": {
+      "Apply Annual Fees": "Aplicar taxas anuais",
+      "Disable Withhold Tax": "Desativar retenção de impostos",
+      "Enable Withhold Tax": "Ativar retenção de impostos",
       "Mark as Fraud": "Marcar como Fraude",
       "Unmark as Fraud": "Desmarcar como Fraude",
       "Update Breach": "Atualizar violação",

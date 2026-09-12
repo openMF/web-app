@@ -1348,7 +1348,7 @@
       "Deposit Period": "Indėlio laikotarpis",
       "Details": "Detalės",
       "Disable": "Išjungti",
-      "Disable Withhold Tax": "Išjungti išskaičiavimo mokestį",
+      "Disable Withhold Tax": "Išjungti išskaičiuojamąjį mokestį",
       "Do you want to mark the Customer Data as valid?": "Ar norite pažymėti kliento duomenis kaip galiojančius?",
       "Documents": "Dokumentai",
       "Down Payment": "Pradinė įmoka",
@@ -1362,7 +1362,7 @@
       "Email External Service": "Pašto išorinė paslauga",
       "Employees": "Darbuotojai",
       "Enable": "Įgalinti",
-      "Enable Withhold Tax": "Įgalinti išskaičiavimo mokestį",
+      "Enable Withhold Tax": "Įgalinti išskaičiuojamąjį mokestį",
       "Entity Data Table Checks": "Subjektų duomenų lentelės patikrinimai",
       "Entity Details": "Subjekto informacija",
       "Entity to Entity Mapping": "Objekto atvaizdavimas",
@@ -3827,6 +3827,9 @@
       "Working with Code": "Darbas su kodu"
     },
     "menus": {
+      "Apply Annual Fees": "Taikyti metinius mokesčius",
+      "Disable Withhold Tax": "Išjungti išskaičiuojamąjį mokestį",
+      "Enable Withhold Tax": "Įgalinti išskaičiuojamąjį mokestį",
       "Mark as Fraud": "Pažymėti kaip sukčiavimą",
       "Unmark as Fraud": "Panaikinti sukčiavimo žymę",
       "Update Breach": "Atnaujinti pažeidimą",

@@ -3852,6 +3852,9 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "Apply Annual Fees": "Apply Annual Fees",
+      "Disable Withhold Tax": "Disable Withhold Tax",
+      "Enable Withhold Tax": "Enable Withhold Tax",
       "Mark as Fraud": "Mark as Fraud",
       "Unmark as Fraud": "Unmark as Fraud",
       "Update Breach": "Update Breach",
