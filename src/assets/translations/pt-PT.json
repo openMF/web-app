@@ -5395,7 +5395,9 @@
       "No Upcoming Charges Found": "Nenhuma cobrança futura encontrada",
       "unableToUpdateDiscount": "Não foi possível atualizar o desconto.",
       "validationSaved": "Dados de validação guardados com sucesso.",
-      "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso."
+      "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

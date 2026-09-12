@@ -5395,7 +5395,9 @@
       "No Upcoming Charges Found": "कुनै आगामी शुल्कहरू भेटिएनन्",
       "unableToUpdateDiscount": "छुट अपडेट गर्न सकिएन।",
       "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।",
-      "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।"
+      "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

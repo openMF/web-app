@@ -11,7 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -25,10 +26,13 @@ export class ClientIdentifierTemplateResolver {
 
   /**
    * Returns the Client Identities data.
+   * Falls back to an empty object when the user lacks READ_CLIENTIDENTIFIER permission.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientIdentifierTemplate(clientId);
+    return this.clientsService
+      .getClientIdentifierTemplate(clientId)
+      .pipe(catchError((err) => (err.status === 403 ? of({}) : throwError(() => err))));
   }
 }

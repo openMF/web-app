@@ -5397,7 +5397,9 @@
       "No Upcoming Charges Found": "No se encontraron cargos próximos",
       "unableToUpdateDiscount": "No se pudo actualizar el descuento.",
       "validationSaved": "Datos de validación guardados exitosamente.",
-      "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente."
+      "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {

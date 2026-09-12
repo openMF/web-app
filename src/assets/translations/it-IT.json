@@ -5396,7 +5396,9 @@
       "No Upcoming Charges Found": "Nessun addebito imminente trovato",
       "unableToUpdateDiscount": "Impossibile aggiornare lo sconto.",
       "validationSaved": "Dati di convalida salvati con successo.",
-      "workingCapitalDiscountUpdated": "Lo sconto del prestito di capitale circolante è stato aggiornato correttamente."
+      "workingCapitalDiscountUpdated": "Lo sconto del prestito di capitale circolante è stato aggiornato correttamente.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "selections": {
       "standingInstructions": {
