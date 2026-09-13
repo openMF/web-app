@@ -9,6 +9,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerInput } from '@angular/material/datepicker';
+import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
@@ -28,6 +30,8 @@ describe('EditClientComponent WEB-1161 production edit flow', () => {
   let systemService: jest.Mocked<SystemService>;
   let router: jest.Mocked<Router>;
   let originalProductionMode: boolean;
+
+  const maxFutureDate = new Date(2100, 0, 1);
 
   const clientDataAndTemplate: any = {
     id: 1,
@@ -284,6 +288,7 @@ describe('EditClientComponent WEB-1161 production edit flow', () => {
           provide: SettingsService,
           useValue: {
             businessDate: new Date(2024, 0, 15),
+            maxFutureDate,
             language: { code: 'en' },
             dateFormat: 'dd MMMM yyyy'
           }
@@ -853,5 +858,56 @@ describe('EditClientComponent WEB-1161 production edit flow', () => {
       'client_pep_pld',
       expect.objectContaining({ is_pep: true, pep_details: 'Public office' })
     );
+  });
+
+  describe('WEB-1103 incorporation validity till date', () => {
+    /** The `Incorporation Validity Till Date` datepicker, as bound in the edit template. */
+    function incorpValidityDatePicker(): MatDatepickerInput<Date> {
+      return fixture.debugElement
+        .query(By.css('input[formControlName="incorpValidityTillDate"]'))
+        .injector.get<MatDatepickerInput<Date>>(MatDatepickerInput);
+    }
+
+    function configureEntityClient(dateOfBirth: any) {
+      configureTestingModule(true, {
+        legalForm: { id: 2 },
+        fullname: 'Acme Holdings LLC',
+        dateOfBirth,
+        clientNonPersonDetails: {
+          constitution: { id: 1 },
+          mainBusinessLine: { id: 2 },
+          incorpNumber: 'INC-1'
+        },
+        clientNonPersonConstitutionOptions: [{ id: 1, name: 'LLC' }],
+        clientNonPersonMainBusinessLineOptions: [{ id: 2, name: 'Services' }]
+      });
+    }
+
+    it('allows future incorporation validity dates', () => {
+      configureEntityClient(null);
+
+      expect(incorpValidityDatePicker().max).toEqual(maxFutureDate);
+    });
+
+    it('falls back to the generic minimum when no incorporation date is set', () => {
+      configureEntityClient(null);
+
+      expect(incorpValidityDatePicker().min).toEqual(component.minDate);
+    });
+
+    it('rejects validity dates before the incorporation date', () => {
+      const incorporationDate = new Date(2026, 5, 10);
+      configureEntityClient(null);
+
+      component.editClientForm.get('dateOfBirth').patchValue(incorporationDate);
+      fixture.detectChanges();
+
+      expect(incorpValidityDatePicker().min).toEqual(incorporationDate);
+
+      const validityControl = component.editClientForm.get('clientNonPersonDetails.incorpValidityTillDate');
+      validityControl.patchValue(new Date(2026, 4, 10));
+
+      expect(validityControl.hasError('matDatepickerMin')).toBe(true);
+    });
   });
 });
