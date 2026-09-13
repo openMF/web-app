@@ -81,6 +81,38 @@ export interface KycEvidence {
   amlScreening?: { status?: string; decision?: string };
 }
 
+export interface PendingProspectsSearchParams {
+  q?: string;
+  registrationStatus?: string;
+  createdFrom?: string;
+  createdTo?: string;
+  offset?: number;
+  limit?: number;
+  orderBy?: string;
+  sortOrder?: string;
+}
+
+export interface PendingProspectsResponse {
+  totalFilteredRecords?: number;
+  pageItems?: PendingProspect[];
+}
+
+export interface PendingProspect {
+  prospectId?: number | string;
+  externalRef?: string;
+  displayName?: string;
+  officeId?: number | string;
+  clientId?: number | string;
+  registrationStatus?: string;
+  createdAt?: string | number[];
+  submittedAt?: string | number[];
+  lastUpdatedAt?: string | number[];
+  currentStage?: string;
+  lastCompletedStage?: string;
+  stoppedAtStage?: string;
+  pendingCreditCount?: number;
+}
+
 /**
  * Tasks Service
  */
@@ -128,6 +160,14 @@ export class TasksService {
    */
   getEnrollmentCases(searchData: EnrollmentCasesSearchParams): Observable<EnrollmentCasesResponse> {
     return this.http.get<EnrollmentCasesResponse>('/v2/onboarding/cases', { params: this.buildHttpParams(searchData) });
+  }
+
+  /**
+   * Get pending prospects.
+   * @param {PendingProspectsSearchParams} searchData Pending prospects search, paging, and sorting parameters.
+   */
+  getPendingProspects(searchData?: PendingProspectsSearchParams): Observable<PendingProspectsResponse> {
+    return this.http.get<PendingProspectsResponse>('/v2/prospects', { params: this.buildHttpParams(searchData) });
   }
 
   /**

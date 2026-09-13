@@ -101,6 +101,16 @@
         >
           {{ 'labels.inputs.Enrollment Status' | translate }}
         </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./pending-prospects']"
+          routerLinkActive
+          #pendingProspects="routerLinkActive"
+          [active]="pendingProspects.isActive"
+          *mifosxHasPermission="'READ_PROSPECT'"
+        >
+          {{ 'labels.inputs.Pending Prospects' | translate }}
+        </a>
       </nav>
 
       <mat-tab-nav-panel #tabPanel>

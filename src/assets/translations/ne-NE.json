@@ -3809,7 +3809,22 @@
       "Provider KYC Decision": "प्रदायकको KYC निर्णय",
       "Source": "स्रोत",
       "Started": "सुरु गरिएको",
-      "Verification Session": "प्रमाणीकरण सत्र"
+      "Verification Session": "प्रमाणीकरण सत्र",
+      "Pending Prospects": "विचाराधीन सम्भावित ग्राहकहरू",
+      "Prospect": "सम्भावित ग्राहक",
+      "External Reference": "बाह्य सन्दर्भ",
+      "Current Stage": "हालको चरण",
+      "Last Completed Stage": "अन्तिम पूरा चरण",
+      "Stopped At": "रोकिएको चरण",
+      "Pending Credits": "विचाराधीन क्रेडिटहरू",
+      "Created": "सिर्जना गरिएको",
+      "Last Updated": "अन्तिम अद्यावधिक",
+      "In Progress": "प्रगतिमा",
+      "Submitted": "पेश गरिएको",
+      "Withdrawn": "फिर्ता लिइएको",
+      "Registration Status": "दर्ता स्थिति",
+      "Unknown": "अज्ञात",
+      "Pending": "विचाराधीन"
     },
     "links": {
       "Community": "समुदाय",
@@ -5078,8 +5093,10 @@
       "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})",
       "Loading enrollment status": "दर्ता स्थिति लोड हुँदैछ",
       "No enrollment cases found": "दर्ताका केसहरू फेला परेनन्",
-      "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
-      "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन"
+      "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन",
+      "Loading pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड हुँदै",
+      "No pending prospects found": "विचाराधीन सम्भावित ग्राहकहरू फेला परेनन्",
+      "Unable to load pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड गर्न सकिएन"
     },
     "permissions": {
       "actions": {

@@ -3810,7 +3810,22 @@
       "Provider KYC Decision": "Pakalpojumu sniedzēja KYC lēmums",
       "Source": "Avots",
       "Started": "Sākts",
-      "Verification Session": "Pārbaudes sesija"
+      "Verification Session": "Pārbaudes sesija",
+      "Pending Prospects": "Neapstrādātie prospekti",
+      "Prospect": "Prospekts",
+      "External Reference": "Ārējā atsauce",
+      "Current Stage": "Pašreizējais posms",
+      "Last Completed Stage": "Pēdējais pabeigtais posms",
+      "Stopped At": "Apturēts pie",
+      "Pending Credits": "Neapstrādātie kredīti",
+      "Created": "Izveidots",
+      "Last Updated": "Pēdējoreiz atjaunināts",
+      "In Progress": "Procesā",
+      "Submitted": "Iesniegts",
+      "Withdrawn": "Atsaukts",
+      "Registration Status": "Reģistrācijas statuss",
+      "Unknown": "Nezināms",
+      "Pending": "Gaida"
     },
     "links": {
       "Community": "kopiena",
@@ -5078,8 +5093,10 @@
       "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})",
       "Loading enrollment status": "Notiek reģistrācijas statusa ielāde",
       "No enrollment cases found": "Reģistrācijas gadījumi nav atrasti",
-      "Select a client from the list": "Atlasiet klientu no saraksta",
-      "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu"
+      "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu",
+      "Loading pending prospects": "Notiek neapstrādāto prospektu ielāde",
+      "No pending prospects found": "Neapstrādāti prospekti nav atrasti",
+      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus"
     },
     "permissions": {
       "actions": {

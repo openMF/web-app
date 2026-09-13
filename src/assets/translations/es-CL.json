@@ -3811,7 +3811,22 @@
       "Provider KYC Decision": "Decisión KYC del proveedor",
       "Source": "Origen",
       "Started": "Iniciado",
-      "Verification Session": "Sesión de verificación"
+      "Verification Session": "Sesión de verificación",
+      "Pending Prospects": "Prospectos pendientes",
+      "Prospect": "Prospecto",
+      "External Reference": "Referencia externa",
+      "Current Stage": "Etapa actual",
+      "Last Completed Stage": "Última etapa completada",
+      "Stopped At": "Detenido en",
+      "Pending Credits": "Créditos pendientes",
+      "Created": "Creado",
+      "Last Updated": "Última actualización",
+      "In Progress": "En progreso",
+      "Submitted": "Enviado",
+      "Withdrawn": "Retirado",
+      "Registration Status": "Estado de registro",
+      "Unknown": "Desconocido",
+      "Pending": "Pendiente"
     },
     "links": {
       "Community": "Comunidad",
@@ -5080,8 +5095,10 @@
       "Counted in repayment periods": "Contado en períodos de pago ({{unit}})",
       "Loading enrollment status": "Cargando estado de enrolamiento",
       "No enrollment cases found": "No se encontraron casos de enrolamiento",
-      "Select a client from the list": "Seleccione un cliente de la lista",
-      "Unable to load enrollment status": "No se pudo cargar el estado de enrolamiento"
+      "Unable to load enrollment status": "No se pudo cargar el estado de enrolamiento",
+      "Loading pending prospects": "Cargando prospectos pendientes",
+      "No pending prospects found": "No se encontraron prospectos pendientes",
+      "Unable to load pending prospects": "No se pudieron cargar los prospectos pendientes"
     },
     "permissions": {
       "actions": {
