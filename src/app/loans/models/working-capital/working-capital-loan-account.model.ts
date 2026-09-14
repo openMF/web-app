@@ -300,3 +300,63 @@ export function mapWorkingCapitalWriteOffBalance(
     fullyRecovered: totalWrittenOff > 0 && writtenOffOutstanding <= 0
   };
 }
+
+/** Classification code value used to populate the repayment classification dropdown. */
+export interface WorkingCapitalClassificationOption {
+  id: number;
+  name: string;
+}
+
+/**
+ * The commands GET /working-capital-loans/{loanId}/transactions/template serves.
+ *
+ * Mirrors the set the backend dispatches on; approval is deliberately absent, as it is the one command still served
+ * by the separate action-template endpoint.
+ */
+export type WorkingCapitalTransactionTemplateCommand =
+  | 'disburse'
+  | 'repayment'
+  | 'goodwillCredit'
+  | 'creditBalanceRefund'
+  | 'recoveryPayment'
+  | 'discountFee'
+  | 'discountFeeAdjustment'
+  | 'chargeOff'
+  | 'prepayLoan';
+
+/**
+ * Response of GET /working-capital-loans/{loanId}/transactions/template?command=prepayLoan.
+ *
+ * The payoff quote that closes the loan: `transactionAmount` is the total, and the
+ * three portions break it down. A Working Capital loan accrues nothing over time -
+ * the whole discount lands in principal at disbursement and its amortization only
+ * moves income recognition - so the quote is the same for any transaction date, and
+ * `transactionDate` is only echoed back from the request.
+ */
+export interface WorkingCapitalPrepaymentTemplate {
+  wcLoanId: number;
+  currency: Currency;
+  transactionDate: number[] | string;
+  transactionAmount: number;
+  principalPortion: number;
+  feeChargesPortion: number;
+  penaltyChargesPortion: number;
+  paymentTypeOptions: PaymentType[];
+  classificationOptions: WorkingCapitalClassificationOption[];
+}
+
+/**
+ * Request body for POST /working-capital-loans/{loanId}/transactions?command=repayment
+ * as sent by the prepayment screen. A prepayment is an ordinary repayment for the
+ * full outstanding balance, so it carries no dedicated command of its own.
+ */
+export interface WorkingCapitalPrepaymentRequest {
+  transactionDate: string;
+  transactionAmount: number;
+  classificationId?: number;
+  note?: string;
+  externalId?: string;
+  paymentDetails?: WorkingCapitalPaymentDetails;
+  locale: string;
+  dateFormat: string;
+}

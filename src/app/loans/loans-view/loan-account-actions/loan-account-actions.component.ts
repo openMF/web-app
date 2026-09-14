@@ -50,6 +50,7 @@ import { WorkingCapitalChargeOffComponent } from '../working-capital/loan-accoun
 import { WorkingCapitalWriteOffComponent } from '../working-capital/loan-account-actions/write-off/write-off.component';
 import { WorkingCapitalUndoWriteOffComponent } from '../working-capital/loan-account-actions/undo-write-off/undo-write-off.component';
 import { WorkingCapitalRecoveryPaymentComponent } from '../working-capital/loan-account-actions/recovery-payment/recovery-payment.component';
+import { WorkingCapitalPrepayLoanComponent } from '../working-capital/loan-account-actions/prepay-loan/prepay-loan.component';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
@@ -98,7 +99,8 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     WorkingCapitalChargeOffComponent,
     WorkingCapitalWriteOffComponent,
     WorkingCapitalUndoWriteOffComponent,
-    WorkingCapitalRecoveryPaymentComponent
+    WorkingCapitalRecoveryPaymentComponent,
+    WorkingCapitalPrepayLoanComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
