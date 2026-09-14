@@ -93,6 +93,8 @@ export class EditClientComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
+  /** Maximum date allowed for fields that accept future dates. */
+  maxFutureDate = this.settingsService.maxFutureDate;
 
   /** Client Data and Template */
   clientDataAndTemplate: any;

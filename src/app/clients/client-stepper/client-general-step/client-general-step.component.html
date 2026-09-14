@@ -171,8 +171,8 @@
           <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
           <input
             matInput
-            [min]="minDate"
-            [max]="maxDate"
+            [min]="createClientForm.value.dateOfBirth || minDate"
+            [max]="maxFutureDate"
             [matDatepicker]="incorpValidityTillDateDatePicker"
             formControlName="incorpValidityTillDate"
           />
