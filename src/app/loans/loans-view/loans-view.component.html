@@ -530,6 +530,21 @@
             {{ 'labels.inputs.Loan Collateral Details' | translate }}
           </a>
         }
+        @if (loanProductService.isLoanProduct) {
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_GUARANTOR'"
+            [routerLink]="['./guarantors']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #guarantors="routerLinkActive"
+            [active]="guarantors.isActive"
+          >
+            {{ 'labels.heading.Guarantors' | translate }}
+          </a>
+        }
         @if (loanProductService.isLoanProduct && loanDetailsData.multiDisburseLoan) {
           <a
             mat-tab-link
