@@ -460,6 +460,11 @@
       "loanNotWrittenOff": "Tento úvěr není odepsaný, proto nemůže přijmout vymoženou platbu.",
       "reversalForbidden": "Nemáte oprávnění stornovat transakce provozního kapitálu. Požádejte administrátora, aby storno provedl.",
       "undoWriteOffWithRecoveries": "Odpis nelze vrátit zpět, dokud má úvěr vymožené platby. Nejprve je stornujte."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Datum předčasného splacení nemůže být v budoucnosti.",
+      "dateOutOfRange": "Datum předčasného splacení je mimo povolený rozsah.",
+      "amountMustBePositive": "Částka transakce musí být větší než 0."
     }
   },
   "labels": {

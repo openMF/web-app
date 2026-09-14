@@ -458,6 +458,11 @@
       "loanNotWrittenOff": "Šis aizdevums nav norakstīts, tāpēc tas nevar pieņemt atgūšanas maksājumu.",
       "reversalForbidden": "Jums nav atļaujas stornēt apgrozāmā kapitāla darījumus. Lūdziet administratoram veikt stornēšanu.",
       "undoWriteOffWithRecoveries": "Norakstīšanu nevar atsaukt, kamēr aizdevumam ir atgūšanas maksājumi. Vispirms tos storno."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Priekšapmaksas datums nevar būt nākotnē.",
+      "dateOutOfRange": "Priekšapmaksas datums ir ārpus atļautā diapazona.",
+      "amountMustBePositive": "Darījuma summai jābūt lielākai par 0."
     }
   },
   "labels": {

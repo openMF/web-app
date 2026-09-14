@@ -32,7 +32,19 @@ describe('LoansViewComponent', () => {
   let loansServiceStub: any;
   let systemServiceStub: any;
 
-  function createComponent(): LoansViewComponent {
+  /**
+   * Builds the component straight from the injection context, without rendering its template: the action menu is
+   * assembled in the constructor, so consuming the seeded route data is enough to assert on it.
+   *
+   * The TestBed is reset on every call because several tests build a component per product type or per flag value.
+   * @param productType Which product the LoanProductService stub reports; defaults to a plain loan product.
+   */
+  function createComponent(
+    productType: { isLoanProduct: boolean; isWorkingCapital: boolean } = {
+      isLoanProduct: true,
+      isWorkingCapital: false
+    }
+  ): LoansViewComponent {
     const routeStub = {
       data: routeData$,
       params: new BehaviorSubject({ loanId: '1' }),
@@ -42,6 +54,7 @@ describe('LoansViewComponent', () => {
       }
     };
 
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -50,8 +63,8 @@ describe('LoansViewComponent', () => {
         {
           provide: LoanProductService,
           useValue: {
-            isLoanProduct: true,
-            isWorkingCapital: false,
+            isLoanProduct: productType.isLoanProduct,
+            isWorkingCapital: productType.isWorkingCapital,
             initialize: jest.fn()
           }
         },
@@ -64,6 +77,29 @@ describe('LoansViewComponent', () => {
     });
 
     return TestBed.runInInjectionContext(() => new LoansViewComponent());
+  }
+
+  /**
+   * Seeds the resolved route data with an active loan, which is the only status
+   * whose action menu carries Prepay Loan and Add Interest Pause.
+   */
+  function seedActiveLoan(overrides: Record<string, unknown> = {}): void {
+    routeData$.next({
+      loanDetailsData: {
+        ...loanDetailsData,
+        status: { active: true, value: 'Active' },
+        ...overrides
+      }
+    });
+  }
+
+  /**
+   * Flattens the assembled action menu to the button names, which is all these tests assert on.
+   * @param component The component whose button configuration to read.
+   * @returns The action names in menu order, or an empty list when no menu was built.
+   */
+  function buttonNames(component: LoansViewComponent): string[] {
+    return (component.buttonConfig?.singleButtons ?? []).map((button: { name: string }) => button.name);
   }
 
   beforeEach(() => {
@@ -102,5 +138,40 @@ describe('LoansViewComponent', () => {
 
     expect(component.loanDatatables).toEqual(datatables);
     expect(component.datatablesReady).toBe(true);
+  });
+
+  describe('action menu on an active loan', () => {
+    it('offers Prepay Loan whether or not the product recalculates interest', () => {
+      seedActiveLoan({ isInterestRecalculationEnabled: false });
+      expect(buttonNames(createComponent())).toContain('Prepay Loan');
+
+      seedActiveLoan({ isInterestRecalculationEnabled: true });
+      expect(buttonNames(createComponent())).toContain('Prepay Loan');
+    });
+
+    it('offers Add Interest Pause only when the loan recalculates interest', () => {
+      seedActiveLoan({ isInterestRecalculationEnabled: true });
+      expect(buttonNames(createComponent())).toContain('Add Interest Pause');
+
+      seedActiveLoan({ isInterestRecalculationEnabled: false });
+      expect(buttonNames(createComponent())).not.toContain('Add Interest Pause');
+    });
+
+    it('withholds Add Interest Pause when the loan details omit the interest recalculation flag', () => {
+      seedActiveLoan();
+
+      expect(buttonNames(createComponent())).not.toContain('Add Interest Pause');
+    });
+
+    it('leaves the Working Capital action menu to its own configuration', () => {
+      seedActiveLoan({ isInterestRecalculationEnabled: false });
+
+      const names = buttonNames(createComponent({ isLoanProduct: false, isWorkingCapital: true }));
+
+      // Working Capital declares Prepay Loan itself, so it appears exactly once
+      // and never picks up the loan-product entry or Add Interest Pause.
+      expect(names.filter((name) => name === 'Prepay Loan')).toHaveLength(1);
+      expect(names).not.toContain('Add Interest Pause');
+    });
   });
 });
