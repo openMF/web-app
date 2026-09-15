@@ -150,3 +150,75 @@ describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
     expect(terms().totalPaymentVolume).toBe(360);
   });
 });
+
+describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
+  let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LoansAccountTermsStepComponent);
+    component = fixture.componentInstance;
+    component.loansAccountTermsData = { product: {}, interestRatePerPeriod: 5 };
+    component.setAdvancedPaymentStrategyControls();
+  });
+
+  function interestRate() {
+    return component.loansAccountTermsForm.get('interestRatePerPeriod')!;
+  }
+
+  it('accepts decimal rates', () => {
+    interestRate().setValue(1202.53);
+    expect(interestRate().valid).toBe(true);
+
+    interestRate().setValue(0.53);
+    expect(interestRate().valid).toBe(true);
+  });
+
+  it('accepts a rate with six decimal places', () => {
+    interestRate().setValue(1.123456);
+
+    expect(interestRate().valid).toBe(true);
+  });
+
+  it('rejects a rate with seven decimal places', () => {
+    interestRate().setValue(1.1234567);
+
+    expect(interestRate().hasError('pattern')).toBe(true);
+  });
+
+  it('rejects a negative rate', () => {
+    interestRate().setValue(-1);
+
+    expect(interestRate().hasError('min')).toBe(true);
+  });
+
+  it('requires a rate', () => {
+    interestRate().setValue(null);
+
+    expect(interestRate().hasError('required')).toBe(true);
+  });
+
+  it('does not rewrite rates below 0.01 while typing', () => {
+    component.setNumericFieldListeners();
+    interestRate().setValue(0.005);
+
+    expect(interestRate().value).toBe(0.005);
+    expect(interestRate().valid).toBe(true);
+  });
+});

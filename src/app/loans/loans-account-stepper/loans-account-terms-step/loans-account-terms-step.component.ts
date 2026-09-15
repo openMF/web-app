@@ -695,14 +695,6 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         });
       }
     });
-    const interestRateControl = this.loansAccountTermsForm.get('interestRatePerPeriod');
-    if (interestRateControl) {
-      interestRateControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-        if (typeof value === 'number' && value < 0.01) {
-          interestRateControl.setValue(0.01, { emitEvent: false });
-        }
-      });
-    }
   }
 
   setAdvancedPaymentStrategyControls(): void {
@@ -727,7 +719,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           'interestRatePerPeriod',
           new UntypedFormControl(this.loansAccountTermsData.interestRatePerPeriod, [
             Validators.required,
-            Validators.min(0)
+            Validators.min(0),
+            Validators.pattern(/^\d+([.,]\d{1,6})?$/)
           ])
         );
       }
@@ -788,7 +781,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         interestChargedFromDate: [''],
         interestRatePerPeriod: [
           '',
-          Validators.min(0)
+          [
+            Validators.min(0),
+            Validators.pattern(/^\d+([.,]\d{1,6})?$/)
+          ]
         ],
         interestType: [''],
         isFloatingInterestRate: [null],
