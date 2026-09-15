@@ -1095,32 +1095,6 @@ export const FORM_STEPS: FormStep[] = [
     kind: 'deferred-income',
     fields: []
   },
-  {
-    id: 7,
-    title: 'labels.heading.Advanced Configuration',
-    icon: 'ti-panel',
-    fields: [
-      {
-        label: 'labels.inputs.Use global config values for repayment event',
-        key: 'useGlobalConfigForRepaymentEvent',
-        type: 'checkbox'
-      },
-      {
-        label: 'labels.inputs.Due days for repayment event',
-        key: 'dueDaysForRepaymentEvent',
-        type: 'number',
-        placeholder: 'labels.placeholders.Example 1',
-        min: 0
-      },
-      {
-        label: 'labels.inputs.OverDue days for repayment event',
-        key: 'overDueDaysForRepaymentEvent',
-        type: 'number',
-        placeholder: 'labels.placeholders.Example 1',
-        min: 0
-      }
-    ]
-  },
   { id: 8, title: 'labels.buttons.Preview', icon: 'ti-eye', kind: 'review', fields: [] }
 ];
 

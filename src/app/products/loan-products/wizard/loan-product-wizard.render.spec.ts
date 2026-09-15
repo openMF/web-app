@@ -15,6 +15,7 @@ import { provideRouter } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { MissingTranslationHandler } from '@ngx-translate/core';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CustomMissingTranslationHandler } from 'app/core/translation/missing-translation.handler';
 
 import { LoanProductWizardComponent } from './loan-product-wizard.component';
@@ -54,6 +55,13 @@ describe('LoanProductWizardComponent (rendered)', () => {
       ],
       providers: [
         DatePipe,
+        // The app provides these in `shared/material.module.ts`, which this standalone component does
+        // not import. `showError` is what makes a step with `[hasError]` render the error indicator
+        // at all, so without it the step-state assertions below would pass vacuously.
+        {
+          provide: STEPPER_GLOBAL_OPTIONS,
+          useValue: { showError: true, displayDefaultIndicatorType: false }
+        },
         provideHttpClient(),
         provideHttpClientTesting(),
         provideRouter([]),
@@ -180,8 +188,7 @@ describe('LoanProductWizardComponent (rendered)', () => {
             Accounting: 'Accounting',
             'Payment Allocation': 'Payment Allocation',
             'Interest Refunds': 'Interest Refunds',
-            'Deferred Income Recognition': 'Deferred Income Recognition',
-            'Advanced Configuration': 'Advanced Configuration'
+            'Deferred Income Recognition': 'Deferred Income Recognition'
           },
           inputs: { 'Terms vary based on loan cycle': 'Terms vary based on loan cycle' },
           text: {
@@ -618,6 +625,125 @@ describe('LoanProductWizardComponent (rendered)', () => {
       selectCharges([]);
 
       expect(reviewRows('Charges')).toEqual([]);
+    });
+  });
+  /**
+   * I4: `visibleSteps` is a getter and `MatStepper` navigates by INDEX, so a gate that adds or
+   * removes a step renumbered every step after it and the operator silently landed on different
+   * content. Loan Cycle Variations sits above Settings, Charges and Accounting in FORM_STEPS, and the
+   * repayment strategy adds or removes three steps at once, so this is the most common interaction in
+   * the wizard. These are DOM-level because the defect is in what the real stepper does with the real
+   * QueryList; the sibling `new LoanProductWizardComponent()` specs cannot see it.
+   */
+  describe('step identity across a visibility change', () => {
+    function selectedStepKind(): string {
+      return component.visibleSteps[component.stepper!.selectedIndex]?.kind ?? 'fields';
+    }
+
+    function selectStep(predicate: (step: { kind?: string; title: string }) => boolean): void {
+      component.stepper!.selectedIndex = component.visibleSteps.findIndex(predicate);
+      detect();
+    }
+
+    function dropAdvancedPaymentSteps(): void {
+      // Personal defaults to the advanced payment allocation strategy, so Payment Allocation,
+      // Interest Refunds and Deferred Income Recognition start visible; moving off it removes them.
+      component.form.get('transactionProcessingStrategyCode')!.setValue('mifos-standard-strategy');
+      detect();
+    }
+
+    it('leaves the operator on their own step when earlier steps disappear', () => {
+      selectStep((step) => step.kind === 'charges');
+      expect(selectedStepKind()).toBe('charges');
+
+      dropAdvancedPaymentSteps();
+
+      // The index moved (Payment Allocation was above Charges); the step under it must not have.
+      expect(component.visibleSteps.some((step) => step.kind === 'payment-allocation')).toBe(false);
+      expect(selectedStepKind()).toBe('charges');
+    });
+
+    it("falls back to the nearest earlier step when the operator's own step disappears", () => {
+      selectStep((step) => step.kind === 'payment-allocation');
+      expect(selectedStepKind()).toBe('payment-allocation');
+
+      dropAdvancedPaymentSteps();
+
+      // Settings is the step declared immediately before Payment Allocation. Never a later one:
+      // moving forward would skip content the operator has not seen.
+      expect(component.visibleSteps[component.stepper!.selectedIndex].title).toBe('labels.heading.Settings');
+    });
+
+    it('hands out the same array while the visible set is unchanged', () => {
+      // The identity is what keeps `*ngFor` from re-creating every step's embedded view on each
+      // change-detection pass, and it is the signal `steps.changes` fires on.
+      const first = component.visibleSteps;
+      component.form.get('name')!.setValue('Some product');
+      detect();
+
+      expect(component.visibleSteps).toBe(first);
+
+      dropAdvancedPaymentSteps();
+      expect(component.visibleSteps).not.toBe(first);
+    });
+  });
+
+  /**
+   * I4, second half: the stepper showed no per-step error or done state. Classic gets that from
+   * `[stepControl]`, which the guided flow cannot use — one flat FormGroup, no per-step control — so
+   * the state comes from `[completed]` / `[hasError]` instead.
+   */
+  describe('per-step done and error indicators', () => {
+    function headerIcon(title: string): HTMLElement | null {
+      const index = component.visibleSteps.findIndex((step) => step.title === title);
+      const header = fixture.nativeElement.querySelectorAll('.mat-step-header')[index] as HTMLElement;
+      return header?.querySelector('.mat-step-icon');
+    }
+
+    function selectStepAt(index: number): void {
+      component.stepper!.selectedIndex = index;
+      detect();
+    }
+
+    it('flags a step the operator has opened and left incomplete', () => {
+      // Details opens the wizard and its `name` is required and empty. The indicator only replaces
+      // the number once the operator is elsewhere, which is exactly when they need it.
+      selectStepAt(1);
+
+      expect(headerIcon('labels.heading.Details')!.classList).toContain('mat-step-icon-state-error');
+    });
+
+    it('turns a step from flagged to ticked as the operator completes it', () => {
+      // The transition is the assertion: `MatStep`'s own default — no `stepControl`, so "completed"
+      // means nothing more than "interacted" — would tick Details in BOTH states, and tell the
+      // operator a step with an empty required name was done.
+      selectStepAt(1);
+      expect(headerIcon('labels.heading.Details')!.classList).toContain('mat-step-icon-state-error');
+
+      component.form.patchValue({ name: 'Personal Loan', shortName: 'PL01' });
+      detect();
+
+      expect(headerIcon('labels.heading.Details')!.classList).toContain('mat-step-icon-state-done');
+    });
+
+    it('claims nothing about a step the operator has never opened', () => {
+      // Charges carries no validators, so without the visited gate it would wear a tick from the
+      // first render — telling the operator they had completed a step they had never seen.
+      const icon = headerIcon('labels.heading.Charges')!;
+
+      expect(icon.classList).not.toContain('mat-step-icon-state-done');
+      expect(icon.classList).not.toContain('mat-step-icon-state-error');
+    });
+
+    it('flags every blocking step once the operator presses Create', () => {
+      // C4's summary names these steps; the stepper stayed silent about them. Terms is invalid
+      // (principal and the rate are required) and unvisited.
+      expect(headerIcon('labels.heading.Terms')!.classList).not.toContain('mat-step-icon-state-error');
+
+      component.submit();
+      detect();
+
+      expect(headerIcon('labels.heading.Terms')!.classList).toContain('mat-step-icon-state-error');
     });
   });
 });
