@@ -408,7 +408,7 @@ const routes: Routes = [
           {
             path: 'edit',
             component: EditTransactionComponent,
-            data: { breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: { breadcrumb: 'Adjust', routeParamBreadcrumb: false },
             resolve: {
               loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
             }
