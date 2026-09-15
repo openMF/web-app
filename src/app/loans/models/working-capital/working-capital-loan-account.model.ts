@@ -17,9 +17,15 @@ export interface WorkingCapitalChargeOffReasonOption {
   isActive?: boolean;
 }
 
-/** Response of GET /working-capital-loans/{loanId}/template?templateType=chargeOff. */
+/**
+ * Response of GET /working-capital-loans/{loanId}/transactions/template?command=chargeOff.
+ *
+ * `expectedAmount` is the outstanding balance the charge-off will write off. Every command served by
+ * that endpoint reports its amount in the same field - the caller asked for one specific command, so
+ * it already knows what the number means.
+ */
 export interface WorkingCapitalChargeOffTemplate {
-  chargeOffAmount: number;
+  expectedAmount: number;
   chargeOffDate: number[] | string;
   chargeOffReasonOptions: WorkingCapitalChargeOffReasonOption[];
   currency: Currency;
@@ -327,17 +333,17 @@ export type WorkingCapitalTransactionTemplateCommand =
 /**
  * Response of GET /working-capital-loans/{loanId}/transactions/template?command=prepayLoan.
  *
- * The payoff quote that closes the loan: `transactionAmount` is the total, and the
- * three portions break it down. A Working Capital loan accrues nothing over time -
- * the whole discount lands in principal at disbursement and its amortization only
- * moves income recognition - so the quote is the same for any transaction date, and
- * `transactionDate` is only echoed back from the request.
+ * The payoff quote that closes the loan: `expectedAmount` is the total, and the three
+ * portions break it down. The quote is the balance as of `transactionDate`, so anything
+ * disbursed, charged or adjusted after that date is left out. Payments are not scoped
+ * the same way - the amount stays net of every repayment already made, which is what
+ * keeps a backdated payoff from closing the loan and then overpaying it.
  */
 export interface WorkingCapitalPrepaymentTemplate {
   wcLoanId: number;
   currency: Currency;
   transactionDate: number[] | string;
-  transactionAmount: number;
+  expectedAmount: number;
   principalPortion: number;
   feeChargesPortion: number;
   penaltyChargesPortion: number;

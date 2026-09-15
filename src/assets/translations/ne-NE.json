@@ -5102,7 +5102,8 @@
       "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन",
       "Loading pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड हुँदै",
       "No pending prospects found": "विचाराधीन सम्भावित ग्राहकहरू फेला परेनन्",
-      "Unable to load pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड गर्न सकिएन"
+      "Unable to load pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड गर्न सकिएन",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "यस मितिको रकम पुनः गणना गर्न सकिएन। पुनः प्रयास गर्न मिति फेरि छान्नुहोस्।"
     },
     "permissions": {
       "actions": {

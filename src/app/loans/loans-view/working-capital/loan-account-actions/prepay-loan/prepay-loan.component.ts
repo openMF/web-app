@@ -9,6 +9,8 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -42,10 +44,10 @@ import {
  * letting them be edited would only let the user contradict the server. The total
  * stays editable, matching the Prepay Loan screen for progressive loans.
  *
- * Unlike that screen, changing the transaction date does not re-fetch the quote. A
- * progressive loan accrues interest per day, so its payoff moves with the date; a
- * Working Capital loan accrues nothing over time, so the quote is identical for every
- * date and a refetch would only cost a request.
+ * Changing the transaction date re-fetches the quote, because the payoff is the balance
+ * as of that date: anything disbursed, charged or adjusted after it is not part of what
+ * was owed then. Submit is disabled while a quote is in flight so a stale amount cannot
+ * be posted.
  */
 @Component({
   selector: 'mifosx-working-capital-prepay-loan',
@@ -72,6 +74,13 @@ export class WorkingCapitalPrepayLoanComponent extends LoanAccountActionsBaseCom
   maxDate = new Date();
   /** Whether a submit request is in flight. */
   isSubmitting = false;
+  /** Whether a re-quote is in flight after a date change. */
+  isQuoteLoading = false;
+  /**
+   * Whether the last re-quote failed, leaving a payoff on screen that was quoted for a different date. Blocks submit
+   * until a re-quote succeeds; picking the date again retries.
+   */
+  isQuoteStale = false;
   /** Whether the optional payment detail fields are visible. */
   showPaymentDetails = false;
   /** Payment type dropdown options. */
@@ -128,11 +137,60 @@ export class WorkingCapitalPrepayLoanComponent extends LoanAccountActionsBaseCom
     this.principalPortion = this.toAmount(template.principalPortion);
     this.feeChargesPortion = this.toAmount(template.feeChargesPortion);
     this.penaltyChargesPortion = this.toAmount(template.penaltyChargesPortion);
-    this.payoffAmount = this.toAmount(template.transactionAmount);
+    this.payoffAmount = this.toAmount(template.expectedAmount);
 
     this.prepayLoanForm.controls.transactionAmount.setValue(this.payoffAmount);
     this.prepayLoanForm.controls.transactionDate.setValue(this.settingsService.businessDate);
     this.cdr.markForCheck();
+
+    this.watchQuoteDate();
+  }
+
+  /**
+   * Re-quotes the payoff whenever the user picks a different date.
+   *
+   * switchMap rather than mergeMap so a slow response for an earlier date cannot land after, and overwrite, the quote
+   * for the date now on screen. A failed re-quote leaves the previous numbers on screen rather than blanking the form,
+   * but marks them stale: they were quoted for the old date, and paying that amount for the new one would not close
+   * the loan. The distinct check lets the same date through again while stale, so re-picking it retries.
+   */
+  private watchQuoteDate(): void {
+    this.prepayLoanForm.controls.transactionDate.valueChanges
+      .pipe(
+        filter((date): date is Date => !!date),
+        map((date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
+        distinctUntilChanged((previous, current) => previous === current && !this.isQuoteStale),
+        tap(() => {
+          this.isQuoteLoading = true;
+          this.cdr.markForCheck();
+        }),
+        switchMap((quoteDate) =>
+          this.loanService
+            .getWorkingCapitalLoanTransactionTemplate(this.loanId, 'prepayLoan', quoteDate)
+            .pipe(catchError(() => of(null)))
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((template: WorkingCapitalPrepaymentTemplate | null) => {
+        this.isQuoteLoading = false;
+        this.isQuoteStale = !template;
+        if (template) {
+          this.applyQuote(template);
+        }
+        this.cdr.markForCheck();
+      });
+  }
+
+  /**
+   * Applies a re-quoted payoff. The breakdown is patched alongside the total: showing a fresh total next to a stale
+   * breakdown would be worse than either on its own.
+   */
+  private applyQuote(template: WorkingCapitalPrepaymentTemplate): void {
+    this.principalPortion = this.toAmount(template.principalPortion);
+    this.feeChargesPortion = this.toAmount(template.feeChargesPortion);
+    this.penaltyChargesPortion = this.toAmount(template.penaltyChargesPortion);
+    this.payoffAmount = this.toAmount(template.expectedAmount);
+    this.prepayLoanForm.controls.transactionAmount.setValue(this.payoffAmount);
   }
 
   /** Toggles the optional payment detail fields. */
@@ -142,7 +200,7 @@ export class WorkingCapitalPrepayLoanComponent extends LoanAccountActionsBaseCom
 
   /** Submits the prepayment as a repayment for the quoted payoff amount. */
   submit(): void {
-    if (this.prepayLoanForm.invalid || this.isSubmitting) {
+    if (this.prepayLoanForm.invalid || this.isSubmitting || this.isQuoteLoading || this.isQuoteStale) {
       this.prepayLoanForm.markAllAsTouched();
       return;
     }
