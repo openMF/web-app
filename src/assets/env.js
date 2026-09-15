@@ -124,6 +124,9 @@
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
+  // Email format validation regex (optional override; leave empty to use the built-in default)
+  window['env']['externalEmailRegex'] = '';
+
   // Postal Code Lookup (auto-fill address from postal code via external API)
   // Set to 'true' to enable, 'false' (default) to disable
   window['env']['enablePostalCodeLookup'] = 'false';

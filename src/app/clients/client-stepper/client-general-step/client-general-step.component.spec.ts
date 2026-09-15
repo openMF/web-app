@@ -112,3 +112,76 @@ describe('ClientGeneralStepComponent WEB-1103 incorporation validity date', () =
     expect(incorpValidityControl().hasError('matDatepickerMin')).toBe(true);
   });
 });
+
+describe('ClientGeneralStepComponent WEB-748 email validation', () => {
+  let fixture: ComponentFixture<ClientGeneralStepComponent>;
+  let component: ClientGeneralStepComponent;
+
+  const clientTemplate: any = {
+    officeOptions: [{ id: 1, name: 'Head Office' }],
+    staffOptions: [],
+    clientLegalFormOptions: [{ id: LegalFormId.PERSON, value: 'PERSON' }],
+    clientTypeOptions: [],
+    clientClassificationOptions: [],
+    clientNonPersonMainBusinessLineOptions: [],
+    clientNonPersonConstitutionOptions: [],
+    genderOptions: [],
+    savingProductOptions: []
+  };
+
+  function emailControl() {
+    return component.createClientForm.get('emailAddress');
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ClientGeneralStepComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        provideNativeDateAdapter(),
+        provideNoopAnimations(),
+        { provide: CdkStepper, useValue: { next: jest.fn(), previous: jest.fn() } },
+        { provide: Dates, useValue: { formatDate: jest.fn(() => '15 January 2026') } },
+        {
+          provide: SettingsService,
+          useValue: { businessDate: new Date(2026, 0, 15), dateFormat: 'dd MMMM yyyy', language: { code: 'en-US' } }
+        },
+        { provide: ClientsService, useValue: { getClientWithOfficeTemplate: jest.fn(() => of(clientTemplate)) } }
+      ]
+    }).compileComponents();
+
+    const faIconLibrary = TestBed.inject(FaIconLibrary);
+    faIconLibrary.addIcons(
+      ...Object.keys(solidIcons)
+        .filter((key) => key !== 'fas' && key !== 'prefix' && key.startsWith('fa'))
+        .map((icon) => (solidIcons as any)[icon])
+    );
+
+    fixture = TestBed.createComponent(ClientGeneralStepComponent);
+    component = fixture.componentInstance;
+    component.clientTemplate = clientTemplate;
+    fixture.detectChanges();
+  });
+
+  it('stays optional when left blank', () => {
+    emailControl().patchValue('');
+    expect(emailControl().valid).toBe(true);
+  });
+
+  it('accepts a well-formed email', () => {
+    emailControl().patchValue('client@example.com');
+    expect(emailControl().valid).toBe(true);
+  });
+
+  it('rejects a malformed email', () => {
+    emailControl().patchValue('not-an-email');
+    expect(emailControl().hasError('pattern')).toBe(true);
+  });
+
+  it('rejects a double-dot domain', () => {
+    emailControl().patchValue('client@example..com');
+    expect(emailControl().hasError('pattern')).toBe(true);
+  });
+});
