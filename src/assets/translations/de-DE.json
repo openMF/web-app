@@ -465,7 +465,17 @@
       "futureDate": "Das Datum der vorzeitigen Rückzahlung darf nicht in der Zukunft liegen.",
       "dateOutOfRange": "Das Datum der vorzeitigen Rückzahlung liegt außerhalb des zulässigen Bereichs.",
       "amountMustBePositive": "Der Transaktionsbetrag muss größer als 0 sein."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -844,7 +854,9 @@
       "Save": "Speichern",
       "Upload Report Design": "Berichtsdesign hochladen",
       "Mass Reject": "Massenhaft ablehnen",
-      "Hide": "Ausblenden"
+      "Hide": "Ausblenden",
+      "Adjust": "Anpassen",
+      "Reverse": "Stornieren"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1821,7 +1833,8 @@
       "Deferred Income Recognition": "Erfassung abgegrenzter Erträge",
       "Advanced Configuration": "Erweiterte Konfiguration",
       "Mass Reject Credit Applications": "Kreditanträge massenhaft ablehnen",
-      "Enrollment Details": "Registrierungsdetails"
+      "Enrollment Details": "Registrierungsdetails",
+      "Reverse Transaction": "Transaktion stornieren"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
@@ -4087,7 +4100,8 @@
       "Are you sure you want to undo the charge-off": "Sind Sie sicher, dass Sie das Abladen rückgängig machen möchten?",
       "Restart Period from Reset Date splits the current period": "Wenn aktiviert, wird die aktuelle Verstoßperiode zum Reset-Datum geteilt und eine neue Periode beginnt ab diesem Datum.",
       "Breach evaluation will stop": "Die Verstoßbewertung endet am {{date}}. Frühere Ergebnisse bleiben erhalten, werden aber bis zur erneuten Aktivierung ausgeblendet.",
-      "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet."
+      "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet.",
+      "This will reopen the loan account": "Das Darlehen ist geschlossen oder überzahlt: durch diesen Vorgang wird das Konto wieder geöffnet."
     },
     "text": {
       "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
@@ -5104,7 +5118,10 @@
       "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden",
       "Loading pending prospects": "Ausstehende Interessenten werden geladen",
       "No pending prospects found": "Keine ausstehenden Interessenten gefunden",
-      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden"
+      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden",
+      "Adjust": "Anpassen",
+      "Identifies the new transaction created by the adjustment": "Kennzeichnet die durch die Anpassung erstellte neue Transaktion",
+      "Identifies the reversal of the original transaction": "Kennzeichnet die Stornierung der ursprünglichen Transaktion"
     },
     "permissions": {
       "actions": {

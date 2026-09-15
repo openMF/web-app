@@ -467,7 +467,17 @@
       "futureDate": "The prepayment date cannot be in the future.",
       "dateOutOfRange": "The prepayment date is outside the allowed range.",
       "amountMustBePositive": "The transaction amount must be greater than 0."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -848,7 +858,9 @@
       "Save": "Save",
       "Upload Report Design": "Upload Report Design",
       "Mass Reject": "Mass Reject",
-      "Hide": "Hide"
+      "Hide": "Hide",
+      "Adjust": "Adjust",
+      "Reverse": "Reverse"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1833,7 +1845,8 @@
       "Deferred Income Recognition": "Deferred Income Recognition",
       "Advanced Configuration": "Advanced Configuration",
       "Mass Reject Credit Applications": "Mass Reject Credit Applications",
-      "Enrollment Details": "Enrollment Details"
+      "Enrollment Details": "Enrollment Details",
+      "Reverse Transaction": "Reverse Transaction"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
@@ -4110,7 +4123,8 @@
       "the Transaction Type": "the Transaction Type",
       "Are you sure you want to undo the charge-off": "Are you sure you want to undo the charge-off",
       "Breach evaluation will stop": "Breach evaluation stops on {{date}}. Previous results stay on record but are hidden until you enable it again.",
-      "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date."
+      "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date.",
+      "This will reopen the loan account": "The loan is closed or overpaid: this operation will reopen the account."
     },
     "text": {
       "Select a client from the list": "Select a client from the list",
@@ -5242,7 +5256,10 @@
       "Unable to load enrollment status": "Unable to load enrollment status",
       "Loading pending prospects": "Loading pending prospects",
       "No pending prospects found": "No pending prospects found",
-      "Unable to load pending prospects": "Unable to load pending prospects"
+      "Unable to load pending prospects": "Unable to load pending prospects",
+      "Adjust": "Adjust",
+      "Identifies the new transaction created by the adjustment": "Identifies the new transaction created by the adjustment",
+      "Identifies the reversal of the original transaction": "Identifies the reversal of the original transaction"
     },
     "permissions": {
       "actions": {

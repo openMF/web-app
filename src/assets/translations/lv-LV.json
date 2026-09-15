@@ -463,7 +463,17 @@
       "futureDate": "Priekšapmaksas datums nevar būt nākotnē.",
       "dateOutOfRange": "Priekšapmaksas datums ir ārpus atļautā diapazona.",
       "amountMustBePositive": "Darījuma summai jābūt lielākai par 0."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -842,7 +852,9 @@
       "Save": "Saglabāt",
       "Upload Report Design": "Augšupielādēt pārskata veidni",
       "Mass Reject": "Noraidīt masveidā",
-      "Hide": "Paslēpt"
+      "Hide": "Paslēpt",
+      "Adjust": "Koriģēt",
+      "Reverse": "Atcelt"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1819,7 +1831,8 @@
       "Deferred Income Recognition": "Atliktā ienākuma atzīšana",
       "Advanced Configuration": "Papildu konfigurācija",
       "Mass Reject Credit Applications": "Masveida kredīta pieteikumu noraidīšana",
-      "Enrollment Details": "Reģistrācijas informācija"
+      "Enrollment Details": "Reģistrācijas informācija",
+      "Reverse Transaction": "Atcelt darījumu"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
@@ -4084,7 +4097,8 @@
       "Are you sure you want to undo the charge-off": "Vai tiešām vēlaties atcelt norakstīšanu?",
       "Restart Period from Reset Date splits the current period": "Ja iespējots, pašreizējais pārkāpuma periods tiek sadalīts atiestatīšanas datumā un jauns periods sākas no šī datuma.",
       "Breach evaluation will stop": "Pārkāpumu novērtēšana tiek pārtraukta {{date}}. Iepriekšējie rezultāti tiek saglabāti, bet paslēpti līdz atkārtotai iespējošanai.",
-      "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti."
+      "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti.",
+      "This will reopen the loan account": "Aizdevums ir slēgts vai pārmaksāts: šī darbība atkārtoti atvērs kontu."
     },
     "text": {
       "Select a client from the list": "Atlasiet klientu no saraksta",
@@ -5102,7 +5116,10 @@
       "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu",
       "Loading pending prospects": "Notiek neapstrādāto prospektu ielāde",
       "No pending prospects found": "Neapstrādāti prospekti nav atrasti",
-      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus"
+      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus",
+      "Adjust": "Koriģēt",
+      "Identifies the new transaction created by the adjustment": "Identificē jauno darījumu, kas izveidots ar korekciju",
+      "Identifies the reversal of the original transaction": "Identificē sākotnējā darījuma atcelšanu"
     },
     "permissions": {
       "actions": {

@@ -465,7 +465,17 @@
       "futureDate": "Datum předčasného splacení nemůže být v budoucnosti.",
       "dateOutOfRange": "Datum předčasného splacení je mimo povolený rozsah.",
       "amountMustBePositive": "Částka transakce musí být větší než 0."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "version": {
@@ -843,7 +853,9 @@
       "Save": "Uložit",
       "Upload Report Design": "Nahrát návrh zprávy",
       "Mass Reject": "Hromadně zamítnout",
-      "Hide": "Skrýt"
+      "Hide": "Skrýt",
+      "Adjust": "Upravit",
+      "Reverse": "Stornovat"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1820,7 +1832,8 @@
       "Deferred Income Recognition": "Vykazování odložených výnosů",
       "Advanced Configuration": "Pokročilá konfigurace",
       "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr",
-      "Enrollment Details": "Podrobnosti registrace"
+      "Enrollment Details": "Podrobnosti registrace",
+      "Reverse Transaction": "Stornovat transakci"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
@@ -4086,7 +4099,8 @@
       "Are you sure you want to undo the charge-off": "Opravdu chcete zrušit odpis?",
       "Restart Period from Reset Date splits the current period": "Pokud je povoleno, aktuální období porušení se rozdělí k datu resetu a nové období začne od tohoto data.",
       "Breach evaluation will stop": "Hodnocení porušení se zastaví {{date}}. Předchozí výsledky zůstanou uloženy, ale budou skryty až do opětovného povolení.",
-      "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen."
+      "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen.",
+      "This will reopen the loan account": "Úvěr je uzavřen nebo přeplacen: touto operací se účet znovu otevře."
     },
     "text": {
       "Select a client from the list": "Vyberte klienta ze seznamu",
@@ -5104,7 +5118,10 @@
       "Unable to load enrollment status": "Nelze načíst stav registrace",
       "Loading pending prospects": "Načítání nevyřízených prospektů",
       "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
-      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty"
+      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty",
+      "Adjust": "Upravit",
+      "Identifies the new transaction created by the adjustment": "Identifikuje novou transakci vytvořenou úpravou",
+      "Identifies the reversal of the original transaction": "Identifikuje storno původní transakce"
     },
     "permissions": {
       "actions": {

@@ -463,7 +463,17 @@
       "futureDate": "Tarehe ya malipo ya mapema haiwezi kuwa ya baadaye.",
       "dateOutOfRange": "Tarehe ya malipo ya mapema iko nje ya kipindi kinachoruhusiwa.",
       "amountMustBePositive": "Kiasi cha muamala lazima kiwe kikubwa kuliko 0."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -842,7 +852,9 @@
       "Save": "Hifadhi",
       "Upload Report Design": "Pakia Muundo wa Ripoti",
       "Mass Reject": "Kataa kwa wingi",
-      "Hide": "Ficha"
+      "Hide": "Ficha",
+      "Adjust": "Rekebisha",
+      "Reverse": "Batilisha"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1816,7 +1828,8 @@
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
       "Advanced Configuration": "Usanidi wa kina",
       "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi",
-      "Enrollment Details": "Maelezo ya usajili"
+      "Enrollment Details": "Maelezo ya usajili",
+      "Reverse Transaction": "Batilisha Muamala"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
@@ -4081,7 +4094,8 @@
       "Are you sure you want to undo the charge-off": "Una uhakika unataka kutendua Chaji-Zima?",
       "Restart Period from Reset Date splits the current period": "Ikiwashwa, kipindi cha sasa cha ukiukaji hugawanywa katika tarehe ya uwekaji upya na kipindi kipya huanza kuanzia tarehe hiyo.",
       "Breach evaluation will stop": "Tathmini ya ukiukaji itasimama tarehe {{date}}. Matokeo ya awali yatahifadhiwa lakini yatafichwa hadi uwashe tena.",
-      "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo."
+      "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo.",
+      "This will reopen the loan account": "Mkopo umefungwa au umelipwa zaidi: operesheni hii itafungua akaunti tena."
     },
     "text": {
       "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
@@ -5099,7 +5113,10 @@
       "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili",
       "Loading pending prospects": "Inapakia watarajiwa wanaosubiri",
       "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
-      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri"
+      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri",
+      "Adjust": "Rekebisha",
+      "Identifies the new transaction created by the adjustment": "Inatambua muamala mpya ulioundwa na marekebisho",
+      "Identifies the reversal of the original transaction": "Inatambua ubatilishaji wa muamala asili"
     },
     "permissions": {
       "actions": {

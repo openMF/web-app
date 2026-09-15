@@ -463,7 +463,17 @@
       "futureDate": "A data do pagamento antecipado não pode ser futura.",
       "dateOutOfRange": "A data do pagamento antecipado está fora do intervalo permitido.",
       "amountMustBePositive": "O montante da transação deve ser superior a 0."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -842,7 +852,9 @@
       "Save": "Guardar",
       "Upload Report Design": "Carregar modelo de relatório",
       "Mass Reject": "Rejeitar em massa",
-      "Hide": "Ocultar"
+      "Hide": "Ocultar",
+      "Adjust": "Ajustar",
+      "Reverse": "Estornar"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1818,7 +1830,8 @@
       "Deferred Income Recognition": "Reconhecimento de receita diferida",
       "Advanced Configuration": "Configuração avançada",
       "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito",
-      "Enrollment Details": "Detalhes da inscrição"
+      "Enrollment Details": "Detalhes da inscrição",
+      "Reverse Transaction": "Estornar transação"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
@@ -4084,7 +4097,8 @@
       "Are you sure you want to undo the charge-off": "Tem a certeza de que pretende desfazer a cobrança?",
       "Restart Period from Reset Date splits the current period": "Se ativado, o período de incumprimento atual é dividido na data de reinício e um novo período começa a partir dessa data.",
       "Breach evaluation will stop": "A avaliação de violações para em {{date}}. Os resultados anteriores são mantidos, mas ficam ocultos até voltar a ativá-la.",
-      "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data."
+      "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data.",
+      "This will reopen the loan account": "O empréstimo está fechado ou com pagamento em excesso: esta operação reabrirá a conta."
     },
     "text": {
       "Select a client from the list": "Selecione um cliente da lista",
@@ -5102,7 +5116,10 @@
       "Unable to load enrollment status": "Não foi possível carregar o estado da inscrição",
       "Loading pending prospects": "A carregar prospectos pendentes",
       "No pending prospects found": "Nenhum prospecto pendente encontrado",
-      "Unable to load pending prospects": "Não foi possível carregar os prospectos pendentes"
+      "Unable to load pending prospects": "Não foi possível carregar os prospectos pendentes",
+      "Adjust": "Ajustar",
+      "Identifies the new transaction created by the adjustment": "Identifica a nova transação criada pelo ajuste",
+      "Identifies the reversal of the original transaction": "Identifica o estorno da transação original"
     },
     "permissions": {
       "actions": {
