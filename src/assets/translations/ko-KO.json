@@ -463,7 +463,17 @@
       "futureDate": "조기 상환 거래일은 미래일 수 없습니다.",
       "dateOutOfRange": "조기 상환 일자가 허용된 범위를 벗어났습니다.",
       "amountMustBePositive": "거래 금액은 0보다 커야 합니다."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -842,7 +852,9 @@
       "Save": "저장",
       "Upload Report Design": "보고서 디자인 업로드",
       "Mass Reject": "일괄 거절",
-      "Hide": "숨기기"
+      "Hide": "숨기기",
+      "Adjust": "조정",
+      "Reverse": "취소"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1820,7 +1832,8 @@
       "Deferred Income Recognition": "이연수익 인식",
       "Advanced Configuration": "고급 구성",
       "Mass Reject Credit Applications": "신용 신청 일괄 거절",
-      "Enrollment Details": "등록 세부 정보"
+      "Enrollment Details": "등록 세부 정보",
+      "Reverse Transaction": "거래 취소"
     },
     "inputs": {
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
@@ -4084,7 +4097,8 @@
       "Are you sure you want to undo the charge-off": "상각을 취소하시겠습니까?",
       "Restart Period from Reset Date splits the current period": "활성화하면 현재 위반 기간이 리셋 날짜로 분할되고 해당 날짜부터 새 기간이 시작됩니다.",
       "Breach evaluation will stop": "{{date}}부터 위반 평가가 중지됩니다. 이전 결과는 보존되지만 다시 활성화할 때까지 표시되지 않습니다.",
-      "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다."
+      "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다.",
+      "This will reopen the loan account": "대출이 종료되었거나 초과 상환되었습니다: 이 작업은 계좌를 다시 엽니다."
     },
     "text": {
       "Select a client from the list": "목록에서 고객을 선택하세요",
@@ -5102,7 +5116,10 @@
       "Unable to load enrollment status": "등록 상태를 불러올 수 없습니다",
       "Loading pending prospects": "대기 중인 잠재 고객을 불러오는 중",
       "No pending prospects found": "대기 중인 잠재 고객이 없습니다",
-      "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다"
+      "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다",
+      "Adjust": "조정",
+      "Identifies the new transaction created by the adjustment": "조정으로 생성된 새 거래를 식별합니다",
+      "Identifies the reversal of the original transaction": "원거래의 취소를 식별합니다"
     },
     "permissions": {
       "actions": {
