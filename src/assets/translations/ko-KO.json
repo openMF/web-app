@@ -5102,7 +5102,8 @@
       "Unable to load enrollment status": "등록 상태를 불러올 수 없습니다",
       "Loading pending prospects": "대기 중인 잠재 고객을 불러오는 중",
       "No pending prospects found": "대기 중인 잠재 고객이 없습니다",
-      "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다"
+      "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "이 날짜에 대한 금액을 다시 계산하지 못했습니다. 날짜를 다시 선택하여 재시도하세요."
     },
     "permissions": {
       "actions": {

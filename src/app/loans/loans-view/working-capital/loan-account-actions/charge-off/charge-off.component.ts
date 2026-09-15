@@ -9,6 +9,8 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
@@ -70,6 +72,13 @@ export class WorkingCapitalChargeOffComponent extends LoanAccountActionsBaseComp
   chargeOffReasonOptions: WorkingCapitalChargeOffReasonOption[] = [];
   /** Guards against duplicate submissions. */
   isSubmitting = false;
+  /** Whether a re-quote is in flight after a date change. */
+  isQuoteLoading = false;
+  /**
+   * Whether the last re-quote failed, leaving an amount on screen that was quoted for a different date. Blocks submit
+   * until a re-quote succeeds; picking the date again retries.
+   */
+  isQuoteStale = false;
   /** Permission required to charge off a Working Capital loan. */
   readonly chargeOffPermission = 'CHARGEOFF_WORKINGCAPITALLOAN';
 
@@ -83,10 +92,44 @@ export class WorkingCapitalChargeOffComponent extends LoanAccountActionsBaseComp
   ngOnInit(): void {
     const template = (this.dataObject || {}) as WorkingCapitalChargeOffTemplate;
     this.maxDate = this.settingsService.businessDate;
-    this.chargeOffAmount = template.chargeOffAmount ?? 0;
+    this.chargeOffAmount = template.expectedAmount ?? 0;
     this.currency = template.currency;
     this.chargeOffReasonOptions = template.chargeOffReasonOptions ?? [];
     this.createChargeOffForm(template);
+    this.watchQuoteDate();
+  }
+
+  /**
+   * Re-quotes the outstanding balance whenever the user picks a different charge-off date, since the amount charged
+   * off is the balance as of that date. switchMap so a slow earlier response cannot overwrite the current one; a
+   * failed re-quote leaves the amount on screen untouched but marks it stale, since it belongs to the previous date.
+   * The distinct check lets the same date through again while stale, so re-picking it retries.
+   */
+  private watchQuoteDate(): void {
+    this.chargeOffForm.controls.transactionDate.valueChanges
+      .pipe(
+        filter((date): date is Date => !!date),
+        map((date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
+        distinctUntilChanged((previous, current) => previous === current && !this.isQuoteStale),
+        tap(() => {
+          this.isQuoteLoading = true;
+          this.cdr.markForCheck();
+        }),
+        switchMap((quoteDate) =>
+          this.loanService
+            .getWorkingCapitalLoanTransactionTemplate(this.loanId, 'chargeOff', quoteDate)
+            .pipe(catchError(() => of(null)))
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((template: WorkingCapitalChargeOffTemplate | null) => {
+        this.isQuoteLoading = false;
+        this.isQuoteStale = !template;
+        if (template) {
+          this.chargeOffAmount = template.expectedAmount ?? 0;
+        }
+        this.cdr.markForCheck();
+      });
   }
 
   /** Builds the typed form pre-filled from the template values. */
@@ -104,7 +147,7 @@ export class WorkingCapitalChargeOffComponent extends LoanAccountActionsBaseComp
   }
 
   submit(): void {
-    if (this.chargeOffForm.invalid || this.isSubmitting) {
+    if (this.chargeOffForm.invalid || this.isSubmitting || this.isQuoteLoading || this.isQuoteStale) {
       this.chargeOffForm.markAllAsTouched();
       return;
     }

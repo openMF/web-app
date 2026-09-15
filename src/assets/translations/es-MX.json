@@ -5128,7 +5128,8 @@
       "Unable to load enrollment status": "No se pudo cargar el estado de enrolamiento",
       "Loading pending prospects": "Cargando prospectos pendientes",
       "No pending prospects found": "No se encontraron prospectos pendientes",
-      "Unable to load pending prospects": "No se pudieron cargar los prospectos pendientes"
+      "Unable to load pending prospects": "No se pudieron cargar los prospectos pendientes",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "No se pudo volver a calcular el monto para esta fecha. Seleccione la fecha nuevamente para reintentar."
     },
     "permissions": {
       "actions": {

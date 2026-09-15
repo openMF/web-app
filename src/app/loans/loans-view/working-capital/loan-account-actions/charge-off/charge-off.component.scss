@@ -13,3 +13,10 @@
 .charge-off-amount {
   margin-bottom: 1rem;
 }
+
+// Explains the disabled submit button after a quote request failed.
+.quote-stale-hint {
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.85rem;
+  margin-right: auto;
+}

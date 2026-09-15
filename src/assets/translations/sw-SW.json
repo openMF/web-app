@@ -5099,7 +5099,8 @@
       "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili",
       "Loading pending prospects": "Inapakia watarajiwa wanaosubiri",
       "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
-      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri"
+      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Kiasi hakikuweza kukokotolewa upya kwa tarehe hii. Chagua tarehe tena ili kujaribu upya."
     },
     "permissions": {
       "actions": {

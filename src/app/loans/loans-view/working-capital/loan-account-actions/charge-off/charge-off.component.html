@@ -70,13 +70,22 @@
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+          <!-- The amount on screen belongs to the previously quoted date; say so rather than leaving a
+               disabled submit button unexplained. -->
+          @if (isQuoteStale) {
+            <div class="quote-stale-hint">
+              {{
+                'labels.text.The amount could not be re-quoted for this date. Pick the date again to retry.' | translate
+              }}
+            </div>
+          }
           <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!chargeOffForm.valid || isSubmitting"
+            [disabled]="!chargeOffForm.valid || isSubmitting || isQuoteLoading || isQuoteStale"
             *mifosxHasPermission="chargeOffPermission"
           >
             {{ 'labels.buttons.Submit' | translate }}

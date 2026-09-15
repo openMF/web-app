@@ -5264,7 +5264,8 @@
       "Unable to load enrollment status": "Unable to load enrollment status",
       "Loading pending prospects": "Loading pending prospects",
       "No pending prospects found": "No pending prospects found",
-      "Unable to load pending prospects": "Unable to load pending prospects"
+      "Unable to load pending prospects": "Unable to load pending prospects",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "The amount could not be re-quoted for this date. Pick the date again to retry."
     },
     "permissions": {
       "actions": {

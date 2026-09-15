@@ -5105,7 +5105,8 @@
       "Unable to load enrollment status": "Impossible de charger le statut d'inscription",
       "Loading pending prospects": "Chargement des prospects en attente",
       "No pending prospects found": "Aucun prospect en attente trouvé",
-      "Unable to load pending prospects": "Impossible de charger les prospects en attente"
+      "Unable to load pending prospects": "Impossible de charger les prospects en attente",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Le montant n'a pas pu être recalculé pour cette date. Sélectionnez à nouveau la date pour réessayer."
     },
     "permissions": {
       "actions": {

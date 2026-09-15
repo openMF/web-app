@@ -5104,7 +5104,8 @@
       "Unable to load enrollment status": "Nelze načíst stav registrace",
       "Loading pending prospects": "Načítání nevyřízených prospektů",
       "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
-      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty"
+      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Částku pro toto datum se nepodařilo znovu vypočítat. Pro opakování vyberte datum znovu."
     },
     "permissions": {
       "actions": {
