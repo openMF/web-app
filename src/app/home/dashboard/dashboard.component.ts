@@ -19,6 +19,7 @@ import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboa
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
 import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Dashboard component.
@@ -41,6 +42,7 @@ import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.co
 export class DashboardComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
   /** Search Text. */
   searchText: FormControl = new FormControl();
@@ -86,6 +88,8 @@ export class DashboardComponent implements OnInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter(
+      (activity) => this.translateService.instant(activity.activity).toLowerCase().indexOf(filterValue) === 0
+    );
   }
 }

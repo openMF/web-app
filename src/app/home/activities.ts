@@ -42,6 +42,16 @@ const activities: any[] = [
   { activity: 'user settings', path: '/settings' },
   { activity: 'employees', path: '/organization/employees' },
   { activity: 'create employee', path: '/organization/employees/create' },
+  {
+    activity: 'labels.text.Base Teller Savings Account Opening',
+    path: '/organization/base-teller/savings-account-openings',
+    permission: 'READ_TELLER'
+  },
+  {
+    activity: 'labels.heading.Savings Account Opening',
+    path: '/organization/base-teller/savings-account-openings',
+    permission: 'READ_TELLER'
+  },
   { activity: 'manage funds', path: '/organization/manage-funds' },
   { activity: 'chart of accounts', path: '/accounting/chart-of-accounts' },
   { activity: 'frequent postings', path: '/accounting/journal-entries/frequent-postings' },
