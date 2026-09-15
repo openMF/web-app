@@ -16,6 +16,7 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('Home search index', () => {
   it('labels every entry', () => {
@@ -72,7 +73,8 @@ describe('HomeComponent search', () => {
         { provide: MatDialog, useValue: {} },
         { provide: ConfigurationWizardService, useValue: {} },
         { provide: PopoverService, useValue: {} },
-        { provide: SettingsService, useValue: {} }
+        { provide: SettingsService, useValue: {} },
+        { provide: TranslateService, useValue: { instant: (key: string) => key } }
       ]
     });
     component = TestBed.runInInjectionContext(() => new HomeComponent());
