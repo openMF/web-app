@@ -24,6 +24,7 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
+import { environment } from 'environments/environment';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -137,7 +138,7 @@ export class ClientGeneralStepComponent implements OnInit {
       mobileNo: [''],
       emailAddress: [
         '',
-        Validators.email
+        Validators.pattern(environment.externalEmailRegex)
       ],
       dateOfBirth: [''],
       clientTypeId: [''],
