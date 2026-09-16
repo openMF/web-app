@@ -52,6 +52,11 @@ const activities: any[] = [
     path: '/organization/base-teller/savings-account-openings',
     permission: 'READ_TELLER'
   },
+  {
+    activity: 'labels.heading.Savings Account Deposit',
+    path: '/organization/base-teller/savings-account-deposits',
+    permission: 'DEPOSIT_SAVINGSACCOUNT'
+  },
   { activity: 'manage funds', path: '/organization/manage-funds' },
   { activity: 'chart of accounts', path: '/accounting/chart-of-accounts' },
   { activity: 'frequent postings', path: '/accounting/journal-entries/frequent-postings' },
