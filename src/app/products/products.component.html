@@ -15,7 +15,12 @@
             <mat-list-item
               [routerLink]="['loan-products']"
               [queryParams]="{ productType: 'loan' }"
-              *mifosxHasPermission="'READ_LOANPRODUCT'"
+              *mifosxHasPermission="[
+                'READ_LOANPRODUCT',
+                'CREATE_LOANPRODUCT',
+                'DELETE_LOANPRODUCT',
+                'CREATE_LOANPRODUCT'
+              ]"
             >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['loan-products']" [queryParams]="{ productType: 'loan' }">
