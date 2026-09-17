@@ -227,7 +227,18 @@
   <button mat-menu-item [routerLink]="['/system']" tabindex="0" *mifosxHasPermission="'READ_CONFIGURATION'">
     {{ 'labels.menus.System' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0" *mifosxHasPermission="'READ_PRODUCT'">
+  <button
+    mat-menu-item
+    [routerLink]="['/products']"
+    tabindex="0"
+    *mifosxHasPermission="[
+      'READ_PRODUCT',
+      'READ_LOANPRODUCT',
+      'CREATE_LOANPRODUCT',
+      'DELETE_LOANPRODUCT',
+      'CREATE_LOANPRODUCT'
+    ]"
+  >
     {{ 'labels.menus.Products' | translate }}
   </button>
   <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
