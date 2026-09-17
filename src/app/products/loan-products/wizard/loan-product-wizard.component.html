@@ -14,8 +14,24 @@
     </div>
   </div>
 
-  <mat-stepper orientation="vertical" [linear]="false" class="wizard-stepper">
-    <mat-step *ngFor="let step of visibleSteps; trackBy: trackByStepId; let i = index">
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="wizard-stepper"
+    (selectionChange)="onStepSelectionChange($event)"
+  >
+    <!--
+      `[completed]` / `[hasError]` rather than `[stepControl]`: the guided flow holds every field in
+      one flat FormGroup, so there is no per-step control to hand the stepper. Both read the same
+      predicate the blocked-submit summary reports on, so the indicator and the summary cannot
+      disagree. The error indicator itself needs `STEPPER_GLOBAL_OPTIONS.showError`, which the app
+      provides in `shared/material.module.ts`.
+    -->
+    <mat-step
+      *ngFor="let step of visibleSteps; trackBy: trackByStepId; let i = index"
+      [completed]="stepCompleted(step)"
+      [hasError]="stepHasError(step)"
+    >
       <ng-template matStepLabel>{{ step.title | translate }}</ng-template>
 
       <div [formGroup]="form" class="step-panel">

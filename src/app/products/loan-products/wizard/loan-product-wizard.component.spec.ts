@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 import { TranslateService, MissingTranslationHandlerParams } from '@ngx-translate/core';
 import { CustomMissingTranslationHandler } from 'app/core/translation/missing-translation.handler';
 import { Router } from '@angular/router';
-import { buildPayload, LoanWizardProfileMode } from './loan-product.config';
+import { FORM_STEPS, buildPayload, LoanWizardProfileMode } from './loan-product.config';
 import { LoanProductWizardComponent } from './loan-product-wizard.component';
 import { LoanProducts } from '../loan-products';
 import { LoanProductService } from '../services/loan-product.service';
@@ -1499,8 +1499,7 @@ describe('LoanProductWizardComponent', () => {
           'graceOnPrincipalPayment',
           'graceOnInterestPayment',
           'interestFreePeriod'
-        ],
-        'labels.heading.Advanced Configuration': []
+        ]
       });
     });
 
@@ -1523,9 +1522,8 @@ describe('LoanProductWizardComponent', () => {
     });
 
     it('locks the Custom/Advanced visible step sequence', () => {
-      // Custom/Advanced hosts Classic's own step components, so two steps disappear because Classic
-      // already contains them: Loan Cycle Variations lives inside Classic's Terms step, and the
-      // Advanced Configuration fields are Classic's Event Settings block inside its Settings step.
+      // Custom/Advanced hosts Classic's own step components, so Loan Cycle Variations disappears:
+      // Classic already contains it, inside its Terms step.
       expect(customAdvancedComponent().visibleSteps.map((step) => step.title)).toEqual([
         'labels.heading.Details',
         'labels.heading.Currency',
@@ -1634,8 +1632,7 @@ describe('LoanProductWizardComponent', () => {
           'interestFreePeriod',
           'delinquencyBucketId',
           'disbursedAmountPercentageForDownPayment'
-        ],
-        'labels.heading.Advanced Configuration': []
+        ]
       });
     });
 
@@ -1782,8 +1779,7 @@ describe('LoanProductWizardComponent', () => {
           'graceOnInterestPayment',
           'delinquencyBucketId',
           'maxTrancheCount'
-        ],
-        'labels.heading.Advanced Configuration': []
+        ]
       });
     });
 
@@ -1913,8 +1909,7 @@ describe('LoanProductWizardComponent', () => {
         'labels.heading.Settings': [
           'delinquencyBucketId',
           'overdueDaysForNPA'
-        ],
-        'labels.heading.Advanced Configuration': []
+        ]
       });
     });
 
@@ -3569,6 +3564,30 @@ describe('LoanProductWizardComponent', () => {
         .sort();
     }
 
+    /**
+     * I5. The Advanced Configuration step was dead: every guided profile hid all three of its fields
+     * and Custom/Advanced excluded the step outright, so it rendered for nobody while still costing a
+     * row in every golden test and a title-string branch in `visibleSteps`. This is the guard that
+     * makes the next such step fail loudly instead of accumulating.
+     */
+    it('renders every step it declares in at least one profile', () => {
+      const reachable = new Set<number>();
+      allProfiles.forEach((profile) => {
+        const component = componentFor(profile);
+        // The gates that hide whole steps, opened: the advanced payment allocation strategy brings
+        // Payment Allocation / Interest Refunds / Deferred Income, and the borrower-cycle toggle
+        // brings Loan Cycle Variations. A step no profile shows even then is unreachable.
+        component.form.patchValue({
+          transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+          useBorrowerCycle: true
+        });
+        component.visibleSteps.forEach((step) => reachable.add(step.id));
+      });
+
+      const unreachable = FORM_STEPS.filter((step) => !reachable.has(step.id)).map((step) => step.title);
+      expect(unreachable).toEqual([]);
+    });
+
     it('has no hidden invalid control on an untouched form, for any profile', () => {
       // Blank required fields the user must actually fill (name, principal, ...) are fine: they are
       // visible, so an early return from submit() highlights them. A hidden one cannot be fixed.
@@ -3763,15 +3782,11 @@ describe('LoanProductWizardComponent', () => {
       [
         'principalThresholdForLastInstallment',
         -1
-      ],
-      [
-        'dueDaysForRepaymentEvent',
-        -1
-      ],
-      [
-        'overDueDaysForRepaymentEvent',
-        -1
       ]
+      // dueDaysForRepaymentEvent / overDueDaysForRepaymentEvent were dropped with the Advanced
+      // Configuration step (I5): no step declares them any more, so the wizard renders no input that
+      // could carry a negative value into them, and a floor on a control nobody can reach only risks
+      // blocking the submit from a step the operator cannot open.
     ];
 
     // Values Classic accepts — the floors themselves, and a rate at exactly six decimal places.
