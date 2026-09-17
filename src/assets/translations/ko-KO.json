@@ -531,6 +531,9 @@
       "Home": "집"
     },
     "buttons": {
+      "Finalize": "완료",
+      "New Operation": "새 작업",
+      "Select Check": "수표 선택",
       "Accept Transfer": "전송 수락",
       "Actions": "행위",
       "Activate": "활성화",
@@ -1194,6 +1197,11 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Cash Payment": "현금 결제",
+      "Confirmation": "확인",
+      "Receipt": "영수증",
+      "Returned Check Payment": "반환 수표 결제",
+      "Search Returned Checks": "반환 수표 검색",
       "Create Agriculture Loan": "농업 대출 생성",
       "Create Auto Loan": "자동차 대출 생성",
       "Create BNPL Loan": "BNPL 대출 생성",
@@ -1823,6 +1831,22 @@
       "Enrollment Details": "등록 세부 정보"
     },
     "inputs": {
+      "Returned": "반환됨",
+      "Settled": "결제 완료",
+      "Check Amount": "수표 금액",
+      "Check Number": "수표 번호",
+      "Change to Give": "반환할 거스름돈",
+      "Currency is required": "통화는 필수입니다.",
+      "Customer Name": "고객 이름",
+      "Customer Name is required": "고객 이름은 필수입니다.",
+      "Date is required": "날짜는 필수입니다.",
+      "Denomination Value": "권종 금액",
+      "Line Total": "행 합계",
+      "Operator": "처리 담당자",
+      "Return Date": "반환일",
+      "Return Reason": "반환 사유",
+      "Teller is required": "창구는 필수입니다.",
+      "Total Cash Received": "총 수령 현금",
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
       "Allow amortization override": "상환 방식 재정의 허용",
       "Allow approval/disbursal above applied amount": "신청 금액 초과 승인/지급 허용",
@@ -4087,6 +4111,18 @@
       "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "수령한 현금은 수표 금액보다 적을 수 없습니다.",
+      "No eligible cash payment types available": "사용 가능한 적격 현금 결제 유형이 없습니다.",
+      "No returned checks found": "반환된 수표를 찾을 수 없습니다.",
+      "Quantity must be a whole number": "수량은 정수여야 합니다.",
+      "Returned check details could not be loaded": "반환 수표 세부 정보를 불러올 수 없습니다.",
+      "Returned check options could not be loaded": "반환 수표 옵션을 불러올 수 없습니다.",
+      "Returned check payment failed": "반환 수표 결제에 실패했습니다.",
+      "Returned check search failed": "반환 수표 검색에 실패했습니다.",
+      "Returned check settled successfully": "반환 수표가 성공적으로 결제되었습니다.",
+      "Settle a returned check with a cash payment": "반환 수표를 현금으로 결제합니다.",
+      "You do not have permission to settle returned checks": "반환 수표를 결제할 권한이 없습니다.",
+      "You do not have permission to view returned check payments": "반환 수표 결제를 볼 권한이 없습니다.",
       "Select a client from the list": "목록에서 고객을 선택하세요",
       "Complete these steps to preview the product": "제품을 미리 보려면 이 단계를 완료하세요",
       "Complete these steps before creating the product": "제품을 만들기 전에 이 단계를 완료하세요",

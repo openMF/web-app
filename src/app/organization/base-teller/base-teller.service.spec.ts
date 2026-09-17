@@ -14,7 +14,7 @@ import { describe, expect, it, beforeEach, afterEach } from '@jest/globals';
 
 import { BaseTellerService } from './base-teller.service';
 
-describe('BaseTellerService deposit workflow', () => {
+describe('BaseTellerService', () => {
   let service: BaseTellerService;
   let httpMock: HttpTestingController;
 
@@ -123,5 +123,93 @@ describe('BaseTellerService deposit workflow', () => {
     req.flush({ defaultUserMessage: 'paymentTypeId is required' }, { status: 400, statusText: 'Bad Request' });
 
     expect((await resultPromise).status).toBe(400);
+  });
+
+  it('searches returned checks with the exact backend filter parameters', async () => {
+    const resultPromise = firstValueFrom(
+      service.searchReturnedChecks({
+        date: '2026-09-16',
+        customerName: 'Ada',
+        tellerId: 7,
+        currencyCode: 'USD',
+        offset: 0,
+        limit: 25
+      })
+    );
+
+    const req = httpMock.expectOne(
+      (request) => request.url === '/v2/base-teller/returned-checks' && request.method === 'GET'
+    );
+    expect(req.request.params.keys().sort()).toEqual([
+      'currencyCode',
+      'customerName',
+      'date',
+      'limit',
+      'offset',
+      'tellerId'
+    ]);
+    expect(req.request.params.get('date')).toBe('2026-09-16');
+    expect(req.request.params.get('customerName')).toBe('Ada');
+    expect(req.request.params.get('tellerId')).toBe('7');
+    expect(req.request.params.get('currencyCode')).toBe('USD');
+    req.flush({ pageItems: [], totalFilteredRecords: 0 });
+
+    expect(await resultPromise).toEqual({ pageItems: [], totalFilteredRecords: 0 });
+  });
+
+  it('retrieves a returned check detail', async () => {
+    const resultPromise = firstValueFrom(service.getReturnedCheck(99));
+    const req = httpMock.expectOne('/v2/base-teller/returned-checks/99');
+    expect(req.request.method).toBe('GET');
+    req.flush({ id: 99, status: 'RETURNED' });
+    expect((await resultPromise).id).toBe(99);
+  });
+
+  it('posts the exact returned check settlement payload and returns the receipt', async () => {
+    const payload = {
+      idempotencyKey: 'operation-1',
+      locale: 'en',
+      dateFormat: 'dd MMMM yyyy',
+      transactionDate: '16 September 2026',
+      cashReceived: 110,
+      currencyCode: 'USD',
+      paymentTypeId: 3,
+      denominations: [{ denominationId: '10', value: 10, quantity: 11 }]
+    };
+    const resultPromise = firstValueFrom(service.settleReturnedCheck(99, payload));
+    const req = httpMock.expectOne('/v2/base-teller/returned-checks/99/settle');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(payload);
+    req.flush({ receiptNumber: 'RCP-1', status: 'SETTLED' });
+    expect((await resultPromise).receiptNumber).toBe('RCP-1');
+  });
+
+  it('retrieves a returned check receipt', async () => {
+    const resultPromise = firstValueFrom(service.getReturnedCheckReceipt('RCP-1'));
+    const req = httpMock.expectOne('/v2/base-teller/returned-checks/receipts/RCP-1');
+    expect(req.request.method).toBe('GET');
+    req.flush({ receiptNumber: 'RCP-1', status: 'SETTLED' });
+    expect((await resultPromise).status).toBe('SETTLED');
+  });
+
+  it('propagates returned check settlement domain errors', async () => {
+    const resultPromise = firstValueFrom(
+      service.settleReturnedCheck(99, {
+        idempotencyKey: 'operation-1',
+        locale: 'en',
+        dateFormat: 'dd MMMM yyyy',
+        transactionDate: '16 September 2026',
+        cashReceived: 100,
+        currencyCode: 'USD',
+        paymentTypeId: 3,
+        denominations: [{ denominationId: '100', value: 100, quantity: 1 }]
+      })
+    ).catch((error) => error);
+    const req = httpMock.expectOne('/v2/base-teller/returned-checks/99/settle');
+    req.flush(
+      { defaultUserMessage: 'Returned check has already been settled.' },
+      { status: 400, statusText: 'Bad Request' }
+    );
+    expect((await resultPromise).error.defaultUserMessage).toBe('Returned check has already been settled.');
   });
 });

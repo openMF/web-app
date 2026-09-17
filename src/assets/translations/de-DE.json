@@ -533,6 +533,9 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Finalize": "Abschließen",
+      "New Operation": "Neuer Vorgang",
+      "Select Check": "Scheck auswählen",
       "Accept Transfer": "Akzeptieren Sie die Übertragung",
       "Actions": "Aktionen",
       "Activate": "aktivieren Sie",
@@ -1196,6 +1199,11 @@
       "NotEqual": "Ungleich"
     },
     "heading": {
+      "Cash Payment": "Barzahlung",
+      "Confirmation": "Bestätigung",
+      "Receipt": "Beleg",
+      "Returned Check Payment": "Zahlung für zurückgegebenen Scheck",
+      "Search Returned Checks": "Zurückgegebene Schecks suchen",
       "Create Agriculture Loan": "Agrarkredit erstellen",
       "Create Auto Loan": "Autokredit erstellen",
       "Create BNPL Loan": "BNPL-Kredit erstellen",
@@ -1824,6 +1832,22 @@
       "Enrollment Details": "Registrierungsdetails"
     },
     "inputs": {
+      "Returned": "Zurückgegeben",
+      "Settled": "Beglichen",
+      "Check Amount": "Scheckbetrag",
+      "Check Number": "Schecknummer",
+      "Change to Give": "Rückgeld",
+      "Currency is required": "Die Währung ist erforderlich.",
+      "Customer Name": "Kundenname",
+      "Customer Name is required": "Der Kundenname ist erforderlich.",
+      "Date is required": "Das Datum ist erforderlich.",
+      "Denomination Value": "Nennwert",
+      "Line Total": "Zeilensumme",
+      "Operator": "Bearbeiter",
+      "Return Date": "Rückgabedatum",
+      "Return Reason": "Rückgabegrund",
+      "Teller is required": "Der Schalter ist erforderlich.",
+      "Total Cash Received": "Erhaltener Bargeldbetrag",
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
       "Allow amortization override": "Überschreiben der Amortisation zulassen",
       "Allow approval/disbursal above applied amount": "Genehmigung/Auszahlung über den beantragten Betrag zulassen",
@@ -4090,6 +4114,18 @@
       "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Der erhaltene Bargeldbetrag darf nicht niedriger als der Scheckbetrag sein.",
+      "No eligible cash payment types available": "Es sind keine zulässigen Barzahlungsarten verfügbar.",
+      "No returned checks found": "Es wurden keine zurückgegebenen Schecks gefunden.",
+      "Quantity must be a whole number": "Die Anzahl muss eine ganze Zahl sein.",
+      "Returned check details could not be loaded": "Die Details des zurückgegebenen Schecks konnten nicht geladen werden.",
+      "Returned check options could not be loaded": "Die Optionen für zurückgegebene Schecks konnten nicht geladen werden.",
+      "Returned check payment failed": "Die Zahlung für den zurückgegebenen Scheck ist fehlgeschlagen.",
+      "Returned check search failed": "Die Suche nach zurückgegebenen Schecks ist fehlgeschlagen.",
+      "Returned check settled successfully": "Der zurückgegebene Scheck wurde erfolgreich beglichen.",
+      "Settle a returned check with a cash payment": "Einen zurückgegebenen Scheck per Barzahlung begleichen.",
+      "You do not have permission to settle returned checks": "Sie sind nicht berechtigt, zurückgegebene Schecks zu begleichen.",
+      "You do not have permission to view returned check payments": "Sie sind nicht berechtigt, Zahlungen für zurückgegebene Schecks anzuzeigen.",
       "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
       "Complete these steps to preview the product": "Schließen Sie diese Schritte ab, um eine Vorschau des Produkts anzuzeigen",
       "Complete these steps before creating the product": "Schließen Sie diese Schritte ab, bevor Sie das Produkt erstellen",

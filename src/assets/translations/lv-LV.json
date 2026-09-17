@@ -531,6 +531,9 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Finalize": "Pabeigt",
+      "New Operation": "Jauna operācija",
+      "Select Check": "Atlasīt čeku",
       "Accept Transfer": "Pieņemt pārsūtīšanu",
       "Actions": "Darbības",
       "Activate": "Aktivizēt",
@@ -1194,6 +1197,11 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Cash Payment": "Skaidras naudas maksājums",
+      "Confirmation": "Apstiprinājums",
+      "Receipt": "Kvīts",
+      "Returned Check Payment": "Atgrieztā čeka apmaksa",
+      "Search Returned Checks": "Meklēt atgrieztos čekus",
       "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
       "Create Auto Loan": "Izveidot auto aizdevumu",
       "Create BNPL Loan": "Izveidot BNPL aizdevumu",
@@ -1822,6 +1830,22 @@
       "Enrollment Details": "Reģistrācijas informācija"
     },
     "inputs": {
+      "Returned": "Atgriezts",
+      "Settled": "Apmaksāts",
+      "Check Amount": "Čeka summa",
+      "Check Number": "Čeka numurs",
+      "Change to Give": "Izdodamā atlikuma summa",
+      "Currency is required": "Valūta ir obligāta.",
+      "Customer Name": "Klienta vārds",
+      "Customer Name is required": "Klienta vārds ir obligāts.",
+      "Date is required": "Datums ir obligāts.",
+      "Denomination Value": "Nominālvērtība",
+      "Line Total": "Rindas kopsumma",
+      "Operator": "Operators",
+      "Return Date": "Atgriešanas datums",
+      "Return Reason": "Atgriešanas iemesls",
+      "Teller is required": "Kase ir obligāta.",
+      "Total Cash Received": "Kopā saņemtā skaidrā nauda",
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
       "Allow amortization override": "Atļaut mainīt amortizāciju",
       "Allow approval/disbursal above applied amount": "Atļaut apstiprināt/izmaksāt vairāk par pieprasīto summu",
@@ -4087,6 +4111,18 @@
       "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",
+      "No eligible cash payment types available": "Nav pieejamu atbilstošu skaidras naudas maksājumu veidu.",
+      "No returned checks found": "Atgriezti čeki netika atrasti.",
+      "Quantity must be a whole number": "Daudzumam jābūt veselam skaitlim.",
+      "Returned check details could not be loaded": "Neizdevās ielādēt atgrieztā čeka informāciju.",
+      "Returned check options could not be loaded": "Neizdevās ielādēt atgrieztā čeka opcijas.",
+      "Returned check payment failed": "Atgrieztā čeka apmaksa neizdevās.",
+      "Returned check search failed": "Atgriezto čeku meklēšana neizdevās.",
+      "Returned check settled successfully": "Atgrieztais čeks ir veiksmīgi apmaksāts.",
+      "Settle a returned check with a cash payment": "Apmaksāt atgrieztu čeku skaidrā naudā.",
+      "You do not have permission to settle returned checks": "Jums nav atļaujas apmaksāt atgrieztos čekus.",
+      "You do not have permission to view returned check payments": "Jums nav atļaujas skatīt atgriezto čeku maksājumus.",
       "Select a client from the list": "Atlasiet klientu no saraksta",
       "Complete these steps to preview the product": "Izpildiet šīs darbības, lai priekšskatītu produktu",
       "Complete these steps before creating the product": "Izpildiet šīs darbības pirms produkta izveides",

@@ -537,6 +537,38 @@
             </mat-list-item>
           </div>
 
+          <div #baseTellerReturnedCheckPayment>
+            <mat-list-item *mifosxHasPermission="'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT'">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller', 'returned-check-payments']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="money-check" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Returned Check Payment' | translate }}
+                    @if (arrowBooleans[22]) {
+                      <p matLine class="menu-explanation">
+                        {{ 'labels.text.Settle a returned check with a cash payment' | translate }}
+                      </p>
+                    }
+                  </div>
+                </a>
+                <div class="menu-right-section">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="menu-expand-button"
+                    (click)="arrowBooleansToggle(22)"
+                    [attr.aria-expanded]="arrowBooleans[22]"
+                    [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                  >
+                    <fa-icon [icon]="arrowBooleans[22] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #workingDays>
             <mat-list-item *mifosxHasPermission="'READ_WORKINGDAYS'">
               <div class="menu-list-item-content">

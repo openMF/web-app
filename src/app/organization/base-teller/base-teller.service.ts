@@ -127,6 +127,100 @@ export interface SavingsDepositReceipt extends SavingsDepositCommandResult {
   };
 }
 
+export interface ReturnedCheckSearchFilters {
+  date: string;
+  customerName: string;
+  tellerId: FineractId;
+  currencyCode: string;
+  offset?: number;
+  limit?: number;
+}
+
+export interface ReturnedCheckSearchResult {
+  id: FineractId;
+  depositCheckDetailId: FineractId;
+  checkNumber: string;
+  clientId: FineractId;
+  customerName: string;
+  savingsAccountId?: FineractId;
+  savingsAccountNo?: string;
+  amount: number | string;
+  currencyCode: string;
+  returnedOnDate: string;
+  status: 'RETURNED' | 'SETTLED';
+  tellerId: FineractId;
+  cashierId?: FineractId;
+  officeId: FineractId;
+  officeName: string;
+}
+
+export interface ReturnedCheckSearchPage {
+  pageItems: ReturnedCheckSearchResult[];
+  totalFilteredRecords: number;
+}
+
+export interface ReturnedCheckDetail extends ReturnedCheckSearchResult {
+  depositId: FineractId;
+  originalReceiptNumber: string;
+  checkType: string;
+  bank: string;
+  returnReason: string;
+  settlementId?: FineractId;
+  settlementReceiptNumber?: string;
+  settledOnUtc?: string;
+}
+
+export interface ReturnedCheckDenomination {
+  denominationId: string;
+  value: number;
+  quantity: number;
+}
+
+export interface ReturnedCheckPaymentPayload {
+  idempotencyKey: string;
+  locale: string;
+  dateFormat: string;
+  transactionDate: string;
+  cashReceived: number;
+  currencyCode: string;
+  paymentTypeId: FineractId;
+  note?: string;
+  denominations: ReturnedCheckDenomination[];
+}
+
+export interface ReturnedCheckReceipt {
+  receiptNumber: string;
+  status: 'RETURNED' | 'SETTLED';
+  failureMessage?: string;
+  returnedCheckId: FineractId;
+  depositCheckDetailId: FineractId;
+  checkNumber: string;
+  clientId: FineractId;
+  customerName: string;
+  checkAmount: number | string;
+  cashReceived: number | string;
+  changeAmount: number | string;
+  currencyCode: string;
+  tellerId: FineractId;
+  cashierId: FineractId;
+  cashierTransactionId: FineractId;
+  operatorId: FineractId;
+  operatorName: string;
+  officeId: FineractId;
+  officeName: string;
+  createdOnUtc: string;
+  completedOnUtc: string;
+  denominations: ReturnedCheckDenomination[];
+}
+
+export interface BaseTellerOption {
+  id: FineractId;
+  name?: string;
+  value?: string;
+  code?: string;
+  isCashPayment?: boolean;
+}
+
 /**
  * Base Teller service.
  */
@@ -137,6 +231,7 @@ export class BaseTellerService {
   private http = inject(HttpClient);
 
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
+  private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
 
   /**
    * Searches customers through the Base Teller savings-opening workflow API.
@@ -238,5 +333,51 @@ export class BaseTellerService {
    */
   getSavingsDepositReceipt(savingsId: FineractId, transactionId: FineractId): Observable<SavingsDepositReceipt> {
     return this.http.get<SavingsDepositReceipt>(`/savingsaccounts/${savingsId}/transactions/${transactionId}`);
+  }
+
+  /** Searches returned checks with the backend's authoritative filter names. */
+  searchReturnedChecks(filters: ReturnedCheckSearchFilters): Observable<ReturnedCheckSearchPage> {
+    let params = new HttpParams()
+      .set('date', filters.date)
+      .set('customerName', filters.customerName)
+      .set('tellerId', String(filters.tellerId))
+      .set('currencyCode', filters.currencyCode);
+    if (filters.offset !== undefined) {
+      params = params.set('offset', String(filters.offset));
+    }
+    if (filters.limit !== undefined) {
+      params = params.set('limit', String(filters.limit));
+    }
+    return this.http.get<ReturnedCheckSearchPage>(this.returnedChecksPath, { params });
+  }
+
+  /** Retrieves the selected returned check before accepting cash. */
+  getReturnedCheck(returnedCheckId: FineractId): Observable<ReturnedCheckDetail> {
+    return this.http.get<ReturnedCheckDetail>(`${this.returnedChecksPath}/${returnedCheckId}`);
+  }
+
+  /** Settles a returned check with the exact WEB-1234 request DTO. */
+  settleReturnedCheck(
+    returnedCheckId: FineractId,
+    payload: ReturnedCheckPaymentPayload
+  ): Observable<ReturnedCheckReceipt> {
+    return this.http.post<ReturnedCheckReceipt>(`${this.returnedChecksPath}/${returnedCheckId}/settle`, payload);
+  }
+
+  /** Retrieves the authoritative settlement receipt. */
+  getReturnedCheckReceipt(receiptNumber: string): Observable<ReturnedCheckReceipt> {
+    return this.http.get<ReturnedCheckReceipt>(`${this.returnedChecksPath}/receipts/${receiptNumber}`);
+  }
+
+  getReturnedCheckTellers(): Observable<BaseTellerOption[]> {
+    return this.http.get<BaseTellerOption[]>('/tellers');
+  }
+
+  getReturnedCheckCurrencies(): Observable<{ selectedCurrencyOptions?: BaseTellerOption[] }> {
+    return this.http.get<{ selectedCurrencyOptions?: BaseTellerOption[] }>('/currencies');
+  }
+
+  getReturnedCheckPaymentTypes(): Observable<BaseTellerOption[]> {
+    return this.http.get<BaseTellerOption[]>('/paymenttypes');
   }
 }

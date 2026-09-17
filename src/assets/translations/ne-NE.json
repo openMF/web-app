@@ -531,6 +531,9 @@
       "Home": "घर"
     },
     "buttons": {
+      "Finalize": "अन्तिम रूप दिनुहोस्",
+      "New Operation": "नयाँ कारोबार",
+      "Select Check": "चेक चयन गर्नुहोस्",
       "Accept Transfer": "स्थानान्तरण स्वीकार गर्नुहोस्",
       "Actions": "कार्यहरू",
       "Activate": "सक्रिय गर्नुहोस्",
@@ -1193,6 +1196,11 @@
       "NotEqual": "बराबर छैन"
     },
     "heading": {
+      "Cash Payment": "नगद भुक्तानी",
+      "Confirmation": "पुष्टि",
+      "Receipt": "रसिद",
+      "Returned Check Payment": "फिर्ता भएको चेकको भुक्तानी",
+      "Search Returned Checks": "फिर्ता भएका चेकहरू खोज्नुहोस्",
       "Create Agriculture Loan": "कृषि ऋण सिर्जना गर्नुहोस्",
       "Create Auto Loan": "सवारी साधन ऋण सिर्जना गर्नुहोस्",
       "Create BNPL Loan": "BNPL ऋण सिर्जना गर्नुहोस्",
@@ -1821,6 +1829,22 @@
       "Enrollment Details": "दर्ता विवरण"
     },
     "inputs": {
+      "Returned": "फिर्ता भएको",
+      "Settled": "भुक्तानी गरिएको",
+      "Check Amount": "चेक रकम",
+      "Check Number": "चेक नम्बर",
+      "Change to Give": "फिर्ता दिनुपर्ने रकम",
+      "Currency is required": "मुद्रा आवश्यक छ।",
+      "Customer Name": "ग्राहकको नाम",
+      "Customer Name is required": "ग्राहकको नाम आवश्यक छ।",
+      "Date is required": "मिति आवश्यक छ।",
+      "Denomination Value": "दरको मूल्य",
+      "Line Total": "पङ्क्तिको जम्मा",
+      "Operator": "सञ्चालक",
+      "Return Date": "फिर्ता मिति",
+      "Return Reason": "फिर्ता हुनुको कारण",
+      "Teller is required": "टेलर आवश्यक छ।",
+      "Total Cash Received": "प्राप्त कुल नगद",
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
       "Allow amortization override": "परिशोधन परिवर्तन अनुमति दिनुहोस्",
       "Allow approval/disbursal above applied amount": "आवेदित रकमभन्दा बढी स्वीकृति/भुक्तानी अनुमति दिनुहोस्",
@@ -4087,6 +4111,18 @@
       "Breach evaluation will resume": "{{date}} देखि उल्लंघन मूल्यांकन पुनः सुरु हुन्छ। त्यो मितिदेखि ऋणको पुनः मूल्यांकन गरिन्छ।"
     },
     "text": {
+      "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
+      "No eligible cash payment types available": "कुनै योग्य नगद भुक्तानी प्रकार उपलब्ध छैन।",
+      "No returned checks found": "कुनै फिर्ता भएको चेक भेटिएन।",
+      "Quantity must be a whole number": "परिमाण पूर्ण सङ्ख्या हुनुपर्छ।",
+      "Returned check details could not be loaded": "फिर्ता भएको चेकको विवरण लोड गर्न सकिएन।",
+      "Returned check options could not be loaded": "फिर्ता भएको चेकका विकल्पहरू लोड गर्न सकिएन।",
+      "Returned check payment failed": "फिर्ता भएको चेकको भुक्तानी असफल भयो।",
+      "Returned check search failed": "फिर्ता भएका चेकको खोजी असफल भयो।",
+      "Returned check settled successfully": "फिर्ता भएको चेक सफलतापूर्वक भुक्तानी गरियो।",
+      "Settle a returned check with a cash payment": "फिर्ता भएको चेक नगद भुक्तानीबाट मिलान गर्नुहोस्।",
+      "You do not have permission to settle returned checks": "तपाईंसँग फिर्ता भएका चेकहरू भुक्तानी गर्ने अनुमति छैन।",
+      "You do not have permission to view returned check payments": "तपाईंसँग फिर्ता भएका चेकका भुक्तानीहरू हेर्ने अनुमति छैन।",
       "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
       "Complete these steps to preview the product": "उत्पादनको पूर्वावलोकन गर्न यी चरणहरू पूरा गर्नुहोस्",
       "Complete these steps before creating the product": "उत्पादन सिर्जना गर्नु अघि यी चरणहरू पूरा गर्नुहोस्",

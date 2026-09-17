@@ -531,6 +531,9 @@
       "Home": "Maison"
     },
     "buttons": {
+      "Finalize": "Finaliser",
+      "New Operation": "Nouvelle opération",
+      "Select Check": "Sélectionner le chèque",
       "Accept Transfer": "Accepter le transfert",
       "Actions": "Actions",
       "Activate": "Activer",
@@ -1197,6 +1200,11 @@
       "NotEqual": "Différent de"
     },
     "heading": {
+      "Cash Payment": "Paiement en espèces",
+      "Confirmation": "Confirmation",
+      "Receipt": "Reçu",
+      "Returned Check Payment": "Paiement d'un chèque retourné",
+      "Search Returned Checks": "Rechercher des chèques retournés",
       "Create Agriculture Loan": "Créer un prêt agricole",
       "Create Auto Loan": "Créer un prêt automobile",
       "Create BNPL Loan": "Créer un prêt BNPL",
@@ -1825,6 +1833,22 @@
       "Enrollment Details": "Détails de l'inscription"
     },
     "inputs": {
+      "Returned": "Retourné",
+      "Settled": "Réglé",
+      "Check Amount": "Montant du chèque",
+      "Check Number": "Numéro du chèque",
+      "Change to Give": "Monnaie à rendre",
+      "Currency is required": "La devise est obligatoire.",
+      "Customer Name": "Nom du client",
+      "Customer Name is required": "Le nom du client est obligatoire.",
+      "Date is required": "La date est obligatoire.",
+      "Denomination Value": "Valeur de la coupure",
+      "Line Total": "Total de la ligne",
+      "Operator": "Opérateur",
+      "Return Date": "Date de retour",
+      "Return Reason": "Motif du retour",
+      "Teller is required": "Le guichet est obligatoire.",
+      "Total Cash Received": "Total des espèces reçues",
       "Account moves out of NPA only on arrears completion": "Le compte ne sort du statut NPA qu'après apurement des arriérés",
       "Allow amortization override": "Autoriser la modification de l'amortissement",
       "Allow approval/disbursal above applied amount": "Autoriser l'approbation/le décaissement au-delà du montant demandé",
@@ -4091,6 +4115,18 @@
       "Breach evaluation will resume": "L'évaluation des manquements reprend le {{date}}. Le prêt est de nouveau évalué à partir de cette date."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Les espèces reçues ne peuvent pas être inférieures au montant du chèque.",
+      "No eligible cash payment types available": "Aucun type de paiement en espèces admissible n'est disponible.",
+      "No returned checks found": "Aucun chèque retourné n'a été trouvé.",
+      "Quantity must be a whole number": "La quantité doit être un nombre entier.",
+      "Returned check details could not be loaded": "Les détails du chèque retourné n'ont pas pu être chargés.",
+      "Returned check options could not be loaded": "Les options de chèque retourné n'ont pas pu être chargées.",
+      "Returned check payment failed": "Le paiement du chèque retourné a échoué.",
+      "Returned check search failed": "La recherche de chèques retournés a échoué.",
+      "Returned check settled successfully": "Le chèque retourné a été réglé avec succès.",
+      "Settle a returned check with a cash payment": "Régler un chèque retourné par un paiement en espèces.",
+      "You do not have permission to settle returned checks": "Vous n'êtes pas autorisé à régler les chèques retournés.",
+      "You do not have permission to view returned check payments": "Vous n'êtes pas autorisé à consulter les paiements de chèques retournés.",
       "Select a client from the list": "Sélectionnez un client dans la liste",
       "Complete these steps to preview the product": "Complétez ces étapes pour afficher l'aperçu du produit",
       "Complete these steps before creating the product": "Complétez ces étapes avant de créer le produit",
