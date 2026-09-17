@@ -503,6 +503,40 @@
             </mat-list-item>
           </div>
 
+          <div #baseTellerSavingsDeposit>
+            <mat-list-item *mifosxHasPermission="'DEPOSIT_SAVINGSACCOUNT'">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller', 'savings-account-deposits']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="money-bill-wave" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Savings Account Deposit' | translate }}
+                    @if (arrowBooleans[21]) {
+                      <p matLine class="menu-explanation">
+                        {{
+                          'labels.text.Deposit funds into an existing savings account through Base Teller' | translate
+                        }}
+                      </p>
+                    }
+                  </div>
+                </a>
+                <div class="menu-right-section">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="menu-expand-button"
+                    (click)="arrowBooleansToggle(21)"
+                    [attr.aria-expanded]="arrowBooleans[21]"
+                    [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                  >
+                    <fa-icon [icon]="arrowBooleans[21] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #workingDays>
             <mat-list-item *mifosxHasPermission="'READ_WORKINGDAYS'">
               <div class="menu-list-item-content">
