@@ -11,6 +11,26 @@ import { Observable, firstValueFrom } from 'rxjs';
 
 export type DocumentPreviewType = 'image' | 'pdf' | 'other';
 
+const PDF_MIME_TYPE = 'application/pdf';
+
+/** MIME types that carry no information about the file and must not short-circuit detection. */
+const GENERIC_MIME_TYPES = [
+  '',
+  'application/octet-stream',
+  'binary/octet-stream',
+  'application/download'
+];
+
+const IMAGE_EXTENSIONS: Record<string, string> = {
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  gif: 'image/gif',
+  bmp: 'image/bmp',
+  webp: 'image/webp',
+  svg: 'image/svg+xml'
+};
+
 export interface DocumentDescriptor {
   id: string;
   name?: string;
@@ -41,6 +61,13 @@ export class DocumentPreviewService {
   }
 
   /**
+   * Whether the document is an image, i.e. whether a grid thumbnail can be rendered for it.
+   */
+  isImage(document: DocumentDescriptor): boolean {
+    return this.detectType(document?.mimeType, document?.fileName, document?.fileData) === 'image';
+  }
+
+  /**
    * Resolve a preview URL for a document, caching object URLs to avoid duplicate downloads.
    */
   async resolvePreviewUrl(
@@ -60,8 +87,20 @@ export class DocumentPreviewService {
     }
 
     const blob = await firstValueFrom(downloadFn(document));
-    const objectUrl = URL.createObjectURL(blob);
-    const type = this.detectType(blob.type || document.mimeType, document.fileName, document.fileData);
+    // Prefer the metadata we control over the response Content-Type: Fineract commonly
+    // serves document attachments as `application/octet-stream`, which is truthy but
+    // useless for type detection.
+    let type = this.detectType(document.mimeType, document.fileName, document.fileData);
+    if (type === 'other') {
+      type = this.detectType(blob.type, document.fileName, document.fileData);
+    }
+
+    // Re-wrap the blob with a concrete MIME type. `<img>` sniffs the bytes and renders
+    // regardless, but `<embed>`/`<iframe>` obey the type, so an octet-stream blob URL
+    // makes the browser download the PDF instead of previewing it.
+    const mimeType = this.getMimeType(type, blob.type, document.fileName);
+    const typedBlob = mimeType && mimeType !== blob.type ? new Blob([blob], { type: mimeType }) : blob;
+    const objectUrl = URL.createObjectURL(typedBlob);
     this.previewCache.set(document.id, { url: objectUrl, type, isObjectUrl: true });
     return { url: objectUrl, type };
   }
@@ -103,30 +142,46 @@ export class DocumentPreviewService {
 
   private detectType(mimeType?: string, fileName?: string, fileData?: string): DocumentPreviewType {
     const normalizedMime = (mimeType || this.extractMimeFromData(fileData) || '').toLowerCase();
-    if (normalizedMime.includes('pdf')) {
-      return 'pdf';
-    }
-    if (normalizedMime.startsWith('image/')) {
-      return 'image';
+    if (!GENERIC_MIME_TYPES.includes(normalizedMime)) {
+      if (normalizedMime.includes('pdf')) {
+        return 'pdf';
+      }
+      if (normalizedMime.startsWith('image/')) {
+        return 'image';
+      }
     }
 
-    const extension = (fileName || '').split('.').pop()?.toLowerCase();
+    const extension = this.getExtension(fileName);
     if (extension === 'pdf') {
       return 'pdf';
     }
-    if (extension && [
-        'jpg',
-        'jpeg',
-        'png',
-        'gif',
-        'bmp',
-        'webp',
-        'svg'
-      ].includes(extension)) {
+    if (extension && IMAGE_EXTENSIONS[extension]) {
       return 'image';
     }
 
     return 'other';
+  }
+
+  /**
+   * Resolve the MIME type to stamp onto the preview blob, so that `<embed>`/`<iframe>`
+   * render it rather than offering it as a download.
+   */
+  private getMimeType(type: DocumentPreviewType, blobMimeType?: string, fileName?: string): string | undefined {
+    const normalizedMime = (blobMimeType || '').toLowerCase();
+    if (type === 'pdf') {
+      return PDF_MIME_TYPE;
+    }
+    if (type === 'image') {
+      if (normalizedMime.startsWith('image/')) {
+        return normalizedMime;
+      }
+      return IMAGE_EXTENSIONS[this.getExtension(fileName)];
+    }
+    return undefined;
+  }
+
+  private getExtension(fileName?: string): string {
+    return (fileName || '').split('.').pop()?.toLowerCase() || '';
   }
 
   private extractMimeFromData(fileData?: string): string | undefined {

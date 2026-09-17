@@ -31,6 +31,7 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { PdfPreviewDialogComponent } from 'app/shared/pdf-preview-dialog/pdf-preview-dialog.component';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { Observable, throwError } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -154,23 +155,34 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       return;
     }
     try {
-      const previewables = this.entityDocuments.filter((doc: any) => this.isPreviewable(doc));
+      const selected = await this.documentPreviewService.resolvePreviewUrl(document, (descriptor) =>
+        this.getDownloadObservable(descriptor.id)
+      );
+
+      // lightGallery only renders images reliably; PDFs get a dedicated dialog.
+      if (selected.type === 'pdf') {
+        this.openPdfPreview(document, selected.url);
+        return;
+      }
+
+      const imageDocuments: any[] = [];
       const galleryItems: GalleryItem[] = [];
 
-      for (const item of previewables) {
+      for (const item of this.entityDocuments.filter((doc: any) => this.isPreviewable(doc))) {
         try {
           const preview = await this.documentPreviewService.resolvePreviewUrl(item, (descriptor) =>
             this.getDownloadObservable(descriptor.id)
           );
-          if (preview.type === 'image') {
-            this.previewThumbnails = { ...this.previewThumbnails, [item.id]: preview.url };
-            this.cdr.markForCheck();
+          if (preview.type !== 'image') {
+            continue;
           }
+          this.previewThumbnails = { ...this.previewThumbnails, [item.id]: preview.url };
+          this.cdr.markForCheck();
+          imageDocuments.push(item);
           galleryItems.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
-            subHtml: this.buildSubHtml(item),
-            iframe: preview.type === 'pdf'
+            thumb: preview.url,
+            subHtml: this.buildSubHtml(item)
           });
         } catch (error) {
           console.error('Preview failed for document', item.id, error);
@@ -183,23 +195,35 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
 
       const startIndex = Math.max(
         0,
-        previewables.findIndex((item: any) => item.id === document.id)
+        imageDocuments.findIndex((item: any) => item.id === document.id)
       );
       this.destroyLightbox();
       this.lightboxInstance = lightGallery(this.lightboxRoot.nativeElement, {
         dynamic: true,
         dynamicEl: galleryItems,
         plugins: this.lightboxPlugins,
+        licenseKey: '0000-0000-000-0000',
         download: false,
         closable: true,
         escKey: true,
-        zoomFromOrigin: true
+        // Only supported for image slides, and there is no origin element in dynamic mode.
+        zoomFromOrigin: false
       });
 
       this.lightboxInstance.openGallery(startIndex);
     } catch (error) {
       console.error('Unable to open preview', error);
     }
+  }
+
+  private openPdfPreview(document: any, url: string): void {
+    this.destroyLightbox();
+    this.dialog.open(PdfPreviewDialogComponent, {
+      data: { url, title: document.name, fileName: document.fileName },
+      width: '60rem',
+      maxWidth: '95vw',
+      autoFocus: false
+    });
   }
 
   private destroyLightbox(): void {
@@ -256,7 +280,9 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   }
 
   private setThumbnail(document: any): void {
-    if (!this.isPreviewable(document)) {
+    // Only images produce a thumbnail; fetching anything else here would download every
+    // PDF in the tab just to throw the blob away.
+    if (!this.documentPreviewService.isImage(document) || !this.isValidDocumentId(document?.id)) {
       return;
     }
     this.documentPreviewService

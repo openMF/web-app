@@ -48,6 +48,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgZoom from 'lightgallery/plugins/zoom';
 import type { LightGallery } from 'lightgallery/lightgallery';
 import type { GalleryItem } from 'lightgallery/lg-utils';
+import { PdfPreviewDialogComponent } from 'app/shared/pdf-preview-dialog/pdf-preview-dialog.component';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientIdentifierPayload, ClientsService } from '../../clients.service';
@@ -397,21 +398,32 @@ export class IdentitiesTabComponent implements OnDestroy {
       return;
     }
     try {
-      const previewableDocs = (identity.documents || []).filter((doc: any) => this.isPreviewable(doc));
+      const selected = await this.documentPreviewService.resolvePreviewUrl(document, () =>
+        this.clientService.downloadClientIdentificationDocument(document.parentEntityId || identity.id, document.id)
+      );
+
+      // lightGallery only renders images reliably; PDFs get a dedicated dialog.
+      if (selected.type === 'pdf') {
+        this.openPdfPreview(document, selected.url);
+        return;
+      }
+
+      const imageDocs: any[] = [];
       const items: GalleryItem[] = [];
-      for (const doc of previewableDocs) {
+      for (const doc of (identity.documents || []).filter((item: any) => this.isPreviewable(item))) {
         try {
           const preview = await this.documentPreviewService.resolvePreviewUrl(doc, () =>
             this.clientService.downloadClientIdentificationDocument(doc.parentEntityId || identity.id, doc.id)
           );
-          if (preview.type === 'image') {
-            this.setPreviewThumbnail(doc.id, preview.url);
+          if (preview.type !== 'image') {
+            continue;
           }
+          this.setPreviewThumbnail(doc.id, preview.url);
+          imageDocs.push(doc);
           items.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
-            subHtml: this.buildSubHtml(doc, identity),
-            iframe: preview.type === 'pdf'
+            thumb: preview.url,
+            subHtml: this.buildSubHtml(doc, identity)
           });
         } catch (error) {
           console.error('Preview failed for document', doc.id, error);
@@ -422,7 +434,7 @@ export class IdentitiesTabComponent implements OnDestroy {
       }
       const startIndex = Math.max(
         0,
-        previewableDocs.findIndex((doc: any) => doc.id === document.id)
+        imageDocs.findIndex((doc: any) => doc.id === document.id)
       );
       this.destroyLightbox();
       this.lightboxInstance = lightGallery(this.identityLightbox.nativeElement, {
@@ -433,7 +445,8 @@ export class IdentitiesTabComponent implements OnDestroy {
         download: false,
         escKey: true,
         closable: true,
-        zoomFromOrigin: true
+        // Only supported for image slides, and there is no origin element in dynamic mode.
+        zoomFromOrigin: false
       });
       this.lightboxInstance.openGallery(startIndex);
     } catch (error) {
@@ -465,7 +478,9 @@ export class IdentitiesTabComponent implements OnDestroy {
   }
 
   private setThumbnail(document: any, identity?: any): void {
-    if (!this.documentPreviewService.isPreviewable(document)) {
+    // Only images produce a thumbnail; fetching anything else here would download every
+    // PDF in the tab just to throw the blob away.
+    if (!this.documentPreviewService.isImage(document)) {
       return;
     }
     const identifierId = document.parentEntityId || identity?.id;
@@ -482,6 +497,16 @@ export class IdentitiesTabComponent implements OnDestroy {
         }
       })
       .catch((): void => undefined);
+  }
+
+  private openPdfPreview(document: any, url: string): void {
+    this.destroyLightbox();
+    this.dialog.open(PdfPreviewDialogComponent, {
+      data: { url, title: document.name, fileName: document.fileName },
+      width: '60rem',
+      maxWidth: '95vw',
+      autoFocus: false
+    });
   }
 
   private setPreviewThumbnail(documentId: string, thumbnailUrl: string): void {

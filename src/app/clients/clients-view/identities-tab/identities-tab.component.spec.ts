@@ -39,6 +39,7 @@ describe('IdentitiesTabComponent', () => {
     } as any;
     documentPreviewService = {
       isPreviewable: jest.fn(() => true),
+      isImage: jest.fn(() => true),
       resolvePreviewUrl: jest.fn((document: any, downloadFn: any) => {
         downloadFn(document);
         return Promise.resolve({ url: `blob:${document.id}`, type: 'image' });

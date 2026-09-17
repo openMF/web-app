@@ -1,0 +1,27 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title class="pdf-preview-title">
+  {{ data.title || ('labels.heading.Document Preview' | translate) }}
+</h1>
+<div mat-dialog-content class="pdf-preview-content">
+  <embed
+    class="pdf-preview-embed"
+    [src]="safeUrl"
+    type="application/pdf"
+    [attr.aria-label]="data.fileName || data.title"
+  />
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="openInNewTab()">
+    {{ 'labels.buttons.Open in new tab' | translate }}
+  </button>
+  <button mat-raised-button color="primary" mat-dialog-close>
+    {{ 'labels.buttons.Close' | translate }}
+  </button>
+</mat-dialog-actions>

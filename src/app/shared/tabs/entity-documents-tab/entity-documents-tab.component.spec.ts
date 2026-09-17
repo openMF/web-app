@@ -21,6 +21,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { PdfPreviewDialogComponent } from 'app/shared/pdf-preview-dialog/pdf-preview-dialog.component';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { EntityDocumentsTabComponent } from './entity-documents-tab.component';
 
@@ -40,6 +41,7 @@ describe('EntityDocumentsTabComponent', () => {
     } as any;
     documentPreviewService = {
       isPreviewable: jest.fn(() => true),
+      isImage: jest.fn(() => true),
       resolvePreviewUrl: jest.fn((document: any, downloadFn: any) => {
         downloadFn(document);
         return Promise.resolve({ url: 'blob:document', type: 'image' });
@@ -180,5 +182,31 @@ describe('EntityDocumentsTabComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Issuance Date: 02 January 2024');
     expect(text).toContain('Expiry Date: 30 June 2030');
+  });
+
+  it('opens a PDF in the preview dialog instead of the lightbox', async () => {
+    documentPreviewService.resolvePreviewUrl.mockResolvedValue({ url: 'blob:statement', type: 'pdf' } as never);
+    const pdfDocument = { id: 77, name: 'Statement', fileName: 'statement.pdf' };
+    component.entityDocuments = [pdfDocument];
+
+    await component.openPreview(pdfDocument);
+
+    expect(dialog.open).toHaveBeenCalledWith(
+      PdfPreviewDialogComponent,
+      expect.objectContaining({
+        data: { url: 'blob:statement', title: 'Statement', fileName: 'statement.pdf' }
+      })
+    );
+    expect(component.previewThumbnails[77]).toBeUndefined();
+  });
+
+  it('does not prefetch a thumbnail for a non-image document', () => {
+    documentPreviewService.isImage.mockReturnValue(false);
+    component.entityDocuments = [{ id: 78, name: 'Statement', fileName: 'statement.pdf' }];
+
+    fixture.detectChanges();
+
+    expect(documentPreviewService.resolvePreviewUrl).not.toHaveBeenCalled();
+    expect(clientsService.downloadClientDocument).not.toHaveBeenCalled();
   });
 });
