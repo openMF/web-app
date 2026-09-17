@@ -10,7 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
@@ -25,7 +25,7 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
     wcLoanId: 1,
     currency: { code: 'EUR', displaySymbol: '€' },
     transactionDate: '10 January 2026',
-    transactionAmount: 9055,
+    expectedAmount: 9055,
     principalPortion: 9000,
     feeChargesPortion: 35,
     penaltyChargesPortion: 20,
@@ -35,6 +35,15 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
 
   let loansServiceStub: any;
   let routerStub: any;
+
+  /** The quote the server returns for an earlier date, once the later charge drops out of scope. */
+  const requotedTemplate = {
+    ...prepayFormData,
+    expectedAmount: 9000,
+    principalPortion: 9000,
+    feeChargesPortion: 0,
+    penaltyChargesPortion: 0
+  };
 
   /**
    * Builds the component against stubbed collaborators and runs ngOnInit, so the tests exercise the real form and
@@ -62,7 +71,15 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
           provide: SettingsService,
           useValue: { businessDate, dateFormat: 'dd MMMM yyyy', language: { code: 'en' } }
         },
-        { provide: Dates, useValue: { formatDate: () => '10 January 2026' } }
+        // A real formatter, not a constant: a constant would make every date look identical to distinctUntilChanged,
+        // and the re-quote tests below would pass without a single request being made.
+        {
+          provide: Dates,
+          useValue: {
+            formatDate: (date: Date) =>
+              date instanceof Date ? `${date.getDate()} January ${date.getFullYear()}` : String(date)
+          }
+        }
       ]
     });
 
@@ -74,7 +91,8 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
 
   beforeEach(() => {
     loansServiceStub = {
-      applyWorkingCapitalLoanActionCommand: jest.fn().mockReturnValue(of({}))
+      applyWorkingCapitalLoanActionCommand: jest.fn().mockReturnValue(of({})),
+      getWorkingCapitalLoanTransactionTemplate: jest.fn().mockReturnValue(of(requotedTemplate))
     };
     routerStub = { navigate: jest.fn() };
   });
@@ -172,7 +190,7 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
   it('never posts a zero amount, which the repayment endpoint would reject', () => {
     const component = createComponent({
       ...prepayFormData,
-      transactionAmount: 0,
+      expectedAmount: 0,
       principalPortion: 0,
       feeChargesPortion: 0,
       penaltyChargesPortion: 0
@@ -199,5 +217,84 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
     expect(component.principalPortion).toBe(0);
     expect(component.paymentTypes).toEqual([]);
     expect(component.classificationOptions).toEqual([]);
+  });
+
+  it('re-quotes the payoff when the transaction date changes, patching the breakdown with the total', () => {
+    const component = createComponent();
+
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+
+    expect(loansServiceStub.getWorkingCapitalLoanTransactionTemplate).toHaveBeenCalledWith(
+      '1',
+      'prepayLoan',
+      '5 January 2026'
+    );
+    expect(component.prepayLoanForm.controls.transactionAmount.value).toBe(9000);
+    // A fresh total beside a stale breakdown would be worse than either alone.
+    expect(component.principalPortion).toBe(9000);
+    expect(component.feeChargesPortion).toBe(0);
+    expect(component.penaltyChargesPortion).toBe(0);
+    expect(component.isQuoteLoading).toBe(false);
+    expect(component.isQuoteStale).toBe(false);
+  });
+
+  it('keeps the last good quote when a re-quote fails, rather than blanking the amount', () => {
+    const component = createComponent();
+    loansServiceStub.getWorkingCapitalLoanTransactionTemplate.mockReturnValue(throwError(() => new Error('boom')));
+
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+
+    expect(component.prepayLoanForm.controls.transactionAmount.value).toBe(9055);
+    expect(component.isQuoteLoading).toBe(false);
+  });
+
+  it('refuses to submit a payoff quoted for a different date after a failed re-quote', () => {
+    const component = createComponent();
+    loansServiceStub.getWorkingCapitalLoanTransactionTemplate.mockReturnValue(throwError(() => new Error('boom')));
+
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+    component.submit();
+
+    // 9055 was the payoff on 10 January; posting it against 5 January would not close the loan.
+    expect(component.isQuoteStale).toBe(true);
+    expect(loansServiceStub.applyWorkingCapitalLoanActionCommand).not.toHaveBeenCalled();
+  });
+
+  it('retries the same date after a failed re-quote instead of swallowing it as a duplicate', () => {
+    const component = createComponent();
+    loansServiceStub.getWorkingCapitalLoanTransactionTemplate.mockReturnValueOnce(throwError(() => new Error('boom')));
+
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+
+    expect(loansServiceStub.getWorkingCapitalLoanTransactionTemplate).toHaveBeenCalledTimes(2);
+    expect(component.isQuoteStale).toBe(false);
+    expect(component.prepayLoanForm.controls.transactionAmount.value).toBe(9000);
+
+    component.submit();
+    expect(loansServiceStub.applyWorkingCapitalLoanActionCommand).toHaveBeenCalled();
+  });
+
+  it('takes the last response when the date is changed repeatedly, not whichever returns first', () => {
+    const component = createComponent();
+    const slow = new Subject<any>();
+    const fast = new Subject<any>();
+    loansServiceStub.getWorkingCapitalLoanTransactionTemplate
+      .mockReturnValueOnce(slow.asObservable())
+      .mockReturnValueOnce(fast.asObservable());
+
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 5));
+    component.prepayLoanForm.controls.transactionDate.setValue(new Date(2026, 0, 7));
+    fast.next({ ...requotedTemplate, expectedAmount: 7777, principalPortion: 7777 });
+    slow.next({ ...requotedTemplate, expectedAmount: 1111, principalPortion: 1111 });
+
+    // switchMap unsubscribed from the first request, so its late answer is discarded.
+    expect(component.prepayLoanForm.controls.transactionAmount.value).toBe(7777);
+  });
+
+  it('does not re-quote on init, because the resolver already fetched the opening quote', () => {
+    createComponent();
+
+    expect(loansServiceStub.getWorkingCapitalLoanTransactionTemplate).not.toHaveBeenCalled();
   });
 });

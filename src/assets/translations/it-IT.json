@@ -5103,7 +5103,8 @@
       "Unable to load enrollment status": "Impossibile caricare lo stato registrazione",
       "Loading pending prospects": "Caricamento prospect in sospeso",
       "No pending prospects found": "Nessun prospect in sospeso trovato",
-      "Unable to load pending prospects": "Impossibile caricare i prospect in sospeso"
+      "Unable to load pending prospects": "Impossibile caricare i prospect in sospeso",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Non è stato possibile ricalcolare l'importo per questa data. Seleziona di nuovo la data per riprovare."
     },
     "permissions": {
       "actions": {

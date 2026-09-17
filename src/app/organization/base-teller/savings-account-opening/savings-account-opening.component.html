@@ -1,0 +1,564 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container base-teller-opening">
+  <mat-card class="workflow-card">
+    <mat-card-content>
+      <h2>{{ 'labels.heading.Savings Account Opening' | translate }}</h2>
+
+      @if (!canAccessWorkflow) {
+        <div class="message error-message">{{ errorMessage | translate }}</div>
+      } @else {
+        @if (errorMessage) {
+          <div class="message error-message">{{ errorMessage | translate }}</div>
+        }
+        <mat-stepper orientation="vertical" linear>
+          <ng-template matStepperIcon="number">
+            <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+          </ng-template>
+          <ng-template matStepperIcon="done">
+            <fa-icon icon="check" size="sm"></fa-icon>
+          </ng-template>
+
+          <mat-step [stepControl]="customerForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Customer' | translate }}</ng-template>
+            <form [formGroup]="customerForm" class="layout-column gap-20px">
+              <mat-form-field>
+                <mat-label
+                  >{{ 'labels.buttons.Search' | translate }} {{ 'labels.inputs.Client' | translate }}</mat-label
+                >
+                <input matInput formControlName="customer" [matAutocomplete]="customerAutocomplete" required />
+                @if (isSearchingCustomers) {
+                  <mat-spinner matSuffix diameter="20"></mat-spinner>
+                }
+                @if (customerForm.controls.customer.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Client' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+              <mat-autocomplete
+                #customerAutocomplete="matAutocomplete"
+                [displayWith]="displayCustomer"
+                (optionSelected)="selectCustomer($event.option.value)"
+              >
+                @for (customer of customersData; track customer) {
+                  <mat-option [value]="customer">
+                    {{ customer.id || customer.clientId }} -
+                    {{ customer.displayName || customer.fullname || customer.name }}
+                  </mat-option>
+                }
+              </mat-autocomplete>
+
+              @if (selectedCustomerId) {
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'labels.inputs.Client ID' | translate }}</span>
+                    <strong>{{ selectedCustomer.id || selectedCustomer.clientId }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Client Name' | translate }}</span>
+                    <strong>{{
+                      selectedCustomer.displayName || selectedCustomer.fullname || selectedCustomer.name
+                    }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Account Number' | translate }}</span>
+                    <strong>{{ selectedCustomer.accountNo || selectedCustomer.accountNumber || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.External Id' | translate }}</span>
+                    <strong>{{ selectedCustomer.externalId || '-' }}</strong>
+                  </div>
+                </section>
+              }
+
+              @if (isLoadingPosition) {
+                <mat-spinner diameter="32"></mat-spinner>
+              }
+
+              @if (customerPosition) {
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'labels.inputs.Actual Balance' | translate }}</span>
+                    <strong>{{ customerPosition.totalBalance || customerPosition.balance || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.heading.Savings Accounts' | translate }}</span>
+                    <strong>{{
+                      customerPosition.savingsAccounts?.length || customerPosition.savingsCount || 0
+                    }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.heading.Loan Products' | translate }}</span>
+                    <strong>{{ customerPosition.loanAccounts?.length || customerPosition.loanCount || 0 }}</strong>
+                  </div>
+                </section>
+              }
+
+              <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
+                <button mat-raised-button matStepperNext [disabled]="!customerForm.valid || isLoadingProducts">
+                  {{ 'labels.buttons.Next' | translate }}
+                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="productForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Savings Products' | translate }}</ng-template>
+            <form [formGroup]="productForm" class="layout-column gap-20px">
+              @if (isLoadingProducts) {
+                <mat-spinner diameter="32"></mat-spinner>
+              }
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
+                <input matInput formControlName="product" [matAutocomplete]="productAutocomplete" required />
+                @if (productForm.controls.product.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Product' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+              <mat-autocomplete #productAutocomplete="matAutocomplete" [displayWith]="displayProduct">
+                @for (product of productsData; track product) {
+                  <mat-option [value]="product">
+                    {{ product.name || product.productName }}
+                    @if (product.currency?.code || product.currencyCode) {
+                      ({{ product.currency?.code || product.currencyCode }})
+                    }
+                  </mat-option>
+                }
+              </mat-autocomplete>
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+                <input matInput formControlName="currencyCode" />
+              </mat-form-field>
+
+              @if (selectedProduct) {
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'labels.inputs.Product Name' | translate }}</span>
+                    <strong>{{ selectedProduct.name || selectedProduct.productName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Currency' | translate }}</span>
+                    <strong>{{ selectedCurrencyCode || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</span>
+                    <strong>{{
+                      selectedProduct.minRequiredOpeningBalance || selectedProduct.minimumOpeningBalance || '-'
+                    }}</strong>
+                  </div>
+                </section>
+              }
+
+              <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
+                <button mat-raised-button matStepperPrevious>
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+                  {{ 'labels.buttons.Previous' | translate }}
+                </button>
+                <button mat-raised-button matStepperNext [disabled]="!productForm.valid">
+                  {{ 'labels.buttons.Next' | translate }}
+                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="accountForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Savings Account' | translate }}</ng-template>
+            <form [formGroup]="accountForm" class="layout-column gap-20px">
+              <div class="form-grid">
+                <mat-form-field (click)="submittedOnDatePicker.open()">
+                  <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [matDatepicker]="submittedOnDatePicker"
+                    formControlName="submittedOnDate"
+                    required
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+                  <input matInput formControlName="externalId" />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Field Officer' | translate }}</mat-label>
+                  <input matInput formControlName="fieldOfficerId" />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Nominal Annual Interest' | translate }}</mat-label>
+                  <input type="number" matInput formControlName="nominalAnnualInterestRate" />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
+                  <input type="number" matInput formControlName="minRequiredOpeningBalance" />
+                </mat-form-field>
+              </div>
+
+              <div class="toggle-row">
+                <mat-checkbox formControlName="approve">{{ 'labels.buttons.Approve' | translate }}</mat-checkbox>
+                <mat-checkbox formControlName="activate">{{ 'labels.buttons.Activate' | translate }}</mat-checkbox>
+                <mat-checkbox formControlName="allowOverdraft">{{
+                  'labels.inputs.Allow Overdraft' | translate
+                }}</mat-checkbox>
+                <mat-checkbox formControlName="enforceMinRequiredBalance">
+                  {{ 'labels.inputs.Enforce Minimum Balance' | translate }}
+                </mat-checkbox>
+              </div>
+
+              <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
+                <button mat-raised-button matStepperPrevious>
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+                  {{ 'labels.buttons.Previous' | translate }}
+                </button>
+                <button mat-raised-button matStepperNext [disabled]="!accountForm.valid">
+                  {{ 'labels.buttons.Next' | translate }}
+                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="fundingForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Initial Funding' | translate }}</ng-template>
+            <form [formGroup]="fundingForm" class="layout-column gap-20px">
+              <div class="form-grid">
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Funding Type' | translate }}</mat-label>
+                  <mat-select formControlName="fundingType" required>
+                    <mat-option value="CASH">{{ 'labels.inputs.Cash' | translate }}</mat-option>
+                    <mat-option value="CHECK">{{ 'labels.inputs.Check' | translate }}</mat-option>
+                  </mat-select>
+                  @if (fundingForm.controls.fundingType.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Funding Type' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+                  <input type="number" matInput formControlName="amount" required />
+                  @if (fundingForm.controls.amount.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                  @if (fundingForm.controls.amount.hasError('min')) {
+                    <mat-error>{{ 'labels.text.Amount must be greater than zero' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+                  <mat-select formControlName="paymentTypeId" required>
+                    @if (!filteredPaymentTypeOptions.length) {
+                      <mat-option disabled>{{
+                        'labels.text.No eligible payment types available' | translate
+                      }}</mat-option>
+                    }
+                    @for (paymentType of filteredPaymentTypeOptions; track paymentType) {
+                      <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (fundingType === 'CASH' && !filteredPaymentTypeOptions.length) {
+                    <mat-hint>{{
+                      'labels.text.Configure a cash payment type before saving cash funding' | translate
+                    }}</mat-hint>
+                  }
+                  @if (fundingForm.controls.paymentTypeId.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              @if (fundingType === 'CASH') {
+                <section class="funding-panel">
+                  <div class="section-heading">
+                    <h3>{{ 'labels.inputs.Denominations' | translate }}</h3>
+                    <button type="button" mat-button color="primary" (click)="addDenomination()">
+                      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+                      {{ 'labels.buttons.Add' | translate }}
+                    </button>
+                  </div>
+
+                  <div formArrayName="denominations" class="layout-column gap-20px">
+                    @for (denominationControl of denominations.controls; track denominationControl; let i = $index) {
+                      <div [formGroupName]="i" class="denomination-row">
+                        @if (denominationOptions.length) {
+                          <mat-form-field>
+                            <mat-label>{{ 'labels.inputs.Denomination' | translate }}</mat-label>
+                            <mat-select formControlName="denomination" required>
+                              @for (denomination of denominationOptions; track denomination) {
+                                <mat-option [value]="denomination">{{ denominationLabel(denomination) }}</mat-option>
+                              }
+                            </mat-select>
+                            @if (denominationControl.get('denomination')?.hasError('required')) {
+                              <mat-error>
+                                {{ 'labels.inputs.Denomination' | translate }} {{ 'labels.commons.is' | translate }}
+                                <strong>{{ 'labels.commons.required' | translate }}</strong>
+                              </mat-error>
+                            }
+                          </mat-form-field>
+                        } @else {
+                          <mat-form-field>
+                            <mat-label>{{ 'labels.inputs.Denomination' | translate }}</mat-label>
+                            <input type="number" matInput formControlName="denomination" required />
+                            @if (denominationControl.get('denomination')?.hasError('required')) {
+                              <mat-error>
+                                {{ 'labels.inputs.Denomination' | translate }} {{ 'labels.commons.is' | translate }}
+                                <strong>{{ 'labels.commons.required' | translate }}</strong>
+                              </mat-error>
+                            }
+                          </mat-form-field>
+                        }
+                        <mat-form-field>
+                          <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
+                          <input type="number" matInput formControlName="quantity" required />
+                          @if (denominationControl.get('quantity')?.hasError('required')) {
+                            <mat-error>
+                              {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
+                              <strong>{{ 'labels.commons.required' | translate }}</strong>
+                            </mat-error>
+                          }
+                          @if (denominationControl.get('quantity')?.hasError('min')) {
+                            <mat-error>{{ 'labels.text.Quantity must be at least one' | translate }}</mat-error>
+                          }
+                        </mat-form-field>
+                        <div class="line-total">
+                          <span>{{ 'labels.inputs.Total' | translate }}</span>
+                          <strong>{{ selectedDenominationLineTotal(denominationControl) }}</strong>
+                        </div>
+                        <button type="button" mat-button color="warn" (click)="removeDenomination(i)">
+                          <fa-icon icon="trash" class="m-r-10"></fa-icon>
+                          {{ 'labels.buttons.Delete' | translate }}
+                        </button>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="total-row" [class.error]="!cashDenominationsReconcile">
+                    <span>{{ 'labels.inputs.Total' | translate }}</span>
+                    <strong>{{ denominationTotal }} / {{ fundingAmount }}</strong>
+                  </div>
+                  @if (!cashDenominationsReconcile) {
+                    <div class="message error-message">
+                      {{ 'labels.text.Cash denomination total must equal the funding amount' | translate }}
+                    </div>
+                  }
+                </section>
+              }
+
+              @if (fundingType === 'CHECK') {
+                <section class="funding-panel form-grid">
+                  <mat-form-field>
+                    <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
+                    <input matInput formControlName="accountNumber" required />
+                    @if (fundingForm.controls.accountNumber.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Account Number' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>{{ 'labels.inputs.Check Type' | translate }}</mat-label>
+                    <input matInput formControlName="checkType" required />
+                    @if (fundingForm.controls.checkType.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Check Type' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
+                    <input matInput formControlName="checkNumber" required />
+                    @if (fundingForm.controls.checkNumber.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Cheque' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
+                    <input matInput formControlName="routingCode" required />
+                    @if (fundingForm.controls.routingCode.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Routing Code' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>{{ 'labels.inputs.Bank Number' | translate }}</mat-label>
+                    <input matInput formControlName="bankNumber" required />
+                    @if (fundingForm.controls.bankNumber.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Bank Number' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                </section>
+              }
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
+                <input matInput formControlName="receiptNumber" />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
+                <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+              </mat-form-field>
+
+              <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
+                <button mat-raised-button matStepperPrevious>
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+                  {{ 'labels.buttons.Previous' | translate }}
+                </button>
+                <button mat-raised-button matStepperNext [disabled]="!fundingForm.valid || !cashDenominationsReconcile">
+                  {{ 'labels.buttons.Next' | translate }}
+                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>{{ 'labels.heading.Preview' | translate }}</ng-template>
+            <section class="summary-grid preview-summary">
+              <div>
+                <span>{{ 'labels.inputs.Client' | translate }}</span>
+                <strong>{{
+                  selectedCustomer?.displayName || selectedCustomer?.fullname || selectedCustomer?.name
+                }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Product' | translate }}</span>
+                <strong>{{ selectedProduct?.name || selectedProduct?.productName }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Amount' | translate }}</span>
+                <strong>{{ fundingAmount }} {{ selectedCurrencyCode }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Funding Type' | translate }}</span>
+                <strong>{{ fundingType }}</strong>
+              </div>
+            </section>
+
+            @if (errorMessage) {
+              <div class="message error-message">{{ errorMessage | translate }}</div>
+            }
+
+            @if (receipt) {
+              <mat-divider></mat-divider>
+              <section class="receipt">
+                <div class="section-heading">
+                  <h3>{{ 'labels.heading.Payment Receipt' | translate }}</h3>
+                  <div class="receipt-actions">
+                    <button type="button" mat-button color="primary" (click)="reviewReceipt()">
+                      {{ 'labels.buttons.View Receipt' | translate }}
+                    </button>
+                    <button type="button" mat-button color="primary" (click)="printReceipt()">
+                      {{ 'labels.buttons.Print Receipt' | translate }}
+                    </button>
+                  </div>
+                </div>
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'labels.inputs.Receipt Number' | translate }}</span>
+                    <strong>{{ receipt.receiptNumber || receipt.receiptNo || receipt.id || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Client' | translate }}</span>
+                    <strong>{{
+                      receipt.customerName || receipt.clientName || receipt.customer?.displayName || '-'
+                    }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.heading.Savings Account' | translate }}</span>
+                    <strong>{{
+                      receipt.savingsAccountNo || receipt.savingsAccountId || receipt.accountNo || '-'
+                    }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Product' | translate }}</span>
+                    <strong>{{ receipt.productName || receipt.savingsProductName || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Amount' | translate }}</span>
+                    <strong
+                      >{{ receipt.amount || receipt.transactionAmount || fundingAmount }}
+                      {{ receipt.currencyCode || selectedCurrencyCode }}</strong
+                    >
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Balance' | translate }}</span>
+                    <strong>{{ receipt.resultingBalance || receipt.accountBalance || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Transaction Id' | translate }}</span>
+                    <strong>{{ receipt.transactionId || receipt.transactionResourceId || '-' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Created On' | translate }}</span>
+                    <strong>{{ receipt.createdDate || receipt.completedTime || receipt.createdAt || '-' }}</strong>
+                  </div>
+                </section>
+              </section>
+            }
+
+            <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
+              <button mat-raised-button matStepperPrevious [disabled]="isSubmitting || !!receipt">
+                <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+                {{ 'labels.buttons.Previous' | translate }}
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="submit()"
+                [disabled]="isSubmitting || !!receipt"
+                *mifosxHasPermission="'READ_TELLER'"
+              >
+                @if (isSubmitting) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  {{ 'labels.buttons.Submit' | translate }}
+                }
+              </button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

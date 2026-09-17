@@ -26,6 +26,8 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
+import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
+import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -109,6 +111,8 @@ import { InvestorsComponent } from './investors/investors.component';
     ViewAdhocQueryComponent,
     TellersComponent,
     ViewTellerComponent,
+    SavingsAccountOpeningComponent,
+    SavingsAccountDepositComponent,
     PaymentTypesComponent,
     EditPaymentTypeComponent,
     PasswordPreferencesComponent,

@@ -5104,7 +5104,8 @@
       "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden",
       "Loading pending prospects": "Ausstehende Interessenten werden geladen",
       "No pending prospects found": "Keine ausstehenden Interessenten gefunden",
-      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden"
+      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Der Betrag konnte für dieses Datum nicht neu ermittelt werden. Wählen Sie das Datum erneut aus, um es noch einmal zu versuchen."
     },
     "permissions": {
       "actions": {

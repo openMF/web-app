@@ -88,6 +88,7 @@ import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAccordion } from '@angular/material/expansion';
 import { Dates } from 'app/core/utils/dates';
@@ -322,6 +323,26 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
    */
   guidedSubmitAttempted = false;
 
+  // Memoised `visibleSteps` result — see the getter.
+  private visibleStepsCache?: { ids: string; steps: FormStep[] };
+  /**
+   * The step the operator is looking at, by id.
+   *
+   * `MatStepper` knows only an INDEX, and the visible set changes under it: Loan Cycle Variations
+   * sits above Settings, Charges and Accounting in FORM_STEPS, so toggling `useBorrowerCycle` on JLG
+   * shifts every later step by one and the operator silently lands on a different step's content.
+   * Tracking the id is what lets {@link restoreStepperSelection} put them back. Undefined until they
+   * first move off the opening step, which needs no restoring.
+   */
+  private selectedStepId?: number;
+  /**
+   * Steps the operator has actually opened. Drives the per-step done/error indicator, mirroring the
+   * `interacted` gate `MatStep` applies to a `[stepControl]` — a tick on a step nobody has visited
+   * would claim work the operator never did.
+   */
+  private readonly visitedStepIds = new Set<number>();
+  private stepperStepsSubscription?: Subscription;
+
   // Reused Classic Charges step. Rendered for the `kind: 'charges'` step; read at submit time to fold the
   // selected charge objects into the payload — mirrors Classic's `@ViewChild(LoanProductChargesStepComponent)`.
   @ViewChild(LoanProductChargesStepComponent) loanProductChargesStep?: LoanProductChargesStepComponent;
@@ -422,10 +443,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     // The hosted Classic steps live inside *ngFor/*ngIf, so their @ViewChild refs cannot be `static`
     // and are not guaranteed by ngAfterViewInit. Retry each pass until wired, then never again.
     this.wireClassicControlMirrors();
+    this.wireStepperSelectionTracking();
   }
 
   ngOnDestroy(): void {
     this.formValueChangesSubscription?.unsubscribe();
+    this.stepperStepsSubscription?.unsubscribe();
     this.classicMirrorSubscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
@@ -631,22 +654,37 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     );
   }
 
+  /**
+   * The steps the stepper renders, in FORM_STEPS order.
+   *
+   * The returned ARRAY IDENTITY is memoised on the set of step ids (I4): `*ngFor` and the per-step
+   * state bindings below ask for this on every change-detection pass, and a fresh array each time
+   * made the stepper re-create embedded views for steps that had not changed. A new array is handed
+   * out only when a gate actually opens or closes a step — which is also the moment
+   * {@link restoreStepperSelection} has to run.
+   */
   get visibleSteps(): FormStep[] {
+    const steps = this.computeVisibleSteps();
+    const ids = steps.map((step) => step.id).join(',');
+    if (this.visibleStepsCache?.ids === ids) {
+      return this.visibleStepsCache.steps;
+    }
+    this.visibleStepsCache = { ids, steps };
+    return steps;
+  }
+
+  private computeVisibleSteps(): FormStep[] {
     return this.steps.filter((step) => {
       // Classic mode renders the four hosted components unconditionally: each owns its own internal
       // show/hide rules, which is the whole point of hosting them.
       if (this.usesClassicSteps && step.classicStep) {
         return true;
       }
-      if (this.usesClassicSteps) {
-        // Two steps become duplicates once Classic's own components are hosted:
-        //   - Loan Cycle Variations: Classic's Terms step owns the three variation FormArrays and
-        //     renders them inline under `useBorrowerCycle`.
-        //   - Advanced Configuration: Classic's Settings step owns the same Event Settings block
-        //     (`useDueForRepaymentsConfigurations` plus the due / overdue day inputs).
-        if (step.kind === 'borrower-cycle' || step.title === 'labels.heading.Advanced Configuration') {
-          return false;
-        }
+      if (this.usesClassicSteps && step.kind === 'borrower-cycle') {
+        // Loan Cycle Variations becomes a duplicate once Classic's own components are hosted:
+        // Classic's Terms step owns the three variation FormArrays and renders them inline under
+        // `useBorrowerCycle`.
+        return false;
       }
       if (step.kind === 'review') {
         return true;
@@ -712,6 +750,152 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
    */
   private get selectedCharges(): any[] {
     return this.loanProductChargesStep?.loanProductCharges?.charges ?? [];
+  }
+
+  /**
+   * Subscribes once to the stepper's own `steps` QueryList.
+   *
+   * That list changes exactly when a gate adds or removes a step, and `changes` emits AFTER the list
+   * has been rebuilt — so the handler already sees the new ordering and length, and can assign a
+   * `selectedIndex` that is in bounds. Nothing is written during the verification pass either, since
+   * the QueryList does not change there.
+   *
+   * Wired from `ngAfterViewChecked` rather than `ngAfterViewInit` for the same reason the Classic
+   * control mirrors are: retry each pass until the @ViewChild resolves, then never again.
+   */
+  private wireStepperSelectionTracking(): void {
+    if (this.stepperStepsSubscription || !this.stepper) {
+      return;
+    }
+    this.stepperStepsSubscription = this.stepper.steps.changes.subscribe(() => this.restoreStepperSelection());
+  }
+
+  /** Records which step the operator moved to, so the id survives a change in the visible set. */
+  onStepSelectionChange(event: StepperSelectionEvent): void {
+    const selected = this.visibleSteps[event.selectedIndex];
+    if (!selected) {
+      return;
+    }
+    this.selectedStepId = selected.id;
+    this.visitedStepIds.add(selected.id);
+  }
+
+  /**
+   * Re-points the stepper at the step the operator was on after the visible set changed (I4).
+   *
+   * Public because it is the whole fix: a spec has to be able to prove that turning a gate off
+   * mid-flow leaves the operator on their own step rather than on whatever slid into that index.
+   */
+  restoreStepperSelection(): void {
+    if (!this.stepper || this.selectedStepId === undefined) {
+      return;
+    }
+    const steps = this.visibleSteps;
+    if (!steps.length) {
+      return;
+    }
+
+    const targetIndex = steps.findIndex((step) => step.id === this.selectedStepId);
+    if (targetIndex >= 0) {
+      if (this.stepper.selectedIndex !== targetIndex) {
+        this.stepper.selectedIndex = targetIndex;
+      }
+      return;
+    }
+
+    // The step they were on is the one that disappeared — they turned its own gate off from inside
+    // it. Fall back to the nearest EARLIER surviving step, never a later one: moving forward would
+    // skip past content they have not seen yet. FORM_STEPS order is the reference, so no history of
+    // the previous list is needed.
+    const fallbackIndex = this.nearestEarlierStepIndex(this.selectedStepId, steps);
+    this.stepper.selectedIndex = fallbackIndex;
+    this.selectedStepId = steps[fallbackIndex].id;
+    this.visitedStepIds.add(this.selectedStepId);
+  }
+
+  private nearestEarlierStepIndex(missingStepId: number, steps: FormStep[]): number {
+    const declaredOrder = this.steps;
+    const missingPosition = declaredOrder.findIndex((step) => step.id === missingStepId);
+    for (let position = missingPosition - 1; position >= 0; position--) {
+      const index = steps.findIndex((step) => step.id === declaredOrder[position].id);
+      if (index >= 0) {
+        return index;
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Whether a step carries the "done" tick (I4).
+   *
+   * Classic gets this from `[stepControl]`, which the guided flow cannot use: every field lives in
+   * ONE flat FormGroup, so there is no per-step control to hand the stepper. `[completed]` and
+   * `[hasError]` are the supported overrides for exactly that case, and they are fed from the same
+   * {@link stepIncomplete} predicate {@link incompleteGuidedSteps} reports on — so the stepper
+   * indicator and the blocked-submit summary cannot disagree about which step is at fault.
+   */
+  stepCompleted(step: FormStep): boolean {
+    return this.stepVisited(step) && !this.stepIncomplete(step);
+  }
+
+  /**
+   * Whether a step shows the error indicator: one the operator has opened and left incomplete, or —
+   * once they have pressed Create — any step blocking it, including ones they never opened. Without
+   * that second case the stepper would stay silent about exactly the steps C4's summary is naming.
+   *
+   * Classic mode has no equivalent flag by design: its `review-pending` list renders unconditionally,
+   * so there is no click to answer.
+   */
+  stepHasError(step: FormStep): boolean {
+    return (this.stepVisited(step) || this.guidedSubmitAttempted) && this.stepIncomplete(step);
+  }
+
+  private stepVisited(step: FormStep): boolean {
+    // The opening step is visited by definition: the stepper starts there and emits no
+    // `selectionChange` for it.
+    return this.visitedStepIds.has(step.id) || step.id === this.visibleSteps[0]?.id;
+  }
+
+  /**
+   * Whether a step still holds something that blocks the create.
+   *
+   * The single predicate behind the stepper indicators, {@link incompleteGuidedSteps} and — in
+   * Classic mode — the hosted forms' own validity. Guided `fields` steps are judged through
+   * {@link visibleFields}, the same visibility source of truth the field grid and the Review use, so
+   * a control the operator was never shown can never be blamed.
+   *
+   * Charges, Payment Allocation and Interest Refunds carry no validators in either flow, so they are
+   * never incomplete; Review has nothing of its own to fill in.
+   */
+  private stepIncomplete(step: FormStep): boolean {
+    if (this.usesClassicSteps && step.classicStep) {
+      return !!this.classicStepForm(step.classicStep)?.invalid;
+    }
+    switch (step.kind ?? 'fields') {
+      case 'fields':
+        return !!this.form && this.visibleFields(step).some((field) => !!this.form.get(field.key)?.invalid);
+      case 'accounting':
+        return !!this.loanProductAccountingStep?.loanProductAccountingForm?.invalid;
+      case 'deferred-income':
+        return !!this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm?.invalid;
+      case 'borrower-cycle':
+        return this.borrowerCycleStepInvalid;
+      default:
+        return false;
+    }
+  }
+
+  private classicStepForm(classicStep: NonNullable<FormStep['classicStep']>): { invalid: boolean } | undefined {
+    switch (classicStep) {
+      case 'details':
+        return this.loanProductDetailsStep?.loanProductDetailsForm;
+      case 'currency':
+        return this.loanProductCurrencyStep?.loanProductCurrencyForm;
+      case 'terms':
+        return this.loanProductTermsStep?.loanProductTermsForm;
+      case 'settings':
+        return this.loanProductSettingsStep?.loanProductSettingsForm;
+    }
   }
 
   trackByStepId(_index: number, step: FormStep): number {
@@ -1136,9 +1320,6 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
       'enableAutoRepaymentForDownPayment',
       'loanChargeOffBehaviour',
       'enableInstallmentLevelDelinquency',
-      'useGlobalConfigForRepaymentEvent',
-      'dueDaysForRepaymentEvent',
-      'overDueDaysForRepaymentEvent',
       'enableIncomeCapitalization',
       'enableBuydownFees'
     ].includes(key);
@@ -1237,25 +1418,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     if (!this.form) {
       return [];
     }
-    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
-    const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
-
     return this.visibleSteps
       .map((step, index) => ({ step, index }))
-      .filter(({ step }) => {
-        switch (step.kind ?? 'fields') {
-          case 'fields':
-            return this.visibleFields(step).some((field) => !!this.form.get(field.key)?.invalid);
-          case 'accounting':
-            return !!accountingForm?.invalid;
-          case 'deferred-income':
-            return !!deferredIncomeForm?.invalid;
-          case 'borrower-cycle':
-            return this.borrowerCycleStepInvalid;
-          default:
-            return false;
-        }
-      })
+      .filter(({ step }) => this.stepIncomplete(step))
       .map(({ step, index }) => ({ index, title: step.title }));
   }
 

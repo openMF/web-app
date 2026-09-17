@@ -5103,7 +5103,8 @@
       "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos",
       "Loading pending prospects": "Įkeliami laukiantys prospektai",
       "No pending prospects found": "Laukiančių prospektų nerasta",
-      "Unable to load pending prospects": "Nepavyko įkelti laukiančių prospektų"
+      "Unable to load pending prospects": "Nepavyko įkelti laukiančių prospektų",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Nepavyko iš naujo apskaičiuoti sumos šiai datai. Pasirinkite datą dar kartą, kad bandytumėte iš naujo."
     },
     "permissions": {
       "actions": {

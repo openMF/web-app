@@ -34,6 +34,21 @@ import {
 /**
  * Loans service.
  */
+/**
+ * The Working Capital transaction template commands whose quoted amount moves with the transaction date.
+ *
+ * Only what the loan owes is scoped to the date, so these are the commands reading an outstanding figure. The rest are
+ * left out because their amount cannot vary with it: `creditBalanceRefund` quotes the overpayment and `recoveryPayment`
+ * what is still recoverable, both of which come from what has been paid rather than what is owed; `disburse` quotes the
+ * approved principal; and `discountFee` / `discountFeeAdjustment` quote no amount at all.
+ */
+const DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS: ReadonlySet<WorkingCapitalTransactionTemplateCommand> = new Set([
+  'repayment',
+  'goodwillCredit',
+  'chargeOff',
+  'prepayLoan'
+]);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -744,7 +759,8 @@ export class LoansService {
    * Approval is the one command it does not serve; that goes through getWorkingCapitalLoanActionTemplate.
    * @param {string} loanId Loan Id.
    * @param {WorkingCapitalTransactionTemplateCommand} command The command whose template to fetch.
-   * @param {string} transactionDate Date to quote for. Only prepayLoan reads it; defaults to the business date.
+   * @param {string} transactionDate Date to quote the amount for, for the commands that read it; defaults to the
+   *   business date. Only what the loan owes is scoped to it - the amount stays net of every payment already made.
    * @returns {Observable<any>} The transaction template.
    */
   getWorkingCapitalLoanTransactionTemplate(
@@ -753,7 +769,7 @@ export class LoansService {
     transactionDate?: string
   ): Observable<any> {
     let httpParams = new HttpParams().set('command', command);
-    if (command === 'prepayLoan') {
+    if (DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS.has(command)) {
       const quoteDate =
         transactionDate ??
         this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);

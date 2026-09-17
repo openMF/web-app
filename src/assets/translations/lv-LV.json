@@ -5102,7 +5102,8 @@
       "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu",
       "Loading pending prospects": "Notiek neapstrādāto prospektu ielāde",
       "No pending prospects found": "Neapstrādāti prospekti nav atrasti",
-      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus"
+      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Neizdevās atkārtoti aprēķināt summu šim datumam. Atlasiet datumu vēlreiz, lai mēģinātu vēlreiz."
     },
     "permissions": {
       "actions": {
