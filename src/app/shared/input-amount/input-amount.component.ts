@@ -43,11 +43,12 @@ export class InputAmountComponent implements OnInit {
     this.inputFormControl.addValidators(amountValueValidator());
     this.inputFormControl.updateValueAndValidity({ emitEvent: false });
   }
+
   numberOnly(event: KeyboardEvent): boolean {
     const charCode = event.which ?? event.keyCode;
     const currentValue = String(this.inputFormControl?.value ?? '');
 
-    if (charCode === 46 || event.key === '.') {
+    if (charCode === 46 || charCode === 110 || event.key === '.' || event.key === 'Decimal') {
       return !currentValue.includes('.');
     }
 
