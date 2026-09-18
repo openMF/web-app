@@ -222,3 +222,99 @@ describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
     expect(interestRate().valid).toBe(true);
   });
 });
+
+/** Response of GET /loans/template?templateType=individual for a plain 800,000 INR loan product. */
+const LOAN_PRODUCT_TEMPLATE: any = {
+  currency: { code: 'INR', name: 'Indian Rupee', decimalPlaces: 2, displaySymbol: '₹' },
+  principal: 800000,
+  termFrequency: 12,
+  termPeriodFrequencyType: { id: 2 },
+  numberOfRepayments: 12,
+  repaymentEvery: 1,
+  repaymentFrequencyType: { id: 2 },
+  amortizationType: { id: 1 },
+  isEqualAmortization: false,
+  interestType: { id: 0 },
+  isLoanProductLinkedToFloatingRate: false,
+  interestCalculationPeriodType: { id: 1 },
+  allowPartialPeriodInterestCalculation: false,
+  interestRateFrequencyType: { id: 3 },
+  interestRatePerPeriod: 12,
+  loanScheduleType: { code: 'loanScheduleType.cumulative' },
+  interestRateFrequencyTypeOptions: [],
+  transactionProcessingStrategyOptions: [],
+  product: { id: 1, principal: 800000, allowAttributeOverrides: {} }
+};
+
+describe('LoansAccountTermsStepComponent — principal decimals', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+    component.loansAccountProductTemplate = LOAN_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, LOAN_PRODUCT_TEMPLATE, true)
+    });
+  });
+
+  function principal() {
+    return component.loansAccountTermsForm.get('principalAmount')!;
+  }
+
+  /**
+   * `loansAccountFormValid` is an input that tracks this very form's validity, so it flips
+   * while the user types — a half-entered amount like `800000.` is momentarily invalid. The
+   * re-seed that used to run on every ngOnChanges put the product default back and swallowed
+   * the decimal point the user had just typed.
+   */
+  it('keeps a half-typed amount when an unrelated input flips', () => {
+    principal().setValue('800000.');
+
+    component.loansAccountFormValid = false;
+    component.ngOnChanges({ loansAccountFormValid: new SimpleChange(true, false, false) });
+
+    expect(principal().value).toBe('800000.');
+  });
+
+  it('keeps the finished decimal amount when validity flips back', () => {
+    principal().setValue('800000.90');
+
+    component.loansAccountFormValid = true;
+    component.ngOnChanges({ loansAccountFormValid: new SimpleChange(false, true, false) });
+
+    expect(principal().value).toBe('800000.90');
+  });
+
+  it('still seeds the form from the product template', () => {
+    expect(principal().value).toBe(800000);
+  });
+
+  it('still re-seeds the form when a new product template arrives', () => {
+    principal().setValue('1');
+    const nextTemplate = { ...LOAN_PRODUCT_TEMPLATE, principal: 50000 };
+
+    component.loansAccountProductTemplate = nextTemplate;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(LOAN_PRODUCT_TEMPLATE, nextTemplate, false)
+    });
+
+    expect(principal().value).toBe(50000);
+  });
+});
