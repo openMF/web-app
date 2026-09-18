@@ -16,7 +16,7 @@
           mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
           class="right-input"
           [formControl]="inputFormControl"
-          (keydown)="numberOnly($event)"
+          (keypress)="numberOnly($event)"
           required
           matInput
           mifosxPositiveNumber
@@ -28,7 +28,7 @@
       <div class="input-group">
         <input
           [formControl]="inputFormControl"
-          (keydown)="numberOnly($event)"
+          (keypress)="numberOnly($event)"
           required
           matInput
           mifosxPositiveNumber
@@ -76,7 +76,7 @@
           mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
           class="right-input"
           [formControl]="inputFormControl"
-          (keydown)="numberOnly($event)"
+          (keypress)="numberOnly($event)"
           matInput
           mifosxPositiveNumber
           (blur)="displayHint = false"
@@ -87,7 +87,7 @@
       <div class="input-group">
         <input
           [formControl]="inputFormControl"
-          (keydown)="numberOnly($event)"
+          (keypress)="numberOnly($event)"
           matInput
           mifosxPositiveNumber
           (blur)="displayHint = false"
