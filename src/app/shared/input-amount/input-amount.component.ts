@@ -48,7 +48,7 @@ export class InputAmountComponent implements OnInit {
     const charCode = event.which ?? event.keyCode;
     const currentValue = String(this.inputFormControl?.value ?? '');
 
-    if (charCode === 46 || charCode === 110 || event.key === '.' || event.key === 'Decimal') {
+    if (charCode === 46 || event.code === 'NumpadDecimal' || event.key === '.' || event.key === 'Decimal') {
       return !currentValue.includes('.');
     }
 
