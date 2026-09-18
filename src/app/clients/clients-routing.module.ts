@@ -107,7 +107,16 @@ const routes: Routes = [
             {
               path: 'personal-data',
               component: PersonalDataTabComponent,
-              data: { title: 'Personal Data', breadcrumb: 'Personal Data', routeParamBreadcrumb: false }
+              data: {
+                title: 'labels.inputs.Personal Data',
+                breadcrumb: 'labels.inputs.Personal Data',
+                routeParamBreadcrumb: false
+              },
+              resolve: {
+                clientIdentities: ClientIdentitiesResolver,
+                clientIdentifierTemplate: ClientIdentifierTemplateResolver,
+                clientDocuments: ClientDocumentsResolver
+              }
             },
             {
               path: 'address',
@@ -154,6 +163,7 @@ const routes: Routes = [
                 }
               ]
             },
+
             {
               path: 'identities',
               component: IdentitiesTabComponent,
