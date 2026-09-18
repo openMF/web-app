@@ -43,18 +43,18 @@ export class InputAmountComponent implements OnInit {
     this.inputFormControl.addValidators(amountValueValidator());
     this.inputFormControl.updateValueAndValidity({ emitEvent: false });
   }
+  numberOnly(event: KeyboardEvent): boolean {
+    const charCode = event.which ?? event.keyCode;
+    const currentValue = String(this.inputFormControl?.value ?? '');
 
-  numberOnly(event: any): boolean {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode === 46) {
-      const value = String(this.inputFormControl.value || '');
-      if (!(value.indexOf('.') > -1)) {
-        return true;
-      }
-      return false;
-    } else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    if (charCode === 46 || event.key === '.') {
+      return !currentValue.includes('.');
+    }
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
+
     return true;
   }
 }
