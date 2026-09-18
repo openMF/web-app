@@ -28,6 +28,8 @@ import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
 import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
 import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
+import { ReturnedCheckPaymentComponent } from './base-teller/returned-check-payment/returned-check-payment.component';
+import { returnedCheckPaymentGuard } from './base-teller/returned-check-payment/returned-check-payment.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -453,6 +455,15 @@ const routes: Routes = [
           data: {
             title: 'labels.heading.Savings Account Deposit',
             breadcrumb: 'labels.heading.Savings Account Deposit'
+          }
+        },
+        {
+          path: 'base-teller/returned-check-payments',
+          component: ReturnedCheckPaymentComponent,
+          canActivate: [returnedCheckPaymentGuard],
+          data: {
+            title: 'labels.heading.Returned Check Payment',
+            breadcrumb: 'labels.heading.Returned Check Payment'
           }
         },
         {

@@ -531,6 +531,9 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Finalize": "Užbaigti",
+      "New Operation": "Nauja operacija",
+      "Select Check": "Pasirinkti čekį",
       "Accept Transfer": "Priimti perkėlimą",
       "Actions": "Veiksmai",
       "Activate": "Suaktyvinti",
@@ -1193,6 +1196,11 @@
       "NotEqual": "Nelygu"
     },
     "heading": {
+      "Cash Payment": "Mokėjimas grynaisiais",
+      "Confirmation": "Patvirtinimas",
+      "Receipt": "Kvitas",
+      "Returned Check Payment": "Grąžinto čekio apmokėjimas",
+      "Search Returned Checks": "Ieškoti grąžintų čekių",
       "Create Agriculture Loan": "Sukurti žemės ūkio paskolą",
       "Create Auto Loan": "Sukurti automobilio paskolą",
       "Create BNPL Loan": "Sukurti BNPL paskolą",
@@ -1821,6 +1829,22 @@
       "Enrollment Details": "Registracijos informacija"
     },
     "inputs": {
+      "Returned": "Grąžintas",
+      "Settled": "Apmokėtas",
+      "Check Amount": "Čekio suma",
+      "Check Number": "Čekio numeris",
+      "Change to Give": "Grąža klientui",
+      "Currency is required": "Valiuta yra privaloma.",
+      "Customer Name": "Kliento vardas",
+      "Customer Name is required": "Kliento vardas yra privalomas.",
+      "Date is required": "Data yra privaloma.",
+      "Denomination Value": "Nominalo vertė",
+      "Line Total": "Eilutės suma",
+      "Operator": "Operatorius",
+      "Return Date": "Grąžinimo data",
+      "Return Reason": "Grąžinimo priežastis",
+      "Teller is required": "Kasa yra privaloma.",
+      "Total Cash Received": "Iš viso gauta grynųjų",
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
       "Allow amortization override": "Leisti keisti amortizaciją",
       "Allow approval/disbursal above applied amount": "Leisti patvirtinti/išmokėti daugiau nei prašoma suma",
@@ -4087,6 +4111,18 @@
       "Breach evaluation will resume": "Pažeidimų vertinimas atnaujinamas {{date}}. Nuo tos dienos paskola vėl vertinama."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
+      "No eligible cash payment types available": "Nėra tinkamų mokėjimo grynaisiais tipų.",
+      "No returned checks found": "Grąžintų čekių nerasta.",
+      "Quantity must be a whole number": "Kiekis turi būti sveikasis skaičius.",
+      "Returned check details could not be loaded": "Nepavyko įkelti grąžinto čekio informacijos.",
+      "Returned check options could not be loaded": "Nepavyko įkelti grąžinto čekio parinkčių.",
+      "Returned check payment failed": "Grąžinto čekio apmokėti nepavyko.",
+      "Returned check search failed": "Grąžintų čekių paieška nepavyko.",
+      "Returned check settled successfully": "Grąžintas čekis sėkmingai apmokėtas.",
+      "Settle a returned check with a cash payment": "Apmokėkite grąžintą čekį grynaisiais.",
+      "You do not have permission to settle returned checks": "Neturite leidimo apmokėti grąžintų čekių.",
+      "You do not have permission to view returned check payments": "Neturite leidimo peržiūrėti grąžintų čekių mokėjimų.",
       "Select a client from the list": "Pasirinkite klientą iš sąrašo",
       "Complete these steps to preview the product": "Atlikite šiuos veiksmus, kad peržiūrėtumėte produktą",
       "Complete these steps before creating the product": "Atlikite šiuos veiksmus prieš kurdami produktą",

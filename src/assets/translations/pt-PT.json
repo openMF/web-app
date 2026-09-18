@@ -531,6 +531,9 @@
       "Home": "Lar"
     },
     "buttons": {
+      "Finalize": "Finalizar",
+      "New Operation": "Nova operação",
+      "Select Check": "Selecionar cheque",
       "Accept Transfer": "Aceitar transferência",
       "Actions": "Ações",
       "Activate": "Ativar",
@@ -1194,6 +1197,11 @@
       "NotEqual": "Diferente de"
     },
     "heading": {
+      "Cash Payment": "Pagamento em numerário",
+      "Confirmation": "Confirmação",
+      "Receipt": "Recibo",
+      "Returned Check Payment": "Pagamento de cheque devolvido",
+      "Search Returned Checks": "Pesquisar cheques devolvidos",
       "Create Agriculture Loan": "Criar empréstimo agrícola",
       "Create Auto Loan": "Criar crédito automóvel",
       "Create BNPL Loan": "Criar empréstimo BNPL",
@@ -1821,6 +1829,22 @@
       "Enrollment Details": "Detalhes da inscrição"
     },
     "inputs": {
+      "Returned": "Devolvido",
+      "Settled": "Liquidado",
+      "Check Amount": "Montante do cheque",
+      "Check Number": "Número do cheque",
+      "Change to Give": "Troco a devolver",
+      "Currency is required": "A moeda é obrigatória.",
+      "Customer Name": "Nome do cliente",
+      "Customer Name is required": "O nome do cliente é obrigatório.",
+      "Date is required": "A data é obrigatória.",
+      "Denomination Value": "Valor da denominação",
+      "Line Total": "Total da linha",
+      "Operator": "Operador",
+      "Return Date": "Data de devolução",
+      "Return Reason": "Motivo da devolução",
+      "Teller is required": "O caixa é obrigatório.",
+      "Total Cash Received": "Total de numerário recebido",
       "Account moves out of NPA only on arrears completion": "A conta sai de NPA apenas após a regularização de todos os atrasos",
       "Allow amortization override": "Permitir alterar a amortização",
       "Allow approval/disbursal above applied amount": "Permitir aprovação/desembolso acima do montante solicitado",
@@ -4087,6 +4111,18 @@
       "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "O numerário recebido não pode ser inferior ao montante do cheque.",
+      "No eligible cash payment types available": "Não existem tipos de pagamento em numerário elegíveis disponíveis.",
+      "No returned checks found": "Não foram encontrados cheques devolvidos.",
+      "Quantity must be a whole number": "A quantidade deve ser um número inteiro.",
+      "Returned check details could not be loaded": "Não foi possível carregar os detalhes do cheque devolvido.",
+      "Returned check options could not be loaded": "Não foi possível carregar as opções do cheque devolvido.",
+      "Returned check payment failed": "O pagamento do cheque devolvido falhou.",
+      "Returned check search failed": "A pesquisa de cheques devolvidos falhou.",
+      "Returned check settled successfully": "O cheque devolvido foi liquidado com sucesso.",
+      "Settle a returned check with a cash payment": "Liquidar um cheque devolvido com um pagamento em numerário.",
+      "You do not have permission to settle returned checks": "Não tem permissão para liquidar cheques devolvidos.",
+      "You do not have permission to view returned check payments": "Não tem permissão para consultar pagamentos de cheques devolvidos.",
       "Select a client from the list": "Selecione um cliente da lista",
       "Complete these steps to preview the product": "Conclua estes passos para pré-visualizar o produto",
       "Complete these steps before creating the product": "Conclua estes passos antes de criar o produto",

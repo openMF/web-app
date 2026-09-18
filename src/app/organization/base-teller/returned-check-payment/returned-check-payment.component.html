@@ -1,0 +1,431 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container returned-check-payment">
+  <mat-card class="workflow-card">
+    <mat-card-content>
+      <h2>{{ 'labels.heading.Returned Check Payment' | translate }}</h2>
+
+      @if (errorMessage) {
+        <div class="message error-message" role="alert">{{ errorMessage | translate }}</div>
+      }
+
+      @if (canRead) {
+        <mat-stepper orientation="vertical" linear>
+          <mat-step [stepControl]="searchForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Search Returned Checks' | translate }}</ng-template>
+            <form [formGroup]="searchForm" class="layout-column gap-20px" (ngSubmit)="search()">
+              <div class="form-grid">
+                <mat-form-field (click)="searchDatePicker.open()">
+                  <mat-label>{{ 'labels.inputs.Date' | translate }}</mat-label>
+                  <input matInput [matDatepicker]="searchDatePicker" [max]="maxDate" formControlName="date" required />
+                  <mat-datepicker-toggle matSuffix [for]="searchDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #searchDatePicker></mat-datepicker>
+                  @if (searchForm.controls.date.hasError('required')) {
+                    <mat-error>{{ 'labels.inputs.Date is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Customer Name' | translate }}</mat-label>
+                  <input matInput formControlName="customerName" required />
+                  @if (searchForm.controls.customerName.hasError('required')) {
+                    <mat-error>{{ 'labels.inputs.Customer Name is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Teller' | translate }}</mat-label>
+                  <mat-select formControlName="tellerId" required>
+                    @for (teller of tellers; track teller.id) {
+                      <mat-option [value]="teller.id">{{ teller.name || teller.value || teller.id }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (searchForm.controls.tellerId.hasError('required')) {
+                    <mat-error>{{ 'labels.inputs.Teller is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+                  <mat-select formControlName="currencyCode" required>
+                    @for (currency of currencies; track currency.code || currency.name) {
+                      <mat-option [value]="currency.code || currency.name">
+                        {{ currency.code || currency.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                  @if (searchForm.controls.currencyCode.hasError('required')) {
+                    <mat-error>{{ 'labels.inputs.Currency is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="layout-row align-center gap-2percent responsive-column step-actions">
+                <button
+                  type="submit"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="
+                    isSearching ||
+                    isLoadingOptions ||
+                    searchForm.controls.date.invalid ||
+                    searchForm.controls.customerName.invalid ||
+                    searchForm.controls.tellerId.invalid ||
+                    searchForm.controls.currencyCode.invalid
+                  "
+                >
+                  @if (isSearching) {
+                    <mat-spinner diameter="20"></mat-spinner>
+                  } @else {
+                    {{ 'labels.buttons.Search' | translate }}
+                  }
+                </button>
+                <button type="button" mat-button (click)="clearSearch()" [disabled]="isSearching">
+                  {{ 'labels.buttons.Clear' | translate }}
+                </button>
+              </div>
+
+              @if (isLoadingOptions) {
+                <div class="loading-state"><mat-spinner diameter="32"></mat-spinner></div>
+              }
+
+              @if (hasSearched && !isSearching && !results.length) {
+                <div class="message empty-state">{{ 'labels.text.No returned checks found' | translate }}</div>
+              }
+
+              @if (results.length) {
+                <div class="table-container mat-elevation-z2">
+                  <table mat-table [dataSource]="results">
+                    <ng-container matColumnDef="checkNumber">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Check Number' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.checkNumber }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="customerName">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Customer' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.customerName }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="amount">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.amount }} {{ check.currencyCode }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="returnedOnDate">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Return Date' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.returnedOnDate | dateFormat }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="currencyCode">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Currency' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.currencyCode }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ statusTranslationKey(check.status) | translate }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="officeName">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">{{ check.officeName }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+                      <td mat-cell *matCellDef="let check">
+                        <button
+                          type="button"
+                          mat-button
+                          color="primary"
+                          (click)="selectCheck(check)"
+                          [disabled]="check.status !== 'RETURNED' || isLoadingDetail"
+                        >
+                          {{ 'labels.buttons.Select Check' | translate }}
+                        </button>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: displayedColumns"
+                      [class.selected-row]="searchForm.controls.selectedCheckId.value === row.id"
+                    ></tr>
+                  </table>
+                </div>
+              }
+
+              @if (isLoadingDetail) {
+                <div class="loading-state"><mat-spinner diameter="32"></mat-spinner></div>
+              }
+
+              <div class="layout-row align-center step-actions">
+                <button type="button" mat-raised-button matStepperNext [disabled]="!selectedCheck || isLoadingDetail">
+                  {{ 'labels.buttons.Next' | translate }}
+                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="paymentForm">
+            <ng-template matStepLabel>{{ 'labels.heading.Cash Payment' | translate }}</ng-template>
+            @if (selectedCheck) {
+              <section class="summary-grid">
+                <div>
+                  <span>{{ 'labels.inputs.Check Number' | translate }}</span
+                  ><strong>{{ selectedCheck.checkNumber }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Customer' | translate }}</span
+                  ><strong>{{ selectedCheck.customerName }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Check Amount' | translate }}</span
+                  ><strong>{{ selectedCheck.amount }} {{ selectedCheck.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Return Date' | translate }}</span
+                  ><strong>{{ selectedCheck.returnedOnDate | dateFormat }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Office' | translate }}</span
+                  ><strong>{{ selectedCheck.officeName }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Teller' | translate }}</span
+                  ><strong>{{ selectedCheck.tellerId }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Status' | translate }}</span
+                  ><strong>{{ statusTranslationKey(selectedCheck.status) | translate }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Return Reason' | translate }}</span
+                  ><strong>{{ selectedCheck.returnReason || '-' }}</strong>
+                </div>
+              </section>
+            }
+
+            <form [formGroup]="paymentForm" class="layout-column gap-20px">
+              <div class="form-grid">
+                <mat-form-field (click)="transactionDatePicker.open()">
+                  <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="transactionDatePicker"
+                    [max]="maxDate"
+                    formControlName="transactionDate"
+                    required
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #transactionDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+                  <mat-select formControlName="paymentTypeId" required>
+                    @for (paymentType of cashPaymentTypes; track paymentType.id) {
+                      <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (!cashPaymentTypes.length) {
+                    <mat-hint>{{ 'labels.text.No eligible cash payment types available' | translate }}</mat-hint>
+                  }
+                </mat-form-field>
+              </div>
+
+              <section class="cash-panel">
+                <div class="section-heading">
+                  <h3>{{ 'labels.inputs.Denominations' | translate }}</h3>
+                  <button type="button" mat-button color="primary" (click)="addDenomination()">
+                    <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+                  </button>
+                </div>
+                <div formArrayName="denominations" class="layout-column gap-20px">
+                  @for (denomination of denominations.controls; track denomination; let i = $index) {
+                    <div [formGroupName]="i" class="denomination-row">
+                      <mat-form-field>
+                        <mat-label>{{ 'labels.inputs.Denomination Value' | translate }}</mat-label>
+                        <input type="number" matInput formControlName="value" min="0.000001" required />
+                      </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
+                        <input type="number" matInput formControlName="quantity" min="0" step="1" required />
+                        @if (denomination.controls.quantity.hasError('pattern')) {
+                          <mat-error>{{ 'labels.text.Quantity must be a whole number' | translate }}</mat-error>
+                        }
+                      </mat-form-field>
+                      <div class="line-total">
+                        <span>{{ 'labels.inputs.Line Total' | translate }}</span>
+                        <strong>{{ lineTotal(denomination) }} {{ selectedCheck?.currencyCode }}</strong>
+                      </div>
+                      <button type="button" mat-button color="warn" (click)="removeDenomination(i)">
+                        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
+                      </button>
+                    </div>
+                  }
+                </div>
+              </section>
+
+              <section class="totals-grid">
+                <div>
+                  <span>{{ 'labels.inputs.Check Amount' | translate }}</span
+                  ><strong>{{ selectedCheck?.amount }} {{ selectedCheck?.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'labels.inputs.Total Cash Received' | translate }}</span
+                  ><strong>{{ totalCashReceived }} {{ selectedCheck?.currencyCode }}</strong>
+                </div>
+                <div [class.error]="!cashIsSufficient">
+                  <span>{{ 'labels.inputs.Change to Give' | translate }}</span
+                  ><strong>{{ changeAmount }} {{ selectedCheck?.currencyCode }}</strong>
+                </div>
+              </section>
+              @if (!cashIsSufficient) {
+                <div class="message error-message">
+                  {{ 'labels.text.Cash received cannot be less than the check amount' | translate }}
+                </div>
+              }
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
+                <textarea matInput formControlName="note" rows="2"></textarea>
+              </mat-form-field>
+
+              <div class="layout-row align-center gap-2percent responsive-column step-actions">
+                <button mat-raised-button matStepperPrevious>
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+                </button>
+                <button mat-raised-button matStepperNext [disabled]="paymentForm.invalid || !cashIsSufficient">
+                  {{ 'labels.buttons.Next' | translate }}<fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>{{ 'labels.heading.Confirmation' | translate }}</ng-template>
+            <section class="summary-grid">
+              <div>
+                <span>{{ 'labels.inputs.Check Number' | translate }}</span
+                ><strong>{{ selectedCheck?.checkNumber }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Customer' | translate }}</span
+                ><strong>{{ selectedCheck?.customerName }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Check Amount' | translate }}</span
+                ><strong>{{ selectedCheck?.amount }} {{ selectedCheck?.currencyCode }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Total Cash Received' | translate }}</span
+                ><strong>{{ totalCashReceived }} {{ selectedCheck?.currencyCode }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Change to Give' | translate }}</span
+                ><strong>{{ changeAmount }} {{ selectedCheck?.currencyCode }}</strong>
+              </div>
+              <div>
+                <span>{{ 'labels.inputs.Currency' | translate }}</span
+                ><strong>{{ selectedCheck?.currencyCode }}</strong>
+              </div>
+            </section>
+            <div class="layout-row align-center gap-2percent responsive-column step-actions">
+              <button mat-raised-button matStepperPrevious [disabled]="isSubmitting">
+                <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+              </button>
+              <button mat-button (click)="newOperation()" [disabled]="isSubmitting">
+                {{ 'labels.buttons.Cancel' | translate }}
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="finalizePayment()"
+                [disabled]="isSubmitting || !canCreate || paymentForm.invalid || !cashIsSufficient"
+                *mifosxHasPermission="'CREATE_BASE_TELLER_RETURNED_CHECK_PAYMENT'"
+              >
+                @if (isSubmitting) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  {{ 'labels.buttons.Finalize' | translate }}
+                }
+              </button>
+            </div>
+            @if (!canCreate) {
+              <div class="message error-message">
+                {{ 'labels.text.You do not have permission to settle returned checks' | translate }}
+              </div>
+            }
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>{{ 'labels.heading.Receipt' | translate }}</ng-template>
+            @if (receipt) {
+              <section class="receipt">
+                <h3>{{ 'labels.text.Returned check settled successfully' | translate }}</h3>
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'labels.inputs.Receipt Number' | translate }}</span
+                    ><strong>{{ receipt.receiptNumber }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Transaction Date' | translate }}</span
+                    ><strong>{{ receipt.completedOnUtc || receipt.createdOnUtc | date: 'medium' }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Check Number' | translate }}</span
+                    ><strong>{{ receipt.checkNumber }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Customer' | translate }}</span
+                    ><strong>{{ receipt.customerName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Check Amount' | translate }}</span
+                    ><strong>{{ receipt.checkAmount }} {{ receipt.currencyCode }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Total Cash Received' | translate }}</span
+                    ><strong>{{ receipt.cashReceived }} {{ receipt.currencyCode }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Change to Give' | translate }}</span
+                    ><strong>{{ receipt.changeAmount }} {{ receipt.currencyCode }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Teller' | translate }}</span
+                    ><strong>{{ receipt.tellerId }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Cashier' | translate }}</span
+                    ><strong>{{ receipt.cashierId }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Operator' | translate }}</span
+                    ><strong>{{ receipt.operatorName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Office' | translate }}</span
+                    ><strong>{{ receipt.officeName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'labels.inputs.Status' | translate }}</span
+                    ><strong>{{ statusTranslationKey(receipt.status) | translate }}</strong>
+                  </div>
+                </section>
+              </section>
+              <div class="layout-row align-center gap-2percent responsive-column step-actions">
+                <button mat-raised-button color="primary" (click)="printReceipt()">
+                  {{ 'labels.buttons.Print' | translate }}
+                </button>
+                <button mat-raised-button (click)="newOperation()">
+                  {{ 'labels.buttons.New Operation' | translate }}
+                </button>
+              </div>
+            }
+          </mat-step>
+        </mat-stepper>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

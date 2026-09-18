@@ -532,6 +532,9 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Finalize": "Finalizar",
+      "New Operation": "Nueva operación",
+      "Select Check": "Seleccionar cheque",
       "Accept Transfer": "Aceptar transferencia",
       "Actions": "Acciones",
       "Activate": "Activar",
@@ -1198,6 +1201,11 @@
       "NotEqual": "No igual"
     },
     "heading": {
+      "Cash Payment": "Pago en efectivo",
+      "Confirmation": "Confirmación",
+      "Receipt": "Recibo",
+      "Returned Check Payment": "Pago de cheque devuelto",
+      "Search Returned Checks": "Buscar cheques devueltos",
       "Create Agriculture Loan": "Crear Crédito Agrícola",
       "Create Auto Loan": "Crear Crédito Automotriz",
       "Create BNPL Loan": "Crear Crédito BNPL",
@@ -1828,6 +1836,22 @@
       "Enrollment Details": "Detalles de enrolamiento"
     },
     "inputs": {
+      "Returned": "Devuelto",
+      "Settled": "Pagado",
+      "Check Amount": "Monto del cheque",
+      "Check Number": "Número de cheque",
+      "Change to Give": "Cambio a entregar",
+      "Currency is required": "La moneda es obligatoria.",
+      "Customer Name": "Nombre del cliente",
+      "Customer Name is required": "El nombre del cliente es obligatorio.",
+      "Date is required": "La fecha es obligatoria.",
+      "Denomination Value": "Valor de la denominación",
+      "Line Total": "Total de la línea",
+      "Operator": "Operador",
+      "Return Date": "Fecha de devolución",
+      "Return Reason": "Motivo de devolución",
+      "Teller is required": "El cajero es obligatorio.",
+      "Total Cash Received": "Total de efectivo recibido",
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
       "Allow amortization override": "Permitir anular la amortización",
       "Allow approval/disbursal above applied amount": "Permitir aprobación/desembolso por encima del monto solicitado",
@@ -4093,6 +4117,18 @@
       "Breach evaluation will resume": "La evaluación de incumplimiento se reanuda el {{date}}. El préstamo se vuelve a evaluar a partir de esa fecha."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "El efectivo recibido no puede ser menor que el monto del cheque.",
+      "No eligible cash payment types available": "No hay tipos de pago en efectivo válidos disponibles.",
+      "No returned checks found": "No se encontraron cheques devueltos.",
+      "Quantity must be a whole number": "La cantidad debe ser un número entero.",
+      "Returned check details could not be loaded": "No se pudieron cargar los detalles del cheque devuelto.",
+      "Returned check options could not be loaded": "No se pudieron cargar las opciones de cheques devueltos.",
+      "Returned check payment failed": "El pago del cheque devuelto falló.",
+      "Returned check search failed": "La búsqueda de cheques devueltos falló.",
+      "Returned check settled successfully": "El cheque devuelto se pagó correctamente.",
+      "Settle a returned check with a cash payment": "Pagar un cheque devuelto con efectivo.",
+      "You do not have permission to settle returned checks": "No tiene permiso para pagar cheques devueltos.",
+      "You do not have permission to view returned check payments": "No tiene permiso para ver los pagos de cheques devueltos.",
       "Select a client from the list": "Seleccione un cliente de la lista",
       "Complete these steps to preview the product": "Complete estos pasos para ver la vista previa del producto",
       "Complete these steps before creating the product": "Complete estos pasos antes de crear el producto",

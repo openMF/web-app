@@ -532,6 +532,9 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Finalize": "Dokončit",
+      "New Operation": "Nová operace",
+      "Select Check": "Vybrat šek",
       "Accept Transfer": "Přijmout převod",
       "Actions": "Akce",
       "Activate": "aktivovat",
@@ -1195,6 +1198,11 @@
       "NotEqual": "Nerovná se"
     },
     "heading": {
+      "Cash Payment": "Hotovostní platba",
+      "Confirmation": "Potvrzení",
+      "Receipt": "Účtenka",
+      "Returned Check Payment": "Platba vráceného šeku",
+      "Search Returned Checks": "Vyhledat vrácené šeky",
       "Create Agriculture Loan": "Vytvořit zemědělský úvěr",
       "Create Auto Loan": "Vytvořit úvěr na automobil",
       "Create BNPL Loan": "Vytvořit úvěr BNPL",
@@ -1823,6 +1831,22 @@
       "Enrollment Details": "Podrobnosti registrace"
     },
     "inputs": {
+      "Returned": "Vráceno",
+      "Settled": "Uhrazeno",
+      "Check Amount": "Částka šeku",
+      "Check Number": "Číslo šeku",
+      "Change to Give": "Částka k vrácení",
+      "Currency is required": "Měna je povinná.",
+      "Customer Name": "Jméno zákazníka",
+      "Customer Name is required": "Jméno zákazníka je povinné.",
+      "Date is required": "Datum je povinné.",
+      "Denomination Value": "Hodnota nominálu",
+      "Line Total": "Celkem za řádek",
+      "Operator": "Operátor",
+      "Return Date": "Datum vrácení",
+      "Return Reason": "Důvod vrácení",
+      "Teller is required": "Pokladník je povinný.",
+      "Total Cash Received": "Celková přijatá hotovost",
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
       "Allow amortization override": "Povolit změnu amortizace",
       "Allow approval/disbursal above applied amount": "Povolit schválení/čerpání nad požadovanou částku",
@@ -4089,6 +4113,18 @@
       "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",
+      "No eligible cash payment types available": "Nejsou k dispozici žádné způsobilé typy hotovostních plateb.",
+      "No returned checks found": "Nebyly nalezeny žádné vrácené šeky.",
+      "Quantity must be a whole number": "Množství musí být celé číslo.",
+      "Returned check details could not be loaded": "Podrobnosti vráceného šeku se nepodařilo načíst.",
+      "Returned check options could not be loaded": "Možnosti platby vráceného šeku se nepodařilo načíst.",
+      "Returned check payment failed": "Platba vráceného šeku se nezdařila.",
+      "Returned check search failed": "Vyhledávání vrácených šeků se nezdařilo.",
+      "Returned check settled successfully": "Vrácený šek byl úspěšně uhrazen.",
+      "Settle a returned check with a cash payment": "Uhraďte vrácený šek hotovostní platbou.",
+      "You do not have permission to settle returned checks": "Nemáte oprávnění k úhradě vrácených šeků.",
+      "You do not have permission to view returned check payments": "Nemáte oprávnění zobrazit platby vrácených šeků.",
       "Select a client from the list": "Vyberte klienta ze seznamu",
       "Complete these steps to preview the product": "Dokončete tyto kroky, abyste zobrazili náhled produktu",
       "Complete these steps before creating the product": "Dokončete tyto kroky před vytvořením produktu",
