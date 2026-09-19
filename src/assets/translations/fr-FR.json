@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Statut d’acquisition",
+    "loading": "Chargement du statut d’acquisition...",
+    "empty": "Aucune donnée d’acquisition n’est disponible pour ce compte.",
+    "retry": "Réessayer",
+    "currentStage": "Étape actuelle",
+    "notAvailable": "Non disponible",
+    "errors": {
+      "forbidden": "Vous n’avez pas l’autorisation de consulter ce statut d’acquisition.",
+      "notFound": "Le statut d’acquisition de ce compte est introuvable.",
+      "generic": "Impossible de charger le statut d’acquisition. Veuillez réessayer."
+    },
+    "stages": {
+      "ONBOARDING": "Intégration",
+      "COMPLIANCE": "Conformité",
+      "APPROVAL": "Approbation",
+      "ACTIVATION": "Activation",
+      "DEPOSIT": "Dépôt",
+      "WITHDRAWAL": "Retrait"
+    },
+    "statuses": {
+      "COMPLETED": "TERMINÉ",
+      "CURRENT": "ACTUEL",
+      "PENDING": "EN ATTENTE",
+      "BLOCKED": "BLOQUÉ",
+      "CANCELLED": "ANNULÉ",
+      "CLOSED": "FERMÉ",
+      "FAILED": "ÉCHEC",
+      "REJECTED": "REJETÉ",
+      "WITHDRAWN": "RETIRÉ"
+    },
+    "fields": {
+      "completedOn": "Terminé le",
+      "sourceStatus": "Statut source",
+      "actor": "Acteur",
+      "amount": "Montant",
+      "accountStatus": "Statut du compte",
+      "reason": "Motif"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",

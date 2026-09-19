@@ -163,6 +163,22 @@
         >
           {{ 'labels.inputs.Dashboard' | translate }}
         </a>
+        @if (savingsAccountData.clientId) {
+          <ng-container *mifosxHasPermission="'READ_CLIENT'">
+            <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNT'">
+              <a
+                mat-tab-link
+                *mifosxHasPermission="'READ_ENROLLMENT_STATUS'"
+                [routerLink]="['./acquisition-status']"
+                routerLinkActive
+                #acquisitionStatus="routerLinkActive"
+                [active]="acquisitionStatus.isActive"
+              >
+                {{ 'acquisition.title' | translate }}
+              </a>
+            </ng-container>
+          </ng-container>
+        }
         <a
           mat-tab-link
           [routerLink]="['./transactions']"

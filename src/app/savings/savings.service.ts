@@ -13,6 +13,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable, map, switchMap } from 'rxjs';
 
+import { AcquisitionBoard } from './models/acquisition-board.model';
+
 export interface SinpeSubscriptionPayload {
   clientId: string | number;
   phoneNumber: string;
@@ -82,6 +84,20 @@ export class SavingsService {
   getSavingsAccountData(accountId: string): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
+  }
+
+  /**
+   * Retrieves the backend-owned acquisition status for a client's savings account.
+   * @param clientId Client id that owns the savings account.
+   * @param savingsAccountId Savings account id.
+   * @returns Acquisition board returned by the savings plugin.
+   */
+  getAcquisitionBoard(clientId: string | number, savingsAccountId: string | number): Observable<AcquisitionBoard> {
+    const configurableHttp = this.http as HttpClient & { skipErrorHandler?: () => HttpClient };
+    const http = configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
+    return http.get<AcquisitionBoard>(
+      `/v2/onboarding/cases/${clientId}/accounts/${savingsAccountId}/acquisition-board`
+    );
   }
 
   /**

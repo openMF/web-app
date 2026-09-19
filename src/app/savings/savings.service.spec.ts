@@ -12,6 +12,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import { describe, expect, it } from '@jest/globals';
 
+import { AcquisitionBoard } from './models/acquisition-board.model';
 import { SavingsService } from './savings.service';
 
 describe('SavingsService SINPE enrollment methods', () => {
@@ -33,6 +34,24 @@ describe('SavingsService SINPE enrollment methods', () => {
 
   afterEach(() => {
     httpMock.verify();
+  });
+
+  it('gets the acquisition board with the client and savings account identifiers', async () => {
+    const board: AcquisitionBoard = {
+      clientId: 90,
+      accountId: 87,
+      prospectId: 12,
+      currentStage: 'COMPLIANCE',
+      stages: []
+    };
+    const resultPromise = firstValueFrom(service.getAcquisitionBoard(90, 87));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === '/v2/onboarding/cases/90/accounts/87/acquisition-board' && request.method === 'GET'
+    );
+    req.flush(board);
+
+    expect(await resultPromise).toEqual(board);
   });
 
   it('requests SINPE enrollment OTP using the v2 endpoint', async () => {

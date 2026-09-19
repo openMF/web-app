@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Estado de aquisição",
+    "loading": "A carregar o estado de aquisição...",
+    "empty": "Não existem dados de estado de aquisição para esta conta.",
+    "retry": "Tentar novamente",
+    "currentStage": "Etapa atual",
+    "notAvailable": "Não disponível",
+    "errors": {
+      "forbidden": "Não tem permissão para ver este estado de aquisição.",
+      "notFound": "Não foi encontrado o estado de aquisição desta conta.",
+      "generic": "Não foi possível carregar o estado de aquisição. Tente novamente."
+    },
+    "stages": {
+      "ONBOARDING": "Integração",
+      "COMPLIANCE": "Conformidade",
+      "APPROVAL": "Aprovação",
+      "ACTIVATION": "Ativação",
+      "DEPOSIT": "Depósito",
+      "WITHDRAWAL": "Levantamento"
+    },
+    "statuses": {
+      "COMPLETED": "CONCLUÍDO",
+      "CURRENT": "ATUAL",
+      "PENDING": "PENDENTE",
+      "BLOCKED": "BLOQUEADO",
+      "CANCELLED": "CANCELADO",
+      "CLOSED": "ENCERRADO",
+      "FAILED": "FALHOU",
+      "REJECTED": "REJEITADO",
+      "WITHDRAWN": "RETIRADO"
+    },
+    "fields": {
+      "completedOn": "Concluído em",
+      "sourceStatus": "Estado de origem",
+      "actor": "Interveniente",
+      "amount": "Montante",
+      "accountStatus": "Estado da conta",
+      "reason": "Motivo"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "logado como",
   "Remember me": "Lembre de mim",

@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Acquisition Status",
+    "loading": "Loading acquisition status...",
+    "empty": "No acquisition status data is available for this account.",
+    "retry": "Retry",
+    "currentStage": "Current stage",
+    "notAvailable": "Not available",
+    "errors": {
+      "forbidden": "You do not have permission to view this acquisition status.",
+      "notFound": "Acquisition status was not found for this account.",
+      "generic": "Unable to load acquisition status. Please try again."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "APPROVAL": "Approval",
+      "ACTIVATION": "Activation",
+      "DEPOSIT": "Deposit",
+      "WITHDRAWAL": "Withdrawal"
+    },
+    "statuses": {
+      "COMPLETED": "COMPLETED",
+      "CURRENT": "CURRENT",
+      "PENDING": "PENDING",
+      "BLOCKED": "BLOCKED",
+      "CANCELLED": "CANCELLED",
+      "CLOSED": "CLOSED",
+      "FAILED": "FAILED",
+      "REJECTED": "REJECTED",
+      "WITHDRAWN": "WITHDRAWN"
+    },
+    "fields": {
+      "completedOn": "Completed on",
+      "sourceStatus": "Source status",
+      "actor": "Actor",
+      "amount": "Amount",
+      "accountStatus": "Account status",
+      "reason": "Reason"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",

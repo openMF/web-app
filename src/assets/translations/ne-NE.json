@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "प्राप्ति स्थिति",
+    "loading": "प्राप्ति स्थिति लोड हुँदैछ...",
+    "empty": "यस खाताका लागि प्राप्ति स्थिति डेटा उपलब्ध छैन।",
+    "retry": "पुनः प्रयास गर्नुहोस्",
+    "currentStage": "हालको चरण",
+    "notAvailable": "उपलब्ध छैन",
+    "errors": {
+      "forbidden": "तपाईंसँग यो प्राप्ति स्थिति हेर्ने अनुमति छैन।",
+      "notFound": "यस खाताको प्राप्ति स्थिति फेला परेन।",
+      "generic": "प्राप्ति स्थिति लोड गर्न सकिएन। फेरि प्रयास गर्नुहोस्।"
+    },
+    "stages": {
+      "ONBOARDING": "अनबोर्डिङ",
+      "COMPLIANCE": "अनुपालन",
+      "APPROVAL": "स्वीकृति",
+      "ACTIVATION": "सक्रियता",
+      "DEPOSIT": "जम्मा",
+      "WITHDRAWAL": "निकासी"
+    },
+    "statuses": {
+      "COMPLETED": "सम्पन्न",
+      "CURRENT": "हालको",
+      "PENDING": "बाँकी",
+      "BLOCKED": "रोकिएको",
+      "CANCELLED": "रद्द गरिएको",
+      "CLOSED": "बन्द",
+      "FAILED": "असफल",
+      "REJECTED": "अस्वीकृत",
+      "WITHDRAWN": "फिर्ता लिइएको"
+    },
+    "fields": {
+      "completedOn": "सम्पन्न मिति",
+      "sourceStatus": "स्रोत स्थिति",
+      "actor": "कार्यकर्ता",
+      "amount": "रकम",
+      "accountStatus": "खाता स्थिति",
+      "reason": "कारण"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
