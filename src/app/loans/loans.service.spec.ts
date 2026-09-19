@@ -87,3 +87,73 @@ describe('LoansService - Working Capital transaction template', () => {
     expect(req.request.params.get('transactionDate')).toBe('05 January 2026');
   });
 });
+
+describe('LoansService - Working Capital application charges', () => {
+  let service: LoansService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
+        { provide: Dates, useValue: {} }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+  });
+
+  const disbursementFee = { id: 12, name: 'Fee', chargeTimeType: { id: 1 } };
+  const dueDateFee = { id: 15, name: 'Late fee', chargeTimeType: { id: 2 } };
+
+  it('offers only the product disbursement charges and preloads them for a new application', () => {
+    const loanData: any = { product: { charges: [
+          disbursementFee,
+          dueDateFee
+        ] } };
+    service.applyWorkingCapitalChargeOptions(loanData, true);
+    expect(loanData.chargeOptions).toEqual([disbursementFee]);
+    expect(loanData.charges).toEqual([disbursementFee]);
+  });
+
+  it('does not preload the catalogue when editing an existing application', () => {
+    const loanData: any = { product: { charges: [disbursementFee] } };
+    service.applyWorkingCapitalChargeOptions(loanData, false);
+    expect(loanData.chargeOptions).toEqual([disbursementFee]);
+    expect(loanData.charges).toEqual([]);
+  });
+
+  it('tolerates a product without catalogue', () => {
+    const loanData: any = { product: {} };
+    service.applyWorkingCapitalChargeOptions(loanData, true);
+    expect(loanData.chargeOptions).toEqual([]);
+    expect(loanData.charges).toEqual([]);
+  });
+
+  it('maps step rows to chargeId, optional amount and the loan charge id when present', () => {
+    const payload = service.buildWorkingCapitalChargesPayload([
+      { id: 12, chargeId: 12, amount: 100 },
+      { id: 301, chargeId: 15, amount: 5 },
+      { chargeId: 18, amount: '' },
+      { name: 'malformed, no chargeId' }
+    ]);
+    expect(payload).toEqual([
+      { chargeId: 12, amount: 100 },
+      { id: 301, chargeId: 15, amount: 5 },
+      { chargeId: 18 }
+    ]);
+  });
+
+  it('keeps the last row when the same charge is listed twice', () => {
+    const payload = service.buildWorkingCapitalChargesPayload([
+      { chargeId: 12, amount: 100 },
+      { chargeId: 12, amount: 150 }
+    ]);
+    expect(payload).toEqual([{ chargeId: 12, amount: 150 }]);
+  });
+
+  it('returns an empty list when the step provided nothing', () => {
+    expect(service.buildWorkingCapitalChargesPayload(undefined)).toEqual([]);
+  });
+});

@@ -293,6 +293,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * DISBURSEMENT:1
    * REPAYMENT:2
    * WAIVE_INTEREST:4
+   * REPAYMENT_AT_DISBURSEMENT:5
    * WAIVE_CHARGES:9
    * ACCRUAL:10
    * REFUND:16
@@ -328,6 +329,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       1,
       2,
       4,
+      5,
       9,
       20,
       21,
@@ -364,6 +366,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     // always send the chargeoff flag.
     return !(
       transaction.type.disbursement ||
+      this.isRepaymentAtDisbursement(transaction.type) ||
       this.isChargeOff(transaction.type) ||
       this.isReAgoeOrReAmortize(transaction.type) ||
       transaction.type.interestRefund ||
@@ -375,7 +378,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   loanTransactionBadgeClass(transaction: LoanTransaction): string {
     if (transaction.manuallyReversed || transaction.reversed) return 'badge-reversed';
     if (this.isAccrualKindOf(transaction.type)) return 'badge-accrual';
-    if (transaction.type.disbursement) return 'badge-disbursement';
+    if (transaction.type.disbursement || this.isRepaymentAtDisbursement(transaction.type)) return 'badge-disbursement';
     if (this.isDownPayment(transaction.type)) return 'badge-downpayment';
     if (this.isChargeOff(transaction.type)) return 'badge-chargeoff';
     if (this.isReAge(transaction.type)) return 'badge-reage';
@@ -421,7 +424,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isAccrualKindOf(transaction.type)) {
       return 'row-accrual';
     }
-    if (transaction.type.disbursement) {
+    if (transaction.type.disbursement || this.isRepaymentAtDisbursement(transaction.type)) {
       return 'row-disbursement';
     }
     if (this.isDownPayment(transaction.type)) {
@@ -602,6 +605,16 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    */
   isRecoveryRepayment(transactionType: LoanTransactionType): boolean {
     return transactionType.recoveryRepayment || transactionType.code === 'loanTransactionType.recoveryRepayment';
+  }
+
+  /**
+   * The portion of a disbursement withheld to settle disbursement charges. It is not a customer
+   * payment, so it is grouped visually with the disbursement and reversed only through undo disbursal.
+   */
+  isRepaymentAtDisbursement(transactionType: LoanTransactionType): boolean {
+    return (
+      transactionType.repaymentAtDisbursement || transactionType.code === 'loanTransactionType.repaymentAtDisbursement'
+    );
   }
 
   private isDownPayment(transactionType: LoanTransactionType): boolean {

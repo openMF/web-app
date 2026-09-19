@@ -32,6 +32,34 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Create charge component.
  */
+/** Charge time types a Working Capital charge product may use: Disbursement (1) and Specified due date (2). */
+export const WORKING_CAPITAL_CHARGE_TIME_TYPES = [
+  1,
+  2
+];
+
+/**
+ * Calculation types the backend accepts for a Working Capital charge product, by time type:
+ * Disbursement allows Flat (1) and % Amount (2); Specified due date allows Flat only. With no time
+ * type chosen yet every candidate is offered.
+ */
+export function workingCapitalCalculationTypes(chargeTimeType: number | null | undefined): number[] {
+  switch (chargeTimeType) {
+    case 1:
+      return [
+        1,
+        2
+      ];
+    case 2:
+      return [1];
+    default:
+      return [
+        1,
+        2
+      ];
+  }
+}
+
 @Component({
   selector: 'mifosx-create-charge',
   templateUrl: './create-charge.component.html',
@@ -177,7 +205,7 @@ export class CreateChargeComponent implements OnInit {
         case 5:
           this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions.filter((chargeTimeType: any) => {
-            return [2].includes(chargeTimeType.id); // Only Specific Due Date
+            return WORKING_CAPITAL_CHARGE_TIME_TYPES.includes(chargeTimeType.id);
           });
           this.chargePaymentModeData = this.chargePaymentModeData.filter((chargePaymentMode: any) => {
             return chargePaymentMode.id === 0;
@@ -214,8 +242,9 @@ export class CreateChargeComponent implements OnInit {
         }
       }
       if (this.chargeForm.get('chargeAppliesTo').value === 5) {
-        // Flat for now
-        return [1].includes(chargeCalculationType.id);
+        return workingCapitalCalculationTypes(this.chargeForm.get('chargeTimeType').value).includes(
+          chargeCalculationType.id
+        );
       }
       return true;
     });
@@ -274,6 +303,10 @@ export class CreateChargeComponent implements OnInit {
       this.chargeForm.get('chargeTimeType').reset();
     });
     this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType) => {
+      if (this.chargeForm.get('chargeAppliesTo').value === 5) {
+        // The allowed calculation types depend on the time type for Working Capital charges.
+        this.chargeForm.get('chargeCalculationType').reset();
+      }
       this.chargeForm.removeControl('feeFrequency');
       this.chargeForm.removeControl('feeInterval');
       this.chargeForm.removeControl('feeOnMonthDay');

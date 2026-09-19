@@ -522,6 +522,28 @@
             ></mifosx-advanced-accounting-mapping-rule>
             <mifosx-advanced-accounting-mapping-rule
               class="flex-100 m-t-10"
+              [textField]="'Fees'"
+              [formType]="'FeesIncome'"
+              [formArray]="feeToIncomeAccountMappings"
+              [textHeading]="'Map Fees to Specific Income Accounts'"
+              [chargeData]="chargeData"
+              [incomeAndLiabilityAccountData]="incomeAndLiabilityAccountData"
+              [accountingMappingOptions]="chargeData"
+              (formChangeEvent)="formChangeEvent($event)"
+            ></mifosx-advanced-accounting-mapping-rule>
+            <mifosx-advanced-accounting-mapping-rule
+              class="flex-100 m-t-10"
+              [textField]="'Penalty'"
+              [formType]="'PenaltyIncome'"
+              [formArray]="penaltyToIncomeAccountMappings"
+              [textHeading]="'Map Penalties to Specific Income Accounts'"
+              [penaltyData]="penaltyData"
+              [incomeAccountData]="incomeAccountData"
+              [accountingMappingOptions]="penaltyData"
+              (formChangeEvent)="formChangeEvent($event)"
+            ></mifosx-advanced-accounting-mapping-rule>
+            <mifosx-advanced-accounting-mapping-rule
+              class="flex-100 m-t-10"
               [textField]="'Charge-off reason'"
               [formType]="'ChargeOffReasonExpense'"
               [formArray]="chargeOffReasonToExpenseAccountMappings"

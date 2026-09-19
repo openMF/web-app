@@ -407,71 +407,72 @@
         <span class="flex-70">{{ loansAccountProductTemplate?.daysInMonthType.value | translateKey: 'catalogs' }}</span>
       </div>
     }
+  }
 
-    @if (loansAccount.charges && loansAccount.charges.length) {
-      <div class="layout-row-wrap responsive-column flex-fill margin-t">
-        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
-        <mat-divider class="flex-fill"></mat-divider>
-        <table class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">
-              {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="chargeCalculationType">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">
-              {{ charge.amount }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="chargeTimeType">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">
-              @if (
-                charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'
-              ) {
-                <span>
-                  {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
-                </span>
-              }
-              @if (charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee') {
-                <span>
-                  {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
-                </span>
-              }
-              @if (
-                !(
-                  charge.chargeTimeType.value === 'Monthly Fee' ||
-                  charge.chargeTimeType.value === 'Annual Fee' ||
-                  charge.chargeTimeType.value === 'Specified due date' ||
-                  charge.chargeTimeType.value === 'Weekly Fee'
-                )
-              ) {
-                <span>
-                  {{ 'labels.inputs.N/A' | translate }}
-                </span>
-              }
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
-        </table>
-      </div>
-    }
+  <!-- Charges apply to both product types, so the table sits outside the term-loan block. -->
+  @if (loansAccount.charges && loansAccount.charges.length) {
+    <div class="layout-row-wrap responsive-column flex-fill margin-t">
+      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
+      <mat-divider class="flex-fill"></mat-divider>
+      <table class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chargeCalculationType">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.amount }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chargeTimeType">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
+              <span>
+                {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
+              </span>
+            }
+            @if (charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee') {
+              <span>
+                {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
+              </span>
+            }
+            @if (
+              !(
+                charge.chargeTimeType.value === 'Monthly Fee' ||
+                charge.chargeTimeType.value === 'Annual Fee' ||
+                charge.chargeTimeType.value === 'Specified due date' ||
+                charge.chargeTimeType.value === 'Weekly Fee'
+              )
+            ) {
+              <span>
+                {{ 'labels.inputs.N/A' | translate }}
+              </span>
+            }
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
+      </table>
+    </div>
+  }
 
+  @if (loanProductService.isLoanProduct) {
     @if (loansAccountProductTemplate.overdueCharges?.length) {
       <div class="flex-fill layout-row-wrap layout-xs-column margin-t">
         <h3 class="mat-h3 flex-98">{{ 'labels.heading.Overdue Charges' | translate }}</h3>

@@ -9,3 +9,8 @@
 .container {
   max-width: 37rem;
 }
+
+.no-charge-options {
+  margin: 0 0 16px;
+  color: var(--mat-sys-on-surface-variant, rgb(0 0 0 / 60%));
+}
