@@ -611,18 +611,12 @@ const routes: Routes = [
                   children: [
                     {
                       path: '',
-                      component: ViewTaxComponentComponent,
-                      resolve: {
-                        taxComponent: TaxComponentResolver
-                      }
+                      component: ViewTaxComponentComponent
                     },
                     {
                       path: 'edit',
                       data: { title: 'Edit Tax Component', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                      component: EditTaxComponentComponent,
-                      resolve: {
-                        taxComponent: TaxComponentResolver
-                      }
+                      component: EditTaxComponentComponent
                     }
                   ]
                 }
@@ -656,10 +650,7 @@ const routes: Routes = [
                   children: [
                     {
                       path: '',
-                      component: ViewTaxGroupComponent,
-                      resolve: {
-                        taxGroup: TaxGroupResolver
-                      }
+                      component: ViewTaxGroupComponent
                     },
                     {
                       path: 'edit',
@@ -711,18 +702,12 @@ const routes: Routes = [
                   children: [
                     {
                       path: '',
-                      component: ViewRangeComponent,
-                      resolve: {
-                        delinquencyRange: DelinquencyRangeComponentsResolver
-                      }
+                      component: ViewRangeComponent
                     },
                     {
                       path: 'edit',
                       data: { title: 'Edit Delinquency Range', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                      component: EditRangeComponent,
-                      resolve: {
-                        delinquencyRange: DelinquencyRangeComponentsResolver
-                      }
+                      component: EditRangeComponent
                     }
                   ]
                 }
@@ -756,17 +741,13 @@ const routes: Routes = [
                   children: [
                     {
                       path: '',
-                      component: ViewBucketComponent,
-                      resolve: {
-                        delinquencyBucket: DelinquencyBucketComponentsResolver
-                      }
+                      component: ViewBucketComponent
                     },
                     {
                       path: 'edit',
                       data: { title: 'Edit Delinquency Bucket', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                       component: EditBucketComponent,
                       resolve: {
-                        delinquencyBucket: DelinquencyBucketComponentsResolver,
                         delinquencyBucketsTemplateData: DelinquencyRangeComponentsResolver
                       }
                     }
@@ -936,18 +917,12 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewProductMixComponent,
-                  resolve: {
-                    productMix: ViewProductMixResolver
-                  }
+                  component: ViewProductMixComponent
                 },
                 {
                   path: 'edit',
                   data: { title: 'Edit Product Mix', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                  component: EditProductMixComponent,
-                  resolve: {
-                    productMix: ViewProductMixResolver
-                  }
+                  component: EditProductMixComponent
                 }
               ]
             }
@@ -978,18 +953,12 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewFloatingRateComponent,
-                  resolve: {
-                    floatingRate: FloatingRateResolver
-                  }
+                  component: ViewFloatingRateComponent
                 },
                 {
                   path: 'edit',
                   component: EditFloatingRateComponent,
-                  data: { title: 'Edit Floating Rate', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                  resolve: {
-                    floatingRate: FloatingRateResolver
-                  }
+                  data: { title: 'Edit Floating Rate', breadcrumb: 'Edit', routeParamBreadcrumb: false }
                 }
               ]
             }
@@ -1023,10 +992,7 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewChargeComponent,
-                  resolve: {
-                    charge: ChargeResolver
-                  }
+                  component: ViewChargeComponent
                 },
                 {
                   path: 'edit',
@@ -1068,18 +1034,14 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewCollateralComponent,
-                  resolve: {
-                    collateral: CollateralResolver
-                  }
+                  component: ViewCollateralComponent
                 },
                 {
                   path: 'edit',
                   component: EditCollateralComponent,
                   data: { title: 'Edit Collateral', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    collateralTemplate: CollateralTemplateResolver,
-                    collateral: CollateralResolver
+                    collateralTemplate: CollateralTemplateResolver
                   }
                 }
               ]
