@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "고객 획득 상태",
+    "loading": "고객 획득 상태를 불러오는 중...",
+    "empty": "이 계좌에 사용할 수 있는 고객 획득 상태 데이터가 없습니다.",
+    "retry": "다시 시도",
+    "currentStage": "현재 단계",
+    "notAvailable": "사용할 수 없음",
+    "errors": {
+      "forbidden": "이 고객 획득 상태를 볼 권한이 없습니다.",
+      "notFound": "이 계좌의 고객 획득 상태를 찾을 수 없습니다.",
+      "generic": "고객 획득 상태를 불러올 수 없습니다. 다시 시도해 주세요."
+    },
+    "stages": {
+      "ONBOARDING": "온보딩",
+      "COMPLIANCE": "규정 준수",
+      "APPROVAL": "승인",
+      "ACTIVATION": "활성화",
+      "DEPOSIT": "입금",
+      "WITHDRAWAL": "출금"
+    },
+    "statuses": {
+      "COMPLETED": "완료",
+      "CURRENT": "현재",
+      "PENDING": "대기 중",
+      "BLOCKED": "차단됨",
+      "CANCELLED": "취소됨",
+      "CLOSED": "종료됨",
+      "FAILED": "실패",
+      "REJECTED": "거부됨",
+      "WITHDRAWN": "철회됨"
+    },
+    "fields": {
+      "completedOn": "완료일",
+      "sourceStatus": "원본 상태",
+      "actor": "처리자",
+      "amount": "금액",
+      "accountStatus": "계좌 상태",
+      "reason": "사유"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",

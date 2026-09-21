@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Hali ya upataji",
+    "loading": "Inapakia hali ya upataji...",
+    "empty": "Hakuna data ya hali ya upataji kwa akaunti hii.",
+    "retry": "Jaribu tena",
+    "currentStage": "Hatua ya sasa",
+    "notAvailable": "Haipatikani",
+    "errors": {
+      "forbidden": "Huna ruhusa ya kuona hali hii ya upataji.",
+      "notFound": "Hali ya upataji haikupatikana kwa akaunti hii.",
+      "generic": "Imeshindikana kupakia hali ya upataji. Tafadhali jaribu tena."
+    },
+    "stages": {
+      "ONBOARDING": "Usajili",
+      "COMPLIANCE": "Uzingatiaji",
+      "APPROVAL": "Uidhinishaji",
+      "ACTIVATION": "Uanzishaji",
+      "DEPOSIT": "Amana",
+      "WITHDRAWAL": "Utoaji"
+    },
+    "statuses": {
+      "COMPLETED": "IMEKAMILIKA",
+      "CURRENT": "YA SASA",
+      "PENDING": "INASUBIRI",
+      "BLOCKED": "IMEZUIWA",
+      "CANCELLED": "IMEGHAFIRIWA",
+      "CLOSED": "IMEFUNGWA",
+      "FAILED": "IMESHINDWA",
+      "REJECTED": "IMEKATALIWA",
+      "WITHDRAWN": "IMEONDOLEWA"
+    },
+    "fields": {
+      "completedOn": "Imekamilika tarehe",
+      "sourceStatus": "Hali ya chanzo",
+      "actor": "Mhusika",
+      "amount": "Kiasi",
+      "accountStatus": "Hali ya akaunti",
+      "reason": "Sababu"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",

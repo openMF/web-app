@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Stav akvizice",
+    "loading": "Načítání stavu akvizice...",
+    "empty": "Pro tento účet nejsou k dispozici žádné údaje o stavu akvizice.",
+    "retry": "Zkusit znovu",
+    "currentStage": "Aktuální fáze",
+    "notAvailable": "Není k dispozici",
+    "errors": {
+      "forbidden": "Nemáte oprávnění zobrazit tento stav akvizice.",
+      "notFound": "Stav akvizice pro tento účet nebyl nalezen.",
+      "generic": "Stav akvizice se nepodařilo načíst. Zkuste to znovu."
+    },
+    "stages": {
+      "ONBOARDING": "Začlenění",
+      "COMPLIANCE": "Soulad",
+      "APPROVAL": "Schválení",
+      "ACTIVATION": "Aktivace",
+      "DEPOSIT": "Vklad",
+      "WITHDRAWAL": "Výběr"
+    },
+    "statuses": {
+      "COMPLETED": "DOKONČENO",
+      "CURRENT": "AKTUÁLNÍ",
+      "PENDING": "ČEKÁ",
+      "BLOCKED": "BLOKOVÁNO",
+      "CANCELLED": "ZRUŠENO",
+      "CLOSED": "UZAVŘENO",
+      "FAILED": "SELHALO",
+      "REJECTED": "ZAMÍTNUTO",
+      "WITHDRAWN": "STAŽENO"
+    },
+    "fields": {
+      "completedOn": "Dokončeno",
+      "sourceStatus": "Zdrojový stav",
+      "actor": "Aktér",
+      "amount": "Částka",
+      "accountStatus": "Stav účtu",
+      "reason": "Důvod"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",

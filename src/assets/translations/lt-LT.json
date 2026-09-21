@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Įsigijimo būsena",
+    "loading": "Įkeliama įsigijimo būsena...",
+    "empty": "Šiai sąskaitai nėra įsigijimo būsenos duomenų.",
+    "retry": "Bandyti dar kartą",
+    "currentStage": "Dabartinis etapas",
+    "notAvailable": "Nėra duomenų",
+    "errors": {
+      "forbidden": "Neturite leidimo peržiūrėti šią įsigijimo būseną.",
+      "notFound": "Šios sąskaitos įsigijimo būsena nerasta.",
+      "generic": "Nepavyko įkelti įsigijimo būsenos. Bandykite dar kartą."
+    },
+    "stages": {
+      "ONBOARDING": "Įtraukimas",
+      "COMPLIANCE": "Atitiktis",
+      "APPROVAL": "Patvirtinimas",
+      "ACTIVATION": "Aktyvinimas",
+      "DEPOSIT": "Įmoka",
+      "WITHDRAWAL": "Išėmimas"
+    },
+    "statuses": {
+      "COMPLETED": "UŽBAIGTA",
+      "CURRENT": "DABARTINĖ",
+      "PENDING": "LAUKIAMA",
+      "BLOCKED": "UŽBLOKUOTA",
+      "CANCELLED": "ATŠAUKTA",
+      "CLOSED": "UŽDARYTA",
+      "FAILED": "NEPAVYKO",
+      "REJECTED": "ATMESTA",
+      "WITHDRAWN": "ATŠAUKTA"
+    },
+    "fields": {
+      "completedOn": "Užbaigta",
+      "sourceStatus": "Šaltinio būsena",
+      "actor": "Vykdytojas",
+      "amount": "Suma",
+      "accountStatus": "Sąskaitos būsena",
+      "reason": "Priežastis"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",

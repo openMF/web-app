@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Akquisitionsstatus",
+    "loading": "Akquisitionsstatus wird geladen...",
+    "empty": "Für dieses Konto sind keine Akquisitionsstatusdaten verfügbar.",
+    "retry": "Erneut versuchen",
+    "currentStage": "Aktuelle Phase",
+    "notAvailable": "Nicht verfügbar",
+    "errors": {
+      "forbidden": "Sie sind nicht berechtigt, diesen Akquisitionsstatus anzuzeigen.",
+      "notFound": "Für dieses Konto wurde kein Akquisitionsstatus gefunden.",
+      "generic": "Der Akquisitionsstatus konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "APPROVAL": "Genehmigung",
+      "ACTIVATION": "Aktivierung",
+      "DEPOSIT": "Einzahlung",
+      "WITHDRAWAL": "Auszahlung"
+    },
+    "statuses": {
+      "COMPLETED": "ABGESCHLOSSEN",
+      "CURRENT": "AKTUELL",
+      "PENDING": "AUSSTEHEND",
+      "BLOCKED": "BLOCKIERT",
+      "CANCELLED": "ABGEBROCHEN",
+      "CLOSED": "GESCHLOSSEN",
+      "FAILED": "FEHLGESCHLAGEN",
+      "REJECTED": "ABGELEHNT",
+      "WITHDRAWN": "ZURÜCKGEZOGEN"
+    },
+    "fields": {
+      "completedOn": "Abgeschlossen am",
+      "sourceStatus": "Quellstatus",
+      "actor": "Akteur",
+      "amount": "Betrag",
+      "accountStatus": "Kontostatus",
+      "reason": "Grund"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",

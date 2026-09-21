@@ -1,4 +1,44 @@
 {
+  "acquisition": {
+    "title": "Piesaistes statuss",
+    "loading": "Notiek piesaistes statusa ielāde...",
+    "empty": "Šim kontam nav pieejami piesaistes statusa dati.",
+    "retry": "Mēģināt vēlreiz",
+    "currentStage": "Pašreizējais posms",
+    "notAvailable": "Nav pieejams",
+    "errors": {
+      "forbidden": "Jums nav atļaujas skatīt šo piesaistes statusu.",
+      "notFound": "Šim kontam piesaistes statuss netika atrasts.",
+      "generic": "Neizdevās ielādēt piesaistes statusu. Mēģiniet vēlreiz."
+    },
+    "stages": {
+      "ONBOARDING": "Uzņemšana",
+      "COMPLIANCE": "Atbilstība",
+      "APPROVAL": "Apstiprināšana",
+      "ACTIVATION": "Aktivizēšana",
+      "DEPOSIT": "Iemaksa",
+      "WITHDRAWAL": "Izmaksa"
+    },
+    "statuses": {
+      "COMPLETED": "PABEIGTS",
+      "CURRENT": "PAŠREIZĒJS",
+      "PENDING": "GAIDA",
+      "BLOCKED": "BLOĶĒTS",
+      "CANCELLED": "ATCELTS",
+      "CLOSED": "SLĒGTS",
+      "FAILED": "NEIZDEVĀS",
+      "REJECTED": "NORAIDĪTS",
+      "WITHDRAWN": "ATSAUKTS"
+    },
+    "fields": {
+      "completedOn": "Pabeigts",
+      "sourceStatus": "Avota statuss",
+      "actor": "Izpildītājs",
+      "amount": "Summa",
+      "accountStatus": "Konta statuss",
+      "reason": "Iemesls"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
