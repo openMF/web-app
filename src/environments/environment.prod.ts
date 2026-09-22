@@ -35,6 +35,12 @@ export const environment = {
     redirectUri: loadedEnv.oauthRedirectUri || '',
     scope: loadedEnv.oauthScope || ''
   },
+  /**
+   * Masks client names in listings when compliance requires it.
+   * Set via MIFOS_COMPLIANCE_HIDE_CLIENT_DATA env var
+   */
+  complianceHideClientData:
+    loadedEnv['complianceHideClientData'] === 'true' || loadedEnv['complianceHideClientData'] === true || false,
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   warningDialog: {
