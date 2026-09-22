@@ -13,6 +13,7 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { LoansService } from './loans.service';
 import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
+import { CreditOriginationBoard } from './models/credit-origination-board.model';
 
 describe('LoansService - Working Capital transaction template', () => {
   const businessDate = new Date(2026, 0, 10);
@@ -37,6 +38,23 @@ describe('LoansService - Working Capital transaction template', () => {
   });
 
   afterEach(() => httpMock.verify());
+
+  it('gets the typed credit origination board from the WEB-1059 endpoint', () => {
+    const board: CreditOriginationBoard = {
+      creditApplicationId: 87,
+      clientId: 90,
+      loanId: 87,
+      prospectId: null,
+      currentStage: 'ONBOARDING',
+      stages: []
+    };
+
+    service.getCreditOriginationBoard(87).subscribe((result) => expect(result).toEqual(board));
+    const req = httpMock.expectOne('/v2/credit-applications/87/origination-board');
+
+    expect(req.request.method).toBe('GET');
+    req.flush(board);
+  });
 
   /**
    * Issues the template request and returns the single outstanding HTTP request, so each test can assert on its params.

@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Estado de concessão do crédito",
+    "loading": "A carregar o estado de concessão do crédito...",
+    "empty": "Não existe um estado de concessão do crédito para este pedido.",
+    "retry": "Tentar novamente",
+    "currentStage": "Etapa atual",
+    "errors": {
+      "unauthorized": "Inicie sessão para consultar o estado de concessão do crédito.",
+      "forbidden": "Não tem permissão para consultar este estado de concessão do crédito.",
+      "notFound": "O pedido de crédito ou o respetivo quadro de concessão não foi encontrado.",
+      "generic": "Não foi possível carregar o estado de concessão do crédito. Tente novamente."
+    },
+    "stages": {
+      "ONBOARDING": "Integração",
+      "COMPLIANCE": "Conformidade",
+      "PARAMETRIC_SCORE": "Pontuação paramétrica",
+      "FILE_INTEGRATION": "Integração do processo",
+      "CREDIT_ANALYSIS": "Análise de crédito",
+      "APPROVAL": "Aprovação",
+      "LEGAL_INSTRUMENTATION": "Formalização jurídica",
+      "DISBURSEMENT": "Desembolso",
+      "RECOVERY": "Recuperação"
+    },
+    "statuses": {
+      "COMPLETED": "Concluído",
+      "CURRENT": "Atual",
+      "PENDING": "Pendente",
+      "REJECTED": "Rejeitado",
+      "BLOCKED": "Bloqueado",
+      "FAILED": "Falhou",
+      "CANCELLED": "Cancelado",
+      "WITHDRAWN": "Retirado",
+      "WRITTEN_OFF": "Abatido"
+    },
+    "fields": {
+      "completedOn": "Concluído em",
+      "source": "Origem",
+      "sourceStatus": "Estado de origem",
+      "actor": "Interveniente",
+      "sourceReference": "Referência de origem",
+      "transactionId": "ID da transação",
+      "amount": "Montante",
+      "loanStatus": "Estado do crédito",
+      "reason": "Motivo"
+    }
+  },
   "acquisition": {
     "title": "Estado de aquisição",
     "loading": "A carregar o estado de aquisição...",

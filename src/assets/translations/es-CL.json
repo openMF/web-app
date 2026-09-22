@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Estado de originación del crédito",
+    "loading": "Cargando el estado de originación del crédito...",
+    "empty": "No hay un estado de originación disponible para esta solicitud.",
+    "retry": "Reintentar",
+    "currentStage": "Etapa actual",
+    "errors": {
+      "unauthorized": "Inicie sesión para ver el estado de originación del crédito.",
+      "forbidden": "No tiene permiso para ver este estado de originación del crédito.",
+      "notFound": "No se encontró la solicitud de crédito ni su tablero de originación.",
+      "generic": "No se pudo cargar el estado de originación del crédito. Inténtelo de nuevo."
+    },
+    "stages": {
+      "ONBOARDING": "Incorporación",
+      "COMPLIANCE": "Cumplimiento",
+      "PARAMETRIC_SCORE": "Puntaje paramétrico",
+      "FILE_INTEGRATION": "Integración del expediente",
+      "CREDIT_ANALYSIS": "Análisis de crédito",
+      "APPROVAL": "Aprobación",
+      "LEGAL_INSTRUMENTATION": "Instrumentación legal",
+      "DISBURSEMENT": "Desembolso",
+      "RECOVERY": "Cobranza"
+    },
+    "statuses": {
+      "COMPLETED": "Completado",
+      "CURRENT": "Actual",
+      "PENDING": "Pendiente",
+      "REJECTED": "Rechazado",
+      "BLOCKED": "Bloqueado",
+      "FAILED": "Fallido",
+      "CANCELLED": "Cancelado",
+      "WITHDRAWN": "Retirado",
+      "WRITTEN_OFF": "Castigado"
+    },
+    "fields": {
+      "completedOn": "Completado el",
+      "source": "Fuente",
+      "sourceStatus": "Estado de origen",
+      "actor": "Actor",
+      "sourceReference": "Referencia de origen",
+      "transactionId": "ID de transacción",
+      "amount": "Importe",
+      "loanStatus": "Estado del crédito",
+      "reason": "Motivo"
+    }
+  },
   "acquisition": {
     "title": "Estado de adquisición",
     "loading": "Cargando estado de adquisición...",

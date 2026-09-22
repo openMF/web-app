@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Kredito suteikimo būsena",
+    "loading": "Įkeliama kredito suteikimo būsena...",
+    "empty": "Šiai paraiškai nėra kredito suteikimo būsenos duomenų.",
+    "retry": "Bandyti dar kartą",
+    "currentStage": "Dabartinis etapas",
+    "errors": {
+      "unauthorized": "Prisijunkite, kad galėtumėte peržiūrėti kredito suteikimo būseną.",
+      "forbidden": "Neturite leidimo peržiūrėti šią kredito suteikimo būseną.",
+      "notFound": "Kredito paraiška arba jos suteikimo eigos lentelė nerasta.",
+      "generic": "Nepavyko įkelti kredito suteikimo būsenos. Bandykite dar kartą."
+    },
+    "stages": {
+      "ONBOARDING": "Įtraukimas",
+      "COMPLIANCE": "Atitiktis",
+      "PARAMETRIC_SCORE": "Parametrinis vertinimas",
+      "FILE_INTEGRATION": "Dokumentų sujungimas",
+      "CREDIT_ANALYSIS": "Kredito analizė",
+      "APPROVAL": "Patvirtinimas",
+      "LEGAL_INSTRUMENTATION": "Teisinis įforminimas",
+      "DISBURSEMENT": "Išmokėjimas",
+      "RECOVERY": "Išieškojimas"
+    },
+    "statuses": {
+      "COMPLETED": "Užbaigta",
+      "CURRENT": "Dabartinė",
+      "PENDING": "Laukiama",
+      "REJECTED": "Atmesta",
+      "BLOCKED": "Užblokuota",
+      "FAILED": "Nepavyko",
+      "CANCELLED": "Atšaukta",
+      "WITHDRAWN": "Atsiimta",
+      "WRITTEN_OFF": "Nurašyta"
+    },
+    "fields": {
+      "completedOn": "Užbaigta",
+      "source": "Šaltinis",
+      "sourceStatus": "Šaltinio būsena",
+      "actor": "Vykdytojas",
+      "sourceReference": "Šaltinio nuoroda",
+      "transactionId": "Operacijos ID",
+      "amount": "Suma",
+      "loanStatus": "Kredito būsena",
+      "reason": "Priežastis"
+    }
+  },
   "acquisition": {
     "title": "Įsigijimo būsena",
     "loading": "Įkeliama įsigijimo būsena...",
