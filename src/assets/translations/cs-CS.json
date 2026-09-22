@@ -4326,6 +4326,8 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Near Breach": "Blízko porušení",
+      "In Progress": "Probíhá",
       "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",
       "No eligible cash payment types available": "Nejsou k dispozici žádné způsobilé typy hotovostních plateb.",
       "No returned checks found": "Nebyly nalezeny žádné vrácené šeky.",

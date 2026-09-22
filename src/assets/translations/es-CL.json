@@ -4325,6 +4325,8 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Near Breach": "Cerca de incumplimiento",
+      "In Progress": "En curso",
       "Cash received cannot be less than the check amount": "El efectivo recibido no puede ser menor que el monto del cheque.",
       "No eligible cash payment types available": "No hay tipos de pago en efectivo habilitados disponibles.",
       "No returned checks found": "No se encontraron cheques devueltos.",

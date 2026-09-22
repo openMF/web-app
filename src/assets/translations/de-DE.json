@@ -4327,6 +4327,8 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Near Breach": "Nahe Verletzung",
+      "In Progress": "In Bearbeitung",
       "Cash received cannot be less than the check amount": "Der erhaltene Bargeldbetrag darf nicht niedriger als der Scheckbetrag sein.",
       "No eligible cash payment types available": "Es sind keine zulässigen Barzahlungsarten verfügbar.",
       "No returned checks found": "Es wurden keine zurückgegebenen Schecks gefunden.",

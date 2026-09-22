@@ -4325,6 +4325,8 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Near Breach": "Tuvu pārkāpumam",
+      "In Progress": "Norisinās",
       "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",
       "No eligible cash payment types available": "Nav pieejamu atbilstošu skaidras naudas maksājumu veidu.",
       "No returned checks found": "Atgriezti čeki netika atrasti.",
