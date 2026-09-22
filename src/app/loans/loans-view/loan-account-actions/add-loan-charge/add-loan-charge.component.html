@@ -11,26 +11,37 @@
     <form [formGroup]="loanChargeForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
-            <mat-select required formControlName="chargeId">
-              @for (loanCharge of loanChargeOptions; track loanCharge) {
-                <mat-option [value]="loanCharge.id">
-                  {{ loanCharge.name + ' (' + loanCharge?.currency.name + ')' }}
-                </mat-option>
+          @if (loanChargeOptions?.length) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
+              <mat-select required formControlName="chargeId">
+                @for (loanCharge of loanChargeOptions; track loanCharge) {
+                  <mat-option [value]="loanCharge.id">
+                    {{ loanCharge.name + ' (' + loanCharge?.currency.name + ')' }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (loanChargeForm.controls.chargeId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
               }
-            </mat-select>
-            @if (loanChargeForm.controls.chargeId.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+            </mat-form-field>
+          } @else {
+            <p class="no-charge-options">
+              {{ 'labels.text.No charges are available for this loan product' | translate }}
+            </p>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-            <input type="number" required matInput formControlName="amount" />
+            <input type="number" [required]="amountRequired" matInput formControlName="amount" />
+            @if (isDisbursementRate) {
+              <mat-hint>{{
+                'labels.text.Enter the rate; the amount is calculated at disbursement' | translate
+              }}</mat-hint>
+            }
             @if (loanChargeForm.controls.amount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}

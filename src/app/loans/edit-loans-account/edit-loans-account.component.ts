@@ -57,7 +57,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  // The charges step lives inside a product-type conditional block, so it only resolves after
+  // change detection; a static query would never see it.
+  @ViewChild(LoansAccountChargesStepComponent, { static: false })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
@@ -119,6 +121,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
         delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
       };
+      this.loansService.applyWorkingCapitalChargeOptions(
+        this.loansAccountProductTemplate,
+        templateData.chargeOptions,
+        false
+      );
     }
     if (this.loansAccountProductTemplate.loanProductId) {
       this.loansService
@@ -165,7 +172,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       return (
         this.loansAccountDetailsForm.valid &&
         this.loansAccountTermsForm.valid &&
-        (!this.loansAccountDetailsForm.pristine || !this.loansAccountTermsForm.pristine)
+        (!this.loansAccountDetailsForm.pristine ||
+          !this.loansAccountTermsForm.pristine ||
+          !(this.loansAccountChargesStep?.pristine ?? true))
       );
     }
   }
@@ -183,7 +192,8 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     } else if (this.loanProductService.isWorkingCapital) {
       return {
         ...this.loansAccountDetailsStep.loansAccountDetails,
-        ...this.loansAccountTermsStep.loansAccountTerms
+        ...this.loansAccountTermsStep.loansAccountTerms,
+        ...this.loansAccountChargesStep?.loansAccountCharges
       };
     }
     console.warn('Unexpected product type in loansAccount getter');
@@ -291,9 +301,15 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
   submitWorkingCapitalProduct(): void {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
+    // `charges` replaces the loan's whole list on update while an absent key keeps it, so it is
+    // only sent when the user actually touched the charges step.
+    const chargesTouched = !(this.loansAccountChargesStep?.pristine ?? true);
     const payload = {
       ...this.loansAccount,
       clientId: this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+      charges: chargesTouched
+        ? this.loansService.buildWorkingCapitalChargesPayload(this.loansAccount.charges)
+        : undefined,
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       locale,

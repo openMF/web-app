@@ -336,6 +336,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         !this.loanProductCurrencyForm.pristine ||
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
+        !(this.loanProductChargesStep?.pristine ?? true) ||
         !(this.loanProductAccountingForm?.pristine ?? true) ||
         this.wasPaymentAllocationChanged
       );
@@ -397,6 +398,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         ...this.loanProductCurrencyStep.loanProductCurrency,
         ...this.loanProductTermsStep.loanProductTerms,
         ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductChargesStep.loanProductCharges,
         ...this.loanProductAccountingStep.loanProductAccounting
       };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
@@ -406,6 +408,13 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
 
   submit() {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
+
+    // `charges` replaces the whole association list on update, while an absent key keeps it. The
+    // preview still needs the current list, so the key is dropped only here, when the user never
+    // touched the charges step, to avoid re-sending (or emptying) what the product already has.
+    if (this.loanProductChargesStep?.pristine ?? true) {
+      delete loanProduct['charges'];
+    }
 
     if (this.loanProductService.isLoanProduct) {
       if (loanProduct['useDueForRepaymentsConfigurations']) {

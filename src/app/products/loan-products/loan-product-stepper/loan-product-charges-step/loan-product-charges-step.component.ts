@@ -88,7 +88,7 @@ export class LoanProductChargesStepComponent extends LoanProductBaseComponent im
   pristine = true;
 
   ngOnInit() {
-    this.chargeData = this.loanProductsTemplate.chargeOptions;
+    this.chargeData = this.loanProductsTemplate.chargeOptions || [];
     this.overdueChargeData = this.loanProductsTemplate.penaltyOptions
       ? this.loanProductsTemplate.penaltyOptions.filter(
           (penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment'
@@ -98,10 +98,22 @@ export class LoanProductChargesStepComponent extends LoanProductBaseComponent im
     this.chargesDataSource = this.loanProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.currencyCode.valueChanges.subscribe(() => this.clearCharges());
     if (this.loanProductService.isLoanProduct && this.multiDisburseLoan) {
-      this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
+      this.multiDisburseLoan.valueChanges.subscribe(() => this.clearCharges());
     }
+  }
+
+  /**
+   * Drops every selected charge because a product setting made them invalid (currency or
+   * multi-disbursement changed). Emptying a non-empty list is a real modification, so the step
+   * stops being pristine and the empty list is sent on save instead of being omitted.
+   */
+  private clearCharges(): void {
+    if (this.chargesDataSource.length > 0) {
+      this.pristine = false;
+    }
+    this.chargesDataSource = [];
   }
 
   addCharge(charge: any) {

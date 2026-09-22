@@ -63,7 +63,7 @@
           </mifosx-loans-account-terms-step>
         </mat-step>
 
-        @if (loanProductService.isLoanProduct) {
+        @if (loanProductService.isLoanProduct || loanProductService.isWorkingCapital) {
           <mat-step>
             <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
@@ -76,7 +76,9 @@
             >
             </mifosx-loans-account-charges-step>
           </mat-step>
+        }
 
+        @if (loanProductService.isLoanProduct) {
           @if (loansAccountFormValid) {
             <mat-step state="repayment" completed>
               <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>

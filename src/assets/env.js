@@ -7,28 +7,33 @@
  */
 
 (function (window) {
-  window["env"] = window["env"] || {};
+  window['env'] = window['env'] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = '';
-  window["env"]["fineractApiUrl"] = '';
+  window['env']['fineractApiUrls'] = 'https://ps-test.dev.alluvial.cloud';
 
-  window["env"]["apiProvider"] = '';
-  window["env"]["apiVersion"] = '';
-  window["env"]["apiActuator"] = '';
+  window['env']['fineractApiUrl'] = 'https://ps-test.dev.alluvial.cloud';
 
-  window["env"]["fineractPlatformTenantId"] = '';
-  window["env"]["fineractPlatformTenantIds"] = '';
+  window['env']['apiProvider'] = '';
+
+  window['env']['apiVersion'] = '';
+
+  window['env']['apiActuator'] = '';
+
+  window['env']['fineractPlatformTenantId'] = 'pstest';
+
+  window['env']['fineractPlatformTenantIds'] = 'pstest';
 
   window['env']['tenantLogoUrl'] = '';
   window['env']['tenantLogoUrlDark'] = '';
 
   // Language Environment variables
-  window["env"]["defaultLanguage"] = '';
-  window["env"]["supportedLanguages"] = '';
+  window['env']['defaultLanguage'] = '';
 
-  window["env"]["defaultFormatDate"] = '';
-  window["env"]["defaultFormatDatetime"] = '';
+  window['env']['supportedLanguages'] = '';
+
+  window['env']['defaultFormatDate'] = '';
+  window['env']['defaultFormatDatetime'] = '';
 
   window['env']['preloadClients'] = '';
 
@@ -38,17 +43,22 @@
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '';
 
-  // Display or not the BackEnd Info
+  // Display or not the BackEnd Info in the footer and the Login view.
+  // Regardless of this setting, it is always available in Admin > System > System Information
   window['env']['displayBackEndInfo'] = '';
 
   // Show minimal production hero on login page
   window['env']['productionMode'] = '';
+  window['env']['enableGlobalDashboard'] = '';
 
   // Enable Global Dashboard feature
-  window['env']['enableGlobalDashboard'] = false;
+  window['env']['enableGlobalDashboard'] = '';
 
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '';
+
+  // Documentation base URL for in-app help links
+  window['env']['documentationBaseUrl'] = '';
 
   // Time in seconds for Notifications, default 60 seconds
   window['env']['waitTimeForNotifications'] = '';
@@ -60,7 +70,7 @@
   window['env']['sessionIdleTimeout'] = '0';
 
   // OAuth Server Enabled
-  window['env']['oauthServerEnabled'] = false;
+  window['env']['oauthServerEnabled'] = '';
 
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '';
@@ -83,65 +93,62 @@
   // OAuth Scope
   window['env']['oauthScope'] = '';
 
+  // Min Password length
+  window['env']['minPasswordLength'] = '';
+
+  // Password Regex
+  window['env']['minPasswordLength'] = '';
+
+  // Enable or Disable HTTP Cache
+  window['env']['httpCacheEnabled'] = '';
 
   // Hide client data (mask names)
   window['env']['complianceHideClientData'] = '';
 
-  // Interbank Transfers Environment variables
   window['env']['mifosInterbankTransfersApiUrl'] = '';
   window['env']['mifosInterbankTransfersApiProvider'] = '';
   window['env']['mifosInterbankTransfersApiVersion'] = '';
-  window['env']['mifosInterbankTransfersEnabled'] = 'true';
-  window['env']['cbIldEnabled'] = 'false';
-  window['env']['pluginBaseUrl'] = 'http://localhost:8084';
+  window['env']['mifosInterbankTransfersEnabled'] = '';
+  window['env']['cbIldEnabled'] = '';
+  window['env']['pluginBaseUrl'] = '';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '';
   window['env']['mifosRemittanceApiProvider'] = '';
   window['env']['mifosRemittanceApiVersion'] = '';
-  window['env']['mifosRemittanceEnabled'] = false;
+  window['env']['mifosRemittanceEnabled'] = '';
   window['env']['mifosRemittanceApiClientHeader'] = '';
   window['env']['mifosRemittanceApiClientKey'] = '';
 
   // Mifos Copilot AI assistant
-  // Set enableCopilot to 'true' to load the Copilot panel for this deployment (off by default)
-  window['env']['enableCopilot'] = false;
+  // Set MIFOS_ENABLE_COPILOT=true to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = '';
   // Base URL of the Copilot gateway, which holds the LLM key server-side and runs banking
-  // tools as the logged-in officer. Leave empty to use the built-in mock responses.
+  // tools as the logged-in officer. Leave unset to use the built-in mock responses.
   window['env']['copilotMcpBaseUrl'] = '';
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
-  // Set to true to enable RBAC, false (default) for backward compatibility
-  window['env']['productionModeEnableRBAC'] = false;
+  // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
+  window['env']['productionModeEnableRBAC'] = '';
 
-  // External National ID System
-  // Set to 'true' to enable External National ID lookup during client creation/editing
-  // When enabled, set EXTERNAL_NATIONAL_ID_SYSTEM_URL, API_HEADER, API_KEY, and REGEX
-  // In production, API key is injected server-side via nginx proxy_set_header (never set here)
-  window['env']['enableExternalNationalIdSystem'] = 'false';
+  // External National ID System Integration
+  // API key is injected server-side via nginx proxy_set_header — not exposed to browser
+  window['env']['enableExternalNationalIdSystem'] = '';
   window['env']['externalNationalIdSystemUrl'] = '';
   window['env']['externalNationalIdSystemApiHeader'] = '';
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
-  // Email format validation regex (optional override; leave empty to use the built-in default)
+  // Email format validation regex (optional override; leave unset to use the built-in default)
   window['env']['externalEmailRegex'] = '';
 
-  // Postal Code Lookup (auto-fill address from postal code via external API)
-  // Set to 'true' to enable, 'false' (default) to disable
-  window['env']['enablePostalCodeLookup'] = 'false';
-
   // Client Address Location (latitude, longitude, and map)
-  window['env']['enableClientAddressLocation'] = false;
-
-  // Password Configuration
-  window['env']['minPasswordLength'] = 8;
+  window['env']['enableClientAddressLocation'] = '';
 
   // OIDC Plugin Environment variables
-  window['env']['oidcServerEnabled'] = false;
+  window['env']['oidcServerEnabled'] = '';
   window['env']['oidcBaseUrl'] = '';
   window['env']['oidcClientId'] = '';
   window['env']['oidcApiUrl'] = '';
   window['env']['oidcFrontUrl'] = '';
-
 })(this);

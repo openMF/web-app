@@ -11,7 +11,7 @@
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       @for (
-        charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value;
+        charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan?.value;
         track charge
       ) {
         <mat-option [value]="charge">
@@ -76,86 +76,89 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-divider class="flex-98"></mat-divider>
+  <!-- Working Capital products do not support penalties yet, so the overdue block is Term Loan only. -->
+  @if (loanProductService.isLoanProduct) {
+    <mat-divider class="flex-98"></mat-divider>
 
-  <div class="flex-98">
-    <h3 class="mat-h3">{{ 'labels.inputs.Overdue Charges' | translate }}</h3>
-  </div>
+    <div class="flex-98">
+      <h3 class="mat-h3">{{ 'labels.inputs.Overdue Charges' | translate }}</h3>
+    </div>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
-    <mat-select #overdueCharge>
-      @for (
-        overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value;
-        track overdueCharge
-      ) {
-        <mat-option [value]="overdueCharge">
-          {{ overdueCharge.name }}
-        </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
+      <mat-select #overdueCharge>
+        @for (
+          overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value;
+          track overdueCharge
+        ) {
+          <mat-option [value]="overdueCharge">
+            {{ overdueCharge.name }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-  <div class="flex-48 align-center">
-    <button
-      type="button"
-      mat-raised-button
-      color="primary"
-      (click)="addCharge(overdueCharge)"
-      [disabled]="!overdueCharge.value"
+    <div class="flex-48 align-center">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="addCharge(overdueCharge)"
+        [disabled]="!overdueCharge.value"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
+
+    <table
+      class="flex-98 mat-elevation-z1"
+      mat-table
+      [dataSource]="chargesDataSource | chargesPenaltyFilter: true"
+      #overdueChargesTable
+      [hidden]="overdueChargesTable.dataSource.length === 0"
     >
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Add' | translate }}
-    </button>
-  </div>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let overdueCharge">
+          {{ overdueCharge.name + ', ' + overdueCharge.currency.displaySymbol }}
+        </td>
+      </ng-container>
 
-  <table
-    class="flex-98 mat-elevation-z1"
-    mat-table
-    [dataSource]="chargesDataSource | chargesPenaltyFilter: true"
-    #overdueChargesTable
-    [hidden]="overdueChargesTable.dataSource.length === 0"
-  >
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
-      <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.name + ', ' + overdueCharge.currency.displaySymbol }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="chargeCalculationType">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+        <td mat-cell *matCellDef="let overdueCharge">
+          {{ overdueCharge.chargeCalculationType.value | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="chargeCalculationType">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-      <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeCalculationType.value | translateKey: 'catalogs' }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let overdueCharge">
+          {{ overdueCharge.amount | formatNumber }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.amount | formatNumber }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="chargeTimeType">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+        <td mat-cell *matCellDef="let overdueCharge">
+          {{ overdueCharge.chargeTimeType.value | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="chargeTimeType">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-      <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeTimeType.value | translateKey: 'catalogs' }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let overdueCharge">
+          <button mat-icon-button color="warn" (click)="deleteCharge(overdueCharge)">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell *matCellDef="let overdueCharge">
-        <button mat-icon-button color="warn" (click)="deleteCharge(overdueCharge)">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  }
 </div>
 
 <div class="layout-row responsive-column align-center gap-2px margin-t">

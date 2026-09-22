@@ -142,6 +142,11 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
         delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
       };
+      this.loansService.applyWorkingCapitalChargeOptions(
+        this.loansAccountProductTemplate,
+        templateData.chargeOptions,
+        true
+      );
     }
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     this.productId = this.loansAccountProductTemplate.product.id;
@@ -223,7 +228,8 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     } else if (this.loanProductService.isWorkingCapital) {
       return {
         ...this.loansAccountDetailsStep.loansAccountDetails,
-        ...this.loansAccountTermsStep?.loansAccountTerms
+        ...this.loansAccountTermsStep?.loansAccountTerms,
+        ...this.loansAccountChargesStep?.loansAccountCharges
       };
     }
     console.warn('Unexpected product type in loansAccount getter');
@@ -282,6 +288,7 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     const payload = {
       ...this.loansAccount,
       clientId: this.loansAccountProductTemplate.client.id,
+      charges: this.loansService.buildWorkingCapitalChargesPayload(this.loansAccount.charges),
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       locale,

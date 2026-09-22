@@ -72,7 +72,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Charge Calculation' | translate }}</mat-label>
             <mat-select required formControlName="chargeCalculationType">
-              @for (chargeCalculation of chargeCalculationTypeOptions; track chargeCalculation) {
+              @for (chargeCalculation of filteredChargeCalculationTypeOptions(); track chargeCalculation) {
                 <mat-option [value]="chargeCalculation.id">
                   {{ chargeCalculation.value | translateKey: 'catalogs' }}
                 </mat-option>

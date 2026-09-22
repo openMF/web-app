@@ -113,22 +113,18 @@
       <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
     </mat-step>
 
-    @if (loanProductService.isLoanProduct) {
-      <mat-step>
-        <ng-template matStepLabel
-          ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.CHARGES' | translate }}</ng-template
-        >
+    <mat-step>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.CHARGES' | translate }}</ng-template
+      >
 
-        <mifosx-loan-product-charges-step
-          [loanProductsTemplate]="loanProductsTemplate"
-          [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
-          [multiDisburseLoan]="
-            loanProductService.isLoanProduct ? loanProductSettingsForm.get('multiDisburseLoan') : null
-          "
-        >
-        </mifosx-loan-product-charges-step>
-      </mat-step>
-    }
+      <mifosx-loan-product-charges-step
+        [loanProductsTemplate]="loanProductsTemplate"
+        [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+        [multiDisburseLoan]="loanProductService.isLoanProduct ? loanProductSettingsForm.get('multiDisburseLoan') : null"
+      >
+      </mifosx-loan-product-charges-step>
+    </mat-step>
 
     @if (isAdvancedPaymentStrategy) {
       <mat-step [stepControl]="loanIncomeCapitalizationForm">
