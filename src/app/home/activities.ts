@@ -80,6 +80,7 @@ const activities: any[] = [
   { activity: 'add product mix', path: '/products/products-mix/create' },
   { activity: 'bulk loan reassignment', path: '/organization/bulkloan' },
   { activity: 'audit', path: '/system/audit-trails' },
+  { activity: 'tenant management', path: '/system/tenant-management' },
   { activity: 'create accounting closure', path: '/accounting/closing-entries/create' },
   { activity: 'navigation', path: '/navigation' },
   { activity: 'remittances', path: '/remittances/process' },

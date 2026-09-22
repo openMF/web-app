@@ -551,6 +551,13 @@
       "futureDate": "Datum předčasného splacení nemůže být v budoucnosti.",
       "dateOutOfRange": "Datum předčasného splacení je mimo povolený rozsah.",
       "amountMustBePositive": "Částka transakce musí být větší než 0."
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
     }
   },
   "labels": {
@@ -932,7 +939,9 @@
       "Save": "Uložit",
       "Upload Report Design": "Nahrát návrh zprávy",
       "Mass Reject": "Hromadně zamítnout",
-      "Hide": "Skrýt"
+      "Hide": "Skrýt",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1212,7 +1221,10 @@
       "unmarried": "svobodný",
       "xbrlmapping": "XBRL Mapování",
       "Enabled": "Povoleno",
-      "Disabled": "Zakázáno"
+      "Disabled": "Zakázáno",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1914,7 +1926,10 @@
       "Deferred Income Recognition": "Vykazování odložených výnosů",
       "Advanced Configuration": "Pokročilá konfigurace",
       "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr",
-      "Enrollment Details": "Podrobnosti registrace"
+      "Enrollment Details": "Podrobnosti registrace",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection"
     },
     "inputs": {
       "Returned": "Vráceno",
@@ -3942,7 +3957,19 @@
       "Withdrawn": "Staženo",
       "Registration Status": "Stav registrace",
       "Unknown": "Neznámé",
-      "Pending": "Nevyřízené"
+      "Pending": "Nevyřízené",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name"
     },
     "links": {
       "Community": "Společenství",
@@ -5227,7 +5254,13 @@
       "Loading pending prospects": "Načítání nevyřízených prospektů",
       "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
       "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Částku pro toto datum se nepodařilo znovu vypočítat. Pro opakování vyberte datum znovu."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Částku pro toto datum se nepodařilo znovu vypočítat. Pro opakování vyberte datum znovu.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
     },
     "permissions": {
       "actions": {

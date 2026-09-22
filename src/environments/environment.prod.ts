@@ -107,6 +107,15 @@ export const environment = {
     loadedEnv['mifosInterbankTransfersEnabled'] !== 'false' && loadedEnv['mifosInterbankTransfersEnabled'] !== false,
 
   /**
+   * Tenant Management administration UI: deployment master switch.
+   * Off by default; set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management
+   * plugin is installed. A server without it has no /v1/admin/tenants endpoint at all, so the
+   * section stays hidden rather than offering a feature that cannot work.
+   */
+  enableTenantManagement:
+    loadedEnv['enableTenantManagement'] === 'true' || loadedEnv['enableTenantManagement'] === true || false,
+
+  /**
    * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).
    * Off by default; set MIFOS_ENABLE_COPILOT=true to load the panel for a deployment.
    * When off, the panel never renders and its lazy chunk is never downloaded.

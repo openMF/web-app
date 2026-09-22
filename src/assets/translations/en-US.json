@@ -553,6 +553,13 @@
       "futureDate": "The prepayment date cannot be in the future.",
       "dateOutOfRange": "The prepayment date is outside the allowed range.",
       "amountMustBePositive": "The transaction amount must be greater than 0."
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
     }
   },
   "labels": {
@@ -937,7 +944,9 @@
       "Save": "Save",
       "Upload Report Design": "Upload Report Design",
       "Mass Reject": "Mass Reject",
-      "Hide": "Hide"
+      "Hide": "Hide",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1220,7 +1229,10 @@
       "unmarried": "unmarried",
       "xbrlmapping": "XBRL Mapping",
       "Enabled": "Enabled",
-      "Disabled": "Disabled"
+      "Disabled": "Disabled",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1933,7 +1945,10 @@
       "Deferred Income Recognition": "Deferred Income Recognition",
       "Advanced Configuration": "Advanced Configuration",
       "Mass Reject Credit Applications": "Mass Reject Credit Applications",
-      "Enrollment Details": "Enrollment Details"
+      "Enrollment Details": "Enrollment Details",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection"
     },
     "inputs": {
       "Returned": "Returned",
@@ -3977,7 +3992,19 @@
       "Withdrawn": "Withdrawn",
       "Registration Status": "Registration Status",
       "Unknown": "Unknown",
-      "Pending": "Pending"
+      "Pending": "Pending",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name"
     },
     "links": {
       "Community": "Community",
@@ -5253,7 +5280,6 @@
       "You do not have permission to deposit into savings accounts through Base Teller": "You do not have permission to deposit into savings accounts through Base Teller.",
       "Customer or savings account search failed": "Customer or savings account search failed.",
       "Deposit funds into an existing savings account through Base Teller": "Deposit funds into an existing savings account through Base Teller.",
-      "Payment types could not be loaded": "Payment types could not be loaded.",
       "Savings account could not be loaded": "Savings account could not be loaded.",
       "Savings account deposit failed": "Savings account deposit failed.",
       "Savings accounts could not be loaded": "Savings accounts could not be loaded.",
@@ -5401,7 +5427,13 @@
       "Loading pending prospects": "Loading pending prospects",
       "No pending prospects found": "No pending prospects found",
       "Unable to load pending prospects": "Unable to load pending prospects",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "The amount could not be re-quoted for this date. Pick the date again to retry."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "The amount could not be re-quoted for this date. Pick the date again to retry.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
     },
     "permissions": {
       "actions": {

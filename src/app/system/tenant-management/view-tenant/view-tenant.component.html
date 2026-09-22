@@ -1,0 +1,92 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container m-b-20 layout-row align-end gap-20px">
+  <button mat-raised-button [routerLink]="['../']">
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Back' | translate }}
+  </button>
+</div>
+
+@if (tenant(); as tenantData) {
+  <div class="container">
+    <mat-card>
+      <mat-card-content>
+        <div class="layout-row-wrap">
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Tenant Identifier' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.identifier }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Name' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.name }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Status' | translate }}:</div>
+          <div class="flex-50">
+            @if (tenantData.status) {
+              {{ tenantData.status | translateKey: 'catalogs' }}
+            } @else {
+              {{ 'labels.text.Unrecognised status' | translate }}
+            }
+          </div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Time Zone' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.timezoneId }}</div>
+
+          @if (tenantData.description) {
+            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Description' | translate }}:</div>
+            <div class="flex-50">{{ tenantData.description }}</div>
+          }
+
+          @if (tenantData.contactEmail) {
+            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Contact Email' | translate }}:</div>
+            <div class="flex-50">{{ tenantData.contactEmail }}</div>
+          }
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Created On' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.createdDate | dateFormat }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Updated on' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.lastModifiedDate | dateFormat }}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="m-t-20">
+      <mat-card-content>
+        <h3 class="mat-body-strong">{{ 'labels.heading.Database Connection' | translate }}</h3>
+
+        <div class="layout-row-wrap">
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Name' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.connection?.schemaName }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Server' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.connection?.schemaServer }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Server Port' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.connection?.schemaServerPort }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Username' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.connection?.schemaUsername }}</div>
+
+          @if (tenantData.connection?.schemaConnectionParameters) {
+            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Connection Parameters' | translate }}:</div>
+            <div class="flex-50">{{ tenantData.connection.schemaConnectionParameters }}</div>
+          }
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Auto Update' | translate }}:</div>
+          <div class="flex-50">
+            {{
+              tenantData.connection?.autoUpdate ? ('labels.commons.Yes' | translate) : ('labels.commons.No' | translate)
+            }}
+          </div>
+        </div>
+
+        <p class="connection-password-note">{{ 'labels.text.Tenant database password write only' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}
