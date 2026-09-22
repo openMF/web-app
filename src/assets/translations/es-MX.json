@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Estado de originación del crédito",
+    "loading": "Cargando el estado de originación del crédito...",
+    "empty": "No hay un estado de originación disponible para esta solicitud.",
+    "retry": "Reintentar",
+    "currentStage": "Etapa actual",
+    "errors": {
+      "unauthorized": "Inicie sesión para ver el estado de originación del crédito.",
+      "forbidden": "No tiene permiso para ver este estado de originación del crédito.",
+      "notFound": "No se encontró la solicitud de crédito ni su tablero de originación.",
+      "generic": "No se pudo cargar el estado de originación del crédito. Inténtelo de nuevo."
+    },
+    "stages": {
+      "ONBOARDING": "Incorporación",
+      "COMPLIANCE": "Cumplimiento",
+      "PARAMETRIC_SCORE": "Puntaje paramétrico",
+      "FILE_INTEGRATION": "Integración del expediente",
+      "CREDIT_ANALYSIS": "Análisis de crédito",
+      "APPROVAL": "Aprobación",
+      "LEGAL_INSTRUMENTATION": "Instrumentación legal",
+      "DISBURSEMENT": "Desembolso",
+      "RECOVERY": "Cobranza"
+    },
+    "statuses": {
+      "COMPLETED": "Completado",
+      "CURRENT": "Actual",
+      "PENDING": "Pendiente",
+      "REJECTED": "Rechazado",
+      "BLOCKED": "Bloqueado",
+      "FAILED": "Fallido",
+      "CANCELLED": "Cancelado",
+      "WITHDRAWN": "Retirado",
+      "WRITTEN_OFF": "Castigado"
+    },
+    "fields": {
+      "completedOn": "Completado el",
+      "source": "Fuente",
+      "sourceStatus": "Estado de origen",
+      "actor": "Actor",
+      "sourceReference": "Referencia de origen",
+      "transactionId": "ID de transacción",
+      "amount": "Importe",
+      "loanStatus": "Estado del crédito",
+      "reason": "Motivo"
+    }
+  },
+  "acquisition": {
+    "title": "Estado de adquisición",
+    "loading": "Cargando estado de adquisición...",
+    "empty": "No hay datos de estado de adquisición disponibles para esta cuenta.",
+    "retry": "Reintentar",
+    "currentStage": "Etapa actual",
+    "notAvailable": "No disponible",
+    "errors": {
+      "forbidden": "No tiene permiso para ver este estado de adquisición.",
+      "notFound": "No se encontró el estado de adquisición para esta cuenta.",
+      "generic": "No se pudo cargar el estado de adquisición. Inténtelo de nuevo."
+    },
+    "stages": {
+      "ONBOARDING": "Incorporación",
+      "COMPLIANCE": "Cumplimiento",
+      "APPROVAL": "Aprobación",
+      "ACTIVATION": "Activación",
+      "DEPOSIT": "Depósito",
+      "WITHDRAWAL": "Retiro"
+    },
+    "statuses": {
+      "COMPLETED": "COMPLETADO",
+      "CURRENT": "ACTUAL",
+      "PENDING": "PENDIENTE",
+      "BLOCKED": "BLOQUEADO",
+      "CANCELLED": "CANCELADO",
+      "CLOSED": "CERRADO",
+      "FAILED": "FALLIDO",
+      "REJECTED": "RECHAZADO",
+      "WITHDRAWN": "RETIRADO"
+    },
+    "fields": {
+      "completedOn": "Completado el",
+      "sourceStatus": "Estado de origen",
+      "actor": "Actor",
+      "amount": "Importe",
+      "accountStatus": "Estado de la cuenta",
+      "reason": "Motivo"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
@@ -459,6 +545,11 @@
       "loanNotWrittenOff": "Este préstamo no está castigado, por lo que no admite una recuperación.",
       "reversalForbidden": "No tiene permiso para reversar transacciones de Capital de Trabajo. Solicite a un administrador que realice la reversión.",
       "undoWriteOffWithRecoveries": "No se puede reversar el castigo mientras el préstamo tenga recuperaciones. Revérselas primero."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "La fecha del pago anticipado no puede ser futura.",
+      "dateOutOfRange": "La fecha del pago anticipado está fuera del rango permitido.",
+      "amountMustBePositive": "El monto de la transacción debe ser mayor que 0."
     }
   },
   "labels": {
@@ -527,6 +618,9 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Finalize": "Finalizar",
+      "New Operation": "Nueva operación",
+      "Select Check": "Seleccionar cheque",
       "Accept Transfer": "Aceptar transferencia",
       "Actions": "Acciones",
       "Activate": "Activar",
@@ -614,8 +708,8 @@
       "Create Interest Refund": "Crear reembolso de intereses",
       "Create Journal Entries": "Crear entradas de diario",
       "Create Loan Product": "Crear producto de Crédito",
-      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
-      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
+      "Create Loan Product (Classic)": "Crear Producto de Crédito (Clásico)",
+      "Create Loan Product (Convenient)": "Crear Producto de Crédito (Personalizado)",
       "Create Office": "Crear Oficina",
       "Create Payment Type": "Crear Tipo de Pago",
       "Create Preference": "Crear Preferencia",
@@ -1193,6 +1287,11 @@
       "NotEqual": "No igual"
     },
     "heading": {
+      "Cash Payment": "Pago en efectivo",
+      "Confirmation": "Confirmación",
+      "Receipt": "Recibo",
+      "Returned Check Payment": "Pago de cheque devuelto",
+      "Search Returned Checks": "Buscar cheques devueltos",
       "Create Agriculture Loan": "Crear Crédito Agrícola",
       "Create Auto Loan": "Crear Crédito Automotriz",
       "Create BNPL Loan": "Crear Crédito BNPL",
@@ -1823,6 +1922,22 @@
       "Enrollment Details": "Detalles de enrolamiento"
     },
     "inputs": {
+      "Returned": "Devuelto",
+      "Settled": "Pagado",
+      "Check Amount": "Monto del cheque",
+      "Check Number": "Número de cheque",
+      "Change to Give": "Cambio a entregar",
+      "Currency is required": "La moneda es obligatoria.",
+      "Customer Name": "Nombre del cliente",
+      "Customer Name is required": "El nombre del cliente es obligatorio.",
+      "Date is required": "La fecha es obligatoria.",
+      "Denomination Value": "Valor de la denominación",
+      "Line Total": "Total de la línea",
+      "Operator": "Operador",
+      "Return Date": "Fecha de devolución",
+      "Return Reason": "Motivo de devolución",
+      "Teller is required": "El cajero es obligatorio.",
+      "Total Cash Received": "Total de efectivo recibido",
       "Account moves out of NPA only on arrears completion": "La cuenta sale de NPA solo tras liquidar todos los atrasos",
       "Allow amortization override": "Permitir anular la amortización",
       "Allow approval/disbursal above applied amount": "Permitir aprobación/desembolso por encima del monto solicitado",
@@ -2479,6 +2594,7 @@
       "Group Principal Loan": "Crédito principal del grupo",
       "Grouping": "Agrupamiento",
       "Groups": "Grupos",
+      "Guarantor": "Aval",
       "Guarantor Type": "Tipo de aval",
       "Hide Accruals": "Ocultar Devengos",
       "Hide Projected": "Ocultar proyectadas",
@@ -3613,17 +3729,17 @@
       "Institution": "Institución",
       "Level and charge": "Nivel y cargo",
       "Key Functions": "Funciones principales",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Teléfono de casa",
+      "Spouse's Name": "Nombre del cónyuge",
+      "Spouse's Occupation": "Ocupación del cónyuge",
+      "Average Expenses (Monthly)": "Gastos Promedio (Mensuales)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Referencia 1 (Miembro de la familia)",
+      "Reference 2 (Family Member)": "Referencia 2 (Miembro de la familia)",
+      "Reference 3 (Acquaintance)": "Referencia 3 (Conocido)",
+      "Reference 1": "Referencia 1",
+      "Reference 2": "Referencia 2",
+      "Reference 3": "Referencia 3",
       "Level of Government": "Nivel de gobierno",
       "Level and Charge": "Nivel y cargo",
       "Entity Employee": "Empleado de la entidad",
@@ -3816,7 +3932,22 @@
       "Provider KYC Decision": "Decisión KYC del proveedor",
       "Source": "Origen",
       "Started": "Iniciado",
-      "Verification Session": "Sesión de verificación"
+      "Verification Session": "Sesión de verificación",
+      "Pending Prospects": "Prospectos pendientes",
+      "Prospect": "Prospecto",
+      "External Reference": "Referencia externa",
+      "Current Stage": "Etapa actual",
+      "Last Completed Stage": "Última etapa completada",
+      "Stopped At": "Detenido en",
+      "Pending Credits": "Créditos pendientes",
+      "Created": "Creado",
+      "Last Updated": "Última actualización",
+      "In Progress": "En progreso",
+      "Submitted": "Enviado",
+      "Withdrawn": "Retirado",
+      "Registration Status": "Estado de registro",
+      "Unknown": "Desconocido",
+      "Pending": "Pendiente"
     },
     "links": {
       "Community": "Comunidad",
@@ -3834,6 +3965,9 @@
       "Working with Code": "Trabajar con código"
     },
     "menus": {
+      "Apply Annual Fees": "Aplicar comisiones anuales",
+      "Disable Withhold Tax": "Desactivar retención de impuestos",
+      "Enable Withhold Tax": "Habilitar retención de impuestos",
       "Mark as Fraud": "Marcar como Fraude",
       "Unmark as Fraud": "Desmarcar como Fraude",
       "Update Breach": "Actualizar Incumplimiento",
@@ -4069,6 +4203,18 @@
       "Breach evaluation will resume": "La evaluación de incumplimiento se reanuda el {{date}}. El préstamo se vuelve a evaluar a partir de esa fecha."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "El efectivo recibido no puede ser menor que el monto del cheque.",
+      "No eligible cash payment types available": "No hay tipos de pago en efectivo válidos disponibles.",
+      "No returned checks found": "No se encontraron cheques devueltos.",
+      "Quantity must be a whole number": "La cantidad debe ser un número entero.",
+      "Returned check details could not be loaded": "No se pudieron cargar los detalles del cheque devuelto.",
+      "Returned check options could not be loaded": "No se pudieron cargar las opciones de cheques devueltos.",
+      "Returned check payment failed": "El pago del cheque devuelto falló.",
+      "Returned check search failed": "La búsqueda de cheques devueltos falló.",
+      "Returned check settled successfully": "El cheque devuelto se pagó correctamente.",
+      "Settle a returned check with a cash payment": "Pagar un cheque devuelto con efectivo.",
+      "You do not have permission to settle returned checks": "No tiene permiso para pagar cheques devueltos.",
+      "You do not have permission to view returned check payments": "No tiene permiso para ver los pagos de cheques devueltos.",
       "Select a client from the list": "Seleccione un cliente de la lista",
       "Complete these steps to preview the product": "Complete estos pasos para ver la vista previa del producto",
       "Complete these steps before creating the product": "Complete estos pasos antes de crear el producto",
@@ -5101,8 +5247,11 @@
       "Counted in repayment periods": "Contado en períodos de pago ({{unit}})",
       "Loading enrollment status": "Cargando estado de enrolamiento",
       "No enrollment cases found": "No se encontraron casos de enrolamiento",
-      "Select a client from the list": "Seleccione un cliente de la lista",
-      "Unable to load enrollment status": "No se pudo cargar el estado de enrolamiento"
+      "Unable to load enrollment status": "No se pudo cargar el estado de enrolamiento",
+      "Loading pending prospects": "Cargando prospectos pendientes",
+      "No pending prospects found": "No se encontraron prospectos pendientes",
+      "Unable to load pending prospects": "No se pudieron cargar los prospectos pendientes",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "No se pudo volver a calcular el monto para esta fecha. Seleccione la fecha nuevamente para reintentar."
     },
     "permissions": {
       "actions": {

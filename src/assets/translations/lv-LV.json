@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Kredīta noformēšanas statuss",
+    "loading": "Notiek kredīta noformēšanas statusa ielāde...",
+    "empty": "Šim pieteikumam nav pieejams kredīta noformēšanas statuss.",
+    "retry": "Mēģināt vēlreiz",
+    "currentStage": "Pašreizējais posms",
+    "errors": {
+      "unauthorized": "Pierakstieties, lai skatītu kredīta noformēšanas statusu.",
+      "forbidden": "Jums nav atļaujas skatīt šo kredīta noformēšanas statusu.",
+      "notFound": "Kredīta pieteikums vai tā noformēšanas pārskats netika atrasts.",
+      "generic": "Neizdevās ielādēt kredīta noformēšanas statusu. Mēģiniet vēlreiz."
+    },
+    "stages": {
+      "ONBOARDING": "Uzņemšana",
+      "COMPLIANCE": "Atbilstība",
+      "PARAMETRIC_SCORE": "Parametriskais novērtējums",
+      "FILE_INTEGRATION": "Dokumentu apvienošana",
+      "CREDIT_ANALYSIS": "Kredīta analīze",
+      "APPROVAL": "Apstiprināšana",
+      "LEGAL_INSTRUMENTATION": "Juridiskā noformēšana",
+      "DISBURSEMENT": "Izmaksa",
+      "RECOVERY": "Parādu piedziņa"
+    },
+    "statuses": {
+      "COMPLETED": "Pabeigts",
+      "CURRENT": "Pašreizējs",
+      "PENDING": "Gaida",
+      "REJECTED": "Noraidīts",
+      "BLOCKED": "Bloķēts",
+      "FAILED": "Neizdevās",
+      "CANCELLED": "Atcelts",
+      "WITHDRAWN": "Atsaukts",
+      "WRITTEN_OFF": "Norakstīts"
+    },
+    "fields": {
+      "completedOn": "Pabeigts",
+      "source": "Avots",
+      "sourceStatus": "Avota statuss",
+      "actor": "Izpildītājs",
+      "sourceReference": "Avota atsauce",
+      "transactionId": "Darījuma ID",
+      "amount": "Summa",
+      "loanStatus": "Kredīta statuss",
+      "reason": "Iemesls"
+    }
+  },
+  "acquisition": {
+    "title": "Piesaistes statuss",
+    "loading": "Notiek piesaistes statusa ielāde...",
+    "empty": "Šim kontam nav pieejami piesaistes statusa dati.",
+    "retry": "Mēģināt vēlreiz",
+    "currentStage": "Pašreizējais posms",
+    "notAvailable": "Nav pieejams",
+    "errors": {
+      "forbidden": "Jums nav atļaujas skatīt šo piesaistes statusu.",
+      "notFound": "Šim kontam piesaistes statuss netika atrasts.",
+      "generic": "Neizdevās ielādēt piesaistes statusu. Mēģiniet vēlreiz."
+    },
+    "stages": {
+      "ONBOARDING": "Uzņemšana",
+      "COMPLIANCE": "Atbilstība",
+      "APPROVAL": "Apstiprināšana",
+      "ACTIVATION": "Aktivizēšana",
+      "DEPOSIT": "Iemaksa",
+      "WITHDRAWAL": "Izmaksa"
+    },
+    "statuses": {
+      "COMPLETED": "PABEIGTS",
+      "CURRENT": "PAŠREIZĒJS",
+      "PENDING": "GAIDA",
+      "BLOCKED": "BLOĶĒTS",
+      "CANCELLED": "ATCELTS",
+      "CLOSED": "SLĒGTS",
+      "FAILED": "NEIZDEVĀS",
+      "REJECTED": "NORAIDĪTS",
+      "WITHDRAWN": "ATSAUKTS"
+    },
+    "fields": {
+      "completedOn": "Pabeigts",
+      "sourceStatus": "Avota statuss",
+      "actor": "Izpildītājs",
+      "amount": "Summa",
+      "accountStatus": "Konta statuss",
+      "reason": "Iemesls"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
@@ -458,6 +544,11 @@
       "loanNotWrittenOff": "Šis aizdevums nav norakstīts, tāpēc tas nevar pieņemt atgūšanas maksājumu.",
       "reversalForbidden": "Jums nav atļaujas stornēt apgrozāmā kapitāla darījumus. Lūdziet administratoram veikt stornēšanu.",
       "undoWriteOffWithRecoveries": "Norakstīšanu nevar atsaukt, kamēr aizdevumam ir atgūšanas maksājumi. Vispirms tos storno."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Priekšapmaksas datums nevar būt nākotnē.",
+      "dateOutOfRange": "Priekšapmaksas datums ir ārpus atļautā diapazona.",
+      "amountMustBePositive": "Darījuma summai jābūt lielākai par 0."
     }
   },
   "labels": {
@@ -526,6 +617,9 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Finalize": "Pabeigt",
+      "New Operation": "Jauna operācija",
+      "Select Check": "Atlasīt čeku",
       "Accept Transfer": "Pieņemt pārsūtīšanu",
       "Actions": "Darbības",
       "Activate": "Aktivizēt",
@@ -1189,6 +1283,11 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Cash Payment": "Skaidras naudas maksājums",
+      "Confirmation": "Apstiprinājums",
+      "Receipt": "Kvīts",
+      "Returned Check Payment": "Atgrieztā čeka apmaksa",
+      "Search Returned Checks": "Meklēt atgrieztos čekus",
       "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
       "Create Auto Loan": "Izveidot auto aizdevumu",
       "Create BNPL Loan": "Izveidot BNPL aizdevumu",
@@ -1349,7 +1448,7 @@
       "Deposit Period": "Depozīta periods",
       "Details": "Sīkāka informācija",
       "Disable": "Atspējot",
-      "Disable Withhold Tax": "Atspējot aizturēšanas nodokli",
+      "Disable Withhold Tax": "Atspējot ieturējuma nodokli",
       "Do you want to mark the Customer Data as valid?": "Vai vēlaties atzīmēt klienta datus kā derīgus?",
       "Documents": "Dokumenti",
       "Down Payment": "Pirmā iemaksa",
@@ -1363,7 +1462,7 @@
       "Email External Service": "E-pasta ārējais pakalpojums",
       "Employees": "Darbinieki",
       "Enable": "Iespējot",
-      "Enable Withhold Tax": "Iespējot ieturēt nodokli",
+      "Enable Withhold Tax": "Iespējot ieturējuma nodokli",
       "Entity Data Table Checks": "Entītijas datu tabulu pārbaudes",
       "Entity Details": "Uzņēmuma detaļas",
       "Entity to Entity Mapping": "Entītiju kartēšana",
@@ -1817,6 +1916,22 @@
       "Enrollment Details": "Reģistrācijas informācija"
     },
     "inputs": {
+      "Returned": "Atgriezts",
+      "Settled": "Apmaksāts",
+      "Check Amount": "Čeka summa",
+      "Check Number": "Čeka numurs",
+      "Change to Give": "Izdodamā atlikuma summa",
+      "Currency is required": "Valūta ir obligāta.",
+      "Customer Name": "Klienta vārds",
+      "Customer Name is required": "Klienta vārds ir obligāts.",
+      "Date is required": "Datums ir obligāts.",
+      "Denomination Value": "Nominālvērtība",
+      "Line Total": "Rindas kopsumma",
+      "Operator": "Operators",
+      "Return Date": "Atgriešanas datums",
+      "Return Reason": "Atgriešanas iemesls",
+      "Teller is required": "Kase ir obligāta.",
+      "Total Cash Received": "Kopā saņemtā skaidrā nauda",
       "Account moves out of NPA only on arrears completion": "Konts iziet no NPA tikai pēc visu parādu segšanas",
       "Allow amortization override": "Atļaut mainīt amortizāciju",
       "Allow approval/disbursal above applied amount": "Atļaut apstiprināt/izmaksāt vairāk par pieprasīto summu",
@@ -2469,6 +2584,7 @@
       "Group Principal Loan": "Grupas galvenais aizdevums",
       "Grouping": "Grupēšana",
       "Groups": "Grupas",
+      "Guarantor": "Galvotājs",
       "Guarantor Type": "Galvotāja veids",
       "Hide Accruals": "Slēpt uzkrājumus",
       "Hide Projected": "Slēpt prognozētās",
@@ -3606,17 +3722,17 @@
       "Institution": "Institūcija",
       "Level and charge": "Līmenis un amats",
       "Key Functions": "Galvenās funkcijas",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Mājas tālrunis 1",
+      "Spouse's Name": "Laulātā vārds",
+      "Spouse's Occupation": "Laulātā nodarbošanās",
+      "Average Expenses (Monthly)": "Vidējie izdevumi (mēnesī)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Atsauce 1 (ģimenes loceklis)",
+      "Reference 2 (Family Member)": "Atsauce 2 (ģimenes loceklis)",
+      "Reference 3 (Acquaintance)": "Atsauce 3 (paziņa)",
+      "Reference 1": "Atsauce 1",
+      "Reference 2": "Atsauce 2",
+      "Reference 3": "Atsauce 3",
       "Level of Government": "Valdības līmenis",
       "Level and Charge": "Līmenis un amats",
       "Entity Employee": "Juridiskās personas darbinieks",
@@ -3810,7 +3926,22 @@
       "Provider KYC Decision": "Pakalpojumu sniedzēja KYC lēmums",
       "Source": "Avots",
       "Started": "Sākts",
-      "Verification Session": "Pārbaudes sesija"
+      "Verification Session": "Pārbaudes sesija",
+      "Pending Prospects": "Neapstrādātie prospekti",
+      "Prospect": "Prospekts",
+      "External Reference": "Ārējā atsauce",
+      "Current Stage": "Pašreizējais posms",
+      "Last Completed Stage": "Pēdējais pabeigtais posms",
+      "Stopped At": "Apturēts pie",
+      "Pending Credits": "Neapstrādātie kredīti",
+      "Created": "Izveidots",
+      "Last Updated": "Pēdējoreiz atjaunināts",
+      "In Progress": "Procesā",
+      "Submitted": "Iesniegts",
+      "Withdrawn": "Atsaukts",
+      "Registration Status": "Reģistrācijas statuss",
+      "Unknown": "Nezināms",
+      "Pending": "Gaida"
     },
     "links": {
       "Community": "kopiena",
@@ -3828,6 +3959,9 @@
       "Working with Code": "Darbs ar kodu"
     },
     "menus": {
+      "Apply Annual Fees": "Piemērot gada maksu",
+      "Disable Withhold Tax": "Atspējot ieturējuma nodokli",
+      "Enable Withhold Tax": "Iespējot ieturējuma nodokli",
       "Mark as Fraud": "Atzīmēt kā krāpšanu",
       "Unmark as Fraud": "Noņemt krāpšanas atzīmi",
       "Update Breach": "Atjaunināt pārkāpumu",
@@ -4063,6 +4197,18 @@
       "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",
+      "No eligible cash payment types available": "Nav pieejamu atbilstošu skaidras naudas maksājumu veidu.",
+      "No returned checks found": "Atgriezti čeki netika atrasti.",
+      "Quantity must be a whole number": "Daudzumam jābūt veselam skaitlim.",
+      "Returned check details could not be loaded": "Neizdevās ielādēt atgrieztā čeka informāciju.",
+      "Returned check options could not be loaded": "Neizdevās ielādēt atgrieztā čeka opcijas.",
+      "Returned check payment failed": "Atgrieztā čeka apmaksa neizdevās.",
+      "Returned check search failed": "Atgriezto čeku meklēšana neizdevās.",
+      "Returned check settled successfully": "Atgrieztais čeks ir veiksmīgi apmaksāts.",
+      "Settle a returned check with a cash payment": "Apmaksāt atgrieztu čeku skaidrā naudā.",
+      "You do not have permission to settle returned checks": "Jums nav atļaujas apmaksāt atgrieztos čekus.",
+      "You do not have permission to view returned check payments": "Jums nav atļaujas skatīt atgriezto čeku maksājumus.",
       "Select a client from the list": "Atlasiet klientu no saraksta",
       "Complete these steps to preview the product": "Izpildiet šīs darbības, lai priekšskatītu produktu",
       "Complete these steps before creating the product": "Izpildiet šīs darbības pirms produkta izveides",
@@ -5075,8 +5221,11 @@
       "Counted in repayment periods": "Tiek skaitīts atmaksas periodos ({{unit}})",
       "Loading enrollment status": "Notiek reģistrācijas statusa ielāde",
       "No enrollment cases found": "Reģistrācijas gadījumi nav atrasti",
-      "Select a client from the list": "Atlasiet klientu no saraksta",
-      "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu"
+      "Unable to load enrollment status": "Neizdevās ielādēt reģistrācijas statusu",
+      "Loading pending prospects": "Notiek neapstrādāto prospektu ielāde",
+      "No pending prospects found": "Neapstrādāti prospekti nav atrasti",
+      "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Neizdevās atkārtoti aprēķināt summu šim datumam. Atlasiet datumu vēlreiz, lai mēģinātu vēlreiz."
     },
     "permissions": {
       "actions": {

@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Status der Kreditvergabe",
+    "loading": "Status der Kreditvergabe wird geladen...",
+    "empty": "Für diesen Antrag ist kein Status der Kreditvergabe verfügbar.",
+    "retry": "Erneut versuchen",
+    "currentStage": "Aktuelle Phase",
+    "errors": {
+      "unauthorized": "Bitte melden Sie sich an, um den Status der Kreditvergabe anzuzeigen.",
+      "forbidden": "Sie sind nicht berechtigt, diesen Status der Kreditvergabe anzuzeigen.",
+      "notFound": "Der Kreditantrag oder die zugehörige Kreditvergabeseite wurde nicht gefunden.",
+      "generic": "Der Status der Kreditvergabe konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "PARAMETRIC_SCORE": "Parametrische Bewertung",
+      "FILE_INTEGRATION": "Zusammenführung der Unterlagen",
+      "CREDIT_ANALYSIS": "Kreditanalyse",
+      "APPROVAL": "Genehmigung",
+      "LEGAL_INSTRUMENTATION": "Rechtliche Dokumentation",
+      "DISBURSEMENT": "Auszahlung",
+      "RECOVERY": "Beitreibung"
+    },
+    "statuses": {
+      "COMPLETED": "Abgeschlossen",
+      "CURRENT": "Aktuell",
+      "PENDING": "Ausstehend",
+      "REJECTED": "Abgelehnt",
+      "BLOCKED": "Blockiert",
+      "FAILED": "Fehlgeschlagen",
+      "CANCELLED": "Abgebrochen",
+      "WITHDRAWN": "Zurückgezogen",
+      "WRITTEN_OFF": "Abgeschrieben"
+    },
+    "fields": {
+      "completedOn": "Abgeschlossen am",
+      "source": "Quelle",
+      "sourceStatus": "Quellstatus",
+      "actor": "Akteur",
+      "sourceReference": "Quellenreferenz",
+      "transactionId": "Transaktions-ID",
+      "amount": "Betrag",
+      "loanStatus": "Kreditstatus",
+      "reason": "Grund"
+    }
+  },
+  "acquisition": {
+    "title": "Akquisitionsstatus",
+    "loading": "Akquisitionsstatus wird geladen...",
+    "empty": "Für dieses Konto sind keine Akquisitionsstatusdaten verfügbar.",
+    "retry": "Erneut versuchen",
+    "currentStage": "Aktuelle Phase",
+    "notAvailable": "Nicht verfügbar",
+    "errors": {
+      "forbidden": "Sie sind nicht berechtigt, diesen Akquisitionsstatus anzuzeigen.",
+      "notFound": "Für dieses Konto wurde kein Akquisitionsstatus gefunden.",
+      "generic": "Der Akquisitionsstatus konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "APPROVAL": "Genehmigung",
+      "ACTIVATION": "Aktivierung",
+      "DEPOSIT": "Einzahlung",
+      "WITHDRAWAL": "Auszahlung"
+    },
+    "statuses": {
+      "COMPLETED": "ABGESCHLOSSEN",
+      "CURRENT": "AKTUELL",
+      "PENDING": "AUSSTEHEND",
+      "BLOCKED": "BLOCKIERT",
+      "CANCELLED": "ABGEBROCHEN",
+      "CLOSED": "GESCHLOSSEN",
+      "FAILED": "FEHLGESCHLAGEN",
+      "REJECTED": "ABGELEHNT",
+      "WITHDRAWN": "ZURÜCKGEZOGEN"
+    },
+    "fields": {
+      "completedOn": "Abgeschlossen am",
+      "sourceStatus": "Quellstatus",
+      "actor": "Akteur",
+      "amount": "Betrag",
+      "accountStatus": "Kontostatus",
+      "reason": "Grund"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",
@@ -460,6 +546,11 @@
       "loanNotWrittenOff": "Dieses Darlehen ist nicht abgeschrieben und kann daher keine Einbringung verbuchen.",
       "reversalForbidden": "Sie haben keine Berechtigung, Betriebsmittelkredit-Transaktionen zu stornieren. Bitten Sie einen Administrator, die Stornierung durchzuführen.",
       "undoWriteOffWithRecoveries": "Die Abschreibung kann nicht rückgängig gemacht werden, solange eine Einbringung vorhanden ist. Stornieren Sie diese zuerst."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Das Datum der vorzeitigen Rückzahlung darf nicht in der Zukunft liegen.",
+      "dateOutOfRange": "Das Datum der vorzeitigen Rückzahlung liegt außerhalb des zulässigen Bereichs.",
+      "amountMustBePositive": "Der Transaktionsbetrag muss größer als 0 sein."
     }
   },
   "labels": {
@@ -528,6 +619,9 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Finalize": "Abschließen",
+      "New Operation": "Neuer Vorgang",
+      "Select Check": "Scheck auswählen",
       "Accept Transfer": "Akzeptieren Sie die Übertragung",
       "Actions": "Aktionen",
       "Activate": "aktivieren Sie",
@@ -1191,6 +1285,11 @@
       "NotEqual": "Ungleich"
     },
     "heading": {
+      "Cash Payment": "Barzahlung",
+      "Confirmation": "Bestätigung",
+      "Receipt": "Beleg",
+      "Returned Check Payment": "Zahlung für zurückgegebenen Scheck",
+      "Search Returned Checks": "Zurückgegebene Schecks suchen",
       "Create Agriculture Loan": "Agrarkredit erstellen",
       "Create Auto Loan": "Autokredit erstellen",
       "Create BNPL Loan": "BNPL-Kredit erstellen",
@@ -1365,7 +1464,7 @@
       "Email External Service": "E-Mail an externen Dienst",
       "Employees": "Mitarbeiter",
       "Enable": "Aktivieren",
-      "Enable Withhold Tax": "Ermöglichen Sie die Quellensteuer",
+      "Enable Withhold Tax": "Aktivieren Sie die Quellensteuer",
       "Entity Data Table Checks": "Überprüfungen der Entitätsdatentabelle",
       "Entity Details": "Entitätsdetails",
       "Entity to Entity Mapping": "Zuordnung von Entität zu Entität",
@@ -1819,6 +1918,22 @@
       "Enrollment Details": "Registrierungsdetails"
     },
     "inputs": {
+      "Returned": "Zurückgegeben",
+      "Settled": "Beglichen",
+      "Check Amount": "Scheckbetrag",
+      "Check Number": "Schecknummer",
+      "Change to Give": "Rückgeld",
+      "Currency is required": "Die Währung ist erforderlich.",
+      "Customer Name": "Kundenname",
+      "Customer Name is required": "Der Kundenname ist erforderlich.",
+      "Date is required": "Das Datum ist erforderlich.",
+      "Denomination Value": "Nennwert",
+      "Line Total": "Zeilensumme",
+      "Operator": "Bearbeiter",
+      "Return Date": "Rückgabedatum",
+      "Return Reason": "Rückgabegrund",
+      "Teller is required": "Der Schalter ist erforderlich.",
+      "Total Cash Received": "Erhaltener Bargeldbetrag",
       "Account moves out of NPA only on arrears completion": "Konto verlässt NPA erst nach Ausgleich aller Rückstände",
       "Allow amortization override": "Überschreiben der Amortisation zulassen",
       "Allow approval/disbursal above applied amount": "Genehmigung/Auszahlung über den beantragten Betrag zulassen",
@@ -2471,6 +2586,7 @@
       "Group Principal Loan": "Konzernhauptdarlehen",
       "Grouping": "Gruppierung",
       "Groups": "Gruppen",
+      "Guarantor": "Bürge",
       "Guarantor Type": "Bürgentyp",
       "Hide Accruals": "Rückstellungen ausblenden",
       "Hide Projected": "Geplante ausblenden",
@@ -3608,17 +3724,17 @@
       "Institution": "Institution",
       "Level and charge": "Ebene und Amt",
       "Key Functions": "Schlüsselfunktionen",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Privattelefon 1",
+      "Spouse's Name": "Name des Ehepartners",
+      "Spouse's Occupation": "Beruf des Ehepartners",
+      "Average Expenses (Monthly)": "Durchschnittliche Ausgaben (monatlich)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Referenz 1 (Familienmitglied)",
+      "Reference 2 (Family Member)": "Referenz 2 (Familienmitglied)",
+      "Reference 3 (Acquaintance)": "Referenz 3 (Bekannter)",
+      "Reference 1": "Referenz 1",
+      "Reference 2": "Referenz 2",
+      "Reference 3": "Referenz 3",
       "Level of Government": "Regierungsebene",
       "Level and Charge": "Ebene und Amt",
       "Entity Employee": "Mitarbeiter der juristischen Person",
@@ -3812,7 +3928,22 @@
       "Provider KYC Decision": "KYC-Entscheidung des Anbieters",
       "Source": "Quelle",
       "Started": "Gestartet",
-      "Verification Session": "Verifizierungssitzung"
+      "Verification Session": "Verifizierungssitzung",
+      "Pending Prospects": "Ausstehende Interessenten",
+      "Prospect": "Interessent",
+      "External Reference": "Externe Referenz",
+      "Current Stage": "Aktuelle Phase",
+      "Last Completed Stage": "Letzte abgeschlossene Phase",
+      "Stopped At": "Angehalten bei",
+      "Pending Credits": "Ausstehende Kredite",
+      "Created": "Erstellt",
+      "Last Updated": "Zuletzt aktualisiert",
+      "In Progress": "In Bearbeitung",
+      "Submitted": "Eingereicht",
+      "Withdrawn": "Zurückgezogen",
+      "Registration Status": "Registrierungsstatus",
+      "Unknown": "Unbekannt",
+      "Pending": "Ausstehend"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3830,6 +3961,9 @@
       "Working with Code": "Arbeiten mit Code"
     },
     "menus": {
+      "Apply Annual Fees": "Jahresgebühren anwenden",
+      "Disable Withhold Tax": "Deaktivieren Sie die Quellensteuer",
+      "Enable Withhold Tax": "Aktivieren Sie die Quellensteuer",
       "Mark as Fraud": "Als Betrug markieren",
       "Unmark as Fraud": "Betrugsmarkierung aufheben",
       "Update Breach": "Verstoß aktualisieren",
@@ -4066,6 +4200,18 @@
       "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Der erhaltene Bargeldbetrag darf nicht niedriger als der Scheckbetrag sein.",
+      "No eligible cash payment types available": "Es sind keine zulässigen Barzahlungsarten verfügbar.",
+      "No returned checks found": "Es wurden keine zurückgegebenen Schecks gefunden.",
+      "Quantity must be a whole number": "Die Anzahl muss eine ganze Zahl sein.",
+      "Returned check details could not be loaded": "Die Details des zurückgegebenen Schecks konnten nicht geladen werden.",
+      "Returned check options could not be loaded": "Die Optionen für zurückgegebene Schecks konnten nicht geladen werden.",
+      "Returned check payment failed": "Die Zahlung für den zurückgegebenen Scheck ist fehlgeschlagen.",
+      "Returned check search failed": "Die Suche nach zurückgegebenen Schecks ist fehlgeschlagen.",
+      "Returned check settled successfully": "Der zurückgegebene Scheck wurde erfolgreich beglichen.",
+      "Settle a returned check with a cash payment": "Einen zurückgegebenen Scheck per Barzahlung begleichen.",
+      "You do not have permission to settle returned checks": "Sie sind nicht berechtigt, zurückgegebene Schecks zu begleichen.",
+      "You do not have permission to view returned check payments": "Sie sind nicht berechtigt, Zahlungen für zurückgegebene Schecks anzuzeigen.",
       "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
       "Complete these steps to preview the product": "Schließen Sie diese Schritte ab, um eine Vorschau des Produkts anzuzeigen",
       "Complete these steps before creating the product": "Schließen Sie diese Schritte ab, bevor Sie das Produkt erstellen",
@@ -5077,8 +5223,11 @@
       "Counted in repayment periods": "Wird in Rückzahlungsperioden gezählt ({{unit}})",
       "Loading enrollment status": "Registrierungsstatus wird geladen",
       "No enrollment cases found": "Keine Registrierungsfälle gefunden",
-      "Select a client from the list": "Wählen Sie einen Kunden aus der Liste aus",
-      "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden"
+      "Unable to load enrollment status": "Registrierungsstatus konnte nicht geladen werden",
+      "Loading pending prospects": "Ausstehende Interessenten werden geladen",
+      "No pending prospects found": "Keine ausstehenden Interessenten gefunden",
+      "Unable to load pending prospects": "Ausstehende Interessenten konnten nicht geladen werden",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Der Betrag konnte für dieses Datum nicht neu ermittelt werden. Wählen Sie das Datum erneut aus, um es noch einmal zu versuchen."
     },
     "permissions": {
       "actions": {

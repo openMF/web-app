@@ -471,6 +471,104 @@
             </mat-list-item>
           </div>
 
+          <div #baseTellerSavingsOpening>
+            <mat-list-item *mifosxHasPermission="'READ_TELLER'">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller', 'savings-account-openings']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="piggy-bank" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Savings Account Opening' | translate }}
+                    @if (arrowBooleans[20]) {
+                      <p matLine class="menu-explanation">
+                        {{ 'labels.text.Open and fund a savings account through Base Teller' | translate }}
+                      </p>
+                    }
+                  </div>
+                </a>
+                <div class="menu-right-section">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="menu-expand-button"
+                    (click)="arrowBooleansToggle(20)"
+                    [attr.aria-expanded]="arrowBooleans[20]"
+                    [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                  >
+                    <fa-icon [icon]="arrowBooleans[20] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
+          <div #baseTellerSavingsDeposit>
+            <mat-list-item *mifosxHasPermission="'DEPOSIT_SAVINGSACCOUNT'">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller', 'savings-account-deposits']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="money-bill-wave" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Savings Account Deposit' | translate }}
+                    @if (arrowBooleans[21]) {
+                      <p matLine class="menu-explanation">
+                        {{
+                          'labels.text.Deposit funds into an existing savings account through Base Teller' | translate
+                        }}
+                      </p>
+                    }
+                  </div>
+                </a>
+                <div class="menu-right-section">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="menu-expand-button"
+                    (click)="arrowBooleansToggle(21)"
+                    [attr.aria-expanded]="arrowBooleans[21]"
+                    [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                  >
+                    <fa-icon [icon]="arrowBooleans[21] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
+          <div #baseTellerReturnedCheckPayment>
+            <mat-list-item *mifosxHasPermission="'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT'">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller', 'returned-check-payments']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="money-check" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Returned Check Payment' | translate }}
+                    @if (arrowBooleans[22]) {
+                      <p matLine class="menu-explanation">
+                        {{ 'labels.text.Settle a returned check with a cash payment' | translate }}
+                      </p>
+                    }
+                  </div>
+                </a>
+                <div class="menu-right-section">
+                  <button
+                    type="button"
+                    mat-icon-button
+                    class="menu-expand-button"
+                    (click)="arrowBooleansToggle(22)"
+                    [attr.aria-expanded]="arrowBooleans[22]"
+                    [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                  >
+                    <fa-icon [icon]="arrowBooleans[22] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #workingDays>
             <mat-list-item *mifosxHasPermission="'READ_WORKINGDAYS'">
               <div class="menu-list-item-content">

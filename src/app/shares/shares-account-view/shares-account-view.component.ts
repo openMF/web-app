@@ -121,7 +121,7 @@ export class SharesAccountViewComponent implements OnInit {
       charges.forEach((charge: any) => {
         if (charge.name === 'Annual fee - INR') {
           this.buttonConfig.addOption({
-            name: 'Apply Anuual Fees',
+            name: 'Apply Annual Fees',
             taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
           });
         }

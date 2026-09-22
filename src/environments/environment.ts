@@ -20,6 +20,23 @@ const loadedEnv = window.env || {};
 const parsedMinLength = Number(loadedEnv.minPasswordLength);
 const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
 
+// Domain labels can't contain dots, so `example..com` can't slip through as a valid host.
+const DEFAULT_EMAIL_REGEX = '^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$';
+function isValidRegex(pattern: string): boolean {
+  try {
+    new RegExp(pattern);
+    return true;
+  } catch {
+    return false;
+  }
+}
+// Guards against a malformed override (e.g. an unbalanced `[`) throwing inside
+// Validators.pattern and preventing the Create Client form from opening.
+const resolvedEmailRegex =
+  loadedEnv.externalEmailRegex && isValidRegex(loadedEnv.externalEmailRegex)
+    ? loadedEnv.externalEmailRegex
+    : DEFAULT_EMAIL_REGEX;
+
 export const environment = {
   production: false,
   version: env.mifos_x.version,
@@ -121,6 +138,9 @@ export const environment = {
   externalNationalIdSystemApiHeader: loadedEnv.externalNationalIdSystemApiHeader || '',
   externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
   externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
+
+  /** Email format validation regex, overridable per deployment. */
+  externalEmailRegex: resolvedEmailRegex,
 
   /**
    * Postal Code Lookup — auto-fill city/state/country from postal code.

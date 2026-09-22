@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "대출 심사 진행 상태",
+    "loading": "대출 심사 진행 상태를 불러오는 중...",
+    "empty": "이 신청에 사용할 수 있는 대출 심사 진행 상태가 없습니다.",
+    "retry": "다시 시도",
+    "currentStage": "현재 단계",
+    "errors": {
+      "unauthorized": "대출 심사 진행 상태를 보려면 로그인하세요.",
+      "forbidden": "이 대출 심사 진행 상태를 볼 권한이 없습니다.",
+      "notFound": "대출 신청 또는 대출 심사 현황판을 찾을 수 없습니다.",
+      "generic": "대출 심사 진행 상태를 불러올 수 없습니다. 다시 시도해 주세요."
+    },
+    "stages": {
+      "ONBOARDING": "온보딩",
+      "COMPLIANCE": "규정 준수",
+      "PARAMETRIC_SCORE": "정량 평가 점수",
+      "FILE_INTEGRATION": "서류 통합",
+      "CREDIT_ANALYSIS": "신용 분석",
+      "APPROVAL": "승인",
+      "LEGAL_INSTRUMENTATION": "법률 문서화",
+      "DISBURSEMENT": "대출금 지급",
+      "RECOVERY": "채권 회수"
+    },
+    "statuses": {
+      "COMPLETED": "완료",
+      "CURRENT": "현재",
+      "PENDING": "대기 중",
+      "REJECTED": "거부됨",
+      "BLOCKED": "차단됨",
+      "FAILED": "실패",
+      "CANCELLED": "취소됨",
+      "WITHDRAWN": "철회됨",
+      "WRITTEN_OFF": "상각됨"
+    },
+    "fields": {
+      "completedOn": "완료일",
+      "source": "출처",
+      "sourceStatus": "원본 상태",
+      "actor": "처리자",
+      "sourceReference": "출처 참조",
+      "transactionId": "거래 ID",
+      "amount": "금액",
+      "loanStatus": "대출 상태",
+      "reason": "사유"
+    }
+  },
+  "acquisition": {
+    "title": "고객 획득 상태",
+    "loading": "고객 획득 상태를 불러오는 중...",
+    "empty": "이 계좌에 사용할 수 있는 고객 획득 상태 데이터가 없습니다.",
+    "retry": "다시 시도",
+    "currentStage": "현재 단계",
+    "notAvailable": "사용할 수 없음",
+    "errors": {
+      "forbidden": "이 고객 획득 상태를 볼 권한이 없습니다.",
+      "notFound": "이 계좌의 고객 획득 상태를 찾을 수 없습니다.",
+      "generic": "고객 획득 상태를 불러올 수 없습니다. 다시 시도해 주세요."
+    },
+    "stages": {
+      "ONBOARDING": "온보딩",
+      "COMPLIANCE": "규정 준수",
+      "APPROVAL": "승인",
+      "ACTIVATION": "활성화",
+      "DEPOSIT": "입금",
+      "WITHDRAWAL": "출금"
+    },
+    "statuses": {
+      "COMPLETED": "완료",
+      "CURRENT": "현재",
+      "PENDING": "대기 중",
+      "BLOCKED": "차단됨",
+      "CANCELLED": "취소됨",
+      "CLOSED": "종료됨",
+      "FAILED": "실패",
+      "REJECTED": "거부됨",
+      "WITHDRAWN": "철회됨"
+    },
+    "fields": {
+      "completedOn": "완료일",
+      "sourceStatus": "원본 상태",
+      "actor": "처리자",
+      "amount": "금액",
+      "accountStatus": "계좌 상태",
+      "reason": "사유"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
@@ -458,6 +544,11 @@
       "loanNotWrittenOff": "이 대출은 상각되지 않았으므로 회수 거래를 등록할 수 없습니다.",
       "reversalForbidden": "운전자본 거래를 취소할 권한이 없습니다. 관리자에게 취소를 요청하세요.",
       "undoWriteOffWithRecoveries": "대출에 회수 거래가 있는 동안에는 상각을 취소할 수 없습니다. 먼저 회수 거래를 취소하세요."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "조기 상환 거래일은 미래일 수 없습니다.",
+      "dateOutOfRange": "조기 상환 일자가 허용된 범위를 벗어났습니다.",
+      "amountMustBePositive": "거래 금액은 0보다 커야 합니다."
     }
   },
   "labels": {
@@ -526,6 +617,9 @@
       "Home": "집"
     },
     "buttons": {
+      "Finalize": "완료",
+      "New Operation": "새 작업",
+      "Select Check": "수표 선택",
       "Accept Transfer": "전송 수락",
       "Actions": "행위",
       "Activate": "활성화",
@@ -1189,6 +1283,11 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Cash Payment": "현금 결제",
+      "Confirmation": "확인",
+      "Receipt": "영수증",
+      "Returned Check Payment": "반환 수표 결제",
+      "Search Returned Checks": "반환 수표 검색",
       "Create Agriculture Loan": "농업 대출 생성",
       "Create Auto Loan": "자동차 대출 생성",
       "Create BNPL Loan": "BNPL 대출 생성",
@@ -1818,6 +1917,22 @@
       "Enrollment Details": "등록 세부 정보"
     },
     "inputs": {
+      "Returned": "반환됨",
+      "Settled": "결제 완료",
+      "Check Amount": "수표 금액",
+      "Check Number": "수표 번호",
+      "Change to Give": "반환할 거스름돈",
+      "Currency is required": "통화는 필수입니다.",
+      "Customer Name": "고객 이름",
+      "Customer Name is required": "고객 이름은 필수입니다.",
+      "Date is required": "날짜는 필수입니다.",
+      "Denomination Value": "권종 금액",
+      "Line Total": "행 합계",
+      "Operator": "처리 담당자",
+      "Return Date": "반환일",
+      "Return Reason": "반환 사유",
+      "Teller is required": "창구는 필수입니다.",
+      "Total Cash Received": "총 수령 현금",
       "Account moves out of NPA only on arrears completion": "모든 연체가 해소된 후에만 NPA에서 해제",
       "Allow amortization override": "상환 방식 재정의 허용",
       "Allow approval/disbursal above applied amount": "신청 금액 초과 승인/지급 허용",
@@ -2470,6 +2585,7 @@
       "Group Principal Loan": "그룹원금대출",
       "Grouping": "그룹화",
       "Groups": "여러 떼",
+      "Guarantor": "보증인",
       "Guarantor Type": "보증인 종류",
       "Hide Accruals": "발생액 숨기기",
       "Hide Projected": "예상 숨기기",
@@ -3606,17 +3722,17 @@
       "Institution": "기관",
       "Level and charge": "직급 및 직책",
       "Key Functions": "주요 기능",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "집 전화 1",
+      "Spouse's Name": "배우자 이름",
+      "Spouse's Occupation": "배우자 직업",
+      "Average Expenses (Monthly)": "평균 지출(월별)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "참고인 1 (가족 구성원)",
+      "Reference 2 (Family Member)": "참고인 2 (가족 구성원)",
+      "Reference 3 (Acquaintance)": "참고인 3 (지인)",
+      "Reference 1": "참고인 1",
+      "Reference 2": "참고인 2",
+      "Reference 3": "참고인 3",
       "Level of Government": "정부 수준",
       "Level and Charge": "직급 및 직책",
       "Entity Employee": "법인 직원",
@@ -3810,7 +3926,22 @@
       "Provider KYC Decision": "제공업체 KYC 결정",
       "Source": "출처",
       "Started": "시작됨",
-      "Verification Session": "확인 세션"
+      "Verification Session": "확인 세션",
+      "Pending Prospects": "대기 중인 잠재 고객",
+      "Prospect": "잠재 고객",
+      "External Reference": "외부 참조",
+      "Current Stage": "현재 단계",
+      "Last Completed Stage": "마지막 완료 단계",
+      "Stopped At": "중단 단계",
+      "Pending Credits": "대기 중인 크레딧",
+      "Created": "생성됨",
+      "Last Updated": "마지막 업데이트",
+      "In Progress": "진행 중",
+      "Submitted": "제출됨",
+      "Withdrawn": "철회됨",
+      "Registration Status": "등록 상태",
+      "Unknown": "알 수 없음",
+      "Pending": "대기 중"
     },
     "links": {
       "Community": "지역 사회",
@@ -3828,6 +3959,9 @@
       "Working with Code": "코드 작업"
     },
     "menus": {
+      "Apply Annual Fees": "연회비 적용",
+      "Disable Withhold Tax": "원천 징수 세금을 비활성화합니다",
+      "Enable Withhold Tax": "원천세를 활성화하십시오",
       "Mark as Fraud": "사기로 표시",
       "Unmark as Fraud": "사기 표시 해제",
       "Update Breach": "위반 업데이트",
@@ -4063,6 +4197,18 @@
       "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "수령한 현금은 수표 금액보다 적을 수 없습니다.",
+      "No eligible cash payment types available": "사용 가능한 적격 현금 결제 유형이 없습니다.",
+      "No returned checks found": "반환된 수표를 찾을 수 없습니다.",
+      "Quantity must be a whole number": "수량은 정수여야 합니다.",
+      "Returned check details could not be loaded": "반환 수표 세부 정보를 불러올 수 없습니다.",
+      "Returned check options could not be loaded": "반환 수표 옵션을 불러올 수 없습니다.",
+      "Returned check payment failed": "반환 수표 결제에 실패했습니다.",
+      "Returned check search failed": "반환 수표 검색에 실패했습니다.",
+      "Returned check settled successfully": "반환 수표가 성공적으로 결제되었습니다.",
+      "Settle a returned check with a cash payment": "반환 수표를 현금으로 결제합니다.",
+      "You do not have permission to settle returned checks": "반환 수표를 결제할 권한이 없습니다.",
+      "You do not have permission to view returned check payments": "반환 수표 결제를 볼 권한이 없습니다.",
       "Select a client from the list": "목록에서 고객을 선택하세요",
       "Complete these steps to preview the product": "제품을 미리 보려면 이 단계를 완료하세요",
       "Complete these steps before creating the product": "제품을 만들기 전에 이 단계를 완료하세요",
@@ -5075,8 +5221,11 @@
       "Counted in repayment periods": "상환 주기 단위로 계산됩니다 ({{unit}})",
       "Loading enrollment status": "등록 상태를 불러오는 중",
       "No enrollment cases found": "등록 사례를 찾을 수 없습니다",
-      "Select a client from the list": "목록에서 고객을 선택하세요",
-      "Unable to load enrollment status": "등록 상태를 불러올 수 없습니다"
+      "Unable to load enrollment status": "등록 상태를 불러올 수 없습니다",
+      "Loading pending prospects": "대기 중인 잠재 고객을 불러오는 중",
+      "No pending prospects found": "대기 중인 잠재 고객이 없습니다",
+      "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "이 날짜에 대한 금액을 다시 계산하지 못했습니다. 날짜를 다시 선택하여 재시도하세요."
     },
     "permissions": {
       "actions": {

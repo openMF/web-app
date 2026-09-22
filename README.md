@@ -34,6 +34,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
     - [Date Formats](#date-and-datetime-format-settings)
     - [Session & Performance](#session--performance-settings)
     - [Password Policy](#password-policy-settings)
+    - [Email Validation](#email-validation-settings)
     - [UI Display](#ui-display-settings)
     - [OAUTH](#oauth-settings)
     - [OIDC](#oidc-settings)
@@ -379,6 +380,14 @@ Password validation for Basic Authentication can be configured via environment v
 MIFOS_MIN_PASSWORD_LENGTH=8
 MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
 ```
+
+#### Email Validation Settings
+
+| Variable             | Description                                           | Default Value                                                         |
+| -------------------- | ----------------------------------------------------- | --------------------------------------------------------------------- |
+| EXTERNAL_EMAIL_REGEX | Regex pattern used to validate the client email field | `^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$` |
+
+If `EXTERNAL_EMAIL_REGEX` is not set, or is not a valid regular expression, the application falls back to the default pattern above. The email field is optional; the pattern is only checked when a value is entered.
 
 #### UI Display Settings
 

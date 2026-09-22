@@ -82,7 +82,14 @@
         [matMenuTriggerFor]="adminMenu"
         #adminMenuTrigger="matMenuTrigger"
         tabindex="0"
-        *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
+        *mifosxHasPermission="[
+          'READ_USER',
+          'READ_ROLE',
+          'READ_LOANPRODUCT',
+          'CREATE_LOANPRODUCT',
+          'DELETE_LOANPRODUCT',
+          'CREATE_LOANPRODUCT'
+        ]"
       >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
@@ -220,7 +227,18 @@
   <button mat-menu-item [routerLink]="['/system']" tabindex="0" *mifosxHasPermission="'READ_CONFIGURATION'">
     {{ 'labels.menus.System' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0" *mifosxHasPermission="'READ_PRODUCT'">
+  <button
+    mat-menu-item
+    [routerLink]="['/products']"
+    tabindex="0"
+    *mifosxHasPermission="[
+      'READ_PRODUCT',
+      'READ_LOANPRODUCT',
+      'CREATE_LOANPRODUCT',
+      'DELETE_LOANPRODUCT',
+      'CREATE_LOANPRODUCT'
+    ]"
+  >
     {{ 'labels.menus.Products' | translate }}
   </button>
   <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">

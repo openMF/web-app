@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 import { CreditApplicationsComponent } from '../checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
+import { PendingProspectsComponent } from '../checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { routes } from '../tasks-routing.module';
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks.component';
 
@@ -23,6 +24,7 @@ describe('CheckerInboxAndTasksComponent', () => {
   const rbacEnabled = environment.productionModeEnableRBAC;
 
   function createComponent(permissions: string[] = ['APPROVE_LOAN_CHECKER']) {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [
         CheckerInboxAndTasksComponent,
@@ -45,6 +47,7 @@ describe('CheckerInboxAndTasksComponent', () => {
   }
 
   async function navigateToComponent(permissions: string[] = ['APPROVE_LOAN_CHECKER']) {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [
         CheckerInboxAndTasksComponent,
@@ -131,6 +134,31 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(creditTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/credit');
   });
 
+  it('shows Pending Prospects only for users who can read prospects', () => {
+    createComponent(['READ_PROSPECT']);
+
+    let tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
+      tab.textContent?.trim()
+    );
+    expect(tabLabels).toContain('labels.inputs.Pending Prospects');
+
+    createComponent([]);
+    tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
+      tab.textContent?.trim()
+    );
+    expect(tabLabels).not.toContain('labels.inputs.Pending Prospects');
+  });
+
+  it('routes Pending Prospects to the pending prospects page', async () => {
+    const routeElement = await navigateToComponent(['READ_PROSPECT']);
+
+    const pendingProspectsTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
+      tab.textContent?.includes('labels.inputs.Pending Prospects')
+    ) as HTMLAnchorElement;
+
+    expect(pendingProspectsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/pending-prospects');
+  });
+
   it('uses CreditApplicationsComponent for both Requests and Credit routes', () => {
     const shellRoute = routes[0] as AngularRoute;
     const taskRoute = shellRoute.children?.find((route: AngularRoute) => route.path === '');
@@ -139,5 +167,16 @@ describe('CheckerInboxAndTasksComponent', () => {
 
     expect(requestsRoute?.component).toBe(CreditApplicationsComponent);
     expect(creditRoute?.component).toBe(CreditApplicationsComponent);
+  });
+
+  it('uses PendingProspectsComponent for the pending prospects route', () => {
+    const shellRoute = routes[0] as AngularRoute;
+    const taskRoute = shellRoute.children?.find((route: AngularRoute) => route.path === '');
+    const pendingProspectsRoute = taskRoute?.children?.find(
+      (route: AngularRoute) => route.path === 'pending-prospects'
+    );
+
+    expect(pendingProspectsRoute?.component).toBe(PendingProspectsComponent);
+    expect(pendingProspectsRoute?.data?.permissions).toEqual(['READ_PROSPECT']);
   });
 });

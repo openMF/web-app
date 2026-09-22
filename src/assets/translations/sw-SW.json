@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Hali ya uanzishaji wa mkopo",
+    "loading": "Inapakia hali ya uanzishaji wa mkopo...",
+    "empty": "Hakuna hali ya uanzishaji wa mkopo kwa ombi hili.",
+    "retry": "Jaribu tena",
+    "currentStage": "Hatua ya sasa",
+    "errors": {
+      "unauthorized": "Tafadhali ingia ili kuona hali ya uanzishaji wa mkopo.",
+      "forbidden": "Huna ruhusa ya kuona hali hii ya uanzishaji wa mkopo.",
+      "notFound": "Ombi la mkopo au bodi yake ya uanzishaji haikupatikana.",
+      "generic": "Imeshindikana kupakia hali ya uanzishaji wa mkopo. Tafadhali jaribu tena."
+    },
+    "stages": {
+      "ONBOARDING": "Usajili",
+      "COMPLIANCE": "Uzingatiaji",
+      "PARAMETRIC_SCORE": "Alama ya vigezo",
+      "FILE_INTEGRATION": "Ujumuishaji wa faili",
+      "CREDIT_ANALYSIS": "Uchambuzi wa mkopo",
+      "APPROVAL": "Uidhinishaji",
+      "LEGAL_INSTRUMENTATION": "Nyaraka za kisheria",
+      "DISBURSEMENT": "Utoaji wa mkopo",
+      "RECOVERY": "Urejeshaji"
+    },
+    "statuses": {
+      "COMPLETED": "Imekamilika",
+      "CURRENT": "Ya sasa",
+      "PENDING": "Inasubiri",
+      "REJECTED": "Imekataliwa",
+      "BLOCKED": "Imezuiwa",
+      "FAILED": "Imeshindwa",
+      "CANCELLED": "Imeghairiwa",
+      "WITHDRAWN": "Imeondolewa",
+      "WRITTEN_OFF": "Imefutwa"
+    },
+    "fields": {
+      "completedOn": "Imekamilika tarehe",
+      "source": "Chanzo",
+      "sourceStatus": "Hali ya chanzo",
+      "actor": "Mhusika",
+      "sourceReference": "Rejeleo la chanzo",
+      "transactionId": "Kitambulisho cha muamala",
+      "amount": "Kiasi",
+      "loanStatus": "Hali ya mkopo",
+      "reason": "Sababu"
+    }
+  },
+  "acquisition": {
+    "title": "Hali ya upataji",
+    "loading": "Inapakia hali ya upataji...",
+    "empty": "Hakuna data ya hali ya upataji kwa akaunti hii.",
+    "retry": "Jaribu tena",
+    "currentStage": "Hatua ya sasa",
+    "notAvailable": "Haipatikani",
+    "errors": {
+      "forbidden": "Huna ruhusa ya kuona hali hii ya upataji.",
+      "notFound": "Hali ya upataji haikupatikana kwa akaunti hii.",
+      "generic": "Imeshindikana kupakia hali ya upataji. Tafadhali jaribu tena."
+    },
+    "stages": {
+      "ONBOARDING": "Usajili",
+      "COMPLIANCE": "Uzingatiaji",
+      "APPROVAL": "Uidhinishaji",
+      "ACTIVATION": "Uanzishaji",
+      "DEPOSIT": "Amana",
+      "WITHDRAWAL": "Utoaji"
+    },
+    "statuses": {
+      "COMPLETED": "IMEKAMILIKA",
+      "CURRENT": "YA SASA",
+      "PENDING": "INASUBIRI",
+      "BLOCKED": "IMEZUIWA",
+      "CANCELLED": "IMEGHAFIRIWA",
+      "CLOSED": "IMEFUNGWA",
+      "FAILED": "IMESHINDWA",
+      "REJECTED": "IMEKATALIWA",
+      "WITHDRAWN": "IMEONDOLEWA"
+    },
+    "fields": {
+      "completedOn": "Imekamilika tarehe",
+      "sourceStatus": "Hali ya chanzo",
+      "actor": "Mhusika",
+      "amount": "Kiasi",
+      "accountStatus": "Hali ya akaunti",
+      "reason": "Sababu"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
@@ -458,6 +544,11 @@
       "loanNotWrittenOff": "Mkopo huu haujafutwa, hivyo hauwezi kupokea malipo ya urejeshaji.",
       "reversalForbidden": "Huna ruhusa ya kutengua miamala ya Mtaji wa Kufanya Kazi. Muombe msimamizi atengue muamala huu.",
       "undoWriteOffWithRecoveries": "Kufuta deni hakuwezi kutenguliwa wakati mkopo una malipo ya urejeshaji. Tengua malipo hayo kwanza."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Tarehe ya malipo ya mapema haiwezi kuwa ya baadaye.",
+      "dateOutOfRange": "Tarehe ya malipo ya mapema iko nje ya kipindi kinachoruhusiwa.",
+      "amountMustBePositive": "Kiasi cha muamala lazima kiwe kikubwa kuliko 0."
     }
   },
   "labels": {
@@ -526,6 +617,9 @@
       "Home": "Nyumbani"
     },
     "buttons": {
+      "Finalize": "Kamilisha",
+      "New Operation": "Operesheni mpya",
+      "Select Check": "Chagua hundi",
       "Accept Transfer": "Kubali Uhamisho",
       "Actions": "Vitendo",
       "Activate": "Amilisha",
@@ -1187,6 +1281,11 @@
       "NotEqual": "Sio sawa"
     },
     "heading": {
+      "Cash Payment": "Malipo ya pesa taslimu",
+      "Confirmation": "Uthibitisho",
+      "Receipt": "Risiti",
+      "Returned Check Payment": "Malipo ya hundi iliyorudishwa",
+      "Search Returned Checks": "Tafuta hundi zilizorudishwa",
       "Create Agriculture Loan": "Unda Mkopo wa Kilimo",
       "Create Auto Loan": "Unda Mkopo wa Gari",
       "Create BNPL Loan": "Unda Mkopo wa BNPL",
@@ -1346,7 +1445,7 @@
       "Deposit Period": "Kipindi cha Amana",
       "Details": "Maelezo",
       "Disable": "Zima",
-      "Disable Withhold Tax": "Lemaza Ushuru",
+      "Disable Withhold Tax": "Lemaza Kodi ya Kuzuia",
       "Do you want to mark the Customer Data as valid?": "Je, unataka kuweka alama data ya mteja kuwa halali?",
       "Documents": "Nyaraka",
       "Down Payment": "Malipo ya Chini",
@@ -1360,7 +1459,7 @@
       "Email External Service": "Barua pepe ya Huduma ya Nje",
       "Employees": "Wafanyakazi",
       "Enable": "Wezesha",
-      "Enable Withhold Tax": "Wezesha Ushuru",
+      "Enable Withhold Tax": "Wezesha Kodi ya Kuzuia",
       "Entity Data Table Checks": "Ukaguzi wa Jedwali la Data ya Huluki",
       "Entity Details": "Maelezo ya Huluki",
       "Entity to Entity Mapping": "Uchoraji wa Huluki kwa Huluki",
@@ -1814,6 +1913,22 @@
       "Enrollment Details": "Maelezo ya usajili"
     },
     "inputs": {
+      "Returned": "Imerudishwa",
+      "Settled": "Imelipwa",
+      "Check Amount": "Kiasi cha hundi",
+      "Check Number": "Nambari ya hundi",
+      "Change to Give": "Chenji ya kurudisha",
+      "Currency is required": "Sarafu inahitajika.",
+      "Customer Name": "Jina la mteja",
+      "Customer Name is required": "Jina la mteja linahitajika.",
+      "Date is required": "Tarehe inahitajika.",
+      "Denomination Value": "Thamani ya dhehebu",
+      "Line Total": "Jumla ya mstari",
+      "Operator": "Opereta",
+      "Return Date": "Tarehe ya kurudishwa",
+      "Return Reason": "Sababu ya kurudishwa",
+      "Teller is required": "Mhudumu wa benki anahitajika.",
+      "Total Cash Received": "Jumla ya pesa taslimu zilizopokelewa",
       "Account moves out of NPA only on arrears completion": "Akaunti hutoka NPA baada tu ya kulipa madeni yote yaliyochelewa",
       "Allow amortization override": "Ruhusu kubadilisha ulipaji wa mtaji",
       "Allow approval/disbursal above applied amount": "Ruhusu idhini/utoaji zaidi ya kiasi kilichoombwa",
@@ -2466,6 +2581,7 @@
       "Group Principal Loan": "Mkopo Mkuu wa Kikundi",
       "Grouping": "Kuweka vikundi",
       "Groups": "Vikundi",
+      "Guarantor": "Mdhamini",
       "Guarantor Type": "Aina ya Mdhamini",
       "Hide Accruals": "Ficha Accruals",
       "Hide Projected": "Ficha zinazotarajiwa",
@@ -3603,17 +3719,17 @@
       "Institution": "Taasisi",
       "Level and charge": "Ngazi na cheo",
       "Key Functions": "Majukumu muhimu",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Simu ya nyumbani 1",
+      "Spouse's Name": "Jina la mwenzi",
+      "Spouse's Occupation": "Kazi ya mwenzi",
+      "Average Expenses (Monthly)": "Gharama za wastani (kila mwezi)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Rejeleo 1 (mwanafamilia)",
+      "Reference 2 (Family Member)": "Rejeleo 2 (mwanafamilia)",
+      "Reference 3 (Acquaintance)": "Rejeleo 3 (mtu anayefahamiana nawe)",
+      "Reference 1": "Rejeleo 1",
+      "Reference 2": "Rejeleo 2",
+      "Reference 3": "Rejeleo 3",
       "Level of Government": "Kiwango cha serikali",
       "Level and Charge": "Kiwango na cheo",
       "Entity Employee": "Mfanyakazi wa taasisi",
@@ -3807,7 +3923,22 @@
       "Provider KYC Decision": "Uamuzi wa KYC wa mtoa huduma",
       "Source": "Chanzo",
       "Started": "Imeanza",
-      "Verification Session": "Kikao cha uthibitishaji"
+      "Verification Session": "Kikao cha uthibitishaji",
+      "Pending Prospects": "Watarajiwa wanaosubiri",
+      "Prospect": "Mtarajiwa",
+      "External Reference": "Rejeleo la nje",
+      "Current Stage": "Hatua ya sasa",
+      "Last Completed Stage": "Hatua ya mwisho iliyokamilika",
+      "Stopped At": "Ilisimama kwenye",
+      "Pending Credits": "Mikopo inayosubiri",
+      "Created": "Imeundwa",
+      "Last Updated": "Ilisasishwa mwisho",
+      "In Progress": "Inaendelea",
+      "Submitted": "Imewasilishwa",
+      "Withdrawn": "Imeondolewa",
+      "Registration Status": "Hali ya usajili",
+      "Unknown": "Haijulikani",
+      "Pending": "Inasubiri"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3825,6 +3956,9 @@
       "Working with Code": "Kufanya kazi na Kanuni"
     },
     "menus": {
+      "Apply Annual Fees": "Tumia Ada ya Mwaka",
+      "Disable Withhold Tax": "Lemaza Kodi ya Kuzuia",
+      "Enable Withhold Tax": "Wezesha Kodi ya Kuzuia",
       "Mark as Fraud": "Weka Alama ya Ulaghai",
       "Unmark as Fraud": "Ondoa Alama ya Ulaghai",
       "Update Breach": "Sasisha ukiukaji",
@@ -4060,6 +4194,18 @@
       "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Pesa taslimu zilizopokelewa haziwezi kuwa chini ya kiasi cha hundi.",
+      "No eligible cash payment types available": "Hakuna aina zinazofaa za malipo ya pesa taslimu zinazopatikana.",
+      "No returned checks found": "Hakuna hundi zilizorudishwa zilizopatikana.",
+      "Quantity must be a whole number": "Idadi lazima iwe nambari kamili.",
+      "Returned check details could not be loaded": "Maelezo ya hundi iliyorudishwa hayakuweza kupakiwa.",
+      "Returned check options could not be loaded": "Chaguo za hundi iliyorudishwa hazikuweza kupakiwa.",
+      "Returned check payment failed": "Malipo ya hundi iliyorudishwa yameshindwa.",
+      "Returned check search failed": "Utafutaji wa hundi zilizorudishwa umeshindwa.",
+      "Returned check settled successfully": "Hundi iliyorudishwa imelipwa kwa mafanikio.",
+      "Settle a returned check with a cash payment": "Lipa hundi iliyorudishwa kwa pesa taslimu.",
+      "You do not have permission to settle returned checks": "Huna ruhusa ya kulipa hundi zilizorudishwa.",
+      "You do not have permission to view returned check payments": "Huna ruhusa ya kuona malipo ya hundi zilizorudishwa.",
       "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
       "Complete these steps to preview the product": "Kamilisha hatua hizi ili kuona onyesho la awali la bidhaa",
       "Complete these steps before creating the product": "Kamilisha hatua hizi kabla ya kuunda bidhaa",
@@ -5072,8 +5218,11 @@
       "Counted in repayment periods": "Huhesabiwa kwa vipindi vya marejesho ({{unit}})",
       "Loading enrollment status": "Inapakia hali ya usajili",
       "No enrollment cases found": "Hakuna kesi za usajili zilizopatikana",
-      "Select a client from the list": "Chagua mteja kutoka kwenye orodha",
-      "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili"
+      "Unable to load enrollment status": "Imeshindwa kupakia hali ya usajili",
+      "Loading pending prospects": "Inapakia watarajiwa wanaosubiri",
+      "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
+      "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Kiasi hakikuweza kukokotolewa upya kwa tarehe hii. Chagua tarehe tena ili kujaribu upya."
     },
     "permissions": {
       "actions": {

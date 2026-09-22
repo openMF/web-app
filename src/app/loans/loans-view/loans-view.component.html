@@ -340,6 +340,21 @@
             {{ 'labels.inputs.Dashboard' | translate }}
           </a>
         }
+        @if (loanProductService.isLoanProduct && loanDetailsData.clientId) {
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_LOAN'"
+            [routerLink]="['./origination-status']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #originationStatus="routerLinkActive"
+            [active]="originationStatus.isActive"
+          >
+            {{ 'creditOrigination.title' | translate }}
+          </a>
+        }
         <a
           mat-tab-link
           [routerLink]="['./accountdetail']"
@@ -528,6 +543,21 @@
             [active]="loanCollateralDetails.isActive"
           >
             {{ 'labels.inputs.Loan Collateral Details' | translate }}
+          </a>
+        }
+        @if (loanProductService.isLoanProduct) {
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_GUARANTOR'"
+            [routerLink]="['./guarantors']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #guarantors="routerLinkActive"
+            [active]="guarantors.isActive"
+          >
+            {{ 'labels.heading.Guarantors' | translate }}
           </a>
         }
         @if (loanProductService.isLoanProduct && loanDetailsData.multiDisburseLoan) {

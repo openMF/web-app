@@ -37,7 +37,7 @@
       <mat-autocomplete #activitySearch="matAutocomplete">
         @for (activity of filteredActivities | async; track activity) {
           <mat-option [routerLink]="activity.path">
-            <span>{{ activity.activity }}</span>
+            <span>{{ activity.activity | translate }}</span>
           </mat-option>
         }
       </mat-autocomplete>

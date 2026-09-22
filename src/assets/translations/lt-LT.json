@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Kredito suteikimo būsena",
+    "loading": "Įkeliama kredito suteikimo būsena...",
+    "empty": "Šiai paraiškai nėra kredito suteikimo būsenos duomenų.",
+    "retry": "Bandyti dar kartą",
+    "currentStage": "Dabartinis etapas",
+    "errors": {
+      "unauthorized": "Prisijunkite, kad galėtumėte peržiūrėti kredito suteikimo būseną.",
+      "forbidden": "Neturite leidimo peržiūrėti šią kredito suteikimo būseną.",
+      "notFound": "Kredito paraiška arba jos suteikimo eigos lentelė nerasta.",
+      "generic": "Nepavyko įkelti kredito suteikimo būsenos. Bandykite dar kartą."
+    },
+    "stages": {
+      "ONBOARDING": "Įtraukimas",
+      "COMPLIANCE": "Atitiktis",
+      "PARAMETRIC_SCORE": "Parametrinis vertinimas",
+      "FILE_INTEGRATION": "Dokumentų sujungimas",
+      "CREDIT_ANALYSIS": "Kredito analizė",
+      "APPROVAL": "Patvirtinimas",
+      "LEGAL_INSTRUMENTATION": "Teisinis įforminimas",
+      "DISBURSEMENT": "Išmokėjimas",
+      "RECOVERY": "Išieškojimas"
+    },
+    "statuses": {
+      "COMPLETED": "Užbaigta",
+      "CURRENT": "Dabartinė",
+      "PENDING": "Laukiama",
+      "REJECTED": "Atmesta",
+      "BLOCKED": "Užblokuota",
+      "FAILED": "Nepavyko",
+      "CANCELLED": "Atšaukta",
+      "WITHDRAWN": "Atsiimta",
+      "WRITTEN_OFF": "Nurašyta"
+    },
+    "fields": {
+      "completedOn": "Užbaigta",
+      "source": "Šaltinis",
+      "sourceStatus": "Šaltinio būsena",
+      "actor": "Vykdytojas",
+      "sourceReference": "Šaltinio nuoroda",
+      "transactionId": "Operacijos ID",
+      "amount": "Suma",
+      "loanStatus": "Kredito būsena",
+      "reason": "Priežastis"
+    }
+  },
+  "acquisition": {
+    "title": "Įsigijimo būsena",
+    "loading": "Įkeliama įsigijimo būsena...",
+    "empty": "Šiai sąskaitai nėra įsigijimo būsenos duomenų.",
+    "retry": "Bandyti dar kartą",
+    "currentStage": "Dabartinis etapas",
+    "notAvailable": "Nėra duomenų",
+    "errors": {
+      "forbidden": "Neturite leidimo peržiūrėti šią įsigijimo būseną.",
+      "notFound": "Šios sąskaitos įsigijimo būsena nerasta.",
+      "generic": "Nepavyko įkelti įsigijimo būsenos. Bandykite dar kartą."
+    },
+    "stages": {
+      "ONBOARDING": "Įtraukimas",
+      "COMPLIANCE": "Atitiktis",
+      "APPROVAL": "Patvirtinimas",
+      "ACTIVATION": "Aktyvinimas",
+      "DEPOSIT": "Įmoka",
+      "WITHDRAWAL": "Išėmimas"
+    },
+    "statuses": {
+      "COMPLETED": "UŽBAIGTA",
+      "CURRENT": "DABARTINĖ",
+      "PENDING": "LAUKIAMA",
+      "BLOCKED": "UŽBLOKUOTA",
+      "CANCELLED": "ATŠAUKTA",
+      "CLOSED": "UŽDARYTA",
+      "FAILED": "NEPAVYKO",
+      "REJECTED": "ATMESTA",
+      "WITHDRAWN": "ATŠAUKTA"
+    },
+    "fields": {
+      "completedOn": "Užbaigta",
+      "sourceStatus": "Šaltinio būsena",
+      "actor": "Vykdytojas",
+      "amount": "Suma",
+      "accountStatus": "Sąskaitos būsena",
+      "reason": "Priežastis"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
@@ -458,6 +544,11 @@
       "loanNotWrittenOff": "Ši paskola nėra nurašyta, todėl negali priimti susigrąžinimo mokėjimo.",
       "reversalForbidden": "Neturite teisės atšaukti apyvartinio kapitalo operacijų. Paprašykite administratoriaus atlikti atšaukimą.",
       "undoWriteOffWithRecoveries": "Nurašymo negalima atšaukti, kol paskola turi susigrąžinimo mokėjimų. Pirmiausia juos stornuokite."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Išankstinio mokėjimo data negali būti ateityje.",
+      "dateOutOfRange": "Išankstinio mokėjimo data yra už leidžiamo intervalo ribų.",
+      "amountMustBePositive": "Operacijos suma turi būti didesnė už 0."
     }
   },
   "labels": {
@@ -526,6 +617,9 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Finalize": "Užbaigti",
+      "New Operation": "Nauja operacija",
+      "Select Check": "Pasirinkti čekį",
       "Accept Transfer": "Priimti perkėlimą",
       "Actions": "Veiksmai",
       "Activate": "Suaktyvinti",
@@ -1188,6 +1282,11 @@
       "NotEqual": "Nelygu"
     },
     "heading": {
+      "Cash Payment": "Mokėjimas grynaisiais",
+      "Confirmation": "Patvirtinimas",
+      "Receipt": "Kvitas",
+      "Returned Check Payment": "Grąžinto čekio apmokėjimas",
+      "Search Returned Checks": "Ieškoti grąžintų čekių",
       "Create Agriculture Loan": "Sukurti žemės ūkio paskolą",
       "Create Auto Loan": "Sukurti automobilio paskolą",
       "Create BNPL Loan": "Sukurti BNPL paskolą",
@@ -1348,7 +1447,7 @@
       "Deposit Period": "Indėlio laikotarpis",
       "Details": "Detalės",
       "Disable": "Išjungti",
-      "Disable Withhold Tax": "Išjungti išskaičiavimo mokestį",
+      "Disable Withhold Tax": "Išjungti išskaičiuojamąjį mokestį",
       "Do you want to mark the Customer Data as valid?": "Ar norite pažymėti kliento duomenis kaip galiojančius?",
       "Documents": "Dokumentai",
       "Down Payment": "Pradinė įmoka",
@@ -1362,7 +1461,7 @@
       "Email External Service": "Pašto išorinė paslauga",
       "Employees": "Darbuotojai",
       "Enable": "Įgalinti",
-      "Enable Withhold Tax": "Įgalinti išskaičiavimo mokestį",
+      "Enable Withhold Tax": "Įgalinti išskaičiuojamąjį mokestį",
       "Entity Data Table Checks": "Subjektų duomenų lentelės patikrinimai",
       "Entity Details": "Subjekto informacija",
       "Entity to Entity Mapping": "Objekto atvaizdavimas",
@@ -1816,6 +1915,22 @@
       "Enrollment Details": "Registracijos informacija"
     },
     "inputs": {
+      "Returned": "Grąžintas",
+      "Settled": "Apmokėtas",
+      "Check Amount": "Čekio suma",
+      "Check Number": "Čekio numeris",
+      "Change to Give": "Grąža klientui",
+      "Currency is required": "Valiuta yra privaloma.",
+      "Customer Name": "Kliento vardas",
+      "Customer Name is required": "Kliento vardas yra privalomas.",
+      "Date is required": "Data yra privaloma.",
+      "Denomination Value": "Nominalo vertė",
+      "Line Total": "Eilutės suma",
+      "Operator": "Operatorius",
+      "Return Date": "Grąžinimo data",
+      "Return Reason": "Grąžinimo priežastis",
+      "Teller is required": "Kasa yra privaloma.",
+      "Total Cash Received": "Iš viso gauta grynųjų",
       "Account moves out of NPA only on arrears completion": "Sąskaita išeina iš NPA tik padengus visus įsiskolinimus",
       "Allow amortization override": "Leisti keisti amortizaciją",
       "Allow approval/disbursal above applied amount": "Leisti patvirtinti/išmokėti daugiau nei prašoma suma",
@@ -2468,6 +2583,7 @@
       "Group Principal Loan": "Grupės pagrindinė paskola",
       "Grouping": "Grupavimas",
       "Groups": "Grupės",
+      "Guarantor": "Garantas",
       "Guarantor Type": "Garanto tipas",
       "Hide Accruals": "Slėpti sukaupimus",
       "Hide Projected": "Slėpti planuojamas",
@@ -3605,17 +3721,17 @@
       "Institution": "Institucija",
       "Level and charge": "Lygis ir pareigos",
       "Key Functions": "Pagrindinės funkcijos",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Namų telefonas 1",
+      "Spouse's Name": "Sutuoktinio vardas",
+      "Spouse's Occupation": "Sutuoktinio profesija",
+      "Average Expenses (Monthly)": "Vidutinės išlaidos (mėnesinės)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Rekomendacija 1 (šeimos narys)",
+      "Reference 2 (Family Member)": "Rekomendacija 2 (šeimos narys)",
+      "Reference 3 (Acquaintance)": "Rekomendacija 3 (pažįstamas)",
+      "Reference 1": "Rekomendacija 1",
+      "Reference 2": "Rekomendacija 2",
+      "Reference 3": "Rekomendacija 3",
       "Level of Government": "Valdžios lygmuo",
       "Level and Charge": "Lygmuo ir pareigos",
       "Entity Employee": "Juridinio asmens darbuotojas",
@@ -3809,7 +3925,22 @@
       "Provider KYC Decision": "Teikėjo KYC sprendimas",
       "Source": "Šaltinis",
       "Started": "Pradėta",
-      "Verification Session": "Patvirtinimo sesija"
+      "Verification Session": "Patvirtinimo sesija",
+      "Pending Prospects": "Laukiantys prospektai",
+      "Prospect": "Prospektas",
+      "External Reference": "Išorinė nuoroda",
+      "Current Stage": "Dabartinis etapas",
+      "Last Completed Stage": "Paskutinis užbaigtas etapas",
+      "Stopped At": "Sustota ties",
+      "Pending Credits": "Laukiantys kreditai",
+      "Created": "Sukurta",
+      "Last Updated": "Paskutinį kartą atnaujinta",
+      "In Progress": "Vykdoma",
+      "Submitted": "Pateikta",
+      "Withdrawn": "Atsiimta",
+      "Registration Status": "Registracijos būsena",
+      "Unknown": "Nežinoma",
+      "Pending": "Laukiama"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3827,6 +3958,9 @@
       "Working with Code": "Darbas su kodu"
     },
     "menus": {
+      "Apply Annual Fees": "Taikyti metinius mokesčius",
+      "Disable Withhold Tax": "Išjungti išskaičiuojamąjį mokestį",
+      "Enable Withhold Tax": "Įgalinti išskaičiuojamąjį mokestį",
       "Mark as Fraud": "Pažymėti kaip sukčiavimą",
       "Unmark as Fraud": "Panaikinti sukčiavimo žymę",
       "Update Breach": "Atnaujinti pažeidimą",
@@ -4063,6 +4197,18 @@
       "Breach evaluation will resume": "Pažeidimų vertinimas atnaujinamas {{date}}. Nuo tos dienos paskola vėl vertinama."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
+      "No eligible cash payment types available": "Nėra tinkamų mokėjimo grynaisiais tipų.",
+      "No returned checks found": "Grąžintų čekių nerasta.",
+      "Quantity must be a whole number": "Kiekis turi būti sveikasis skaičius.",
+      "Returned check details could not be loaded": "Nepavyko įkelti grąžinto čekio informacijos.",
+      "Returned check options could not be loaded": "Nepavyko įkelti grąžinto čekio parinkčių.",
+      "Returned check payment failed": "Grąžinto čekio apmokėti nepavyko.",
+      "Returned check search failed": "Grąžintų čekių paieška nepavyko.",
+      "Returned check settled successfully": "Grąžintas čekis sėkmingai apmokėtas.",
+      "Settle a returned check with a cash payment": "Apmokėkite grąžintą čekį grynaisiais.",
+      "You do not have permission to settle returned checks": "Neturite leidimo apmokėti grąžintų čekių.",
+      "You do not have permission to view returned check payments": "Neturite leidimo peržiūrėti grąžintų čekių mokėjimų.",
       "Select a client from the list": "Pasirinkite klientą iš sąrašo",
       "Complete these steps to preview the product": "Atlikite šiuos veiksmus, kad peržiūrėtumėte produktą",
       "Complete these steps before creating the product": "Atlikite šiuos veiksmus prieš kurdami produktą",
@@ -5076,8 +5222,11 @@
       "Counted in repayment periods": "Skaičiuojama grąžinimo laikotarpiais ({{unit}})",
       "Loading enrollment status": "Įkeliama registracijos būsena",
       "No enrollment cases found": "Registracijos atvejų nerasta",
-      "Select a client from the list": "Pasirinkite klientą iš sąrašo",
-      "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos"
+      "Unable to load enrollment status": "Nepavyko įkelti registracijos būsenos",
+      "Loading pending prospects": "Įkeliami laukiantys prospektai",
+      "No pending prospects found": "Laukiančių prospektų nerasta",
+      "Unable to load pending prospects": "Nepavyko įkelti laukiančių prospektų",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Nepavyko iš naujo apskaičiuoti sumos šiai datai. Pasirinkite datą dar kartą, kad bandytumėte iš naujo."
     },
     "permissions": {
       "actions": {

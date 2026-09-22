@@ -38,6 +38,11 @@ import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
 import { LoanBuyDownFeesTabComponent } from './loans-view/loan-buy-down-fees-tab/loan-buy-down-fees-tab.component';
 import { LoanAccountDashboardComponent } from './loans-view/loan-account-dashboard/loan-account-dashboard.component';
+import { CreditOriginationStatusComponent } from './loans-view/credit-origination-status/credit-origination-status.component';
+import {
+  CREDIT_ORIGINATION_BOARD_PERMISSION,
+  creditOriginationStatusGuard
+} from './loans-view/credit-origination-status/credit-origination-status.guard';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -66,6 +71,8 @@ import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owne
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
 import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/external-asset-owner-active-transfer.resolver';
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
+import { LoanGuarantorsTabComponent } from './loans-view/loan-guarantors-tab/loan-guarantors-tab.component';
+import { LoanGuarantorsResolver } from './common-resolvers/loan-guarantors.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
 import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
@@ -130,6 +137,17 @@ const routes: Routes = [
             path: 'dashboard',
             component: LoanAccountDashboardComponent,
             data: { title: 'Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'origination-status',
+            component: CreditOriginationStatusComponent,
+            canActivate: [creditOriginationStatusGuard],
+            data: {
+              title: 'Credit Origination Status',
+              breadcrumb: 'Credit Origination Status',
+              routeParamBreadcrumb: false,
+              permissions: [CREDIT_ORIGINATION_BOARD_PERMISSION]
+            }
           },
           {
             path: 'accountdetail',
@@ -257,6 +275,18 @@ const routes: Routes = [
             },
             resolve: {
               loanCollaterals: LoanCollateralsResolver
+            }
+          },
+          {
+            path: 'guarantors',
+            component: LoanGuarantorsTabComponent,
+            data: {
+              title: 'Guarantors',
+              breadcrumb: 'Guarantors',
+              routeParamBreadcrumb: false
+            },
+            resolve: {
+              loanGuarantors: LoanGuarantorsResolver
             }
           },
           {

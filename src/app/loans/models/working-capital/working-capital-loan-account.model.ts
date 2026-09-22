@@ -17,9 +17,15 @@ export interface WorkingCapitalChargeOffReasonOption {
   isActive?: boolean;
 }
 
-/** Response of GET /working-capital-loans/{loanId}/template?templateType=chargeOff. */
+/**
+ * Response of GET /working-capital-loans/{loanId}/transactions/template?command=chargeOff.
+ *
+ * `expectedAmount` is the outstanding balance the charge-off will write off. Every command served by
+ * that endpoint reports its amount in the same field - the caller asked for one specific command, so
+ * it already knows what the number means.
+ */
 export interface WorkingCapitalChargeOffTemplate {
-  chargeOffAmount: number;
+  expectedAmount: number;
   chargeOffDate: number[] | string;
   chargeOffReasonOptions: WorkingCapitalChargeOffReasonOption[];
   currency: Currency;
@@ -299,4 +305,64 @@ export function mapWorkingCapitalWriteOffBalance(
     recoveredPercentage: totalWrittenOff > 0 ? Math.min(100, (totalRecovered / totalWrittenOff) * 100) : 0,
     fullyRecovered: totalWrittenOff > 0 && writtenOffOutstanding <= 0
   };
+}
+
+/** Classification code value used to populate the repayment classification dropdown. */
+export interface WorkingCapitalClassificationOption {
+  id: number;
+  name: string;
+}
+
+/**
+ * The commands GET /working-capital-loans/{loanId}/transactions/template serves.
+ *
+ * Mirrors the set the backend dispatches on; approval is deliberately absent, as it is the one command still served
+ * by the separate action-template endpoint.
+ */
+export type WorkingCapitalTransactionTemplateCommand =
+  | 'disburse'
+  | 'repayment'
+  | 'goodwillCredit'
+  | 'creditBalanceRefund'
+  | 'recoveryPayment'
+  | 'discountFee'
+  | 'discountFeeAdjustment'
+  | 'chargeOff'
+  | 'prepayLoan';
+
+/**
+ * Response of GET /working-capital-loans/{loanId}/transactions/template?command=prepayLoan.
+ *
+ * The payoff quote that closes the loan: `expectedAmount` is the total, and the three
+ * portions break it down. The quote is the balance as of `transactionDate`, so anything
+ * disbursed, charged or adjusted after that date is left out. Payments are not scoped
+ * the same way - the amount stays net of every repayment already made, which is what
+ * keeps a backdated payoff from closing the loan and then overpaying it.
+ */
+export interface WorkingCapitalPrepaymentTemplate {
+  wcLoanId: number;
+  currency: Currency;
+  transactionDate: number[] | string;
+  expectedAmount: number;
+  principalPortion: number;
+  feeChargesPortion: number;
+  penaltyChargesPortion: number;
+  paymentTypeOptions: PaymentType[];
+  classificationOptions: WorkingCapitalClassificationOption[];
+}
+
+/**
+ * Request body for POST /working-capital-loans/{loanId}/transactions?command=repayment
+ * as sent by the prepayment screen. A prepayment is an ordinary repayment for the
+ * full outstanding balance, so it carries no dedicated command of its own.
+ */
+export interface WorkingCapitalPrepaymentRequest {
+  transactionDate: string;
+  transactionAmount: number;
+  classificationId?: number;
+  note?: string;
+  externalId?: string;
+  paymentDetails?: WorkingCapitalPaymentDetails;
+  locale: string;
+  dateFormat: string;
 }

@@ -139,6 +139,9 @@
   window['env']['externalNationalIdSystemApiKey'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY';
   window['env']['externalNationalIdRegex'] = '$EXTERNAL_NATIONAL_ID_REGEX';
 
+  // Email format validation regex (optional override; leave unset to use the built-in default)
+  window['env']['externalEmailRegex'] = '$EXTERNAL_EMAIL_REGEX';
+
   // Client Address Location (latitude, longitude, and map)
   window['env']['enableClientAddressLocation'] = '$MIFOS_ENABLE_CLIENT_ADDRESS_LOCATION';
 

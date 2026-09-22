@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "Stav procesu poskytnutí úvěru",
+    "loading": "Načítání stavu procesu poskytnutí úvěru...",
+    "empty": "Pro tuto žádost není k dispozici stav procesu poskytnutí úvěru.",
+    "retry": "Zkusit znovu",
+    "currentStage": "Aktuální fáze",
+    "errors": {
+      "unauthorized": "Chcete-li zobrazit stav procesu poskytnutí úvěru, přihlaste se.",
+      "forbidden": "Nemáte oprávnění zobrazit stav tohoto procesu poskytnutí úvěru.",
+      "notFound": "Žádost o úvěr nebo její přehled procesu poskytnutí úvěru nebyly nalezeny.",
+      "generic": "Stav procesu poskytnutí úvěru se nepodařilo načíst. Zkuste to znovu."
+    },
+    "stages": {
+      "ONBOARDING": "Začlenění",
+      "COMPLIANCE": "Soulad",
+      "PARAMETRIC_SCORE": "Parametrické hodnocení",
+      "FILE_INTEGRATION": "Integrace dokumentace",
+      "CREDIT_ANALYSIS": "Úvěrová analýza",
+      "APPROVAL": "Schválení",
+      "LEGAL_INSTRUMENTATION": "Právní dokumentace",
+      "DISBURSEMENT": "Vyplacení",
+      "RECOVERY": "Vymáhání"
+    },
+    "statuses": {
+      "COMPLETED": "Dokončeno",
+      "CURRENT": "Aktuální",
+      "PENDING": "Čeká",
+      "REJECTED": "Zamítnuto",
+      "BLOCKED": "Blokováno",
+      "FAILED": "Selhalo",
+      "CANCELLED": "Zrušeno",
+      "WITHDRAWN": "Staženo",
+      "WRITTEN_OFF": "Odepsáno"
+    },
+    "fields": {
+      "completedOn": "Dokončeno",
+      "source": "Zdroj",
+      "sourceStatus": "Zdrojový stav",
+      "actor": "Aktér",
+      "sourceReference": "Reference zdroje",
+      "transactionId": "ID transakce",
+      "amount": "Částka",
+      "loanStatus": "Stav úvěru",
+      "reason": "Důvod"
+    }
+  },
+  "acquisition": {
+    "title": "Stav akvizice",
+    "loading": "Načítání stavu akvizice...",
+    "empty": "Pro tento účet nejsou k dispozici žádné údaje o stavu akvizice.",
+    "retry": "Zkusit znovu",
+    "currentStage": "Aktuální fáze",
+    "notAvailable": "Není k dispozici",
+    "errors": {
+      "forbidden": "Nemáte oprávnění zobrazit tento stav akvizice.",
+      "notFound": "Stav akvizice pro tento účet nebyl nalezen.",
+      "generic": "Stav akvizice se nepodařilo načíst. Zkuste to znovu."
+    },
+    "stages": {
+      "ONBOARDING": "Začlenění",
+      "COMPLIANCE": "Soulad",
+      "APPROVAL": "Schválení",
+      "ACTIVATION": "Aktivace",
+      "DEPOSIT": "Vklad",
+      "WITHDRAWAL": "Výběr"
+    },
+    "statuses": {
+      "COMPLETED": "DOKONČENO",
+      "CURRENT": "AKTUÁLNÍ",
+      "PENDING": "ČEKÁ",
+      "BLOCKED": "BLOKOVÁNO",
+      "CANCELLED": "ZRUŠENO",
+      "CLOSED": "UZAVŘENO",
+      "FAILED": "SELHALO",
+      "REJECTED": "ZAMÍTNUTO",
+      "WITHDRAWN": "STAŽENO"
+    },
+    "fields": {
+      "completedOn": "Dokončeno",
+      "sourceStatus": "Zdrojový stav",
+      "actor": "Aktér",
+      "amount": "Částka",
+      "accountStatus": "Stav účtu",
+      "reason": "Důvod"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
@@ -460,6 +546,11 @@
       "loanNotWrittenOff": "Tento úvěr není odepsaný, proto nemůže přijmout vymoženou platbu.",
       "reversalForbidden": "Nemáte oprávnění stornovat transakce provozního kapitálu. Požádejte administrátora, aby storno provedl.",
       "undoWriteOffWithRecoveries": "Odpis nelze vrátit zpět, dokud má úvěr vymožené platby. Nejprve je stornujte."
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "Datum předčasného splacení nemůže být v budoucnosti.",
+      "dateOutOfRange": "Datum předčasného splacení je mimo povolený rozsah.",
+      "amountMustBePositive": "Částka transakce musí být větší než 0."
     }
   },
   "labels": {
@@ -527,6 +618,9 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Finalize": "Dokončit",
+      "New Operation": "Nová operace",
+      "Select Check": "Vybrat šek",
       "Accept Transfer": "Přijmout převod",
       "Actions": "Akce",
       "Activate": "aktivovat",
@@ -1190,6 +1284,11 @@
       "NotEqual": "Nerovná se"
     },
     "heading": {
+      "Cash Payment": "Hotovostní platba",
+      "Confirmation": "Potvrzení",
+      "Receipt": "Účtenka",
+      "Returned Check Payment": "Platba vráceného šeku",
+      "Search Returned Checks": "Vyhledat vrácené šeky",
       "Create Agriculture Loan": "Vytvořit zemědělský úvěr",
       "Create Auto Loan": "Vytvořit úvěr na automobil",
       "Create BNPL Loan": "Vytvořit úvěr BNPL",
@@ -1351,7 +1450,7 @@
       "Deposit Period": "Doba vkladu",
       "Details": "Podrobnosti",
       "Disable": "Zakázat",
-      "Disable Withhold Tax": "Zakázat zadržení daně",
+      "Disable Withhold Tax": "Zakázat srážkovou daň",
       "Do you want to mark the Customer Data as valid?": "Chcete označit údaje zákazníka jako platné?",
       "Documents": "Dokumenty",
       "Down Payment": "Záloha",
@@ -1365,7 +1464,7 @@
       "Email External Service": "E-mailová externí služba",
       "Employees": "Zaměstnanci",
       "Enable": "Umožnit",
-      "Enable Withhold Tax": "Povolit zadrženou daň",
+      "Enable Withhold Tax": "Povolit srážkovou daň",
       "Entity Data Table Checks": "Kontroly tabulky dat entit",
       "Entity Details": "Detaily entity",
       "Entity to Entity Mapping": "Mapování entity na entitu",
@@ -1818,6 +1917,22 @@
       "Enrollment Details": "Podrobnosti registrace"
     },
     "inputs": {
+      "Returned": "Vráceno",
+      "Settled": "Uhrazeno",
+      "Check Amount": "Částka šeku",
+      "Check Number": "Číslo šeku",
+      "Change to Give": "Částka k vrácení",
+      "Currency is required": "Měna je povinná.",
+      "Customer Name": "Jméno zákazníka",
+      "Customer Name is required": "Jméno zákazníka je povinné.",
+      "Date is required": "Datum je povinné.",
+      "Denomination Value": "Hodnota nominálu",
+      "Line Total": "Celkem za řádek",
+      "Operator": "Operátor",
+      "Return Date": "Datum vrácení",
+      "Return Reason": "Důvod vrácení",
+      "Teller is required": "Pokladník je povinný.",
+      "Total Cash Received": "Celková přijatá hotovost",
       "Account moves out of NPA only on arrears completion": "Účet opustí NPA až po uhrazení všech nedoplatků",
       "Allow amortization override": "Povolit změnu amortizace",
       "Allow approval/disbursal above applied amount": "Povolit schválení/čerpání nad požadovanou částku",
@@ -2470,6 +2585,7 @@
       "Group Principal Loan": "Skupinová jistina úvěru",
       "Grouping": "Seskupování",
       "Groups": "Skupiny",
+      "Guarantor": "Ručitel",
       "Guarantor Type": "Typ ručitele",
       "Hide Accruals": "Skrýt časové rozlišení",
       "Hide Projected": "Skrýt plánované",
@@ -3607,17 +3723,17 @@
       "Institution": "Instituce",
       "Level and charge": "Úroveň a funkce",
       "Key Functions": "Klíčové funkce",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "Domácí telefon 1",
+      "Spouse's Name": "Jméno manžela/manželky",
+      "Spouse's Occupation": "Povolání manžela/manželky",
+      "Average Expenses (Monthly)": "Průměrné výdaje (měsíčně)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "Referenční osoba 1 (rodinný příslušník)",
+      "Reference 2 (Family Member)": "Referenční osoba 2 (rodinný příslušník)",
+      "Reference 3 (Acquaintance)": "Referenční osoba 3 (známý)",
+      "Reference 1": "Referenční osoba 1",
+      "Reference 2": "Referenční osoba 2",
+      "Reference 3": "Referenční osoba 3",
       "Level of Government": "Úroveň vlády",
       "Level and Charge": "Úroveň a funkce",
       "Entity Employee": "Zaměstnanec subjektu",
@@ -3811,7 +3927,22 @@
       "Provider KYC Decision": "Rozhodnutí poskytovatele KYC",
       "Source": "Zdroj",
       "Started": "Zahájeno",
-      "Verification Session": "Ověřovací relace"
+      "Verification Session": "Ověřovací relace",
+      "Pending Prospects": "Nevyřízené prospekty",
+      "Prospect": "Prospekt",
+      "External Reference": "Externí reference",
+      "Current Stage": "Aktuální fáze",
+      "Last Completed Stage": "Poslední dokončená fáze",
+      "Stopped At": "Zastaveno ve fázi",
+      "Pending Credits": "Nevyřízené úvěry",
+      "Created": "Vytvořeno",
+      "Last Updated": "Naposledy aktualizováno",
+      "In Progress": "Probíhá",
+      "Submitted": "Odesláno",
+      "Withdrawn": "Staženo",
+      "Registration Status": "Stav registrace",
+      "Unknown": "Neznámé",
+      "Pending": "Nevyřízené"
     },
     "links": {
       "Community": "Společenství",
@@ -3829,6 +3960,9 @@
       "Working with Code": "Práce s kódem"
     },
     "menus": {
+      "Apply Annual Fees": "Uplatnit roční poplatky",
+      "Disable Withhold Tax": "Zakázat srážkovou daň",
+      "Enable Withhold Tax": "Povolit srážkovou daň",
       "Mark as Fraud": "Označit jako podvod",
       "Unmark as Fraud": "Zrušit označení podvodu",
       "Update Breach": "Aktualizovat porušení",
@@ -4065,6 +4199,18 @@
       "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen."
     },
     "text": {
+      "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",
+      "No eligible cash payment types available": "Nejsou k dispozici žádné způsobilé typy hotovostních plateb.",
+      "No returned checks found": "Nebyly nalezeny žádné vrácené šeky.",
+      "Quantity must be a whole number": "Množství musí být celé číslo.",
+      "Returned check details could not be loaded": "Podrobnosti vráceného šeku se nepodařilo načíst.",
+      "Returned check options could not be loaded": "Možnosti platby vráceného šeku se nepodařilo načíst.",
+      "Returned check payment failed": "Platba vráceného šeku se nezdařila.",
+      "Returned check search failed": "Vyhledávání vrácených šeků se nezdařilo.",
+      "Returned check settled successfully": "Vrácený šek byl úspěšně uhrazen.",
+      "Settle a returned check with a cash payment": "Uhraďte vrácený šek hotovostní platbou.",
+      "You do not have permission to settle returned checks": "Nemáte oprávnění k úhradě vrácených šeků.",
+      "You do not have permission to view returned check payments": "Nemáte oprávnění zobrazit platby vrácených šeků.",
       "Select a client from the list": "Vyberte klienta ze seznamu",
       "Complete these steps to preview the product": "Dokončete tyto kroky, abyste zobrazili náhled produktu",
       "Complete these steps before creating the product": "Dokončete tyto kroky před vytvořením produktu",
@@ -5077,8 +5223,11 @@
       "Counted in repayment periods": "Počítáno ve splátkových obdobích ({{unit}})",
       "Loading enrollment status": "Načítá se stav registrace",
       "No enrollment cases found": "Nebyly nalezeny žádné případy registrace",
-      "Select a client from the list": "Vyberte klienta ze seznamu",
-      "Unable to load enrollment status": "Nelze načíst stav registrace"
+      "Unable to load enrollment status": "Nelze načíst stav registrace",
+      "Loading pending prospects": "Načítání nevyřízených prospektů",
+      "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
+      "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Částku pro toto datum se nepodařilo znovu vypočítat. Pro opakování vyberte datum znovu."
     },
     "permissions": {
       "actions": {

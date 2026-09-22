@@ -20,6 +20,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
+import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
@@ -29,10 +30,26 @@ import {
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
+import { CreditOriginationBoard } from './models/credit-origination-board.model';
 
 /**
  * Loans service.
  */
+/**
+ * The Working Capital transaction template commands whose quoted amount moves with the transaction date.
+ *
+ * Only what the loan owes is scoped to the date, so these are the commands reading an outstanding figure. The rest are
+ * left out because their amount cannot vary with it: `creditBalanceRefund` quotes the overpayment and `recoveryPayment`
+ * what is still recoverable, both of which come from what has been paid rather than what is owed; `disburse` quotes the
+ * approved principal; and `discountFee` / `discountFeeAdjustment` quote no amount at all.
+ */
+const DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS: ReadonlySet<WorkingCapitalTransactionTemplateCommand> = new Set([
+  'repayment',
+  'goodwillCredit',
+  'chargeOff',
+  'prepayLoan'
+]);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +73,15 @@ export class LoansService {
   getLoansPage(offset: number, limit: number): Observable<any> {
     const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
     return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Retrieves the backend-owned credit origination workflow for a loan application.
+   * @param creditApplicationId Fineract loan application identifier.
+   * @returns The nine-stage credit origination board.
+   */
+  getCreditOriginationBoard(creditApplicationId: number | string): Observable<CreditOriginationBoard> {
+    return this.http.get<CreditOriginationBoard>(`/v2/credit-applications/${creditApplicationId}/origination-board`);
   }
 
   /**
@@ -698,6 +724,15 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 
+  /**
+   * Fetches the Working Capital Loan approval template.
+   *
+   * Approval is the only action still served by this endpoint; every other command, disburse included, goes through
+   * getWorkingCapitalLoanTransactionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {string} actionName 'approve'.
+   * @returns {Observable<any>} The action template.
+   */
   getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', actionName);
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
@@ -726,13 +761,33 @@ export class LoansService {
     );
   }
 
-  getWorkingCapitalLoanPayoutTemplate(loanId: string, actionName: string): Observable<any> {
-    const httpParams = new HttpParams().set('templateType', actionName);
-    return this.http.get(`/workingcapitalloans/${loanId}/template`, { params: httpParams });
-  }
-
-  getWorkingCapitalLoanTransactionTemplate(loanId: string, actionName: string): Observable<any> {
-    const httpParams = new HttpParams().set('command', actionName);
+  /**
+   * Fetches the template for one Working Capital Loan command: disburse, repayment, goodwillCredit,
+   * creditBalanceRefund, recoveryPayment, discountFee, discountFeeAdjustment, chargeOff or prepayLoan.
+   *
+   * Despite the endpoint name this also serves disburse, which is a lifecycle action rather than a transaction.
+   * Approval is the one command it does not serve; that goes through getWorkingCapitalLoanActionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {WorkingCapitalTransactionTemplateCommand} command The command whose template to fetch.
+   * @param {string} transactionDate Date to quote the amount for, for the commands that read it; defaults to the
+   *   business date. Only what the loan owes is scoped to it - the amount stays net of every payment already made.
+   * @returns {Observable<any>} The transaction template.
+   */
+  getWorkingCapitalLoanTransactionTemplate(
+    loanId: string,
+    command: WorkingCapitalTransactionTemplateCommand,
+    transactionDate?: string
+  ): Observable<any> {
+    let httpParams = new HttpParams().set('command', command);
+    if (DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS.has(command)) {
+      const quoteDate =
+        transactionDate ??
+        this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+      httpParams = httpParams
+        .set('transactionDate', quoteDate)
+        .set('locale', this.settingsService.language.code)
+        .set('dateFormat', this.settingsService.dateFormat);
+    }
     return this.http.get(`/working-capital-loans/${loanId}/transactions/template`, { params: httpParams });
   }
 

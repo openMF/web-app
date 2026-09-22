@@ -1,4 +1,90 @@
 {
+  "creditOrigination": {
+    "title": "ऋण उत्पत्ति स्थिति",
+    "loading": "ऋण उत्पत्ति स्थिति लोड हुँदैछ...",
+    "empty": "यस आवेदनका लागि ऋण उत्पत्ति स्थिति उपलब्ध छैन।",
+    "retry": "पुनः प्रयास गर्नुहोस्",
+    "currentStage": "हालको चरण",
+    "errors": {
+      "unauthorized": "ऋण उत्पत्ति स्थिति हेर्न कृपया साइन इन गर्नुहोस्।",
+      "forbidden": "तपाईंसँग यो ऋण उत्पत्ति स्थिति हेर्ने अनुमति छैन।",
+      "notFound": "ऋण आवेदन वा यसको उत्पत्ति बोर्ड फेला परेन।",
+      "generic": "ऋण उत्पत्ति स्थिति लोड गर्न सकिएन। फेरि प्रयास गर्नुहोस्।"
+    },
+    "stages": {
+      "ONBOARDING": "अनबोर्डिङ",
+      "COMPLIANCE": "अनुपालन",
+      "PARAMETRIC_SCORE": "प्यारामेट्रिक स्कोर",
+      "FILE_INTEGRATION": "फाइल एकीकरण",
+      "CREDIT_ANALYSIS": "ऋण विश्लेषण",
+      "APPROVAL": "स्वीकृति",
+      "LEGAL_INSTRUMENTATION": "कानुनी दस्तावेजीकरण",
+      "DISBURSEMENT": "ऋण वितरण",
+      "RECOVERY": "असुली"
+    },
+    "statuses": {
+      "COMPLETED": "सम्पन्न",
+      "CURRENT": "हालको",
+      "PENDING": "बाँकी",
+      "REJECTED": "अस्वीकृत",
+      "BLOCKED": "रोकिएको",
+      "FAILED": "असफल",
+      "CANCELLED": "रद्द गरिएको",
+      "WITHDRAWN": "फिर्ता लिइएको",
+      "WRITTEN_OFF": "अपलेखन गरिएको"
+    },
+    "fields": {
+      "completedOn": "सम्पन्न मिति",
+      "source": "स्रोत",
+      "sourceStatus": "स्रोत स्थिति",
+      "actor": "कार्यकर्ता",
+      "sourceReference": "स्रोत सन्दर्भ",
+      "transactionId": "कारोबार ID",
+      "amount": "रकम",
+      "loanStatus": "ऋण स्थिति",
+      "reason": "कारण"
+    }
+  },
+  "acquisition": {
+    "title": "प्राप्ति स्थिति",
+    "loading": "प्राप्ति स्थिति लोड हुँदैछ...",
+    "empty": "यस खाताका लागि प्राप्ति स्थिति डेटा उपलब्ध छैन।",
+    "retry": "पुनः प्रयास गर्नुहोस्",
+    "currentStage": "हालको चरण",
+    "notAvailable": "उपलब्ध छैन",
+    "errors": {
+      "forbidden": "तपाईंसँग यो प्राप्ति स्थिति हेर्ने अनुमति छैन।",
+      "notFound": "यस खाताको प्राप्ति स्थिति फेला परेन।",
+      "generic": "प्राप्ति स्थिति लोड गर्न सकिएन। फेरि प्रयास गर्नुहोस्।"
+    },
+    "stages": {
+      "ONBOARDING": "अनबोर्डिङ",
+      "COMPLIANCE": "अनुपालन",
+      "APPROVAL": "स्वीकृति",
+      "ACTIVATION": "सक्रियता",
+      "DEPOSIT": "जम्मा",
+      "WITHDRAWAL": "निकासी"
+    },
+    "statuses": {
+      "COMPLETED": "सम्पन्न",
+      "CURRENT": "हालको",
+      "PENDING": "बाँकी",
+      "BLOCKED": "रोकिएको",
+      "CANCELLED": "रद्द गरिएको",
+      "CLOSED": "बन्द",
+      "FAILED": "असफल",
+      "REJECTED": "अस्वीकृत",
+      "WITHDRAWN": "फिर्ता लिइएको"
+    },
+    "fields": {
+      "completedOn": "सम्पन्न मिति",
+      "sourceStatus": "स्रोत स्थिति",
+      "actor": "कार्यकर्ता",
+      "amount": "रकम",
+      "accountStatus": "खाता स्थिति",
+      "reason": "कारण"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
@@ -458,6 +544,11 @@
       "loanNotWrittenOff": "यो ऋण मिनाहा गरिएको छैन, त्यसैले असुली भुक्तानी लिन सकिँदैन।",
       "reversalForbidden": "तपाईंसँग कार्यशील पुँजी कारोबार फिर्ता गर्ने अनुमति छैन। प्रशासकलाई यो फिर्ता गर्न अनुरोध गर्नुहोस्।",
       "undoWriteOffWithRecoveries": "ऋणमा असुली भुक्तानी रहेसम्म मिनाहा फिर्ता गर्न मिल्दैन। पहिले ती फिर्ता गर्नुहोस्।"
+    },
+    "workingCapitalPrepayment": {
+      "futureDate": "पूर्व भुक्तानीको मिति भविष्यको हुन सक्दैन।",
+      "dateOutOfRange": "पूर्व भुक्तानीको मिति अनुमति दिइएको दायराभन्दा बाहिर छ।",
+      "amountMustBePositive": "कारोबार रकम ० भन्दा बढी हुनुपर्छ।"
     }
   },
   "labels": {
@@ -526,6 +617,9 @@
       "Home": "घर"
     },
     "buttons": {
+      "Finalize": "अन्तिम रूप दिनुहोस्",
+      "New Operation": "नयाँ कारोबार",
+      "Select Check": "चेक चयन गर्नुहोस्",
       "Accept Transfer": "स्थानान्तरण स्वीकार गर्नुहोस्",
       "Actions": "कार्यहरू",
       "Activate": "सक्रिय गर्नुहोस्",
@@ -1188,6 +1282,11 @@
       "NotEqual": "बराबर छैन"
     },
     "heading": {
+      "Cash Payment": "नगद भुक्तानी",
+      "Confirmation": "पुष्टि",
+      "Receipt": "रसिद",
+      "Returned Check Payment": "फिर्ता भएको चेकको भुक्तानी",
+      "Search Returned Checks": "फिर्ता भएका चेकहरू खोज्नुहोस्",
       "Create Agriculture Loan": "कृषि ऋण सिर्जना गर्नुहोस्",
       "Create Auto Loan": "सवारी साधन ऋण सिर्जना गर्नुहोस्",
       "Create BNPL Loan": "BNPL ऋण सिर्जना गर्नुहोस्",
@@ -1348,7 +1447,7 @@
       "Deposit Period": "जम्मा अवधि",
       "Details": "विवरणहरू",
       "Disable": "असक्षम गर्नुहोस्",
-      "Disable Withhold Tax": "प्रयोग गर्ने कर अक्षम गर्नुहोस्",
+      "Disable Withhold Tax": "कर रोक असक्षम गर्नुहोस्",
       "Do you want to mark the Customer Data as valid?": "के तपाईं ग्राहक डाटालाई मान्य भनी चिन्ह लगाउन चाहनुहुन्छ?",
       "Documents": "कागजातहरू",
       "Down Payment": "डाउन पेमेन्ट",
@@ -1362,7 +1461,7 @@
       "Email External Service": "इमेल बाह्य सेवा",
       "Employees": "कर्मचारीहरु",
       "Enable": "सक्षम गर्नुहोस्",
-      "Enable Withhold Tax": "सक्षम गर्न कर सक्षम गर्नुहोस्",
+      "Enable Withhold Tax": "कर रोक सक्षम गर्नुहोस्",
       "Entity Data Table Checks": "संस्था डेटा तालिका जाँच",
       "Entity Details": "संस्था विवरण",
       "Entity to Entity Mapping": "एकाई देखि इकाई म्यापिङ",
@@ -1816,6 +1915,22 @@
       "Enrollment Details": "दर्ता विवरण"
     },
     "inputs": {
+      "Returned": "फिर्ता भएको",
+      "Settled": "भुक्तानी गरिएको",
+      "Check Amount": "चेक रकम",
+      "Check Number": "चेक नम्बर",
+      "Change to Give": "फिर्ता दिनुपर्ने रकम",
+      "Currency is required": "मुद्रा आवश्यक छ।",
+      "Customer Name": "ग्राहकको नाम",
+      "Customer Name is required": "ग्राहकको नाम आवश्यक छ।",
+      "Date is required": "मिति आवश्यक छ।",
+      "Denomination Value": "दरको मूल्य",
+      "Line Total": "पङ्क्तिको जम्मा",
+      "Operator": "सञ्चालक",
+      "Return Date": "फिर्ता मिति",
+      "Return Reason": "फिर्ता हुनुको कारण",
+      "Teller is required": "टेलर आवश्यक छ।",
+      "Total Cash Received": "प्राप्त कुल नगद",
       "Account moves out of NPA only on arrears completion": "सबै बक्यौता भुक्तानी भएपछि मात्र खाता NPA बाट बाहिरिन्छ",
       "Allow amortization override": "परिशोधन परिवर्तन अनुमति दिनुहोस्",
       "Allow approval/disbursal above applied amount": "आवेदित रकमभन्दा बढी स्वीकृति/भुक्तानी अनुमति दिनुहोस्",
@@ -2468,6 +2583,7 @@
       "Group Principal Loan": "समूह प्रिन्सिपल ऋण",
       "Grouping": "समूहीकरण",
       "Groups": "समूहहरू",
+      "Guarantor": "ग्यारेन्टर",
       "Guarantor Type": "ग्यारेन्टर प्रकार",
       "Hide Accruals": "आम्दानी लुकाउनुहोस्",
       "Hide Projected": "प्रक्षेपित लुकाउनुहोस्",
@@ -3605,17 +3721,17 @@
       "Institution": "संस्था",
       "Level and charge": "स्तर र पदभार",
       "Key Functions": "मुख्य कार्यहरू",
-      "Home phone 1": "Home phone 1",
-      "Spouse's Name": "Spouse's Name",
-      "Spouse's Occupation": "Spouse's Occupation",
-      "Average Expenses (Monthly)": "Average Expenses (Monthly)",
+      "Home phone 1": "घरको फोन १",
+      "Spouse's Name": "पति/पत्नीको नाम",
+      "Spouse's Occupation": "पति/पत्नीको पेशा",
+      "Average Expenses (Monthly)": "औसत खर्च (मासिक)",
       "Colony / Neighborhood": "Colony / Neighborhood",
-      "Reference 1 (Family Member)": "Reference 1 (Family Member)",
-      "Reference 2 (Family Member)": "Reference 2 (Family Member)",
-      "Reference 3 (Acquaintance)": "Reference 3 (Acquaintance)",
-      "Reference 1": "Reference 1",
-      "Reference 2": "Reference 2",
-      "Reference 3": "Reference 3",
+      "Reference 1 (Family Member)": "सन्दर्भ १ (परिवारका सदस्य)",
+      "Reference 2 (Family Member)": "सन्दर्भ २ (परिवारका सदस्य)",
+      "Reference 3 (Acquaintance)": "सन्दर्भ ३ (परिचित)",
+      "Reference 1": "सन्दर्भ १",
+      "Reference 2": "सन्दर्भ २",
+      "Reference 3": "सन्दर्भ ३",
       "Level of Government": "सरकारको तह",
       "Level and Charge": "तह र पद",
       "Entity Employee": "संस्थाको कर्मचारी",
@@ -3809,7 +3925,22 @@
       "Provider KYC Decision": "प्रदायकको KYC निर्णय",
       "Source": "स्रोत",
       "Started": "सुरु गरिएको",
-      "Verification Session": "प्रमाणीकरण सत्र"
+      "Verification Session": "प्रमाणीकरण सत्र",
+      "Pending Prospects": "विचाराधीन सम्भावित ग्राहकहरू",
+      "Prospect": "सम्भावित ग्राहक",
+      "External Reference": "बाह्य सन्दर्भ",
+      "Current Stage": "हालको चरण",
+      "Last Completed Stage": "अन्तिम पूरा चरण",
+      "Stopped At": "रोकिएको चरण",
+      "Pending Credits": "विचाराधीन क्रेडिटहरू",
+      "Created": "सिर्जना गरिएको",
+      "Last Updated": "अन्तिम अद्यावधिक",
+      "In Progress": "प्रगतिमा",
+      "Submitted": "पेश गरिएको",
+      "Withdrawn": "फिर्ता लिइएको",
+      "Registration Status": "दर्ता स्थिति",
+      "Unknown": "अज्ञात",
+      "Pending": "विचाराधीन"
     },
     "links": {
       "Community": "समुदाय",
@@ -3827,6 +3958,9 @@
       "Working with Code": "Code मा काम गर्नुहुन्छ"
     },
     "menus": {
+      "Apply Annual Fees": "वार्षिक शुल्क लागू गर्नुहोस्",
+      "Disable Withhold Tax": "कर रोक असक्षम गर्नुहोस्",
+      "Enable Withhold Tax": "कर रोक सक्षम गर्नुहोस्",
       "Mark as Fraud": "ठगीको रूपमा चिन्ह लगाउनुहोस्",
       "Unmark as Fraud": "ठगी चिन्ह हटाउनुहोस्",
       "Update Breach": "उल्लंघन अद्यावधिक गर्नुहोस्",
@@ -4063,6 +4197,18 @@
       "Breach evaluation will resume": "{{date}} देखि उल्लंघन मूल्यांकन पुनः सुरु हुन्छ। त्यो मितिदेखि ऋणको पुनः मूल्यांकन गरिन्छ।"
     },
     "text": {
+      "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
+      "No eligible cash payment types available": "कुनै योग्य नगद भुक्तानी प्रकार उपलब्ध छैन।",
+      "No returned checks found": "कुनै फिर्ता भएको चेक भेटिएन।",
+      "Quantity must be a whole number": "परिमाण पूर्ण सङ्ख्या हुनुपर्छ।",
+      "Returned check details could not be loaded": "फिर्ता भएको चेकको विवरण लोड गर्न सकिएन।",
+      "Returned check options could not be loaded": "फिर्ता भएको चेकका विकल्पहरू लोड गर्न सकिएन।",
+      "Returned check payment failed": "फिर्ता भएको चेकको भुक्तानी असफल भयो।",
+      "Returned check search failed": "फिर्ता भएका चेकको खोजी असफल भयो।",
+      "Returned check settled successfully": "फिर्ता भएको चेक सफलतापूर्वक भुक्तानी गरियो।",
+      "Settle a returned check with a cash payment": "फिर्ता भएको चेक नगद भुक्तानीबाट मिलान गर्नुहोस्।",
+      "You do not have permission to settle returned checks": "तपाईंसँग फिर्ता भएका चेकहरू भुक्तानी गर्ने अनुमति छैन।",
+      "You do not have permission to view returned check payments": "तपाईंसँग फिर्ता भएका चेकका भुक्तानीहरू हेर्ने अनुमति छैन।",
       "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
       "Complete these steps to preview the product": "उत्पादनको पूर्वावलोकन गर्न यी चरणहरू पूरा गर्नुहोस्",
       "Complete these steps before creating the product": "उत्पादन सिर्जना गर्नु अघि यी चरणहरू पूरा गर्नुहोस्",
@@ -5075,8 +5221,11 @@
       "Counted in repayment periods": "भुक्तानी अवधिमा गणना गरिन्छ ({{unit}})",
       "Loading enrollment status": "दर्ता स्थिति लोड हुँदैछ",
       "No enrollment cases found": "दर्ताका केसहरू फेला परेनन्",
-      "Select a client from the list": "सूचीबाट ग्राहक चयन गर्नुहोस्",
-      "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन"
+      "Unable to load enrollment status": "दर्ता स्थिति लोड गर्न सकिएन",
+      "Loading pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड हुँदै",
+      "No pending prospects found": "विचाराधीन सम्भावित ग्राहकहरू फेला परेनन्",
+      "Unable to load pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड गर्न सकिएन",
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "यस मितिको रकम पुनः गणना गर्न सकिएन। पुनः प्रयास गर्न मिति फेरि छान्नुहोस्।"
     },
     "permissions": {
       "actions": {
