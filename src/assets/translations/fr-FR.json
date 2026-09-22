@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Statut d’octroi du crédit",
+    "loading": "Chargement du statut d’octroi du crédit...",
+    "empty": "Aucun statut d’octroi du crédit n’est disponible pour cette demande.",
+    "retry": "Réessayer",
+    "currentStage": "Étape actuelle",
+    "errors": {
+      "unauthorized": "Veuillez vous connecter pour consulter le statut d’octroi du crédit.",
+      "forbidden": "Vous n’avez pas l’autorisation de consulter ce statut d’octroi du crédit.",
+      "notFound": "La demande de crédit ou son tableau d’octroi est introuvable.",
+      "generic": "Impossible de charger le statut d’octroi du crédit. Veuillez réessayer."
+    },
+    "stages": {
+      "ONBOARDING": "Intégration",
+      "COMPLIANCE": "Conformité",
+      "PARAMETRIC_SCORE": "Score paramétrique",
+      "FILE_INTEGRATION": "Constitution du dossier",
+      "CREDIT_ANALYSIS": "Analyse du crédit",
+      "APPROVAL": "Approbation",
+      "LEGAL_INSTRUMENTATION": "Formalisation juridique",
+      "DISBURSEMENT": "Décaissement",
+      "RECOVERY": "Recouvrement"
+    },
+    "statuses": {
+      "COMPLETED": "Terminé",
+      "CURRENT": "Actuel",
+      "PENDING": "En attente",
+      "REJECTED": "Rejeté",
+      "BLOCKED": "Bloqué",
+      "FAILED": "Échec",
+      "CANCELLED": "Annulé",
+      "WITHDRAWN": "Retiré",
+      "WRITTEN_OFF": "Passé en perte"
+    },
+    "fields": {
+      "completedOn": "Terminé le",
+      "source": "Source",
+      "sourceStatus": "Statut source",
+      "actor": "Acteur",
+      "sourceReference": "Référence source",
+      "transactionId": "ID de transaction",
+      "amount": "Montant",
+      "loanStatus": "Statut du crédit",
+      "reason": "Motif"
+    }
+  },
   "acquisition": {
     "title": "Statut d’acquisition",
     "loading": "Chargement du statut d’acquisition...",

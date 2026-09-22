@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Stav procesu poskytnutí úvěru",
+    "loading": "Načítání stavu procesu poskytnutí úvěru...",
+    "empty": "Pro tuto žádost není k dispozici stav procesu poskytnutí úvěru.",
+    "retry": "Zkusit znovu",
+    "currentStage": "Aktuální fáze",
+    "errors": {
+      "unauthorized": "Chcete-li zobrazit stav procesu poskytnutí úvěru, přihlaste se.",
+      "forbidden": "Nemáte oprávnění zobrazit stav tohoto procesu poskytnutí úvěru.",
+      "notFound": "Žádost o úvěr nebo její přehled procesu poskytnutí úvěru nebyly nalezeny.",
+      "generic": "Stav procesu poskytnutí úvěru se nepodařilo načíst. Zkuste to znovu."
+    },
+    "stages": {
+      "ONBOARDING": "Začlenění",
+      "COMPLIANCE": "Soulad",
+      "PARAMETRIC_SCORE": "Parametrické hodnocení",
+      "FILE_INTEGRATION": "Integrace dokumentace",
+      "CREDIT_ANALYSIS": "Úvěrová analýza",
+      "APPROVAL": "Schválení",
+      "LEGAL_INSTRUMENTATION": "Právní dokumentace",
+      "DISBURSEMENT": "Vyplacení",
+      "RECOVERY": "Vymáhání"
+    },
+    "statuses": {
+      "COMPLETED": "Dokončeno",
+      "CURRENT": "Aktuální",
+      "PENDING": "Čeká",
+      "REJECTED": "Zamítnuto",
+      "BLOCKED": "Blokováno",
+      "FAILED": "Selhalo",
+      "CANCELLED": "Zrušeno",
+      "WITHDRAWN": "Staženo",
+      "WRITTEN_OFF": "Odepsáno"
+    },
+    "fields": {
+      "completedOn": "Dokončeno",
+      "source": "Zdroj",
+      "sourceStatus": "Zdrojový stav",
+      "actor": "Aktér",
+      "sourceReference": "Reference zdroje",
+      "transactionId": "ID transakce",
+      "amount": "Částka",
+      "loanStatus": "Stav úvěru",
+      "reason": "Důvod"
+    }
+  },
   "acquisition": {
     "title": "Stav akvizice",
     "loading": "Načítání stavu akvizice...",

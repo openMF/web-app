@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Status der Kreditvergabe",
+    "loading": "Status der Kreditvergabe wird geladen...",
+    "empty": "Für diesen Antrag ist kein Status der Kreditvergabe verfügbar.",
+    "retry": "Erneut versuchen",
+    "currentStage": "Aktuelle Phase",
+    "errors": {
+      "unauthorized": "Bitte melden Sie sich an, um den Status der Kreditvergabe anzuzeigen.",
+      "forbidden": "Sie sind nicht berechtigt, diesen Status der Kreditvergabe anzuzeigen.",
+      "notFound": "Der Kreditantrag oder die zugehörige Kreditvergabeseite wurde nicht gefunden.",
+      "generic": "Der Status der Kreditvergabe konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "PARAMETRIC_SCORE": "Parametrische Bewertung",
+      "FILE_INTEGRATION": "Zusammenführung der Unterlagen",
+      "CREDIT_ANALYSIS": "Kreditanalyse",
+      "APPROVAL": "Genehmigung",
+      "LEGAL_INSTRUMENTATION": "Rechtliche Dokumentation",
+      "DISBURSEMENT": "Auszahlung",
+      "RECOVERY": "Beitreibung"
+    },
+    "statuses": {
+      "COMPLETED": "Abgeschlossen",
+      "CURRENT": "Aktuell",
+      "PENDING": "Ausstehend",
+      "REJECTED": "Abgelehnt",
+      "BLOCKED": "Blockiert",
+      "FAILED": "Fehlgeschlagen",
+      "CANCELLED": "Abgebrochen",
+      "WITHDRAWN": "Zurückgezogen",
+      "WRITTEN_OFF": "Abgeschrieben"
+    },
+    "fields": {
+      "completedOn": "Abgeschlossen am",
+      "source": "Quelle",
+      "sourceStatus": "Quellstatus",
+      "actor": "Akteur",
+      "sourceReference": "Quellenreferenz",
+      "transactionId": "Transaktions-ID",
+      "amount": "Betrag",
+      "loanStatus": "Kreditstatus",
+      "reason": "Grund"
+    }
+  },
   "acquisition": {
     "title": "Akquisitionsstatus",
     "loading": "Akquisitionsstatus wird geladen...",

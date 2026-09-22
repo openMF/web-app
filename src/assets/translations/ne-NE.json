@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "ऋण उत्पत्ति स्थिति",
+    "loading": "ऋण उत्पत्ति स्थिति लोड हुँदैछ...",
+    "empty": "यस आवेदनका लागि ऋण उत्पत्ति स्थिति उपलब्ध छैन।",
+    "retry": "पुनः प्रयास गर्नुहोस्",
+    "currentStage": "हालको चरण",
+    "errors": {
+      "unauthorized": "ऋण उत्पत्ति स्थिति हेर्न कृपया साइन इन गर्नुहोस्।",
+      "forbidden": "तपाईंसँग यो ऋण उत्पत्ति स्थिति हेर्ने अनुमति छैन।",
+      "notFound": "ऋण आवेदन वा यसको उत्पत्ति बोर्ड फेला परेन।",
+      "generic": "ऋण उत्पत्ति स्थिति लोड गर्न सकिएन। फेरि प्रयास गर्नुहोस्।"
+    },
+    "stages": {
+      "ONBOARDING": "अनबोर्डिङ",
+      "COMPLIANCE": "अनुपालन",
+      "PARAMETRIC_SCORE": "प्यारामेट्रिक स्कोर",
+      "FILE_INTEGRATION": "फाइल एकीकरण",
+      "CREDIT_ANALYSIS": "ऋण विश्लेषण",
+      "APPROVAL": "स्वीकृति",
+      "LEGAL_INSTRUMENTATION": "कानुनी दस्तावेजीकरण",
+      "DISBURSEMENT": "ऋण वितरण",
+      "RECOVERY": "असुली"
+    },
+    "statuses": {
+      "COMPLETED": "सम्पन्न",
+      "CURRENT": "हालको",
+      "PENDING": "बाँकी",
+      "REJECTED": "अस्वीकृत",
+      "BLOCKED": "रोकिएको",
+      "FAILED": "असफल",
+      "CANCELLED": "रद्द गरिएको",
+      "WITHDRAWN": "फिर्ता लिइएको",
+      "WRITTEN_OFF": "अपलेखन गरिएको"
+    },
+    "fields": {
+      "completedOn": "सम्पन्न मिति",
+      "source": "स्रोत",
+      "sourceStatus": "स्रोत स्थिति",
+      "actor": "कार्यकर्ता",
+      "sourceReference": "स्रोत सन्दर्भ",
+      "transactionId": "कारोबार ID",
+      "amount": "रकम",
+      "loanStatus": "ऋण स्थिति",
+      "reason": "कारण"
+    }
+  },
   "acquisition": {
     "title": "प्राप्ति स्थिति",
     "loading": "प्राप्ति स्थिति लोड हुँदैछ...",

@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Kredīta noformēšanas statuss",
+    "loading": "Notiek kredīta noformēšanas statusa ielāde...",
+    "empty": "Šim pieteikumam nav pieejams kredīta noformēšanas statuss.",
+    "retry": "Mēģināt vēlreiz",
+    "currentStage": "Pašreizējais posms",
+    "errors": {
+      "unauthorized": "Pierakstieties, lai skatītu kredīta noformēšanas statusu.",
+      "forbidden": "Jums nav atļaujas skatīt šo kredīta noformēšanas statusu.",
+      "notFound": "Kredīta pieteikums vai tā noformēšanas pārskats netika atrasts.",
+      "generic": "Neizdevās ielādēt kredīta noformēšanas statusu. Mēģiniet vēlreiz."
+    },
+    "stages": {
+      "ONBOARDING": "Uzņemšana",
+      "COMPLIANCE": "Atbilstība",
+      "PARAMETRIC_SCORE": "Parametriskais novērtējums",
+      "FILE_INTEGRATION": "Dokumentu apvienošana",
+      "CREDIT_ANALYSIS": "Kredīta analīze",
+      "APPROVAL": "Apstiprināšana",
+      "LEGAL_INSTRUMENTATION": "Juridiskā noformēšana",
+      "DISBURSEMENT": "Izmaksa",
+      "RECOVERY": "Parādu piedziņa"
+    },
+    "statuses": {
+      "COMPLETED": "Pabeigts",
+      "CURRENT": "Pašreizējs",
+      "PENDING": "Gaida",
+      "REJECTED": "Noraidīts",
+      "BLOCKED": "Bloķēts",
+      "FAILED": "Neizdevās",
+      "CANCELLED": "Atcelts",
+      "WITHDRAWN": "Atsaukts",
+      "WRITTEN_OFF": "Norakstīts"
+    },
+    "fields": {
+      "completedOn": "Pabeigts",
+      "source": "Avots",
+      "sourceStatus": "Avota statuss",
+      "actor": "Izpildītājs",
+      "sourceReference": "Avota atsauce",
+      "transactionId": "Darījuma ID",
+      "amount": "Summa",
+      "loanStatus": "Kredīta statuss",
+      "reason": "Iemesls"
+    }
+  },
   "acquisition": {
     "title": "Piesaistes statuss",
     "loading": "Notiek piesaistes statusa ielāde...",

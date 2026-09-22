@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Hali ya uanzishaji wa mkopo",
+    "loading": "Inapakia hali ya uanzishaji wa mkopo...",
+    "empty": "Hakuna hali ya uanzishaji wa mkopo kwa ombi hili.",
+    "retry": "Jaribu tena",
+    "currentStage": "Hatua ya sasa",
+    "errors": {
+      "unauthorized": "Tafadhali ingia ili kuona hali ya uanzishaji wa mkopo.",
+      "forbidden": "Huna ruhusa ya kuona hali hii ya uanzishaji wa mkopo.",
+      "notFound": "Ombi la mkopo au bodi yake ya uanzishaji haikupatikana.",
+      "generic": "Imeshindikana kupakia hali ya uanzishaji wa mkopo. Tafadhali jaribu tena."
+    },
+    "stages": {
+      "ONBOARDING": "Usajili",
+      "COMPLIANCE": "Uzingatiaji",
+      "PARAMETRIC_SCORE": "Alama ya vigezo",
+      "FILE_INTEGRATION": "Ujumuishaji wa faili",
+      "CREDIT_ANALYSIS": "Uchambuzi wa mkopo",
+      "APPROVAL": "Uidhinishaji",
+      "LEGAL_INSTRUMENTATION": "Nyaraka za kisheria",
+      "DISBURSEMENT": "Utoaji wa mkopo",
+      "RECOVERY": "Urejeshaji"
+    },
+    "statuses": {
+      "COMPLETED": "Imekamilika",
+      "CURRENT": "Ya sasa",
+      "PENDING": "Inasubiri",
+      "REJECTED": "Imekataliwa",
+      "BLOCKED": "Imezuiwa",
+      "FAILED": "Imeshindwa",
+      "CANCELLED": "Imeghairiwa",
+      "WITHDRAWN": "Imeondolewa",
+      "WRITTEN_OFF": "Imefutwa"
+    },
+    "fields": {
+      "completedOn": "Imekamilika tarehe",
+      "source": "Chanzo",
+      "sourceStatus": "Hali ya chanzo",
+      "actor": "Mhusika",
+      "sourceReference": "Rejeleo la chanzo",
+      "transactionId": "Kitambulisho cha muamala",
+      "amount": "Kiasi",
+      "loanStatus": "Hali ya mkopo",
+      "reason": "Sababu"
+    }
+  },
   "acquisition": {
     "title": "Hali ya upataji",
     "loading": "Inapakia hali ya upataji...",

@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Stato di concessione del credito",
+    "loading": "Caricamento dello stato di concessione del credito...",
+    "empty": "Nessuno stato di concessione del credito è disponibile per questa richiesta.",
+    "retry": "Riprova",
+    "currentStage": "Fase corrente",
+    "errors": {
+      "unauthorized": "Accedere per visualizzare lo stato di concessione del credito.",
+      "forbidden": "Non si dispone dell’autorizzazione per visualizzare questo stato di concessione del credito.",
+      "notFound": "La richiesta di credito o il relativo quadro di concessione non è stato trovato.",
+      "generic": "Impossibile caricare lo stato di concessione del credito. Riprovare."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Conformità",
+      "PARAMETRIC_SCORE": "Punteggio parametrico",
+      "FILE_INTEGRATION": "Completamento del fascicolo",
+      "CREDIT_ANALYSIS": "Analisi del credito",
+      "APPROVAL": "Approvazione",
+      "LEGAL_INSTRUMENTATION": "Formalizzazione legale",
+      "DISBURSEMENT": "Erogazione",
+      "RECOVERY": "Recupero crediti"
+    },
+    "statuses": {
+      "COMPLETED": "Completato",
+      "CURRENT": "Corrente",
+      "PENDING": "In attesa",
+      "REJECTED": "Rifiutato",
+      "BLOCKED": "Bloccato",
+      "FAILED": "Non riuscito",
+      "CANCELLED": "Annullato",
+      "WITHDRAWN": "Ritirato",
+      "WRITTEN_OFF": "Stralciato"
+    },
+    "fields": {
+      "completedOn": "Completato il",
+      "source": "Origine",
+      "sourceStatus": "Stato di origine",
+      "actor": "Attore",
+      "sourceReference": "Riferimento di origine",
+      "transactionId": "ID transazione",
+      "amount": "Importo",
+      "loanStatus": "Stato del credito",
+      "reason": "Motivo"
+    }
+  },
   "acquisition": {
     "title": "Stato di acquisizione",
     "loading": "Caricamento dello stato di acquisizione...",

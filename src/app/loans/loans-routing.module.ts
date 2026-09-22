@@ -38,6 +38,11 @@ import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
 import { LoanBuyDownFeesTabComponent } from './loans-view/loan-buy-down-fees-tab/loan-buy-down-fees-tab.component';
 import { LoanAccountDashboardComponent } from './loans-view/loan-account-dashboard/loan-account-dashboard.component';
+import { CreditOriginationStatusComponent } from './loans-view/credit-origination-status/credit-origination-status.component';
+import {
+  CREDIT_ORIGINATION_BOARD_PERMISSION,
+  creditOriginationStatusGuard
+} from './loans-view/credit-origination-status/credit-origination-status.guard';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -132,6 +137,17 @@ const routes: Routes = [
             path: 'dashboard',
             component: LoanAccountDashboardComponent,
             data: { title: 'Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'origination-status',
+            component: CreditOriginationStatusComponent,
+            canActivate: [creditOriginationStatusGuard],
+            data: {
+              title: 'Credit Origination Status',
+              breadcrumb: 'Credit Origination Status',
+              routeParamBreadcrumb: false,
+              permissions: [CREDIT_ORIGINATION_BOARD_PERMISSION]
+            }
           },
           {
             path: 'accountdetail',

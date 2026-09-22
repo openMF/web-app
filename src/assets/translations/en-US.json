@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "Credit Origination Status",
+    "loading": "Loading credit origination status...",
+    "empty": "No credit origination status is available for this application.",
+    "retry": "Retry",
+    "currentStage": "Current stage",
+    "errors": {
+      "unauthorized": "Please sign in to view this credit origination status.",
+      "forbidden": "You do not have permission to view this credit origination status.",
+      "notFound": "The credit application or its origination board was not found.",
+      "generic": "Unable to load credit origination status. Please try again."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "PARAMETRIC_SCORE": "Parametric Score",
+      "FILE_INTEGRATION": "File Integration",
+      "CREDIT_ANALYSIS": "Credit Analysis",
+      "APPROVAL": "Approval",
+      "LEGAL_INSTRUMENTATION": "Legal Instrumentation",
+      "DISBURSEMENT": "Disbursement",
+      "RECOVERY": "Recovery"
+    },
+    "statuses": {
+      "COMPLETED": "Completed",
+      "CURRENT": "Current",
+      "PENDING": "Pending",
+      "REJECTED": "Rejected",
+      "BLOCKED": "Blocked",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled",
+      "WITHDRAWN": "Withdrawn",
+      "WRITTEN_OFF": "Written Off"
+    },
+    "fields": {
+      "completedOn": "Completed on",
+      "source": "Source",
+      "sourceStatus": "Source status",
+      "actor": "Actor",
+      "sourceReference": "Source reference",
+      "transactionId": "Transaction ID",
+      "amount": "Amount",
+      "loanStatus": "Loan status",
+      "reason": "Reason"
+    }
+  },
   "acquisition": {
     "title": "Acquisition Status",
     "loading": "Loading acquisition status...",

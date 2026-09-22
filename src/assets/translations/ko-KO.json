@@ -1,4 +1,50 @@
 {
+  "creditOrigination": {
+    "title": "대출 심사 진행 상태",
+    "loading": "대출 심사 진행 상태를 불러오는 중...",
+    "empty": "이 신청에 사용할 수 있는 대출 심사 진행 상태가 없습니다.",
+    "retry": "다시 시도",
+    "currentStage": "현재 단계",
+    "errors": {
+      "unauthorized": "대출 심사 진행 상태를 보려면 로그인하세요.",
+      "forbidden": "이 대출 심사 진행 상태를 볼 권한이 없습니다.",
+      "notFound": "대출 신청 또는 대출 심사 현황판을 찾을 수 없습니다.",
+      "generic": "대출 심사 진행 상태를 불러올 수 없습니다. 다시 시도해 주세요."
+    },
+    "stages": {
+      "ONBOARDING": "온보딩",
+      "COMPLIANCE": "규정 준수",
+      "PARAMETRIC_SCORE": "정량 평가 점수",
+      "FILE_INTEGRATION": "서류 통합",
+      "CREDIT_ANALYSIS": "신용 분석",
+      "APPROVAL": "승인",
+      "LEGAL_INSTRUMENTATION": "법률 문서화",
+      "DISBURSEMENT": "대출금 지급",
+      "RECOVERY": "채권 회수"
+    },
+    "statuses": {
+      "COMPLETED": "완료",
+      "CURRENT": "현재",
+      "PENDING": "대기 중",
+      "REJECTED": "거부됨",
+      "BLOCKED": "차단됨",
+      "FAILED": "실패",
+      "CANCELLED": "취소됨",
+      "WITHDRAWN": "철회됨",
+      "WRITTEN_OFF": "상각됨"
+    },
+    "fields": {
+      "completedOn": "완료일",
+      "source": "출처",
+      "sourceStatus": "원본 상태",
+      "actor": "처리자",
+      "sourceReference": "출처 참조",
+      "transactionId": "거래 ID",
+      "amount": "금액",
+      "loanStatus": "대출 상태",
+      "reason": "사유"
+    }
+  },
   "acquisition": {
     "title": "고객 획득 상태",
     "loading": "고객 획득 상태를 불러오는 중...",
