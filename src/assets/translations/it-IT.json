@@ -549,6 +549,13 @@
       "futureDate": "La data del pagamento anticipato non può essere futura.",
       "dateOutOfRange": "La data del pagamento anticipato è fuori dall’intervallo consentito.",
       "amountMustBePositive": "L'importo della transazione deve essere maggiore di 0."
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
     }
   },
   "labels": {
@@ -931,7 +938,9 @@
       "Save": "Salva",
       "Upload Report Design": "Carica modello di rapporto",
       "Mass Reject": "Rifiuta in massa",
-      "Hide": "Nascondi"
+      "Hide": "Nascondi",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1211,7 +1220,10 @@
       "unmarried": "non sposato",
       "xbrlmapping": "Mappatura XBRL",
       "Enabled": "Abilitato",
-      "Disabled": "Disabilitato"
+      "Disabled": "Disabilitato",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -1913,7 +1925,10 @@
       "Deferred Income Recognition": "Rilevazione dei risconti passivi",
       "Advanced Configuration": "Configurazione avanzata",
       "Mass Reject Credit Applications": "Rifiuto massivo delle richieste di credito",
-      "Enrollment Details": "Dettagli registrazione"
+      "Enrollment Details": "Dettagli registrazione",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection"
     },
     "inputs": {
       "Returned": "Restituito",
@@ -3941,7 +3956,19 @@
       "Withdrawn": "Ritirato",
       "Registration Status": "Stato registrazione",
       "Unknown": "Sconosciuto",
-      "Pending": "In sospeso"
+      "Pending": "In sospeso",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name"
     },
     "links": {
       "Community": "Comunità",
@@ -5226,7 +5253,13 @@
       "Loading pending prospects": "Caricamento prospect in sospeso",
       "No pending prospects found": "Nessun prospect in sospeso trovato",
       "Unable to load pending prospects": "Impossibile caricare i prospect in sospeso",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Non è stato possibile ricalcolare l'importo per questa data. Seleziona di nuovo la data per riprovare."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Non è stato possibile ricalcolare l'importo per questa data. Seleziona di nuovo la data per riprovare.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
     },
     "permissions": {
       "actions": {

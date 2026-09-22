@@ -549,6 +549,13 @@
       "futureDate": "Tarehe ya malipo ya mapema haiwezi kuwa ya baadaye.",
       "dateOutOfRange": "Tarehe ya malipo ya mapema iko nje ya kipindi kinachoruhusiwa.",
       "amountMustBePositive": "Kiasi cha muamala lazima kiwe kikubwa kuliko 0."
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
     }
   },
   "labels": {
@@ -931,7 +938,9 @@
       "Save": "Hifadhi",
       "Upload Report Design": "Pakia Muundo wa Ripoti",
       "Mass Reject": "Kataa kwa wingi",
-      "Hide": "Ficha"
+      "Hide": "Ficha",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1209,7 +1218,10 @@
       "unmarried": "bila kuolewa",
       "xbrlmapping": "Ramani ya XBRL",
       "Enabled": "Imewashwa",
-      "Disabled": "Imezimwa"
+      "Disabled": "Imezimwa",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1910,7 +1922,10 @@
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
       "Advanced Configuration": "Usanidi wa kina",
       "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi",
-      "Enrollment Details": "Maelezo ya usajili"
+      "Enrollment Details": "Maelezo ya usajili",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection"
     },
     "inputs": {
       "Returned": "Imerudishwa",
@@ -3938,7 +3953,19 @@
       "Withdrawn": "Imeondolewa",
       "Registration Status": "Hali ya usajili",
       "Unknown": "Haijulikani",
-      "Pending": "Inasubiri"
+      "Pending": "Inasubiri",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5222,7 +5249,13 @@
       "Loading pending prospects": "Inapakia watarajiwa wanaosubiri",
       "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
       "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Kiasi hakikuweza kukokotolewa upya kwa tarehe hii. Chagua tarehe tena ili kujaribu upya."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Kiasi hakikuweza kukokotolewa upya kwa tarehe hii. Chagua tarehe tena ili kujaribu upya.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
     },
     "permissions": {
       "actions": {

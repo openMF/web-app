@@ -549,6 +549,13 @@
       "futureDate": "조기 상환 거래일은 미래일 수 없습니다.",
       "dateOutOfRange": "조기 상환 일자가 허용된 범위를 벗어났습니다.",
       "amountMustBePositive": "거래 금액은 0보다 커야 합니다."
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
     }
   },
   "labels": {
@@ -931,7 +938,9 @@
       "Save": "저장",
       "Upload Report Design": "보고서 디자인 업로드",
       "Mass Reject": "일괄 거절",
-      "Hide": "숨기기"
+      "Hide": "숨기기",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1211,7 +1220,10 @@
       "unmarried": "미혼",
       "xbrlmapping": "XBRL 매핑",
       "Enabled": "활성화됨",
-      "Disabled": "장애가 있는"
+      "Disabled": "장애가 있는",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1914,7 +1926,10 @@
       "Deferred Income Recognition": "이연수익 인식",
       "Advanced Configuration": "고급 구성",
       "Mass Reject Credit Applications": "신용 신청 일괄 거절",
-      "Enrollment Details": "등록 세부 정보"
+      "Enrollment Details": "등록 세부 정보",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection"
     },
     "inputs": {
       "Returned": "반환됨",
@@ -3941,7 +3956,19 @@
       "Withdrawn": "철회됨",
       "Registration Status": "등록 상태",
       "Unknown": "알 수 없음",
-      "Pending": "대기 중"
+      "Pending": "대기 중",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name"
     },
     "links": {
       "Community": "지역 사회",
@@ -5225,7 +5252,13 @@
       "Loading pending prospects": "대기 중인 잠재 고객을 불러오는 중",
       "No pending prospects found": "대기 중인 잠재 고객이 없습니다",
       "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "이 날짜에 대한 금액을 다시 계산하지 못했습니다. 날짜를 다시 선택하여 재시도하세요."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "이 날짜에 대한 금액을 다시 계산하지 못했습니다. 날짜를 다시 선택하여 재시도하세요.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
     },
     "permissions": {
       "actions": {

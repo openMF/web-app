@@ -204,10 +204,20 @@ export class LoginComponent implements OnInit {
     if (environment.displayTenantSelector === 'false') {
       return false;
     }
-    const tenantIds = environment.fineractPlatformTenantIds
-      .split(',')
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0);
+    // The configured list, plus any identifier tenant management has seen on this installation, so
+    // a deployment that registers tenants through the API does not have to also list them in the
+    // environment as well. Without that feature the second list is empty and this is the configured
+    // list unchanged.
+    const configured: string[] = environment.fineractPlatformTenantIds.split(',');
+    const known: string[] = this.settingsService.tenantIdentifiers ?? [];
+    const tenantIds = [
+      ...new Set([
+        ...configured,
+        ...known
+      ])
+    ]
+      .map((id: string) => id.trim())
+      .filter((id: string) => id.length > 0);
     if (tenantIds.length === 0 || (tenantIds.length === 1 && tenantIds[0] === 'default')) {
       return false;
     }

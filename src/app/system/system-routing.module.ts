@@ -55,6 +55,9 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
 import { SystemComponent } from './system.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
+import { TenantManagementComponent } from './tenant-management/tenant-management.component';
+import { TenantsComponent } from './tenant-management/tenants.component';
+import { ViewTenantComponent } from './tenant-management/view-tenant/view-tenant.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ManageDashboardsComponent } from './manage-dashboards/manage-dashboards.component';
 
@@ -588,6 +591,26 @@ const routes: Routes = [
                   }
                 }
               ]
+            }
+          ]
+        },
+        {
+          path: 'tenant-management',
+          component: TenantManagementComponent,
+          data: { title: 'Tenant Management', breadcrumb: 'Tenant Management' },
+          // Deliberately no resolvers anywhere below: this API is called with a master credential
+          // the section signs in for, which may not exist yet when the route activates. A resolver
+          // would fire an unauthenticated request before the sign-in card could render, so every
+          // page here fetches its own data once the credential is in place.
+          children: [
+            {
+              path: '',
+              component: TenantsComponent
+            },
+            {
+              path: ':id',
+              component: ViewTenantComponent,
+              data: { title: 'View Tenant', routeParamBreadcrumb: 'id' }
             }
           ]
         },
