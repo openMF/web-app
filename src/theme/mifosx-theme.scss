@@ -21,12 +21,41 @@
 
 @include mat.all-component-typographies();
 
-$mifosx-typography-level: mat.m2-define-typography-level(
-  $font-family: Roboto,
-  $font-weight: 400,
-  $font-size: 14px,
-  $line-height: 1.5,
+$mifosx-font: 'Manrope, sans-serif';
+$mifosx-body-level: mat.m2-define-typography-level(
+  $font-family: $mifosx-font,
+  $font-weight: 500,
+  $font-size: 16px,
+  $line-height: 1.45,
   $letter-spacing: normal
+);
+$mifosx-title-level: mat.m2-define-typography-level(
+  $font-family: $mifosx-font,
+  $font-weight: 600,
+  $font-size: 16px,
+  $line-height: 1.4,
+  $letter-spacing: -0.01em
+);
+$mifosx-headline-level: mat.m2-define-typography-level(
+  $font-family: $mifosx-font,
+  $font-weight: 800,
+  $font-size: 24px,
+  $line-height: 1.25,
+  $letter-spacing: -0.03em
+);
+$mifosx-button-level: mat.m2-define-typography-level(
+  $font-family: $mifosx-font,
+  $font-weight: 600,
+  $font-size: 14px,
+  $line-height: 1.25,
+  $letter-spacing: normal
+);
+$mifosx-caption-level: mat.m2-define-typography-level(
+  $font-family: $mifosx-font,
+  $font-weight: 500,
+  $font-size: 13px,
+  $line-height: 1.35,
+  $letter-spacing: 0.02em
 );
 
 @include mat.elevation-classes();
@@ -41,15 +70,19 @@ $mifosx-color-config: (
 );
 
 $mifosx-typography: mat.m2-define-typography-config(
-  $body-1: $mifosx-typography-level,
-  $body-2: $mifosx-typography-level,
-  $headline-1: $mifosx-typography-level,
-  $headline-2: $mifosx-typography-level,
-  $headline-3: $mifosx-typography-level,
-  $headline-4: $mifosx-typography-level,
-  $headline-5: $mifosx-typography-level,
-  $headline-6: $mifosx-typography-level,
-  $button: $mifosx-typography-level
+  $font-family: $mifosx-font,
+  $body-1: $mifosx-body-level,
+  $body-2: $mifosx-body-level,
+  $headline-1: $mifosx-headline-level,
+  $headline-2: $mifosx-headline-level,
+  $headline-3: $mifosx-title-level,
+  $headline-4: $mifosx-title-level,
+  $headline-5: $mifosx-title-level,
+  $headline-6: $mifosx-title-level,
+  $subtitle-1: $mifosx-title-level,
+  $subtitle-2: $mifosx-caption-level,
+  $button: $mifosx-button-level,
+  $caption: $mifosx-caption-level
 );
 
 $mifosx-density: 0;

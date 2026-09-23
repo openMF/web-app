@@ -7,41 +7,94 @@
 -->
 
 <!-- Application Shell -->
-<mat-sidenav-container id="mifosx-shell-container" autosize>
-  <!-- Sidenav -->
-  <mat-sidenav
-    #sidenav
-    class="sidebar-panel"
-    [ngClass]="{
-      'sidebar-full': !sidenavCollapsed,
-      'sidebar-compact': sidenavCollapsed
-    }"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
-  </mat-sidenav>
+<div class="thr-app-outer" [class.handset]="(isHandset$ | async) === true">
+  <div class="thr-app-frame">
+    <mat-sidenav-container id="mifosx-shell-container" autosize>
+      <!-- Sidenav -->
+      <mat-sidenav
+        #sidenav
+        class="sidebar-panel"
+        [ngClass]="{
+          'sidebar-full': !sidenavCollapsed,
+          'sidebar-compact': sidenavCollapsed,
+          'sidebar-sheet': (isHandset$ | async) === true
+        }"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false"
+      >
+        <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
+      </mat-sidenav>
 
-  <!-- Content -->
-  <mat-sidenav-content class="sidenav">
-    <!-- Toolbar -->
-    <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
-    <!-- Progress Bar -->
-    @if (progressBarMode !== 'none') {
-      <div>
-        <div class="loading"></div>
-      </div>
-    }
+      <!-- Content -->
+      <mat-sidenav-content
+        class="sidenav"
+        [class.dashboard-pane]="isDashboardRoute"
+        [class.with-mobile-nav]="(isHandset$ | async) === true"
+      >
+        <!-- Toolbar -->
+        <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
+        <!-- Progress Bar -->
+        @if (progressBarMode !== 'none') {
+          <div>
+            <div class="loading"></div>
+          </div>
+        }
 
-    <!-- Breadcrumb -->
-    <mifosx-breadcrumb></mifosx-breadcrumb>
-    <!-- Content -->
-    <mifosx-content></mifosx-content>
-    <!-- Footer -->
-    <mifosx-footer [styleClass]="'main-page'"></mifosx-footer>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+        <!-- Content -->
+        <mifosx-content></mifosx-content>
+        <!-- Footer -->
+        @if (!isDashboardRoute) {
+          <mifosx-footer [styleClass]="'main-page'"></mifosx-footer>
+        }
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+  @if ((isHandset$ | async) === true) {
+    <nav class="mobile-tabbar" [attr.aria-label]="'labels.menus.Navigation' | translate">
+      <a
+        class="mobile-tabbar__item"
+        [routerLink]="['/home']"
+        (click)="closeMobileMenu()"
+        [class.is-active]="isDashboardTabActive() && !sidenav.opened"
+      >
+        <mifosx-thr-icon name="layout-dashboard" size="20"></mifosx-thr-icon>
+        <span>{{ 'labels.menus.Dashboard' | translate }}</span>
+      </a>
+      <a
+        class="mobile-tabbar__item"
+        [routerLink]="['/clients']"
+        (click)="closeMobileMenu()"
+        [class.is-active]="isClientsTabActive() && !sidenav.opened"
+        *mifosxHasPermission="'READ_CLIENT'"
+      >
+        <mifosx-thr-icon name="user" size="20"></mifosx-thr-icon>
+        <span>{{ 'labels.menus.Clients' | translate }}</span>
+      </a>
+      <a
+        class="mobile-tabbar__item"
+        [routerLink]="['/loans']"
+        (click)="closeMobileMenu()"
+        [class.is-active]="isLoansTabActive() && !sidenav.opened"
+        *mifosxHasPermission="'READ_LOAN'"
+      >
+        <mifosx-thr-icon name="money-bill" size="20"></mifosx-thr-icon>
+        <span>{{ 'labels.menus.Loans' | translate }}</span>
+      </a>
+      <button
+        type="button"
+        class="mobile-tabbar__item"
+        (click)="toggleMobileMenu()"
+        [class.is-active]="sidenav.opened"
+        [attr.aria-expanded]="sidenav.opened"
+      >
+        <mifosx-thr-icon name="more-horizontal" size="20"></mifosx-thr-icon>
+        <span>{{ 'labels.menus.More' | translate }}</span>
+      </button>
+    </nav>
+  }
+</div>
 
 <!-- Mifos Copilot AI panel - lazy-loaded; zero bytes downloaded when enableCopilot=false -->
 <ng-container #copilotHost></ng-container>

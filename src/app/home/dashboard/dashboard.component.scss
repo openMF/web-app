@@ -8,22 +8,22 @@
 
 .container {
   overflow-x: hidden;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 8px 24px 24px;
+  box-sizing: border-box;
+}
+
+@media screen and (width <= 768px) {
+  .container {
+    padding: 8px 8px calc(64px + 24px + env(safe-area-inset-bottom));
+  }
 }
 
 .dashboard-layout {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.search-card {
-  padding: 16px;
-}
-
-.search-card mat-card-content {
-  width: 100%;
-}
-
-.search-card mat-form-field {
+  gap: 0;
   width: 100%;
 }

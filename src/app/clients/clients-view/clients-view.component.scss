@@ -14,8 +14,9 @@
 @include entity.tabs;
 
 .account-overview {
-  min-width: 85%;
-  margin-left: 10px;
+  min-width: 0;
+  width: 100%;
+  margin-left: 0;
 }
 
 .make-flex {
@@ -32,7 +33,7 @@ mifosx-account-header {
   }
 
   .signature {
-    color: var(--md-sys-color-on-primary, #fff);
+    color: var(--ch-text-2, var(--thr-muted, #555851));
     text-align: center;
     margin: 0;
     padding: 2%;

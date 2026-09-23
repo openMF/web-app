@@ -17,7 +17,6 @@ import { describe, it, expect, beforeEach } from '@jest/globals';
 import { ShellComponent } from './shell.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { ProgressBarService } from '../progress-bar/progress-bar.service';
@@ -35,9 +34,6 @@ class StubToolbarComponent {
   @Input() sidenav: MatSidenav;
   @Output() collapse = new EventEmitter<boolean>();
 }
-
-@Component({ selector: 'mifosx-breadcrumb', template: '' })
-class StubBreadcrumbComponent {}
 
 @Component({ selector: 'mifosx-content', template: '' })
 class StubContentComponent {}
@@ -72,7 +68,6 @@ describe('ShellComponent — progress bar visibility', () => {
           imports: [
             SidenavComponent,
             ToolbarComponent,
-            BreadcrumbComponent,
             ContentComponent,
             FooterComponent
           ]
@@ -81,7 +76,6 @@ describe('ShellComponent — progress bar visibility', () => {
           imports: [
             StubSidenavComponent,
             StubToolbarComponent,
-            StubBreadcrumbComponent,
             StubContentComponent,
             StubFooterComponent
           ]

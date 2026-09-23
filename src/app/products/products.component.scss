@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-mat-list-item {
-  height: 50px;
+@use 'assets/styles/hub-workspace';
+
+:host {
+  @include hub-workspace.hub;
 }

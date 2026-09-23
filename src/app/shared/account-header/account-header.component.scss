@@ -7,12 +7,13 @@
  */
 
 .header {
-  background-color: var(--md-sys-color-primary, #1074b9) !important;
-  color: var(--md-sys-color-on-primary, #fff) !important;
+  background: var(--thr-card, #fff) !important;
+  color: var(--thr-foreground, #171916) !important;
+  padding: 16px 24px !important;
 
   .mat-mdc-card-title,
   .mat-mdc-card-subtitle {
-    color: var(--md-sys-color-on-primary, #fff) !important;
+    color: inherit !important;
   }
 }
 

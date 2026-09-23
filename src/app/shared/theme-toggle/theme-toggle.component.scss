@@ -6,15 +6,30 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-:host button {
-  color: rgb(255 255 255 / 72%);
-  border-radius: 50%;
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--thr-muted, #555851);
+  cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+    background-color 0.16s ease,
+    color 0.16s ease;
 
-  &:hover {
-    background-color: rgb(255 255 255 / 15%);
-    color: #fff;
+  &:hover,
+  &:focus-visible {
+    background: var(--thr-nav-hover, rgb(23 25 22 / 5%));
+    color: var(--thr-foreground, #171916);
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--thr-ring, #3f9e2a);
   }
 }

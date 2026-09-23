@@ -11,7 +11,7 @@
 <!-- Global Web App Configuration Settings -->
 <div class="container">
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ 'labels.inputs.Main Configuration' | translate }}
@@ -19,7 +19,7 @@
       </mat-expansion-panel-header>
 
       <div class="layout-column">
-        <mifosx-language-selector></mifosx-language-selector>
+        <mifosx-language-selector appearance="outline"></mifosx-language-selector>
 
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Default Date Format' | translate }}</mat-label>

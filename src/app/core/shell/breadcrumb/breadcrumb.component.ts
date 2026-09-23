@@ -23,7 +23,7 @@ import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
 import { filter } from 'rxjs/operators';
-import { merge } from 'rxjs';
+import { merge, of } from 'rxjs';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
@@ -32,6 +32,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from '../../authentication/authentication.service';
 import { MatIcon } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
@@ -84,15 +85,87 @@ export class BreadcrumbComponent implements AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
+  private authenticationService = inject(AuthenticationService);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
   /** Array of breadcrumbs. */
-  breadcrumbs: Breadcrumb[];
+  breadcrumbs: Breadcrumb[] = [];
   /* Reference of breadcrumb */
   @ViewChild('breadcrumb') breadcrumb: ElementRef<any>;
   /* Template for popover on breadcrumb */
   @ViewChild('templateBreadcrumb') templateBreadcrumb: TemplateRef<any>;
+
+  get hideTrail(): boolean {
+    return this.isAppHomePath();
+  }
+
+  get showGreeting(): boolean {
+    return this.isAppHomePath() && !this.isOnboardingView();
+  }
+
+  get greetingKey(): string {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      return 'labels.text.Good morning';
+    }
+    if (hour < 17) {
+      return 'labels.text.Good afternoon';
+    }
+    return 'labels.text.Good evening';
+  }
+
+  get userLabel(): string {
+    const credentials = this.authenticationService.getCredentials();
+    const staffName = credentials?.staffDisplayName?.trim();
+    if (staffName) {
+      return staffName.split(/\s+/)[0];
+    }
+    return this.formatUsername(credentials?.username || '');
+  }
+
+  get userInitials(): string {
+    const credentials = this.authenticationService.getCredentials();
+    const source = credentials?.staffDisplayName?.trim() || this.formatUsername(credentials?.username || '');
+    const parts = source.split(/\s+/).filter(Boolean);
+    if (!parts.length) {
+      return '';
+    }
+    const first = parts[0].charAt(0);
+    const last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : '';
+    return (first + last).toUpperCase();
+  }
+
+  private formatUsername(username: string): string {
+    return username
+      .replace(/[-_]+/g, ' ')
+      .split(' ')
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(' ');
+  }
+
+  get pageTitle(): string {
+    if (this.isOnboardingView()) {
+      return this.translateService.instant('labels.heading.Onboarding Board');
+    }
+    if (!this.breadcrumbs.length) {
+      return '';
+    }
+    return this.getTranslate(this.breadcrumbs[this.breadcrumbs.length - 1].label);
+  }
+
+  private isOnboardingView(): boolean {
+    const [
+      path,
+      query = ''
+    ] = this.router.url.split('?');
+    return this.isAppHomePath(path) && query.includes('view=onboarding');
+  }
+
+  private isAppHomePath(path = this.router.url.split('?')[0]): boolean {
+    return path === '/home' || path === '/dashboard' || path.startsWith('/dashboard/');
+  }
 
   /**
    * Generates the breadcrumbs.
@@ -112,7 +185,7 @@ export class BreadcrumbComponent implements AfterViewInit {
     const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
 
     // Merge navigation events with language change events to regenerate breadcrumbs when language changes
-    merge(onNavigationEnd, this.translateService.onLangChange)
+    merge(of(null), onNavigationEnd, this.translateService.onLangChange)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.breadcrumbs = [];

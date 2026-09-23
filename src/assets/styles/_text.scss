@@ -16,11 +16,11 @@ html {
 }
 
 body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  color: rgb(0 0 0 / 87%);
-  line-height: 1.5;
+  font-family: var(--thr-font, 'Manrope', sans-serif);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--thr-foreground, rgb(0 0 0 / 87%));
+  line-height: 1.45;
   letter-spacing: normal;
 }
 
@@ -29,11 +29,11 @@ body {
 .mat-typography .mat-h1,
 .mat-typography .mat-headline,
 .mat-typography h1 {
-  font:
-    400 24px/32px Roboto,
-    'Helvetica Neue',
-    sans-serif;
-  letter-spacing: normal;
+  font-family: var(--thr-font, 'Manrope', sans-serif);
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
   margin: 0 0 16px;
 }
 
@@ -51,11 +51,11 @@ body {
 
 .bold,
 .strong {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .no-bold {
-  font-weight: normal;
+  font-weight: 500;
 }
 
 .italic,
@@ -68,7 +68,7 @@ body {
 }
 
 .normal {
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
 }
 

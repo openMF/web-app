@@ -20,9 +20,9 @@ import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatBadge } from '@angular/material/badge';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatIcon } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 /**
  * Notifications Tray Component
@@ -38,10 +38,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTooltip,
     MatMenuTrigger,
     MatBadge,
-    FaIconComponent,
     MatMenu,
     MatIcon,
-    MatMenuItem
+    MatMenuItem,
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -21,6 +21,7 @@
 @use 'lightgallery/scss/lg-zoom' as *;
 @use 'lightgallery/scss/lg-fullscreen' as *;
 @use 'app/core/error-handler/error-handler.component';
+@use 'theme/almost-thr';
 
 // Global Imports
 @import url('leaflet/dist/leaflet.css');
@@ -38,7 +39,7 @@
  * The value is unchanged by default, so existing appearance is preserved.
  */
 :root {
-  --md-sys-color-primary: var(--brand-primary-500, #1074b9);
+  --md-sys-color-primary: var(--brand-primary-500, #2f9a28);
 }
 
 /**
@@ -47,7 +48,7 @@
  */
 .mat-mdc-progress-bar,
 .dark-theme .mat-mdc-progress-bar {
-  --mat-progress-bar-track-color: color-mix(in srgb, var(--brand-primary-500, #1074b9) 25%, transparent);
+  --mat-progress-bar-track-color: color-mix(in srgb, var(--brand-primary-500, #2f9a28) 25%, transparent);
 }
 
 .custom-snackbar-top-right {
@@ -76,16 +77,16 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: #1074b914;
+      background-color: color-mix(in srgb, var(--thr-lime, #2f9a28) 8%, transparent);
     }
 
     &.mat-mdc-option-active {
-      background-color: #1074b91f;
+      background-color: color-mix(in srgb, var(--thr-lime, #2f9a28) 12%, transparent);
     }
 
     &.mdc-list-item--selected {
-      background-color: #1074b91f;
-      color: var(--md-sys-color-primary, #1074b9);
+      background-color: color-mix(in srgb, var(--thr-lime, #2f9a28) 12%, transparent);
+      color: var(--md-sys-color-primary, #2f9a28);
       font-weight: 500;
     }
 
@@ -674,9 +675,11 @@ mat-stepper {
 }
 
 .menu-explanation {
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
   margin: 0;
   overflow-wrap: break-word;
+  color: var(--thr-muted, #555851);
 }
 
 .menu-list-item-content {

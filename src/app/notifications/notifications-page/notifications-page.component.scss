@@ -9,3 +9,19 @@
 .select-row {
   cursor: pointer;
 }
+
+.mat-elevation-z8 {
+  border: 1px solid var(--thr-border, rgb(23 25 22 / 14%));
+  border-radius: var(--thr-radius-lg, 24px);
+  background: var(--thr-card, #fff);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/* stylelint-disable-next-line selector-no-qualifying-type -- Material no-data row attribute */
+tr[matNoDataRow] td {
+  padding: 48px 24px !important;
+  text-align: center !important;
+  color: var(--thr-muted, #555851);
+  font-weight: 500;
+}

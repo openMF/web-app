@@ -16,17 +16,13 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 /** Custom Services */
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
-import { MatNavList, MatListItem } from '@angular/material/list';
-import { MatIcon } from '@angular/material/icon';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatLine } from '@angular/material/grid-list';
-import { NgClass } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 @Component({
   selector: 'mifosx-system',
@@ -34,18 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./system.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatNavList,
-    MatListItem,
-    MatIcon,
-    FaIconComponent,
-    MatLine,
-    NgClass
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemComponent implements AfterViewInit {
   private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
+  configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
 
   /* Reference of manage datatables */
@@ -76,9 +67,7 @@ export class SystemComponent implements AfterViewInit {
   @ViewChild('manageReports') manageReports: ElementRef<any>;
   /* Template for popover on manage reports */
   @ViewChild('templateManageReports') templateManageReports: TemplateRef<any>;
-  // Initialize an array of 18 boolean values, all set to false
   isDisabled: boolean = true;
-  arrowBooleans: boolean[] = new Array(18).fill(false);
 
   /**
    * Popover function
@@ -86,7 +75,6 @@ export class SystemComponent implements AfterViewInit {
    * @param target HTMLElement | ElementRef<any>.
    * @param position String.
    * @param backdrop Boolean.
-   * @param arrowNumber - The index of the boolean value to toggle.
    */
   showPopover(
     template: TemplateRef<any>,
@@ -260,10 +248,5 @@ export class SystemComponent implements AfterViewInit {
     this.configurationWizardService.showManageReports = false;
     this.configurationWizardService.showManageFunds = true;
     this.router.navigate(['/organization/manage-funds']);
-  }
-
-  arrowBooleansToggle(arrowNumber: number) {
-    // Toggle the boolean value at the given index
-    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
 }

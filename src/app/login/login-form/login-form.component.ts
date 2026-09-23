@@ -16,7 +16,6 @@ import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { MatPrefix } from '@angular/material/form-field';
 import { M3IconComponent } from '../../shared/m3-ui/m3-icon/m3-icon.component';
 import { M3ButtonComponent } from '../../shared/m3-ui/m3-button/m3-button.component';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -34,7 +33,6 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./login-form.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatPrefix,
     M3IconComponent,
     M3ButtonComponent,
     MatProgressBar,
@@ -58,6 +56,8 @@ export class LoginFormComponent implements OnInit {
   oauthEnabled = environment.OIDC.oidcServerEnabled || environment.oauth.enabled;
   /** Whether remember me functionality is enabled */
   enableRememberMe = environment.enableRememberMe === true;
+  /** Local UI preview is only offered in development builds. */
+  allowDevUiPreview = !environment.production;
 
   /**
    * Creates login form.
@@ -81,6 +81,23 @@ export class LoginFormComponent implements OnInit {
           this.loginForm.reset();
           this.loginForm.markAsPristine();
           // Angular Material Bug: Validation errors won't get removed on reset.
+          this.loginForm.enable();
+          this.loading = false;
+        })
+      )
+      .subscribe();
+  }
+
+  /**
+   * Opens the app shell without a Fineract session (development only).
+   */
+  loginDevPreview() {
+    this.loading = true;
+    this.loginForm.disable();
+    this.authenticationService
+      .loginDevPreview()
+      .pipe(
+        finalize(() => {
           this.loginForm.enable();
           this.loading = false;
         })

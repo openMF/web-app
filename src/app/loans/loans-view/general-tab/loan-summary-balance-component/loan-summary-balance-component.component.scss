@@ -78,7 +78,7 @@ table.matrix {
 
 .matrix td.rowlabel {
   text-align: left;
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: var(--ch-text-2);

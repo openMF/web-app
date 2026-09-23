@@ -9,10 +9,10 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { TasksService } from 'app/tasks/tasks.service';
@@ -35,8 +35,10 @@ class DashboardEngineStubComponent {
 describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   const rbacEnabled = environment.productionModeEnableRBAC;
+  const queryParamMap$ = new BehaviorSubject(convertToParamMap({}));
 
   beforeEach(async () => {
+    queryParamMap$.next(convertToParamMap({}));
     await TestBed.configureTestingModule({
       imports: [
         DashboardComponent,
@@ -45,7 +47,13 @@ describe('DashboardComponent', () => {
       ],
       providers: [
         provideNoopAnimations(),
-        { provide: ActivatedRoute, useValue: { data: of({ offices: [], products: [], clientGroups: [] }) } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ offices: [], products: [], clientGroups: [] }),
+            queryParamMap: queryParamMap$
+          }
+        },
         {
           provide: AuthenticationService,
           useValue: { getCredentials: () => ({ permissions: [] as string[] }) }
@@ -74,40 +82,28 @@ describe('DashboardComponent', () => {
     environment.productionModeEnableRBAC = rbacEnabled;
   });
 
-  it('shows both tabs even when the user has no onboarding read permissions', () => {
-    environment.productionModeEnableRBAC = true;
-    const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')).map((tab: HTMLElement) =>
-      tab.textContent?.trim()
-    );
-
-    expect(tabLabels).toEqual([
-      'labels.heading.Dashboard',
-      'labels.heading.Onboarding Board'
-    ]);
-  });
-
-  it('selects Dashboard by default and lazily shows the Onboarding Board when selected', () => {
-    const tabs = fixture.nativeElement.querySelectorAll('[role="tab"]');
-
-    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
+  it('shows the analytics dashboard by default without page tabs', () => {
+    expect(fixture.nativeElement.querySelectorAll('[role="tab"]').length).toBe(0);
     expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeNull();
-
-    tabs[1].click();
-    fixture.detectChanges();
-
-    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
-    expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeTruthy();
   });
 
-  it('restores the existing dashboard content when switching back', () => {
-    const tabs = fixture.nativeElement.querySelectorAll('[role="tab"]');
-    tabs[1].click();
-    fixture.detectChanges();
-    tabs[0].click();
+  it('shows the Onboarding Board from the dashboard query param even without onboarding permissions', () => {
+    environment.productionModeEnableRBAC = true;
+    queryParamMap$.next(convertToParamMap({ view: 'onboarding' }));
     fixture.detectChanges();
 
-    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
+    expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeNull();
+  });
+
+  it('restores the existing dashboard content when leaving onboarding', () => {
+    queryParamMap$.next(convertToParamMap({ view: 'onboarding' }));
+    fixture.detectChanges();
+    queryParamMap$.next(convertToParamMap({}));
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.querySelector('mifosx-analytics-dashboard')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('mifosx-onboarding-board')).toBeNull();
   });
 });

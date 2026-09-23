@@ -10,7 +10,7 @@
 @if (!oauthEnabled) {
   <div>
     <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-      <mat-form-field class="login-field flex-align-center" appearance="fill">
+      <mat-form-field class="login-field" appearance="outline" subscriptSizing="dynamic">
         <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
         <input
           matInput
@@ -19,7 +19,6 @@
           formControlName="username"
           [placeholder]="'labels.placeholders.Enter your username' | translate"
         />
-        <mifosx-m3-icon matIconPrefix name="account_circle"></mifosx-m3-icon>
         @if (loginForm.controls.username.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Username' | translate }}
@@ -28,8 +27,7 @@
         }
       </mat-form-field>
 
-      <!-- Password Field -->
-      <mat-form-field class="login-field" appearance="fill">
+      <mat-form-field class="login-field" appearance="outline" subscriptSizing="dynamic">
         <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
         <input
           matInput
@@ -39,7 +37,6 @@
           [placeholder]="'labels.placeholders.Enter your password' | translate"
           (keyup.enter)="onEnter($event)"
         />
-        <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
         @if (loginForm.controls.password.value && !loading) {
           <button
             type="button"
@@ -94,6 +91,18 @@
         }
       </mifosx-m3-button>
     </form>
+    @if (allowDevUiPreview) {
+      <mifosx-m3-button
+        variant="outlined"
+        type="button"
+        class="login-submit-button"
+        [disabled]="loading"
+        [fullWidth]="true"
+        [label]="'labels.buttons.Continue without backend' | translate"
+        (clicked)="loginDevPreview()"
+      ></mifosx-m3-button>
+      <p class="dev-preview-hint">{{ 'labels.text.Local UI preview hint' | translate }}</p>
+    }
   </div>
 }
 

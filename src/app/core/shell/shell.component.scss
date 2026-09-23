@@ -6,25 +6,118 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+$mobile-tabbar: 64px;
+
+.thr-app-outer {
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 8px;
+
+  &.handset {
+    height: 100vh;
+    height: 100dvh; /* stylelint-disable-line unit-allowed-list */
+    padding: 0;
+
+    .thr-app-frame {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+}
+
+.thr-app-frame {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
 #mifosx-shell-container {
   max-width: 100%;
-  height: 100vh;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
 
   .sidebar-panel {
-    min-height: 100vh;
-    overflow: auto;
-    box-shadow:
-      0 3px 1px -2px rgb(0 0 0 / 20%),
-      0 2px 2px 0 rgb(0 0 0 / 14%),
-      0 1px 5px 0 rgb(0 0 0 / 12%);
+    min-height: 100%;
+    overflow: hidden;
+    box-shadow: none;
   }
 
   .sidebar-full {
-    width: 15rem;
+    width: 16rem;
   }
 
   .sidebar-compact {
     width: 4rem;
+  }
+
+  .sidebar-panel.sidebar-sheet.mat-drawer-over {
+    position: fixed;
+    inset: 24px 0 calc(#{$mobile-tabbar} + env(safe-area-inset-bottom)) 0;
+    z-index: 1000;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    border: 0;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -8px 32px rgb(23 25 22 / 16%) !important;
+    transform: translate3d(0, 100%, 0);
+    padding-bottom: 8px;
+
+    ::ng-deep {
+      .app-sidenav {
+        overflow: hidden auto;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--thr-foreground, #171916) 28%, transparent) transparent;
+      }
+
+      .app-sidenav .mat-mdc-nav-list {
+        flex: 0 0 auto;
+        overflow: visible;
+      }
+
+      .app-sidenav .nav-group.open {
+        flex: 0 0 auto;
+        min-height: auto;
+        overflow: visible;
+      }
+
+      .app-sidenav .nav-group.open .nav-group-items {
+        flex: 0 0 auto;
+        max-height: none;
+        overflow: visible;
+      }
+    }
+  }
+
+  .sidebar-panel.sidebar-sheet.mat-drawer-over::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    z-index: 2;
+    width: 40px;
+    height: 4px;
+    margin-left: -20px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--thr-foreground, #171916) 22%, transparent);
+    pointer-events: none;
+  }
+
+  .sidebar-panel.sidebar-sheet.mat-drawer-over.mat-drawer-opened {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.mat-drawer-transition .sidebar-panel.sidebar-sheet.mat-drawer-over {
+    transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  &:has(.sidebar-sheet.mat-drawer-opened) ::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgb(23 25 22 / 32%);
   }
 }
 
@@ -34,6 +127,72 @@ $color: #e2e4ec;
 
 .sidenav {
   overflow-x: hidden;
+
+  &.with-mobile-nav {
+    -webkit-overflow-scrolling: touch;
+
+    ::ng-deep mifosx-footer {
+      margin-bottom: calc(#{$mobile-tabbar} + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+.mobile-tabbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  box-sizing: border-box;
+  height: calc(#{$mobile-tabbar} + env(safe-area-inset-bottom));
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  background: var(--thr-shell, #f7f7f4);
+  border-top: 1px solid var(--thr-border, #e2e4ec);
+}
+
+.mobile-tabbar__item {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  margin: 0;
+  padding: 4px 2px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--thr-muted, #6b6f66);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+
+  span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.is-active {
+    background: #252a20;
+    color: #fff;
+    font-weight: 600;
+  }
+}
+
+:host-context(.dark-theme) {
+  .mobile-tabbar__item.is-active {
+    background: #fff;
+    color: #252a20;
+  }
 }
 
 @keyframes move {

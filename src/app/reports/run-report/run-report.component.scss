@@ -7,51 +7,51 @@
  */
 
 :host {
-  --rr-blue-900: #0d2b5e;
-  --rr-blue-700: #1565c0;
-  --rr-blue-600: #1976d2;
-  --rr-blue-100: #bbdefb;
-  --rr-blue-50: #e3f2fd;
-  --rr-blue-20: #f0f7ff;
+  --rr-blue-900: #1f5c16;
+  --rr-blue-700: #171916;
+  --rr-blue-600: #2a2c28;
+  --rr-blue-100: #d7f3c4;
+  --rr-blue-50: #e8f5e0;
+  --rr-blue-20: #f6faf1;
   --rr-surface: #fff;
-  --rr-surface-alt: #f4f7fb;
-  --rr-surface-h: #ebf2fa;
-  --rr-border: #dde5f0;
-  --rr-border-strong: #c0d0e4;
-  --rr-text-1: #0d1b2a;
-  --rr-text-2: #4a6785;
-  --rr-text-3: #8fa5bc;
+  --rr-surface-alt: #eef0ea;
+  --rr-surface-h: #e7e9e3;
+  --rr-border: rgb(23 25 22 / 14%);
+  --rr-border-strong: rgb(23 25 22 / 22%);
+  --rr-text-1: #171916;
+  --rr-text-2: #555851;
+  --rr-text-3: #8b8e86;
   --rr-paid: #2e7d32;
   --rr-paid-bg: #e8f5e9;
   --rr-alert: #c62828;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
   color: var(--rr-text-1);
 }
 
 :host-context(.dark-theme) {
-  --rr-blue-700: #5b9bd5;
-  --rr-blue-600: #7ab3e0;
-  --rr-blue-100: #1a3a60;
-  --rr-blue-50: #0a2040;
-  --rr-blue-20: #0d1f35;
-  --rr-surface: #1a2535;
-  --rr-surface-alt: #101d2d;
-  --rr-surface-h: #132032;
-  --rr-border: #1e3050;
-  --rr-border-strong: #2a4264;
-  --rr-text-1: #e2ebf6;
-  --rr-text-2: #8baecf;
-  --rr-text-3: #6a8fad;
+  --rr-blue-700: #f3f3ee;
+  --rr-blue-600: #fff;
+  --rr-blue-100: #22251f;
+  --rr-blue-50: #1b1d1a;
+  --rr-blue-20: #161815;
+  --rr-surface: #22251f;
+  --rr-surface-alt: #161815;
+  --rr-surface-h: #1b1d1a;
+  --rr-border: rgb(255 255 255 / 8%);
+  --rr-border-strong: rgb(255 255 255 / 14%);
+  --rr-text-1: #f2f3ef;
+  --rr-text-2: #8b8e86;
+  --rr-text-3: #6b6e66;
   --rr-paid: #66bb6a;
   --rr-paid-bg: #172b1a;
   --rr-alert: #ef9a9a;
 }
 
 .run-report-host {
-  max-width: 82rem;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 
 /* ── Page head ───────────────────────────────────────────────── */
@@ -88,7 +88,7 @@
   }
 
   .type-pill {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 11px;
     font-weight: 500;
     color: var(--rr-blue-700);
@@ -119,7 +119,7 @@
     align-items: center;
     gap: 8px;
     padding: 7px 14px;
-    border-radius: 4px;
+    border-radius: 12px;
     font-size: 12px;
     font-weight: 500;
     color: var(--rr-text-3);
@@ -142,7 +142,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: inherit;
       font-size: 10.5px;
       font-weight: 600;
       border: 1px solid var(--rr-border);
@@ -362,7 +362,7 @@
   display: inline-flex;
   background: var(--rr-surface-alt);
   border: 1px solid var(--rr-border);
-  border-radius: 4px;
+  border-radius: 12px;
   padding: 3px;
   gap: 2px;
   width: fit-content;
@@ -372,7 +372,7 @@
     min-width: 34px;
     background: transparent;
     border: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 500;
     color: var(--rr-text-2);
@@ -408,7 +408,7 @@
   padding: 12px 8px;
   background: var(--rr-surface);
   border: 1px solid var(--rr-border);
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.18s ease;
   text-align: center;
@@ -426,7 +426,7 @@
   }
 
   .tag {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 11px;
     font-weight: 600;
     color: var(--rr-blue-700);
@@ -464,7 +464,7 @@
   padding: 12px 14px;
   background: var(--rr-surface-alt);
   border: 1px dashed var(--rr-border);
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   user-select: none;
   outline: none;
@@ -522,11 +522,11 @@
       color: var(--rr-text-3);
 
       code {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: inherit;
         background: var(--rr-surface);
         border: 1px solid var(--rr-border);
         padding: 1px 6px;
-        border-radius: 4px;
+        border-radius: 12px;
         color: var(--rr-blue-700);
       }
     }
@@ -539,7 +539,7 @@
   align-items: center;
   gap: 7px;
   padding: 7px 14px;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;

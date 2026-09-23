@@ -7,26 +7,25 @@
  */
 
 :root {
-  /* Brand blue scale */
-  --ds-blue-900: #0d2b5e;
-  --ds-blue-700: #1565c0;
-  --ds-blue-600: #1976d2;
-  --ds-blue-400: #42a5f5;
-  --ds-blue-100: #bbdefb;
-  --ds-blue-50: #e3f2fd;
-  --ds-blue-20: #f0f7ff;
+  --ds-blue-900: #1f5c16;
+  --ds-blue-700: #2f9a28;
+  --ds-blue-600: #3f9e2a;
+  --ds-blue-400: #84dc4e;
+  --ds-blue-100: #d7f3c4;
+  --ds-blue-50: #e8f5e0;
+  --ds-blue-20: #f6faf1;
 
   /* Surfaces */
   --ds-surface: #fff;
-  --ds-surface-alt: #f4f7fb;
-  --ds-surface-head: #ebf2fa;
-  --ds-border: #dde5f0;
-  --ds-border-strong: #c0d0e4;
+  --ds-surface-alt: #eef0ea;
+  --ds-surface-head: #e7e9e3;
+  --ds-border: rgb(23 25 22 / 14%);
+  --ds-border-strong: rgb(23 25 22 / 22%);
 
   /* Text scale */
-  --ds-text-1: #0d1b2a;
-  --ds-text-2: #4a6785;
-  --ds-text-3: #8fa5bc;
+  --ds-text-1: #171916;
+  --ds-text-2: #555851;
+  --ds-text-3: #8b8e86;
 
   /* Financial-status colors */
   --ds-paid: #2e7d32;
@@ -52,35 +51,35 @@
   --ds-action-on-fill: #fff;
 
   /* Elevation */
-  --ds-shadow-xs: 0 1px 2px rgb(13 43 94 / 6%);
-  --ds-shadow-sm: 0 2px 8px rgb(13 43 94 / 10%);
-  --ds-shadow-md: 0 6px 20px rgb(13 43 94 / 14%);
+  --ds-shadow-xs: 0 1px 2px rgb(23 25 22 / 6%);
+  --ds-shadow-sm: 0 2px 8px rgb(23 25 22 / 8%);
+  --ds-shadow-md: 0 10px 28px rgb(23 25 22 / 8%);
 
   /* Radii */
-  --ds-radius-sm: 4px;
-  --ds-radius: 8px;
-  --ds-radius-lg: 12px;
+  --ds-radius-sm: 8px;
+  --ds-radius: 16px;
+  --ds-radius-lg: 24px;
 }
 
 body.dark-theme {
-  --ds-blue-700: #5b9bd5;
-  --ds-blue-600: #7ab3e0;
-  --ds-blue-100: #1a3a60;
-  --ds-blue-50: #0a2040;
-  --ds-blue-20: #0d1f35;
-  --ds-surface: #1a2535;
-  --ds-surface-alt: #101d2d;
-  --ds-surface-head: #132032;
-  --ds-border: #1e3050;
-  --ds-border-strong: #2a4264;
-  --ds-text-1: #e2ebf6;
-  --ds-text-2: #8baecf;
-  --ds-text-3: #6a8fad;
-  --ds-paid: #66bb6a;
-  --ds-paid-bg: #172b1a;
-  --ds-partial: #ffa726;
+  --ds-blue-700: #84dc4e;
+  --ds-blue-600: #84dc4e;
+  --ds-blue-100: #22251f;
+  --ds-blue-50: #1b1d1a;
+  --ds-blue-20: #161815;
+  --ds-surface: #22251f;
+  --ds-surface-alt: #161815;
+  --ds-surface-head: #1b1d1a;
+  --ds-border: rgb(255 255 255 / 8%);
+  --ds-border-strong: rgb(255 255 255 / 14%);
+  --ds-text-1: #f2f3ef;
+  --ds-text-2: #8b8e86;
+  --ds-text-3: #6b6e66;
+  --ds-paid: #84dc4e;
+  --ds-paid-bg: #14210c;
+  --ds-partial: #e4c84a;
   --ds-partial-bg: #281c0b;
   --ds-alert: #ef9a9a;
   --ds-alert-bg: #2b1212;
-  --ds-zero: #6a8fad;
+  --ds-zero: #6b6e66;
 }

@@ -33,7 +33,7 @@
   --je-manual: #7c3aed;
   --je-manual-bg: #f3e8ff;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
 }
 
@@ -169,7 +169,7 @@
   .sym {
     color: var(--je-text-3);
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 500;
   }
 }
 
@@ -263,7 +263,7 @@
 
   .muted {
     color: var(--je-text-3);
-    font-weight: 400;
+    font-weight: 500;
     margin-left: 4px;
   }
 }

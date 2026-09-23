@@ -16,7 +16,7 @@
   .page-loader-text {
     margin-top: 1rem;
     font-size: 0.95rem;
-    color: #1976d2;
+    color: var(--thr-muted, #555851);
     font-weight: 500;
   }
 }

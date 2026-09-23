@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   Copyright since 2025 Mifos Initiative
 
   This Source Code Form is subject to the terms of the Mozilla Public
@@ -6,11 +6,11 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 <button
-  mat-icon-button
-  class="m-l-5 m-r-5"
+  type="button"
+  class="theme-toggle-btn"
   (click)="toggleTheme()"
   [matTooltip]="themeToggleLabel | translate"
   [attr.aria-label]="themeToggleLabel | translate"
 >
-  <mifosx-m3-icon [name]="darkModeOn ? 'wb_sunny' : 'nights_stay'"></mifosx-m3-icon>
+  <mifosx-thr-icon [name]="darkModeOn ? 'sun' : 'moon'" size="16"></mifosx-thr-icon>
 </button>

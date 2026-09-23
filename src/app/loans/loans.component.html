@@ -235,20 +235,28 @@
                   </span>
                 }
                 @case ('accountNo') {
-                  <span class="mono"
-                    ><mifosx-account-number display="left" [accountNo]="loan.accountNo"></mifosx-account-number
-                  ></span>
+                  <span class="mono mobile-field">
+                    <span class="mobile-label">{{ col.translate ? (col.label | translate) : col.label }}</span>
+                    <mifosx-account-number display="left" [accountNo]="loan.accountNo"></mifosx-account-number>
+                  </span>
                 }
                 @case ('principal') {
-                  <span class="mono">{{
-                    loan.principal | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2'
-                  }}</span>
+                  <span class="mono mobile-field">
+                    <span class="mobile-label">{{ col.translate ? (col.label | translate) : col.label }}</span>
+                    <span>{{ loan.principal | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2' }}</span>
+                  </span>
                 }
                 @case ('product') {
-                  <span class="office">{{ loan.loanProductName }}</span>
+                  <span class="office mobile-field">
+                    <span class="mobile-label">{{ col.translate ? (col.label | translate) : col.label }}</span>
+                    <span>{{ loan.loanProductName }}</span>
+                  </span>
                 }
                 @default {
-                  <span class="cell" [class.cell-mono]="col.mono">{{ loan._cells?.[col.id] || '—' }}</span>
+                  <span class="cell mobile-field" [class.cell-mono]="col.mono">
+                    <span class="mobile-label">{{ col.translate ? (col.label | translate) : col.label }}</span>
+                    <span>{{ loan._cells?.[col.id] || '—' }}</span>
+                  </span>
                 }
               }
             }

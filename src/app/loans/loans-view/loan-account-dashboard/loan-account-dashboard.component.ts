@@ -274,7 +274,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
 
                 // Draw Percentage value
                 const valFontSize = Math.round(Math.min(width, height) * 0.13);
-                c.font = `600 ${valFontSize}px 'DM Sans', sans-serif`;
+                c.font = `600 ${valFontSize}px 'Manrope', sans-serif`;
                 c.textBaseline = 'bottom';
                 c.textAlign = 'center';
                 const text = `${this.progressPercentage.toFixed(1)}%`;
@@ -285,7 +285,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
 
                 // Draw Sub-label "REPAID"
                 const labelFontSize = Math.round(Math.min(width, height) * 0.055);
-                c.font = `700 ${labelFontSize}px 'DM Sans', sans-serif`;
+                c.font = `700 ${labelFontSize}px 'Manrope', sans-serif`;
                 c.textBaseline = 'top';
                 c.fillStyle = isDark ? '#94a3b8' : '#64748b';
                 const repaidLabel = (this.translate.instant('labels.heading.Repaid') || 'REPAID').toUpperCase();

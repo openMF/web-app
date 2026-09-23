@@ -16,16 +16,13 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 /** Custom Services */
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
-import { MatNavList, MatListItem } from '@angular/material/list';
-import { MatIcon } from '@angular/material/icon';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 /**
  * Accounting component.
@@ -36,17 +33,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./accounting.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatNavList,
-    MatListItem,
-    MatIcon,
-    FaIconComponent,
-    MatLine
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccountingComponent implements AfterViewInit {
   private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
+  configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
 
   /* Reference of Chart of Accounts */
@@ -69,8 +62,6 @@ export class AccountingComponent implements AfterViewInit {
   @ViewChild('createJournalEntries') createJournalEntries: ElementRef<any>;
   /* Template for popover on Create Journal Entries */
   @ViewChild('templateCreateJournalEntries') templateCreateJournalEntries: TemplateRef<any>;
-  // Initialize an array of 10 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(10).fill(false);
 
   /**
    * Popover function
@@ -209,10 +200,5 @@ export class AccountingComponent implements AfterViewInit {
     this.configurationWizardService.showCreateJournalEntries = false;
     this.configurationWizardService.showClosingEntriesList = true;
     this.router.navigate(['/accounting/closing-entries']);
-  }
-
-  arrowBooleansToggle(arrowNumber: number) {
-    // Toggle the boolean value at the given index
-    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
 }

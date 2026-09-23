@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -15,14 +15,14 @@
 
 :root {
   // Surface Colors - Light Theme
-  --toolbar-surface: var(--md-sys-color-surface-container, #f3f3f3);
-  --toolbar-on-surface: var(--md-sys-color-on-surface, #1a1c1e);
-  --toolbar-on-surface-variant: var(--md-sys-color-on-surface-variant, #44474e);
-  --toolbar-primary: var(--md-sys-color-primary, #1074b9);
+  --toolbar-surface: var(--md-sys-color-surface-container, #f4f5f1);
+  --toolbar-on-surface: var(--md-sys-color-on-surface, #171916);
+  --toolbar-on-surface-variant: var(--md-sys-color-on-surface-variant, #555851);
+  --toolbar-primary: var(--md-sys-color-primary, #2f9a28);
   --toolbar-on-primary: var(--md-sys-color-on-primary, #fff);
-  --toolbar-primary-container: var(--md-sys-color-primary-container, #d1e4ff);
-  --toolbar-on-primary-container: var(--md-sys-color-on-primary-container, #001d35);
-  --toolbar-surface-container-high: var(--md-sys-color-surface-container-high, #e8e8eb);
+  --toolbar-primary-container: var(--md-sys-color-primary-container, #e8f5e0);
+  --toolbar-on-primary-container: var(--md-sys-color-on-primary-container, #1f5c16);
+  --toolbar-surface-container-high: var(--md-sys-color-surface-container-high, #e7e9e3);
 
   // Dimensions
   --toolbar-height: 64px;
@@ -40,7 +40,7 @@
   --toolbar-nav-item-min-height: 40px;
 
   // Typography
-  --toolbar-font-family: 'Roboto', system-ui, sans-serif;
+  --toolbar-font-family: 'Manrope', sans-serif;
   --toolbar-font-size: 14px;
   --toolbar-font-weight: 500;
   --toolbar-font-weight-active: 600;
@@ -68,7 +68,7 @@
   --toolbar-duration-medium: 250ms;
 
   // Search Component
-  --toolbar-search-background: var(--md-sys-color-surface-container-high, #e8e8eb);
+  --toolbar-search-background: var(--md-sys-color-surface-container-high, #e7e9e3);
   --toolbar-search-border-radius: 28px;
   --toolbar-search-padding: 4px 16px;
 }

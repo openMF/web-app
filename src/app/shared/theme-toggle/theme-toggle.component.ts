@@ -6,13 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemingService } from './theming.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { M3IconComponent } from '../m3-ui/m3-icon/m3-icon.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 @Component({
   selector: 'mifosx-theme-toggle',
@@ -20,17 +20,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./theme-toggle.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatIconButton,
     MatTooltip,
-    M3IconComponent
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ThemeToggleComponent implements OnInit, OnChanges {
+export class ThemeToggleComponent implements OnInit {
   private themingService = inject(ThemingService);
   private settingsService = inject(SettingsService);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
-  darkModeOn: boolean;
+  darkModeOn = false;
 
   /** Translation key describing the theme the toggle will switch to. */
   get themeToggleLabel(): string {
@@ -38,24 +39,20 @@ export class ThemeToggleComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.darkModeOn = !!this.settingsService.themeDarkEnabled;
+    this.syncFromTheme();
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.syncFromTheme();
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.darkModeOn = !!this.settingsService.themeDarkEnabled;
-  }
-
-  /**
-   * Toggle between light and dark themes
-   * This method handles the complete theme switching process:
-   * 1. Toggles the local state
-   * 2. Persists the preference to settings
-   */
   toggleTheme() {
-    // Step 1: Toggle the dark mode state
-    this.darkModeOn = !this.darkModeOn;
-    // Step 2: Persist the theme preference to localStorage via settings service
-    this.settingsService.setThemeDarkEnabled(this.darkModeOn);
-    this.themingService.setDarkMode(this.darkModeOn);
+    const nextDark = !this.darkModeOn;
+    this.settingsService.setThemeDarkEnabled(nextDark);
+    this.themingService.setDarkMode(nextDark);
+  }
+
+  private syncFromTheme(): void {
+    this.darkModeOn = this.themingService.isDarkMode();
+    this.cdr.markForCheck();
   }
 }

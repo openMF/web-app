@@ -44,6 +44,7 @@ import { TwoFactorAuthenticationComponent } from './two-factor-authentication/tw
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
@@ -67,6 +68,7 @@ import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
     TwoFactorAuthenticationComponent,
     MatMenuTrigger,
     FaIconComponent,
+    ThrIconComponent,
     MatMenu,
     MatMenuItem,
     M3IconComponent

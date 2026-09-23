@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -28,20 +28,20 @@ md-filled-tonal-button {
 
   // Typography
   --md-filled-button-label-text-size: 14px;
-  --md-filled-button-label-text-weight: 500;
-  --md-filled-button-label-text-font: 'Roboto', sans-serif;
+  --md-filled-button-label-text-weight: 600;
+  --md-filled-button-label-text-font: var(--thr-font, 'Manrope', sans-serif);
   --md-outlined-button-label-text-size: 14px;
-  --md-outlined-button-label-text-weight: 500;
-  --md-outlined-button-label-text-font: 'Roboto', sans-serif;
+  --md-outlined-button-label-text-weight: 600;
+  --md-outlined-button-label-text-font: var(--thr-font, 'Manrope', sans-serif);
   --md-elevated-button-label-text-size: 14px;
-  --md-elevated-button-label-text-weight: 500;
-  --md-elevated-button-label-text-font: 'Roboto', sans-serif;
+  --md-elevated-button-label-text-weight: 600;
+  --md-elevated-button-label-text-font: var(--thr-font, 'Manrope', sans-serif);
   --md-text-button-label-text-size: 14px;
-  --md-text-button-label-text-weight: 500;
-  --md-text-button-label-text-font: 'Roboto', sans-serif;
+  --md-text-button-label-text-weight: 600;
+  --md-text-button-label-text-font: var(--thr-font, 'Manrope', sans-serif);
   --md-filled-tonal-button-label-text-size: 14px;
-  --md-filled-tonal-button-label-text-weight: 500;
-  --md-filled-tonal-button-label-text-font: 'Roboto', sans-serif;
+  --md-filled-tonal-button-label-text-weight: 600;
+  --md-filled-tonal-button-label-text-font: var(--thr-font, 'Manrope', sans-serif);
   // Border radius (Material Design 3 uses 20px for buttons)
   --md-filled-button-container-shape: 20px;
   --md-outlined-button-container-shape: 20px;
@@ -62,16 +62,16 @@ md-filled-tonal-button {
   --md-filled-tonal-button-trailing-space: 24px;
 
   // Apply theme colors using Material Design tokens
-  --md-sys-color-primary: #1074b9;
+  --md-sys-color-primary: var(--thr-lime, #2f9a28);
   --md-sys-color-on-primary: #fff;
-  --md-sys-color-surface-container-highest: #e1e2ec;
-  --md-sys-color-on-surface: #303135;
-  --md-sys-color-on-surface-variant: #44474e;
+  --md-sys-color-surface-container-highest: var(--thr-shell, #e7e9e3);
+  --md-sys-color-on-surface: var(--thr-foreground, #171916);
+  --md-sys-color-on-surface-variant: var(--thr-muted, #555851);
 
   // ========== FILLED BUTTON ==========
   // Normal state
-  --md-filled-button-container-color: #1074b9;
-  --md-filled-button-label-text-color: #fff;
+  --md-filled-button-container-color: var(--thr-primary-btn, #171916);
+  --md-filled-button-label-text-color: var(--thr-primary-btn-fg, #f3f3ee);
 
   // Hover state
   --md-filled-button-hover-state-layer-color: #fff;
@@ -93,20 +93,20 @@ md-filled-tonal-button {
 
   // ========== OUTLINED BUTTON ==========
   // Normal state
-  --md-outlined-button-outline-color: #1074b9;
-  --md-outlined-button-label-text-color: #1074b9;
+  --md-outlined-button-outline-color: var(--thr-lime, #2f9a28);
+  --md-outlined-button-label-text-color: var(--thr-lime, #2f9a28);
   --md-outlined-button-outline-width: 1px;
 
   // Hover state
-  --md-outlined-button-hover-state-layer-color: #1074b9;
+  --md-outlined-button-hover-state-layer-color: var(--thr-lime, #2f9a28);
   --md-outlined-button-hover-state-layer-opacity: 8%;
 
   // Focus state
-  --md-outlined-button-focus-state-layer-color: #1074b9;
+  --md-outlined-button-focus-state-layer-color: var(--thr-lime, #2f9a28);
   --md-outlined-button-focus-state-layer-opacity: 12%;
 
   // Pressed state
-  --md-outlined-button-pressed-state-layer-color: #1074b9;
+  --md-outlined-button-pressed-state-layer-color: var(--thr-lime, #2f9a28);
   --md-outlined-button-pressed-state-layer-opacity: 12%;
 
   // Disabled state
@@ -118,21 +118,21 @@ md-filled-tonal-button {
   // ========== ELEVATED BUTTON ==========
   // Normal state
   --md-elevated-button-container-color: #f5f5f5;
-  --md-elevated-button-label-text-color: #1074b9;
+  --md-elevated-button-label-text-color: var(--thr-lime, #2f9a28);
   --md-elevated-button-container-elevation: 1;
 
   // Hover state
-  --md-elevated-button-hover-state-layer-color: #1074b9;
+  --md-elevated-button-hover-state-layer-color: var(--thr-lime, #2f9a28);
   --md-elevated-button-hover-state-layer-opacity: 8%;
   --md-elevated-button-hover-container-elevation: 2;
 
   // Focus state
-  --md-elevated-button-focus-state-layer-color: #1074b9;
+  --md-elevated-button-focus-state-layer-color: var(--thr-lime, #2f9a28);
   --md-elevated-button-focus-state-layer-opacity: 12%;
   --md-elevated-button-focus-container-elevation: 1;
 
   // Pressed state
-  --md-elevated-button-pressed-state-layer-color: #1074b9;
+  --md-elevated-button-pressed-state-layer-color: var(--thr-lime, #2f9a28);
   --md-elevated-button-pressed-state-layer-opacity: 12%;
   --md-elevated-button-pressed-container-elevation: 1;
 
@@ -145,18 +145,18 @@ md-filled-tonal-button {
 
   // ========== TEXT BUTTON ==========
   // Normal state
-  --md-text-button-label-text-color: #1074b9;
+  --md-text-button-label-text-color: var(--thr-lime, #2f9a28);
 
   // Hover state
-  --md-text-button-hover-state-layer-color: #1074b9;
+  --md-text-button-hover-state-layer-color: var(--thr-lime, #2f9a28);
   --md-text-button-hover-state-layer-opacity: 8%;
 
   // Focus state
-  --md-text-button-focus-state-layer-color: #1074b9;
+  --md-text-button-focus-state-layer-color: var(--thr-lime, #2f9a28);
   --md-text-button-focus-state-layer-opacity: 12%;
 
   // Pressed state
-  --md-text-button-pressed-state-layer-color: #1074b9;
+  --md-text-button-pressed-state-layer-color: var(--thr-lime, #2f9a28);
   --md-text-button-pressed-state-layer-opacity: 12%;
 
   // Disabled state
@@ -165,19 +165,19 @@ md-filled-tonal-button {
 
   // ========== TONAL BUTTON ==========
   // Normal state
-  --md-filled-tonal-button-container-color: #d1e4ff;
-  --md-filled-tonal-button-label-text-color: #001d36;
+  --md-filled-tonal-button-container-color: var(--thr-lime-soft, #e8f5e0);
+  --md-filled-tonal-button-label-text-color: var(--brand-primary-700, #1f5c16);
 
   // Hover state
-  --md-filled-tonal-button-hover-state-layer-color: #001d36;
+  --md-filled-tonal-button-hover-state-layer-color: var(--brand-primary-700, #1f5c16);
   --md-filled-tonal-button-hover-state-layer-opacity: 8%;
 
   // Focus state
-  --md-filled-tonal-button-focus-state-layer-color: #001d36;
+  --md-filled-tonal-button-focus-state-layer-color: var(--brand-primary-700, #1f5c16);
   --md-filled-tonal-button-focus-state-layer-opacity: 12%;
 
   // Pressed state
-  --md-filled-tonal-button-pressed-state-layer-color: #001d36;
+  --md-filled-tonal-button-pressed-state-layer-color: var(--brand-primary-700, #1f5c16);
   --md-filled-tonal-button-pressed-state-layer-opacity: 12%;
 
   // Disabled state

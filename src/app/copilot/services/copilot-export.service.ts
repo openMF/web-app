@@ -311,7 +311,7 @@ export class CopilotExportService {
       'padding:0',
       'background:#ffffff',
       'color:#111827',
-      "font-family:Roboto,'Helvetica Neue',Arial,sans-serif",
+      'font-family:Manrope,sans-serif',
       'font-size:14px',
       'line-height:1.6'
     ].join(';');

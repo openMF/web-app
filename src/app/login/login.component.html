@@ -1,181 +1,150 @@
-﻿<!--
+<!--
   Copyright since 2025 Mifos Initiative
 
   This Source Code Form is subject to the terms of the Mozilla Public
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<!-- Modern Material Design 3 Login Layout -->
 <div class="login-wrapper">
-  <!-- Left Panel - Hero Section (Hidden on tablet and mobile) -->
-  <div class="hero-panel hide-lt-lg" [class.production-mode]="productionMode">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <!-- Default Mode: Full content -->
-      @if (!productionMode) {
-        <div class="hero-text">
-          <h1 class="hero-title">{{ 'APP_NAME' | translate }}</h1>
-          <p class="hero-subtitle">
-            {{ 'labels.text.A' | translate }}
-            <span class="hero-highlight">{{ 'labels.text.global community' | translate }}</span>
-            {{ 'labels.text.elimination of poverty' | translate }}
-          </p>
-          <div class="hero-features">
-            <div class="feature-item">
-              <fa-icon icon="shield-alt" class="feature-icon"></fa-icon>
-              <span class="feature-text">{{ 'labels.heading.Secure & Reliable' | translate }}</span>
-            </div>
-            <div class="feature-item">
-              <fa-icon icon="users" class="feature-icon"></fa-icon>
-              <span class="feature-text">{{ 'labels.heading.Community Driven' | translate }}</span>
-            </div>
-            <div class="feature-item">
-              <fa-icon icon="globe" class="feature-icon"></fa-icon>
-              <span class="feature-text">{{ 'labels.heading.Global Impact' | translate }}</span>
-            </div>
-          </div>
-          <div class="hero-links">
-            <a [href]="'mifosHome' | documentationLink" target="_blank" rel="noopener noreferrer" class="hero-link">
-              {{ 'labels.text.Mifos Initiative' | translate }}
-              <fa-icon icon="external-link-alt" size="sm"></fa-icon>
-            </a>
-            <a
-              [href]="'mifosVolunteer' | documentationLink"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hero-link"
-            >
-              {{ 'labels.text.Get involved' | translate }}
-              <fa-icon icon="external-link-alt" size="sm"></fa-icon>
-            </a>
-          </div>
-        </div>
-      }
-      <!-- Production Mode: Minimal branding at bottom -->
-      @if (productionMode) {
-        <div class="hero-branding-bottom">
-          <h1 class="hero-title-minimal">{{ 'APP_NAME' | translate }}</h1>
-        </div>
-      }
-    </div>
+  <div class="login-topbar">
+    @if (allowServerSwitch()) {
+      <mifosx-server-selector class="header-control" appearance="outline" subscriptSizing="dynamic" [showLabel]="false">
+      </mifosx-server-selector>
+    }
+    <mifosx-theme-toggle class="header-control theme-toggle"></mifosx-theme-toggle>
+    <mifosx-language-selector class="header-control" appearance="outline" subscriptSizing="dynamic" [showLabel]="false">
+    </mifosx-language-selector>
   </div>
 
-  <!-- Right Panel - Login Form -->
-  <div class="login-panel">
-    <!-- Header Controls -->
-    <div class="login-header">
-      @if (allowServerSwitch()) {
-        <mifosx-server-selector
-          class="header-control"
-          appearance="outline"
-          subscriptSizing="dynamic"
-          [showLabel]="false"
-        >
-        </mifosx-server-selector>
-      }
-      <mifosx-theme-toggle class="header-control theme-toggle"></mifosx-theme-toggle>
-      <mifosx-language-selector
-        class="header-control"
-        appearance="outline"
-        subscriptSizing="dynamic"
-        [showLabel]="false"
-      >
-      </mifosx-language-selector>
-    </div>
+  <div class="auth-shell">
+    <aside class="auth-visual hide-lt-lg" [class.production-mode]="productionMode" aria-hidden="true">
+      <div class="auth-visual-panel">
+        <div class="auth-visual-blob auth-visual-blob--one"></div>
+        <div class="auth-visual-blob auth-visual-blob--two"></div>
+        <div class="auth-visual-blob auth-visual-blob--three"></div>
 
-    <!-- Main Login Card -->
-    <div class="login-card-container">
-      <div class="login-card">
-        <!-- Logo Section -->
-        <div class="logo-section">
-          @if (!themeDarkEnabled) {
-            <img [src]="logoPath" (error)="onLogoError()" alt="{{ 'APP_NAME' | translate }} Logo" class="logo-image" />
-          } @else {
-            <img
-              [src]="logoPathDark"
-              (error)="onLogoErrorDark()"
-              alt="{{ 'APP_NAME' | translate }} Logo"
-              class="logo-image"
-            />
-          }
-        </div>
-
-        <!-- Form Section -->
-        <div class="form-section">
-          <!-- Tenant Selector -->
-          @if (showTenantSelector) {
-            <div class="tenant-section">
-              <mifosx-tenant-selector></mifosx-tenant-selector>
+        @if (!productionMode) {
+          <div class="auth-visual-copy">
+            <h1 class="auth-visual-title">{{ 'labels.heading.Modern Lending Simplified' | translate }}</h1>
+            <p class="auth-visual-subtitle">
+              {{ 'labels.text.Flexible loan management platform description' | translate }}
+            </p>
+            <div class="auth-visual-features">
+              <div class="auth-visual-feature">
+                <mifosx-thr-icon name="shield-alt" size="16"></mifosx-thr-icon>
+                <span>{{ 'labels.heading.Complete Loan Management' | translate }}</span>
+              </div>
+              <div class="auth-visual-feature">
+                <mifosx-thr-icon name="users" size="16"></mifosx-thr-icon>
+                <span>{{ 'labels.heading.Built for Financial Institutions' | translate }}</span>
+              </div>
+              <div class="auth-visual-feature">
+                <mifosx-thr-icon name="globe" size="16"></mifosx-thr-icon>
+                <span>{{ 'labels.heading.Flexible & Extensible' | translate }}</span>
+              </div>
             </div>
-          }
-
-          <!-- Login Forms -->
-          @if (!resetPassword && !twoFactorAuthenticationRequired) {
-            <mifosx-login-form></mifosx-login-form>
-          }
-
-          @if (resetPassword) {
-            <mifosx-reset-password></mifosx-reset-password>
-          }
-
-          @if (twoFactorAuthenticationRequired) {
-            <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
-          }
-        </div>
-
-        <!-- Version Info Section -->
-        <div class="login-version-info" *ngIf="displayBackendInfo">
-          <div class="version-info-container">
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Tenant' | translate }}</span>
-              <span class="version-value">{{ tenantDisplayName }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</span>
-              <span class="version-value">{{ versions?.mifos }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</span>
-              <span class="version-value">{{ versions?.fineract?.version }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Server' | translate }}</span>
-              <span class="version-value">{{ server }}</span>
+            <div class="auth-visual-links">
+              <a href="https://almosthr.com" target="_blank" rel="noopener noreferrer">
+                {{ 'labels.buttons.Learn About Almost.thr' | translate }}
+              </a>
+              <a [href]="'userManual' | documentationLink" target="_blank" rel="noopener noreferrer">
+                {{ 'labels.buttons.Explore the Platform' | translate }}
+              </a>
             </div>
           </div>
-        </div>
-
-        <!-- Resources Links (hidden in production mode) -->
-        @if (!productionMode) {
-          <div class="resources-section">
-            <div class="resources-branding">
-              <span class="branding-text"
-                >{{ 'labels.text.Powered by' | translate }}
-                <a href="https://mifos.org" target="_blank" rel="noopener noreferrer">{{
-                  'labels.text.Mifos Initiative' | translate
-                }}</a></span
-              >
-            </div>
-            <div class="resources-links">
-              <button mat-button [matMenuTriggerFor]="resourcesMenu" class="resource-button">
-                <fa-icon icon="book" size="sm"></fa-icon>
-                {{ 'labels.links.Resources' | translate }}
-              </button>
-              <button mat-button [matMenuTriggerFor]="communityMenu" class="resource-button">
-                <fa-icon icon="users" size="sm"></fa-icon>
-                {{ 'labels.links.Community' | translate }}
-              </button>
-              <button mat-button [matMenuTriggerFor]="contributeMenu" class="resource-button">
-                <fa-icon icon="heart" size="sm"></fa-icon>
-                {{ 'labels.links.Contribute' | translate }}
-              </button>
-            </div>
+        } @else {
+          <div class="auth-visual-copy auth-visual-copy--minimal">
+            <h1 class="auth-visual-title">{{ 'APP_NAME' | translate }}</h1>
           </div>
         }
       </div>
+    </aside>
 
-      <!-- Footer -->
+    <section class="auth-form-panel">
+      <div class="auth-brand">
+        @if (!themeDarkEnabled) {
+          <img [src]="logoPath" (error)="onLogoError()" alt="{{ 'APP_NAME' | translate }} Logo" class="auth-logo" />
+        } @else {
+          <img
+            [src]="logoPathDark"
+            (error)="onLogoErrorDark()"
+            alt="{{ 'APP_NAME' | translate }} Logo"
+            class="auth-logo"
+          />
+        }
+        <span class="auth-brand-name">{{ 'APP_NAME' | translate }}</span>
+      </div>
+
+      <div class="auth-heading">
+        <h2>{{ 'labels.heading.Login to your account' | translate }}</h2>
+        <p>{{ 'labels.text.Welcome back enter details' | translate }}</p>
+      </div>
+
+      <div class="auth-form-body">
+        @if (showTenantSelector) {
+          <div class="tenant-section">
+            <mifosx-tenant-selector></mifosx-tenant-selector>
+          </div>
+        }
+
+        @if (!resetPassword && !twoFactorAuthenticationRequired) {
+          <mifosx-login-form></mifosx-login-form>
+        }
+
+        @if (resetPassword) {
+          <mifosx-reset-password></mifosx-reset-password>
+        }
+
+        @if (twoFactorAuthenticationRequired) {
+          <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
+        }
+      </div>
+
+      <div class="login-version-info" *ngIf="displayBackendInfo">
+        <div class="version-info-container">
+          <div class="version-item">
+            <span class="version-label">{{ 'labels.version.Tenant' | translate }}</span>
+            <span class="version-value">{{ tenantDisplayName }}</span>
+          </div>
+          <div class="version-item">
+            <span class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</span>
+            <span class="version-value">{{ versions?.mifos }}</span>
+          </div>
+          <div class="version-item">
+            <span class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</span>
+            <span class="version-value">{{ versions?.fineract?.version }}</span>
+          </div>
+          <div class="version-item">
+            <span class="version-label">{{ 'labels.version.Server' | translate }}</span>
+            <span class="version-value">{{ server }}</span>
+          </div>
+        </div>
+      </div>
+
+      @if (!productionMode) {
+        <div class="resources-section">
+          <div class="resources-links">
+            <button mat-button [matMenuTriggerFor]="resourcesMenu" class="resource-button">
+              <fa-icon icon="book" size="sm"></fa-icon>
+              {{ 'labels.links.Resources' | translate }}
+            </button>
+            <button mat-button [matMenuTriggerFor]="communityMenu" class="resource-button">
+              <fa-icon icon="users" size="sm"></fa-icon>
+              {{ 'labels.links.Community' | translate }}
+            </button>
+            <button mat-button [matMenuTriggerFor]="contributeMenu" class="resource-button">
+              <fa-icon icon="heart" size="sm"></fa-icon>
+              {{ 'labels.links.Contribute' | translate }}
+            </button>
+          </div>
+        </div>
+      }
+
       <div class="login-footer">
+        <span class="login-rights">
+          Mifos LMS · {{ 'labels.text.Powered by' | translate }}
+          <a href="https://almosthr.com" target="_blank" rel="noopener noreferrer">Almost.thr</a>
+        </span>
         <button
           mat-icon-button
           (click)="reloadSettings()"
@@ -187,11 +156,10 @@
           <mifosx-m3-icon name="refresh"></mifosx-m3-icon>
         </button>
       </div>
-    </div>
+    </section>
   </div>
 </div>
 
-<!-- Resource Menus -->
 <mat-menu #resourcesMenu="matMenu" class="modern-menu">
   <a [href]="'userManual' | documentationLink" target="_blank" rel="noopener noreferrer" mat-menu-item>
     <fa-icon icon="book-open" class="menu-icon"></fa-icon>

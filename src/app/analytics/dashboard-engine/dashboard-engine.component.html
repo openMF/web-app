@@ -8,20 +8,20 @@
 
 @if (filtersForm) {
   <div class="dashboard-shell">
-    <!-- Filters Container -->
-    <div class="filter-row">
-      <mat-menu #exportMenu="matMenu">
-        <button mat-menu-item id="export-csv-btn" (click)="exportAsCSV()">
-          <mat-icon>download</mat-icon>
-          {{ 'labels.buttons.Export CSV' | translate }}
-        </button>
-        <button mat-menu-item id="export-pdf-btn" (click)="exportAsPDF()">
-          <mat-icon>picture_as_pdf</mat-icon>
-          {{ 'labels.buttons.Export PDF' | translate }}
-        </button>
-      </mat-menu>
+    <mat-menu #exportMenu="matMenu">
+      <button mat-menu-item id="export-csv-btn" (click)="exportAsCSV()">
+        <mifosx-thr-icon name="download" size="16"></mifosx-thr-icon>
+        {{ 'labels.buttons.Export CSV' | translate }}
+      </button>
+      <button mat-menu-item id="export-pdf-btn" (click)="exportAsPDF()">
+        <mifosx-thr-icon name="file" size="16"></mifosx-thr-icon>
+        {{ 'labels.buttons.Export PDF' | translate }}
+      </button>
+    </mat-menu>
+
+    <div class="filter-row" [class.has-group]="clientGroups.length">
       <mat-form-field class="office-field" appearance="outline">
-        <mat-label>Branch</mat-label>
+        <mat-label>{{ 'labels.inputs.Branch' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.officeId">
           @for (office of offices; track office.id) {
             <mat-option [value]="office.id">
@@ -32,9 +32,9 @@
       </mat-form-field>
 
       <mat-form-field class="product-field" appearance="outline">
-        <mat-label>Product</mat-label>
+        <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.productId">
-          <mat-option value="">All</mat-option>
+          <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
           @for (product of products; track product.id) {
             <mat-option [value]="product.id">
               {{ product.name }}
@@ -45,9 +45,9 @@
 
       @if (clientGroups.length) {
         <mat-form-field class="client-group-field" appearance="outline">
-          <mat-label>Client Group</mat-label>
+          <mat-label>{{ 'labels.inputs.Group' | translate }}</mat-label>
           <mat-select [formControl]="filtersForm.controls.clientGroupId">
-            <mat-option value="">All</mat-option>
+            <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
             @for (group of clientGroups; track group.id) {
               <mat-option [value]="group.id">
                 {{ group.name }}
@@ -58,7 +58,7 @@
       }
 
       <mat-form-field class="timescale-field" appearance="outline">
-        <mat-label>Date Range</mat-label>
+        <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.timescale">
           <mat-option value="Day">{{ 'labels.buttons.Day' | translate }}</mat-option>
           <mat-option value="Week">{{ 'labels.buttons.Week' | translate }}</mat-option>
@@ -66,42 +66,117 @@
           <mat-option value="Year">{{ 'labels.buttons.Year' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
-
-      <button mat-raised-button color="primary" class="export-btn" [matMenuTriggerFor]="exportMenu">
-        <mat-icon>download</mat-icon>
-        {{ 'labels.buttons.Export PDF/CSV' | translate }}
-      </button>
     </div>
 
     @if (!visibleWidgets.length) {
       <mat-card class="empty-dashboard">
-        {{ 'labels.text.No Data' | translate }}
+        <div class="panel-header">
+          <span>{{ 'labels.text.No Data' | translate }}</span>
+          <button
+            mat-icon-button
+            class="export-icon"
+            [matMenuTriggerFor]="exportMenu"
+            [attr.aria-label]="'labels.buttons.Export PDF/CSV' | translate"
+            matTooltip="{{ 'labels.buttons.Export PDF/CSV' | translate }}"
+          >
+            <mifosx-thr-icon name="download" size="16"></mifosx-thr-icon>
+          </button>
+        </div>
       </mat-card>
     } @else {
-      <div class="summary-grid">
-        @for (widget of metricWidgets; track widget.id) {
-          <mifosx-dashboard-widget [widget]="widget" [state]="widgetStateMap[widget.id]"></mifosx-dashboard-widget>
-        }
-      </div>
-
-      <div class="chart-grid">
-        @for (widget of chartWidgets; track widget.id) {
-          <div
-            [class.widget-wide]="widget.layout === 'wide'"
-            [class.widget-half]="widget.layout === 'half'"
-            [class.widget-two-thirds]="widget.layout === 'two-thirds'"
-            [class.widget-one-third]="widget.layout === 'one-third'"
-          >
+      @if (heroMetrics.length) {
+        <div class="kpi-grid">
+          @for (widget of heroMetrics; track widget.id) {
             <mifosx-dashboard-widget
               [widget]="widget"
               [state]="widgetStateMap[widget.id]"
+              [inverted]="isInvertedHero(widget)"
+              [caption]="heroCaption(widget)"
+            ></mifosx-dashboard-widget>
+          }
+        </div>
+      }
+
+      @if (featuredChart || sideMetrics.length) {
+        <div class="feature-row" [class.feature-row-solo]="!sideMetrics.length">
+          @if (featuredChart) {
+            <mifosx-dashboard-widget
+              class="featured-chart"
+              [widget]="featuredChart"
+              [state]="widgetStateMap[featuredChart.id]"
+              [featured]="true"
               [offices]="offices"
               [selectedOfficeId]="filtersForm.controls.officeId.value"
               (officeSelected)="onOfficeSelected($event)"
             ></mifosx-dashboard-widget>
+          }
+          @if (sideMetrics.length) {
+            <mat-card class="recent-card">
+              <div class="panel-header">
+                <h2>{{ 'labels.heading.Recent Activity' | translate }}</h2>
+                @if (!activityGroups.length) {
+                  <button
+                    mat-icon-button
+                    class="export-icon"
+                    [matMenuTriggerFor]="exportMenu"
+                    [attr.aria-label]="'labels.buttons.Export PDF/CSV' | translate"
+                    matTooltip="{{ 'labels.buttons.Export PDF/CSV' | translate }}"
+                  >
+                    <mifosx-thr-icon name="download" size="16"></mifosx-thr-icon>
+                  </button>
+                }
+              </div>
+              <div class="recent-list">
+                @for (widget of sideMetrics; track widget.id) {
+                  <mifosx-dashboard-widget
+                    [widget]="widget"
+                    [state]="widgetStateMap[widget.id]"
+                    [compact]="true"
+                  ></mifosx-dashboard-widget>
+                }
+              </div>
+            </mat-card>
+          }
+        </div>
+      }
+
+      @if (activityGroups.length) {
+        <mat-card class="activity-card">
+          <div class="panel-header">
+            <h2>{{ 'labels.text.Portfolio Snapshot' | translate }}</h2>
+            <button
+              mat-icon-button
+              class="export-icon"
+              [matMenuTriggerFor]="exportMenu"
+              [attr.aria-label]="'labels.buttons.Export PDF/CSV' | translate"
+              matTooltip="{{ 'labels.buttons.Export PDF/CSV' | translate }}"
+            >
+              <mifosx-thr-icon name="download" size="16"></mifosx-thr-icon>
+            </button>
           </div>
-        }
-      </div>
+          <div class="snapshot-groups">
+            @for (group of activityGroups; track group.categoryKey) {
+              <section class="snapshot-group">
+                <h3 class="snapshot-group__title">{{ group.categoryKey | translate }}</h3>
+                @for (row of group.rows; track row.id) {
+                  <div class="snapshot-item">
+                    <span class="snapshot-item__icon" aria-hidden="true">
+                      <mifosx-thr-icon [name]="row.icon" size="16"></mifosx-thr-icon>
+                    </span>
+                    <span class="snapshot-item__copy">
+                      <span class="snapshot-item__name">{{ row.segmentKey | translate }}</span>
+                      <span class="snapshot-item__track">
+                        <span class="snapshot-item__fill" [style.width.%]="row.share"></span>
+                      </span>
+                    </span>
+                    <span class="snapshot-item__value">{{ row.value }}</span>
+                  </div>
+                }
+              </section>
+            }
+          </div>
+        </mat-card>
+      }
     }
   </div>
 }

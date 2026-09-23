@@ -7,16 +7,17 @@
  */
 
 .container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: none;
+  margin: 0;
 }
 
 mat-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
-  padding: 10px;
-  background-color: var(--md-sys-color-surface, #fff);
+  border-radius: var(--thr-radius-lg, 24px);
+  box-shadow: none;
+  padding: 16px;
+  background-color: var(--thr-card, #fff);
+  border: 1px solid var(--thr-border, rgb(23 25 22 / 14%));
 }
 
 .mat-mdc-nav-list {
@@ -24,14 +25,13 @@ mat-card {
 
   .mat-mdc-list-item {
     height: auto !important;
-    min-height: 48px;
-    margin-bottom: 2px;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
+    min-height: 64px;
+    margin-bottom: 8px;
+    border-radius: 16px;
+    transition: background-color 0.16s ease;
 
     &:hover {
-      background-color: rgb(16 116 185 / 5%);
-      transform: translateX(4px);
+      background-color: var(--thr-nav-hover, rgb(23 25 22 / 5%));
     }
 
     .menu-list-item-content {
@@ -41,16 +41,15 @@ mat-card {
     .menu-left-section {
       cursor: pointer;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
       overflow: hidden;
 
       mat-icon {
-        color: var(--md-sys-color-primary, #1074b9);
+        color: var(--thr-foreground, #171916);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 4px;
         flex-shrink: 0;
       }
 
@@ -58,20 +57,19 @@ mat-card {
         display: flex;
         flex-direction: column;
         min-width: 0;
-        padding-top: 4px;
 
         .menu-title {
-          font-weight: 500;
-          color: var(--md-sys-color-on-surface, #1a1c1e);
+          font-weight: 600;
+          color: var(--thr-foreground, #171916);
           line-height: 1.2;
         }
 
         .menu-explanation {
-          color: var(--md-sys-color-on-surface-variant, #44474e);
+          color: var(--thr-muted, #555851);
           font-size: 13px;
-          margin-top: 6px;
+          font-weight: 500;
+          margin-top: 4px;
           line-height: 1.4;
-          opacity: 0.8;
           white-space: normal;
           overflow-wrap: anywhere;
           word-break: normal;
@@ -92,16 +90,16 @@ mat-card {
       height: 40px;
 
       &:focus-visible {
-        outline: 2px solid var(--md-sys-color-primary, #1074b9);
+        outline: 2px solid var(--thr-ring, #3f9e2a);
         outline-offset: 2px;
-        border-radius: 8px;
+        border-radius: 12px;
       }
 
       fa-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--md-sys-color-outline, #74777f);
+        color: var(--thr-muted, #555851);
         transition:
           transform 0.2s ease,
           color 0.2s ease;
@@ -109,50 +107,47 @@ mat-card {
 
       fa-icon.rotated {
         transform: rotate(180deg);
-        color: var(--md-sys-color-primary, #1074b9);
+        color: var(--thr-foreground, #171916);
       }
 
       &:hover fa-icon {
-        color: var(--md-sys-color-primary, #1074b9);
+        color: var(--thr-foreground, #171916);
       }
     }
   }
 }
 
-/* Responsive adjustments */
 @media (width <= 768px) {
   .container {
-    padding: 10px;
+    padding: 0;
   }
 }
 
-/* Dark Mode Support */
 :host-context(.dark-theme) {
   .mat-mdc-nav-list .mat-mdc-list-item {
     &:hover {
-      background-color: rgb(255 255 255 / 8%);
+      background-color: var(--thr-nav-hover, rgb(255 255 255 / 5%));
     }
 
     .menu-text-content {
       .menu-title {
-        color: var(--md-sys-color-on-surface, #e2e2e5);
+        color: var(--thr-foreground, #f2f3ef);
       }
 
       .menu-explanation {
-        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
-        opacity: 0.85;
+        color: var(--thr-muted, #8b8e86);
       }
     }
 
     .menu-right-section fa-icon {
-      color: var(--md-sys-color-outline, #939099);
+      color: var(--thr-muted, #8b8e86);
 
       &.rotated {
-        color: var(--md-sys-color-primary, #a8c8ff);
+        color: var(--thr-foreground, #f2f3ef);
       }
 
       &:hover {
-        color: var(--md-sys-color-primary, #a8c8ff);
+        color: var(--thr-foreground, #f2f3ef);
       }
     }
   }

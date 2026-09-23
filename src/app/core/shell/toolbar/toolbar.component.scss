@@ -8,27 +8,28 @@
 
 #mifosx-toolbar {
   position: relative;
-  box-shadow:
-    0 3px 1px -2px rgb(0 0 0 / 20%),
-    0 2px 2px 0 rgb(0 0 0 / 14%),
-    0 1px 5px 0 rgb(0 0 0 / 12%);
+  box-shadow: none;
+  min-height: 72px;
+  height: auto !important;
+  align-items: center;
+  padding: 16px 24px;
 
   .tab-nav-bar {
-    display: flex;
+    display: none;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 8px;
   }
 
   .tab-link {
     min-width: auto;
-    padding: 15px 1rem;
+    padding: 8px 16px;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    color: rgb(255 255 255 / 70%);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: var(--thr-muted, rgb(255 255 255 / 70%));
 
     &:hover {
-      color: #fff;
+      color: var(--thr-foreground, #fff);
     }
 
     cursor: pointer;
@@ -44,14 +45,6 @@
 
   .language {
     font-size: 0.875rem;
-  }
-
-  .img-button {
-    img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
   }
 
   .ml-1 {
@@ -78,44 +71,13 @@
   flex: 1 1 auto;
 }
 
-.white-text-language ::ng-deep mifosx-language-selector {
-  color: white !important;
-
-  // Target only Material form-field internals — leave custom elements free to set their own backgrounds
-  /* stylelint-disable selector-class-pattern */
-  .mat-mdc-form-field {
-    // Cancel the global form-field bottom margin so the toolbar can centre the
-    // control instead of it being nudged into place.
-    margin-bottom: 0;
-  }
-
-  // Material reserves a fixed-width infix that overflows the space the toolbar
-  // gives the selector, so the control is sized from the infix outwards.
-  .mat-mdc-form-field-infix {
-    width: 100px;
-  }
-
-  .mat-mdc-text-field-wrapper,
-  .mat-mdc-form-field-flex,
-  .mat-mdc-form-field-infix {
-    background-color: transparent !important;
-  }
-
-  .mat-mdc-floating-label,
-  .mdc-floating-label,
-  mat-label,
-  .mat-mdc-select,
-  .mat-mdc-select-value,
-  .mat-mdc-select-min-line,
-  .mat-mdc-select-arrow,
-  .mat-mdc-select-trigger {
-    color: white !important;
-  }
-  /* stylelint-enable selector-class-pattern */
+.toolbar-title {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .white-text-search ::ng-deep mifosx-search-tool {
-  color: white !important;
+  color: var(--thr-foreground, #171916) !important;
 
   // Target only Material form-field internals — leave custom elements free to set their own backgrounds
   /* stylelint-disable selector-class-pattern */
@@ -127,14 +89,14 @@
   mat-label,
   input {
     background-color: transparent !important;
-    color: white !important;
+    color: var(--thr-foreground, #171916) !important;
     margin-bottom: 0;
   }
 
   .mat-mdc-select-value,
   .mat-mdc-select-arrow,
   .mat-mdc-select-trigger {
-    color: white !important;
+    color: var(--thr-foreground, #171916) !important;
   }
   /* stylelint-enable selector-class-pattern */
 }

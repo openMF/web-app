@@ -11,3 +11,147 @@
 /* Shared entity-list system: tokens + toolbar/rows/pager/empty state. */
 @include entity-list.tokens;
 @include entity-list.list;
+
+/* Hidden on the desktop table; shown as row captions once the list becomes cards. */
+.mobile-label {
+  display: none;
+}
+
+@media screen and (width <= 768px) {
+  :host {
+    margin-inline: -16px;
+    margin-bottom: calc(64px + 16px + env(safe-area-inset-bottom));
+  }
+
+  .toolbar {
+    align-items: stretch;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .search {
+    flex: 1 1 100%;
+    max-width: none;
+    margin-right: 0;
+  }
+
+  .toolbar-spacer {
+    display: block;
+    flex-basis: 100%;
+    width: 0;
+    height: 0;
+  }
+
+  .btn {
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+
+  .list-header {
+    display: none;
+  }
+
+  .list-row {
+    grid-template-columns: 40px minmax(0, 1fr); /* stylelint-disable-line unit-allowed-list */
+    grid-template-areas:
+      'avatar name'
+      'status status'
+      'account account'
+      'external external'
+      'office office';
+    gap: 8px;
+    align-items: center;
+    padding: 16px;
+    border-left: 4px solid transparent;
+  }
+
+  .list-row > .rail {
+    display: none;
+  }
+
+  .list-row.active {
+    border-left-color: var(--loan-paid);
+  }
+
+  .list-row.pending {
+    border-left-color: var(--loan-partial);
+  }
+
+  .list-row.closed {
+    border-left-color: var(--loan-text-3);
+  }
+
+  .list-row.rejected {
+    border-left-color: var(--loan-alert);
+  }
+
+  .list-row > .avatar {
+    grid-area: avatar;
+  }
+
+  .list-row > .name-block {
+    grid-area: name;
+  }
+
+  .list-row > .status-pill,
+  .list-row > .muted-dash {
+    grid-area: status;
+    justify-self: start;
+  }
+
+  .name-meta {
+    white-space: normal;
+  }
+
+  .mobile-field {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .mobile-label {
+    display: block;
+    flex: 0 0 auto;
+    color: var(--loan-text-3);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .mobile-field > :not(.mobile-label) {
+    min-width: 0;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .list-row > :nth-child(5) {
+    grid-area: account;
+  }
+
+  .list-row > :nth-child(6) {
+    grid-area: external;
+  }
+
+  .list-row > :nth-child(7) {
+    grid-area: office;
+  }
+
+  .list-footer {
+    align-items: stretch;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .pager {
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+}

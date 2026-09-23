@@ -29,7 +29,7 @@
   overflow: hidden;
   box-shadow: var(--ds-shadow-xs);
   color: var(--ds-text-1);
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: inherit;
 }
 
 /* ───────────── KPI strip ───────────── */
@@ -86,7 +86,7 @@
   }
 
   .unit {
-    font-family: 'DM Sans', sans-serif;
+    font-family: inherit;
     font-size: 11px;
     font-weight: 500;
     color: var(--ds-text-3);
@@ -202,9 +202,9 @@
 }
 
 .filter-chip {
-  font:
-    600 11px 'DM Sans',
-    sans-serif;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
   padding: 5px 10px;
   border-radius: 3px;
   color: var(--ds-text-2);
@@ -226,9 +226,9 @@
 }
 
 .btn {
-  font:
-    600 13px 'DM Sans',
-    sans-serif;
+  font-family: inherit;
+  font-size: var(--thr-text-sm, 0.875rem);
+  font-weight: 600;
   padding: 7px 14px;
   border-radius: var(--ds-radius-sm);
   border: 1px solid transparent;
@@ -245,11 +245,12 @@
 }
 
 .btn-primary {
-  background: var(--ds-blue-700);
-  color: #fff;
+  background: var(--thr-primary-btn, var(--ds-blue-700));
+  color: var(--thr-primary-btn-fg, #fff);
 
   &:hover:not(:disabled) {
-    background: var(--ds-blue-600);
+    background: var(--thr-primary-btn-h, var(--ds-blue-600));
+    color: var(--thr-primary-btn-fg, #fff);
     box-shadow: var(--ds-shadow-sm);
   }
 }
@@ -501,7 +502,7 @@
   }
 
   .duration-unit {
-    font-family: 'DM Sans', sans-serif;
+    font-family: inherit;
     font-size: 10.5px;
     color: var(--ds-text-3);
     text-transform: uppercase;
@@ -612,7 +613,7 @@
     font-size: 15px;
     font-weight: 700;
     color: var(--ds-text-1);
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: inherit;
   }
 }
 

@@ -6,31 +6,32 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-toolbar class="layout-row" color="primary" id="mifosx-toolbar">
-  @if (!sidenavCollapsed) {
+<mat-toolbar class="layout-row" id="mifosx-toolbar">
+  @if ((isHandset$ | async) !== true) {
     <button
       mat-icon-button
+      class="show-lt-md"
       (click)="toggleSidenav()"
       matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
       tabindex="0"
     >
-      <fa-icon icon="bars" size="lg"></fa-icon>
+      <mifosx-thr-icon name="menu" size="16"></mifosx-thr-icon>
     </button>
   }
 
-  @if (sidenav.opened) {
+  @if (sidenav.opened && (isHandset$ | async) !== true) {
     <button
       mat-icon-button
       (click)="toggleSidenavCollapse()"
       matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
-      class="hide-lt-md"
+      class="show-lt-md"
       tabindex="0"
     >
       @if (!sidenavCollapsed) {
-        <fa-icon icon="chevron-left"></fa-icon>
+        <mifosx-thr-icon name="chevron-left" size="16"></mifosx-thr-icon>
       }
       @if (sidenavCollapsed) {
-        <fa-icon icon="chevron-right"></fa-icon>
+        <mifosx-thr-icon name="chevron-right" size="16"></mifosx-thr-icon>
       }
     </button>
   }
@@ -44,7 +45,7 @@
       tabindex="0"
       *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER', 'READ_LOAN']"
     >
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
+      <mifosx-thr-icon class="mr-05" name="university" size="16"></mifosx-thr-icon>
       {{ 'labels.menus.Institution' | translate }}
     </a>
 
@@ -62,7 +63,7 @@
           'READ_PROVISIONINGCRITERIA'
         ]"
       >
-        <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
+        <mifosx-thr-icon class="mr-05" name="money-bill-alt" size="16"></mifosx-thr-icon>
         {{ 'labels.menus.Accounting' | translate }}
       </a>
       <a
@@ -73,7 +74,7 @@
         tabindex="0"
         *mifosxHasPermission="'READ_REPORT'"
       >
-        <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
+        <mifosx-thr-icon class="mr-05" name="chart-bar" size="16"></mifosx-thr-icon>
         {{ 'labels.menus.Reports' | translate }}
       </a>
       <a
@@ -91,40 +92,23 @@
           'CREATE_LOANPRODUCT'
         ]"
       >
-        <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
+        <mifosx-thr-icon class="mr-05" name="shield-alt" size="16"></mifosx-thr-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
       <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
-        <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
+        <mifosx-thr-icon class="mr-05" name="info" size="16"></mifosx-thr-icon>
         {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>
     </span>
   </div>
+
+  <mifosx-breadcrumb class="toolbar-title"></mifosx-breadcrumb>
 
   <span class="toolbar-spacer"></span>
 
   <div #globalSearch class="white-text-search">
     <mifosx-search-tool tabindex="0"></mifosx-search-tool>
   </div>
-
-  <div #languageSelector class="white-text-language">
-    <mifosx-language-selector
-      class="ml-1 language hide-lt-md"
-      subscriptSizing="dynamic"
-      tabindex="0"
-    ></mifosx-language-selector>
-  </div>
-
-  <button
-    mat-icon-button
-    [matMenuTriggerFor]="languageMenu"
-    class="show-lt-md"
-    tabindex="0"
-    [attr.aria-label]="'labels.menus.Language Selector' | translate"
-    matTooltip="{{ 'labels.menus.Language Selector' | translate }}"
-  >
-    <mat-icon>language</mat-icon>
-  </button>
 
   <div #notifications>
     <mifosx-notifications-tray #notificationsTray class="hide-lt-md" tabindex="0"></mifosx-notifications-tray>
@@ -133,25 +117,7 @@
   <div #themeToggle>
     <mifosx-theme-toggle tabindex="0"></mifosx-theme-toggle>
   </div>
-
-  <div #appMenu>
-    <button
-      mat-icon-button
-      class="ml-1 img-button"
-      [matMenuTriggerFor]="applicationMenu"
-      tabindex="0"
-      [attr.aria-label]="'labels.heading.User Profile' | translate"
-      matTooltip="{{ 'labels.heading.User Profile' | translate }}"
-    >
-      <img src="assets/images/user_placeholder.png" [alt]="'labels.heading.User Profile' | translate" />
-    </button>
-  </div>
 </mat-toolbar>
-
-<!-- Language selector menu for small screen view -->
-<mat-menu #languageMenu="matMenu">
-  <mifosx-language-selector class="ml-1 language"></mifosx-language-selector>
-</mat-menu>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
@@ -243,40 +209,6 @@
   </button>
   <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
     {{ 'labels.menus.Templates' | translate }}
-  </button>
-</mat-menu>
-
-<!-- Application User Help Menu -->
-<mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="help()" tabindex="0">
-    <mat-icon matListIcon>
-      <fa-icon icon="question-circle" size="sm"></fa-icon>
-    </mat-icon>
-    <span>{{ 'labels.menus.Help' | translate }}</span>
-  </button>
-  <button mat-menu-item [routerLink]="['/system', 'system-information']" tabindex="0">
-    <mat-icon>
-      <fa-icon icon="info-circle" size="sm"></fa-icon>
-    </mat-icon>
-    <span>{{ 'labels.heading.System Information' | translate }}</span>
-  </button>
-  <button mat-menu-item [routerLink]="['/profile']" tabindex="0">
-    <mat-icon>
-      <fa-icon icon="user" size="sm"></fa-icon>
-    </mat-icon>
-    <span>{{ 'labels.menus.Profile' | translate }}</span>
-  </button>
-  <button mat-menu-item [routerLink]="['/settings']" tabindex="0">
-    <mat-icon>
-      <fa-icon icon="cog" size="sm"></fa-icon>
-    </mat-icon>
-    <span>{{ 'labels.menus.Settings' | translate }}</span>
-  </button>
-  <button mat-menu-item (click)="logout()" id="logout" tabindex="0">
-    <mat-icon>
-      <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
-    </mat-icon>
-    <span>{{ 'labels.menus.Sign Out' | translate }}</span>
   </button>
 </mat-menu>
 
@@ -396,30 +328,6 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateLanguageSelector let-popover="popover">
-  <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Organization available languages' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
       (click)="popover.close(); showPopover(templateNotifications, notifications)"
     >
       {{ 'labels.buttons.Next' | translate }}
@@ -437,7 +345,7 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
+      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
@@ -459,22 +367,6 @@
       color="primary"
       (click)="popover.close(); showPopover(templateNotifications, notifications)"
     >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateAppMenu let-popover="popover">
-  <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.User settings and sign out button' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

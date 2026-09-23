@@ -21,9 +21,9 @@ import { Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 /**
  * Search Tool Component — renders a toolbar icon that opens a centred modal.
@@ -56,8 +56,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     MatIcon,
-    FaIconComponent,
-    MatTooltip
+    MatTooltip,
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

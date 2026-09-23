@@ -9,12 +9,28 @@
 <nav class="breadcrumb-wrapper" aria-label="Page navigation">
   <div class="page-header">
     <div class="title-row">
-      <span #breadcrumb class="breadcrumb-title">
-        {{ getTranslate(breadcrumbs[breadcrumbs?.length - 1].label) }}
-      </span>
+      @if (showGreeting) {
+        <div #breadcrumb class="page-greeting">
+          <a
+            class="page-greeting__avatar"
+            [routerLink]="['/settings']"
+            [attr.aria-label]="'labels.menus.Settings' | translate"
+          >
+            {{ userInitials }}
+          </a>
+          <span class="page-greeting__copy">
+            <span class="page-greeting__hello">{{ greetingKey | translate }}</span>
+            <span class="page-greeting__name">{{ userLabel }}</span>
+          </span>
+        </div>
+      } @else if (pageTitle) {
+        <span #breadcrumb class="breadcrumb-title">
+          {{ pageTitle }}
+        </span>
+      }
     </div>
 
-    @if (breadcrumbs.length - 1 !== 0) {
+    @if (!hideTrail && breadcrumbs.length > 1) {
       <ol class="breadcrumb-trail" aria-label="breadcrumb">
         @for (breadcrumb of breadcrumbs; track breadcrumb; let first = $first; let last = $last) {
           <li class="breadcrumb-item" [class.breadcrumb-item--active]="last">

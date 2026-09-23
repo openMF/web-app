@@ -9,18 +9,22 @@
 import { environment } from 'environments/environment';
 /** Angular Imports */
 import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  Input,
-  TemplateRef,
-  ElementRef,
-  ViewChild,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 /** Custom Components */
 import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
@@ -37,12 +41,12 @@ import { SettingsService } from 'app/settings/settings.service';
 import { NgClass } from '@angular/common';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 import { remittanceConfig } from '../../../remittances/remittance.config';
 
 import { catchError, finalize, of, take } from 'rxjs';
@@ -52,6 +56,7 @@ import { catchError, finalize, of, take } from 'rxjs';
  */
 @Component({
   selector: 'mifosx-sidenav',
+  standalone: true,
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   imports: [
@@ -59,13 +64,13 @@ import { catchError, finalize, of, take } from 'rxjs';
     NgClass,
     MatIconButton,
     MatTooltip,
-    FaIconComponent,
     MatDivider,
     MatNavList,
     MatListItem,
     RouterLinkActive,
     MatIcon,
-    MatLine
+    MatLine,
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -78,6 +83,13 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private documentationLinks = inject(DocumentationLinksService);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+  private host = inject(ElementRef<HTMLElement>);
+
+  /** Accordion group currently expanded. Null when the dashboard landing is active. */
+  openGroup: 'institution' | 'operations' | 'admin' | null = null;
+  readonly nestedLink: { exact: boolean } = { exact: false };
 
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
@@ -85,6 +97,12 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   tooltipPosition = 'after';
   /** Username of authenticated user. */
   username: string;
+  /** Display name shown in the sidebar profile chip. */
+  displayName = '';
+  /** Initials used in the sidebar avatar. */
+  userInitials = '';
+  /** Secondary line under the display name (office or tenant). */
+  userSubtitle = '';
   /** Array of all user activities */
   userActivity: string[];
   /** Mapped Activites */
@@ -120,8 +138,121 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    this.username = credentials?.username ?? '';
+    this.displayName = credentials?.staffDisplayName || this.username;
+    this.userInitials = this.initialsFrom(this.displayName);
+    this.userSubtitle = credentials?.officeName || this.tenantIdentifier;
     this.setMappedAcitivites();
+    this.syncGroupFromUrl(this.router.url);
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((event) => {
+        this.syncGroupFromUrl(event.urlAfterRedirects);
+        this.cdr.markForCheck();
+      });
+  }
+
+  isDashboardLinkActive(): boolean {
+    return this.isAppHomePath() && !this.isOnboardingLinkActive();
+  }
+
+  isOnboardingLinkActive(): boolean {
+    const [
+      path,
+      query = ''
+    ] = this.router.url.split('?');
+    return this.isAppHomePath(path) && query.includes('view=onboarding');
+  }
+
+  isProfileLinkActive(): boolean {
+    const path = this.router.url.split('?')[0];
+    return path === '/settings' || path.startsWith('/settings/') || path === '/profile' || path.startsWith('/profile/');
+  }
+
+  private initialsFrom(name: string): string {
+    const parts = name
+      .trim()
+      .split(/[\s._-]+/)
+      .filter(Boolean);
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
+    return (name.trim().slice(0, 2) || 'U').toUpperCase();
+  }
+
+  private isAppHomePath(path = this.router.url.split('?')[0]): boolean {
+    return path === '/home' || path === '/dashboard' || path.startsWith('/dashboard/');
+  }
+
+  isGroupOpen(group: 'institution' | 'operations' | 'admin'): boolean {
+    return this.openGroup === group;
+  }
+
+  toggleGroup(group: 'institution' | 'operations' | 'admin'): void {
+    this.openGroup = this.openGroup === group ? null : group;
+    if (!this.openGroup) {
+      return;
+    }
+    setTimeout(() => this.revealOpenGroup());
+  }
+
+  /** On a phone, bring the opened submenu into the sheet so its items are not left below the fold. */
+  private revealOpenGroup(): void {
+    const scroller = this.host.nativeElement.closest('.sidebar-sheet')?.querySelector('.app-sidenav');
+    const open = this.host.nativeElement.querySelector('.nav-group.open');
+    if (!(scroller instanceof HTMLElement) || !(open instanceof HTMLElement)) {
+      return;
+    }
+    const top = open.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 8;
+    scroller.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  private syncGroupFromUrl(url: string): void {
+    const path = url.split('?')[0];
+    if (
+      this.matchesAny(path, [
+        '/clients',
+        '/loans',
+        '/groups',
+        '/centers'
+      ])
+    ) {
+      this.openGroup = 'institution';
+      return;
+    }
+    if (
+      this.matchesAny(path, [
+        '/products',
+        '/accounting',
+        '/reports',
+        '/notifications',
+        '/navigation',
+        '/checker-inbox-and-tasks',
+        '/collections',
+        '/remittances',
+        '/reporting-dashboard'
+      ])
+    ) {
+      this.openGroup = 'operations';
+      return;
+    }
+    if (
+      this.matchesAny(path, [
+        '/appusers',
+        '/organization',
+        '/system',
+        '/templates'
+      ])
+    ) {
+      this.openGroup = 'admin';
+    }
+  }
+
+  private matchesAny(path: string, prefixes: string[]): boolean {
+    return prefixes.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
   }
 
   /**

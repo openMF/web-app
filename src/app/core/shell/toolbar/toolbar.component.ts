@@ -30,11 +30,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, of } from 'rxjs';
-import { catchError, finalize, map, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AuthenticationService } from '../../authentication/authentication.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
@@ -44,15 +43,13 @@ import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifi
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { SearchToolComponent } from '../../../shared/search-tool/search-tool.component';
-import { LanguageSelectorComponent } from '../../../shared/language-selector/language-selector.component';
-import { MatIcon } from '@angular/material/icon';
 import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../../../shared/notifications-tray/notifications-tray.component';
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 /**
  * Toolbar component.
@@ -66,37 +63,32 @@ import { DocumentationLinksService } from 'app/shared/services/documentation-lin
     MatToolbar,
     MatIconButton,
     MatTooltip,
-    FaIconComponent,
     MatMenuTrigger,
     SearchToolComponent,
-    LanguageSelectorComponent,
-    MatIcon,
     NotificationsTrayComponent_1,
     ThemeToggleComponent,
+    BreadcrumbComponent,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
-  private authenticationService = inject(AuthenticationService);
   private popoverService = inject(PopoverService);
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private changeDetector = inject(ChangeDetectorRef);
-  private documentationLinks = inject(DocumentationLinksService);
   private destroyRef = inject(DestroyRef);
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
   /* Template for popover on institution */
   @ViewChild('templateInstitution') templateInstitution: TemplateRef<any>;
-  /* Reference of appMenu */
-  @ViewChild('appMenu') appMenu: ElementRef<any>;
-  /* Template for popover on appMenu */
-  @ViewChild('templateAppMenu') templateAppMenu: TemplateRef<any>;
+  @ViewChild('themeToggle') themeToggle: ElementRef<any>;
+  @ViewChild('templateThemePicker') templateThemePicker: TemplateRef<any>;
   @ViewChild('notificationsTray') notificationsTray: NotificationsTrayComponent;
 
   /** Subscription to breakpoint observer for handset. */
@@ -105,7 +97,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
     .pipe(map((result) => result.matches));
 
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
-  sidenavCollapsed = true;
+  sidenavCollapsed = false;
 
   /** Instance of sidenav. */
   @Input() sidenav: MatSidenav;
@@ -117,7 +109,14 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    */
   ngOnInit() {
     this.isHandset$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isHandset) => {
-      if (isHandset && this.sidenavCollapsed) {
+      if (!isHandset) {
+        if (this.sidenavCollapsed) {
+          this.toggleSidenavCollapse(false);
+        }
+        if (this.sidenav && !this.sidenav.opened) {
+          this.sidenav.open();
+        }
+      } else if (this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);
       }
     });
@@ -138,31 +137,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * Toggles the current collapsed state of sidenav.
    */
   toggleSidenavCollapse(sidenavCollapsed?: boolean) {
-    this.sidenavCollapsed = sidenavCollapsed || !this.sidenavCollapsed;
+    this.sidenavCollapsed = sidenavCollapsed !== undefined ? sidenavCollapsed : !this.sidenavCollapsed;
     this.collapse.emit(this.sidenavCollapsed);
   }
 
-  /**
-   * Logs out the authenticated user and redirects to login page.
-   * Uses unified AuthenticationService which handles both OAuth2 and OIDC logout.
-   */
-  logout() {
-    this.authenticationService
-      .logout()
-      .pipe(
-        take(1),
-        catchError(() => of(void 0)),
-        finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
-      )
-      .subscribe();
-  }
-
-  /**
-   * Opens Mifos JIRA Wiki page.
-   */
-  help() {
-    this.documentationLinks.open('userManual');
-  }
   /**
    * Popover function
    * @param template TemplateRef<any>.
@@ -249,14 +227,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       this.toggleSidenavCollapse();
     }
 
-    if (this.configurationWizardService.showToolbarAdmin) {
+    if (this.configurationWizardService.showToolbarAdmin && this.themeToggle) {
       setTimeout(() => {
-        this.showPopover(this.templateAppMenu, this.appMenu.nativeElement);
+        this.showPopover(this.templateThemePicker, this.themeToggle.nativeElement);
       });
     }
-  }
-
-  navigateMenu(routePath: string): void {
-    this.router.navigate([routePath]);
   }
 }

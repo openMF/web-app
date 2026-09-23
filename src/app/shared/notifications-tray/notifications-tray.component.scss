@@ -22,15 +22,18 @@
 }
 
 :host button.mat-mdc-icon-button {
-  color: rgb(255 255 255 / 80%);
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: var(--thr-muted, #555851);
+  border-radius: 16px;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+    background-color 0.16s ease,
+    color 0.16s ease;
 
-  &:hover {
-    background-color: rgb(255 255 255 / 15%);
-    color: #fff;
+  &:hover,
+  &:focus-visible {
+    background-color: var(--thr-nav-hover, rgb(23 25 22 / 5%));
+    color: var(--thr-foreground, #171916);
   }
 }
 
@@ -63,8 +66,8 @@
     .notifications-title {
       margin: 0;
       font-size: 16px;
-      font-weight: 500;
-      color: $dark-grey;
+      font-weight: 600;
+      color: var(--thr-foreground, #171916);
       line-height: 1.5;
     }
   }
@@ -153,7 +156,7 @@
       }
 
       .unread-indicator {
-        color: $peter-river;
+        color: var(--thr-lime, #2f9a28);
         font-size: 8px;
         margin-top: 6px;
         flex-shrink: 0;
@@ -163,7 +166,7 @@
     .notification-time {
       font-size: 12px;
       color: $asbestos;
-      font-weight: 400;
+      font-weight: 500;
       margin-top: 2px;
       width: 100%;
       overflow: hidden;
@@ -188,7 +191,7 @@
       background-color: transparent;
 
       .notification-content .notification-text {
-        font-weight: 400;
+        font-weight: 500;
         color: $asbestos;
       }
     }
@@ -229,7 +232,7 @@
         }
 
         .unread-indicator {
-          color: $peter-river;
+          color: var(--thr-lime, #84dc4e);
         }
       }
 

@@ -449,7 +449,7 @@ export class SavingsAccountDashboardComponent implements OnInit, AfterViewInit, 
                 c.restore();
 
                 const valFontSize = Math.round(height * 0.11);
-                c.font = `600 ${valFontSize}px 'DM Sans', sans-serif`;
+                c.font = `600 ${valFontSize}px 'Manrope', sans-serif`;
                 c.textBaseline = 'bottom';
                 c.textAlign = 'center';
                 const text = `${this.currencySymbol}${this.currentBalance.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
@@ -459,7 +459,7 @@ export class SavingsAccountDashboardComponent implements OnInit, AfterViewInit, 
                 c.fillText(text, textX, textY - 2);
 
                 const labelFontSize = Math.round(height * 0.05);
-                c.font = `700 ${labelFontSize}px 'DM Sans', sans-serif`;
+                c.font = `700 ${labelFontSize}px 'Manrope', sans-serif`;
                 c.textBaseline = 'top';
                 c.fillStyle = isDark ? '#94a3b8' : '#64748b';
                 const netBalanceLabel = (

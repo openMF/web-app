@@ -36,7 +36,7 @@
   --je-manual: #7c3aed;
   --je-manual-bg: #f3e8ff;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
 }
 
@@ -348,7 +348,7 @@
   .sym {
     font-size: 13px;
     color: var(--je-text-3);
-    font-weight: 400;
+    font-weight: 500;
   }
 
   &.debit {
@@ -537,7 +537,7 @@ table.je-table {
     color: var(--je-text-3);
     font-size: 11px;
     margin-right: 4px;
-    font-weight: 400;
+    font-weight: 500;
   }
 }
 

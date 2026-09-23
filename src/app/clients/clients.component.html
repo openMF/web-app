@@ -175,17 +175,22 @@
         } @else {
           <span class="muted-dash">—</span>
         }
-        <span class="mono"
-          ><mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number
-        ></span>
-        <span class="mono">
+        <span class="mono mobile-field">
+          <span class="mobile-label">{{ 'labels.inputs.Account No' | translate }}</span>
+          <mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number>
+        </span>
+        <span class="mono mobile-field">
+          <span class="mobile-label">{{ 'labels.inputs.External Id' | translate }}</span>
           @if (row.externalId) {
             <mifosx-external-identifier display="left" [externalId]="row.externalId"></mifosx-external-identifier>
           } @else {
             <span class="muted-dash">—</span>
           }
         </span>
-        <span class="office">{{ row.officeName }}</span>
+        <span class="office mobile-field">
+          <span class="mobile-label">{{ 'labels.inputs.Office Name' | translate }}</span>
+          <span>{{ row.officeName }}</span>
+        </span>
       </div>
     }
 

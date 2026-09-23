@@ -6,12 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use '@angular/material' as mat;
-@use 'sass:map';
-
 @mixin account-view-component-theme($theme) {
-  $primary: map.get($theme, primary);
-
   mifosx-view-bulk-import {
     .cover {
       background-color: white;
@@ -34,9 +29,9 @@
   mifosx-recurring-deposits-account-view,
   mifosx-savings-account-view {
     .account-card {
-      margin: 0 auto;
-      max-width: 90rem;
-      width: 90%;
+      margin: 0;
+      max-width: none;
+      width: 100%;
       padding: 0;
 
       i,
@@ -45,23 +40,23 @@
       }
 
       .header {
-        background-color: mat.m2-get-color-from-palette($primary, 500);
-        padding: 1%;
+        background-color: var(--thr-card, #fff);
+        padding: 16px 24px;
       }
 
       .header-title-group {
         .account-card-title {
-          color: white;
-          width: 90%;
+          color: var(--thr-foreground, #171916);
+          width: 100%;
         }
 
         p {
-          color: white;
+          color: var(--thr-muted, #555851);
         }
 
         .account-overview {
           border: none;
-          max-width: 240px;
+          max-width: none;
           font-size: 14px;
 
           tr:nth-child(even) {
@@ -71,21 +66,21 @@
       }
 
       .profile-image-container {
-        margin: 1%;
+        margin: 0 16px 0 0;
 
         .profile-image {
           object-fit: cover;
-          border-radius: 20px;
+          border-radius: 16px;
         }
 
         .signature {
-          background-color: mat.m2-get-color-from-palette($primary, 500);
+          background-color: transparent;
         }
       }
 
       .account-actions {
         align-self: flex-end;
-        margin: 0 1%;
+        margin: 0 16px 16px;
 
         i {
           margin-bottom: 2px;
@@ -94,7 +89,7 @@
       }
 
       .navigation-tabs {
-        background-color: #f2f2f2;
+        background-color: var(--thr-card, #fff);
         overflow: auto;
       }
 

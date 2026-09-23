@@ -21,7 +21,8 @@ import {
   inject,
   Output,
   EventEmitter,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostBinding
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import * as L from 'leaflet';
@@ -37,8 +38,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ThemingService } from 'app/shared/theme-toggle/theming.service';
 
 /** Custom Imports */
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 import { AnalyticsWidgetDefinition, AnalyticsWidgetState } from '../models/analytics-dashboard.model';
 
 Chart.register(...registerables);
@@ -61,7 +62,7 @@ const PERCENT_ADAPTERS = new Set<string>([]);
   styleUrls: ['./dashboard-widget.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -75,7 +76,16 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
   @Input() state?: AnalyticsWidgetState;
   @Input() offices: any[] = [];
   @Input() selectedOfficeId: number | null = null;
+  @Input() inverted = false;
+  @Input() compact = false;
+  @Input() featured = false;
+  @Input() caption = '';
   @Output() officeSelected = new EventEmitter<number>();
+
+  @HostBinding('class.compact-host')
+  get compactHost(): boolean {
+    return this.compact;
+  }
 
   hasValidCoordinates = false;
 
@@ -505,24 +515,43 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
     }
 
     const canvas = this.chartCanvas.nativeElement;
-    const legendColor = this.currentTheme === 'dark-theme' ? '#f5f5f5' : '#4f4f4f';
-    const axisColor = this.currentTheme === 'dark-theme' ? '#d9d9d9' : '#757575';
+    const isDark = this.currentTheme === 'dark-theme';
+    const legendColor = isDark ? '#f2f3ef' : '#171916';
+    const axisColor = isDark ? '#8b8e86' : '#6b6e66';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(23,25,22,0.08)';
+    const palette = [
+      '#84dc4e',
+      '#f5c451',
+      '#5eead4',
+      '#c4c7bf'
+    ];
 
     const labels = (this.state.labels || []).map((label) =>
       this.state!.translateLabels ? this.translateService.instant(label) : label
     );
 
     const isLine = this.widget.chartType === 'line';
+    const isDoughnut = this.widget.chartType === 'doughnut';
 
-    const datasets: any[] = this.state.datasets.map((dataset) => ({
-      ...dataset,
-      label: this.translateService.instant(dataset.labelKey),
-      borderRadius: this.widget.chartType === 'bar' ? 4 : 0,
-      fill: dataset.fill ?? false,
-      tension: dataset.tension ?? 0,
-      pointRadius: isLine ? 4 : 0,
-      pointHoverRadius: isLine ? 6 : 0
-    }));
+    const datasets: any[] = this.state.datasets.map((dataset, index) => {
+      const color = palette[index % palette.length];
+      const usesSeriesColors = Array.isArray(dataset.backgroundColor);
+      return {
+        ...dataset,
+        label: this.translateService.instant(dataset.labelKey),
+        backgroundColor: usesSeriesColors ? palette : isLine ? 'transparent' : color,
+        borderColor: usesSeriesColors ? palette : color,
+        borderWidth: isLine ? 3 : (dataset.borderWidth ?? 0),
+        borderRadius: this.widget.chartType === 'bar' ? 8 : 0,
+        fill: false,
+        tension: isLine ? 0.35 : 0,
+        pointRadius: isLine ? 0 : 0,
+        pointHoverRadius: isLine ? 5 : 0,
+        pointBackgroundColor: color,
+        pointBorderColor: isDark ? '#22251f' : '#ffffff',
+        pointBorderWidth: 3
+      };
+    });
 
     const config: any = {
       type: this.widget.chartType || 'bar',
@@ -533,43 +562,52 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: this.widget.chartType === 'doughnut' ? '75%' : undefined,
+        cutout: isDoughnut ? '75%' : undefined,
         animation: {
           duration: 400
         },
         plugins: {
           legend: {
-            position: 'bottom',
+            position: this.featured ? 'top' : 'bottom',
+            align: this.featured ? 'end' : 'center',
             labels: {
               color: legendColor,
-              padding: 16,
-              boxWidth: 12,
-              boxHeight: 12
+              padding: 8,
+              boxWidth: 8,
+              boxHeight: 8,
+              usePointStyle: true,
+              pointStyle: 'circle'
             }
           }
         },
-        scales:
-          this.widget.chartType !== 'doughnut'
-            ? {
-                x: {
-                  ticks: {
-                    color: axisColor
-                  },
-                  grid: {
-                    display: false
-                  }
+        scales: !isDoughnut
+          ? {
+              x: {
+                ticks: {
+                  color: axisColor
                 },
-                y: {
-                  beginAtZero: true,
-                  ticks: {
-                    color: axisColor
-                  },
-                  grid: {
-                    color: this.currentTheme === 'dark-theme' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'
-                  }
+                border: {
+                  display: false
+                },
+                grid: {
+                  display: false
+                }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: axisColor,
+                  maxTicksLimit: 5
+                },
+                border: {
+                  display: false
+                },
+                grid: {
+                  color: gridColor
                 }
               }
-            : undefined
+            }
+          : undefined
       }
     };
 

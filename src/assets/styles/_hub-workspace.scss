@@ -1,0 +1,208 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@mixin hub {
+  .hub-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .hub-section__title,
+  .hub-panel__title {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--thr-foreground, #171916);
+  }
+
+  .hub-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* stylelint-disable-line unit-allowed-list */
+    gap: 16px;
+  }
+
+  .hub-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: 120px;
+    padding: 24px;
+    border: 1px solid var(--thr-border, rgb(23 25 22 / 14%));
+    border-radius: var(--thr-radius-lg, 24px);
+    background: var(--thr-card, #fff);
+    color: var(--thr-foreground, #171916) !important;
+    text-decoration: none;
+    transition:
+      background-color 0.16s ease,
+      border-color 0.16s ease;
+  }
+
+  .hub-feature:hover {
+    background: var(--thr-nav-hover, rgb(23 25 22 / 5%));
+    color: var(--thr-foreground, #171916) !important;
+  }
+
+  .hub-feature--primary {
+    background: var(--thr-invert-bg, #252a20);
+    border-color: transparent;
+    color: var(--thr-invert-fg, #f3f3ee) !important;
+  }
+
+  .hub-feature--primary:hover {
+    background: var(--thr-primary-btn-h, #2a2c28);
+    color: var(--thr-invert-fg, #f3f3ee) !important;
+  }
+
+  .hub-feature__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 16px;
+    background: var(--thr-icon-well, rgb(23 25 22 / 6%));
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  .hub-feature--primary .hub-feature__icon {
+    background: var(--thr-invert-icon, rgb(255 255 255 / 8%));
+  }
+
+  .hub-feature__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .hub-feature__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: inherit;
+  }
+
+  .hub-feature__desc {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--thr-muted, #555851) !important;
+  }
+
+  .hub-feature--primary .hub-feature__desc {
+    color: var(--thr-invert-muted, rgb(243 243 238 / 55%)) !important;
+  }
+
+  .hub-feature__go {
+    margin-top: 4px;
+    color: var(--thr-muted, #555851);
+    flex-shrink: 0;
+  }
+
+  .hub-feature--primary .hub-feature__go {
+    color: var(--thr-invert-muted, rgb(243 243 238 / 55%));
+  }
+
+  .hub-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* stylelint-disable-line unit-allowed-list */
+    gap: 16px;
+    align-items: start;
+  }
+
+  .hub-panel {
+    padding: 24px;
+    border: 1px solid var(--thr-border, rgb(23 25 22 / 14%));
+    border-radius: var(--thr-radius-lg, 24px);
+    background: var(--thr-card, #fff);
+  }
+
+  .hub-panel__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hub-feature-grid > div,
+  .hub-panel__list > div {
+    display: contents;
+  }
+
+  .hub-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 16px;
+    color: var(--thr-foreground, #171916) !important;
+    text-decoration: none;
+    transition: background-color 0.16s ease;
+  }
+
+  .hub-row:hover {
+    background: var(--thr-nav-hover, rgb(23 25 22 / 5%));
+    color: var(--thr-foreground, #171916) !important;
+  }
+
+  .hub-row--disabled {
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  .hub-row__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    background: var(--thr-icon-well, rgb(23 25 22 / 6%));
+    color: var(--thr-foreground, #171916);
+    flex-shrink: 0;
+  }
+
+  .hub-row__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .hub-row__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: inherit;
+  }
+
+  .hub-row__desc {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--thr-muted, #555851) !important;
+  }
+
+  .hub-row__go {
+    margin-top: 8px;
+    color: var(--thr-muted, #555851);
+    flex-shrink: 0;
+  }
+
+  @media (width <= 900px) {
+    .hub-feature-grid,
+    .hub-panels {
+      grid-template-columns: 1fr; /* stylelint-disable-line unit-allowed-list */
+    }
+  }
+}

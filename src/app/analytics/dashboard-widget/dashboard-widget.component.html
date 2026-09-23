@@ -6,73 +6,104 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="widget-card" [class.metric-card]="widget.type === 'metric'">
-  <div class="widget-header">
-    <div class="widget-title">
-      <fa-icon [icon]="widget.icon" class="title-icon"></fa-icon>
-      <span>{{ widget.titleKey | translate }}</span>
+@if (compact && widget.type === 'metric') {
+  <div class="recent-row">
+    <span class="kpi-icon">
+      <mifosx-thr-icon [name]="widget.icon" size="16"></mifosx-thr-icon>
+    </span>
+    <div class="recent-copy">
+      <p class="recent-name">{{ widget.titleKey | translate }}</p>
+      @if (state?.contextKey) {
+        <p class="recent-meta">{{ state.contextKey | translate }}</p>
+      }
     </div>
-
-    @if (state?.contextKey && widget.type !== 'metric') {
-      <span class="widget-context">
-        {{ state.contextKey | translate }}
-      </span>
+    @if (state?.loading) {
+      <span class="kpi-shimmer compact-shimmer"></span>
+    } @else {
+      <span class="recent-value">{{ formatMetricValue(widget.id, state?.metricValue) }}</span>
     }
   </div>
-
-  <div class="widget-content">
-    @if (state?.loading) {
-      <div class="widget-placeholder"></div>
-    } @else if (state?.empty) {
-      <div class="widget-empty">
-        {{ 'labels.text.No Data' | translate }}
-      </div>
-    } @else if (widget.type === 'metric') {
-      <div class="metric-body">
-        <div class="metric-value-row">
-          <div class="metric-value">
-            {{ formatMetricValue(widget.id, state.metricValue) }}
-          </div>
-          @if (trendDirection && state.trendPercent !== undefined) {
-            <div class="metric-trend" [class]="trendDirection">
-              <fa-icon
-                [icon]="trendDirection === 'up' ? 'arrow-up' : trendDirection === 'down' ? 'arrow-down' : 'minus'"
-              ></fa-icon>
-              <span
-                >{{ trendDirection === 'up' ? '+' : trendDirection === 'down' ? '-' : ''
-                }}{{ state.trendPercent | number: '1.2-2' }}%</span
-              >
-            </div>
-          }
-        </div>
-      </div>
-    } @else if (widget.adapter === 'georeference-map') {
-      <div class="map-container">
-        @if (hasValidCoordinates) {
-          <div #leafletMap class="leaflet-map-element"></div>
-        } @else {
-          <div class="map-empty-state">
-            <fa-icon icon="globe" class="empty-icon"></fa-icon>
-            <span class="empty-title">{{ 'labels.text.No Map Data' | translate }}</span>
-            <span class="empty-subtitle">{{ 'labels.text.No offices with valid coordinates found.' | translate }}</span>
+} @else {
+  <mat-card
+    class="widget-card"
+    [class.metric-card]="widget.type === 'metric'"
+    [class.inverted]="inverted"
+    [class.featured]="featured"
+  >
+    @if (widget.type === 'metric') {
+      <div class="kpi-top">
+        <span class="kpi-icon">
+          <mifosx-thr-icon [name]="widget.icon" size="16"></mifosx-thr-icon>
+        </span>
+        @if (trendDirection && state?.trendPercent !== undefined) {
+          <div
+            class="metric-trend"
+            [class.up]="trendDirection === 'up'"
+            [class.down]="trendDirection === 'down'"
+            [class.flat]="trendDirection === 'flat'"
+          >
+            <mifosx-thr-icon
+              [name]="trendDirection === 'up' ? 'arrow-up' : trendDirection === 'down' ? 'arrow-down' : 'minus'"
+              size="12"
+            ></mifosx-thr-icon>
+            <span
+              >{{ trendDirection === 'up' ? '+' : trendDirection === 'down' ? '-' : ''
+              }}{{ state.trendPercent | number: '1.2-2' }}%</span
+            >
           </div>
         }
       </div>
-    } @else {
-      @if (state?.details?.length) {
-        <div class="widget-details">
-          @for (detail of state.details; track detail.labelKey) {
-            <div class="detail-chip">
-              <span class="detail-label">{{ detail.labelKey | translate }}</span>
-              <span class="detail-value">{{ detail.value | number: '1.0-0' }}</span>
-            </div>
-          }
-        </div>
+      <p class="kpi-label">{{ widget.titleKey | translate }}</p>
+      @if (state?.loading) {
+        <div class="kpi-shimmer"></div>
+      } @else if (state?.empty) {
+        <p class="kpi-value">{{ 'labels.text.No Data' | translate }}</p>
+      } @else {
+        <p class="kpi-value">{{ formatMetricValue(widget.id, state?.metricValue) }}</p>
       }
+      @if (caption) {
+        <p class="kpi-caption">{{ caption }}</p>
+      }
+    } @else {
+      <div class="widget-header">
+        <div class="widget-title">
+          <span>{{ widget.titleKey | translate }}</span>
+        </div>
 
-      <div class="chart-shell">
-        <canvas #chartCanvas></canvas>
+        @if (state?.contextKey) {
+          <span class="widget-context">
+            {{ state.contextKey | translate }}
+          </span>
+        }
+      </div>
+
+      <div class="widget-content">
+        @if (state?.loading) {
+          <div class="widget-placeholder"></div>
+        } @else if (state?.empty) {
+          <div class="widget-empty">
+            {{ 'labels.text.No Data' | translate }}
+          </div>
+        } @else if (widget.adapter === 'georeference-map') {
+          <div class="map-container">
+            @if (hasValidCoordinates) {
+              <div #leafletMap class="leaflet-map-element"></div>
+            } @else {
+              <div class="map-empty-state">
+                <mifosx-thr-icon name="globe" size="24"></mifosx-thr-icon>
+                <span class="empty-title">{{ 'labels.text.No Map Data' | translate }}</span>
+                <span class="empty-subtitle">{{
+                  'labels.text.No offices with valid coordinates found.' | translate
+                }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="chart-shell">
+            <canvas #chartCanvas></canvas>
+          </div>
+        }
       </div>
     }
-  </div>
-</mat-card>
+  </mat-card>
+}

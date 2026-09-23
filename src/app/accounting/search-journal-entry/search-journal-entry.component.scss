@@ -7,25 +7,25 @@
  */
 
 .container {
-  max-width: 82rem;
+  max-width: none;
 }
 
 :host {
-  --je-blue-900: #0d2b5e;
-  --je-blue-700: #1565c0;
-  --je-blue-600: #1976d2;
-  --je-blue-400: #42a5f5;
-  --je-blue-100: #bbdefb;
-  --je-blue-50: #e3f2fd;
-  --je-blue-20: #f0f7ff;
+  --je-blue-900: #1f5c16;
+  --je-blue-700: #171916;
+  --je-blue-600: #2a2c28;
+  --je-blue-400: #84dc4e;
+  --je-blue-100: #d7f3c4;
+  --je-blue-50: #e8f5e0;
+  --je-blue-20: #f6faf1;
   --je-surface: #fff;
-  --je-surface-alt: #f4f7fb;
-  --je-surface-h: #ebf2fa;
-  --je-border: #dde5f0;
-  --je-border-strong: #c0d0e4;
-  --je-text-1: #0d1b2a;
-  --je-text-2: #4a6785;
-  --je-text-3: #8fa5bc;
+  --je-surface-alt: #eef0ea;
+  --je-surface-h: #e7e9e3;
+  --je-border: rgb(23 25 22 / 14%);
+  --je-border-strong: rgb(23 25 22 / 22%);
+  --je-text-1: #171916;
+  --je-text-2: #555851;
+  --je-text-3: #8b8e86;
   --je-paid: #2e7d32;
   --je-paid-bg: #e8f5e9;
   --je-partial: #e65100;
@@ -33,31 +33,31 @@
   --je-alert: #c62828;
   --je-alert-bg: #ffebee;
   --je-zero: #b0bec5;
-  --je-debit: #1d4ed8;
-  --je-debit-bg: #eff6ff;
+  --je-debit: #1f5c16;
+  --je-debit-bg: #e8f5e0;
   --je-credit: #2e7d32;
   --je-credit-bg: #e8f5e9;
   --je-manual: #7c3aed;
   --je-manual-bg: #f3e8ff;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
 }
 
 :host-context(.dark-theme) {
-  --je-blue-700: #5b9bd5;
-  --je-blue-600: #7ab3e0;
-  --je-blue-100: #1a3a60;
-  --je-blue-50: #0a2040;
-  --je-blue-20: #0d1f35;
-  --je-surface: #1a2535;
-  --je-surface-alt: #101d2d;
-  --je-surface-h: #132032;
-  --je-border: #1e3050;
-  --je-border-strong: #2a4264;
-  --je-text-1: #e2ebf6;
-  --je-text-2: #8baecf;
-  --je-text-3: #6a8fad;
+  --je-blue-700: #f3f3ee;
+  --je-blue-600: #fff;
+  --je-blue-100: #22251f;
+  --je-blue-50: #1b1d1a;
+  --je-blue-20: #161815;
+  --je-surface: #22251f;
+  --je-surface-alt: #161815;
+  --je-surface-h: #1b1d1a;
+  --je-border: rgb(255 255 255 / 8%);
+  --je-border-strong: rgb(255 255 255 / 14%);
+  --je-text-1: #f2f3ef;
+  --je-text-2: #8b8e86;
+  --je-text-3: #6b6e66;
   --je-paid: #66bb6a;
   --je-paid-bg: #172b1a;
   --je-partial: #ffa726;
@@ -65,8 +65,8 @@
   --je-alert: #ef9a9a;
   --je-alert-bg: #2b1212;
   --je-zero: #6a8fad;
-  --je-debit: #7ab3e0;
-  --je-debit-bg: #0a2040;
+  --je-debit: #84dc4e;
+  --je-debit-bg: #14210c;
   --je-credit: #66bb6a;
   --je-credit-bg: #172b1a;
   --je-manual: #b794f6;
@@ -107,7 +107,7 @@
   }
 
   .count {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 500;
     color: var(--je-blue-700);
@@ -150,7 +150,7 @@
   }
 
   .applied {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 11px;
     font-weight: 500;
     color: var(--je-text-2);
@@ -176,7 +176,7 @@
   gap: 6px;
   font-family: inherit;
   font-weight: 500;
-  border-radius: 4px;
+  border-radius: 12px;
 
   &:hover {
     color: var(--je-blue-600);
@@ -427,7 +427,7 @@
   }
 
   .count {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 11.5px;
     color: var(--je-text-2);
     background: var(--je-surface);
@@ -480,7 +480,7 @@ table.je-table {
 
     &.num {
       text-align: right;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: inherit;
       font-weight: 500;
       white-space: nowrap;
     }
@@ -488,7 +488,7 @@ table.je-table {
     &.cell-id,
     &.cell-tx,
     &.cell-code {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: inherit;
       font-size: 12px;
       color: var(--je-text-2);
       font-weight: 500;
@@ -499,7 +499,7 @@ table.je-table {
     }
 
     &.cell-date {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: inherit;
       font-size: 12px;
       color: var(--je-text-2);
     }
@@ -576,7 +576,7 @@ table.je-table {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: inherit;
   font-size: 11.5px;
   color: var(--je-text-2);
   background: var(--je-surface-alt);
@@ -669,7 +669,7 @@ table.je-table {
   }
 
   .mat-mdc-paginator-range-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     color: var(--je-text-2);
   }
 }

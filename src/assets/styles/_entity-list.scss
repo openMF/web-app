@@ -25,68 +25,66 @@
   // and the shared status/neutral colours (src/assets/styles/_colours.scss) instead of an
   // invented one-off scale — kept in sync with loans.component.scss's identical tokens.
   :host {
-    --loan-blue-700: #{map.get(palette.$primary-palette, 500)};
-    --loan-blue-600: #{map.get(palette.$primary-palette, 700)};
-    --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 500), 25%)};
-    --loan-blue-50: #{rgba(map.get(palette.$primary-palette, 500), 10%)};
-    --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 500), 6%)};
-    --loan-surface: #{$white};
-    --loan-surface-alt: #{$light-grey};
-    --loan-surface-h: #{rgba(map.get(palette.$primary-palette, 500), 5%)};
-    --loan-border: #{$mid-grey};
-    --loan-text-1: #{$dark-grey};
-    --loan-text-2: #{rgba($dark-grey, 70%)};
-    --loan-text-3: #{rgba($dark-grey, 45%)};
-    --loan-paid: #{$status-active};
-    --loan-paid-bg: #{rgba($status-active, 12%)};
-    --loan-partial: #{$status-pending};
-    --loan-partial-bg: #{rgba($status-pending, 12%)};
-    --loan-alert: #{$msg-danger};
-    --loan-alert-bg: #{rgba($msg-danger, 12%)};
-    --loan-violet: #{$amethyst};
-    --loan-btn-primary-bg: #{map.get(palette.$primary-palette, 500)};
-    --loan-btn-primary-bg-h: #{map.get(palette.$primary-palette, 700)};
+    --loan-blue-700: #2f9a28;
+    --loan-blue-600: #1f5c16;
+    --loan-blue-100: rgb(47 154 40 / 18%);
+    --loan-blue-50: rgb(47 154 40 / 10%);
+    --loan-blue-20: rgb(47 154 40 / 6%);
+    --loan-surface: #fff;
+    --loan-surface-alt: #eef0ea;
+    --loan-surface-h: rgb(47 154 40 / 6%);
+    --loan-border: rgb(23 25 22 / 10%);
+    --loan-text-1: #171916;
+    --loan-text-2: #555851;
+    --loan-text-3: #8b8e86;
+    --loan-paid: #2f9a28;
+    --loan-paid-bg: rgb(47 154 40 / 12%);
+    --loan-partial: #b58d12;
+    --loan-partial-bg: rgb(181 141 18 / 14%);
+    --loan-alert: #c62828;
+    --loan-alert-bg: rgb(198 40 40 / 10%);
+    --loan-violet: #3f9e2a;
+    --loan-btn-primary-bg: #171916;
+    --loan-btn-primary-bg-h: #2a2c28;
 
     display: block;
   }
 
   :host-context(.dark-theme) {
-    --loan-blue-700: #{map.get(palette.$primary-palette, 100)};
-    --loan-blue-600: #{map.get(palette.$primary-palette, 500)};
-    --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 100), 30%)};
-    --loan-blue-50: #{rgba(map.get(palette.$primary-palette, 100), 16%)};
-    --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 100), 10%)};
-    --loan-surface: #2c2f36;
-    --loan-surface-alt: #23262c;
+    --loan-blue-700: #84dc4e;
+    --loan-blue-600: #84dc4e;
+    --loan-blue-100: rgb(132 220 78 / 24%);
+    --loan-blue-50: rgb(132 220 78 / 12%);
+    --loan-blue-20: rgb(132 220 78 / 8%);
+    --loan-surface: #22251f;
+    --loan-surface-alt: #161815;
     --loan-surface-h: rgb(255 255 255 / 4%);
-    --loan-border: rgb(255 255 255 / 12%);
-    --loan-text-1: rgb(255 255 255 / 87%);
-    --loan-text-2: rgb(255 255 255 / 60%);
-    --loan-text-3: rgb(255 255 255 / 38%);
-    --loan-paid: #{$status-active};
-    --loan-paid-bg: #{rgba($status-active, 20%)};
-    --loan-partial: #{$status-pending};
-    --loan-partial-bg: #{rgba($status-pending, 20%)};
-    --loan-alert: #{$msg-danger};
-    --loan-alert-bg: #{rgba($msg-danger, 20%)};
-    --loan-violet: #{$amethyst};
-
-    // Solid mid blue keeps white button text readable on the dark surface
-    // (the dark --loan-blue-700 is a light tint meant for text accents).
-    --loan-btn-primary-bg: #{map.get(palette.$primary-palette, 500)};
-    --loan-btn-primary-bg-h: #{map.get(palette.$primary-palette, 700)};
+    --loan-border: rgb(255 255 255 / 8%);
+    --loan-text-1: #f2f3ef;
+    --loan-text-2: #8b8e86;
+    --loan-text-3: #6b6e66;
+    --loan-paid: #84dc4e;
+    --loan-paid-bg: #14210c;
+    --loan-partial: #e4c84a;
+    --loan-partial-bg: #281c0b;
+    --loan-alert: #ef9a9a;
+    --loan-alert-bg: #2b1212;
+    --loan-violet: #b6ee8c;
+    --loan-btn-primary-bg: #f3f3ee;
+    --loan-btn-primary-bg-h: #fff;
   }
 }
 
 @mixin list {
   .entity-list-container {
-    margin: 16px auto;
-    max-width: 70%;
-    border-radius: 8px;
+    margin: 0;
+    max-width: none;
+    width: 100%;
+    border-radius: var(--thr-radius, 16px);
     overflow: hidden;
     border: 1px solid var(--loan-border);
     background: var(--loan-surface-alt);
-    box-shadow: 0 1px 3px rgb(13 43 94 / 6%);
+    box-shadow: var(--thr-shadow, none);
   }
 
   /* ── Toolbar ──────────────────────────────────────────────── */
@@ -108,13 +106,13 @@
 
   .search input {
     width: 100%;
-    height: 36px;
+    height: 40px;
     padding: 0 12px 0 36px;
     border: 1px solid var(--loan-border);
-    border-radius: 6px;
+    border-radius: 12px;
     background: var(--loan-surface);
     font-family: inherit;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--loan-text-1);
     transition:
       border-color 0.14s ease,
@@ -241,7 +239,7 @@
   }
 
   .count-badge strong {
-    font-family: 'Roboto Mono', monospace;
+    font-family: inherit;
     font-weight: 700;
   }
 
@@ -252,10 +250,10 @@
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    height: 36px;
-    padding: 0 14px;
-    border-radius: 6px;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 12px;
     border: 1px solid transparent;
     font-family: inherit;
     font-size: 13px;
@@ -273,25 +271,30 @@
     height: 13px;
   }
 
-  .btn-ghost {
+  .btn-ghost,
+  a.btn-ghost {
     background: var(--loan-surface);
-    color: var(--loan-text-2);
+    color: var(--loan-text-1);
     border-color: var(--loan-border);
   }
 
-  .btn-ghost:hover {
-    color: var(--loan-blue-700);
-    border-color: var(--loan-blue-700);
-    background: var(--loan-blue-50);
+  .btn-ghost:hover,
+  a.btn-ghost:hover {
+    color: var(--loan-text-1);
+    border-color: var(--loan-text-1);
+    background: var(--loan-blue-20);
   }
 
-  .btn-primary {
-    background: var(--loan-btn-primary-bg, var(--loan-blue-700));
-    color: #fff;
+  .btn-primary,
+  a.btn-primary {
+    background: var(--thr-primary-btn, var(--loan-btn-primary-bg));
+    color: var(--thr-primary-btn-fg, #f3f3ee);
   }
 
-  .btn-primary:hover {
-    background: var(--loan-btn-primary-bg-h, var(--loan-blue-600));
+  .btn-primary:hover,
+  a.btn-primary:hover {
+    background: var(--thr-primary-btn-h, var(--loan-btn-primary-bg-h));
+    color: var(--thr-primary-btn-fg, #f3f3ee);
   }
 
   .loading-bar {
@@ -309,7 +312,7 @@
 
     /* Name takes every pixel the other columns don't need, so long names stay readable. */
     /* stylelint-disable-next-line unit-allowed-list */
-    grid-template-columns: 4px 36px minmax(220px, 1fr) 148px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%);
+    grid-template-columns: 4px 36px minmax(220px, 1fr) 148px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%); /* stylelint-disable-line unit-allowed-list */
     align-items: center;
     gap: 14px;
     padding: 8px 16px;
@@ -319,10 +322,10 @@
     padding: 10px 16px;
     background: var(--loan-surface-h);
     border-bottom: 1px solid var(--loan-border);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--thr-text-xs, 0.8125rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
     color: var(--loan-text-2);
     user-select: none;
   }
@@ -566,7 +569,7 @@
   }
 
   .mono {
-    font-family: 'Roboto Mono', monospace;
+    font-family: inherit;
     font-size: 12.5px;
     color: var(--loan-text-1);
     white-space: nowrap;
@@ -684,7 +687,7 @@
   }
 
   .page-info {
-    font-family: 'Roboto Mono', monospace;
+    font-family: inherit;
     font-size: 12px;
   }
 }

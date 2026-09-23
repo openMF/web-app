@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,6 @@ import { activities } from '../activities';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
-import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -32,9 +31,6 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DashboardEngineComponent,
-    MatTab,
-    MatTabContent,
-    MatTabGroup,
     OnboardingBoardComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,6 +39,7 @@ export class DashboardComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Search Text. */
   searchText: FormControl = new FormControl();
@@ -58,12 +55,18 @@ export class DashboardComponent implements OnInit {
   products: any[] = [];
   /** Client group options */
   clientGroups: any[] = [];
+  /** Onboarding stays reachable from the sidenav without dashboard tabs. */
+  showOnboarding = false;
 
   constructor() {
     this.route.data.subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
       this.offices = data.offices || [];
       this.products = data.products || [];
       this.clientGroups = data.clientGroups || [];
+    });
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      this.showOnboarding = params.get('view') === 'onboarding';
+      this.cdr.markForCheck();
     });
   }
 

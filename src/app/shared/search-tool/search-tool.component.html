@@ -13,7 +13,7 @@
   (click)="toggleSearchVisibility()"
   [matTooltip]="'labels.text.Search' | translate"
 >
-  <fa-icon icon="search" size="lg"></fa-icon>
+  <mifosx-thr-icon name="search" size="16"></mifosx-thr-icon>
 </button>
 
 <!-- Spotlight modal -->
@@ -22,7 +22,7 @@
     <div class="spotlight-wrap" [@modalSlide] (click)="$event.stopPropagation()">
       <!-- Input row -->
       <div class="spotlight-row">
-        <fa-icon icon="search" class="spotlight-icon"></fa-icon>
+        <mifosx-thr-icon name="search" class="spotlight-icon" size="16"></mifosx-thr-icon>
 
         <input
           #queryInput

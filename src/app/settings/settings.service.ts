@@ -304,6 +304,10 @@ export class SettingsService {
   }
 
   get themeDarkEnabled(): boolean {
-    return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
+    const stored = localStorage.getItem('mifosXThemeDarkEnabled');
+    if (stored === null) {
+      return true;
+    }
+    return JSON.parse(stored);
   }
 }

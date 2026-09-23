@@ -22,7 +22,8 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Subscription, forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 import { TranslateService } from '@ngx-translate/core';
 /** Custom Services */
@@ -40,6 +41,7 @@ import {
 /** Custom Imports */
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DashboardWidgetComponent } from '../dashboard-widget/dashboard-widget.component';
+import { ThrIconComponent } from 'app/shared/thr-icon/thr-icon.component';
 
 @Component({
   selector: 'mifosx-analytics-dashboard',
@@ -49,8 +51,10 @@ import { DashboardWidgetComponent } from '../dashboard-widget/dashboard-widget.c
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatMenuModule,
-    MatIconModule,
-    DashboardWidgetComponent
+    MatIconButton,
+    MatTooltip,
+    DashboardWidgetComponent,
+    ThrIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -83,6 +87,115 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
 
   get chartWidgets(): AnalyticsWidgetDefinition[] {
     return this.visibleWidgets.filter((widget) => widget.type === 'chart');
+  }
+
+  get heroMetrics(): AnalyticsWidgetDefinition[] {
+    return this.metricWidgets.slice(0, 4);
+  }
+
+  get sideMetrics(): AnalyticsWidgetDefinition[] {
+    return this.metricWidgets.slice(4);
+  }
+
+  get featuredChart(): AnalyticsWidgetDefinition | undefined {
+    return this.chartWidgets.find((widget) => widget.adapter !== 'georeference-map');
+  }
+
+  get activityGroups(): {
+    categoryKey: string;
+    rows: { id: string; segmentKey: string; value: string; icon: string; share: number }[];
+  }[] {
+    const grouped = new Map<
+      string,
+      { id: string; segmentKey: string; value: string; icon: string; amount: number }[]
+    >();
+
+    this.visibleWidgets.forEach((widget) => {
+      const details = this.widgetStateMap[widget.id]?.details;
+      if (!details?.length) {
+        return;
+      }
+      const rows = grouped.get(widget.titleKey) || [];
+      details.forEach((detail, index) => {
+        rows.push({
+          id: `${widget.id}-${index}`,
+          segmentKey: detail.labelKey,
+          value: this.formatMetricValue(widget, detail.value),
+          icon: widget.icon || 'chart-line',
+          amount: Math.abs(detail.value || 0)
+        });
+      });
+      grouped.set(widget.titleKey, rows);
+    });
+
+    return [...grouped.entries()].map(
+      ([
+        categoryKey,
+        rows
+      ]) => {
+        const max = Math.max(...rows.map((row) => row.amount), 0);
+        return {
+          categoryKey,
+          rows: rows.map((row) => ({
+            id: row.id,
+            segmentKey: row.segmentKey,
+            value: row.value,
+            icon: row.icon,
+            share: max > 0 ? Math.round((row.amount / max) * 100) : 0
+          }))
+        };
+      }
+    );
+  }
+
+  isInvertedHero(widget: AnalyticsWidgetDefinition): boolean {
+    return this.heroMetrics.length === 4 && widget.id === this.heroMetrics[3].id;
+  }
+
+  heroCaption(widget: AnalyticsWidgetDefinition): string {
+    if (!this.isInvertedHero(widget)) {
+      return '';
+    }
+
+    const collectedWidget = this.visibleWidgets.find((item) => item.adapter === 'collection-total');
+    const collected = this.widgetStateMap[collectedWidget?.id || '']?.metricValue;
+    const pending = this.widgetStateMap[widget.id]?.metricValue;
+
+    if (collected === undefined || collected === null) {
+      return '';
+    }
+
+    return this.translateService.instant('labels.text.You collected {{collected}} / {{total}}', {
+      collected: this.formatMetricValue(collectedWidget || widget, collected),
+      total: this.formatMetricValue(widget, collected + (pending || 0))
+    });
+  }
+
+  private formatMetricValue(widget: AnalyticsWidgetDefinition, value?: number): string {
+    if (value === undefined || value === null) {
+      return '—';
+    }
+
+    const currencyAdapters = new Set([
+      'collection-total',
+      'disbursement-total',
+      'savings-total',
+      'average-loan-size-total'
+    ]);
+
+    if (currencyAdapters.has(widget.adapter)) {
+      const abs = Math.abs(value);
+      const sign = value < 0 ? '-' : '';
+      if (abs >= 1_000_000) {
+        return `${sign}$${(abs / 1_000_000).toFixed(1)}M`;
+      }
+      if (abs >= 1_000) {
+        return `${sign}$${(abs / 1_000).toFixed(1)}K`;
+      }
+      return `${sign}$${abs.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+    }
+
+    return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
 
   ngOnInit(): void {

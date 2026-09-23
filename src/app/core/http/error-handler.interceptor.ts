@@ -8,10 +8,17 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+  HttpResponse
+} from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 /** Environment Configuration */
@@ -135,6 +142,19 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       log.error(`Request Error: ${errorMessage}`);
     }
 
+    // Local UI preview has no Fineract session. Return an empty success so
+    // route resolvers still activate screens instead of cancelling navigation.
+    if (!environment.production && sessionStorage.getItem('mifosXDevUiPreview') === 'true') {
+      return of(
+        new HttpResponse({
+          status: 200,
+          statusText: 'OK',
+          url: request.url,
+          body: previewFallbackBody(request.method)
+        })
+      );
+    }
+
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
       this.alertService.alert({
         type: this.translate.instant('errors.error.auth.type'),
@@ -188,4 +208,21 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     throw response;
   }
+}
+
+/**
+ * Dual-shape empty payload so list screens (arrays / pageItems / content)
+ * and object screens can all bind without throwing in local UI preview.
+ */
+function previewFallbackBody(method: string): any {
+  if (method !== 'GET') {
+    return { resourceId: 1 };
+  }
+  return Object.assign([], {
+    content: [],
+    pageItems: [],
+    totalElements: 0,
+    numberOfElements: 0,
+    totalFilteredRecords: 0
+  });
 }

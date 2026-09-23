@@ -861,7 +861,7 @@ export class ManageDashboardsComponent implements OnInit, AfterViewInit, OnDestr
                 labels: {
                   boxWidth: 12,
                   color: textColor,
-                  font: { size: 12, family: 'Inter, Roboto, sans-serif' }
+                  font: { size: 12, family: 'Manrope, sans-serif' }
                 }
               },
               tooltip: {

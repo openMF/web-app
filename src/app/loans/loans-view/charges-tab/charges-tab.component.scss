@@ -12,7 +12,7 @@
 :host {
   @include rt.ch-tokens;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
 }
 

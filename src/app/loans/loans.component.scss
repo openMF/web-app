@@ -14,50 +14,51 @@
 // and the shared status/neutral colours (src/assets/styles/_colours.scss) instead of an
 // invented one-off scale — kept in sync with clients.component.scss's identical tokens.
 :host {
-  --loan-blue-700: #{map.get(palette.$primary-palette, 500)};
-  --loan-blue-600: #{map.get(palette.$primary-palette, 700)};
-  --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 500), 25%)};
-  --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 500), 6%)};
-  --loan-surface: #{$white};
-  --loan-surface-alt: #{$light-grey};
-  --loan-surface-h: #{rgba(map.get(palette.$primary-palette, 500), 5%)};
-  --loan-border: #{$mid-grey};
-  --loan-text-1: #{$dark-grey};
-  --loan-text-2: #{rgba($dark-grey, 70%)};
-  --loan-text-3: #{rgba($dark-grey, 45%)};
-  --loan-paid: #{$status-active};
-  --loan-paid-bg: #{rgba($status-active, 12%)};
-  --loan-partial: #{$status-pending};
-  --loan-partial-bg: #{rgba($status-pending, 12%)};
-  --loan-alert: #{$msg-danger};
-  --loan-alert-bg: #{rgba($msg-danger, 12%)};
+  --loan-blue-700: #2f9a28;
+  --loan-blue-600: #1f5c16;
+  --loan-blue-100: rgb(47 154 40 / 18%);
+  --loan-blue-20: rgb(47 154 40 / 6%);
+  --loan-surface: #fff;
+  --loan-surface-alt: #eef0ea;
+  --loan-surface-h: rgb(47 154 40 / 6%);
+  --loan-border: rgb(23 25 22 / 10%);
+  --loan-text-1: #171916;
+  --loan-text-2: #555851;
+  --loan-text-3: #8b8e86;
+  --loan-paid: #2f9a28;
+  --loan-paid-bg: rgb(47 154 40 / 12%);
+  --loan-partial: #b58d12;
+  --loan-partial-bg: rgb(181 141 18 / 14%);
+  --loan-alert: #c62828;
+  --loan-alert-bg: rgb(198 40 40 / 10%);
 
   display: block;
 }
 
 :host-context(.dark-theme) {
-  --loan-blue-700: #{map.get(palette.$primary-palette, 100)};
-  --loan-blue-600: #{map.get(palette.$primary-palette, 500)};
-  --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 100), 30%)};
-  --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 100), 10%)};
-  --loan-surface: #2c2f36;
-  --loan-surface-alt: #23262c;
+  --loan-blue-700: #84dc4e;
+  --loan-blue-600: #84dc4e;
+  --loan-blue-100: rgb(132 220 78 / 24%);
+  --loan-blue-20: rgb(132 220 78 / 8%);
+  --loan-surface: #22251f;
+  --loan-surface-alt: #161815;
   --loan-surface-h: rgb(255 255 255 / 4%);
-  --loan-border: rgb(255 255 255 / 12%);
-  --loan-text-1: rgb(255 255 255 / 87%);
-  --loan-text-2: rgb(255 255 255 / 60%);
-  --loan-text-3: rgb(255 255 255 / 38%);
-  --loan-paid: #{$status-active};
-  --loan-paid-bg: #{rgba($status-active, 20%)};
-  --loan-partial: #{$status-pending};
-  --loan-partial-bg: #{rgba($status-pending, 20%)};
-  --loan-alert: #{$msg-danger};
-  --loan-alert-bg: #{rgba($msg-danger, 20%)};
+  --loan-border: rgb(255 255 255 / 8%);
+  --loan-text-1: #f2f3ef;
+  --loan-text-2: #8b8e86;
+  --loan-text-3: #6b6e66;
+  --loan-paid: #84dc4e;
+  --loan-paid-bg: #14210c;
+  --loan-partial: #e4c84a;
+  --loan-partial-bg: #281c0b;
+  --loan-alert: #ef9a9a;
+  --loan-alert-bg: #2b1212;
 }
 
 .loans-layout {
-  margin: 16px auto;
-  max-width: 84%;
+  margin: 0;
+  max-width: none;
+  width: 100%;
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -66,7 +67,7 @@
 .loans-container {
   flex: 1;
   min-width: 0;
-  border-radius: 8px;
+  border-radius: var(--thr-radius, 16px);
 
   /* Visible (not hidden) so the column panel can drop below the toolbar even when the list is short. */
   overflow: visible;
@@ -79,7 +80,7 @@
 @media (width <= 1100px) {
   .loans-layout {
     flex-direction: column;
-    max-width: 96%;
+    max-width: none;
   }
 
   .filter-panel {
@@ -98,7 +99,7 @@
   gap: 12px;
   flex-wrap: wrap;
   border-bottom: 1px solid var(--loan-border);
-  border-radius: 8px 8px 0 0;
+  border-radius: 16px 16px 0 0;
 }
 
 .search {
@@ -120,7 +121,7 @@
 }
 
 .count-badge strong {
-  font-family: 'Roboto Mono', monospace;
+  font-family: inherit;
   font-weight: 700;
 }
 
@@ -134,10 +135,10 @@
 }
 
 .cog-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--loan-border);
-  border-radius: 6px;
+  border-radius: 12px;
   background: var(--loan-surface);
   color: var(--loan-text-2);
   cursor: pointer;
@@ -220,10 +221,10 @@
 
 .col-group-title {
   padding: 8px 4px 4px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--thr-text-xs, 0.8125rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--loan-text-3);
 }
 
@@ -425,10 +426,10 @@
   padding: 8px 16px;
   background: var(--loan-surface-h);
   border-bottom: 1px solid var(--loan-border);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--thr-text-xs, 0.8125rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--loan-text-2);
   user-select: none;
 }
@@ -757,6 +758,147 @@ a.name:hover {
   font-size: 12px;
 }
 
+/* Hidden on the desktop table; shown as row captions once the list becomes cards. */
+.mobile-label {
+  display: none;
+}
+
+@media screen and (width <= 768px) {
+  .loans-layout {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    margin-bottom: calc(64px + 16px + env(safe-area-inset-bottom));
+    align-items: stretch;
+  }
+
+  .loans-container {
+    width: 100%;
+  }
+
+  .toolbar {
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .search {
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: 0;
+    margin-right: 0;
+  }
+
+  .toolbar-spacer {
+    display: none;
+  }
+
+  .col-panel {
+    width: min(300px, calc(100vw - 32px));
+  }
+
+  .scroll-sync-top,
+  .list-header {
+    display: none;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+  .list-row {
+    grid-template-columns: 40px minmax(0, 1fr) !important; /* stylelint-disable-line unit-allowed-list */
+    min-width: 0 !important;
+    gap: 8px;
+    align-items: center;
+    padding: 16px;
+    border-left: 4px solid transparent;
+  }
+
+  .list-row > .rail {
+    display: none;
+  }
+
+  .list-row.active {
+    border-left-color: var(--loan-paid);
+  }
+
+  .list-row.pending {
+    border-left-color: var(--loan-partial);
+  }
+
+  .list-row.closed {
+    border-left-color: var(--loan-text-3);
+  }
+
+  .list-row.rejected,
+  .list-row.arrears {
+    border-left-color: var(--loan-alert);
+  }
+
+  .list-row > .avatar {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .list-row > .name-block {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .name,
+  .name-meta {
+    white-space: normal;
+  }
+
+  .list-row > :not(.rail, .avatar, .name-block) {
+    grid-column: 1 / -1;
+  }
+
+  .status-pill {
+    justify-self: start;
+  }
+
+  .mobile-field {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--loan-border);
+    white-space: normal;
+  }
+
+  .mobile-label {
+    display: block;
+    flex: 0 0 auto;
+    color: var(--loan-text-3);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .mobile-field > :not(.mobile-label) {
+    min-width: 0;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .list-footer {
+    align-items: stretch;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .pager {
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+}
+
 /* ── Filter panel (right side) ────────────────────────────── */
 .filter-panel {
   width: 280px;
@@ -795,10 +937,10 @@ a.name:hover {
   justify-content: space-between;
   gap: 8px;
   padding: 12px 0 4px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--thr-text-xs, 0.8125rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--loan-text-3);
 }
 
@@ -971,4 +1113,12 @@ a.name:hover {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--loan-text-3);
+}
+
+@media screen and (width <= 768px) {
+  .filter-panel {
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
 }

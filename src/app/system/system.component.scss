@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.disabled-item {
-  pointer-events: none; // Prevent clicks
-  opacity: 0.5; // Greyed out effect
+@use 'assets/styles/hub-workspace';
+
+:host {
+  @include hub-workspace.hub;
 }

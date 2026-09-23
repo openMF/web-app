@@ -14,7 +14,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { Route } from '../core/route/route.service';
 
 /** Custom Components */
-import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReportingDashboardComponent } from './reporting-dashboard/reporting-dashboard.component';
 
@@ -32,17 +31,17 @@ const routes: Routes = [
     },
     {
       path: 'home',
-      component: HomeComponent,
-      data: { title: 'Home' }
-    },
-    {
-      path: 'dashboard',
       component: DashboardComponent,
-      data: { title: 'Global Financial Dashboard', breadcrumb: 'Global Financial Dashboard' },
+      data: { title: 'Dashboard', breadcrumb: 'Dashboard' },
       resolve: {
         offices: OfficesResolver,
         products: LoanProductsResolver
       }
+    },
+    {
+      path: 'dashboard',
+      redirectTo: '/home',
+      pathMatch: 'full'
     },
     {
       path: 'reporting-dashboard',

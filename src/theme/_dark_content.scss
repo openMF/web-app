@@ -6,12 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use '@angular/material' as mat;
-@use 'sass:map';
-
 @mixin account-view-component-dark-theme($theme) {
-  $primary: map.get($theme, primary);
-
   mifosx-login {
     .login-container {
       background-color: #424242;
@@ -72,9 +67,9 @@
   mifosx-recurring-deposits-account-view,
   mifosx-savings-account-view {
     .account-card {
-      margin: 0 auto;
-      max-width: 90rem;
-      width: 90%;
+      margin: 0;
+      max-width: none;
+      width: 100%;
       padding: 0;
 
       i,
@@ -83,23 +78,23 @@
       }
 
       .header {
-        background-color: mat.m2-get-color-from-palette($primary, 500);
-        padding: 1%;
+        background-color: var(--thr-card, #22251f);
+        padding: 16px 24px;
       }
 
       .header-title-group {
         .account-card-title {
-          color: white;
-          width: 90%;
+          color: var(--thr-foreground, #f2f3ef);
+          width: 100%;
         }
 
         p {
-          color: white;
+          color: var(--thr-muted, #8b8e86);
         }
 
         .account-overview {
           border: none;
-          max-width: 240px;
+          max-width: none;
           font-size: 14px;
 
           tr:nth-child(even) {
@@ -109,21 +104,21 @@
       }
 
       .profile-image-container {
-        margin: 1%;
+        margin: 0 16px 0 0;
 
         .profile-image {
           object-fit: cover;
-          border-radius: 20px;
+          border-radius: 16px;
         }
 
         .signature {
-          background-color: mat.m2-get-color-from-palette($primary, 500);
+          background-color: transparent;
         }
       }
 
       .account-actions {
         align-self: flex-end;
-        margin: 0 1%;
+        margin: 0 16px 16px;
 
         i {
           margin-bottom: 2px;
@@ -238,6 +233,30 @@ body.dark-theme {
     color: #0098ff !important;
   }
 
+  a.acct-feature:any-link,
+  a.acct-row:any-link,
+  a.hub-feature:any-link,
+  a.hub-row:any-link {
+    color: var(--thr-foreground, #f2f3ef) !important;
+  }
+
+  a.page-greeting__avatar:any-link {
+    color: #171916 !important;
+  }
+
+  a.mobile-tabbar__item:any-link {
+    color: var(--thr-muted, #a3a89c) !important;
+  }
+
+  a.mobile-tabbar__item.is-active:any-link {
+    color: #252a20 !important;
+  }
+
+  a.acct-feature--primary:any-link,
+  a.hub-feature--primary:any-link {
+    color: var(--thr-invert-fg, #171916) !important;
+  }
+
   span.breadcrumb-link {
     a {
       color: #0098ff !important;
@@ -260,18 +279,17 @@ body.dark-theme {
     color: #e3f2fd !important;
   }
 
-  // Entity-list toolbar buttons are anchors; keep their own colors instead
-  // of the global dark link blue.
+  // Entity-list toolbar buttons are anchors; keep invert ink in both themes.
   a.btn-primary {
-    color: #fff !important;
+    color: var(--thr-primary-btn-fg, #171916) !important;
   }
 
   a.btn-ghost {
-    color: var(--loan-text-2, rgb(255 255 255 / 60%)) !important;
+    color: var(--thr-foreground, #f2f3ef) !important;
   }
 
   a.btn-ghost:hover {
-    color: var(--loan-blue-700, #90caf9) !important;
+    color: var(--thr-foreground, #f2f3ef) !important;
   }
 
   .cdk-drag-preview {

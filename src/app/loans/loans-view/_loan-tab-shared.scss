@@ -28,7 +28,7 @@
   --ch-alert-bg: #ffebee;
   --ch-zero: #b0bec5;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
 }
 
@@ -229,10 +229,10 @@ $transaction-type-keys:
   }
 
   .fact-label {
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--thr-text-xs, 0.8125rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
     color: var(--ch-text-3);
     margin-bottom: 4px;
   }
@@ -251,7 +251,7 @@ $transaction-type-keys:
 
   .fact-value.muted {
     color: var(--ch-text-3);
-    font-weight: 400;
+    font-weight: 500;
   }
 
   @media (width <= 520px) {
@@ -272,7 +272,7 @@ $transaction-type-keys:
   border-radius: 4px;
   border: 1px solid transparent;
   font:
-    600 13px 'DM Sans',
+    600 13px/1.25 Manrope,
     sans-serif;
   cursor: pointer;
   transition:

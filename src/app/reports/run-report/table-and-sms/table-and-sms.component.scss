@@ -7,20 +7,20 @@
  */
 
 :host {
-  --tas-blue-900: #0d2b5e;
-  --tas-blue-700: #1565c0;
-  --tas-blue-600: #1976d2;
-  --tas-blue-100: #bbdefb;
-  --tas-blue-50: #e3f2fd;
-  --tas-blue-20: #f0f7ff;
+  --tas-blue-900: #1f5c16;
+  --tas-blue-700: #171916;
+  --tas-blue-600: #2a2c28;
+  --tas-blue-100: #d7f3c4;
+  --tas-blue-50: #e8f5e0;
+  --tas-blue-20: #f6faf1;
   --tas-surface: #fff;
-  --tas-surface-alt: #f4f7fb;
-  --tas-surface-h: #ebf2fa;
-  --tas-border: #dde5f0;
-  --tas-border-strong: #c0d0e4;
-  --tas-text-1: #0d1b2a;
-  --tas-text-2: #4a6785;
-  --tas-text-3: #8fa5bc;
+  --tas-surface-alt: #eef0ea;
+  --tas-surface-h: #e7e9e3;
+  --tas-border: rgb(23 25 22 / 14%);
+  --tas-border-strong: rgb(23 25 22 / 22%);
+  --tas-text-1: #171916;
+  --tas-text-2: #555851;
+  --tas-text-3: #8b8e86;
   --tas-paid: #2e7d32;
   --tas-paid-bg: #e8f5e9;
   --tas-alert: #c62828;
@@ -28,25 +28,25 @@
   --tas-type-num: #2e7d32;
   --tas-type-num-bg: #e8f5e9;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--thr-font, 'Manrope', sans-serif), system-ui, sans-serif;
   display: block;
   color: var(--tas-text-1);
 }
 
 :host-context(.dark-theme) {
-  --tas-blue-700: #5b9bd5;
-  --tas-blue-600: #7ab3e0;
-  --tas-blue-100: #1a3a60;
-  --tas-blue-50: #0a2040;
-  --tas-blue-20: #0d1f35;
-  --tas-surface: #1a2535;
-  --tas-surface-alt: #101d2d;
-  --tas-surface-h: #132032;
-  --tas-border: #1e3050;
-  --tas-border-strong: #2a4264;
-  --tas-text-1: #e2ebf6;
-  --tas-text-2: #8baecf;
-  --tas-text-3: #6a8fad;
+  --tas-blue-700: #f3f3ee;
+  --tas-blue-600: #fff;
+  --tas-blue-100: #22251f;
+  --tas-blue-50: #1b1d1a;
+  --tas-blue-20: #161815;
+  --tas-surface: #22251f;
+  --tas-surface-alt: #161815;
+  --tas-surface-h: #1b1d1a;
+  --tas-border: rgb(255 255 255 / 8%);
+  --tas-border-strong: rgb(255 255 255 / 14%);
+  --tas-text-1: #f2f3ef;
+  --tas-text-2: #8b8e86;
+  --tas-text-3: #6b6e66;
   --tas-paid: #66bb6a;
   --tas-paid-bg: #172b1a;
   --tas-alert: #ef9a9a;
@@ -56,8 +56,8 @@
 }
 
 .tas-host {
-  max-width: 82rem;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 
 /* ── Card ────────────────────────────────────────────────────── */
@@ -100,7 +100,7 @@
   }
 
   .count {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 11.5px;
     color: var(--tas-text-2);
     background: var(--tas-surface);
@@ -147,7 +147,7 @@ table.rep {
   }
 
   ::ng-deep th.mat-mdc-header-cell .ttype {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -173,7 +173,7 @@ table.rep {
   }
 
   ::ng-deep td.mat-mdc-cell.cell-num {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: inherit;
     text-align: right;
     font-feature-settings: 'tnum' 1;
   }
@@ -231,7 +231,7 @@ table.rep {
 
 ::ng-deep .mat-mdc-paginator .mat-mdc-paginator-page-size-label,
 ::ng-deep .mat-mdc-paginator .mat-mdc-paginator-range-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: inherit;
   font-size: 11.5px;
   color: var(--tas-text-3);
 }
@@ -328,7 +328,7 @@ table.rep {
 
 .skel {
   height: 12px;
-  border-radius: 4px;
+  border-radius: 12px;
   background: linear-gradient(90deg, var(--tas-surface-alt) 0%, var(--tas-surface-h) 50%, var(--tas-surface-alt) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
@@ -382,7 +382,7 @@ table.rep {
   align-items: center;
   gap: 7px;
   padding: 7px 14px;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;

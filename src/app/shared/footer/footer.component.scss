@@ -97,7 +97,7 @@
   }
 
   .info-value {
-    font-weight: 400;
+    font-weight: 500;
     opacity: 0.9;
   }
 
@@ -154,9 +154,10 @@
 }
 
 .main-page {
-  max-width: 70%;
-  min-width: 50%;
-  padding-left: 30%;
+  max-width: none;
+  width: 100%;
+  padding: 16px 24px 24px;
+  box-sizing: border-box;
 }
 
 .copy-label {

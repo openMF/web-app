@@ -36,6 +36,9 @@ import { getOAuthConfig, getActiveAuthMode, AuthMode } from './oauth.config';
 /** Custom Utilities */
 import { sanitizeReturnUrl } from '../utils/return-url.utils';
 
+/** Session flag for local UI preview when Fineract login is unavailable. */
+export const DEV_UI_PREVIEW_STORAGE_KEY = 'mifosXDevUiPreview';
+
 /**
  * Authentication workflow.
  */
@@ -307,6 +310,40 @@ export class AuthenticationService {
   }
 
   /**
+   * Opens the authenticated shell without a Fineract session.
+   * Development builds only — used when the demo backend rejects login.
+   */
+  loginDevPreview(): Observable<boolean> {
+    if (environment.production) {
+      throw new Error('UI preview login is not available in production builds');
+    }
+
+    this.rememberMe = false;
+    this.storage = sessionStorage;
+    sessionStorage.setItem(DEV_UI_PREVIEW_STORAGE_KEY, 'true');
+
+    const credentials: Credentials = {
+      authenticated: true,
+      officeId: 1,
+      officeName: 'Head Office',
+      permissions: ['ALL_FUNCTIONS'],
+      roles: [{ id: 1, name: 'Super user' }],
+      userId: 1,
+      username: 'dev-preview',
+      shouldRenewPassword: false,
+      isTwoFactorAuthenticationRequired: false
+    };
+
+    this.onLoginSuccess(credentials);
+    return of(true);
+  }
+
+  /** True when the current tab is using the local UI preview session. */
+  static isDevUiPreview(): boolean {
+    return !environment.production && sessionStorage.getItem(DEV_UI_PREVIEW_STORAGE_KEY) === 'true';
+  }
+
+  /**
    * Fetches user details from the server.
    * @returns {Promise<void>} Promise that resolves when user details are fetched.
    */
@@ -362,8 +399,10 @@ export class AuthenticationService {
     credentials.rememberMe = this.rememberMe;
 
     if (this.authMode !== AuthMode.Basic) {
-      this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
-    } else {
+      if (credentials.accessToken) {
+        this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
+      }
+    } else if (credentials.base64EncodedAuthenticationKey) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
     }
     if (credentials.isTwoFactorAuthenticationRequired) {
@@ -441,6 +480,7 @@ export class AuthenticationService {
     sessionStorage.removeItem('oauth_callback_query');
 
     this.authenticationInterceptor.removeAuthorization();
+    sessionStorage.removeItem(DEV_UI_PREVIEW_STORAGE_KEY);
     this.setCredentials();
     this.resetDialog();
     this.userLoggedIn$.next(false);
@@ -537,6 +577,7 @@ export class AuthenticationService {
       ].forEach((store) => {
         store.removeItem(this.credentialsStorageKey);
         store.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+        store.removeItem(DEV_UI_PREVIEW_STORAGE_KEY);
       });
       this.cleanupLegacyStorage();
 

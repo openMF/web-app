@@ -7,7 +7,6 @@
  */
 
 @use 'assets/styles/helper';
-@use 'assets/styles/colours' as *;
 
 .not-found-container {
   height: 100%;
@@ -15,11 +14,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: $accent;
-  color: $white;
+  background: var(--thr-background, #eef0ea);
+  color: var(--thr-foreground, #171916);
 }
 
 #title {
-  font-size: 160px;
-  font-weight: bolder;
+  font-size: 120px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+#subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--thr-muted, #555851);
 }
