@@ -1951,7 +1951,10 @@
       "Reverse Transaction": "거래 취소",
       "Create Tenant": "테넌트 만들기",
       "Edit Tenant": "테넌트 편집",
-      "Tenant Details": "테넌트 상세"
+      "Tenant Details": "테넌트 상세",
+      "Savings Account Opening": "저축 계좌 개설",
+      "Savings Account Deposit": "저축 계좌 입금",
+      "Preview": "미리보기"
     },
     "inputs": {
       "Returned": "반환됨",

@@ -1949,7 +1949,10 @@
       "Reverse Transaction": "Estornar transação",
       "Create Tenant": "Criar inquilino",
       "Edit Tenant": "Editar inquilino",
-      "Tenant Details": "Detalhes do inquilino"
+      "Tenant Details": "Detalhes do inquilino",
+      "Savings Account Opening": "Abertura de conta poupança",
+      "Savings Account Deposit": "Depósito em conta poupança",
+      "Preview": "Pré-visualização"
     },
     "inputs": {
       "Returned": "Devolvido",

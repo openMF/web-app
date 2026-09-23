@@ -1949,7 +1949,10 @@
       "Reverse Transaction": "लेनदेन उल्टाउनुहोस्",
       "Create Tenant": "टेनेन्ट सिर्जना गर्नुहोस्",
       "Edit Tenant": "टेनेन्ट सम्पादन गर्नुहोस्",
-      "Tenant Details": "टेनेन्ट विवरण"
+      "Tenant Details": "टेनेन्ट विवरण",
+      "Savings Account Opening": "बचत खाता खोल्ने",
+      "Savings Account Deposit": "बचत खातामा जम्मा",
+      "Preview": "पूर्वावलोकन"
     },
     "inputs": {
       "Returned": "फिर्ता भएको",

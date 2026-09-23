@@ -1950,7 +1950,10 @@
       "Reverse Transaction": "Storna transazione",
       "Create Tenant": "Crea tenant",
       "Edit Tenant": "Modifica tenant",
-      "Tenant Details": "Dettagli del tenant"
+      "Tenant Details": "Dettagli del tenant",
+      "Savings Account Opening": "Apertura conto di risparmio",
+      "Savings Account Deposit": "Deposito su conto di risparmio",
+      "Preview": "Anteprima"
     },
     "inputs": {
       "Returned": "Restituito",

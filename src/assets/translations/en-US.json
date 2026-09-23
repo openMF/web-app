@@ -1970,7 +1970,8 @@
       "Reverse Transaction": "Reverse Transaction",
       "Create Tenant": "Create Tenant",
       "Edit Tenant": "Edit Tenant",
-      "Tenant Details": "Tenant Details"
+      "Tenant Details": "Tenant Details",
+      "Preview": "Preview"
     },
     "inputs": {
       "Returned": "Returned",

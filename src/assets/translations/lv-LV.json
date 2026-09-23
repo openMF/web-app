@@ -1950,7 +1950,10 @@
       "Reverse Transaction": "Atcelt darījumu",
       "Create Tenant": "Izveidot nomnieku",
       "Edit Tenant": "Rediģēt nomnieku",
-      "Tenant Details": "Nomnieka informācija"
+      "Tenant Details": "Nomnieka informācija",
+      "Savings Account Opening": "Krājkonta atvēršana",
+      "Savings Account Deposit": "Noguldījums krājkontā",
+      "Preview": "Priekšskatījums"
     },
     "inputs": {
       "Returned": "Atgriezts",

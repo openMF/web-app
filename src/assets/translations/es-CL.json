@@ -1950,7 +1950,10 @@
       "Reverse Transaction": "Reversar transacción",
       "Create Tenant": "Crear instancia",
       "Edit Tenant": "Editar instancia",
-      "Tenant Details": "Detalles de la instancia"
+      "Tenant Details": "Detalles de la instancia",
+      "Savings Account Opening": "Apertura de cuenta de ahorro",
+      "Savings Account Deposit": "Depósito en cuenta de ahorro",
+      "Preview": "Vista previa"
     },
     "inputs": {
       "Returned": "Devuelto",

@@ -1952,7 +1952,10 @@
       "Reverse Transaction": "Transaktion stornieren",
       "Create Tenant": "Mandant anlegen",
       "Edit Tenant": "Mandant bearbeiten",
-      "Tenant Details": "Mandantendetails"
+      "Tenant Details": "Mandantendetails",
+      "Savings Account Opening": "Eröffnung eines Sparkontos",
+      "Savings Account Deposit": "Einzahlung auf ein Sparkonto",
+      "Preview": "Vorschau"
     },
     "inputs": {
       "Returned": "Zurückgegeben",

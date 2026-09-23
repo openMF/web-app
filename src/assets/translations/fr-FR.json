@@ -1953,7 +1953,10 @@
       "Reverse Transaction": "Annuler la transaction",
       "Create Tenant": "Créer un locataire",
       "Edit Tenant": "Modifier le locataire",
-      "Tenant Details": "Détails du locataire"
+      "Tenant Details": "Détails du locataire",
+      "Savings Account Opening": "Ouverture d'un compte d'épargne",
+      "Savings Account Deposit": "Dépôt sur un compte d'épargne",
+      "Preview": "Aperçu"
     },
     "inputs": {
       "Returned": "Retourné",

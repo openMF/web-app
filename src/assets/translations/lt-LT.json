@@ -1949,7 +1949,10 @@
       "Reverse Transaction": "Atšaukti operaciją",
       "Create Tenant": "Sukurti nuomininką",
       "Edit Tenant": "Redaguoti nuomininką",
-      "Tenant Details": "Nuomininko informacija"
+      "Tenant Details": "Nuomininko informacija",
+      "Savings Account Opening": "Taupomosios sąskaitos atidarymas",
+      "Savings Account Deposit": "Indėlis į taupomąją sąskaitą",
+      "Preview": "Peržiūra"
     },
     "inputs": {
       "Returned": "Grąžintas",
