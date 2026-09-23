@@ -556,7 +556,17 @@
       "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
       "unknown": "The tenant management request could not be completed.",
       "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
-    }
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -940,7 +950,9 @@
       "Mass Reject": "Rifiuta in massa",
       "Hide": "Nascondi",
       "Sign In": "Sign In",
-      "Sign Out": "Sign Out"
+      "Sign Out": "Sign Out",
+      "Adjust": "Rettifica",
+      "Reverse": "Storna"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1928,7 +1940,8 @@
       "Enrollment Details": "Dettagli registrazione",
       "Tenant Management": "Tenant Management",
       "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection"
+      "Database Connection": "Database Connection",
+      "Reverse Transaction": "Storna transazione"
     },
     "inputs": {
       "Returned": "Restituito",
@@ -4221,7 +4234,8 @@
       "Are you sure you want to undo the charge-off": "Sei sicuro di voler annullare l'addebito?",
       "Restart Period from Reset Date splits the current period": "Se abilitato, il periodo di violazione corrente viene suddiviso alla data di ripristino e un nuovo periodo inizia da quella data.",
       "Breach evaluation will stop": "La valutazione delle violazioni si interrompe il {{date}}. I risultati precedenti restano registrati ma vengono nascosti fino a una nuova abilitazione.",
-      "Breach evaluation will resume": "La valutazione delle violazioni riprende il {{date}}. Il prestito viene valutato di nuovo a partire da quella data."
+      "Breach evaluation will resume": "La valutazione delle violazioni riprende il {{date}}. Il prestito viene valutato di nuovo a partire da quella data.",
+      "This will reopen the loan account": "Il prestito è chiuso o sovrapagato: questa operazione riaprirà il conto."
     },
     "text": {
       "Cash received cannot be less than the check amount": "I contanti ricevuti non possono essere inferiori all'importo dell'assegno.",
@@ -5259,7 +5273,10 @@
       "Unrecognised status": "Unrecognised status",
       "Manage the tenants of this installation": "Manage the tenants of this installation",
       "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here."
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Adjust": "Rettifica",
+      "Identifies the new transaction created by the adjustment": "Identifica la nuova transazione creata dalla rettifica",
+      "Identifies the reversal of the original transaction": "Identifica lo storno della transazione originale"
     },
     "permissions": {
       "actions": {

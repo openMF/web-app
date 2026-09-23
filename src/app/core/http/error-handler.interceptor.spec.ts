@@ -82,4 +82,108 @@ describe('ErrorHandlerInterceptor', () => {
     intercept('/fineract-provider/api/v1/businessdate', 404);
     expect(alert).toHaveBeenCalled();
   });
+
+  describe('domain rule violations', () => {
+    const REVERSE_ONLY_CODE = 'error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed';
+
+    /**
+     * Encodes the error body the way the browser delivers it to a request that
+     * asked for an ArrayBuffer response. The buffer is filled byte by byte
+     * instead of through `TextEncoder`, whose output belongs to another realm
+     * under jsdom and would therefore fail the interceptor's `instanceof` check.
+     * @param body Error body sent by the backend
+     */
+    function encodeBody(body: unknown): ArrayBuffer {
+      const json = JSON.stringify(body);
+      const buffer = new ArrayBuffer(json.length);
+      const bytes = new Uint8Array(buffer);
+      for (let index = 0; index < json.length; index++) {
+        bytes[index] = json.charCodeAt(index);
+      }
+      return buffer;
+    }
+
+    /**
+     * Drives the interceptor with the envelope the backend sends for a domain
+     * rule violation: a generic code on the envelope and the meaningful one on
+     * the nested error.
+     * @param nestedCode Globalisation code of the nested error
+     * @param translations Keys the translate service knows about
+     * @param asArrayBuffer Sends the body encoded, as requests that ask for an
+     * ArrayBuffer response receive it
+     */
+    function interceptDomainRuleViolation(
+      nestedCode: string,
+      translations: { [key: string]: string } = {},
+      asArrayBuffer = false
+    ): void {
+      TestBed.resetTestingModule();
+      alert = jest.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          ErrorHandlerInterceptor,
+          { provide: AlertService, useValue: { alert } },
+          {
+            provide: TranslateService,
+            useValue: { instant: (key: string) => translations[key] ?? key }
+          }
+        ]
+      });
+      const localInterceptor = TestBed.inject(ErrorHandlerInterceptor);
+      const body = {
+        userMessageGlobalisationCode: 'validation.msg.domain.rule.violation',
+        defaultUserMessage: 'Request was understood but caused a domain rule violation.',
+        errors: [
+          {
+            userMessageGlobalisationCode: nestedCode,
+            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit'
+          }
+        ]
+      };
+      const response = new HttpErrorResponse({
+        status: 403,
+        url: '/fineract-provider/api/v1/loans/1/transactions/77',
+        error: asArrayBuffer ? encodeBody(body) : body
+      });
+      try {
+        (localInterceptor as any).handleError(response, new HttpRequest('POST', response.url, {})).subscribe({
+          error: (): void => undefined
+        });
+      } catch {
+        // The interceptor rethrows after alerting, which is the path under test.
+      }
+    }
+
+    it('shows the translated message for the backend code', () => {
+      interceptDomainRuleViolation(REVERSE_ONLY_CODE, {
+        [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.'
+      });
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('shows the translated message when the body arrives as an ArrayBuffer', () => {
+      interceptDomainRuleViolation(
+        REVERSE_ONLY_CODE,
+        { [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.' },
+        true
+      );
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('falls back to the server message when the code has no translation', () => {
+      interceptDomainRuleViolation(REVERSE_ONLY_CODE);
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit'
+        })
+      );
+    });
+  });
 });
