@@ -223,6 +223,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Neexistuje žádný aktivní reset, který by bylo možné vrátit.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Úvěr nemá plán porušení.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Toto období porušení již bylo resetováno. Před dalším resetem vraťte stávající reset.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Datum úpravy poplatku nesmí předcházet datu splatnosti poplatku.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Úprava poplatku není spojena s žádným poplatkem, a proto ji nelze upravit.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Tento typ transakce nelze u úvěru na provozní kapitál upravit.",
+    "wc.loan.charge.adjustment.invalid.status": "Úpravy poplatků nejsou v aktuálním stavu úvěru povoleny.",
+    "wc.loan.charge.adjustment.inactive.charge": "Úpravy poplatků nejsou u neaktivního poplatku povoleny.",
+    "wc.loan.charge.adjustment.invalid.amount": "Částka nesmí být vyšší než částka poplatku dostupná pro úpravu.",
     "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",
     "clientNotInGSIM": "Klient s ID {{id}} není přítomen v GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Výše kapitalizovaného příjmu již upravená",
@@ -1088,7 +1094,8 @@
       "Post Dividends": "Zaúčtovat dividendy",
       "Convert": "Převést",
       "Deleting": "Mazání",
-      "Inactivate": "Deaktivovat"
+      "Inactivate": "Deaktivovat",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -5656,7 +5663,10 @@
       "Closed": "Uzavřeno",
       "Dashboard Export": "Export přehledu",
       "Generated on": "Vygenerováno",
-      "Automated export": "Toto je automatický export z globálního přehledu Mifos X"
+      "Automated export": "Toto je automatický export z globálního přehledu Mifos X",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu",
+      "Remaining discount fee available to adjust": "Zbývající poplatek za slevu k úpravě",
+      "Cannot precede the discount fee date": "Nesmí předcházet datu poplatku za slevu"
     },
     "permissions": {
       "actions": {
@@ -5893,7 +5903,8 @@
       "validationSaved": "Ověřovací data byla úspěšně uložena.",
       "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována.",
       "identityDescriptionsUpdated": "Popisy dokladů totožnosti byly úspěšně aktualizovány.",
-      "identityDescriptionsUpdateFailed": "Některé popisy dokladů totožnosti se nepodařilo aktualizovat."
+      "identityDescriptionsUpdateFailed": "Některé popisy dokladů totožnosti se nepodařilo aktualizovat.",
+      "unableToAdjustDiscountFee": "Poplatek za slevu se nepodařilo upravit."
     },
     "selections": {
       "standingInstructions": {

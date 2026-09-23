@@ -221,6 +221,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Il n'y a aucune réinitialisation active à annuler.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Le prêt n'a pas de calendrier de manquement.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Cette période de manquement a déjà été réinitialisée. Annulez la réinitialisation existante avant de réinitialiser à nouveau.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "La date de l'ajustement de frais ne peut pas être antérieure à la date d'échéance des frais.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "L'ajustement de frais n'est lié à aucun frais et ne peut donc pas être ajusté.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Ce type de transaction ne peut pas être ajusté sur un prêt de fonds de roulement.",
+    "wc.loan.charge.adjustment.invalid.status": "Les ajustements de frais ne sont pas autorisés pour le statut actuel du prêt.",
+    "wc.loan.charge.adjustment.inactive.charge": "Les ajustements de frais ne sont pas autorisés sur des frais inactifs.",
+    "wc.loan.charge.adjustment.invalid.amount": "Le montant ne peut pas être supérieur au montant des frais disponible pour l'ajustement.",
     "error.resource.notImplemented.type": "Non implémenté",
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
@@ -1087,7 +1093,8 @@
       "Post Dividends": "Comptabiliser les dividendes",
       "Convert": "Convertir",
       "Deleting": "Suppression",
-      "Inactivate": "Désactiver"
+      "Inactivate": "Désactiver",
+      "Discount Fee Adjustment": "Ajustement des frais de remise"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -5655,7 +5662,10 @@
       "Closed": "Clôturé",
       "Dashboard Export": "Export du tableau de bord",
       "Generated on": "Généré le",
-      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X"
+      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
+      "Discount Fee Adjustment": "Ajustement des frais de remise",
+      "Remaining discount fee available to adjust": "Frais de remise restants pouvant être ajustés",
+      "Cannot precede the discount fee date": "Ne peut pas précéder la date des frais de remise"
     },
     "permissions": {
       "actions": {
@@ -5956,7 +5966,8 @@
       "validationSaved": "Données de validation enregistrées avec succès.",
       "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès.",
       "identityDescriptionsUpdated": "Les descriptions des pièces d'identité ont été mises à jour.",
-      "identityDescriptionsUpdateFailed": "Certaines descriptions de pièces d'identité n'ont pas pu être mises à jour."
+      "identityDescriptionsUpdateFailed": "Certaines descriptions de pièces d'identité n'ont pas pu être mises à jour.",
+      "unableToAdjustDiscountFee": "Impossible d'ajuster les frais de remise."
     },
     "selections": {
       "standingInstructions": {
