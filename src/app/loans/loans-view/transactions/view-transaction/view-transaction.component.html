@@ -19,6 +19,18 @@
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Adjust' | translate }}
       </button>
     </span>
+    @if (allowDiscountFeeAdjustment) {
+      <span *mifosxHasPermission="'DISCOUNTFEEADJUSTMENT_WORKINGCAPITALLOAN'">
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="'discount-fee-adjustment'"
+          queryParamsHandling="preserve"
+        >
+          <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Discount Fee Adjustment' | translate }}
+        </button>
+      </span>
+    }
     <span *mifosxHasPermission="undoPermission">
       <button mat-raised-button color="warn" (click)="undoTransaction()" [disabled]="!allowUndo">
         <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ undoButtonLabelKey | translate }}
