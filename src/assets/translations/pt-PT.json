@@ -551,11 +551,11 @@
       "amountMustBePositive": "O montante da transação deve ser superior a 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Gestão de inquilinos",
+      "unauthorized": "A sua sessão de gestão de inquilinos já não é válida. Inicie sessão novamente.",
+      "notAvailable": "Este servidor não oferece administração de inquilinos. O plugin de gestão de inquilinos do Fineract não está instalado.",
+      "unknown": "Não foi possível concluir o pedido de gestão de inquilinos.",
+      "signInRejected": "Essas credenciais mestras foram recusadas. A administração de inquilinos precisa de um utilizador mestre, não do utilizador de um inquilino."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "O servidor de base de dados recusou as credenciais deste inquilino.",
+    "error.msg.tenant.schema.creation.not.permitted": "O utilizador da base de dados não tem permissão para criar bases de dados. Conceda-lhe essa permissão ou crie a base de dados antes do inquilino.",
+    "error.msg.tenant.schema.absent": "O servidor de base de dados não tem nenhuma base de dados com esse nome.",
+    "error.msg.tenant.connection.failed": "Não foi possível aceder à base de dados do inquilino."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "Carregar modelo de relatório",
       "Mass Reject": "Rejeitar em massa",
       "Hide": "Ocultar",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Iniciar sessão",
+      "Sign Out": "Terminar sessão",
       "Adjust": "Ajustar",
-      "Reverse": "Estornar"
+      "Reverse": "Estornar",
+      "Create Tenant": "Criar inquilino",
+      "Test Connection": "Testar ligação"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1233,9 +1239,9 @@
       "xbrlmapping": "Mapeamento XBRL",
       "Enabled": "Habilitado",
       "Disabled": "Desabilitado",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Ativo",
+      "INACTIVE": "Inativo",
+      "SUSPENDED": "Suspenso"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -1937,10 +1943,13 @@
       "Advanced Configuration": "Configuração avançada",
       "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito",
       "Enrollment Details": "Detalhes da inscrição",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Estornar transação"
+      "Tenant Management": "Gestão de inquilinos",
+      "Tenant Management Sign In": "Iniciar sessão na gestão de inquilinos",
+      "Database Connection": "Ligação à base de dados",
+      "Reverse Transaction": "Estornar transação",
+      "Create Tenant": "Criar inquilino",
+      "Edit Tenant": "Editar inquilino",
+      "Tenant Details": "Detalhes do inquilino"
     },
     "inputs": {
       "Returned": "Devolvido",
@@ -3969,18 +3978,19 @@
       "Registration Status": "Estado do registo",
       "Unknown": "Desconhecido",
       "Pending": "Pendente",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Identificador do inquilino",
+      "Time Zone": "Fuso horário",
+      "Contact Email": "E-mail de contacto",
+      "Master Username": "Utilizador mestre",
+      "Master Password": "Palavra-passe mestra",
+      "Schema Name": "Nome do esquema",
+      "Schema Server": "Servidor do esquema",
+      "Schema Server Port": "Porta do servidor do esquema",
+      "Schema Username": "Utilizador do esquema",
+      "Schema Connection Parameters": "Parâmetros de ligação do esquema",
+      "Auto Update": "Atualização automática",
+      "Search by identifier or name": "Procurar por identificador ou nome",
+      "Schema Password": "Palavra-passe do esquema"
     },
     "links": {
       "Community": "Comunidade",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "Se ativado, o período de incumprimento atual é dividido na data de reinício e um novo período começa a partir dessa data.",
       "Breach evaluation will stop": "A avaliação de violações para em {{date}}. Os resultados anteriores são mantidos, mas ficam ocultos até voltar a ativá-la.",
       "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data.",
-      "This will reopen the loan account": "O empréstimo está fechado ou com pagamento em excesso: esta operação reabrirá a conta."
+      "This will reopen the loan account": "O empréstimo está fechado ou com pagamento em excesso: esta operação reabrirá a conta.",
+      "Activate tenant": "Ativar o inquilino {{identifier}}",
+      "Deactivate tenant": "Desativar o inquilino {{identifier}} — todos os pedidos para ele serão recusados até ser novamente ativado",
+      "Suspend tenant": "Suspender o inquilino {{identifier}} — todos os pedidos para ele serão recusados até ser novamente ativado",
+      "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
       "Cash received cannot be less than the check amount": "O numerário recebido não pode ser inferior ao montante do cheque.",
@@ -5267,15 +5281,38 @@
       "No pending prospects found": "Nenhum prospecto pendente encontrado",
       "Unable to load pending prospects": "Não foi possível carregar os prospectos pendentes",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Não foi possível recalcular o valor para esta data. Selecione a data novamente para tentar de novo.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Sessão iniciada como utilizador mestre",
+      "No tenants found": "Nenhum inquilino encontrado",
+      "Unrecognised status": "Estado não reconhecido",
+      "Manage the tenants of this installation": "Gerir os inquilinos desta instalação",
+      "Tenant management master context": "A administração de inquilinos está acima de cada inquilino, pelo que precisa de um utilizador mestre próprio. O utilizador de um inquilino não pode iniciar sessão aqui, por mais permissões que tenha nesse inquilino.",
+      "Tenant database password write only": "A palavra-passe da base de dados é guardada cifrada e nunca é devolvida pelo servidor, por isso não pode ser mostrada aqui.",
       "Adjust": "Ajustar",
       "Identifies the new transaction created by the adjustment": "Identifica a nova transação criada pelo ajuste",
-      "Identifies the reversal of the original transaction": "Identifica o estorno da transação original"
+      "Identifies the reversal of the original transaction": "Identifica o estorno da transação original",
+      "Tenant identifier format": "Letras minúsculas, dígitos, hífen e sublinhado; não pode ser alterado mais tarde.",
+      "Schema name format": "Letras, dígitos e sublinhado, começando por uma letra ou sublinhado, no máximo 63 caracteres.",
+      "Port range": "Introduza uma porta entre 1 e 65535.",
+      "Tenant database created if absent": "A base de dados é criada se não existir e reutilizada — nunca esvaziada — se já existir.",
+      "Schema connection parameters hint": "Parâmetros JDBC adicionais, por exemplo sslmode=verify-full para uma base de dados noutro anfitrião.",
+      "Testing the connection": "A testar a ligação…",
+      "Provisioning a tenant takes a while": "Criar e migrar a base de dados pode demorar um minuto. Mantenha esta página aberta até terminar.",
+      "Tenant identifier cannot be changed": "Não pode ser alterado — cada pedido seleciona um inquilino por ele.",
+      "Schema name cannot be changed": "Não pode ser alterado — os dados do inquilino já estão aí.",
+      "Leave blank to clear": "Deixe em branco para limpar.",
+      "Leave blank to keep the stored password": "Deixe em branco para manter a palavra-passe guardada.",
+      "Enter the password to test": "Introduza a palavra-passe da base de dados para testar a ligação. A guardada nunca é devolvida.",
+      "Deactivate before removing": "Desative o inquilino antes de o remover.",
+      "Test connection on create hint": "Verifica o servidor, as credenciais e se a base de dados já existe.",
+      "Schema username hint": "Um utilizador de base de dados já existente nesse servidor. Precisa de permissão para criar bases de dados.",
+      "Schema password hint": "A palavra-passe atual desse utilizador. O plugin cria a base de dados, não o utilizador, por isso não é uma palavra-passe que escolha aqui.",
+      "Database server did not answer": "O servidor de base de dados não respondeu nesse anfitrião e porta.",
+      "Database server refused the credentials": "O servidor de base de dados recusou estas credenciais.",
+      "Existing database will be reused": "As credenciais funcionam e já existe uma base de dados com esse nome. Será reutilizada, não esvaziada.",
+      "Database will be created on submit": "As credenciais funcionam. A base de dados ainda não existe e será criada ao submeter.",
+      "Tenant database answered": "A base de dados respondeu.",
+      "Tenant database is missing": "As credenciais funcionam, mas o servidor não tem nenhuma base de dados com esse nome.",
+      "Prove the connection before saving": "Teste a ligação antes de guardar detalhes da base de dados alterados. O servidor aceita-os sem verificação e a plataforma deixa de arrancar no reinício seguinte, porque um inquilino que não pode ser migrado impede o arranque de todos."
     },
     "permissions": {
       "actions": {

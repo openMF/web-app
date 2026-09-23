@@ -553,11 +553,11 @@
       "amountMustBePositive": "Částka transakce musí být větší než 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Správa tenantů",
+      "unauthorized": "Vaše relace správy tenantů již není platná. Přihlaste se znovu.",
+      "notAvailable": "Tento server neposkytuje správu tenantů. Zásuvný modul správy tenantů pro Fineract není nainstalován.",
+      "unknown": "Požadavek správy tenantů se nepodařilo dokončit.",
+      "signInRejected": "Tyto hlavní přihlašovací údaje byly odmítnuty. Správa tenantů vyžaduje hlavního uživatele, nikoli uživatele konkrétního tenanta."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -568,7 +568,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "Databázový server odmítl přihlašovací údaje tohoto tenanta.",
+    "error.msg.tenant.schema.creation.not.permitted": "Databázový uživatel nesmí vytvářet databáze. Udělte mu toto oprávnění, nebo databázi vytvořte před tenantem.",
+    "error.msg.tenant.schema.absent": "Databázový server nemá žádnou databázi tohoto názvu.",
+    "error.msg.tenant.connection.failed": "Databázi tenanta se nepodařilo kontaktovat."
   },
   "labels": {
     "version": {
@@ -950,10 +954,12 @@
       "Upload Report Design": "Nahrát návrh zprávy",
       "Mass Reject": "Hromadně zamítnout",
       "Hide": "Skrýt",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Přihlásit se",
+      "Sign Out": "Odhlásit se",
       "Adjust": "Upravit",
-      "Reverse": "Stornovat"
+      "Reverse": "Stornovat",
+      "Create Tenant": "Vytvořit tenanta",
+      "Test Connection": "Otestovat připojení"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1234,9 +1240,9 @@
       "xbrlmapping": "XBRL Mapování",
       "Enabled": "Povoleno",
       "Disabled": "Zakázáno",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Aktivní",
+      "INACTIVE": "Neaktivní",
+      "SUSPENDED": "Pozastavený"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1939,10 +1945,13 @@
       "Advanced Configuration": "Pokročilá konfigurace",
       "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr",
       "Enrollment Details": "Podrobnosti registrace",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Stornovat transakci"
+      "Tenant Management": "Správa tenantů",
+      "Tenant Management Sign In": "Přihlášení do správy tenantů",
+      "Database Connection": "Připojení k databázi",
+      "Reverse Transaction": "Stornovat transakci",
+      "Create Tenant": "Vytvořit tenanta",
+      "Edit Tenant": "Upravit tenanta",
+      "Tenant Details": "Podrobnosti tenanta"
     },
     "inputs": {
       "Returned": "Vráceno",
@@ -3971,18 +3980,19 @@
       "Registration Status": "Stav registrace",
       "Unknown": "Neznámé",
       "Pending": "Nevyřízené",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Identifikátor tenanta",
+      "Time Zone": "Časové pásmo",
+      "Contact Email": "Kontaktní e-mail",
+      "Master Username": "Hlavní uživatelské jméno",
+      "Master Password": "Hlavní heslo",
+      "Schema Name": "Název schématu",
+      "Schema Server": "Server schématu",
+      "Schema Server Port": "Port serveru schématu",
+      "Schema Username": "Uživatel schématu",
+      "Schema Connection Parameters": "Parametry připojení schématu",
+      "Auto Update": "Automatická aktualizace",
+      "Search by identifier or name": "Hledat podle identifikátoru nebo názvu",
+      "Schema Password": "Heslo schématu"
     },
     "links": {
       "Community": "Společenství",
@@ -4237,7 +4247,11 @@
       "Restart Period from Reset Date splits the current period": "Pokud je povoleno, aktuální období porušení se rozdělí k datu resetu a nové období začne od tohoto data.",
       "Breach evaluation will stop": "Hodnocení porušení se zastaví {{date}}. Předchozí výsledky zůstanou uloženy, ale budou skryty až do opětovného povolení.",
       "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen.",
-      "This will reopen the loan account": "Úvěr je uzavřen nebo přeplacen: touto operací se účet znovu otevře."
+      "This will reopen the loan account": "Úvěr je uzavřen nebo přeplacen: touto operací se účet znovu otevře.",
+      "Activate tenant": "Aktivovat tenanta {{identifier}}",
+      "Deactivate tenant": "Deaktivovat tenanta {{identifier}} — všechny požadavky na něj budou odmítnuty, dokud nebude znovu aktivován",
+      "Suspend tenant": "Pozastavit tenanta {{identifier}} — všechny požadavky na něj budou odmítnuty, dokud nebude znovu aktivován",
+      "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
       "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",
@@ -5269,15 +5283,38 @@
       "No pending prospects found": "Nebyly nalezeny žádné nevyřízené prospekty",
       "Unable to load pending prospects": "Nelze načíst nevyřízené prospekty",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Částku pro toto datum se nepodařilo znovu vypočítat. Pro opakování vyberte datum znovu.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Přihlášen jako hlavní uživatel",
+      "No tenants found": "Nebyli nalezeni žádní tenanti",
+      "Unrecognised status": "Nerozpoznaný stav",
+      "Manage the tenants of this installation": "Spravovat tenanty této instalace",
+      "Tenant management master context": "Správa tenantů stojí nad jednotlivými tenanty, a proto vyžaduje vlastního hlavního uživatele. Uživatel konkrétního tenanta se sem nepřihlásí, ať má v daném tenantovi jakákoli oprávnění.",
+      "Tenant database password write only": "Heslo k databázi je uloženo zašifrované a server je nikdy nevrací, proto je zde nelze zobrazit.",
       "Adjust": "Upravit",
       "Identifies the new transaction created by the adjustment": "Identifikuje novou transakci vytvořenou úpravou",
-      "Identifies the reversal of the original transaction": "Identifikuje storno původní transakce"
+      "Identifies the reversal of the original transaction": "Identifikuje storno původní transakce",
+      "Tenant identifier format": "Malá písmena, číslice, pomlčka a podtržítko; později jej nelze změnit.",
+      "Schema name format": "Písmena, číslice a podtržítko, začínající písmenem nebo podtržítkem, nejvýše 63 znaků.",
+      "Port range": "Zadejte port od 1 do 65535.",
+      "Tenant database created if absent": "Databáze se vytvoří, pokud neexistuje, a znovu se použije — nikdy se nevyprázdní —, pokud již existuje.",
+      "Schema connection parameters hint": "Další parametry JDBC, například sslmode=verify-full pro databázi na jiném hostiteli.",
+      "Testing the connection": "Probíhá test připojení…",
+      "Provisioning a tenant takes a while": "Vytvoření a migrace databáze může trvat minutu. Nechte tuto stránku otevřenou, dokud se nedokončí.",
+      "Tenant identifier cannot be changed": "Nelze změnit — každý požadavek podle něj vybírá tenanta.",
+      "Schema name cannot be changed": "Nelze změnit — data tenanta jsou již tam.",
+      "Leave blank to clear": "Ponechte prázdné pro vymazání.",
+      "Leave blank to keep the stored password": "Ponechte prázdné pro zachování uloženého hesla.",
+      "Enter the password to test": "Zadejte heslo k databázi pro test připojení. Uložené heslo se nikdy nevrací.",
+      "Deactivate before removing": "Před odstraněním tenanta jej deaktivujte.",
+      "Test connection on create hint": "Ověří server, přihlašovací údaje a zda databáze již existuje.",
+      "Schema username hint": "Existující databázový uživatel na tomto serveru. Potřebuje oprávnění vytvářet databáze.",
+      "Schema password hint": "Stávající heslo tohoto uživatele. Zásuvný modul vytváří databázi, nikoli uživatele, takže to není heslo, které si zde volíte.",
+      "Database server did not answer": "Databázový server na tomto hostiteli a portu neodpověděl.",
+      "Database server refused the credentials": "Databázový server tyto přihlašovací údaje odmítl.",
+      "Existing database will be reused": "Přihlašovací údaje fungují a databáze tohoto názvu již existuje. Bude znovu použita, nikoli vyprázdněna.",
+      "Database will be created on submit": "Přihlašovací údaje fungují. Databáze zatím neexistuje a vytvoří se při odeslání.",
+      "Tenant database answered": "Databáze odpověděla.",
+      "Tenant database is missing": "Přihlašovací údaje fungují, ale server nemá žádnou databázi tohoto názvu.",
+      "Prove the connection before saving": "Před uložením změněných údajů o databázi otestujte připojení. Server je přijme neověřené a platforma se pak při příštím startu nespustí, protože tenant, kterého nelze migrovat, zabrání startu všech tenantů."
     },
     "permissions": {
       "actions": {

@@ -551,11 +551,11 @@
       "amountMustBePositive": "Kiasi cha muamala lazima kiwe kikubwa kuliko 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Usimamizi wa tenant",
+      "unauthorized": "Kipindi chako cha usimamizi wa tenant hakitumiki tena. Ingia upya.",
+      "notAvailable": "Seva hii haitoi usimamizi wa tenant. Programu-jalizi ya usimamizi wa tenant ya Fineract haijasakinishwa.",
+      "unknown": "Ombi la usimamizi wa tenant halikuweza kukamilika.",
+      "signInRejected": "Vitambulisho hivyo vikuu vilikataliwa. Usimamizi wa tenant unahitaji mtumiaji mkuu, si mtumiaji wa tenant."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "Seva ya hifadhidata ilikataa vitambulisho vya tenant hii.",
+    "error.msg.tenant.schema.creation.not.permitted": "Mtumiaji wa hifadhidata haruhusiwi kuunda hifadhidata. Mpe ruhusa hiyo au unda hifadhidata kabla ya tenant.",
+    "error.msg.tenant.schema.absent": "Seva ya hifadhidata haina hifadhidata yenye jina hilo.",
+    "error.msg.tenant.connection.failed": "Hifadhidata ya tenant haikuweza kufikiwa."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "Pakia Muundo wa Ripoti",
       "Mass Reject": "Kataa kwa wingi",
       "Hide": "Ficha",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Ingia",
+      "Sign Out": "Toka",
       "Adjust": "Rekebisha",
-      "Reverse": "Batilisha"
+      "Reverse": "Batilisha",
+      "Create Tenant": "Unda tenant",
+      "Test Connection": "Jaribu muunganisho"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1231,9 +1237,9 @@
       "xbrlmapping": "Ramani ya XBRL",
       "Enabled": "Imewashwa",
       "Disabled": "Imezimwa",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Hai",
+      "INACTIVE": "Isiyo hai",
+      "SUSPENDED": "Imesimamishwa"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1935,10 +1941,13 @@
       "Advanced Configuration": "Usanidi wa kina",
       "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi",
       "Enrollment Details": "Maelezo ya usajili",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Batilisha Muamala"
+      "Tenant Management": "Usimamizi wa tenant",
+      "Tenant Management Sign In": "Ingia kwenye usimamizi wa tenant",
+      "Database Connection": "Muunganisho wa hifadhidata",
+      "Reverse Transaction": "Batilisha Muamala",
+      "Create Tenant": "Unda tenant",
+      "Edit Tenant": "Hariri tenant",
+      "Tenant Details": "Maelezo ya tenant"
     },
     "inputs": {
       "Returned": "Imerudishwa",
@@ -3967,18 +3976,19 @@
       "Registration Status": "Hali ya usajili",
       "Unknown": "Haijulikani",
       "Pending": "Inasubiri",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Kitambulisho cha tenant",
+      "Time Zone": "Saa za eneo",
+      "Contact Email": "Barua pepe ya mawasiliano",
+      "Master Username": "Jina la mtumiaji mkuu",
+      "Master Password": "Nenosiri kuu",
+      "Schema Name": "Jina la skema",
+      "Schema Server": "Seva ya skema",
+      "Schema Server Port": "Bandari ya seva ya skema",
+      "Schema Username": "Mtumiaji wa skema",
+      "Schema Connection Parameters": "Vigezo vya muunganisho wa skema",
+      "Auto Update": "Sasisho otomatiki",
+      "Search by identifier or name": "Tafuta kwa kitambulisho au jina",
+      "Schema Password": "Nenosiri la skema"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4232,7 +4242,11 @@
       "Restart Period from Reset Date splits the current period": "Ikiwashwa, kipindi cha sasa cha ukiukaji hugawanywa katika tarehe ya uwekaji upya na kipindi kipya huanza kuanzia tarehe hiyo.",
       "Breach evaluation will stop": "Tathmini ya ukiukaji itasimama tarehe {{date}}. Matokeo ya awali yatahifadhiwa lakini yatafichwa hadi uwashe tena.",
       "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo.",
-      "This will reopen the loan account": "Mkopo umefungwa au umelipwa zaidi: operesheni hii itafungua akaunti tena."
+      "This will reopen the loan account": "Mkopo umefungwa au umelipwa zaidi: operesheni hii itafungua akaunti tena.",
+      "Activate tenant": "Washa tenant {{identifier}}",
+      "Deactivate tenant": "Zima tenant {{identifier}} — kila ombi linaloelekezwa kwake litakataliwa hadi iwashwe tena",
+      "Suspend tenant": "Simamisha tenant {{identifier}} — kila ombi linaloelekezwa kwake litakataliwa hadi iwashwe tena",
+      "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
       "Cash received cannot be less than the check amount": "Pesa taslimu zilizopokelewa haziwezi kuwa chini ya kiasi cha hundi.",
@@ -5264,15 +5278,38 @@
       "No pending prospects found": "Hakuna watarajiwa wanaosubiri waliopatikana",
       "Unable to load pending prospects": "Imeshindwa kupakia watarajiwa wanaosubiri",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Kiasi hakikuweza kukokotolewa upya kwa tarehe hii. Chagua tarehe tena ili kujaribu upya.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Umeingia kama mtumiaji mkuu",
+      "No tenants found": "Hakuna tenant iliyopatikana",
+      "Unrecognised status": "Hali isiyotambulika",
+      "Manage the tenants of this installation": "Simamia tenant za usakinishaji huu",
+      "Tenant management master context": "Usimamizi wa tenant uko juu ya kila tenant, hivyo unahitaji mtumiaji mkuu wake. Mtumiaji wa tenant hawezi kuingia hapa, hata awe na ruhusa kiasi gani ndani ya tenant hiyo.",
+      "Tenant database password write only": "Nenosiri la hifadhidata huhifadhiwa likiwa limesimbwa na seva hairudishi kamwe, hivyo haliwezi kuonyeshwa hapa.",
       "Adjust": "Rekebisha",
       "Identifies the new transaction created by the adjustment": "Inatambua muamala mpya ulioundwa na marekebisho",
-      "Identifies the reversal of the original transaction": "Inatambua ubatilishaji wa muamala asili"
+      "Identifies the reversal of the original transaction": "Inatambua ubatilishaji wa muamala asili",
+      "Tenant identifier format": "Herufi ndogo, tarakimu, kistari na mstari chini; haiwezi kubadilishwa baadaye.",
+      "Schema name format": "Herufi, tarakimu na mstari chini, kuanzia herufi au mstari chini, si zaidi ya herufi 63.",
+      "Port range": "Weka bandari kati ya 1 na 65535.",
+      "Tenant database created if absent": "Hifadhidata huundwa ikiwa haipo, na hutumika tena — haifutwi kamwe — ikiwa tayari ipo.",
+      "Schema connection parameters hint": "Vigezo vya ziada vya JDBC, kwa mfano sslmode=verify-full kwa hifadhidata iliyo kwenye seva nyingine.",
+      "Testing the connection": "Inajaribu muunganisho…",
+      "Provisioning a tenant takes a while": "Kuunda na kuhamisha hifadhidata kunaweza kuchukua dakika moja. Acha ukurasa huu wazi hadi ikamilike.",
+      "Tenant identifier cannot be changed": "Haiwezi kubadilishwa — kila ombi huchagua tenant kwa kitambulisho hiki.",
+      "Schema name cannot be changed": "Haiwezi kubadilishwa — data ya tenant tayari iko humo.",
+      "Leave blank to clear": "Acha wazi ili kufuta.",
+      "Leave blank to keep the stored password": "Acha wazi ili kubakiza nenosiri lililohifadhiwa.",
+      "Enter the password to test": "Weka nenosiri la hifadhidata ili kujaribu muunganisho. Lile lililohifadhiwa halirudishwi kamwe.",
+      "Deactivate before removing": "Zima tenant kabla ya kuiondoa.",
+      "Test connection on create hint": "Hukagua seva, vitambulisho, na kama hifadhidata tayari ipo.",
+      "Schema username hint": "Mtumiaji wa hifadhidata aliyepo tayari kwenye seva hiyo. Anahitaji ruhusa ya kuunda hifadhidata.",
+      "Schema password hint": "Nenosiri la sasa la mtumiaji huyo. Programu-jalizi huunda hifadhidata, si mtumiaji, hivyo hili si nenosiri unalochagua hapa.",
+      "Database server did not answer": "Seva ya hifadhidata haikujibu kwenye seva na mlango huo.",
+      "Database server refused the credentials": "Seva ya hifadhidata ilikataa vitambulisho hivi.",
+      "Existing database will be reused": "Vitambulisho vinafanya kazi na hifadhidata yenye jina hilo tayari ipo. Itatumika tena, haitafutwa.",
+      "Database will be created on submit": "Vitambulisho vinafanya kazi. Hifadhidata bado haipo na itaundwa unapowasilisha.",
+      "Tenant database answered": "Hifadhidata ilijibu.",
+      "Tenant database is missing": "Vitambulisho vinafanya kazi, lakini seva haina hifadhidata yenye jina hilo.",
+      "Prove the connection before saving": "Jaribu muunganisho kabla ya kuhifadhi maelezo ya hifadhidata yaliyobadilishwa. Seva huyakubali bila kuthibitishwa, kisha mfumo hushindwa kuanza wakati ujao, kwa sababu tenant moja isiyoweza kuhamishwa huzuia tenant zote kuanza."
     },
     "permissions": {
       "actions": {

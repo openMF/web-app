@@ -551,11 +551,11 @@
       "amountMustBePositive": "Operacijos suma turi būti didesnė už 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Nuomininkų valdymas",
+      "unauthorized": "Jūsų nuomininkų valdymo sesija nebegalioja. Prisijunkite iš naujo.",
+      "notAvailable": "Šis serveris nesiūlo nuomininkų administravimo. Fineract nuomininkų valdymo papildinys neįdiegtas.",
+      "unknown": "Nuomininkų valdymo užklausos nepavyko įvykdyti.",
+      "signInRejected": "Šie pagrindiniai prisijungimo duomenys buvo atmesti. Nuomininkų administravimui reikia pagrindinio naudotojo, o ne nuomininko naudotojo."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "Duomenų bazės serveris atmetė šio nuomininko prisijungimo duomenis.",
+    "error.msg.tenant.schema.creation.not.permitted": "Duomenų bazės naudotojui neleidžiama kurti duomenų bazių. Suteikite jam šią teisę arba sukurkite duomenų bazę prieš nuomininką.",
+    "error.msg.tenant.schema.absent": "Duomenų bazės serveryje nėra tokiu pavadinimu duomenų bazės.",
+    "error.msg.tenant.connection.failed": "Nepavyko pasiekti nuomininko duomenų bazės."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "Įkelti ataskaitos maketą",
       "Mass Reject": "Atmesti masiškai",
       "Hide": "Slėpti",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Prisijungti",
+      "Sign Out": "Atsijungti",
       "Adjust": "Koreguoti",
-      "Reverse": "Atšaukti"
+      "Reverse": "Atšaukti",
+      "Create Tenant": "Sukurti nuomininką",
+      "Test Connection": "Tikrinti ryšį"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1232,9 +1238,9 @@
       "xbrlmapping": "XBRL Žemėlapis",
       "Enabled": "Įjungtas",
       "Disabled": "Išjungta",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Aktyvus",
+      "INACTIVE": "Neaktyvus",
+      "SUSPENDED": "Sustabdytas"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1937,10 +1943,13 @@
       "Advanced Configuration": "Išplėstinė konfigūracija",
       "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas",
       "Enrollment Details": "Registracijos informacija",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Atšaukti operaciją"
+      "Tenant Management": "Nuomininkų valdymas",
+      "Tenant Management Sign In": "Prisijungimas prie nuomininkų valdymo",
+      "Database Connection": "Duomenų bazės ryšys",
+      "Reverse Transaction": "Atšaukti operaciją",
+      "Create Tenant": "Sukurti nuomininką",
+      "Edit Tenant": "Redaguoti nuomininką",
+      "Tenant Details": "Nuomininko informacija"
     },
     "inputs": {
       "Returned": "Grąžintas",
@@ -3969,18 +3978,19 @@
       "Registration Status": "Registracijos būsena",
       "Unknown": "Nežinoma",
       "Pending": "Laukiama",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Nuomininko identifikatorius",
+      "Time Zone": "Laiko juosta",
+      "Contact Email": "Kontaktinis el. paštas",
+      "Master Username": "Pagrindinio naudotojo vardas",
+      "Master Password": "Pagrindinis slaptažodis",
+      "Schema Name": "Schemos pavadinimas",
+      "Schema Server": "Schemos serveris",
+      "Schema Server Port": "Schemos serverio prievadas",
+      "Schema Username": "Schemos naudotojas",
+      "Schema Connection Parameters": "Schemos ryšio parametrai",
+      "Auto Update": "Automatinis atnaujinimas",
+      "Search by identifier or name": "Ieškoti pagal identifikatorių arba pavadinimą",
+      "Schema Password": "Schemos slaptažodis"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "Jei įjungta, dabartinis pažeidimo laikotarpis padalijamas atstatymo data, o naujas laikotarpis prasideda nuo šios datos.",
       "Breach evaluation will stop": "Pažeidimų vertinimas sustabdomas {{date}}. Ankstesni rezultatai išsaugomi, bet paslepiami, kol vėl įjungsite.",
       "Breach evaluation will resume": "Pažeidimų vertinimas atnaujinamas {{date}}. Nuo tos dienos paskola vėl vertinama.",
-      "This will reopen the loan account": "Paskola uždaryta arba permokėta: ši operacija vėl atidarys sąskaitą."
+      "This will reopen the loan account": "Paskola uždaryta arba permokėta: ši operacija vėl atidarys sąskaitą.",
+      "Activate tenant": "Aktyvuoti nuomininką {{identifier}}",
+      "Deactivate tenant": "Deaktyvuoti nuomininką {{identifier}} — visos jam skirtos užklausos bus atmestos, kol jis nebus vėl aktyvuotas",
+      "Suspend tenant": "Sustabdyti nuomininką {{identifier}} — visos jam skirtos užklausos bus atmestos, kol jis nebus vėl aktyvuotas",
+      "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
       "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
@@ -5268,15 +5282,38 @@
       "No pending prospects found": "Laukiančių prospektų nerasta",
       "Unable to load pending prospects": "Nepavyko įkelti laukiančių prospektų",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Nepavyko iš naujo apskaičiuoti sumos šiai datai. Pasirinkite datą dar kartą, kad bandytumėte iš naujo.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Prisijungta kaip pagrindinis naudotojas",
+      "No tenants found": "Nuomininkų nerasta",
+      "Unrecognised status": "Neatpažinta būsena",
+      "Manage the tenants of this installation": "Tvarkyti šios sistemos nuomininkus",
+      "Tenant management master context": "Nuomininkų administravimas yra aukščiau už kiekvieną nuomininką, todėl jam reikia atskiro pagrindinio naudotojo. Nuomininko naudotojas čia prisijungti negali, kad ir kokias teises jis turėtų tame nuomininke.",
+      "Tenant database password write only": "Duomenų bazės slaptažodis saugomas užšifruotas ir serveris jo niekada negrąžina, todėl čia jo parodyti negalima.",
       "Adjust": "Koreguoti",
       "Identifies the new transaction created by the adjustment": "Identifikuoja naują operaciją, sukurtą koreguojant",
-      "Identifies the reversal of the original transaction": "Identifikuoja pradinės operacijos atšaukimą"
+      "Identifies the reversal of the original transaction": "Identifikuoja pradinės operacijos atšaukimą",
+      "Tenant identifier format": "Mažosios raidės, skaitmenys, brūkšnelis ir pabraukimas; vėliau jo pakeisti nebus galima.",
+      "Schema name format": "Raidės, skaitmenys ir pabraukimas, pradedant raide arba pabraukimu, ne daugiau kaip 63 simboliai.",
+      "Port range": "Įveskite prievadą nuo 1 iki 65535.",
+      "Tenant database created if absent": "Duomenų bazė sukuriama, jei jos nėra, ir naudojama pakartotinai — niekada neištrinama —, jei ji jau yra.",
+      "Schema connection parameters hint": "Papildomi JDBC parametrai, pavyzdžiui sslmode=verify-full duomenų bazei kitame serveryje.",
+      "Testing the connection": "Tikrinamas ryšys…",
+      "Provisioning a tenant takes a while": "Duomenų bazės sukūrimas ir migracija gali užtrukti minutę. Palikite šį puslapį atidarytą, kol bus baigta.",
+      "Tenant identifier cannot be changed": "Negalima keisti — pagal jį kiekviena užklausa pasirenka nuomininką.",
+      "Schema name cannot be changed": "Negalima keisti — nuomininko duomenys jau yra ten.",
+      "Leave blank to clear": "Palikite tuščią, kad išvalytumėte.",
+      "Leave blank to keep the stored password": "Palikite tuščią, kad išsaugotumėte esamą slaptažodį.",
+      "Enter the password to test": "Įveskite duomenų bazės slaptažodį ryšiui patikrinti. Išsaugotas slaptažodis niekada negrąžinamas.",
+      "Deactivate before removing": "Prieš pašalindami nuomininką, jį deaktyvuokite.",
+      "Test connection on create hint": "Patikrina serverį, prisijungimo duomenis ir ar duomenų bazė jau yra.",
+      "Schema username hint": "Tame serveryje jau esantis duomenų bazės naudotojas. Jam reikia teisės kurti duomenų bazes.",
+      "Schema password hint": "Esamas to naudotojo slaptažodis. Papildinys sukuria duomenų bazę, o ne naudotoją, todėl tai nėra slaptažodis, kurį pasirenkate čia.",
+      "Database server did not answer": "Duomenų bazės serveris tuo adresu ir prievadu neatsakė.",
+      "Database server refused the credentials": "Duomenų bazės serveris atmetė šiuos prisijungimo duomenis.",
+      "Existing database will be reused": "Prisijungimo duomenys veikia, o tokiu pavadinimu duomenų bazė jau yra. Ji bus naudojama pakartotinai, o ne ištrinta.",
+      "Database will be created on submit": "Prisijungimo duomenys veikia. Duomenų bazės dar nėra ir ji bus sukurta pateikus.",
+      "Tenant database answered": "Duomenų bazė atsakė.",
+      "Tenant database is missing": "Prisijungimo duomenys veikia, bet serveryje nėra tokiu pavadinimu duomenų bazės.",
+      "Prove the connection before saving": "Prieš išsaugodami pakeistus duomenų bazės duomenis, patikrinkite ryšį. Serveris priima juos nepatikrintus, o vėliau platforma nebepasileidžia, nes nuomininkas, kurio negalima migruoti, sustabdo visų nuomininkų paleidimą."
     },
     "permissions": {
       "actions": {

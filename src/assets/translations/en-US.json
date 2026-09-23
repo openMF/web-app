@@ -570,7 +570,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "The database server refused the credentials for this tenant.",
+    "error.msg.tenant.schema.creation.not.permitted": "The database user is not allowed to create databases. Grant it that right, or create the database before the tenant.",
+    "error.msg.tenant.schema.absent": "The database server has no database of that name.",
+    "error.msg.tenant.connection.failed": "The tenant database could not be reached."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -958,7 +962,9 @@
       "Sign In": "Sign In",
       "Sign Out": "Sign Out",
       "Adjust": "Adjust",
-      "Reverse": "Reverse"
+      "Reverse": "Reverse",
+      "Create Tenant": "Create Tenant",
+      "Test Connection": "Test Connection"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1961,7 +1967,10 @@
       "Tenant Management": "Tenant Management",
       "Tenant Management Sign In": "Tenant Management Sign In",
       "Database Connection": "Database Connection",
-      "Reverse Transaction": "Reverse Transaction"
+      "Reverse Transaction": "Reverse Transaction",
+      "Create Tenant": "Create Tenant",
+      "Edit Tenant": "Edit Tenant",
+      "Tenant Details": "Tenant Details"
     },
     "inputs": {
       "Returned": "Returned",
@@ -4017,7 +4026,8 @@
       "Schema Username": "Schema Username",
       "Schema Connection Parameters": "Schema Connection Parameters",
       "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Search by identifier or name": "Search by identifier or name",
+      "Schema Password": "Schema Password"
     },
     "links": {
       "Community": "Community",
@@ -4273,7 +4283,11 @@
       "Are you sure you want to undo the charge-off": "Are you sure you want to undo the charge-off",
       "Breach evaluation will stop": "Breach evaluation stops on {{date}}. Previous results stay on record but are hidden until you enable it again.",
       "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date.",
-      "This will reopen the loan account": "The loan is closed or overpaid: this operation will reopen the account."
+      "This will reopen the loan account": "The loan is closed or overpaid: this operation will reopen the account.",
+      "Activate tenant": "Activate the tenant {{identifier}}",
+      "Deactivate tenant": "Deactivate the tenant {{identifier}} — every request for it will be refused until it is activated again",
+      "Suspend tenant": "Suspend the tenant {{identifier}} — every request for it will be refused until it is activated again",
+      "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
       "Select a client from the list": "Select a client from the list",
@@ -5450,7 +5464,30 @@
       "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
       "Adjust": "Adjust",
       "Identifies the new transaction created by the adjustment": "Identifies the new transaction created by the adjustment",
-      "Identifies the reversal of the original transaction": "Identifies the reversal of the original transaction"
+      "Identifies the reversal of the original transaction": "Identifies the reversal of the original transaction",
+      "Tenant identifier format": "Lower case letters, digits, hyphen and underscore; it cannot be changed later.",
+      "Schema name format": "Letters, digits and underscore, starting with a letter or underscore, at most 63 characters.",
+      "Port range": "Enter a port between 1 and 65535.",
+      "Tenant database created if absent": "The database is created if it does not exist, and reused — never emptied — if it does.",
+      "Schema connection parameters hint": "Extra JDBC parameters, for example sslmode=verify-full for a database on another host.",
+      "Testing the connection": "Testing the connection…",
+      "Provisioning a tenant takes a while": "Creating and migrating the database can take a minute. Leave this page open until it finishes.",
+      "Tenant identifier cannot be changed": "Cannot be changed — every request selects a tenant by it.",
+      "Schema name cannot be changed": "Cannot be changed — the tenant’s data already lives there.",
+      "Leave blank to clear": "Leave blank to clear.",
+      "Leave blank to keep the stored password": "Leave blank to keep the stored password.",
+      "Enter the password to test": "Enter the database password to test the connection. The stored one is never returned.",
+      "Deactivate before removing": "Deactivate the tenant before removing it.",
+      "Test connection on create hint": "Checks the server, the credentials, and whether the database already exists.",
+      "Schema username hint": "An existing database user on that server. It needs permission to create databases.",
+      "Schema password hint": "That user’s existing password. The plugin creates the database, not the database user, so this is not a password you choose here.",
+      "Database server did not answer": "The database server did not answer at that host and port.",
+      "Database server refused the credentials": "The database server refused these credentials.",
+      "Existing database will be reused": "The credentials work, and a database of that name already exists. It will be reused, not emptied.",
+      "Database will be created on submit": "The credentials work. The database does not exist yet and will be created when you submit.",
+      "Tenant database answered": "The database answered.",
+      "Tenant database is missing": "The credentials work, but the server has no database of that name.",
+      "Prove the connection before saving": "Test the connection before saving changed database details. The server accepts them unverified, and the platform then fails to start at the next restart, because a tenant it cannot migrate prevents every tenant from starting."
     },
     "permissions": {
       "actions": {

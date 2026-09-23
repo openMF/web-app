@@ -551,11 +551,11 @@
       "amountMustBePositive": "कारोबार रकम ० भन्दा बढी हुनुपर्छ।"
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "टेनेन्ट व्यवस्थापन",
+      "unauthorized": "तपाईंको टेनेन्ट व्यवस्थापन सत्र अब मान्य छैन। फेरि साइन इन गर्नुहोस्।",
+      "notAvailable": "यो सर्भरले टेनेन्ट प्रशासन प्रदान गर्दैन। Fineract टेनेन्ट व्यवस्थापन प्लगिन स्थापना गरिएको छैन।",
+      "unknown": "टेनेन्ट व्यवस्थापन अनुरोध पूरा गर्न सकिएन।",
+      "signInRejected": "ती मास्टर प्रमाणहरू अस्वीकार गरिए। टेनेन्ट प्रशासनलाई टेनेन्टको प्रयोगकर्ता होइन, मास्टर प्रयोगकर्ता चाहिन्छ।"
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "डाटाबेस सर्भरले यस टेनेन्टका प्रमाणहरू अस्वीकार गर्‍यो।",
+    "error.msg.tenant.schema.creation.not.permitted": "डाटाबेस प्रयोगकर्तालाई डाटाबेस सिर्जना गर्ने अनुमति छैन। उसलाई त्यो अधिकार दिनुहोस् वा टेनेन्टभन्दा पहिले डाटाबेस सिर्जना गर्नुहोस्।",
+    "error.msg.tenant.schema.absent": "डाटाबेस सर्भरमा त्यही नामको कुनै डाटाबेस छैन।",
+    "error.msg.tenant.connection.failed": "टेनेन्ट डाटाबेसमा पुग्न सकिएन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
       "Mass Reject": "सामूहिक अस्वीकार",
       "Hide": "लुकाउनुहोस्",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "साइन इन",
+      "Sign Out": "साइन आउट",
       "Adjust": "समायोजन गर्नुहोस्",
-      "Reverse": "उल्टाउनुहोस्"
+      "Reverse": "उल्टाउनुहोस्",
+      "Create Tenant": "टेनेन्ट सिर्जना गर्नुहोस्",
+      "Test Connection": "जडान परीक्षण गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1232,9 +1238,9 @@
       "xbrlmapping": "XBRL म्यापिङ",
       "Enabled": "सक्षम गरियो",
       "Disabled": "अक्षम",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "सक्रिय",
+      "INACTIVE": "निष्क्रिय",
+      "SUSPENDED": "निलम्बित"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1937,10 +1943,13 @@
       "Advanced Configuration": "उन्नत कन्फिगरेसन",
       "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार",
       "Enrollment Details": "दर्ता विवरण",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "लेनदेन उल्टाउनुहोस्"
+      "Tenant Management": "टेनेन्ट व्यवस्थापन",
+      "Tenant Management Sign In": "टेनेन्ट व्यवस्थापनमा साइन इन",
+      "Database Connection": "डाटाबेस जडान",
+      "Reverse Transaction": "लेनदेन उल्टाउनुहोस्",
+      "Create Tenant": "टेनेन्ट सिर्जना गर्नुहोस्",
+      "Edit Tenant": "टेनेन्ट सम्पादन गर्नुहोस्",
+      "Tenant Details": "टेनेन्ट विवरण"
     },
     "inputs": {
       "Returned": "फिर्ता भएको",
@@ -3969,18 +3978,19 @@
       "Registration Status": "दर्ता स्थिति",
       "Unknown": "अज्ञात",
       "Pending": "विचाराधीन",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "टेनेन्ट पहिचायक",
+      "Time Zone": "समय क्षेत्र",
+      "Contact Email": "सम्पर्क इमेल",
+      "Master Username": "मास्टर प्रयोगकर्ता नाम",
+      "Master Password": "मास्टर पासवर्ड",
+      "Schema Name": "स्किमा नाम",
+      "Schema Server": "स्किमा सर्भर",
+      "Schema Server Port": "स्किमा सर्भर पोर्ट",
+      "Schema Username": "स्किमा प्रयोगकर्ता",
+      "Schema Connection Parameters": "स्किमा जडान प्यारामिटरहरू",
+      "Auto Update": "स्वतः अद्यावधिक",
+      "Search by identifier or name": "पहिचायक वा नामद्वारा खोज्नुहोस्",
+      "Schema Password": "स्किमा पासवर्ड"
     },
     "links": {
       "Community": "समुदाय",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "सक्षम पारेमा, हालको उल्लंघन अवधि रिसेट मितिमा विभाजन हुन्छ र सो मितिबाट नयाँ अवधि सुरु हुन्छ।",
       "Breach evaluation will stop": "{{date}} देखि उल्लंघन मूल्यांकन रोकिन्छ। अघिल्ला नतिजाहरू रेकर्डमा रहन्छन् तर पुनः सक्षम नगरेसम्म लुकाइन्छन्।",
       "Breach evaluation will resume": "{{date}} देखि उल्लंघन मूल्यांकन पुनः सुरु हुन्छ। त्यो मितिदेखि ऋणको पुनः मूल्यांकन गरिन्छ।",
-      "This will reopen the loan account": "ऋण बन्द वा अधिक भुक्तानी भएको छ: यो कार्यले खाता पुनः खोल्नेछ।"
+      "This will reopen the loan account": "ऋण बन्द वा अधिक भुक्तानी भएको छ: यो कार्यले खाता पुनः खोल्नेछ।",
+      "Activate tenant": "टेनेन्ट {{identifier}} सक्रिय गर्ने",
+      "Deactivate tenant": "टेनेन्ट {{identifier}} निष्क्रिय गर्ने — पुनः सक्रिय नगरिएसम्म यसका सबै अनुरोध अस्वीकार गरिनेछन्",
+      "Suspend tenant": "टेनेन्ट {{identifier}} निलम्बन गर्ने — पुनः सक्रिय नगरिएसम्म यसका सबै अनुरोध अस्वीकार गरिनेछन्",
+      "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
       "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
@@ -5267,15 +5281,38 @@
       "No pending prospects found": "विचाराधीन सम्भावित ग्राहकहरू फेला परेनन्",
       "Unable to load pending prospects": "विचाराधीन सम्भावित ग्राहकहरू लोड गर्न सकिएन",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "यस मितिको रकम पुनः गणना गर्न सकिएन। पुनः प्रयास गर्न मिति फेरि छान्नुहोस्।",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "मास्टर प्रयोगकर्ताको रूपमा साइन इन",
+      "No tenants found": "कुनै टेनेन्ट फेला परेन",
+      "Unrecognised status": "नचिनिएको स्थिति",
+      "Manage the tenants of this installation": "यस स्थापनाका टेनेन्टहरू व्यवस्थापन गर्नुहोस्",
+      "Tenant management master context": "टेनेन्ट प्रशासन प्रत्येक टेनेन्टभन्दा माथि रहन्छ, त्यसैले यसलाई आफ्नै मास्टर प्रयोगकर्ता चाहिन्छ। कुनै टेनेन्टको प्रयोगकर्ताले त्यस टेनेन्टमा जतिसुकै अधिकार भए पनि यहाँ साइन इन गर्न सक्दैन।",
+      "Tenant database password write only": "डाटाबेस पासवर्ड इन्क्रिप्ट गरी भण्डारण गरिन्छ र सर्भरले कहिल्यै फिर्ता गर्दैन, त्यसैले यहाँ देखाउन सकिँदैन।",
       "Adjust": "समायोजन गर्नुहोस्",
       "Identifies the new transaction created by the adjustment": "समायोजनले सिर्जना गरेको नयाँ लेनदेन पहिचान गर्दछ",
-      "Identifies the reversal of the original transaction": "मूल लेनदेनको उल्टाइ पहिचान गर्दछ"
+      "Identifies the reversal of the original transaction": "मूल लेनदेनको उल्टाइ पहिचान गर्दछ",
+      "Tenant identifier format": "साना अक्षर, अङ्क, ड्यास र अन्डरस्कोर; पछि परिवर्तन गर्न सकिँदैन।",
+      "Schema name format": "अक्षर, अङ्क र अन्डरस्कोर, अक्षर वा अन्डरस्कोरबाट सुरु हुने, बढीमा ६३ वर्ण।",
+      "Port range": "१ र ६५५३५ बीचको पोर्ट प्रविष्ट गर्नुहोस्।",
+      "Tenant database created if absent": "डाटाबेस नभएमा सिर्जना गरिन्छ, र भएमा खाली नगरी पुनः प्रयोग गरिन्छ।",
+      "Schema connection parameters hint": "थप JDBC प्यारामिटरहरू, उदाहरणका लागि अर्को होस्टको डाटाबेसका लागि sslmode=verify-full।",
+      "Testing the connection": "जडान परीक्षण गर्दै…",
+      "Provisioning a tenant takes a while": "डाटाबेस सिर्जना र माइग्रेसनमा एक मिनेट लाग्न सक्छ। सकिन्जेल यो पृष्ठ खुला राख्नुहोस्।",
+      "Tenant identifier cannot be changed": "परिवर्तन गर्न सकिँदैन — प्रत्येक अनुरोधले यसैबाट टेनेन्ट छान्छ।",
+      "Schema name cannot be changed": "परिवर्तन गर्न सकिँदैन — टेनेन्टको डाटा पहिल्यै त्यहाँ छ।",
+      "Leave blank to clear": "हटाउन खाली छोड्नुहोस्।",
+      "Leave blank to keep the stored password": "भण्डारण गरिएको पासवर्ड राख्न खाली छोड्नुहोस्।",
+      "Enter the password to test": "जडान परीक्षण गर्न डाटाबेस पासवर्ड प्रविष्ट गर्नुहोस्। भण्डारण गरिएको पासवर्ड कहिल्यै फिर्ता गरिँदैन।",
+      "Deactivate before removing": "टेनेन्ट हटाउनुअघि निष्क्रिय पार्नुहोस्।",
+      "Test connection on create hint": "सर्भर, प्रमाणहरू, र डाटाबेस पहिल्यै छ कि छैन जाँच्छ।",
+      "Schema username hint": "त्यस सर्भरमा पहिल्यै रहेको डाटाबेस प्रयोगकर्ता। यसलाई डाटाबेस सिर्जना गर्ने अनुमति चाहिन्छ।",
+      "Schema password hint": "त्यस प्रयोगकर्ताको हालको पासवर्ड। प्लगिनले डाटाबेस सिर्जना गर्छ, प्रयोगकर्ता होइन, त्यसैले यो तपाईंले यहाँ छान्ने पासवर्ड होइन।",
+      "Database server did not answer": "त्यस होस्ट र पोर्टमा डाटाबेस सर्भरले जवाफ दिएन।",
+      "Database server refused the credentials": "डाटाबेस सर्भरले यी प्रमाणहरू अस्वीकार गर्‍यो।",
+      "Existing database will be reused": "प्रमाणहरू काम गर्छन् र त्यही नामको डाटाबेस पहिल्यै छ। यो खाली नगरी पुनः प्रयोग गरिनेछ।",
+      "Database will be created on submit": "प्रमाणहरू काम गर्छन्। डाटाबेस अझै छैन र पेस गर्दा सिर्जना गरिनेछ।",
+      "Tenant database answered": "डाटाबेसले जवाफ दियो।",
+      "Tenant database is missing": "प्रमाणहरू काम गर्छन्, तर सर्भरमा त्यही नामको कुनै डाटाबेस छैन।",
+      "Prove the connection before saving": "परिवर्तन गरिएको डाटाबेस विवरण सुरक्षित गर्नुअघि जडान परीक्षण गर्नुहोस्। सर्भरले अप्रमाणित रूपमै स्वीकार गर्छ, र त्यसपछि अर्को पटक सुरु हुँदा प्लेटफर्म चल्दैन, किनभने माइग्रेट गर्न नसकिने एउटै टेनेन्टले सबै टेनेन्टको सुरुवात रोक्छ।"
     },
     "permissions": {
       "actions": {

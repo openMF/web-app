@@ -21,8 +21,23 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { TenantMasterSessionService } from './tenant-master-session.service';
 
 /** Custom Models */
-import { Tenant, TenantTemplate, TenantsPage, TenantsQuery } from './models/tenant.model';
-import { tenantManagementErrorKey, tenantManagementErrorMessage } from './tenant-management-error';
+import {
+  CreateTenantPayload,
+  DeleteTenantResponse,
+  Tenant,
+  TenantStatusCommand,
+  TenantTemplate,
+  TenantsPage,
+  TenantsQuery,
+  TestConnectionPayload,
+  TestConnectionResponse,
+  UpdateTenantPayload
+} from './models/tenant.model';
+import {
+  tenantManagementErrorCode,
+  tenantManagementErrorKey,
+  tenantManagementErrorMessage
+} from './tenant-management-error';
 
 /**
  * Tenant management API binding.
@@ -72,6 +87,59 @@ export class TenantManagementService {
   }
 
   /**
+   * Registers a tenant, creating and migrating its schema.
+   *
+   * Synchronous by design: the call returns only once the schema has been created, proved reachable
+   * and migrated, which takes the better part of a minute against a real database. Callers must
+   * show progress and stop the form being submitted twice.
+   */
+  createTenant(payload: CreateTenantPayload): Observable<Tenant> {
+    return this.request(this.http.post<Tenant>(this.session.baseUrl, payload, { headers: this.session.headers }));
+  }
+
+  /** Applies a partial update. */
+  updateTenant(tenantId: number | string, payload: UpdateTenantPayload): Observable<Tenant> {
+    return this.request(
+      this.http.put<Tenant>(`${this.session.baseUrl}/${tenantId}`, payload, { headers: this.session.headers })
+    );
+  }
+
+  /**
+   * Activates, deactivates or suspends a tenant.
+   *
+   * The body is an empty object rather than nothing: the resource consumes JSON and declares no
+   * body parameter, so a request without one is rejected.
+   */
+  changeStatus(tenantId: number | string, command: TenantStatusCommand): Observable<Tenant> {
+    const params = new HttpParams().set('command', command);
+    return this.request(
+      this.http.post<Tenant>(`${this.session.baseUrl}/${tenantId}`, {}, { headers: this.session.headers, params })
+    );
+  }
+
+  /**
+   * Removes the tenant's registry entry.
+   *
+   * This never drops a schema and never deletes tenant data, and an active tenant is refused.
+   */
+  deleteTenant(tenantId: number | string): Observable<DeleteTenantResponse> {
+    return this.request(
+      this.http.delete<DeleteTenantResponse>(`${this.session.baseUrl}/${tenantId}`, {
+        headers: this.session.headers
+      })
+    );
+  }
+
+  /** Probes a database with the supplied details, before anything is committed. */
+  testConnection(payload: TestConnectionPayload): Observable<TestConnectionResponse> {
+    return this.request(
+      this.http.post<TestConnectionResponse>(`${this.session.baseUrl}/test-connection`, payload, {
+        headers: this.session.headers
+      })
+    );
+  }
+
+  /**
    * Reports a failure and passes it on.
    *
    * A 401 also ends the master session, so the section falls back to its sign-in card instead of
@@ -85,11 +153,30 @@ export class TenantManagementService {
         }
         this.alertService.alert({
           type: this.translateService.instant('errors.tenantManagement.type'),
-          message:
-            tenantManagementErrorMessage(error) || this.translateService.instant(tenantManagementErrorKey(error.status))
+          message: this.messageFor(error)
         });
         return throwError(() => error);
       })
     );
+  }
+
+  /**
+   * The clearest thing that can be said about a failure.
+   *
+   * The classification the backend sends is preferred over its own English sentence, so a rejected
+   * password reads as a rejected password in the user's language. A code this app has no
+   * translation for falls back to the backend's message, and a response carrying neither falls back
+   * to a generic line for the status.
+   */
+  private messageFor(error: HttpErrorResponse): string {
+    const code = tenantManagementErrorCode(error);
+    if (code) {
+      const key = `errors.${code}`;
+      const translated = this.translateService.instant(key);
+      if (translated !== key) {
+        return translated;
+      }
+    }
+    return tenantManagementErrorMessage(error) || this.translateService.instant(tenantManagementErrorKey(error.status));
   }
 }

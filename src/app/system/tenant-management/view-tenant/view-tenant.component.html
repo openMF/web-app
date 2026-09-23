@@ -6,14 +6,36 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container m-b-20 layout-row align-end gap-20px">
-  <button mat-raised-button [routerLink]="['../']">
-    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Back' | translate }}
-  </button>
-</div>
-
 @if (tenant(); as tenantData) {
+  <div class="container m-b-20 layout-row-wrap align-end gap-20px">
+    <button mat-raised-button [routerLink]="['../']">
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+
+    <button mat-raised-button color="primary" [routerLink]="['edit']">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Edit' | translate }}
+    </button>
+
+    @for (command of availableCommands(); track command) {
+      <button mat-raised-button (click)="changeStatus(command)">
+        {{ 'labels.buttons.' + (command | titlecase) | translate }}
+      </button>
+    }
+
+    <span
+      [matTooltip]="'labels.text.Deactivate before removing' | translate"
+      [matTooltipDisabled]="canDelete()"
+      matTooltipPosition="above"
+    >
+      <button mat-raised-button color="warn" (click)="delete()" [disabled]="!canDelete()">
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Delete' | translate }}
+      </button>
+    </span>
+  </div>
+
   <div class="container">
     <mat-card>
       <mat-card-content>
@@ -36,21 +58,17 @@
           <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Time Zone' | translate }}:</div>
           <div class="flex-50">{{ tenantData.timezoneId }}</div>
 
-          @if (tenantData.description) {
-            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Description' | translate }}:</div>
-            <div class="flex-50">{{ tenantData.description }}</div>
-          }
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Description' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.description || '—' }}</div>
 
-          @if (tenantData.contactEmail) {
-            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Contact Email' | translate }}:</div>
-            <div class="flex-50">{{ tenantData.contactEmail }}</div>
-          }
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Contact Email' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.contactEmail || '—' }}</div>
 
           <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Created On' | translate }}:</div>
-          <div class="flex-50">{{ tenantData.createdDate | dateFormat }}</div>
+          <div class="flex-50">{{ (tenantData.createdDate | dateFormat) || '—' }}</div>
 
           <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Updated on' | translate }}:</div>
-          <div class="flex-50">{{ tenantData.lastModifiedDate | dateFormat }}</div>
+          <div class="flex-50">{{ (tenantData.lastModifiedDate | dateFormat) || '—' }}</div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -72,10 +90,8 @@
           <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Username' | translate }}:</div>
           <div class="flex-50">{{ tenantData.connection?.schemaUsername }}</div>
 
-          @if (tenantData.connection?.schemaConnectionParameters) {
-            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Connection Parameters' | translate }}:</div>
-            <div class="flex-50">{{ tenantData.connection.schemaConnectionParameters }}</div>
-          }
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Schema Connection Parameters' | translate }}:</div>
+          <div class="flex-50">{{ tenantData.connection?.schemaConnectionParameters || '—' }}</div>
 
           <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Auto Update' | translate }}:</div>
           <div class="flex-50">
