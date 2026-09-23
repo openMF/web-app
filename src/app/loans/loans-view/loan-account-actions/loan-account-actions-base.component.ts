@@ -45,12 +45,29 @@ export abstract class LoanAccountActionsBaseComponent {
     this.gotoLoanViewTab(tabName);
   }
 
+  /**
+   * Navigates to one of the loan view tabs.
+   *
+   * The screens that extend this base sit at different depths below the loan:
+   * an action is `:loanId/actions/:action`, the transaction adjustment is
+   * `:loanId/transactions/:id/edit`. Counting `../` from the current route
+   * therefore lands somewhere else depending on the caller. The target is built
+   * from the route that declares `:loanId` instead: navigating `[loanId,
+   * tabName]` relative to its parent rebuilds the loan URL whatever the depth.
+   */
   private gotoLoanViewTab(tabName: string): void {
-    this.router.navigate([`../../${tabName}`], {
-      queryParams: {
-        productType: this.loanProductService.productType.value
-      },
-      relativeTo: this.route
-    });
+    const loanRoute = this.route.pathFromRoot.find((route) => route.routeConfig?.path?.startsWith(':loanId'));
+    this.router.navigate(
+      [
+        this.loanId,
+        tabName
+      ],
+      {
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        },
+        relativeTo: loanRoute?.parent
+      }
+    );
   }
 }

@@ -170,11 +170,20 @@ describe('ViewTransactionComponent', () => {
       expect(component.adjustPermission).toBe('ADJUST_WORKINGCAPITALLOAN');
     });
 
-    it('offers no adjustment on the Working Capital types the adjust command only reverses', () => {
+    it('offers the adjustment on every repayment like Working Capital type', () => {
       [
         22,
         23,
         26
+      ].forEach((typeId) => {
+        expect(createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true }).allowEdition).toBe(true);
+      });
+    });
+
+    it('offers no adjustment on the Working Capital types the adjust command rejects', () => {
+      [
+        1,
+        9
       ].forEach((typeId) => {
         expect(createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true }).allowEdition).toBe(false);
       });
