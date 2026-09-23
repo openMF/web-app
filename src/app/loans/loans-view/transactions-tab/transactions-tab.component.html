@@ -207,6 +207,16 @@
                 <span>{{ 'labels.buttons.Adjust' | translate }}</span>
               </button>
             }
+            @if (allowDiscountFeeAdjustment(transaction)) {
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'DISCOUNTFEEADJUSTMENT_WORKINGCAPITALLOAN'"
+                (click)="discountFeeAdjustment(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="edit" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'labels.buttons.Discount Fee Adjustment' | translate }}</span>
+              </button>
+            }
             @if (allowUndoTransaction(transaction)) {
               <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
                 <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>

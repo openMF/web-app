@@ -21,3 +21,12 @@
   line-height: 1.5;
   opacity: 0.85;
 }
+
+// Angular Material declares `.mat-mdc-card-content { display: block }` with the
+// same specificity as the global `.layout-column` utility and injects it after
+// the global stylesheet, so the utility loses and the inline-flex form fields
+// flow side by side instead of stacking. Re-declaring it here wins: view
+// encapsulation adds the component attribute to the selector.
+.layout-column {
+  display: flex;
+}
