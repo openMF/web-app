@@ -54,6 +54,7 @@ import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../../lo
 import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
+  canAdjustWorkingCapitalDiscountFee,
   canAdjustWorkingCapitalTransaction,
   canReverseLoanTransaction
 } from '../../loan-transaction-adjust.helper';
@@ -127,6 +128,18 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   undoPermission: string = DEFAULT_UNDO_PERMISSION;
   /** Permission required by the Adjust button; each product posts its own adjust command. */
   adjustPermission: string = DEFAULT_UNDO_PERMISSION;
+  /**
+   * True when the Discount Fee Adjustment button is offered. Its own command,
+   * shown only on a Working Capital discount fee: it draws the remaining
+   * discount pool down instead of reversing anything, so it sits beside Adjust
+   * rather than replacing it.
+   */
+  allowDiscountFeeAdjustment = false;
+
+  /** Status of the loan the transaction belongs to, read from the parent route. */
+  private loanStatus: { active?: boolean } | null = null;
+  /** What is left of the discount pool; an exhausted one leaves nothing to adjust. */
+  private remainingDiscount = 0;
   existTransactionRelations = false;
 
   paymentTypeOptions: {}[] = [];
@@ -158,6 +171,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { loanDetailsAssociationData?: any }) => {
         this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
+        this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
+        this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
+        this.refreshDiscountFeeAdjustment();
       });
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
@@ -169,6 +185,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         this.allowEdition = false;
         this.allowUndo = false;
         this.allowChargeback = false;
+        this.allowDiscountFeeAdjustment = false;
         return;
       }
       const alreadyReversed = this.transactionData.manuallyReversed || this.transactionData.reversed;
@@ -224,6 +241,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       if (this.isWorkingCapital) {
         this.allowChargeback = false;
       }
+      this.refreshDiscountFeeAdjustment();
     });
     this.clientId = this.route.snapshot.params['clientId'];
     this.loanId = this.route.snapshot.params['loanId'];
@@ -289,6 +307,24 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       transactionType.id === 44 ||
       (isWorkingCapital && transactionType.disbursement)
     );
+  }
+
+  /**
+   * Recomputes the Discount Fee Adjustment availability. Called from both route
+   * subscriptions because the decision needs the transaction from one and the
+   * loan status and remaining discount from the other, and either may arrive
+   * first.
+   */
+  private refreshDiscountFeeAdjustment(): void {
+    this.allowDiscountFeeAdjustment =
+      this.isWorkingCapital &&
+      !!this.transactionType &&
+      this.remainingDiscount > 0 &&
+      canAdjustWorkingCapitalDiscountFee(
+        this.transactionType,
+        this.transactionData?.manuallyReversed || this.transactionData?.reversed,
+        this.loanStatus
+      );
   }
 
   isWriteOff(transactionType: LoanTransactionType): boolean {

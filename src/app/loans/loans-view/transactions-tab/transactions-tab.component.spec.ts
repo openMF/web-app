@@ -50,16 +50,23 @@ describe('TransactionsTabComponent', () => {
    * Builds the component against stubbed collaborators without running ngOnInit,
    * so the tests exercise the row action rules rather than the table setup.
    * @param isWorkingCapital Whether the loan is a Working Capital one
+   * @param loanStatusCode Status code of the loan
+   * @param loanDetails Extra loan level fields merged into the resolved loan
    */
   function createComponent(
     isWorkingCapital = false,
-    loanStatusCode = 'loanStatusType.active'
+    loanStatusCode = 'loanStatusType.active',
+    loanDetails: any = {}
   ): TransactionsTabComponent {
     TestBed.resetTestingModule();
     const loanRoute = {
       snapshot: { params: { loanId: '1' } },
       data: of({
-        loanDetailsData: { status: { code: loanStatusCode, value: 'Active' }, transactions: [] }
+        loanDetailsData: {
+          status: { code: loanStatusCode, value: 'Active' },
+          transactions: [],
+          ...loanDetails
+        }
       })
     };
     TestBed.configureTestingModule({
@@ -250,17 +257,19 @@ describe('TransactionsTabComponent', () => {
       expect(component.allowAdjustTransaction(transaction(2))).toBe(true);
     });
 
-    it('offers no adjust action on the types its adjust command only reverses', () => {
+    it('offers the adjust action on the other types its adjust command routes', () => {
       const component = createComponent(true);
 
-      // The Working Capital adjust command accepts these only with a zero
-      // amount, which is what the undo entry already does.
+      // Payout refund, goodwill credit and charge adjustment go through the
+      // same repayment like adjustment as a repayment. The charge adjustment
+      // entry adjusts the transaction the charge adjustment created, not the
+      // charge itself.
       [
         22,
         23,
         26
       ].forEach((typeId) => {
-        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
+        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(true);
       });
     });
 
@@ -280,6 +289,43 @@ describe('TransactionsTabComponent', () => {
       const component = createComponent(true);
 
       expect(component.allowAdjustTransaction(transaction(2, { reversed: true }))).toBe(false);
+    });
+
+    it('offers the discount fee adjustment on a discount fee while the pool lasts', () => {
+      const component = createComponent(true, 'loanStatusType.active', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 400
+      });
+
+      expect(component.allowDiscountFeeAdjustment(transaction(44))).toBe(true);
+      // Its own command, so the adjust entry stays hidden for the same row.
+      expect(component.allowAdjustTransaction(transaction(44))).toBe(false);
+    });
+
+    it('offers no discount fee adjustment once the pool is exhausted', () => {
+      const component = createComponent(true, 'loanStatusType.active', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 0
+      });
+
+      expect(component.allowDiscountFeeAdjustment(transaction(44))).toBe(false);
+    });
+
+    it('opens the discount fee adjustment form with the product type the resolvers read', () => {
+      const component = createComponent(true, 'loanStatusType.active', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 400
+      });
+
+      component.discountFeeAdjustment(transaction(44), { stopPropagation: jest.fn() } as unknown as MouseEvent);
+
+      expect(routerStub.navigate).toHaveBeenCalledWith(
+        [
+          77,
+          'discount-fee-adjustment'
+        ],
+        expect.objectContaining({ queryParams: { productType: 'workingCapital' } })
+      );
     });
 
     it('gates the adjust action with the Working Capital permission', () => {

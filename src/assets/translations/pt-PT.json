@@ -378,6 +378,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Não há nenhuma redefinição ativa para desfazer.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "O empréstimo não tem calendário de incumprimento.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Este período de incumprimento já foi redefinido. Desfaça a redefinição existente antes de redefinir novamente.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "A data do ajuste do encargo não pode ser anterior à data de vencimento do encargo.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "O ajuste do encargo não está associado a nenhum encargo, pelo que não pode ser ajustado.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Este tipo de transação não pode ser ajustado num empréstimo de fundo de maneio.",
+    "wc.loan.charge.adjustment.invalid.status": "Os ajustes de encargos não são permitidos para o estado atual do empréstimo.",
+    "wc.loan.charge.adjustment.inactive.charge": "Os ajustes de encargos não são permitidos num encargo inativo.",
+    "wc.loan.charge.adjustment.invalid.amount": "O montante não pode ser superior ao montante do encargo disponível para ajuste.",
     "error.resource.notImplemented.type": "Não implementado",
     "error.resource.notImplemented.message": "Funcionalidade não implementada!",
     "linkedSavingsAccountOwnership": "A conta poupança vinculada não pertence ao cliente selecionado.",
@@ -1244,7 +1250,8 @@
       "Post Dividends": "Lançar dividendos",
       "Convert": "Converter",
       "Deleting": "A eliminar",
-      "Inactivate": "Inativar"
+      "Inactivate": "Inativar",
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -5814,7 +5821,10 @@
       "Closed": "Encerrado",
       "Dashboard Export": "Exportação do painel",
       "Generated on": "Gerado em",
-      "Automated export": "Esta é uma exportação automática do painel global do Mifos X"
+      "Automated export": "Esta é uma exportação automática do painel global do Mifos X",
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
+      "Remaining discount fee available to adjust": "Taxa de desconto restante disponível para ajuste",
+      "Cannot precede the discount fee date": "Não pode ser anterior à data da taxa de desconto"
     },
     "permissions": {
       "actions": {
@@ -6115,7 +6125,8 @@
       "validationSaved": "Dados de validação guardados com sucesso.",
       "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso.",
       "identityDescriptionsUpdated": "As descrições de identidade foram atualizadas com sucesso.",
-      "identityDescriptionsUpdateFailed": "Algumas descrições de identidade não puderam ser atualizadas."
+      "identityDescriptionsUpdateFailed": "Algumas descrições de identidade não puderam ser atualizadas.",
+      "unableToAdjustDiscountFee": "Não foi possível ajustar a taxa de desconto."
     },
     "selections": {
       "standingInstructions": {

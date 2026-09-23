@@ -142,6 +142,6 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   }
 
   gotoLoanChargesView(): void {
-    this.gotoLoanView('../charges');
+    this.gotoLoanView('charges');
   }
 }
