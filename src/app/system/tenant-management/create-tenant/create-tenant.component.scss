@@ -6,7 +6,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.connection-password-note {
-  margin-top: 16px;
+.connection-explanation,
+.provisioning-note {
   color: var(--md-sys-color-on-surface-variant, #44474e);
+}
+
+.provisioning-note {
+  margin-top: 16px;
+}
+
+.connection-reachable {
+  color: var(--md-sys-color-primary, #1074b9);
+}
+
+.connection-note {
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+}
+
+.connection-unreachable {
+  color: var(--md-sys-color-error, #ba1a1a);
 }

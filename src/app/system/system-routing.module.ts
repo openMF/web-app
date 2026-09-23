@@ -57,6 +57,8 @@ import { SystemComponent } from './system.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
 import { TenantManagementComponent } from './tenant-management/tenant-management.component';
 import { TenantsComponent } from './tenant-management/tenants.component';
+import { CreateTenantComponent } from './tenant-management/create-tenant/create-tenant.component';
+import { EditTenantComponent } from './tenant-management/edit-tenant/edit-tenant.component';
 import { ViewTenantComponent } from './tenant-management/view-tenant/view-tenant.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ManageDashboardsComponent } from './manage-dashboards/manage-dashboards.component';
@@ -608,9 +610,24 @@ const routes: Routes = [
               component: TenantsComponent
             },
             {
+              path: 'create',
+              component: CreateTenantComponent,
+              data: { title: 'Create Tenant', breadcrumb: 'Create' }
+            },
+            {
               path: ':id',
-              component: ViewTenantComponent,
-              data: { title: 'View Tenant', routeParamBreadcrumb: 'id' }
+              data: { title: 'View Tenant', routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewTenantComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditTenantComponent,
+                  data: { title: 'Edit Tenant', breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                }
+              ]
             }
           ]
         },

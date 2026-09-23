@@ -551,11 +551,11 @@
       "amountMustBePositive": "거래 금액은 0보다 커야 합니다."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "테넌트 관리",
+      "unauthorized": "테넌트 관리 세션이 더 이상 유효하지 않습니다. 다시 로그인하세요.",
+      "notAvailable": "이 서버는 테넌트 관리를 제공하지 않습니다. Fineract 테넌트 관리 플러그인이 설치되어 있지 않습니다.",
+      "unknown": "테넌트 관리 요청을 완료할 수 없습니다.",
+      "signInRejected": "해당 마스터 자격 증명이 거부되었습니다. 테넌트 관리에는 테넌트의 사용자가 아니라 마스터 사용자가 필요합니다."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "데이터베이스 서버가 이 테넌트의 자격 증명을 거부했습니다.",
+    "error.msg.tenant.schema.creation.not.permitted": "데이터베이스 사용자에게 데이터베이스를 만들 권한이 없습니다. 권한을 부여하거나 테넌트보다 먼저 데이터베이스를 만드세요.",
+    "error.msg.tenant.schema.absent": "데이터베이스 서버에 같은 이름의 데이터베이스가 없습니다.",
+    "error.msg.tenant.connection.failed": "테넌트 데이터베이스에 연결할 수 없습니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "보고서 디자인 업로드",
       "Mass Reject": "일괄 거절",
       "Hide": "숨기기",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "로그인",
+      "Sign Out": "로그아웃",
       "Adjust": "조정",
-      "Reverse": "취소"
+      "Reverse": "취소",
+      "Create Tenant": "테넌트 만들기",
+      "Test Connection": "연결 테스트"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1233,9 +1239,9 @@
       "xbrlmapping": "XBRL 매핑",
       "Enabled": "활성화됨",
       "Disabled": "장애가 있는",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "활성",
+      "INACTIVE": "비활성",
+      "SUSPENDED": "일시 중지됨"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1939,10 +1945,13 @@
       "Advanced Configuration": "고급 구성",
       "Mass Reject Credit Applications": "신용 신청 일괄 거절",
       "Enrollment Details": "등록 세부 정보",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "거래 취소"
+      "Tenant Management": "테넌트 관리",
+      "Tenant Management Sign In": "테넌트 관리 로그인",
+      "Database Connection": "데이터베이스 연결",
+      "Reverse Transaction": "거래 취소",
+      "Create Tenant": "테넌트 만들기",
+      "Edit Tenant": "테넌트 편집",
+      "Tenant Details": "테넌트 상세"
     },
     "inputs": {
       "Returned": "반환됨",
@@ -3970,18 +3979,19 @@
       "Registration Status": "등록 상태",
       "Unknown": "알 수 없음",
       "Pending": "대기 중",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "테넌트 식별자",
+      "Time Zone": "시간대",
+      "Contact Email": "연락처 이메일",
+      "Master Username": "마스터 사용자 이름",
+      "Master Password": "마스터 비밀번호",
+      "Schema Name": "스키마 이름",
+      "Schema Server": "스키마 서버",
+      "Schema Server Port": "스키마 서버 포트",
+      "Schema Username": "스키마 사용자",
+      "Schema Connection Parameters": "스키마 연결 매개변수",
+      "Auto Update": "자동 업데이트",
+      "Search by identifier or name": "식별자 또는 이름으로 검색",
+      "Schema Password": "스키마 비밀번호"
     },
     "links": {
       "Community": "지역 사회",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "활성화하면 현재 위반 기간이 리셋 날짜로 분할되고 해당 날짜부터 새 기간이 시작됩니다.",
       "Breach evaluation will stop": "{{date}}부터 위반 평가가 중지됩니다. 이전 결과는 보존되지만 다시 활성화할 때까지 표시되지 않습니다.",
       "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다.",
-      "This will reopen the loan account": "대출이 종료되었거나 초과 상환되었습니다: 이 작업은 계좌를 다시 엽니다."
+      "This will reopen the loan account": "대출이 종료되었거나 초과 상환되었습니다: 이 작업은 계좌를 다시 엽니다.",
+      "Activate tenant": "테넌트 {{identifier}}을(를) 활성화합니다",
+      "Deactivate tenant": "테넌트 {{identifier}}을(를) 비활성화합니다 — 다시 활성화할 때까지 해당 테넌트로 향하는 모든 요청이 거부됩니다",
+      "Suspend tenant": "테넌트 {{identifier}}을(를) 일시 중지합니다 — 다시 활성화할 때까지 해당 테넌트로 향하는 모든 요청이 거부됩니다",
+      "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
       "Cash received cannot be less than the check amount": "수령한 현금은 수표 금액보다 적을 수 없습니다.",
@@ -5267,15 +5281,38 @@
       "No pending prospects found": "대기 중인 잠재 고객이 없습니다",
       "Unable to load pending prospects": "대기 중인 잠재 고객을 불러올 수 없습니다",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "이 날짜에 대한 금액을 다시 계산하지 못했습니다. 날짜를 다시 선택하여 재시도하세요.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "마스터 사용자로 로그인됨",
+      "No tenants found": "테넌트를 찾을 수 없습니다",
+      "Unrecognised status": "인식할 수 없는 상태",
+      "Manage the tenants of this installation": "이 설치의 테넌트 관리",
+      "Tenant management master context": "테넌트 관리는 개별 테넌트보다 상위에 있으므로 별도의 마스터 사용자가 필요합니다. 테넌트의 사용자는 해당 테넌트에서 아무리 많은 권한을 가지고 있어도 여기에 로그인할 수 없습니다.",
+      "Tenant database password write only": "데이터베이스 비밀번호는 암호화되어 저장되며 서버가 절대 반환하지 않으므로 여기에 표시할 수 없습니다.",
       "Adjust": "조정",
       "Identifies the new transaction created by the adjustment": "조정으로 생성된 새 거래를 식별합니다",
-      "Identifies the reversal of the original transaction": "원거래의 취소를 식별합니다"
+      "Identifies the reversal of the original transaction": "원거래의 취소를 식별합니다",
+      "Tenant identifier format": "소문자, 숫자, 하이픈, 밑줄을 사용합니다. 나중에 변경할 수 없습니다.",
+      "Schema name format": "문자, 숫자, 밑줄을 사용하며 문자 또는 밑줄로 시작하고 최대 63자입니다.",
+      "Port range": "1에서 65535 사이의 포트를 입력하세요.",
+      "Tenant database created if absent": "데이터베이스가 없으면 생성되고, 이미 있으면 비우지 않고 다시 사용합니다.",
+      "Schema connection parameters hint": "추가 JDBC 매개변수입니다. 예를 들어 다른 호스트의 데이터베이스에는 sslmode=verify-full을 사용합니다.",
+      "Testing the connection": "연결을 테스트하는 중…",
+      "Provisioning a tenant takes a while": "데이터베이스 생성과 마이그레이션에는 1분 정도 걸릴 수 있습니다. 완료될 때까지 이 페이지를 열어 두세요.",
+      "Tenant identifier cannot be changed": "변경할 수 없습니다. 모든 요청이 이 값으로 테넌트를 선택합니다.",
+      "Schema name cannot be changed": "변경할 수 없습니다. 테넌트의 데이터가 이미 그곳에 있습니다.",
+      "Leave blank to clear": "지우려면 비워 두세요.",
+      "Leave blank to keep the stored password": "저장된 비밀번호를 유지하려면 비워 두세요.",
+      "Enter the password to test": "연결을 테스트하려면 데이터베이스 비밀번호를 입력하세요. 저장된 비밀번호는 반환되지 않습니다.",
+      "Deactivate before removing": "테넌트를 제거하기 전에 비활성화하세요.",
+      "Test connection on create hint": "서버, 자격 증명, 그리고 데이터베이스가 이미 있는지 확인합니다.",
+      "Schema username hint": "해당 서버에 이미 존재하는 데이터베이스 사용자입니다. 데이터베이스를 만들 권한이 필요합니다.",
+      "Schema password hint": "그 사용자의 기존 비밀번호입니다. 플러그인은 데이터베이스를 만들지만 사용자는 만들지 않으므로 여기서 정하는 비밀번호가 아닙니다.",
+      "Database server did not answer": "해당 호스트와 포트에서 데이터베이스 서버가 응답하지 않았습니다.",
+      "Database server refused the credentials": "데이터베이스 서버가 이 자격 증명을 거부했습니다.",
+      "Existing database will be reused": "자격 증명이 유효하며 같은 이름의 데이터베이스가 이미 있습니다. 비우지 않고 다시 사용합니다.",
+      "Database will be created on submit": "자격 증명이 유효합니다. 데이터베이스는 아직 없으며 제출할 때 생성됩니다.",
+      "Tenant database answered": "데이터베이스가 응답했습니다.",
+      "Tenant database is missing": "자격 증명은 유효하지만 서버에 같은 이름의 데이터베이스가 없습니다.",
+      "Prove the connection before saving": "변경한 데이터베이스 정보를 저장하기 전에 연결을 테스트하세요. 서버는 확인 없이 받아들이며, 다음 재시작 때 플랫폼이 시작되지 않습니다. 마이그레이션할 수 없는 테넌트가 하나라도 있으면 모든 테넌트가 시작되지 않기 때문입니다."
     },
     "permissions": {
       "actions": {

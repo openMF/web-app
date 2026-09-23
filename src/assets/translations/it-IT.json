@@ -551,11 +551,11 @@
       "amountMustBePositive": "L'importo della transazione deve essere maggiore di 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Gestione dei tenant",
+      "unauthorized": "La tua sessione di gestione dei tenant non è più valida. Accedi di nuovo.",
+      "notAvailable": "Questo server non offre l’amministrazione dei tenant. Il plugin di gestione dei tenant di Fineract non è installato.",
+      "unknown": "Non è stato possibile completare la richiesta di gestione dei tenant.",
+      "signInRejected": "Quelle credenziali master sono state rifiutate. L’amministrazione dei tenant richiede un utente master, non l’utente di un tenant."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "Il server del database ha rifiutato le credenziali di questo tenant.",
+    "error.msg.tenant.schema.creation.not.permitted": "L’utente del database non è autorizzato a creare database. Concedigli quel diritto oppure crea il database prima del tenant.",
+    "error.msg.tenant.schema.absent": "Il server del database non ha alcun database con quel nome.",
+    "error.msg.tenant.connection.failed": "Non è stato possibile raggiungere il database del tenant."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "Carica modello di rapporto",
       "Mass Reject": "Rifiuta in massa",
       "Hide": "Nascondi",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Accedi",
+      "Sign Out": "Esci",
       "Adjust": "Rettifica",
-      "Reverse": "Storna"
+      "Reverse": "Storna",
+      "Create Tenant": "Crea tenant",
+      "Test Connection": "Prova la connessione"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1233,9 +1239,9 @@
       "xbrlmapping": "Mappatura XBRL",
       "Enabled": "Abilitato",
       "Disabled": "Disabilitato",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Attivo",
+      "INACTIVE": "Inattivo",
+      "SUSPENDED": "Sospeso"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -1938,10 +1944,13 @@
       "Advanced Configuration": "Configurazione avanzata",
       "Mass Reject Credit Applications": "Rifiuto massivo delle richieste di credito",
       "Enrollment Details": "Dettagli registrazione",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Storna transazione"
+      "Tenant Management": "Gestione dei tenant",
+      "Tenant Management Sign In": "Accesso alla gestione dei tenant",
+      "Database Connection": "Connessione al database",
+      "Reverse Transaction": "Storna transazione",
+      "Create Tenant": "Crea tenant",
+      "Edit Tenant": "Modifica tenant",
+      "Tenant Details": "Dettagli del tenant"
     },
     "inputs": {
       "Returned": "Restituito",
@@ -3970,18 +3979,19 @@
       "Registration Status": "Stato registrazione",
       "Unknown": "Sconosciuto",
       "Pending": "In sospeso",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Identificatore del tenant",
+      "Time Zone": "Fuso orario",
+      "Contact Email": "E-mail di contatto",
+      "Master Username": "Utente master",
+      "Master Password": "Password master",
+      "Schema Name": "Nome dello schema",
+      "Schema Server": "Server dello schema",
+      "Schema Server Port": "Porta del server dello schema",
+      "Schema Username": "Utente dello schema",
+      "Schema Connection Parameters": "Parametri di connessione dello schema",
+      "Auto Update": "Aggiornamento automatico",
+      "Search by identifier or name": "Cerca per identificatore o nome",
+      "Schema Password": "Password dello schema"
     },
     "links": {
       "Community": "Comunità",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "Se abilitato, il periodo di violazione corrente viene suddiviso alla data di ripristino e un nuovo periodo inizia da quella data.",
       "Breach evaluation will stop": "La valutazione delle violazioni si interrompe il {{date}}. I risultati precedenti restano registrati ma vengono nascosti fino a una nuova abilitazione.",
       "Breach evaluation will resume": "La valutazione delle violazioni riprende il {{date}}. Il prestito viene valutato di nuovo a partire da quella data.",
-      "This will reopen the loan account": "Il prestito è chiuso o sovrapagato: questa operazione riaprirà il conto."
+      "This will reopen the loan account": "Il prestito è chiuso o sovrapagato: questa operazione riaprirà il conto.",
+      "Activate tenant": "Attivare il tenant {{identifier}}",
+      "Deactivate tenant": "Disattivare il tenant {{identifier}} — ogni richiesta destinata a esso verrà rifiutata finché non viene riattivato",
+      "Suspend tenant": "Sospendere il tenant {{identifier}} — ogni richiesta destinata a esso verrà rifiutata finché non viene riattivato",
+      "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
       "Cash received cannot be less than the check amount": "I contanti ricevuti non possono essere inferiori all'importo dell'assegno.",
@@ -5268,15 +5282,38 @@
       "No pending prospects found": "Nessun prospect in sospeso trovato",
       "Unable to load pending prospects": "Impossibile caricare i prospect in sospeso",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Non è stato possibile ricalcolare l'importo per questa data. Seleziona di nuovo la data per riprovare.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Connesso come utente master",
+      "No tenants found": "Nessun tenant trovato",
+      "Unrecognised status": "Stato non riconosciuto",
+      "Manage the tenants of this installation": "Gestisci i tenant di questa installazione",
+      "Tenant management master context": "L’amministrazione dei tenant si colloca al di sopra di ogni tenant e richiede quindi un proprio utente master. L’utente di un tenant non può accedere qui, per quanti privilegi abbia in quel tenant.",
+      "Tenant database password write only": "La password del database viene memorizzata cifrata e non viene mai restituita dal server, quindi non può essere mostrata qui.",
       "Adjust": "Rettifica",
       "Identifies the new transaction created by the adjustment": "Identifica la nuova transazione creata dalla rettifica",
-      "Identifies the reversal of the original transaction": "Identifica lo storno della transazione originale"
+      "Identifies the reversal of the original transaction": "Identifica lo storno della transazione originale",
+      "Tenant identifier format": "Lettere minuscole, cifre, trattino e trattino basso; non potrà essere modificato in seguito.",
+      "Schema name format": "Lettere, cifre e trattino basso, iniziando con una lettera o un trattino basso, al massimo 63 caratteri.",
+      "Port range": "Inserisci una porta compresa tra 1 e 65535.",
+      "Tenant database created if absent": "Il database viene creato se non esiste e riutilizzato — mai svuotato — se esiste già.",
+      "Schema connection parameters hint": "Parametri JDBC aggiuntivi, ad esempio sslmode=verify-full per un database su un altro host.",
+      "Testing the connection": "Prova della connessione in corso…",
+      "Provisioning a tenant takes a while": "La creazione e la migrazione del database possono richiedere un minuto. Lascia aperta questa pagina fino al termine.",
+      "Tenant identifier cannot be changed": "Non modificabile: ogni richiesta seleziona un tenant tramite questo identificatore.",
+      "Schema name cannot be changed": "Non modificabile: i dati del tenant si trovano già lì.",
+      "Leave blank to clear": "Lascia vuoto per cancellare.",
+      "Leave blank to keep the stored password": "Lascia vuoto per mantenere la password memorizzata.",
+      "Enter the password to test": "Inserisci la password del database per provare la connessione. Quella memorizzata non viene mai restituita.",
+      "Deactivate before removing": "Disattiva il tenant prima di rimuoverlo.",
+      "Test connection on create hint": "Verifica il server, le credenziali e se il database esiste già.",
+      "Schema username hint": "Un utente del database già esistente su quel server. Deve poter creare database.",
+      "Schema password hint": "La password attuale di quell’utente. Il plugin crea il database, non l’utente, quindi non è una password che scegli qui.",
+      "Database server did not answer": "Il server del database non ha risposto su quell’host e quella porta.",
+      "Database server refused the credentials": "Il server del database ha rifiutato queste credenziali.",
+      "Existing database will be reused": "Le credenziali funzionano ed esiste già un database con quel nome. Verrà riutilizzato, non svuotato.",
+      "Database will be created on submit": "Le credenziali funzionano. Il database non esiste ancora e verrà creato all’invio.",
+      "Tenant database answered": "Il database ha risposto.",
+      "Tenant database is missing": "Le credenziali funzionano, ma il server non ha alcun database con quel nome.",
+      "Prove the connection before saving": "Prova la connessione prima di salvare dettagli del database modificati. Il server li accetta senza verifica e poi la piattaforma non si avvia al riavvio successivo, perché un tenant che non può essere migrato impedisce l’avvio dell’intera piattaforma."
     },
     "permissions": {
       "actions": {

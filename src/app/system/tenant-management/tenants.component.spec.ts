@@ -12,7 +12,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { of } from 'rxjs';
 
@@ -88,7 +88,7 @@ describe('TenantsComponent', () => {
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faSearch);
+    TestBed.inject(FaIconLibrary).addIcons(faSearch, faPlus);
 
     fixture = TestBed.createComponent(TenantsComponent);
     component = fixture.componentInstance;

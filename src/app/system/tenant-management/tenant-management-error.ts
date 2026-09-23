@@ -29,6 +29,22 @@ export function tenantManagementErrorMessage(error: HttpErrorResponse): string |
 }
 
 /**
+ * The globalisation code Fineract classified the failure as, or `null` when it sent none.
+ *
+ * Since MX-421 the backend distinguishes a rejected password, a missing privilege and a database
+ * that is not there from one another, each with its own code. Preferring the code over the
+ * message means the reason can be said in the user's language rather than only in English.
+ */
+export function tenantManagementErrorCode(error: HttpErrorResponse): string | null {
+  const body = error?.error;
+  if (!body || typeof body !== 'object') {
+    return null;
+  }
+  const nested = Array.isArray(body.errors) ? body.errors[0] : null;
+  return nested?.userMessageGlobalisationCode || body.userMessageGlobalisationCode || null;
+}
+
+/**
  * The translation key describing a failed tenant management request, by status.
  *
  * 404 is called out because it is the expected answer from a server running stock Fineract: the

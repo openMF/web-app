@@ -551,11 +551,11 @@
       "amountMustBePositive": "Darījuma summai jābūt lielākai par 0."
     },
     "tenantManagement": {
-      "type": "Tenant Management",
-      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
-      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
-      "unknown": "The tenant management request could not be completed.",
-      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+      "type": "Nomnieku pārvaldība",
+      "unauthorized": "Jūsu nomnieku pārvaldības sesija vairs nav derīga. Piesakieties vēlreiz.",
+      "notAvailable": "Šis serveris nepiedāvā nomnieku administrēšanu. Fineract nomnieku pārvaldības spraudnis nav instalēts.",
+      "unknown": "Nomnieku pārvaldības pieprasījumu neizdevās pabeigt.",
+      "signInRejected": "Šie galvenie akreditācijas dati tika noraidīti. Nomnieku administrēšanai nepieciešams galvenais lietotājs, nevis nomnieka lietotājs."
     },
     "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
     "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
@@ -566,7 +566,11 @@
     "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
     "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
-    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment."
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "Datubāzes serveris noraidīja šī nomnieka akreditācijas datus.",
+    "error.msg.tenant.schema.creation.not.permitted": "Datubāzes lietotājam nav atļauts veidot datubāzes. Piešķiriet tam šīs tiesības vai izveidojiet datubāzi pirms nomnieka.",
+    "error.msg.tenant.schema.absent": "Datubāzes serverī nav datubāzes ar šādu nosaukumu.",
+    "error.msg.tenant.connection.failed": "Nomnieka datubāzi neizdevās sasniegt."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -949,10 +953,12 @@
       "Upload Report Design": "Augšupielādēt pārskata veidni",
       "Mass Reject": "Noraidīt masveidā",
       "Hide": "Paslēpt",
-      "Sign In": "Sign In",
-      "Sign Out": "Sign Out",
+      "Sign In": "Pieteikties",
+      "Sign Out": "Atteikties",
       "Adjust": "Koriģēt",
-      "Reverse": "Atcelt"
+      "Reverse": "Atcelt",
+      "Create Tenant": "Izveidot nomnieku",
+      "Test Connection": "Pārbaudīt savienojumu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1233,9 +1239,9 @@
       "xbrlmapping": "XBRL Kartēšana",
       "Enabled": "Iespējots",
       "Disabled": "Atspējots",
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "ACTIVE": "Aktīvs",
+      "INACTIVE": "Neaktīvs",
+      "SUSPENDED": "Apturēts"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1938,10 +1944,13 @@
       "Advanced Configuration": "Papildu konfigurācija",
       "Mass Reject Credit Applications": "Masveida kredīta pieteikumu noraidīšana",
       "Enrollment Details": "Reģistrācijas informācija",
-      "Tenant Management": "Tenant Management",
-      "Tenant Management Sign In": "Tenant Management Sign In",
-      "Database Connection": "Database Connection",
-      "Reverse Transaction": "Atcelt darījumu"
+      "Tenant Management": "Nomnieku pārvaldība",
+      "Tenant Management Sign In": "Pieteikšanās nomnieku pārvaldībā",
+      "Database Connection": "Datubāzes savienojums",
+      "Reverse Transaction": "Atcelt darījumu",
+      "Create Tenant": "Izveidot nomnieku",
+      "Edit Tenant": "Rediģēt nomnieku",
+      "Tenant Details": "Nomnieka informācija"
     },
     "inputs": {
       "Returned": "Atgriezts",
@@ -3970,18 +3979,19 @@
       "Registration Status": "Reģistrācijas statuss",
       "Unknown": "Nezināms",
       "Pending": "Gaida",
-      "Tenant Identifier": "Tenant Identifier",
-      "Time Zone": "Time Zone",
-      "Contact Email": "Contact Email",
-      "Master Username": "Master Username",
-      "Master Password": "Master Password",
-      "Schema Name": "Schema Name",
-      "Schema Server": "Schema Server",
-      "Schema Server Port": "Schema Server Port",
-      "Schema Username": "Schema Username",
-      "Schema Connection Parameters": "Schema Connection Parameters",
-      "Auto Update": "Auto Update",
-      "Search by identifier or name": "Search by identifier or name"
+      "Tenant Identifier": "Nomnieka identifikators",
+      "Time Zone": "Laika josla",
+      "Contact Email": "Kontaktpersonas e-pasts",
+      "Master Username": "Galvenā lietotāja vārds",
+      "Master Password": "Galvenā parole",
+      "Schema Name": "Shēmas nosaukums",
+      "Schema Server": "Shēmas serveris",
+      "Schema Server Port": "Shēmas servera ports",
+      "Schema Username": "Shēmas lietotājs",
+      "Schema Connection Parameters": "Shēmas savienojuma parametri",
+      "Auto Update": "Automātiska atjaunināšana",
+      "Search by identifier or name": "Meklēt pēc identifikatora vai nosaukuma",
+      "Schema Password": "Shēmas parole"
     },
     "links": {
       "Community": "kopiena",
@@ -4235,7 +4245,11 @@
       "Restart Period from Reset Date splits the current period": "Ja iespējots, pašreizējais pārkāpuma periods tiek sadalīts atiestatīšanas datumā un jauns periods sākas no šī datuma.",
       "Breach evaluation will stop": "Pārkāpumu novērtēšana tiek pārtraukta {{date}}. Iepriekšējie rezultāti tiek saglabāti, bet paslēpti līdz atkārtotai iespējošanai.",
       "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti.",
-      "This will reopen the loan account": "Aizdevums ir slēgts vai pārmaksāts: šī darbība atkārtoti atvērs kontu."
+      "This will reopen the loan account": "Aizdevums ir slēgts vai pārmaksāts: šī darbība atkārtoti atvērs kontu.",
+      "Activate tenant": "Aktivizēt nomnieku {{identifier}}",
+      "Deactivate tenant": "Deaktivizēt nomnieku {{identifier}} — visi tam adresētie pieprasījumi tiks noraidīti, līdz tas tiks atkal aktivizēts",
+      "Suspend tenant": "Apturēt nomnieku {{identifier}} — visi tam adresētie pieprasījumi tiks noraidīti, līdz tas tiks atkal aktivizēts",
+      "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
       "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",
@@ -5267,15 +5281,38 @@
       "No pending prospects found": "Neapstrādāti prospekti nav atrasti",
       "Unable to load pending prospects": "Nevar ielādēt neapstrādātos prospektus",
       "The amount could not be re-quoted for this date. Pick the date again to retry.": "Neizdevās atkārtoti aprēķināt summu šim datumam. Atlasiet datumu vēlreiz, lai mēģinātu vēlreiz.",
-      "Signed in as master user": "Signed in as master user",
-      "No tenants found": "No tenants found",
-      "Unrecognised status": "Unrecognised status",
-      "Manage the tenants of this installation": "Manage the tenants of this installation",
-      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
-      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Signed in as master user": "Pieteicies kā galvenais lietotājs",
+      "No tenants found": "Nomnieki nav atrasti",
+      "Unrecognised status": "Neatpazīts statuss",
+      "Manage the tenants of this installation": "Pārvaldīt šīs instalācijas nomniekus",
+      "Tenant management master context": "Nomnieku administrēšana atrodas augstāk par katru atsevišķu nomnieku, tāpēc tai nepieciešams savs galvenais lietotājs. Nomnieka lietotājs šeit nevar pieteikties neatkarīgi no tā, cik plašas tiesības viņam ir šajā nomniekā.",
+      "Tenant database password write only": "Datubāzes parole tiek glabāta šifrēta, un serveris to nekad neatgriež, tāpēc to šeit nevar parādīt.",
       "Adjust": "Koriģēt",
       "Identifies the new transaction created by the adjustment": "Identificē jauno darījumu, kas izveidots ar korekciju",
-      "Identifies the reversal of the original transaction": "Identificē sākotnējā darījuma atcelšanu"
+      "Identifies the reversal of the original transaction": "Identificē sākotnējā darījuma atcelšanu",
+      "Tenant identifier format": "Mazie burti, cipari, defise un pasvītrojums; vēlāk to nevarēs mainīt.",
+      "Schema name format": "Burti, cipari un pasvītrojums, sākot ar burtu vai pasvītrojumu, ne vairāk kā 63 rakstzīmes.",
+      "Port range": "Ievadiet portu no 1 līdz 65535.",
+      "Tenant database created if absent": "Datubāze tiek izveidota, ja tās nav, un izmantota atkārtoti — nekad netiek iztukšota —, ja tā jau pastāv.",
+      "Schema connection parameters hint": "Papildu JDBC parametri, piemēram, sslmode=verify-full datubāzei citā resursdatorā.",
+      "Testing the connection": "Notiek savienojuma pārbaude…",
+      "Provisioning a tenant takes a while": "Datubāzes izveide un migrācija var aizņemt minūti. Atstājiet šo lapu atvērtu, līdz tas ir pabeigts.",
+      "Tenant identifier cannot be changed": "Nevar mainīt — pēc tā katrs pieprasījums izvēlas nomnieku.",
+      "Schema name cannot be changed": "Nevar mainīt — nomnieka dati jau atrodas tur.",
+      "Leave blank to clear": "Atstājiet tukšu, lai notīrītu.",
+      "Leave blank to keep the stored password": "Atstājiet tukšu, lai saglabātu esošo paroli.",
+      "Enter the password to test": "Ievadiet datubāzes paroli, lai pārbaudītu savienojumu. Saglabātā parole nekad netiek atgriezta.",
+      "Deactivate before removing": "Pirms nomnieka noņemšanas deaktivizējiet to.",
+      "Test connection on create hint": "Pārbauda serveri, akreditācijas datus un to, vai datubāze jau pastāv.",
+      "Schema username hint": "Šajā serverī jau esošs datubāzes lietotājs. Tam nepieciešamas tiesības veidot datubāzes.",
+      "Schema password hint": "Šī lietotāja esošā parole. Spraudnis izveido datubāzi, nevis lietotāju, tāpēc šī nav parole, ko jūs izvēlaties šeit.",
+      "Database server did not answer": "Datubāzes serveris šajā resursdatorā un portā neatbildēja.",
+      "Database server refused the credentials": "Datubāzes serveris noraidīja šos akreditācijas datus.",
+      "Existing database will be reused": "Akreditācijas dati darbojas, un datubāze ar šādu nosaukumu jau pastāv. Tā tiks izmantota atkārtoti, nevis iztukšota.",
+      "Database will be created on submit": "Akreditācijas dati darbojas. Datubāzes vēl nav, un tā tiks izveidota, iesniedzot.",
+      "Tenant database answered": "Datubāze atbildēja.",
+      "Tenant database is missing": "Akreditācijas dati darbojas, bet serverī nav datubāzes ar šādu nosaukumu.",
+      "Prove the connection before saving": "Pirms mainītu datubāzes datu saglabāšanas pārbaudiet savienojumu. Serveris tos pieņem nepārbaudītus, un platforma nākamajā restartēšanā vairs nestartē, jo nomnieks, kuru nevar migrēt, neļauj startēt nevienam nomniekam."
     },
     "permissions": {
       "actions": {
