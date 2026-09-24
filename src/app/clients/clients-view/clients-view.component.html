@@ -16,6 +16,7 @@
       accountImage
       mat-card-md-image
       class="profile-image"
+      [alt]="complianceHideClientData ? maskName(clientViewData.displayName) : clientViewData.displayName"
       [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
     />
 
