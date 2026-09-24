@@ -332,9 +332,15 @@
               }
             </div>
             <div class="acc-balance-block">
-              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-label">{{ 'labels.inputs.Account Balance' | translate }}</div>
               <div class="acc-balance-value savings">
                 {{ saving.accountBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Available Balance' | translate }}</div>
+              <div class="acc-balance-value savings">
+                {{ saving.availableBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
               </div>
             </div>
             <div class="acc-actions" (click)="$event.stopPropagation()">

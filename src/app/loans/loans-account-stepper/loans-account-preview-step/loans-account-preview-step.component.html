@@ -41,7 +41,7 @@
 
   @if (loanProductService.isLoanProduct && loansAccount.loanPurposeId) {
     <div class="flex-fill">
-      <span class="flex-30">{{ 'labels.inputs.Loan purpose' | translate }}:</span>
+      <span class="flex-30">{{ 'labels.heading.Loan Purpose' | translate }}:</span>
       <span class="flex-70">{{
         loansAccount.loanPurposeId | find: loansAccountProductTemplate.loanPurposeOptions : 'id' : 'name'
       }}</span>
