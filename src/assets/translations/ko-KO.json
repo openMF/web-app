@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "수수료별 소득 계정을 구성하기 위한 소득 계정은 비워둘 수 없습니다.",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "자금이 유효하지 않습니다.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "자금 출처는 필수입니다.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "청구된 이자에 대한 유예는 상환 횟수 값보다 작거나 같아야 합니다.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "청구된 이자에 대한 유예는 상환 횟수 값보다 작거나 같아야 합니다.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "부과되는 이자에 대한 유예는 0 이상의 값이어야 합니다.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "대출상품 '이자지급 유예'는 상환횟수보다 적어야 합니다.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "이자 지불 유예는 상환 횟수 값보다 작아야 합니다.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "설명은 필수입니다.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "설명은 {{params[0].value}}자를 초과할 수 없습니다.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "입력한 소수 자릿수는 `{{params[0].value}}`이며 {{params[1].value}}와 {{params[2].value}} 사이의 숫자여야 합니다.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "수수료 계정 수입은 필수입니다.",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "수수료 계정 수입은 필수입니다.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "이자 계산(연간 일수)은 필수입니다.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "이자 계산(연간 일수)은 `[ {{params[1].value}} ]` 중 하나여야 합니다.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "이자 계산 유형은 필수입니다.",
@@ -1302,7 +1302,7 @@
       "should": "~해야 한다",
       "on": "~에",
       "every": "매",
-      "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
+      "Password validation": "비밀번호는 최소 {{minchar}}자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
       "Must be a positive integer": "양의 정수여야 합니다",
       "Must be greater than 0": "0보다 커야 합니다",
       "Must be at least": "최소한이어야 합니다",
@@ -4058,7 +4058,10 @@
       "No bureau data available": "신용정보 데이터가 없습니다",
       "Failed to load bureau data": "신용정보 데이터를 불러오지 못했습니다",
       "ENTITY": "법인",
-      "PERSON": "개인"
+      "PERSON": "개인",
+      "Payment": "납입액",
+      "Export Date": "내보낸 날짜",
+      "Label": "항목"
     },
     "links": {
       "Community": "지역 사회",
@@ -5522,7 +5525,11 @@
       "ShareAccountApproveBusinessEvent": "출자 계좌 승인 비즈니스 이벤트",
       "ShareAccountCreateBusinessEvent": "출자 계좌 생성 비즈니스 이벤트",
       "ShareProductDividentsCreateBusinessEvent": "출자 상품 배당금 생성 비즈니스 이벤트",
-      "Fineract": "Apache Fineract®"
+      "Fineract": "Apache Fineract®",
+      "Closed": "종료됨",
+      "Dashboard Export": "대시보드 내보내기",
+      "Generated on": "생성 일시",
+      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다"
     },
     "permissions": {
       "actions": {
@@ -6321,10 +6328,12 @@
         "success": "고객이 성공적으로 해지되었습니다."
       },
       "reject": {
-        "success": "고객이 성공적으로 거절되었습니다."
+        "success": "고객이 성공적으로 거절되었습니다.",
+        "failure": "고객 거절에 실패했습니다."
       },
       "withdraw": {
-        "success": "고객이 성공적으로 탈퇴되었습니다."
+        "success": "고객이 성공적으로 탈퇴되었습니다.",
+        "failure": "고객 철회에 실패했습니다."
       },
       "reactivate": {
         "success": "고객이 성공적으로 재활성화되었습니다.",
@@ -6335,7 +6344,8 @@
         "failure": "고객 활성화에 실패했습니다."
       },
       "acceptTransfer": {
-        "success": "고객 이체가 성공적으로 수락되었습니다."
+        "success": "고객 이체가 성공적으로 수락되었습니다.",
+        "failure": "고객 이체 수락에 실패했습니다."
       },
       "rejectTransfer": {
         "success": "고객 이체가 성공적으로 거절되었습니다."
@@ -6344,7 +6354,8 @@
         "success": "고객 이체가 성공적으로 취소되었습니다."
       },
       "undoRejection": {
-        "success": "고객 거절이 성공적으로 취소되었습니다."
+        "success": "고객 거절이 성공적으로 취소되었습니다.",
+        "failure": "고객 거절 취소에 실패했습니다."
       },
       "transfer": {
         "success": "고객 이체가 성공적으로 제안되었습니다.",
@@ -6355,7 +6366,8 @@
         "failure": "고객 수수료를 추가하지 못했습니다."
       },
       "addCollateral": {
-        "success": "고객 담보가 성공적으로 추가되었습니다."
+        "success": "고객 담보가 성공적으로 추가되었습니다.",
+        "failure": "고객 담보 추가에 실패했습니다."
       },
       "assignStaff": {
         "success": "직원이 고객에게 성공적으로 배정되었습니다.",

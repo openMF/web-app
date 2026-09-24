@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Das Einkommenskonto zum Konfigurieren gebührenspezifischer Einkommenskonten darf nicht leer sein",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Der Fonds ist ungültig.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Die Angabe der Finanzierungsquelle ist obligatorisch.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Die Zahlungsfrist für berechnete Zinsen muss kleiner oder gleich dem Wert für die Anzahl der Rückzahlungen sein.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Die Zahlungsfrist für berechnete Zinsen muss kleiner oder gleich dem Wert für die Anzahl der Rückzahlungen sein.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Der Zinsaufschlag muss einen Wert von Null oder mehr haben.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Das Darlehensprodukt „Kulanz bei Zinszahlung“ muss geringer sein als die Anzahl der Rückzahlungen.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Die Zahlungsfrist für Zinszahlungen muss geringer sein als der Wert für die Anzahl der Rückzahlungen.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Beschreibung ist obligatorisch.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Die Beschreibung darf nicht länger als {{params[0].value}} Zeichen sein.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Die eingegebenen Dezimalstellen sind „{{params[0].value}}“ und müssen eine Zahl zwischen {{params[1].value}} und {{params[2].value}} sein.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Einnahmen aus dem Gebührenkonto sind obligatorisch",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Einnahmen aus dem Gebührenkonto sind obligatorisch",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Die Zinsberechnung (Tage im Jahr) ist obligatorisch.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Die Zinsberechnung (Tage im Jahr) muss eine von „[ {{params[1].value}} ]“ sein.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Die Zinsberechnungsart ist obligatorisch.",
@@ -1304,7 +1304,7 @@
       "should": "sollen",
       "on": "An",
       "every": "jeden",
-      "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
+      "Password validation": "Das Passwort sollte mindestens {{minchar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
       "Must be a positive integer": "Muss eine positive ganze Zahl sein",
       "Must be greater than 0": "Muss größer als 0 sein",
       "Must be at least": "Muss mindestens",
@@ -4060,7 +4060,10 @@
       "No bureau data available": "Keine Auskunfteidaten verfügbar",
       "Failed to load bureau data": "Auskunfteidaten konnten nicht geladen werden",
       "ENTITY": "Juristische Person",
-      "PERSON": "Natürliche Person"
+      "PERSON": "Natürliche Person",
+      "Payment": "Zahlung",
+      "Export Date": "Exportdatum",
+      "Label": "Bezeichnung"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5524,7 +5527,11 @@
       "SavingsWithdrawalBusinessEvent": "Geschäftsereignis: Sparkonto — Auszahlung",
       "ShareAccountApproveBusinessEvent": "Geschäftsereignis: Anteilskonto — Genehmigung",
       "ShareAccountCreateBusinessEvent": "Geschäftsereignis: Anteilskonto — Erstellung",
-      "ShareProductDividentsCreateBusinessEvent": "Geschäftsereignis: Anteilsprodukt — Dividenden erstellt"
+      "ShareProductDividentsCreateBusinessEvent": "Geschäftsereignis: Anteilsprodukt — Dividenden erstellt",
+      "Closed": "Geschlossen",
+      "Dashboard Export": "Dashboard-Export",
+      "Generated on": "Erstellt am",
+      "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard"
     },
     "permissions": {
       "actions": {
@@ -6323,10 +6330,12 @@
         "success": "Kunde erfolgreich geschlossen."
       },
       "reject": {
-        "success": "Kunde erfolgreich abgelehnt."
+        "success": "Kunde erfolgreich abgelehnt.",
+        "failure": "Ablehnung des Kunden fehlgeschlagen."
       },
       "withdraw": {
-        "success": "Kunde erfolgreich zurückgezogen."
+        "success": "Kunde erfolgreich zurückgezogen.",
+        "failure": "Rückzug des Kunden fehlgeschlagen."
       },
       "reactivate": {
         "success": "Kunde erfolgreich reaktiviert.",
@@ -6337,7 +6346,8 @@
         "failure": "Aktivierung des Kunden fehlgeschlagen."
       },
       "acceptTransfer": {
-        "success": "Kundentransfer erfolgreich akzeptiert."
+        "success": "Kundentransfer erfolgreich akzeptiert.",
+        "failure": "Annahme des Kundentransfers fehlgeschlagen."
       },
       "rejectTransfer": {
         "success": "Kundentransfer erfolgreich abgelehnt."
@@ -6346,7 +6356,8 @@
         "success": "Kundentransfer erfolgreich rückgängig gemacht."
       },
       "undoRejection": {
-        "success": "Kundenablehnung erfolgreich rückgängig gemacht."
+        "success": "Kundenablehnung erfolgreich rückgängig gemacht.",
+        "failure": "Rücknahme der Kundenablehnung fehlgeschlagen."
       },
       "transfer": {
         "success": "Kundentransfer erfolgreich vorgeschlagen.",
@@ -6357,7 +6368,8 @@
         "failure": "Kundengebühr konnte nicht hinzugefügt werden."
       },
       "addCollateral": {
-        "success": "Kundensicherheit erfolgreich hinzugefügt."
+        "success": "Kundensicherheit erfolgreich hinzugefügt.",
+        "failure": "Hinzufügen der Kundensicherheit fehlgeschlagen."
       },
       "assignStaff": {
         "success": "Personal erfolgreich dem Kunden zugewiesen.",

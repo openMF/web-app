@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "La cuenta de ingresos para configurar cuentas de ingresos específicas para comisiones no puede estar en blanco",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "El fondo no es válido.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "La fuente del fondo es obligatoria.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "La Periodos de Gracia sobre los intereses cobrados debe ser menor o igual al valor de # de reembolsos.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "La Periodos de Gracia sobre los intereses cobrados debe ser menor o igual al valor de # de reembolsos.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "La Periodos de Gracia sobre los intereses cobrados debe ser un valor igual a cero o mayor.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "El producto de Crédito 'Gracia en el pago de intereses' debe ser menor que el número de reembolsos.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "La Periodos de Gracia en los pagos de intereses debe ser menor que el valor del número de reembolsos.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "La descripción es obligatoria.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "La descripción no puede tener más de {{params[0].value}} caracteres.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Los decimales ingresados ​​son `{{params[0].value}}` y debe ser un número entre {{params[1].value}} y {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "La cuenta de Ingresos por Comisiones es obligatoria",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "La cuenta de Ingresos por Comisiones es obligatoria",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insuficiente. El saldo de su cuenta es {{balance}}.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "El cálculo de intereses (días del año) es obligatorio.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "El cálculo de intereses (días del año) debe ser uno de `[ {{params[1].value}} ]`.",
@@ -4052,7 +4052,10 @@
       "No bureau data available": "No hay datos del buró disponibles",
       "Failed to load bureau data": "No se pudieron cargar los datos del buró",
       "ENTITY": "Persona moral",
-      "PERSON": "Persona física"
+      "PERSON": "Persona física",
+      "Payment": "Pago",
+      "Export Date": "Fecha de exportación",
+      "Label": "Etiqueta"
     },
     "links": {
       "Community": "Comunidad",
@@ -5516,7 +5519,11 @@
       "RecurringDepositAccountCreateBusinessEvent": "Evento de negocio: cuenta de depósito recurrente — creación",
       "ShareAccountApproveBusinessEvent": "Evento de negocio: cuenta de acciones — aprobación",
       "ShareAccountCreateBusinessEvent": "Evento de negocio: cuenta de acciones — creación",
-      "ShareProductDividentsCreateBusinessEvent": "Evento de negocio: producto de acciones — creación de dividendos"
+      "ShareProductDividentsCreateBusinessEvent": "Evento de negocio: producto de acciones — creación de dividendos",
+      "Closed": "Cerrado",
+      "Dashboard Export": "Exportación del panel",
+      "Generated on": "Generado el",
+      "Automated export": "Esta es una exportación automática del panel global de Mifos X"
     },
     "permissions": {
       "actions": {
@@ -6315,10 +6322,12 @@
         "success": "Cliente cerrado con éxito."
       },
       "reject": {
-        "success": "Cliente rechazado con éxito."
+        "success": "Cliente rechazado con éxito.",
+        "failure": "Error al rechazar el cliente."
       },
       "withdraw": {
-        "success": "Cliente retirado con éxito."
+        "success": "Cliente retirado con éxito.",
+        "failure": "Error al retirar el cliente."
       },
       "reactivate": {
         "success": "Cliente reactivado con éxito.",
@@ -6329,7 +6338,8 @@
         "failure": "Error al activar el cliente."
       },
       "acceptTransfer": {
-        "success": "Transferencia de cliente aceptada con éxito."
+        "success": "Transferencia de cliente aceptada con éxito.",
+        "failure": "Error al aceptar la transferencia del cliente."
       },
       "rejectTransfer": {
         "success": "Transferencia de cliente rechazada con éxito."
@@ -6338,7 +6348,8 @@
         "success": "Transferencia de cliente deshecha con éxito."
       },
       "undoRejection": {
-        "success": "Rechazo de cliente deshecho con éxito."
+        "success": "Rechazo de cliente deshecho con éxito.",
+        "failure": "Error al deshacer el rechazo del cliente."
       },
       "transfer": {
         "success": "Transferencia de cliente propuesta con éxito.",
@@ -6349,7 +6360,8 @@
         "failure": "No se pudo añadir el cargo del cliente."
       },
       "addCollateral": {
-        "success": "Garantía del cliente añadida con éxito."
+        "success": "Garantía del cliente añadida con éxito.",
+        "failure": "Error al añadir la garantía del cliente."
       },
       "assignStaff": {
         "success": "Asesor asignado al cliente con éxito.",

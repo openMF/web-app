@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "शुल्क विशिष्ट आय खाताहरू कन्फिगर गर्नको लागि आय खाता खाली हुन सक्दैन",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "कोष अवैध छ।",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "कोषको स्रोत अनिवार्य छ।",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "चार्ज गरिएको ब्याजमा अनुग्रह # भुक्तानीको मूल्य भन्दा कम वा बराबर हुनुपर्छ।",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "चार्ज गरिएको ब्याजमा अनुग्रह # भुक्तानीको मूल्य भन्दा कम वा बराबर हुनुपर्छ।",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "चार्ज गरिएको ब्याजमा अनुग्रह शून्य वा बढी भएको मान हुनुपर्छ।",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "ऋण उत्पादन 'ब्याज भुक्तानीमा अनुग्रह' भुक्तानी संख्या भन्दा कम हुनुपर्छ।",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "ब्याज भुक्तानीमा अनुग्रह # भुक्तानी को लागि मूल्य भन्दा कम हुनुपर्छ।",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "वर्णन अनिवार्य छ।",
     "validation.msg.savingsproduct.description.exceeds.max.length": "वर्णन {{params[0].value}} वर्णभन्दा लामो हुन सक्दैन।",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "प्रविष्ट गरिएको दशमलव स्थानहरू `{{params[0].value}}` हो र {{params[1].value}} र {{params[2].value}} बीचको सङ्ख्या हुनुपर्छ।",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "शुल्क खाताबाट आय अनिवार्य छ",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "शुल्क खाताबाट आय अनिवार्य छ",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "ब्याज गणना (वर्षमा दिनहरू) अनिवार्य छ।",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "ब्याज गणना (वर्षमा दिनहरू) `[ {{params[1].value}} ]` मध्ये एउटा हुनुपर्छ।",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "ब्याज गणना प्रकार अनिवार्य छ।",
@@ -1302,7 +1302,7 @@
       "should": "गर्नुपर्छ",
       "on": "मा",
       "every": "प्रत्येक",
-      "Password validation": "पासवर्डमा कम्तिमा १२ क्यारेक्टरहरू हुनुपर्छ, जसमा १ अपरकेस, लोअरकेस र स्पेशल क्यारेक्टरहरू हुनुपर्छ र दोहोरिएका क्यारेक्टरहरू वा सेतो-स्पेसहरू समावेश हुनु हुँदैन।",
+      "Password validation": "पासवर्डमा कम्तिमा {{minchar}} क्यारेक्टरहरू हुनुपर्छ, जसमा १ अपरकेस, लोअरकेस र स्पेशल क्यारेक्टरहरू हुनुपर्छ र दोहोरिएका क्यारेक्टरहरू वा सेतो-स्पेसहरू समावेश हुनु हुँदैन।",
       "Must be a positive integer": "सकारात्मक पूर्णांक हुनुपर्छ",
       "Must be greater than 0": "० भन्दा ठूलो हुनुपर्छ",
       "Must be at least": "कम्तिमा हुनुपर्छ",
@@ -4058,7 +4058,10 @@
       "No bureau data available": "कुनै ब्यूरो डाटा उपलब्ध छैन",
       "Failed to load bureau data": "ब्यूरो डाटा लोड गर्न असफल",
       "ENTITY": "संस्था",
-      "PERSON": "व्यक्ति"
+      "PERSON": "व्यक्ति",
+      "Payment": "भुक्तानी",
+      "Export Date": "निर्यात मिति",
+      "Label": "लेबल"
     },
     "links": {
       "Community": "समुदाय",
@@ -5522,7 +5525,11 @@
       "SavingsWithdrawalBusinessEvent": "व्यापार घटना: बचत — झिक्ने",
       "ShareAccountApproveBusinessEvent": "व्यापार घटना: सेयर खाता — स्वीकृति",
       "ShareAccountCreateBusinessEvent": "व्यापार घटना: सेयर खाता — सिर्जना",
-      "ShareProductDividentsCreateBusinessEvent": "व्यापार घटना: सेयर उत्पादन — लाभांश सिर्जना"
+      "ShareProductDividentsCreateBusinessEvent": "व्यापार घटना: सेयर उत्पादन — लाभांश सिर्जना",
+      "Closed": "बन्द गरियो",
+      "Dashboard Export": "ड्यासबोर्ड निर्यात",
+      "Generated on": "उत्पन्न मिति",
+      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो"
     },
     "permissions": {
       "actions": {
@@ -6321,10 +6328,12 @@
         "success": "ग्राहक सफलतापूर्वक बन्द गरियो।"
       },
       "reject": {
-        "success": "ग्राहक सफलतापूर्वक अस्वीकार गरियो।"
+        "success": "ग्राहक सफलतापूर्वक अस्वीकार गरियो।",
+        "failure": "ग्राहक अस्वीकार गर्न असफल भयो।"
       },
       "withdraw": {
-        "success": "ग्राहक सफलतापूर्वक फिर्ता गरियो।"
+        "success": "ग्राहक सफलतापूर्वक फिर्ता गरियो।",
+        "failure": "ग्राहक फिर्ता लिन असफल भयो।"
       },
       "reactivate": {
         "success": "ग्राहक सफलतापूर्वक पुन: सक्रिय गरियो।",
@@ -6335,7 +6344,8 @@
         "failure": "ग्राहक सक्रिय गर्न असफल भयो।"
       },
       "acceptTransfer": {
-        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक स्वीकार गरियो।"
+        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक स्वीकार गरियो।",
+        "failure": "ग्राहक स्थानान्तरण स्वीकार गर्न असफल भयो।"
       },
       "rejectTransfer": {
         "success": "ग्राहक स्थानान्तरण सफलतापूर्वक अस्वीकार गरियो।"
@@ -6344,7 +6354,8 @@
         "success": "ग्राहक स्थानान्तरण सफलतापूर्वक रद्द गरियो।"
       },
       "undoRejection": {
-        "success": "ग्राहक अस्वीकार सफलतापूर्वक रद्द गरियो।"
+        "success": "ग्राहक अस्वीकार सफलतापूर्वक रद्द गरियो।",
+        "failure": "ग्राहक अस्वीकृति रद्द गर्न असफल भयो।"
       },
       "transfer": {
         "success": "ग्राहक स्थानान्तरण सफलतापूर्वक प्रस्ताव गरियो।",
@@ -6355,7 +6366,8 @@
         "failure": "ग्राहक शुल्क थप्न सकिएन।"
       },
       "addCollateral": {
-        "success": "ग्राहक धितो सफलतापूर्वक थपियो।"
+        "success": "ग्राहक धितो सफलतापूर्वक थपियो।",
+        "failure": "ग्राहक धितो थप्न असफल भयो।"
       },
       "assignStaff": {
         "success": "कर्मचारी सफलतापूर्वक ग्राहकलाई खटाइयो।",
