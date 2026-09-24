@@ -1951,7 +1951,10 @@
       "Reverse Transaction": "Stornovat transakci",
       "Create Tenant": "Vytvořit tenanta",
       "Edit Tenant": "Upravit tenanta",
-      "Tenant Details": "Podrobnosti tenanta"
+      "Tenant Details": "Podrobnosti tenanta",
+      "Savings Account Opening": "Založení spořicího účtu",
+      "Savings Account Deposit": "Vklad na spořicí účet",
+      "Preview": "Náhled"
     },
     "inputs": {
       "Returned": "Vráceno",

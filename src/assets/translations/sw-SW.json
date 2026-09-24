@@ -1947,7 +1947,10 @@
       "Reverse Transaction": "Batilisha Muamala",
       "Create Tenant": "Unda tenant",
       "Edit Tenant": "Hariri tenant",
-      "Tenant Details": "Maelezo ya tenant"
+      "Tenant Details": "Maelezo ya tenant",
+      "Savings Account Opening": "Ufunguzi wa Akaunti ya Akiba",
+      "Savings Account Deposit": "Amana ya Akaunti ya Akiba",
+      "Preview": "Onyesho la Kukagua"
     },
     "inputs": {
       "Returned": "Imerudishwa",
