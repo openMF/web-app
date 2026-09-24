@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Akaunti ya Mapato ya kusanidi Akaunti za Mapato mahususi ya Ada haiwezi kuwa tupu",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Mfuko ni batili.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Chanzo cha Mfuko ni lazima.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Neema kwenye riba inayotozwa lazima iwe chini ya au sawa na thamani ya # ya malipo.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Neema kwenye riba inayotozwa lazima iwe chini ya au sawa na thamani ya # ya malipo.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Neema kwenye riba inayotozwa lazima iwe thamani ambayo ni sifuri au zaidi.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Bidhaa ya Mkopo 'Grace on interest payment' lazima iwe chini ya idadi ya malipo.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Neema kwenye malipo ya riba lazima iwe chini ya thamani ya # ya malipo.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Maelezo ni ya lazima.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Ufafanuzi hauwezi kuwa zaidi ya vibambo {{params[0].value}} kwa urefu.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Maeneo ya decimal yaliyowekwa ni `{{params[0].value}}` na lazima iwe nambari kati ya {{params[1].value}} na {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Mapato kutoka kwa Akaunti ya Ada ni lazima",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Mapato kutoka kwa Akaunti ya Ada ni lazima",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Hesabu ya riba (Siku katika Mwaka) ni ya lazima.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Hesabu ya riba (Siku katika Mwaka) lazima iwe mojawapo ya `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Aina ya hesabu ya riba ni ya lazima.",
@@ -4059,7 +4059,10 @@
       "No bureau data available": "Hakuna data ya ofisi ya mikopo inayopatikana",
       "Failed to load bureau data": "Imeshindwa kupakia data ya ofisi ya mikopo",
       "ENTITY": "Shirika",
-      "PERSON": "Mtu binafsi"
+      "PERSON": "Mtu binafsi",
+      "Payment": "Malipo",
+      "Export Date": "Tarehe ya Kuhamisha",
+      "Label": "Lebo"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5523,7 +5526,11 @@
       "SavingsWithdrawalBusinessEvent": "Tukio la biashara: akiba — kutoa",
       "ShareAccountApproveBusinessEvent": "Tukio la biashara: akaunti ya hisa — kuidhinisha",
       "ShareAccountCreateBusinessEvent": "Tukio la biashara: akaunti ya hisa — kuunda",
-      "ShareProductDividentsCreateBusinessEvent": "Tukio la biashara: bidhaa ya hisa — kuunda gawio"
+      "ShareProductDividentsCreateBusinessEvent": "Tukio la biashara: bidhaa ya hisa — kuunda gawio",
+      "Closed": "Imefungwa",
+      "Dashboard Export": "Uhamishaji wa Dashibodi",
+      "Generated on": "Imetolewa tarehe",
+      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X"
     },
     "permissions": {
       "actions": {
@@ -6322,10 +6329,12 @@
         "success": "Mteja amefungwa kwa mafanikio."
       },
       "reject": {
-        "success": "Mteja amekataliwa kwa mafanikio."
+        "success": "Mteja amekataliwa kwa mafanikio.",
+        "failure": "Imeshindwa kumkataa mteja."
       },
       "withdraw": {
-        "success": "Mteja ameondolewa kwa mafanikio."
+        "success": "Mteja ameondolewa kwa mafanikio.",
+        "failure": "Imeshindwa kumwondoa mteja."
       },
       "reactivate": {
         "success": "Mteja amerejeshwa kwa mafanikio.",
@@ -6336,7 +6345,8 @@
         "failure": "Imeshindikana kumwezesha mteja."
       },
       "acceptTransfer": {
-        "success": "Uhamisho wa mteja umekubaliwa kwa mafanikio."
+        "success": "Uhamisho wa mteja umekubaliwa kwa mafanikio.",
+        "failure": "Imeshindwa kukubali uhamisho wa mteja."
       },
       "rejectTransfer": {
         "success": "Uhamisho wa mteja umekataliwa kwa mafanikio."
@@ -6345,7 +6355,8 @@
         "success": "Uhamisho wa mteja umetenguliwa kwa mafanikio."
       },
       "undoRejection": {
-        "success": "Kukataliwa kwa mteja umetenguliwa kwa mafanikio."
+        "success": "Kukataliwa kwa mteja umetenguliwa kwa mafanikio.",
+        "failure": "Imeshindwa kutengua kukataliwa kwa mteja."
       },
       "transfer": {
         "success": "Uhamisho wa mteja umependekezwa kwa mafanikio.",
@@ -6356,7 +6367,8 @@
         "failure": "Imeshindwa kuongeza malipo ya mteja."
       },
       "addCollateral": {
-        "success": "Dhamana ya mteja imeongezwa kwa mafanikio."
+        "success": "Dhamana ya mteja imeongezwa kwa mafanikio.",
+        "failure": "Imeshindwa kuongeza dhamana ya mteja."
       },
       "assignStaff": {
         "success": "Mfanyakazi amepangiwa mteja kwa mafanikio.",

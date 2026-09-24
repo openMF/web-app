@@ -102,10 +102,10 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="minimumActivePeriodForDividends" min="1" step="1" required />
       <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('required')">
-        Frequency is <strong>required</strong>
+        {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Frequency' | translate) } }}
       </mat-error>
       <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('min')">
-        Frequency must be greater than zero
+        {{ 'errors.validation.mustBeGreaterThanZero' | translate: { field: ('labels.inputs.Frequency' | translate) } }}
       </mat-error>
     </mat-form-field>
 
@@ -132,10 +132,10 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency" min="1" step="1" required />
       <mat-error *ngIf="shareProductSettingsForm.get('lockinPeriodFrequency').hasError('required')">
-        Frequency is <strong>required</strong>
+        {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Frequency' | translate) } }}
       </mat-error>
       <mat-error *ngIf="shareProductSettingsForm.get('lockinPeriodFrequency').hasError('min')">
-        Frequency must be greater than zero
+        {{ 'errors.validation.mustBeGreaterThanZero' | translate: { field: ('labels.inputs.Frequency' | translate) } }}
       </mat-error>
     </mat-form-field>
 

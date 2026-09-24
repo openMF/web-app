@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Příjmový účet pro konfiguraci Poplatkových účtů příjmu nemůže být prázdný",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fond je neplatný.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Zdroj fondu je povinný.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Úrok z úroků musí být nižší nebo roven hodnotě # splátek.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Úrok z úroků musí být nižší nebo roven hodnotě # splátek.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Úrok z úroků musí mít hodnotu nulovou nebo vyšší.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Úvěrový produkt „Grace při platbě úroků“ musí být nižší než počet splátek.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Výplata úroků musí být nižší než hodnota # splátek.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Popis je povinný.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Popis nesmí být delší než {{params[0].value}} znaků.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Zadaná desetinná místa jsou `{{params[0].value}}` a musí to být číslo mezi {{params[1].value}} a {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Příjem z Poplatkového účtu je povinný",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Příjem z Poplatkového účtu je povinný",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Výpočet úroku (dny v roce) je povinný.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Výpočet úroku (Dny v roce) musí být jeden z `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Typ výpočtu úroku je povinný.",
@@ -4060,7 +4060,10 @@
       "No bureau data available": "Nejsou dostupná žádná data z úvěrového registru",
       "Failed to load bureau data": "Nepodařilo se načíst data z úvěrového registru",
       "ENTITY": "Právnická osoba",
-      "PERSON": "Fyzická osoba"
+      "PERSON": "Fyzická osoba",
+      "Payment": "Platba",
+      "Export Date": "Datum exportu",
+      "Label": "Popisek"
     },
     "links": {
       "Community": "Společenství",
@@ -5524,7 +5527,11 @@
       "SavingsWithdrawalBusinessEvent": "Obchodní událost: spoření — výběr",
       "ShareAccountApproveBusinessEvent": "Obchodní událost: podílový účet — schválení",
       "ShareAccountCreateBusinessEvent": "Obchodní událost: podílový účet — vytvoření",
-      "ShareProductDividentsCreateBusinessEvent": "Obchodní událost: podílový produkt — vytvoření dividend"
+      "ShareProductDividentsCreateBusinessEvent": "Obchodní událost: podílový produkt — vytvoření dividend",
+      "Closed": "Uzavřeno",
+      "Dashboard Export": "Export přehledu",
+      "Generated on": "Vygenerováno",
+      "Automated export": "Toto je automatický export z globálního přehledu Mifos X"
     },
     "permissions": {
       "actions": {
@@ -6324,10 +6331,12 @@
         "success": "Klient byl úspěšně uzavřen."
       },
       "reject": {
-        "success": "Klient byl úspěšně odmítnut."
+        "success": "Klient byl úspěšně odmítnut.",
+        "failure": "Zamítnutí klienta se nezdařilo."
       },
       "withdraw": {
-        "success": "Klient byl úspěšně stažen."
+        "success": "Klient byl úspěšně stažen.",
+        "failure": "Odstoupení klienta se nezdařilo."
       },
       "reactivate": {
         "success": "Klient byl úspěšně reaktivován.",
@@ -6338,7 +6347,8 @@
         "failure": "Nepodařilo se aktivovat klienta."
       },
       "acceptTransfer": {
-        "success": "Převod klienta byl úspěšně přijat."
+        "success": "Převod klienta byl úspěšně přijat.",
+        "failure": "Přijetí převodu klienta se nezdařilo."
       },
       "rejectTransfer": {
         "success": "Převod klienta byl úspěšně odmítnut."
@@ -6347,7 +6357,8 @@
         "success": "Převod klienta byl úspěšně zrušen."
       },
       "undoRejection": {
-        "success": "Odmítnutí klienta bylo úspěšně zrušeno."
+        "success": "Odmítnutí klienta bylo úspěšně zrušeno.",
+        "failure": "Zrušení zamítnutí klienta se nezdařilo."
       },
       "transfer": {
         "success": "Převod klienta byl úspěšně navržen.",
@@ -6358,7 +6369,8 @@
         "failure": "Poplatek klienta se nepodařilo přidat."
       },
       "addCollateral": {
-        "success": "Kolaterál klienta byl úspěšně přidán."
+        "success": "Kolaterál klienta byl úspěšně přidán.",
+        "failure": "Přidání zajištění klienta se nezdařilo."
       },
       "assignStaff": {
         "success": "Personál byl úspěšně přidělen ke klientovi.",

@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "A conta de receita para configurar contas de receita específicas de taxas não pode ficar em branco",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "O fundo é inválido.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "A Fonte do Fundo é obrigatória.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "A carência sobre os juros cobrados deve ser menor ou igual ao valor de # de reembolsos.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "A carência sobre os juros cobrados deve ser menor ou igual ao valor de # de reembolsos.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "A carência sobre os juros cobrados deve ter valor zero ou maior.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "O produto de empréstimo 'Adiantamento no pagamento de juros' deve ser inferior ao número de reembolsos.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "A carência no pagamento de juros deve ser inferior ao valor de # de reembolsos.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "A descrição é obrigatória.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "A descrição não pode ter mais de {{params[0].value}} caracteres.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "As casas decimais inseridas são `{{params[0].value}}` e devem ser um número entre {{params[1].value}} e {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "O rendimento da conta de taxas é obrigatório",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "O rendimento da conta de taxas é obrigatório",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "O cálculo de juros (dias no ano) é obrigatório.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "O cálculo de juros (dias no ano) deve ser um de `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "O tipo de cálculo de juros é obrigatório.",
@@ -4059,7 +4059,10 @@
       "No bureau data available": "Não há dados da central de risco disponíveis",
       "Failed to load bureau data": "Falha ao carregar os dados da central de risco",
       "ENTITY": "Pessoa coletiva",
-      "PERSON": "Pessoa singular"
+      "PERSON": "Pessoa singular",
+      "Payment": "Pagamento",
+      "Export Date": "Data de exportação",
+      "Label": "Rótulo"
     },
     "links": {
       "Community": "Comunidade",
@@ -5523,7 +5526,11 @@
       "SavingsWithdrawalBusinessEvent": "Evento de negócio: poupança — levantamento",
       "ShareAccountApproveBusinessEvent": "Evento de negócio: conta de ações — aprovação",
       "ShareAccountCreateBusinessEvent": "Evento de negócio: conta de ações — criação",
-      "ShareProductDividentsCreateBusinessEvent": "Evento de negócio: produto de ações — criação de dividendos"
+      "ShareProductDividentsCreateBusinessEvent": "Evento de negócio: produto de ações — criação de dividendos",
+      "Closed": "Encerrado",
+      "Dashboard Export": "Exportação do painel",
+      "Generated on": "Gerado em",
+      "Automated export": "Esta é uma exportação automática do painel global do Mifos X"
     },
     "permissions": {
       "actions": {
@@ -6322,10 +6329,12 @@
         "success": "Cliente encerrado com sucesso."
       },
       "reject": {
-        "success": "Cliente rejeitado com sucesso."
+        "success": "Cliente rejeitado com sucesso.",
+        "failure": "Falha ao rejeitar o cliente."
       },
       "withdraw": {
-        "success": "Cliente retirado com sucesso."
+        "success": "Cliente retirado com sucesso.",
+        "failure": "Falha ao retirar o cliente."
       },
       "reactivate": {
         "success": "Cliente reativado com sucesso.",
@@ -6336,7 +6345,8 @@
         "failure": "Falha ao ativar o cliente."
       },
       "acceptTransfer": {
-        "success": "Transferência de cliente aceite com sucesso."
+        "success": "Transferência de cliente aceite com sucesso.",
+        "failure": "Falha ao aceitar a transferência do cliente."
       },
       "rejectTransfer": {
         "success": "Transferência de cliente rejeitada com sucesso."
@@ -6345,7 +6355,8 @@
         "success": "Transferência de cliente desfeita com sucesso."
       },
       "undoRejection": {
-        "success": "Rejeição de cliente desfeita com sucesso."
+        "success": "Rejeição de cliente desfeita com sucesso.",
+        "failure": "Falha ao anular a rejeição do cliente."
       },
       "transfer": {
         "success": "Transferência de cliente proposta com sucesso.",
@@ -6356,7 +6367,8 @@
         "failure": "Não foi possível adicionar o encargo do cliente."
       },
       "addCollateral": {
-        "success": "Garantia do cliente adicionada com sucesso."
+        "success": "Garantia do cliente adicionada com sucesso.",
+        "failure": "Falha ao adicionar a garantia do cliente."
       },
       "assignStaff": {
         "success": "Pessoal atribuído ao cliente com sucesso.",

@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Ienākumu konts, lai konfigurētu Nodevas ienākumu kontus, nedrīkst būt tukšs",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fonds nav derīgs.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Līdzekļu avots ir obligāts.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Procentu atvieglojumam ir jābūt mazākam vai vienādam ar atmaksas # vērtību.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Procentu atvieglojumam ir jābūt mazākam vai vienādam ar atmaksas # vērtību.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Procentu atvieglojuma vērtībai ir jābūt nullei vai lielākai.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Aizdevuma produktam 'Procentu maksājuma atvieglojumam' ir jābūt mazākam par atmaksu skaitu.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Procentu maksājumu atvieglojumam ir jābūt mazākam par atmaksas # vērtību.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Apraksts ir obligāts.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Apraksts nedrīkst būt garāks par {{params[0].value}} rakstzīmēm.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Ievadītās decimāldaļas ir `{{params[0].value}}`, un tai ir jābūt skaitlim starp {{params[1].value}} un {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Ienākumi no Maksas konta ir obligāti",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Ienākumi no Maksas konta ir obligāti",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Procentu aprēķināšana (dienas gadā) ir obligāta.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Procentu aprēķinam (dienas gadā) ir jābūt vienam no `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Procentu aprēķina veids ir obligāts.",
@@ -4059,7 +4059,10 @@
       "No bureau data available": "Kredītbiroja dati nav pieejami",
       "Failed to load bureau data": "Neizdevās ielādēt kredītbiroja datus",
       "ENTITY": "Juridiska persona",
-      "PERSON": "Fiziska persona"
+      "PERSON": "Fiziska persona",
+      "Payment": "Maksājums",
+      "Export Date": "Eksporta datums",
+      "Label": "Nosaukums"
     },
     "links": {
       "Community": "kopiena",
@@ -5523,7 +5526,11 @@
       "SavingsWithdrawalBusinessEvent": "Biznesa notikums: krājumi — izņemšana",
       "ShareAccountApproveBusinessEvent": "Biznesa notikums: daļu konts — apstiprināšana",
       "ShareAccountCreateBusinessEvent": "Biznesa notikums: daļu konts — izveide",
-      "ShareProductDividentsCreateBusinessEvent": "Biznesa notikums: daļu produkts — dividenžu izveide"
+      "ShareProductDividentsCreateBusinessEvent": "Biznesa notikums: daļu produkts — dividenžu izveide",
+      "Closed": "Slēgts",
+      "Dashboard Export": "Paneļa eksports",
+      "Generated on": "Ģenerēts",
+      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa"
     },
     "permissions": {
       "actions": {
@@ -6322,10 +6329,12 @@
         "success": "Klients veiksmīgi slēgts."
       },
       "reject": {
-        "success": "Klients veiksmīgi noraidīts."
+        "success": "Klients veiksmīgi noraidīts.",
+        "failure": "Neizdevās noraidīt klientu."
       },
       "withdraw": {
-        "success": "Klients veiksmīgi atsaukts."
+        "success": "Klients veiksmīgi atsaukts.",
+        "failure": "Neizdevās atsaukt klientu."
       },
       "reactivate": {
         "success": "Klients veiksmīgi reaktivēts.",
@@ -6336,7 +6345,8 @@
         "failure": "Neizdevās aktivizēt klientu."
       },
       "acceptTransfer": {
-        "success": "Klienta pārsūtīšana veiksmīgi pieņemta."
+        "success": "Klienta pārsūtīšana veiksmīgi pieņemta.",
+        "failure": "Neizdevās pieņemt klienta pārsūtīšanu."
       },
       "rejectTransfer": {
         "success": "Klienta pārsūtīšana veiksmīgi noraidīta."
@@ -6345,7 +6355,8 @@
         "success": "Klienta pārsūtīšana veiksmīgi atcelta."
       },
       "undoRejection": {
-        "success": "Klienta noraidīšana veiksmīgi atcelta."
+        "success": "Klienta noraidīšana veiksmīgi atcelta.",
+        "failure": "Neizdevās atsaukt klienta noraidījumu."
       },
       "transfer": {
         "success": "Klienta pārsūtīšana veiksmīgi ierosināta.",
@@ -6356,7 +6367,8 @@
         "failure": "Neizdevās pievienot klienta maksu."
       },
       "addCollateral": {
-        "success": "Klienta nodrošinājums veiksmīgi pievienots."
+        "success": "Klienta nodrošinājums veiksmīgi pievienots.",
+        "failure": "Neizdevās pievienot klienta nodrošinājumu."
       },
       "assignStaff": {
         "success": "Darbinieks veiksmīgi piesaistīts klientam.",

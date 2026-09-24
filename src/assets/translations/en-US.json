@@ -202,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Income Account for configuring Fee specific Income Accounts cannot be blank",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fund is invalid.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Fund Source is mandatory.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Grace on interest charged must be less than or equal to the value for # of repayments.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Grace on interest charged must be less than or equal to the value for # of repayments.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Grace on interest charged must be a value that is zero or greater.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Loan Product 'Grace on interest payment' must be less than number of repayments.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Grace on interest payments must be less than the value for # of repayments.",
@@ -355,7 +355,7 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Description is mandatory.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Description cannot be over {{params[0].value}} characters long.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Decimal places entered is `{{params[0].value}}` and must be a number between {{params[1].value}} and {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Income from Fees Account is mandatory",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Income from Fees Account is mandatory",
     "validation.msg.savingsproduct.insufficient.balance": "Insufficient balance. Your account balance is {{balance}}.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Interest calculation (Days in Year) is mandatory.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Interest calculation (Days in Year) must be one of `[ {{params[1].value}} ]`.",
@@ -4055,7 +4055,10 @@
       "Min Balance Required for Interest Calculation": "Min Balance Required for Interest Calculation",
       "Minimum Shares per Client": "Minimum Shares per Client",
       "Nominal interest rate frequency": "Nominal interest rate frequency",
-      "On Hold Funds": "On Hold Funds"
+      "On Hold Funds": "On Hold Funds",
+      "Payment": "Payment",
+      "Export Date": "Export Date",
+      "Label": "Label"
     },
     "links": {
       "Community": "Community",
@@ -5519,7 +5522,11 @@
       "Export the data to CSV file": "Export the data to CSV file",
       "Export the data to XLS file": "Export the data to XLS file",
       "No penalties found": "No penalties found",
-      "Report Output Type": "Report Output Type"
+      "Report Output Type": "Report Output Type",
+      "Closed": "Closed",
+      "Dashboard Export": "Dashboard Export",
+      "Generated on": "Generated on",
+      "Automated export": "This is an automated export from Mifos X Global Dashboard"
     },
     "permissions": {
       "actions": {
@@ -6318,10 +6325,12 @@
         "success": "Client closed successfully."
       },
       "reject": {
-        "success": "Client rejected successfully."
+        "success": "Client rejected successfully.",
+        "failure": "Failed to reject client."
       },
       "withdraw": {
-        "success": "Client withdrawn successfully."
+        "success": "Client withdrawn successfully.",
+        "failure": "Failed to withdraw client."
       },
       "reactivate": {
         "success": "Client reactivated successfully.",
@@ -6332,7 +6341,8 @@
         "failure": "Failed to activate client."
       },
       "acceptTransfer": {
-        "success": "Client transfer accepted successfully."
+        "success": "Client transfer accepted successfully.",
+        "failure": "Failed to accept client transfer."
       },
       "rejectTransfer": {
         "success": "Client transfer rejected successfully."
@@ -6341,7 +6351,8 @@
         "success": "Client transfer undone successfully."
       },
       "undoRejection": {
-        "success": "Client rejection undone successfully."
+        "success": "Client rejection undone successfully.",
+        "failure": "Failed to undo client rejection."
       },
       "transfer": {
         "success": "Client transfer proposed successfully.",
@@ -6352,7 +6363,8 @@
         "failure": "Client charge could not be added."
       },
       "addCollateral": {
-        "success": "Client collateral added successfully."
+        "success": "Client collateral added successfully.",
+        "failure": "Failed to add client collateral."
       },
       "assignStaff": {
         "success": "Staff assigned to client successfully.",
