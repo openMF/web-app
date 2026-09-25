@@ -4325,6 +4325,8 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "Near Breach": "위반 임박",
+      "In Progress": "진행 중",
       "Cash received cannot be less than the check amount": "수령한 현금은 수표 금액보다 적을 수 없습니다.",
       "No eligible cash payment types available": "사용 가능한 적격 현금 결제 유형이 없습니다.",
       "No returned checks found": "반환된 수표를 찾을 수 없습니다.",

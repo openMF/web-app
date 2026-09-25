@@ -4325,6 +4325,8 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Near Breach": "उल्लङ्घनको नजिक",
+      "In Progress": "प्रगतिमा",
       "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
       "No eligible cash payment types available": "कुनै योग्य नगद भुक्तानी प्रकार उपलब्ध छैन।",
       "No returned checks found": "कुनै फिर्ता भएको चेक भेटिएन।",

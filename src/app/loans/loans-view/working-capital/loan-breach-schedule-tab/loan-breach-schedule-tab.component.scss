@@ -23,6 +23,12 @@
   --br-edge-mild: rgb(249 168 37 / 40%);
   --br-edge-moderate: rgb(239 108 0 / 40%);
   --br-edge-severe: rgb(198 40 40 / 45%);
+  --br-near: var(--ch-blue-700);
+  --br-near-bg: var(--ch-blue-50);
+  --br-ok: var(--ch-paid);
+  --br-ok-bg: var(--ch-paid-bg);
+  --br-open: var(--ch-text-3);
+  --br-open-bg: var(--ch-surface-h);
 }
 
 /* ── Dark mode overrides ────────────────────────────────────── */
@@ -120,6 +126,16 @@
     background: var(--br-severe);
     box-shadow: 0 0 0 3px var(--br-severe-pulse);
     animation: br-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+.status-chip.near-breach {
+  border-color: var(--br-near);
+  background: var(--br-near-bg);
+  color: var(--br-near);
+
+  .dot {
+    background: var(--br-near);
   }
 }
 
@@ -261,6 +277,21 @@
   .breach-bar.severe,
   .breach-bar-edge.severe {
     fill: var(--br-severe);
+  }
+
+  .breach-bar.near-breach,
+  .breach-bar-edge.near-breach {
+    fill: var(--br-near);
+  }
+
+  .breach-bar.compliant,
+  .breach-bar-edge.compliant {
+    fill: var(--br-ok);
+  }
+
+  .breach-bar.open,
+  .breach-bar-edge.open {
+    fill: var(--br-open);
   }
 
   .breach-bar-edge {
@@ -423,6 +454,18 @@
   .breach-table .mat-mdc-row.row-severe td:first-child::before {
     background: var(--br-severe);
   }
+
+  .breach-table .mat-mdc-row.row-near-breach td:first-child::before {
+    background: var(--br-near);
+  }
+
+  .breach-table .mat-mdc-row.row-compliant td:first-child::before {
+    background: var(--br-ok);
+  }
+
+  .breach-table .mat-mdc-row.row-open td:first-child::before {
+    background: var(--br-open);
+  }
 }
 
 /* ── Severity pill ──────────────────────────────────────────── */
@@ -475,6 +518,36 @@
   }
 }
 
+.severity-pill.near-breach {
+  background: var(--br-near-bg);
+  color: var(--br-near);
+  border-color: var(--br-near);
+
+  .dot {
+    background: var(--br-near);
+  }
+}
+
+.severity-pill.compliant {
+  background: var(--br-ok-bg);
+  color: var(--br-ok);
+  border-color: var(--br-ok);
+
+  .dot {
+    background: var(--br-ok);
+  }
+}
+
+.severity-pill.open {
+  background: var(--br-open-bg);
+  color: var(--br-open);
+  border-color: var(--br-open);
+
+  .dot {
+    background: var(--br-open);
+  }
+}
+
 /* ── Gap bar (inline in table) ──────────────────────────────── */
 .gap-value {
   font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
@@ -511,6 +584,18 @@
 
 .gap-bar-fill.severe {
   background: var(--br-severe);
+}
+
+.gap-bar-fill.near-breach {
+  background: var(--br-near);
+}
+
+.gap-bar-fill.compliant {
+  background: var(--br-ok);
+}
+
+.gap-bar-fill.open {
+  background: var(--br-open);
 }
 
 // Stands in for the whole evaluation while breach evaluation is disabled.

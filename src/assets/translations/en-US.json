@@ -4321,6 +4321,8 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Near Breach": "Near Breach",
+      "In Progress": "In Progress",
       "Select a client from the list": "Select a client from the list",
       "Complete these steps to preview the product": "Complete these steps to preview the product",
       "Complete these steps before creating the product": "Complete these steps before creating the product",

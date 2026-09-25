@@ -4325,6 +4325,8 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Near Breach": "Karibu na ukiukaji",
+      "In Progress": "Inaendelea",
       "Cash received cannot be less than the check amount": "Pesa taslimu zilizopokelewa haziwezi kuwa chini ya kiasi cha hundi.",
       "No eligible cash payment types available": "Hakuna aina zinazofaa za malipo ya pesa taslimu zinazopatikana.",
       "No returned checks found": "Hakuna hundi zilizorudishwa zilizopatikana.",

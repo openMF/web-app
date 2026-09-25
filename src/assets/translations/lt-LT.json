@@ -4325,6 +4325,8 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "Near Breach": "Artėja pažeidimas",
+      "In Progress": "Vykdoma",
       "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
       "No eligible cash payment types available": "Nėra tinkamų mokėjimo grynaisiais tipų.",
       "No returned checks found": "Grąžintų čekių nerasta.",

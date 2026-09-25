@@ -58,8 +58,22 @@ import { resolveBreachActionErrorMessage } from '../breach-action-error.helper';
 
 type Severity = 'mild' | 'moderate' | 'severe';
 
+/**
+ * State of an evaluation period, read from the API flags rather than inferred from amounts or dates.
+ * `breach` is tri-state: `true` the period expired with the minimum payment uncovered, `false` the
+ * minimum was covered, `null` the period is still open and undecided. `nearBreach` is a warning
+ * raised at an intermediate evaluation point and survives the period being covered later, so it is
+ * only shown when the period is not in breach.
+ */
+type PeriodStatus = 'in-breach' | 'near-breach' | 'open' | 'compliant';
+
 interface BreachPeriodView extends BreachSchedule {
-  severity: Severity;
+  status: PeriodStatus;
+  /** Only set for a period in breach; severity grades how much of the minimum payment is missing. */
+  severity: Severity | null;
+  /** Modifier class for the pill, the timeline bar and the gap bar: the severity, or the status. */
+  toneClass: string;
+  statusLabelKey: string;
   gapPercent: number;
   gapBarWidth: number;
   fromDateObj: Date;
@@ -82,7 +96,7 @@ interface BreachKpis {
   totalDays: number;
   peakOutstanding: number;
   avgGapPercent: number;
-  status: 'in-breach' | 'resolved' | 'compliant';
+  status: 'in-breach' | 'resolved' | 'near-breach' | 'compliant';
 }
 
 interface ResetHistoryRow {
@@ -286,16 +300,14 @@ export class LoanBreachScheduleTabComponent implements OnInit {
             this.currencyCode = data.loanDetailsData.currency.code;
           }
           this.loanBalances = data?.loanDetailsData.balance;
+          this.refreshHeaderStatus();
+          this.cdr.markForCheck();
         });
     }
   }
 
   severityLabel(severity: Severity): string {
     return severity.charAt(0).toUpperCase() + severity.slice(1);
-  }
-
-  severityLabelKey(severity: Severity): string {
-    return `labels.text.${this.severityLabel(severity)}`;
   }
 
   /**
@@ -406,12 +418,57 @@ export class LoanBreachScheduleTabComponent implements OnInit {
   buildTooltip(period: BreachPeriodView): string {
     const from = this.dateUtils.formatDate(period.fromDateObj, Dates.DEFAULT_DATEFORMAT);
     const to = this.dateUtils.formatDate(period.toDateObj, Dates.DEFAULT_DATEFORMAT);
-    const gapSign = period.gapPercent >= 0 ? '+' : '';
     return (
       `P${period.periodNumber} · ${from} → ${to} (${period.numberOfDays}d) · ` +
       `Min ${period.minPaymentAmount.toFixed(2)} · ` +
-      `Outstanding ${period.outstandingAmount.toFixed(2)} (${gapSign}${period.gapPercent.toFixed(1)}%)`
+      `Outstanding ${period.outstandingAmount.toFixed(2)} (${period.gapPercent.toFixed(1)}%)`
     );
+  }
+
+  /**
+   * Reads the state of a period from the API flags. A period in breach wins over a near breach
+   * warning, and a covered period is compliant even when it tripped a near breach evaluation
+   * earlier — the warning is then what the row reports, since the breach never materialised.
+   */
+  private periodStatus(period: BreachSchedule): PeriodStatus {
+    if (period.breach === true) {
+      return 'in-breach';
+    }
+    if (period.nearBreach === true) {
+      return 'near-breach';
+    }
+    return period.breach === false ? 'compliant' : 'open';
+  }
+
+  /**
+   * Share of the minimum payment still uncovered. `outstandingAmount` is already
+   * `max(0, minPayment - paid)`, so it is the shortfall itself: 0% when the minimum is fully paid
+   * and 100% when nothing was paid. Clamped because the value crosses an API boundary.
+   */
+  private gapPercentOf(period: BreachSchedule): number {
+    if (!(period.minPaymentAmount > 0)) {
+      return 0;
+    }
+    return Math.min(Math.max((period.outstandingAmount / period.minPaymentAmount) * 100, 0), 100);
+  }
+
+  private severityOf(gapPercent: number): Severity {
+    if (gapPercent < SEVERITY_MILD_THRESHOLD) {
+      return 'mild';
+    }
+    return gapPercent <= SEVERITY_MODERATE_THRESHOLD ? 'moderate' : 'severe';
+  }
+
+  private statusLabelKey(status: PeriodStatus, severity: Severity | null): string {
+    if (severity) {
+      return `labels.text.${this.severityLabel(severity)}`;
+    }
+    const labels: Record<Exclude<PeriodStatus, 'in-breach'>, string> = {
+      'near-breach': 'labels.text.Near Breach',
+      compliant: 'labels.text.Compliant',
+      open: 'labels.text.In Progress'
+    };
+    return labels[status as Exclude<PeriodStatus, 'in-breach'>];
   }
 
   private processBreachPeriods(periods: BreachSchedule[]): void {
@@ -447,20 +504,13 @@ export class LoanBreachScheduleTabComponent implements OnInit {
     this.monthMarks = this.buildMonthMarks(rangeStart, rangeEnd, pxPerDay);
 
     const today = this.settingsService.businessDate || new Date();
-    let totalDays = 0;
     let peakOutstanding = 0;
     let gapSum = 0;
-    let isCurrentlyInBreach = false;
 
     this.breachPeriods = parsed.map((p) => {
-      const gap = p.outstandingAmount - p.minPaymentAmount;
-      const gapPercent = p.minPaymentAmount > 0 ? (gap / p.minPaymentAmount) * 100 : 0;
-      const severity: Severity =
-        gapPercent < SEVERITY_MILD_THRESHOLD
-          ? 'mild'
-          : gapPercent <= SEVERITY_MODERATE_THRESHOLD
-            ? 'moderate'
-            : 'severe';
+      const gapPercent = this.gapPercentOf(p);
+      const status = this.periodStatus(p);
+      const severity = status === 'in-breach' ? this.severityOf(gapPercent) : null;
 
       const barX = LEFT_PAD + this.daysBetween(rangeStart, p.fromDateObj) * pxPerDay;
       const barWidth = Math.max(p.numberOfDays * pxPerDay, MIN_BAR_WIDTH);
@@ -468,19 +518,17 @@ export class LoanBreachScheduleTabComponent implements OnInit {
       const barHeight = MIN_BAR_HEIGHT + heightRatio * (MAX_BAR_HEIGHT - MIN_BAR_HEIGHT);
       const barY = BASELINE_Y - barHeight;
 
-      totalDays += p.numberOfDays;
       peakOutstanding = Math.max(peakOutstanding, p.outstandingAmount);
       gapSum += gapPercent;
 
-      if (today >= p.fromDateObj && today <= p.toDateObj) {
-        isCurrentlyInBreach = true;
-      }
-
       return {
         ...p,
+        status,
         severity,
+        toneClass: severity ?? status,
+        statusLabelKey: this.statusLabelKey(status, severity),
         gapPercent,
-        gapBarWidth: Math.min(Math.max(gapPercent, 0), 100),
+        gapBarWidth: gapPercent,
         barX,
         barY,
         barWidth,
@@ -491,16 +539,60 @@ export class LoanBreachScheduleTabComponent implements OnInit {
 
     this.currentPeriod = this.breachPeriods.find((p) => today >= p.fromDateObj && today <= p.toDateObj) ?? null;
 
+    // Only a period the backend flagged as breached counts towards the breach KPIs: a period that
+    // merely contains the business date, or one that is still open, is not a breach.
+    const breachedPeriods = this.breachPeriods.filter((p) => p.status === 'in-breach');
+
     this.kpis = {
-      count: this.breachPeriods.length,
-      totalDays,
+      count: breachedPeriods.length,
+      totalDays: breachedPeriods.reduce((sum, p) => sum + p.numberOfDays, 0),
       peakOutstanding,
       avgGapPercent: gapSum / this.breachPeriods.length,
-      status: isCurrentlyInBreach ? 'in-breach' : 'resolved'
+      status: this.headerStatus()
     };
 
     this.todayX =
       today >= rangeStart && today < rangeEnd ? LEFT_PAD + this.daysBetween(rangeStart, today) * pxPerDay : null;
+  }
+
+  /**
+   * Badge of the whole schedule, read from the debt rather than from the position of the business
+   * date on the timeline. A period is only flagged as breached once it has expired, and the same
+   * evaluation opens the next one, so the period holding the business date is almost never the
+   * breached one — keying the badge on it made "In Breach" unreachable.
+   *
+   * `breachPastDueAmount` is the minimum payment of the expired periods still uncovered, netted by
+   * the backend against the last active reset. It is the very figure the Past Due Amount KPI shows,
+   * so reading the badge from it keeps the two consistent by construction: while it is positive the
+   * loan is in breach, and a breach history with nothing left to cover is a resolved one.
+   */
+  private headerStatus(): BreachKpis['status'] {
+    const pastDueAmount = this.loanBalances?.breachPastDueAmount;
+    const hasBreachedPeriod = this.breachPeriods.some((p) => p.status === 'in-breach');
+    if (pastDueAmount == null) {
+      return hasBreachedPeriod ? 'in-breach' : this.warningStatus();
+    }
+    if (pastDueAmount > 0) {
+      return 'in-breach';
+    }
+    return hasBreachedPeriod ? 'resolved' : this.warningStatus();
+  }
+
+  /**
+   * Fallback of {@link headerStatus} when no period is in breach: a near breach warning raised on any
+   * period is still worth surfacing.
+   */
+  private warningStatus(): BreachKpis['status'] {
+    return this.breachPeriods.some((p) => p.status === 'near-breach') ? 'near-breach' : 'compliant';
+  }
+
+  /**
+   * The past due amount travels with the loan balances, on a route emission of its own. Recomputing
+   * the badge when they arrive keeps it right whatever order the two emissions come in, and after a
+   * breach action changes the balance.
+   */
+  private refreshHeaderStatus(): void {
+    this.kpis = { ...this.kpis, status: this.headerStatus() };
   }
 
   private buildMonthMarks(rangeStart: Date, rangeEnd: Date, pxPerDay: number): MonthMark[] {

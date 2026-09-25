@@ -34,7 +34,7 @@
       </div>
       <div class="kpi">
         <span class="kpi-label">{{ 'labels.heading.Average Gap' | translate }}</span>
-        <span class="kpi-value">+{{ kpis.avgGapPercent | formatNumber: '' : '1' }}%</span>
+        <span class="kpi-value">{{ kpis.avgGapPercent | formatNumber: '' : '1' }}%</span>
       </div>
       <div class="kpi-status">
         @switch (kpis.status) {
@@ -42,6 +42,12 @@
             <span class="status-chip in-breach">
               <span class="dot"></span>
               {{ 'labels.text.In Breach' | translate }}
+            </span>
+          }
+          @case ('near-breach') {
+            <span class="status-chip near-breach">
+              <span class="dot"></span>
+              {{ 'labels.text.Near Breach' | translate }}
             </span>
           }
           @case ('resolved') {
@@ -105,7 +111,7 @@
           @for (period of breachPeriods; track period.id) {
             <rect
               class="breach-bar-edge"
-              [ngClass]="period.severity"
+              [ngClass]="period.toneClass"
               [attr.x]="period.barX"
               [attr.y]="period.barY"
               [attr.width]="period.barWidth"
@@ -114,7 +120,7 @@
             ></rect>
             <rect
               class="breach-bar"
-              [ngClass]="period.severity"
+              [ngClass]="period.toneClass"
               [attr.x]="period.barX"
               [attr.y]="period.barY"
               [attr.width]="period.barWidth"
@@ -190,9 +196,9 @@
           <ng-container matColumnDef="severity">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.text.Severity' | translate }}</th>
             <td mat-cell *matCellDef="let item">
-              <span class="severity-pill" [ngClass]="item.severity">
+              <span class="severity-pill" [ngClass]="item.toneClass">
                 <span class="dot"></span>
-                {{ severityLabelKey(item.severity) | translate }}
+                {{ item.statusLabelKey | translate }}
               </span>
               @if (item.reset) {
                 <span class="reset-badge">
@@ -239,9 +245,9 @@
           <ng-container matColumnDef="gap">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.text.Gap' | translate }}</th>
             <td mat-cell *matCellDef="let item">
-              <span class="gap-value">+{{ item.gapPercent | formatNumber: '' : '1' }}%</span>
+              <span class="gap-value">{{ item.gapPercent | formatNumber: '' : '1' }}%</span>
               <span class="gap-bar">
-                <span class="gap-bar-fill" [ngClass]="item.severity" [style.width.%]="item.gapBarWidth"></span>
+                <span class="gap-bar-fill" [ngClass]="item.toneClass" [style.width.%]="item.gapBarWidth"></span>
               </span>
             </td>
           </ng-container>
@@ -251,7 +257,7 @@
             mat-row
             *matRowDef="let row; columns: displayedColumns"
             class="table-row"
-            [ngClass]="'row-' + row.severity"
+            [ngClass]="'row-' + row.toneClass"
           ></tr>
         </table>
       </div>

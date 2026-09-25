@@ -4325,6 +4325,8 @@
       "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
+      "Near Breach": "Vicino alla violazione",
+      "In Progress": "In corso",
       "Cash received cannot be less than the check amount": "I contanti ricevuti non possono essere inferiori all'importo dell'assegno.",
       "No eligible cash payment types available": "Non sono disponibili tipi di pagamento in contanti idonei.",
       "No returned checks found": "Non sono stati trovati assegni restituiti.",

@@ -4325,6 +4325,8 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Near Breach": "Perto do incumprimento",
+      "In Progress": "Em curso",
       "Cash received cannot be less than the check amount": "O numerário recebido não pode ser inferior ao montante do cheque.",
       "No eligible cash payment types available": "Não existem tipos de pagamento em numerário elegíveis disponíveis.",
       "No returned checks found": "Não foram encontrados cheques devolvidos.",

@@ -4325,6 +4325,8 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "Near Breach": "Proche du manquement",
+      "In Progress": "En cours",
       "Cash received cannot be less than the check amount": "Les espèces reçues ne peuvent pas être inférieures au montant du chèque.",
       "No eligible cash payment types available": "Aucun type de paiement en espèces admissible n'est disponible.",
       "No returned checks found": "Aucun chèque retourné n'a été trouvé.",
