@@ -157,9 +157,23 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     this.selection.changed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.cdr.detectChanges());
   }
 
-  /** Working Capital loans do not support the waive charge command. */
+  /**
+   * Working Capital waives the whole outstanding amount of a single charge, so
+   * the only gate is having something left to waive: the backend rejects an
+   * `amount` parameter and accepts the command on an active loan regardless of
+   * the charge time type. Term Loan keeps its own rule, where a paid or already
+   * waived charge, a disbursement charge or a non-active loan closes the action
+   * through `actionFlag`.
+   */
   allowWaive(charge: LoanCharge): boolean {
-    return !charge.actionFlag && !this.loanProductService.isWorkingCapital;
+    return this.loanProductService.isWorkingCapital
+      ? this.status === 'Active' && charge.amountOutstanding > 0
+      : !charge.actionFlag;
+  }
+
+  /** Permission of the waive command the row posts, which differs per product. */
+  get waivePermission(): string {
+    return this.loanProductService.isWorkingCapital ? 'WAIVE_WORKINGCAPITALLOANCHARGE' : 'WAIVE_LOANCHARGE';
   }
 
   private buildColumns(): void {
@@ -388,8 +402,12 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     return charge.amount > 0 ? Math.round((charge.amountPaid / charge.amount) * 100) : 0;
   }
 
+  /**
+   * Working Capital charges carry no `waived` flag, only the waived amount, so
+   * the state is derived from it instead.
+   */
   isWaived(charge: LoanCharge): boolean {
-    return charge.waived;
+    return this.loanProductService.isWorkingCapital ? charge.amountWaived > 0 : charge.waived;
   }
 
   isPaid(charge: LoanCharge): boolean {
