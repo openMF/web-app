@@ -226,8 +226,21 @@ export class LoansAccountButtonConfiguration {
           }
         ];
         break;
+      // Repayment, Goodwill Credit, Payout Refund and Add Loan Charge share the same rule on the
+      // backend: they are accepted while the loan is Active, Closed (obligations met) or Overpaid.
+      // Posting one of them reopens the loan, which is the reason the backend allows them.
       case 'Closed (obligations met)':
         this.buttonsArray = [
+          {
+            name: 'Add Loan Charge',
+            icon: 'plus',
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
+          },
+          {
+            name: 'Make Repayment',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
           {
             name: 'Goodwill Credit',
             icon: 'coins',
@@ -243,9 +256,9 @@ export class LoansAccountButtonConfiguration {
       case 'Overpaid':
         this.buttonsArray = [
           {
-            name: 'Credit Balance Refund',
-            icon: 'coins',
-            taskPermissionName: 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN'
+            name: 'Add Loan Charge',
+            icon: 'plus',
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
           },
           {
             name: 'Make Repayment',
@@ -253,14 +266,20 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
           },
           {
-            name: 'Add Loan Charge',
-            icon: 'plus',
-            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
+            name: 'Goodwill Credit',
+            icon: 'coins',
+            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
           },
           {
             name: 'Payout Refund',
             icon: 'coins',
             taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
+          },
+          // Only an overpaid loan carries a credit balance to refund.
+          {
+            name: 'Credit Balance Refund',
+            icon: 'coins',
+            taskPermissionName: 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN'
           }
         ];
         break;
