@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} turi būti didesnis nei nulis",
     "validation.sharesMinDefaultMaxOrder": "Mažiausia reikšmė turi būti mažesnė arba lygi numatytajai, o numatytoji – mažesnė arba lygi didžiausiai",
     "validation.msg.savingsproduct.insufficient.balance": "Nepakankamas likutis. Jūsų sąskaitos likutis yra {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo."
+    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Mokestis nepriklauso šiai paskolai.",
+    "wc.loan.charge.waiver.inactive.charge": "Mokesčio negalima atsisakyti, nes jis nėra aktyvus.",
+    "wc.loan.charge.waiver.invalid.status": "Mokesčio negalima atsisakyti dėl dabartinės paskolos būsenos.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

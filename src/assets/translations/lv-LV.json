@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} jābūt lielākam par nulli",
     "validation.sharesMinDefaultMaxOrder": "Minimālajai vērtībai jābūt mazākai vai vienādai ar noklusējuma vērtību, bet noklusējuma vērtībai – mazākai vai vienādai ar maksimālo",
     "validation.msg.savingsproduct.insufficient.balance": "Nepietiekams atlikums. Jūsu konta atlikums ir {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Atvēršanas laikam jābūt pirms slēgšanas laika."
+    "validation.openingTimeBeforeClosingTime": "Atvēršanas laikam jābūt pirms slēgšanas laika.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Maksa nepieder šim aizdevumam.",
+    "wc.loan.charge.waiver.inactive.charge": "Maksu nevar atcelt, jo tā nav aktīva.",
+    "wc.loan.charge.waiver.invalid.status": "Maksu nevar atcelt pašreizējā aizdevuma statusa dēļ.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Maksai nav atlikušās summas, ko varētu atcelt."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

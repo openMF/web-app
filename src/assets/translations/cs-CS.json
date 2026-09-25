@@ -577,7 +577,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} musí být větší než nula",
     "validation.sharesMinDefaultMaxOrder": "Minimum musí být menší nebo rovno výchozí hodnotě a výchozí hodnota menší nebo rovna maximu",
     "validation.msg.savingsproduct.insufficient.balance": "Nedostatečný zůstatek. Zůstatek na vašem účtu je {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Čas otevření musí předcházet času uzavření."
+    "validation.openingTimeBeforeClosingTime": "Čas otevření musí předcházet času uzavření.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Poplatek nepatří k tomuto úvěru.",
+    "wc.loan.charge.waiver.inactive.charge": "Poplatek nelze prominout, protože není aktivní.",
+    "wc.loan.charge.waiver.invalid.status": "Poplatek nelze prominout kvůli aktuálnímu stavu úvěru.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Poplatek nemá žádnou nesplacenou částku k prominutí."
   },
   "labels": {
     "version": {

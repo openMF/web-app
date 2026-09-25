@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}}은(는) 0보다 커야 합니다",
     "validation.sharesMinDefaultMaxOrder": "최솟값은 기본값보다 작거나 같아야 하며, 기본값은 최댓값보다 작거나 같아야 합니다",
     "validation.msg.savingsproduct.insufficient.balance": "잔액이 부족합니다. 계좌 잔액은 {{balance}}입니다.",
-    "validation.openingTimeBeforeClosingTime": "개점 시간은 마감 시간보다 앞서야 합니다."
+    "validation.openingTimeBeforeClosingTime": "개점 시간은 마감 시간보다 앞서야 합니다.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "해당 수수료는 이 대출에 속하지 않습니다.",
+    "wc.loan.charge.waiver.inactive.charge": "수수료가 활성 상태가 아니므로 면제할 수 없습니다.",
+    "wc.loan.charge.waiver.invalid.status": "현재 대출 상태에서는 수수료를 면제할 수 없습니다.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "면제할 미납 수수료 금액이 없습니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

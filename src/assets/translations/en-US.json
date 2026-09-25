@@ -577,7 +577,11 @@
     "validation.mustBeAnInteger": "{{field}} must be an integer",
     "validation.mustBeGreaterThan": "{{field}} must be greater than {{other}}",
     "validation.mustBeGreaterThanZero": "{{field}} must be greater than zero",
-    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum"
+    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "The charge does not belong to this loan.",
+    "wc.loan.charge.waiver.inactive.charge": "The charge cannot be waived because it is not active.",
+    "wc.loan.charge.waiver.invalid.status": "The charge cannot be waived because of the current status of the loan.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

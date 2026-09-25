@@ -577,7 +577,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} muss größer als null sein",
     "validation.sharesMinDefaultMaxOrder": "Das Minimum muss kleiner oder gleich dem Standardwert sein, und der Standardwert kleiner oder gleich dem Maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Unzureichendes Guthaben. Ihr Kontostand beträgt {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Die Öffnungszeit muss vor der Schließzeit liegen."
+    "validation.openingTimeBeforeClosingTime": "Die Öffnungszeit muss vor der Schließzeit liegen.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Die Gebühr gehört nicht zu diesem Kredit.",
+    "wc.loan.charge.waiver.inactive.charge": "Die Gebühr kann nicht erlassen werden, da sie nicht aktiv ist.",
+    "wc.loan.charge.waiver.invalid.status": "Die Gebühr kann aufgrund des aktuellen Status des Kredits nicht erlassen werden.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Die Gebühr hat keinen offenen Betrag, der erlassen werden könnte."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} deve essere maggiore di zero",
     "validation.sharesMinDefaultMaxOrder": "Il minimo deve essere minore o uguale al valore predefinito e il valore predefinito minore o uguale al massimo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insufficiente. Il saldo del tuo conto è di {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura."
+    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "L'onere non appartiene a questo prestito.",
+    "wc.loan.charge.waiver.inactive.charge": "L'onere non può essere condonato perché non è attivo.",
+    "wc.loan.charge.waiver.invalid.status": "L'onere non può essere condonato a causa dello stato attuale del prestito.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "L'onere non ha alcun importo residuo da condonare."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
