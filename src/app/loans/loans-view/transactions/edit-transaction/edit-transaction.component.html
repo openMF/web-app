@@ -43,15 +43,11 @@
         >
         </mifosx-input-amount>
 
-        @if (isLoanProduct) {
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
-            <input matInput formControlName="externalId" />
-            <mat-hint>{{
-              'labels.text.Identifies the new transaction created by the adjustment' | translate
-            }}</mat-hint>
-          </mat-form-field>
-        }
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+          <input matInput formControlName="externalId" />
+          <mat-hint>{{ 'labels.text.Identifies the new transaction created by the adjustment' | translate }}</mat-hint>
+        </mat-form-field>
 
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Reversal External Id' | translate }}</mat-label>

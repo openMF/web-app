@@ -220,8 +220,8 @@ describe('LoanTransactionAdjustHelper', () => {
         'CHARGE_ADJUSTMENT',
         26
       ]
-    ])('keeps %s reverse-only, as the backend rejects a positive amount on it', (_name, id: number) => {
-      expect(canAdjustWorkingCapitalTransaction(transactionType(id), false)).toBe(false);
+    ])('re-submits %s with a new amount, as the adjust command accepts it', (_name, id: number) => {
+      expect(canAdjustWorkingCapitalTransaction(transactionType(id), false)).toBe(true);
     });
 
     it.each([

@@ -71,15 +71,18 @@ const REVERSE_ONLY_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
 ]);
 
 /**
- * Working Capital types the adjust command accepts with a positive amount, i.e.
- * the ones that can be re-submitted from the adjust form. Mirrors
- * WorkingCapitalLoanDataValidator#isEditableForPartialAdjustment: the command
- * also accepts goodwill credit, payout refund and charge adjustment, but only
- * with a zero amount, which is a plain reversal and is already offered through
- * the Working Capital undo command.
+ * Working Capital types the adjust command accepts, i.e. the ones that can be
+ * re-submitted from the adjust form. Mirrors the type switch in the backend's
+ * WorkingCapitalLoanWritePlatformServiceImpl#adjustTransaction, which routes
+ * these four through the repayment like adjustment and rejects every other type
+ * outright. A zero amount is a plain reversal on all of them and is offered
+ * through the Working Capital undo command instead.
  */
 const WORKING_CAPITAL_ADJUSTABLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
-  2 // REPAYMENT
+  2, // REPAYMENT
+  22, // PAYOUT_REFUND
+  23, // GOODWILL_CREDIT
+  26 // CHARGE_ADJUSTMENT
 ]);
 
 /**

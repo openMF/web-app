@@ -250,17 +250,19 @@ describe('TransactionsTabComponent', () => {
       expect(component.allowAdjustTransaction(transaction(2))).toBe(true);
     });
 
-    it('offers no adjust action on the types its adjust command only reverses', () => {
+    it('offers the adjust action on the other types its adjust command routes', () => {
       const component = createComponent(true);
 
-      // The Working Capital adjust command accepts these only with a zero
-      // amount, which is what the undo entry already does.
+      // Payout refund, goodwill credit and charge adjustment go through the
+      // same repayment like adjustment as a repayment. The charge adjustment
+      // entry adjusts the transaction the charge adjustment created, not the
+      // charge itself.
       [
         22,
         23,
         26
       ].forEach((typeId) => {
-        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
+        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(true);
       });
     });
 

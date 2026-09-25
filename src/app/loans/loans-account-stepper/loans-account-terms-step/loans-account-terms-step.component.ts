@@ -553,7 +553,12 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           principalAmount: isEditingAccount
             ? this.loansAccountTermsData.principal
             : this.loansAccountTermsData.principal || this.loansAccountTermsData.product?.principal,
-          periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
+          // The account response names the rate `paymentRate`; `periodPaymentRate`
+          // only exists on the product template, so reading it here would blank
+          // the value ngOnChanges already read from the account.
+          periodPaymentRate: isEditingAccount
+            ? this.loansAccountTermsData.paymentRate
+            : this.loansAccountTermsData.periodPaymentRate,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: isEditingAccount
