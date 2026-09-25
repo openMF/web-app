@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} lazima iwe kubwa kuliko sifuri",
     "validation.sharesMinDefaultMaxOrder": "Kiwango cha chini lazima kiwe kidogo au sawa na chaguo-msingi, na chaguo-msingi kiwe kidogo au sawa na kiwango cha juu",
     "validation.msg.savingsproduct.insufficient.balance": "Salio halitoshi. Salio la akaunti yako ni {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga."
+    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
+    "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
+    "wc.loan.charge.waiver.invalid.status": "Ada haiwezi kusamehewa kwa sababu ya hali ya sasa ya mkopo.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",

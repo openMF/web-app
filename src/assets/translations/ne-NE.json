@@ -575,7 +575,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} शून्य भन्दा ठूलो हुनुपर्छ",
     "validation.sharesMinDefaultMaxOrder": "न्यूनतम पूर्वनिर्धारित भन्दा सानो वा बराबर हुनुपर्छ, र पूर्वनिर्धारित अधिकतम भन्दा सानो वा बराबर हुनुपर्छ",
     "validation.msg.savingsproduct.insufficient.balance": "अपर्याप्त मौज्दात। तपाईंको खाताको मौज्दात {{balance}} छ।",
-    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।"
+    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "यो शुल्क यस ऋणको होइन।",
+    "wc.loan.charge.waiver.inactive.charge": "शुल्क सक्रिय नभएकाले मिनाहा गर्न सकिँदैन।",
+    "wc.loan.charge.waiver.invalid.status": "ऋणको हालको स्थितिका कारण शुल्क मिनाहा गर्न सकिँदैन।",
+    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
