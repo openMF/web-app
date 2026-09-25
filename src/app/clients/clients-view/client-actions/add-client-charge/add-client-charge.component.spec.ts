@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { AddClientChargeComponent } from './add-client-charge.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -110,5 +110,39 @@ describe('AddClientChargeComponent', () => {
     component.submit();
 
     expect(notifier.notifyAndNavigate).not.toHaveBeenCalled();
+  });
+
+  it('should apply only the latest charge template when the charge changes quickly', () => {
+    const firstTemplate = new Subject<any>();
+    const secondTemplate = new Subject<any>();
+    clientsService.getChargeAndTemplate.mockReturnValueOnce(firstTemplate).mockReturnValueOnce(secondTemplate);
+
+    component.clientChargeForm.controls.chargeId.setValue(1);
+    component.clientChargeForm.controls.chargeId.setValue(2);
+    secondTemplate.next({
+      chargeTimeType: { id: 2, value: 'Specified due date' },
+      chargeCalculationType: { id: 1 },
+      amount: 200,
+      feeInterval: null
+    });
+    firstTemplate.next({
+      chargeTimeType: { id: 2, value: 'Specified due date' },
+      chargeCalculationType: { id: 1 },
+      amount: 100,
+      feeInterval: null
+    });
+
+    expect(component.clientChargeForm.controls.amount.value).toBe(200);
+    expect(component.chargeDetails.amount).toBe(200);
+  });
+
+  it('should keep loading charge templates after a failed lookup', () => {
+    clientsService.getChargeAndTemplate.mockReturnValueOnce(throwError(() => new Error('API error')));
+
+    component.clientChargeForm.controls.chargeId.setValue(1);
+    component.clientChargeForm.controls.chargeId.setValue(2);
+
+    expect(clientsService.getChargeAndTemplate).toHaveBeenCalledTimes(2);
+    expect(component.clientChargeForm.controls.amount.value).toBe(100);
   });
 });

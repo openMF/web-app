@@ -177,7 +177,7 @@
 
         @if (fixedDepositProductData.withHoldTax) {
           <div class="flex-100 layout-row">
-            <span class="flex-40">{{ 'labels.inputs.Withhold Tax group' | translate }}:</span>
+            <span class="flex-40">{{ 'labels.inputs.Withhold Tax Group' | translate }}:</span>
             <span class="flex-60">{{ fixedDepositProductData.taxGroup.name }}</span>
           </div>
         }
@@ -452,7 +452,7 @@
             @if (fixedDepositProductData.paymentChannelToFundSourceMappings?.length) {
               <div class="flex-100 layout-row-wrap layout-xs-column">
                 <h4 class="mat-h4 flex-100">
-                  {{ 'labels.inputs.Configure Fund Sources for Payment Channels' | translate }}
+                  {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
                 </h4>
                 <table
                   class="mat-elevation-z1 flex-100"
@@ -478,7 +478,7 @@
             }
             @if (fixedDepositProductData.feeToIncomeAccountMappings?.length) {
               <div class="flex-100 layout-row-wrap layout-xs-column">
-                <h4 class="mat-h4 flex-100">{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
+                <h4 class="mat-h4 flex-100">{{ 'labels.heading.Fees to Specific Income Accounts' | translate }}</h4>
                 <table
                   class="mat-elevation-z1 flex-100"
                   mat-table
