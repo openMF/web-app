@@ -200,7 +200,7 @@ FINERACT_API_ACTUATOR=/fineract-provider
 FINERACT_API_VERSION=/v1
 FINERACT_PLATFORM_TENANT_IDENTIFIER=default
 MIFOS_DEFAULT_LANGUAGE=en-US
-MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
+MIFOS_SUPPORTED_LANGUAGES=az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
 MIFOS_PRELOAD_CLIENTS=true
 MIFOS_DEFAULT_CHAR_DELIMITER=,
 ```
@@ -291,10 +291,10 @@ All these environment variables can be set when using Docker or Docker Compose:
 
 #### Language Settings (i18n)
 
-| Variable                  | Description                 | Default Value                                                           |
-| ------------------------- | --------------------------- | ----------------------------------------------------------------------- |
-| MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
-| MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
+| Variable                  | Description                 | Default Value                                                                 |
+| ------------------------- | --------------------------- | ----------------------------------------------------------------------------- |
+| MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                         |
+| MIFOS_SUPPORTED_LANGUAGES | List of supported languages | az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
 
 #### Date and Datetime Format Settings
 
@@ -332,20 +332,21 @@ These values are read by the application when it starts and are used as the defa
 
 Available languages:
 
-| Language   | Code | File       |
-| ---------- | ---- | ---------- |
-| Czech      | cs   | cs-CS.json |
-| German     | de   | de-DE.json |
-| English    | en   | en-US.json |
-| Spanish    | es   | es-MX.json |
-| French     | fr   | fr-FR.json |
-| Italian    | it   | it-IT.json |
-| Korean     | ko   | ko-KO.json |
-| Lithuanian | lt   | lt-LT.json |
-| Latvian    | lv   | lv-LV.json |
-| Nepali     | ne   | ne-NE.json |
-| Portuguese | pt   | pt-PT.json |
-| Swahili    | sw   | sw-SW.json |
+| Language    | Code | File       |
+| ----------- | ---- | ---------- |
+| Azerbaijani | az   | az-AZ.json |
+| Czech       | cs   | cs-CS.json |
+| German      | de   | de-DE.json |
+| English     | en   | en-US.json |
+| Spanish     | es   | es-MX.json |
+| French      | fr   | fr-FR.json |
+| Italian     | it   | it-IT.json |
+| Korean      | ko   | ko-KO.json |
+| Lithuanian  | lt   | lt-LT.json |
+| Latvian     | lv   | lv-LV.json |
+| Nepali      | ne   | ne-NE.json |
+| Portuguese  | pt   | pt-PT.json |
+| Swahili     | sw   | sw-SW.json |
 
 #### Session & Performance Settings
 
