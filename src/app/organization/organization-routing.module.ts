@@ -293,10 +293,7 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewEmployeeComponent,
-                  resolve: {
-                    employee: EmployeeResolver
-                  }
+                  component: ViewEmployeeComponent
                 },
                 {
                   path: 'edit',
@@ -497,17 +494,13 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewTellerComponent,
-                  resolve: {
-                    teller: TellerResolver
-                  }
+                  component: ViewTellerComponent
                 },
                 {
                   path: 'edit',
                   component: EditTellerComponent,
                   data: { title: 'Edit Teller', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
-                    teller: TellerResolver,
                     offices: OfficesResolver
                   }
                 },
@@ -551,7 +544,6 @@ const routes: Routes = [
                           component: EditCashierComponent,
                           data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                           resolve: {
-                            cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
                           }
                         },
@@ -718,10 +710,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: ManageFundsComponent,
-              resolve: {
-                funds: ManageFundsResolver
-              }
+              component: ManageFundsComponent
             },
             {
               path: 'create',
@@ -740,18 +729,12 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewFundComponent,
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  component: ViewFundComponent
                 },
                 {
                   path: 'edit',
                   component: EditFundComponent,
-                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                 }
               ]
             }
@@ -811,10 +794,7 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewHolidaysComponent,
-                  resolve: {
-                    holidays: HolidayResolver
-                  }
+                  component: ViewHolidaysComponent
                 },
                 {
                   path: 'edit',
@@ -826,6 +806,8 @@ const routes: Routes = [
                     routeResolveBreadcrumb: null
                   },
                   resolve: {
+                    // Not a duplicate of the parent: the parent resolves HolidayResolver under
+                    // `holidays`, and EditHolidayComponent reads `holiday`.
                     holiday: HolidayResolver,
                     holidayTemplate: HolidayTemplateResolver
                   }
