@@ -180,9 +180,6 @@
     "validation.msg.loan.principal.is.greater.than.max": "Principal amount {{params[0].value}} is invalid. Must be an amount less than or equal to Maximum principal amount {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Principal amount {{params[0].value}} is invalid. Must be an amount greater than or equal to Minimum Principal amount {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Accounting type is mandatory.",
-    "labels.alt.Center profile placeholder": "Center profile placeholder",
-    "labels.alt.Group profile placeholder": "Group profile placeholder",
-    "labels.commons.Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Accounting type is invalid. Must be a number between {{params[1].value}} and {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Allow Partial Installment Calculation cannot be set as true for daily calculation",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Variable Installment should be used with either daily interest calculation  or allow partial interest calculation true",
@@ -205,7 +202,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Income Account for configuring Fee specific Income Accounts cannot be blank",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fund is invalid.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Fund Source is mandatory.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Grace on interest charged must be less than or equal to the value for # of repayments.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Grace on interest charged must be less than or equal to the value for # of repayments.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Grace on interest charged must be a value that is zero or greater.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Loan Product 'Grace on interest payment' must be less than number of repayments.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Grace on interest payments must be less than the value for # of repayments.",
@@ -358,8 +355,8 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Description is mandatory.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Description cannot be over {{params[0].value}} characters long.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Decimal places entered is `{{params[0].value}}` and must be a number between {{params[1].value}} and {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Income from Fees Account is mandatory",
-    "validation.msg.savingsproduct.insufficient.balance": "You have a balance of ${{balance}} in your account",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Income from Fees Account is mandatory",
+    "validation.msg.savingsproduct.insufficient.balance": "Insufficient balance. Your account balance is {{balance}}.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Interest calculation (Days in Year) is mandatory.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Interest calculation (Days in Year) must be one of `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Interest calculation type is mandatory.",
@@ -574,7 +571,13 @@
     "error.msg.tenant.connection.credentials.rejected": "The database server refused the credentials for this tenant.",
     "error.msg.tenant.schema.creation.not.permitted": "The database user is not allowed to create databases. Grant it that right, or create the database before the tenant.",
     "error.msg.tenant.schema.absent": "The database server has no database of that name.",
-    "error.msg.tenant.connection.failed": "The tenant database could not be reached."
+    "error.msg.tenant.connection.failed": "The tenant database could not be reached.",
+    "validation.cannotBeginWithSpecialCharacterOrNumber": "{{field}} cannot begin with a special character or number",
+    "validation.maxMustBeGreaterOrEqualToMin": "Maximum value must be greater than or equal to the minimum",
+    "validation.mustBeAnInteger": "{{field}} must be an integer",
+    "validation.mustBeGreaterThan": "{{field}} must be greater than {{other}}",
+    "validation.mustBeGreaterThanZero": "{{field}} must be greater than zero",
+    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -964,7 +967,8 @@
       "Adjust": "Adjust",
       "Reverse": "Reverse",
       "Create Tenant": "Create Tenant",
-      "Test Connection": "Test Connection"
+      "Test Connection": "Test Connection",
+      "Post Dividends": "Post Dividends"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1250,7 +1254,8 @@
       "Disabled": "Disabled",
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "SUSPENDED": "Suspended"
+      "SUSPENDED": "Suspended",
+      "other": "other"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1308,7 +1313,8 @@
       "must be after or equal to start date": "must be after or equal to start date",
       "Yes": "Yes",
       "No": "No",
-      "No classification data available": "No classification data available"
+      "No classification data available": "No classification data available",
+      "Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed."
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Password must be at least 1 character and not more than 50 characters long",
@@ -1971,7 +1977,11 @@
       "Create Tenant": "Create Tenant",
       "Edit Tenant": "Edit Tenant",
       "Tenant Details": "Tenant Details",
-      "Preview": "Preview"
+      "Preview": "Preview",
+      "Configuration": "Configuration",
+      "Edit Charge Amount": "Edit Charge Amount",
+      "Edit Charge Date": "Edit Charge Date",
+      "Edit Guarantor": "Edit Guarantor"
     },
     "inputs": {
       "Returned": "Returned",
@@ -2133,8 +2143,10 @@
       "Attribute Value": "Attribute Value",
       "Auto Generate Password": "Auto Generate Password",
       "Auto generate password": "Auto generate password",
+      "Account Balance": "Account Balance",
       "Available Balance": "Available Balance",
       "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)",
+      "Available Savings": "Available Savings",
       "Avg Amount/Transaction": "Avg Amount/Transaction",
       "Balance": "Balance",
       "Balance Of Loan": "Balance Of Loan",
@@ -3519,7 +3531,6 @@
       "Total Records": "Total Records",
       "Total records": "Total records",
       "Total Repaid": "Total Repaid",
-      "Total Savings": "Total Savings",
       "Total Shares": "Total Shares",
       "Total Value": "Total Value",
       "Total Withdrawals": "Total Withdrawals",
@@ -3618,7 +3629,7 @@
       "Website": "Website",
       "Wednesday": "Wednesday",
       "Weekly": "Weekly",
-      "Witdhold Tax Group": "Withhold Tax Group",
+      "Withhold Tax Group": "Withhold Tax Group",
       "Withdraw Balance": "Withdraw Balance",
       "Withdraw Money From Saving Account": "Withdraw Money From Saving Account",
       "Withdrawal Date": "Withdrawal Date",
@@ -4028,7 +4039,26 @@
       "Schema Connection Parameters": "Schema Connection Parameters",
       "Auto Update": "Auto Update",
       "Search by identifier or name": "Search by identifier or name",
-      "Schema Password": "Schema Password"
+      "Schema Password": "Schema Password",
+      "Allow Overdraft": "Allow Overdraft",
+      "Annual Fee": "Annual Fee",
+      "Annual Fees": "Annual Fees",
+      "Charge Date": "Charge Date",
+      "Confirm Reject": "Confirm Reject",
+      "Deposit": "Deposit",
+      "Deposit Term In multiple of": "Deposit Term In multiple of",
+      "Deposit Type": "Deposit Type",
+      "GL Name": "GL Name",
+      "Interest On Overdraft": "Interest On Overdraft",
+      "Maximum Shares per Client": "Maximum Shares per Client",
+      "Message": "Message",
+      "Min Balance Required for Interest Calculation": "Min Balance Required for Interest Calculation",
+      "Minimum Shares per Client": "Minimum Shares per Client",
+      "Nominal interest rate frequency": "Nominal interest rate frequency",
+      "On Hold Funds": "On Hold Funds",
+      "Payment": "Payment",
+      "Export Date": "Export Date",
+      "Label": "Label"
     },
     "links": {
       "Community": "Community",
@@ -5488,7 +5518,15 @@
       "Database will be created on submit": "The credentials work. The database does not exist yet and will be created when you submit.",
       "Tenant database answered": "The database answered.",
       "Tenant database is missing": "The credentials work, but the server has no database of that name.",
-      "Prove the connection before saving": "Test the connection before saving changed database details. The server accepts them unverified, and the platform then fails to start at the next restart, because a tenant it cannot migrate prevents every tenant from starting."
+      "Prove the connection before saving": "Test the connection before saving changed database details. The server accepts them unverified, and the platform then fails to start at the next restart, because a tenant it cannot migrate prevents every tenant from starting.",
+      "Export the data to CSV file": "Export the data to CSV file",
+      "Export the data to XLS file": "Export the data to XLS file",
+      "No penalties found": "No penalties found",
+      "Report Output Type": "Report Output Type",
+      "Closed": "Closed",
+      "Dashboard Export": "Dashboard Export",
+      "Generated on": "Generated on",
+      "Automated export": "This is an automated export from Mifos X Global Dashboard"
     },
     "permissions": {
       "actions": {
@@ -5920,6 +5958,10 @@
         "own.account": "Own Account",
         "other.bank": "Other Bank"
       }
+    },
+    "alt": {
+      "Center profile placeholder": "Center profile placeholder",
+      "Group profile placeholder": "Group profile placeholder"
     }
   },
   "languages": {
@@ -6152,7 +6194,13 @@
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
     "Reporting Dashboard": "CB-ILD Reporting Dashboard",
     "Nothing left to recover": "There is nothing left to recover on this loan.",
-    "Reverse the recovery payments first": "Undo write-off is blocked while the loan has recovery payments. Reverse them first."
+    "Reverse the recovery payments first": "Undo write-off is blocked while the loan has recovery payments. Reverse them first.",
+    "Enables definition and tracking inactive Savings Accounts": "Enables definition and tracking of inactive Savings Accounts",
+    "External Id is a unique identifier": "External Id is a unique identifier",
+    "Fields are used to define the minimum, default, and maximum period payment rate": "Fields are used to define the minimum, default, and maximum period payment rate",
+    "Frequency must be a positive integer": "Frequency must be a positive integer",
+    "Frequency must be greater than zero": "Frequency must be greater than zero",
+    "Make Payment": "Make Payment"
   },
   "countries": {
     "AF": "Afghanistan",
@@ -6277,10 +6325,12 @@
         "success": "Client closed successfully."
       },
       "reject": {
-        "success": "Client rejected successfully."
+        "success": "Client rejected successfully.",
+        "failure": "Failed to reject client."
       },
       "withdraw": {
-        "success": "Client withdrawn successfully."
+        "success": "Client withdrawn successfully.",
+        "failure": "Failed to withdraw client."
       },
       "reactivate": {
         "success": "Client reactivated successfully.",
@@ -6291,7 +6341,8 @@
         "failure": "Failed to activate client."
       },
       "acceptTransfer": {
-        "success": "Client transfer accepted successfully."
+        "success": "Client transfer accepted successfully.",
+        "failure": "Failed to accept client transfer."
       },
       "rejectTransfer": {
         "success": "Client transfer rejected successfully."
@@ -6300,17 +6351,20 @@
         "success": "Client transfer undone successfully."
       },
       "undoRejection": {
-        "success": "Client rejection undone successfully."
+        "success": "Client rejection undone successfully.",
+        "failure": "Failed to undo client rejection."
       },
       "transfer": {
         "success": "Client transfer proposed successfully.",
         "failure": "Failed to propose client transfer."
       },
       "addCharge": {
-        "success": "Client charge added successfully."
+        "success": "Client charge added successfully.",
+        "failure": "Client charge could not be added."
       },
       "addCollateral": {
-        "success": "Client collateral added successfully."
+        "success": "Client collateral added successfully.",
+        "failure": "Failed to add client collateral."
       },
       "assignStaff": {
         "success": "Staff assigned to client successfully.",
