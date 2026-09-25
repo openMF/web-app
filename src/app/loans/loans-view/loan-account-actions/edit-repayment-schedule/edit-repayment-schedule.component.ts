@@ -112,7 +112,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
       data: {
         heading: this.translateService.instant('labels.heading.Discard Changes'),
         dialogContext: this.translateService.instant(
-          'labels.dialogContext.Are you sure you want to leave this page and lose all inputted data'
+          'labels.text.Are you sure you want to leave this page and lose all inputted data'
         )
       }
     });

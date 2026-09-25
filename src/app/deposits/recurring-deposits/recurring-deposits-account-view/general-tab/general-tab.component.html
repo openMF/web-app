@@ -83,7 +83,7 @@
           }
           @if (recurringDepositsAccountData.witdHoldTax) {
             <tr>
-              <td>{{ 'labels.inputs.Witdhold Tax Group' | translate }}</td>
+              <td>{{ 'labels.inputs.Withhold Tax Group' | translate }}</td>
               <td>
                 <span>{{ recurringDepositsAccountData.taxGroup.name }}</span>
               </td>
@@ -201,7 +201,7 @@
                 <span
                   >{{ recurringDepositsAccountData.timeline.activatedOnDate | dateFormat }}
                   @if (!recurringDepositsAccountData.timeline.activatedOnDate) {
-                    <span>{{ 'labels.inputs.Not Activated' | translate }}</span>
+                    <span>{{ 'labels.text.Not Activated' | translate }}</span>
                   }
                 </span>
               }
@@ -209,7 +209,7 @@
                 <span
                   >{{ recurringDepositsAccountData.expectedFirstDepositOnDate | dateFormat }}
                   @if (!recurringDepositsAccountData.expectedFirstDepositOnDate) {
-                    <span>{{ 'labels.inputs.Not Activated' | translate }}</span>
+                    <span>{{ 'labels.text.Not Activated' | translate }}</span>
                   }
                 </span>
               }
@@ -495,7 +495,7 @@
           }
           @if (recurringDepositsAccountData.witdHoldTax) {
             <tr>
-              <td>{{ 'labels.inputs.Witdhold Tax Group' | translate }}</td>
+              <td>{{ 'labels.inputs.Withhold Tax Group' | translate }}</td>
               <td>
                 <span>{{ recurringDepositsAccountData.taxGroup.name }}</span>
               </td>
