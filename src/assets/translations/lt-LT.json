@@ -5435,6 +5435,7 @@
       "Report Output Type": "Ataskaitos išvesties tipas",
       "Country": "Šalis",
       "Amount must be greater than zero": "Suma turi būti didesnė nei nulis",
+      "Base Teller": "Pagrindinė kasa",
       "Base Teller Savings Account Opening": "Taupomosios sąskaitos atidarymas bazinėje kasoje",
       "Bill and Service Payment": "Sąskaitų ir paslaugų apmokėjimas",
       "Savings Growth": "Santaupų augimas",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Laukas",
       "cardValue": "Reikšmė"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Pagrindinė kasa"
+    },
+    "views": {
+      "closing": "Kasos aparato uždarymas",
+      "global": "Pasaulinis grynųjų pinigų skaičius",
+      "deposit-in-transit": "Užstatas tranzitu",
+      "bank-deposit": "Banko indėlis",
+      "history": "Sandorių istorija",
+      "holdings": "Pinigai į rankas"
+    },
+    "actions": {
+      "addDenomination": "Pridėti nominalą",
+      "confirmDeposit": "Patvirtinkite indėlį",
+      "finalizeClosing": "Užbaikite uždarymą",
+      "load": "Įkelti",
+      "printReceipt": "Spausdinti kvitą",
+      "removeDenomination": "Pašalinti nominalą",
+      "reprint": "Perspausdinti",
+      "retry": "Bandyti dar kartą",
+      "search": "Paieška",
+      "confirm": "Patvirtinti",
+      "cancel": "Atšaukti"
+    },
+    "fields": {
+      "actualAmount": "Faktinė suma",
+      "all": "Visi",
+      "amount": "Suma",
+      "authorization": "Autorizacija",
+      "authorizedBy": "Įgaliojo",
+      "authorizedOn": "Įgaliota Įjungta",
+      "businessDate": "Darbo data",
+      "cashier": "Kasininkė",
+      "cashierId": "Kasininko ID",
+      "checks": "Čekiai",
+      "closingStatus": "Uždarymo būsena",
+      "completedOn": "Užbaigta",
+      "currency": "Valiuta",
+      "currentBalance": "Dabartinis balansas",
+      "denomination": "Denominacija",
+      "description": "apibūdinimas",
+      "difference": "Skirtumas",
+      "expectedBalance": "Numatomas likutis",
+      "expectedCash": "Tikėtini grynieji pinigai",
+      "fromDate": "Nuo datos",
+      "headCashier": "Vadovas kasininkas",
+      "inflows": "Įplaukos",
+      "office": "Skyrius",
+      "openingBalance": "Pradinis balansas",
+      "openingFunds": "Atidarymo fondai",
+      "outflows": "Ištekėjimai",
+      "physicalAssets": "Fizinis turtas",
+      "physicalCash": "Fiziniai pinigai",
+      "previousSettlements": "Ankstesnės gyvenvietės",
+      "quantity": "Kiekis",
+      "reference": "Nuoroda",
+      "search": "Aprašymas arba nuoroda",
+      "settlementsDeposits": "Atsiskaitymai ir indėliai",
+      "status": "Būsena",
+      "teller": "Teikėjas",
+      "toDate": "Iki datos",
+      "total": "Iš viso",
+      "transactionType": "Operacijos tipas"
+    },
+    "sections": {
+      "authoritativeContext": "Autoritetingas uždarymo kontekstas",
+      "denominations": "Denominacijos",
+      "eligibleChecks": "Tinkami čekiai",
+      "preview": "Grynųjų pinigų peržiūra",
+      "receipt": "Kvitas"
+    },
+    "states": {
+      "alreadyCompleted": "Šis uždarymas jau baigtas.",
+      "loading": "Įkeliama",
+      "noData": "Nėra duomenų",
+      "noDenominations": "Jokių nominalų neįvestas",
+      "noEligibleChecks": "Nėra tinkamų čekių",
+      "noHoldings": "Nėra grynųjų pinigų kasoje duomenų",
+      "noSettlements": "Kasos atsiskaitymų nėra",
+      "noTransactions": "Nerasta jokių operacijų",
+      "submitting": "Pateikiama",
+      "closingCompleted": "Uždarymas baigtas",
+      "authorizationRequired": "Reikalingas leidimas",
+      "depositCompleted": "Indėlis baigtas",
+      "settlementCompleted": "Atsiskaitymas baigtas"
+    },
+    "status": {
+      "OPEN": "Atidaryti",
+      "COMPLETED": "Užbaigta"
+    },
+    "differenceType": {
+      "BALANCED": "Subalansuota",
+      "OVERAGE": "Perteklius",
+      "SHORTAGE": "Trūkumas"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Užstatas tranzitu",
+      "BANK_DEPOSIT": "Banko indėlis"
+    },
+    "closing": {
+      "confirmTitle": "Patvirtinkite galutinį kasos aparato uždarymą",
+      "confirmText": "Užbaigti {{cashier}} {{date}} {{currency}}? Numatoma: {{expected}}; grynieji pinigai: {{cash}}; čekiai: {{checks}}; skirtumo peržiūra: {{difference}}. Autorizavimą atlieka prisiregistravusi vyriausioji kasininkė."
+    },
+    "operation": {
+      "confirmText": "Paskelbti šį paskutinį indėlį už {{cashier}} {{date}} {{currency}}? Grynieji pinigai: {{cash}}; čekiai: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Įveskite pateikiamus nominalus. Taupymo įskiepis juos patvirtina ir apskaičiuoja bendrą sumą.",
+      "previewOnly": "Šios įrašų sumos yra peržiūra. „Savings Plugin“ atsakymas yra autoritetingas."
+    },
+    "errors": {
+      "cashiers": "Nepavyko įkelti kasų",
+      "closing": "Uždaryti nepavyko",
+      "context": "Nepavyko įkelti uždarymo konteksto",
+      "global": "Nepavyko įkelti pasaulinio grynųjų pinigų skaičiaus",
+      "history": "Nepavyko įkelti operacijų istorijos",
+      "holdings": "Nepavyko įkelti grynųjų pinigų duomenų",
+      "notCompleted": "Užpakalinė programa negrąžino baigtos būsenos",
+      "operation": "Nepavyko užbaigti depozito",
+      "options": "Nepavyko įkelti grynųjų pinigų valdymo parinkčių",
+      "receipt": "Nepavyko įkelti kvito"
     }
   }
 }

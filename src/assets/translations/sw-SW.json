@@ -5435,6 +5435,7 @@
       "Report Output Type": "Aina ya Matokeo ya Ripoti",
       "Country": "Nchi",
       "Amount must be greater than zero": "Kiasi lazima kiwe kikubwa kuliko sifuri",
+      "Base Teller": "Kaunta ya msingi",
       "Base Teller Savings Account Opening": "Ufunguzi wa Akaunti ya Akiba kwa Keshia wa Msingi",
       "Bill and Service Payment": "Malipo ya bili na huduma",
       "Savings Growth": "Ukuaji wa Akiba",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Sehemu",
       "cardValue": "Thamani"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Kaunta ya msingi"
+    },
+    "views": {
+      "closing": "Daftari la Fedha Kufungwa",
+      "global": "Hesabu ya Fedha Duniani",
+      "deposit-in-transit": "Amana katika Usafiri",
+      "bank-deposit": "Amana ya Benki",
+      "history": "Historia ya Muamala",
+      "holdings": "Pesa-Mkononi"
+    },
+    "actions": {
+      "addDenomination": "Ongeza Dhehebu",
+      "confirmDeposit": "Thibitisha Amana",
+      "finalizeClosing": "Maliza Kufunga",
+      "load": "Mzigo",
+      "printReceipt": "Chapisha risiti",
+      "removeDenomination": "Ondoa Dhehebu",
+      "reprint": "Chapisha upya",
+      "retry": "Jaribu tena",
+      "search": "Tafuta",
+      "confirm": "Thibitisha",
+      "cancel": "Ghairi"
+    },
+    "fields": {
+      "actualAmount": "Kiasi Halisi",
+      "all": "Vyote",
+      "amount": "Kiasi",
+      "authorization": "Uidhinishaji",
+      "authorizedBy": "Imeidhinishwa Na",
+      "authorizedOn": "Imeidhinishwa Imewashwa",
+      "businessDate": "Tarehe ya Biashara",
+      "cashier": "Keshia",
+      "cashierId": "Kitambulisho cha Cashier",
+      "checks": "Hundi",
+      "closingStatus": "Hali ya Kufunga",
+      "completedOn": "Imekamilika Kwa",
+      "currency": "Sarafu",
+      "currentBalance": "Salio la Sasa",
+      "denomination": "Dhehebu",
+      "description": "Maelezo",
+      "difference": "Tofauti",
+      "expectedBalance": "Salio linalotarajiwa",
+      "expectedCash": "Pesa Zinazotarajiwa",
+      "fromDate": "Kuanzia Tarehe",
+      "headCashier": "Keshia Mkuu",
+      "inflows": "Uingiaji",
+      "office": "Ofisi",
+      "openingBalance": "Kufungua Mizani",
+      "openingFunds": "Fedha za Ufunguzi",
+      "outflows": "Inatoka nje",
+      "physicalAssets": "Mali za Kimwili",
+      "physicalCash": "Fedha ya kimwili",
+      "previousSettlements": "Makazi yaliyotangulia",
+      "quantity": "Kiasi",
+      "reference": "Rejeleo",
+      "search": "Maelezo au kumbukumbu",
+      "settlementsDeposits": "Makazi na Amana",
+      "status": "Hali",
+      "teller": "Mtangazaji",
+      "toDate": "Mpaka leo",
+      "total": "Jumla",
+      "transactionType": "Aina ya Muamala"
+    },
+    "sections": {
+      "authoritativeContext": "Muktadha wa Kufunga Wenye Mamlaka",
+      "denominations": "Madhehebu",
+      "eligibleChecks": "Hundi Zinazostahiki",
+      "preview": "Hakiki ya Hesabu ya Pesa",
+      "receipt": "Risiti"
+    },
+    "states": {
+      "alreadyCompleted": "Ufungaji huu tayari umekamilika.",
+      "loading": "Inapakia",
+      "noData": "Hakuna Data",
+      "noDenominations": "Hakuna madhehebu yaliyoingizwa",
+      "noEligibleChecks": "Hakuna Hundi Zinazostahiki",
+      "noHoldings": "Hakuna data ya pesa kwa mkono",
+      "noSettlements": "Hakuna makazi ya mtunza fedha",
+      "noTransactions": "Hakuna Miamala Imepatikana",
+      "submitting": "Inatuma",
+      "closingCompleted": "Kufunga Kumekamilika",
+      "authorizationRequired": "Idhini Inahitajika",
+      "depositCompleted": "Amana Imekamilika",
+      "settlementCompleted": "Suluhu Imekamilika"
+    },
+    "status": {
+      "OPEN": "Fungua",
+      "COMPLETED": "Imekamilika"
+    },
+    "differenceType": {
+      "BALANCED": "Imesawazishwa",
+      "OVERAGE": "Kupita kiasi",
+      "SHORTAGE": "Uhaba"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Amana katika Usafiri",
+      "BANK_DEPOSIT": "Amana ya Benki"
+    },
+    "closing": {
+      "confirmTitle": "Thibitisha Kufungwa kwa Sajili ya Mwisho ya Pesa",
+      "confirmText": "Je, ungependa kukamilisha {{cashier}} kwa {{date}} kwa {{currency}}? Inatarajiwa: {{expected}}; pesa taslimu: {{cash}}; hundi: {{checks}}; onyesho la kukagua tofauti: {{difference}}. Uidhinishaji unafanywa na keshia mkuu aliyeingia."
+    },
+    "operation": {
+      "confirmText": "Ungependa kutuma amana hii ya mwisho ya {{cashier}} tarehe {{date}} kwa {{currency}}? Fedha: {{cash}}; hundi: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Ingiza madhehebu yanayowasilishwa. Programu-jalizi ya Akiba inazihalalisha na kukokotoa jumla inayoidhinishwa.",
+      "previewOnly": "Jumla hizi za ingizo ni onyesho la kukagua. Jibu la Programu-jalizi ya Akiba ni halali."
+    },
+    "errors": {
+      "cashiers": "Keshia hazikuweza kupakiwa",
+      "closing": "Kufunga hakuweza kukamilika",
+      "context": "Muktadha wa kufunga haukuweza kupakiwa",
+      "global": "Hesabu ya pesa taslimu ulimwenguni haikuweza kupakiwa",
+      "history": "Historia ya muamala haikuweza kupakiwa",
+      "holdings": "Data ya pesa kwa mkono haikuweza kupakiwa",
+      "notCompleted": "Upande wa nyuma haukurudisha hali iliyokamilishwa",
+      "operation": "Amana haikuweza kukamilika",
+      "options": "Chaguo za usimamizi wa pesa hazikuweza kupakiwa",
+      "receipt": "Risiti haikuweza kupakiwa"
     }
   }
 }

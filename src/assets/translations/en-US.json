@@ -4431,6 +4431,7 @@
       "Active Savers": "Active Savers",
       "Amount Collected": "Amount Collected",
       "Amount must be greater than zero": "Amount must be greater than zero",
+      "Base Teller": "Base Teller",
       "Base Teller Savings Account Opening": "Base Teller Savings Account Opening",
       "Bill and Service Payment": "Bill and Service Payment",
       "Georeference Map": "Georeference Map",
@@ -6646,6 +6647,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Field",
       "cardValue": "Value"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Base Teller"
+    },
+    "views": {
+      "closing": "Cash Register Closing",
+      "global": "Global Cash Count",
+      "deposit-in-transit": "Deposit in Transit",
+      "bank-deposit": "Bank Deposit",
+      "history": "Transaction History",
+      "holdings": "Cash-on-Hand"
+    },
+    "actions": {
+      "addDenomination": "Add Denomination",
+      "confirmDeposit": "Confirm Deposit",
+      "finalizeClosing": "Finalize Closing",
+      "load": "Load",
+      "printReceipt": "Print Receipt",
+      "removeDenomination": "Remove Denomination",
+      "reprint": "Reprint",
+      "retry": "Retry",
+      "search": "Search",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "fields": {
+      "actualAmount": "Actual Amount",
+      "all": "All",
+      "amount": "Amount",
+      "authorization": "Authorization",
+      "authorizedBy": "Authorized By",
+      "authorizedOn": "Authorized On",
+      "businessDate": "Business Date",
+      "cashier": "Cashier",
+      "cashierId": "Cashier ID",
+      "checks": "Checks",
+      "closingStatus": "Closing Status",
+      "completedOn": "Completed On",
+      "currency": "Currency",
+      "currentBalance": "Current Balance",
+      "denomination": "Denomination",
+      "description": "Description",
+      "difference": "Difference",
+      "expectedBalance": "Expected Balance",
+      "expectedCash": "Expected Cash",
+      "fromDate": "From Date",
+      "headCashier": "Head Cashier",
+      "inflows": "Inflows",
+      "office": "Office",
+      "openingBalance": "Opening Balance",
+      "openingFunds": "Opening Funds",
+      "outflows": "Outflows",
+      "physicalAssets": "Physical Assets",
+      "physicalCash": "Physical Cash",
+      "previousSettlements": "Previous Settlements",
+      "quantity": "Quantity",
+      "reference": "Reference",
+      "search": "Description or reference",
+      "settlementsDeposits": "Settlements and Deposits",
+      "status": "Status",
+      "teller": "Teller",
+      "toDate": "To Date",
+      "total": "Total",
+      "transactionType": "Transaction Type"
+    },
+    "sections": {
+      "authoritativeContext": "Authoritative Closing Context",
+      "denominations": "Denominations",
+      "eligibleChecks": "Eligible Checks",
+      "preview": "Cash Count Preview",
+      "receipt": "Receipt"
+    },
+    "states": {
+      "alreadyCompleted": "This closing is already completed.",
+      "loading": "Loading",
+      "noData": "No Data",
+      "noDenominations": "No denominations entered",
+      "noEligibleChecks": "No Eligible Checks",
+      "noHoldings": "No cash-on-hand data",
+      "noSettlements": "No cashier settlements",
+      "noTransactions": "No Transactions Found",
+      "submitting": "Submitting",
+      "closingCompleted": "Closing Completed",
+      "authorizationRequired": "Authorization Required",
+      "depositCompleted": "Deposit Completed",
+      "settlementCompleted": "Settlement Completed"
+    },
+    "status": {
+      "OPEN": "Open",
+      "COMPLETED": "Completed"
+    },
+    "differenceType": {
+      "BALANCED": "Balanced",
+      "OVERAGE": "Overage",
+      "SHORTAGE": "Shortage"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Deposit in Transit",
+      "BANK_DEPOSIT": "Bank Deposit"
+    },
+    "closing": {
+      "confirmTitle": "Confirm Final Cash Register Closing",
+      "confirmText": "Finalize {{cashier}} for {{date}} in {{currency}}? Expected: {{expected}}; cash: {{cash}}; checks: {{checks}}; difference preview: {{difference}}. Authorization is performed by the signed-in head cashier."
+    },
+    "operation": {
+      "confirmText": "Post this final deposit for {{cashier}} on {{date}} in {{currency}}? Cash: {{cash}}; checks: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Enter the denominations being submitted. The Savings Plugin validates them and calculates the authoritative total.",
+      "previewOnly": "These entry totals are a preview. The Savings Plugin response is authoritative."
+    },
+    "errors": {
+      "cashiers": "Cashiers could not be loaded",
+      "closing": "Closing could not be completed",
+      "context": "Closing context could not be loaded",
+      "global": "Global cash count could not be loaded",
+      "history": "Transaction history could not be loaded",
+      "holdings": "Cash-on-hand data could not be loaded",
+      "notCompleted": "The backend did not return a completed status",
+      "operation": "Deposit could not be completed",
+      "options": "Cash-management options could not be loaded",
+      "receipt": "Receipt could not be loaded"
     }
   }
 }

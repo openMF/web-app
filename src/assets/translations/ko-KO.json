@@ -5434,6 +5434,7 @@
       "Report Output Type": "보고서 출력 형식",
       "Country": "국가",
       "Amount must be greater than zero": "금액은 0보다 커야 합니다",
+      "Base Teller": "기본 창구",
       "Base Teller Savings Account Opening": "기본 창구 저축 계좌 개설",
       "Bill and Service Payment": "청구서 및 서비스 결제",
       "Savings Growth": "저축 증가",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "항목",
       "cardValue": "값"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "기본 창구"
+    },
+    "views": {
+      "closing": "금전 등록기 폐쇄",
+      "global": "글로벌 현금 수",
+      "deposit-in-transit": "운송중 예금",
+      "bank-deposit": "은행 예금",
+      "history": "거래 내역",
+      "holdings": "현금 보유"
+    },
+    "actions": {
+      "addDenomination": "권종 추가",
+      "confirmDeposit": "입금 확인",
+      "finalizeClosing": "마감 확정",
+      "load": "로드",
+      "printReceipt": "영수증 인쇄",
+      "removeDenomination": "권종 제거",
+      "reprint": "재인쇄",
+      "retry": "재시도",
+      "search": "찾다",
+      "confirm": "확인하다",
+      "cancel": "취소"
+    },
+    "fields": {
+      "actualAmount": "실제 금액",
+      "all": "전체",
+      "amount": "금액",
+      "authorization": "승인",
+      "authorizedBy": "승인자",
+      "authorizedOn": "승인 날짜",
+      "businessDate": "사업일",
+      "cashier": "출납원",
+      "cashierId": "계산원 ID",
+      "checks": "수표",
+      "closingStatus": "마감 상태",
+      "completedOn": "완료 날짜",
+      "currency": "통화",
+      "currentBalance": "현재의 균형",
+      "denomination": "권종",
+      "description": "설명",
+      "difference": "차이",
+      "expectedBalance": "예상 잔액",
+      "expectedCash": "예상현금",
+      "fromDate": "시작 날짜",
+      "headCashier": "수석 계산원",
+      "inflows": "유입",
+      "office": "지점 / 사무소",
+      "openingBalance": "기초 잔액",
+      "openingFunds": "기금 개설",
+      "outflows": "유출",
+      "physicalAssets": "물리적 자산",
+      "physicalCash": "실물 현금",
+      "previousSettlements": "이전 정착지",
+      "quantity": "수량",
+      "reference": "참조",
+      "search": "설명 또는 참조",
+      "settlementsDeposits": "결제 및 예금",
+      "status": "상태",
+      "teller": "창구 직원",
+      "toDate": "현재까지",
+      "total": "총",
+      "transactionType": "거래 유형"
+    },
+    "sections": {
+      "authoritativeContext": "신뢰할 수 있는 종료 컨텍스트",
+      "denominations": "권종",
+      "eligibleChecks": "적격 수표",
+      "preview": "현금현황 미리보기",
+      "receipt": "영수증"
+    },
+    "states": {
+      "alreadyCompleted": "이번 마감은 이미 완료되었습니다.",
+      "loading": "로드 중",
+      "noData": "데이터 없음",
+      "noDenominations": "입력된 권종이 없습니다.",
+      "noEligibleChecks": "적격 수표 없음",
+      "noHoldings": "현금 보유 데이터 없음",
+      "noSettlements": "계산원 정산 없음",
+      "noTransactions": "거래가 없습니다.",
+      "submitting": "제출 중",
+      "closingCompleted": "마감 완료",
+      "authorizationRequired": "승인 필요",
+      "depositCompleted": "입금완료",
+      "settlementCompleted": "정산 완료"
+    },
+    "status": {
+      "OPEN": "열기",
+      "COMPLETED": "완전한"
+    },
+    "differenceType": {
+      "BALANCED": "균형",
+      "OVERAGE": "초과분",
+      "SHORTAGE": "부족"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "운송중 예금",
+      "BANK_DEPOSIT": "은행 예금"
+    },
+    "closing": {
+      "confirmTitle": "최종 금전 등록기 폐쇄 확인",
+      "confirmText": "{{cashier}}의 {{date}}을(를) {{currency}}로 확정하시겠습니까? 예상됨: {{expected}}; 현금: {{cash}}; 수표: {{checks}}; 차이 미리보기: {{difference}}. 승인은 서명된 수석 계산원이 수행합니다."
+    },
+    "operation": {
+      "confirmText": "{{cashier}}에 {{date}}에 대한 최종 입금액을 {{currency}}로 게시하시겠습니까? 현금: {{cash}}; 수표: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "제출되는 액면가를 입력하세요. Savings Plugin은 이를 검증하고 신뢰할 수 있는 총계를 계산합니다.",
+      "previewOnly": "이 항목 합계는 미리보기입니다. Savings Plugin 응답은 신뢰할 수 있습니다."
+    },
+    "errors": {
+      "cashiers": "계산원을 로드할 수 없습니다.",
+      "closing": "종료를 완료할 수 없습니다.",
+      "context": "닫는 컨텍스트를 로드할 수 없습니다.",
+      "global": "글로벌 현금 수를 로드할 수 없습니다.",
+      "history": "거래 내역을 로드할 수 없습니다.",
+      "holdings": "보유 현금 데이터를 로드할 수 없습니다.",
+      "notCompleted": "백엔드가 완료 상태를 반환하지 않았습니다.",
+      "operation": "입금을 완료하지 못했습니다.",
+      "options": "현금 관리 옵션을 로드할 수 없습니다.",
+      "receipt": "영수증을 로드할 수 없습니다."
     }
   }
 }

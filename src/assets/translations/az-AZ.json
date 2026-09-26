@@ -4299,6 +4299,7 @@
       "Active Savers": "Aktiv əmanətçilər",
       "Amount Collected": "Toplanmış məbləğ",
       "Amount must be greater than zero": "Məbləğ sıfırdan böyük olmalıdır",
+      "Base Teller": "Baza kassiri",
       "Base Teller Savings Account Opening": "Əsas kassirin əmanət hesabının açılması",
       "Bill and Service Payment": "Hesab və xidmət ödənişi",
       "Georeference Map": "Coğrafi istinad xəritəsi",
@@ -6456,6 +6457,130 @@
       "fileNameFallback": "Copilot",
       "cardField": "Sahə",
       "cardValue": "Qiymət"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Baza kassiri"
+    },
+    "views": {
+      "closing": "Kassanın bağlanması",
+      "global": "Ümumi nağd pul sayımı",
+      "deposit-in-transit": "Yolda olan depozit",
+      "bank-deposit": "Bank depoziti",
+      "history": "Əməliyyat tarixçəsi",
+      "holdings": "Kassadakı nağd pul"
+    },
+    "actions": {
+      "addDenomination": "Nominal əlavə et",
+      "confirmDeposit": "Depoziti təsdiqlə",
+      "finalizeClosing": "Bağlanmanı tamamla",
+      "load": "Yüklə",
+      "printReceipt": "Qəbzi çap et",
+      "removeDenomination": "Nominalı sil",
+      "reprint": "Yenidən çap et",
+      "retry": "Yenidən cəhd et",
+      "search": "Axtar",
+      "confirm": "Təsdiqlə",
+      "cancel": "Ləğv et"
+    },
+    "fields": {
+      "actualAmount": "Faktiki məbləğ",
+      "all": "Hamısı",
+      "amount": "Məbləğ",
+      "authorization": "Təsdiqləmə",
+      "authorizedBy": "Təsdiqləyən",
+      "authorizedOn": "Təsdiqlənmə vaxtı",
+      "businessDate": "Əməliyyat tarixi",
+      "cashier": "Kassir",
+      "cashierId": "Kassir ID-si",
+      "checks": "Çeklər",
+      "closingStatus": "Bağlanma statusu",
+      "completedOn": "Tamamlanma vaxtı",
+      "currency": "Valyuta",
+      "currentBalance": "Cari balans",
+      "denomination": "Nominal",
+      "description": "Təsvir",
+      "difference": "Fərq",
+      "expectedBalance": "Gözlənilən balans",
+      "expectedCash": "Gözlənilən nağd pul",
+      "fromDate": "Başlanğıc tarixi",
+      "headCashier": "Baş kassir",
+      "inflows": "Daxilolmalar",
+      "office": "Ofis",
+      "openingBalance": "Başlanğıc balans",
+      "openingFunds": "Başlanğıc vəsaitlər",
+      "outflows": "Çıxışlar",
+      "physicalAssets": "Fiziki aktivlər",
+      "physicalCash": "Faktiki nağd pul",
+      "previousSettlements": "Əvvəlki hesablaşmalar",
+      "quantity": "Miqdar",
+      "reference": "İstinad",
+      "search": "Təsvir və ya istinad",
+      "settlementsDeposits": "Hesablaşmalar və depozitlər",
+      "status": "Status",
+      "teller": "Kassa",
+      "toDate": "Son tarix",
+      "total": "Cəmi",
+      "transactionType": "Əməliyyat növü"
+    },
+    "sections": {
+      "authoritativeContext": "Rəsmi bağlanma məlumatları",
+      "denominations": "Nominallar",
+      "eligibleChecks": "Uyğun çeklər",
+      "preview": "Nağd pul sayımına baxış",
+      "receipt": "Qəbz"
+    },
+    "states": {
+      "alreadyCompleted": "Bu bağlanma artıq tamamlanıb.",
+      "loading": "Yüklənir",
+      "noData": "Məlumat yoxdur",
+      "noDenominations": "Nominal daxil edilməyib",
+      "noEligibleChecks": "Uyğun çek yoxdur",
+      "noHoldings": "Kassadakı nağd pul məlumatı yoxdur",
+      "noSettlements": "Kassir hesablaşması yoxdur",
+      "noTransactions": "Əməliyyat tapılmadı",
+      "submitting": "Göndərilir",
+      "closingCompleted": "Bağlanma tamamlandı",
+      "authorizationRequired": "Təsdiqləmə tələb olunur",
+      "depositCompleted": "Depozit tamamlandı",
+      "settlementCompleted": "Hesablaşma tamamlandı"
+    },
+    "status": {
+      "OPEN": "Açıq",
+      "COMPLETED": "Tamamlanıb"
+    },
+    "differenceType": {
+      "BALANCED": "Balanslaşdırılıb",
+      "OVERAGE": "Artıqlıq",
+      "SHORTAGE": "Çatışmazlıq"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Yolda olan depozit",
+      "BANK_DEPOSIT": "Bank depoziti"
+    },
+    "closing": {
+      "confirmTitle": "Kassanın yekun bağlanmasını təsdiqlə",
+      "confirmText": "{{cashier}} kassirini {{date}} tarixində {{currency}} valyutası üzrə bağlamaq istəyirsiniz? Gözlənilən: {{expected}}; nağd pul: {{cash}}; çeklər: {{checks}}; fərqə baxış: {{difference}}. Təsdiqləmə daxil olmuş baş kassir tərəfindən həyata keçirilir."
+    },
+    "operation": {
+      "confirmText": "{{cashier}} kassiri üçün {{date}} tarixində {{currency}} valyutası üzrə bu yekun depozit yerləşdirilsin? Nağd pul: {{cash}}; çeklər: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Təqdim edilən nominalları daxil edin. Savings Plugin onları yoxlayır və rəsmi yekun məbləği hesablayır.",
+      "previewOnly": "Bu daxilolma cəmləri ilkin baxış üçündür. Savings Plugin cavabı əsas götürülür."
+    },
+    "errors": {
+      "cashiers": "Kassirləri yükləmək mümkün olmadı",
+      "closing": "Bağlanmanı tamamlamaq mümkün olmadı",
+      "context": "Bağlanma məlumatlarını yükləmək mümkün olmadı",
+      "global": "Ümumi nağd pul sayımını yükləmək mümkün olmadı",
+      "history": "Əməliyyat tarixçəsini yükləmək mümkün olmadı",
+      "holdings": "Kassadakı nağd pul məlumatını yükləmək mümkün olmadı",
+      "notCompleted": "Backend tamamlanmış status qaytarmadı",
+      "operation": "Depoziti tamamlamaq mümkün olmadı",
+      "options": "Nağd pul idarəetmə seçimlərini yükləmək mümkün olmadı",
+      "receipt": "Qəbzi yükləmək mümkün olmadı"
     }
   }
 }

@@ -5435,6 +5435,7 @@
       "Report Output Type": "Tipo de saída do relatório",
       "Country": "País",
       "Amount must be greater than zero": "O montante deve ser maior do que zero",
+      "Base Teller": "Caixa base",
       "Base Teller Savings Account Opening": "Abertura de conta poupança no balcão base",
       "Bill and Service Payment": "Pagamento de faturas e serviços",
       "Savings Growth": "Crescimento da poupança",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Campo",
       "cardValue": "Valor"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Caixa base"
+    },
+    "views": {
+      "closing": "Fechamento de caixa registradora",
+      "global": "Contagem de caixa global",
+      "deposit-in-transit": "Depósito em Trânsito",
+      "bank-deposit": "Depósito Bancário",
+      "history": "Histórico de transações",
+      "holdings": "Dinheiro em mãos"
+    },
+    "actions": {
+      "addDenomination": "Adicionar Denominação",
+      "confirmDeposit": "Confirmar depósito",
+      "finalizeClosing": "Finalizar fechamento",
+      "load": "Carregar",
+      "printReceipt": "Imprimir recibo",
+      "removeDenomination": "Remover Denominação",
+      "reprint": "Reimprimir",
+      "retry": "Tentar novamente",
+      "search": "Procurar",
+      "confirm": "confirme",
+      "cancel": "Cancelar"
+    },
+    "fields": {
+      "actualAmount": "Valor real",
+      "all": "Todos",
+      "amount": "Montante",
+      "authorization": "Autorização",
+      "authorizedBy": "Autorizado por",
+      "authorizedOn": "Autorizado em",
+      "businessDate": "Data Comercial",
+      "cashier": "Caixa",
+      "cashierId": "ID do caixa",
+      "checks": "Cheques",
+      "closingStatus": "Status de fechamento",
+      "completedOn": "Concluído em",
+      "currency": "Moeda",
+      "currentBalance": "Saldo Atual",
+      "denomination": "Denominação",
+      "description": "Descrição",
+      "difference": "Diferença",
+      "expectedBalance": "Saldo esperado",
+      "expectedCash": "Dinheiro Esperado",
+      "fromDate": "Da data",
+      "headCashier": "Caixa Chefe",
+      "inflows": "Entradas",
+      "office": "Escritório",
+      "openingBalance": "Saldo inicial",
+      "openingFunds": "Abrindo Fundos",
+      "outflows": "Saídas",
+      "physicalAssets": "Ativos Físicos",
+      "physicalCash": "Dinheiro Físico",
+      "previousSettlements": "Acordos anteriores",
+      "quantity": "Quantidade",
+      "reference": "Referência",
+      "search": "Descrição ou referência",
+      "settlementsDeposits": "Liquidações e Depósitos",
+      "status": "Status",
+      "teller": "Caixa",
+      "toDate": "A data",
+      "total": "Total",
+      "transactionType": "Tipo de Transação"
+    },
+    "sections": {
+      "authoritativeContext": "Contexto de fechamento oficial",
+      "denominations": "Denominações",
+      "eligibleChecks": "Cheques elegíveis",
+      "preview": "Visualização da contagem de dinheiro",
+      "receipt": "Recibo"
+    },
+    "states": {
+      "alreadyCompleted": "Este fechamento já está concluído.",
+      "loading": "A carregar",
+      "noData": "Sem Dados",
+      "noDenominations": "Nenhuma denominação inserida",
+      "noEligibleChecks": "Nenhum cheque elegível",
+      "noHoldings": "Sem dados de dinheiro em caixa",
+      "noSettlements": "Sem liquidações de caixa",
+      "noTransactions": "Nenhuma transação encontrada",
+      "submitting": "Enviando",
+      "closingCompleted": "Fechamento concluído",
+      "authorizationRequired": "Autorização necessária",
+      "depositCompleted": "Depósito concluído",
+      "settlementCompleted": "Liquidação concluída"
+    },
+    "status": {
+      "OPEN": "Aberto",
+      "COMPLETED": "Concluído"
+    },
+    "differenceType": {
+      "BALANCED": "Equilibrado",
+      "OVERAGE": "Excedente",
+      "SHORTAGE": "Escassez"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Depósito em Trânsito",
+      "BANK_DEPOSIT": "Depósito Bancário"
+    },
+    "closing": {
+      "confirmTitle": "Confirmar o fechamento final da caixa registradora",
+      "confirmText": "Finalizar {{cashier}} para {{date}} em {{currency}}? Esperado: {{expected}}; dinheiro: {{cash}}; cheques: {{checks}}; visualização da diferença: {{difference}}. A autorização é realizada pelo caixa principal cadastrado."
+    },
+    "operation": {
+      "confirmText": "Fazer este depósito final para {{cashier}} em {{date}} em {{currency}}? Dinheiro: {{cash}}; cheques: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Insira as denominações que estão sendo enviadas. O Savings Plugin os valida e calcula o total oficial.",
+      "previewOnly": "Esses totais de entrada são uma prévia. A resposta do Savings Plugin é oficial."
+    },
+    "errors": {
+      "cashiers": "Não foi possível carregar os caixas",
+      "closing": "Não foi possível concluir o fechamento",
+      "context": "Não foi possível carregar o contexto de fechamento",
+      "global": "Não foi possível carregar a contagem global de dinheiro",
+      "history": "Não foi possível carregar o histórico de transações",
+      "holdings": "Não foi possível carregar os dados de dinheiro em caixa",
+      "notCompleted": "O back-end não retornou um status concluído",
+      "operation": "Não foi possível concluir o depósito",
+      "options": "Não foi possível carregar as opções de gerenciamento de caixa",
+      "receipt": "Não foi possível carregar o recibo"
     }
   }
 }

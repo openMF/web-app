@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { describe, expect, it, beforeEach, afterEach } from '@jest/globals';
 
 import { BaseTellerService } from './base-teller.service';
+import { CashierClosingRequest, CashOperationRequest } from './cash-management/cash-management.models';
 
 describe('BaseTellerService', () => {
   let service: BaseTellerService;
@@ -212,7 +213,6 @@ describe('BaseTellerService', () => {
     );
     expect((await resultPromise).error.defaultUserMessage).toBe('Returned check has already been settled.');
   });
-
   it('uses the exact WEB-1236 endpoints and contracts', async () => {
     const servicesPromise = firstValueFrom(service.getServicePaymentServices());
     const servicesRequest = httpMock.expectOne('/v2/base-teller/service-payments/services');
@@ -270,5 +270,96 @@ describe('BaseTellerService', () => {
     expect(request.request.params.get('exactMatch')).toBe('false');
     request.flush([{ entityId: 42, entityName: 'Ada' }]);
     expect(await resultPromise).toEqual([{ entityId: 42, entityName: 'Ada' }]);
+  });
+
+  it('loads the exact WEB-1232 cashier-closing context URL and query', async () => {
+    const resultPromise = firstValueFrom(service.getCashierClosingContext(9, 'USD', '2026-09-23'));
+    const req = httpMock.expectOne((request) => request.url === '/v2/base-teller/closings/context');
+    expect(req.request.method).toBe('GET');
+    expect(req.request.params.get('cashierId')).toBe('9');
+    expect(req.request.params.get('currencyCode')).toBe('USD');
+    expect(req.request.params.get('businessDate')).toBe('2026-09-23');
+    req.flush({ cashierId: 9, currencyCode: 'USD', eligibleChecks: [], status: 'OPEN' });
+    expect((await resultPromise).status).toBe('OPEN');
+  });
+
+  it('serializes the exact WEB-1232 closing DTO to the closing URL', async () => {
+    const payload: CashierClosingRequest = {
+      idempotencyKey: 'close-1',
+      cashierId: 9,
+      businessDate: '2026-09-23',
+      currencyCode: 'USD',
+      denominations: [{ denominationId: '20', value: 20, quantity: 2 }],
+      checkIds: [4]
+    };
+    const resultPromise = firstValueFrom(service.closeCashier(payload));
+    const req = httpMock.expectOne('/v2/base-teller/closings');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(payload);
+    req.flush({ id: 1, status: 'COMPLETED', differenceType: 'BALANCED' });
+    expect((await resultPromise).differenceType).toBe('BALANCED');
+  });
+
+  it('loads the global cash count from the exact WEB-1232 URL', async () => {
+    const resultPromise = firstValueFrom(service.getGlobalCashCount('2026-09-23', 'USD'));
+    const req = httpMock.expectOne((request) => request.url === '/v2/base-teller/closings/global');
+    expect(req.request.params.get('businessDate')).toBe('2026-09-23');
+    expect(req.request.params.get('currencyCode')).toBe('USD');
+    req.flush({ businessDate: '2026-09-23', cashierClosings: [] });
+    expect((await resultPromise).cashierClosings).toEqual([]);
+  });
+
+  it.each([
+    'DEPOSIT_IN_TRANSIT',
+    'BANK_DEPOSIT'
+  ] as const)('posts %s to the single authoritative cash-operation endpoint', async (transactionType) => {
+    const payload: CashOperationRequest = {
+      idempotencyKey: `operation-${transactionType}`,
+      transactionType,
+      cashierId: 9,
+      businessDate: '2026-09-23',
+      currencyCode: 'USD',
+      denominations: [{ denominationId: '10', value: 10, quantity: 1 }],
+      checkIds: [],
+      description: null
+    };
+    const resultPromise = firstValueFrom(service.createCashOperation(payload));
+    const req = httpMock.expectOne('/v2/base-teller/cash-operations');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body.transactionType).toBe(transactionType);
+    req.flush({ id: 2, transactionType, status: 'COMPLETED' });
+    expect((await resultPromise).transactionType).toBe(transactionType);
+  });
+
+  it('sends supported filters and pagination to WEB-1232 transaction history', async () => {
+    const resultPromise = firstValueFrom(
+      service.getCashOperationHistory({
+        fromDate: '2026-09-01',
+        cashierId: 9,
+        transactionType: 'BANK_DEPOSIT',
+        q: 'safe',
+        offset: 25,
+        limit: 25
+      })
+    );
+    const req = httpMock.expectOne((request) => request.url === '/v2/base-teller/cash-operations');
+    expect(req.request.method).toBe('GET');
+    expect(req.request.params.get('transactionType')).toBe('BANK_DEPOSIT');
+    expect(req.request.params.get('offset')).toBe('25');
+    expect(req.request.params.get('limit')).toBe('25');
+    req.flush({ pageItems: [], totalFilteredRecords: 0 });
+    expect((await resultPromise).totalFilteredRecords).toBe(0);
+  });
+
+  it('loads authoritative cash holdings from the exact WEB-1232 URL', async () => {
+    const resultPromise = firstValueFrom(
+      service.getCashHoldings({ businessDate: '2026-09-23', cashierId: 9, currencyCode: 'USD' })
+    );
+    const req = httpMock.expectOne(
+      '/v2/base-teller/cash-operations/holdings?businessDate=2026-09-23&cashierId=9&currencyCode=USD'
+    );
+    expect(req.request.method).toBe('GET');
+    req.flush([{ cashierId: 9, currentBalance: 40 }]);
+    expect((await resultPromise)[0].currentBalance).toBe(40);
   });
 });
