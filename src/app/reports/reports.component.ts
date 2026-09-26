@@ -36,13 +36,18 @@ interface ReportGroup {
   collapsed: boolean;
 }
 
-const ENGINE_TYPES = [
+/**
+ * Preferred ordering for the engine chips. The chips themselves are built from
+ * the report types actually present, so an engine missing from this list still
+ * gets a chip rather than being left out of every filter.
+ */
+const ENGINE_ORDER: string[] = [
   'Table',
   'Pentaho',
   'BIRT',
   'Chart',
   'SMS'
-] as const;
+];
 
 /**
  * Reports component.
@@ -102,7 +107,8 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  readonly engines = ENGINE_TYPES;
+  /** Engine chips to render, derived from the loaded reports. */
+  engines: string[] = [];
 
   constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -286,14 +292,32 @@ export class ReportsComponent implements OnInit {
   }
 
   private computeEngineCounts(): void {
+    // Counting only a fixed list of engines left any other report type out of
+    // every chip, so the chip counts did not add up to the catalogue total and
+    // those reports could not be reached by filtering. Count whatever types are
+    // present instead.
     const counts: Record<string, number> = {};
-    ENGINE_TYPES.forEach((t) => (counts[t] = 0));
     this.reportsData.forEach((r) => {
-      if (counts[r.reportType] !== undefined) {
-        counts[r.reportType]++;
+      if (!r.reportType) {
+        return;
       }
+      counts[r.reportType] = (counts[r.reportType] ?? 0) + 1;
     });
     this.engineCounts = counts;
+    this.engines = Object.keys(counts).sort((a, b) => {
+      const indexA = ENGINE_ORDER.indexOf(a);
+      const indexB = ENGINE_ORDER.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+      }
+      if (indexA !== -1) {
+        return -1;
+      }
+      if (indexB !== -1) {
+        return 1;
+      }
+      return a.localeCompare(b);
+    });
   }
 
   private loadPersistedState(): void {
