@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  AfterViewInit,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -16,6 +25,8 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { EMPTY } from 'rxjs';
+import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
@@ -54,6 +65,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -71,6 +83,16 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   clientMembers: any[] = [];
   /** ClientChoice. */
   clientChoice = new UntypedFormControl('');
+  /** Center the new group will belong to, when created from a Center. */
+  centerId: number | null = null;
+  /** Name of the center the new group will belong to. */
+  centerName: string;
+  /** Whether the center's group template has loaded; the form can't be submitted before. */
+  centerTemplateLoaded = false;
+  /** Route back to the page the user came from. */
+  cancelRoute: any[] = ['../'];
+  /** All offices, from `resolve`; restored when leaving center mode. */
+  private offices: any;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -84,16 +106,82 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
+      this.offices = data.offices;
       this.officeData = data.offices;
     });
   }
 
   /**
-   * Creates and sets the group form.
+   * Creates and sets the group form. Angular reuses this component when only the
+   * query string changes, so the form is rebuilt whenever `centerId` changes.
    */
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
+    this.route.queryParamMap
+      .pipe(
+        map((params) => this.parseCenterId(params.get('centerId'))),
+        distinctUntilChanged(),
+        tap((centerId) => this.setUpForm(centerId)),
+        // Errors are already reported by the HTTP error interceptor; the form stays
+        // locked and cannot be submitted.
+        switchMap((centerId) =>
+          centerId ? this.groupService.getCenterGroupTemplate(centerId).pipe(catchError(() => EMPTY)) : EMPTY
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((template: any) => this.applyCenterGroupTemplate(template));
+  }
+
+  /**
+   * Whether the form can be submitted.
+   */
+  get canSubmit(): boolean {
+    return this.groupForm.valid && (!this.centerId || this.centerTemplateLoaded);
+  }
+
+  /**
+   * @param {string | null} value `centerId` query parameter.
+   * @returns {number | null} The center id, or null unless it is a positive integer.
+   */
+  private parseCenterId(value: string | null): number | null {
+    const centerId = Number(value);
+    return value && Number.isInteger(centerId) && centerId > 0 ? centerId : null;
+  }
+
+  /**
+   * Resets the component for standalone or center mode and builds a fresh form.
+   * @param {number | null} centerId Center the new group will belong to, if any.
+   */
+  private setUpForm(centerId: number | null) {
+    this.centerId = centerId;
+    this.centerName = undefined;
+    this.centerTemplateLoaded = false;
+    this.officeData = this.offices;
+    this.staffData = undefined;
+    this.clientMembers = [];
+    this.cancelRoute = centerId ? [
+          '/centers',
+          centerId
+        ] : ['../'];
     this.createGroupForm();
+    this.changeDetectorRef.markForCheck();
+  }
+
+  /**
+   * Applies the center's group template. Fineract always creates a center's group in
+   * the center's office, so the office stays locked to it.
+   * @param {any} template Group template for the center.
+   */
+  private applyCenterGroupTemplate(template: any) {
+    this.centerName = template.centerName;
+    this.officeData = template.officeOptions;
+    this.staffData = template.staffOptions;
+    this.groupForm.patchValue({ officeId: template.officeId, staffId: template.staffId ?? '' });
+    if (this.staffData === undefined) {
+      this.groupForm.controls['staffId'].disable();
+    }
+    this.centerTemplateLoaded = true;
+    this.changeDetectorRef.markForCheck();
   }
 
   /**
@@ -129,7 +217,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         ]
       ],
       officeId: [
-        '',
+        // A center's group always belongs to the center's office.
+        { value: '', disabled: !!this.centerId },
         Validators.required
       ],
       submittedOnDate: [
@@ -148,16 +237,19 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.getStaff(option).subscribe((data) => {
-        this.staffData = data['staffOptions'];
-        if (this.staffData === undefined) {
-          this.groupForm.controls['staffId'].disable();
-        } else {
-          this.groupForm.controls['staffId'].enable();
-        }
+    // In center mode the office is fixed and staff options come from the center's template.
+    if (!this.centerId) {
+      this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
+        this.groupService.getStaff(option).subscribe((data) => {
+          this.staffData = data['staffOptions'];
+          if (this.staffData === undefined) {
+            this.groupForm.controls['staffId'].disable();
+          } else {
+            this.groupForm.controls['staffId'].enable();
+          }
+        });
       });
-    });
+    }
     this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
         this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
@@ -198,7 +290,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * if successful redirects to groups.
    */
   submit() {
-    const groupFormData = this.groupForm.value;
+    // Raw value, so the locked office of a center's group is included.
+    const groupFormData = this.groupForm.getRawValue();
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const submittedOnDate: Date = this.groupForm.value.submittedOnDate;
@@ -214,8 +307,15 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
+    // The raw value includes staffId even when no staff was chosen or the control is disabled.
+    if (data.staffId === '') {
+      delete data.staffId;
+    }
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
+    if (this.centerId) {
+      data.centerId = this.centerId;
+    }
     this.groupService.createGroup(data).subscribe((response: any) => {
       this.router.navigate([
         '../groups',

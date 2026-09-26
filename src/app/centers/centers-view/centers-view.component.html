@@ -158,9 +158,9 @@
       </mat-icon>
       <span>{{ 'labels.buttons.Edit' | translate }}</span>
     </button>
-    <button [disabled]="true" mat-menu-item *mifosxHasPermission="'CREATE_GROUP'">
+    <button mat-menu-item *mifosxHasPermission="'CREATE_GROUP'" (click)="doAction('Add Group')">
       <mat-icon matListIcon>
-        <fa-icon icon="add" size="sm"></fa-icon>
+        <fa-icon icon="plus" size="sm"></fa-icon>
       </mat-icon>
       <span>{{ 'labels.buttons.Add Group' | translate }}</span>
     </button>
