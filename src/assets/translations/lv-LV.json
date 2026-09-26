@@ -5435,6 +5435,7 @@
       "Report Output Type": "Pārskata izvades veids",
       "Country": "Valsts",
       "Amount must be greater than zero": "Summai jābūt lielākai par nulli",
+      "Base Teller": "Pamata kase",
       "Base Teller Savings Account Opening": "Krājkonta atvēršana pamata kasē",
       "Bill and Service Payment": "Rēķinu un pakalpojumu apmaksa",
       "Savings Growth": "Uzkrājumu pieaugums",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Lauks",
       "cardValue": "Vērtība"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Pamata kase"
+    },
+    "views": {
+      "closing": "Kases aparāta slēgšana",
+      "global": "Globālais naudas skaits",
+      "deposit-in-transit": "Depozīts tranzītā",
+      "bank-deposit": "Bankas depozīts",
+      "history": "Darījumu vēsture",
+      "holdings": "Skaidra nauda"
+    },
+    "actions": {
+      "addDenomination": "Pievienot nominālvērtību",
+      "confirmDeposit": "Apstipriniet depozītu",
+      "finalizeClosing": "Pabeigt slēgšanu",
+      "load": "Ielādēt",
+      "printReceipt": "Drukāt kvīti",
+      "removeDenomination": "Noņemt nominālvērtību",
+      "reprint": "Atkārtoti izdrukāt",
+      "retry": "Mēģināt vēlreiz",
+      "search": "Meklēt",
+      "confirm": "Apstiprināt",
+      "cancel": "Atcelt"
+    },
+    "fields": {
+      "actualAmount": "Faktiskā summa",
+      "all": "Visi",
+      "amount": "Summa",
+      "authorization": "Autorizācija",
+      "authorizedBy": "Autorizēja",
+      "authorizedOn": "Autorizēts Ieslēgts",
+      "businessDate": "Darba datums",
+      "cashier": "Kasieris",
+      "cashierId": "Kases ID",
+      "checks": "Čeki",
+      "closingStatus": "Slēgšanas statuss",
+      "completedOn": "Pabeigts",
+      "currency": "Valūta",
+      "currentBalance": "Pašreizējā bilance",
+      "denomination": "Denominācija",
+      "description": "Apraksts",
+      "difference": "Atšķirība",
+      "expectedBalance": "Paredzamais atlikums",
+      "expectedCash": "Paredzamā nauda",
+      "fromDate": "No datuma",
+      "headCashier": "Galvenais kasieris",
+      "inflows": "Ieplūdes",
+      "office": "Birojs",
+      "openingBalance": "Sākuma bilance",
+      "openingFunds": "Atvēršanas līdzekļi",
+      "outflows": "Izplūdes",
+      "physicalAssets": "Fiziskie aktīvi",
+      "physicalCash": "Fiziskā nauda",
+      "previousSettlements": "Iepriekšējie norēķini",
+      "quantity": "Daudzums",
+      "reference": "Atsauce",
+      "search": "Apraksts vai atsauce",
+      "settlementsDeposits": "Norēķini un noguldījumi",
+      "status": "Statuss",
+      "teller": "Kasieris",
+      "toDate": "Līdz datumam",
+      "total": "Kopā",
+      "transactionType": "Darījuma veids"
+    },
+    "sections": {
+      "authoritativeContext": "Autoritatīvs noslēguma konteksts",
+      "denominations": "Denominācijas",
+      "eligibleChecks": "Atbilstošie čeki",
+      "preview": "Skaidras naudas skaitīšanas priekšskatījums",
+      "receipt": "Kvīts"
+    },
+    "states": {
+      "alreadyCompleted": "Šī slēgšana jau ir pabeigta.",
+      "loading": "Notiek ielāde",
+      "noData": "Nav datu",
+      "noDenominations": "Nav ievadītas nominālvērtības",
+      "noEligibleChecks": "Nav atbilstošu čeku",
+      "noHoldings": "Nav datu par skaidru naudu",
+      "noSettlements": "Nav kases norēķinu",
+      "noTransactions": "Nav atrasts neviens darījums",
+      "submitting": "Iesniedz",
+      "closingCompleted": "Slēgšana pabeigta",
+      "authorizationRequired": "Nepieciešama autorizācija",
+      "depositCompleted": "Depozīts pabeigts",
+      "settlementCompleted": "Izlīgums pabeigts"
+    },
+    "status": {
+      "OPEN": "Atvērt",
+      "COMPLETED": "Pabeigts"
+    },
+    "differenceType": {
+      "BALANCED": "Sabalansēts",
+      "OVERAGE": "Skaidras naudas pārpalikums",
+      "SHORTAGE": "Trūkums"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Depozīts tranzītā",
+      "BANK_DEPOSIT": "Bankas depozīts"
+    },
+    "closing": {
+      "confirmTitle": "Apstipriniet kases aparāta galīgo slēgšanu",
+      "confirmText": "Vai pabeigt {{cashier}} uz {{date}} šādā valūtā: {{currency}}? Paredzētais: {{expected}}; skaidra nauda: {{cash}}; čeki: {{checks}}; atšķirību priekšskatījums: {{difference}}. Autorizāciju veic galvenais kasieris, kas ir pierakstījies."
+    },
+    "operation": {
+      "confirmText": "Pārskaitīt šo pēdējo depozītu par {{cashier}} šādā datumā: {{date}} šādā valūtā: {{currency}}? Skaidra nauda: {{cash}}; čeki: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Ievadiet iesniedzamās nominālvērtības. Savings Plugin tos apstiprina un aprēķina autoritatīvo kopējo summu.",
+      "previewOnly": "Šīs ierakstu kopsummas ir priekšskatījums. Savings Plugin atbilde ir autoritatīva."
+    },
+    "errors": {
+      "cashiers": "Kasieri nevarēja ielādēt",
+      "closing": "Slēgšanu nevarēja pabeigt",
+      "context": "Aizveramo kontekstu nevarēja ielādēt",
+      "global": "Nevarēja ielādēt globālo skaidras naudas skaitu",
+      "history": "Darījumu vēsturi nevarēja ielādēt",
+      "holdings": "Nevarēja ielādēt kases datus",
+      "notCompleted": "Aizmugursistēma neatgrieza pabeigtu statusu",
+      "operation": "Depozītu nevarēja pabeigt",
+      "options": "Nevarēja ielādēt skaidras naudas pārvaldības opcijas",
+      "receipt": "Kvītu nevarēja ielādēt"
     }
   }
 }

@@ -5435,6 +5435,7 @@
       "Report Output Type": "प्रतिवेदन आउटपुट प्रकार",
       "Country": "देश",
       "Amount must be greater than zero": "रकम शून्य भन्दा ठूलो हुनुपर्छ",
+      "Base Teller": "आधारभूत टेलर",
       "Base Teller Savings Account Opening": "आधार टेलरबाट बचत खाता खोल्ने",
       "Bill and Service Payment": "बिल तथा सेवा भुक्तानी",
       "Savings Growth": "बचत वृद्धि",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "क्षेत्र",
       "cardValue": "मान"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "आधारभूत टेलर"
+    },
+    "views": {
+      "closing": "नगद दर्ता बन्द",
+      "global": "ग्लोबल नगद गणना",
+      "deposit-in-transit": "ट्रान्जिटमा जम्मा गर्नुहोस्",
+      "bank-deposit": "बैंक निक्षेप",
+      "history": "लेनदेन इतिहास",
+      "holdings": "नगद-मा-हात"
+    },
+    "actions": {
+      "addDenomination": "मूल्यवर्ग थप्नुहोस्",
+      "confirmDeposit": "निक्षेप पुष्टि गर्नुहोस्",
+      "finalizeClosing": "समापनलाई अन्तिम रूप दिनुहोस्",
+      "load": "लोड",
+      "printReceipt": "रसिद छाप्नुहोस्",
+      "removeDenomination": "मूल्यवर्ग हटाउनुहोस्",
+      "reprint": "पुन: प्रिन्ट गर्नुहोस्",
+      "retry": "पुनः प्रयास गर्नुहोस्",
+      "search": "खोज्नुहोस्",
+      "confirm": "पुष्टि गर्नुहोस्",
+      "cancel": "रद्द गर्नुहोस्"
+    },
+    "fields": {
+      "actualAmount": "वास्तविक रकम",
+      "all": "सबै",
+      "amount": "रकम",
+      "authorization": "प्राधिकरण",
+      "authorizedBy": "द्वारा अधिकृत",
+      "authorizedOn": "अधिकृत अन",
+      "businessDate": "व्यापार मिति",
+      "cashier": "क्यासियर",
+      "cashierId": "क्यासियर आईडी",
+      "checks": "चेक",
+      "closingStatus": "बन्द स्थिति",
+      "completedOn": "मा सम्पन्न भयो",
+      "currency": "मुद्रा",
+      "currentBalance": "हालको मौज्दात",
+      "denomination": "मूल्यवर्ग",
+      "description": "विवरण",
+      "difference": "फरक",
+      "expectedBalance": "अपेक्षित शेष",
+      "expectedCash": "अपेक्षित नगद",
+      "fromDate": "मिति देखि",
+      "headCashier": "हेड क्यासियर",
+      "inflows": "प्रवाह हुन्छ",
+      "office": "कार्यालय",
+      "openingBalance": "ओपनिङ ब्यालेन्स",
+      "openingFunds": "कोष खोल्दै",
+      "outflows": "बहिर्गमन",
+      "physicalAssets": "भौतिक सम्पत्ति",
+      "physicalCash": "भौतिक नगद",
+      "previousSettlements": "अघिल्ला नगद मिलानहरू",
+      "quantity": "मात्रा",
+      "reference": "सन्दर्भ",
+      "search": "विवरण वा सन्दर्भ",
+      "settlementsDeposits": "नगद मिलान र निक्षेपहरू",
+      "status": "स्थिति",
+      "teller": "टेलर",
+      "toDate": "मिति सम्म",
+      "total": "कुल",
+      "transactionType": "कारोबारको प्रकार"
+    },
+    "sections": {
+      "authoritativeContext": "आधिकारिक समापन सन्दर्भ",
+      "denominations": "मूल्यवर्गहरू",
+      "eligibleChecks": "योग्य चेकहरू",
+      "preview": "नगद गणना पूर्वावलोकन",
+      "receipt": "रसिद"
+    },
+    "states": {
+      "alreadyCompleted": "यो समापन पहिले नै पूरा भएको छ।",
+      "loading": "लोड हुँदै",
+      "noData": "कुनै डाटा छैन",
+      "noDenominations": "कुनै मूल्यवर्ग प्रविष्ट गरिएको छैन",
+      "noEligibleChecks": "कुनै योग्य चेकहरू छैनन्",
+      "noHoldings": "कुनै नगद-अन-ह्यान्ड डाटा",
+      "noSettlements": "क्यासियर नगद मिलानहरू छैनन्",
+      "noTransactions": "कुनै लेनदेन फेला परेन",
+      "submitting": "पेश गर्दै",
+      "closingCompleted": "बन्द गर्ने कार्य सम्पन्न भयो",
+      "authorizationRequired": "प्राधिकरण आवश्यक छ",
+      "depositCompleted": "निक्षेप पूरा भयो",
+      "settlementCompleted": "नगद मिलान सम्पन्न भयो"
+    },
+    "status": {
+      "OPEN": "खुला",
+      "COMPLETED": "पूरा भयो"
+    },
+    "differenceType": {
+      "BALANCED": "सन्तुलित",
+      "OVERAGE": "ओभरेज",
+      "SHORTAGE": "अभाव"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "ट्रान्जिटमा जम्मा गर्नुहोस्",
+      "BANK_DEPOSIT": "बैंक निक्षेप"
+    },
+    "closing": {
+      "confirmTitle": "अन्तिम नगद दर्ता समापन पुष्टि गर्नुहोस्",
+      "confirmText": "{{cashier}} मा {{date}} को लागि {{currency}} लाई अन्तिम बनाउने हो? अपेक्षित: {{expected}}; नगद: {{cash}}; चेकहरू: {{checks}}; भिन्नता पूर्वावलोकन: {{difference}}। प्राधिकरण साइन-इन हेड क्यासियर द्वारा गरिन्छ।"
+    },
+    "operation": {
+      "confirmText": "यो अन्तिम जम्मा {{cashier}} को लागि {{date}} मा {{currency}} मा पोस्ट गर्ने हो? नगद: {{cash}}; चेकहरू: {{checks}}।"
+    },
+    "hints": {
+      "backendDenominations": "पेश गरिँदै गरेका मूल्यवर्गहरू प्रविष्ट गर्नुहोस्। बचत प्लगइनले तिनीहरूलाई प्रमाणीकरण गर्दछ र आधिकारिक कुल गणना गर्दछ।",
+      "previewOnly": "यी प्रविष्टि योगहरू पूर्वावलोकन हुन्। बचत प्लगइन प्रतिक्रिया आधिकारिक छ।"
+    },
+    "errors": {
+      "cashiers": "क्यासियरहरू लोड गर्न सकिएन",
+      "closing": "बन्द गर्न सकिएन",
+      "context": "बन्द गर्ने सन्दर्भ लोड गर्न सकिएन",
+      "global": "विश्वव्यापी नगद गणना लोड गर्न सकिएन",
+      "history": "लेनदेन इतिहास लोड गर्न सकिएन",
+      "holdings": "नगद अन-ह्यान्ड डाटा लोड गर्न सकिएन",
+      "notCompleted": "ब्याकइन्डले पूर्ण स्थिति फिर्ता गरेन",
+      "operation": "जम्मा गर्न सकिएन",
+      "options": "नगद व्यवस्थापन विकल्पहरू लोड गर्न सकिएन",
+      "receipt": "रसिद लोड गर्न सकिएन"
     }
   }
 }

@@ -5434,6 +5434,7 @@
       "Report Output Type": "Type de sortie du rapport",
       "Country": "Pays",
       "Amount must be greater than zero": "Le montant doit être supérieur à zéro",
+      "Base Teller": "Guichet de base",
       "Base Teller Savings Account Opening": "Ouverture de compte d'épargne au guichet de base",
       "Bill and Service Payment": "Paiement de factures et de services",
       "Savings Growth": "Croissance de l'épargne",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Champ",
       "cardValue": "Valeur"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Guichet de base"
+    },
+    "views": {
+      "closing": "Fermeture de la caisse",
+      "global": "Compte de trésorerie mondial",
+      "deposit-in-transit": "Dépôt en transit",
+      "bank-deposit": "Dépôt bancaire",
+      "history": "Historique des transactions",
+      "holdings": "Encaisse"
+    },
+    "actions": {
+      "addDenomination": "Ajouter une dénomination",
+      "confirmDeposit": "Confirmer le dépôt",
+      "finalizeClosing": "Finaliser la clôture",
+      "load": "Charger",
+      "printReceipt": "Imprimer le reçu",
+      "removeDenomination": "Supprimer la dénomination",
+      "reprint": "Réimpression",
+      "retry": "Réessayer",
+      "search": "Recherche",
+      "confirm": "Confirmer",
+      "cancel": "Annuler"
+    },
+    "fields": {
+      "actualAmount": "Montant réel",
+      "all": "Tous",
+      "amount": "Montant",
+      "authorization": "Autorisation",
+      "authorizedBy": "Autorisé par",
+      "authorizedOn": "Autorisé le",
+      "businessDate": "Date d'affaires",
+      "cashier": "La caissière",
+      "cashierId": "Identifiant du caissier",
+      "checks": "Chèques",
+      "closingStatus": "Statut de clôture",
+      "completedOn": "Terminé le",
+      "currency": "Devise",
+      "currentBalance": "Solde actuel",
+      "denomination": "Dénomination",
+      "description": "Description",
+      "difference": "Différence",
+      "expectedBalance": "Solde prévu",
+      "expectedCash": "Trésorerie attendue",
+      "fromDate": "Partir de la date",
+      "headCashier": "Caissier en chef",
+      "inflows": "Entrées",
+      "office": "Bureau",
+      "openingBalance": "Solde d'ouverture",
+      "openingFunds": "Fonds d'ouverture",
+      "outflows": "Sorties",
+      "physicalAssets": "Actifs physiques",
+      "physicalCash": "Trésorerie physique",
+      "previousSettlements": "Règlements précédents",
+      "quantity": "Quantité",
+      "reference": "Référence",
+      "search": "Description ou référence",
+      "settlementsDeposits": "Règlements et dépôts",
+      "status": "Statut",
+      "teller": "Caissier",
+      "toDate": "À ce jour",
+      "total": "Total",
+      "transactionType": "Type de transaction"
+    },
+    "sections": {
+      "authoritativeContext": "Contexte de clôture faisant autorité",
+      "denominations": "Dénominations",
+      "eligibleChecks": "Chèques éligibles",
+      "preview": "Aperçu du décompte des espèces",
+      "receipt": "Reçu"
+    },
+    "states": {
+      "alreadyCompleted": "Cette clôture est déjà réalisée.",
+      "loading": "Chargement",
+      "noData": "Aucune donnée",
+      "noDenominations": "Aucune dénomination saisie",
+      "noEligibleChecks": "Aucun chèque éligible",
+      "noHoldings": "Aucune donnée sur l'encaisse",
+      "noSettlements": "Pas de règlement en caisse",
+      "noTransactions": "Aucune transaction trouvée",
+      "submitting": "Envoi en cours",
+      "closingCompleted": "Clôture terminée",
+      "authorizationRequired": "Autorisation requise",
+      "depositCompleted": "Dépôt terminé",
+      "settlementCompleted": "Règlement terminé"
+    },
+    "status": {
+      "OPEN": "Ouvert",
+      "COMPLETED": "Complété"
+    },
+    "differenceType": {
+      "BALANCED": "Équilibré",
+      "OVERAGE": "Excédent",
+      "SHORTAGE": "Pénurie"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Dépôt en transit",
+      "BANK_DEPOSIT": "Dépôt bancaire"
+    },
+    "closing": {
+      "confirmTitle": "Confirmer la clôture finale de la caisse enregistreuse",
+      "confirmText": "Finaliser {{cashier}} pour {{date}} en {{currency}} ? Attendu : {{expected}} ; espèces : {{cash}} ; chèques : {{checks}} ; aperçu de la différence : {{difference}}. L'autorisation est effectuée par le caissier en chef inscrit."
+    },
+    "operation": {
+      "confirmText": "Publier ce dépôt final pour {{cashier}} le {{date}} en {{currency}} ? Espèces : {{cash}} ; chèques : {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Entrez les dénominations soumises. Le plugin Savings les valide et calcule le total faisant autorité.",
+      "previewOnly": "Ces totaux d’entrées sont un aperçu. La réponse du Savings Plugin fait autorité."
+    },
+    "errors": {
+      "cashiers": "Les caissiers n'ont pas pu être chargés",
+      "closing": "La clôture n'a pas pu être complétée",
+      "context": "Le contexte de fermeture n'a pas pu être chargé",
+      "global": "Le décompte global des espèces n'a pas pu être chargé",
+      "history": "L'historique des transactions n'a pas pu être chargé",
+      "holdings": "Les données d'encaisse n'ont pas pu être chargées",
+      "notCompleted": "Le backend n'a pas renvoyé un statut terminé",
+      "operation": "Le dépôt n'a pas pu être complété",
+      "options": "Les options de gestion de trésorerie n'ont pas pu être chargées",
+      "receipt": "Le reçu n'a pas pu être chargé"
     }
   }
 }

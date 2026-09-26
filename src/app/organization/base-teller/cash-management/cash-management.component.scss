@@ -1,0 +1,148 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cash-management {
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .filter-grid,
+  .summary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .filter-grid mat-form-field,
+  .filter-grid .form-action,
+  .summary-grid div {
+    flex: 1 1 200px;
+  }
+
+  .form-action {
+    display: flex;
+    align-items: center;
+  }
+
+  section {
+    margin-top: 24px;
+  }
+
+  .section-heading,
+  .receipt-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .denomination-header,
+  .denomination-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 40%) minmax(96px, 25%) minmax(120px, 25%) 48px;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .summary-grid {
+    margin: 0;
+
+    div {
+      padding: 16px;
+      border: 1px solid var(--mat-sys-outline-variant);
+      border-radius: 8px;
+    }
+
+    dt {
+      color: var(--mat-sys-on-surface-variant);
+      margin-bottom: 8px;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+
+  .difference[data-type='OVERAGE'] {
+    border-inline-start: 4px solid var(--mat-sys-primary);
+  }
+
+  .difference[data-type='SHORTAGE'] {
+    border-inline-start: 4px solid var(--mat-sys-error);
+  }
+
+  .message,
+  .loading-state {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .error {
+    color: var(--mat-sys-error);
+    background: var(--mat-sys-error-container);
+  }
+
+  .warning,
+  .empty-state,
+  .hint {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table,
+  .full-width {
+    width: 100%;
+  }
+}
+
+@media (width <= 600px) {
+  .cash-management {
+    .denomination-header {
+      display: none;
+    }
+
+    .denomination-row {
+      grid-template-columns: 48% 48%;
+    }
+
+    .section-heading,
+    .receipt-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+}
+
+@media print {
+  .no-print,
+  form,
+  .context-section,
+  .asset-form,
+  h1,
+  .message {
+    display: none !important;
+  }
+}

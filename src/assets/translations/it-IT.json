@@ -5435,6 +5435,7 @@
       "Report Output Type": "Tipo di output del report",
       "Country": "Paese",
       "Amount must be greater than zero": "L'importo deve essere maggiore di zero",
+      "Base Teller": "Sportello base",
       "Base Teller Savings Account Opening": "Apertura di conto di risparmio allo sportello base",
       "Bill and Service Payment": "Pagamento di bollette e servizi",
       "Savings Growth": "Crescita del risparmio",
@@ -6658,6 +6659,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Campo",
       "cardValue": "Valore"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Sportello base"
+    },
+    "views": {
+      "closing": "Chiusura del registratore di cassa",
+      "global": "Conteggio contante globale",
+      "deposit-in-transit": "Deposito in transito",
+      "bank-deposit": "Deposito bancario",
+      "history": "Cronologia delle transazioni",
+      "holdings": "Contanti a portata di mano"
+    },
+    "actions": {
+      "addDenomination": "Aggiungi denominazione",
+      "confirmDeposit": "Conferma deposito",
+      "finalizeClosing": "Finalizzare la chiusura",
+      "load": "Caricare",
+      "printReceipt": "Stampa ricevuta",
+      "removeDenomination": "Rimuovi denominazione",
+      "reprint": "Ristampa",
+      "retry": "Riprova",
+      "search": "Ricerca",
+      "confirm": "Confermare",
+      "cancel": "Annulla"
+    },
+    "fields": {
+      "actualAmount": "Importo effettivo",
+      "all": "Tutti",
+      "amount": "Importo",
+      "authorization": "Autorizzazione",
+      "authorizedBy": "Autorizzato da",
+      "authorizedOn": "Autorizzato il",
+      "businessDate": "Data lavorativa",
+      "cashier": "Cassiere",
+      "cashierId": "Identificativo del cassiere",
+      "checks": "Assegni",
+      "closingStatus": "Stato di chiusura",
+      "completedOn": "Completato il",
+      "currency": "Valuta",
+      "currentBalance": "Saldo corrente",
+      "denomination": "Denominazione",
+      "description": "Descrizione",
+      "difference": "Differenza",
+      "expectedBalance": "Saldo previsto",
+      "expectedCash": "Contanti attesi",
+      "fromDate": "Dalla data",
+      "headCashier": "Capo Cassiere",
+      "inflows": "Afflussi",
+      "office": "Ufficio",
+      "openingBalance": "Saldo di apertura",
+      "openingFunds": "Apertura Fondi",
+      "outflows": "Deflussi",
+      "physicalAssets": "Beni fisici",
+      "physicalCash": "Contanti fisici",
+      "previousSettlements": "Liquidazioni precedenti",
+      "quantity": "Quantità",
+      "reference": "Riferimento",
+      "search": "Descrizione o riferimento",
+      "settlementsDeposits": "Liquidazioni e depositi",
+      "status": "Stato",
+      "teller": "Cassiere",
+      "toDate": "Ad oggi",
+      "total": "Totale",
+      "transactionType": "Tipo di Transazione"
+    },
+    "sections": {
+      "authoritativeContext": "Contesto di chiusura autorevole",
+      "denominations": "Denominazioni",
+      "eligibleChecks": "Assegni idonei",
+      "preview": "Anteprima del conteggio dei contanti",
+      "receipt": "Ricevuta"
+    },
+    "states": {
+      "alreadyCompleted": "Questa chiusura è già completata.",
+      "loading": "Caricamento",
+      "noData": "Nessun dato",
+      "noDenominations": "Nessuna denominazione inserita",
+      "noEligibleChecks": "Nessun assegno idoneo",
+      "noHoldings": "Nessun dato relativo al contante",
+      "noSettlements": "Nessun regolamento di cassa",
+      "noTransactions": "Nessuna transazione trovata",
+      "submitting": "Invio in corso",
+      "closingCompleted": "Chiusura completata",
+      "authorizationRequired": "Autorizzazione richiesta",
+      "depositCompleted": "Deposito completato",
+      "settlementCompleted": "Liquidazione completata"
+    },
+    "status": {
+      "OPEN": "Aperto",
+      "COMPLETED": "Completato"
+    },
+    "differenceType": {
+      "BALANCED": "Bilanciato",
+      "OVERAGE": "Eccesso",
+      "SHORTAGE": "Carenza"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Deposito in transito",
+      "BANK_DEPOSIT": "Deposito bancario"
+    },
+    "closing": {
+      "confirmTitle": "Conferma chiusura definitiva del registratore di cassa",
+      "confirmText": "Finalizzare {{cashier}} per {{date}} in {{currency}}? Previsto: {{expected}}; contanti: {{cash}}; assegni: {{checks}}; anteprima della differenza: {{difference}}. L'autorizzazione viene eseguita dal capo cassiere registrato."
+    },
+    "operation": {
+      "confirmText": "Inviare questo deposito finale per {{cashier}} il {{date}} in {{currency}}? Contanti: {{cash}}; assegni: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Inserisci le denominazioni inviate. Il plugin Savings li convalida e calcola il totale autorevole.",
+      "previewOnly": "Questi totali delle voci sono un'anteprima. La risposta del plugin Saving è autorevole."
+    },
+    "errors": {
+      "cashiers": "Impossibile caricare i cassieri",
+      "closing": "Impossibile completare la chiusura",
+      "context": "Impossibile caricare il contesto di chiusura",
+      "global": "Impossibile caricare il conteggio globale dei contanti",
+      "history": "Impossibile caricare la cronologia delle transazioni",
+      "holdings": "Impossibile caricare i dati sulle disponibilità liquide",
+      "notCompleted": "Il backend non ha restituito uno stato completato",
+      "operation": "Impossibile completare il deposito",
+      "options": "Impossibile caricare le opzioni di gestione della liquidità",
+      "receipt": "Impossibile caricare la ricevuta"
     }
   }
 }

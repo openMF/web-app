@@ -23,6 +23,7 @@ describe('OrganizationComponent', () => {
   });
 
   function createComponent(productionMode: boolean): OrganizationComponent {
+    TestBed.resetTestingModule();
     environment.productionMode = productionMode;
     TestBed.configureTestingModule({
       providers: [
@@ -37,9 +38,24 @@ describe('OrganizationComponent', () => {
 
   it('hides the service payment menu state when production mode is disabled', () => {
     expect(createComponent(false).productionMode).toBe(false);
+    expect(createComponent(false).baseTellerPermissions).not.toContain('READ_BASE_TELLER_SERVICE_PAYMENT');
   });
 
   it('enables the service payment menu state when production mode is enabled', () => {
     expect(createComponent(true).productionMode).toBe(true);
+    expect(createComponent(true).baseTellerPermissions).toContain('READ_BASE_TELLER_SERVICE_PAYMENT');
+  });
+
+  it('uses all WEB-1232 permissions for Base Teller navigation', () => {
+    expect(createComponent(false).baseTellerPermissions).toEqual([
+      'READ_TELLER',
+      'DEPOSIT_SAVINGSACCOUNT',
+      'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT',
+      'READ_CASHIER_CLOSING',
+      'READ_GLOBAL_SETTLEMENT',
+      'CREATE_CASH_DEPOSIT',
+      'READ_CASH_OPERATION_HISTORY',
+      'READ_CASH_HOLDINGS'
+    ]);
   });
 });
