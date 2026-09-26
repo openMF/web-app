@@ -200,6 +200,17 @@
             </mat-option>
           }
         </mat-select>
+        @if (createClientForm.value.genderId) {
+          <button
+            matSuffix
+            mat-icon-button
+            type="button"
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'genderId')"
+          >
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
       </mat-form-field>
     }
 
@@ -212,6 +223,17 @@
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.staffId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'staffId')"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     @if (createClientForm.value.legalFormId === LegalFormId.PERSON) {
@@ -246,6 +268,17 @@
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.clientTypeId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'clientTypeId')"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -257,6 +290,17 @@
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.clientClassificationId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'clientClassificationId')"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()">
