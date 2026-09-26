@@ -5436,6 +5436,7 @@
       "Report Output Type": "Ausgabetyp des Berichts",
       "Country": "Land",
       "Amount must be greater than zero": "Der Betrag muss größer als null sein",
+      "Base Teller": "Basiskasse",
       "Base Teller Savings Account Opening": "Sparkontoeröffnung am Basisschalter",
       "Bill and Service Payment": "Rechnungs- und Dienstleistungszahlung",
       "Savings Growth": "Sparwachstum",
@@ -6660,6 +6661,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Feld",
       "cardValue": "Wert"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Basiskasse"
+    },
+    "views": {
+      "closing": "Schließung der Registrierkasse",
+      "global": "Globale Bargeldzählung",
+      "deposit-in-transit": "Bankeinzahlung im Transit",
+      "bank-deposit": "Bankeinzahlung",
+      "history": "Transaktionsverlauf",
+      "holdings": "Kassenbestand"
+    },
+    "actions": {
+      "addDenomination": "Stückelung hinzufügen",
+      "confirmDeposit": "Bestätigen Sie die Einzahlung",
+      "finalizeClosing": "Abschluss abschließen",
+      "load": "Laden",
+      "printReceipt": "Beleg drucken",
+      "removeDenomination": "Stückelung entfernen",
+      "reprint": "Nachdruck",
+      "retry": "Erneut versuchen",
+      "search": "Suchen",
+      "confirm": "Bestätigen",
+      "cancel": "Stornieren"
+    },
+    "fields": {
+      "actualAmount": "Tatsächlicher Betrag",
+      "all": "Alle",
+      "amount": "Betrag",
+      "authorization": "Autorisierung",
+      "authorizedBy": "Autorisiert von",
+      "authorizedOn": "Autorisiert am",
+      "businessDate": "Geschäftsdatum",
+      "cashier": "Kassierer",
+      "cashierId": "Kassierer-ID",
+      "checks": "Schecks",
+      "closingStatus": "Abschlussstatus",
+      "completedOn": "Abgeschlossen am",
+      "currency": "Währung",
+      "currentBalance": "Aktueller Kontostand",
+      "denomination": "Stückelung",
+      "description": "Beschreibung",
+      "difference": "Unterschied",
+      "expectedBalance": "Erwarteter Saldo",
+      "expectedCash": "Erwartetes Bargeld",
+      "fromDate": "Ab Datum",
+      "headCashier": "Chefkassierer",
+      "inflows": "Zuflüsse",
+      "office": "Filiale",
+      "openingBalance": "Eröffnungsbilanz",
+      "openingFunds": "Eröffnungsfonds",
+      "outflows": "Abflüsse",
+      "physicalAssets": "Physische Vermögenswerte",
+      "physicalCash": "Physisches Bargeld",
+      "previousSettlements": "Frühere Abrechnungen",
+      "quantity": "Menge",
+      "reference": "Referenz",
+      "search": "Beschreibung oder Referenz",
+      "settlementsDeposits": "Abrechnungen und Einlagen",
+      "status": "Status",
+      "teller": "Kassierer",
+      "toDate": "Bis Datum",
+      "total": "Gesamt",
+      "transactionType": "Transaktionstyp"
+    },
+    "sections": {
+      "authoritativeContext": "Maßgeblicher Schlusskontext",
+      "denominations": "Stückelungen",
+      "eligibleChecks": "Berechtigte Schecks",
+      "preview": "Vorschau der Bargeldzählung",
+      "receipt": "Beleg"
+    },
+    "states": {
+      "alreadyCompleted": "Dieser Abschluss ist bereits abgeschlossen.",
+      "loading": "Wird geladen",
+      "noData": "Keine Daten",
+      "noDenominations": "Keine Stückelungen eingegeben",
+      "noEligibleChecks": "Keine berechtigten Schecks",
+      "noHoldings": "Keine Daten zum Kassenbestand",
+      "noSettlements": "Keine Kassenabrechnungen",
+      "noTransactions": "Keine Transaktionen gefunden",
+      "submitting": "Wird gesendet",
+      "closingCompleted": "Abschluss abgeschlossen",
+      "authorizationRequired": "Genehmigung erforderlich",
+      "depositCompleted": "Einzahlung abgeschlossen",
+      "settlementCompleted": "Abrechnung abgeschlossen"
+    },
+    "status": {
+      "OPEN": "Offen",
+      "COMPLETED": "Vollendet"
+    },
+    "differenceType": {
+      "BALANCED": "Ausgeglichen",
+      "OVERAGE": "Kassenüberschuss",
+      "SHORTAGE": "Mangel"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Bankeinzahlung im Transit",
+      "BANK_DEPOSIT": "Bankeinzahlung"
+    },
+    "closing": {
+      "confirmTitle": "Bestätigen Sie den endgültigen Abschluss der Registrierkasse",
+      "confirmText": "{{cashier}} für {{date}} in {{currency}} abschließen? Erwartet: {{expected}}; Bargeld: {{cash}}; prüft: {{checks}}; Differenzvorschau: {{difference}}. Die Autorisierung erfolgt durch den angemeldeten Hauptkassierer."
+    },
+    "operation": {
+      "confirmText": "Diese letzte Einzahlung für {{cashier}} am {{date}} in {{currency}} buchen? Bargeld: {{cash}}; Schecks: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Geben Sie die eingereichten Stückelungen ein. Das Savings Plugin validiert sie und berechnet die maßgebliche Summe.",
+      "previewOnly": "Bei diesen Eintragssummen handelt es sich um eine Vorschau. Die Antwort des Savings Plugin ist maßgeblich."
+    },
+    "errors": {
+      "cashiers": "Kassen konnten nicht geladen werden",
+      "closing": "Der Abschluss konnte nicht abgeschlossen werden",
+      "context": "Der Schließkontext konnte nicht geladen werden",
+      "global": "Die globale Bargeldzählung konnte nicht geladen werden",
+      "history": "Der Transaktionsverlauf konnte nicht geladen werden",
+      "holdings": "Die Kassenbestandsdaten konnten nicht geladen werden",
+      "notCompleted": "Das Backend hat keinen abgeschlossenen Status zurückgegeben",
+      "operation": "Die Einzahlung konnte nicht abgeschlossen werden",
+      "options": "Cash-Management-Optionen konnten nicht geladen werden",
+      "receipt": "Der Beleg konnte nicht geladen werden"
     }
   }
 }

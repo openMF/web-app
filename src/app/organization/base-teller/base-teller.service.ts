@@ -13,6 +13,22 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
+import {
+  CashHolding,
+  CashHoldingFilters,
+  CashOperation,
+  CashOperationFilters,
+  CashOperationPage,
+  CashOperationRequest,
+  CashierClosingContext,
+  CashierClosingReceipt,
+  CashierClosingRequest,
+  CashierOption,
+  CurrencyOption,
+  GlobalCashCount,
+  TellerOption
+} from './cash-management/cash-management.models';
+
 export type FineractId = string | number;
 
 export interface DepositSearchResult {
@@ -334,6 +350,85 @@ export class BaseTellerService {
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
   private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
   private readonly servicePaymentsPath = '/v2/base-teller/service-payments';
+  private readonly cashierClosingsPath = '/v2/base-teller/closings';
+  private readonly cashOperationsPath = '/v2/base-teller/cash-operations';
+
+  getCashierClosingContext(
+    cashierId: FineractId,
+    currencyCode: string,
+    businessDate?: string
+  ): Observable<CashierClosingContext> {
+    let params = new HttpParams().set('cashierId', String(cashierId)).set('currencyCode', currencyCode);
+    if (businessDate) {
+      params = params.set('businessDate', businessDate);
+    }
+    return this.http.get<CashierClosingContext>(`${this.cashierClosingsPath}/context`, { params });
+  }
+
+  closeCashier(payload: CashierClosingRequest): Observable<CashierClosingReceipt> {
+    return this.http.post<CashierClosingReceipt>(this.cashierClosingsPath, payload);
+  }
+
+  getCashierClosing(id: FineractId): Observable<CashierClosingReceipt> {
+    return this.http.get<CashierClosingReceipt>(`${this.cashierClosingsPath}/${id}`);
+  }
+
+  getGlobalCashCount(businessDate?: string, currencyCode?: string): Observable<GlobalCashCount> {
+    let params = new HttpParams();
+    if (businessDate) {
+      params = params.set('businessDate', businessDate);
+    }
+    if (currencyCode) {
+      params = params.set('currencyCode', currencyCode);
+    }
+    return this.http.get<GlobalCashCount>(`${this.cashierClosingsPath}/global`, { params });
+  }
+
+  createCashOperation(payload: CashOperationRequest): Observable<CashOperation> {
+    return this.http.post<CashOperation>(this.cashOperationsPath, payload);
+  }
+
+  getCashOperationHistory(filters: CashOperationFilters): Observable<CashOperationPage> {
+    let params = new HttpParams();
+    Object.entries(filters).forEach(
+      ([
+        key,
+        value
+      ]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params = params.set(key, String(value));
+        }
+      }
+    );
+    return this.http.get<CashOperationPage>(this.cashOperationsPath, { params });
+  }
+
+  getCashHoldings(filters: CashHoldingFilters): Observable<CashHolding[]> {
+    let params = new HttpParams();
+    Object.entries(filters).forEach(
+      ([
+        key,
+        value
+      ]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params = params.set(key, String(value));
+        }
+      }
+    );
+    return this.http.get<CashHolding[]>(`${this.cashOperationsPath}/holdings`, { params });
+  }
+
+  getCashManagementTellers(): Observable<TellerOption[] | { pageItems?: TellerOption[] }> {
+    return this.http.get<TellerOption[] | { pageItems?: TellerOption[] }>('/tellers');
+  }
+
+  getCashManagementCashiers(tellerId: FineractId): Observable<{ cashiers?: CashierOption[] } | CashierOption[]> {
+    return this.http.get<{ cashiers?: CashierOption[] } | CashierOption[]>(`/tellers/${tellerId}/cashiers`);
+  }
+
+  getCashManagementCurrencies(): Observable<{ selectedCurrencyOptions?: CurrencyOption[] }> {
+    return this.http.get<{ selectedCurrencyOptions?: CurrencyOption[] }>('/currencies');
+  }
 
   /**
    * Searches customers through the Base Teller savings-opening workflow API.

@@ -5436,6 +5436,7 @@
       "Report Output Type": "Typ výstupu sestavy",
       "Country": "Země",
       "Amount must be greater than zero": "Částka musí být větší než nula",
+      "Base Teller": "Základní pokladna",
       "Base Teller Savings Account Opening": "Otevření spořicího účtu na přepážce",
       "Bill and Service Payment": "Platba účtů a služeb",
       "Savings Growth": "Růst úspor",
@@ -6660,6 +6661,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Pole",
       "cardValue": "Hodnota"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Základní pokladna"
+    },
+    "views": {
+      "closing": "Uzavření pokladny",
+      "global": "Global Cash Count",
+      "deposit-in-transit": "Vklad v tranzitu",
+      "bank-deposit": "Bankovní vklad",
+      "history": "Historie transakcí",
+      "holdings": "Hotovost na ruku"
+    },
+    "actions": {
+      "addDenomination": "Přidat denominaci",
+      "confirmDeposit": "Potvrďte vklad",
+      "finalizeClosing": "Dokončit uzavření",
+      "load": "Načíst",
+      "printReceipt": "Tisknout účtenku",
+      "removeDenomination": "Odebrat denominaci",
+      "reprint": "Dotisk",
+      "retry": "Opakovat",
+      "search": "Vyhledávání",
+      "confirm": "Potvrdit",
+      "cancel": "zrušení"
+    },
+    "fields": {
+      "actualAmount": "Skutečná částka",
+      "all": "Vše",
+      "amount": "Částka",
+      "authorization": "Autorizace",
+      "authorizedBy": "Autorizoval",
+      "authorizedOn": "Autorizováno dne",
+      "businessDate": "Obchodní datum",
+      "cashier": "Pokladní",
+      "cashierId": "ID pokladníka",
+      "checks": "Kontroly",
+      "closingStatus": "Stav uzavření",
+      "completedOn": "Dokončeno dne",
+      "currency": "Měna",
+      "currentBalance": "Aktuální zůstatek",
+      "denomination": "Denominace",
+      "description": "Popis",
+      "difference": "Rozdíl",
+      "expectedBalance": "Očekávaný zůstatek",
+      "expectedCash": "Očekávaná hotovost",
+      "fromDate": "Od data",
+      "headCashier": "Vedoucí pokladní",
+      "inflows": "Přítoky",
+      "office": "Kancelář",
+      "openingBalance": "Počáteční zůstatek",
+      "openingFunds": "Otevření fondů",
+      "outflows": "Odtoky",
+      "physicalAssets": "Fyzická aktiva",
+      "physicalCash": "Fyzická hotovost",
+      "previousSettlements": "Předchozí vypořádání",
+      "quantity": "Množství",
+      "reference": "Reference",
+      "search": "Popis nebo odkaz",
+      "settlementsDeposits": "Vypořádání a vklady",
+      "status": "Stav",
+      "teller": "Pokladník",
+      "toDate": "K datu",
+      "total": "Celkový",
+      "transactionType": "Typ transakce"
+    },
+    "sections": {
+      "authoritativeContext": "Autoritativní závěrečný kontext",
+      "denominations": "Denominace",
+      "eligibleChecks": "Způsobilé kontroly",
+      "preview": "Náhled počítání hotovosti",
+      "receipt": "Účtenka"
+    },
+    "states": {
+      "alreadyCompleted": "Toto uzavření je již dokončeno.",
+      "loading": "Načítání",
+      "noData": "Žádná data",
+      "noDenominations": "Nebyly zadány žádné nominální hodnoty",
+      "noEligibleChecks": "Žádné způsobilé kontroly",
+      "noHoldings": "Žádné údaje o hotovosti",
+      "noSettlements": "Žádné pokladní vyrovnání",
+      "noTransactions": "Nebyly nalezeny žádné transakce",
+      "submitting": "Odesílání",
+      "closingCompleted": "Ukončení dokončeno",
+      "authorizationRequired": "Vyžaduje se autorizace",
+      "depositCompleted": "Vklad dokončen",
+      "settlementCompleted": "Vyrovnání dokončeno"
+    },
+    "status": {
+      "OPEN": "Otevřít",
+      "COMPLETED": "Dokončeno"
+    },
+    "differenceType": {
+      "BALANCED": "Vyrovnáno",
+      "OVERAGE": "Přebytek",
+      "SHORTAGE": "Nedostatek"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Vklad v tranzitu",
+      "BANK_DEPOSIT": "Bankovní vklad"
+    },
+    "closing": {
+      "confirmTitle": "Potvrďte konečné uzavření pokladny",
+      "confirmText": "Dokončit {{cashier}} na {{date}} v {{currency}}? Očekávané: {{expected}}; hotovost: {{cash}}; kontroly: {{checks}}; náhled rozdílu: {{difference}}. Autorizaci provádí přihlášený hlavní pokladník."
+    },
+    "operation": {
+      "confirmText": "Odeslat tento konečný vklad pro {{cashier}} dne {{date}} v {{currency}}? Hotovost: {{cash}}; kontroly: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Zadejte odesílané nominální hodnoty. Plugin Savings je ověří a vypočítá směrodatný součet.",
+      "previewOnly": "Tyto součty vstupů jsou náhledem. Směrodatná je odpověď Savings Plugin."
+    },
+    "errors": {
+      "cashiers": "Pokladny se nepodařilo načíst",
+      "closing": "Uzavření nebylo možné dokončit",
+      "context": "Závěrečný kontext se nepodařilo načíst",
+      "global": "Globální počet hotovosti nelze načíst",
+      "history": "Historii transakcí se nepodařilo načíst",
+      "holdings": "Údaje o pokladně nelze načíst",
+      "notCompleted": "Backend nevrátil stav dokončeno",
+      "operation": "Vklad nebylo možné dokončit",
+      "options": "Možnosti správy hotovosti nelze načíst",
+      "receipt": "Účtenku se nepodařilo načíst"
     }
   }
 }
