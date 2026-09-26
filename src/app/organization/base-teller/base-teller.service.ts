@@ -221,6 +221,107 @@ export interface BaseTellerOption {
   isCashPayment?: boolean;
 }
 
+export type ServicePaymentPayerType = 'CLIENT' | 'NON_CLIENT';
+export type ServicePaymentCommissionType = 'NONE' | 'FIXED' | 'PERCENTAGE';
+export type ServicePaymentAmount = number | string;
+
+export interface ServicePaymentDenominationConfiguration {
+  identifier: string;
+  value: ServicePaymentAmount;
+  type: string;
+}
+
+export interface ServicePaymentServiceConfiguration {
+  id: FineractId;
+  code: string;
+  name: string;
+  active: boolean;
+  currencyCode: string;
+  commissionType: ServicePaymentCommissionType;
+  commissionValue: ServicePaymentAmount;
+  commissionVatRate: ServicePaymentAmount;
+  denominations: ServicePaymentDenominationConfiguration[];
+}
+
+export interface ServicePaymentClient {
+  clientId: FineractId;
+  accountNo: string;
+  externalId?: string;
+  displayName: string;
+  officeId: FineractId;
+  officeName: string;
+  status: string;
+}
+
+export interface ServicePaymentQuoteRequest {
+  payerType: ServicePaymentPayerType;
+  clientId?: FineractId;
+  payerName?: string;
+  serviceId: FineractId;
+  serviceReference: string;
+  baseAmount: ServicePaymentAmount;
+  currencyCode: string;
+}
+
+export interface ServicePaymentQuote extends ServicePaymentQuoteRequest {
+  clientAccountNo?: string;
+  payerName: string;
+  serviceCode: string;
+  serviceName: string;
+  commission: ServicePaymentAmount;
+  commissionVat: ServicePaymentAmount;
+  totalToPay: ServicePaymentAmount;
+  businessDate: string;
+}
+
+export interface ServicePaymentDenomination {
+  denominationId: string;
+  value: ServicePaymentAmount;
+  quantity: number;
+}
+
+export interface ServicePaymentRequest extends ServicePaymentQuoteRequest {
+  idempotencyKey: string;
+  businessDate: string;
+  paymentTypeId: FineractId;
+  denominations: ServicePaymentDenomination[];
+}
+
+export interface ServicePaymentReceipt {
+  transactionId: FineractId;
+  receiptNumber: string;
+  status: string;
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  tellerId: FineractId;
+  tellerName: string;
+  cashierId: FineractId;
+  cashierName: string;
+  operatorId: FineractId;
+  operatorName: string;
+  payerType: ServicePaymentPayerType;
+  clientId?: FineractId;
+  clientAccountNo?: string;
+  payerName: string;
+  serviceId: FineractId;
+  serviceCode: string;
+  serviceName: string;
+  serviceReference: string;
+  baseAmount: ServicePaymentAmount;
+  commission: ServicePaymentAmount;
+  commissionVat: ServicePaymentAmount;
+  totalPaid: ServicePaymentAmount;
+  amountReceived: ServicePaymentAmount;
+  change: ServicePaymentAmount;
+  currencyCode: string;
+  cashierTransactionId?: FineractId;
+  accountingTransactionId?: string;
+  createdOnUtc: string;
+  completedOnUtc?: string;
+  denominations: ServicePaymentDenomination[];
+}
+
 /**
  * Base Teller service.
  */
@@ -232,6 +333,7 @@ export class BaseTellerService {
 
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
   private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
+  private readonly servicePaymentsPath = '/v2/base-teller/service-payments';
 
   /**
    * Searches customers through the Base Teller savings-opening workflow API.
@@ -379,5 +481,38 @@ export class BaseTellerService {
 
   getReturnedCheckPaymentTypes(): Observable<BaseTellerOption[]> {
     return this.http.get<BaseTellerOption[]>('/paymenttypes');
+  }
+
+  /** Lists the backend-configured active service-payment catalog. */
+  getServicePaymentServices(): Observable<ServicePaymentServiceConfiguration[]> {
+    return this.http.get<ServicePaymentServiceConfiguration[]>(`${this.servicePaymentsPath}/services`);
+  }
+
+  /** Searches the platform client index before resolving the payer through WEB-1236. */
+  searchServicePaymentClients(
+    searchTerm: string
+  ): Observable<DepositSearchResult[] | { pageItems?: DepositSearchResult[] }> {
+    const params = new HttpParams().set('exactMatch', 'false').set('query', searchTerm).set('resource', 'clients');
+    return this.http.get<DepositSearchResult[] | { pageItems?: DepositSearchResult[] }>('/search', { params });
+  }
+
+  /** Resolves an authoritative, office-scoped client payer. */
+  getServicePaymentClient(clientId: FineractId): Observable<ServicePaymentClient> {
+    return this.http.get<ServicePaymentClient>(`${this.servicePaymentsPath}/clients/${clientId}`);
+  }
+
+  /** Gets the backend-authoritative commission, VAT, total, and business date. */
+  quoteServicePayment(payload: ServicePaymentQuoteRequest): Observable<ServicePaymentQuote> {
+    return this.http.post<ServicePaymentQuote>(`${this.servicePaymentsPath}/quote`, payload);
+  }
+
+  /** Posts a cash service payment with the backend idempotency contract. */
+  createServicePayment(payload: ServicePaymentRequest): Observable<ServicePaymentReceipt> {
+    return this.http.post<ServicePaymentReceipt>(this.servicePaymentsPath, payload);
+  }
+
+  /** Retrieves the immutable backend receipt for display or reprint. */
+  getServicePaymentReceipt(transactionId: FineractId): Observable<ServicePaymentReceipt> {
+    return this.http.get<ServicePaymentReceipt>(`${this.servicePaymentsPath}/${transactionId}/receipt`);
   }
 }

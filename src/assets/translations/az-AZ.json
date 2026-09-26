@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Ödəniş təfərrüatları"
+    },
+    "buttons": {
+      "calculate": "Hesabla",
+      "newPayment": "Yeni ödəniş",
+      "printReceipt": "Qəbzi çap et",
+      "reprintReceipt": "Qəbzi yenidən çap et"
+    },
+    "inputs": {
+      "clientSearch": "Müştəri adı, hesab nömrəsi və ya xarici ID",
+      "commission": "Komissiya",
+      "commissionVat": "Komissiya ƏDV-si",
+      "existingClient": "Mövcud müştəri",
+      "nonClient": "Müştəri olmayan",
+      "payer": "Ödəyici",
+      "payerName": "Ödəyicinin adı",
+      "payerNameRequired": "Ödəyicinin adı tələb olunur",
+      "payerType": "Ödəyici növü",
+      "service": "Xidmət",
+      "serviceReference": "Xidmət istinadı",
+      "subtotal": "Aralıq cəm",
+      "totalToPay": "Ümumi ödəniləcək məbləğ"
+    },
+    "text": {
+      "clientError": "Müştəri məlumatlarını yükləmək mümkün olmadı",
+      "clientSearchError": "Müştəri axtarışı uğursuz oldu",
+      "configurationError": "Xidmət ödənişi konfiqurasiyasını yükləmək mümkün olmadı",
+      "insufficientCash": "Qəbul edilən nağd pul ümumi ödəniləcək məbləğdən az ola bilməz",
+      "navigation": "Hesab və ya xidmət üçün nağd ödənişi icra et",
+      "noClients": "Müştəri tapılmadı",
+      "noCreatePermission": "Xidmət ödənişi yaratmaq icazəniz yoxdur",
+      "noDenominations": "Bu xidmət valyutası üçün pul nominalları konfiqurasiya edilməyib",
+      "noReadPermission": "Xidmət ödənişlərinə baxmaq icazəniz yoxdur",
+      "noServices": "Heç bir xidmət ödənişi xidməti konfiqurasiya edilməyib",
+      "paymentError": "Xidmət ödənişini tamamlamaq mümkün olmadı",
+      "quoteError": "Xidmət ödənişi təklifini hesablamaq mümkün olmadı",
+      "receiptError": "Xidmət ödənişi qəbzini əldə etmək mümkün olmadı",
+      "success": "Xidmət ödənişi uğurla tamamlandı",
+      "validAmount": "Düzgün müsbət məbləğ daxil edin"
+    }
+  },
   "acquisition": {
     "title": "Müştəri cəlbinin vəziyyəti",
     "loading": "Müştəri cəlbinin vəziyyəti yüklənir...",
@@ -1332,6 +1375,7 @@
       "Beneficiary": "Vəsait alan",
       "Beneficiary Details": "Vəsait alanın təfərrüatları",
       "Beneficiary Selection": "Vəsait alanın seçilməsi",
+      "Bill and Service Payment": "Hesab və xidmət ödənişi",
       "Block Savings Account": "Əmanət hesabının bloklanması",
       "Breach Configuration": "Pozuntu konfiqurasiyası",
       "Breach Periods": "Pozuntu dövrləri",
@@ -4256,6 +4300,7 @@
       "Amount Collected": "Toplanmış məbləğ",
       "Amount must be greater than zero": "Məbləğ sıfırdan böyük olmalıdır",
       "Base Teller Savings Account Opening": "Əsas kassirin əmanət hesabının açılması",
+      "Bill and Service Payment": "Hesab və xidmət ödənişi",
       "Georeference Map": "Coğrafi istinad xəritəsi",
       "Savings Portfolio": "Əmanət portfeli",
       "Loan Portfolio Distribution": "Kredit portfelinin bölgüsü",

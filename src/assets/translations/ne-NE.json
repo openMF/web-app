@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "भुक्तानी विवरण"
+    },
+    "buttons": {
+      "calculate": "गणना गर्नुहोस्",
+      "newPayment": "नयाँ भुक्तानी",
+      "printReceipt": "रसिद प्रिन्ट गर्नुहोस्",
+      "reprintReceipt": "रसिद पुनः प्रिन्ट गर्नुहोस्"
+    },
+    "inputs": {
+      "clientSearch": "ग्राहकको नाम, खाता नम्बर वा बाह्य आईडी",
+      "commission": "कमिसन",
+      "commissionVat": "कमिसन भ्याट",
+      "existingClient": "विद्यमान ग्राहक",
+      "nonClient": "गैर-ग्राहक",
+      "payer": "भुक्तानीकर्ता",
+      "payerName": "भुक्तानीकर्ताको नाम",
+      "payerNameRequired": "भुक्तानीकर्ताको नाम आवश्यक छ",
+      "payerType": "भुक्तानीकर्ताको प्रकार",
+      "service": "सेवा",
+      "serviceReference": "सेवा सन्दर्भ",
+      "subtotal": "उप-जम्मा",
+      "totalToPay": "कुल भुक्तानी"
+    },
+    "text": {
+      "clientError": "ग्राहकको विवरण लोड गर्न सकिएन",
+      "clientSearchError": "ग्राहक खोज असफल भयो",
+      "configurationError": "सेवा भुक्तानी कन्फिगरेसन लोड गर्न सकिएन",
+      "insufficientCash": "प्राप्त नगद कुल भुक्तानीभन्दा कम हुन सक्दैन",
+      "navigation": "बिल वा सेवाको नगद भुक्तानी प्रक्रिया गर्नुहोस्",
+      "noClients": "कुनै ग्राहक फेला परेन",
+      "noCreatePermission": "तपाईंसँग सेवा भुक्तानी सिर्जना गर्ने अनुमति छैन",
+      "noDenominations": "यस सेवा मुद्राका लागि कुनै मूल्यवर्ग कन्फिगर गरिएको छैन",
+      "noReadPermission": "तपाईंसँग सेवा भुक्तानी हेर्ने अनुमति छैन",
+      "noServices": "कुनै सेवा भुक्तानी सेवा कन्फिगर गरिएको छैन",
+      "paymentError": "सेवा भुक्तानी पूरा गर्न सकिएन",
+      "quoteError": "सेवा भुक्तानी उद्धरण गणना गर्न सकिएन",
+      "receiptError": "सेवा भुक्तानी रसिद प्राप्त गर्न सकिएन",
+      "success": "सेवा भुक्तानी सफलतापूर्वक पूरा भयो",
+      "validAmount": "मान्य धनात्मक रकम प्रविष्ट गर्नुहोस्"
+    }
+  },
   "creditOrigination": {
     "title": "ऋण उत्पत्ति स्थिति",
     "loading": "ऋण उत्पत्ति स्थिति लोड हुँदैछ...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "लाभग्राही",
       "Beneficiary Details": "लाभग्राही विवरण",
       "Beneficiary Selection": "लाभग्राही छनोट",
+      "Bill and Service Payment": "बिल तथा सेवा भुक्तानी",
       "Block Savings Account": "बचत खाता रोक्नुहोस्",
       "Breach Configuration": "उल्लंघन कन्फिगरेसन",
       "Breach Periods": "उल्लंघनको अवधि",
@@ -5392,6 +5436,7 @@
       "Country": "देश",
       "Amount must be greater than zero": "रकम शून्य भन्दा ठूलो हुनुपर्छ",
       "Base Teller Savings Account Opening": "आधार टेलरबाट बचत खाता खोल्ने",
+      "Bill and Service Payment": "बिल तथा सेवा भुक्तानी",
       "Savings Growth": "बचत वृद्धि",
       "Time Period": "समय अवधि",
       "Women Borrowers": "महिला ऋणीहरू",

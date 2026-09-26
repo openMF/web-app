@@ -16,6 +16,8 @@
  * there; verify a new path against the route configs, and beware a parent route
  * with children but no component of its own, which renders a blank page.
  */
+import { environment } from 'environments/environment';
+
 const activities: any[] = [
   { activity: 'client', path: '/clients' },
   { activity: 'groups', path: '/groups' },
@@ -57,6 +59,15 @@ const activities: any[] = [
     path: '/organization/base-teller/savings-account-deposits',
     permission: 'DEPOSIT_SAVINGSACCOUNT'
   },
+  ...(environment.productionMode
+    ? [
+        {
+          activity: 'labels.heading.Bill and Service Payment',
+          path: '/organization/base-teller/service-payments',
+          permission: 'READ_BASE_TELLER_SERVICE_PAYMENT'
+        }
+      ]
+    : []),
   { activity: 'manage funds', path: '/organization/manage-funds' },
   { activity: 'chart of accounts', path: '/accounting/chart-of-accounts' },
   { activity: 'frequent postings', path: '/accounting/journal-entries/frequent-postings' },

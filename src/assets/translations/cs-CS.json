@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Údaje o platbě"
+    },
+    "buttons": {
+      "calculate": "Vypočítat",
+      "newPayment": "Nová platba",
+      "printReceipt": "Vytisknout účtenku",
+      "reprintReceipt": "Znovu vytisknout účtenku"
+    },
+    "inputs": {
+      "clientSearch": "Jméno klienta, číslo účtu nebo externí ID",
+      "commission": "Provize",
+      "commissionVat": "DPH z provize",
+      "existingClient": "Stávající klient",
+      "nonClient": "Ne-klient",
+      "payer": "Plátce",
+      "payerName": "Jméno plátce",
+      "payerNameRequired": "Jméno plátce je povinné",
+      "payerType": "Typ plátce",
+      "service": "Služba",
+      "serviceReference": "Reference služby",
+      "subtotal": "Mezisoučet",
+      "totalToPay": "Celkem k úhradě"
+    },
+    "text": {
+      "clientError": "Údaje o klientovi se nepodařilo načíst",
+      "clientSearchError": "Vyhledávání klientů selhalo",
+      "configurationError": "Konfiguraci plateb za služby se nepodařilo načíst",
+      "insufficientCash": "Přijatá hotovost nesmí být nižší než celková částka k úhradě",
+      "navigation": "Zpracovat hotovostní platbu účtu nebo služby",
+      "noClients": "Nebyli nalezeni žádní klienti",
+      "noCreatePermission": "Nemáte oprávnění vytvářet platby za služby",
+      "noDenominations": "Pro tuto měnu služby nejsou nakonfigurovány žádné nominální hodnoty",
+      "noReadPermission": "Nemáte oprávnění zobrazit platby za služby",
+      "noServices": "Nejsou nakonfigurovány žádné služby pro platby",
+      "paymentError": "Platbu za službu se nepodařilo dokončit",
+      "quoteError": "Nabídku platby za službu se nepodařilo vypočítat",
+      "receiptError": "Účtenku za platbu služby se nepodařilo načíst",
+      "success": "Platba za službu byla úspěšně dokončena",
+      "validAmount": "Zadejte platnou kladnou částku"
+    }
+  },
   "creditOrigination": {
     "title": "Stav procesu poskytnutí úvěru",
     "loading": "Načítání stavu procesu poskytnutí úvěru...",
@@ -1410,6 +1453,7 @@
       "Beneficiary": "Příjemce",
       "Beneficiary Details": "Podrobnosti příjemce",
       "Beneficiary Selection": "Výběr příjemce",
+      "Bill and Service Payment": "Platba účtů a služeb",
       "Block Savings Account": "Blokovat spořicí účet",
       "Breach Configuration": "Konfigurace porušení",
       "Breach Periods": "Období Porušení",
@@ -5393,6 +5437,7 @@
       "Country": "Země",
       "Amount must be greater than zero": "Částka musí být větší než nula",
       "Base Teller Savings Account Opening": "Otevření spořicího účtu na přepážce",
+      "Bill and Service Payment": "Platba účtů a služeb",
       "Savings Growth": "Růst úspor",
       "Time Period": "Časové období",
       "Women Borrowers": "Ženy dlužnice",

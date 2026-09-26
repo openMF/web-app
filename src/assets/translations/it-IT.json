@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Dettagli del pagamento"
+    },
+    "buttons": {
+      "calculate": "Calcola",
+      "newPayment": "Nuovo pagamento",
+      "printReceipt": "Stampa ricevuta",
+      "reprintReceipt": "Ristampa ricevuta"
+    },
+    "inputs": {
+      "clientSearch": "Nome cliente, numero di conto o ID esterno",
+      "commission": "Commissione",
+      "commissionVat": "IVA sulla commissione",
+      "existingClient": "Cliente esistente",
+      "nonClient": "Non cliente",
+      "payer": "Pagatore",
+      "payerName": "Nome del pagatore",
+      "payerNameRequired": "Il nome del pagatore è obbligatorio",
+      "payerType": "Tipo di pagatore",
+      "service": "Servizio",
+      "serviceReference": "Riferimento del servizio",
+      "subtotal": "Subtotale",
+      "totalToPay": "Totale da pagare"
+    },
+    "text": {
+      "clientError": "Impossibile caricare i dati del cliente",
+      "clientSearchError": "Ricerca del cliente non riuscita",
+      "configurationError": "Impossibile caricare la configurazione dei pagamenti dei servizi",
+      "insufficientCash": "Il contante ricevuto non può essere inferiore al totale da pagare",
+      "navigation": "Elabora il pagamento in contanti di una bolletta o di un servizio",
+      "noClients": "Nessun cliente trovato",
+      "noCreatePermission": "Non disponi dell’autorizzazione per creare pagamenti di servizi",
+      "noDenominations": "Non sono configurati tagli per la valuta di questo servizio",
+      "noReadPermission": "Non disponi dell’autorizzazione per visualizzare i pagamenti di servizi",
+      "noServices": "Non sono configurati servizi di pagamento",
+      "paymentError": "Impossibile completare il pagamento del servizio",
+      "quoteError": "Impossibile calcolare il preventivo del pagamento del servizio",
+      "receiptError": "Impossibile recuperare la ricevuta del pagamento del servizio",
+      "success": "Pagamento del servizio completato correttamente",
+      "validAmount": "Inserisci un importo positivo valido"
+    }
+  },
   "creditOrigination": {
     "title": "Stato di concessione del credito",
     "loading": "Caricamento dello stato di concessione del credito...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Beneficiario",
       "Beneficiary Details": "Dettagli del beneficiario",
       "Beneficiary Selection": "Selezione del beneficiario",
+      "Bill and Service Payment": "Pagamento di bollette e servizi",
       "Block Savings Account": "Bloccare il conto di risparmio",
       "Breach Configuration": "Configurazione della violazione",
       "Breach Periods": "Periodi di Violazione",
@@ -5392,6 +5436,7 @@
       "Country": "Paese",
       "Amount must be greater than zero": "L'importo deve essere maggiore di zero",
       "Base Teller Savings Account Opening": "Apertura di conto di risparmio allo sportello base",
+      "Bill and Service Payment": "Pagamento di bollette e servizi",
       "Savings Growth": "Crescita del risparmio",
       "Time Period": "Periodo di tempo",
       "Women Borrowers": "Donne mutuatarie",

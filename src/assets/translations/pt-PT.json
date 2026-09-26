@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Detalhes do pagamento"
+    },
+    "buttons": {
+      "calculate": "Calcular",
+      "newPayment": "Novo pagamento",
+      "printReceipt": "Imprimir recibo",
+      "reprintReceipt": "Reimprimir recibo"
+    },
+    "inputs": {
+      "clientSearch": "Nome do cliente, número da conta ou ID externo",
+      "commission": "Comissão",
+      "commissionVat": "IVA da comissão",
+      "existingClient": "Cliente existente",
+      "nonClient": "Não cliente",
+      "payer": "Pagador",
+      "payerName": "Nome do pagador",
+      "payerNameRequired": "O nome do pagador é obrigatório",
+      "payerType": "Tipo de pagador",
+      "service": "Serviço",
+      "serviceReference": "Referência do serviço",
+      "subtotal": "Subtotal",
+      "totalToPay": "Total a pagar"
+    },
+    "text": {
+      "clientError": "Não foi possível carregar os dados do cliente",
+      "clientSearchError": "A pesquisa de clientes falhou",
+      "configurationError": "Não foi possível carregar a configuração de pagamentos de serviços",
+      "insufficientCash": "O dinheiro recebido não pode ser inferior ao total a pagar",
+      "navigation": "Processar o pagamento em dinheiro de uma fatura ou serviço",
+      "noClients": "Nenhum cliente encontrado",
+      "noCreatePermission": "Não tem permissão para criar pagamentos de serviços",
+      "noDenominations": "Não existem denominações configuradas para a moeda deste serviço",
+      "noReadPermission": "Não tem permissão para consultar pagamentos de serviços",
+      "noServices": "Não existem serviços de pagamento configurados",
+      "paymentError": "Não foi possível concluir o pagamento do serviço",
+      "quoteError": "Não foi possível calcular a cotação do pagamento do serviço",
+      "receiptError": "Não foi possível obter o recibo do pagamento do serviço",
+      "success": "Pagamento do serviço concluído com sucesso",
+      "validAmount": "Introduza um montante positivo válido"
+    }
+  },
   "creditOrigination": {
     "title": "Estado de concessão do crédito",
     "loading": "A carregar o estado de concessão do crédito...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Beneficiário",
       "Beneficiary Details": "Detalhes do beneficiário",
       "Beneficiary Selection": "Seleção de Beneficiário",
+      "Bill and Service Payment": "Pagamento de faturas e serviços",
       "Block Savings Account": "Bloquear conta poupança",
       "Breach Configuration": "Configuração de violação",
       "Breach Periods": "Períodos de Incumprimento",
@@ -5392,6 +5436,7 @@
       "Country": "País",
       "Amount must be greater than zero": "O montante deve ser maior do que zero",
       "Base Teller Savings Account Opening": "Abertura de conta poupança no balcão base",
+      "Bill and Service Payment": "Pagamento de faturas e serviços",
       "Savings Growth": "Crescimento da poupança",
       "Time Period": "Período de tempo",
       "Women Borrowers": "Mulheres mutuárias",

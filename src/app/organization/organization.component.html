@@ -569,6 +569,40 @@
             </mat-list-item>
           </div>
 
+          @if (productionMode) {
+            <div #baseTellerServicePayment>
+              <mat-list-item *mifosxHasPermission="'READ_BASE_TELLER_SERVICE_PAYMENT'">
+                <div class="menu-list-item-content">
+                  <a class="menu-left-section" [routerLink]="['base-teller', 'service-payments']">
+                    <mat-icon>
+                      <fa-icon icon="money-check-dollar" size="sm"></fa-icon>
+                    </mat-icon>
+                    <div matLine>
+                      {{ 'labels.heading.Bill and Service Payment' | translate }}
+                      @if (arrowBooleans[23]) {
+                        <p matLine class="menu-explanation">
+                          {{ 'servicePayment.text.navigation' | translate }}
+                        </p>
+                      }
+                    </div>
+                  </a>
+                  <div class="menu-right-section">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      class="menu-expand-button"
+                      (click)="arrowBooleansToggle(23)"
+                      [attr.aria-expanded]="arrowBooleans[23]"
+                      [attr.aria-label]="'tooltips.Toggle Collapse' | translate"
+                    >
+                      <fa-icon [icon]="arrowBooleans[23] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+              </mat-list-item>
+            </div>
+          }
+
           <div #workingDays>
             <mat-list-item *mifosxHasPermission="'READ_WORKINGDAYS'">
               <div class="menu-list-item-content">
