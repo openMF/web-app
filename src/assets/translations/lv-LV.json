@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Maksājuma informācija"
+    },
+    "buttons": {
+      "calculate": "Aprēķināt",
+      "newPayment": "Jauns maksājums",
+      "printReceipt": "Drukāt kvīti",
+      "reprintReceipt": "Atkārtoti drukāt kvīti"
+    },
+    "inputs": {
+      "clientSearch": "Klienta vārds, konta numurs vai ārējais ID",
+      "commission": "Komisijas maksa",
+      "commissionVat": "Komisijas maksas PVN",
+      "existingClient": "Esošs klients",
+      "nonClient": "Nav klients",
+      "payer": "Maksātājs",
+      "payerName": "Maksātāja vārds",
+      "payerNameRequired": "Maksātāja vārds ir obligāts",
+      "payerType": "Maksātāja veids",
+      "service": "Pakalpojums",
+      "serviceReference": "Pakalpojuma atsauce",
+      "subtotal": "Starpsumma",
+      "totalToPay": "Kopā jāmaksā"
+    },
+    "text": {
+      "clientError": "Neizdevās ielādēt klienta informāciju",
+      "clientSearchError": "Klientu meklēšana neizdevās",
+      "configurationError": "Neizdevās ielādēt pakalpojumu maksājumu konfigurāciju",
+      "insufficientCash": "Saņemtā skaidrā nauda nedrīkst būt mazāka par kopējo maksājamo summu",
+      "navigation": "Apstrādāt rēķina vai pakalpojuma apmaksu skaidrā naudā",
+      "noClients": "Klienti nav atrasti",
+      "noCreatePermission": "Jums nav atļaujas izveidot pakalpojumu maksājumus",
+      "noDenominations": "Šī pakalpojuma valūtai nav konfigurētu nominālvērtību",
+      "noReadPermission": "Jums nav atļaujas skatīt pakalpojumu maksājumus",
+      "noServices": "Nav konfigurētu pakalpojumu maksājumu pakalpojumu",
+      "paymentError": "Pakalpojuma maksājumu neizdevās pabeigt",
+      "quoteError": "Pakalpojuma maksājuma piedāvājumu neizdevās aprēķināt",
+      "receiptError": "Pakalpojuma maksājuma kvīti neizdevās iegūt",
+      "success": "Pakalpojuma maksājums ir veiksmīgi pabeigts",
+      "validAmount": "Ievadiet derīgu pozitīvu summu"
+    }
+  },
   "creditOrigination": {
     "title": "Kredīta noformēšanas statuss",
     "loading": "Notiek kredīta noformēšanas statusa ielāde...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Saņēmējs",
       "Beneficiary Details": "Saņēmēja detaļas",
       "Beneficiary Selection": "Saņēmēja izvēle",
+      "Bill and Service Payment": "Rēķinu un pakalpojumu apmaksa",
       "Block Savings Account": "Bloķēt krājkontu",
       "Breach Configuration": "Pārkāpuma konfigurācija",
       "Breach Periods": "Pārkāpuma Periodi",
@@ -5392,6 +5436,7 @@
       "Country": "Valsts",
       "Amount must be greater than zero": "Summai jābūt lielākai par nulli",
       "Base Teller Savings Account Opening": "Krājkonta atvēršana pamata kasē",
+      "Bill and Service Payment": "Rēķinu un pakalpojumu apmaksa",
       "Savings Growth": "Uzkrājumu pieaugums",
       "Time Period": "Laika periods",
       "Women Borrowers": "Sievietes aizņēmējas",

@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Payment Details"
+    },
+    "buttons": {
+      "calculate": "Calculate",
+      "newPayment": "New Payment",
+      "printReceipt": "Print Receipt",
+      "reprintReceipt": "Reprint Receipt"
+    },
+    "inputs": {
+      "clientSearch": "Client name, account number or external ID",
+      "commission": "Commission",
+      "commissionVat": "Commission VAT",
+      "existingClient": "Existing Client",
+      "nonClient": "Non-client",
+      "payer": "Payer",
+      "payerName": "Payer Name",
+      "payerNameRequired": "Payer Name is required",
+      "payerType": "Payer Type",
+      "service": "Service",
+      "serviceReference": "Service Reference",
+      "subtotal": "Subtotal",
+      "totalToPay": "Total to Pay"
+    },
+    "text": {
+      "clientError": "Client details could not be loaded",
+      "clientSearchError": "Client search failed",
+      "configurationError": "Service payment configuration could not be loaded",
+      "insufficientCash": "Cash received cannot be less than the total to pay",
+      "navigation": "Process a cash bill or service payment",
+      "noClients": "No clients found",
+      "noCreatePermission": "You do not have permission to create service payments",
+      "noDenominations": "No denominations are configured for this service currency",
+      "noReadPermission": "You do not have permission to view service payments",
+      "noServices": "No service payment services are configured",
+      "paymentError": "Service payment could not be completed",
+      "quoteError": "Service payment quote could not be calculated",
+      "receiptError": "Service payment receipt could not be retrieved",
+      "success": "Service payment completed successfully",
+      "validAmount": "Enter a valid positive amount"
+    }
+  },
   "creditOrigination": {
     "title": "Credit Origination Status",
     "loading": "Loading credit origination status...",
@@ -1414,6 +1457,7 @@
       "Beneficiary": "Beneficiary",
       "Beneficiary Details": "Beneficiary Details",
       "Beneficiary Selection": "Beneficiary Selection",
+      "Bill and Service Payment": "Bill and Service Payment",
       "Block Savings Account": "Block Savings Account",
       "Breach Configuration": "Breach Configuration",
       "Breach Periods": "Breach Periods",
@@ -4388,6 +4432,7 @@
       "Amount Collected": "Amount Collected",
       "Amount must be greater than zero": "Amount must be greater than zero",
       "Base Teller Savings Account Opening": "Base Teller Savings Account Opening",
+      "Bill and Service Payment": "Bill and Service Payment",
       "Georeference Map": "Georeference Map",
       "Savings Portfolio": "Savings Portfolio",
       "Loan Portfolio Distribution": "Loan Portfolio Distribution",

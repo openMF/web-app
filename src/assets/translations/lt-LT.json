@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Mokėjimo informacija"
+    },
+    "buttons": {
+      "calculate": "Apskaičiuoti",
+      "newPayment": "Naujas mokėjimas",
+      "printReceipt": "Spausdinti kvitą",
+      "reprintReceipt": "Pakartotinai spausdinti kvitą"
+    },
+    "inputs": {
+      "clientSearch": "Kliento vardas, sąskaitos numeris arba išorinis ID",
+      "commission": "Komisinis mokestis",
+      "commissionVat": "Komisinio mokesčio PVM",
+      "existingClient": "Esamas klientas",
+      "nonClient": "Ne klientas",
+      "payer": "Mokėtojas",
+      "payerName": "Mokėtojo vardas",
+      "payerNameRequired": "Mokėtojo vardas yra privalomas",
+      "payerType": "Mokėtojo tipas",
+      "service": "Paslauga",
+      "serviceReference": "Paslaugos nuoroda",
+      "subtotal": "Tarpinė suma",
+      "totalToPay": "Iš viso mokėti"
+    },
+    "text": {
+      "clientError": "Nepavyko įkelti kliento informacijos",
+      "clientSearchError": "Klientų paieška nepavyko",
+      "configurationError": "Nepavyko įkelti paslaugų mokėjimo konfigūracijos",
+      "insufficientCash": "Grynaisiais gauta suma negali būti mažesnė už bendrą mokėtiną sumą",
+      "navigation": "Apdoroti sąskaitos arba paslaugos mokėjimą grynaisiais",
+      "noClients": "Klientų nerasta",
+      "noCreatePermission": "Neturite teisės kurti paslaugų mokėjimų",
+      "noDenominations": "Šiai paslaugos valiutai nominalai nesukonfigūruoti",
+      "noReadPermission": "Neturite teisės peržiūrėti paslaugų mokėjimų",
+      "noServices": "Paslaugų mokėjimo paslaugos nesukonfigūruotos",
+      "paymentError": "Nepavyko užbaigti paslaugos mokėjimo",
+      "quoteError": "Nepavyko apskaičiuoti paslaugos mokėjimo pasiūlymo",
+      "receiptError": "Nepavyko gauti paslaugos mokėjimo kvito",
+      "success": "Paslaugos mokėjimas sėkmingai užbaigtas",
+      "validAmount": "Įveskite tinkamą teigiamą sumą"
+    }
+  },
   "creditOrigination": {
     "title": "Kredito suteikimo būsena",
     "loading": "Įkeliama kredito suteikimo būsena...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Gavėjas",
       "Beneficiary Details": "Gavėjo informacija",
       "Beneficiary Selection": "Gavėjo pasirinkimas",
+      "Bill and Service Payment": "Sąskaitų ir paslaugų apmokėjimas",
       "Block Savings Account": "Blokuoti taupomąją sąskaitą",
       "Breach Configuration": "Pažeidimo konfigūracija",
       "Breach Periods": "Pažeidimo Laikotarpiai",
@@ -5392,6 +5436,7 @@
       "Country": "Šalis",
       "Amount must be greater than zero": "Suma turi būti didesnė nei nulis",
       "Base Teller Savings Account Opening": "Taupomosios sąskaitos atidarymas bazinėje kasoje",
+      "Bill and Service Payment": "Sąskaitų ir paslaugų apmokėjimas",
       "Savings Growth": "Santaupų augimas",
       "Time Period": "Laikotarpis",
       "Women Borrowers": "Moterys skolininkės",

@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "결제 세부 정보"
+    },
+    "buttons": {
+      "calculate": "계산",
+      "newPayment": "새 결제",
+      "printReceipt": "영수증 인쇄",
+      "reprintReceipt": "영수증 재인쇄"
+    },
+    "inputs": {
+      "clientSearch": "고객 이름, 계좌 번호 또는 외부 ID",
+      "commission": "수수료",
+      "commissionVat": "수수료 부가가치세",
+      "existingClient": "기존 고객",
+      "nonClient": "비고객",
+      "payer": "납부자",
+      "payerName": "납부자 이름",
+      "payerNameRequired": "납부자 이름은 필수입니다",
+      "payerType": "납부자 유형",
+      "service": "서비스",
+      "serviceReference": "서비스 참조",
+      "subtotal": "소계",
+      "totalToPay": "총 결제 금액"
+    },
+    "text": {
+      "clientError": "고객 세부 정보를 불러올 수 없습니다",
+      "clientSearchError": "고객 검색에 실패했습니다",
+      "configurationError": "서비스 결제 구성을 불러올 수 없습니다",
+      "insufficientCash": "수령한 현금은 총 결제 금액보다 적을 수 없습니다",
+      "navigation": "청구서 또는 서비스의 현금 결제를 처리합니다",
+      "noClients": "고객을 찾을 수 없습니다",
+      "noCreatePermission": "서비스 결제를 생성할 권한이 없습니다",
+      "noDenominations": "이 서비스 통화에 구성된 권종이 없습니다",
+      "noReadPermission": "서비스 결제를 볼 권한이 없습니다",
+      "noServices": "구성된 서비스 결제 서비스가 없습니다",
+      "paymentError": "서비스 결제를 완료할 수 없습니다",
+      "quoteError": "서비스 결제 견적을 계산할 수 없습니다",
+      "receiptError": "서비스 결제 영수증을 가져올 수 없습니다",
+      "success": "서비스 결제가 완료되었습니다",
+      "validAmount": "유효한 양수 금액을 입력하세요"
+    }
+  },
   "creditOrigination": {
     "title": "대출 심사 진행 상태",
     "loading": "대출 심사 진행 상태를 불러오는 중...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "수익자",
       "Beneficiary Details": "수취인 상세정보",
       "Beneficiary Selection": "수익자 선택",
+      "Bill and Service Payment": "청구서 및 서비스 결제",
       "Block Savings Account": "블록저축계좌",
       "Breach Configuration": "위반 구성",
       "Breach Periods": "위반 기간",
@@ -5391,6 +5435,7 @@
       "Country": "국가",
       "Amount must be greater than zero": "금액은 0보다 커야 합니다",
       "Base Teller Savings Account Opening": "기본 창구 저축 계좌 개설",
+      "Bill and Service Payment": "청구서 및 서비스 결제",
       "Savings Growth": "저축 증가",
       "Time Period": "기간",
       "Women Borrowers": "여성 차입자",

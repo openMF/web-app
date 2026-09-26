@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Detalles del pago"
+    },
+    "buttons": {
+      "calculate": "Calcular",
+      "newPayment": "Nuevo pago",
+      "printReceipt": "Imprimir recibo",
+      "reprintReceipt": "Reimprimir recibo"
+    },
+    "inputs": {
+      "clientSearch": "Nombre del cliente, número de cuenta o ID externo",
+      "commission": "Comisión",
+      "commissionVat": "IVA de la comisión",
+      "existingClient": "Cliente existente",
+      "nonClient": "No cliente",
+      "payer": "Pagador",
+      "payerName": "Nombre del pagador",
+      "payerNameRequired": "El nombre del pagador es obligatorio",
+      "payerType": "Tipo de pagador",
+      "service": "Servicio",
+      "serviceReference": "Referencia del servicio",
+      "subtotal": "Subtotal",
+      "totalToPay": "Total a pagar"
+    },
+    "text": {
+      "clientError": "No se pudieron cargar los datos del cliente",
+      "clientSearchError": "La búsqueda de clientes falló",
+      "configurationError": "No se pudo cargar la configuración de pagos de servicios",
+      "insufficientCash": "El efectivo recibido no puede ser menor que el total a pagar",
+      "navigation": "Procesar el pago en efectivo de un recibo o servicio",
+      "noClients": "No se encontraron clientes",
+      "noCreatePermission": "No tiene permiso para crear pagos de servicios",
+      "noDenominations": "No hay denominaciones configuradas para la moneda de este servicio",
+      "noReadPermission": "No tiene permiso para ver pagos de servicios",
+      "noServices": "No hay servicios de pago configurados",
+      "paymentError": "No se pudo completar el pago del servicio",
+      "quoteError": "No se pudo calcular la cotización del pago del servicio",
+      "receiptError": "No se pudo recuperar el recibo del pago del servicio",
+      "success": "El pago del servicio se completó correctamente",
+      "validAmount": "Ingrese un monto positivo válido"
+    }
+  },
   "creditOrigination": {
     "title": "Estado de originación del crédito",
     "loading": "Cargando el estado de originación del crédito...",
@@ -1410,6 +1453,7 @@
       "Beneficiary": "Beneficiario",
       "Beneficiary Details": "Detalles del Beneficiario",
       "Beneficiary Selection": "Selección de Beneficiario",
+      "Bill and Service Payment": "Pago de recibos y servicios",
       "Block Savings Account": "Bloquear Cuenta de Ahorros",
       "Breach Configuration": "Configuración de Incumplimiento",
       "Breach Periods": "Períodos de Incumplimiento",
@@ -5404,6 +5448,7 @@
       "Country": "País",
       "Amount must be greater than zero": "El importe debe ser mayor que cero",
       "Base Teller Savings Account Opening": "Apertura de cuenta de ahorro en caja base",
+      "Bill and Service Payment": "Pago de recibos y servicios",
       "Savings Growth": "Crecimiento del ahorro",
       "Time Period": "Período de tiempo",
       "Women Borrowers": "Mujeres prestatarias",

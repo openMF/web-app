@@ -26,6 +26,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { environment } from 'environments/environment';
 
 /**
  * Organization component.
@@ -51,6 +52,7 @@ export class OrganizationComponent implements AfterViewInit {
   private popoverService = inject(PopoverService);
 
   shouldShowFundMapping = false;
+  productionMode = environment.productionMode === true;
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
   /* Template for popover on manage offices */
@@ -76,7 +78,7 @@ export class OrganizationComponent implements AfterViewInit {
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
   // Initialize an array of menu toggle values, all set to false
-  arrowBooleans: boolean[] = new Array(23).fill(false);
+  arrowBooleans: boolean[] = new Array(24).fill(false);
 
   /**
    * Popover function

@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Maelezo ya malipo"
+    },
+    "buttons": {
+      "calculate": "Kokotoa",
+      "newPayment": "Malipo mapya",
+      "printReceipt": "Chapisha risiti",
+      "reprintReceipt": "Chapisha risiti tena"
+    },
+    "inputs": {
+      "clientSearch": "Jina la mteja, nambari ya akaunti au kitambulisho cha nje",
+      "commission": "Kamisheni",
+      "commissionVat": "VAT ya kamisheni",
+      "existingClient": "Mteja aliyepo",
+      "nonClient": "Asiye mteja",
+      "payer": "Mlipaji",
+      "payerName": "Jina la mlipaji",
+      "payerNameRequired": "Jina la mlipaji linahitajika",
+      "payerType": "Aina ya mlipaji",
+      "service": "Huduma",
+      "serviceReference": "Kumbukumbu ya huduma",
+      "subtotal": "Jumla ndogo",
+      "totalToPay": "Jumla ya kulipa"
+    },
+    "text": {
+      "clientError": "Maelezo ya mteja hayakuweza kupakiwa",
+      "clientSearchError": "Utafutaji wa mteja umeshindikana",
+      "configurationError": "Mipangilio ya malipo ya huduma haikuweza kupakiwa",
+      "insufficientCash": "Fedha taslimu zilizopokelewa haziwezi kuwa chini ya jumla ya kulipa",
+      "navigation": "Shughulikia malipo ya fedha taslimu ya bili au huduma",
+      "noClients": "Hakuna wateja waliopatikana",
+      "noCreatePermission": "Huna ruhusa ya kuunda malipo ya huduma",
+      "noDenominations": "Hakuna madhehebu yaliyosanidiwa kwa sarafu ya huduma hii",
+      "noReadPermission": "Huna ruhusa ya kuona malipo ya huduma",
+      "noServices": "Hakuna huduma za malipo zilizosanidiwa",
+      "paymentError": "Malipo ya huduma hayakuweza kukamilishwa",
+      "quoteError": "Nukuu ya malipo ya huduma haikuweza kukokotolewa",
+      "receiptError": "Risiti ya malipo ya huduma haikuweza kupatikana",
+      "success": "Malipo ya huduma yamekamilika kwa mafanikio",
+      "validAmount": "Weka kiasi halali chanya"
+    }
+  },
   "creditOrigination": {
     "title": "Hali ya uanzishaji wa mkopo",
     "loading": "Inapakia hali ya uanzishaji wa mkopo...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Mnufaika",
       "Beneficiary Details": "Maelezo ya mpokeaji",
       "Beneficiary Selection": "Uchaguzi wa Mnufaika",
+      "Bill and Service Payment": "Malipo ya bili na huduma",
       "Block Savings Account": "Zuia Akaunti ya Akiba",
       "Breach Configuration": "Usanidi wa Ukiukaji",
       "Breach Periods": "Vipindi vya Ukiukaji",
@@ -5392,6 +5436,7 @@
       "Country": "Nchi",
       "Amount must be greater than zero": "Kiasi lazima kiwe kikubwa kuliko sifuri",
       "Base Teller Savings Account Opening": "Ufunguzi wa Akaunti ya Akiba kwa Keshia wa Msingi",
+      "Bill and Service Payment": "Malipo ya bili na huduma",
       "Savings Growth": "Ukuaji wa Akiba",
       "Time Period": "Kipindi cha Muda",
       "Women Borrowers": "Wakopaji Wanawake",

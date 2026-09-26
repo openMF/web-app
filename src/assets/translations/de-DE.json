@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Zahlungsdetails"
+    },
+    "buttons": {
+      "calculate": "Berechnen",
+      "newPayment": "Neue Zahlung",
+      "printReceipt": "Beleg drucken",
+      "reprintReceipt": "Beleg erneut drucken"
+    },
+    "inputs": {
+      "clientSearch": "Kundenname, Kontonummer oder externe ID",
+      "commission": "Provision",
+      "commissionVat": "Mehrwertsteuer auf Provision",
+      "existingClient": "Bestehender Kunde",
+      "nonClient": "Nichtkunde",
+      "payer": "Zahler",
+      "payerName": "Name des Zahlers",
+      "payerNameRequired": "Der Name des Zahlers ist erforderlich",
+      "payerType": "Zahlertyp",
+      "service": "Dienstleistung",
+      "serviceReference": "Dienstleistungsreferenz",
+      "subtotal": "Zwischensumme",
+      "totalToPay": "Gesamtbetrag"
+    },
+    "text": {
+      "clientError": "Die Kundendaten konnten nicht geladen werden",
+      "clientSearchError": "Die Kundensuche ist fehlgeschlagen",
+      "configurationError": "Die Konfiguration für Dienstleistungszahlungen konnte nicht geladen werden",
+      "insufficientCash": "Der erhaltene Bargeldbetrag darf nicht unter dem Gesamtbetrag liegen",
+      "navigation": "Eine Rechnung oder Dienstleistung bar bezahlen",
+      "noClients": "Keine Kunden gefunden",
+      "noCreatePermission": "Sie sind nicht berechtigt, Dienstleistungszahlungen zu erstellen",
+      "noDenominations": "Für diese Dienstleistungswährung sind keine Stückelungen konfiguriert",
+      "noReadPermission": "Sie sind nicht berechtigt, Dienstleistungszahlungen anzuzeigen",
+      "noServices": "Es sind keine Dienstleistungszahlungen konfiguriert",
+      "paymentError": "Die Dienstleistungszahlung konnte nicht abgeschlossen werden",
+      "quoteError": "Das Angebot für die Dienstleistungszahlung konnte nicht berechnet werden",
+      "receiptError": "Der Beleg für die Dienstleistungszahlung konnte nicht abgerufen werden",
+      "success": "Die Dienstleistungszahlung wurde erfolgreich abgeschlossen",
+      "validAmount": "Geben Sie einen gültigen positiven Betrag ein"
+    }
+  },
   "creditOrigination": {
     "title": "Status der Kreditvergabe",
     "loading": "Status der Kreditvergabe wird geladen...",
@@ -1411,6 +1454,7 @@
       "Beneficiary": "Begünstigter",
       "Beneficiary Details": "Details des Begünstigten",
       "Beneficiary Selection": "Begünstigtenauswahl",
+      "Bill and Service Payment": "Rechnungs- und Dienstleistungszahlung",
       "Block Savings Account": "Sparkonto sperren",
       "Breach Configuration": "Verstoßkonfiguration",
       "Breach Periods": "Verstoßperioden",
@@ -5393,6 +5437,7 @@
       "Country": "Land",
       "Amount must be greater than zero": "Der Betrag muss größer als null sein",
       "Base Teller Savings Account Opening": "Sparkontoeröffnung am Basisschalter",
+      "Bill and Service Payment": "Rechnungs- und Dienstleistungszahlung",
       "Savings Growth": "Sparwachstum",
       "Time Period": "Zeitraum",
       "Women Borrowers": "Kreditnehmerinnen",

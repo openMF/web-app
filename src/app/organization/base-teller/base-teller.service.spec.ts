@@ -212,4 +212,63 @@ describe('BaseTellerService', () => {
     );
     expect((await resultPromise).error.defaultUserMessage).toBe('Returned check has already been settled.');
   });
+
+  it('uses the exact WEB-1236 endpoints and contracts', async () => {
+    const servicesPromise = firstValueFrom(service.getServicePaymentServices());
+    const servicesRequest = httpMock.expectOne('/v2/base-teller/service-payments/services');
+    expect(servicesRequest.request.method).toBe('GET');
+    servicesRequest.flush([{ id: 5, code: 'POWER', name: 'Power', active: true, denominations: [] }]);
+    expect((await servicesPromise)[0].code).toBe('POWER');
+
+    const clientPromise = firstValueFrom(service.getServicePaymentClient(42));
+    const clientRequest = httpMock.expectOne('/v2/base-teller/service-payments/clients/42');
+    expect(clientRequest.request.method).toBe('GET');
+    clientRequest.flush({ clientId: 42, displayName: 'Ada' });
+    expect((await clientPromise).clientId).toBe(42);
+
+    const quote = {
+      payerType: 'NON_CLIENT' as const,
+      payerName: 'Ada',
+      serviceId: 5,
+      serviceReference: 'INV-1',
+      baseAmount: '100.00',
+      currencyCode: 'USD'
+    };
+    const quotePromise = firstValueFrom(service.quoteServicePayment(quote));
+    const quoteRequest = httpMock.expectOne('/v2/base-teller/service-payments/quote');
+    expect(quoteRequest.request.method).toBe('POST');
+    expect(quoteRequest.request.body).toEqual(quote);
+    quoteRequest.flush({ ...quote, commission: 2, commissionVat: 0.26, totalToPay: 102.26 });
+    expect((await quotePromise).totalToPay).toBe(102.26);
+
+    const payment = {
+      ...quote,
+      idempotencyKey: 'stable-key',
+      businessDate: '2026-09-25',
+      paymentTypeId: 1,
+      denominations: [{ denominationId: '100', value: 100, quantity: 2 }]
+    };
+    const paymentPromise = firstValueFrom(service.createServicePayment(payment));
+    const paymentRequest = httpMock.expectOne('/v2/base-teller/service-payments');
+    expect(paymentRequest.request.method).toBe('POST');
+    expect(paymentRequest.request.body).toEqual(payment);
+    paymentRequest.flush({ transactionId: 77, receiptNumber: 'SP-77' });
+    expect((await paymentPromise).transactionId).toBe(77);
+
+    const receiptPromise = firstValueFrom(service.getServicePaymentReceipt(77));
+    const receiptRequest = httpMock.expectOne('/v2/base-teller/service-payments/77/receipt');
+    expect(receiptRequest.request.method).toBe('GET');
+    receiptRequest.flush({ transactionId: 77, receiptNumber: 'SP-77' });
+    expect((await receiptPromise).receiptNumber).toBe('SP-77');
+  });
+
+  it('searches only clients for the service-payment payer lookup', async () => {
+    const resultPromise = firstValueFrom(service.searchServicePaymentClients('Ada'));
+    const request = httpMock.expectOne((candidate) => candidate.url === '/search');
+    expect(request.request.params.get('query')).toBe('Ada');
+    expect(request.request.params.get('resource')).toBe('clients');
+    expect(request.request.params.get('exactMatch')).toBe('false');
+    request.flush([{ entityId: 42, entityName: 'Ada' }]);
+    expect(await resultPromise).toEqual([{ entityId: 42, entityName: 'Ada' }]);
+  });
 });

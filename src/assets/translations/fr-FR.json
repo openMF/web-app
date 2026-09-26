@@ -1,4 +1,47 @@
 {
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Détails du paiement"
+    },
+    "buttons": {
+      "calculate": "Calculer",
+      "newPayment": "Nouveau paiement",
+      "printReceipt": "Imprimer le reçu",
+      "reprintReceipt": "Réimprimer le reçu"
+    },
+    "inputs": {
+      "clientSearch": "Nom du client, numéro de compte ou identifiant externe",
+      "commission": "Commission",
+      "commissionVat": "TVA sur la commission",
+      "existingClient": "Client existant",
+      "nonClient": "Non-client",
+      "payer": "Payeur",
+      "payerName": "Nom du payeur",
+      "payerNameRequired": "Le nom du payeur est obligatoire",
+      "payerType": "Type de payeur",
+      "service": "Service",
+      "serviceReference": "Référence du service",
+      "subtotal": "Sous-total",
+      "totalToPay": "Total à payer"
+    },
+    "text": {
+      "clientError": "Les informations du client n’ont pas pu être chargées",
+      "clientSearchError": "La recherche de clients a échoué",
+      "configurationError": "La configuration des paiements de services n’a pas pu être chargée",
+      "insufficientCash": "Le montant reçu ne peut pas être inférieur au total à payer",
+      "navigation": "Traiter le paiement en espèces d’une facture ou d’un service",
+      "noClients": "Aucun client trouvé",
+      "noCreatePermission": "Vous n’êtes pas autorisé à créer des paiements de services",
+      "noDenominations": "Aucune coupure n’est configurée pour la devise de ce service",
+      "noReadPermission": "Vous n’êtes pas autorisé à consulter les paiements de services",
+      "noServices": "Aucun service de paiement n’est configuré",
+      "paymentError": "Le paiement du service n’a pas pu être effectué",
+      "quoteError": "Le devis du paiement du service n’a pas pu être calculé",
+      "receiptError": "Le reçu du paiement du service n’a pas pu être récupéré",
+      "success": "Le paiement du service a été effectué avec succès",
+      "validAmount": "Saisissez un montant positif valide"
+    }
+  },
   "creditOrigination": {
     "title": "Statut d’octroi du crédit",
     "loading": "Chargement du statut d’octroi du crédit...",
@@ -1409,6 +1452,7 @@
       "Beneficiary": "Bénéficiaire",
       "Beneficiary Details": "Détails du bénéficiaire",
       "Beneficiary Selection": "Sélection du bénéficiaire",
+      "Bill and Service Payment": "Paiement de factures et de services",
       "Block Savings Account": "Bloquer le compte d'épargne",
       "Breach Configuration": "Configuration de violation",
       "Breach Periods": "Périodes de Manquement",
@@ -5391,6 +5435,7 @@
       "Country": "Pays",
       "Amount must be greater than zero": "Le montant doit être supérieur à zéro",
       "Base Teller Savings Account Opening": "Ouverture de compte d'épargne au guichet de base",
+      "Bill and Service Payment": "Paiement de factures et de services",
       "Savings Growth": "Croissance de l'épargne",
       "Time Period": "Période",
       "Women Borrowers": "Emprunteuses",
