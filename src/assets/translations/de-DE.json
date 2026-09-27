@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Bar- und Scheckzahlungen für Kredite",
+      "denominations": "Bargeldstückelungen",
+      "receipt": "Kreditzahlungsbeleg"
+    },
+    "steps": {
+      "customer": "Kundensuche",
+      "loan": "Kredit- und Saldoüberprüfung",
+      "payment": "Zahlungsdetails",
+      "confirmation": "Vorschau und Bestätigung",
+      "receipt": "Quittung"
+    },
+    "tabs": {
+      "current": "Aktuelle Guthaben",
+      "overdue": "Überfällige Beträge",
+      "schedule": "Tilgungsplan",
+      "history": "Transaktionsverlauf"
+    },
+    "fields": {
+      "businessDate": "Geschäftsdatum",
+      "teller": "Schalter",
+      "cashier": "Kassierer",
+      "customerSearch": "Kundensuche",
+      "customer": "Kunde",
+      "accountNumber": "Kontonummer",
+      "office": "Büro",
+      "status": "Status",
+      "loanAccount": "Darlehenskonto",
+      "totalDue": "Gesamtbetrag der Fälligkeit",
+      "principal": "Kapital",
+      "interest": "Interesse",
+      "tax": "Zinssteuer/Mehrwertsteuer",
+      "fees": "Gebühren",
+      "penalties": "Strafen",
+      "total": "Insgesamt",
+      "paymentMethod": "Zahlungsmethode",
+      "amount": "Betrag",
+      "paymentType": "Zahlungsart",
+      "note": "Hinweis",
+      "denomination": "Konfession",
+      "quantity": "Menge",
+      "subtotal": "Zwischensumme",
+      "paymentAmount": "Zahlungsbetrag",
+      "tendered": "Übergebenes Bargeld",
+      "change": "Rückgeld",
+      "bank": "Bank",
+      "checkType": "Scheckart",
+      "checkNumber": "Schecknummer",
+      "checkAccount": "Scheckkontonummer",
+      "routingCode": "Routing-Code",
+      "classification": "Scheckklassifizierung",
+      "receiptNumber": "Belegnummer",
+      "operator": "Betreiber",
+      "loanTransaction": "Kredittransaktions-ID",
+      "cashierTransaction": "Kassierer-Transaktions-ID",
+      "overpayment": "Überzahlung",
+      "returnReason": "Rückgabegrund"
+    },
+    "methods": {
+      "CASH": "Bargeld",
+      "CHECK": "Scheck"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Zum Einzug",
+      "CLEARED_FUNDS": "Verfügbare Deckung"
+    },
+    "status": {
+      "IN_PROGRESS": "In Bearbeitung",
+      "PENDING_COLLECTION": "Ausstehende Abholung",
+      "COMPLETED": "Abgeschlossen",
+      "CLEARED": "Eingelöst",
+      "RETURNED": "Zurückgegeben",
+      "FAILED": "Fehlgeschlagen"
+    },
+    "actions": {
+      "preview": "Vorschau der Zahlung",
+      "confirmSubmit": "Bestätigen und abschicken",
+      "clearCheck": "Scheck einlösen",
+      "returnCheck": "Scheck zurückgeben",
+      "print": "Drucken",
+      "reprint": "Nachdruck",
+      "newPayment": "Neue Zahlung"
+    },
+    "hints": {
+      "customerSearch": "Suchen Sie nach Name, Kundennummer oder Kontoinhabernummer"
+    },
+    "messages": {
+      "pendingExplanation": "Der Scheck wird zum Einzug angenommen. Der Kreditsaldo wird erst reduziert, wenn ein autorisierter Benutzer den Scheck einlöst.",
+      "pendingReceipt": "Die Zahlung steht noch aus. Es wurde keine Kreditrückzahlung gebucht.",
+      "confirm": "Sehen Sie sich die Backend-autorisierende Vorschau sorgfältig an und bestätigen Sie dann ausdrücklich die Zahlung."
+    },
+    "empty": {
+      "customers": "Keine Kunden gefunden",
+      "loans": "Keine geeigneten Kredite gefunden",
+      "schedule": "Es ist kein Tilgungsplan verfügbar",
+      "history": "Es ist kein Transaktionsverlauf verfügbar",
+      "paymentTypes": "Es ist keine konfigurierte Zahlungsart verfügbar",
+      "denominations": "Für diese Währung sind keine Stückelungen konfiguriert",
+      "banks": "Es sind keine Banken konfiguriert"
+    },
+    "validation": {
+      "amount": "Geben Sie einen Betrag größer Null mit maximal sechs Dezimalstellen ein",
+      "quantity": "Die Menge muss eine nicht negative ganze Zahl sein",
+      "insufficientCash": "Das übergebene Bargeld ist geringer als der Zahlungsbetrag"
+    },
+    "errors": {
+      "noReadPermission": "Sie sind nicht berechtigt, Kreditzahlungen anzuzeigen",
+      "noCreatePermission": "Sie sind nicht berechtigt, diese Zahlung zu erstellen",
+      "configuration": "Die Tellerkonfiguration konnte nicht geladen werden. Überprüfen Sie die Kassiererzuweisung und die Backend-Konfiguration.",
+      "customerSearch": "Die Kundensuche ist fehlgeschlagen",
+      "loanList": "Berechtigte Kredite konnten nicht geladen werden",
+      "loanDetails": "Kreditdetails konnten nicht geladen werden",
+      "preview": "Die Zahlungsvorschau ist fehlgeschlagen",
+      "submit": "Die Zahlung konnte nicht übermittelt werden",
+      "receipt": "Der Beleg konnte nicht geladen werden",
+      "transition": "Der Statuswechsel des Schecks konnte nicht abgeschlossen werden"
+    }
+  },
   "cashAllocation": {
     "title": "Kassenladenöffnung und Bargeldbereitstellung",
     "actions": {

@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Cash and Check Credit Payments",
+      "denominations": "Cash Denominations",
+      "receipt": "Credit Payment Receipt"
+    },
+    "steps": {
+      "customer": "Customer Search",
+      "loan": "Loan and Balance Review",
+      "payment": "Payment Details",
+      "confirmation": "Preview and Confirmation",
+      "receipt": "Receipt"
+    },
+    "tabs": {
+      "current": "Current Balances",
+      "overdue": "Overdue Balances",
+      "schedule": "Amortization Schedule",
+      "history": "Transaction History"
+    },
+    "fields": {
+      "businessDate": "Business Date",
+      "teller": "Teller",
+      "cashier": "Cashier",
+      "customerSearch": "Customer Search",
+      "customer": "Customer",
+      "accountNumber": "Account Number",
+      "office": "Office",
+      "status": "Status",
+      "loanAccount": "Loan Account",
+      "totalDue": "Total Amount Due",
+      "principal": "Principal",
+      "interest": "Interest",
+      "tax": "Interest Tax/VAT",
+      "fees": "Fees",
+      "penalties": "Penalties",
+      "total": "Total",
+      "paymentMethod": "Payment Method",
+      "amount": "Amount",
+      "paymentType": "Payment Type",
+      "note": "Note",
+      "denomination": "Denomination",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal",
+      "paymentAmount": "Payment Amount",
+      "tendered": "Tendered Cash",
+      "change": "Change",
+      "bank": "Bank",
+      "checkType": "Check Type",
+      "checkNumber": "Check Number",
+      "checkAccount": "Check Account Number",
+      "routingCode": "Routing Code",
+      "classification": "Check Classification",
+      "receiptNumber": "Receipt Number",
+      "operator": "Operator",
+      "loanTransaction": "Loan Transaction ID",
+      "cashierTransaction": "Cashier Transaction ID",
+      "overpayment": "Overpayment",
+      "returnReason": "Return Reason"
+    },
+    "methods": {
+      "CASH": "Cash",
+      "CHECK": "Check"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Subject to Collection",
+      "CLEARED_FUNDS": "Cleared Funds"
+    },
+    "status": {
+      "IN_PROGRESS": "In Progress",
+      "PENDING_COLLECTION": "Pending Collection",
+      "COMPLETED": "Completed",
+      "CLEARED": "Cleared",
+      "RETURNED": "Returned",
+      "FAILED": "Failed"
+    },
+    "actions": {
+      "preview": "Preview Payment",
+      "confirmSubmit": "Confirm and Submit",
+      "clearCheck": "Clear Check",
+      "returnCheck": "Return Check",
+      "print": "Print",
+      "reprint": "Reprint",
+      "newPayment": "New Payment"
+    },
+    "hints": {
+      "customerSearch": "Search by name, customer number, or account-holder number"
+    },
+    "messages": {
+      "pendingExplanation": "The check will be accepted pending collection. The loan will not be reduced until an authorized user clears the check.",
+      "pendingReceipt": "Payment is pending collection. No loan repayment has been posted.",
+      "confirm": "Review the backend-authoritative preview carefully, then explicitly confirm the payment."
+    },
+    "empty": {
+      "customers": "No customers found",
+      "loans": "No eligible loans found",
+      "schedule": "No amortization schedule is available",
+      "history": "No transaction history is available",
+      "paymentTypes": "No configured payment type is available",
+      "denominations": "No denominations are configured for this currency",
+      "banks": "No banks are configured"
+    },
+    "validation": {
+      "amount": "Enter an amount greater than zero with no more than six decimal places",
+      "quantity": "Quantity must be a non-negative whole number",
+      "insufficientCash": "Tendered cash is less than the payment amount"
+    },
+    "errors": {
+      "noReadPermission": "You do not have permission to view credit payments",
+      "noCreatePermission": "You do not have permission to create this payment",
+      "configuration": "Teller configuration could not be loaded. Verify the cashier assignment and backend configuration.",
+      "customerSearch": "Customer search failed",
+      "loanList": "Eligible loans could not be loaded",
+      "loanDetails": "Loan details could not be loaded",
+      "preview": "Payment preview failed",
+      "submit": "Payment could not be submitted",
+      "receipt": "Receipt could not be loaded",
+      "transition": "The check transition could not be completed"
+    }
+  },
   "cashAllocation": {
     "title": "Cash Drawer Opening and Provisioning",
     "actions": {

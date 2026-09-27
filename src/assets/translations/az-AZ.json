@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Kredit üzrə nağd və çek ödənişləri",
+      "denominations": "Nağd pul nominalları",
+      "receipt": "Kredit ödəniş qəbzi"
+    },
+    "steps": {
+      "customer": "Müştəri Axtarışı",
+      "loan": "Kredit və Balans Baxışı",
+      "payment": "Ödəniş təfərrüatları",
+      "confirmation": "Önizləmə və Təsdiq",
+      "receipt": "Qəbz"
+    },
+    "tabs": {
+      "current": "Cari balanslar",
+      "overdue": "Vaxtı keçmiş qalıqlar",
+      "schedule": "Amortizasiya Cədvəli",
+      "history": "Əməliyyat Tarixçəsi"
+    },
+    "fields": {
+      "businessDate": "İş Tarixi",
+      "teller": "Əməliyyat pəncərəsi",
+      "cashier": "Kassir",
+      "customerSearch": "Müştəri Axtarışı",
+      "customer": "Müştəri",
+      "accountNumber": "Hesab nömrəsi",
+      "office": "Ofis",
+      "status": "Vəziyyət",
+      "loanAccount": "Kredit hesabı",
+      "totalDue": "Ödənilməli olan ümumi məbləğ",
+      "principal": "Əsas borc",
+      "interest": "Maraq",
+      "tax": "Faiz Vergisi/ƏDV",
+      "fees": "Rüsumlar",
+      "penalties": "Penaltilər",
+      "total": "Cəmi",
+      "paymentMethod": "Ödəniş metodu",
+      "amount": "Məbləğ",
+      "paymentType": "Ödəniş növü",
+      "note": "Qeyd",
+      "denomination": "Denominasiya",
+      "quantity": "Kəmiyyət",
+      "subtotal": "Ara cəmi",
+      "paymentAmount": "Ödəniş məbləği",
+      "tendered": "Nağd pul",
+      "change": "Qaytarılacaq məbləğ",
+      "bank": "Bank",
+      "checkType": "Çek növü",
+      "checkNumber": "Çek nömrəsi",
+      "checkAccount": "Çek hesab nömrəsi",
+      "routingCode": "Marşrut kodu",
+      "classification": "Çek təsnifatı",
+      "receiptNumber": "Qəbz nömrəsi",
+      "operator": "Operator",
+      "loanTransaction": "Kredit Əməliyyatı ID",
+      "cashierTransaction": "Kassir əməliyyatının ID-si",
+      "overpayment": "Artıq ödəniş",
+      "returnReason": "Qayıdış Səbəbi"
+    },
+    "methods": {
+      "CASH": "Nağd pul",
+      "CHECK": "Çek"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "İnkassoya qəbul edilən",
+      "CLEARED_FUNDS": "Təsdiqlənmiş vəsait"
+    },
+    "status": {
+      "IN_PROGRESS": "Davam edir",
+      "PENDING_COLLECTION": "Gözləyən Kolleksiya",
+      "COMPLETED": "Tamamlandı",
+      "CLEARED": "Təsdiqləndi",
+      "RETURNED": "Qayıtdı",
+      "FAILED": "Uğursuz oldu"
+    },
+    "actions": {
+      "preview": "Ödənişə ön baxış",
+      "confirmSubmit": "Təsdiq edin və təqdim edin",
+      "clearCheck": "Çeki təsdiqlə",
+      "returnCheck": "Çeki geri qaytar",
+      "print": "Çap et",
+      "reprint": "Yenidən çap edin",
+      "newPayment": "Yeni Ödəniş"
+    },
+    "hints": {
+      "customerSearch": "Adı, müştəri nömrəsi və ya hesab sahibinin nömrəsi ilə axtarın"
+    },
+    "messages": {
+      "pendingExplanation": "Çek inkassoya qəbul ediləcək. Səlahiyyətli istifadəçi çeki təsdiqləyənə qədər kredit qalığı azalmayacaq.",
+      "pendingReceipt": "Ödənişin yığılması gözlənilir. Kreditin ödənilməsi barədə məlumat verilməyib.",
+      "confirm": "Backend-səlahiyyətli önizləməni diqqətlə nəzərdən keçirin, sonra ödənişi açıq şəkildə təsdiqləyin."
+    },
+    "empty": {
+      "customers": "Müştəri tapılmadı",
+      "loans": "Uyğun kredit tapılmadı",
+      "schedule": "Amortizasiya cədvəli mövcud deyil",
+      "history": "Heç bir əməliyyat tarixçəsi mövcud deyil",
+      "paymentTypes": "Konfiqurasiya edilmiş ödəniş növü mövcud deyil",
+      "denominations": "Bu valyuta üçün heç bir nominal konfiqurasiya edilməyib",
+      "banks": "Heç bir bank konfiqurasiya edilməyib"
+    },
+    "validation": {
+      "amount": "Altı onluqdan çox olmayan sıfırdan böyük məbləği daxil edin",
+      "quantity": "Kəmiyyət mənfi olmayan tam ədəd olmalıdır",
+      "insufficientCash": "Nağd pul ödəniş məbləğindən azdır"
+    },
+    "errors": {
+      "noReadPermission": "Sizin kredit ödənişlərinə baxmaq icazəniz yoxdur",
+      "noCreatePermission": "Bu ödənişi yaratmaq icazəniz yoxdur",
+      "configuration": "Teller konfiqurasiyasını yükləmək mümkün olmadı. Kassir təyinatını və arxa uç konfiqurasiyasını yoxlayın.",
+      "customerSearch": "Müştəri axtarışı alınmadı",
+      "loanList": "Uyğun kreditləri yükləmək mümkün olmadı",
+      "loanDetails": "Kredit təfərrüatlarını yükləmək mümkün olmadı",
+      "preview": "Ödənişin önizləməsi alınmadı",
+      "submit": "Ödənişi təqdim etmək mümkün olmadı",
+      "receipt": "Qəbzi yükləmək mümkün olmadı",
+      "transition": "Çek keçidini tamamlamaq mümkün olmadı"
+    }
+  },
   "cashAllocation": {
     "title": "Kassanın açılması və nağd pulla təminatı",
     "actions": {

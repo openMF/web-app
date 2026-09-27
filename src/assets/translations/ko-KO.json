@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "현금 및 수표 대출 상환",
+      "denominations": "현금 액면가",
+      "receipt": "신용 지불 영수증"
+    },
+    "steps": {
+      "customer": "고객 검색",
+      "loan": "대출 및 잔액 검토",
+      "payment": "결제 세부정보",
+      "confirmation": "미리보기 및 확인",
+      "receipt": "영수증"
+    },
+    "tabs": {
+      "current": "현재 잔액",
+      "overdue": "연체 잔액",
+      "schedule": "상각 일정",
+      "history": "거래 내역"
+    },
+    "fields": {
+      "businessDate": "사업일",
+      "teller": "창구",
+      "cashier": "출납원",
+      "customerSearch": "고객 검색",
+      "customer": "고객",
+      "accountNumber": "계좌번호",
+      "office": "사무실",
+      "status": "상태",
+      "loanAccount": "대출계좌",
+      "totalDue": "총 지불 금액",
+      "principal": "원금",
+      "interest": "이자",
+      "tax": "이자세/VAT",
+      "fees": "수수료",
+      "penalties": "처벌",
+      "total": "합계",
+      "paymentMethod": "결제수단",
+      "amount": "금액",
+      "paymentType": "결제 유형",
+      "note": "참고",
+      "denomination": "명칭",
+      "quantity": "수량",
+      "subtotal": "소계",
+      "paymentAmount": "결제 금액",
+      "tendered": "입찰현금",
+      "change": "거스름돈",
+      "bank": "은행",
+      "checkType": "수표 유형",
+      "checkNumber": "수표번호",
+      "checkAccount": "수표 계좌 번호",
+      "routingCode": "라우팅 코드",
+      "classification": "수표 분류",
+      "receiptNumber": "영수증 번호",
+      "operator": "운영자",
+      "loanTransaction": "대출거래ID",
+      "cashierTransaction": "계산원 거래 ID",
+      "overpayment": "초과 지급",
+      "returnReason": "반품 이유"
+    },
+    "methods": {
+      "CASH": "현금",
+      "CHECK": "수표"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "추심 조건부",
+      "CLEARED_FUNDS": "결제 확인된 자금"
+    },
+    "status": {
+      "IN_PROGRESS": "진행 중",
+      "PENDING_COLLECTION": "보류 중인 컬렉션",
+      "COMPLETED": "완료됨",
+      "CLEARED": "결제 완료",
+      "RETURNED": "반환됨",
+      "FAILED": "실패"
+    },
+    "actions": {
+      "preview": "미리보기 결제",
+      "confirmSubmit": "확인 및 제출",
+      "clearCheck": "수표 결제 처리",
+      "returnCheck": "수표 반환",
+      "print": "인쇄",
+      "reprint": "재판",
+      "newPayment": "새로운 결제"
+    },
+    "hints": {
+      "customerSearch": "이름, 고객 번호, 계좌 소유자 번호로 검색"
+    },
+    "messages": {
+      "pendingExplanation": "수표는 추심 조건부로 접수됩니다. 권한이 있는 사용자가 수표 결제를 처리할 때까지 대출 잔액은 줄어들지 않습니다.",
+      "pendingReceipt": "결제가 수집 보류 중입니다. 대출금 상환 내역이 없습니다.",
+      "confirm": "백엔드 권한 미리보기를 주의 깊게 검토한 후 결제를 명시적으로 확인하세요."
+    },
+    "empty": {
+      "customers": "고객을 찾을 수 없습니다.",
+      "loans": "적격 대출을 찾을 수 없습니다.",
+      "schedule": "상각 일정이 없습니다.",
+      "history": "거래내역이 없습니다",
+      "paymentTypes": "구성된 결제 유형이 없습니다.",
+      "denominations": "이 통화에 구성된 단위가 없습니다.",
+      "banks": "구성된 은행이 없습니다."
+    },
+    "validation": {
+      "amount": "소수점 6자리 이하로 0보다 큰 금액을 입력하세요.",
+      "quantity": "수량은 음수가 아닌 정수여야 합니다.",
+      "insufficientCash": "입찰현금이 결제금액보다 적습니다."
+    },
+    "errors": {
+      "noReadPermission": "크레딧 결제를 볼 수 있는 권한이 없습니다.",
+      "noCreatePermission": "이 결제를 생성할 권한이 없습니다.",
+      "configuration": "텔러 구성을 로드할 수 없습니다. 계산원 할당 및 백엔드 구성을 확인합니다.",
+      "customerSearch": "고객 검색 실패",
+      "loanList": "적격 대출을 로드할 수 없습니다.",
+      "loanDetails": "대출 세부정보를 로드할 수 없습니다.",
+      "preview": "결제 미리보기 실패",
+      "submit": "결제를 제출할 수 없습니다.",
+      "receipt": "영수증을 로드할 수 없습니다.",
+      "transition": "수표 상태 변경을 완료할 수 없습니다."
+    }
+  },
   "cashAllocation": {
     "title": "현금 서랍 개설 및 현금 공급",
     "actions": {

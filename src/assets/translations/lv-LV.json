@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Kredīta maksājumi skaidrā naudā un ar čeku",
+      "denominations": "Skaidras naudas nominālvērtības",
+      "receipt": "Kredīta maksājuma kvīts"
+    },
+    "steps": {
+      "customer": "Klientu meklēšana",
+      "loan": "Kredīta un bilances apskats",
+      "payment": "Maksājuma informācija",
+      "confirmation": "Priekšskatījums un apstiprināšana",
+      "receipt": "Kvīts"
+    },
+    "tabs": {
+      "current": "Pašreizējie atlikumi",
+      "overdue": "Nokavētie atlikumi",
+      "schedule": "Amortizācijas grafiks",
+      "history": "Darījumu vēsture"
+    },
+    "fields": {
+      "businessDate": "Darba datums",
+      "teller": "Klientu apkalpošanas kase",
+      "cashier": "Kasieris",
+      "customerSearch": "Klientu meklēšana",
+      "customer": "Klients",
+      "accountNumber": "Konta numurs",
+      "office": "Birojs",
+      "status": "Statuss",
+      "loanAccount": "Aizdevuma konts",
+      "totalDue": "Kopējā maksājamā summa",
+      "principal": "Pamatsumma",
+      "interest": "Interese",
+      "tax": "Procentu nodoklis/PVN",
+      "fees": "Maksas",
+      "penalties": "Sodi",
+      "total": "Kopā",
+      "paymentMethod": "Maksājuma veids",
+      "amount": "Summa",
+      "paymentType": "Maksājuma veids",
+      "note": "Piezīme",
+      "denomination": "Denominācija",
+      "quantity": "Daudzums",
+      "subtotal": "Starpsumma",
+      "paymentAmount": "Maksājuma summa",
+      "tendered": "Piedāvātā nauda",
+      "change": "Atlikums",
+      "bank": "Banka",
+      "checkType": "Čeka veids",
+      "checkNumber": "Čeka numurs",
+      "checkAccount": "Čeka konta numurs",
+      "routingCode": "Maršruta kods",
+      "classification": "Čeka klasifikācija",
+      "receiptNumber": "Kvīts numurs",
+      "operator": "Operators",
+      "loanTransaction": "Aizdevuma darījuma ID",
+      "cashierTransaction": "Kases darījuma ID",
+      "overpayment": "Pārmaksa",
+      "returnReason": "Atgriešanas iemesls"
+    },
+    "methods": {
+      "CASH": "Skaidra nauda",
+      "CHECK": "Čeks"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Inkaso",
+      "CLEARED_FUNDS": "Segti līdzekļi"
+    },
+    "status": {
+      "IN_PROGRESS": "Notiek",
+      "PENDING_COLLECTION": "Gaidāma kolekcija",
+      "COMPLETED": "Pabeigts",
+      "CLEARED": "Apmaksāts",
+      "RETURNED": "Atgriezās",
+      "FAILED": "Neizdevās"
+    },
+    "actions": {
+      "preview": "Priekšskatīt maksājumu",
+      "confirmSubmit": "Apstipriniet un iesniedziet",
+      "clearCheck": "Apmaksāt čeku",
+      "returnCheck": "Atgriezt čeku",
+      "print": "Drukāt",
+      "reprint": "Atkārtoti izdrukāt",
+      "newPayment": "Jauns maksājums"
+    },
+    "hints": {
+      "customerSearch": "Meklējiet pēc vārda, klienta numura vai konta īpašnieka numura"
+    },
+    "messages": {
+      "pendingExplanation": "Čeks tiks pieņemts inkaso. Kredīta atlikums netiks samazināts, kamēr pilnvarots lietotājs neapmaksās čeku.",
+      "pendingReceipt": "Maksājums gaida iekasēšanu. Kredīta atmaksa nav iegrāmatota.",
+      "confirm": "Rūpīgi pārskatiet aizmugursistēmas autoritatīvo priekšskatījumu un pēc tam skaidri apstipriniet maksājumu."
+    },
+    "empty": {
+      "customers": "Nav atrasts neviens klients",
+      "loans": "Nav atrasts neviens piemērots aizdevums",
+      "schedule": "Amortizācijas grafiks nav pieejams",
+      "history": "Darījumu vēsture nav pieejama",
+      "paymentTypes": "Nav pieejams neviens konfigurēts maksājuma veids",
+      "denominations": "Šai valūtai nav konfigurēta neviena nominālvērtība",
+      "banks": "Nav konfigurēta neviena banka"
+    },
+    "validation": {
+      "amount": "Ievadiet summu, kas lielāka par nulli ar ne vairāk kā sešām zīmēm aiz komata",
+      "quantity": "Daudzumam ir jābūt nenegatīvam veselam skaitlim",
+      "insufficientCash": "Piedāvātā skaidrā nauda ir mazāka par maksājuma summu"
+    },
+    "errors": {
+      "noReadPermission": "Jums nav atļaujas skatīt kredītmaksājumus",
+      "noCreatePermission": "Jums nav atļaujas izveidot šo maksājumu",
+      "configuration": "Nevarēja ielādēt kases konfigurāciju. Pārbaudiet kasiera piešķiršanu un aizmugursistēmas konfigurāciju.",
+      "customerSearch": "Klientu meklēšana neizdevās",
+      "loanList": "Nevarēja ielādēt piemērotos aizdevumus",
+      "loanDetails": "Aizdevuma informāciju nevarēja ielādēt",
+      "preview": "Maksājuma priekšskatījums neizdevās",
+      "submit": "Maksājumu nevarēja iesniegt",
+      "receipt": "Kvītu nevarēja ielādēt",
+      "transition": "Neizdevās pabeigt čeka statusa maiņu"
+    }
+  },
   "cashAllocation": {
     "title": "Kases atvēršana un skaidras naudas nodrošināšana",
     "actions": {

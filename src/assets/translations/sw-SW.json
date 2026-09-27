@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Malipo ya mkopo kwa pesa taslimu na hundi",
+      "denominations": "Madhehebu ya Fedha",
+      "receipt": "Risiti ya Malipo ya Mkopo"
+    },
+    "steps": {
+      "customer": "Utafutaji wa Wateja",
+      "loan": "Mapitio ya Mikopo na Mizani",
+      "payment": "Maelezo ya Malipo",
+      "confirmation": "Hakiki na Uthibitisho",
+      "receipt": "Risiti"
+    },
+    "tabs": {
+      "current": "Mizani ya Sasa",
+      "overdue": "Mizani iliyopitwa na wakati",
+      "schedule": "Ratiba ya Malipo",
+      "history": "Historia ya Muamala"
+    },
+    "fields": {
+      "businessDate": "Tarehe ya Biashara",
+      "teller": "Dirisha la huduma",
+      "cashier": "Keshia",
+      "customerSearch": "Utafutaji wa Wateja",
+      "customer": "Mteja",
+      "accountNumber": "Nambari ya Akaunti",
+      "office": "Ofisi",
+      "status": "Hali",
+      "loanAccount": "Akaunti ya mkopo",
+      "totalDue": "Jumla ya Kiasi Kinachodaiwa",
+      "principal": "Mtaji",
+      "interest": "Maslahi",
+      "tax": "Kodi ya Riba/VAT",
+      "fees": "Ada",
+      "penalties": "Adhabu",
+      "total": "Jumla",
+      "paymentMethod": "Njia ya Malipo",
+      "amount": "Kiasi",
+      "paymentType": "Aina ya Malipo",
+      "note": "Kumbuka",
+      "denomination": "Dhehebu",
+      "quantity": "Kiasi",
+      "subtotal": "Jumla ndogo",
+      "paymentAmount": "Kiasi cha Malipo",
+      "tendered": "Pesa zilizotolewa",
+      "change": "Chenji",
+      "bank": "Benki",
+      "checkType": "Aina ya hundi",
+      "checkNumber": "Nambari ya hundi",
+      "checkAccount": "Nambari ya akaunti ya hundi",
+      "routingCode": "Msimbo wa Njia",
+      "classification": "Uainishaji wa hundi",
+      "receiptNumber": "Nambari ya risiti",
+      "operator": "Opereta",
+      "loanTransaction": "Kitambulisho cha Muamala wa Mkopo",
+      "cashierTransaction": "Kitambulisho cha Muamala wa Cashier",
+      "overpayment": "Malipo ya ziada",
+      "returnReason": "Kurudi Sababu"
+    },
+    "methods": {
+      "CASH": "Fedha taslimu",
+      "CHECK": "Hundi"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Inasubiri kukusanywa",
+      "CLEARED_FUNDS": "Fedha zilizothibitishwa"
+    },
+    "status": {
+      "IN_PROGRESS": "Inaendelea",
+      "PENDING_COLLECTION": "Mkusanyiko Unasubiri",
+      "COMPLETED": "Imekamilika",
+      "CLEARED": "Imelipwa",
+      "RETURNED": "Imerejeshwa",
+      "FAILED": "Imeshindwa"
+    },
+    "actions": {
+      "preview": "Hakiki Malipo",
+      "confirmSubmit": "Thibitisha na Uwasilishe",
+      "clearCheck": "Thibitisha hundi",
+      "returnCheck": "Rudisha hundi",
+      "print": "Chapisha",
+      "reprint": "Chapisha upya",
+      "newPayment": "Malipo Mapya"
+    },
+    "hints": {
+      "customerSearch": "Tafuta kwa jina, nambari ya mteja, au nambari ya mwenye akaunti"
+    },
+    "messages": {
+      "pendingExplanation": "Hundi itakubaliwa ikisubiri kukusanywa. Salio la mkopo halitapunguzwa hadi mtumiaji aliyeidhinishwa athibitishe hundi.",
+      "pendingReceipt": "Malipo yanasubiri kukusanywa. Hakuna urejeshaji wa mkopo uliotumwa.",
+      "confirm": "Kagua onyesho la kukagua lililoidhinishwa na mazingira ya nyuma kwa makini, kisha uthibitishe malipo kwa uwazi."
+    },
+    "empty": {
+      "customers": "Hakuna wateja waliopatikana",
+      "loans": "Hakuna mikopo inayostahiki iliyopatikana",
+      "schedule": "Hakuna ratiba ya malipo inayopatikana",
+      "history": "Hakuna historia ya muamala inayopatikana",
+      "paymentTypes": "Hakuna aina ya malipo iliyosanidiwa inayopatikana",
+      "denominations": "Hakuna madhehebu ambayo yamesanidiwa kwa sarafu hii",
+      "banks": "Hakuna benki zilizosanidiwa"
+    },
+    "validation": {
+      "amount": "Weka kiasi kikubwa zaidi ya sifuri bila nafasi za desimali zisizozidi sita",
+      "quantity": "Idadi lazima iwe nambari nzima isiyo hasi",
+      "insufficientCash": "Pesa iliyotumwa ni chini ya kiasi cha malipo"
+    },
+    "errors": {
+      "noReadPermission": "Huna ruhusa ya kuangalia malipo ya mikopo",
+      "noCreatePermission": "Huna ruhusa ya kuunda malipo haya",
+      "configuration": "Mipangilio ya teller haikuweza kupakiwa. Thibitisha kazi ya keshia na usanidi wa mazingira ya nyuma.",
+      "customerSearch": "Utafutaji wa mteja haukufaulu",
+      "loanList": "Mikopo inayostahiki haikuweza kupakiwa",
+      "loanDetails": "Maelezo ya mkopo hayakuweza kupakiwa",
+      "preview": "Onyesho la kukagua malipo limeshindwa",
+      "submit": "Malipo hayakuweza kuwasilishwa",
+      "receipt": "Risiti haikuweza kupakiwa",
+      "transition": "Mabadiliko ya hali ya hundi hayakuweza kukamilika"
+    }
+  },
   "cashAllocation": {
     "title": "Ufunguzi na Utoaji wa Fedha Taslimu Kwenye Droo",
     "actions": {
