@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Apertura y abastecimiento de caja",
+    "actions": {
+      "confirmPost": "Confirmar y contabilizar",
+      "newOperation": "Nueva operación",
+      "preview": "Vista previa de la transacción",
+      "printReceipt": "Imprimir comprobante",
+      "reprintReceipt": "Reimprimir comprobante",
+      "retrySameTransaction": "Reintentar la misma transacción"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Billete",
+      "COIN": "Moneda"
+    },
+    "dialog": {
+      "confirmTitle": "Confirmar asignación de efectivo"
+    },
+    "empty": {
+      "cashiers": "No hay cajeros activos disponibles para esta oficina",
+      "currencies": "No hay monedas configuradas",
+      "denominations": "No hay denominaciones activas configuradas para esta moneda",
+      "headCashiers": "No hay un cajero principal con fondos disponible para esta moneda"
+    },
+    "errors": {
+      "context": "No se pudo cargar la configuración de asignación de efectivo",
+      "create": "No se pudo completar la asignación de efectivo",
+      "integerQuantity": "Ingrese una cantidad entera de unidades",
+      "noReadPermission": "No tiene permiso para ver las asignaciones de efectivo",
+      "preview": "No se pudo calcular la vista previa de la asignación de efectivo",
+      "receipt": "No se pudo recuperar el comprobante de asignación de efectivo"
+    },
+    "labels": {
+      "businessDate": "Fecha de negocio",
+      "cashInflow": "Entrada de efectivo",
+      "cashOutflow": "Salida de efectivo",
+      "checksInflow": "Entrada de cheques",
+      "checksOutflow": "Salida de cheques",
+      "currency": "Moneda",
+      "denomination": "Denominación",
+      "denominationBreakdown": "Desglose por denominación",
+      "destination": "Destino",
+      "note": "Nota",
+      "office": "Oficina",
+      "operation": "Operación",
+      "quantity": "Cantidad",
+      "source": "Origen",
+      "subtotal": "Subtotal",
+      "totalCash": "Efectivo total",
+      "transferFrom": "Transferir desde",
+      "transferTo": "Transferir a",
+      "type": "Tipo",
+      "vaultBalance": "Saldo de bóveda",
+      "vouchersInflow": "Entrada de vales",
+      "vouchersOutflow": "Salida de vales"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Abastecimiento del cajero principal",
+      "OPERATIONAL_TELLER_ALLOCATION": "Abastecimiento del cajero operativo",
+      "SAFE_VAULT_OPENING": "Apertura de caja / bóveda"
+    },
+    "receipt": {
+      "accountingTransaction": "Transacción contable",
+      "completedOn": "Completada el",
+      "createdOn": "Creada el",
+      "destinationAfter": "Saldo de destino posterior",
+      "destinationBefore": "Saldo de destino anterior",
+      "operator": "Operador",
+      "reference": "Referencia del comprobante",
+      "sourceAfter": "Saldo de origen posterior",
+      "sourceBefore": "Saldo de origen anterior",
+      "status": "Estado",
+      "title": "Comprobante de asignación de efectivo"
+    },
+    "status": {
+      "loading": "Cargando la configuración de asignación de efectivo...",
+      "processing": "Procesando..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Detalles del pago"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Base Teller": "Caja base",
       "Cash received cannot be less than the check amount": "El efectivo recibido no puede ser menor que el monto del cheque.",
       "No eligible cash payment types available": "No hay tipos de pago en efectivo habilitados disponibles.",
       "No returned checks found": "No se encontraron cheques devueltos.",

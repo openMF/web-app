@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Kasos atidarymas ir aprūpinimas grynaisiais",
+    "actions": {
+      "confirmPost": "Patvirtinti ir užregistruoti",
+      "newOperation": "Nauja operacija",
+      "preview": "Operacijos peržiūra",
+      "printReceipt": "Spausdinti kvitą",
+      "reprintReceipt": "Perspausdinti kvitą",
+      "retrySameTransaction": "Pakartoti tą pačią operaciją"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknotas",
+      "COIN": "Moneta"
+    },
+    "dialog": {
+      "confirmTitle": "Patvirtinti grynųjų pinigų paskirstymą"
+    },
+    "empty": {
+      "cashiers": "Šiam padaliniui nėra aktyvių kasininkų",
+      "currencies": "Nesukonfigūruota jokių valiutų",
+      "denominations": "Šiai valiutai nesukonfigūruoti jokie aktyvūs nominalai",
+      "headCashiers": "Šiai valiutai nėra lėšų turinčio vyriausiojo kasininko"
+    },
+    "errors": {
+      "context": "Nepavyko įkelti grynųjų pinigų paskirstymo konfigūracijos",
+      "create": "Nepavyko užbaigti grynųjų pinigų paskirstymo",
+      "integerQuantity": "Įveskite sveikąjį vienetų skaičių",
+      "noReadPermission": "Neturite teisės peržiūrėti grynųjų pinigų paskirstymų",
+      "preview": "Nepavyko apskaičiuoti grynųjų pinigų paskirstymo peržiūros",
+      "receipt": "Nepavyko gauti grynųjų pinigų paskirstymo kvito"
+    },
+    "labels": {
+      "businessDate": "Veiklos data",
+      "cashInflow": "Grynųjų pinigų įplaukos",
+      "cashOutflow": "Grynųjų pinigų išmokos",
+      "checksInflow": "Čekių įplaukos",
+      "checksOutflow": "Čekių išmokos",
+      "currency": "Valiuta",
+      "denomination": "Nominalas",
+      "denominationBreakdown": "Nominalų išklotinė",
+      "destination": "Gavėjas",
+      "note": "Pastaba",
+      "office": "Padalinys",
+      "operation": "Operacija",
+      "quantity": "Kiekis",
+      "source": "Šaltinis",
+      "subtotal": "Tarpinė suma",
+      "totalCash": "Iš viso grynųjų",
+      "transferFrom": "Pervesti iš",
+      "transferTo": "Pervesti į",
+      "type": "Tipas",
+      "vaultBalance": "Seifo likutis",
+      "vouchersInflow": "Kuponų įplaukos",
+      "vouchersOutflow": "Kuponų išmokos"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Vyriausiojo kasininko aprūpinimas",
+      "OPERATIONAL_TELLER_ALLOCATION": "Operacinio kasininko aprūpinimas",
+      "SAFE_VAULT_OPENING": "Kasos / seifo atidarymas"
+    },
+    "receipt": {
+      "accountingTransaction": "Apskaitos operacija",
+      "completedOn": "Užbaigta",
+      "createdOn": "Sukurta",
+      "destinationAfter": "Gavėjo likutis po operacijos",
+      "destinationBefore": "Gavėjo likutis prieš operaciją",
+      "operator": "Operatorius",
+      "reference": "Kvito nuoroda",
+      "sourceAfter": "Šaltinio likutis po operacijos",
+      "sourceBefore": "Šaltinio likutis prieš operaciją",
+      "status": "Būsena",
+      "title": "Grynųjų pinigų paskirstymo kvitas"
+    },
+    "status": {
+      "loading": "Įkeliama grynųjų pinigų paskirstymo konfigūracija...",
+      "processing": "Apdorojama..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Mokėjimo informacija"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "Base Teller": "Bazinė kasa",
       "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
       "No eligible cash payment types available": "Nėra tinkamų mokėjimo grynaisiais tipų.",
       "No returned checks found": "Grąžintų čekių nerasta.",

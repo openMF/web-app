@@ -338,6 +338,107 @@ export interface ServicePaymentReceipt {
   denominations: ServicePaymentDenomination[];
 }
 
+export type CashAllocationAmount = number | string;
+export type CashAllocationType = 'SAFE_VAULT_OPENING' | 'HEAD_CASHIER_ALLOCATION' | 'OPERATIONAL_TELLER_ALLOCATION';
+
+export interface CashAllocationDenomination {
+  identifier: string;
+  type: string;
+  value: CashAllocationAmount;
+  quantity: number;
+  subtotal: CashAllocationAmount;
+}
+
+export interface CashAllocationCurrency {
+  code: string;
+  name: string;
+  displaySymbol: string;
+  decimalPlaces: number;
+  denominations: CashAllocationDenomination[];
+}
+
+export interface CashAllocationCashier {
+  cashierId: FineractId;
+  tellerId: FineractId;
+  tellerName: string;
+  staffId: FineractId;
+  cashierName: string;
+  headCashierSource: boolean;
+  currentBalance: CashAllocationAmount;
+}
+
+export interface CashAllocationContext {
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  currencyCode?: string;
+  vaultBalance: CashAllocationAmount;
+  currencies: CashAllocationCurrency[];
+  cashiers: CashAllocationCashier[];
+}
+
+export interface CashAllocationRequest {
+  idempotencyKey: string;
+  operationType: CashAllocationType;
+  officeId: FineractId;
+  sourceCashierId?: FineractId;
+  destinationCashierId?: FineractId;
+  businessDate: string;
+  currencyCode: string;
+  amount: string;
+  denominations: Array<{
+    denominationId: string;
+    quantity: number;
+  }>;
+  note?: string;
+}
+
+export interface CashAllocationPreview {
+  operationType: CashAllocationType;
+  businessDate: string;
+  officeId: FineractId;
+  currencyCode: string;
+  source: string;
+  destination: string;
+  cashInflow: CashAllocationAmount;
+  cashOutflow: CashAllocationAmount;
+  checksInflow: CashAllocationAmount;
+  checksOutflow: CashAllocationAmount;
+  vouchersInflow: CashAllocationAmount;
+  vouchersOutflow: CashAllocationAmount;
+  authoritativeTotal: CashAllocationAmount;
+  denominations: CashAllocationDenomination[];
+}
+
+export interface CashAllocationReceipt {
+  id: FineractId;
+  reference: string;
+  operationType: CashAllocationType;
+  status: string;
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  initiatedBy: FineractId;
+  initiatedByUsername: string;
+  sourceCashierId?: FineractId;
+  source: string;
+  destinationCashierId?: FineractId;
+  destination: string;
+  currencyCode: string;
+  totalAmount: CashAllocationAmount;
+  sourceBalanceBefore?: CashAllocationAmount;
+  sourceBalanceAfter?: CashAllocationAmount;
+  destinationBalanceBefore: CashAllocationAmount;
+  destinationBalanceAfter: CashAllocationAmount;
+  sourceCashierTransactionId?: FineractId;
+  destinationCashierTransactionId?: FineractId;
+  accountingTransactionId?: string;
+  note?: string;
+  createdOn: string;
+  completedOn?: string;
+  denominations: CashAllocationDenomination[];
+}
+
 /**
  * Base Teller service.
  */
@@ -352,6 +453,7 @@ export class BaseTellerService {
   private readonly servicePaymentsPath = '/v2/base-teller/service-payments';
   private readonly cashierClosingsPath = '/v2/base-teller/closings';
   private readonly cashOperationsPath = '/v2/base-teller/cash-operations';
+  private readonly cashAllocationsPath = '/v2/base-teller/cash-allocations';
 
   getCashierClosingContext(
     cashierId: FineractId,
@@ -429,7 +531,6 @@ export class BaseTellerService {
   getCashManagementCurrencies(): Observable<{ selectedCurrencyOptions?: CurrencyOption[] }> {
     return this.http.get<{ selectedCurrencyOptions?: CurrencyOption[] }>('/currencies');
   }
-
   /**
    * Searches customers through the Base Teller savings-opening workflow API.
    */
@@ -609,5 +710,34 @@ export class BaseTellerService {
   /** Retrieves the immutable backend receipt for display or reprint. */
   getServicePaymentReceipt(transactionId: FineractId): Observable<ServicePaymentReceipt> {
     return this.http.get<ServicePaymentReceipt>(`${this.servicePaymentsPath}/${transactionId}/receipt`);
+  }
+
+  /** Retrieves deployment currencies, denominations, balances, and eligible active cashiers. */
+  getCashAllocationContext(officeId: FineractId, currencyCode?: string): Observable<CashAllocationContext> {
+    let params = new HttpParams().set('officeId', String(officeId));
+    if (currencyCode) {
+      params = params.set('currencyCode', currencyCode);
+    }
+    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, { params });
+  }
+
+  /** Validates an allocation and returns the backend-authoritative transaction preview. */
+  previewCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationPreview> {
+    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload);
+  }
+
+  /** Finalizes an allocation using the request's backend idempotency key. */
+  createCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationReceipt> {
+    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload);
+  }
+
+  /** Retrieves the immutable completed allocation. */
+  getCashAllocation(allocationId: FineractId): Observable<CashAllocationReceipt> {
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`);
+  }
+
+  /** Retrieves the immutable receipt through the separately permissioned reprint endpoint. */
+  reprintCashAllocationReceipt(allocationId: FineractId): Observable<CashAllocationReceipt> {
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`);
   }
 }

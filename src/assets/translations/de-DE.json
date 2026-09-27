@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Kassenladenöffnung und Bargeldbereitstellung",
+    "actions": {
+      "confirmPost": "Bestätigen und buchen",
+      "newOperation": "Neuer Vorgang",
+      "preview": "Transaktion in der Vorschau anzeigen",
+      "printReceipt": "Beleg drucken",
+      "reprintReceipt": "Beleg erneut drucken",
+      "retrySameTransaction": "Dieselbe Transaktion erneut versuchen"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknote",
+      "COIN": "Münze"
+    },
+    "dialog": {
+      "confirmTitle": "Bargeldzuweisung bestätigen"
+    },
+    "empty": {
+      "cashiers": "Für diese Filiale sind keine aktiven Kassenmitarbeiter verfügbar",
+      "currencies": "Es sind keine Währungen konfiguriert",
+      "denominations": "Für diese Währung sind keine aktiven Stückelungen konfiguriert",
+      "headCashiers": "Für diese Währung ist kein Hauptkassierer mit verfügbarem Guthaben vorhanden"
+    },
+    "errors": {
+      "context": "Die Konfiguration der Bargeldzuweisung konnte nicht geladen werden",
+      "create": "Die Bargeldzuweisung konnte nicht abgeschlossen werden",
+      "integerQuantity": "Geben Sie eine ganze Stückzahl ein",
+      "noReadPermission": "Sie sind nicht berechtigt, Bargeldzuweisungen anzuzeigen",
+      "preview": "Die Vorschau der Bargeldzuweisung konnte nicht berechnet werden",
+      "receipt": "Der Beleg für die Bargeldzuweisung konnte nicht abgerufen werden"
+    },
+    "labels": {
+      "businessDate": "Geschäftsdatum",
+      "cashInflow": "Bargeldzufluss",
+      "cashOutflow": "Bargeldabfluss",
+      "checksInflow": "Scheckzufluss",
+      "checksOutflow": "Scheckabfluss",
+      "currency": "Währung",
+      "denomination": "Stückelung",
+      "denominationBreakdown": "Aufschlüsselung nach Stückelung",
+      "destination": "Ziel",
+      "note": "Notiz",
+      "office": "Filiale",
+      "operation": "Vorgang",
+      "quantity": "Anzahl",
+      "source": "Quelle",
+      "subtotal": "Zwischensumme",
+      "totalCash": "Bargeldsumme",
+      "transferFrom": "Übertragen von",
+      "transferTo": "Übertragen an",
+      "type": "Typ",
+      "vaultBalance": "Tresorbestand",
+      "vouchersInflow": "Gutscheinzufluss",
+      "vouchersOutflow": "Gutscheinabfluss"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Bargeldbereitstellung für Hauptkassierer",
+      "OPERATIONAL_TELLER_ALLOCATION": "Bargeldbereitstellung für Schalterkassierer",
+      "SAFE_VAULT_OPENING": "Kassen-/Tresoröffnung"
+    },
+    "receipt": {
+      "accountingTransaction": "Buchungstransaktion",
+      "completedOn": "Abgeschlossen am",
+      "createdOn": "Erstellt am",
+      "destinationAfter": "Zielbestand danach",
+      "destinationBefore": "Zielbestand davor",
+      "operator": "Bearbeiter",
+      "reference": "Belegreferenz",
+      "sourceAfter": "Quellbestand danach",
+      "sourceBefore": "Quellbestand davor",
+      "status": "Status",
+      "title": "Beleg der Bargeldzuweisung"
+    },
+    "status": {
+      "loading": "Konfiguration der Bargeldzuweisung wird geladen...",
+      "processing": "Verarbeitung läuft..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Zahlungsdetails"
@@ -4371,6 +4449,7 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Base Teller": "Basisschalter",
       "Cash received cannot be less than the check amount": "Der erhaltene Bargeldbetrag darf nicht niedriger als der Scheckbetrag sein.",
       "No eligible cash payment types available": "Es sind keine zulässigen Barzahlungsarten verfügbar.",
       "No returned checks found": "Es wurden keine zurückgegebenen Schecks gefunden.",

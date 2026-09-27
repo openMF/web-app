@@ -1,0 +1,159 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cash-allocation {
+  mat-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2,
+  h3 {
+    margin-top: 0;
+  }
+
+  .loading-state,
+  .empty-state {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .error-message {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 4px;
+    color: var(--mat-sys-error);
+    background: var(--mat-sys-error-container);
+  }
+
+  .form-grid,
+  .context-summary,
+  .receipt-details {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 8px));
+    gap: 16px;
+  }
+
+  .context-summary {
+    grid-template-columns: repeat(3, calc((100% - 32px) / 3));
+    margin-bottom: 24px;
+  }
+
+  .context-summary div,
+  .receipt-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .context-summary span,
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .denominations {
+    margin: 16px 0 24px;
+  }
+
+  .denomination-header,
+  .denomination-row {
+    display: grid;
+    grid-template-columns: 20% 25% 160px auto;
+    gap: 16px;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .denomination-header {
+    font-weight: 500;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  .denomination-row {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  .denomination-row mat-form-field {
+    margin-top: 8px;
+  }
+
+  .allocation-total {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    padding: 16px 0;
+    font-size: 1.125rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-end;
+  }
+
+  .receipt-details {
+    margin-bottom: 24px;
+  }
+
+  .receipt-denominations {
+    margin-bottom: 24px;
+  }
+
+  .receipt-denominations div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+}
+
+@media (width <= 700px) {
+  .cash-allocation {
+    .form-grid,
+    .context-summary,
+    .receipt-details {
+      grid-template-columns: 100%;
+    }
+
+    .denomination-header {
+      display: none;
+    }
+
+    .denomination-row {
+      grid-template-columns: repeat(2, calc(50% - 8px));
+    }
+  }
+}
+
+@media print {
+  .cash-allocation {
+    form,
+    .receipt-actions,
+    .error-message,
+    h2 {
+      display: none;
+    }
+
+    mat-card {
+      box-shadow: none;
+    }
+  }
+}

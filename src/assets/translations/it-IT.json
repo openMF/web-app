@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Apertura e approvvigionamento della cassa",
+    "actions": {
+      "confirmPost": "Conferma e registra",
+      "newOperation": "Nuova operazione",
+      "preview": "Anteprima transazione",
+      "printReceipt": "Stampa ricevuta",
+      "reprintReceipt": "Ristampa ricevuta",
+      "retrySameTransaction": "Riprova la stessa transazione"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banconota",
+      "COIN": "Moneta"
+    },
+    "dialog": {
+      "confirmTitle": "Conferma allocazione di contante"
+    },
+    "empty": {
+      "cashiers": "Nessun cassiere attivo è disponibile per questa filiale",
+      "currencies": "Nessuna valuta configurata",
+      "denominations": "Nessun taglio attivo configurato per questa valuta",
+      "headCashiers": "Nessun cassiere capo con fondi è disponibile per questa valuta"
+    },
+    "errors": {
+      "context": "Impossibile caricare la configurazione dell’allocazione di contante",
+      "create": "Impossibile completare l’allocazione di contante",
+      "integerQuantity": "Inserisci un numero intero di elementi",
+      "noReadPermission": "Non disponi dell’autorizzazione per visualizzare le allocazioni di contante",
+      "preview": "Impossibile calcolare l’anteprima dell’allocazione di contante",
+      "receipt": "Impossibile recuperare la ricevuta dell’allocazione di contante"
+    },
+    "labels": {
+      "businessDate": "Data operativa",
+      "cashInflow": "Entrate di contante",
+      "cashOutflow": "Uscite di contante",
+      "checksInflow": "Entrate di assegni",
+      "checksOutflow": "Uscite di assegni",
+      "currency": "Valuta",
+      "denomination": "Taglio",
+      "denominationBreakdown": "Dettaglio dei tagli",
+      "destination": "Destinazione",
+      "note": "Nota",
+      "office": "Filiale",
+      "operation": "Operazione",
+      "quantity": "Quantità",
+      "source": "Origine",
+      "subtotal": "Subtotale",
+      "totalCash": "Totale contante",
+      "transferFrom": "Trasferisci da",
+      "transferTo": "Trasferisci a",
+      "type": "Tipo",
+      "vaultBalance": "Saldo cassaforte",
+      "vouchersInflow": "Entrate di buoni",
+      "vouchersOutflow": "Uscite di buoni"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Approvvigionamento del cassiere capo",
+      "OPERATIONAL_TELLER_ALLOCATION": "Approvvigionamento del cassiere operativo",
+      "SAFE_VAULT_OPENING": "Apertura cassa / cassaforte"
+    },
+    "receipt": {
+      "accountingTransaction": "Transazione contabile",
+      "completedOn": "Completata il",
+      "createdOn": "Creata il",
+      "destinationAfter": "Saldo destinazione successivo",
+      "destinationBefore": "Saldo destinazione precedente",
+      "operator": "Operatore",
+      "reference": "Riferimento ricevuta",
+      "sourceAfter": "Saldo origine successivo",
+      "sourceBefore": "Saldo origine precedente",
+      "status": "Stato",
+      "title": "Ricevuta di allocazione contante"
+    },
+    "status": {
+      "loading": "Caricamento della configurazione dell’allocazione di contante...",
+      "processing": "Elaborazione in corso..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Dettagli del pagamento"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
+      "Base Teller": "Sportello base",
       "Cash received cannot be less than the check amount": "I contanti ricevuti non possono essere inferiori all'importo dell'assegno.",
       "No eligible cash payment types available": "Non sono disponibili tipi di pagamento in contanti idonei.",
       "No returned checks found": "Non sono stati trovati assegni restituiti.",

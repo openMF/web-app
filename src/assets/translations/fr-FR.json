@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Ouverture et approvisionnement de caisse",
+    "actions": {
+      "confirmPost": "Confirmer et comptabiliser",
+      "newOperation": "Nouvelle opération",
+      "preview": "Aperçu de la transaction",
+      "printReceipt": "Imprimer le reçu",
+      "reprintReceipt": "Réimprimer le reçu",
+      "retrySameTransaction": "Réessayer la même transaction"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Billet",
+      "COIN": "Pièce"
+    },
+    "dialog": {
+      "confirmTitle": "Confirmer l’affectation d’espèces"
+    },
+    "empty": {
+      "cashiers": "Aucun caissier actif n’est disponible pour cette agence",
+      "currencies": "Aucune devise n’est configurée",
+      "denominations": "Aucune coupure active n’est configurée pour cette devise",
+      "headCashiers": "Aucun caissier principal approvisionné n’est disponible pour cette devise"
+    },
+    "errors": {
+      "context": "Impossible de charger la configuration de l’affectation d’espèces",
+      "create": "Impossible de terminer l’affectation d’espèces",
+      "integerQuantity": "Saisissez un nombre entier d’unités",
+      "noReadPermission": "Vous n’êtes pas autorisé à consulter les affectations d’espèces",
+      "preview": "Impossible de calculer l’aperçu de l’affectation d’espèces",
+      "receipt": "Impossible de récupérer le reçu de l’affectation d’espèces"
+    },
+    "labels": {
+      "businessDate": "Date d’activité",
+      "cashInflow": "Entrées d’espèces",
+      "cashOutflow": "Sorties d’espèces",
+      "checksInflow": "Entrées de chèques",
+      "checksOutflow": "Sorties de chèques",
+      "currency": "Devise",
+      "denomination": "Coupure",
+      "denominationBreakdown": "Détail des coupures",
+      "destination": "Destination",
+      "note": "Note",
+      "office": "Agence",
+      "operation": "Opération",
+      "quantity": "Quantité",
+      "source": "Source",
+      "subtotal": "Sous-total",
+      "totalCash": "Total des espèces",
+      "transferFrom": "Transférer depuis",
+      "transferTo": "Transférer vers",
+      "type": "Type",
+      "vaultBalance": "Solde du coffre",
+      "vouchersInflow": "Entrées de bons",
+      "vouchersOutflow": "Sorties de bons"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Approvisionnement du caissier principal",
+      "OPERATIONAL_TELLER_ALLOCATION": "Approvisionnement du caissier opérationnel",
+      "SAFE_VAULT_OPENING": "Ouverture de la caisse / du coffre"
+    },
+    "receipt": {
+      "accountingTransaction": "Transaction comptable",
+      "completedOn": "Terminé le",
+      "createdOn": "Créé le",
+      "destinationAfter": "Solde de destination après",
+      "destinationBefore": "Solde de destination avant",
+      "operator": "Opérateur",
+      "reference": "Référence du reçu",
+      "sourceAfter": "Solde source après",
+      "sourceBefore": "Solde source avant",
+      "status": "Statut",
+      "title": "Reçu d’affectation d’espèces"
+    },
+    "status": {
+      "loading": "Chargement de la configuration de l’affectation d’espèces...",
+      "processing": "Traitement en cours..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Détails du paiement"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "Base Teller": "Guichet de base",
       "Cash received cannot be less than the check amount": "Les espèces reçues ne peuvent pas être inférieures au montant du chèque.",
       "No eligible cash payment types available": "Aucun type de paiement en espèces admissible n'est disponible.",
       "No returned checks found": "Aucun chèque retourné n'a été trouvé.",

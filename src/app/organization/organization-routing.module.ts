@@ -35,6 +35,8 @@ import { ServicePaymentComponent } from './base-teller/service-payment/service-p
 import { servicePaymentGuard } from './base-teller/service-payment/service-payment.guard';
 import { CashManagementComponent } from './base-teller/cash-management/cash-management.component';
 import { cashManagementGuard } from './base-teller/cash-management/cash-management.guard';
+import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
+import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -454,6 +456,15 @@ const routes: Routes = [
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/cash-allocations',
+          component: CashAllocationComponent,
+          canActivate: [cashAllocationGuard],
+          data: {
+            title: 'cashAllocation.title',
+            breadcrumb: 'cashAllocation.title'
+          }
         },
         {
           path: 'base-teller/savings-account-openings',
