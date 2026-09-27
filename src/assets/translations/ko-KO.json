@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "현금 서랍 개설 및 현금 공급",
+    "actions": {
+      "confirmPost": "확인 및 전기",
+      "newOperation": "새 작업",
+      "preview": "거래 미리보기",
+      "printReceipt": "영수증 인쇄",
+      "reprintReceipt": "영수증 재인쇄",
+      "retrySameTransaction": "동일 거래 다시 시도"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "지폐",
+      "COIN": "동전"
+    },
+    "dialog": {
+      "confirmTitle": "현금 배정 확인"
+    },
+    "empty": {
+      "cashiers": "이 지점에 사용 가능한 활성 출납원이 없습니다",
+      "currencies": "구성된 통화가 없습니다",
+      "denominations": "이 통화에 구성된 활성 권종이 없습니다",
+      "headCashiers": "이 통화에 자금이 있는 수석 출납원이 없습니다"
+    },
+    "errors": {
+      "context": "현금 배정 구성을 불러올 수 없습니다",
+      "create": "현금 배정을 완료할 수 없습니다",
+      "integerQuantity": "품목 수량을 정수로 입력하십시오",
+      "noReadPermission": "현금 배정을 볼 권한이 없습니다",
+      "preview": "현금 배정 미리보기를 계산할 수 없습니다",
+      "receipt": "현금 배정 영수증을 가져올 수 없습니다"
+    },
+    "labels": {
+      "businessDate": "영업일",
+      "cashInflow": "현금 유입",
+      "cashOutflow": "현금 유출",
+      "checksInflow": "수표 유입",
+      "checksOutflow": "수표 유출",
+      "currency": "통화",
+      "denomination": "권종",
+      "denominationBreakdown": "권종별 내역",
+      "destination": "대상",
+      "note": "메모",
+      "office": "지점",
+      "operation": "작업",
+      "quantity": "수량",
+      "source": "출처",
+      "subtotal": "소계",
+      "totalCash": "총 현금",
+      "transferFrom": "이체 출처",
+      "transferTo": "이체 대상",
+      "type": "유형",
+      "vaultBalance": "금고 잔액",
+      "vouchersInflow": "바우처 유입",
+      "vouchersOutflow": "바우처 유출"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "수석 출납원 현금 공급",
+      "OPERATIONAL_TELLER_ALLOCATION": "창구 출납원 현금 공급",
+      "SAFE_VAULT_OPENING": "현금 서랍 / 금고 개설"
+    },
+    "receipt": {
+      "accountingTransaction": "회계 거래",
+      "completedOn": "완료 일시",
+      "createdOn": "생성 일시",
+      "destinationAfter": "대상 사후 잔액",
+      "destinationBefore": "대상 사전 잔액",
+      "operator": "처리자",
+      "reference": "영수증 참조",
+      "sourceAfter": "출처 사후 잔액",
+      "sourceBefore": "출처 사전 잔액",
+      "status": "상태",
+      "title": "현금 배정 영수증"
+    },
+    "status": {
+      "loading": "현금 배정 구성을 불러오는 중...",
+      "processing": "처리 중..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "결제 세부 정보"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "Base Teller": "기본 창구",
       "Cash received cannot be less than the check amount": "수령한 현금은 수표 금액보다 적을 수 없습니다.",
       "No eligible cash payment types available": "사용 가능한 적격 현금 결제 유형이 없습니다.",
       "No returned checks found": "반환된 수표를 찾을 수 없습니다.",

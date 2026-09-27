@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Otevření a zásobení pokladny",
+    "actions": {
+      "confirmPost": "Potvrdit a zaúčtovat",
+      "newOperation": "Nová operace",
+      "preview": "Náhled transakce",
+      "printReceipt": "Vytisknout stvrzenku",
+      "reprintReceipt": "Znovu vytisknout stvrzenku",
+      "retrySameTransaction": "Opakovat stejnou transakci"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Bankovka",
+      "COIN": "Mince"
+    },
+    "dialog": {
+      "confirmTitle": "Potvrdit přidělení hotovosti"
+    },
+    "empty": {
+      "cashiers": "Pro tuto pobočku nejsou k dispozici žádní aktivní pokladníci",
+      "currencies": "Nejsou nakonfigurovány žádné měny",
+      "denominations": "Pro tuto měnu nejsou nakonfigurovány žádné aktivní nominální hodnoty",
+      "headCashiers": "Pro tuto měnu není k dispozici žádný hlavní pokladník s prostředky"
+    },
+    "errors": {
+      "context": "Konfiguraci přidělení hotovosti se nepodařilo načíst",
+      "create": "Přidělení hotovosti se nepodařilo dokončit",
+      "integerQuantity": "Zadejte celé číslo kusů",
+      "noReadPermission": "Nemáte oprávnění zobrazit přidělení hotovosti",
+      "preview": "Náhled přidělení hotovosti se nepodařilo vypočítat",
+      "receipt": "Stvrzenku o přidělení hotovosti se nepodařilo načíst"
+    },
+    "labels": {
+      "businessDate": "Obchodní datum",
+      "cashInflow": "Příjem hotovosti",
+      "cashOutflow": "Výdej hotovosti",
+      "checksInflow": "Příjem šeků",
+      "checksOutflow": "Výdej šeků",
+      "currency": "Měna",
+      "denomination": "Nominální hodnota",
+      "denominationBreakdown": "Rozpis nominálních hodnot",
+      "destination": "Cíl",
+      "note": "Poznámka",
+      "office": "Pobočka",
+      "operation": "Operace",
+      "quantity": "Množství",
+      "source": "Zdroj",
+      "subtotal": "Mezisoučet",
+      "totalCash": "Hotovost celkem",
+      "transferFrom": "Převést z",
+      "transferTo": "Převést na",
+      "type": "Typ",
+      "vaultBalance": "Zůstatek trezoru",
+      "vouchersInflow": "Příjem poukázek",
+      "vouchersOutflow": "Výdej poukázek"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Zásobení hlavního pokladníka",
+      "OPERATIONAL_TELLER_ALLOCATION": "Zásobení provozního pokladníka",
+      "SAFE_VAULT_OPENING": "Otevření pokladny / trezoru"
+    },
+    "receipt": {
+      "accountingTransaction": "Účetní transakce",
+      "completedOn": "Dokončeno dne",
+      "createdOn": "Vytvořeno dne",
+      "destinationAfter": "Konečný zůstatek cíle",
+      "destinationBefore": "Počáteční zůstatek cíle",
+      "operator": "Operátor",
+      "reference": "Reference stvrzenky",
+      "sourceAfter": "Konečný zůstatek zdroje",
+      "sourceBefore": "Počáteční zůstatek zdroje",
+      "status": "Stav",
+      "title": "Stvrzenka o přidělení hotovosti"
+    },
+    "status": {
+      "loading": "Načítá se konfigurace přidělení hotovosti...",
+      "processing": "Zpracovává se..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Údaje o platbě"
@@ -4370,6 +4448,7 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Base Teller": "Přepážka",
       "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",
       "No eligible cash payment types available": "Nejsou k dispozici žádné způsobilé typy hotovostních plateb.",
       "No returned checks found": "Nebyly nalezeny žádné vrácené šeky.",

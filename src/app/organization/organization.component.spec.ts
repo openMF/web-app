@@ -48,6 +48,7 @@ describe('OrganizationComponent', () => {
 
   it('uses all WEB-1232 permissions for Base Teller navigation', () => {
     expect(createComponent(false).baseTellerPermissions).toEqual([
+      'READ_BASE_TELLER_CASH_ALLOCATION',
       'READ_TELLER',
       'DEPOSIT_SAVINGSACCOUNT',
       'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT',
@@ -57,5 +58,9 @@ describe('OrganizationComponent', () => {
       'READ_CASH_OPERATION_HISTORY',
       'READ_CASH_HOLDINGS'
     ]);
+  });
+
+  it('shows the dedicated Base Teller entry for the WEB-1221 read permission', () => {
+    expect(createComponent(false).baseTellerPermissions).toContain('READ_BASE_TELLER_CASH_ALLOCATION');
   });
 });

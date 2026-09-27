@@ -362,4 +362,50 @@ describe('BaseTellerService', () => {
     req.flush([{ cashierId: 9, currentBalance: 40 }]);
     expect((await resultPromise)[0].currentBalance).toBe(40);
   });
+
+  it('uses the exact WEB-1221 context, preview, create, retrieve, and reprint endpoints', async () => {
+    const contextPromise = firstValueFrom(service.getCashAllocationContext(1, 'CRC'));
+    const contextRequest = httpMock.expectOne(
+      (request) => request.url === '/v2/base-teller/cash-allocations/context' && request.method === 'GET'
+    );
+    expect(contextRequest.request.params.get('officeId')).toBe('1');
+    expect(contextRequest.request.params.get('currencyCode')).toBe('CRC');
+    contextRequest.flush({ businessDate: '2026-09-26', currencies: [], cashiers: [] });
+    expect((await contextPromise).businessDate).toBe('2026-09-26');
+
+    const payload = {
+      idempotencyKey: 'stable-key',
+      operationType: 'SAFE_VAULT_OPENING' as const,
+      officeId: 1,
+      businessDate: '2026-09-26',
+      currencyCode: 'CRC',
+      amount: '100.00',
+      denominations: [{ denominationId: 'note-100', quantity: 1 }]
+    };
+    const previewPromise = firstValueFrom(service.previewCashAllocation(payload));
+    const previewRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/preview');
+    expect(previewRequest.request.method).toBe('POST');
+    expect(previewRequest.request.body).toEqual(payload);
+    previewRequest.flush({ authoritativeTotal: '100.00' });
+    expect((await previewPromise).authoritativeTotal).toBe('100.00');
+
+    const createPromise = firstValueFrom(service.createCashAllocation(payload));
+    const createRequest = httpMock.expectOne('/v2/base-teller/cash-allocations');
+    expect(createRequest.request.method).toBe('POST');
+    expect(createRequest.request.body.idempotencyKey).toBe('stable-key');
+    createRequest.flush({ id: 77, reference: 'CA-77' });
+    expect((await createPromise).id).toBe(77);
+
+    const retrievePromise = firstValueFrom(service.getCashAllocation(77));
+    const retrieveRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/77');
+    expect(retrieveRequest.request.method).toBe('GET');
+    retrieveRequest.flush({ id: 77, reference: 'CA-77' });
+    expect((await retrievePromise).reference).toBe('CA-77');
+
+    const reprintPromise = firstValueFrom(service.reprintCashAllocationReceipt(77));
+    const reprintRequest = httpMock.expectOne('/v2/base-teller/cash-allocations/77/receipt');
+    expect(reprintRequest.request.method).toBe('GET');
+    reprintRequest.flush({ id: 77, reference: 'CA-77' });
+    expect((await reprintPromise).reference).toBe('CA-77');
+  });
 });

@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "नगद दराज खोल्ने र नगद उपलब्ध गराउने",
+    "actions": {
+      "confirmPost": "पुष्टि गरी पोस्ट गर्नुहोस्",
+      "newOperation": "नयाँ कार्य",
+      "preview": "कारोबार पूर्वावलोकन",
+      "printReceipt": "रसिद छाप्नुहोस्",
+      "reprintReceipt": "रसिद पुनः छाप्नुहोस्",
+      "retrySameTransaction": "उही कारोबार पुनः प्रयास गर्नुहोस्"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "बैंक नोट",
+      "COIN": "सिक्का"
+    },
+    "dialog": {
+      "confirmTitle": "नगद विनियोजन पुष्टि गर्नुहोस्"
+    },
+    "empty": {
+      "cashiers": "यस कार्यालयका लागि कुनै सक्रिय क्यासियर उपलब्ध छैन",
+      "currencies": "कुनै मुद्रा कन्फिगर गरिएको छैन",
+      "denominations": "यस मुद्राका लागि कुनै सक्रिय मूल्यवर्ग कन्फिगर गरिएको छैन",
+      "headCashiers": "यस मुद्राका लागि रकम भएको प्रमुख क्यासियर उपलब्ध छैन"
+    },
+    "errors": {
+      "context": "नगद विनियोजनको कन्फिगरेसन लोड गर्न सकिएन",
+      "create": "नगद विनियोजन पूरा गर्न सकिएन",
+      "integerQuantity": "वस्तुको पूर्ण सङ्ख्या प्रविष्ट गर्नुहोस्",
+      "noReadPermission": "तपाईंसँग नगद विनियोजन हेर्ने अनुमति छैन",
+      "preview": "नगद विनियोजनको पूर्वावलोकन गणना गर्न सकिएन",
+      "receipt": "नगद विनियोजनको रसिद प्राप्त गर्न सकिएन"
+    },
+    "labels": {
+      "businessDate": "कारोबार मिति",
+      "cashInflow": "नगद आगमन",
+      "cashOutflow": "नगद बहिर्गमन",
+      "checksInflow": "चेक आगमन",
+      "checksOutflow": "चेक बहिर्गमन",
+      "currency": "मुद्रा",
+      "denomination": "मूल्यवर्ग",
+      "denominationBreakdown": "मूल्यवर्ग विवरण",
+      "destination": "गन्तव्य",
+      "note": "टिप्पणी",
+      "office": "कार्यालय",
+      "operation": "कार्य",
+      "quantity": "परिमाण",
+      "source": "स्रोत",
+      "subtotal": "उप-जम्मा",
+      "totalCash": "कुल नगद",
+      "transferFrom": "यहाँबाट स्थानान्तरण",
+      "transferTo": "यहाँ स्थानान्तरण",
+      "type": "प्रकार",
+      "vaultBalance": "सेफ मौज्दात",
+      "vouchersInflow": "भौचर आगमन",
+      "vouchersOutflow": "भौचर बहिर्गमन"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "प्रमुख क्यासियरलाई नगद उपलब्ध गराउने",
+      "OPERATIONAL_TELLER_ALLOCATION": "सञ्चालन क्यासियरलाई नगद उपलब्ध गराउने",
+      "SAFE_VAULT_OPENING": "नगद दराज / सेफ खोल्ने"
+    },
+    "receipt": {
+      "accountingTransaction": "लेखा कारोबार",
+      "completedOn": "पूरा भएको मिति",
+      "createdOn": "सिर्जना मिति",
+      "destinationAfter": "गन्तव्यको पछिल्लो मौज्दात",
+      "destinationBefore": "गन्तव्यको अघिल्लो मौज्दात",
+      "operator": "सञ्चालक",
+      "reference": "रसिद सन्दर्भ",
+      "sourceAfter": "स्रोतको पछिल्लो मौज्दात",
+      "sourceBefore": "स्रोतको अघिल्लो मौज्दात",
+      "status": "स्थिति",
+      "title": "नगद विनियोजन रसिद"
+    },
+    "status": {
+      "loading": "नगद विनियोजनको कन्फिगरेसन लोड हुँदैछ...",
+      "processing": "प्रशोधन हुँदैछ..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "भुक्तानी विवरण"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Base Teller": "आधार टेलर",
       "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
       "No eligible cash payment types available": "कुनै योग्य नगद भुक्तानी प्रकार उपलब्ध छैन।",
       "No returned checks found": "कुनै फिर्ता भएको चेक भेटिएन।",

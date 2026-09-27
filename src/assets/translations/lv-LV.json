@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Kases atvēršana un skaidras naudas nodrošināšana",
+    "actions": {
+      "confirmPost": "Apstiprināt un iegrāmatot",
+      "newOperation": "Jauna operācija",
+      "preview": "Darījuma priekšskatījums",
+      "printReceipt": "Drukāt kvīti",
+      "reprintReceipt": "Atkārtoti drukāt kvīti",
+      "retrySameTransaction": "Atkārtot to pašu darījumu"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknote",
+      "COIN": "Monēta"
+    },
+    "dialog": {
+      "confirmTitle": "Apstiprināt skaidras naudas piešķīrumu"
+    },
+    "empty": {
+      "cashiers": "Šai filiālei nav pieejams neviens aktīvs kasieris",
+      "currencies": "Nav konfigurēta neviena valūta",
+      "denominations": "Šai valūtai nav konfigurēts neviens aktīvs nomināls",
+      "headCashiers": "Šai valūtai nav pieejams galvenais kasieris ar līdzekļiem"
+    },
+    "errors": {
+      "context": "Neizdevās ielādēt skaidras naudas piešķīruma konfigurāciju",
+      "create": "Neizdevās pabeigt skaidras naudas piešķīrumu",
+      "integerQuantity": "Ievadiet veselu vienību skaitu",
+      "noReadPermission": "Jums nav atļaujas skatīt skaidras naudas piešķīrumus",
+      "preview": "Neizdevās aprēķināt skaidras naudas piešķīruma priekšskatījumu",
+      "receipt": "Neizdevās iegūt skaidras naudas piešķīruma kvīti"
+    },
+    "labels": {
+      "businessDate": "Darba datums",
+      "cashInflow": "Skaidras naudas ieplūde",
+      "cashOutflow": "Skaidras naudas aizplūde",
+      "checksInflow": "Čeku ieplūde",
+      "checksOutflow": "Čeku aizplūde",
+      "currency": "Valūta",
+      "denomination": "Nomināls",
+      "denominationBreakdown": "Nominālu sadalījums",
+      "destination": "Saņēmējs",
+      "note": "Piezīme",
+      "office": "Filiāle",
+      "operation": "Operācija",
+      "quantity": "Daudzums",
+      "source": "Avots",
+      "subtotal": "Starpsumma",
+      "totalCash": "Skaidra nauda kopā",
+      "transferFrom": "Pārskaitīt no",
+      "transferTo": "Pārskaitīt uz",
+      "type": "Tips",
+      "vaultBalance": "Seifa atlikums",
+      "vouchersInflow": "Kuponu ieplūde",
+      "vouchersOutflow": "Kuponu aizplūde"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Galvenā kasiera nodrošināšana",
+      "OPERATIONAL_TELLER_ALLOCATION": "Operatīvā kasiera nodrošināšana",
+      "SAFE_VAULT_OPENING": "Kases / seifa atvēršana"
+    },
+    "receipt": {
+      "accountingTransaction": "Grāmatvedības darījums",
+      "completedOn": "Pabeigts",
+      "createdOn": "Izveidots",
+      "destinationAfter": "Saņēmēja atlikums pēc darījuma",
+      "destinationBefore": "Saņēmēja atlikums pirms darījuma",
+      "operator": "Operators",
+      "reference": "Kvīts atsauce",
+      "sourceAfter": "Avota atlikums pēc darījuma",
+      "sourceBefore": "Avota atlikums pirms darījuma",
+      "status": "Statuss",
+      "title": "Skaidras naudas piešķīruma kvīts"
+    },
+    "status": {
+      "loading": "Notiek skaidras naudas piešķīruma konfigurācijas ielāde...",
+      "processing": "Notiek apstrāde..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Maksājuma informācija"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Base Teller": "Pamata kase",
       "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",
       "No eligible cash payment types available": "Nav pieejamu atbilstošu skaidras naudas maksājumu veidu.",
       "No returned checks found": "Atgriezti čeki netika atrasti.",

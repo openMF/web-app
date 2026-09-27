@@ -32,6 +32,16 @@ export interface BaseTellerWorkflow {
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
   {
+    label: 'cashAllocation.title',
+    materialIcon: 'point_of_sale',
+    permission: 'READ_BASE_TELLER_CASH_ALLOCATION',
+    route: [
+      '/organization',
+      'base-teller',
+      'cash-allocations'
+    ]
+  },
+  {
     label: 'labels.heading.Savings Account Opening',
     fontAwesomeIcon: 'piggy-bank',
     permission: 'READ_TELLER',

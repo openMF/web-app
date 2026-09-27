@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Kassanın açılması və nağd pulla təminatı",
+    "actions": {
+      "confirmPost": "Təsdiqlə və qeydə al",
+      "newOperation": "Yeni əməliyyat",
+      "preview": "Əməliyyata önbaxış",
+      "printReceipt": "Qəbzi çap et",
+      "reprintReceipt": "Qəbzi yenidən çap et",
+      "retrySameTransaction": "Eyni əməliyyatı yenidən sına"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Əskinas",
+      "COIN": "Sikkə"
+    },
+    "dialog": {
+      "confirmTitle": "Nağd pul bölgüsünü təsdiqlə"
+    },
+    "empty": {
+      "cashiers": "Bu ofis üçün aktiv kassir mövcud deyil",
+      "currencies": "Heç bir valyuta konfiqurasiya edilməyib",
+      "denominations": "Bu valyuta üçün aktiv nominal konfiqurasiya edilməyib",
+      "headCashiers": "Bu valyuta üçün vəsaiti olan baş kassir mövcud deyil"
+    },
+    "errors": {
+      "context": "Nağd pul bölgüsü konfiqurasiyasını yükləmək mümkün olmadı",
+      "create": "Nağd pul bölgüsünü tamamlamaq mümkün olmadı",
+      "integerQuantity": "Tam ədəd miqdar daxil edin",
+      "noReadPermission": "Nağd pul bölgülərinə baxmaq icazəniz yoxdur",
+      "preview": "Nağd pul bölgüsünün önbaxışını hesablamaq mümkün olmadı",
+      "receipt": "Nağd pul bölgüsü qəbzini əldə etmək mümkün olmadı"
+    },
+    "labels": {
+      "businessDate": "Əməliyyat tarixi",
+      "cashInflow": "Nağd pul mədaxili",
+      "cashOutflow": "Nağd pul məxarici",
+      "checksInflow": "Çek mədaxili",
+      "checksOutflow": "Çek məxarici",
+      "currency": "Valyuta",
+      "denomination": "Nominal",
+      "denominationBreakdown": "Nominal üzrə bölgü",
+      "destination": "Təyinat",
+      "note": "Qeyd",
+      "office": "Ofis",
+      "operation": "Əməliyyat",
+      "quantity": "Miqdar",
+      "source": "Mənbə",
+      "subtotal": "Aralıq cəm",
+      "totalCash": "Ümumi nağd pul",
+      "transferFrom": "Köçürmə mənbəyi",
+      "transferTo": "Köçürmə təyinatı",
+      "type": "Növ",
+      "vaultBalance": "Seyf qalığı",
+      "vouchersInflow": "Vauçer mədaxili",
+      "vouchersOutflow": "Vauçer məxarici"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Baş kassirin təminatı",
+      "OPERATIONAL_TELLER_ALLOCATION": "Əməliyyat kassirinin təminatı",
+      "SAFE_VAULT_OPENING": "Kassa / seyfin açılması"
+    },
+    "receipt": {
+      "accountingTransaction": "Mühasibat əməliyyatı",
+      "completedOn": "Tamamlanma tarixi",
+      "createdOn": "Yaradılma tarixi",
+      "destinationAfter": "Təyinatın sonrakı qalığı",
+      "destinationBefore": "Təyinatın əvvəlki qalığı",
+      "operator": "Operator",
+      "reference": "Qəbz istinadı",
+      "sourceAfter": "Mənbənin sonrakı qalığı",
+      "sourceBefore": "Mənbənin əvvəlki qalığı",
+      "status": "Status",
+      "title": "Nağd pul bölgüsü qəbzi"
+    },
+    "status": {
+      "loading": "Nağd pul bölgüsü konfiqurasiyası yüklənir...",
+      "processing": "Emal edilir..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Ödəniş təfərrüatları"
@@ -4407,6 +4485,7 @@
       "Cancel Pending Sale": "Gözləyən satışı ləğv et",
       "Cash denomination total must equal the funding amount": "Nominal üzrə nağd pulun cəmi maliyyələşdirmə məbləğinə bərabər olmalıdır.",
       "Cash denomination total must equal the transaction amount": "Nominal üzrə nağd pulun cəmi əməliyyat məbləğinə bərabər olmalıdır.",
+      "Base Teller": "Əsas kassir",
       "Cash received cannot be less than the check amount": "Alınmış nağd pul çek məbləğindən az ola bilməz.",
       "Cashier Transactions": "Kassir əməliyyatları",
       "Cashiers": "Kassirlər",

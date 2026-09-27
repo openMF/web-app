@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Abertura e aprovisionamento de caixa",
+    "actions": {
+      "confirmPost": "Confirmar e contabilizar",
+      "newOperation": "Nova operação",
+      "preview": "Pré-visualizar transação",
+      "printReceipt": "Imprimir recibo",
+      "reprintReceipt": "Reimprimir recibo",
+      "retrySameTransaction": "Repetir a mesma transação"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Nota",
+      "COIN": "Moeda"
+    },
+    "dialog": {
+      "confirmTitle": "Confirmar alocação de numerário"
+    },
+    "empty": {
+      "cashiers": "Não existem caixas ativos disponíveis para esta agência",
+      "currencies": "Não existem moedas configuradas",
+      "denominations": "Não existem denominações ativas configuradas para esta moeda",
+      "headCashiers": "Não existe um caixa principal com fundos disponível para esta moeda"
+    },
+    "errors": {
+      "context": "Não foi possível carregar a configuração da alocação de numerário",
+      "create": "Não foi possível concluir a alocação de numerário",
+      "integerQuantity": "Introduza um número inteiro de unidades",
+      "noReadPermission": "Não tem permissão para consultar alocações de numerário",
+      "preview": "Não foi possível calcular a pré-visualização da alocação de numerário",
+      "receipt": "Não foi possível obter o recibo da alocação de numerário"
+    },
+    "labels": {
+      "businessDate": "Data de negócio",
+      "cashInflow": "Entrada de numerário",
+      "cashOutflow": "Saída de numerário",
+      "checksInflow": "Entrada de cheques",
+      "checksOutflow": "Saída de cheques",
+      "currency": "Moeda",
+      "denomination": "Denominação",
+      "denominationBreakdown": "Detalhe das denominações",
+      "destination": "Destino",
+      "note": "Nota",
+      "office": "Agência",
+      "operation": "Operação",
+      "quantity": "Quantidade",
+      "source": "Origem",
+      "subtotal": "Subtotal",
+      "totalCash": "Total em numerário",
+      "transferFrom": "Transferir de",
+      "transferTo": "Transferir para",
+      "type": "Tipo",
+      "vaultBalance": "Saldo do cofre",
+      "vouchersInflow": "Entrada de vales",
+      "vouchersOutflow": "Saída de vales"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Aprovisionamento do caixa principal",
+      "OPERATIONAL_TELLER_ALLOCATION": "Aprovisionamento do caixa operacional",
+      "SAFE_VAULT_OPENING": "Abertura da caixa / do cofre"
+    },
+    "receipt": {
+      "accountingTransaction": "Transação contabilística",
+      "completedOn": "Concluída em",
+      "createdOn": "Criada em",
+      "destinationAfter": "Saldo de destino posterior",
+      "destinationBefore": "Saldo de destino anterior",
+      "operator": "Operador",
+      "reference": "Referência do recibo",
+      "sourceAfter": "Saldo de origem posterior",
+      "sourceBefore": "Saldo de origem anterior",
+      "status": "Estado",
+      "title": "Recibo de alocação de numerário"
+    },
+    "status": {
+      "loading": "A carregar a configuração da alocação de numerário...",
+      "processing": "A processar..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Detalhes do pagamento"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Base Teller": "Balcão base",
       "Cash received cannot be less than the check amount": "O numerário recebido não pode ser inferior ao montante do cheque.",
       "No eligible cash payment types available": "Não existem tipos de pagamento em numerário elegíveis disponíveis.",
       "No returned checks found": "Não foram encontrados cheques devolvidos.",

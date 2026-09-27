@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Ufunguzi na Utoaji wa Fedha Taslimu Kwenye Droo",
+    "actions": {
+      "confirmPost": "Thibitisha na Uweke Kumbukumbu",
+      "newOperation": "Operesheni Mpya",
+      "preview": "Hakiki Muamala",
+      "printReceipt": "Chapisha Risiti",
+      "reprintReceipt": "Chapisha Risiti Tena",
+      "retrySameTransaction": "Jaribu Tena Muamala Huu"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Noti",
+      "COIN": "Sarafu"
+    },
+    "dialog": {
+      "confirmTitle": "Thibitisha Ugawaji wa Fedha Taslimu"
+    },
+    "empty": {
+      "cashiers": "Hakuna wahudumu hai wa fedha wanaopatikana katika ofisi hii",
+      "currencies": "Hakuna sarafu zilizosanidiwa",
+      "denominations": "Hakuna madhehebu hai yaliyosanidiwa kwa sarafu hii",
+      "headCashiers": "Hakuna mhudumu mkuu wa fedha mwenye salio anayepatikana kwa sarafu hii"
+    },
+    "errors": {
+      "context": "Imeshindikana kupakia usanidi wa ugawaji wa fedha taslimu",
+      "create": "Imeshindikana kukamilisha ugawaji wa fedha taslimu",
+      "integerQuantity": "Weka idadi kamili ya vipande",
+      "noReadPermission": "Huna ruhusa ya kuona migawanyo ya fedha taslimu",
+      "preview": "Imeshindikana kukokotoa hakikisho la ugawaji wa fedha taslimu",
+      "receipt": "Imeshindikana kupata risiti ya ugawaji wa fedha taslimu"
+    },
+    "labels": {
+      "businessDate": "Tarehe ya Biashara",
+      "cashInflow": "Fedha Taslimu Zinazoingia",
+      "cashOutflow": "Fedha Taslimu Zinazotoka",
+      "checksInflow": "Hundi Zinazoingia",
+      "checksOutflow": "Hundi Zinazotoka",
+      "currency": "Sarafu",
+      "denomination": "Madhehebu",
+      "denominationBreakdown": "Mchanganuo wa Madhehebu",
+      "destination": "Mpokeaji",
+      "note": "Maelezo",
+      "office": "Ofisi",
+      "operation": "Operesheni",
+      "quantity": "Kiasi",
+      "source": "Chanzo",
+      "subtotal": "Jumla Ndogo",
+      "totalCash": "Jumla ya Fedha Taslimu",
+      "transferFrom": "Hamisha Kutoka",
+      "transferTo": "Hamisha Kwenda",
+      "type": "Aina",
+      "vaultBalance": "Salio la Seifu",
+      "vouchersInflow": "Vocha Zinazoingia",
+      "vouchersOutflow": "Vocha Zinazotoka"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Utoaji kwa Mhudumu Mkuu wa Fedha",
+      "OPERATIONAL_TELLER_ALLOCATION": "Utoaji kwa Mhudumu wa Fedha wa Kawaida",
+      "SAFE_VAULT_OPENING": "Ufunguzi wa Droo / Seifu"
+    },
+    "receipt": {
+      "accountingTransaction": "Muamala wa Uhasibu",
+      "completedOn": "Ilikamilishwa Tarehe",
+      "createdOn": "Iliundwa Tarehe",
+      "destinationAfter": "Salio la Mpokeaji Baada",
+      "destinationBefore": "Salio la Mpokeaji Kabla",
+      "operator": "Mwendeshaji",
+      "reference": "Kumbukumbu ya Risiti",
+      "sourceAfter": "Salio la Chanzo Baada",
+      "sourceBefore": "Salio la Chanzo Kabla",
+      "status": "Hali",
+      "title": "Risiti ya Ugawaji wa Fedha Taslimu"
+    },
+    "status": {
+      "loading": "Inapakia usanidi wa ugawaji wa fedha taslimu...",
+      "processing": "Inachakata..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Maelezo ya malipo"
@@ -4369,6 +4447,7 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Base Teller": "Keshia wa Msingi",
       "Cash received cannot be less than the check amount": "Pesa taslimu zilizopokelewa haziwezi kuwa chini ya kiasi cha hundi.",
       "No eligible cash payment types available": "Hakuna aina zinazofaa za malipo ya pesa taslimu zinazopatikana.",
       "No returned checks found": "Hakuna hundi zilizorudishwa zilizopatikana.",

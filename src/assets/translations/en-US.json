@@ -1,4 +1,82 @@
 {
+  "cashAllocation": {
+    "title": "Cash Drawer Opening and Provisioning",
+    "actions": {
+      "confirmPost": "Confirm and Post",
+      "newOperation": "New Operation",
+      "preview": "Preview Transaction",
+      "printReceipt": "Print Receipt",
+      "reprintReceipt": "Reprint Receipt",
+      "retrySameTransaction": "Retry Same Transaction"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknote",
+      "COIN": "Coin"
+    },
+    "dialog": {
+      "confirmTitle": "Confirm Cash Allocation"
+    },
+    "empty": {
+      "cashiers": "No active cashiers are available for this office",
+      "currencies": "No currencies are configured",
+      "denominations": "No active denominations are configured for this currency",
+      "headCashiers": "No funded head cashier is available for this currency"
+    },
+    "errors": {
+      "context": "Cash allocation configuration could not be loaded",
+      "create": "Cash allocation could not be completed",
+      "integerQuantity": "Enter a whole number of items",
+      "noReadPermission": "You do not have permission to view cash allocations",
+      "preview": "Cash allocation preview could not be calculated",
+      "receipt": "Cash allocation receipt could not be retrieved"
+    },
+    "labels": {
+      "businessDate": "Business Date",
+      "cashInflow": "Cash Inflow",
+      "cashOutflow": "Cash Outflow",
+      "checksInflow": "Checks Inflow",
+      "checksOutflow": "Checks Outflow",
+      "currency": "Currency",
+      "denomination": "Denomination",
+      "denominationBreakdown": "Denomination Breakdown",
+      "destination": "Destination",
+      "note": "Note",
+      "office": "Office",
+      "operation": "Operation",
+      "quantity": "Quantity",
+      "source": "Source",
+      "subtotal": "Subtotal",
+      "totalCash": "Total Cash",
+      "transferFrom": "Transfer From",
+      "transferTo": "Transfer To",
+      "type": "Type",
+      "vaultBalance": "Vault Balance",
+      "vouchersInflow": "Vouchers Inflow",
+      "vouchersOutflow": "Vouchers Outflow"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Head Cashier Provisioning",
+      "OPERATIONAL_TELLER_ALLOCATION": "Operational Teller Provisioning",
+      "SAFE_VAULT_OPENING": "Safe / Vault Opening"
+    },
+    "receipt": {
+      "accountingTransaction": "Accounting Transaction",
+      "completedOn": "Completed On",
+      "createdOn": "Created On",
+      "destinationAfter": "Destination Balance After",
+      "destinationBefore": "Destination Balance Before",
+      "operator": "Operator",
+      "reference": "Receipt Reference",
+      "sourceAfter": "Source Balance After",
+      "sourceBefore": "Source Balance Before",
+      "status": "Status",
+      "title": "Cash Allocation Receipt"
+    },
+    "status": {
+      "loading": "Loading cash allocation configuration...",
+      "processing": "Processing..."
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Payment Details"
@@ -4539,6 +4617,7 @@
       "Cancel Pending Sale": "Cancel Pending Sale",
       "Cash denomination total must equal the funding amount": "Cash denomination total must equal the funding amount.",
       "Cash denomination total must equal the transaction amount": "Cash denomination total must equal the transaction amount.",
+      "Base Teller": "Base Teller",
       "Cash received cannot be less than the check amount": "Cash received cannot be less than the check amount.",
       "Cashier Transactions": "Cashier Transactions",
       "Cashiers": "Cashiers",
