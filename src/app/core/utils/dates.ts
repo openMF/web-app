@@ -39,8 +39,15 @@ export class Dates {
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {
-    const datePipe: DatePipe = new DatePipe(this.language.code);
-    return datePipe.transform(timestamp, dateFormat);
+    try {
+      const datePipe: DatePipe = new DatePipe(this.language.code);
+      return datePipe.transform(timestamp, dateFormat);
+    } catch (e) {
+      if (moment(timestamp).isValid()) {
+        return this.formatDateAsString(timestamp, dateFormat);
+      }
+      throw e;
+    }
   }
 
   public formatDateAsString(value: Date, dateFormat: string): string {
