@@ -196,6 +196,40 @@
       "processing": "Processing..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Retry",
+      "update": "Update",
+      "updateCategory": "Update {{category}}",
+      "updating": "Updating...",
+      "updatingCategory": "Updating {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Accounting", "GENERAL": "General Catalogs", "USERS": "Users" },
+    "errors": {
+      "alreadyRunning": "This catalog update is already running",
+      "interrupted": "The previous catalog update was interrupted. Please retry",
+      "load": "Catalog update statuses could not be loaded",
+      "sourceValidation": "The catalog source could not be validated. Please retry",
+      "unknown": "The catalog update failed. Please retry",
+      "update": "The catalog update request could not be completed. Please retry"
+    },
+    "labels": {
+      "lastAttempt": "Last Attempt",
+      "lastUpdate": "Last Update",
+      "needsUpdate": "Needs Update",
+      "neverUpdated": "Never Updated",
+      "no": "No",
+      "status": "Status",
+      "yes": "Yes"
+    },
+    "messages": { "loading": "Loading catalog update statuses...", "success": "The catalogs have been updated" },
+    "status": {
+      "CURRENT": "Current",
+      "FAILED": "Update Failed",
+      "UPDATING": "Updating...",
+      "UPDATE_REQUIRED": "Update Required"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Payment Details"
@@ -1571,6 +1605,7 @@
     },
     "heading": {
       "Cash Payment": "Cash Payment",
+      "Catalog Updates": "Catalog Updates",
       "Confirmation": "Confirmation",
       "Receipt": "Receipt",
       "Returned Check Payment": "Returned Check Payment",

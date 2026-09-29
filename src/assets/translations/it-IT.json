@@ -196,6 +196,43 @@
       "processing": "Elaborazione in corso..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Riprova",
+      "update": "Aggiorna",
+      "updateCategory": "Aggiorna {{category}}",
+      "updating": "Aggiornamento...",
+      "updatingCategory": "Aggiornamento di {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Contabilità", "GENERAL": "Cataloghi generali", "USERS": "Utenti" },
+    "errors": {
+      "alreadyRunning": "Questo aggiornamento del catalogo è già in corso",
+      "interrupted": "Il precedente aggiornamento del catalogo è stato interrotto. Riprova",
+      "load": "Impossibile caricare gli stati di aggiornamento dei cataloghi",
+      "sourceValidation": "Impossibile convalidare l’origine del catalogo. Riprova",
+      "unknown": "Aggiornamento del catalogo non riuscito. Riprova",
+      "update": "Impossibile completare la richiesta di aggiornamento del catalogo. Riprova"
+    },
+    "labels": {
+      "lastAttempt": "Ultimo tentativo",
+      "lastUpdate": "Ultimo aggiornamento",
+      "needsUpdate": "Aggiornamento necessario",
+      "neverUpdated": "Mai aggiornato",
+      "no": "No",
+      "status": "Stato",
+      "yes": "Sì"
+    },
+    "messages": {
+      "loading": "Caricamento degli stati di aggiornamento dei cataloghi...",
+      "success": "I cataloghi sono stati aggiornati"
+    },
+    "status": {
+      "CURRENT": "Aggiornato",
+      "FAILED": "Aggiornamento non riuscito",
+      "UPDATING": "Aggiornamento...",
+      "UPDATE_REQUIRED": "Aggiornamento richiesto"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Dettagli del pagamento"
@@ -1569,6 +1606,7 @@
     },
     "heading": {
       "Cash Payment": "Pagamento in contanti",
+      "Catalog Updates": "Aggiornamenti dei cataloghi",
       "Confirmation": "Conferma",
       "Receipt": "Ricevuta",
       "Returned Check Payment": "Pagamento assegno restituito",

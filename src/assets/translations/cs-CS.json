@@ -196,6 +196,40 @@
       "processing": "Zpracovává se..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Opakovat",
+      "update": "Aktualizovat",
+      "updateCategory": "Aktualizovat: {{category}}",
+      "updating": "Aktualizace...",
+      "updatingCategory": "Aktualizuje se: {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Účetnictví", "GENERAL": "Obecné katalogy", "USERS": "Uživatelé" },
+    "errors": {
+      "alreadyRunning": "Tato aktualizace katalogu již probíhá",
+      "interrupted": "Předchozí aktualizace katalogu byla přerušena. Zkuste to znovu",
+      "load": "Stavy aktualizací katalogů se nepodařilo načíst",
+      "sourceValidation": "Zdroj katalogu se nepodařilo ověřit. Zkuste to znovu",
+      "unknown": "Aktualizace katalogu se nezdařila. Zkuste to znovu",
+      "update": "Požadavek na aktualizaci katalogu se nepodařilo dokončit. Zkuste to znovu"
+    },
+    "labels": {
+      "lastAttempt": "Poslední pokus",
+      "lastUpdate": "Poslední aktualizace",
+      "needsUpdate": "Vyžaduje aktualizaci",
+      "neverUpdated": "Dosud neaktualizováno",
+      "no": "Ne",
+      "status": "Stav",
+      "yes": "Ano"
+    },
+    "messages": { "loading": "Načítají se stavy aktualizací katalogů...", "success": "Katalogy byly aktualizovány" },
+    "status": {
+      "CURRENT": "Aktuální",
+      "FAILED": "Aktualizace se nezdařila",
+      "UPDATING": "Aktualizace...",
+      "UPDATE_REQUIRED": "Je vyžadována aktualizace"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Údaje o platbě"
@@ -1570,6 +1604,7 @@
     },
     "heading": {
       "Cash Payment": "Hotovostní platba",
+      "Catalog Updates": "Aktualizace katalogů",
       "Confirmation": "Potvrzení",
       "Receipt": "Účtenka",
       "Returned Check Payment": "Platba vráceného šeku",
