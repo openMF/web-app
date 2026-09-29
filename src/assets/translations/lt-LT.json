@@ -77,6 +77,40 @@
       "processing": "Apdorojama..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Bandyti dar kartą",
+      "update": "Atnaujinti",
+      "updateCategory": "Atnaujinti {{category}}",
+      "updating": "Atnaujinama...",
+      "updatingCategory": "Atnaujinama: {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Apskaita", "GENERAL": "Bendrieji katalogai", "USERS": "Naudotojai" },
+    "errors": {
+      "alreadyRunning": "Šis katalogo atnaujinimas jau vykdomas",
+      "interrupted": "Ankstesnis katalogo atnaujinimas buvo nutrauktas. Bandykite dar kartą",
+      "load": "Nepavyko įkelti katalogų atnaujinimo būsenų",
+      "sourceValidation": "Nepavyko patikrinti katalogo šaltinio. Bandykite dar kartą",
+      "unknown": "Katalogo atnaujinti nepavyko. Bandykite dar kartą",
+      "update": "Nepavyko užbaigti katalogo atnaujinimo užklausos. Bandykite dar kartą"
+    },
+    "labels": {
+      "lastAttempt": "Paskutinis bandymas",
+      "lastUpdate": "Paskutinis atnaujinimas",
+      "needsUpdate": "Reikia atnaujinti",
+      "neverUpdated": "Niekada neatnaujinta",
+      "no": "Ne",
+      "status": "Būsena",
+      "yes": "Taip"
+    },
+    "messages": { "loading": "Įkeliamos katalogų atnaujinimo būsenos...", "success": "Katalogai atnaujinti" },
+    "status": {
+      "CURRENT": "Atnaujinta",
+      "FAILED": "Atnaujinti nepavyko",
+      "UPDATING": "Atnaujinama...",
+      "UPDATE_REQUIRED": "Reikia atnaujinti"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Mokėjimo informacija"
@@ -1449,6 +1483,7 @@
     },
     "heading": {
       "Cash Payment": "Mokėjimas grynaisiais",
+      "Catalog Updates": "Katalogų atnaujinimai",
       "Confirmation": "Patvirtinimas",
       "Receipt": "Kvitas",
       "Returned Check Payment": "Grąžinto čekio apmokėjimas",

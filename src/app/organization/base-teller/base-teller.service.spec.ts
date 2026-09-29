@@ -36,6 +36,33 @@ describe('BaseTellerService', () => {
     httpMock.verify();
   });
 
+  it('uses the exact WEB-1254 status endpoints', async () => {
+    const allPromise = firstValueFrom(service.getCatalogUpdates());
+    const allRequest = httpMock.expectOne('/v2/base-teller/catalog-updates');
+    expect(allRequest.request.method).toBe('GET');
+    allRequest.flush([{ category: 'GENERAL', status: 'UPDATE_REQUIRED', needsUpdate: true }]);
+    expect((await allPromise)[0].category).toBe('GENERAL');
+
+    const onePromise = firstValueFrom(service.getCatalogUpdate('ACCOUNTING'));
+    const oneRequest = httpMock.expectOne('/v2/base-teller/catalog-updates/ACCOUNTING');
+    expect(oneRequest.request.method).toBe('GET');
+    oneRequest.flush({ category: 'ACCOUNTING', status: 'CURRENT', needsUpdate: false });
+    expect((await onePromise).status).toBe('CURRENT');
+  });
+
+  it.each([
+    'GENERAL',
+    'ACCOUNTING',
+    'USERS'
+  ] as const)('posts a bodyless WEB-1254 synchronization for %s', async (category) => {
+    const resultPromise = firstValueFrom(service.synchronizeCatalog(category));
+    const request = httpMock.expectOne(`/v2/base-teller/catalog-updates/${category}/sync`);
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toBeNull();
+    request.flush({ category, status: 'CURRENT', needsUpdate: false });
+    expect((await resultPromise).category).toBe(category);
+  });
+
   it('searches customers and savings accounts through the platform search endpoint', async () => {
     const resultPromise = firstValueFrom(service.searchDepositCustomersAndAccounts('amina'));
 

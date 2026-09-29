@@ -77,6 +77,43 @@
       "processing": "Traitement en cours..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Réessayer",
+      "update": "Mettre à jour",
+      "updateCategory": "Mettre à jour {{category}}",
+      "updating": "Mise à jour...",
+      "updatingCategory": "Mise à jour de {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Comptabilité", "GENERAL": "Catalogues généraux", "USERS": "Utilisateurs" },
+    "errors": {
+      "alreadyRunning": "Cette mise à jour du catalogue est déjà en cours",
+      "interrupted": "La mise à jour précédente du catalogue a été interrompue. Veuillez réessayer",
+      "load": "Impossible de charger les états de mise à jour des catalogues",
+      "sourceValidation": "La source du catalogue n’a pas pu être validée. Veuillez réessayer",
+      "unknown": "La mise à jour du catalogue a échoué. Veuillez réessayer",
+      "update": "La demande de mise à jour du catalogue n’a pas pu aboutir. Veuillez réessayer"
+    },
+    "labels": {
+      "lastAttempt": "Dernière tentative",
+      "lastUpdate": "Dernière mise à jour",
+      "needsUpdate": "Mise à jour nécessaire",
+      "neverUpdated": "Jamais mis à jour",
+      "no": "Non",
+      "status": "État",
+      "yes": "Oui"
+    },
+    "messages": {
+      "loading": "Chargement des états de mise à jour des catalogues...",
+      "success": "Les catalogues ont été mis à jour"
+    },
+    "status": {
+      "CURRENT": "À jour",
+      "FAILED": "Échec de la mise à jour",
+      "UPDATING": "Mise à jour...",
+      "UPDATE_REQUIRED": "Mise à jour requise"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Détails du paiement"
@@ -1449,6 +1486,7 @@
     },
     "heading": {
       "Cash Payment": "Paiement en espèces",
+      "Catalog Updates": "Mises à jour des catalogues",
       "Confirmation": "Confirmation",
       "Receipt": "Reçu",
       "Returned Check Payment": "Paiement d'un chèque retourné",

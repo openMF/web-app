@@ -21,6 +21,15 @@ describe('BaseTellerComponent', () => {
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
       {
+        materialIcon: 'sync',
+        permission: 'READ_BASE_TELLER_CATALOG_UPDATE',
+        route: [
+          '/organization',
+          'base-teller',
+          'catalog-updates'
+        ]
+      },
+      {
         materialIcon: 'point_of_sale',
         permission: 'READ_BASE_TELLER_CASH_ALLOCATION',
         route: [
@@ -126,13 +135,13 @@ describe('BaseTellerComponent', () => {
     environment.productionMode = false;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(10);
+    expect(component.workflows).toHaveLength(11);
   });
 
   it('shows Bill and Service Payment when production mode is enabled', () => {
     environment.productionMode = true;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(11);
+    expect(component.workflows).toHaveLength(12);
   });
 });
