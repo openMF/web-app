@@ -221,6 +221,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "No hay un reinicio de incumplimiento activo para deshacer.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "El préstamo no tiene calendario de incumplimiento.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Este período de incumplimiento ya fue reiniciado. Deshaz el reinicio existente antes de volver a reiniciar.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "La fecha del ajuste de cargo no puede ser anterior a la fecha de vencimiento del cargo.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "El ajuste de cargo no está vinculado a ningún cargo, por lo que no se puede ajustar.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Este tipo de transacción no se puede ajustar en un préstamo de capital de trabajo.",
+    "wc.loan.charge.adjustment.invalid.status": "Los ajustes de cargo no están permitidos para el estado actual del préstamo.",
+    "wc.loan.charge.adjustment.inactive.charge": "Los ajustes de cargo no están permitidos sobre un cargo inactivo.",
+    "wc.loan.charge.adjustment.invalid.amount": "El monto no puede ser mayor que el monto del cargo disponible para ajuste.",
     "error.resource.notImplemented.type": "No implementado",
     "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",
@@ -1087,7 +1093,8 @@
       "Post Dividends": "Contabilizar dividendos",
       "Convert": "Convertir",
       "Deleting": "Eliminando",
-      "Inactivate": "Inactivar"
+      "Inactivate": "Inactivar",
+      "Discount Fee Adjustment": "Ajuste de Comisión de Descuento"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -5656,7 +5663,10 @@
       "Closed": "Cerrado",
       "Dashboard Export": "Exportación del panel",
       "Generated on": "Generado el",
-      "Automated export": "Esta es una exportación automática del panel global de Mifos X"
+      "Automated export": "Esta es una exportación automática del panel global de Mifos X",
+      "Discount Fee Adjustment": "Ajuste de Comisión de Descuento",
+      "Remaining discount fee available to adjust": "Comisión de descuento disponible para ajustar",
+      "Cannot precede the discount fee date": "No puede ser anterior a la fecha de la comisión de descuento"
     },
     "permissions": {
       "actions": {
@@ -5957,7 +5967,8 @@
       "validationSaved": "Datos de validación guardados exitosamente.",
       "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente.",
       "identityDescriptionsUpdated": "Las descripciones de identidad se actualizaron correctamente.",
-      "identityDescriptionsUpdateFailed": "Algunas descripciones de identidad no se pudieron actualizar."
+      "identityDescriptionsUpdateFailed": "Algunas descripciones de identidad no se pudieron actualizar.",
+      "unableToAdjustDiscountFee": "No se pudo ajustar la comisión de descuento."
     },
     "selections": {
       "standingInstructions": {
