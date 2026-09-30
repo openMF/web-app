@@ -7,6 +7,7 @@
  */
 
 import { Currency, PaymentType } from 'app/shared/models/general.model';
+import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 
 /** Code value option used to populate the charge-off reason dropdown. */
 export interface WorkingCapitalChargeOffReasonOption {
@@ -105,6 +106,14 @@ export interface WorkingCapitalBalances {
   totalRecoveryPayment?: number;
   /** totalWrittenOff - totalRecovered: what can still be recovered. */
   writtenOffOutstanding?: number;
+}
+
+export interface WorkingCapitalLoanTransaction {
+  id: number;
+  type: LoanTransactionType;
+  transactionDate: number[] | string;
+  reversed: boolean;
+  currency: Currency;
 }
 
 export interface WorkingCapitalLoanDiscountUpdateRequest {
