@@ -1,0 +1,104 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container catalog-updates">
+  <mat-card class="catalog-updates-card">
+    <mat-card-content>
+      <h2>{{ 'labels.heading.Catalog Updates' | translate }}</h2>
+
+      @if (loadError) {
+        <div class="message error-message" role="alert">{{ loadError | translate }}</div>
+        <button type="button" mat-raised-button color="primary" (click)="loadCatalogUpdates()">
+          {{ 'catalogUpdates.actions.retry' | translate }}
+        </button>
+      } @else if (isLoading) {
+        <div class="loading-state" role="status">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>{{ 'catalogUpdates.messages.loading' | translate }}</span>
+        </div>
+      } @else {
+        <div class="catalog-grid">
+          @for (catalogUpdate of catalogUpdates; track catalogUpdate.category) {
+            <mat-card class="catalog-card">
+              <mat-card-content>
+                <div class="catalog-heading">
+                  <mat-icon aria-hidden="true">sync</mat-icon>
+                  <h3>{{ categoryKey(catalogUpdate.category) | translate }}</h3>
+                </div>
+
+                <dl class="catalog-details">
+                  <div>
+                    <dt>{{ 'catalogUpdates.labels.lastUpdate' | translate }}</dt>
+                    <dd>
+                      @if (catalogUpdate.lastUpdatedAt) {
+                        {{ catalogUpdate.lastUpdatedAt | datetimeFormat }}
+                      } @else {
+                        {{ 'catalogUpdates.labels.neverUpdated' | translate }}
+                      }
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'catalogUpdates.labels.lastAttempt' | translate }}</dt>
+                    <dd>
+                      @if (catalogUpdate.lastAttemptAt) {
+                        {{ catalogUpdate.lastAttemptAt | datetimeFormat }}
+                      } @else {
+                        {{ 'catalogUpdates.labels.neverUpdated' | translate }}
+                      }
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'catalogUpdates.labels.needsUpdate' | translate }}</dt>
+                    <dd>
+                      {{
+                        (catalogUpdate.needsUpdate ? 'catalogUpdates.labels.yes' : 'catalogUpdates.labels.no')
+                          | translate
+                      }}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'catalogUpdates.labels.status' | translate }}</dt>
+                    <dd class="status" [class.needs-update]="catalogUpdate.needsUpdate">
+                      {{ statusKey(catalogUpdate.status) | translate }}
+                    </dd>
+                  </div>
+                </dl>
+
+                @if (errorKey(catalogUpdate); as categoryError) {
+                  <div class="message error-message" role="alert">{{ categoryError | translate }}</div>
+                }
+              </mat-card-content>
+              @if (canUpdate) {
+                <mat-card-actions align="end">
+                  <button
+                    type="button"
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="isUpdating(catalogUpdate)"
+                    [attr.aria-label]="
+                      (isUpdating(catalogUpdate)
+                        ? 'catalogUpdates.actions.updatingCategory'
+                        : 'catalogUpdates.actions.updateCategory'
+                      ) | translate: { category: (categoryKey(catalogUpdate.category) | translate) }
+                    "
+                    (click)="synchronize(catalogUpdate)"
+                  >
+                    @if (isUpdating(catalogUpdate)) {
+                      <mat-spinner diameter="20"></mat-spinner>
+                    }
+                    {{ actionKey(catalogUpdate) | translate }}
+                  </button>
+                </mat-card-actions>
+              }
+            </mat-card>
+          }
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -31,6 +31,19 @@ import {
 
 export type FineractId = string | number;
 
+export type CatalogCategory = 'GENERAL' | 'ACCOUNTING' | 'USERS';
+
+export type CatalogUpdateStatus = 'CURRENT' | 'UPDATE_REQUIRED' | 'UPDATING' | 'FAILED';
+
+export interface CatalogUpdateResponse {
+  category: CatalogCategory;
+  lastUpdatedAt: string | null;
+  lastAttemptAt: string | null;
+  needsUpdate: boolean;
+  status: CatalogUpdateStatus;
+  failureCode: string | null;
+}
+
 export interface DepositSearchResult {
   id?: FineractId;
   entityId?: FineractId;
@@ -454,6 +467,22 @@ export class BaseTellerService {
   private readonly cashierClosingsPath = '/v2/base-teller/closings';
   private readonly cashOperationsPath = '/v2/base-teller/cash-operations';
   private readonly cashAllocationsPath = '/v2/base-teller/cash-allocations';
+  private readonly catalogUpdatesPath = '/v2/base-teller/catalog-updates';
+
+  /** Retrieves the backend-authoritative status for every supported catalog category. */
+  getCatalogUpdates(): Observable<CatalogUpdateResponse[]> {
+    return this.http.get<CatalogUpdateResponse[]>(this.catalogUpdatesPath);
+  }
+
+  /** Retrieves the backend-authoritative status for one catalog category. */
+  getCatalogUpdate(category: CatalogCategory): Observable<CatalogUpdateResponse> {
+    return this.http.get<CatalogUpdateResponse>(`${this.catalogUpdatesPath}/${category}`);
+  }
+
+  /** Requests a synchronous backend refresh and returns its persisted result. */
+  synchronizeCatalog(category: CatalogCategory): Observable<CatalogUpdateResponse> {
+    return this.http.post<CatalogUpdateResponse>(`${this.catalogUpdatesPath}/${category}/sync`, null);
+  }
 
   getCashierClosingContext(
     cashierId: FineractId,

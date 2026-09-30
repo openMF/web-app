@@ -77,6 +77,40 @@
       "processing": "Emal edilir..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Yenidən cəhd edin",
+      "update": "Yeniləyin",
+      "updateCategory": "{{category}} kataloqunu yeniləyin",
+      "updating": "Yenilənir...",
+      "updatingCategory": "{{category}} yenilənir"
+    },
+    "categories": { "ACCOUNTING": "Mühasibat", "GENERAL": "Ümumi kataloqlar", "USERS": "İstifadəçilər" },
+    "errors": {
+      "alreadyRunning": "Bu kataloq yeniləməsi artıq icra olunur",
+      "interrupted": "Əvvəlki kataloq yeniləməsi dayandırıldı. Yenidən cəhd edin",
+      "load": "Kataloq yeniləmə statuslarını yükləmək mümkün olmadı",
+      "sourceValidation": "Kataloq mənbəyini yoxlamaq mümkün olmadı. Yenidən cəhd edin",
+      "unknown": "Kataloq yeniləməsi uğursuz oldu. Yenidən cəhd edin",
+      "update": "Kataloq yeniləmə sorğusunu tamamlamaq mümkün olmadı. Yenidən cəhd edin"
+    },
+    "labels": {
+      "lastAttempt": "Son cəhd",
+      "lastUpdate": "Son yeniləmə",
+      "needsUpdate": "Yeniləmə lazımdır",
+      "neverUpdated": "Heç vaxt yenilənməyib",
+      "no": "Xeyr",
+      "status": "Status",
+      "yes": "Bəli"
+    },
+    "messages": { "loading": "Kataloq yeniləmə statusları yüklənir...", "success": "Kataloqlar yeniləndi" },
+    "status": {
+      "CURRENT": "Cari",
+      "FAILED": "Yeniləmə uğursuz oldu",
+      "UPDATING": "Yenilənir...",
+      "UPDATE_REQUIRED": "Yeniləmə tələb olunur"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Ödəniş təfərrüatları"
@@ -1369,6 +1403,7 @@
     },
     "heading": {
       "Cash Payment": "Nağd ödəniş",
+      "Catalog Updates": "Kataloq yeniləmələri",
       "Confirmation": "Təsdiq",
       "Receipt": "Qəbz",
       "Returned Check Payment": "Geri qaytarılmış çek üzrə ödəniş",
