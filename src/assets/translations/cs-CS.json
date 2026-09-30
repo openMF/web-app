@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Hotovostní a šekové splátky úvěru",
+      "denominations": "Hotovostní nominální hodnoty",
+      "receipt": "Potvrzení o platbě kreditu"
+    },
+    "steps": {
+      "customer": "Vyhledávání zákazníků",
+      "loan": "Půjčka a přehled zůstatku",
+      "payment": "Platební údaje",
+      "confirmation": "Náhled a potvrzení",
+      "receipt": "Potvrzení"
+    },
+    "tabs": {
+      "current": "Aktuální zůstatky",
+      "overdue": "Zůstatky po splatnosti",
+      "schedule": "Amortizační plán",
+      "history": "Historie transakcí"
+    },
+    "fields": {
+      "businessDate": "Obchodní datum",
+      "teller": "Pokladní přepážka",
+      "cashier": "Pokladník",
+      "customerSearch": "Vyhledávání zákazníků",
+      "customer": "Zákazník",
+      "accountNumber": "Číslo účtu",
+      "office": "Kancelář",
+      "status": "Stav",
+      "loanAccount": "Úvěrový účet",
+      "totalDue": "Celková dlužná částka",
+      "principal": "Jistina",
+      "interest": "Zájem",
+      "tax": "Daň z úroků/DPH",
+      "fees": "Poplatky",
+      "penalties": "Penalty",
+      "total": "Celkem",
+      "paymentMethod": "Způsob platby",
+      "amount": "Částka",
+      "paymentType": "Typ platby",
+      "note": "Poznámka",
+      "denomination": "Denominace",
+      "quantity": "množství",
+      "subtotal": "Mezisoučet",
+      "paymentAmount": "Částka platby",
+      "tendered": "Nabídková hotovost",
+      "change": "Vrácená částka",
+      "bank": "Banka",
+      "checkType": "Typ šeku",
+      "checkNumber": "Číslo šeku",
+      "checkAccount": "Číslo účtu šeku",
+      "routingCode": "Směrovací kód",
+      "classification": "Klasifikace šeku",
+      "receiptNumber": "Číslo účtenky",
+      "operator": "Operátor",
+      "loanTransaction": "ID úvěrové transakce",
+      "cashierTransaction": "ID pokladní transakce",
+      "overpayment": "Přeplatek",
+      "returnReason": "Důvod návratu"
+    },
+    "methods": {
+      "CASH": "Hotovost",
+      "CHECK": "Šek"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "K inkasu",
+      "CLEARED_FUNDS": "Kryté prostředky"
+    },
+    "status": {
+      "IN_PROGRESS": "Probíhá",
+      "PENDING_COLLECTION": "Čeká na výběr",
+      "COMPLETED": "Dokončeno",
+      "CLEARED": "Proplaceno",
+      "RETURNED": "Vráceno",
+      "FAILED": "Nepodařilo se"
+    },
+    "actions": {
+      "preview": "Náhled platby",
+      "confirmSubmit": "Potvrdit a odeslat",
+      "clearCheck": "Proplatit šek",
+      "returnCheck": "Vrátit šek",
+      "print": "Tisk",
+      "reprint": "Dotisk",
+      "newPayment": "Nová platba"
+    },
+    "hints": {
+      "customerSearch": "Vyhledávejte podle jména, čísla zákazníka nebo čísla majitele účtu"
+    },
+    "messages": {
+      "pendingExplanation": "Šek bude přijat k inkasu. Zůstatek úvěru se nesníží, dokud oprávněný uživatel šek neproplatí.",
+      "pendingReceipt": "Platba čeká na vyzvednutí. Nebyla zaúčtována žádná splátka půjčky.",
+      "confirm": "Pečlivě si prohlédněte backendový autoritativní náhled a poté platbu výslovně potvrďte."
+    },
+    "empty": {
+      "customers": "Nebyli nalezeni žádní zákazníci",
+      "loans": "Nebyly nalezeny žádné způsobilé půjčky",
+      "schedule": "Není k dispozici žádný amortizační plán",
+      "history": "Není k dispozici žádná historie transakcí",
+      "paymentTypes": "Není k dispozici žádný nakonfigurovaný typ platby",
+      "denominations": "Pro tuto měnu nejsou nakonfigurovány žádné nominální hodnoty",
+      "banks": "Nejsou nakonfigurovány žádné banky"
+    },
+    "validation": {
+      "amount": "Zadejte částku větší než nula s maximálně šesti desetinnými místy",
+      "quantity": "Množství musí být nezáporné celé číslo",
+      "insufficientCash": "Nabízená hotovost je nižší než částka platby"
+    },
+    "errors": {
+      "noReadPermission": "Nemáte oprávnění prohlížet kreditní platby",
+      "noCreatePermission": "K vytvoření této platby nemáte oprávnění",
+      "configuration": "Konfigurace Telleru nelze načíst. Ověřte přiřazení pokladníka a konfiguraci backendu.",
+      "customerSearch": "Hledání zákazníků se nezdařilo",
+      "loanList": "Způsobilé půjčky se nepodařilo načíst",
+      "loanDetails": "Podrobnosti o půjčce se nepodařilo načíst",
+      "preview": "Náhled platby se nezdařil",
+      "submit": "Platbu nebylo možné odeslat",
+      "receipt": "Účtenku se nepodařilo načíst",
+      "transition": "Přechod stavu šeku se nepodařilo dokončit"
+    }
+  },
   "cashAllocation": {
     "title": "Otevření a zásobení pokladny",
     "actions": {

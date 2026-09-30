@@ -72,6 +72,16 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
     ]
   },
   {
+    label: 'creditPayment.heading.title',
+    fontAwesomeIcon: 'money-check-dollar',
+    permission: 'READ_BASE_TELLER_CREDIT_PAYMENT',
+    route: [
+      '/organization',
+      'base-teller',
+      'credit-payments'
+    ]
+  },
+  {
     label: 'web1232.views.closing',
     materialIcon: 'point_of_sale',
     permission: 'READ_CASHIER_CLOSING',

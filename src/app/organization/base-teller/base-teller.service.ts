@@ -338,6 +338,209 @@ export interface ServicePaymentReceipt {
   denominations: ServicePaymentDenomination[];
 }
 
+export type CreditPaymentAmount = number | string;
+export type CreditPaymentMethod = 'CASH' | 'CHECK';
+export type CreditPaymentCheckClassification = 'SUBJECT_TO_COLLECTION' | 'CLEARED_FUNDS';
+export type CreditPaymentStatus =
+  'IN_PROGRESS' | 'PENDING_COLLECTION' | 'COMPLETED' | 'CLEARED' | 'RETURNED' | 'FAILED';
+
+export interface CreditPaymentDenominationConfiguration {
+  identifier: string;
+  currencyCode: string;
+  value: CreditPaymentAmount;
+  type: string;
+}
+
+export interface CreditPaymentBank {
+  id: FineractId;
+  code: string;
+  name: string;
+}
+
+export interface CreditPaymentContext {
+  businessDate: string;
+  officeId: FineractId;
+  tellerId: FineractId;
+  cashierId: FineractId;
+  denominations: CreditPaymentDenominationConfiguration[];
+  banks: CreditPaymentBank[];
+  paymentTypes: BaseTellerOption[];
+}
+
+export interface CreditPaymentCustomer {
+  clientId: FineractId;
+  accountNo: string;
+  externalId?: string;
+  displayName: string;
+  officeId: FineractId;
+  officeName: string;
+  status: string;
+}
+
+export interface CreditPaymentSchedulePeriod {
+  period?: number;
+  dueDate?: string | number[];
+  principalDue?: CreditPaymentAmount;
+  principalOutstanding?: CreditPaymentAmount;
+  interestDue?: CreditPaymentAmount;
+  interestOutstanding?: CreditPaymentAmount;
+  feeChargesDue?: CreditPaymentAmount;
+  feeChargesOutstanding?: CreditPaymentAmount;
+  penaltyChargesDue?: CreditPaymentAmount;
+  penaltyChargesOutstanding?: CreditPaymentAmount;
+  totalDueForPeriod?: CreditPaymentAmount;
+  totalOutstandingForPeriod?: CreditPaymentAmount;
+}
+
+export interface CreditPaymentTransaction {
+  id?: FineractId;
+  date?: string | number[];
+  amount?: CreditPaymentAmount;
+  principalPortion?: CreditPaymentAmount;
+  interestPortion?: CreditPaymentAmount;
+  feeChargesPortion?: CreditPaymentAmount;
+  penaltyChargesPortion?: CreditPaymentAmount;
+  type?: { code?: string; value?: string } | string;
+  reversed?: boolean;
+}
+
+export interface CreditPaymentLoan {
+  id: FineractId;
+  accountNo: string;
+  clientId: FineractId;
+  clientName: string;
+  officeId: FineractId;
+  status: string;
+  payable: boolean;
+  currencyCode: string;
+  principalOutstanding: CreditPaymentAmount;
+  interestOutstanding: CreditPaymentAmount;
+  feeOutstanding: CreditPaymentAmount;
+  penaltyOutstanding: CreditPaymentAmount;
+  taxOutstanding?: CreditPaymentAmount;
+  totalOutstanding: CreditPaymentAmount;
+  principalOverdue: CreditPaymentAmount;
+  interestOverdue: CreditPaymentAmount;
+  feeOverdue: CreditPaymentAmount;
+  penaltyOverdue: CreditPaymentAmount;
+  taxOverdue?: CreditPaymentAmount;
+  totalOverdue: CreditPaymentAmount;
+  repaymentSchedule?: { periods?: CreditPaymentSchedulePeriod[] };
+  transactions?: CreditPaymentTransaction[];
+}
+
+export interface CreditPaymentDenomination {
+  denominationId: string;
+  value?: CreditPaymentAmount;
+  quantity: number;
+}
+
+export interface CreditPaymentCheckRequest {
+  bankId: FineractId;
+  checkType: string;
+  checkNumber: string;
+  accountNumber?: string;
+  routingCode?: string;
+  classification: CreditPaymentCheckClassification;
+}
+
+export interface CreditPaymentRequest {
+  idempotencyKey?: string;
+  clientId: FineractId;
+  loanId: FineractId;
+  paymentMethod: CreditPaymentMethod;
+  amount: CreditPaymentAmount;
+  currencyCode: string;
+  paymentTypeId: FineractId;
+  transactionDate: string;
+  dateFormat: string;
+  locale: string;
+  note?: string;
+  denominations?: CreditPaymentDenomination[];
+  check?: CreditPaymentCheckRequest;
+}
+
+export interface CreditPaymentPreview {
+  loanId: FineractId;
+  paymentMethod: CreditPaymentMethod;
+  checkClassification?: CreditPaymentCheckClassification;
+  currencyCode: string;
+  businessDate: string;
+  paymentAmount: CreditPaymentAmount;
+  tenderAmount: CreditPaymentAmount;
+  changeAmount: CreditPaymentAmount;
+  principalOutstanding: CreditPaymentAmount;
+  interestOutstanding: CreditPaymentAmount;
+  feeOutstanding: CreditPaymentAmount;
+  penaltyOutstanding: CreditPaymentAmount;
+  taxOutstanding?: CreditPaymentAmount;
+  nativeRepaymentTemplate?: CreditPaymentTransaction;
+  denominations: CreditPaymentDenomination[];
+  postsRepaymentOnConfirmation: boolean;
+}
+
+export interface CreditPaymentCheck {
+  id: FineractId;
+  bankId: FineractId;
+  bankName: string;
+  checkType: string;
+  checkNumber: string;
+  accountNumber?: string;
+  routingCode?: string;
+  classification: CreditPaymentCheckClassification;
+  status: CreditPaymentStatus;
+  acceptedBy: FineractId;
+  acceptedOnUtc: string;
+  clearedBy?: FineractId;
+  clearedOnUtc?: string;
+  returnedBy?: FineractId;
+  returnedOnUtc?: string;
+  returnReason?: string;
+}
+
+export interface CreditPaymentReceipt {
+  id: FineractId;
+  receiptNumber: string;
+  status: CreditPaymentStatus;
+  paymentMethod: CreditPaymentMethod;
+  clientId: FineractId;
+  clientName: string;
+  loanId: FineractId;
+  loanAccountNo: string;
+  amount: CreditPaymentAmount;
+  tenderAmount: CreditPaymentAmount;
+  changeAmount: CreditPaymentAmount;
+  currencyCode: string;
+  paymentTypeId: FineractId;
+  loanTransactionId?: FineractId;
+  cashierTransactionId?: FineractId;
+  principalPortion?: CreditPaymentAmount;
+  interestPortion?: CreditPaymentAmount;
+  feePortion?: CreditPaymentAmount;
+  penaltyPortion?: CreditPaymentAmount;
+  overpaymentPortion?: CreditPaymentAmount;
+  businessDate: string;
+  operatorId: FineractId;
+  operatorName: string;
+  officeId: FineractId;
+  tellerId?: FineractId;
+  cashierId?: FineractId;
+  note?: string;
+  failureMessage?: string;
+  createdOnUtc: string;
+  completedOnUtc?: string;
+  denominations: CreditPaymentDenomination[];
+  check?: CreditPaymentCheck;
+}
+
+export interface CreditPaymentTransitionRequest {
+  idempotencyKey: string;
+  transactionDate: string;
+  dateFormat: string;
+  locale: string;
+  reason?: string;
+}
+
 export type CashAllocationAmount = number | string;
 export type CashAllocationType = 'SAFE_VAULT_OPENING' | 'HEAD_CASHIER_ALLOCATION' | 'OPERATIONAL_TELLER_ALLOCATION';
 
@@ -451,9 +654,53 @@ export class BaseTellerService {
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
   private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
   private readonly servicePaymentsPath = '/v2/base-teller/service-payments';
+  private readonly creditPaymentsPath = '/v2/base-teller/credit-payments';
   private readonly cashierClosingsPath = '/v2/base-teller/closings';
   private readonly cashOperationsPath = '/v2/base-teller/cash-operations';
   private readonly cashAllocationsPath = '/v2/base-teller/cash-allocations';
+
+  getCreditPaymentContext(): Observable<CreditPaymentContext> {
+    return this.http.get<CreditPaymentContext>(`${this.creditPaymentsPath}/context`);
+  }
+
+  searchCreditPaymentCustomers(searchTerm: string, limit: number = 20): Observable<CreditPaymentCustomer[]> {
+    const params = new HttpParams().set('q', searchTerm).set('limit', String(limit));
+    return this.http.get<CreditPaymentCustomer[]>(`${this.creditPaymentsPath}/customers`, { params });
+  }
+
+  getCreditPaymentLoans(clientId: FineractId): Observable<CreditPaymentLoan[]> {
+    return this.http.get<CreditPaymentLoan[]>(`${this.creditPaymentsPath}/customers/${clientId}/loans`);
+  }
+
+  getCreditPaymentLoan(loanId: FineractId): Observable<CreditPaymentLoan> {
+    return this.http.get<CreditPaymentLoan>(`${this.creditPaymentsPath}/loans/${loanId}`);
+  }
+
+  previewCreditPayment(payload: CreditPaymentRequest): Observable<CreditPaymentPreview> {
+    return this.http.post<CreditPaymentPreview>(`${this.creditPaymentsPath}/preview`, payload);
+  }
+
+  createCreditPayment(payload: CreditPaymentRequest): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(this.creditPaymentsPath, payload);
+  }
+
+  getCreditPaymentReceipt(receiptNumber: string): Observable<CreditPaymentReceipt> {
+    return this.http.get<CreditPaymentReceipt>(`${this.creditPaymentsPath}/${encodeURIComponent(receiptNumber)}`);
+  }
+
+  clearCreditPaymentCheck(
+    checkId: FineractId,
+    payload: CreditPaymentTransitionRequest
+  ): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(`${this.creditPaymentsPath}/checks/${checkId}/clear`, payload);
+  }
+
+  returnCreditPaymentCheck(
+    checkId: FineractId,
+    payload: CreditPaymentTransitionRequest
+  ): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(`${this.creditPaymentsPath}/checks/${checkId}/return`, payload);
+  }
 
   getCashierClosingContext(
     cashierId: FineractId,

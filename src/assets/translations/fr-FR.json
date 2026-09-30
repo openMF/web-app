@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Remboursements de prêt en espèces et par chèque",
+      "denominations": "Dénominations en espèces",
+      "receipt": "Reçu de paiement de crédit"
+    },
+    "steps": {
+      "customer": "Recherche de clients",
+      "loan": "Examen du prêt et du solde",
+      "payment": "Détails du paiement",
+      "confirmation": "Aperçu et confirmation",
+      "receipt": "Reçu"
+    },
+    "tabs": {
+      "current": "Soldes courants",
+      "overdue": "Soldes en souffrance",
+      "schedule": "Calendrier d'amortissement",
+      "history": "Historique des transactions"
+    },
+    "fields": {
+      "businessDate": "Date d'affaires",
+      "teller": "Guichet",
+      "cashier": "Caissier",
+      "customerSearch": "Recherche de clients",
+      "customer": "Client",
+      "accountNumber": "Numéro de compte",
+      "office": "Bureau",
+      "status": "Statut",
+      "loanAccount": "Compte de prêt",
+      "totalDue": "Montant total dû",
+      "principal": "Capital",
+      "interest": "Intérêt",
+      "tax": "Impôt sur les intérêts/TVA",
+      "fees": "Frais",
+      "penalties": "Pénalités",
+      "total": "Total",
+      "paymentMethod": "Mode de paiement",
+      "amount": "Montant",
+      "paymentType": "Type de paiement",
+      "note": "Remarque",
+      "denomination": "Dénomination",
+      "quantity": "Quantité",
+      "subtotal": "Sous-total",
+      "paymentAmount": "Montant du paiement",
+      "tendered": "Trésorerie offerte",
+      "change": "Monnaie",
+      "bank": "Banque",
+      "checkType": "Type de chèque",
+      "checkNumber": "Numéro de chèque",
+      "checkAccount": "Numéro de compte du chèque",
+      "routingCode": "Code de routage",
+      "classification": "Classification du chèque",
+      "receiptNumber": "Numéro de reçu",
+      "operator": "Opérateur",
+      "loanTransaction": "ID de transaction de prêt",
+      "cashierTransaction": "ID de transaction du caissier",
+      "overpayment": "Trop-payé",
+      "returnReason": "Raison du retour"
+    },
+    "methods": {
+      "CASH": "Espèces",
+      "CHECK": "Chèque"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Sous réserve d'encaissement",
+      "CLEARED_FUNDS": "Fonds compensés"
+    },
+    "status": {
+      "IN_PROGRESS": "En cours",
+      "PENDING_COLLECTION": "En attente de collecte",
+      "COMPLETED": "Terminé",
+      "CLEARED": "Encaissé",
+      "RETURNED": "Retourné",
+      "FAILED": "Échec"
+    },
+    "actions": {
+      "preview": "Aperçu du paiement",
+      "confirmSubmit": "Confirmer et soumettre",
+      "clearCheck": "Encaisser le chèque",
+      "returnCheck": "Retourner le chèque",
+      "print": "Imprimer",
+      "reprint": "Réimpression",
+      "newPayment": "Nouveau paiement"
+    },
+    "hints": {
+      "customerSearch": "Recherche par nom, numéro de client ou numéro de titulaire de compte"
+    },
+    "messages": {
+      "pendingExplanation": "Le chèque sera accepté sous réserve d'encaissement. Le solde du prêt ne sera réduit qu'après l'encaissement du chèque par un utilisateur autorisé.",
+      "pendingReceipt": "Le paiement est en attente d'encaissement. Aucun remboursement de prêt n'a été comptabilisé.",
+      "confirm": "Examinez attentivement l’aperçu faisant autorité dans le backend, puis confirmez explicitement le paiement."
+    },
+    "empty": {
+      "customers": "Aucun client trouvé",
+      "loans": "Aucun prêt éligible trouvé",
+      "schedule": "Aucun plan d'amortissement n'est disponible",
+      "history": "Aucun historique des transactions n'est disponible",
+      "paymentTypes": "Aucun type de paiement configuré n'est disponible",
+      "denominations": "Aucune dénomination n'est configurée pour cette devise",
+      "banks": "Aucune banque n'est configurée"
+    },
+    "validation": {
+      "amount": "Entrez un montant supérieur à zéro avec un maximum de six décimales",
+      "quantity": "La quantité doit être un nombre entier non négatif",
+      "insufficientCash": "L'argent déposé est inférieur au montant du paiement"
+    },
+    "errors": {
+      "noReadPermission": "Vous n'êtes pas autorisé à consulter les paiements de crédit",
+      "noCreatePermission": "Vous n'êtes pas autorisé à créer ce paiement",
+      "configuration": "La configuration du guichet n'a pas pu être chargée. Vérifiez l'affectation du caissier et la configuration du backend.",
+      "customerSearch": "La recherche de client a échoué",
+      "loanList": "Les prêts éligibles n'ont pas pu être chargés",
+      "loanDetails": "Les détails du prêt n'ont pas pu être chargés",
+      "preview": "Échec de l'aperçu du paiement",
+      "submit": "Le paiement n'a pas pu être soumis",
+      "receipt": "Le reçu n'a pas pu être chargé",
+      "transition": "Le changement d'état du chèque n'a pas pu être effectué"
+    }
+  },
   "cashAllocation": {
     "title": "Ouverture et approvisionnement de caisse",
     "actions": {
