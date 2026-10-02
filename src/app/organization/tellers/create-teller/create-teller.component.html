@@ -22,8 +22,10 @@
             }
             @if (tellerForm.controls.name.hasError('pattern')) {
               <mat-error>
-                {{ 'labels.inputs.Teller Name' | translate }} <strong>{{ 'labels.commons.cannot' | translate }}</strong>
-                {{ 'labels.commons.begin with a special character or number' | translate }}
+                {{
+                  'errors.validation.cannotBeginWithSpecialCharacterOrNumber'
+                    | translate: { field: ('labels.inputs.Teller Name' | translate) }
+                }}
               </mat-error>
             }
           </mat-form-field>

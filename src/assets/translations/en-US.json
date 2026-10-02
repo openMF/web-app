@@ -1,4 +1,211 @@
 {
+  "cashAllocation": {
+    "title": "Cash Drawer Opening and Provisioning",
+    "actions": {
+      "confirmPost": "Confirm and Post",
+      "newOperation": "New Operation",
+      "preview": "Preview Transaction",
+      "printReceipt": "Print Receipt",
+      "reprintReceipt": "Reprint Receipt",
+      "retrySameTransaction": "Retry Same Transaction"
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknote",
+      "COIN": "Coin"
+    },
+    "dialog": {
+      "confirmTitle": "Confirm Cash Allocation"
+    },
+    "empty": {
+      "cashiers": "No active cashiers are available for this office",
+      "currencies": "No currencies are configured",
+      "denominations": "No active denominations are configured for this currency",
+      "headCashiers": "No funded head cashier is available for this currency"
+    },
+    "errors": {
+      "context": "Cash allocation configuration could not be loaded",
+      "create": "Cash allocation could not be completed",
+      "integerQuantity": "Enter a whole number of items",
+      "noReadPermission": "You do not have permission to view cash allocations",
+      "preview": "Cash allocation preview could not be calculated",
+      "receipt": "Cash allocation receipt could not be retrieved"
+    },
+    "labels": {
+      "businessDate": "Business Date",
+      "cashInflow": "Cash Inflow",
+      "cashOutflow": "Cash Outflow",
+      "checksInflow": "Checks Inflow",
+      "checksOutflow": "Checks Outflow",
+      "currency": "Currency",
+      "denomination": "Denomination",
+      "denominationBreakdown": "Denomination Breakdown",
+      "destination": "Destination",
+      "note": "Note",
+      "office": "Office",
+      "operation": "Operation",
+      "quantity": "Quantity",
+      "source": "Source",
+      "subtotal": "Subtotal",
+      "totalCash": "Total Cash",
+      "transferFrom": "Transfer From",
+      "transferTo": "Transfer To",
+      "type": "Type",
+      "vaultBalance": "Vault Balance",
+      "vouchersInflow": "Vouchers Inflow",
+      "vouchersOutflow": "Vouchers Outflow"
+    },
+    "operations": {
+      "HEAD_CASHIER_ALLOCATION": "Head Cashier Provisioning",
+      "OPERATIONAL_TELLER_ALLOCATION": "Operational Teller Provisioning",
+      "SAFE_VAULT_OPENING": "Safe / Vault Opening"
+    },
+    "receipt": {
+      "accountingTransaction": "Accounting Transaction",
+      "completedOn": "Completed On",
+      "createdOn": "Created On",
+      "destinationAfter": "Destination Balance After",
+      "destinationBefore": "Destination Balance Before",
+      "operator": "Operator",
+      "reference": "Receipt Reference",
+      "sourceAfter": "Source Balance After",
+      "sourceBefore": "Source Balance Before",
+      "status": "Status",
+      "title": "Cash Allocation Receipt"
+    },
+    "status": {
+      "loading": "Loading cash allocation configuration...",
+      "processing": "Processing..."
+    }
+  },
+  "servicePayment": {
+    "heading": {
+      "paymentDetails": "Payment Details"
+    },
+    "buttons": {
+      "calculate": "Calculate",
+      "newPayment": "New Payment",
+      "printReceipt": "Print Receipt",
+      "reprintReceipt": "Reprint Receipt"
+    },
+    "inputs": {
+      "clientSearch": "Client name, account number or external ID",
+      "commission": "Commission",
+      "commissionVat": "Commission VAT",
+      "existingClient": "Existing Client",
+      "nonClient": "Non-client",
+      "payer": "Payer",
+      "payerName": "Payer Name",
+      "payerNameRequired": "Payer Name is required",
+      "payerType": "Payer Type",
+      "service": "Service",
+      "serviceReference": "Service Reference",
+      "subtotal": "Subtotal",
+      "totalToPay": "Total to Pay"
+    },
+    "text": {
+      "clientError": "Client details could not be loaded",
+      "clientSearchError": "Client search failed",
+      "configurationError": "Service payment configuration could not be loaded",
+      "insufficientCash": "Cash received cannot be less than the total to pay",
+      "navigation": "Process a cash bill or service payment",
+      "noClients": "No clients found",
+      "noCreatePermission": "You do not have permission to create service payments",
+      "noDenominations": "No denominations are configured for this service currency",
+      "noReadPermission": "You do not have permission to view service payments",
+      "noServices": "No service payment services are configured",
+      "paymentError": "Service payment could not be completed",
+      "quoteError": "Service payment quote could not be calculated",
+      "receiptError": "Service payment receipt could not be retrieved",
+      "success": "Service payment completed successfully",
+      "validAmount": "Enter a valid positive amount"
+    }
+  },
+  "creditOrigination": {
+    "title": "Credit Origination Status",
+    "loading": "Loading credit origination status...",
+    "empty": "No credit origination status is available for this application.",
+    "retry": "Retry",
+    "currentStage": "Current stage",
+    "errors": {
+      "unauthorized": "Please sign in to view this credit origination status.",
+      "forbidden": "You do not have permission to view this credit origination status.",
+      "notFound": "The credit application or its origination board was not found.",
+      "generic": "Unable to load credit origination status. Please try again."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "PARAMETRIC_SCORE": "Parametric Score",
+      "FILE_INTEGRATION": "File Integration",
+      "CREDIT_ANALYSIS": "Credit Analysis",
+      "APPROVAL": "Approval",
+      "LEGAL_INSTRUMENTATION": "Legal Instrumentation",
+      "DISBURSEMENT": "Disbursement",
+      "RECOVERY": "Recovery"
+    },
+    "statuses": {
+      "COMPLETED": "Completed",
+      "CURRENT": "Current",
+      "PENDING": "Pending",
+      "REJECTED": "Rejected",
+      "BLOCKED": "Blocked",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled",
+      "WITHDRAWN": "Withdrawn",
+      "WRITTEN_OFF": "Written Off"
+    },
+    "fields": {
+      "completedOn": "Completed on",
+      "source": "Source",
+      "sourceStatus": "Source status",
+      "actor": "Actor",
+      "sourceReference": "Source reference",
+      "transactionId": "Transaction ID",
+      "amount": "Amount",
+      "loanStatus": "Loan status",
+      "reason": "Reason"
+    }
+  },
+  "acquisition": {
+    "title": "Acquisition Status",
+    "loading": "Loading acquisition status...",
+    "empty": "No acquisition status data is available for this account.",
+    "retry": "Retry",
+    "currentStage": "Current stage",
+    "notAvailable": "Not available",
+    "errors": {
+      "forbidden": "You do not have permission to view this acquisition status.",
+      "notFound": "Acquisition status was not found for this account.",
+      "generic": "Unable to load acquisition status. Please try again."
+    },
+    "stages": {
+      "ONBOARDING": "Onboarding",
+      "COMPLIANCE": "Compliance",
+      "APPROVAL": "Approval",
+      "ACTIVATION": "Activation",
+      "DEPOSIT": "Deposit",
+      "WITHDRAWAL": "Withdrawal"
+    },
+    "statuses": {
+      "COMPLETED": "COMPLETED",
+      "CURRENT": "CURRENT",
+      "PENDING": "PENDING",
+      "BLOCKED": "BLOCKED",
+      "CANCELLED": "CANCELLED",
+      "CLOSED": "CLOSED",
+      "FAILED": "FAILED",
+      "REJECTED": "REJECTED",
+      "WITHDRAWN": "WITHDRAWN"
+    },
+    "fields": {
+      "completedOn": "Completed on",
+      "sourceStatus": "Source status",
+      "actor": "Actor",
+      "amount": "Amount",
+      "accountStatus": "Account status",
+      "reason": "Reason"
+    }
+  },
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -94,9 +301,6 @@
     "validation.msg.loan.principal.is.greater.than.max": "Principal amount {{params[0].value}} is invalid. Must be an amount less than or equal to Maximum principal amount {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Principal amount {{params[0].value}} is invalid. Must be an amount greater than or equal to Minimum Principal amount {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Accounting type is mandatory.",
-    "labels.alt.Center profile placeholder": "Center profile placeholder",
-    "labels.alt.Group profile placeholder": "Group profile placeholder",
-    "labels.commons.Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Accounting type is invalid. Must be a number between {{params[1].value}} and {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Allow Partial Installment Calculation cannot be set as true for daily calculation",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Variable Installment should be used with either daily interest calculation  or allow partial interest calculation true",
@@ -119,7 +323,7 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Income Account for configuring Fee specific Income Accounts cannot be blank",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fund is invalid.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Fund Source is mandatory.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Grace on interest charged must be less than or equal to the value for # of repayments.",
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Grace on interest charged must be less than or equal to the value for # of repayments.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Grace on interest charged must be a value that is zero or greater.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Loan Product 'Grace on interest payment' must be less than number of repayments.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Grace on interest payments must be less than the value for # of repayments.",
@@ -272,8 +476,8 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Description is mandatory.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Description cannot be over {{params[0].value}} characters long.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Decimal places entered is `{{params[0].value}}` and must be a number between {{params[1].value}} and {{params[2].value}}.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Income from Fees Account is mandatory",
-    "validation.msg.savingsproduct.insufficient.balance": "You have a balance of ${{balance}} in your account",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Income from Fees Account is mandatory",
+    "validation.msg.savingsproduct.insufficient.balance": "Insufficient balance. Your account balance is {{balance}}.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Interest calculation (Days in Year) is mandatory.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Interest calculation (Days in Year) must be one of `[ {{params[1].value}} ]`.",
     "validation.msg.savingsproduct.interestCalculationType.cannot.be.blank": "Interest calculation type is mandatory.",
@@ -467,7 +671,34 @@
       "futureDate": "The prepayment date cannot be in the future.",
       "dateOutOfRange": "The prepayment date is outside the allowed range.",
       "amountMustBePositive": "The transaction amount must be greater than 0."
-    }
+    },
+    "tenantManagement": {
+      "type": "Tenant Management",
+      "unauthorized": "Your tenant management session is no longer valid. Sign in again.",
+      "notAvailable": "This server does not offer tenant administration. The Fineract tenant management plugin is not installed.",
+      "unknown": "The tenant management request could not be completed.",
+      "signInRejected": "Those master credentials were rejected. Tenant administration needs a master user, not a tenant's own user."
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Only repayment, waiver, accrual, credit balance refund, capitalized income, capitalized income adjustment, buy down fee or buy down fee adjustment transactions can be adjusted.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "This transaction is part of an account transfer and cannot be adjusted.",
+    "error.msg.loan.written.off.update.not.allowed": "The loan is written off, so its transactions cannot be adjusted.",
+    "error.msg.loan.transaction.update.not.allowed": "This transaction cannot be adjusted because it is linked to another transaction.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "This transaction type can only be reversed: its amount cannot be changed.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "The loan cannot be reopened because it is foreclosed.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "A capitalized income adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "A buy down fee can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "A buy down fee adjustment can only be reversed: its amount cannot be changed.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "This buy down fee cannot be reversed while it has a non-reversed adjustment.",
+    "error.msg.tenant.connection.credentials.rejected": "The database server refused the credentials for this tenant.",
+    "error.msg.tenant.schema.creation.not.permitted": "The database user is not allowed to create databases. Grant it that right, or create the database before the tenant.",
+    "error.msg.tenant.schema.absent": "The database server has no database of that name.",
+    "error.msg.tenant.connection.failed": "The tenant database could not be reached.",
+    "validation.cannotBeginWithSpecialCharacterOrNumber": "{{field}} cannot begin with a special character or number",
+    "validation.maxMustBeGreaterOrEqualToMin": "Maximum value must be greater than or equal to the minimum",
+    "validation.mustBeAnInteger": "{{field}} must be an integer",
+    "validation.mustBeGreaterThan": "{{field}} must be greater than {{other}}",
+    "validation.mustBeGreaterThanZero": "{{field}} must be greater than zero",
+    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -593,6 +824,7 @@
       "Chargeback": "Chargeback",
       "Charges Overview": "Charges Overview",
       "Clear": "Clear",
+      "Finalize": "Finalize",
       "Clear All": "Clear All",
       "Client Screen Reports": "Client Screen Reports",
       "Close": "Close",
@@ -744,6 +976,8 @@
       "Previous": "Previous",
       "Previous page": "Previous page",
       "Print": "Print",
+      "New Operation": "New Operation",
+      "Select Check": "Select Check",
       "Print Receipt": "Print Receipt",
       "Proceed": "Proceed",
       "Productive Collection Sheet": "Productive Collection Sheet",
@@ -848,7 +1082,14 @@
       "Save": "Save",
       "Upload Report Design": "Upload Report Design",
       "Mass Reject": "Mass Reject",
-      "Hide": "Hide"
+      "Hide": "Hide",
+      "Sign In": "Sign In",
+      "Sign Out": "Sign Out",
+      "Adjust": "Adjust",
+      "Reverse": "Reverse",
+      "Create Tenant": "Create Tenant",
+      "Test Connection": "Test Connection",
+      "Post Dividends": "Post Dividends"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1131,7 +1372,11 @@
       "unmarried": "unmarried",
       "xbrlmapping": "XBRL Mapping",
       "Enabled": "Enabled",
-      "Disabled": "Disabled"
+      "Disabled": "Disabled",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "SUSPENDED": "Suspended",
+      "other": "other"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1189,7 +1434,8 @@
       "must be after or equal to start date": "must be after or equal to start date",
       "Yes": "Yes",
       "No": "No",
-      "No classification data available": "No classification data available"
+      "No classification data available": "No classification data available",
+      "Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed."
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Password must be at least 1 character and not more than 50 characters long",
@@ -1204,6 +1450,11 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Cash Payment": "Cash Payment",
+      "Confirmation": "Confirmation",
+      "Receipt": "Receipt",
+      "Returned Check Payment": "Returned Check Payment",
+      "Search Returned Checks": "Search Returned Checks",
       "Create Agriculture Loan": "Create Agriculture Loan",
       "Create Auto Loan": "Create Auto Loan",
       "Create BNPL Loan": "Create BNPL Loan",
@@ -1284,6 +1535,7 @@
       "Beneficiary": "Beneficiary",
       "Beneficiary Details": "Beneficiary Details",
       "Beneficiary Selection": "Beneficiary Selection",
+      "Bill and Service Payment": "Bill and Service Payment",
       "Block Savings Account": "Block Savings Account",
       "Breach Configuration": "Breach Configuration",
       "Breach Periods": "Breach Periods",
@@ -1839,9 +2091,23 @@
       "Deferred Income Recognition": "Deferred Income Recognition",
       "Advanced Configuration": "Advanced Configuration",
       "Mass Reject Credit Applications": "Mass Reject Credit Applications",
-      "Enrollment Details": "Enrollment Details"
+      "Enrollment Details": "Enrollment Details",
+      "Tenant Management": "Tenant Management",
+      "Tenant Management Sign In": "Tenant Management Sign In",
+      "Database Connection": "Database Connection",
+      "Reverse Transaction": "Reverse Transaction",
+      "Create Tenant": "Create Tenant",
+      "Edit Tenant": "Edit Tenant",
+      "Tenant Details": "Tenant Details",
+      "Preview": "Preview",
+      "Configuration": "Configuration",
+      "Edit Charge Amount": "Edit Charge Amount",
+      "Edit Charge Date": "Edit Charge Date",
+      "Edit Guarantor": "Edit Guarantor"
     },
     "inputs": {
+      "Returned": "Returned",
+      "Settled": "Settled",
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",
       "Allow amortization override": "Allow amortization override",
       "Allow approval/disbursal above applied amount": "Allow approval/disbursal above applied amount",
@@ -1999,8 +2265,10 @@
       "Attribute Value": "Attribute Value",
       "Auto Generate Password": "Auto Generate Password",
       "Auto generate password": "Auto generate password",
+      "Account Balance": "Account Balance",
       "Available Balance": "Available Balance",
       "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)",
+      "Available Savings": "Available Savings",
       "Avg Amount/Transaction": "Avg Amount/Transaction",
       "Balance": "Balance",
       "Balance Of Loan": "Balance Of Loan",
@@ -2056,7 +2324,6 @@
       "Capital Value": "Capital Value",
       "Cash In": "Cash In",
       "Cash Out": "Cash Out",
-      "Cash Payment": "Cash Payment",
       "Cash": "Cash",
       "Cashier": "Cashier",
       "Cashier/Staff": "Cashier/Staff",
@@ -2194,6 +2461,8 @@
       "Ctrl": "Ctrl",
       "Currency": "Currency",
       "Customer": "Customer",
+      "Customer Name": "Customer Name",
+      "Customer Name is required": "Customer Name is required.",
       "Customer Type": "Customer Type",
       "Currency Code": "Currency Code",
       "Currency Configuration": "Currency Configuration",
@@ -2223,6 +2492,7 @@
       "Data Table": "Data Table",
       "Data Table Name": "Data Table Name",
       "Date": "Date",
+      "Date is required": "Date is required.",
       "Date Of Birth": "Date Of Birth",
       "Date Type": "Date Type",
       "Date Value": "Date Value",
@@ -2272,6 +2542,7 @@
       "Delinquent Days": "Delinquent Days",
       "Delivery Method": "Delivery Method",
       "Denomination": "Denomination",
+      "Denomination Value": "Denomination Value",
       "Denominations": "Denominations",
       "Deposit Account": "Deposit Account",
       "Deposit Amount": "Deposit Amount",
@@ -2905,6 +3176,7 @@
       "OTP": "OTP",
       "Occupation": "Occupation",
       "Office": "Office",
+      "Operator": "Operator",
       "Office Name": "Office Name",
       "Officer": "Officer",
       "Offices Charges/Fees": "Offices --> Charges/Fees",
@@ -3381,7 +3653,6 @@
       "Total Records": "Total Records",
       "Total records": "Total records",
       "Total Repaid": "Total Repaid",
-      "Total Savings": "Total Savings",
       "Total Shares": "Total Shares",
       "Total Value": "Total Value",
       "Total Withdrawals": "Total Withdrawals",
@@ -3393,6 +3664,15 @@
       "Transaction": "Transaction",
       "Transaction Amount": "Transaction Amount",
       "Transaction Date": "Transaction Date",
+      "Check Amount": "Check Amount",
+      "Check Number": "Check Number",
+      "Change to Give": "Change to Give",
+      "Currency is required": "Currency is required.",
+      "Line Total": "Line Total",
+      "Return Date": "Return Date",
+      "Return Reason": "Return Reason",
+      "Teller is required": "Teller is required.",
+      "Total Cash Received": "Total Cash Received",
       "Transaction Date From": "Transaction Date From",
       "Transaction Date Range": "Transaction Date Range",
       "Transaction Date To": "Transaction Date To",
@@ -3471,7 +3751,7 @@
       "Website": "Website",
       "Wednesday": "Wednesday",
       "Weekly": "Weekly",
-      "Witdhold Tax Group": "Withhold Tax Group",
+      "Withhold Tax Group": "Withhold Tax Group",
       "Withdraw Balance": "Withdraw Balance",
       "Withdraw Money From Saving Account": "Withdraw Money From Saving Account",
       "Withdrawal Date": "Withdrawal Date",
@@ -3868,7 +4148,39 @@
       "Withdrawn": "Withdrawn",
       "Registration Status": "Registration Status",
       "Unknown": "Unknown",
-      "Pending": "Pending"
+      "Pending": "Pending",
+      "Tenant Identifier": "Tenant Identifier",
+      "Time Zone": "Time Zone",
+      "Contact Email": "Contact Email",
+      "Master Username": "Master Username",
+      "Master Password": "Master Password",
+      "Schema Name": "Schema Name",
+      "Schema Server": "Schema Server",
+      "Schema Server Port": "Schema Server Port",
+      "Schema Username": "Schema Username",
+      "Schema Connection Parameters": "Schema Connection Parameters",
+      "Auto Update": "Auto Update",
+      "Search by identifier or name": "Search by identifier or name",
+      "Schema Password": "Schema Password",
+      "Allow Overdraft": "Allow Overdraft",
+      "Annual Fee": "Annual Fee",
+      "Annual Fees": "Annual Fees",
+      "Charge Date": "Charge Date",
+      "Confirm Reject": "Confirm Reject",
+      "Deposit": "Deposit",
+      "Deposit Term In multiple of": "Deposit Term In multiple of",
+      "Deposit Type": "Deposit Type",
+      "GL Name": "GL Name",
+      "Interest On Overdraft": "Interest On Overdraft",
+      "Maximum Shares per Client": "Maximum Shares per Client",
+      "Message": "Message",
+      "Min Balance Required for Interest Calculation": "Min Balance Required for Interest Calculation",
+      "Minimum Shares per Client": "Minimum Shares per Client",
+      "Nominal interest rate frequency": "Nominal interest rate frequency",
+      "On Hold Funds": "On Hold Funds",
+      "Payment": "Payment",
+      "Export Date": "Export Date",
+      "Label": "Label"
     },
     "links": {
       "Community": "Community",
@@ -4123,9 +4435,16 @@
       "the Transaction Type": "the Transaction Type",
       "Are you sure you want to undo the charge-off": "Are you sure you want to undo the charge-off",
       "Breach evaluation will stop": "Breach evaluation stops on {{date}}. Previous results stay on record but are hidden until you enable it again.",
-      "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date."
+      "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date.",
+      "This will reopen the loan account": "The loan is closed or overpaid: this operation will reopen the account.",
+      "Activate tenant": "Activate the tenant {{identifier}}",
+      "Deactivate tenant": "Deactivate the tenant {{identifier}} — every request for it will be refused until it is activated again",
+      "Suspend tenant": "Suspend the tenant {{identifier}} — every request for it will be refused until it is activated again",
+      "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Near Breach": "Near Breach",
+      "In Progress": "In Progress",
       "Select a client from the list": "Select a client from the list",
       "Complete these steps to preview the product": "Complete these steps to preview the product",
       "Complete these steps before creating the product": "Complete these steps before creating the product",
@@ -4192,7 +4511,9 @@
       "Active Savers": "Active Savers",
       "Amount Collected": "Amount Collected",
       "Amount must be greater than zero": "Amount must be greater than zero",
+      "Base Teller": "Base Teller",
       "Base Teller Savings Account Opening": "Base Teller Savings Account Opening",
+      "Bill and Service Payment": "Bill and Service Payment",
       "Georeference Map": "Georeference Map",
       "Savings Portfolio": "Savings Portfolio",
       "Loan Portfolio Distribution": "Loan Portfolio Distribution",
@@ -4298,6 +4619,8 @@
       "Cancel Pending Sale": "Cancel Pending Sale",
       "Cash denomination total must equal the funding amount": "Cash denomination total must equal the funding amount.",
       "Cash denomination total must equal the transaction amount": "Cash denomination total must equal the transaction amount.",
+      "Base Teller": "Base Teller",
+      "Cash received cannot be less than the check amount": "Cash received cannot be less than the check amount.",
       "Cashier Transactions": "Cashier Transactions",
       "Cashiers": "Cashiers",
       "Center Actions": "Center Actions",
@@ -4328,6 +4651,17 @@
       "Codes": "Codes",
       "Codes are used to define drop down values": "Codes are used to define drop down values",
       "Configure a cash payment type before saving cash funding": "Configure a cash payment type before saving cash funding.",
+      "No eligible cash payment types available": "No eligible cash payment types available.",
+      "No returned checks found": "No returned checks found.",
+      "Quantity must be a whole number": "Quantity must be a whole number.",
+      "Returned check details could not be loaded": "Returned check details could not be loaded.",
+      "Returned check options could not be loaded": "Returned check options could not be loaded.",
+      "Returned check payment failed": "Returned check payment failed.",
+      "Returned check search failed": "Returned check search failed.",
+      "Returned check settled successfully": "Returned check settled successfully.",
+      "Settle a returned check with a cash payment": "Settle a returned check with a cash payment.",
+      "You do not have permission to settle returned checks": "You do not have permission to settle returned checks.",
+      "You do not have permission to view returned check payments": "You do not have permission to view returned check payments.",
       "Customer position could not be loaded": "Customer position could not be loaded.",
       "Customer search failed": "Customer search failed.",
       "Executive overview of institutional clients, loans, savings, shares, transaction operations and dashboard governance.": "Executive overview of institutional clients, loans, savings, shares, transaction operations and dashboard governance.",
@@ -5132,7 +5466,6 @@
       "You do not have permission to deposit into savings accounts through Base Teller": "You do not have permission to deposit into savings accounts through Base Teller.",
       "Customer or savings account search failed": "Customer or savings account search failed.",
       "Deposit funds into an existing savings account through Base Teller": "Deposit funds into an existing savings account through Base Teller.",
-      "Payment types could not be loaded": "Payment types could not be loaded.",
       "Savings account could not be loaded": "Savings account could not be loaded.",
       "Savings account deposit failed": "Savings account deposit failed.",
       "Savings accounts could not be loaded": "Savings accounts could not be loaded.",
@@ -5280,7 +5613,47 @@
       "Loading pending prospects": "Loading pending prospects",
       "No pending prospects found": "No pending prospects found",
       "Unable to load pending prospects": "Unable to load pending prospects",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "The amount could not be re-quoted for this date. Pick the date again to retry."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "The amount could not be re-quoted for this date. Pick the date again to retry.",
+      "Signed in as master user": "Signed in as master user",
+      "No tenants found": "No tenants found",
+      "Unrecognised status": "Unrecognised status",
+      "Manage the tenants of this installation": "Manage the tenants of this installation",
+      "Tenant management master context": "Tenant administration runs above every tenant, so it needs a master user of its own. A tenant's own user cannot sign in here, however privileged it is in that tenant.",
+      "Tenant database password write only": "The database password is stored encrypted and is never returned by the server, so it cannot be shown here.",
+      "Adjust": "Adjust",
+      "Identifies the new transaction created by the adjustment": "Identifies the new transaction created by the adjustment",
+      "Identifies the reversal of the original transaction": "Identifies the reversal of the original transaction",
+      "Tenant identifier format": "Lower case letters, digits, hyphen and underscore; it cannot be changed later.",
+      "Schema name format": "Letters, digits and underscore, starting with a letter or underscore, at most 63 characters.",
+      "Port range": "Enter a port between 1 and 65535.",
+      "Tenant database created if absent": "The database is created if it does not exist, and reused — never emptied — if it does.",
+      "Schema connection parameters hint": "Extra JDBC parameters, for example sslmode=verify-full for a database on another host.",
+      "Testing the connection": "Testing the connection…",
+      "Provisioning a tenant takes a while": "Creating and migrating the database can take a minute. Leave this page open until it finishes.",
+      "Tenant identifier cannot be changed": "Cannot be changed — every request selects a tenant by it.",
+      "Schema name cannot be changed": "Cannot be changed — the tenant’s data already lives there.",
+      "Leave blank to clear": "Leave blank to clear.",
+      "Leave blank to keep the stored password": "Leave blank to keep the stored password.",
+      "Enter the password to test": "Enter the database password to test the connection. The stored one is never returned.",
+      "Deactivate before removing": "Deactivate the tenant before removing it.",
+      "Test connection on create hint": "Checks the server, the credentials, and whether the database already exists.",
+      "Schema username hint": "An existing database user on that server. It needs permission to create databases.",
+      "Schema password hint": "That user’s existing password. The plugin creates the database, not the database user, so this is not a password you choose here.",
+      "Database server did not answer": "The database server did not answer at that host and port.",
+      "Database server refused the credentials": "The database server refused these credentials.",
+      "Existing database will be reused": "The credentials work, and a database of that name already exists. It will be reused, not emptied.",
+      "Database will be created on submit": "The credentials work. The database does not exist yet and will be created when you submit.",
+      "Tenant database answered": "The database answered.",
+      "Tenant database is missing": "The credentials work, but the server has no database of that name.",
+      "Prove the connection before saving": "Test the connection before saving changed database details. The server accepts them unverified, and the platform then fails to start at the next restart, because a tenant it cannot migrate prevents every tenant from starting.",
+      "Export the data to CSV file": "Export the data to CSV file",
+      "Export the data to XLS file": "Export the data to XLS file",
+      "No penalties found": "No penalties found",
+      "Report Output Type": "Report Output Type",
+      "Closed": "Closed",
+      "Dashboard Export": "Dashboard Export",
+      "Generated on": "Generated on",
+      "Automated export": "This is an automated export from Mifos X Global Dashboard"
     },
     "permissions": {
       "actions": {
@@ -5579,7 +5952,9 @@
       "No Upcoming Charges Found": "No Upcoming Charges Found",
       "unableToUpdateDiscount": "Unable to update discount.",
       "validationSaved": "Validation data saved successfully.",
-      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully."
+      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
+      "identityDescriptionsUpdated": "Identity descriptions updated successfully.",
+      "identityDescriptionsUpdateFailed": "Some identity descriptions failed to update."
     },
     "cbild": {
       "fields": {
@@ -5710,6 +6085,10 @@
         "own.account": "Own Account",
         "other.bank": "Other Bank"
       }
+    },
+    "alt": {
+      "Center profile placeholder": "Center profile placeholder",
+      "Group profile placeholder": "Group profile placeholder"
     }
   },
   "languages": {
@@ -5942,7 +6321,13 @@
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
     "Reporting Dashboard": "CB-ILD Reporting Dashboard",
     "Nothing left to recover": "There is nothing left to recover on this loan.",
-    "Reverse the recovery payments first": "Undo write-off is blocked while the loan has recovery payments. Reverse them first."
+    "Reverse the recovery payments first": "Undo write-off is blocked while the loan has recovery payments. Reverse them first.",
+    "Enables definition and tracking inactive Savings Accounts": "Enables definition and tracking of inactive Savings Accounts",
+    "External Id is a unique identifier": "External Id is a unique identifier",
+    "Fields are used to define the minimum, default, and maximum period payment rate": "Fields are used to define the minimum, default, and maximum period payment rate",
+    "Frequency must be a positive integer": "Frequency must be a positive integer",
+    "Frequency must be greater than zero": "Frequency must be greater than zero",
+    "Make Payment": "Make Payment"
   },
   "countries": {
     "AF": "Afghanistan",
@@ -6067,10 +6452,12 @@
         "success": "Client closed successfully."
       },
       "reject": {
-        "success": "Client rejected successfully."
+        "success": "Client rejected successfully.",
+        "failure": "Failed to reject client."
       },
       "withdraw": {
-        "success": "Client withdrawn successfully."
+        "success": "Client withdrawn successfully.",
+        "failure": "Failed to withdraw client."
       },
       "reactivate": {
         "success": "Client reactivated successfully.",
@@ -6081,7 +6468,8 @@
         "failure": "Failed to activate client."
       },
       "acceptTransfer": {
-        "success": "Client transfer accepted successfully."
+        "success": "Client transfer accepted successfully.",
+        "failure": "Failed to accept client transfer."
       },
       "rejectTransfer": {
         "success": "Client transfer rejected successfully."
@@ -6090,17 +6478,20 @@
         "success": "Client transfer undone successfully."
       },
       "undoRejection": {
-        "success": "Client rejection undone successfully."
+        "success": "Client rejection undone successfully.",
+        "failure": "Failed to undo client rejection."
       },
       "transfer": {
         "success": "Client transfer proposed successfully.",
         "failure": "Failed to propose client transfer."
       },
       "addCharge": {
-        "success": "Client charge added successfully."
+        "success": "Client charge added successfully.",
+        "failure": "Client charge could not be added."
       },
       "addCollateral": {
-        "success": "Client collateral added successfully."
+        "success": "Client collateral added successfully.",
+        "failure": "Failed to add client collateral."
       },
       "assignStaff": {
         "success": "Staff assigned to client successfully.",
@@ -6337,6 +6728,130 @@
       "fileNameFallback": "copilot",
       "cardField": "Field",
       "cardValue": "Value"
+    }
+  },
+  "web1232": {
+    "navigation": {
+      "baseTeller": "Base Teller"
+    },
+    "views": {
+      "closing": "Cash Register Closing",
+      "global": "Global Cash Count",
+      "deposit-in-transit": "Deposit in Transit",
+      "bank-deposit": "Bank Deposit",
+      "history": "Transaction History",
+      "holdings": "Cash-on-Hand"
+    },
+    "actions": {
+      "addDenomination": "Add Denomination",
+      "confirmDeposit": "Confirm Deposit",
+      "finalizeClosing": "Finalize Closing",
+      "load": "Load",
+      "printReceipt": "Print Receipt",
+      "removeDenomination": "Remove Denomination",
+      "reprint": "Reprint",
+      "retry": "Retry",
+      "search": "Search",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "fields": {
+      "actualAmount": "Actual Amount",
+      "all": "All",
+      "amount": "Amount",
+      "authorization": "Authorization",
+      "authorizedBy": "Authorized By",
+      "authorizedOn": "Authorized On",
+      "businessDate": "Business Date",
+      "cashier": "Cashier",
+      "cashierId": "Cashier ID",
+      "checks": "Checks",
+      "closingStatus": "Closing Status",
+      "completedOn": "Completed On",
+      "currency": "Currency",
+      "currentBalance": "Current Balance",
+      "denomination": "Denomination",
+      "description": "Description",
+      "difference": "Difference",
+      "expectedBalance": "Expected Balance",
+      "expectedCash": "Expected Cash",
+      "fromDate": "From Date",
+      "headCashier": "Head Cashier",
+      "inflows": "Inflows",
+      "office": "Office",
+      "openingBalance": "Opening Balance",
+      "openingFunds": "Opening Funds",
+      "outflows": "Outflows",
+      "physicalAssets": "Physical Assets",
+      "physicalCash": "Physical Cash",
+      "previousSettlements": "Previous Settlements",
+      "quantity": "Quantity",
+      "reference": "Reference",
+      "search": "Description or reference",
+      "settlementsDeposits": "Settlements and Deposits",
+      "status": "Status",
+      "teller": "Teller",
+      "toDate": "To Date",
+      "total": "Total",
+      "transactionType": "Transaction Type"
+    },
+    "sections": {
+      "authoritativeContext": "Authoritative Closing Context",
+      "denominations": "Denominations",
+      "eligibleChecks": "Eligible Checks",
+      "preview": "Cash Count Preview",
+      "receipt": "Receipt"
+    },
+    "states": {
+      "alreadyCompleted": "This closing is already completed.",
+      "loading": "Loading",
+      "noData": "No Data",
+      "noDenominations": "No denominations entered",
+      "noEligibleChecks": "No Eligible Checks",
+      "noHoldings": "No cash-on-hand data",
+      "noSettlements": "No cashier settlements",
+      "noTransactions": "No Transactions Found",
+      "submitting": "Submitting",
+      "closingCompleted": "Closing Completed",
+      "authorizationRequired": "Authorization Required",
+      "depositCompleted": "Deposit Completed",
+      "settlementCompleted": "Settlement Completed"
+    },
+    "status": {
+      "OPEN": "Open",
+      "COMPLETED": "Completed"
+    },
+    "differenceType": {
+      "BALANCED": "Balanced",
+      "OVERAGE": "Overage",
+      "SHORTAGE": "Shortage"
+    },
+    "operationType": {
+      "DEPOSIT_IN_TRANSIT": "Deposit in Transit",
+      "BANK_DEPOSIT": "Bank Deposit"
+    },
+    "closing": {
+      "confirmTitle": "Confirm Final Cash Register Closing",
+      "confirmText": "Finalize {{cashier}} for {{date}} in {{currency}}? Expected: {{expected}}; cash: {{cash}}; checks: {{checks}}; difference preview: {{difference}}. Authorization is performed by the signed-in head cashier."
+    },
+    "operation": {
+      "confirmText": "Post this final deposit for {{cashier}} on {{date}} in {{currency}}? Cash: {{cash}}; checks: {{checks}}."
+    },
+    "hints": {
+      "backendDenominations": "Enter the denominations being submitted. The Savings Plugin validates them and calculates the authoritative total.",
+      "previewOnly": "These entry totals are a preview. The Savings Plugin response is authoritative."
+    },
+    "errors": {
+      "cashiers": "Cashiers could not be loaded",
+      "closing": "Closing could not be completed",
+      "context": "Closing context could not be loaded",
+      "global": "Global cash count could not be loaded",
+      "history": "Transaction history could not be loaded",
+      "holdings": "Cash-on-hand data could not be loaded",
+      "notCompleted": "The backend did not return a completed status",
+      "operation": "Deposit could not be completed",
+      "options": "Cash-management options could not be loaded",
+      "receipt": "Receipt could not be loaded"
     }
   }
 }

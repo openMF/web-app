@@ -8,6 +8,10 @@
 
 <h1 mat-dialog-title>{{ data.title }}</h1>
 
+@if (data.warning) {
+  <p class="form-dialog-warning">{{ data.warning }}</p>
+}
+
 <div
   mat-dialog-content
   [formGroup]="form"

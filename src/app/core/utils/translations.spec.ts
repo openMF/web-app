@@ -11,6 +11,7 @@ import { join } from 'path';
 import { describe, expect, it } from '@jest/globals';
 
 const locales = [
+  'az-AZ',
   'cs-CS',
   'de-DE',
   'en-US',
@@ -27,6 +28,7 @@ const locales = [
 ];
 
 const expectedInvalidJsonMessages: Record<string, string> = {
+  'az-AZ': 'Düzgün JSON daxil edin.',
   'cs-CS': 'Zadejte platný JSON.',
   'de-DE': 'Geben Sie gültiges JSON ein.',
   'en-US': 'Enter valid JSON.',

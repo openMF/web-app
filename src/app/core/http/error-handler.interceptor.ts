@@ -62,6 +62,21 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return error;
   }
 
+  /**
+   * Resolves a backend globalisation code against the `errors` section, where
+   * the codes are stored as flat dotted keys. Returns null when the code has no
+   * translation, so the caller can fall back to the server message.
+   * @param code Globalisation code sent by the backend
+   */
+  private translateErrorCode(code: string | undefined): string | null {
+    if (!code) {
+      return null;
+    }
+    const key = `errors.${code}`;
+    const translated = this.translate.instant(key);
+    return translated && translated !== key ? translated : null;
+  }
+
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     // Tenant branding is cosmetic and optional: the endpoint is absent on
     // deployments without the self-service plugin. Let the caller fall back to
@@ -106,21 +121,25 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         : nestedMessage
       : topLevelMessage;
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        if (
-          response.error.errors[0].userMessageGlobalisationCode &&
-          this.databaseErrorCodes.indexOf(response.error.errors[0].userMessageGlobalisationCode) > -1
-        ) {
-          errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
-        } else {
-          errorMessage =
-            response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-            response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-        }
+    // Read the nested error from the parsed body rather than from the raw
+    // response, so a body delivered as an ArrayBuffer goes through the same
+    // lookup instead of falling back to the untranslated server message.
+    const nestedError = errorBody?.errors?.[0];
+    if (nestedError) {
+      const nestedCode = nestedError.userMessageGlobalisationCode;
+      if (nestedCode && this.databaseErrorCodes.indexOf(nestedCode) > -1) {
+        errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
+      } else {
+        // A domain rule violation carries the meaningful code on the nested
+        // error, not on the envelope, so it is looked up here before falling
+        // back to the raw message the server sent.
+        errorMessage =
+          this.translateErrorCode(nestedCode) ||
+          nestedError.defaultUserMessage?.replace(/\\./g, ' ') ||
+          nestedError.developerMessage?.replace(/\\./g, ' ');
       }
-      if ('parameterName' in errorBody.errors[0]) {
-        parameterName = errorBody.errors[0].parameterName;
+      if ('parameterName' in nestedError) {
+        parameterName = nestedError.parameterName;
       }
     }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');

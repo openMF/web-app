@@ -127,6 +127,11 @@
   // tools as the logged-in officer. Leave unset to use the built-in mock responses.
   window['env']['copilotMcpBaseUrl'] = '$MIFOS_COPILOT_MCP_BASE_URL';
 
+  // Tenant Management administration UI
+  // Set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management plugin is
+  // installed (off by default; a server without it has no tenant administration API)
+  window['env']['enableTenantManagement'] = '$MIFOS_ENABLE_TENANT_MANAGEMENT';
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = '$MIFOS_PRODUCTION_MODE_ENABLE_RBAC';

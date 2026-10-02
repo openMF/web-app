@@ -57,6 +57,10 @@ import { CustomMissingTranslationHandler } from './core/translation/missing-tran
           LocationStrategy
         ]
       },
+      // Without a default language ngx-translate has no catalogue to fall back on, so any key a
+      // locale is missing reaches the missing-translation handler and renders as a raw dotted key.
+      // Falling back to en-US degrades a gap to English instead, which is the readable failure.
+      defaultLanguage: 'en-US',
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomMissingTranslationHandler }
     }),
     BrowserModule,

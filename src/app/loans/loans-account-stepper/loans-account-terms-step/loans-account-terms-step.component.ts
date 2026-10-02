@@ -211,6 +211,15 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
    * Executes on change of input values
    */
   ngOnChanges(changes: SimpleChanges) {
+    // Re-seed the form only when the template the values come from actually changed. Angular
+    // also runs ngOnChanges when an unrelated input flips — `loansAccountFormValid` tracks this
+    // very form's validity — and re-patching then overwrites what the user is still typing. A
+    // half-typed amount such as `800000.` is briefly invalid, which flipped that input and put
+    // the product default back, swallowing the decimal point.
+    if (!changes['loansAccountProductTemplate'] && !changes['loansAccountTemplate']) {
+      return;
+    }
+
     if (this.loanProductService.isLoanProduct) {
       if (this.loansAccountProductTemplate) {
         this.loansAccountTermsData = this.loansAccountProductTemplate;

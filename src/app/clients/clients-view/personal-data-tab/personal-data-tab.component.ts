@@ -18,29 +18,34 @@ import { MatDialog } from '@angular/material/dialog';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientsService, ClientIdentifierPayload } from 'app/clients/clients.service';
 import { MatIcon } from '@angular/material/icon';
 import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';
-import { EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { environment } from 'environments/environment';
+import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
+import { EMPTY, Observable, of, forkJoin } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Dates } from 'app/core/utils/dates';
 import {
   CustomerDataValidation,
   KYC_VALIDATION_DATATABLE,
   KYC_VALIDATION_DATATABLE_ENTITY,
   KYC_VALIDATION_CONFIG_NAME,
   ValidationStatus,
-  emptyCustomerDataValidation
+  emptyCustomerDataValidation,
+  DOCUMENT_DATA_TYPES,
+  DOCUMENT_REASON_TYPES
 } from 'app/clients/models/document-validation.model';
 import { ValidateCustomerDataDialogComponent } from '../custom-dialogs/validate-customer-data-dialog/validate-customer-data-dialog.component';
 import { PersonalDataViewService } from './personal-data-view.service';
 import { PersonalDataViewModel } from './personal-data-view.model';
 import { PersonProductionPersonalDataComponent } from './person-production-personal-data/person-production-personal-data.component';
 import { EntityProductionPersonalDataComponent } from './entity-production-personal-data/entity-production-personal-data.component';
+import { IdentitiesTabComponent } from '../identities-tab/identities-tab.component';
+import { DocumentsTabComponent } from '../documents-tab/documents-tab.component';
 
 /** Interfaces */
 interface ClientViewData {
@@ -85,7 +90,9 @@ interface ClientViewData {
     DateFormatPipe,
     MatIcon,
     PersonProductionPersonalDataComponent,
-    EntityProductionPersonalDataComponent
+    EntityProductionPersonalDataComponent,
+    IdentitiesTabComponent,
+    DocumentsTabComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -101,6 +108,7 @@ export class PersonalDataTabComponent implements OnDestroy {
   private translateService = inject(TranslateService);
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
+  private dateUtils = inject(Dates);
 
   /** Client View Data */
   clientViewData!: ClientViewData;
@@ -124,6 +132,9 @@ export class PersonalDataTabComponent implements OnDestroy {
 
   /** Whether the global config check has completed */
   private configLoaded = false;
+  /** Client Identities for description update */
+  private clientIdentities: any[] = [];
+
   constructor() {
     this.systemService
       .getConfigurations()
@@ -152,6 +163,10 @@ export class PersonalDataTabComponent implements OnDestroy {
           this.loadValidationData();
         }
       });
+
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientIdentities: any[] }) => {
+      this.clientIdentities = data.clientIdentities || [];
+    });
   }
 
   private loadProductionViewModel(clientDatatables: any[]) {
@@ -198,42 +213,42 @@ export class PersonalDataTabComponent implements OnDestroy {
             this.hasDatatableEntry = true;
             this.validationData = {
               nid: {
-                selected: !!raw[0],
+                selected: !!raw[1],
                 reasons: {
-                  missingDocument: !!raw[1],
-                  illegibleDocument: !!raw[2],
-                  invalidDocument: !!raw[3],
-                  expiredDocument: !!raw[4]
+                  missingDocument: !!raw[2],
+                  illegibleDocument: !!raw[3],
+                  invalidDocument: !!raw[4],
+                  expiredDocument: !!raw[5]
                 }
               },
               legalId: {
-                selected: !!raw[5],
+                selected: !!raw[6],
                 reasons: {
-                  missingDocument: !!raw[6],
-                  illegibleDocument: !!raw[7],
-                  invalidDocument: !!raw[8],
-                  expiredDocument: !!raw[9]
+                  missingDocument: !!raw[7],
+                  illegibleDocument: !!raw[8],
+                  invalidDocument: !!raw[9],
+                  expiredDocument: !!raw[10]
                 }
               },
               proofOfAddress: {
-                selected: !!raw[10],
+                selected: !!raw[11],
                 reasons: {
-                  missingDocument: !!raw[11],
-                  illegibleDocument: !!raw[12],
-                  invalidDocument: !!raw[13],
-                  expiredDocument: !!raw[14]
+                  missingDocument: !!raw[12],
+                  illegibleDocument: !!raw[13],
+                  invalidDocument: !!raw[14],
+                  expiredDocument: !!raw[15]
                 }
               },
               score: {
-                selected: !!raw[15],
+                selected: !!raw[16],
                 reasons: {
-                  missingDocument: !!raw[16],
-                  illegibleDocument: !!raw[17],
-                  invalidDocument: !!raw[18],
-                  expiredDocument: !!raw[19]
+                  missingDocument: !!raw[17],
+                  illegibleDocument: !!raw[18],
+                  invalidDocument: !!raw[19],
+                  expiredDocument: !!raw[20]
                 }
               },
-              validationStatus: (raw[20] as ValidationStatus) ?? null
+              validationStatus: (raw[21] as ValidationStatus) ?? null
             };
           } catch {
             this.validationData = null;
@@ -280,6 +295,7 @@ export class PersonalDataTabComponent implements OnDestroy {
             type: 'success',
             message: this.translateService.instant('labels.messages.validationSaved')
           });
+          this.updateIdentityDescriptions(result);
         });
     });
   }
@@ -365,7 +381,8 @@ export class PersonalDataTabComponent implements OnDestroy {
       .getPentahoRunReportData(reportName, formData, tenantIdentifier, locale, dateFormat)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        catchError((error): any => {
+        catchError((error: any): any => {
+          console.error('Document preview failed', error);
           this.showPdf = false;
           if (this.rawPdfUrl) {
             URL.revokeObjectURL(this.rawPdfUrl);
@@ -423,5 +440,108 @@ export class PersonalDataTabComponent implements OnDestroy {
       this.rawPdfUrl = null;
     }
     this.pdfUrl = null;
+  }
+
+  /** Managed suffix marker used to identify the validation-appended portion of a description */
+  private static readonly VALIDATION_SUFFIX_MARKER = ' [KYC: ';
+
+  /**
+   * Updates identity descriptions by replacing (not just appending) negative validation reasons.
+   * Builds a managed suffix like " [KYC: Missing document, Invalid document]" and replaces
+   * any previous suffix, preserving the user's original description text.
+   */
+  private updateIdentityDescriptions(result: CustomerDataValidation) {
+    if (!this.clientIdentities || this.clientIdentities.length === 0) return;
+
+    const dataTypes = DOCUMENT_DATA_TYPES;
+    const reasonTypes = DOCUMENT_REASON_TYPES;
+    const updates: Observable<any>[] = [];
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
+
+    for (const dt of dataTypes) {
+      const docVal = result[dt.key] as any;
+      if (!docVal || !docVal.reasons) continue;
+
+      // Find an identity whose documentType name matches the validation key or label
+      const dtLabel = this.translateService.instant(dt.labelKey).toLowerCase();
+      const matchingIdentity = this.clientIdentities.find((id: any) => {
+        const typeName = id.documentType?.name?.toLowerCase() || '';
+        return typeName.includes(dt.key.toLowerCase()) || typeName.includes(dtLabel);
+      });
+
+      if (matchingIdentity) {
+        // Collect active reasons
+        const activeReasons: string[] = [];
+        for (const rt of reasonTypes) {
+          if (docVal.reasons[rt.key]) {
+            activeReasons.push(this.translateService.instant(rt.labelKey));
+          }
+        }
+
+        // Strip any existing managed suffix from the current description
+        const currentDesc = matchingIdentity.description || '';
+        const markerIdx = currentDesc.indexOf(PersonalDataTabComponent.VALIDATION_SUFFIX_MARKER);
+        const baseDesc = markerIdx >= 0 ? currentDesc.substring(0, markerIdx) : currentDesc;
+
+        // Build new description: base + managed suffix (only if there are active reasons)
+        const newDesc = activeReasons.length > 0 ? `${baseDesc} [KYC: ${activeReasons.join(', ')}]` : baseDesc;
+
+        // Only update if the description actually changed
+        if (newDesc !== currentDesc) {
+          const identifierData: ClientIdentifierPayload = {
+            documentTypeId: matchingIdentity.documentType.id,
+            documentKey: matchingIdentity.documentKey,
+            description: newDesc,
+            dateFormat,
+            locale,
+            issuanceDate: matchingIdentity.issuanceDate
+              ? this.dateUtils.formatDate(matchingIdentity.issuanceDate, dateFormat)
+              : null,
+            expiryDate: matchingIdentity.expiryDate
+              ? this.dateUtils.formatDate(matchingIdentity.expiryDate, dateFormat)
+              : null
+          };
+
+          const clientIdStr = this.clientViewData.id.toString();
+          updates.push(
+            this.clientsService.editClientIdentifier(clientIdStr, matchingIdentity.id, identifierData).pipe(
+              map(() => ({ success: true, identity: matchingIdentity, newDesc })),
+              catchError((err) => {
+                console.error(`Failed to update identity ${matchingIdentity.id}`, err);
+                return of({ success: false, identity: matchingIdentity, newDesc });
+              })
+            )
+          );
+        }
+      }
+    }
+
+    if (updates.length > 0) {
+      forkJoin(updates).subscribe((results: any[]) => {
+        let allSuccess = true;
+
+        // Synchronize local state only for the requests that actually succeeded
+        results.forEach((r) => {
+          if (r.success) {
+            r.identity.description = r.newDesc;
+          } else {
+            allSuccess = false;
+          }
+        });
+
+        if (allSuccess) {
+          this.alertService.alert({
+            type: 'success',
+            message: this.translateService.instant('labels.messages.identityDescriptionsUpdated')
+          });
+        } else {
+          this.alertService.alert({
+            type: 'error',
+            message: this.translateService.instant('labels.messages.identityDescriptionsUpdateFailed')
+          });
+        }
+      });
+    }
   }
 }

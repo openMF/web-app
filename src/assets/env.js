@@ -110,6 +110,11 @@
   // tools as the logged-in officer. Leave empty to use the built-in mock responses.
   window['env']['copilotMcpBaseUrl'] = '';
 
+  // Tenant Management administration UI
+  // Set to true where the Fineract tenant management plugin is installed (off by default; a server
+  // without it has no tenant administration API, so the section stays hidden)
+  window['env']['enableTenantManagement'] = false;
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to true to enable RBAC, false (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = false;

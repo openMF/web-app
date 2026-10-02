@@ -252,7 +252,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     });
     editColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
-        this.columnData[this.columnData.findIndex((newColumn) => newColumn.columnName === column.name)] = {
+        this.columnData[this.columnData.findIndex((newColumn) => newColumn.columnName === column.columnName)] = {
           columnName: response.name,
           columnDisplayType: response.type,
           isColumnNullable: !response.mandatory,

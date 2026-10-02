@@ -28,6 +28,9 @@ import { MatLine } from '@angular/material/grid-list';
 import { NgClass } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Environment Configuration */
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'mifosx-system',
   templateUrl: './system.component.html',
@@ -76,6 +79,9 @@ export class SystemComponent implements AfterViewInit {
   @ViewChild('manageReports') manageReports: ElementRef<any>;
   /* Template for popover on manage reports */
   @ViewChild('templateManageReports') templateManageReports: TemplateRef<any>;
+  /** Whether this deployment has the Fineract tenant management plugin. */
+  readonly tenantManagementEnabled = environment.enableTenantManagement;
+
   // Initialize an array of 18 boolean values, all set to false
   isDisabled: boolean = true;
   arrowBooleans: boolean[] = new Array(18).fill(false);

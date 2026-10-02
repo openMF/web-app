@@ -52,9 +52,14 @@ import { SavingDocumentsResolver } from './common-resolvers/saving-documents.res
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 import { SavingsAccountDashboardComponent } from './savings-account-view/savings-account-dashboard/savings-account-dashboard.component';
+import { AcquisitionStatusComponent } from './savings-account-view/acquisition-status/acquisition-status.component';
+import {
+  ACQUISITION_BOARD_PERMISSIONS,
+  acquisitionStatusGuard
+} from './savings-account-view/acquisition-status/acquisition-status.guard';
 
 /** Savings Routes */
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     data: { title: 'All Savings', breadcrumb: 'Savings', routeParamBreadcrumb: false, addBreadcrumbLink: false },
@@ -95,6 +100,17 @@ const routes: Routes = [
             path: 'dashboard',
             component: SavingsAccountDashboardComponent,
             data: { title: 'Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'acquisition-status',
+            component: AcquisitionStatusComponent,
+            canActivate: [acquisitionStatusGuard],
+            data: {
+              title: 'Acquisition Status',
+              breadcrumb: 'Acquisition Status',
+              routeParamBreadcrumb: false,
+              permissions: ACQUISITION_BOARD_PERMISSIONS
+            }
           },
           {
             path: 'transactions',

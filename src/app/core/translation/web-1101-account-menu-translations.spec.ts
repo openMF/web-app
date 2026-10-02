@@ -22,6 +22,7 @@ import { CustomMissingTranslationHandler } from './missing-translation.handler';
  */
 
 const locales = [
+  'az-AZ',
   'cs-CS',
   'de-DE',
   'en-US',

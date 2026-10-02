@@ -10,6 +10,10 @@
   <mat-card>
     <form [formGroup]="editTransactionForm" (ngSubmit)="submit()">
       <mat-card-content class="layout-column">
+        @if (willReopenLoan) {
+          <p class="adjust-warning">{{ reopenWarningKey | translate }}</p>
+        }
+
         <mat-form-field (click)="dueDatePicker.open()">
           <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
           <input
@@ -35,12 +39,29 @@
           [isRequired]="true"
           [inputFormControl]="editTransactionForm.controls.transactionAmount"
           [inputLabel]="'Transaction Amount'"
+          [minVal]="minAmount"
         >
         </mifosx-input-amount>
 
+        @if (isLoanProduct) {
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
+            <mat-hint>{{
+              'labels.text.Identifies the new transaction created by the adjustment' | translate
+            }}</mat-hint>
+          </mat-form-field>
+        }
+
         <mat-form-field>
-          <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
-          <input matInput formControlName="externalId" />
+          <mat-label>{{ 'labels.inputs.Reversal External Id' | translate }}</mat-label>
+          <input matInput formControlName="reversalExternalId" maxlength="100" />
+          <mat-hint>{{ 'labels.text.Identifies the reversal of the original transaction' | translate }}</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+          <textarea matInput formControlName="note" maxlength="1000" rows="2"></textarea>
         </mat-form-field>
 
         <mat-form-field>
@@ -64,35 +85,27 @@
           </span>
         </div>
 
-        @if (editTransactionForm.controls['accountNumber']) {
+        @if (showPaymentDetails) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
             <input type="number" formControlName="accountNumber" matInput />
           </mat-form-field>
-        }
 
-        @if (editTransactionForm.controls['checkNumber']) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
             <input type="number" formControlName="checkNumber" matInput />
           </mat-form-field>
-        }
 
-        @if (editTransactionForm.controls['routingCode']) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
             <input formControlName="routingCode" matInput />
           </mat-form-field>
-        }
 
-        @if (editTransactionForm.controls['receiptNumber']) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
             <input formControlName="receiptNumber" matInput />
           </mat-form-field>
-        }
 
-        @if (editTransactionForm.controls['bankNumber']) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
             <input formControlName="bankNumber" matInput />
@@ -100,7 +113,7 @@
         }
 
         <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">
+          <button type="button" mat-raised-button [routerLink]="['../']" queryParamsHandling="preserve">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button mat-raised-button color="primary" [disabled]="!editTransactionForm.valid">

@@ -27,7 +27,7 @@
         <span class="kpi-value">{{ performanceHistory.lastLoanAmount | formatNumber }}</span>
       </div>
       <div class="kpi-card savings">
-        <span class="kpi-label">{{ 'labels.inputs.Total Savings' | translate }}</span>
+        <span class="kpi-label">{{ 'labels.inputs.Available Savings' | translate }}</span>
         <span class="kpi-value">{{ performanceHistory.totalSavings | formatNumber }}</span>
         <span class="kpi-sub">{{ performanceHistory.activeSavings }} {{ 'labels.inputs.Active' | translate }}</span>
       </div>
@@ -332,9 +332,15 @@
               }
             </div>
             <div class="acc-balance-block">
-              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-label">{{ 'labels.inputs.Account Balance' | translate }}</div>
               <div class="acc-balance-value savings">
                 {{ saving.accountBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Available Balance' | translate }}</div>
+              <div class="acc-balance-value savings">
+                {{ saving.availableBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
               </div>
             </div>
             <div class="acc-actions" (click)="$event.stopPropagation()">

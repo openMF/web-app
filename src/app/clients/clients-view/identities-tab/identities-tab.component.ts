@@ -111,6 +111,7 @@ interface ClientIdentifierDialogResult {
   selector: 'mifosx-identities-tab',
   templateUrl: './identities-tab.component.html',
   styleUrls: ['./identities-tab.component.scss'],
+  standalone: true,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,

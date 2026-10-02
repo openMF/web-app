@@ -95,6 +95,17 @@ export class SettingsService {
   }
 
   /**
+   * Records the tenant identifiers read from the tenant management API.
+   *
+   * Kept apart from the configured list because that one is re-seeded from the environment on every
+   * bootstrap and on every visit to the login page, which would erase anything written into it.
+   * @param {string[]} list Tenant identifiers this installation actually has
+   */
+  setDiscoveredTenantIdentifiers(list: string[]) {
+    localStorage.setItem('mifosXDiscoveredTenantIdentifiers', JSON.stringify(list));
+  }
+
+  /**
    * Sets Tenant Identifier setting throughout the app.
    * @param {string} Tenant Identifier
    */
@@ -258,10 +269,25 @@ export class SettingsService {
   }
 
   /**
-   * Returns list of Tenant Identifiers
+   * Returns list of Tenant Identifiers.
+   *
+   * With tenant management enabled the identifiers seen through its API are offered alongside the
+   * configured ones, so the selector reflects the tenants this installation actually has rather
+   * than only those someone remembered to list in the environment. Configured entries keep their
+   * order and come first. Without the feature the configured list is returned unchanged.
    */
   get tenantIdentifiers(): any {
-    return JSON.parse(localStorage.getItem('mifosXTenantIdentifiers'));
+    const configured: string[] = JSON.parse(localStorage.getItem('mifosXTenantIdentifiers')) || [];
+    if (!environment.enableTenantManagement) {
+      return configured;
+    }
+    const discovered: string[] = JSON.parse(localStorage.getItem('mifosXDiscoveredTenantIdentifiers')) || [];
+    return [
+      ...new Set([
+        ...configured,
+        ...discovered
+      ])
+    ];
   }
 
   /**

@@ -242,11 +242,11 @@
       savingProduct.penaltyToIncomeAccountMappings?.length
     ) {
       <div class="flex-fill layout-row-wrap responsive-column">
-        <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Advanced Accounting Rules' | translate }}</h3>
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
         <mat-divider [inset]="true"></mat-divider>
         @if (savingProduct.paymentChannelToFundSourceMappings?.length) {
           <div class="flex-fill layout-row-wrap responsive-column">
-            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fund Sources for Payment Channels' | translate }}</h4>
+            <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Fund Sources for Payment Channels' | translate }}</h4>
             <table
               class="mat-elevation-z1 flex-fill"
               mat-table
@@ -271,7 +271,7 @@
         }
         @if (savingProduct.feeToIncomeAccountMappings?.length) {
           <div class="flex-fill layout-row-wrap responsive-column">
-            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
+            <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Fees to Specific Income Accounts' | translate }}</h4>
             <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
               <ng-container matColumnDef="chargeId">
                 <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
@@ -292,7 +292,7 @@
         }
         @if (savingProduct.penaltyToIncomeAccountMappings?.length) {
           <div class="flex-fill layout-row-wrap responsive-column">
-            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Penalties to Specific Income Accounts' | translate }}</h4>
+            <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Penalties to Specific Income Accounts' | translate }}</h4>
             <table
               class="mat-elevation-z1 flex-fill"
               mat-table
