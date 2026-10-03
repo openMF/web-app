@@ -20,7 +20,6 @@ import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-in
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
-import { EnrollmentStatusComponent } from './checker-inbox-and-tasks-tabs/enrollment-status/enrollment-status.component';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
@@ -41,7 +40,6 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     ClientApprovalComponent,
     LoanApprovalComponent,
     CreditApplicationsComponent,
-    EnrollmentStatusComponent,
     PendingProspectsComponent,
     LoanDisbursalComponent,
     RescheduleLoanComponent,

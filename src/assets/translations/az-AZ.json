@@ -6781,5 +6781,62 @@
       "options": "Nağd pul idarəetmə seçimlərini yükləmək mümkün olmadı",
       "receipt": "Qəbzi yükləmək mümkün olmadı"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Qəbulun vəziyyəti",
+    "description": "Bu müştəri üçün qeydiyyat mərhələlərini və gözləmə müddətini nəzərdən keçirin.",
+    "loading": "Qeydiyyat vəziyyəti yüklənir",
+    "empty": "Qeydiyyat məlumatı yoxdur",
+    "notAvailable": "Mövcud deyil",
+    "stages": {
+      "registration": "Kommersiya qeydiyyatı",
+      "onboarding": "Qeydiyyata qəbul",
+      "kyc": "Biometriya və KYC",
+      "kycLevel1": "Müştərini tanıma səviyyəsi 1",
+      "kycLevel2": "Müştərini tanıma səviyyəsi 2",
+      "kycLevel3": "Müştərini tanıma səviyyəsi 3",
+      "compliance": "Tələblərə uyğunluq",
+      "activation": "Aktivləşdirmə",
+      "commercialActivation": "Aktivləşdirmə — Kommersiya qeydiyyatı",
+      "operationsActivation": "Aktivləşdirmə — Əməliyyatlar",
+      "activeCustomer": "Aktiv müştəri",
+      "documentValidation": "Sənədlərin yoxlanılması"
+    },
+    "statuses": {
+      "COMPLETED": "Tamamlanıb",
+      "CURRENT": "Cari",
+      "IN_PROGRESS": "İcra olunur",
+      "PENDING": "Gözləyir",
+      "NOT_STARTED": "Başlanmayıb",
+      "BLOCKED": "Bloklanıb",
+      "FAILED": "Uğursuz olub",
+      "REJECTED": "Rədd edilib",
+      "WITHDRAWN": "Geri götürülüb",
+      "CLOSED": "Bağlanıb",
+      "ACTIVE": "Aktiv",
+      "APPROVED": "Təsdiqlənib",
+      "SUBMITTED": "Təqdim edilib",
+      "UNKNOWN": "Naməlum"
+    },
+    "fields": {
+      "startedOn": "Başlayıb",
+      "completedOn": "Tamamlanıb",
+      "elapsedDays": "Keçən günlər",
+      "source": "Mənbə",
+      "kycEvidence": "KYC sübutları",
+      "days": "{{count}} gün"
+    },
+    "traffic": {
+      "yellow": "Sarı (1–5 gün)",
+      "orange": "Narıncı (6–10 gün)",
+      "red": "Qırmızı (10 gündən çox) — diqqət tələb edir",
+      "needsAttention": "Diqqət tələb edir",
+      "overdue": "Müddəti keçib"
+    },
+    "errors": {
+      "clientNotFound": "Müştəri tapılmadı.",
+      "forbidden": "Bu qeydiyyat məlumatına baxmaq icazəniz yoxdur.",
+      "generic": "Qeydiyyat statusunu yükləmək mümkün olmadı. Yenidən cəhd edin."
+    }
   }
 }

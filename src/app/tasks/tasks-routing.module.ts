@@ -23,7 +23,6 @@ import {
   CREDIT_APPLICATIONS_PERMISSION,
   creditApplicationsGuard
 } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
-import { EnrollmentStatusComponent } from './checker-inbox-and-tasks-tabs/enrollment-status/enrollment-status.component';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
@@ -85,11 +84,6 @@ export const routes: Routes = [
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
           data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
-        },
-        {
-          path: 'enrollment-status',
-          component: EnrollmentStatusComponent,
-          data: { title: 'Enrollment Status' }
         },
         {
           path: 'pending-prospects',
