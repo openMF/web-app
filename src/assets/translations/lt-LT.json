@@ -696,7 +696,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} turi būti didesnis nei nulis",
     "validation.sharesMinDefaultMaxOrder": "Mažiausia reikšmė turi būti mažesnė arba lygi numatytajai, o numatytoji – mažesnė arba lygi didžiausiai",
     "validation.msg.savingsproduct.insufficient.balance": "Nepakankamas likutis. Jūsų sąskaitos likutis yra {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo."
+    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Šio tipo operacijos apyvartinio kapitalo paskolai negalima koreguoti skirtumu.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Koregavimo suma negali būti nulis.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Koregavimas negali sumažinti operacijos žemiau nulio."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1087,7 +1090,8 @@
       "Post Dividends": "Apskaityti dividendus",
       "Convert": "Konvertuoti",
       "Deleting": "Šalinama",
-      "Inactivate": "Deaktyvuoti"
+      "Inactivate": "Deaktyvuoti",
+      "Adjust by Difference": "Koreguoti skirtumu"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -4184,7 +4188,10 @@
       "PERSON": "Fizinis asmuo",
       "Payment": "Mokėjimas",
       "Export Date": "Eksporto data",
-      "Label": "Etiketė"
+      "Label": "Etiketė",
+      "Adjustment Amount": "Koregavimo suma",
+      "Original Amount": "Pradinė suma",
+      "Resulting Amount": "Galutinė suma"
     },
     "links": {
       "Community": "bendruomenė",
@@ -5656,7 +5663,11 @@
       "Closed": "Uždaryta",
       "Dashboard Export": "Skydelio eksportas",
       "Generated on": "Sugeneruota",
-      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio"
+      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio",
+      "Adjust by Difference": "Koreguoti skirtumu",
+      "The adjustment amount cannot be zero": "Koregavimo suma negali būti nulis",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Koregavimas panaikina sumą, todėl operacija atšaukiama be pakeitimo",
+      "A positive amount increases the transaction and a negative one decreases it": "Teigiama suma operaciją padidina, neigiama – sumažina"
     },
     "permissions": {
       "actions": {

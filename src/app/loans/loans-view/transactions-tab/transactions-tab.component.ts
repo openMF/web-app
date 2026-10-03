@@ -66,7 +66,9 @@ import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalTransaction,
-  canReverseLoanTransaction
+  canAdjustWorkingCapitalTransactionByDelta,
+  canReverseLoanTransaction,
+  WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION
 } from '../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -405,6 +407,22 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     return this.loanProductService.isWorkingCapital ? 'ADJUST_WORKINGCAPITALLOAN' : 'ADJUST_LOAN';
   }
 
+  /** Permission of the Working Capital delta based adjustment, gated apart from Adjust. */
+  readonly adjustByDeltaPermission = WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION;
+
+  /**
+   * True when the row offers the Working Capital adjustment by difference, a
+   * command of its own on the same endpoint: the amount sent is the signed
+   * difference and the backend works out the corrected total.
+   * @param transaction Transaction of the row
+   */
+  allowAdjustByDeltaTransaction(transaction: LoanTransaction): boolean {
+    return (
+      this.loanProductService.isWorkingCapital &&
+      canAdjustWorkingCapitalTransactionByDelta(transaction.type, transaction.manuallyReversed || transaction.reversed)
+    );
+  }
+
   /**
    * The backend rejects both reversing and adjusting a transaction that is
    * linked to a chargeback.
@@ -420,11 +438,31 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * @param $event Mouse Event
    */
   adjustTransaction(transaction: LoanTransaction, $event: MouseEvent): void {
+    this.openAdjustForm(transaction, $event, 'edit');
+  }
+
+  /**
+   * Opens the adjust form in its delta based mode for the transaction of the row.
+   * @param transaction Transaction of the row
+   * @param $event Mouse Event
+   */
+  adjustTransactionByDelta(transaction: LoanTransaction, $event: MouseEvent): void {
+    this.openAdjustForm(transaction, $event, 'adjust-by-delta');
+  }
+
+  /**
+   * Navigates to one of the adjust form routes of the transaction, carrying the
+   * product type the resolvers read.
+   * @param transaction Transaction of the row
+   * @param $event Mouse Event
+   * @param path Route of the form below the transaction
+   */
+  private openAdjustForm(transaction: LoanTransaction, $event: MouseEvent, path: string): void {
     $event.stopPropagation();
     this.router.navigate(
       [
         transaction.id,
-        'edit'
+        path
       ],
       {
         queryParams: {

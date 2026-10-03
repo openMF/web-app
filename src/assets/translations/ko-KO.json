@@ -696,7 +696,10 @@
     "validation.mustBeGreaterThanZero": "{{field}}은(는) 0보다 커야 합니다",
     "validation.sharesMinDefaultMaxOrder": "최솟값은 기본값보다 작거나 같아야 하며, 기본값은 최댓값보다 작거나 같아야 합니다",
     "validation.msg.savingsproduct.insufficient.balance": "잔액이 부족합니다. 계좌 잔액은 {{balance}}입니다.",
-    "validation.openingTimeBeforeClosingTime": "개점 시간은 마감 시간보다 앞서야 합니다."
+    "validation.openingTimeBeforeClosingTime": "개점 시간은 마감 시간보다 앞서야 합니다.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "이 거래 유형은 운전자본 대출에서 차액으로 조정할 수 없습니다.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "조정 금액은 0일 수 없습니다.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "조정으로 거래를 0 미만으로 줄일 수 없습니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1087,7 +1090,8 @@
       "Post Dividends": "배당금 기표",
       "Convert": "변환",
       "Deleting": "삭제 중",
-      "Inactivate": "비활성화"
+      "Inactivate": "비활성화",
+      "Adjust by Difference": "차액으로 조정"
     },
     "catalogs": {
       "% Amount": "양",
@@ -4184,7 +4188,10 @@
       "PERSON": "개인",
       "Payment": "납입액",
       "Export Date": "내보낸 날짜",
-      "Label": "항목"
+      "Label": "항목",
+      "Adjustment Amount": "조정 금액",
+      "Original Amount": "원래 금액",
+      "Resulting Amount": "결과 금액"
     },
     "links": {
       "Community": "지역 사회",
@@ -5656,7 +5663,11 @@
       "Closed": "종료됨",
       "Dashboard Export": "대시보드 내보내기",
       "Generated on": "생성 일시",
-      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다"
+      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다",
+      "Adjust by Difference": "차액으로 조정",
+      "The adjustment amount cannot be zero": "조정 금액은 0일 수 없습니다",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "조정이 금액을 상쇄하므로 거래는 대체 없이 취소됩니다",
+      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다"
     },
     "permissions": {
       "actions": {

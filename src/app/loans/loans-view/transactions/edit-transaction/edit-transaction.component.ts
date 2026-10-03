@@ -9,7 +9,15 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -22,7 +30,8 @@ import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan
 import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
-  canAdjustWorkingCapitalTransaction
+  canAdjustWorkingCapitalTransaction,
+  canAdjustWorkingCapitalTransactionByDelta
 } from '../../loan-transaction-adjust.helper';
 import { REOPEN_LOAN_WARNING_KEY } from '../../loan-transaction-reversal.helper';
 
@@ -50,6 +59,19 @@ interface AdjustTransactionForm {
  */
 const MIN_ADJUSTMENT_AMOUNT = 0.000001;
 
+/** Value of the `adjustMode` route data that switches the form to the delta based adjustment. */
+const DELTA_ADJUST_MODE = 'delta';
+
+/**
+ * Rejects a zero difference. The backend refuses it because it changes
+ * nothing; cancelling the amount exactly is how a reversal is requested.
+ * @param control The signed difference control
+ */
+function nonZeroAmount(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  return value !== null && value !== '' && Number(value) === 0 ? { zeroAmount: true } : null;
+}
+
 /** Payment detail controls, shown and cleared as a single block. */
 const PAYMENT_DETAIL_CONTROLS = [
   'accountNumber',
@@ -69,6 +91,12 @@ const PAYMENT_DETAIL_CONTROLS = [
  * the same command on its own resource: it nests the payment details in a
  * `paymentDetails` object and does not accept an external id, which it lifts
  * from the original transaction onto the replacement instead.
+ *
+ * The same form also serves the Working Capital delta based adjustment, picked
+ * by the `adjustMode` route data. The amount is then the signed difference
+ * rather than the corrected total: the backend adds it to the existing amount,
+ * reverses only when the result is zero, and rejects a zero difference or a
+ * decrease larger than the amount.
  */
 @Component({
   selector: 'mifosx-edit-transaction',
@@ -93,6 +121,12 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
   maxDate = new Date();
   /** Smallest amount accepted by the form, bound to the amount input so the hint is shown. */
   minAmount = MIN_ADJUSTMENT_AMOUNT;
+  /** True when the route posts the delta based adjustment, where the amount is the signed difference. */
+  readonly isDeltaMode: boolean;
+  /** Label of the amount field, which names the corrected total or the difference depending on the mode. */
+  readonly amountLabel: string;
+  /** Amount of the transaction being adjusted; the difference is applied on top of it. */
+  originalAmount = 0;
   /** Loans account transaction form. */
   editTransactionForm: FormGroup<AdjustTransactionForm>;
   /** loans account transaction payment options. */
@@ -126,6 +160,8 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
    */
   constructor() {
     super();
+    this.isDeltaMode = this.route.snapshot.data?.['adjustMode'] === DELTA_ADJUST_MODE;
+    this.amountLabel = this.isDeltaMode ? 'Adjustment Amount' : 'Transaction Amount';
     this.route.parent?.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { loanDetailsAssociationData?: any }) => {
@@ -148,6 +184,15 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
    */
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
+    const template = this.transactionTemplateData;
+    // Working Capital names the fields after the transaction and nests the
+    // payment type in the payment detail, where Term Loan flattens them.
+    this.originalAmount = Number(this.isWorkingCapital ? template?.transactionAmount : template?.amount) || 0;
+    if (this.isDeltaMode) {
+      // The largest decrease is the one that cancels the amount; anything
+      // beyond it is an overshoot the backend rejects.
+      this.minAmount = -this.originalAmount;
+    }
     this.createEditTransactionForm();
     // The backend rejects a positive amount on reverse-only types, and rejects
     // the command outright on the rest, so the form is never reachable for them
@@ -159,13 +204,12 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     // The external id identifies the replacement transaction the adjustment
     // creates, not the one being adjusted, so it is left empty: re-sending the
     // original id collides with the row that stays in the ledger as reversed.
-    const template = this.transactionTemplateData;
-    // Working Capital names the fields after the transaction and nests the
-    // payment type in the payment detail, where Term Loan flattens them.
     const date = this.isWorkingCapital ? template.transactionDate : template.date;
     this.editTransactionForm.patchValue({
       transactionDate: date && new Date(date),
-      transactionAmount: this.isWorkingCapital ? template.transactionAmount : template.amount,
+      // The difference starts empty: prefilling the current amount would
+      // double the transaction, where the corrected total starts from it.
+      transactionAmount: this.isDeltaMode ? null : this.originalAmount,
       paymentTypeId: this.isWorkingCapital
         ? (template.paymentDetailData?.paymentType?.id ?? null)
         : template.paymentTypeId
@@ -179,9 +223,39 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       return false;
     }
     const alreadyReversed = template.manuallyReversed || template.reversed;
+    if (this.isDeltaMode) {
+      return this.isWorkingCapital && canAdjustWorkingCapitalTransactionByDelta(template.type, alreadyReversed);
+    }
     return this.isWorkingCapital
       ? canAdjustWorkingCapitalTransaction(template.type, alreadyReversed)
       : canAdjustLoanTransaction(template.type, alreadyReversed);
+  }
+
+  /**
+   * The corrected total must be positive, since zero means reverse only. The
+   * signed difference must not be zero, which changes nothing, and must not
+   * decrease the amount below zero, which the backend rejects as an overshoot.
+   */
+  private amountValidators(): ValidatorFn[] {
+    return this.isDeltaMode ? [
+          Validators.required,
+          nonZeroAmount,
+          Validators.min(-this.originalAmount)
+        ] : [
+          Validators.required,
+          Validators.min(MIN_ADJUSTMENT_AMOUNT)
+        ];
+  }
+
+  /** Amount the replacement will carry once the difference is applied. */
+  get resultingAmount(): number {
+    return this.originalAmount + Number(this.editTransactionForm.controls.transactionAmount.value ?? 0);
+  }
+
+  /** True when the difference cancels the amount exactly, so the backend reverses without creating a replacement. */
+  get reversesWithoutReplacement(): boolean {
+    const control = this.editTransactionForm.controls.transactionAmount;
+    return control.value !== null && control.valid && this.resultingAmount === 0;
   }
 
   /**
@@ -190,10 +264,7 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
   createEditTransactionForm() {
     this.editTransactionForm = this.formBuilder.group<AdjustTransactionForm>({
       transactionDate: new FormControl<Date | null>(null, Validators.required),
-      transactionAmount: new FormControl<number | null>(null, [
-        Validators.required,
-        Validators.min(MIN_ADJUSTMENT_AMOUNT)
-      ]),
+      transactionAmount: new FormControl<number | null>(null, this.amountValidators()),
       externalId: new FormControl<string | null>(null),
       reversalExternalId: new FormControl<string | null>(null, Validators.maxLength(100)),
       note: new FormControl<string | null>(null, Validators.maxLength(1000)),
@@ -233,9 +304,10 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       reversalExternalId: formValue.reversalExternalId,
       note: formValue.note
     };
-    // The external id names the replacement transaction; Working Capital
-    // rejects the parameter and lifts the original id onto the replacement.
-    if (this.isLoanProduct) {
+    // The external id names the replacement transaction. Term Loan accepts it
+    // on its adjust command; Working Capital only on the delta based one, and
+    // otherwise lifts the original id onto the replacement.
+    if (this.isLoanProduct || this.isDeltaMode) {
       optionalFields.externalId = formValue.externalId;
     }
     const paymentDetails: { [key: string]: string | number | null } = {
@@ -257,16 +329,17 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     } else {
       Object.assign(payload, this.filledIn(paymentDetails));
     }
+    const command = this.isDeltaMode ? 'adjust-by-delta' : 'adjust';
     const request = this.isWorkingCapital
       ? this.loansService.applyWorkingCapitalLoanActionCommand(
           this.loanAccountId,
           payload,
-          'adjust',
+          command,
           this.transactionTemplateData.id
         )
       : this.loansService.executeLoansAccountTransactionsCommand(
           this.loanAccountId,
-          'adjust',
+          command,
           payload,
           this.transactionTemplateData.id
         );

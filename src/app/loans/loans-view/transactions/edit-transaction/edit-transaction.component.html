@@ -34,14 +34,50 @@
           }
         </mat-form-field>
 
+        @if (isDeltaMode) {
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Original Amount' | translate }}</mat-label>
+            <input
+              matInput
+              readonly
+              [value]="originalAmount | currency: currency?.code : currency?.displaySymbol : '1.2-10'"
+            />
+          </mat-form-field>
+        }
+
         <mifosx-input-amount
           [currency]="currency"
           [isRequired]="true"
           [inputFormControl]="editTransactionForm.controls.transactionAmount"
-          [inputLabel]="'Transaction Amount'"
+          [inputLabel]="amountLabel"
           [minVal]="minAmount"
+          [allowNegative]="isDeltaMode"
         >
         </mifosx-input-amount>
+
+        @if (isDeltaMode) {
+          @if (editTransactionForm.controls.transactionAmount.hasError('zeroAmount')) {
+            <p class="adjust-note adjust-error">{{ 'labels.text.The adjustment amount cannot be zero' | translate }}</p>
+          } @else if (reversesWithoutReplacement) {
+            <p class="adjust-note adjust-warning">
+              {{
+                'labels.text.The adjustment cancels the amount, so the transaction is reversed without a replacement'
+                  | translate
+              }}
+            </p>
+          } @else if (editTransactionForm.controls.transactionAmount.valid) {
+            <p class="adjust-note adjust-hint">
+              {{ 'labels.inputs.Resulting Amount' | translate }}:
+              {{ resultingAmount | currency: currency?.code : currency?.displaySymbol : '1.2-10' }}
+            </p>
+          } @else {
+            <p class="adjust-note adjust-hint">
+              {{
+                'labels.text.A positive amount increases the transaction and a negative one decreases it' | translate
+              }}
+            </p>
+          }
+        }
 
         @if (isLoanProduct) {
           <mat-form-field>
