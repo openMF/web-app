@@ -256,6 +256,50 @@ describe('TransactionsTabComponent', () => {
     });
   });
 
+  describe('Working Capital adjust by difference', () => {
+    it('offers the entry on every type the delta based command accepts', () => {
+      const component = createComponent(true);
+
+      [
+        2,
+        22,
+        23,
+        26
+      ].forEach((typeId) => {
+        expect(component.allowAdjustByDeltaTransaction(transaction(typeId))).toBe(true);
+      });
+    });
+
+    it('offers no entry on a type the command rejects or on a reversed transaction', () => {
+      const component = createComponent(true);
+
+      expect(component.allowAdjustByDeltaTransaction(transaction(44))).toBe(false);
+      expect(component.allowAdjustByDeltaTransaction(transaction(2, { reversed: true }))).toBe(false);
+    });
+
+    it('offers no entry on a Term Loan, which has no delta based command', () => {
+      expect(createComponent(false).allowAdjustByDeltaTransaction(transaction(2))).toBe(false);
+    });
+
+    it('gates the entry with the permission the backend derives for the command', () => {
+      expect(createComponent(true).adjustByDeltaPermission).toBe('ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION');
+    });
+
+    it('opens the delta route of the adjust form with the product type the resolvers read', () => {
+      const component = createComponent(true);
+
+      component.adjustTransactionByDelta(transaction(2), { stopPropagation: jest.fn() } as unknown as MouseEvent);
+
+      expect(routerStub.navigate).toHaveBeenCalledWith(
+        [
+          77,
+          'adjust-by-delta'
+        ],
+        expect.objectContaining({ queryParams: { productType: 'workingCapital' } })
+      );
+    });
+  });
+
   describe('Working Capital row actions', () => {
     it('keeps its own reversal rules instead of the adjust command gate', () => {
       const component = createComponent(true);
@@ -307,7 +351,7 @@ describe('TransactionsTabComponent', () => {
     });
 
     it('offers the discount fee adjustment on a discount fee while the pool lasts', () => {
-      const component = createComponent(true, 'loanStatusType.active', {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
         status: { code: 'loanStatusType.active', value: 'Active', active: true },
         discountFee: 400
       });
@@ -318,7 +362,7 @@ describe('TransactionsTabComponent', () => {
     });
 
     it('offers no discount fee adjustment once the pool is exhausted', () => {
-      const component = createComponent(true, 'loanStatusType.active', {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
         status: { code: 'loanStatusType.active', value: 'Active', active: true },
         discountFee: 0
       });
@@ -327,7 +371,7 @@ describe('TransactionsTabComponent', () => {
     });
 
     it('opens the discount fee adjustment form with the product type the resolvers read', () => {
-      const component = createComponent(true, 'loanStatusType.active', {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
         status: { code: 'loanStatusType.active', value: 'Active', active: true },
         discountFee: 400
       });

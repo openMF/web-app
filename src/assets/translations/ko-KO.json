@@ -909,7 +909,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "이 값은 변경할 수 없습니다: 상품에서 허용하지 않습니다.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "이 값은 변경할 수 없습니다: 상품에서 허용하지 않습니다.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "이 값은 변경할 수 없습니다: 상품에서 허용하지 않습니다.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "이 값은 변경할 수 없습니다: 상품에서 허용하지 않습니다."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "이 값은 변경할 수 없습니다: 상품에서 허용하지 않습니다.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "이 거래 유형은 운전자본 대출에서 차액으로 조정할 수 없습니다.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "조정 금액은 0일 수 없습니다.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "조정으로 거래를 0 미만으로 줄일 수 없습니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1303,7 +1306,8 @@
       "Convert": "변환",
       "Deleting": "삭제 중",
       "Inactivate": "비활성화",
-      "Discount Fee Adjustment": "할인 수수료 조정"
+      "Discount Fee Adjustment": "할인 수수료 조정",
+      "Adjust by Difference": "차액으로 조정"
     },
     "catalogs": {
       "% Amount": "양",
@@ -4413,7 +4417,9 @@
       "PERSON": "개인",
       "Payment": "납입액",
       "Export Date": "내보낸 날짜",
-      "Label": "항목"
+      "Label": "항목",
+      "Original Amount": "원래 금액",
+      "Resulting Amount": "결과 금액"
     },
     "links": {
       "Community": "지역 사회",
@@ -5893,7 +5899,11 @@
       "Discount Fee Adjustment": "할인 수수료 조정",
       "Remaining discount fee available to adjust": "조정 가능한 잔여 할인 수수료",
       "Cannot precede the discount fee date": "할인 수수료 날짜보다 이전일 수 없습니다",
-      "Defined by product": "상품에서 정의됨"
+      "Defined by product": "상품에서 정의됨",
+      "Adjust by Difference": "차액으로 조정",
+      "The adjustment amount cannot be zero": "조정 금액은 0일 수 없습니다",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "조정이 금액을 상쇄하므로 거래는 대체 없이 취소됩니다",
+      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다"
     },
     "permissions": {
       "actions": {

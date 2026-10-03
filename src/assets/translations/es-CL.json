@@ -912,7 +912,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Este tipo de transacción no se puede ajustar por diferencia en un préstamo de Capital de Trabajo.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "El monto del ajuste no puede ser cero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "El ajuste no puede reducir la transacción por debajo de cero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1306,7 +1309,8 @@
       "Convert": "Convertir",
       "Deleting": "Eliminando",
       "Inactivate": "Inactivar",
-      "Discount Fee Adjustment": "Ajuste de Comisión de Descuento"
+      "Discount Fee Adjustment": "Ajuste de Comisión de Descuento",
+      "Adjust by Difference": "Ajustar por diferencia"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -4416,7 +4420,9 @@
       "PERSON": "Persona natural",
       "Payment": "Pago",
       "Export Date": "Fecha de exportación",
-      "Label": "Etiqueta"
+      "Label": "Etiqueta",
+      "Original Amount": "Monto original",
+      "Resulting Amount": "Monto resultante"
     },
     "links": {
       "Community": "Comunidad",
@@ -5896,7 +5902,11 @@
       "Discount Fee Adjustment": "Ajuste de Comisión de Descuento",
       "Remaining discount fee available to adjust": "Comisión de descuento disponible para ajustar",
       "Cannot precede the discount fee date": "No puede ser anterior a la fecha de la comisión de descuento",
-      "Defined by product": "Definido por el producto"
+      "Defined by product": "Definido por el producto",
+      "Adjust by Difference": "Ajustar por diferencia",
+      "The adjustment amount cannot be zero": "El monto del ajuste no puede ser cero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "El ajuste cancela el monto, por lo que la transacción se reversa sin crear un reemplazo",
+      "A positive amount increases the transaction and a negative one decreases it": "Un monto positivo aumenta la transacción y uno negativo la disminuye"
     },
     "permissions": {
       "actions": {
