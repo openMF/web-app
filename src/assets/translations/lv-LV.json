@@ -899,7 +899,10 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Maksa nepieder šim aizdevumam.",
     "wc.loan.charge.waiver.inactive.charge": "Maksu nevar atcelt, jo tā nav aktīva.",
     "wc.loan.charge.waiver.invalid.status": "Maksu nevar atcelt pašreizējā aizdevuma statusa dēļ.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Maksai nav atlikušās summas, ko varētu atcelt."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Maksai nav atlikušās summas, ko varētu atcelt.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Šāda veida darījumu apgrozāmā kapitāla aizdevumam nevar koriģēt pēc starpības.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Korekcijas summa nedrīkst būt nulle.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Korekcija nedrīkst samazināt darījumu zem nulles."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1293,7 +1296,8 @@
       "Convert": "Konvertēt",
       "Deleting": "Dzēš",
       "Inactivate": "Deaktivizēt",
-      "Discount Fee Adjustment": "Atlaides maksas korekcija"
+      "Discount Fee Adjustment": "Atlaides maksas korekcija",
+      "Adjust by Difference": "Koriģēt pēc starpības"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -4393,7 +4397,9 @@
       "PERSON": "Fiziska persona",
       "Payment": "Maksājums",
       "Export Date": "Eksporta datums",
-      "Label": "Nosaukums"
+      "Label": "Nosaukums",
+      "Original Amount": "Sākotnējā summa",
+      "Resulting Amount": "Rezultējošā summa"
     },
     "links": {
       "Community": "kopiena",
@@ -5870,7 +5876,11 @@
       "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
       "Discount Fee Adjustment": "Atlaides maksas korekcija",
       "Remaining discount fee available to adjust": "Atlikusī atlaides maksa, ko var koriģēt",
-      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma"
+      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma",
+      "Adjust by Difference": "Koriģēt pēc starpības",
+      "The adjustment amount cannot be zero": "Korekcijas summa nedrīkst būt nulle",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Korekcija atceļ summu, tāpēc darījums tiek atcelts bez aizstāšanas",
+      "A positive amount increases the transaction and a negative one decreases it": "Pozitīva summa darījumu palielina, negatīva – samazina"
     },
     "permissions": {
       "actions": {

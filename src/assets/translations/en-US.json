@@ -901,7 +901,10 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "The charge does not belong to this loan.",
     "wc.loan.charge.waiver.inactive.charge": "The charge cannot be waived because it is not active.",
     "wc.loan.charge.waiver.invalid.status": "The charge cannot be waived because of the current status of the loan.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive."
+    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "This transaction type cannot be adjusted by difference on a Working Capital loan.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "The adjustment amount cannot be zero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "The adjustment cannot decrease the transaction below zero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1295,7 +1298,8 @@
       "Create Tenant": "Create Tenant",
       "Test Connection": "Test Connection",
       "Post Dividends": "Post Dividends",
-      "Discount Fee Adjustment": "Discount Fee Adjustment"
+      "Discount Fee Adjustment": "Discount Fee Adjustment",
+      "Adjust by Difference": "Adjust by Difference"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -4389,7 +4393,9 @@
       "On Hold Funds": "On Hold Funds",
       "Payment": "Payment",
       "Export Date": "Export Date",
-      "Label": "Label"
+      "Label": "Label",
+      "Original Amount": "Original Amount",
+      "Resulting Amount": "Resulting Amount"
     },
     "links": {
       "Community": "Community",
@@ -5867,7 +5873,11 @@
       "Automated export": "This is an automated export from Mifos X Global Dashboard",
       "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Remaining discount fee available to adjust": "Remaining discount fee available to adjust",
-      "Cannot precede the discount fee date": "Cannot precede the discount fee date"
+      "Cannot precede the discount fee date": "Cannot precede the discount fee date",
+      "Adjust by Difference": "Adjust by Difference",
+      "The adjustment amount cannot be zero": "The adjustment amount cannot be zero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "The adjustment cancels the amount, so the transaction is reversed without a replacement",
+      "A positive amount increases the transaction and a negative one decreases it": "A positive amount increases the transaction and a negative one decreases it"
     },
     "permissions": {
       "actions": {
