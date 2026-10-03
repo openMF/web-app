@@ -65,12 +65,14 @@ describe('EditTransactionComponent', () => {
    * @param template The resolved transaction template; defaults to a repayment.
    * @param loanStatusCode Status code of the loan the transaction belongs to.
    * @param isWorkingCapital Whether the loan is a Working Capital one.
+   * @param adjustMode Route data of the form route; `delta` opens the delta based adjustment.
    * @returns The initialised component.
    */
   function createComponent(
     template: any = repaymentTemplate,
     loanStatusCode = 'loanStatusType.active',
-    isWorkingCapital = false
+    isWorkingCapital = false,
+    adjustMode?: string
   ): EditTransactionComponent {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -81,7 +83,7 @@ describe('EditTransactionComponent', () => {
           useValue: {
             data: of({ loansAccountTransactionTemplate: template }),
             parent: { data: of({ loanDetailsAssociationData: { status: { code: loanStatusCode } } }) },
-            snapshot: { params: { loanId: '1' } }
+            snapshot: { params: { loanId: '1' }, data: adjustMode ? { adjustMode } : {} }
           }
         },
         { provide: Router, useValue: routerStub },
@@ -347,6 +349,125 @@ describe('EditTransactionComponent', () => {
 
     it('navigates away instead of offering the form for an already reversed repayment', () => {
       createComponent({ ...workingCapitalRepayment, reversed: true }, 'loanStatusType.active', true);
+
+      expect(routerStub.navigate).toHaveBeenCalled();
+    });
+  });
+
+  describe('Working Capital adjust by difference', () => {
+    /** Builds the component on the delta route for the given Working Capital transaction. */
+    function createDeltaComponent(template: any = workingCapitalRepayment): EditTransactionComponent {
+      return createComponent(template, 'loanStatusType.active', true, 'delta');
+    }
+
+    it('reads the mode from the route and names the amount after the difference', () => {
+      const component = createDeltaComponent();
+
+      expect(component.isDeltaMode).toBe(true);
+      expect(component.amountLabel).toBe('Adjustment Amount');
+      expect(createComponent(workingCapitalRepayment, 'loanStatusType.active', true).isDeltaMode).toBe(false);
+    });
+
+    it('keeps the original amount aside and leaves the difference empty', () => {
+      const component = createDeltaComponent();
+
+      // Prefilling the current amount would double the transaction.
+      expect(component.originalAmount).toBe(150);
+      expect(component.editTransactionForm.controls.transactionAmount.value).toBeNull();
+      expect(component.editTransactionForm.controls.transactionDate.value).toEqual(new Date(2026, 5, 1));
+      expect(component.editTransactionForm.controls.paymentTypeId.value).toBe(1);
+    });
+
+    it('posts the delta based command on the Working Capital resource with the signed difference', () => {
+      const component = createDeltaComponent();
+      component.editTransactionForm.controls.transactionAmount.setValue(-40);
+
+      component.submit();
+
+      expect(loansServiceStub.applyWorkingCapitalLoanActionCommand).toHaveBeenCalledWith(
+        '1',
+        expect.objectContaining({ transactionAmount: -40 }),
+        'adjust-by-delta',
+        77
+      );
+      expect(loansServiceStub.executeLoansAccountTransactionsCommand).not.toHaveBeenCalled();
+    });
+
+    it('sends the external id of the replacement, which the delta based command accepts', () => {
+      const component = createDeltaComponent();
+      component.editTransactionForm.patchValue({ transactionAmount: 40, externalId: ' new-wc-external-id ' });
+
+      component.submit();
+
+      expect(submittedWorkingCapitalPayload().externalId).toBe('new-wc-external-id');
+    });
+
+    it('rejects a zero difference, which the backend refuses as a no-op', () => {
+      const component = createDeltaComponent();
+
+      component.editTransactionForm.controls.transactionAmount.setValue(0);
+
+      expect(component.editTransactionForm.controls.transactionAmount.hasError('zeroAmount')).toBe(true);
+      expect(component.editTransactionForm.valid).toBe(false);
+    });
+
+    it('rejects a decrease larger than the amount, which the backend refuses as an overshoot', () => {
+      const component = createDeltaComponent();
+
+      component.editTransactionForm.controls.transactionAmount.setValue(-150.01);
+
+      expect(component.minAmount).toBe(-150);
+      expect(component.editTransactionForm.controls.transactionAmount.hasError('min')).toBe(true);
+      expect(component.editTransactionForm.valid).toBe(false);
+    });
+
+    it('accepts the difference that cancels the amount and flags it as a plain reversal', () => {
+      const component = createDeltaComponent();
+
+      component.editTransactionForm.controls.transactionAmount.setValue(-150);
+
+      expect(component.editTransactionForm.controls.transactionAmount.valid).toBe(true);
+      expect(component.resultingAmount).toBe(0);
+      expect(component.reversesWithoutReplacement).toBe(true);
+    });
+
+    it('works out the amount the replacement will carry', () => {
+      const component = createDeltaComponent();
+
+      component.editTransactionForm.controls.transactionAmount.setValue(40);
+
+      expect(component.resultingAmount).toBe(190);
+      expect(component.reversesWithoutReplacement).toBe(false);
+    });
+
+    it('offers the form on every type the delta based command accepts', () => {
+      [
+        2,
+        22,
+        23,
+        26
+      ].forEach((typeId) => {
+        routerStub.navigate.mockClear();
+        createDeltaComponent({ ...workingCapitalRepayment, type: { id: typeId } });
+
+        expect(routerStub.navigate).not.toHaveBeenCalled();
+      });
+    });
+
+    it('navigates away instead of offering the form for a type the command rejects', () => {
+      createDeltaComponent({ ...workingCapitalRepayment, type: { id: 44 } });
+
+      expect(routerStub.navigate).toHaveBeenCalled();
+    });
+
+    it('navigates away instead of offering the form for an already reversed transaction', () => {
+      createDeltaComponent({ ...workingCapitalRepayment, reversed: true });
+
+      expect(routerStub.navigate).toHaveBeenCalled();
+    });
+
+    it('navigates away on a Term Loan, which has no delta based command', () => {
+      createComponent(repaymentTemplate, 'loanStatusType.active', false, 'delta');
 
       expect(routerStub.navigate).toHaveBeenCalled();
     });

@@ -698,7 +698,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} muss größer als null sein",
     "validation.sharesMinDefaultMaxOrder": "Das Minimum muss kleiner oder gleich dem Standardwert sein, und der Standardwert kleiner oder gleich dem Maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Unzureichendes Guthaben. Ihr Kontostand beträgt {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Die Öffnungszeit muss vor der Schließzeit liegen."
+    "validation.openingTimeBeforeClosingTime": "Die Öffnungszeit muss vor der Schließzeit liegen.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Dieser Transaktionstyp kann bei einem Betriebsmitteldarlehen nicht nach Differenz angepasst werden.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Der Anpassungsbetrag darf nicht null sein.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Die Anpassung darf die Transaktion nicht unter null verringern."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1089,7 +1092,8 @@
       "Post Dividends": "Dividenden buchen",
       "Convert": "Umwandeln",
       "Deleting": "Wird gelöscht",
-      "Inactivate": "Deaktivieren"
+      "Inactivate": "Deaktivieren",
+      "Adjust by Difference": "Nach Differenz anpassen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -4186,7 +4190,10 @@
       "PERSON": "Natürliche Person",
       "Payment": "Zahlung",
       "Export Date": "Exportdatum",
-      "Label": "Bezeichnung"
+      "Label": "Bezeichnung",
+      "Adjustment Amount": "Anpassungsbetrag",
+      "Original Amount": "Ursprünglicher Betrag",
+      "Resulting Amount": "Resultierender Betrag"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5658,7 +5665,11 @@
       "Closed": "Geschlossen",
       "Dashboard Export": "Dashboard-Export",
       "Generated on": "Erstellt am",
-      "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard"
+      "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard",
+      "Adjust by Difference": "Nach Differenz anpassen",
+      "The adjustment amount cannot be zero": "Der Anpassungsbetrag darf nicht null sein",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Die Anpassung hebt den Betrag auf, daher wird die Transaktion ohne Ersatz storniert",
+      "A positive amount increases the transaction and a negative one decreases it": "Ein positiver Betrag erhöht die Transaktion, ein negativer verringert sie"
     },
     "permissions": {
       "actions": {

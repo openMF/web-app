@@ -698,7 +698,10 @@
     "validation.mustBeAnInteger": "{{field}} must be an integer",
     "validation.mustBeGreaterThan": "{{field}} must be greater than {{other}}",
     "validation.mustBeGreaterThanZero": "{{field}} must be greater than zero",
-    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum"
+    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "This transaction type cannot be adjusted by difference on a Working Capital loan.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "The adjustment amount cannot be zero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "The adjustment cannot decrease the transaction below zero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1089,7 +1092,8 @@
       "Reverse": "Reverse",
       "Create Tenant": "Create Tenant",
       "Test Connection": "Test Connection",
-      "Post Dividends": "Post Dividends"
+      "Post Dividends": "Post Dividends",
+      "Adjust by Difference": "Adjust by Difference"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -4180,7 +4184,10 @@
       "On Hold Funds": "On Hold Funds",
       "Payment": "Payment",
       "Export Date": "Export Date",
-      "Label": "Label"
+      "Label": "Label",
+      "Adjustment Amount": "Adjustment Amount",
+      "Original Amount": "Original Amount",
+      "Resulting Amount": "Resulting Amount"
     },
     "links": {
       "Community": "Community",
@@ -5653,7 +5660,11 @@
       "Closed": "Closed",
       "Dashboard Export": "Dashboard Export",
       "Generated on": "Generated on",
-      "Automated export": "This is an automated export from Mifos X Global Dashboard"
+      "Automated export": "This is an automated export from Mifos X Global Dashboard",
+      "Adjust by Difference": "Adjust by Difference",
+      "The adjustment amount cannot be zero": "The adjustment amount cannot be zero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "The adjustment cancels the amount, so the transaction is reversed without a replacement",
+      "A positive amount increases the transaction and a negative one decreases it": "A positive amount increases the transaction and a negative one decreases it"
     },
     "permissions": {
       "actions": {

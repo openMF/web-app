@@ -696,7 +696,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} deve essere maggiore di zero",
     "validation.sharesMinDefaultMaxOrder": "Il minimo deve essere minore o uguale al valore predefinito e il valore predefinito minore o uguale al massimo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insufficiente. Il saldo del tuo conto è di {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura."
+    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Questo tipo di transazione non può essere rettificato per differenza su un prestito di capitale circolante.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "L'importo della rettifica non può essere zero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "La rettifica non può ridurre la transazione sotto lo zero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1087,7 +1090,8 @@
       "Post Dividends": "Registra dividendi",
       "Convert": "Converti",
       "Deleting": "Eliminazione",
-      "Inactivate": "Disattiva"
+      "Inactivate": "Disattiva",
+      "Adjust by Difference": "Rettifica per differenza"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -4184,7 +4188,10 @@
       "PERSON": "Persona fisica",
       "Payment": "Pagamento",
       "Export Date": "Data di esportazione",
-      "Label": "Etichetta"
+      "Label": "Etichetta",
+      "Adjustment Amount": "Importo della rettifica",
+      "Original Amount": "Importo originale",
+      "Resulting Amount": "Importo risultante"
     },
     "links": {
       "Community": "Comunità",
@@ -5656,7 +5663,11 @@
       "Closed": "Chiuso",
       "Dashboard Export": "Esportazione del cruscotto",
       "Generated on": "Generato il",
-      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X"
+      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X",
+      "Adjust by Difference": "Rettifica per differenza",
+      "The adjustment amount cannot be zero": "L'importo della rettifica non può essere zero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "La rettifica annulla l'importo, quindi la transazione viene stornata senza sostituzione",
+      "A positive amount increases the transaction and a negative one decreases it": "Un importo positivo aumenta la transazione e uno negativo la diminuisce"
     },
     "permissions": {
       "actions": {

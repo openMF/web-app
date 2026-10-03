@@ -207,6 +207,16 @@
                 <span>{{ 'labels.buttons.Adjust' | translate }}</span>
               </button>
             }
+            @if (allowAdjustByDeltaTransaction(transaction)) {
+              <button
+                mat-menu-item
+                *mifosxHasPermission="adjustByDeltaPermission"
+                (click)="adjustTransactionByDelta(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="edit" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'labels.buttons.Adjust by Difference' | translate }}</span>
+              </button>
+            }
             @if (allowUndoTransaction(transaction)) {
               <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
                 <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>

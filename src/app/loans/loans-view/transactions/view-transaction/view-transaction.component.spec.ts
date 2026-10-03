@@ -187,6 +187,28 @@ describe('ViewTransactionComponent', () => {
 
       expect(component.allowEdition).toBe(false);
     });
+
+    it('offers the adjustment by difference on every Working Capital type its command accepts', () => {
+      [
+        2,
+        22,
+        23,
+        26
+      ].forEach((typeId) => {
+        const component = createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true });
+
+        expect(component.allowAdjustByDelta).toBe(true);
+        expect(component.adjustByDeltaPermission).toBe('ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION');
+      });
+    });
+
+    it('offers no adjustment by difference on a rejected type, a reversed transaction or a Term Loan', () => {
+      expect(createComponent(workingCapitalTransaction(44), { isWorkingCapital: true }).allowAdjustByDelta).toBe(false);
+      expect(
+        createComponent(workingCapitalTransaction(2, { reversed: true }), { isWorkingCapital: true }).allowAdjustByDelta
+      ).toBe(false);
+      expect(createComponent(transaction(2)).allowAdjustByDelta).toBe(false);
+    });
   });
 
   describe('reversal', () => {

@@ -696,7 +696,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} debe ser mayor que cero",
     "validation.sharesMinDefaultMaxOrder": "El mínimo debe ser menor o igual que el valor predeterminado, y el predeterminado menor o igual que el máximo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insuficiente. El saldo de su cuenta es {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "La hora de apertura debe ser anterior a la de cierre."
+    "validation.openingTimeBeforeClosingTime": "La hora de apertura debe ser anterior a la de cierre.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Este tipo de transacción no se puede ajustar por diferencia en un préstamo de Capital de Trabajo.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "El monto del ajuste no puede ser cero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "El ajuste no puede reducir la transacción por debajo de cero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1087,7 +1090,8 @@
       "Post Dividends": "Contabilizar dividendos",
       "Convert": "Convertir",
       "Deleting": "Eliminando",
-      "Inactivate": "Inactivar"
+      "Inactivate": "Inactivar",
+      "Adjust by Difference": "Ajustar por diferencia"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -4184,7 +4188,10 @@
       "PERSON": "Persona natural",
       "Payment": "Pago",
       "Export Date": "Fecha de exportación",
-      "Label": "Etiqueta"
+      "Label": "Etiqueta",
+      "Adjustment Amount": "Monto del ajuste",
+      "Original Amount": "Monto original",
+      "Resulting Amount": "Monto resultante"
     },
     "links": {
       "Community": "Comunidad",
@@ -5656,7 +5663,11 @@
       "Closed": "Cerrado",
       "Dashboard Export": "Exportación del panel",
       "Generated on": "Generado el",
-      "Automated export": "Esta es una exportación automática del panel global de Mifos X"
+      "Automated export": "Esta es una exportación automática del panel global de Mifos X",
+      "Adjust by Difference": "Ajustar por diferencia",
+      "The adjustment amount cannot be zero": "El monto del ajuste no puede ser cero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "El ajuste cancela el monto, por lo que la transacción se reversa sin crear un reemplazo",
+      "A positive amount increases the transaction and a negative one decreases it": "Un monto positivo aumenta la transacción y uno negativo la disminuye"
     },
     "permissions": {
       "actions": {
