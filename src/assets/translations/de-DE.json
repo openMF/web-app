@@ -179,12 +179,12 @@
       "generic": "Der Akquisitionsstatus konnte nicht geladen werden. Bitte versuchen Sie es erneut."
     },
     "stages": {
-      "ONBOARDING": "Onboarding",
-      "COMPLIANCE": "Compliance",
-      "APPROVAL": "Genehmigung",
-      "ACTIVATION": "Aktivierung",
-      "DEPOSIT": "Einzahlung",
-      "WITHDRAWAL": "Auszahlung"
+      "ONBOARDING": "Handelsregister / Onboarding",
+      "COMPLIANCE": "Unterlagen / Compliance",
+      "APPROVAL": "Genehmigung / Prüfung durch Ausschuss oder interne Kontrolle",
+      "ACTIVATION": "Aktivierung / Geschäftsbetrieb",
+      "DEPOSIT": "Einzahlung / Geldautomat",
+      "WITHDRAWAL": "Auszahlung / Geldautomat"
     },
     "statuses": {
       "COMPLETED": "ABGESCHLOSSEN",
@@ -195,7 +195,8 @@
       "CLOSED": "GESCHLOSSEN",
       "FAILED": "FEHLGESCHLAGEN",
       "REJECTED": "ABGELEHNT",
-      "WITHDRAWN": "ZURÜCKGEZOGEN"
+      "WITHDRAWN": "ZURÜCKGEZOGEN",
+      "UNKNOWN": "STATUS NICHT VERFÜGBAR"
     },
     "fields": {
       "completedOn": "Abgeschlossen am",

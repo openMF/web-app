@@ -179,12 +179,12 @@
       "generic": "Impossible de charger le statut d’acquisition. Veuillez réessayer."
     },
     "stages": {
-      "ONBOARDING": "Intégration",
-      "COMPLIANCE": "Conformité",
-      "APPROVAL": "Approbation",
-      "ACTIVATION": "Activation",
-      "DEPOSIT": "Dépôt",
-      "WITHDRAWAL": "Retrait"
+      "ONBOARDING": "Immatriculation commerciale / Intégration",
+      "COMPLIANCE": "Dossier / Conformité",
+      "APPROVAL": "Approbation / Validation du comité ou du contrôle interne",
+      "ACTIVATION": "Activation / Opérations commerciales",
+      "DEPOSIT": "Dépôt / Guichet automatique",
+      "WITHDRAWAL": "Retrait / Guichet automatique"
     },
     "statuses": {
       "COMPLETED": "TERMINÉ",
@@ -195,7 +195,8 @@
       "CLOSED": "FERMÉ",
       "FAILED": "ÉCHEC",
       "REJECTED": "REJETÉ",
-      "WITHDRAWN": "RETIRÉ"
+      "WITHDRAWN": "RETIRÉ",
+      "UNKNOWN": "STATUT INDISPONIBLE"
     },
     "fields": {
       "completedOn": "Terminé le",
