@@ -179,12 +179,12 @@
       "generic": "Impossibile caricare lo stato di acquisizione. Riprovare."
     },
     "stages": {
-      "ONBOARDING": "Onboarding",
-      "COMPLIANCE": "Conformità",
-      "APPROVAL": "Approvazione",
-      "ACTIVATION": "Attivazione",
-      "DEPOSIT": "Deposito",
-      "WITHDRAWAL": "Prelievo"
+      "ONBOARDING": "Registrazione commerciale / Onboarding",
+      "COMPLIANCE": "Fascicolo / Conformità",
+      "APPROVAL": "Approvazione / Convalida del comitato o controllo interno",
+      "ACTIVATION": "Attivazione / Operazioni commerciali",
+      "DEPOSIT": "Deposito / Sportello automatico",
+      "WITHDRAWAL": "Prelievo / Sportello automatico"
     },
     "statuses": {
       "COMPLETED": "COMPLETATO",
@@ -195,7 +195,8 @@
       "CLOSED": "CHIUSO",
       "FAILED": "NON RIUSCITO",
       "REJECTED": "RIFIUTATO",
-      "WITHDRAWN": "RITIRATO"
+      "WITHDRAWN": "RITIRATO",
+      "UNKNOWN": "STATO NON DISPONIBILE"
     },
     "fields": {
       "completedOn": "Completato il",

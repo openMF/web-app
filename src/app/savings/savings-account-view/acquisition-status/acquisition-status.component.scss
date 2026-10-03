@@ -72,10 +72,6 @@
   margin-top: 0;
 }
 
-.backend-stage-name {
-  min-height: 40px;
-}
-
 .current-stage .stage-card {
   border: 2px solid var(--md-sys-color-primary);
 }
@@ -105,28 +101,39 @@ dd {
 }
 
 .status-completed {
-  background: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
+  background: var(--md-sys-color-tertiary, #2e7d32);
+  color: var(--md-sys-color-on-tertiary, #fff);
 }
 
 .status-current {
-  background: var(--md-sys-color-tertiary-container);
-  color: var(--md-sys-color-on-tertiary-container);
+  background: var(--md-sys-color-primary, #1074b9);
+  color: var(--md-sys-color-on-primary, #fff);
 }
 
-.status-pending {
+.status-pending,
+.status-closed,
+.status-unknown {
   background: var(--md-sys-color-surface-variant);
   color: var(--md-sys-color-on-surface-variant);
 }
 
-.status-blocked,
-.status-cancelled,
-.status-closed,
-.status-failed,
-.status-rejected,
-.status-withdrawn {
-  background: var(--md-sys-color-error-container);
-  color: var(--md-sys-color-on-error-container);
+.status-error {
+  background: var(--md-sys-color-error, #ba1a1a);
+  color: var(--md-sys-color-on-error, #fff);
+}
+
+.connector-completed {
+  background: var(--md-sys-color-tertiary, #2e7d32);
+}
+
+.stage-marker mat-icon {
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
+}
+
+.stage-card mat-chip mat-icon {
+  color: inherit;
 }
 
 @media (width <= 959px) {

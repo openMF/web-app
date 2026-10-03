@@ -179,12 +179,12 @@
       "generic": "Unable to load acquisition status. Please try again."
     },
     "stages": {
-      "ONBOARDING": "Onboarding",
-      "COMPLIANCE": "Compliance",
-      "APPROVAL": "Approval",
-      "ACTIVATION": "Activation",
-      "DEPOSIT": "Deposit",
-      "WITHDRAWAL": "Withdrawal"
+      "ONBOARDING": "Commercial Registration / Onboarding",
+      "COMPLIANCE": "File / Compliance",
+      "APPROVAL": "Approval / Committee or Internal Control Validation",
+      "ACTIVATION": "Activation / Commercial-Operations",
+      "DEPOSIT": "Deposit / ATM",
+      "WITHDRAWAL": "Withdrawal / ATM"
     },
     "statuses": {
       "COMPLETED": "COMPLETED",
@@ -195,7 +195,8 @@
       "CLOSED": "CLOSED",
       "FAILED": "FAILED",
       "REJECTED": "REJECTED",
-      "WITHDRAWN": "WITHDRAWN"
+      "WITHDRAWN": "WITHDRAWN",
+      "UNKNOWN": "STATUS UNAVAILABLE"
     },
     "fields": {
       "completedOn": "Completed on",
