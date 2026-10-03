@@ -6864,5 +6864,62 @@
       "options": "नगद व्यवस्थापन विकल्पहरू लोड गर्न सकिएन",
       "receipt": "रसिद लोड गर्न सकिएन"
     }
+  },
+  "enrollmentStatus": {
+    "title": "दर्ता स्थिति",
+    "description": "यस ग्राहकको दर्ताका चरणहरू र प्रतीक्षा समय हेर्नुहोस्।",
+    "loading": "दर्ता स्थिति लोड हुँदैछ",
+    "empty": "दर्ता जानकारी उपलब्ध छैन",
+    "notAvailable": "उपलब्ध छैन",
+    "stages": {
+      "registration": "व्यावसायिक दर्ता",
+      "onboarding": "अनबोर्डिङ",
+      "kyc": "बायोमेट्रिक्स र KYC",
+      "kycLevel1": "KYC स्तर १",
+      "kycLevel2": "KYC स्तर २",
+      "kycLevel3": "KYC स्तर ३",
+      "compliance": "अनुपालन",
+      "activation": "सक्रियता",
+      "commercialActivation": "सक्रियता — व्यावसायिक दर्ता",
+      "operationsActivation": "सक्रियता — सञ्चालन",
+      "activeCustomer": "सक्रिय ग्राहक",
+      "documentValidation": "कागजात प्रमाणीकरण"
+    },
+    "statuses": {
+      "COMPLETED": "पूरा भयो",
+      "CURRENT": "हालको",
+      "IN_PROGRESS": "प्रगतिमा",
+      "PENDING": "विचाराधीन",
+      "NOT_STARTED": "सुरु भएको छैन",
+      "BLOCKED": "रोकिएको",
+      "FAILED": "असफल",
+      "REJECTED": "अस्वीकृत",
+      "WITHDRAWN": "फिर्ता लिइएको",
+      "CLOSED": "बन्द",
+      "ACTIVE": "सक्रिय",
+      "APPROVED": "स्वीकृत",
+      "SUBMITTED": "पेश गरिएको",
+      "UNKNOWN": "अज्ञात"
+    },
+    "fields": {
+      "startedOn": "सुरु गरिएको",
+      "completedOn": "पूरा भयो",
+      "elapsedDays": "बितेका दिनहरू",
+      "source": "स्रोत",
+      "kycEvidence": "KYC प्रमाण",
+      "days": "{{count}} दिन"
+    },
+    "traffic": {
+      "yellow": "पहेंलो (१–५ दिन)",
+      "orange": "सुन्तला (६–१० दिन)",
+      "red": "रातो (१० दिनभन्दा बढी) — ध्यान आवश्यक",
+      "needsAttention": "ध्यान आवश्यक",
+      "overdue": "समय नाघेको"
+    },
+    "errors": {
+      "clientNotFound": "ग्राहक फेला परेन।",
+      "forbidden": "यो दर्ता जानकारी हेर्ने अनुमति तपाईंसँग छैन।",
+      "generic": "दर्ता स्थिति लोड गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
+    }
   }
 }

@@ -6858,5 +6858,62 @@
       "options": "No se pudieron cargar las opciones de administración de efectivo",
       "receipt": "No se pudo cargar el recibo"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Estado de enrolamiento",
+    "description": "Revise las etapas de enrolamiento y el tiempo de espera de este cliente.",
+    "loading": "Cargando estado de enrolamiento",
+    "empty": "No hay información de enrolamiento",
+    "notAvailable": "No disponible",
+    "stages": {
+      "registration": "Registro comercial",
+      "onboarding": "Incorporación",
+      "kyc": "Biometría y KYC",
+      "kycLevel1": "KYC nivel 1",
+      "kycLevel2": "KYC nivel 2",
+      "kycLevel3": "KYC nivel 3",
+      "compliance": "Cumplimiento",
+      "activation": "Activación",
+      "commercialActivation": "Activación — Registro comercial",
+      "operationsActivation": "Activación — Operaciones",
+      "activeCustomer": "Cliente activo",
+      "documentValidation": "Validación de documentos"
+    },
+    "statuses": {
+      "COMPLETED": "Terminado",
+      "CURRENT": "ACTUAL",
+      "IN_PROGRESS": "En progreso",
+      "PENDING": "Pendiente",
+      "NOT_STARTED": "No iniciado",
+      "BLOCKED": "BLOQUEADO",
+      "FAILED": "FALLIDO",
+      "REJECTED": "RECHAZADO",
+      "WITHDRAWN": "RETIRADO",
+      "CLOSED": "CERRADO",
+      "ACTIVE": "Activa",
+      "APPROVED": "Aprobado",
+      "SUBMITTED": "Enviado",
+      "UNKNOWN": "Desconocido"
+    },
+    "fields": {
+      "startedOn": "Iniciado",
+      "completedOn": "Terminado",
+      "elapsedDays": "Días transcurridos",
+      "source": "Origen",
+      "kycEvidence": "Evidencia KYC",
+      "days": "{{count}} días"
+    },
+    "traffic": {
+      "yellow": "Amarillo (1–5 días)",
+      "orange": "Naranja (6–10 días)",
+      "red": "Rojo (más de 10 días) — requiere atención",
+      "needsAttention": "Requiere atención",
+      "overdue": "Vencido"
+    },
+    "errors": {
+      "clientNotFound": "No se encontró el cliente.",
+      "forbidden": "No tiene permiso para ver esta información de enrolamiento.",
+      "generic": "No se pudo cargar el estado de enrolamiento. Inténtelo de nuevo."
+    }
   }
 }

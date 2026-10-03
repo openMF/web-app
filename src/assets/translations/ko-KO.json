@@ -6864,5 +6864,62 @@
       "options": "현금 관리 옵션을 로드할 수 없습니다.",
       "receipt": "영수증을 로드할 수 없습니다."
     }
+  },
+  "enrollmentStatus": {
+    "title": "등록 상태",
+    "description": "이 고객의 등록 단계와 대기 시간을 검토합니다.",
+    "loading": "등록 상태를 불러오는 중",
+    "empty": "등록 정보가 없습니다",
+    "notAvailable": "사용할 수 없음",
+    "stages": {
+      "registration": "사업자 등록",
+      "onboarding": "온보딩",
+      "kyc": "생체 인식 및 KYC",
+      "kycLevel1": "KYC 1단계",
+      "kycLevel2": "KYC 2단계",
+      "kycLevel3": "KYC 3단계",
+      "compliance": "규정 준수",
+      "activation": "활성화",
+      "commercialActivation": "활성화 — 사업자 등록",
+      "operationsActivation": "활성화 — 운영",
+      "activeCustomer": "활성 고객",
+      "documentValidation": "문서 검증"
+    },
+    "statuses": {
+      "COMPLETED": "완전한",
+      "CURRENT": "현재",
+      "IN_PROGRESS": "진행 중",
+      "PENDING": "대기 중",
+      "NOT_STARTED": "시작되지 않음",
+      "BLOCKED": "차단됨",
+      "FAILED": "실패",
+      "REJECTED": "거부됨",
+      "WITHDRAWN": "철회됨",
+      "CLOSED": "종료됨",
+      "ACTIVE": "활성",
+      "APPROVED": "승인됨",
+      "SUBMITTED": "제출됨",
+      "UNKNOWN": "알 수 없음"
+    },
+    "fields": {
+      "startedOn": "시작됨",
+      "completedOn": "완전한",
+      "elapsedDays": "경과 일수",
+      "source": "출처",
+      "kycEvidence": "KYC 증빙",
+      "days": "{{count}}일"
+    },
+    "traffic": {
+      "yellow": "노란색(1~5일)",
+      "orange": "주황색(6~10일)",
+      "red": "빨간색(10일 초과) — 주의 필요",
+      "needsAttention": "주의 필요",
+      "overdue": "기한 초과"
+    },
+    "errors": {
+      "clientNotFound": "고객을 찾을 수 없습니다.",
+      "forbidden": "이 등록 정보를 볼 권한이 없습니다.",
+      "generic": "등록 상태를 불러올 수 없습니다. 다시 시도해 주세요."
+    }
   }
 }

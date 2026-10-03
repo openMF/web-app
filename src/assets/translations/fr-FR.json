@@ -6864,5 +6864,62 @@
       "options": "Les options de gestion de trésorerie n'ont pas pu être chargées",
       "receipt": "Le reçu n'a pas pu être chargé"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Statut d'inscription",
+    "description": "Consultez les étapes d’inscription et le délai d’attente de ce client.",
+    "loading": "Chargement du statut d'inscription",
+    "empty": "Aucune information d’inscription",
+    "notAvailable": "Non disponible",
+    "stages": {
+      "registration": "Immatriculation commerciale",
+      "onboarding": "Intégration",
+      "kyc": "Données biométriques et KYC",
+      "kycLevel1": "KYC niveau 1",
+      "kycLevel2": "KYC niveau 2",
+      "kycLevel3": "KYC niveau 3",
+      "compliance": "Conformité",
+      "activation": "Activation",
+      "commercialActivation": "Activation — Immatriculation commerciale",
+      "operationsActivation": "Activation — Opérations",
+      "activeCustomer": "Client actif",
+      "documentValidation": "Validation des documents"
+    },
+    "statuses": {
+      "COMPLETED": "Complété",
+      "CURRENT": "ACTUEL",
+      "IN_PROGRESS": "En cours",
+      "PENDING": "En attente",
+      "NOT_STARTED": "Non commencé",
+      "BLOCKED": "BLOQUÉ",
+      "FAILED": "ÉCHEC",
+      "REJECTED": "REJETÉ",
+      "WITHDRAWN": "RETIRÉ",
+      "CLOSED": "FERMÉ",
+      "ACTIVE": "Actif",
+      "APPROVED": "Approuvé",
+      "SUBMITTED": "Soumis",
+      "UNKNOWN": "Inconnu"
+    },
+    "fields": {
+      "startedOn": "Démarré",
+      "completedOn": "Complété",
+      "elapsedDays": "Jours écoulés",
+      "source": "Source",
+      "kycEvidence": "Justificatifs KYC",
+      "days": "{{count}} jours"
+    },
+    "traffic": {
+      "yellow": "Jaune (1 à 5 jours)",
+      "orange": "Orange (6 à 10 jours)",
+      "red": "Rouge (plus de 10 jours) — attention requise",
+      "needsAttention": "Attention requise",
+      "overdue": "En retard"
+    },
+    "errors": {
+      "clientNotFound": "Client introuvable.",
+      "forbidden": "Vous n’êtes pas autorisé à consulter ces informations d’inscription.",
+      "generic": "Impossible de charger le statut d’inscription. Veuillez réessayer."
+    }
   }
 }

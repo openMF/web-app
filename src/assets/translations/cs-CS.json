@@ -6866,5 +6866,62 @@
       "options": "Možnosti správy hotovosti nelze načíst",
       "receipt": "Účtenku se nepodařilo načíst"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Stav registrace",
+    "description": "Zkontrolujte fáze registrace a dobu čekání tohoto klienta.",
+    "loading": "Načítá se stav registrace",
+    "empty": "Nejsou k dispozici žádné informace o registraci",
+    "notAvailable": "Není k dispozici",
+    "stages": {
+      "registration": "Obchodní registrace",
+      "onboarding": "Začlenění",
+      "kyc": "Biometrie a KYC",
+      "kycLevel1": "KYC úroveň 1",
+      "kycLevel2": "KYC úroveň 2",
+      "kycLevel3": "KYC úroveň 3",
+      "compliance": "Soulad s předpisy",
+      "activation": "Aktivace",
+      "commercialActivation": "Aktivace — Obchodní registrace",
+      "operationsActivation": "Aktivace — Provoz",
+      "activeCustomer": "Aktivní klient",
+      "documentValidation": "Ověření dokumentů"
+    },
+    "statuses": {
+      "COMPLETED": "Dokončeno",
+      "CURRENT": "AKTUÁLNÍ",
+      "IN_PROGRESS": "Probíhá",
+      "PENDING": "Nevyřízené",
+      "NOT_STARTED": "Nezahájeno",
+      "BLOCKED": "BLOKOVÁNO",
+      "FAILED": "SELHALO",
+      "REJECTED": "ZAMÍTNUTO",
+      "WITHDRAWN": "STAŽENO",
+      "CLOSED": "UZAVŘENO",
+      "ACTIVE": "Aktivní",
+      "APPROVED": "Schválený",
+      "SUBMITTED": "Odesláno",
+      "UNKNOWN": "Neznámé"
+    },
+    "fields": {
+      "startedOn": "Zahájeno",
+      "completedOn": "Dokončeno",
+      "elapsedDays": "Uplynulé dny",
+      "source": "Zdroj",
+      "kycEvidence": "Doklady KYC",
+      "days": "{{count}} dní"
+    },
+    "traffic": {
+      "yellow": "Žlutá (1–5 dní)",
+      "orange": "Oranžová (6–10 dní)",
+      "red": "Červená (více než 10 dní) — vyžaduje pozornost",
+      "needsAttention": "Vyžaduje pozornost",
+      "overdue": "Po termínu"
+    },
+    "errors": {
+      "clientNotFound": "Klient nebyl nalezen.",
+      "forbidden": "Nemáte oprávnění zobrazit tyto informace o registraci.",
+      "generic": "Stav registrace se nepodařilo načíst. Zkuste to znovu."
+    }
   }
 }
