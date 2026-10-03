@@ -254,6 +254,17 @@
       >
     </div>
 
+    @if (isSemiMonthly(loansAccount.repaymentFrequencyType)) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.First repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loansAccount.firstRepaymentDayOfMonth }}</span>
+      </div>
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Second repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loansAccount.secondRepaymentDayOfMonth | semiMonthlyDay }}</span>
+      </div>
+    }
+
     @if (productEnableDownPayment) {
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>

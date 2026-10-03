@@ -24,6 +24,7 @@ import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBasicDetails } from '../models/loan-product.model';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 
 /**
  * Edit Loans
@@ -246,10 +247,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       loanType
     };
     delete loansAccountData.isValid;
-    if (loansAccountData.syncRepaymentsWithMeeting) {
+    // Semi-monthly loans cannot be linked to a meeting calendar (the backend rejects `calendarId`).
+    if (loansAccountData.syncRepaymentsWithMeeting && !isSemiMonthly(loansAccountData.repaymentFrequencyType)) {
       loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
     }
+    delete loansAccountData.syncRepaymentsWithMeeting;
 
     if (loansAccountData.recalculationRestFrequencyDate) {
       loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(

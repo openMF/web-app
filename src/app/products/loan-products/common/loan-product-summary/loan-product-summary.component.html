@@ -363,6 +363,16 @@
         {{ loanProduct.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
       >
     </div>
+    @if (isSemiMonthly(loanProduct.repaymentFrequencyType)) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.First repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.firstRepaymentDayOfMonth }}</span>
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Second repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.secondRepaymentDayOfMonth | semiMonthlyDay }}</span>
+      </div>
+    }
     @if (loanProduct.fixedLength) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Fixed Length' | translate }}:</span>

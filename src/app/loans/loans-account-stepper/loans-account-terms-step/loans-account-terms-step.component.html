@@ -253,6 +253,11 @@
         />
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
+        @if (loansAccountTermsForm.controls.repaymentsStartingFromDate.hasError('semiMonthlyDueDay')) {
+          <mat-error>{{
+            'labels.text.First repayment date must fall on a semi-monthly due day' | translate
+          }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="flex-fill flex-23" (click)="interestPicker.open()">
@@ -306,6 +311,44 @@
           }
         </mat-select>
       </mat-form-field>
+
+      @if (isSemiMonthly()) {
+        <mat-form-field class="flex-fill flex-23">
+          <mat-label>{{ 'labels.inputs.First repayment day of month' | translate }}</mat-label>
+          <mat-select formControlName="firstRepaymentDayOfMonth" required>
+            @for (day of firstRepaymentDayOptions; track day) {
+              <mat-option [value]="day">{{ day }}</mat-option>
+            }
+          </mat-select>
+          @if (loansAccountTermsForm.controls.firstRepaymentDayOfMonth.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.First repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill flex-23">
+          <mat-label>{{ 'labels.inputs.Second repayment day of month' | translate }}</mat-label>
+          <mat-select formControlName="secondRepaymentDayOfMonth" required>
+            @for (day of secondRepaymentDayOptions(); track day) {
+              <mat-option [value]="day">
+                {{ day | semiMonthlyDay }}
+              </mat-option>
+            }
+          </mat-select>
+          <mat-hint>{{
+            loansAccountTermsForm.controls.firstRepaymentDayOfMonth.value
+              | semiMonthlyDueDays: loansAccountTermsForm.controls.secondRepaymentDayOfMonth.value
+          }}</mat-hint>
+          @if (loansAccountTermsForm.controls.secondRepaymentDayOfMonth.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Second repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+      }
 
       @if (loansAccountTermsForm.controls.repaymentFrequencyType.value === 2) {
         <mat-form-field class="flex-fill flex-14">
