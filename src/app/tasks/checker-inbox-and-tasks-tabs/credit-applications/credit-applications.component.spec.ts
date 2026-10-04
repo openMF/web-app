@@ -317,7 +317,22 @@ describe('CreditApplicationsComponent', () => {
 
     expect(component.loading).toBe(false);
     expect(component.dataSource.data).toEqual([]);
+    expect(component.loadFailed).toBe(true);
     expect(component.filterError).toBe('labels.text.Unable to load credit applications');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.text.No credit applications found');
+  });
+
+  it('retries a failed request', () => {
+    TestBed.resetTestingModule();
+    createComponent(throwError(() => new Error('network')));
+    tasksService.getCreditApplications.mockReturnValue(of(page));
+    tasksService.getCreditApplications.mockClear();
+
+    component.retryLoad();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+    expect(component.loadFailed).toBe(false);
+    expect(component.dataSource.data).toEqual(page.pageItems);
   });
 
   it('navigates rows to the existing loan details route', () => {

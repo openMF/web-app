@@ -78,6 +78,7 @@
           routerLinkActive
           #creditRequests="routerLinkActive"
           [active]="creditRequests.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
         >
           {{ 'labels.inputs.Requests' | translate }}
         </a>
