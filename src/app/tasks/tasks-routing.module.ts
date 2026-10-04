@@ -19,6 +19,10 @@ import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-in
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
+import {
+  CREDIT_APPLICATIONS_PERMISSION,
+  creditApplicationsGuard
+} from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
 import { EnrollmentStatusComponent } from './checker-inbox-and-tasks-tabs/enrollment-status/enrollment-status.component';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
@@ -73,12 +77,14 @@ export const routes: Routes = [
         {
           path: 'requests',
           component: CreditApplicationsComponent,
-          data: { title: 'Requests' }
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Requests', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'credit',
           component: CreditApplicationsComponent,
-          data: { title: 'Credit' }
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'enrollment-status',

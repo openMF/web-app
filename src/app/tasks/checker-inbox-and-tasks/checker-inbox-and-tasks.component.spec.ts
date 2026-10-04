@@ -89,14 +89,14 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(tabLabels).toContain('labels.inputs.Credit');
   });
 
-  it('keeps Requests visible and hides Credit for users who cannot read loans', () => {
+  it('hides Requests and Credit for users who cannot read loans', () => {
     createComponent([]);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
       tab.textContent?.trim()
     );
 
-    expect(tabLabels).toContain('labels.inputs.Requests');
+    expect(tabLabels).not.toContain('labels.inputs.Requests');
     expect(tabLabels).not.toContain('labels.inputs.Credit');
   });
 
@@ -115,7 +115,7 @@ describe('CheckerInboxAndTasksComponent', () => {
   });
 
   it('routes Requests to the existing credit applications page', async () => {
-    const routeElement = await navigateToComponent();
+    const routeElement = await navigateToComponent(['READ_LOAN']);
 
     const requestsTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
       tab.textContent?.includes('labels.inputs.Requests')
@@ -167,6 +167,10 @@ describe('CheckerInboxAndTasksComponent', () => {
 
     expect(requestsRoute?.component).toBe(CreditApplicationsComponent);
     expect(creditRoute?.component).toBe(CreditApplicationsComponent);
+    expect(requestsRoute?.data?.permissions).toEqual(['READ_LOAN']);
+    expect(creditRoute?.data?.permissions).toEqual(['READ_LOAN']);
+    expect(requestsRoute?.canActivate).toHaveLength(1);
+    expect(creditRoute?.canActivate).toHaveLength(1);
   });
 
   it('uses PendingProspectsComponent for the pending prospects route', () => {
