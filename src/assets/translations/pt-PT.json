@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Pagamentos de empréstimos em numerário e cheque",
+      "denominations": "Denominações de dinheiro",
+      "receipt": "Recibo de pagamento de crédito"
+    },
+    "steps": {
+      "customer": "Pesquisa de clientes",
+      "loan": "Revisão de empréstimo e saldo",
+      "payment": "Detalhes de pagamento",
+      "confirmation": "Visualização e confirmação",
+      "receipt": "Recibo"
+    },
+    "tabs": {
+      "current": "Saldos Atuais",
+      "overdue": "Saldos vencidos",
+      "schedule": "Cronograma de Amortização",
+      "history": "Histórico de transações"
+    },
+    "fields": {
+      "businessDate": "Data Comercial",
+      "teller": "Balcão",
+      "cashier": "Caixa",
+      "customerSearch": "Pesquisa de clientes",
+      "customer": "Cliente",
+      "accountNumber": "Número da conta",
+      "office": "Escritório",
+      "status": "Estado",
+      "loanAccount": "Conta de empréstimo",
+      "totalDue": "Valor total devido",
+      "principal": "Capital",
+      "interest": "Interesse",
+      "tax": "Imposto de Juros/IVA",
+      "fees": "Taxas",
+      "penalties": "Penalidades",
+      "total": "Total",
+      "paymentMethod": "Método de pagamento",
+      "amount": "Quantidade",
+      "paymentType": "Tipo de pagamento",
+      "note": "Nota",
+      "denomination": "Denominação",
+      "quantity": "Quantidade",
+      "subtotal": "Subtotal",
+      "paymentAmount": "Valor do pagamento",
+      "tendered": "Dinheiro oferecido",
+      "change": "Troco",
+      "bank": "Banco",
+      "checkType": "Tipo de cheque",
+      "checkNumber": "Número do cheque",
+      "checkAccount": "Número da conta do cheque",
+      "routingCode": "Código de roteamento",
+      "classification": "Classificação do cheque",
+      "receiptNumber": "Número do recibo",
+      "operator": "Operador",
+      "loanTransaction": "ID da transação de empréstimo",
+      "cashierTransaction": "ID da transação do caixa",
+      "overpayment": "Pagamento a maior",
+      "returnReason": "Motivo da devolução"
+    },
+    "methods": {
+      "CASH": "Numerário",
+      "CHECK": "Cheque"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Sujeito a cobrança",
+      "CLEARED_FUNDS": "Fundos compensados"
+    },
+    "status": {
+      "IN_PROGRESS": "Em andamento",
+      "PENDING_COLLECTION": "Coleta pendente",
+      "COMPLETED": "Concluído",
+      "CLEARED": "Compensado",
+      "RETURNED": "Devolvido",
+      "FAILED": "Falha"
+    },
+    "actions": {
+      "preview": "Pré-visualizar pagamento",
+      "confirmSubmit": "Confirmar e enviar",
+      "clearCheck": "Compensar cheque",
+      "returnCheck": "Devolver cheque",
+      "print": "Imprimir",
+      "reprint": "Reimprimir",
+      "newPayment": "Novo pagamento"
+    },
+    "hints": {
+      "customerSearch": "Pesquise por nome, número de cliente ou número de titular da conta"
+    },
+    "messages": {
+      "pendingExplanation": "O cheque será aceito enquanto se aguarda a cobrança. O empréstimo não será reduzido até que um usuário autorizado compense o cheque.",
+      "pendingReceipt": "O pagamento está pendente de cobrança. Nenhum reembolso de empréstimo foi lançado.",
+      "confirm": "Revise cuidadosamente a visualização oficial do back-end e confirme explicitamente o pagamento."
+    },
+    "empty": {
+      "customers": "Nenhum cliente encontrado",
+      "loans": "Nenhum empréstimo elegível encontrado",
+      "schedule": "Nenhum cronograma de amortização está disponível",
+      "history": "Nenhum histórico de transações está disponível",
+      "paymentTypes": "Nenhum tipo de pagamento configurado está disponível",
+      "denominations": "Nenhuma denominação está configurada para esta moeda",
+      "banks": "Nenhum banco está configurado"
+    },
+    "validation": {
+      "amount": "Insira um valor maior que zero com no máximo seis casas decimais",
+      "quantity": "A quantidade precisa ser um número inteiro não negativo",
+      "insufficientCash": "O dinheiro oferecido é menor que o valor do pagamento"
+    },
+    "errors": {
+      "noReadPermission": "Você não tem permissão para visualizar pagamentos de crédito",
+      "noCreatePermission": "Você não tem permissão para criar este pagamento",
+      "configuration": "A configuração do Teller não pôde ser carregada. Verifique a atribuição do caixa e a configuração de back-end.",
+      "customerSearch": "Falha na pesquisa do cliente",
+      "loanList": "Não foi possível carregar os empréstimos elegíveis",
+      "loanDetails": "Não foi possível carregar os detalhes do empréstimo",
+      "preview": "Falha na visualização do pagamento",
+      "submit": "Não foi possível enviar o pagamento",
+      "receipt": "Não foi possível carregar o recibo",
+      "transition": "Não foi possível concluir a transição do cheque"
+    }
+  },
   "cashAllocation": {
     "title": "Abertura e aprovisionamento de caixa",
     "actions": {

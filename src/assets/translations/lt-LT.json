@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Grynieji ir čekių mokėjimai už paskolą",
+      "denominations": "Grynųjų pinigų nominalai",
+      "receipt": "Kredito mokėjimo kvitas"
+    },
+    "steps": {
+      "customer": "Kliento paieška",
+      "loan": "Paskolos ir likučio peržiūra",
+      "payment": "Mokėjimo informacija",
+      "confirmation": "Peržiūra ir patvirtinimas",
+      "receipt": "Kvitas"
+    },
+    "tabs": {
+      "current": "Dabartiniai likučiai",
+      "overdue": "Uždelsti likučiai",
+      "schedule": "Amortizacijos grafikas",
+      "history": "Sandorių istorija"
+    },
+    "fields": {
+      "businessDate": "Darbo data",
+      "teller": "Kasa",
+      "cashier": "Kasininkas",
+      "customerSearch": "Klientų paieška",
+      "customer": "Klientas",
+      "accountNumber": "Sąskaitos numeris",
+      "office": "Biuras",
+      "status": "Būsena",
+      "loanAccount": "Paskolos sąskaita",
+      "totalDue": "Visa mokėtina suma",
+      "principal": "Pagrindinė suma",
+      "interest": "Palūkanos",
+      "tax": "Palūkanų mokestis/PVM",
+      "fees": "Mokesčiai",
+      "penalties": "Baudos",
+      "total": "Iš viso",
+      "paymentMethod": "Mokėjimo būdas",
+      "amount": "Suma",
+      "paymentType": "Mokėjimo tipas",
+      "note": "Pastaba",
+      "denomination": "Denominacija",
+      "quantity": "Kiekis",
+      "subtotal": "Tarpinė suma",
+      "paymentAmount": "Mokėjimo suma",
+      "tendered": "Siūlomi pinigai",
+      "change": "Grąža",
+      "bank": "bankas",
+      "checkType": "Čekio tipas",
+      "checkNumber": "Čekio numeris",
+      "checkAccount": "Čekio sąskaitos numeris",
+      "routingCode": "Maršruto kodas",
+      "classification": "Čekio klasifikacija",
+      "receiptNumber": "Kvito numeris",
+      "operator": "Operatorius",
+      "loanTransaction": "Paskolos operacijos ID",
+      "cashierTransaction": "Kasininko operacijos ID",
+      "overpayment": "Permokėjimas",
+      "returnReason": "Grąžinimo priežastis"
+    },
+    "methods": {
+      "CASH": "Grynieji pinigai",
+      "CHECK": "Čekis"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Inkasuojamas",
+      "CLEARED_FUNDS": "Padengtos lėšos"
+    },
+    "status": {
+      "IN_PROGRESS": "Vykdoma",
+      "PENDING_COLLECTION": "Laukiama kolekcija",
+      "COMPLETED": "Baigta",
+      "CLEARED": "Apmokėtas",
+      "RETURNED": "Sugrįžo",
+      "FAILED": "Nepavyko"
+    },
+    "actions": {
+      "preview": "Peržiūrėti mokėjimą",
+      "confirmSubmit": "Patvirtinkite ir pateikite",
+      "clearCheck": "Apmokėti čekį",
+      "returnCheck": "Grąžinti čekį",
+      "print": "Spausdinti",
+      "reprint": "Perspausdinti",
+      "newPayment": "Naujas mokėjimas"
+    },
+    "hints": {
+      "customerSearch": "Ieškokite pagal vardą, kliento numerį arba sąskaitos savininko numerį"
+    },
+    "messages": {
+      "pendingExplanation": "Čekis bus priimtas inkasuoti. Paskolos likutis nesumažės, kol įgaliotas naudotojas neapmokės čekio.",
+      "pendingReceipt": "Mokėjimas laukia surinkimo. Paskolos grąžinimas nebuvo paskelbtas.",
+      "confirm": "Atidžiai peržiūrėkite autentišką foninės programos peržiūrą, tada aiškiai patvirtinkite mokėjimą."
+    },
+    "empty": {
+      "customers": "Klientų nerasta",
+      "loans": "Tinkamų paskolų nerasta",
+      "schedule": "Amortizacijos grafiko nėra",
+      "history": "Operacijų istorijos nėra",
+      "paymentTypes": "Nėra sukonfigūruoto mokėjimo tipo",
+      "denominations": "Šiai valiutai nenustatyti jokie nominalai",
+      "banks": "Bankai nesukonfigūruoti"
+    },
+    "validation": {
+      "amount": "Įveskite sumą, didesnę už nulį ir ne daugiau kaip šešis skaitmenis po kablelio",
+      "quantity": "Kiekis turi būti neneigiamas sveikasis skaičius",
+      "insufficientCash": "Siūlomi grynieji pinigai yra mažesni už mokėjimo sumą"
+    },
+    "errors": {
+      "noReadPermission": "Neturite leidimo peržiūrėti kredito mokėjimų",
+      "noCreatePermission": "Neturite leidimo sukurti šio mokėjimo",
+      "configuration": "Nepavyko įkelti kasatoriaus konfigūracijos. Patikrinkite kasininko priskyrimą ir užpakalinės sistemos konfigūraciją.",
+      "customerSearch": "Klientų paieška nepavyko",
+      "loanList": "Nepavyko įkelti tinkamų paskolų",
+      "loanDetails": "Nepavyko įkelti paskolos informacijos",
+      "preview": "Nepavyko peržiūrėti mokėjimo",
+      "submit": "Nepavyko pateikti mokėjimo",
+      "receipt": "Nepavyko įkelti kvito",
+      "transition": "Nepavyko pakeisti čekio būsenos"
+    }
+  },
   "cashAllocation": {
     "title": "Kasos atidarymas ir aprūpinimas grynaisiais",
     "actions": {

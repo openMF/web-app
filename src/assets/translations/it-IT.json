@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Pagamenti di prestiti in contanti e con assegno",
+      "denominations": "Denominazioni in contanti",
+      "receipt": "Ricevuta di pagamento del credito"
+    },
+    "steps": {
+      "customer": "Ricerca clienti",
+      "loan": "Revisione del prestito e del saldo",
+      "payment": "Dettagli di pagamento",
+      "confirmation": "Anteprima e conferma",
+      "receipt": "Ricevuta"
+    },
+    "tabs": {
+      "current": "Saldi correnti",
+      "overdue": "Saldi scaduti",
+      "schedule": "Piano di ammortamento",
+      "history": "Cronologia delle transazioni"
+    },
+    "fields": {
+      "businessDate": "Data lavorativa",
+      "teller": "Cassiere",
+      "cashier": "Cassiere",
+      "customerSearch": "Ricerca clienti",
+      "customer": "Cliente",
+      "accountNumber": "Numero di conto",
+      "office": "Ufficio",
+      "status": "Stato",
+      "loanAccount": "Conto di prestito",
+      "totalDue": "Importo totale dovuto",
+      "principal": "Capitale",
+      "interest": "Interesse",
+      "tax": "Imposta sugli interessi/IVA",
+      "fees": "Commissioni",
+      "penalties": "Sanzioni",
+      "total": "Totale",
+      "paymentMethod": "Metodo di pagamento",
+      "amount": "Importo",
+      "paymentType": "Tipo di pagamento",
+      "note": "Nota",
+      "denomination": "Denominazione",
+      "quantity": "Quantità",
+      "subtotal": "Totale parziale",
+      "paymentAmount": "Importo del pagamento",
+      "tendered": "Contanti offerti",
+      "change": "Resto",
+      "bank": "Banca",
+      "checkType": "Tipo di assegno",
+      "checkNumber": "Numero assegno",
+      "checkAccount": "Numero di conto dell’assegno",
+      "routingCode": "Codice di instradamento",
+      "classification": "Classificazione dell’assegno",
+      "receiptNumber": "Numero della ricevuta",
+      "operator": "Operatore",
+      "loanTransaction": "ID della transazione di prestito",
+      "cashierTransaction": "ID transazione cassiere",
+      "overpayment": "Pagamento in eccesso",
+      "returnReason": "Motivo del reso"
+    },
+    "methods": {
+      "CASH": "Contanti",
+      "CHECK": "Assegno"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Soggetto a incasso",
+      "CLEARED_FUNDS": "Fondi disponibili"
+    },
+    "status": {
+      "IN_PROGRESS": "In corso",
+      "PENDING_COLLECTION": "Raccolta in sospeso",
+      "COMPLETED": "Completato",
+      "CLEARED": "Incassato",
+      "RETURNED": "Restituito",
+      "FAILED": "Fallito"
+    },
+    "actions": {
+      "preview": "Anteprima del pagamento",
+      "confirmSubmit": "Conferma e invia",
+      "clearCheck": "Incassa assegno",
+      "returnCheck": "Restituisci assegno",
+      "print": "Stampa",
+      "reprint": "Ristampa",
+      "newPayment": "Nuovo pagamento"
+    },
+    "hints": {
+      "customerSearch": "Cerca per nome, codice cliente o numero intestatario del conto"
+    },
+    "messages": {
+      "pendingExplanation": "L’assegno sarà accettato in attesa di incasso. Il saldo del prestito non verrà ridotto finché un utente autorizzato non incasserà l’assegno.",
+      "pendingReceipt": "Il pagamento è in attesa di riscossione. Non è stato registrato alcun rimborso del prestito.",
+      "confirm": "Esamina attentamente l'anteprima autorevole del backend, quindi conferma esplicitamente il pagamento."
+    },
+    "empty": {
+      "customers": "Nessun cliente trovato",
+      "loans": "Nessun prestito idoneo trovato",
+      "schedule": "Non è disponibile alcun piano di ammortamento",
+      "history": "Non è disponibile alcuna cronologia delle transazioni",
+      "paymentTypes": "Nessun tipo di pagamento configurato è disponibile",
+      "denominations": "Nessuna denominazione è configurata per questa valuta",
+      "banks": "Nessuna banca è configurata"
+    },
+    "validation": {
+      "amount": "Inserisci un importo maggiore di zero con non più di sei cifre decimali",
+      "quantity": "La quantità deve essere un numero intero non negativo",
+      "insufficientCash": "Il denaro offerto è inferiore all'importo del pagamento"
+    },
+    "errors": {
+      "noReadPermission": "Non hai l'autorizzazione per visualizzare i pagamenti con credito",
+      "noCreatePermission": "Non hai l'autorizzazione per creare questo pagamento",
+      "configuration": "Impossibile caricare la configurazione del cassiere. Verificare l'assegnazione del cassiere e la configurazione del backend.",
+      "customerSearch": "La ricerca del cliente non è riuscita",
+      "loanList": "Non è stato possibile caricare i prestiti idonei",
+      "loanDetails": "Non è stato possibile caricare i dettagli del prestito",
+      "preview": "Anteprima del pagamento non riuscita",
+      "submit": "Impossibile inviare il pagamento",
+      "receipt": "Impossibile caricare la ricevuta",
+      "transition": "Impossibile completare il cambio di stato dell’assegno"
+    }
+  },
   "cashAllocation": {
     "title": "Apertura e approvvigionamento della cassa",
     "actions": {
