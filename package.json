@@ -45,12 +45,12 @@
     "@angular/common": "20.3.24",
     "@angular/compiler": "20.3.24",
     "@angular/core": "20.3.24",
-    "@angular/forms": "20.3.24",
-    "@angular/localize": "20.3.24",
+    "@angular/forms": "^20.3.29",
+    "@angular/localize": "^20.3.29",
     "@angular/material": "^20.2.14",
     "@angular/platform-browser": "20.3.24",
-    "@angular/platform-browser-dynamic": "20.3.24",
-    "@angular/router": "20.3.24",
+    "@angular/platform-browser-dynamic": "^20.3.29",
+    "@angular/router": "^20.3.29",
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -65,7 +65,7 @@
     "angular-oauth2-oidc": "^20.0.0",
     "chart.js": "^4.5.1",
     "d3": "^7.9.0",
-    "exceljs": "^4.4.0",
+    "exceljs": "^3.4.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.2",
@@ -85,7 +85,7 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular-builders/jest": "^20.0.0",
+    "@angular-builders/jest": "^22.0.1",
     "@angular-eslint/builder": "^20.7.0",
     "@angular-eslint/eslint-plugin": "^20.7.0",
     "@angular-eslint/eslint-plugin-template": "^20.7.0",
@@ -103,8 +103,8 @@
     "@types/d3-shape": "^3.1.0",
     "@types/d3-timer": "^3.0.0",
     "@types/jest": "^29.5.14",
-    "@types/leaflet.markercluster": "^1.5.4",
     "@types/leaflet": "^1.9.21",
+    "@types/leaflet.markercluster": "^1.5.4",
     "@types/lodash": "4.17.24",
     "@types/node": "24.13.1",
     "@types/vkbeautify": "^0.99.2",
@@ -123,7 +123,7 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.6.2",
     "prettier-plugin-multiline-arrays": "^4.0.5",
-    "puppeteer": "^24.4.0",
+    "puppeteer": "^25.8.0",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-standard": "^36.0.1",
@@ -161,5 +161,16 @@
       "archiver": "^7.0.1",
       "unzipper": "^0.12.3"
     }
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "@scarf/scarf@1.4.0": true,
+    "core-js@3.50.0": true,
+    "esbuild@0.28.1": true,
+    "lmdb@3.4.2": true,
+    "msgpackr-extract@3.0.4": true,
+    "puppeteer@25.8.0": true,
+    "esbuild@0.28.2": true,
+    "lmdb@3.5.6": true
   }
 }

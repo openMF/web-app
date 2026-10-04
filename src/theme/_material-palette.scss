@@ -16,9 +16,9 @@
 /* ############ Light mode palettes ################ */
 
 $primary-palette: (
-  100: var(--brand-primary-100, #5ba2ec),
-  500: var(--brand-primary-500, #1074b9),
-  700: var(--brand-primary-700, #004989),
+  100: var(--brand-primary-100, #c0e4ca),
+  500: var(--brand-primary-500, #1c8b3c),
+  700: var(--brand-primary-700, #156c2e),
   contrast: (
     100: rgb(0 0 0 / 87%),
     500: white,
@@ -40,9 +40,9 @@ $accent-palette: (
 /* ############ Dark mode palettes ################ */
 
 $dark-primary-palette: (
-  100: var(--brand-primary-100, #5ba2ec),
-  500: var(--brand-primary-500, #1074b9),
-  700: var(--brand-primary-700, #004989),
+  100: var(--brand-primary-100, #c0e4ca),
+  500: var(--brand-primary-500, #1c8b3c),
+  700: var(--brand-primary-700, #156c2e),
   contrast: (
     100: white,
     500: rgb(255 255 255 / 87%),
