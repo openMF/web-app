@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Angular Material Imports */
 import { MatDialog } from '@angular/material/dialog';
@@ -108,24 +108,15 @@ export class CreditApplicationsComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
+  private route = inject(ActivatedRoute);
   private router = inject(Router);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  creditApplicationsForm: UntypedFormGroup = this.formBuilder.group({
-    submittedFrom: [''],
-    submittedTo: [''],
-    clientTypeId: [''],
-    stateProvinceId: [''],
-    municipality: [''],
-    productId: [''],
-    minAmount: [''],
-    maxAmount: [''],
-    status: [''],
-    currencyCode: ['']
-  });
+  isCreditSearch = this.route.snapshot.routeConfig?.path === 'credit' || this.route.snapshot.data['title'] === 'Credit';
+  creditApplicationsForm: UntypedFormGroup = this.createSearchForm();
 
   dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = [
@@ -510,22 +501,76 @@ export class CreditApplicationsComponent implements OnInit {
 
   private buildSearchParams(): any {
     const formValue = this.creditApplicationsForm.value;
+    const filterParams = this.isCreditSearch
+      ? {
+          submittedFrom: this.formatApiDate(formValue.submittedFrom),
+          submittedTo: this.formatApiDate(formValue.submittedTo),
+          minAmount: formValue.minAmount,
+          maxAmount: formValue.maxAmount,
+          stateProvinceId: formValue.stateProvinceId,
+          municipality: formValue.municipality,
+          productId: formValue.productId
+        }
+      : {
+          submittedFrom: this.formatApiDate(formValue.submittedFrom),
+          submittedTo: this.formatApiDate(formValue.submittedTo),
+          clientTypeId: formValue.clientTypeId,
+          stateProvinceId: formValue.stateProvinceId,
+          municipality: formValue.municipality,
+          productId: formValue.productId,
+          minAmount: formValue.minAmount,
+          maxAmount: formValue.maxAmount,
+          status: formValue.status,
+          currencyCode: formValue.currencyCode
+        };
+
     return {
-      submittedFrom: this.formatApiDate(formValue.submittedFrom),
-      submittedTo: this.formatApiDate(formValue.submittedTo),
-      clientTypeId: formValue.clientTypeId,
-      stateProvinceId: formValue.stateProvinceId,
-      municipality: formValue.municipality,
-      productId: formValue.productId,
-      minAmount: formValue.minAmount,
-      maxAmount: formValue.maxAmount,
-      status: formValue.status,
-      currencyCode: formValue.currencyCode,
+      ...this.removeEmptyParams(filterParams),
       offset: this.pageIndex * this.pageSize,
       limit: this.pageSize,
       orderBy: this.orderBy,
       sortOrder: this.sortOrder
     };
+  }
+
+  private createSearchForm(): UntypedFormGroup {
+    const prototypeControls = {
+      submittedFrom: [''],
+      submittedTo: [''],
+      minAmount: [''],
+      maxAmount: [''],
+      stateProvinceId: [''],
+      municipality: [''],
+      productId: ['']
+    };
+
+    if (this.isCreditSearch) {
+      return this.formBuilder.group(prototypeControls);
+    }
+
+    return this.formBuilder.group({
+      submittedFrom: [''],
+      submittedTo: [''],
+      clientTypeId: [''],
+      stateProvinceId: [''],
+      municipality: [''],
+      productId: [''],
+      minAmount: [''],
+      maxAmount: [''],
+      status: [''],
+      currencyCode: ['']
+    });
+  }
+
+  private removeEmptyParams(params: any): any {
+    const populatedParams: any = {};
+    Object.keys(params).forEach((key) => {
+      const value = params[key];
+      if (value !== '' && value !== null && value !== undefined) {
+        populatedParams[key] = value;
+      }
+    });
+    return populatedParams;
   }
 
   private validateFilters(): boolean {
@@ -547,7 +592,7 @@ export class CreditApplicationsComponent implements OnInit {
       this.filterError = 'labels.text.Amounts cannot be negative';
     } else if (hasMinAmount && hasMaxAmount && minAmount > maxAmount) {
       this.filterError = 'labels.text.Minimum Amount cannot be greater than Maximum Amount';
-    } else if ((hasMinAmount || hasMaxAmount) && !formValue.currencyCode) {
+    } else if (!this.isCreditSearch && (hasMinAmount || hasMaxAmount) && !formValue.currencyCode) {
       this.filterError = 'labels.text.Currency is required when filtering by amount';
     }
 

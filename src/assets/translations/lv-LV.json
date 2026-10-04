@@ -7019,5 +7019,62 @@
       "options": "Nevarēja ielādēt skaidras naudas pārvaldības opcijas",
       "receipt": "Kvītu nevarēja ielādēt"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Reģistrācijas statuss",
+    "description": "Pārskatiet šī klienta reģistrācijas posmus un gaidīšanas laiku.",
+    "loading": "Notiek reģistrācijas statusa ielāde",
+    "empty": "Nav reģistrācijas informācijas",
+    "notAvailable": "Nav pieejams",
+    "stages": {
+      "registration": "Komercreģistrācija",
+      "onboarding": "Uzņemšana",
+      "kyc": "Biometrija un KYC",
+      "kycLevel1": "KYC 1. līmenis",
+      "kycLevel2": "KYC 2. līmenis",
+      "kycLevel3": "KYC 3. līmenis",
+      "compliance": "Atbilstība",
+      "activation": "Aktivizēšana",
+      "commercialActivation": "Aktivizēšana — Komercreģistrācija",
+      "operationsActivation": "Aktivizēšana — Operācijas",
+      "activeCustomer": "Aktīvs klients",
+      "documentValidation": "Dokumentu pārbaude"
+    },
+    "statuses": {
+      "COMPLETED": "Pabeigts",
+      "CURRENT": "PAŠREIZĒJS",
+      "IN_PROGRESS": "Procesā",
+      "PENDING": "Gaida",
+      "NOT_STARTED": "Nav sākts",
+      "BLOCKED": "BLOĶĒTS",
+      "FAILED": "NEIZDEVĀS",
+      "REJECTED": "NORAIDĪTS",
+      "WITHDRAWN": "ATSAUKTS",
+      "CLOSED": "SLĒGTS",
+      "ACTIVE": "Aktīvs",
+      "APPROVED": "Apstiprināts",
+      "SUBMITTED": "Iesniegts",
+      "UNKNOWN": "Nezināms"
+    },
+    "fields": {
+      "startedOn": "Sākts",
+      "completedOn": "Pabeigts",
+      "elapsedDays": "Pagājušās dienas",
+      "source": "Avots",
+      "kycEvidence": "KYC pierādījumi",
+      "days": "{{count}} dienas"
+    },
+    "traffic": {
+      "yellow": "Dzeltens (1–5 dienas)",
+      "orange": "Oranžs (6–10 dienas)",
+      "red": "Sarkans (vairāk nekā 10 dienas) — jāpievērš uzmanība",
+      "needsAttention": "Jāpievērš uzmanība",
+      "overdue": "Nokavēts"
+    },
+    "errors": {
+      "clientNotFound": "Klients nav atrasts.",
+      "forbidden": "Jums nav atļaujas skatīt šo reģistrācijas informāciju.",
+      "generic": "Neizdevās ielādēt reģistrācijas statusu. Lūdzu, mēģiniet vēlreiz."
+    }
   }
 }

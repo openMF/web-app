@@ -7008,5 +7008,62 @@
       "options": "Cash-management options could not be loaded",
       "receipt": "Receipt could not be loaded"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Enrollment Status",
+    "description": "Review this client’s enrollment stages and waiting time.",
+    "loading": "Loading enrollment status",
+    "empty": "No Enrollment Information",
+    "notAvailable": "Not available",
+    "stages": {
+      "registration": "Commercial Registration",
+      "onboarding": "Onboarding",
+      "kyc": "Biometrics and KYC",
+      "kycLevel1": "KYC Level 1",
+      "kycLevel2": "KYC Level 2",
+      "kycLevel3": "KYC Level 3",
+      "compliance": "Compliance",
+      "activation": "Activation",
+      "commercialActivation": "Activation — Commercial Registration",
+      "operationsActivation": "Activation — Operations",
+      "activeCustomer": "Active Customer",
+      "documentValidation": "Document Validation"
+    },
+    "statuses": {
+      "COMPLETED": "Completed",
+      "CURRENT": "CURRENT",
+      "IN_PROGRESS": "In Progress",
+      "PENDING": "Pending",
+      "NOT_STARTED": "Not Started",
+      "BLOCKED": "BLOCKED",
+      "FAILED": "FAILED",
+      "REJECTED": "REJECTED",
+      "WITHDRAWN": "WITHDRAWN",
+      "CLOSED": "CLOSED",
+      "ACTIVE": "Active",
+      "APPROVED": "Approved",
+      "SUBMITTED": "Submitted",
+      "UNKNOWN": "Unknown"
+    },
+    "fields": {
+      "startedOn": "Started",
+      "completedOn": "Completed",
+      "elapsedDays": "Elapsed Days",
+      "source": "Source",
+      "kycEvidence": "KYC Evidence",
+      "days": "{{count}} days"
+    },
+    "traffic": {
+      "yellow": "Yellow (1–5 days)",
+      "orange": "Orange (6–10 days)",
+      "red": "Red (more than 10 days) — Needs Attention",
+      "needsAttention": "Needs Attention",
+      "overdue": "Overdue"
+    },
+    "errors": {
+      "clientNotFound": "Client not found.",
+      "forbidden": "You do not have permission to view this enrollment information.",
+      "generic": "Unable to load enrollment status. Please try again."
+    }
   }
 }

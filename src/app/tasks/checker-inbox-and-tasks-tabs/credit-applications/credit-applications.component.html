@@ -7,7 +7,12 @@
 -->
 
 <div class="tab-container mat-typography">
-  <form [formGroup]="creditApplicationsForm" (ngSubmit)="applyFilters()" class="credit-applications-filter">
+  <form
+    [formGroup]="creditApplicationsForm"
+    (ngSubmit)="applyFilters()"
+    class="credit-applications-filter"
+    [class.credit-search-filter]="isCreditSearch"
+  >
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
       <input matInput [matDatepicker]="submittedFromPicker" formControlName="submittedFrom" />
@@ -22,23 +27,46 @@
       <mat-datepicker #submittedToPicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Customer Type' | translate }}</mat-label>
-      <mat-select formControlName="clientTypeId">
-        @for (clientType of clientTypeOptions; track optionValue(clientType)) {
-          <mat-option [value]="optionValue(clientType)">{{ optionLabel(clientType) }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    @if (!isCreditSearch) {
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Customer Type' | translate }}</mat-label>
+        <mat-select formControlName="clientTypeId">
+          @for (clientType of clientTypeOptions; track optionValue(clientType)) {
+            <mat-option [value]="optionValue(clientType)">{{ optionLabel(clientType) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.State' | translate }}</mat-label>
-      <mat-select formControlName="stateProvinceId">
-        @for (state of stateOptions; track optionValue(state)) {
-          <mat-option [value]="optionValue(state)">{{ optionLabel(state) }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.State' | translate }}</mat-label>
+        <mat-select formControlName="stateProvinceId">
+          @for (state of stateOptions; track optionValue(state)) {
+            <mat-option [value]="optionValue(state)">{{ optionLabel(state) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (isCreditSearch) {
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Amount Range From' | translate }}</mat-label>
+        <input matInput type="number" min="0" formControlName="minAmount" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Amount Range To' | translate }}</mat-label>
+        <input matInput type="number" min="0" formControlName="maxAmount" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.State' | translate }}</mat-label>
+        <mat-select formControlName="stateProvinceId">
+          @for (state of stateOptions; track optionValue(state)) {
+            <mat-option [value]="optionValue(state)">{{ optionLabel(state) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
 
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.Municipality' | translate }}</mat-label>
@@ -54,36 +82,40 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Minimum Amount' | translate }}</mat-label>
-      <input matInput type="number" min="0" formControlName="minAmount" />
-    </mat-form-field>
+    @if (!isCreditSearch) {
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Minimum Amount' | translate }}</mat-label>
+        <input matInput type="number" min="0" formControlName="minAmount" />
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Maximum Amount' | translate }}</mat-label>
-      <input matInput type="number" min="0" formControlName="maxAmount" />
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Maximum Amount' | translate }}</mat-label>
+        <input matInput type="number" min="0" formControlName="maxAmount" />
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
-      <mat-select formControlName="currencyCode">
-        @for (currency of currencyOptions; track optionValue(currency)) {
-          <mat-option [value]="optionValue(currency)">{{ optionLabel(currency) }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+        <mat-select formControlName="currencyCode">
+          @for (currency of currencyOptions; track optionValue(currency)) {
+            <mat-option [value]="optionValue(currency)">{{ optionLabel(currency) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
-      <mat-select formControlName="status">
-        @for (status of statusOptions; track optionValue(status)) {
-          <mat-option [value]="optionValue(status)">{{ status.labelKey | translate }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          @for (status of statusOptions; track optionValue(status)) {
+            <mat-option [value]="optionValue(status)">{{ status.labelKey | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
 
     <div class="filter-actions">
-      <button mat-raised-button color="primary" type="submit">{{ 'labels.buttons.Search' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ (isCreditSearch ? 'labels.buttons.Advanced Search' : 'labels.buttons.Search') | translate }}
+      </button>
       <button mat-button type="button" (click)="clearFilters()">{{ 'labels.buttons.Clear' | translate }}</button>
     </div>
   </form>

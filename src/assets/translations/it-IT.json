@@ -7022,5 +7022,62 @@
       "options": "Impossibile caricare le opzioni di gestione della liquidità",
       "receipt": "Impossibile caricare la ricevuta"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Stato registrazione",
+    "description": "Controlla le fasi di registrazione e il tempo di attesa del cliente.",
+    "loading": "Caricamento dello stato registrazione",
+    "empty": "Nessuna informazione di registrazione",
+    "notAvailable": "Non disponibile",
+    "stages": {
+      "registration": "Registrazione commerciale",
+      "onboarding": "Onboarding",
+      "kyc": "Biometria e KYC",
+      "kycLevel1": "KYC livello 1",
+      "kycLevel2": "KYC livello 2",
+      "kycLevel3": "KYC livello 3",
+      "compliance": "Conformità",
+      "activation": "Attivazione",
+      "commercialActivation": "Attivazione — Registrazione commerciale",
+      "operationsActivation": "Attivazione — Operazioni",
+      "activeCustomer": "Cliente attivo",
+      "documentValidation": "Convalida documenti"
+    },
+    "statuses": {
+      "COMPLETED": "Completato",
+      "CURRENT": "CORRENTE",
+      "IN_PROGRESS": "In corso",
+      "PENDING": "In sospeso",
+      "NOT_STARTED": "Non iniziato",
+      "BLOCKED": "BLOCCATO",
+      "FAILED": "NON RIUSCITO",
+      "REJECTED": "RIFIUTATO",
+      "WITHDRAWN": "RITIRATO",
+      "CLOSED": "CHIUSO",
+      "ACTIVE": "Attivo",
+      "APPROVED": "Approvato",
+      "SUBMITTED": "Inviato",
+      "UNKNOWN": "Sconosciuto"
+    },
+    "fields": {
+      "startedOn": "Avviato",
+      "completedOn": "Completato",
+      "elapsedDays": "Giorni trascorsi",
+      "source": "Origine",
+      "kycEvidence": "Prove KYC",
+      "days": "{{count}} giorni"
+    },
+    "traffic": {
+      "yellow": "Giallo (1–5 giorni)",
+      "orange": "Arancione (6–10 giorni)",
+      "red": "Rosso (più di 10 giorni) — richiede attenzione",
+      "needsAttention": "Richiede attenzione",
+      "overdue": "In ritardo"
+    },
+    "errors": {
+      "clientNotFound": "Cliente non trovato.",
+      "forbidden": "Non disponi delle autorizzazioni per visualizzare queste informazioni.",
+      "generic": "Impossibile caricare lo stato di registrazione. Riprova."
+    }
   }
 }
