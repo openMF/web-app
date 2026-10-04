@@ -6984,5 +6984,62 @@
       "options": "Chaguo za usimamizi wa pesa hazikuweza kupakiwa",
       "receipt": "Risiti haikuweza kupakiwa"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Hali ya usajili",
+    "description": "Kagua hatua za usajili na muda wa kusubiri wa mteja huyu.",
+    "loading": "Inapakia hali ya usajili",
+    "empty": "Hakuna taarifa za usajili",
+    "notAvailable": "Haipatikani",
+    "stages": {
+      "registration": "Usajili wa biashara",
+      "onboarding": "Usajili",
+      "kyc": "Biometriki na KYC",
+      "kycLevel1": "KYC kiwango cha 1",
+      "kycLevel2": "KYC kiwango cha 2",
+      "kycLevel3": "KYC kiwango cha 3",
+      "compliance": "Uzingatiaji",
+      "activation": "Uanzishaji",
+      "commercialActivation": "Uanzishaji — Usajili wa biashara",
+      "operationsActivation": "Uanzishaji — Uendeshaji",
+      "activeCustomer": "Mteja anayetumika",
+      "documentValidation": "Uthibitishaji wa nyaraka"
+    },
+    "statuses": {
+      "COMPLETED": "Imekamilika",
+      "CURRENT": "YA SASA",
+      "IN_PROGRESS": "Inaendelea",
+      "PENDING": "Inasubiri",
+      "NOT_STARTED": "Haijaanza",
+      "BLOCKED": "IMEZUIWA",
+      "FAILED": "IMESHINDWA",
+      "REJECTED": "IMEKATALIWA",
+      "WITHDRAWN": "IMEONDOLEWA",
+      "CLOSED": "IMEFUNGWA",
+      "ACTIVE": "Hai",
+      "APPROVED": "Imeidhinishwa",
+      "SUBMITTED": "Imewasilishwa",
+      "UNKNOWN": "Haijulikani"
+    },
+    "fields": {
+      "startedOn": "Imeanza",
+      "completedOn": "Imekamilika",
+      "elapsedDays": "Siku zilizopita",
+      "source": "Chanzo",
+      "kycEvidence": "Ushahidi wa KYC",
+      "days": "Siku {{count}}"
+    },
+    "traffic": {
+      "yellow": "Njano (siku 1–5)",
+      "orange": "Machungwa (siku 6–10)",
+      "red": "Nyekundu (zaidi ya siku 10) — inahitaji kushughulikiwa",
+      "needsAttention": "Inahitaji kushughulikiwa",
+      "overdue": "Imechelewa"
+    },
+    "errors": {
+      "clientNotFound": "Mteja hakupatikana.",
+      "forbidden": "Huna ruhusa ya kuona taarifa hizi za usajili.",
+      "generic": "Imeshindwa kupakia hali ya usajili. Tafadhali jaribu tena."
+    }
   }
 }

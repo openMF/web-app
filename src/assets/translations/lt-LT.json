@@ -6984,5 +6984,62 @@
       "options": "Nepavyko įkelti grynųjų pinigų valdymo parinkčių",
       "receipt": "Nepavyko įkelti kvito"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Registracijos būsena",
+    "description": "Peržiūrėkite šio kliento registracijos etapus ir laukimo trukmę.",
+    "loading": "Įkeliama registracijos būsena",
+    "empty": "Registracijos informacijos nėra",
+    "notAvailable": "Nėra duomenų",
+    "stages": {
+      "registration": "Komercinė registracija",
+      "onboarding": "Įtraukimas",
+      "kyc": "Biometrija ir KYC",
+      "kycLevel1": "KYC 1 lygis",
+      "kycLevel2": "KYC 2 lygis",
+      "kycLevel3": "KYC 3 lygis",
+      "compliance": "Atitiktis",
+      "activation": "Aktyvinimas",
+      "commercialActivation": "Aktyvinimas — Komercinė registracija",
+      "operationsActivation": "Aktyvinimas — Operacijos",
+      "activeCustomer": "Aktyvus klientas",
+      "documentValidation": "Dokumentų patvirtinimas"
+    },
+    "statuses": {
+      "COMPLETED": "Užbaigta",
+      "CURRENT": "DABARTINĖ",
+      "IN_PROGRESS": "Vykdoma",
+      "PENDING": "Laukiama",
+      "NOT_STARTED": "Nepradėta",
+      "BLOCKED": "UŽBLOKUOTA",
+      "FAILED": "NEPAVYKO",
+      "REJECTED": "ATMESTA",
+      "WITHDRAWN": "ATŠAUKTA",
+      "CLOSED": "UŽDARYTA",
+      "ACTIVE": "Aktyvus",
+      "APPROVED": "Patvirtinta",
+      "SUBMITTED": "Pateikta",
+      "UNKNOWN": "Nežinoma"
+    },
+    "fields": {
+      "startedOn": "Pradėta",
+      "completedOn": "Užbaigta",
+      "elapsedDays": "Praėjusios dienos",
+      "source": "Šaltinis",
+      "kycEvidence": "KYC įrodymai",
+      "days": "{{count}} d."
+    },
+    "traffic": {
+      "yellow": "Geltona (1–5 dienos)",
+      "orange": "Oranžinė (6–10 dienų)",
+      "red": "Raudona (daugiau nei 10 dienų) — reikia dėmesio",
+      "needsAttention": "Reikia dėmesio",
+      "overdue": "Pradelsta"
+    },
+    "errors": {
+      "clientNotFound": "Klientas nerastas.",
+      "forbidden": "Neturite leidimo peržiūrėti šios registracijos informacijos.",
+      "generic": "Nepavyko įkelti registracijos būsenos. Bandykite dar kartą."
+    }
   }
 }

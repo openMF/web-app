@@ -6984,5 +6984,62 @@
       "options": "Não foi possível carregar as opções de gerenciamento de caixa",
       "receipt": "Não foi possível carregar o recibo"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Estado da inscrição",
+    "description": "Reveja as etapas de inscrição e o tempo de espera deste cliente.",
+    "loading": "A carregar o estado da inscrição",
+    "empty": "Sem informação de inscrição",
+    "notAvailable": "Não disponível",
+    "stages": {
+      "registration": "Registo comercial",
+      "onboarding": "Integração",
+      "kyc": "Biometria e KYC",
+      "kycLevel1": "KYC nível 1",
+      "kycLevel2": "KYC nível 2",
+      "kycLevel3": "KYC nível 3",
+      "compliance": "Conformidade",
+      "activation": "Ativação",
+      "commercialActivation": "Ativação — Registo comercial",
+      "operationsActivation": "Ativação — Operações",
+      "activeCustomer": "Cliente ativo",
+      "documentValidation": "Validação documental"
+    },
+    "statuses": {
+      "COMPLETED": "Concluído",
+      "CURRENT": "ATUAL",
+      "IN_PROGRESS": "Em progresso",
+      "PENDING": "Pendente",
+      "NOT_STARTED": "Não iniciado",
+      "BLOCKED": "BLOQUEADO",
+      "FAILED": "FALHOU",
+      "REJECTED": "REJEITADO",
+      "WITHDRAWN": "RETIRADO",
+      "CLOSED": "ENCERRADO",
+      "ACTIVE": "Ativo",
+      "APPROVED": "Aprovado",
+      "SUBMITTED": "Submetido",
+      "UNKNOWN": "Desconhecido"
+    },
+    "fields": {
+      "startedOn": "Iniciado",
+      "completedOn": "Concluído",
+      "elapsedDays": "Dias decorridos",
+      "source": "Origem",
+      "kycEvidence": "Evidências KYC",
+      "days": "{{count}} dias"
+    },
+    "traffic": {
+      "yellow": "Amarelo (1–5 dias)",
+      "orange": "Laranja (6–10 dias)",
+      "red": "Vermelho (mais de 10 dias) — requer atenção",
+      "needsAttention": "Requer atenção",
+      "overdue": "Em atraso"
+    },
+    "errors": {
+      "clientNotFound": "Cliente não encontrado.",
+      "forbidden": "Não tem permissão para consultar esta informação de inscrição.",
+      "generic": "Não foi possível carregar o estado da inscrição. Tente novamente."
+    }
   }
 }

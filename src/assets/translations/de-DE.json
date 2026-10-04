@@ -6986,5 +6986,62 @@
       "options": "Cash-Management-Optionen konnten nicht geladen werden",
       "receipt": "Der Beleg konnte nicht geladen werden"
     }
+  },
+  "enrollmentStatus": {
+    "title": "Registrierungsstatus",
+    "description": "Prüfen Sie die Registrierungsphasen und Wartezeit dieses Kunden.",
+    "loading": "Registrierungsstatus wird geladen",
+    "empty": "Keine Registrierungsinformationen verfügbar",
+    "notAvailable": "Nicht verfügbar",
+    "stages": {
+      "registration": "Handelsregistereintrag",
+      "onboarding": "Onboarding",
+      "kyc": "Biometrie und KYC",
+      "kycLevel1": "KYC-Stufe 1",
+      "kycLevel2": "KYC-Stufe 2",
+      "kycLevel3": "KYC-Stufe 3",
+      "compliance": "Compliance",
+      "activation": "Aktivierung",
+      "commercialActivation": "Aktivierung — Handelsregistereintrag",
+      "operationsActivation": "Aktivierung — Betrieb",
+      "activeCustomer": "Aktiver Kunde",
+      "documentValidation": "Dokumentenprüfung"
+    },
+    "statuses": {
+      "COMPLETED": "Vollendet",
+      "CURRENT": "AKTUELL",
+      "IN_PROGRESS": "In Bearbeitung",
+      "PENDING": "Ausstehend",
+      "NOT_STARTED": "Nicht begonnen",
+      "BLOCKED": "BLOCKIERT",
+      "FAILED": "FEHLGESCHLAGEN",
+      "REJECTED": "ABGELEHNT",
+      "WITHDRAWN": "ZURÜCKGEZOGEN",
+      "CLOSED": "GESCHLOSSEN",
+      "ACTIVE": "Aktiv",
+      "APPROVED": "Genehmigt",
+      "SUBMITTED": "Eingereicht",
+      "UNKNOWN": "Unbekannt"
+    },
+    "fields": {
+      "startedOn": "Gestartet",
+      "completedOn": "Vollendet",
+      "elapsedDays": "Vergangene Tage",
+      "source": "Quelle",
+      "kycEvidence": "KYC-Nachweise",
+      "days": "{{count}} Tage"
+    },
+    "traffic": {
+      "yellow": "Gelb (1–5 Tage)",
+      "orange": "Orange (6–10 Tage)",
+      "red": "Rot (mehr als 10 Tage) — Handlungsbedarf",
+      "needsAttention": "Handlungsbedarf",
+      "overdue": "Überfällig"
+    },
+    "errors": {
+      "clientNotFound": "Kunde wurde nicht gefunden.",
+      "forbidden": "Sie sind nicht berechtigt, diese Registrierungsinformationen anzuzeigen.",
+      "generic": "Der Registrierungsstatus konnte nicht geladen werden. Versuchen Sie es erneut."
+    }
   }
 }
