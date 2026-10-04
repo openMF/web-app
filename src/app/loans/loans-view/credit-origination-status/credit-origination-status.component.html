@@ -1,0 +1,210 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="credit-origination-status" aria-live="polite">
+  <h2>{{ 'creditOrigination.title' | translate }}</h2>
+
+  @if (isLoading) {
+    <div class="state-panel">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>{{ 'creditOrigination.loading' | translate }}</p>
+    </div>
+  } @else if (isUnavailable) {
+    <mat-card class="state-card">
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>{{ 'creditOrigination.empty' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else if (error) {
+    <mat-card class="state-card error-state">
+      <mat-card-content>
+        <mat-icon color="warn">error_outline</mat-icon>
+        @switch (error) {
+          @case ('unauthorized') {
+            <p>{{ 'creditOrigination.errors.unauthorized' | translate }}</p>
+          }
+          @case ('forbidden') {
+            <p>{{ 'creditOrigination.errors.forbidden' | translate }}</p>
+          }
+          @case ('not-found') {
+            <p>{{ 'creditOrigination.errors.notFound' | translate }}</p>
+          }
+          @default {
+            <p>{{ 'creditOrigination.errors.generic' | translate }}</p>
+          }
+        }
+        <button mat-stroked-button color="primary" type="button" (click)="loadBoard()">
+          {{ 'creditOrigination.retry' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else if (!board?.stages?.length) {
+    <mat-card class="state-card">
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>{{ 'creditOrigination.empty' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="stage-flow">
+      @for (stage of board?.stages; track stage.code; let last = $last) {
+        <article class="stage" [class.current-stage]="board?.currentStage === stage.code">
+          <div class="stage-marker" [ngClass]="statusClass(stage.status)">
+            @if (stage.status === 'COMPLETED') {
+              <mat-icon>check</mat-icon>
+            } @else if (isTerminal(stage.status)) {
+              <mat-icon>priority_high</mat-icon>
+            } @else {
+              <span>{{ $index + 1 }}</span>
+            }
+          </div>
+
+          <mat-card class="stage-card">
+            <mat-card-content>
+              <h3>
+                @switch (stage.code) {
+                  @case ('ONBOARDING') {
+                    {{ 'creditOrigination.stages.ONBOARDING' | translate }}
+                  }
+                  @case ('COMPLIANCE') {
+                    {{ 'creditOrigination.stages.COMPLIANCE' | translate }}
+                  }
+                  @case ('PARAMETRIC_SCORE') {
+                    {{ 'creditOrigination.stages.PARAMETRIC_SCORE' | translate }}
+                  }
+                  @case ('FILE_INTEGRATION') {
+                    {{ 'creditOrigination.stages.FILE_INTEGRATION' | translate }}
+                  }
+                  @case ('CREDIT_ANALYSIS') {
+                    {{ 'creditOrigination.stages.CREDIT_ANALYSIS' | translate }}
+                  }
+                  @case ('APPROVAL') {
+                    {{ 'creditOrigination.stages.APPROVAL' | translate }}
+                  }
+                  @case ('LEGAL_INSTRUMENTATION') {
+                    {{ 'creditOrigination.stages.LEGAL_INSTRUMENTATION' | translate }}
+                  }
+                  @case ('DISBURSEMENT') {
+                    {{ 'creditOrigination.stages.DISBURSEMENT' | translate }}
+                  }
+                  @case ('RECOVERY') {
+                    {{ 'creditOrigination.stages.RECOVERY' | translate }}
+                  }
+                  @default {
+                    {{ stage.displayName }}
+                  }
+                }
+              </h3>
+
+              <mat-chip [ngClass]="statusClass(stage.status)">
+                @switch (stage.status) {
+                  @case ('COMPLETED') {
+                    {{ 'creditOrigination.statuses.COMPLETED' | translate }}
+                  }
+                  @case ('CURRENT') {
+                    {{ 'creditOrigination.statuses.CURRENT' | translate }}
+                  }
+                  @case ('PENDING') {
+                    {{ 'creditOrigination.statuses.PENDING' | translate }}
+                  }
+                  @case ('REJECTED') {
+                    {{ 'creditOrigination.statuses.REJECTED' | translate }}
+                  }
+                  @case ('BLOCKED') {
+                    {{ 'creditOrigination.statuses.BLOCKED' | translate }}
+                  }
+                  @case ('FAILED') {
+                    {{ 'creditOrigination.statuses.FAILED' | translate }}
+                  }
+                  @case ('CANCELLED') {
+                    {{ 'creditOrigination.statuses.CANCELLED' | translate }}
+                  }
+                  @case ('WITHDRAWN') {
+                    {{ 'creditOrigination.statuses.WITHDRAWN' | translate }}
+                  }
+                  @case ('WRITTEN_OFF') {
+                    {{ 'creditOrigination.statuses.WRITTEN_OFF' | translate }}
+                  }
+                }
+              </mat-chip>
+
+              @if (board?.currentStage === stage.code) {
+                <p class="current-indicator">
+                  <mat-icon>play_arrow</mat-icon>
+                  {{ 'creditOrigination.currentStage' | translate }}
+                </p>
+              }
+
+              <dl>
+                @if (stage.completedOn) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.completedOn' | translate }}</dt>
+                    <dd>{{ stage.completedOn | date: 'medium' }}</dd>
+                  </div>
+                }
+                @if (stage.details?.source) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.source' | translate }}</dt>
+                    <dd>{{ stage.details?.source }}</dd>
+                  </div>
+                }
+                @if (stage.details?.sourceStatus) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.sourceStatus' | translate }}</dt>
+                    <dd>{{ stage.details?.sourceStatus }}</dd>
+                  </div>
+                }
+                @if (stage.details?.actorName || stage.details?.actorId) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.actor' | translate }}</dt>
+                    <dd>{{ stage.details?.actorName || stage.details?.actorId }}</dd>
+                  </div>
+                }
+                @if (stage.details?.sourceReference) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.sourceReference' | translate }}</dt>
+                    <dd>{{ stage.details?.sourceReference }}</dd>
+                  </div>
+                }
+                @if (stage.details?.transactionId) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.transactionId' | translate }}</dt>
+                    <dd>{{ stage.details?.transactionId }}</dd>
+                  </div>
+                }
+                @if (stage.details?.amount !== null && stage.details?.amount !== undefined) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.amount' | translate }}</dt>
+                    <dd>{{ stage.details?.amount }} {{ stage.details?.currencyCode }}</dd>
+                  </div>
+                }
+                @if (stage.details?.loanStatus) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.loanStatus' | translate }}</dt>
+                    <dd>{{ stage.details?.loanStatus }}</dd>
+                  </div>
+                }
+                @if (stage.details?.reason) {
+                  <div>
+                    <dt>{{ 'creditOrigination.fields.reason' | translate }}</dt>
+                    <dd>{{ stage.details?.reason }}</dd>
+                  </div>
+                }
+              </dl>
+            </mat-card-content>
+          </mat-card>
+
+          @if (!last) {
+            <div class="connector" aria-hidden="true"></div>
+          }
+        </article>
+      }
+    </div>
+  }
+</section>

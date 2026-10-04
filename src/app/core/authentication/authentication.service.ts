@@ -32,6 +32,10 @@ import { environment } from '../../../environments/environment';
 import { LoginContext } from './login-context.model';
 import { Credentials } from './credentials.model';
 import { getOAuthConfig, getActiveAuthMode, AuthMode } from './oauth.config';
+import {
+  TENANT_MASTER_CREDENTIALS_KEY,
+  TENANT_MASTER_USERNAME_KEY
+} from 'app/system/tenant-management/models/tenant.model';
 
 /** Custom Utilities */
 import { sanitizeReturnUrl } from '../utils/return-url.utils';
@@ -537,6 +541,10 @@ export class AuthenticationService {
       ].forEach((store) => {
         store.removeItem(this.credentialsStorageKey);
         store.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+        // The tenant management master credential is a separate, higher-privilege session held in
+        // this tab. Leaving it behind would let whoever logs in next administer every tenant.
+        store.removeItem(TENANT_MASTER_CREDENTIALS_KEY);
+        store.removeItem(TENANT_MASTER_USERNAME_KEY);
       });
       this.cleanupLegacyStorage();
 

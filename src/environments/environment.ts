@@ -76,7 +76,7 @@ export const environment = {
   },
   defaultLanguage: loadedEnv.defaultLanguage || 'en-US',
   supportedLanguages:
-    loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+    loadedEnv.supportedLanguages || 'az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   defaultFormatDate: loadedEnv.defaultFormatDate || '',
   defaultFormatDatetime: loadedEnv.defaultFormatDatetime || '',
   preloadClients: loadedEnv['preloadClients'] || true,
@@ -107,6 +107,15 @@ export const environment = {
   mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
   mifosInterbankTransfersEnabled:
     window.env?.mifosInterbankTransfersEnabled !== 'false' && window.env?.mifosInterbankTransfersEnabled !== false,
+
+  /**
+   * Tenant Management administration UI: deployment master switch.
+   * Off by default; set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management
+   * plugin is installed. A server without it has no /v1/admin/tenants endpoint at all, so the
+   * section stays hidden rather than offering a feature that cannot work.
+   */
+  enableTenantManagement:
+    loadedEnv.enableTenantManagement === 'true' || loadedEnv.enableTenantManagement === true || false,
 
   /**
    * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).

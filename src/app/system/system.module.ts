@@ -86,6 +86,11 @@ import { RunSelectedJobsPopoverComponent } from './manage-jobs/scheduler-jobs/ru
 import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-selected-jobs-popover/run-selected-jobs-table/run-selected-jobs-table.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { TenantManagementComponent } from './tenant-management/tenant-management.component';
+import { TenantsComponent } from './tenant-management/tenants.component';
+import { CreateTenantComponent } from './tenant-management/create-tenant/create-tenant.component';
+import { EditTenantComponent } from './tenant-management/edit-tenant/edit-tenant.component';
+import { ViewTenantComponent } from './tenant-management/view-tenant/view-tenant.component';
 
 @NgModule({
   imports: [
@@ -161,7 +166,12 @@ import { AboutUsComponent } from './about-us/about-us.component';
     RunSelectedJobsPopoverComponent,
     RunSelectedJobsTableComponent,
     SystemInformationComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    TenantManagementComponent,
+    TenantsComponent,
+    ViewTenantComponent,
+    CreateTenantComponent,
+    EditTenantComponent
   ]
 })
 export class SystemModule {}

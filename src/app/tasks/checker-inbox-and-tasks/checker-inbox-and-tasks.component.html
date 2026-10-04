@@ -78,6 +78,7 @@
           routerLinkActive
           #creditRequests="routerLinkActive"
           [active]="creditRequests.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
         >
           {{ 'labels.inputs.Requests' | translate }}
         </a>
@@ -90,16 +91,6 @@
           *mifosxHasPermission="'READ_LOAN'"
         >
           {{ 'labels.inputs.Credit' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./enrollment-status']"
-          routerLinkActive
-          #enrollmentStatus="routerLinkActive"
-          [active]="enrollmentStatus.isActive"
-          *mifosxHasPermission="'READ_CLIENT'"
-        >
-          {{ 'labels.inputs.Enrollment Status' | translate }}
         </a>
         <a
           mat-tab-link

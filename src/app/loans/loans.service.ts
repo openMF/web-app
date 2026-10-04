@@ -30,6 +30,7 @@ import {
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
+import { CreditOriginationBoard } from './models/credit-origination-board.model';
 
 /**
  * Loans service.
@@ -72,6 +73,15 @@ export class LoansService {
   getLoansPage(offset: number, limit: number): Observable<any> {
     const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
     return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Retrieves the backend-owned credit origination workflow for a loan application.
+   * @param creditApplicationId Fineract loan application identifier.
+   * @returns The nine-stage credit origination board.
+   */
+  getCreditOriginationBoard(creditApplicationId: number | string): Observable<CreditOriginationBoard> {
+    return this.http.get<CreditOriginationBoard>(`/v2/credit-applications/${creditApplicationId}/origination-board`);
   }
 
   /**
@@ -119,6 +129,18 @@ export class LoansService {
     }
     const httpParams = new HttpParams()
       .set('command', 'prepayLoan')
+      .set('transactionDate', transactionDate)
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
+  getLoanContractTerminationTemplate(loanId: string, transactionDate: string): Observable<any> {
+    if (!transactionDate) {
+      transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+    }
+    const httpParams = new HttpParams()
+      .set('command', 'contractTermination')
       .set('transactionDate', transactionDate)
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat);

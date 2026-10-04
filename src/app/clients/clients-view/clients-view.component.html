@@ -16,6 +16,7 @@
       accountImage
       mat-card-md-image
       class="profile-image"
+      [alt]="complianceHideClientData ? maskName(clientViewData.displayName) : clientViewData.displayName"
       [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
     />
 
@@ -456,6 +457,7 @@
         </svg>
         {{ 'labels.inputs.Family Members' | translate }}
       </a>
+
       <a
         mat-tab-link
         [routerLink]="['./identities']"
@@ -497,6 +499,20 @@
           ></path>
         </svg>
         {{ 'labels.inputs.Notes' | translate }}
+      </a>
+      <a
+        mat-tab-link
+        [routerLink]="['./enrollment-status']"
+        routerLinkActive
+        #enrollmentStatus="routerLinkActive"
+        [active]="enrollmentStatus.isActive"
+        *mifosxHasPermission="'READ_ENROLLMENT_STATUS'"
+      >
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19V9M10 19V5M16 19v-8M22 19H2"></path>
+          <path d="m3 7 6-4 6 6 6-5"></path>
+        </svg>
+        {{ 'labels.inputs.Enrollment Status' | translate }}
       </a>
       @if (cbIldEnabled) {
         <a

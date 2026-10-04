@@ -26,6 +26,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { environment } from 'environments/environment';
 
 /**
  * Organization component.
@@ -51,6 +52,20 @@ export class OrganizationComponent implements AfterViewInit {
   private popoverService = inject(PopoverService);
 
   shouldShowFundMapping = false;
+  productionMode = environment.productionMode === true;
+  readonly baseTellerPermissions = [
+    'READ_BASE_TELLER_CASH_ALLOCATION',
+    'READ_TELLER',
+    'DEPOSIT_SAVINGSACCOUNT',
+    'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT',
+    'READ_BASE_TELLER_CREDIT_PAYMENT',
+    'READ_CASHIER_CLOSING',
+    'READ_GLOBAL_SETTLEMENT',
+    'CREATE_CASH_DEPOSIT',
+    'READ_CASH_OPERATION_HISTORY',
+    'READ_CASH_HOLDINGS',
+    ...(this.productionMode ? ['READ_BASE_TELLER_SERVICE_PAYMENT'] : [])
+  ];
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
   /* Template for popover on manage offices */
@@ -76,7 +91,7 @@ export class OrganizationComponent implements AfterViewInit {
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
   // Initialize an array of menu toggle values, all set to false
-  arrowBooleans: boolean[] = new Array(23).fill(false);
+  arrowBooleans: boolean[] = new Array(24).fill(false);
 
   /**
    * Popover function

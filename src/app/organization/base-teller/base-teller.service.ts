@@ -13,7 +13,36 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
+import {
+  CashHolding,
+  CashHoldingFilters,
+  CashOperation,
+  CashOperationFilters,
+  CashOperationPage,
+  CashOperationRequest,
+  CashierClosingContext,
+  CashierClosingReceipt,
+  CashierClosingRequest,
+  CashierOption,
+  CurrencyOption,
+  GlobalCashCount,
+  TellerOption
+} from './cash-management/cash-management.models';
+
 export type FineractId = string | number;
+
+export type CatalogCategory = 'GENERAL' | 'ACCOUNTING' | 'USERS';
+
+export type CatalogUpdateStatus = 'CURRENT' | 'UPDATE_REQUIRED' | 'UPDATING' | 'FAILED';
+
+export interface CatalogUpdateResponse {
+  category: CatalogCategory;
+  lastUpdatedAt: string | null;
+  lastAttemptAt: string | null;
+  needsUpdate: boolean;
+  status: CatalogUpdateStatus;
+  failureCode: string | null;
+}
 
 export interface DepositSearchResult {
   id?: FineractId;
@@ -221,6 +250,411 @@ export interface BaseTellerOption {
   isCashPayment?: boolean;
 }
 
+export type ServicePaymentPayerType = 'CLIENT' | 'NON_CLIENT';
+export type ServicePaymentCommissionType = 'NONE' | 'FIXED' | 'PERCENTAGE';
+export type ServicePaymentAmount = number | string;
+
+export interface ServicePaymentDenominationConfiguration {
+  identifier: string;
+  value: ServicePaymentAmount;
+  type: string;
+}
+
+export interface ServicePaymentServiceConfiguration {
+  id: FineractId;
+  code: string;
+  name: string;
+  active: boolean;
+  currencyCode: string;
+  commissionType: ServicePaymentCommissionType;
+  commissionValue: ServicePaymentAmount;
+  commissionVatRate: ServicePaymentAmount;
+  denominations: ServicePaymentDenominationConfiguration[];
+}
+
+export interface ServicePaymentClient {
+  clientId: FineractId;
+  accountNo: string;
+  externalId?: string;
+  displayName: string;
+  officeId: FineractId;
+  officeName: string;
+  status: string;
+}
+
+export interface ServicePaymentQuoteRequest {
+  payerType: ServicePaymentPayerType;
+  clientId?: FineractId;
+  payerName?: string;
+  serviceId: FineractId;
+  serviceReference: string;
+  baseAmount: ServicePaymentAmount;
+  currencyCode: string;
+}
+
+export interface ServicePaymentQuote extends ServicePaymentQuoteRequest {
+  clientAccountNo?: string;
+  payerName: string;
+  serviceCode: string;
+  serviceName: string;
+  commission: ServicePaymentAmount;
+  commissionVat: ServicePaymentAmount;
+  totalToPay: ServicePaymentAmount;
+  businessDate: string;
+}
+
+export interface ServicePaymentDenomination {
+  denominationId: string;
+  value: ServicePaymentAmount;
+  quantity: number;
+}
+
+export interface ServicePaymentRequest extends ServicePaymentQuoteRequest {
+  idempotencyKey: string;
+  businessDate: string;
+  paymentTypeId: FineractId;
+  denominations: ServicePaymentDenomination[];
+}
+
+export interface ServicePaymentReceipt {
+  transactionId: FineractId;
+  receiptNumber: string;
+  status: string;
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  tellerId: FineractId;
+  tellerName: string;
+  cashierId: FineractId;
+  cashierName: string;
+  operatorId: FineractId;
+  operatorName: string;
+  payerType: ServicePaymentPayerType;
+  clientId?: FineractId;
+  clientAccountNo?: string;
+  payerName: string;
+  serviceId: FineractId;
+  serviceCode: string;
+  serviceName: string;
+  serviceReference: string;
+  baseAmount: ServicePaymentAmount;
+  commission: ServicePaymentAmount;
+  commissionVat: ServicePaymentAmount;
+  totalPaid: ServicePaymentAmount;
+  amountReceived: ServicePaymentAmount;
+  change: ServicePaymentAmount;
+  currencyCode: string;
+  cashierTransactionId?: FineractId;
+  accountingTransactionId?: string;
+  createdOnUtc: string;
+  completedOnUtc?: string;
+  denominations: ServicePaymentDenomination[];
+}
+
+export type CreditPaymentAmount = number | string;
+export type CreditPaymentMethod = 'CASH' | 'CHECK';
+export type CreditPaymentCheckClassification = 'SUBJECT_TO_COLLECTION' | 'CLEARED_FUNDS';
+export type CreditPaymentStatus =
+  'IN_PROGRESS' | 'PENDING_COLLECTION' | 'COMPLETED' | 'CLEARED' | 'RETURNED' | 'FAILED';
+
+export interface CreditPaymentDenominationConfiguration {
+  identifier: string;
+  currencyCode: string;
+  value: CreditPaymentAmount;
+  type: string;
+}
+
+export interface CreditPaymentBank {
+  id: FineractId;
+  code: string;
+  name: string;
+}
+
+export interface CreditPaymentContext {
+  businessDate: string;
+  officeId: FineractId;
+  tellerId: FineractId;
+  cashierId: FineractId;
+  denominations: CreditPaymentDenominationConfiguration[];
+  banks: CreditPaymentBank[];
+  paymentTypes: BaseTellerOption[];
+}
+
+export interface CreditPaymentCustomer {
+  clientId: FineractId;
+  accountNo: string;
+  externalId?: string;
+  displayName: string;
+  officeId: FineractId;
+  officeName: string;
+  status: string;
+}
+
+export interface CreditPaymentSchedulePeriod {
+  period?: number;
+  dueDate?: string | number[];
+  principalDue?: CreditPaymentAmount;
+  principalOutstanding?: CreditPaymentAmount;
+  interestDue?: CreditPaymentAmount;
+  interestOutstanding?: CreditPaymentAmount;
+  feeChargesDue?: CreditPaymentAmount;
+  feeChargesOutstanding?: CreditPaymentAmount;
+  penaltyChargesDue?: CreditPaymentAmount;
+  penaltyChargesOutstanding?: CreditPaymentAmount;
+  totalDueForPeriod?: CreditPaymentAmount;
+  totalOutstandingForPeriod?: CreditPaymentAmount;
+}
+
+export interface CreditPaymentTransaction {
+  id?: FineractId;
+  date?: string | number[];
+  amount?: CreditPaymentAmount;
+  principalPortion?: CreditPaymentAmount;
+  interestPortion?: CreditPaymentAmount;
+  feeChargesPortion?: CreditPaymentAmount;
+  penaltyChargesPortion?: CreditPaymentAmount;
+  type?: { code?: string; value?: string } | string;
+  reversed?: boolean;
+}
+
+export interface CreditPaymentLoan {
+  id: FineractId;
+  accountNo: string;
+  clientId: FineractId;
+  clientName: string;
+  officeId: FineractId;
+  status: string;
+  payable: boolean;
+  currencyCode: string;
+  principalOutstanding: CreditPaymentAmount;
+  interestOutstanding: CreditPaymentAmount;
+  feeOutstanding: CreditPaymentAmount;
+  penaltyOutstanding: CreditPaymentAmount;
+  taxOutstanding?: CreditPaymentAmount;
+  totalOutstanding: CreditPaymentAmount;
+  principalOverdue: CreditPaymentAmount;
+  interestOverdue: CreditPaymentAmount;
+  feeOverdue: CreditPaymentAmount;
+  penaltyOverdue: CreditPaymentAmount;
+  taxOverdue?: CreditPaymentAmount;
+  totalOverdue: CreditPaymentAmount;
+  repaymentSchedule?: { periods?: CreditPaymentSchedulePeriod[] };
+  transactions?: CreditPaymentTransaction[];
+}
+
+export interface CreditPaymentDenomination {
+  denominationId: string;
+  value?: CreditPaymentAmount;
+  quantity: number;
+}
+
+export interface CreditPaymentCheckRequest {
+  bankId: FineractId;
+  checkType: string;
+  checkNumber: string;
+  accountNumber?: string;
+  routingCode?: string;
+  classification: CreditPaymentCheckClassification;
+}
+
+export interface CreditPaymentRequest {
+  idempotencyKey?: string;
+  clientId: FineractId;
+  loanId: FineractId;
+  paymentMethod: CreditPaymentMethod;
+  amount: CreditPaymentAmount;
+  currencyCode: string;
+  paymentTypeId: FineractId;
+  transactionDate: string;
+  dateFormat: string;
+  locale: string;
+  note?: string;
+  denominations?: CreditPaymentDenomination[];
+  check?: CreditPaymentCheckRequest;
+}
+
+export interface CreditPaymentPreview {
+  loanId: FineractId;
+  paymentMethod: CreditPaymentMethod;
+  checkClassification?: CreditPaymentCheckClassification;
+  currencyCode: string;
+  businessDate: string;
+  paymentAmount: CreditPaymentAmount;
+  tenderAmount: CreditPaymentAmount;
+  changeAmount: CreditPaymentAmount;
+  principalOutstanding: CreditPaymentAmount;
+  interestOutstanding: CreditPaymentAmount;
+  feeOutstanding: CreditPaymentAmount;
+  penaltyOutstanding: CreditPaymentAmount;
+  taxOutstanding?: CreditPaymentAmount;
+  nativeRepaymentTemplate?: CreditPaymentTransaction;
+  denominations: CreditPaymentDenomination[];
+  postsRepaymentOnConfirmation: boolean;
+}
+
+export interface CreditPaymentCheck {
+  id: FineractId;
+  bankId: FineractId;
+  bankName: string;
+  checkType: string;
+  checkNumber: string;
+  accountNumber?: string;
+  routingCode?: string;
+  classification: CreditPaymentCheckClassification;
+  status: CreditPaymentStatus;
+  acceptedBy: FineractId;
+  acceptedOnUtc: string;
+  clearedBy?: FineractId;
+  clearedOnUtc?: string;
+  returnedBy?: FineractId;
+  returnedOnUtc?: string;
+  returnReason?: string;
+}
+
+export interface CreditPaymentReceipt {
+  id: FineractId;
+  receiptNumber: string;
+  status: CreditPaymentStatus;
+  paymentMethod: CreditPaymentMethod;
+  clientId: FineractId;
+  clientName: string;
+  loanId: FineractId;
+  loanAccountNo: string;
+  amount: CreditPaymentAmount;
+  tenderAmount: CreditPaymentAmount;
+  changeAmount: CreditPaymentAmount;
+  currencyCode: string;
+  paymentTypeId: FineractId;
+  loanTransactionId?: FineractId;
+  cashierTransactionId?: FineractId;
+  principalPortion?: CreditPaymentAmount;
+  interestPortion?: CreditPaymentAmount;
+  feePortion?: CreditPaymentAmount;
+  penaltyPortion?: CreditPaymentAmount;
+  overpaymentPortion?: CreditPaymentAmount;
+  businessDate: string;
+  operatorId: FineractId;
+  operatorName: string;
+  officeId: FineractId;
+  tellerId?: FineractId;
+  cashierId?: FineractId;
+  note?: string;
+  failureMessage?: string;
+  createdOnUtc: string;
+  completedOnUtc?: string;
+  denominations: CreditPaymentDenomination[];
+  check?: CreditPaymentCheck;
+}
+
+export interface CreditPaymentTransitionRequest {
+  idempotencyKey: string;
+  transactionDate: string;
+  dateFormat: string;
+  locale: string;
+  reason?: string;
+}
+
+export type CashAllocationAmount = number | string;
+export type CashAllocationType = 'SAFE_VAULT_OPENING' | 'HEAD_CASHIER_ALLOCATION' | 'OPERATIONAL_TELLER_ALLOCATION';
+
+export interface CashAllocationDenomination {
+  identifier: string;
+  type: string;
+  value: CashAllocationAmount;
+  quantity: number;
+  subtotal: CashAllocationAmount;
+}
+
+export interface CashAllocationCurrency {
+  code: string;
+  name: string;
+  displaySymbol: string;
+  decimalPlaces: number;
+  denominations: CashAllocationDenomination[];
+}
+
+export interface CashAllocationCashier {
+  cashierId: FineractId;
+  tellerId: FineractId;
+  tellerName: string;
+  staffId: FineractId;
+  cashierName: string;
+  headCashierSource: boolean;
+  currentBalance: CashAllocationAmount;
+}
+
+export interface CashAllocationContext {
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  currencyCode?: string;
+  vaultBalance: CashAllocationAmount;
+  currencies: CashAllocationCurrency[];
+  cashiers: CashAllocationCashier[];
+}
+
+export interface CashAllocationRequest {
+  idempotencyKey: string;
+  operationType: CashAllocationType;
+  officeId: FineractId;
+  sourceCashierId?: FineractId;
+  destinationCashierId?: FineractId;
+  businessDate: string;
+  currencyCode: string;
+  amount: string;
+  denominations: Array<{
+    denominationId: string;
+    quantity: number;
+  }>;
+  note?: string;
+}
+
+export interface CashAllocationPreview {
+  operationType: CashAllocationType;
+  businessDate: string;
+  officeId: FineractId;
+  currencyCode: string;
+  source: string;
+  destination: string;
+  cashInflow: CashAllocationAmount;
+  cashOutflow: CashAllocationAmount;
+  checksInflow: CashAllocationAmount;
+  checksOutflow: CashAllocationAmount;
+  vouchersInflow: CashAllocationAmount;
+  vouchersOutflow: CashAllocationAmount;
+  authoritativeTotal: CashAllocationAmount;
+  denominations: CashAllocationDenomination[];
+}
+
+export interface CashAllocationReceipt {
+  id: FineractId;
+  reference: string;
+  operationType: CashAllocationType;
+  status: string;
+  businessDate: string;
+  officeId: FineractId;
+  officeName: string;
+  initiatedBy: FineractId;
+  initiatedByUsername: string;
+  sourceCashierId?: FineractId;
+  source: string;
+  destinationCashierId?: FineractId;
+  destination: string;
+  currencyCode: string;
+  totalAmount: CashAllocationAmount;
+  sourceBalanceBefore?: CashAllocationAmount;
+  sourceBalanceAfter?: CashAllocationAmount;
+  destinationBalanceBefore: CashAllocationAmount;
+  destinationBalanceAfter: CashAllocationAmount;
+  sourceCashierTransactionId?: FineractId;
+  destinationCashierTransactionId?: FineractId;
+  accountingTransactionId?: string;
+  note?: string;
+  createdOn: string;
+  completedOn?: string;
+  denominations: CashAllocationDenomination[];
+}
+
 /**
  * Base Teller service.
  */
@@ -232,7 +666,147 @@ export class BaseTellerService {
 
   private readonly savingsAccountOpeningsPath = '/v2/base-teller/savings-account-openings';
   private readonly returnedChecksPath = '/v2/base-teller/returned-checks';
+  private readonly servicePaymentsPath = '/v2/base-teller/service-payments';
+  private readonly creditPaymentsPath = '/v2/base-teller/credit-payments';
+  private readonly cashierClosingsPath = '/v2/base-teller/closings';
+  private readonly cashOperationsPath = '/v2/base-teller/cash-operations';
+  private readonly cashAllocationsPath = '/v2/base-teller/cash-allocations';
+  private readonly catalogUpdatesPath = '/v2/base-teller/catalog-updates';
 
+  /** Retrieves the backend-authoritative status for every supported catalog category. */
+  getCatalogUpdates(): Observable<CatalogUpdateResponse[]> {
+    return this.http.get<CatalogUpdateResponse[]>(this.catalogUpdatesPath);
+  }
+
+  /** Retrieves the backend-authoritative status for one catalog category. */
+  getCatalogUpdate(category: CatalogCategory): Observable<CatalogUpdateResponse> {
+    return this.http.get<CatalogUpdateResponse>(`${this.catalogUpdatesPath}/${category}`);
+  }
+
+  /** Requests a synchronous backend refresh and returns its persisted result. */
+  synchronizeCatalog(category: CatalogCategory): Observable<CatalogUpdateResponse> {
+    return this.http.post<CatalogUpdateResponse>(`${this.catalogUpdatesPath}/${category}/sync`, null);
+  }
+
+  getCreditPaymentContext(): Observable<CreditPaymentContext> {
+    return this.http.get<CreditPaymentContext>(`${this.creditPaymentsPath}/context`);
+  }
+
+  searchCreditPaymentCustomers(searchTerm: string, limit: number = 20): Observable<CreditPaymentCustomer[]> {
+    const params = new HttpParams().set('q', searchTerm).set('limit', String(limit));
+    return this.http.get<CreditPaymentCustomer[]>(`${this.creditPaymentsPath}/customers`, { params });
+  }
+
+  getCreditPaymentLoans(clientId: FineractId): Observable<CreditPaymentLoan[]> {
+    return this.http.get<CreditPaymentLoan[]>(`${this.creditPaymentsPath}/customers/${clientId}/loans`);
+  }
+
+  getCreditPaymentLoan(loanId: FineractId): Observable<CreditPaymentLoan> {
+    return this.http.get<CreditPaymentLoan>(`${this.creditPaymentsPath}/loans/${loanId}`);
+  }
+
+  previewCreditPayment(payload: CreditPaymentRequest): Observable<CreditPaymentPreview> {
+    return this.http.post<CreditPaymentPreview>(`${this.creditPaymentsPath}/preview`, payload);
+  }
+
+  createCreditPayment(payload: CreditPaymentRequest): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(this.creditPaymentsPath, payload);
+  }
+
+  getCreditPaymentReceipt(receiptNumber: string): Observable<CreditPaymentReceipt> {
+    return this.http.get<CreditPaymentReceipt>(`${this.creditPaymentsPath}/${encodeURIComponent(receiptNumber)}`);
+  }
+
+  clearCreditPaymentCheck(
+    checkId: FineractId,
+    payload: CreditPaymentTransitionRequest
+  ): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(`${this.creditPaymentsPath}/checks/${checkId}/clear`, payload);
+  }
+
+  returnCreditPaymentCheck(
+    checkId: FineractId,
+    payload: CreditPaymentTransitionRequest
+  ): Observable<CreditPaymentReceipt> {
+    return this.http.post<CreditPaymentReceipt>(`${this.creditPaymentsPath}/checks/${checkId}/return`, payload);
+  }
+
+  getCashierClosingContext(
+    cashierId: FineractId,
+    currencyCode: string,
+    businessDate?: string
+  ): Observable<CashierClosingContext> {
+    let params = new HttpParams().set('cashierId', String(cashierId)).set('currencyCode', currencyCode);
+    if (businessDate) {
+      params = params.set('businessDate', businessDate);
+    }
+    return this.http.get<CashierClosingContext>(`${this.cashierClosingsPath}/context`, { params });
+  }
+
+  closeCashier(payload: CashierClosingRequest): Observable<CashierClosingReceipt> {
+    return this.http.post<CashierClosingReceipt>(this.cashierClosingsPath, payload);
+  }
+
+  getCashierClosing(id: FineractId): Observable<CashierClosingReceipt> {
+    return this.http.get<CashierClosingReceipt>(`${this.cashierClosingsPath}/${id}`);
+  }
+
+  getGlobalCashCount(businessDate?: string, currencyCode?: string): Observable<GlobalCashCount> {
+    let params = new HttpParams();
+    if (businessDate) {
+      params = params.set('businessDate', businessDate);
+    }
+    if (currencyCode) {
+      params = params.set('currencyCode', currencyCode);
+    }
+    return this.http.get<GlobalCashCount>(`${this.cashierClosingsPath}/global`, { params });
+  }
+
+  createCashOperation(payload: CashOperationRequest): Observable<CashOperation> {
+    return this.http.post<CashOperation>(this.cashOperationsPath, payload);
+  }
+
+  getCashOperationHistory(filters: CashOperationFilters): Observable<CashOperationPage> {
+    let params = new HttpParams();
+    Object.entries(filters).forEach(
+      ([
+        key,
+        value
+      ]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params = params.set(key, String(value));
+        }
+      }
+    );
+    return this.http.get<CashOperationPage>(this.cashOperationsPath, { params });
+  }
+
+  getCashHoldings(filters: CashHoldingFilters): Observable<CashHolding[]> {
+    let params = new HttpParams();
+    Object.entries(filters).forEach(
+      ([
+        key,
+        value
+      ]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params = params.set(key, String(value));
+        }
+      }
+    );
+    return this.http.get<CashHolding[]>(`${this.cashOperationsPath}/holdings`, { params });
+  }
+
+  getCashManagementTellers(): Observable<TellerOption[] | { pageItems?: TellerOption[] }> {
+    return this.http.get<TellerOption[] | { pageItems?: TellerOption[] }>('/tellers');
+  }
+
+  getCashManagementCashiers(tellerId: FineractId): Observable<{ cashiers?: CashierOption[] } | CashierOption[]> {
+    return this.http.get<{ cashiers?: CashierOption[] } | CashierOption[]>(`/tellers/${tellerId}/cashiers`);
+  }
+
+  getCashManagementCurrencies(): Observable<{ selectedCurrencyOptions?: CurrencyOption[] }> {
+    return this.http.get<{ selectedCurrencyOptions?: CurrencyOption[] }>('/currencies');
+  }
   /**
    * Searches customers through the Base Teller savings-opening workflow API.
    */
@@ -379,5 +953,67 @@ export class BaseTellerService {
 
   getReturnedCheckPaymentTypes(): Observable<BaseTellerOption[]> {
     return this.http.get<BaseTellerOption[]>('/paymenttypes');
+  }
+
+  /** Lists the backend-configured active service-payment catalog. */
+  getServicePaymentServices(): Observable<ServicePaymentServiceConfiguration[]> {
+    return this.http.get<ServicePaymentServiceConfiguration[]>(`${this.servicePaymentsPath}/services`);
+  }
+
+  /** Searches the platform client index before resolving the payer through WEB-1236. */
+  searchServicePaymentClients(
+    searchTerm: string
+  ): Observable<DepositSearchResult[] | { pageItems?: DepositSearchResult[] }> {
+    const params = new HttpParams().set('exactMatch', 'false').set('query', searchTerm).set('resource', 'clients');
+    return this.http.get<DepositSearchResult[] | { pageItems?: DepositSearchResult[] }>('/search', { params });
+  }
+
+  /** Resolves an authoritative, office-scoped client payer. */
+  getServicePaymentClient(clientId: FineractId): Observable<ServicePaymentClient> {
+    return this.http.get<ServicePaymentClient>(`${this.servicePaymentsPath}/clients/${clientId}`);
+  }
+
+  /** Gets the backend-authoritative commission, VAT, total, and business date. */
+  quoteServicePayment(payload: ServicePaymentQuoteRequest): Observable<ServicePaymentQuote> {
+    return this.http.post<ServicePaymentQuote>(`${this.servicePaymentsPath}/quote`, payload);
+  }
+
+  /** Posts a cash service payment with the backend idempotency contract. */
+  createServicePayment(payload: ServicePaymentRequest): Observable<ServicePaymentReceipt> {
+    return this.http.post<ServicePaymentReceipt>(this.servicePaymentsPath, payload);
+  }
+
+  /** Retrieves the immutable backend receipt for display or reprint. */
+  getServicePaymentReceipt(transactionId: FineractId): Observable<ServicePaymentReceipt> {
+    return this.http.get<ServicePaymentReceipt>(`${this.servicePaymentsPath}/${transactionId}/receipt`);
+  }
+
+  /** Retrieves deployment currencies, denominations, balances, and eligible active cashiers. */
+  getCashAllocationContext(officeId: FineractId, currencyCode?: string): Observable<CashAllocationContext> {
+    let params = new HttpParams().set('officeId', String(officeId));
+    if (currencyCode) {
+      params = params.set('currencyCode', currencyCode);
+    }
+    return this.http.get<CashAllocationContext>(`${this.cashAllocationsPath}/context`, { params });
+  }
+
+  /** Validates an allocation and returns the backend-authoritative transaction preview. */
+  previewCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationPreview> {
+    return this.http.post<CashAllocationPreview>(`${this.cashAllocationsPath}/preview`, payload);
+  }
+
+  /** Finalizes an allocation using the request's backend idempotency key. */
+  createCashAllocation(payload: CashAllocationRequest): Observable<CashAllocationReceipt> {
+    return this.http.post<CashAllocationReceipt>(this.cashAllocationsPath, payload);
+  }
+
+  /** Retrieves the immutable completed allocation. */
+  getCashAllocation(allocationId: FineractId): Observable<CashAllocationReceipt> {
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}`);
+  }
+
+  /** Retrieves the immutable receipt through the separately permissioned reprint endpoint. */
+  reprintCashAllocationReceipt(allocationId: FineractId): Observable<CashAllocationReceipt> {
+    return this.http.get<CashAllocationReceipt>(`${this.cashAllocationsPath}/${allocationId}/receipt`);
   }
 }

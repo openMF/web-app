@@ -79,6 +79,9 @@ export interface KycEvidence {
   idVerification?: { status?: string; decision?: string };
   amlScreeningStatus?: string;
   amlScreening?: { status?: string; decision?: string };
+  faceMatchEvidenceStatus?: string;
+  idVerificationEvidenceStatus?: string;
+  amlScreeningEvidenceStatus?: string;
 }
 
 export interface PendingProspectsSearchParams {

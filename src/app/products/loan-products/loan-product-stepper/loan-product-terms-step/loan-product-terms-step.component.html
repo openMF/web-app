@@ -303,9 +303,7 @@
               <strong>0</strong>
             </mat-error>
             <mat-error *ngIf="loanProductTermsForm.errors?.['maxLessThanMin']">
-              {{ 'labels.commons.Maximum Value must be' | translate }}
-              <strong>{{ 'labels.commons.greater equal to than' | translate }}</strong>
-              {{ 'labels.inputs.Minimum' | translate }}
+              {{ 'errors.validation.maxMustBeGreaterOrEqualToMin' | translate }}
             </mat-error>
             <mat-error *ngIf="loanProductTermsForm.get('maxInterestRatePerPeriod')?.hasError('pattern')">
               {{ 'labels.commons.Only up to 6 decimal places allowed' | translate }}

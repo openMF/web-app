@@ -11,8 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, forkJoin, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -42,11 +42,13 @@ export class ClientIdentitiesResolver {
               map((documents: any[]) => ({
                 ...identity,
                 documents: documents || []
-              }))
+              })),
+              catchError((err) => (err.status === 403 ? of({ ...identity, documents: [] }) : throwError(() => err)))
             )
           )
         );
-      })
+      }),
+      catchError((err) => (err.status === 403 ? of([]) : throwError(() => err)))
     );
   }
 }
