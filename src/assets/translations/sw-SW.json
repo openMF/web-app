@@ -196,6 +196,40 @@
       "processing": "Inachakata..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Jaribu tena",
+      "update": "Sasisha",
+      "updateCategory": "Sasisha {{category}}",
+      "updating": "Inasasisha...",
+      "updatingCategory": "Inasasisha {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Uhasibu", "GENERAL": "Katalogi za jumla", "USERS": "Watumiaji" },
+    "errors": {
+      "alreadyRunning": "Usasishaji huu wa katalogi tayari unaendelea",
+      "interrupted": "Usasishaji wa katalogi uliopita ulikatizwa. Tafadhali jaribu tena",
+      "load": "Hali za usasishaji wa katalogi hazikuweza kupakiwa",
+      "sourceValidation": "Chanzo cha katalogi hakikuweza kuthibitishwa. Tafadhali jaribu tena",
+      "unknown": "Usasishaji wa katalogi umeshindwa. Tafadhali jaribu tena",
+      "update": "Ombi la kusasisha katalogi halikuweza kukamilika. Tafadhali jaribu tena"
+    },
+    "labels": {
+      "lastAttempt": "Jaribio la mwisho",
+      "lastUpdate": "Usasishaji wa mwisho",
+      "needsUpdate": "Inahitaji kusasishwa",
+      "neverUpdated": "Haijawahi kusasishwa",
+      "no": "Hapana",
+      "status": "Hali",
+      "yes": "Ndiyo"
+    },
+    "messages": { "loading": "Inapakia hali za usasishaji wa katalogi...", "success": "Katalogi zimesasishwa" },
+    "status": {
+      "CURRENT": "Imesasishwa",
+      "FAILED": "Usasishaji umeshindwa",
+      "UPDATING": "Inasasisha...",
+      "UPDATE_REQUIRED": "Usasishaji unahitajika"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Maelezo ya malipo"
@@ -1569,6 +1603,7 @@
     },
     "heading": {
       "Cash Payment": "Malipo ya pesa taslimu",
+      "Catalog Updates": "Masasisho ya katalogi",
       "Confirmation": "Uthibitisho",
       "Receipt": "Risiti",
       "Returned Check Payment": "Malipo ya hundi iliyorudishwa",

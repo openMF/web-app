@@ -196,6 +196,43 @@
       "processing": "A processar..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Tentar novamente",
+      "update": "Atualizar",
+      "updateCategory": "Atualizar {{category}}",
+      "updating": "A atualizar...",
+      "updatingCategory": "A atualizar {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Contabilidade", "GENERAL": "Catálogos gerais", "USERS": "Utilizadores" },
+    "errors": {
+      "alreadyRunning": "Esta atualização de catálogo já está em curso",
+      "interrupted": "A atualização anterior do catálogo foi interrompida. Tente novamente",
+      "load": "Não foi possível carregar os estados de atualização dos catálogos",
+      "sourceValidation": "Não foi possível validar a origem do catálogo. Tente novamente",
+      "unknown": "A atualização do catálogo falhou. Tente novamente",
+      "update": "Não foi possível concluir o pedido de atualização do catálogo. Tente novamente"
+    },
+    "labels": {
+      "lastAttempt": "Última tentativa",
+      "lastUpdate": "Última atualização",
+      "needsUpdate": "Necessita de atualização",
+      "neverUpdated": "Nunca atualizado",
+      "no": "Não",
+      "status": "Estado",
+      "yes": "Sim"
+    },
+    "messages": {
+      "loading": "A carregar estados de atualização dos catálogos...",
+      "success": "Os catálogos foram atualizados"
+    },
+    "status": {
+      "CURRENT": "Atualizado",
+      "FAILED": "Falha na atualização",
+      "UPDATING": "A atualizar...",
+      "UPDATE_REQUIRED": "Atualização necessária"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Detalhes do pagamento"
@@ -1569,6 +1606,7 @@
     },
     "heading": {
       "Cash Payment": "Pagamento em numerário",
+      "Catalog Updates": "Atualizações de catálogos",
       "Confirmation": "Confirmação",
       "Receipt": "Recibo",
       "Returned Check Payment": "Pagamento de cheque devolvido",

@@ -196,6 +196,43 @@
       "processing": "Verarbeitung läuft..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Erneut versuchen",
+      "update": "Aktualisieren",
+      "updateCategory": "{{category}} aktualisieren",
+      "updating": "Wird aktualisiert...",
+      "updatingCategory": "{{category}} wird aktualisiert"
+    },
+    "categories": { "ACCOUNTING": "Buchhaltung", "GENERAL": "Allgemeine Kataloge", "USERS": "Benutzer" },
+    "errors": {
+      "alreadyRunning": "Diese Katalogaktualisierung wird bereits ausgeführt",
+      "interrupted": "Die vorherige Katalogaktualisierung wurde unterbrochen. Bitte erneut versuchen",
+      "load": "Die Katalogaktualisierungsstatus konnten nicht geladen werden",
+      "sourceValidation": "Die Katalogquelle konnte nicht geprüft werden. Bitte erneut versuchen",
+      "unknown": "Die Katalogaktualisierung ist fehlgeschlagen. Bitte erneut versuchen",
+      "update": "Die Katalogaktualisierung konnte nicht abgeschlossen werden. Bitte erneut versuchen"
+    },
+    "labels": {
+      "lastAttempt": "Letzter Versuch",
+      "lastUpdate": "Letzte Aktualisierung",
+      "needsUpdate": "Aktualisierung erforderlich",
+      "neverUpdated": "Noch nie aktualisiert",
+      "no": "Nein",
+      "status": "Status",
+      "yes": "Ja"
+    },
+    "messages": {
+      "loading": "Katalogaktualisierungsstatus werden geladen...",
+      "success": "Die Kataloge wurden aktualisiert"
+    },
+    "status": {
+      "CURRENT": "Aktuell",
+      "FAILED": "Aktualisierung fehlgeschlagen",
+      "UPDATING": "Wird aktualisiert...",
+      "UPDATE_REQUIRED": "Aktualisierung erforderlich"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Zahlungsdetails"
@@ -1571,6 +1608,7 @@
     },
     "heading": {
       "Cash Payment": "Barzahlung",
+      "Catalog Updates": "Katalogaktualisierungen",
       "Confirmation": "Bestätigung",
       "Receipt": "Beleg",
       "Returned Check Payment": "Zahlung für zurückgegebenen Scheck",

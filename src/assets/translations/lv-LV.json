@@ -196,6 +196,40 @@
       "processing": "Notiek apstrāde..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "Mēģināt vēlreiz",
+      "update": "Atjaunināt",
+      "updateCategory": "Atjaunināt {{category}}",
+      "updating": "Atjaunina...",
+      "updatingCategory": "Atjaunina {{category}}"
+    },
+    "categories": { "ACCOUNTING": "Grāmatvedība", "GENERAL": "Vispārīgie katalogi", "USERS": "Lietotāji" },
+    "errors": {
+      "alreadyRunning": "Šī kataloga atjaunināšana jau notiek",
+      "interrupted": "Iepriekšējā kataloga atjaunināšana tika pārtraukta. Mēģiniet vēlreiz",
+      "load": "Neizdevās ielādēt katalogu atjaunināšanas statusus",
+      "sourceValidation": "Neizdevās pārbaudīt kataloga avotu. Mēģiniet vēlreiz",
+      "unknown": "Kataloga atjaunināšana neizdevās. Mēģiniet vēlreiz",
+      "update": "Neizdevās pabeigt kataloga atjaunināšanas pieprasījumu. Mēģiniet vēlreiz"
+    },
+    "labels": {
+      "lastAttempt": "Pēdējais mēģinājums",
+      "lastUpdate": "Pēdējais atjauninājums",
+      "needsUpdate": "Nepieciešams atjauninājums",
+      "neverUpdated": "Nekad nav atjaunināts",
+      "no": "Nē",
+      "status": "Statuss",
+      "yes": "Jā"
+    },
+    "messages": { "loading": "Ielādē katalogu atjaunināšanas statusus...", "success": "Katalogi ir atjaunināti" },
+    "status": {
+      "CURRENT": "Aktuāls",
+      "FAILED": "Atjaunināšana neizdevās",
+      "UPDATING": "Atjaunina...",
+      "UPDATE_REQUIRED": "Nepieciešams atjauninājums"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "Maksājuma informācija"
@@ -1569,6 +1603,7 @@
     },
     "heading": {
       "Cash Payment": "Skaidras naudas maksājums",
+      "Catalog Updates": "Katalogu atjauninājumi",
       "Confirmation": "Apstiprinājums",
       "Receipt": "Kvīts",
       "Returned Check Payment": "Atgrieztā čeka apmaksa",

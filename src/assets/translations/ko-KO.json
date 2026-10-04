@@ -196,6 +196,40 @@
       "processing": "처리 중..."
     }
   },
+  "catalogUpdates": {
+    "actions": {
+      "retry": "다시 시도",
+      "update": "업데이트",
+      "updateCategory": "{{category}} 업데이트",
+      "updating": "업데이트 중...",
+      "updatingCategory": "{{category}} 업데이트 중"
+    },
+    "categories": { "ACCOUNTING": "회계", "GENERAL": "일반 카탈로그", "USERS": "사용자" },
+    "errors": {
+      "alreadyRunning": "이 카탈로그 업데이트가 이미 진행 중입니다",
+      "interrupted": "이전 카탈로그 업데이트가 중단되었습니다. 다시 시도하세요",
+      "load": "카탈로그 업데이트 상태를 불러올 수 없습니다",
+      "sourceValidation": "카탈로그 원본을 확인할 수 없습니다. 다시 시도하세요",
+      "unknown": "카탈로그 업데이트에 실패했습니다. 다시 시도하세요",
+      "update": "카탈로그 업데이트 요청을 완료할 수 없습니다. 다시 시도하세요"
+    },
+    "labels": {
+      "lastAttempt": "마지막 시도",
+      "lastUpdate": "마지막 업데이트",
+      "needsUpdate": "업데이트 필요",
+      "neverUpdated": "업데이트한 적 없음",
+      "no": "아니요",
+      "status": "상태",
+      "yes": "예"
+    },
+    "messages": { "loading": "카탈로그 업데이트 상태를 불러오는 중...", "success": "카탈로그가 업데이트되었습니다" },
+    "status": {
+      "CURRENT": "최신",
+      "FAILED": "업데이트 실패",
+      "UPDATING": "업데이트 중...",
+      "UPDATE_REQUIRED": "업데이트 필요"
+    }
+  },
   "servicePayment": {
     "heading": {
       "paymentDetails": "결제 세부 정보"
@@ -1569,6 +1603,7 @@
     },
     "heading": {
       "Cash Payment": "현금 결제",
+      "Catalog Updates": "카탈로그 업데이트",
       "Confirmation": "확인",
       "Receipt": "영수증",
       "Returned Check Payment": "반환 수표 결제",

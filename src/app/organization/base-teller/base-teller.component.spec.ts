@@ -21,6 +21,15 @@ describe('BaseTellerComponent', () => {
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
       {
+        materialIcon: 'sync',
+        permission: 'READ_BASE_TELLER_CATALOG_UPDATE',
+        route: [
+          '/organization',
+          'base-teller',
+          'catalog-updates'
+        ]
+      },
+      {
         materialIcon: 'point_of_sale',
         permission: 'READ_BASE_TELLER_CASH_ALLOCATION',
         route: [
