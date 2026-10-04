@@ -22,6 +22,16 @@
     }
   }
 
+  .credit-search-filter {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, calc((100% - 48px) / 4)));
+    gap: 16px;
+
+    .filter-actions {
+      grid-column: 1 / -1;
+    }
+  }
+
   .filter-actions {
     display: flex;
     gap: 8px;
@@ -56,6 +66,18 @@
 
   .view-details {
     color: var(--md-sys-color-primary);
+  }
+}
+
+@media (width <= 960px) {
+  .tab-container .credit-search-filter {
+    grid-template-columns: repeat(2, minmax(0, calc((100% - 16px) / 2)));
+  }
+}
+
+@media (width <= 600px) {
+  .tab-container .credit-search-filter {
+    grid-template-columns: minmax(0, 100%);
   }
 }
 
