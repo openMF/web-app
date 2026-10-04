@@ -153,6 +153,7 @@ export class CreditApplicationsComponent implements OnInit {
   orderBy = 'submittedOnDate';
   sortOrder = 'DESC';
   loading = false;
+  loadFailed = false;
   filterError = '';
   rejecting = false;
   rejectionResultMessage = '';
@@ -180,6 +181,10 @@ export class CreditApplicationsComponent implements OnInit {
     this.filterError = '';
     this.clearSelection();
     this.resetPage();
+    this.loadCreditApplications();
+  }
+
+  retryLoad(): void {
     this.loadCreditApplications();
   }
 
@@ -476,6 +481,7 @@ export class CreditApplicationsComponent implements OnInit {
 
   private loadCreditApplications(): void {
     this.loading = true;
+    this.loadFailed = false;
     this.filterError = '';
     const params = this.buildSearchParams();
 
@@ -495,6 +501,7 @@ export class CreditApplicationsComponent implements OnInit {
           this.dataSource.data = [];
           this.totalFilteredRecords = 0;
           this.loading = false;
+          this.loadFailed = true;
           this.filterError = 'labels.text.Unable to load credit applications';
           this.changeDetectorRef.markForCheck();
         }

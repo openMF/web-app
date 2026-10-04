@@ -93,6 +93,9 @@
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check"></i>
         {{ filterError | translate }}
+        @if (loadFailed) {
+          <button mat-button type="button" (click)="retryLoad()">{{ 'labels.buttons.Retry' | translate }}</button>
+        }
       </div>
     </div>
   }
@@ -234,7 +237,7 @@
     </table>
   </div>
 
-  @if (!loading && dataSource.data.length === 0) {
+  @if (!loading && !loadFailed && dataSource.data.length === 0) {
     <div class="alert">
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check"></i>

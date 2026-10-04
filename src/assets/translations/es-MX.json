@@ -1,4 +1,123 @@
 {
+  "creditPayment": {
+    "heading": {
+      "title": "Pagos de préstamos en efectivo y con cheque",
+      "denominations": "Denominaciones en efectivo",
+      "receipt": "Recibo de pago de crédito"
+    },
+    "steps": {
+      "customer": "Búsqueda de clientes",
+      "loan": "Revisión de préstamos y saldos",
+      "payment": "Detalles de pago",
+      "confirmation": "Vista previa y confirmación",
+      "receipt": "Recibo"
+    },
+    "tabs": {
+      "current": "Saldos actuales",
+      "overdue": "Saldos vencidos",
+      "schedule": "Calendario de amortización",
+      "history": "Historial de transacciones"
+    },
+    "fields": {
+      "businessDate": "Fecha comercial",
+      "teller": "Ventanilla",
+      "cashier": "Cajero",
+      "customerSearch": "Búsqueda de clientes",
+      "customer": "Cliente",
+      "accountNumber": "Número de cuenta",
+      "office": "Oficina",
+      "status": "Estado",
+      "loanAccount": "Cuenta de préstamo",
+      "totalDue": "Monto total adeudado",
+      "principal": "Capital",
+      "interest": "Interés",
+      "tax": "Impuesto sobre intereses/IVA",
+      "fees": "Tarifas",
+      "penalties": "Penalizaciones",
+      "total": "totales",
+      "paymentMethod": "Método de pago",
+      "amount": "Cantidad",
+      "paymentType": "Tipo de pago",
+      "note": "Nota",
+      "denomination": "Denominación",
+      "quantity": "Cantidad",
+      "subtotal": "Subtotal",
+      "paymentAmount": "Monto del pago",
+      "tendered": "Efectivo licitado",
+      "change": "Cambio",
+      "bank": "Banco",
+      "checkType": "Tipo de cheque",
+      "checkNumber": "Número de cheque",
+      "checkAccount": "Número de cuenta del cheque",
+      "routingCode": "Código de ruta",
+      "classification": "Clasificación del cheque",
+      "receiptNumber": "Número de recibo",
+      "operator": "Operador",
+      "loanTransaction": "ID de transacción de préstamo",
+      "cashierTransaction": "ID de transacción del cajero",
+      "overpayment": "Pago excesivo",
+      "returnReason": "Motivo de la devolución"
+    },
+    "methods": {
+      "CASH": "Efectivo",
+      "CHECK": "Cheque"
+    },
+    "classification": {
+      "SUBJECT_TO_COLLECTION": "Sujeto a cobro",
+      "CLEARED_FUNDS": "Fondos compensados"
+    },
+    "status": {
+      "IN_PROGRESS": "En progreso",
+      "PENDING_COLLECTION": "Colección pendiente",
+      "COMPLETED": "Completado",
+      "CLEARED": "Compensado",
+      "RETURNED": "Devuelto",
+      "FAILED": "Fallido"
+    },
+    "actions": {
+      "preview": "Vista previa del pago",
+      "confirmSubmit": "Confirmar y enviar",
+      "clearCheck": "Compensar cheque",
+      "returnCheck": "Devolver cheque",
+      "print": "Imprimir",
+      "reprint": "Reimprimir",
+      "newPayment": "Nuevo pago"
+    },
+    "hints": {
+      "customerSearch": "Buscar por nombre, número de cliente o número de titular de cuenta"
+    },
+    "messages": {
+      "pendingExplanation": "El cheque se aceptará sujeto a cobro. El saldo del préstamo no se reducirá hasta que un usuario autorizado compense el cheque.",
+      "pendingReceipt": "El pago está pendiente de cobro. No se ha contabilizado ningún reembolso del préstamo.",
+      "confirm": "Revise detenidamente la vista previa autorizada del backend y luego confirme explícitamente el pago."
+    },
+    "empty": {
+      "customers": "No se encontraron clientes",
+      "loans": "No se encontraron préstamos elegibles",
+      "schedule": "No hay calendario de amortización disponible",
+      "history": "No hay historial de transacciones disponible",
+      "paymentTypes": "No hay ningún tipo de pago configurado disponible",
+      "denominations": "No hay denominaciones configuradas para esta moneda.",
+      "banks": "No hay bancos configurados"
+    },
+    "validation": {
+      "amount": "Ingrese una cantidad mayor que cero con no más de seis decimales",
+      "quantity": "La cantidad debe ser un número entero no negativo.",
+      "insufficientCash": "El efectivo ofrecido es menor que el monto del pago."
+    },
+    "errors": {
+      "noReadPermission": "No tienes permiso para ver los pagos de crédito",
+      "noCreatePermission": "No tienes permiso para crear este pago.",
+      "configuration": "No se pudo cargar la configuración del cajero. Verifique la asignación del cajero y la configuración del backend.",
+      "customerSearch": "Error en la búsqueda de clientes",
+      "loanList": "No se pudieron cargar los préstamos elegibles",
+      "loanDetails": "No se pudieron cargar los detalles del préstamo",
+      "preview": "Error en la vista previa del pago",
+      "submit": "No se pudo enviar el pago",
+      "receipt": "No se pudo cargar el recibo",
+      "transition": "No se pudo completar la transición del cheque"
+    }
+  },
   "cashAllocation": {
     "title": "Apertura y abastecimiento de caja",
     "actions": {

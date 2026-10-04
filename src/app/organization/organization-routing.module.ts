@@ -31,6 +31,8 @@ import { SavingsAccountOpeningComponent } from './base-teller/savings-account-op
 import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
 import { ReturnedCheckPaymentComponent } from './base-teller/returned-check-payment/returned-check-payment.component';
 import { returnedCheckPaymentGuard } from './base-teller/returned-check-payment/returned-check-payment.guard';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
+import { creditPaymentGuard } from './base-teller/credit-payment/credit-payment.guard';
 import { ServicePaymentComponent } from './base-teller/service-payment/service-payment.component';
 import { servicePaymentGuard } from './base-teller/service-payment/service-payment.guard';
 import { CashManagementComponent } from './base-teller/cash-management/cash-management.component';
@@ -486,6 +488,15 @@ const routes: Routes = [
           data: {
             title: 'labels.heading.Returned Check Payment',
             breadcrumb: 'labels.heading.Returned Check Payment'
+          }
+        },
+        {
+          path: 'base-teller/credit-payments',
+          component: CreditPaymentComponent,
+          canActivate: [creditPaymentGuard],
+          data: {
+            title: 'creditPayment.heading.title',
+            breadcrumb: 'creditPayment.heading.title'
           }
         },
         {
