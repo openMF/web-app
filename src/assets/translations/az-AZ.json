@@ -252,12 +252,12 @@
       "generic": "Müştəri cəlbinin vəziyyətini yükləmək mümkün olmadı. Yenidən cəhd edin."
     },
     "stages": {
-      "ONBOARDING": "Qeydiyyata qəbul",
-      "COMPLIANCE": "Uyğunluq",
-      "APPROVAL": "Təsdiq",
-      "ACTIVATION": "Aktivləşdirmə",
-      "DEPOSIT": "Vəsaitin yatırılması",
-      "WITHDRAWAL": "Vəsaitin çıxarılması"
+      "ONBOARDING": "Kommersiya qeydiyyatı / Qeydiyyata qəbul",
+      "COMPLIANCE": "Sənədlər / Uyğunluq",
+      "APPROVAL": "Təsdiq / Komitə və ya daxili nəzarətin yoxlaması",
+      "ACTIVATION": "Aktivləşdirmə / Kommersiya əməliyyatları",
+      "DEPOSIT": "Vəsaitin yatırılması / ATM",
+      "WITHDRAWAL": "Vəsaitin çıxarılması / ATM"
     },
     "statuses": {
       "COMPLETED": "Tamamlanıb",
@@ -268,7 +268,8 @@
       "CLOSED": "Bağlanıb",
       "FAILED": "Uğursuz olub",
       "REJECTED": "Rədd edilib",
-      "WITHDRAWN": "Geri götürülüb"
+      "WITHDRAWN": "Geri götürülüb",
+      "UNKNOWN": "Vəziyyət mövcud deyil"
     },
     "fields": {
       "completedOn": "Tamamlanma tarixi",

@@ -298,12 +298,12 @@
       "generic": "Stav akvizice se nepodařilo načíst. Zkuste to znovu."
     },
     "stages": {
-      "ONBOARDING": "Začlenění",
-      "COMPLIANCE": "Soulad",
-      "APPROVAL": "Schválení",
-      "ACTIVATION": "Aktivace",
-      "DEPOSIT": "Vklad",
-      "WITHDRAWAL": "Výběr"
+      "ONBOARDING": "Obchodní registrace / Začlenění",
+      "COMPLIANCE": "Dokumentace / Soulad",
+      "APPROVAL": "Schválení / Ověření výborem nebo interní kontrolou",
+      "ACTIVATION": "Aktivace / Obchodní operace",
+      "DEPOSIT": "Vklad / Bankomat",
+      "WITHDRAWAL": "Výběr / Bankomat"
     },
     "statuses": {
       "COMPLETED": "DOKONČENO",
@@ -314,7 +314,8 @@
       "CLOSED": "UZAVŘENO",
       "FAILED": "SELHALO",
       "REJECTED": "ZAMÍTNUTO",
-      "WITHDRAWN": "STAŽENO"
+      "WITHDRAWN": "STAŽENO",
+      "UNKNOWN": "STAV NENÍ K DISPOZICI"
     },
     "fields": {
       "completedOn": "Dokončeno",

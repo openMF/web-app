@@ -142,14 +142,73 @@ describe('AcquisitionStatusComponent', () => {
     expect(fixture.nativeElement.querySelector('mat-spinner')).toBeNull();
   });
 
-  it('renders all six backend stages and their completed, current, and pending statuses', async () => {
+  it('renders all six stages in the required business order regardless of backend array order', async () => {
+    await setup(of({ ...board, stages: [...board.stages].reverse() }));
+
+    const headings = Array.from<HTMLElement>(fixture.nativeElement.querySelectorAll('.stage h3')).map((heading) =>
+      heading.textContent?.trim()
+    );
+    expect(headings).toEqual([
+      'acquisition.stages.ONBOARDING',
+      'acquisition.stages.COMPLIANCE',
+      'acquisition.stages.APPROVAL',
+      'acquisition.stages.ACTIVATION',
+      'acquisition.stages.DEPOSIT',
+      'acquisition.stages.WITHDRAWAL'
+    ]);
+  });
+
+  it('maps completed, current, and pending backend statuses to semantic colors, icons, and translated text', async () => {
     await setup();
 
-    const text = fixture.nativeElement.textContent;
-    expect(fixture.nativeElement.querySelectorAll('.stage')).toHaveLength(6);
-    expect(text).toContain('COMPLETED');
-    expect(text).toContain('CURRENT');
-    expect(text).toContain('PENDING');
+    const stages = fixture.nativeElement.querySelectorAll('.stage');
+    expect(stages).toHaveLength(6);
+    expect(stages[0].querySelector('.stage-marker').classList.contains('status-completed')).toBe(true);
+    expect(stages[0].querySelector('.stage-marker mat-icon').textContent).toContain('check');
+    expect(stages[0].querySelector('mat-chip').textContent).toContain('acquisition.statuses.COMPLETED');
+    expect(stages[0].querySelector('.stage-marker').getAttribute('aria-label')).toBe('acquisition.statuses.COMPLETED');
+    expect(stages[1].querySelector('.stage-marker').classList.contains('status-current')).toBe(true);
+    expect(stages[1].classList.contains('current-stage')).toBe(true);
+    expect(stages[1].getAttribute('aria-labelledby')).toBe('acquisition-stage-COMPLIANCE');
+    expect(stages[1].querySelector('.stage-marker mat-icon').textContent).toContain('autorenew');
+    expect(stages[1].querySelector('mat-chip').textContent).toContain('acquisition.statuses.CURRENT');
+    expect(stages[2].querySelector('.stage-marker').classList.contains('status-pending')).toBe(true);
+    expect(stages[2].querySelector('.stage-marker mat-icon').textContent).toContain('schedule');
+    expect(stages[2].querySelector('mat-chip').textContent).toContain('acquisition.statuses.PENDING');
+    expect(stages[0].querySelector('.connector').classList.contains('connector-completed')).toBe(true);
+    expect(stages[1].querySelector('.connector').classList.contains('connector-completed')).toBe(false);
+  });
+
+  it('uses currentStage as the single source of current-stage emphasis when it is present', async () => {
+    await setup(of({ ...board, currentStage: 'APPROVAL' }));
+
+    const stages = fixture.nativeElement.querySelectorAll('.stage');
+    expect(stages[1].classList.contains('current-stage')).toBe(false);
+    expect(stages[1].querySelector('.current-indicator')).toBeNull();
+    expect(stages[2].classList.contains('current-stage')).toBe(true);
+    expect(stages[2].querySelector('.current-indicator')).not.toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.current-indicator')).toHaveLength(1);
+  });
+
+  it('maps blocked and failed backend statuses to the error state without inferring status from position', async () => {
+    const exceptionalBoard: AcquisitionBoard = {
+      ...board,
+      currentStage: 'ONBOARDING',
+      stages: board.stages.map((stage) => ({
+        ...stage,
+        status: stage.code === 'ONBOARDING' ? 'PENDING' : stage.code === 'APPROVAL' ? 'BLOCKED' : 'FAILED'
+      }))
+    };
+    await setup(of(exceptionalBoard));
+
+    const stages = fixture.nativeElement.querySelectorAll('.stage');
+    expect(stages[0].querySelector('.stage-marker').classList.contains('status-pending')).toBe(true);
+    expect(stages[2].querySelector('.stage-marker').classList.contains('status-error')).toBe(true);
+    expect(stages[2].querySelector('.stage-marker mat-icon').textContent).toContain('block');
+    expect(stages[2].querySelector('mat-chip').textContent).toContain('acquisition.statuses.BLOCKED');
+    expect(stages[3].querySelector('.stage-marker').classList.contains('status-error')).toBe(true);
+    expect(stages[3].querySelector('.stage-marker mat-icon').textContent).toContain('error');
+    expect(stages[3].querySelector('mat-chip').textContent).toContain('acquisition.statuses.FAILED');
   });
 
   it('renders a completion timestamp and does not fabricate a null timestamp', async () => {
@@ -162,15 +221,42 @@ describe('AcquisitionStatusComponent', () => {
     expect(stageText[1]).toContain('acquisition.notAvailable');
   });
 
-  it('preserves an unknown backend status instead of mapping it to pending', async () => {
+  it('uses an accessible translated fallback instead of leaking an unknown backend enum', async () => {
     const unknownStatusBoard: AcquisitionBoard = {
       ...board,
       stages: [{ ...board.stages[0], status: 'MANUAL_REVIEW' }]
     };
     await setup(of(unknownStatusBoard));
 
-    expect(fixture.nativeElement.textContent).toContain('MANUAL_REVIEW');
-    expect(fixture.nativeElement.textContent).not.toContain('PENDING');
+    const marker = fixture.nativeElement.querySelector('.stage-marker');
+    expect(marker.classList.contains('status-unknown')).toBe(true);
+    expect(marker.textContent).toContain('help_outline');
+    expect(marker.getAttribute('aria-label')).toBe('acquisition.statuses.UNKNOWN');
+    expect(fixture.nativeElement.textContent).toContain('acquisition.statuses.UNKNOWN');
+    expect(fixture.nativeElement.textContent).not.toContain('MANUAL_REVIEW');
+  });
+
+  it('does not expose backend stage names or technical source and account statuses', async () => {
+    const technicalBoard: AcquisitionBoard = {
+      ...board,
+      stages: [
+        {
+          ...board.stages[0],
+          name: 'INTERNAL_STAGE_NAME',
+          details: {
+            ...board.stages[0].details,
+            sourceStatus: 'INTERNAL_SOURCE_STATUS',
+            accountStatus: 'TECHNICAL_ACCOUNT_STATUS'
+          }
+        },
+        ...board.stages.slice(1)
+      ]
+    };
+    await setup(of(technicalBoard));
+
+    expect(fixture.nativeElement.textContent).not.toContain('INTERNAL_STAGE_NAME');
+    expect(fixture.nativeElement.textContent).not.toContain('INTERNAL_SOURCE_STATUS');
+    expect(fixture.nativeElement.textContent).not.toContain('TECHNICAL_ACCOUNT_STATUS');
   });
 
   it('shows the empty state when the backend returns no stages', async () => {

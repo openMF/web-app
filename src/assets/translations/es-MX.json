@@ -298,12 +298,12 @@
       "generic": "No se pudo cargar el estado de adquisición. Inténtelo de nuevo."
     },
     "stages": {
-      "ONBOARDING": "Incorporación",
-      "COMPLIANCE": "Cumplimiento",
-      "APPROVAL": "Aprobación",
-      "ACTIVATION": "Activación",
-      "DEPOSIT": "Depósito",
-      "WITHDRAWAL": "Retiro"
+      "ONBOARDING": "Registro comercial / Incorporación",
+      "COMPLIANCE": "Expediente / Cumplimiento",
+      "APPROVAL": "Aprobación / Validación del comité o control interno",
+      "ACTIVATION": "Activación / Operaciones comerciales",
+      "DEPOSIT": "Depósito / Cajero automático",
+      "WITHDRAWAL": "Retiro / Cajero automático"
     },
     "statuses": {
       "COMPLETED": "COMPLETADO",
@@ -314,7 +314,8 @@
       "CLOSED": "CERRADO",
       "FAILED": "FALLIDO",
       "REJECTED": "RECHAZADO",
-      "WITHDRAWN": "RETIRADO"
+      "WITHDRAWN": "RETIRADO",
+      "UNKNOWN": "ESTADO NO DISPONIBLE"
     },
     "fields": {
       "completedOn": "Completado el",

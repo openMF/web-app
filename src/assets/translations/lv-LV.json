@@ -298,12 +298,12 @@
       "generic": "Neizdevās ielādēt piesaistes statusu. Mēģiniet vēlreiz."
     },
     "stages": {
-      "ONBOARDING": "Uzņemšana",
-      "COMPLIANCE": "Atbilstība",
-      "APPROVAL": "Apstiprināšana",
-      "ACTIVATION": "Aktivizēšana",
-      "DEPOSIT": "Iemaksa",
-      "WITHDRAWAL": "Izmaksa"
+      "ONBOARDING": "Komercreģistrācija / Uzņemšana",
+      "COMPLIANCE": "Dokumenti / Atbilstība",
+      "APPROVAL": "Apstiprināšana / Komitejas vai iekšējās kontroles pārbaude",
+      "ACTIVATION": "Aktivizēšana / Komercdarbība",
+      "DEPOSIT": "Iemaksa / Bankomāts",
+      "WITHDRAWAL": "Izmaksa / Bankomāts"
     },
     "statuses": {
       "COMPLETED": "PABEIGTS",
@@ -314,7 +314,8 @@
       "CLOSED": "SLĒGTS",
       "FAILED": "NEIZDEVĀS",
       "REJECTED": "NORAIDĪTS",
-      "WITHDRAWN": "ATSAUKTS"
+      "WITHDRAWN": "ATSAUKTS",
+      "UNKNOWN": "STATUSS NAV PIEEJAMS"
     },
     "fields": {
       "completedOn": "Pabeigts",

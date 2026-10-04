@@ -298,12 +298,12 @@
       "generic": "Nepavyko įkelti įsigijimo būsenos. Bandykite dar kartą."
     },
     "stages": {
-      "ONBOARDING": "Įtraukimas",
-      "COMPLIANCE": "Atitiktis",
-      "APPROVAL": "Patvirtinimas",
-      "ACTIVATION": "Aktyvinimas",
-      "DEPOSIT": "Įmoka",
-      "WITHDRAWAL": "Išėmimas"
+      "ONBOARDING": "Komercinė registracija / Įtraukimas",
+      "COMPLIANCE": "Dokumentai / Atitiktis",
+      "APPROVAL": "Patvirtinimas / Komiteto arba vidaus kontrolės patikra",
+      "ACTIVATION": "Aktyvinimas / Komercinės operacijos",
+      "DEPOSIT": "Įmoka / Bankomatas",
+      "WITHDRAWAL": "Išėmimas / Bankomatas"
     },
     "statuses": {
       "COMPLETED": "UŽBAIGTA",
@@ -314,7 +314,8 @@
       "CLOSED": "UŽDARYTA",
       "FAILED": "NEPAVYKO",
       "REJECTED": "ATMESTA",
-      "WITHDRAWN": "ATŠAUKTA"
+      "WITHDRAWN": "ATŠAUKTA",
+      "UNKNOWN": "BŪSENA NEPASIEKIAMA"
     },
     "fields": {
       "completedOn": "Užbaigta",

@@ -298,12 +298,12 @@
       "generic": "Imeshindikana kupakia hali ya upataji. Tafadhali jaribu tena."
     },
     "stages": {
-      "ONBOARDING": "Usajili",
-      "COMPLIANCE": "Uzingatiaji",
-      "APPROVAL": "Uidhinishaji",
-      "ACTIVATION": "Uanzishaji",
-      "DEPOSIT": "Amana",
-      "WITHDRAWAL": "Utoaji"
+      "ONBOARDING": "Usajili wa kibiashara / Usajili",
+      "COMPLIANCE": "Jalada / Uzingatiaji",
+      "APPROVAL": "Uidhinishaji / Uthibitishaji wa kamati au udhibiti wa ndani",
+      "ACTIVATION": "Uanzishaji / Shughuli za kibiashara",
+      "DEPOSIT": "Amana / ATM",
+      "WITHDRAWAL": "Utoaji / ATM"
     },
     "statuses": {
       "COMPLETED": "IMEKAMILIKA",
@@ -314,7 +314,8 @@
       "CLOSED": "IMEFUNGWA",
       "FAILED": "IMESHINDWA",
       "REJECTED": "IMEKATALIWA",
-      "WITHDRAWN": "IMEONDOLEWA"
+      "WITHDRAWN": "IMEONDOLEWA",
+      "UNKNOWN": "HALI HAIPATIKANI"
     },
     "fields": {
       "completedOn": "Imekamilika tarehe",
