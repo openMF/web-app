@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
@@ -106,6 +106,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 })
 export class LoanAccountActionsComponent {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private loanProductService = inject(LoanProductService);
@@ -157,6 +158,7 @@ export class LoanAccountActionsComponent {
     'Add Interest Pause': boolean;
     'Capitalized Income': boolean;
     'Contract Termination': boolean;
+    'Loan Withdrawal': boolean;
     'Buy Down Fee': boolean;
     'Undo Write-off': boolean;
     'Attach Loan Originator': boolean;
@@ -201,6 +203,7 @@ export class LoanAccountActionsComponent {
     'Add Interest Pause': false,
     'Capitalized Income': false,
     'Contract Termination': false,
+    'Loan Withdrawal': false,
     'Buy Down Fee': false,
     'Undo Write-off': false,
     'Attach Loan Originator': false,
@@ -220,22 +223,25 @@ export class LoanAccountActionsComponent {
     // Safely access data with optional chaining
     this.navigationData = currentNavigation?.extras?.state?.data;
 
+    // Reused on param-only navigation: re-tag the template and mark this OnPush view, or the old screen stays.
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
       this.actionButtonData = data.actionButtonData ? data.actionButtonData : {};
+      this.actionButtonData['actionName'] = this.toActionName(this.route.snapshot.params['action']);
+      this.actionButtonData['productType'] = LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan');
+      this.cdr.markForCheck();
     });
 
     this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      this.actionName = params['action'];
-      if (this.actionName === 'Change Loan Officer') {
-        this.actionName = 'Assign Loan Officer';
-      }
+      this.actionName = this.toActionName(params['action']);
       for (const key of Object.keys(this.actions)) {
         this.actions[key as keyof typeof this.actions] = false;
       }
       this.actions[this.actionName as keyof typeof this.actions] = true;
+      this.cdr.markForCheck();
     });
+  }
 
-    this.actionButtonData['actionName'] = this.actionName;
-    this.actionButtonData['productType'] = LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan');
+  private toActionName(action: string): string {
+    return action === 'Change Loan Officer' ? 'Assign Loan Officer' : action;
   }
 }

@@ -108,3 +108,41 @@ describe('LoansAccountButtonConfiguration - Working Capital', () => {
     );
   });
 });
+
+describe('LoansAccountButtonConfiguration - early termination', () => {
+  function optionsFor(substatusCode: string | null) {
+    const substatus = substatusCode ? ({ id: 1, code: substatusCode, value: substatusCode } as any) : null;
+    return new LoansAccountButtonConfiguration(false, 'Active', substatus).options;
+  }
+
+  it('offers contract termination and loan withdrawal on an active loan, each with its own permission', () => {
+    const options = optionsFor(null);
+
+    expect(options.find((option) => option.name === 'Contract Termination')?.taskPermissionName).toBe(
+      'CONTRACT_TERMINATION_LOAN'
+    );
+    expect(options.find((option) => option.name === 'Loan Withdrawal')?.taskPermissionName).toBe(
+      'LOAN_WITHDRAWAL_LOAN'
+    );
+  });
+
+  it.each([
+    'loanSubStatus.loanSubStatusType.contractTermination',
+    'loanSubStatus.loanSubStatusType.loanWithdrawal'
+  ])('offers neither once the loan carries %s, as each blocks the other', (substatusCode) => {
+    const names = optionsFor(substatusCode).map((option) => option.name);
+
+    expect(names).not.toContain('Contract Termination');
+    expect(names).not.toContain('Loan Withdrawal');
+  });
+
+  it('keeps loan withdrawal out of the Working Capital menu', () => {
+    const workingCapital = new LoansAccountButtonConfiguration(true, 'Active', null);
+    const offered = [
+      ...workingCapital.singleButtons,
+      ...workingCapital.options
+    ].map((button) => button.name);
+
+    expect(offered).not.toContain('Loan Withdrawal');
+  });
+});

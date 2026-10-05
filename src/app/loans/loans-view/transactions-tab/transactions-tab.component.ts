@@ -333,6 +333,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * DISCOUNT_FEE_AMORTIZATION:45
    * DISCOUNT_FEE_ADJUSTMENT:46
    * DISCOUNT_FEE_AMORTIZATION_ADJUSTMENT:47
+   * LOAN_WITHDRAWAL:48
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -362,7 +363,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       44,
       45,
       46,
-      47
+      47,
+      48
     ].includes(transactionsData.type.id);
   }
 
@@ -374,8 +376,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     // Working Capital keeps its own reversal rules, matched by code as well
     // because it does not always send the type flags. The Term Loan branch is
     // the adjust command's own gate plus write-off, which has its own undo
-    // command wired in `undoTransaction()`; charge-off, re-age, re-amortize and
-    // contract termination are undone from their own entries.
+    // command wired in `undoTransaction()`; charge-off, re-age, re-amortize,
+    // contract termination and loan withdrawal are undone from their own entries.
     return this.loanProductService.isWorkingCapital
       ? !(
           transaction.type.disbursement ||

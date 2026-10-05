@@ -140,6 +140,15 @@ describe('TransactionsTabComponent', () => {
       });
     });
 
+    it('lists the loan withdrawal but leaves its undo to the transaction view', () => {
+      const component = createComponent();
+      const withdrawal = transaction(48, { type: { id: 48, loanWithdrawal: true } });
+
+      expect(component.showTransaction(withdrawal)).toBe(true);
+      expect(component.allowUndoTransaction(withdrawal)).toBe(false);
+      expect(component.allowAdjustTransaction(withdrawal)).toBe(false);
+    });
+
     it('keeps the reversal on a write-off, which has its own command', () => {
       const component = createComponent();
 

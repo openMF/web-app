@@ -758,6 +758,9 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       if (this.isContractTermination(this.loanSubStatus)) {
         return 'loanSubStatusType.contractTermination';
       }
+      if (this.isLoanWithdrawal(this.loanSubStatus)) {
+        return 'loanSubStatusType.loanWithdrawal';
+      }
       if (this.loanDetailsData.inArrears) {
         return 'loanStatusType.activeOverdue';
       }
@@ -792,6 +795,9 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (this.isContractTermination(this.loanSubStatus)) {
       return 'contractTermination';
     }
+    if (this.isLoanWithdrawal(this.loanSubStatus)) {
+      return 'loanWithdrawal';
+    }
     return '';
   }
 
@@ -819,6 +825,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       return false;
     }
     return substatus.code === 'loanSubStatus.loanSubStatusType.contractTermination';
+  }
+
+  private isLoanWithdrawal(substatus: OptionData): boolean {
+    return substatus?.code === 'loanSubStatus.loanSubStatusType.loanWithdrawal';
   }
 
   private canShowWorkingCapitalDiscountUpdate(): boolean {

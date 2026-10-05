@@ -18,12 +18,19 @@
 @if (actions['Foreclosure']) {
   <mifosx-foreclosure [dataObject]="actionButtonData"></mifosx-foreclosure>
 }
-@if (actions['Prepay Loan'] || actions['Contract Termination']) {
-  @if (isWorkingCapital && actions['Prepay Loan']) {
+<!-- One block per action: switching actions must rebuild the screen, which reads its mode once on init -->
+@if (actions['Prepay Loan']) {
+  @if (isWorkingCapital) {
     <mifosx-working-capital-prepay-loan [dataObject]="actionButtonData"></mifosx-working-capital-prepay-loan>
   } @else {
     <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
   }
+}
+@if (actions['Contract Termination']) {
+  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+}
+@if (actions['Loan Withdrawal']) {
+  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
 }
 @if (actions['Make Repayment']) {
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>

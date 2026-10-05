@@ -17,13 +17,16 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 import { SettingsService } from 'app/settings/settings.service';
 import { PrepayLoanComponent } from './prepay-loan.component';
 
-describe('PrepayLoanComponent - contract termination', () => {
+describe.each([
+  { actionName: 'Contract Termination', command: 'contractTermination' },
+  { actionName: 'Loan Withdrawal', command: 'loanWithdrawal' }
+])('PrepayLoanComponent - $actionName', ({ actionName, command: earlyTerminationCommand }) => {
   const businessDate = new Date(2024, 2, 1);
   const maxFutureDate = new Date(2100, 0, 1);
 
-  /** The payoff quote the contract termination template returns for the business date. */
-  const contractTerminationTemplate = {
-    actionName: 'Contract Termination',
+  /** The payoff quote the early termination template returns for the business date. */
+  const earlyTerminationTemplate = {
+    actionName,
     currency: { code: 'EUR', displaySymbol: '€' },
     amount: 84.06,
     principalPortion: 83.57,
@@ -34,7 +37,7 @@ describe('PrepayLoanComponent - contract termination', () => {
 
   /** The quote for 31 March 2024: same principal, interest accrued to the later date. */
   const futureDatedTemplate = {
-    ...contractTerminationTemplate,
+    ...earlyTerminationTemplate,
     amount: 84.53,
     interestPortion: 0.96
   };
@@ -45,10 +48,10 @@ describe('PrepayLoanComponent - contract termination', () => {
   /**
    * Builds the component against stubbed collaborators and runs ngOnInit, so the tests exercise the real form,
    * date bounds and payload logic without rendering the template.
-   * @param dataObject The resolved action template; defaults to the contract termination quote.
+   * @param dataObject The resolved action template; defaults to the early termination quote.
    * @returns The initialised component.
    */
-  function createComponent(dataObject: any = contractTerminationTemplate): PrepayLoanComponent {
+  function createComponent(dataObject: any = earlyTerminationTemplate): PrepayLoanComponent {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -111,8 +114,8 @@ describe('PrepayLoanComponent - contract termination', () => {
               1
             ] } })
       ),
-      getLoanContractTerminationTemplate: jest.fn().mockReturnValue(of(futureDatedTemplate)),
-      getLoanPrepayLoanActionTemplate: jest.fn().mockReturnValue(of(contractTerminationTemplate)),
+      getLoanEarlyTerminationTemplate: jest.fn().mockReturnValue(of(futureDatedTemplate)),
+      getLoanPrepayLoanActionTemplate: jest.fn().mockReturnValue(of(earlyTerminationTemplate)),
       loanActionButtons: jest.fn().mockReturnValue(of({}))
     };
     routerStub = { navigate: jest.fn() };
@@ -121,9 +124,19 @@ describe('PrepayLoanComponent - contract termination', () => {
   it('defaults the termination date to the business date', () => {
     const component = createComponent();
 
-    expect(component.contractTermination).toBe(true);
+    expect(component.earlyTerminationCommand).toBe(earlyTerminationCommand);
+    expect(component.isEarlyTermination).toBe(true);
     expect(component.prepayLoanForm.controls.transactionDate.value).toBe(businessDate);
     expect(component.minDate).toBe(businessDate);
+  });
+
+  it('gates submit with the permission of the command it posts', () => {
+    expect(createComponent().submitPermission).toBe(
+      earlyTerminationCommand === 'loanWithdrawal' ? 'LOAN_WITHDRAWAL_LOAN' : 'CONTRACT_TERMINATION_LOAN'
+    );
+    expect(createComponent({ ...earlyTerminationTemplate, actionName: 'Prepay Loan' }).submitPermission).toBe(
+      'REPAYMENT_LOAN'
+    );
   });
 
   it('bounds the picker one day before the maturity date', () => {
@@ -162,25 +175,29 @@ describe('PrepayLoanComponent - contract termination', () => {
 
     component.prepayLoanForm.patchValue({ transactionDate: new Date(2024, 2, 31) });
 
-    expect(loansServiceStub.getLoanContractTerminationTemplate).toHaveBeenCalledWith('1', '31 March 2024');
+    expect(loansServiceStub.getLoanEarlyTerminationTemplate).toHaveBeenCalledWith(
+      '1',
+      earlyTerminationCommand,
+      '31 March 2024'
+    );
     expect(component.prepayData.amount).toBe(84.53);
     expect(component.prepayData.interestPortion).toBe(0.96);
   });
 
   it('does not re-quote when the typed date cannot be read', () => {
     const component = createComponent();
-    loansServiceStub.getLoanContractTerminationTemplate.mockClear();
+    loansServiceStub.getLoanEarlyTerminationTemplate.mockClear();
 
     component.prepayLoanForm.patchValue({ transactionDate: null });
 
-    expect(loansServiceStub.getLoanContractTerminationTemplate).not.toHaveBeenCalled();
+    expect(loansServiceStub.getLoanEarlyTerminationTemplate).not.toHaveBeenCalled();
     expect(component.prepayData.interestPortion).toBe(0.49);
   });
 
   it('shows the latest date quote even when an earlier response arrives last', () => {
     const firstQuote = new Subject<any>();
     const secondQuote = new Subject<any>();
-    loansServiceStub.getLoanContractTerminationTemplate = jest
+    loansServiceStub.getLoanEarlyTerminationTemplate = jest
       .fn()
       .mockReturnValueOnce(firstQuote)
       .mockReturnValueOnce(secondQuote);
@@ -189,7 +206,7 @@ describe('PrepayLoanComponent - contract termination', () => {
     component.prepayLoanForm.patchValue({ transactionDate: new Date(2024, 2, 20) });
     component.prepayLoanForm.patchValue({ transactionDate: new Date(2024, 2, 31) });
     secondQuote.next(futureDatedTemplate);
-    firstQuote.next({ ...contractTerminationTemplate, amount: 84.2, interestPortion: 0.63 });
+    firstQuote.next({ ...earlyTerminationTemplate, amount: 84.2, interestPortion: 0.63 });
 
     expect(component.prepayData.amount).toBe(84.53);
     expect(component.prepayData.interestPortion).toBe(0.96);
@@ -212,7 +229,7 @@ describe('PrepayLoanComponent - contract termination', () => {
       payload
     ] = loansServiceStub.loanActionButtons.mock.calls[0];
     expect(loanId).toBe('1');
-    expect(command).toBe('contractTermination');
+    expect(command).toBe(earlyTerminationCommand);
     expect(payload).toEqual({
       transactionDate: '31 March 2024',
       externalId: 'ct-ext-1',
@@ -224,11 +241,12 @@ describe('PrepayLoanComponent - contract termination', () => {
   });
 
   it('leaves the prepay flow on the business date bound and asks for no loan details', () => {
-    const component = createComponent({ ...contractTerminationTemplate, actionName: 'Prepay Loan' });
+    const component = createComponent({ ...earlyTerminationTemplate, actionName: 'Prepay Loan' });
 
-    expect(component.contractTermination).toBe(false);
+    expect(component.earlyTerminationCommand).toBeNull();
+    expect(component.isEarlyTermination).toBe(false);
     expect(component.maxDate).toBe(businessDate);
     expect(loansServiceStub.getLoanAccountDetails).not.toHaveBeenCalled();
-    expect(loansServiceStub.getLoanContractTerminationTemplate).not.toHaveBeenCalled();
+    expect(loansServiceStub.getLoanEarlyTerminationTemplate).not.toHaveBeenCalled();
   });
 });
