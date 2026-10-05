@@ -287,7 +287,7 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('institution')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -300,10 +300,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateInstitution, institution)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('accounting')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('accounting')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -316,10 +316,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('reports')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('reports')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -332,28 +332,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('admin')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateSelfService let-popover="popover">
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('admin')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -366,14 +348,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('configWizard')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('configWizard')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -386,18 +364,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('globalSearch')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('globalSearch')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -410,18 +380,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('languageSelector')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNotifications, notifications)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('languageSelector')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -434,14 +396,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('notifications')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('notifications')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -454,14 +412,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNotifications, notifications)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('themePicker')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('themePicker')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -474,7 +428,7 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('appMenu')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
