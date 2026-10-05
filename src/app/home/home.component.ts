@@ -180,7 +180,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showHome) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+        // The dashboard button is only rendered when the global dashboard is enabled.
+        if (this.buttonDashboard) {
+          this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+        } else {
+          this.showPopover(this.templateSearchActivity, this.searchActivity.nativeElement, 'bottom', true);
+        }
       });
     }
     if (this.configurationWizardService.showHomeSearchActivity) {
@@ -223,6 +228,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/home']);
       }
     });
+  }
+
+  /**
+   * Back from the search activity step: shows the dashboard button step,
+   * or goes back to the breadcrumbs if the dashboard button isn't rendered.
+   */
+  searchActivityBack() {
+    if (this.buttonDashboard) {
+      this.showPopover(this.templateButtonDashboard, this.buttonDashboard, 'bottom', true);
+    } else {
+      this.previousStep();
+    }
   }
 
   /**
