@@ -126,7 +126,7 @@ playwright/
 ├── global-setup.ts            readiness probe for Fineract and the web app, CI only
 ├── config/                    shared selectors, routes, roles and behaviour contracts
 ├── factories/                 create clients, groups, loans, savings, charges and users through the API
-├── fixtures/                  the fineractApi and apiSetup test fixtures
+├── fixtures/                  the session restore and the fineractApi and apiSetup test fixtures
 ├── pages/                     page objects, one per screen or dialog
 ├── types/                     shared test data types
 ├── utils/                     retry, readiness, naming, cleanup and sleep helpers
@@ -165,7 +165,7 @@ A few rules keep the suite consistent, and ESLint enforces the first two:
 
 1. Do not navigate to the login page from a spec. The `setup` project has already logged in, so start from the page you are testing. The `mifosx-playwright/no-direct-login-goto` rule catches this.
 2. Do not call `waitForTimeout`. Wait for something on the page instead. If you really need a fixed delay, use `loggedSleep(ms, reason)` from `playwright/utils/sleep.ts`, which records the wait in `sleeps.json`. The `mifosx-playwright/no-bare-wait-for-timeout` rule catches this.
-3. Import `test` and `expect` from `playwright/fixtures/test-fixtures.ts` so that you get the `fineractApi` and `apiSetup` fixtures.
+3. Import `test` and `expect` from `playwright/fixtures/test-fixtures.ts` so that you get the `fineractApi` and `apiSetup` fixtures. It builds on `playwright/fixtures/auth-session.ts`, which puts the logged in session back into every page the test opens, so do not add your own `addInitScript` for credentials. A spec that needs no API fixtures can import `test` from `auth-session.ts` instead.
 4. Keep locators in page objects and assertions in specs. Page objects extend `BasePage` and are exported from `playwright/pages/index.ts`.
 5. Create the data a test needs through the API, using the factories in `playwright/factories`, rather than clicking through the UI.
 6. Every new file needs the MPL 2.0 license header. The commit hook checks for it.
