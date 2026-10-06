@@ -7,6 +7,7 @@
  */
 
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
+import { LoanProducts } from 'app/products/loan-products/loan-products';
 
 /**
  * Availability rules for the Term Loan adjust command
@@ -31,7 +32,7 @@ import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.mode
  * Gate 1 - types the adjust command accepts at all. Mirrors the type check in
  * the backend's LoanAdjustmentServiceImpl#adjustExistingTransaction: accrual
  * related, repayment like, waiver, credit balance refund, deferred income,
- * capitalized income adjustment or buy down fee adjustment.
+ * capitalized income adjustment, buy down fee adjustment or chargeback.
  */
 const REVERSIBLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
   2, // REPAYMENT
@@ -43,6 +44,7 @@ const REVERSIBLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
   22, // PAYOUT_REFUND
   23, // GOODWILL_CREDIT
   24, // CHARGE_REFUND
+  25, // CHARGEBACK
   26, // CHARGE_ADJUSTMENT
   28, // DOWN_PAYMENT
   31, // INTEREST_PAYMENT_WAIVER
@@ -56,7 +58,7 @@ const REVERSIBLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
 
 /**
  * Gate 2 - types that clear gate 1 but reject a positive amount, so they can
- * only be reversed. The first three come from the backend's
+ * only be reversed. The first four come from the backend's
  * LoanTransaction#isEditable check; the deferred income ones each raise their
  * own "cannot be adjusted" error.
  */
@@ -64,6 +66,7 @@ const REVERSE_ONLY_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
   21, // MERCHANT_ISSUED_REFUND
   22, // PAYOUT_REFUND
   23, // GOODWILL_CREDIT
+  25, // CHARGEBACK
   35, // CAPITALIZED_INCOME
   37, // CAPITALIZED_INCOME_ADJUSTMENT
   40, // BUY_DOWN_FEE
@@ -88,6 +91,9 @@ const WORKING_CAPITAL_ADJUSTABLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new
  * adjusted directly.
  */
 const INTEREST_REFUND_TYPE_ID = 33;
+
+/** Chargeback clears both gates, but the backend reverses it on progressive loans only. */
+const CHARGEBACK_TYPE_ID = 25;
 
 /**
  * Loan statuses the command is allowed to act on even though the loan is no
@@ -116,6 +122,20 @@ export function canReverseLoanTransaction(transactionType: LoanTransactionType, 
 /** True when the transaction can be re-submitted with a new date, amount and payment details. */
 export function canAdjustLoanTransaction(transactionType: LoanTransactionType, alreadyReversed: boolean): boolean {
   return canReverseLoanTransaction(transactionType, alreadyReversed) && !isReverseOnlyLoanTransaction(transactionType);
+}
+
+/**
+ * True when the loan allows reversing the transaction: a chargeback only on a progressive loan.
+ * @param transactionType Type of the transaction
+ * @param loanScheduleType Schedule type of the loan the transaction belongs to
+ */
+export function loanAllowsReversal(
+  transactionType: LoanTransactionType,
+  loanScheduleType: { code?: string } | null | undefined
+): boolean {
+  return (
+    transactionType.id !== CHARGEBACK_TYPE_ID || loanScheduleType?.code === LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE
+  );
 }
 
 /**

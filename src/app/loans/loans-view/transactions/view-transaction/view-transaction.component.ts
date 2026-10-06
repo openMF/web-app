@@ -55,7 +55,8 @@ import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalTransaction,
-  canReverseLoanTransaction
+  canReverseLoanTransaction,
+  loanAllowsReversal
 } from '../../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -128,6 +129,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   /** Permission required by the Adjust button; each product posts its own adjust command. */
   adjustPermission: string = DEFAULT_UNDO_PERMISSION;
   existTransactionRelations = false;
+  loanScheduleType: { code?: string } | null = null;
 
   paymentTypeOptions: {}[] = [];
   transactionRelations = new MatTableDataSource();
@@ -158,6 +160,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { loanDetailsAssociationData?: any }) => {
         this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
+        this.loanScheduleType = data.loanDetailsAssociationData?.loanScheduleType ?? null;
       });
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
@@ -192,7 +195,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         : canAdjustLoanTransaction(this.transactionType, alreadyReversed);
       this.allowUndo = this.isWorkingCapital
         ? this.allowUndoTransaction(alreadyReversed, this.transactionType, !!this.transactionData.wcLoanId)
-        : canReverseLoanTransaction(this.transactionType, alreadyReversed) ||
+        : (canReverseLoanTransaction(this.transactionType, alreadyReversed) &&
+            loanAllowsReversal(this.transactionType, this.loanScheduleType)) ||
           (!alreadyReversed && this.hasDedicatedUndoCommand(this.transactionType));
       this.allowChargeback =
         this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;

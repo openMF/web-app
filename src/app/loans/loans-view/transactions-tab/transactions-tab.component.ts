@@ -66,7 +66,8 @@ import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalTransaction,
-  canReverseLoanTransaction
+  canReverseLoanTransaction,
+  loanAllowsReversal
 } from '../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -385,7 +386,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           this.isDiscountFee(transaction.type) ||
           transaction.type.contractTermination
         )
-      : canReverseLoanTransaction(transaction.type, alreadyReversed) || this.isWriteOff(transaction.type);
+      : (canReverseLoanTransaction(transaction.type, alreadyReversed) &&
+          loanAllowsReversal(transaction.type, this.loanDetailsData?.loanScheduleType)) ||
+          this.isWriteOff(transaction.type);
   }
 
   /**
