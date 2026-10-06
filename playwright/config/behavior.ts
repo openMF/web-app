@@ -44,11 +44,30 @@ export const BEHAVIOR = {
   overlayDismissNeeded: true,
 
   /**
-   * Angular persists Fineract credentials in sessionStorage under this
-   * key. The auth-setup project copies localStorage -> sessionStorage
-   * on every test to survive page reloads.
+   * Angular persists Fineract credentials under this key.
    */
   authStorageKey: 'mifosXCredentials',
+
+  /**
+   * Where the app keeps the credentials stored under `authStorageKey`.
+   *
+   * Angular keeps them in sessionStorage (remember-me is off), which
+   * Playwright's `storageState` does not persist. The auth setup mirrors
+   * them into localStorage, and `fixtures/auth-session.ts` copies them
+   * back into sessionStorage on every page load. React keeps them in
+   * localStorage, where `storageState` restores them on its own.
+   *
+   * Typed as the union, not the literal, so the shared check
+   * `BEHAVIOR.authStorage === 'session'` type-checks in both repos.
+   */
+  authStorage: 'session' as 'session' | 'local',
+
+  /**
+   * localStorage key holding the Fineract server URL the app talks to.
+   * The auth setup seeds it with `E2E_FINERACT_URL` so browser-side API
+   * calls reach the local Fineract instead of the default server.
+   */
+  serverStorageKey: 'mifosXServerURL',
 
   /**
    * Angular date inputs format dates as "01 January 2024".
