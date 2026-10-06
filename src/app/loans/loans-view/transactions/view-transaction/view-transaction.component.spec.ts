@@ -65,9 +65,13 @@ describe('ViewTransactionComponent', () => {
    */
   function createComponent(
     transactionData: any = transaction(2),
-    options: { loanStatusCode?: string; isWorkingCapital?: boolean } = {}
+    options: { loanStatusCode?: string; isWorkingCapital?: boolean; loanScheduleTypeCode?: string } = {}
   ): ViewTransactionComponent {
-    const { loanStatusCode = 'loanStatusType.active', isWorkingCapital = false } = options;
+    const {
+      loanStatusCode = 'loanStatusType.active',
+      isWorkingCapital = false,
+      loanScheduleTypeCode = 'PROGRESSIVE'
+    } = options;
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -75,7 +79,14 @@ describe('ViewTransactionComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({ loansAccountTransaction: transactionData }),
-            parent: { data: of({ loanDetailsAssociationData: { status: { code: loanStatusCode } } }) },
+            parent: {
+              data: of({
+                loanDetailsAssociationData: {
+                  status: { code: loanStatusCode },
+                  loanScheduleType: { code: loanScheduleTypeCode }
+                }
+              })
+            },
             snapshot: { params: { loanId: '1', clientId: '5' } }
           }
         },
@@ -144,6 +155,20 @@ describe('ViewTransactionComponent', () => {
       const component = createComponent(transaction(21));
 
       expect(component.allowUndo).toBe(true);
+      expect(component.allowEdition).toBe(false);
+    });
+
+    it('offers only the reversal on a chargeback of a progressive loan', () => {
+      const component = createComponent(transaction(25));
+
+      expect(component.allowUndo).toBe(true);
+      expect(component.allowEdition).toBe(false);
+    });
+
+    it('offers no action on a chargeback of a cumulative loan', () => {
+      const component = createComponent(transaction(25), { loanScheduleTypeCode: 'CUMULATIVE' });
+
+      expect(component.allowUndo).toBe(false);
       expect(component.allowEdition).toBe(false);
     });
 

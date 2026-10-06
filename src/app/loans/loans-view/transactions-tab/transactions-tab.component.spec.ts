@@ -53,13 +53,18 @@ describe('TransactionsTabComponent', () => {
    */
   function createComponent(
     isWorkingCapital = false,
-    loanStatusCode = 'loanStatusType.active'
+    loanStatusCode = 'loanStatusType.active',
+    loanScheduleTypeCode = 'PROGRESSIVE'
   ): TransactionsTabComponent {
     TestBed.resetTestingModule();
     const loanRoute = {
       snapshot: { params: { loanId: '1' } },
       data: of({
-        loanDetailsData: { status: { code: loanStatusCode, value: 'Active' }, transactions: [] }
+        loanDetailsData: {
+          status: { code: loanStatusCode, value: 'Active' },
+          loanScheduleType: { code: loanScheduleTypeCode },
+          transactions: []
+        }
       })
     };
     TestBed.configureTestingModule({
@@ -127,10 +132,9 @@ describe('TransactionsTabComponent', () => {
     it('offers no action on types the adjust command rejects', () => {
       const component = createComponent();
 
-      // Chargeback, charge payment, income posting and interest refund used to
-      // be offered by the previous blacklist and failed on submit.
+      // Charge payment, income posting and interest refund used to be offered
+      // by the previous blacklist and failed on submit.
       [
-        25,
         17,
         19,
         33
@@ -138,6 +142,20 @@ describe('TransactionsTabComponent', () => {
         expect(component.allowUndoTransaction(transaction(typeId))).toBe(false);
         expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
       });
+    });
+
+    it('offers only the reversal on a chargeback of a progressive loan', () => {
+      const component = createComponent();
+
+      expect(component.allowUndoTransaction(transaction(25))).toBe(true);
+      expect(component.allowAdjustTransaction(transaction(25))).toBe(false);
+    });
+
+    it('offers no action on a chargeback of a cumulative loan', () => {
+      const component = createComponent(false, 'loanStatusType.active', 'CUMULATIVE');
+
+      expect(component.allowUndoTransaction(transaction(25))).toBe(false);
+      expect(component.allowAdjustTransaction(transaction(25))).toBe(false);
     });
 
     it('keeps the reversal on a write-off, which has its own command', () => {

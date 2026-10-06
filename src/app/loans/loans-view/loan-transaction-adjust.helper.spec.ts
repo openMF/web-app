@@ -12,7 +12,8 @@ import {
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalTransaction,
   canReverseLoanTransaction,
-  isReverseOnlyLoanTransaction
+  isReverseOnlyLoanTransaction,
+  loanAllowsReversal
 } from './loan-transaction-adjust.helper';
 
 /** Only the id is read by the gates, so the rest of the type is irrelevant here. */
@@ -82,6 +83,10 @@ describe('LoanTransactionAdjustHelper', () => {
       23
     ],
     [
+      'CHARGEBACK',
+      25
+    ],
+    [
       'CAPITALIZED_INCOME',
       35
     ],
@@ -123,10 +128,6 @@ describe('LoanTransactionAdjustHelper', () => {
     [
       'INCOME_POSTING',
       19
-    ],
-    [
-      'CHARGEBACK',
-      25
     ],
     [
       'CHARGE_OFF',
@@ -195,6 +196,24 @@ describe('LoanTransactionAdjustHelper', () => {
     it('offers neither action', () => {
       expect(canReverseLoanTransaction(transactionType(id), false)).toBe(false);
       expect(canAdjustLoanTransaction(transactionType(id), false)).toBe(false);
+    });
+  });
+
+  describe('loan schedule type', () => {
+    it('allows reversing a chargeback on a progressive loan', () => {
+      expect(loanAllowsReversal(transactionType(25), { code: 'PROGRESSIVE' })).toBe(true);
+    });
+
+    it('rejects reversing a chargeback on a cumulative loan', () => {
+      expect(loanAllowsReversal(transactionType(25), { code: 'CUMULATIVE' })).toBe(false);
+    });
+
+    it('rejects reversing a chargeback when the schedule type is unknown', () => {
+      expect(loanAllowsReversal(transactionType(25), undefined)).toBe(false);
+    });
+
+    it('does not restrict other types on a cumulative loan', () => {
+      expect(loanAllowsReversal(transactionType(2), { code: 'CUMULATIVE' })).toBe(true);
     });
   });
 
