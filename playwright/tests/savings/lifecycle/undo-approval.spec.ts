@@ -24,15 +24,6 @@ const SUBMITTED_ON_DATE = '03 January 2024';
 const APPROVED_ON_DATE = '04 January 2024';
 
 test.describe('Savings lifecycle · Undo approval', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('returns an approved account to pending', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const account = await createApprovedSavingsAccount(apiSetup, cleanupGuard, client.resourceId, {

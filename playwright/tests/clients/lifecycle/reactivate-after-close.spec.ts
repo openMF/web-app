@@ -31,15 +31,6 @@ const REACTIVATION_DATE = '04 January 2024';
 const CLOSURE_REASON_NAME = 'E2E Close Client Reason';
 
 test.describe('Client lifecycle · Reactivate (Closed → Pending)', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('reactivates a closed client from the client actions flow', async ({ page, fineractApi }) => {
     const closureReason = await fineractApi.ensureClientClosureReason(CLOSURE_REASON_NAME);
     const officeId = await fineractApi.getFirstOfficeId();
