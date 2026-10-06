@@ -9,6 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   QueryList,
@@ -65,6 +66,12 @@ export class CreateClientComponent {
   private settingsService = inject(SettingsService);
   private destroyRef = inject(DestroyRef);
   private datatablesService = inject(Datatables);
+  private cdr = inject(ChangeDetectorRef);
+
+  /** True while the create client request is in flight. */
+  isSubmitting = false;
+  /** Idempotency key reused if the same submission is retried. */
+  submitIdempotencyKey?: string;
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
@@ -167,6 +174,16 @@ export class CreateClientComponent {
    * Submits the create client form.
    */
   submit() {
+    if (this.isSubmitting) {
+      return;
+    }
+    if (!this.submitIdempotencyKey) {
+      this.submitIdempotencyKey =
+        globalThis.crypto?.randomUUID?.() ?? `create-client-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const clientData = {
@@ -185,14 +202,23 @@ export class CreateClientComponent {
       }
     }
 
-    this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
+    this.clientsService.createClient(clientData, this.submitIdempotencyKey).subscribe({
+      next: (response: any) => {
+        this.submitIdempotencyKey = undefined;
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      },
+      error: () => {
+        // Fineract replays the stored response for a reused key, so a corrected form needs a new key.
+        this.submitIdempotencyKey = undefined;
+        this.isSubmitting = false;
+        this.cdr.markForCheck();
+      }
     });
   }
 }

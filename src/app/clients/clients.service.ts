@@ -88,8 +88,12 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
-  createClient(client: any) {
-    return this.http.post(`/clients`, client);
+  createClient(client: any, idempotencyKey?: string) {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/clients`, client, { headers });
   }
 
   updateClient(clientId: string, client: any) {
