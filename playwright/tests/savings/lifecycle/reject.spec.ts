@@ -25,15 +25,6 @@ const SUBMITTED_ON_DATE = '03 January 2024';
 const REJECTED_ON_DATE = '04 January 2024';
 
 test.describe('Savings lifecycle · Reject', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('rejects a pending savings account from the More submenu', async ({
     page,
     fineractApi,

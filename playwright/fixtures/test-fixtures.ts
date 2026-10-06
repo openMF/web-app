@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { test as base } from '@playwright/test';
+import { test as base } from './auth-session';
 
 import { FineractApiClient } from './fineract-api';
 import { ApiSetupManager } from '../utils/api-setup-manager';
@@ -24,6 +24,10 @@ import { CleanupGuard } from '../utils/cleanup-guard';
  *                      as an auto-fixture so its `flush()` runs in the
  *                      teardown phase even if a test never names it,
  *                      never opts in, or throws halfway through.
+ *
+ * Built on `./auth-session`, so every page a test opens already has
+ * the logged-in session restored. Specs do not need their own
+ * `addInitScript` for credentials.
  *
  * Factories in `playwright/factories/*.ts` consume `apiSetup` and
  * `cleanupGuard` together — the factory registers its own deleter on

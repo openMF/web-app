@@ -318,6 +318,12 @@
                 <span class="product-type-chip savings">{{ 'labels.heading.Saving Accounts' | translate }}</span>
               </div>
             </div>
+            <div class="acc-external-id">
+              @if (saving.externalId) {
+                <div class="acc-external-id-label">{{ 'labels.inputs.External Id' | translate }}</div>
+                <div class="acc-external-id-value">{{ saving.externalId }}</div>
+              }
+            </div>
             <div class="acc-product">
               <div class="acc-product-name">
                 <mifosx-long-text [textValue]="saving.productName" chars="40"></mifosx-long-text>
