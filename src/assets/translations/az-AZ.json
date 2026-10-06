@@ -782,7 +782,10 @@
       "futureDate": "Vaxtından əvvəl ödəniş tarixi gələcəkdə ola bilməz.",
       "dateOutOfRange": "Vaxtından əvvəl ödəniş tarixi icazə verilən aralıqdan kənardadır.",
       "amountMustBePositive": "Əməliyyat məbləği 0-dan böyük olmalıdır."
-    }
+    },
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Bu əməliyyat növü dövriyyə kapitalı krediti üzrə fərqlə düzəliş edilə bilməz.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Düzəliş məbləği sıfır ola bilməz.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Düzəliş əməliyyatı sıfırdan aşağı sala bilməz."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
@@ -1166,7 +1169,8 @@
       "Save": "Yadda saxla",
       "Upload Report Design": "Hesabat tərtibatını yüklə",
       "Mass Reject": "Kütləvi rədd et",
-      "Hide": "Gizlət"
+      "Hide": "Gizlət",
+      "Adjust by Difference": "Fərqlə düzəliş et"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -4208,7 +4212,10 @@
       "Withdrawn": "Geri götürülüb",
       "Registration Status": "Qeydiyyatın vəziyyəti",
       "Unknown": "Naməlum",
-      "Pending": "Gözləyir"
+      "Pending": "Gözləyir",
+      "Adjustment Amount": "Düzəliş məbləği",
+      "Original Amount": "İlkin məbləğ",
+      "Resulting Amount": "Nəticə məbləği"
     },
     "links": {
       "Community": "İcma",
@@ -5634,7 +5641,11 @@
       "Loading pending prospects": "Gözləyən potensial müştərilər yüklənir",
       "No pending prospects found": "Gözləyən potensial müştəri tapılmadı",
       "Unable to load pending prospects": "Gözləyən potensial müştəriləri yükləmək mümkün olmadı",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç.",
+      "Adjust by Difference": "Fərqlə düzəliş et",
+      "The adjustment amount cannot be zero": "Düzəliş məbləği sıfır ola bilməz",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Düzəliş məbləği ləğv edir, buna görə əməliyyat əvəzsiz geri qaytarılır",
+      "A positive amount increases the transaction and a negative one decreases it": "Müsbət məbləğ əməliyyatı artırır, mənfi məbləğ azaldır"
     },
     "permissions": {
       "actions": {

@@ -83,6 +83,28 @@ const WORKING_CAPITAL_ADJUSTABLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new
 ]);
 
 /**
+ * Working Capital types the delta based adjustment accepts
+ * (`POST /working-capital-loans/{loanId}/transactions/{transactionId}?command=adjust-by-delta`).
+ * Mirrors WorkingCapitalLoanDataValidator#validateAdjustByDeltaIsSupportedForTransaction.
+ * Unlike the adjust command, the amount sent is the signed difference: the
+ * backend reverses the original and re-creates it with the existing amount
+ * plus the difference, or reverses only when the difference cancels it.
+ */
+const WORKING_CAPITAL_DELTA_ADJUSTABLE_TRANSACTION_TYPE_IDS: ReadonlySet<number> = new Set([
+  2, // REPAYMENT
+  22, // PAYOUT_REFUND
+  23, // GOODWILL_CREDIT
+  26 // CHARGE_ADJUSTMENT
+]);
+
+/**
+ * Permission of the Working Capital delta based adjustment, which the backend
+ * derives from the command action (ADJUSTBYDELTA) and entity
+ * (WORKINGCAPITALLOANTRANSACTION) names.
+ */
+export const WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION = 'ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION';
+
+/**
  * Interest refund is repayment like, so it clears gate 1, but the backend
  * rejects it before reaching that check: it can be neither reversed nor
  * adjusted directly.
@@ -129,6 +151,19 @@ export function canAdjustWorkingCapitalTransaction(
   alreadyReversed: boolean
 ): boolean {
   return !alreadyReversed && WORKING_CAPITAL_ADJUSTABLE_TRANSACTION_TYPE_IDS.has(transactionType.id);
+}
+
+/**
+ * True when a Working Capital transaction can be corrected by a signed
+ * difference through the delta based adjustment command.
+ * @param transactionType Type of the transaction
+ * @param alreadyReversed Whether the transaction is already reversed
+ */
+export function canAdjustWorkingCapitalTransactionByDelta(
+  transactionType: LoanTransactionType,
+  alreadyReversed: boolean
+): boolean {
+  return !alreadyReversed && WORKING_CAPITAL_DELTA_ADJUSTABLE_TRANSACTION_TYPE_IDS.has(transactionType.id);
 }
 
 /**

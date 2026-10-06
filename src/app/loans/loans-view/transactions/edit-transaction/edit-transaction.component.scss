@@ -12,12 +12,27 @@
   padding-bottom: 2%;
 }
 
-// Shown when the loan is closed or overpaid: the adjustment is accepted but
-// reopens the account. Styled with opacity rather than a fixed colour so it
-// reads the same in both themes.
+// Short notes around the form: the reopening caution, and in delta mode the
+// feedback under the amount. Opacity rather than a fixed colour for the
+// neutral ones so they read the same in both themes; the error one takes the
+// theme's error token.
+.adjust-note {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 .adjust-warning {
   margin: 0 0 16px;
   font-size: 0.85rem;
   line-height: 1.5;
   opacity: 0.85;
+}
+
+.adjust-hint {
+  opacity: 0.7;
+}
+
+.adjust-error {
+  color: var(--mat-sys-error, #b3261e);
 }

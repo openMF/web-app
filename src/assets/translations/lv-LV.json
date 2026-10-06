@@ -850,7 +850,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} jābūt lielākam par nulli",
     "validation.sharesMinDefaultMaxOrder": "Minimālajai vērtībai jābūt mazākai vai vienādai ar noklusējuma vērtību, bet noklusējuma vērtībai – mazākai vai vienādai ar maksimālo",
     "validation.msg.savingsproduct.insufficient.balance": "Nepietiekams atlikums. Jūsu konta atlikums ir {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Atvēršanas laikam jābūt pirms slēgšanas laika."
+    "validation.openingTimeBeforeClosingTime": "Atvēršanas laikam jābūt pirms slēgšanas laika.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Šāda veida darījumu apgrozāmā kapitāla aizdevumam nevar koriģēt pēc starpības.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Korekcijas summa nedrīkst būt nulle.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Korekcija nedrīkst samazināt darījumu zem nulles."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1241,7 +1244,8 @@
       "Post Dividends": "Grāmatot dividendes",
       "Convert": "Konvertēt",
       "Deleting": "Dzēš",
-      "Inactivate": "Deaktivizēt"
+      "Inactivate": "Deaktivizēt",
+      "Adjust by Difference": "Koriģēt pēc starpības"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -4339,7 +4343,10 @@
       "PERSON": "Fiziska persona",
       "Payment": "Maksājums",
       "Export Date": "Eksporta datums",
-      "Label": "Nosaukums"
+      "Label": "Nosaukums",
+      "Adjustment Amount": "Korekcijas summa",
+      "Original Amount": "Sākotnējā summa",
+      "Resulting Amount": "Rezultējošā summa"
     },
     "links": {
       "Community": "kopiena",
@@ -5811,7 +5818,11 @@
       "Closed": "Slēgts",
       "Dashboard Export": "Paneļa eksports",
       "Generated on": "Ģenerēts",
-      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa"
+      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
+      "Adjust by Difference": "Koriģēt pēc starpības",
+      "The adjustment amount cannot be zero": "Korekcijas summa nedrīkst būt nulle",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Korekcija atceļ summu, tāpēc darījums tiek atcelts bez aizstāšanas",
+      "A positive amount increases the transaction and a negative one decreases it": "Pozitīva summa darījumu palielina, negatīva – samazina"
     },
     "permissions": {
       "actions": {

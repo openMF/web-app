@@ -853,7 +853,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} शून्य भन्दा ठूलो हुनुपर्छ",
     "validation.sharesMinDefaultMaxOrder": "न्यूनतम पूर्वनिर्धारित भन्दा सानो वा बराबर हुनुपर्छ, र पूर्वनिर्धारित अधिकतम भन्दा सानो वा बराबर हुनुपर्छ",
     "validation.msg.savingsproduct.insufficient.balance": "अपर्याप्त मौज्दात। तपाईंको खाताको मौज्दात {{balance}} छ।",
-    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।"
+    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "यो कारोबार प्रकार कार्यशील पुँजी ऋणमा फरकद्वारा समायोजन गर्न सकिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "समायोजन रकम शून्य हुन सक्दैन।",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "समायोजनले कारोबारलाई शून्यभन्दा तल घटाउन सक्दैन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1244,7 +1247,8 @@
       "Post Dividends": "लाभांश पोस्ट गर्नुहोस्",
       "Convert": "रूपान्तरण गर्नुहोस्",
       "Deleting": "मेटाउँदै",
-      "Inactivate": "निष्क्रिय पार्नुहोस्"
+      "Inactivate": "निष्क्रिय पार्नुहोस्",
+      "Adjust by Difference": "फरकद्वारा समायोजन"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -4342,7 +4346,10 @@
       "PERSON": "व्यक्ति",
       "Payment": "भुक्तानी",
       "Export Date": "निर्यात मिति",
-      "Label": "लेबल"
+      "Label": "लेबल",
+      "Adjustment Amount": "समायोजन रकम",
+      "Original Amount": "मूल रकम",
+      "Resulting Amount": "परिणामी रकम"
     },
     "links": {
       "Community": "समुदाय",
@@ -5814,7 +5821,11 @@
       "Closed": "बन्द गरियो",
       "Dashboard Export": "ड्यासबोर्ड निर्यात",
       "Generated on": "उत्पन्न मिति",
-      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो"
+      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
+      "Adjust by Difference": "फरकद्वारा समायोजन",
+      "The adjustment amount cannot be zero": "समायोजन रकम शून्य हुन सक्दैन",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "समायोजनले रकम रद्द गर्छ, त्यसैले कारोबार प्रतिस्थापनबिना उल्ट्याइन्छ",
+      "A positive amount increases the transaction and a negative one decreases it": "सकारात्मक रकमले कारोबार बढाउँछ र नकारात्मकले घटाउँछ"
     },
     "permissions": {
       "actions": {

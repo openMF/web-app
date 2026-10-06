@@ -850,7 +850,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} lazima iwe kubwa kuliko sifuri",
     "validation.sharesMinDefaultMaxOrder": "Kiwango cha chini lazima kiwe kidogo au sawa na chaguo-msingi, na chaguo-msingi kiwe kidogo au sawa na kiwango cha juu",
     "validation.msg.savingsproduct.insufficient.balance": "Salio halitoshi. Salio la akaunti yako ni {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga."
+    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Aina hii ya muamala haiwezi kurekebishwa kwa tofauti kwenye mkopo wa mtaji wa kazi.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Kiasi cha marekebisho hakiwezi kuwa sifuri.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Marekebisho hayawezi kupunguza muamala chini ya sifuri."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1241,7 +1244,8 @@
       "Post Dividends": "Weka Gawio",
       "Convert": "Badilisha",
       "Deleting": "Inafuta",
-      "Inactivate": "Zima"
+      "Inactivate": "Zima",
+      "Adjust by Difference": "Rekebisha kwa Tofauti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -4339,7 +4343,10 @@
       "PERSON": "Mtu binafsi",
       "Payment": "Malipo",
       "Export Date": "Tarehe ya Kuhamisha",
-      "Label": "Lebo"
+      "Label": "Lebo",
+      "Adjustment Amount": "Kiasi cha Marekebisho",
+      "Original Amount": "Kiasi Asilia",
+      "Resulting Amount": "Kiasi Kinachotokana"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5811,7 +5818,11 @@
       "Closed": "Imefungwa",
       "Dashboard Export": "Uhamishaji wa Dashibodi",
       "Generated on": "Imetolewa tarehe",
-      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X"
+      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
+      "Adjust by Difference": "Rekebisha kwa Tofauti",
+      "The adjustment amount cannot be zero": "Kiasi cha marekebisho hakiwezi kuwa sifuri",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Marekebisho yanafuta kiasi, kwa hivyo muamala unatenguliwa bila mbadala",
+      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza"
     },
     "permissions": {
       "actions": {

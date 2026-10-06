@@ -414,6 +414,16 @@ const routes: Routes = [
             }
           },
           {
+            // Working Capital only: same form, but the amount is the signed
+            // difference and the delta based adjustment command is posted.
+            path: 'adjust-by-delta',
+            component: EditTransactionComponent,
+            data: { breadcrumb: 'Adjust by Difference', routeParamBreadcrumb: false, adjustMode: 'delta' },
+            resolve: {
+              loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
+            }
+          },
+          {
             path: 'reciept',
             component: ViewRecieptComponent,
             data: { breadcrumb: 'Reciept', routeParamBreadcrumb: false },

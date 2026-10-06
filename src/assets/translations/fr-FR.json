@@ -853,7 +853,10 @@
     "validation.mustBeGreaterThanZero": "{{field}} doit être supérieur à zéro",
     "validation.sharesMinDefaultMaxOrder": "Le minimum doit être inférieur ou égal à la valeur par défaut, et la valeur par défaut inférieure ou égale au maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Solde insuffisant. Le solde de votre compte est de {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "L'heure d'ouverture doit précéder l'heure de fermeture."
+    "validation.openingTimeBeforeClosingTime": "L'heure d'ouverture doit précéder l'heure de fermeture.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Ce type de transaction ne peut pas être ajusté par différence sur un prêt de fonds de roulement.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Le montant de l'ajustement ne peut pas être zéro.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "L'ajustement ne peut pas réduire la transaction en dessous de zéro."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1244,7 +1247,8 @@
       "Post Dividends": "Comptabiliser les dividendes",
       "Convert": "Convertir",
       "Deleting": "Suppression",
-      "Inactivate": "Désactiver"
+      "Inactivate": "Désactiver",
+      "Adjust by Difference": "Ajuster par différence"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -4342,7 +4346,10 @@
       "PERSON": "Personne physique",
       "Payment": "Paiement",
       "Export Date": "Date d'export",
-      "Label": "Libellé"
+      "Label": "Libellé",
+      "Adjustment Amount": "Montant de l'ajustement",
+      "Original Amount": "Montant d'origine",
+      "Resulting Amount": "Montant résultant"
     },
     "links": {
       "Community": "Communauté",
@@ -5814,7 +5821,11 @@
       "Closed": "Clôturé",
       "Dashboard Export": "Export du tableau de bord",
       "Generated on": "Généré le",
-      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X"
+      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
+      "Adjust by Difference": "Ajuster par différence",
+      "The adjustment amount cannot be zero": "Le montant de l'ajustement ne peut pas être zéro",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "L'ajustement annule le montant, la transaction est donc contre-passée sans remplacement",
+      "A positive amount increases the transaction and a negative one decreases it": "Un montant positif augmente la transaction et un montant négatif la diminue"
     },
     "permissions": {
       "actions": {
