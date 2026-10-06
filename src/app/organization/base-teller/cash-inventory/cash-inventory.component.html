@@ -1,0 +1,181 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container cash-inventory">
+  <mat-card>
+    <mat-card-content>
+      <header>
+        <div>
+          <h2>{{ 'cashInventory.title' | translate }}</h2>
+          <p>{{ 'cashInventory.description' | translate }}</p>
+        </div>
+        @if (asOf) {
+          <p class="as-of">{{ 'cashInventory.lastUpdated' | translate }}: {{ asOf | date: 'medium' }}</p>
+        }
+      </header>
+
+      @if (contextLoading) {
+        <div class="loading-state" role="status" aria-live="polite">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>{{ 'cashInventory.states.loadingFilters' | translate }}</span>
+        </div>
+      }
+
+      @if (contextError) {
+        <div class="message error" role="alert">
+          <span>{{ contextError | translate }}</span>
+          @if (contextError !== 'cashInventory.errors.forbidden') {
+            <button mat-button type="button" (click)="loadContext()">{{ 'cashInventory.retry' | translate }}</button>
+          }
+        </div>
+      }
+
+      @if (context) {
+        <form [formGroup]="filterForm" class="filter-panel" (ngSubmit)="applyFilters()">
+          <mat-form-field>
+            <mat-label>{{ 'cashInventory.filters.custodian' | translate }}</mat-label>
+            <mat-select formControlName="custodianKey">
+              <mat-option [value]="null">{{ 'cashInventory.all' | translate }}</mat-option>
+              @for (custodian of context.custodians; track custodian.key) {
+                <mat-option [value]="custodian.key">{{ custodian.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'cashInventory.filters.transactionType' | translate }}</mat-label>
+            <mat-select formControlName="transactionType">
+              <mat-option [value]="null">{{ 'cashInventory.all' | translate }}</mat-option>
+              @for (type of context.transactionTypes; track type.code) {
+                <mat-option [value]="type.code">
+                  @if (type.code === 'CASH') {
+                    {{ 'cashInventory.types.CASH' | translate }}
+                  } @else if (type.code === 'CHECK') {
+                    {{ 'cashInventory.types.CHECK' | translate }}
+                  } @else {
+                    {{ type.name }}
+                  }
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'cashInventory.filters.currency' | translate }}</mat-label>
+            <mat-select formControlName="currencyCode">
+              <mat-option [value]="null">{{ 'cashInventory.all' | translate }}</mat-option>
+              @for (currency of context.currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }} — {{ currency.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="showLastCutOff">
+            {{ 'cashInventory.filters.showLastCutOff' | translate }}
+          </mat-checkbox>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="inventoryLoading">
+            {{ 'cashInventory.apply' | translate }}
+          </button>
+        </form>
+
+        @if (inventoryLoading) {
+          <div class="loading-state" role="status" aria-live="polite">
+            <mat-spinner diameter="40"></mat-spinner>
+            <span>{{ 'cashInventory.states.loadingInventory' | translate }}</span>
+          </div>
+        }
+
+        @if (inventoryError && !inventoryLoading) {
+          <div class="message error" role="alert">
+            <span>{{ inventoryError | translate }}</span>
+            @if (inventoryError !== 'cashInventory.errors.forbidden') {
+              <button mat-button type="button" (click)="retryInventory()">
+                {{ 'cashInventory.retry' | translate }}
+              </button>
+            }
+          </div>
+        }
+
+        @if (!inventoryLoading && !inventoryError && rows.length) {
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="rows">
+              <ng-container matColumnDef="userCode">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.user' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.userCode }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.name' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="inventoryType">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.type' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ 'cashInventory.types.' + row.inventoryType | translate }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="currencyCode">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.currency' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="initialBalance">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.initialBalance' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.initialBalance | number: digitsInfo(row) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="accumulatedInflows">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.inflows' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.accumulatedInflows | number: digitsInfo(row) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="accumulatedOutflows">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.outflows' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.accumulatedOutflows | number: digitsInfo(row) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cutOffs">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.cutOffs' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.cutOffs | number: digitsInfo(row) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="balance">
+                <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.balance' | translate }}</th>
+                <td mat-cell *matCellDef="let row" class="balance-cell">
+                  <strong>{{ row.balance | number: digitsInfo(row) }} {{ row.currencyCode }}</strong>
+                  @if (filterForm.controls.showLastCutOff.value && row.lastCutOffAt) {
+                    <small>
+                      {{ 'cashInventory.lastCutOff' | translate }}: {{ row.lastCutOffAt | date: 'short' }}
+                      @if (row.lastCutOffAmount !== null) {
+                        · {{ row.lastCutOffAmount | number: digitsInfo(row) }} {{ row.currencyCode }}
+                      }
+                    </small>
+                  }
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        } @else if (hasLoadedInventory && !inventoryLoading && !inventoryError) {
+          <div class="message empty-state">{{ 'cashInventory.states.empty' | translate }}</div>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

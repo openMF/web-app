@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Cash Inventory Monitoring",
+    "description": "Review cash and check inventory by custodian, transaction type and currency.",
+    "all": "All",
+    "apply": "Apply Filters",
+    "retry": "Retry",
+    "lastUpdated": "Last Updated",
+    "lastCutOff": "Last Cut-off",
+    "filters": {
+      "custodian": "User / Custodian",
+      "transactionType": "Transaction Type",
+      "currency": "Currency",
+      "showLastCutOff": "Show Last Cut-off"
+    },
+    "types": { "CASH": "Cash", "CHECK": "Check" },
+    "columns": {
+      "user": "User / Custodian",
+      "name": "Name",
+      "type": "Type",
+      "currency": "Currency",
+      "initialBalance": "Initial Balance",
+      "inflows": "Accumulated Inflows",
+      "outflows": "Accumulated Outflows",
+      "cutOffs": "Cut-offs",
+      "balance": "Available Balance"
+    },
+    "states": {
+      "loadingFilters": "Loading inventory filters",
+      "loadingInventory": "Loading cash inventory",
+      "empty": "No cash inventory records found."
+    },
+    "errors": {
+      "context": "Unable to load cash inventory filters.",
+      "inventory": "Unable to load cash inventory.",
+      "forbidden": "You do not have permission to view cash inventory."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Cash and Check Credit Payments",

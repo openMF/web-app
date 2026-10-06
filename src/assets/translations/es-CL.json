@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Monitoreo de inventario de efectivo",
+    "description": "Revise el inventario de efectivo y cheques por custodio, tipo de transacción y moneda.",
+    "all": "Todos",
+    "apply": "Aplicar filtros",
+    "retry": "Reintentar",
+    "lastUpdated": "Última actualización",
+    "lastCutOff": "Último corte",
+    "filters": {
+      "custodian": "Usuario / Custodio",
+      "transactionType": "Tipo de transacción",
+      "currency": "Moneda",
+      "showLastCutOff": "Mostrar último corte"
+    },
+    "types": { "CASH": "Efectivo", "CHECK": "Cheque" },
+    "columns": {
+      "user": "Usuario / Custodio",
+      "name": "Nombre",
+      "type": "Tipo",
+      "currency": "Moneda",
+      "initialBalance": "Saldo inicial",
+      "inflows": "Entradas acumuladas",
+      "outflows": "Salidas acumuladas",
+      "cutOffs": "Cortes",
+      "balance": "Saldo disponible"
+    },
+    "states": {
+      "loadingFilters": "Cargando filtros de inventario",
+      "loadingInventory": "Cargando inventario de efectivo",
+      "empty": "No se encontraron registros de inventario de efectivo."
+    },
+    "errors": {
+      "context": "No se pudieron cargar los filtros del inventario de efectivo.",
+      "inventory": "No se pudo cargar el inventario de efectivo.",
+      "forbidden": "No tiene permiso para ver el inventario de efectivo."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Pagos de préstamos en efectivo y con cheque",
