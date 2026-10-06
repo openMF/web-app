@@ -33,15 +33,6 @@ const DUE_DATE = '15 January 2024';
 const PAY_DATE = '20 January 2024';
 
 test.describe('Client charges · Operations', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('lists a charge on the client general tab', async ({ page, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     await createTestClientCharge(apiSetup, cleanupGuard, client.resourceId, { dueDate: DUE_DATE });

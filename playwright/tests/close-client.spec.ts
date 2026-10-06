@@ -17,15 +17,6 @@ const ACTIVE_LOAN_TEST_DATE = '04 January 2024';
 const CLOSURE_REASON_NAME = 'E2E Close Client Reason';
 
 test.describe('Close Client Workflow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('should close an active client from the client actions flow', async ({ page, fineractApi }) => {
     await fineractApi.ensureClientClosureReason(CLOSURE_REASON_NAME);
     const officeId = await fineractApi.getFirstOfficeId();

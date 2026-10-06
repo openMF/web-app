@@ -55,15 +55,6 @@ const SUBMITTED_ON_DATE = '01 January 2024';
 const ACTIVATION_DATE = '02 January 2024';
 
 test.describe('Groups · Create', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('creates an active group with a client member', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const groupName = generateE2EName('group');

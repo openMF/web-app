@@ -47,15 +47,6 @@ import { ManageGroupMembersPage } from '../../pages/groups/manage-group-members.
  * cleans up fully; the associate test does not, by design.
  */
 test.describe('Groups · Manage members', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('associates a client with a group', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const group = await createTestGroup(apiSetup, cleanupGuard);
