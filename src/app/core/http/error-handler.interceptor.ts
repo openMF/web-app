@@ -149,8 +149,20 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     // state: the footer falls back to the system date instead of interrupting the user with an
     // alert. The trailing slash keeps the business date list lookup out of this exception.
     const isBusinessDate404 = status === 404 && request.method === 'GET' && request.url.includes('/businessdate/');
+    // The office Address, Services and Schedules tabs show their own message when the plugin
+    // providing these endpoints isn't deployed, so a 404 on loading them isn't an error.
+    const isOfficePluginLookup404 =
+      status === 404 &&
+      request.method === 'GET' &&
+      /\/v2\/offices\/[^/]+\/(addresses|services|schedules)(\?|$)/.test(request.url);
 
-    if (!environment.production && !isClientImage404 && !isAnalyticsReport404 && !isBusinessDate404) {
+    if (
+      !environment.production &&
+      !isClientImage404 &&
+      !isAnalyticsReport404 &&
+      !isBusinessDate404 &&
+      !isOfficePluginLookup404
+    ) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
@@ -180,7 +192,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
       });
     } else if (status === 404) {
-      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404) {
+      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404 || isOfficePluginLookup404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({
