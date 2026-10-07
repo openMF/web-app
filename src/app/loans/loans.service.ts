@@ -135,12 +135,12 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
-  getLoanContractTerminationTemplate(loanId: string, transactionDate: string): Observable<any> {
+  getLoanEarlyTerminationTemplate(loanId: string, command: string, transactionDate: string): Observable<any> {
     if (!transactionDate) {
       transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
     }
     const httpParams = new HttpParams()
-      .set('command', 'contractTermination')
+      .set('command', command)
       .set('transactionDate', transactionDate)
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat);

@@ -39,6 +39,16 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrepayLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private static readonly EARLY_TERMINATION_COMMANDS: Record<string, string> = {
+    'Contract Termination': 'contractTermination',
+    'Loan Withdrawal': 'loanWithdrawal'
+  };
+
+  private static readonly SUBMIT_PERMISSIONS: Record<string, string> = {
+    contractTermination: 'CONTRACT_TERMINATION_LOAN',
+    loanWithdrawal: 'LOAN_WITHDRAWAL_LOAN'
+  };
+
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
@@ -61,7 +71,8 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
 
   prepayData: any;
   currency: Currency | null = null;
-  contractTermination: boolean;
+  /** Backend command of the early termination action, or null for a normal prepayment. */
+  earlyTerminationCommand: string | null = null;
   maturityDate: Date | null = null;
 
   /**
@@ -81,11 +92,12 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
    */
   ngOnInit() {
     this.prepayData = this.dataObject;
-    this.contractTermination = this.dataObject['actionName'] == 'Contract Termination';
+    this.earlyTerminationCommand =
+      PrepayLoanComponent.EARLY_TERMINATION_COMMANDS[this.dataObject['actionName']] ?? null;
     this.maxDate = this.settingsService.businessDate;
     this.createprepayLoanForm();
-    if (this.contractTermination) {
-      this.setContractTerminationDetails();
+    if (this.isEarlyTermination) {
+      this.setEarlyTerminationDetails();
     } else {
       this.setPrepayLoanDetails();
     }
@@ -94,11 +106,19 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     }
   }
 
+  get isEarlyTermination(): boolean {
+    return !!this.earlyTerminationCommand;
+  }
+
+  get submitPermission(): string {
+    return PrepayLoanComponent.SUBMIT_PERMISSIONS[this.earlyTerminationCommand] ?? 'REPAYMENT_LOAN';
+  }
+
   /**
    * Creates the prepay loan form.
    */
   createprepayLoanForm() {
-    if (this.contractTermination) {
+    if (this.isEarlyTermination) {
       this.prepayLoanForm = this.formBuilder.group({
         transactionDate: [
           this.settingsService.businessDate,
@@ -148,9 +168,9 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
   }
 
   /**
-   * Bounds the contract termination date and keeps the payoff preview in step with it.
+   * Bounds the early termination date and keeps the payoff preview in step with it.
    */
-  setContractTerminationDetails() {
+  setEarlyTerminationDetails() {
     this.minDate = this.settingsService.businessDate;
     this.maxDate = this.settingsService.maxFutureDate;
 
@@ -178,7 +198,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
         map((date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
         distinctUntilChanged(),
         switchMap((terminationDate) =>
-          this.loanService.getLoanContractTerminationTemplate(this.loanId, terminationDate)
+          this.loanService.getLoanEarlyTerminationTemplate(this.loanId, this.earlyTerminationCommand, terminationDate)
         ),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -235,27 +255,27 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     });
   }
 
-  submitContractTermination() {
-    const contractTerminationFormData = this.prepayLoanForm.value;
+  submitEarlyTermination() {
+    const earlyTerminationFormData = this.prepayLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.prepayLoanForm.value.transactionDate;
-    if (contractTerminationFormData.transactionDate instanceof Date) {
-      contractTerminationFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    if (earlyTerminationFormData.transactionDate instanceof Date) {
+      earlyTerminationFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
     const data = {
-      ...contractTerminationFormData,
+      ...earlyTerminationFormData,
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, this.earlyTerminationCommand, data).subscribe((response: any) => {
       this.gotoLoanDefaultView();
     });
   }
 
   submit() {
-    if (this.contractTermination) {
-      this.submitContractTermination();
+    if (this.isEarlyTermination) {
+      this.submitEarlyTermination();
     } else {
       this.submitRepayment();
     }

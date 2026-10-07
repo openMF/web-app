@@ -114,7 +114,8 @@ describe('ViewTransactionComponent', () => {
   beforeEach(() => {
     dialogResult = { data: { value: { note: ' Wrong amount ', reversalExternalId: '' } } };
     loansServiceStub = {
-      executeLoansAccountTransactionsCommand: jest.fn().mockReturnValue(of({ resourceId: 77 }))
+      executeLoansAccountTransactionsCommand: jest.fn().mockReturnValue(of({ resourceId: 77 })),
+      loanActionButtons: jest.fn().mockReturnValue(of({ resourceId: 1 }))
     };
     dialogStub = { open: jest.fn().mockReturnValue({ afterClosed: () => of(dialogResult) }) };
     routerStub = { navigate: jest.fn() };
@@ -230,6 +231,30 @@ describe('ViewTransactionComponent', () => {
       ] = loansServiceStub.executeLoansAccountTransactionsCommand.mock.calls[0];
       expect(command).toBe('undo-charge-off');
       expect(transactionId).toBeUndefined();
+    });
+
+    it.each([
+      { flag: 'contractTermination', typeId: 38, command: 'undoContractTermination' },
+      { flag: 'loanWithdrawal', typeId: 48, command: 'undoLoanWithdrawal' }
+    ])('undoes a $flag on the loan with $command', ({ flag, typeId, command }) => {
+      dialogResult = { data: { value: { note: 'customer changed mind', reversalExternalId: 'rev-9' } } };
+      const component = createComponent(transaction(typeId, { type: { id: typeId, [flag]: true } }));
+
+      expect(component.allowUndo).toBe(true);
+      component.undoTransaction();
+
+      expect(loansServiceStub.loanActionButtons).toHaveBeenCalledWith('1', command, {
+        note: 'customer changed mind',
+        reversalExternalId: 'rev-9'
+      });
+      expect(loansServiceStub.executeLoansAccountTransactionsCommand).not.toHaveBeenCalled();
+    });
+
+    it('gates the loan withdrawal undo with its own permission and names it Undo', () => {
+      const component = createComponent(transaction(48, { type: { id: 48, loanWithdrawal: true } }));
+
+      expect(component.undoPermission).toBe('LOAN_WITHDRAWAL_UNDO_LOAN');
+      expect(component.undoButtonLabelKey).toBe('labels.buttons.Undo');
     });
 
     it('gates the button with the permission of the command it posts', () => {

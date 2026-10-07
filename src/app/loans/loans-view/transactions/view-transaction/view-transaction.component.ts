@@ -174,13 +174,15 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       const alreadyReversed = this.transactionData.manuallyReversed || this.transactionData.reversed;
       this.isWorkingCapitalChargeOff = this.isWorkingCapital && this.isChargeOff(this.transactionType);
       this.isTermLoanChargeOff = !this.isWorkingCapital && this.isChargeOff(this.transactionType);
-      // A charge-off is undone through its dedicated command rather than the
-      // adjust command, so the button is gated with the same permission the
-      // account header action uses instead of the default ADJUST_LOAN.
+      // A charge-off or loan withdrawal is undone through its dedicated command
+      // rather than the adjust command, so the button is gated with that
+      // command's permission instead of the default ADJUST_LOAN.
       if (this.isWorkingCapitalChargeOff) {
         this.undoPermission = 'UNDOCHARGEOFF_WORKINGCAPITALLOAN';
       } else if (this.isTermLoanChargeOff) {
         this.undoPermission = 'UNDOCHARGEOFF_LOAN';
+      } else if (this.transactionType.loanWithdrawal) {
+        this.undoPermission = 'LOAN_WITHDRAWAL_UNDO_LOAN';
       } else {
         this.undoPermission = DEFAULT_UNDO_PERMISSION;
       }
@@ -251,7 +253,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     return !!(
       this.isWriteOff(transactionType) ||
       this.isChargeOff(transactionType) ||
-      transactionType.contractTermination
+      transactionType.contractTermination ||
+      transactionType.loanWithdrawal
     );
   }
 
@@ -305,7 +308,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   undoTransaction() {
     const accountId = this.route.snapshot.params['loanId'];
 
-    if (this.transactionType.contractTermination) {
+    if (this.transactionType.contractTermination || this.transactionType.loanWithdrawal) {
+      const command = this.transactionType.loanWithdrawal ? 'undoLoanWithdrawal' : 'undoContractTermination';
       this.openReversalDialog('labels.heading.Undo Transaction', 'labels.buttons.Undo')
         .afterClosed()
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -319,7 +323,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           };
 
           this.loansService
-            .loanActionButtons(accountId, 'undoContractTermination', payload)
+            .loanActionButtons(accountId, command, payload)
             .subscribe(() => this.navigateToTransactionList());
         });
     } else if (this.isWorkingCapitalChargeOff) {

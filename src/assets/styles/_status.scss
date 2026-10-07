@@ -52,6 +52,10 @@
   color: $subStatus-contract-termination;
 }
 
+.subStatus-loan-withdrawal {
+  color: $subStatus-loan-withdrawal;
+}
+
 .mat-step-header .mat-step-icon-state-done {
   background-color: $state-done;
 
@@ -123,6 +127,10 @@
 
   &.subStatus-contract-termination {
     background-color: $subStatus-contract-termination;
+  }
+
+  &.subStatus-loan-withdrawal {
+    background-color: $subStatus-loan-withdrawal;
   }
 }
 
