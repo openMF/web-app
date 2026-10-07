@@ -164,7 +164,7 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     // payment type in the payment detail, where Term Loan flattens them.
     const date = this.isWorkingCapital ? template.transactionDate : template.date;
     this.editTransactionForm.patchValue({
-      transactionDate: date && new Date(date),
+      transactionDate: date && this.dateUtils.parseDate(date),
       transactionAmount: this.isWorkingCapital ? template.transactionAmount : template.amount,
       paymentTypeId: this.isWorkingCapital
         ? (template.paymentDetailData?.paymentType?.id ?? null)

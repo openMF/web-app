@@ -27,6 +27,7 @@ import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Savings Account Details Step
  */
@@ -46,6 +47,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   private destroyRef = inject(DestroyRef);
 
   /** Savings Account Template */
@@ -89,7 +91,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
           productId: this.savingsAccountTemplate.savingsProductId,
           submittedOnDate:
             this.savingsAccountTemplate.timeline.submittedOnDate &&
-            new Date(this.savingsAccountTemplate.timeline.submittedOnDate),
+            this.dateUtils.parseDate(this.savingsAccountTemplate.timeline.submittedOnDate),
           externalId: this.savingsAccountTemplate.externalId
         });
       } else {
