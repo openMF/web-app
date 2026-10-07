@@ -51,4 +51,40 @@ describe('SavingsAccountChargesStepComponent', () => {
 
     expect(openedDatepicker().maxDate).toBe(maxFutureDate);
   });
+
+  describe('when modifying an application', () => {
+    const flatCharge = { chargeId: 3, name: 'Withdrawal Fee', amount: 2, amountOrPercentage: 2 };
+    const percentageCharge = { chargeId: 4, name: 'Withdrawal Fee %', amount: 0, amountOrPercentage: 1 };
+
+    beforeEach(() => {
+      component.savingsAccountTemplate = { id: 4, charges: [
+          flatCharge,
+          percentageCharge
+        ] };
+      component.ngOnInit();
+    });
+
+    it("loads the account's own charges, with the entered amount or percentage", () => {
+      expect(component.chargesDataSource).toEqual([
+        { ...flatCharge, id: 3, amount: 2 },
+        { ...percentageCharge, id: 4, amount: 1 }
+      ]);
+    });
+
+    it("keeps the account's charges when the product template arrives", () => {
+      component.savingsAccountProductTemplate = { chargeOptions: [], charges: [] };
+      component.ngOnChanges();
+
+      expect(component.chargesDataSource.length).toBe(2);
+    });
+  });
+
+  it('uses the product charges when creating an application', () => {
+    component.savingsAccountTemplate = { clientId: 1 };
+    component.ngOnInit();
+    component.savingsAccountProductTemplate = { chargeOptions: [], charges: [{ chargeId: 7, amount: 5 }] };
+    component.ngOnChanges();
+
+    expect(component.chargesDataSource).toEqual([{ chargeId: 7, amount: 5, id: 7 }]);
+  });
 });
