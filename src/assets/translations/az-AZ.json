@@ -1203,6 +1203,7 @@
       "Save": "Yadda saxla",
       "Upload Report Design": "Hesabat tərtibatını yüklə",
       "Mass Reject": "Kütləvi rədd et",
+      "Reject Selected": "Seçilənləri rədd et",
       "Hide": "Gizlət"
     },
     "catalogs": {
@@ -2201,6 +2202,7 @@
       "Deferred Income Recognition": "Təxirə salınmış gəlirin tanınması",
       "Advanced Configuration": "Genişləndirilmiş konfiqurasiya",
       "Mass Reject Credit Applications": "Kredit müraciətlərinin kütləvi rəddi",
+      "Mass Rejection": "Kütləvi rədd",
       "Enrollment Details": "Qeydiyyat təfərrüatları"
     },
     "inputs": {

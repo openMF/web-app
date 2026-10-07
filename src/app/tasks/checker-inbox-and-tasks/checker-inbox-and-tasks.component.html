@@ -94,6 +94,16 @@
         </a>
         <a
           mat-tab-link
+          [routerLink]="['./mass-rejection']"
+          routerLinkActive
+          #massRejection="routerLinkActive"
+          [active]="massRejection.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.heading.Mass Rejection' | translate }}
+        </a>
+        <a
+          mat-tab-link
           [routerLink]="['./pending-prospects']"
           routerLinkActive
           #pendingProspects="routerLinkActive"

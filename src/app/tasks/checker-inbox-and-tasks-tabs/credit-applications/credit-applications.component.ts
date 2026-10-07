@@ -115,12 +115,14 @@ export class CreditApplicationsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  isCreditSearch = this.route.snapshot.routeConfig?.path === 'credit' || this.route.snapshot.data['title'] === 'Credit';
+  private routePath = this.route.snapshot.routeConfig?.path;
+  isCreditSearch = this.routePath === 'credit' || this.route.snapshot.data['title'] === 'Credit';
+  isMassRejection = this.routePath === 'mass-rejection' || this.route.snapshot.data['title'] === 'Mass Rejection';
   creditApplicationsForm: UntypedFormGroup = this.createSearchForm();
 
   dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = [
-    'select',
+    ...(this.isMassRejection ? ['select'] : []),
     'accountNo',
     'clientName',
     'clientType',
@@ -135,7 +137,7 @@ export class CreditApplicationsComponent implements OnInit {
   loanProductOptions: OptionItem[] = [];
   clientTypeOptions: OptionItem[] = [];
   stateOptions: OptionItem[] = [];
-  statusOptions: OptionItem[] = CREDIT_APPLICATION_STATUS_OPTIONS;
+  statusOptions: OptionItem[] = [...CREDIT_APPLICATION_STATUS_OPTIONS];
   currencyOptions: OptionItem[] = [];
 
   pageSize = 10;
@@ -147,11 +149,13 @@ export class CreditApplicationsComponent implements OnInit {
   loadFailed = false;
   filterError = '';
   rejecting = false;
+  confirmingRejection = false;
   rejectionResultMessage = '';
   rejectionResultParams: any = {};
   rejectionResultType: 'success' | 'error' | '' = '';
   selectedApplicationIds = new Set<number | string>();
   selectedApplications = new Map<number | string, any>();
+  failedApplications: any[] = [];
 
   ngOnInit(): void {
     this.loadFilterOptions();
@@ -239,15 +243,11 @@ export class CreditApplicationsComponent implements OnInit {
     const status = application?.status;
     const statusId = typeof status === 'object' && status !== null ? status.id : application?.statusId;
     const statusCode = typeof status === 'object' && status !== null ? status.code : '';
-    const statusValue = `${this.statusLabel(status)}`.toLowerCase();
 
     return (
       !!application?.loanId &&
       this.isSupportedApplicationProduct(application) &&
-      (statusId === 100 ||
-        statusCode === 'loanStatusType.submitted.and.pending.approval' ||
-        statusValue === 'submitted and pending approval' ||
-        statusValue === 'submitted')
+      (statusId === 100 || statusCode === 'loanStatusType.submitted.and.pending.approval')
     );
   }
 
@@ -301,7 +301,7 @@ export class CreditApplicationsComponent implements OnInit {
     this.rejectionResultParams = {};
     this.rejectionResultType = '';
 
-    if (this.rejecting) {
+    if (this.rejecting || this.confirmingRejection) {
       return;
     }
 
@@ -312,6 +312,7 @@ export class CreditApplicationsComponent implements OnInit {
       return;
     }
 
+    this.confirmingRejection = true;
     const dialogRef = this.dialog.open(MassRejectCreditApplicationsDialogComponent, {
       data: {
         selectedCount: this.selectedApplicationIds.size,
@@ -323,7 +324,9 @@ export class CreditApplicationsComponent implements OnInit {
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((dialogResult: any) => {
+        this.confirmingRejection = false;
         if (!dialogResult?.confirm) {
+          this.changeDetectorRef.markForCheck();
           return;
         }
         this.rejectSelectedApplications(dialogResult.data);
@@ -339,6 +342,7 @@ export class CreditApplicationsComponent implements OnInit {
     this.rejectionResultMessage = '';
     this.rejectionResultParams = {};
     this.rejectionResultType = '';
+    this.failedApplications = [];
     const rejectionPayload = this.buildRejectionPayload(formData);
     const selectedLoanIds = Array.from(this.selectedApplicationIds);
 
@@ -363,6 +367,9 @@ export class CreditApplicationsComponent implements OnInit {
       .subscribe((results: any[]) => {
         const failed = results.filter((result) => result?.error).length;
         const succeeded = results.length - failed;
+        this.failedApplications = results
+          .map((result, index) => (result?.error ? this.selectedApplications.get(selectedLoanIds[index]) : null))
+          .filter((application) => !!application);
 
         if (failed === 0) {
           this.rejectionResultMessage = 'labels.text.All selected credit applications were rejected successfully';
@@ -433,7 +440,11 @@ export class CreditApplicationsComponent implements OnInit {
     if (normalizedProductType === 'loan' || normalizedProductType === 'loans') {
       return 'loan';
     }
-    return '';
+    // The authoritative credit-application search reads Fineract's m_loan records. If an
+    // extension does not explicitly identify a working-capital product, use the normal loan
+    // command instead of making a real application non-selectable because optional lookup
+    // metadata is absent.
+    return application?.loanId ? 'loan' : '';
   }
 
   private productTypeFromLookup(application: any): string {
@@ -483,6 +494,9 @@ export class CreditApplicationsComponent implements OnInit {
         next: (data: any) => {
           const pageItems = data?.pageItems || [];
           this.dataSource.data = pageItems;
+          if (this.isMassRejection) {
+            this.mergeStatusOptions(pageItems);
+          }
           this.pruneSelectionWithRefreshedPage(pageItems);
           this.totalFilteredRecords = data?.totalFilteredRecords || 0;
           this.loading = false;
@@ -501,28 +515,35 @@ export class CreditApplicationsComponent implements OnInit {
 
   private buildSearchParams(): any {
     const formValue = this.creditApplicationsForm.value;
-    const filterParams = this.isCreditSearch
+    const filterParams = this.isMassRejection
       ? {
           submittedFrom: this.formatApiDate(formValue.submittedFrom),
           submittedTo: this.formatApiDate(formValue.submittedTo),
-          minAmount: formValue.minAmount,
-          maxAmount: formValue.maxAmount,
-          stateProvinceId: formValue.stateProvinceId,
-          municipality: formValue.municipality,
+          status: formValue.status,
           productId: formValue.productId
         }
-      : {
-          submittedFrom: this.formatApiDate(formValue.submittedFrom),
-          submittedTo: this.formatApiDate(formValue.submittedTo),
-          clientTypeId: formValue.clientTypeId,
-          stateProvinceId: formValue.stateProvinceId,
-          municipality: formValue.municipality,
-          productId: formValue.productId,
-          minAmount: formValue.minAmount,
-          maxAmount: formValue.maxAmount,
-          status: formValue.status,
-          currencyCode: formValue.currencyCode
-        };
+      : this.isCreditSearch
+        ? {
+            submittedFrom: this.formatApiDate(formValue.submittedFrom),
+            submittedTo: this.formatApiDate(formValue.submittedTo),
+            minAmount: formValue.minAmount,
+            maxAmount: formValue.maxAmount,
+            stateProvinceId: formValue.stateProvinceId,
+            municipality: formValue.municipality,
+            productId: formValue.productId
+          }
+        : {
+            submittedFrom: this.formatApiDate(formValue.submittedFrom),
+            submittedTo: this.formatApiDate(formValue.submittedTo),
+            clientTypeId: formValue.clientTypeId,
+            stateProvinceId: formValue.stateProvinceId,
+            municipality: formValue.municipality,
+            productId: formValue.productId,
+            minAmount: formValue.minAmount,
+            maxAmount: formValue.maxAmount,
+            status: formValue.status,
+            currencyCode: formValue.currencyCode
+          };
 
     return {
       ...this.removeEmptyParams(filterParams),
@@ -534,6 +555,15 @@ export class CreditApplicationsComponent implements OnInit {
   }
 
   private createSearchForm(): UntypedFormGroup {
+    if (this.isMassRejection) {
+      return this.formBuilder.group({
+        submittedFrom: [''],
+        submittedTo: [''],
+        status: [''],
+        productId: ['']
+      });
+    }
+
     const prototypeControls = {
       submittedFrom: [''],
       submittedTo: [''],
@@ -575,6 +605,19 @@ export class CreditApplicationsComponent implements OnInit {
 
   private validateFilters(): boolean {
     const formValue = this.creditApplicationsForm.value;
+    if (this.isMassRejection) {
+      this.filterError = '';
+      if (
+        formValue.submittedFrom &&
+        formValue.submittedTo &&
+        this.dateUtils.isAfter(formValue.submittedFrom, formValue.submittedTo)
+      ) {
+        this.filterError = 'labels.text.From Date cannot be after To Date';
+      }
+      this.changeDetectorRef.markForCheck();
+      return !this.filterError;
+    }
+
     const hasMinAmount = formValue.minAmount !== '' && formValue.minAmount !== null;
     const hasMaxAmount = formValue.maxAmount !== '' && formValue.maxAmount !== null;
     const minAmount = Number(formValue.minAmount);
@@ -624,5 +667,27 @@ export class CreditApplicationsComponent implements OnInit {
         this.selectedApplications.delete(loanId);
       }
     });
+  }
+
+  private mergeStatusOptions(applications: any[]): void {
+    const options = new Map(
+      this.statusOptions.map((option) => [
+        `${option.id ?? option.code}`,
+        option
+      ])
+    );
+    applications.forEach((application) => {
+      const status = application?.status;
+      if (!status || typeof status !== 'object' || (status.id === undefined && !status.code)) {
+        return;
+      }
+      options.set(`${status.id ?? status.code}`, {
+        id: status.id,
+        code: status.code,
+        value: status.value,
+        displayLabel: status.value || status.code
+      });
+    });
+    this.statusOptions = Array.from(options.values());
   }
 }

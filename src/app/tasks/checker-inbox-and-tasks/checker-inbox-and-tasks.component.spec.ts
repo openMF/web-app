@@ -87,9 +87,10 @@ describe('CheckerInboxAndTasksComponent', () => {
 
     expect(tabLabels).toContain('labels.inputs.Requests');
     expect(tabLabels).toContain('labels.inputs.Credit');
+    expect(tabLabels).toContain('labels.heading.Mass Rejection');
   });
 
-  it('hides Requests and Credit for users who cannot read loans', () => {
+  it('hides Requests, Credit, and Mass Rejection for users who cannot read loans', () => {
     createComponent([]);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
@@ -98,9 +99,10 @@ describe('CheckerInboxAndTasksComponent', () => {
 
     expect(tabLabels).not.toContain('labels.inputs.Requests');
     expect(tabLabels).not.toContain('labels.inputs.Credit');
+    expect(tabLabels).not.toContain('labels.heading.Mass Rejection');
   });
 
-  it('places Requests and Credit after Reschedule Loan', () => {
+  it('places Requests, Credit, and Mass Rejection after Reschedule Loan', () => {
     createComponent(['ALL_FUNCTIONS']);
 
     const tabLabels = Array.from(fixture.nativeElement.querySelectorAll('a[mat-tab-link]')).map((tab: HTMLElement) =>
@@ -109,9 +111,11 @@ describe('CheckerInboxAndTasksComponent', () => {
     const rescheduleLoanIndex = tabLabels.indexOf('labels.inputs.Reschedule Loan');
     const requestsIndex = tabLabels.indexOf('labels.inputs.Requests');
     const creditIndex = tabLabels.indexOf('labels.inputs.Credit');
+    const massRejectionIndex = tabLabels.indexOf('labels.heading.Mass Rejection');
 
     expect(requestsIndex).toBe(rescheduleLoanIndex + 1);
     expect(creditIndex).toBe(requestsIndex + 1);
+    expect(massRejectionIndex).toBe(creditIndex + 1);
   });
 
   it('routes Requests to the existing credit applications page', async () => {
@@ -132,6 +136,16 @@ describe('CheckerInboxAndTasksComponent', () => {
     ) as HTMLAnchorElement;
 
     expect(creditTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/credit');
+  });
+
+  it('routes Mass Rejection to its dedicated task tab', async () => {
+    const routeElement = await navigateToComponent(['READ_LOAN']);
+
+    const massRejectionTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
+      tab.textContent?.includes('labels.heading.Mass Rejection')
+    ) as HTMLAnchorElement;
+
+    expect(massRejectionTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/mass-rejection');
   });
 
   it('shows Pending Prospects only for users who can read prospects', () => {
@@ -159,18 +173,22 @@ describe('CheckerInboxAndTasksComponent', () => {
     expect(pendingProspectsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/pending-prospects');
   });
 
-  it('uses CreditApplicationsComponent for both Requests and Credit routes', () => {
+  it('uses CreditApplicationsComponent for Requests, Credit, and Mass Rejection routes', () => {
     const shellRoute = routes[0] as AngularRoute;
     const taskRoute = shellRoute.children?.find((route: AngularRoute) => route.path === '');
     const requestsRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'requests');
     const creditRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'credit');
+    const massRejectionRoute = taskRoute?.children?.find((route: AngularRoute) => route.path === 'mass-rejection');
 
     expect(requestsRoute?.component).toBe(CreditApplicationsComponent);
     expect(creditRoute?.component).toBe(CreditApplicationsComponent);
+    expect(massRejectionRoute?.component).toBe(CreditApplicationsComponent);
     expect(requestsRoute?.data?.permissions).toEqual(['READ_LOAN']);
     expect(creditRoute?.data?.permissions).toEqual(['READ_LOAN']);
+    expect(massRejectionRoute?.data?.permissions).toEqual(['READ_LOAN']);
     expect(requestsRoute?.canActivate).toHaveLength(1);
     expect(creditRoute?.canActivate).toHaveLength(1);
+    expect(massRejectionRoute?.canActivate).toHaveLength(1);
   });
 
   it('uses PendingProspectsComponent for the pending prospects route', () => {

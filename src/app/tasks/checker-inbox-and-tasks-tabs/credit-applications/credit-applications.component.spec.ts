@@ -145,7 +145,10 @@ describe('CreditApplicationsComponent', () => {
           useValue: {
             snapshot: {
               routeConfig: { path: routePath },
-              data: { title: routePath === 'credit' ? 'Credit' : 'Requests' }
+              data: {
+                title:
+                  routePath === 'credit' ? 'Credit' : routePath === 'mass-rejection' ? 'Mass Rejection' : 'Requests'
+              }
             }
           }
         }
@@ -237,6 +240,92 @@ describe('CreditApplicationsComponent', () => {
     expect(form.textContent).toContain('labels.inputs.Currency');
     expect(form.textContent).toContain('labels.buttons.Search');
     expect(form.textContent).toContain('labels.buttons.Clear');
+  });
+
+  it('renders only WEB-1063 filters and actions on the Mass Rejection route', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+    const form = fixture.nativeElement.querySelector('form');
+    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
+      control.getAttribute('formControlName')
+    );
+
+    expect(controls).toEqual([
+      'submittedFrom',
+      'submittedTo',
+      'productId',
+      'status'
+    ]);
+    expect(Object.keys(component.creditApplicationsForm.controls).sort()).toEqual(
+      [
+        'submittedFrom',
+        'submittedTo',
+        'status',
+        'productId'
+      ].sort()
+    );
+    expect(form.textContent).toContain('labels.buttons.Advanced Search');
+    expect(form.textContent).not.toContain('labels.inputs.Customer Type');
+    expect(form.textContent).not.toContain('labels.inputs.Municipality');
+    expect(form.textContent).not.toContain('labels.inputs.Amount Range From');
+    expect(form.textContent).not.toContain('labels.inputs.Amount Range To');
+    expect(fixture.nativeElement.textContent).toContain('labels.buttons.Reject Selected');
+    expect(component.displayedColumns[0]).toBe('select');
+  });
+
+  it('submits only the Mass Rejection filters plus server paging and sorting', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+    tasksService.getCreditApplications.mockClear();
+    component.creditApplicationsForm.patchValue({
+      submittedFrom: new Date(2026, 0, 1),
+      submittedTo: new Date(2026, 0, 31),
+      status: 100,
+      productId: 10
+    });
+
+    component.applyFilters();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      submittedFrom: '2026-01-01',
+      submittedTo: '2026-01-31',
+      status: 100,
+      productId: 10,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
+  });
+
+  it('uses statuses returned by the authoritative application search on Mass Rejection', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+
+    expect(component.statusOptions.map((status) => status.id)).toEqual([
+      100,
+      200,
+      400,
+      500
+    ]);
+    expect(component.statusOptions).toContainEqual(
+      expect.objectContaining({
+        id: 100,
+        code: 'loanStatusType.submitted.and.pending.approval',
+        displayLabel: 'Submitted and pending approval'
+      })
+    );
+  });
+
+  it('keeps rejection controls and selection off the Requests and Credit screens', () => {
+    expect(component.displayedColumns).not.toContain('select');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
+
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'requests');
+
+    expect(component.displayedColumns).not.toContain('select');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
   });
 
   it('applies filters and resets the current page', () => {
@@ -494,6 +583,17 @@ describe('CreditApplicationsComponent', () => {
     expect(component.selectedApplicationIds.size).toBe(0);
   });
 
+  it('keeps pending applications selectable when the response omits the status code', () => {
+    const pendingWithoutCode = {
+      ...page.pageItems[0],
+      status: { id: 100, value: 'Submitted and pending approval' }
+    };
+
+    expect(component.isRejectable(pendingWithoutCode)).toBe(true);
+    component.toggleSelection(pendingWithoutCode, true);
+    expect(component.selectedApplicationIds).toEqual(new Set([42]));
+  });
+
   it('selects and deselects the visible rejectable page', () => {
     component.dataSource.data = [
       page.pageItems[0],
@@ -581,7 +681,7 @@ describe('CreditApplicationsComponent', () => {
     expect(loansService.applyWorkingCapitalLoanAccountCommand).toHaveBeenCalledWith(43, 'reject', expect.any(Object));
   });
 
-  it('does not select rows when the application product type cannot be determined', () => {
+  it('uses the normal loan rejection flow when optional product type metadata is absent', () => {
     const applicationWithoutProductType: any = { ...page.pageItems[0] };
     delete applicationWithoutProductType.productType;
 
@@ -590,7 +690,7 @@ describe('CreditApplicationsComponent', () => {
       true
     );
 
-    expect(component.selectedApplicationIds.size).toBe(0);
+    expect(component.selectedApplicationIds).toEqual(new Set([42]));
   });
 
   it('rejects multiple selected loans and refreshes the list after success', () => {
@@ -629,6 +729,7 @@ describe('CreditApplicationsComponent', () => {
     expect(component.rejectionResultParams).toEqual({ succeeded: 1, total: 2, failed: 1 });
     expect(component.rejectionResultType).toBe('error');
     expect(component.selectedApplicationIds).toEqual(new Set([43]));
+    expect(component.failedApplications).toEqual([expect.objectContaining({ loanId: 43, accountNo: 'LN-42' })]);
   });
 
   it('removes selected applications that are no longer rejectable on reload', () => {
@@ -687,8 +788,8 @@ describe('CreditApplicationsComponent', () => {
   it('hides mass reject when the user lacks the reject loan permission', () => {
     environment.productionModeEnableRBAC = true;
     TestBed.resetTestingModule();
-    createComponent(of(page), ['READ_LOAN']);
+    createComponent(of(page), ['READ_LOAN'], 'mass-rejection');
 
-    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Mass Reject');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
   });
 });
