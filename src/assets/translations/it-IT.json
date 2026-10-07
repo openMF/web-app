@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Monitoraggio dell’inventario di cassa",
+    "description": "Esamina l’inventario di contanti e assegni per custode, tipo di transazione e valuta.",
+    "all": "Tutti",
+    "apply": "Applica filtri",
+    "retry": "Riprova",
+    "lastUpdated": "Ultimo aggiornamento",
+    "lastCutOff": "Ultima chiusura",
+    "filters": {
+      "custodian": "Utente / Custode",
+      "transactionType": "Tipo di transazione",
+      "currency": "Valuta",
+      "showLastCutOff": "Mostra ultima chiusura"
+    },
+    "types": { "CASH": "Contanti", "CHECK": "Assegno" },
+    "columns": {
+      "user": "Utente / Custode",
+      "name": "Nome",
+      "type": "Tipo",
+      "currency": "Valuta",
+      "initialBalance": "Saldo iniziale",
+      "inflows": "Entrate accumulate",
+      "outflows": "Uscite accumulate",
+      "cutOffs": "Chiusure",
+      "balance": "Saldo disponibile"
+    },
+    "states": {
+      "loadingFilters": "Caricamento filtri inventario",
+      "loadingInventory": "Caricamento inventario di cassa",
+      "empty": "Nessun record di inventario di cassa trovato."
+    },
+    "errors": {
+      "context": "Impossibile caricare i filtri dell’inventario di cassa.",
+      "inventory": "Impossibile caricare l’inventario di cassa.",
+      "forbidden": "Non hai il permesso di visualizzare l’inventario di cassa."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Pagamenti di prestiti in contanti e con assegno",

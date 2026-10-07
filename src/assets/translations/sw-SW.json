@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Ufuatiliaji wa hesabu ya fedha",
+    "description": "Kagua hesabu ya fedha na hundi kwa mtunzaji, aina ya muamala na sarafu.",
+    "all": "Zote",
+    "apply": "Tumia vichujio",
+    "retry": "Jaribu tena",
+    "lastUpdated": "Ilisasishwa mwisho",
+    "lastCutOff": "Kufungwa kwa mwisho",
+    "filters": {
+      "custodian": "Mtumiaji / Mtunzaji",
+      "transactionType": "Aina ya muamala",
+      "currency": "Sarafu",
+      "showLastCutOff": "Onyesha kufungwa kwa mwisho"
+    },
+    "types": { "CASH": "Fedha taslimu", "CHECK": "Hundi" },
+    "columns": {
+      "user": "Mtumiaji / Mtunzaji",
+      "name": "Jina",
+      "type": "Aina",
+      "currency": "Sarafu",
+      "initialBalance": "Salio la mwanzo",
+      "inflows": "Mapato yaliyokusanywa",
+      "outflows": "Matumizi yaliyokusanywa",
+      "cutOffs": "Kufungwa",
+      "balance": "Salio linalopatikana"
+    },
+    "states": {
+      "loadingFilters": "Inapakia vichujio vya hesabu",
+      "loadingInventory": "Inapakia hesabu ya fedha",
+      "empty": "Hakuna rekodi za hesabu ya fedha zilizopatikana."
+    },
+    "errors": {
+      "context": "Imeshindwa kupakia vichujio vya hesabu ya fedha.",
+      "inventory": "Imeshindwa kupakia hesabu ya fedha.",
+      "forbidden": "Huna ruhusa ya kuona hesabu ya fedha."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Malipo ya mkopo kwa pesa taslimu na hundi",

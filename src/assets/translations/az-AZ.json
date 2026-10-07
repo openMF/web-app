@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Kassa inventarının monitorinqi",
+    "description": "Nağd pul və çek inventarını məsul şəxs, əməliyyat növü və valyuta üzrə nəzərdən keçirin.",
+    "all": "Hamısı",
+    "apply": "Filtrləri tətbiq et",
+    "retry": "Yenidən cəhd et",
+    "lastUpdated": "Son yenilənmə",
+    "lastCutOff": "Son bağlanış",
+    "filters": {
+      "custodian": "İstifadəçi / Məsul şəxs",
+      "transactionType": "Əməliyyat növü",
+      "currency": "Valyuta",
+      "showLastCutOff": "Son bağlanışı göstər"
+    },
+    "types": { "CASH": "Nağd pul", "CHECK": "Çek" },
+    "columns": {
+      "user": "İstifadəçi / Məsul şəxs",
+      "name": "Ad",
+      "type": "Növ",
+      "currency": "Valyuta",
+      "initialBalance": "İlkin qalıq",
+      "inflows": "Yığılmış daxilolmalar",
+      "outflows": "Yığılmış çıxışlar",
+      "cutOffs": "Bağlanışlar",
+      "balance": "Mövcud qalıq"
+    },
+    "states": {
+      "loadingFilters": "İnventar filtrləri yüklənir",
+      "loadingInventory": "Kassa inventarı yüklənir",
+      "empty": "Kassa inventarı qeydi tapılmadı."
+    },
+    "errors": {
+      "context": "Kassa inventarı filtrlərini yükləmək mümkün olmadı.",
+      "inventory": "Kassa inventarını yükləmək mümkün olmadı.",
+      "forbidden": "Kassa inventarına baxmaq icazəniz yoxdur."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Kredit üzrə nağd və çek ödənişləri",

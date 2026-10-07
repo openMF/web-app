@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, map, switchMap } from 'rxjs';
@@ -276,8 +276,12 @@ export class SavingsService {
    * @param {any} savingsAccount Savings Account
    * @returns {Observable<any>}
    */
-  createSavingsAccount(savingsAccount: any): Observable<any> {
-    return this.http.post('/savingsaccounts', savingsAccount);
+  createSavingsAccount(savingsAccount: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post('/savingsaccounts', savingsAccount, { headers });
   }
 
   /**
