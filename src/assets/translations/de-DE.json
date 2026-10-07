@@ -813,8 +813,10 @@
         "message": "{{count}} Gebühr(en) konnte(n) nicht erlassen werden."
       }
     },
-    "error.auth.type": "Authentifizierungsfehler",
-    "error.auth.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.auth.invalidCredentials.type": "Anmeldung fehlgeschlagen",
+    "error.auth.invalidCredentials.message": "Benutzername oder Passwort ist falsch. Bitte überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut.",
+    "error.auth.sessionExpired.type": "Sitzung abgelaufen",
+    "error.auth.sessionExpired.message": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
     "error.token.invalid.type": "Ungültiger Token",
     "error.token.invalid.message": "Der angegebene Einmaltoken ist ungültig.",
     "error.bad.request.type": "Fehlerhafte Anfrage",

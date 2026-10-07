@@ -813,8 +813,10 @@
         "message": "{{count}} costo/i non ha/hanno potuto essere rinunciato/i."
       }
     },
-    "error.auth.type": "Errore di autenticazione",
-    "error.auth.message": "La sessione è scaduta o le credenziali non sono valide.",
+    "error.auth.invalidCredentials.type": "Accesso non riuscito",
+    "error.auth.invalidCredentials.message": "Nome utente o password non corretti. Verificare le credenziali e riprovare.",
+    "error.auth.sessionExpired.type": "Sessione scaduta",
+    "error.auth.sessionExpired.message": "La sessione è scaduta. Effettuare di nuovo l'accesso.",
     "error.token.invalid.type": "Token non valido",
     "error.token.invalid.message": "Il token monouso fornito non è valido.",
     "error.bad.request.type": "Richiesta errata",

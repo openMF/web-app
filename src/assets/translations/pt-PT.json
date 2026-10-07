@@ -813,8 +813,10 @@
         "message": "{{count}} encargo(s) não puderam ser dispensados."
       }
     },
-    "error.auth.type": "Erro de autenticação",
-    "error.auth.message": "A sua sessão expirou ou as credenciais são inválidas.",
+    "error.auth.invalidCredentials.type": "Falha no início de sessão",
+    "error.auth.invalidCredentials.message": "Nome de utilizador ou palavra-passe incorretos. Verifique as suas credenciais e tente novamente.",
+    "error.auth.sessionExpired.type": "Sessão expirada",
+    "error.auth.sessionExpired.message": "A sua sessão expirou. Inicie sessão novamente.",
     "error.token.invalid.type": "Token inválido",
     "error.token.invalid.message": "O token de uso único fornecido é inválido.",
     "error.bad.request.type": "Pedido incorreto",

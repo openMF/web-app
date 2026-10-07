@@ -811,8 +811,10 @@
         "message": "{{count}} charge(s) could not be waived."
       }
     },
-    "error.auth.type": "Authentication Error",
-    "error.auth.message": "Your session has expired or the credentials are invalid.",
+    "error.auth.invalidCredentials.type": "Login Failed",
+    "error.auth.invalidCredentials.message": "Incorrect username or password. Please check your credentials and try again.",
+    "error.auth.sessionExpired.type": "Session Expired",
+    "error.auth.sessionExpired.message": "Your session has expired. Please log in again.",
     "error.token.invalid.type": "Invalid Token",
     "error.token.invalid.message": "The provided one time token is invalid.",
     "error.bad.request.type": "Bad Request",

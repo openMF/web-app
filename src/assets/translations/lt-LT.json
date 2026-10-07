@@ -810,8 +810,10 @@
         "message": "{{count}} mokesčio(-ių) nepavyko atleisti."
       }
     },
-    "error.auth.type": "Autentifikacijos klaida",
-    "error.auth.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.auth.invalidCredentials.type": "Prisijungti nepavyko",
+    "error.auth.invalidCredentials.message": "Neteisingas naudotojo vardas arba slaptažodis. Patikrinkite prisijungimo duomenis ir bandykite dar kartą.",
+    "error.auth.sessionExpired.type": "Sesija baigėsi",
+    "error.auth.sessionExpired.message": "Jūsų sesija baigėsi. Prisijunkite iš naujo.",
     "error.token.invalid.type": "Neteisingas žetonas",
     "error.token.invalid.message": "Pateiktas vienkartinis žetonas yra neteisingas.",
     "error.bad.request.type": "Bloga užklausa",

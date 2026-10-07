@@ -813,8 +813,10 @@
         "message": "{{count}} शुल्क माफ गर्न सकिएन।"
       }
     },
-    "error.auth.type": "प्रमाणीकरण त्रुटि",
-    "error.auth.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.auth.invalidCredentials.type": "लगइन असफल भयो",
+    "error.auth.invalidCredentials.message": "प्रयोगकर्ता नाम वा पासवर्ड गलत छ। कृपया आफ्नो विवरण जाँच गरेर फेरि प्रयास गर्नुहोस्।",
+    "error.auth.sessionExpired.type": "सत्र समाप्त भयो",
+    "error.auth.sessionExpired.message": "तपाईंको सत्र समाप्त भएको छ। कृपया फेरि लगइन गर्नुहोस्।",
     "error.token.invalid.type": "अमान्य टोकन",
     "error.token.invalid.message": "प्रदान गरिएको एक पटकको टोकन अमान्य छ।",
     "error.bad.request.type": "खराब अनुरोध",

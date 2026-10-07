@@ -768,8 +768,10 @@
         "message": "{{count}} haqq üzrə ödənişdən azad etmək mümkün olmadı."
       }
     },
-    "error.auth.type": "Doğrulama xətası",
-    "error.auth.message": "Sessiyanızın vaxtı bitib və ya giriş məlumatları etibarsızdır.",
+    "error.auth.invalidCredentials.type": "Giriş uğursuz oldu",
+    "error.auth.invalidCredentials.message": "İstifadəçi adı və ya parol yanlışdır. Giriş məlumatlarınızı yoxlayın və yenidən cəhd edin.",
+    "error.auth.sessionExpired.type": "Sessiyanın vaxtı bitib",
+    "error.auth.sessionExpired.message": "Sessiyanızın vaxtı bitib. Yenidən daxil olun.",
     "error.token.invalid.type": "Etibarsız token",
     "error.token.invalid.message": "Təqdim olunmuş birdəfəlik token etibarsızdır.",
     "error.bad.request.type": "Yanlış sorğu",

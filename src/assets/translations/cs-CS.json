@@ -810,8 +810,10 @@
         "message": "{{count}} poplatek/ky nemohl(y) být odpuštěn(y)."
       }
     },
-    "error.auth.type": "Chyba ověření",
-    "error.auth.message": "Vaše relace vypršela nebo jsou přihlašovací údaje neplatné.",
+    "error.auth.invalidCredentials.type": "Přihlášení se nezdařilo",
+    "error.auth.invalidCredentials.message": "Nesprávné uživatelské jméno nebo heslo. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.",
+    "error.auth.sessionExpired.type": "Relace vypršela",
+    "error.auth.sessionExpired.message": "Vaše relace vypršela. Přihlaste se prosím znovu.",
     "error.token.invalid.type": "Neplatný token",
     "error.token.invalid.message": "Poskytnutý jednorázový token je neplatný.",
     "error.bad.request.type": "Chybný požadavek",

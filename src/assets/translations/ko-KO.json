@@ -810,8 +810,10 @@
         "message": "{{count}}개의 수수료를 면제할 수 없습니다."
       }
     },
-    "error.auth.type": "인증 오류",
-    "error.auth.message": "세션이 만료되었거나 자격 증명이 유효하지 않습니다.",
+    "error.auth.invalidCredentials.type": "로그인 실패",
+    "error.auth.invalidCredentials.message": "사용자 이름 또는 비밀번호가 올바르지 않습니다. 자격 증명을 확인한 후 다시 시도하십시오.",
+    "error.auth.sessionExpired.type": "세션 만료",
+    "error.auth.sessionExpired.message": "세션이 만료되었습니다. 다시 로그인하십시오.",
     "error.token.invalid.type": "유효하지 않은 토큰",
     "error.token.invalid.message": "제공된 일회용 토큰이 유효하지 않습니다.",
     "error.bad.request.type": "잘못된 요청",
