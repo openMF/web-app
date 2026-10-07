@@ -58,7 +58,8 @@ describe('OrganizationComponent', () => {
       'READ_GLOBAL_SETTLEMENT',
       'CREATE_CASH_DEPOSIT',
       'READ_CASH_OPERATION_HISTORY',
-      'READ_CASH_HOLDINGS'
+      'READ_CASH_HOLDINGS',
+      'READ_BASE_TELLER_TRANSACTION_HISTORY'
     ]);
   });
 

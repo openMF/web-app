@@ -7063,6 +7063,87 @@
       "receipt": "Nepavyko įkelti kvito"
     }
   },
+  "transactionHistory": {
+    "title": "Operacijų istorija",
+    "description": "Ieškokite ir peržiūrėkite užbaigtas Base Teller operacijas, nominalų informaciją ir kvitus.",
+    "sections": {
+      "searchFilters": "Paieškos filtrai",
+      "results": "Operacijų rezultatai",
+      "totals": "Sumos pagal valiutą",
+      "details": "Operacijos informacija",
+      "cancellation": "Atšaukimo informacija",
+      "denominations": "Nominalų informacija",
+      "operationDenominations": "Operacijos nominalai",
+      "changeGiven": "Atiduota grąža",
+      "receipt": "Kvitas",
+      "report": "Operacijų istorijos ataskaita"
+    },
+    "fields": {
+      "all": "Visi",
+      "date": "Data",
+      "dateFrom": "Data nuo",
+      "dateTo": "Data iki",
+      "transactionDate": "Operacijos data",
+      "teller": "Kasininkas",
+      "currency": "Valiuta",
+      "status": "Būsena",
+      "type": "Tipas",
+      "operation": "Operacija",
+      "concept": "Paskirtis",
+      "reference": "Nuoroda",
+      "inflows": "Įplaukos",
+      "outflows": "Išmokos",
+      "totalInflows": "Iš viso įplaukų",
+      "totalOutflows": "Iš viso išmokų",
+      "total": "Iš viso",
+      "actions": "Veiksmai",
+      "client": "Klientas",
+      "identification": "Identifikacija",
+      "cashReceived": "Gauti grynieji",
+      "checksReceived": "Gauti čekiai",
+      "change": "Grąža",
+      "adjustment": "Koregavimas",
+      "reason": "Priežastis",
+      "user": "Naudotojas",
+      "denomination": "Nominalas",
+      "quantity": "Kiekis",
+      "amount": "Suma",
+      "generatedAt": "Sugeneruota",
+      "totalRecords": "Iš viso įrašų",
+      "notApplicable": "Netaikoma"
+    },
+    "actions": {
+      "search": "Ieškoti",
+      "clear": "Išvalyti",
+      "viewDetails": "Peržiūrėti informaciją",
+      "denominationDetails": "Nominalų informacija",
+      "reprintReceipt": "Pakartotinai spausdinti kvitą",
+      "printResults": "Spausdinti rezultatus",
+      "retry": "Bandyti dar kartą"
+    },
+    "states": {
+      "loadingFilters": "Įkeliami filtrai…",
+      "loadingHistory": "Įkeliama operacijų istorija…",
+      "loadingDetails": "Įkeliama operacijos informacija…",
+      "loadingDenominations": "Įkeliama nominalų informacija…",
+      "noTransactions": "Operacijų nerasta.",
+      "noDenominations": "Šiai operacijai nominalų informacijos nėra.",
+      "selectTransaction": "Pasirinkite operaciją, kad matytumėte jos informaciją."
+    },
+    "errors": {
+      "context": "Nepavyko įkelti operacijų istorijos filtrų.",
+      "search": "Nepavyko įkelti operacijų istorijos.",
+      "detail": "Nepavyko įkelti operacijos informacijos.",
+      "denominations": "Nepavyko įkelti nominalų informacijos.",
+      "receiptUnavailable": "Šios operacijos kvitas nepasiekiamas.",
+      "report": "Nepavyko įkelti operacijų istorijos ataskaitos."
+    },
+    "validation": {
+      "dateRange": "Data nuo turi būti ankstesnė arba lygi datai iki.",
+      "referenceLength": "Nuoroda negali būti ilgesnė nei 200 simbolių."
+    },
+    "denominationTypes": { "BANKNOTE": "Banknotas", "COIN": "Moneta" }
+  },
   "enrollmentStatus": {
     "title": "Registracijos būsena",
     "description": "Peržiūrėkite šio kliento registracijos etapus ir laukimo trukmę.",
