@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Monitorização do inventário de caixa",
+    "description": "Consulte o inventário de numerário e cheques por custodiante, tipo de transação e moeda.",
+    "all": "Todos",
+    "apply": "Aplicar filtros",
+    "retry": "Tentar novamente",
+    "lastUpdated": "Última atualização",
+    "lastCutOff": "Último fecho",
+    "filters": {
+      "custodian": "Utilizador / Custodiante",
+      "transactionType": "Tipo de transação",
+      "currency": "Moeda",
+      "showLastCutOff": "Mostrar último fecho"
+    },
+    "types": { "CASH": "Numerário", "CHECK": "Cheque" },
+    "columns": {
+      "user": "Utilizador / Custodiante",
+      "name": "Nome",
+      "type": "Tipo",
+      "currency": "Moeda",
+      "initialBalance": "Saldo inicial",
+      "inflows": "Entradas acumuladas",
+      "outflows": "Saídas acumuladas",
+      "cutOffs": "Fechos",
+      "balance": "Saldo disponível"
+    },
+    "states": {
+      "loadingFilters": "A carregar filtros do inventário",
+      "loadingInventory": "A carregar inventário de caixa",
+      "empty": "Não foram encontrados registos de inventário de caixa."
+    },
+    "errors": {
+      "context": "Não foi possível carregar os filtros do inventário de caixa.",
+      "inventory": "Não foi possível carregar o inventário de caixa.",
+      "forbidden": "Não tem permissão para consultar o inventário de caixa."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Pagamentos de empréstimos em numerário e cheque",
