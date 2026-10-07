@@ -98,7 +98,7 @@ export class EditCenterComponent implements OnInit {
       this.editCenterForm.addControl(
         'activationDate',
         new UntypedFormControl(
-          this.centerData.activationDate ? this.centerData.activationDate : new Date(),
+          this.centerData.activationDate ? this.dateUtils.parseDate(this.centerData.activationDate) : new Date(),
           Validators.required
         )
       );
