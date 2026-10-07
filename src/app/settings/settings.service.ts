@@ -314,7 +314,7 @@ export class SettingsService {
   getBusinessDates(businessDateData: any, dateType: string): void {
     businessDateData.some((data: any) => {
       if (data.type === dateType) {
-        const dateVal = new Date(data.date);
+        const dateVal = this.dateUtils.parseDate(data.date);
         this.setBusinessDate(this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat));
         this.alertService.alert({
           type: dateType + ' Set',
