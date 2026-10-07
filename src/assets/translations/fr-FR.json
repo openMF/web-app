@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Suivi de l’inventaire de caisse",
+    "description": "Consultez l’inventaire des espèces et des chèques par dépositaire, type de transaction et devise.",
+    "all": "Tous",
+    "apply": "Appliquer les filtres",
+    "retry": "Réessayer",
+    "lastUpdated": "Dernière mise à jour",
+    "lastCutOff": "Dernière clôture",
+    "filters": {
+      "custodian": "Utilisateur / Dépositaire",
+      "transactionType": "Type de transaction",
+      "currency": "Devise",
+      "showLastCutOff": "Afficher la dernière clôture"
+    },
+    "types": { "CASH": "Espèces", "CHECK": "Chèque" },
+    "columns": {
+      "user": "Utilisateur / Dépositaire",
+      "name": "Nom",
+      "type": "Type",
+      "currency": "Devise",
+      "initialBalance": "Solde initial",
+      "inflows": "Entrées cumulées",
+      "outflows": "Sorties cumulées",
+      "cutOffs": "Clôtures",
+      "balance": "Solde disponible"
+    },
+    "states": {
+      "loadingFilters": "Chargement des filtres d’inventaire",
+      "loadingInventory": "Chargement de l’inventaire de caisse",
+      "empty": "Aucun enregistrement d’inventaire de caisse trouvé."
+    },
+    "errors": {
+      "context": "Impossible de charger les filtres de l’inventaire de caisse.",
+      "inventory": "Impossible de charger l’inventaire de caisse.",
+      "forbidden": "Vous n’êtes pas autorisé à consulter l’inventaire de caisse."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Remboursements de prêt en espèces et par chèque",

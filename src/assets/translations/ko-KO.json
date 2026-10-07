@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "현금 재고 모니터링",
+    "description": "보관 담당자, 거래 유형 및 통화별 현금과 수표 재고를 검토합니다.",
+    "all": "전체",
+    "apply": "필터 적용",
+    "retry": "다시 시도",
+    "lastUpdated": "마지막 업데이트",
+    "lastCutOff": "마지막 마감",
+    "filters": {
+      "custodian": "사용자 / 보관 담당자",
+      "transactionType": "거래 유형",
+      "currency": "통화",
+      "showLastCutOff": "마지막 마감 표시"
+    },
+    "types": { "CASH": "현금", "CHECK": "수표" },
+    "columns": {
+      "user": "사용자 / 보관 담당자",
+      "name": "이름",
+      "type": "유형",
+      "currency": "통화",
+      "initialBalance": "초기 잔액",
+      "inflows": "누적 유입",
+      "outflows": "누적 유출",
+      "cutOffs": "마감",
+      "balance": "사용 가능 잔액"
+    },
+    "states": {
+      "loadingFilters": "재고 필터 로드 중",
+      "loadingInventory": "현금 재고 로드 중",
+      "empty": "현금 재고 기록을 찾을 수 없습니다."
+    },
+    "errors": {
+      "context": "현금 재고 필터를 불러올 수 없습니다.",
+      "inventory": "현금 재고를 불러올 수 없습니다.",
+      "forbidden": "현금 재고를 볼 권한이 없습니다."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "현금 및 수표 대출 상환",

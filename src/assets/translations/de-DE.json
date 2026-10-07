@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Überwachung des Bargeldbestands",
+    "description": "Prüfen Sie Bargeld- und Scheckbestände nach Verwahrer, Transaktionstyp und Währung.",
+    "all": "Alle",
+    "apply": "Filter anwenden",
+    "retry": "Erneut versuchen",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "lastCutOff": "Letzter Abschluss",
+    "filters": {
+      "custodian": "Benutzer / Verwahrer",
+      "transactionType": "Transaktionstyp",
+      "currency": "Währung",
+      "showLastCutOff": "Letzten Abschluss anzeigen"
+    },
+    "types": { "CASH": "Bargeld", "CHECK": "Scheck" },
+    "columns": {
+      "user": "Benutzer / Verwahrer",
+      "name": "Name",
+      "type": "Typ",
+      "currency": "Währung",
+      "initialBalance": "Anfangsbestand",
+      "inflows": "Kumulierte Zuflüsse",
+      "outflows": "Kumulierte Abflüsse",
+      "cutOffs": "Abschlüsse",
+      "balance": "Verfügbarer Bestand"
+    },
+    "states": {
+      "loadingFilters": "Bestandsfilter werden geladen",
+      "loadingInventory": "Bargeldbestand wird geladen",
+      "empty": "Keine Bargeldbestände gefunden."
+    },
+    "errors": {
+      "context": "Die Filter für den Bargeldbestand konnten nicht geladen werden.",
+      "inventory": "Der Bargeldbestand konnte nicht geladen werden.",
+      "forbidden": "Sie sind nicht berechtigt, den Bargeldbestand anzuzeigen."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Bar- und Scheckzahlungen für Kredite",

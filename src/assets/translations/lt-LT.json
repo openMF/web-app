@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Kasos inventoriaus stebėjimas",
+    "description": "Peržiūrėkite grynųjų ir čekių inventorių pagal saugotoją, operacijos tipą ir valiutą.",
+    "all": "Visi",
+    "apply": "Taikyti filtrus",
+    "retry": "Bandyti dar kartą",
+    "lastUpdated": "Paskutinį kartą atnaujinta",
+    "lastCutOff": "Paskutinis uždarymas",
+    "filters": {
+      "custodian": "Naudotojas / Saugotojas",
+      "transactionType": "Operacijos tipas",
+      "currency": "Valiuta",
+      "showLastCutOff": "Rodyti paskutinį uždarymą"
+    },
+    "types": { "CASH": "Grynieji", "CHECK": "Čekis" },
+    "columns": {
+      "user": "Naudotojas / Saugotojas",
+      "name": "Pavadinimas",
+      "type": "Tipas",
+      "currency": "Valiuta",
+      "initialBalance": "Pradinis likutis",
+      "inflows": "Sukauptos įplaukos",
+      "outflows": "Sukauptos išmokos",
+      "cutOffs": "Uždarymai",
+      "balance": "Galimas likutis"
+    },
+    "states": {
+      "loadingFilters": "Įkeliami inventoriaus filtrai",
+      "loadingInventory": "Įkeliamas kasos inventorius",
+      "empty": "Kasos inventoriaus įrašų nerasta."
+    },
+    "errors": {
+      "context": "Nepavyko įkelti kasos inventoriaus filtrų.",
+      "inventory": "Nepavyko įkelti kasos inventoriaus.",
+      "forbidden": "Neturite teisės peržiūrėti kasos inventoriaus."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Grynieji ir čekių mokėjimai už paskolą",

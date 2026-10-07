@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -670,8 +670,12 @@ export class LoansService {
    * Creates Loans Account
    * @param {any} loanAccount Loan Account
    */
-  createLoansAccount(productType: string, loanAccount: any): Observable<any> {
-    return this.http.post(`/${productType}`, loanAccount);
+  createLoansAccount(productType: string, loanAccount: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/${productType}`, loanAccount, { headers });
   }
 
   getLoanDocuments(loanId: any): Observable<any> {
@@ -1062,11 +1066,6 @@ export class LoansService {
     loansAccountData.principal = loansAccountData.principalAmount;
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
-
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
     return loansAccountData;
   }
 
