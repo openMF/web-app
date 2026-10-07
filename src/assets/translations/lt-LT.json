@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Nėra aktyvaus atstatymo, kurį būtų galima atšaukti.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Paskola neturi pažeidimo grafiko.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Šis pažeidimo laikotarpis jau buvo atstatytas. Prieš atstatydami dar kartą, atšaukite esamą atstatymą.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Mokesčio koregavimo data negali būti ankstesnė nei mokesčio mokėjimo terminas.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Mokesčio koregavimas nesusietas su jokiu mokesčiu, todėl jo koreguoti negalima.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Šio tipo operacijos apyvartinio kapitalo paskoloje koreguoti negalima.",
+    "wc.loan.charge.adjustment.invalid.status": "Esant dabartinei paskolos būsenai mokesčių koregavimas neleidžiamas.",
+    "wc.loan.charge.adjustment.inactive.charge": "Neaktyvaus mokesčio koreguoti negalima.",
+    "wc.loan.charge.adjustment.invalid.amount": "Suma negali būti didesnė nei koregavimui prieinama mokesčio suma.",
     "error.resource.notImplemented.type": "Neįgyvendinta",
     "error.resource.notImplemented.message": "Neįgyvendinta funkcija!",
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
@@ -1278,7 +1284,8 @@
       "Post Dividends": "Apskaityti dividendus",
       "Convert": "Konvertuoti",
       "Deleting": "Šalinama",
-      "Inactivate": "Deaktyvuoti"
+      "Inactivate": "Deaktyvuoti",
+      "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -5848,7 +5855,10 @@
       "Closed": "Uždaryta",
       "Dashboard Export": "Skydelio eksportas",
       "Generated on": "Sugeneruota",
-      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio"
+      "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio",
+      "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
+      "Remaining discount fee available to adjust": "Likęs nuolaidos mokestis, kurį galima koreguoti",
+      "Cannot precede the discount fee date": "Negali būti ankstesnė nei nuolaidos mokesčio data"
     },
     "permissions": {
       "actions": {
@@ -6149,7 +6159,8 @@
       "validationSaved": "Patvirtinimo duomenys sėkmingai išsaugoti.",
       "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta.",
       "identityDescriptionsUpdated": "Tapatybės dokumentų aprašai sėkmingai atnaujinti.",
-      "identityDescriptionsUpdateFailed": "Kai kurių tapatybės dokumentų aprašų atnaujinti nepavyko."
+      "identityDescriptionsUpdateFailed": "Kai kurių tapatybės dokumentų aprašų atnaujinti nepavyko.",
+      "unableToAdjustDiscountFee": "Nepavyko koreguoti nuolaidos mokesčio."
     },
     "selections": {
       "standingInstructions": {

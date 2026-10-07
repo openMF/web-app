@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "실행 취소할 활성 초기화가 없습니다.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "대출에 위반 일정이 없습니다.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "이 위반 기간은 이미 초기화되었습니다. 다시 초기화하려면 기존 초기화를 먼저 실행 취소하세요.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "수수료 조정 날짜는 수수료 만기일보다 이전일 수 없습니다.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "수수료 조정이 어떤 수수료에도 연결되어 있지 않아 조정할 수 없습니다.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "이 거래 유형은 운전자본 대출에서 조정할 수 없습니다.",
+    "wc.loan.charge.adjustment.invalid.status": "현재 대출 상태에서는 수수료 조정이 허용되지 않습니다.",
+    "wc.loan.charge.adjustment.inactive.charge": "비활성 수수료에는 수수료 조정이 허용되지 않습니다.",
+    "wc.loan.charge.adjustment.invalid.amount": "금액은 조정 가능한 수수료 금액보다 클 수 없습니다.",
     "error.resource.notImplemented.type": "구현되지 않음",
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
@@ -1278,7 +1284,8 @@
       "Post Dividends": "배당금 기표",
       "Convert": "변환",
       "Deleting": "삭제 중",
-      "Inactivate": "비활성화"
+      "Inactivate": "비활성화",
+      "Discount Fee Adjustment": "할인 수수료 조정"
     },
     "catalogs": {
       "% Amount": "양",
@@ -5848,7 +5855,10 @@
       "Closed": "종료됨",
       "Dashboard Export": "대시보드 내보내기",
       "Generated on": "생성 일시",
-      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다"
+      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다",
+      "Discount Fee Adjustment": "할인 수수료 조정",
+      "Remaining discount fee available to adjust": "조정 가능한 잔여 할인 수수료",
+      "Cannot precede the discount fee date": "할인 수수료 날짜보다 이전일 수 없습니다"
     },
     "permissions": {
       "actions": {
@@ -6149,7 +6159,8 @@
       "validationSaved": "검증 데이터가 성공적으로 저장되었습니다.",
       "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
       "identityDescriptionsUpdated": "신분증 설명이 성공적으로 수정되었습니다.",
-      "identityDescriptionsUpdateFailed": "일부 신분증 설명을 수정하지 못했습니다."
+      "identityDescriptionsUpdateFailed": "일부 신분증 설명을 수정하지 못했습니다.",
+      "unableToAdjustDiscountFee": "할인 수수료를 조정할 수 없습니다."
     },
     "selections": {
       "standingInstructions": {

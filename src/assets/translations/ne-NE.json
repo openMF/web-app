@@ -415,6 +415,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "पूर्ववत गर्न सकिने कुनै सक्रिय रिसेट छैन।",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "ऋणमा उल्लंघन तालिका छैन।",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "यो उल्लंघन अवधि पहिले नै रिसेट गरिएको छ। फेरि रिसेट गर्नु अघि अवस्थित रिसेट पूर्ववत गर्नुहोस्।",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "शुल्क समायोजनको मिति शुल्कको भुक्तानी मितिभन्दा अगाडिको हुन सक्दैन।",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "शुल्क समायोजन कुनै पनि शुल्कसँग जोडिएको छैन, त्यसैले यसलाई समायोजन गर्न सकिँदैन।",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "यस प्रकारको कारोबार कार्यशील पुँजी कर्जामा समायोजन गर्न सकिँदैन।",
+    "wc.loan.charge.adjustment.invalid.status": "ऋणको हालको स्थितिमा शुल्क समायोजन अनुमति छैन।",
+    "wc.loan.charge.adjustment.inactive.charge": "निष्क्रिय शुल्कमा शुल्क समायोजन अनुमति छैन।",
+    "wc.loan.charge.adjustment.invalid.amount": "रकम समायोजनका लागि उपलब्ध शुल्क रकमभन्दा बढी हुन सक्दैन।",
     "error.resource.notImplemented.type": "कार्यान्वयन भएको छैन",
     "error.resource.notImplemented.message": "कार्यान्वयन नभएको कार्यक्षमता!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
@@ -1281,7 +1287,8 @@
       "Post Dividends": "लाभांश पोस्ट गर्नुहोस्",
       "Convert": "रूपान्तरण गर्नुहोस्",
       "Deleting": "मेटाउँदै",
-      "Inactivate": "निष्क्रिय पार्नुहोस्"
+      "Inactivate": "निष्क्रिय पार्नुहोस्",
+      "Discount Fee Adjustment": "छुट शुल्क समायोजन"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -5851,7 +5858,10 @@
       "Closed": "बन्द गरियो",
       "Dashboard Export": "ड्यासबोर्ड निर्यात",
       "Generated on": "उत्पन्न मिति",
-      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो"
+      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
+      "Discount Fee Adjustment": "छुट शुल्क समायोजन",
+      "Remaining discount fee available to adjust": "समायोजन गर्न उपलब्ध बाँकी छुट शुल्क",
+      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन"
     },
     "permissions": {
       "actions": {
@@ -6152,7 +6162,8 @@
       "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।",
       "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
       "identityDescriptionsUpdated": "पहिचान विवरणहरू सफलतापूर्वक अद्यावधिक भए।",
-      "identityDescriptionsUpdateFailed": "केही पहिचान विवरणहरू अद्यावधिक गर्न असफल भए।"
+      "identityDescriptionsUpdateFailed": "केही पहिचान विवरणहरू अद्यावधिक गर्न असफल भए।",
+      "unableToAdjustDiscountFee": "छुट शुल्क समायोजन गर्न सकिएन।"
     },
     "selections": {
       "standingInstructions": {

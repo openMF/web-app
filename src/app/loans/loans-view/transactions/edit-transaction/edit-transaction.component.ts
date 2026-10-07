@@ -66,9 +66,9 @@ const PAYMENT_DETAIL_CONTROLS = [
  * replacement of the same type with the submitted date, amount and payment
  * details. The backend validates the body against a strict parameter
  * whitelist, so the payload is assembled field by field. Working Capital posts
- * the same command on its own resource: it nests the payment details in a
- * `paymentDetails` object and does not accept an external id, which it lifts
- * from the original transaction onto the replacement instead.
+ * the same command on its own resource, where the only difference is that the
+ * payment details are nested in a `paymentDetails` object instead of flattened
+ * into the body.
  */
 @Component({
   selector: 'mifosx-edit-transaction',
@@ -153,7 +153,7 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     // the command outright on the rest, so the form is never reachable for them
     // even when the route is opened directly.
     if (!this.isAdjustable()) {
-      this.gotoTransactionList();
+      this.gotoLoanView('transactions');
       return;
     }
     // The external id identifies the replacement transaction the adjustment
@@ -229,15 +229,14 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       dateFormat,
       locale: this.settingsService.language.code
     };
+    // The external id names the replacement transaction the adjustment creates;
+    // the reversed original keeps the id it already had. Both products accept
+    // it and both auto-generate one when it is left empty.
     const optionalFields: { [key: string]: string | number | null } = {
       reversalExternalId: formValue.reversalExternalId,
-      note: formValue.note
+      note: formValue.note,
+      externalId: formValue.externalId
     };
-    // The external id names the replacement transaction; Working Capital
-    // rejects the parameter and lifts the original id onto the replacement.
-    if (this.isLoanProduct) {
-      optionalFields.externalId = formValue.externalId;
-    }
     const paymentDetails: { [key: string]: string | number | null } = {
       paymentTypeId: formValue.paymentTypeId,
       accountNumber: formValue.accountNumber,
@@ -270,7 +269,11 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
           payload,
           this.transactionTemplateData.id
         );
-    request.subscribe(() => this.gotoTransactionList());
+    // The transactions tab, not the transaction detail: it sits under the loan
+    // route, which is re-activated and therefore refetches the account, the
+    // schedule and the transactions the adjustment rewrote. It is also where
+    // both the reversed original and its replacement are visible.
+    request.subscribe(() => this.gotoLoanView('transactions'));
   }
 
   /**
@@ -293,28 +296,5 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       }
     );
     return filledIn;
-  }
-
-  /**
-   * Returns to the loan's transaction list. Going back to the transaction
-   * detail would stay inside the same parent route, so the loan resolver would
-   * not re-run; the list sits under the loan route, which is re-activated and
-   * therefore refetches the account, the schedule and the transactions the
-   * adjustment rewrote. It is also where both the reversed original and its
-   * replacement are visible.
-   */
-  private gotoTransactionList(): void {
-    this.router.navigate(
-      [
-        '../',
-        '../'
-      ],
-      {
-        queryParams: {
-          productType: this.loanProductService.productType.value
-        },
-        relativeTo: this.route
-      }
-    );
   }
 }

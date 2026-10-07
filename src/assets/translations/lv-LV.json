@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Nav aktīvas atiestatīšanas, ko atsaukt.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Aizdevumam nav pārkāpuma grafika.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Šis pārkāpuma periods jau ir atiestatīts. Pirms atkārtotas atiestatīšanas atsauciet esošo atiestatīšanu.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Maksas korekcijas datums nedrīkst būt agrāks par maksas termiņa datumu.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Maksas korekcija nav saistīta ne ar vienu maksu, tāpēc to nevar koriģēt.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Šāda veida darījumu apgrozāmā kapitāla aizdevumam nevar koriģēt.",
+    "wc.loan.charge.adjustment.invalid.status": "Maksas korekcijas nav atļautas pašreizējā aizdevuma statusā.",
+    "wc.loan.charge.adjustment.inactive.charge": "Maksas korekcijas nav atļautas neaktīvai maksai.",
+    "wc.loan.charge.adjustment.invalid.amount": "Summa nedrīkst pārsniegt korekcijai pieejamo maksas summu.",
     "error.resource.notImplemented.type": "Nav ieviests",
     "error.resource.notImplemented.message": "Neieviesta funkcionalitāte!",
     "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",
@@ -1278,7 +1284,8 @@
       "Post Dividends": "Grāmatot dividendes",
       "Convert": "Konvertēt",
       "Deleting": "Dzēš",
-      "Inactivate": "Deaktivizēt"
+      "Inactivate": "Deaktivizēt",
+      "Discount Fee Adjustment": "Atlaides maksas korekcija"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -5848,7 +5855,10 @@
       "Closed": "Slēgts",
       "Dashboard Export": "Paneļa eksports",
       "Generated on": "Ģenerēts",
-      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa"
+      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
+      "Discount Fee Adjustment": "Atlaides maksas korekcija",
+      "Remaining discount fee available to adjust": "Atlikusī atlaides maksa, ko var koriģēt",
+      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma"
     },
     "permissions": {
       "actions": {
@@ -6149,7 +6159,8 @@
       "validationSaved": "Validācijas dati veiksmīgi saglabāti.",
       "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
       "identityDescriptionsUpdated": "Identitātes dokumentu apraksti veiksmīgi atjaunināti.",
-      "identityDescriptionsUpdateFailed": "Dažus identitātes dokumentu aprakstus neizdevās atjaunināt."
+      "identityDescriptionsUpdateFailed": "Dažus identitātes dokumentu aprakstus neizdevās atjaunināt.",
+      "unableToAdjustDiscountFee": "Neizdevās koriģēt atlaides maksu."
     },
     "selections": {
       "standingInstructions": {

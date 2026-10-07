@@ -65,6 +65,7 @@ import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../loan-
 import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
+  canAdjustWorkingCapitalDiscountFee,
   canAdjustWorkingCapitalTransaction,
   canReverseLoanTransaction
 } from '../loan-transaction-adjust.helper';
@@ -398,6 +399,46 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     return this.loanProductService.isWorkingCapital
       ? canAdjustWorkingCapitalTransaction(transaction.type, alreadyReversed)
       : !this.hasChargebackRelation(transaction) && canAdjustLoanTransaction(transaction.type, alreadyReversed);
+  }
+
+  /**
+   * True when the row offers the Working Capital Discount Fee Adjustment, a
+   * command of its own that draws the remaining discount pool down rather than
+   * reversing and re-creating the transaction the way `adjust` does. An
+   * exhausted pool leaves nothing to draw down, so the entry disappears with it.
+   * @param transaction Transaction of the row
+   */
+  allowDiscountFeeAdjustment(transaction: LoanTransaction): boolean {
+    return (
+      this.loanProductService.isWorkingCapital &&
+      Number(this.loanDetailsData?.discountFee ?? 0) > 0 &&
+      canAdjustWorkingCapitalDiscountFee(
+        transaction.type,
+        transaction.manuallyReversed || transaction.reversed,
+        this.loanDetailsData?.status
+      )
+    );
+  }
+
+  /**
+   * Opens the discount fee adjustment form for the transaction of the row.
+   * @param transaction Transaction of the row
+   * @param $event Mouse Event
+   */
+  discountFeeAdjustment(transaction: LoanTransaction, $event: MouseEvent): void {
+    $event.stopPropagation();
+    this.router.navigate(
+      [
+        transaction.id,
+        'discount-fee-adjustment'
+      ],
+      {
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        },
+        relativeTo: this.route
+      }
+    );
   }
 
   /** Permission of the adjust command the row posts, which differs per product. */

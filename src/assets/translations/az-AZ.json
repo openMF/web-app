@@ -1203,7 +1203,8 @@
       "Save": "Yadda saxla",
       "Upload Report Design": "Hesabat tərtibatını yüklə",
       "Mass Reject": "Kütləvi rədd et",
-      "Hide": "Gizlət"
+      "Hide": "Gizlət",
+      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -5671,7 +5672,10 @@
       "Loading pending prospects": "Gözləyən potensial müştərilər yüklənir",
       "No pending prospects found": "Gözləyən potensial müştəri tapılmadı",
       "Unable to load pending prospects": "Gözləyən potensial müştəriləri yükləmək mümkün olmadı",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç.",
+      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
+      "Remaining discount fee available to adjust": "Düzəliş üçün mövcud qalan endirim haqqı",
+      "Cannot precede the discount fee date": "Endirim haqqı tarixindən əvvəl ola bilməz"
     },
     "permissions": {
       "actions": {
@@ -5970,7 +5974,8 @@
       "No Upcoming Charges Found": "Qarşıdan gələn haqq tapılmadı",
       "unableToUpdateDiscount": "Endirimi yeniləmək mümkün olmadı.",
       "validationSaved": "Yoxlama məlumatları uğurla yadda saxlanıldı.",
-      "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi."
+      "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi.",
+      "unableToAdjustDiscountFee": "Endirim haqqını düzəltmək mümkün olmadı."
     },
     "cbild": {
       "fields": {
