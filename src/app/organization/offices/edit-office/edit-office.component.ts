@@ -70,7 +70,7 @@ export class EditOfficeComponent implements OnInit {
         Validators.required
       ],
       openingDate: [
-        this.officeData.openingDate && new Date(this.officeData.openingDate),
+        this.officeData.openingDate && this.dateUtils.parseDate(this.officeData.openingDate),
         Validators.required
       ],
       externalId: [this.officeData.externalId]
