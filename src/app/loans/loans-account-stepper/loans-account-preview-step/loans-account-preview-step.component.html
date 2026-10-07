@@ -511,7 +511,7 @@
   <button mat-raised-button [routerLink]="['..']" [queryParams]="{ productType: loanProductService.productType.value }">
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submitEvent.emit()">
+  <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitEvent.emit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

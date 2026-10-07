@@ -52,6 +52,16 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
     ]
   },
   {
+    label: 'cashInventory.title',
+    materialIcon: 'inventory_2',
+    permission: 'READ_BASE_TELLER_CASH_INVENTORY',
+    route: [
+      '/organization',
+      'base-teller',
+      'cash-inventory'
+    ]
+  },
+  {
     label: 'labels.heading.Savings Account Opening',
     fontAwesomeIcon: 'piggy-bank',
     permission: 'READ_TELLER',

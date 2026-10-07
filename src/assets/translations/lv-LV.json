@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Kases inventāra uzraudzība",
+    "description": "Pārskatiet skaidras naudas un čeku inventāru pēc glabātāja, darījuma veida un valūtas.",
+    "all": "Visi",
+    "apply": "Lietot filtrus",
+    "retry": "Mēģināt vēlreiz",
+    "lastUpdated": "Pēdējoreiz atjaunināts",
+    "lastCutOff": "Pēdējā slēgšana",
+    "filters": {
+      "custodian": "Lietotājs / Glabātājs",
+      "transactionType": "Darījuma veids",
+      "currency": "Valūta",
+      "showLastCutOff": "Rādīt pēdējo slēgšanu"
+    },
+    "types": { "CASH": "Skaidra nauda", "CHECK": "Čeks" },
+    "columns": {
+      "user": "Lietotājs / Glabātājs",
+      "name": "Nosaukums",
+      "type": "Veids",
+      "currency": "Valūta",
+      "initialBalance": "Sākuma atlikums",
+      "inflows": "Uzkrātās ieplūdes",
+      "outflows": "Uzkrātās izplūdes",
+      "cutOffs": "Slēgšanas",
+      "balance": "Pieejamais atlikums"
+    },
+    "states": {
+      "loadingFilters": "Ielādē inventāra filtrus",
+      "loadingInventory": "Ielādē kases inventāru",
+      "empty": "Kases inventāra ieraksti nav atrasti."
+    },
+    "errors": {
+      "context": "Neizdevās ielādēt kases inventāra filtrus.",
+      "inventory": "Neizdevās ielādēt kases inventāru.",
+      "forbidden": "Jums nav atļaujas skatīt kases inventāru."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Kredīta maksājumi skaidrā naudā un ar čeku",

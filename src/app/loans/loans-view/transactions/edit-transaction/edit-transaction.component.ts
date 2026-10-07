@@ -34,8 +34,8 @@ interface AdjustTransactionForm {
   reversalExternalId: FormControl<string | null>;
   note: FormControl<string | null>;
   paymentTypeId: FormControl<number | null>;
-  accountNumber: FormControl<number | null>;
-  checkNumber: FormControl<number | null>;
+  accountNumber: FormControl<string | null>;
+  checkNumber: FormControl<string | null>;
   routingCode: FormControl<string | null>;
   receiptNumber: FormControl<string | null>;
   bankNumber: FormControl<string | null>;
@@ -198,8 +198,8 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       reversalExternalId: new FormControl<string | null>(null, Validators.maxLength(100)),
       note: new FormControl<string | null>(null, Validators.maxLength(1000)),
       paymentTypeId: new FormControl<number | null>(null),
-      accountNumber: new FormControl<number | null>(null),
-      checkNumber: new FormControl<number | null>(null),
+      accountNumber: new FormControl<string | null>(null),
+      checkNumber: new FormControl<string | null>(null),
       routingCode: new FormControl<string | null>(null),
       receiptNumber: new FormControl<string | null>(null),
       bankNumber: new FormControl<string | null>(null)
