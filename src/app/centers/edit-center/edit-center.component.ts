@@ -121,7 +121,6 @@ export class EditCenterComponent implements OnInit {
     }
     const data = {
       ...editCenterFormData,
-      name: this.centerData.name,
       dateFormat,
       locale
     };
