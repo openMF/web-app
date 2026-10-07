@@ -21,6 +21,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters/edit-business-rule-parameters.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Edit SMS Campaign step.
  */
@@ -39,6 +40,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private reportService = inject(ReportsService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
@@ -140,7 +142,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
     if (this.smsCampaign.triggerType.value === 'Schedule') {
       this.smsCampaignDetailsForm.addControl(
         'recurrenceStartDate',
-        new FormControl(new Date(this.smsCampaign.recurrenceStartDate))
+        new FormControl(this.dateUtils.parseDate(this.smsCampaign.recurrenceStartDate))
       );
     }
   }

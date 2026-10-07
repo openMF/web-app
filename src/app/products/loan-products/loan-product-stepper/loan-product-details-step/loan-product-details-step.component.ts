@@ -64,8 +64,8 @@ export class LoanProductDetailsStepComponent extends LoanProductBaseComponent im
       description: this.loanProductsTemplate.description,
       externalId: this.loanProductsTemplate.externalId,
       fundId: this.loanProductsTemplate.fundId,
-      startDate: this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
-      closeDate: this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
+      startDate: this.loanProductsTemplate.startDate && this.dateUtils.parseDate(this.loanProductsTemplate.startDate),
+      closeDate: this.loanProductsTemplate.closeDate && this.dateUtils.parseDate(this.loanProductsTemplate.closeDate),
       includeInBorrowerCycle: this.loanProductsTemplate.includeInBorrowerCycle
     });
   }

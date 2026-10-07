@@ -254,8 +254,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         name: any;
         chartSlabs: any[];
       } = {
-        endDate: chartData.endDate ? new Date(chartData.endDate) : '',
-        fromDate: chartData.fromDate ? new Date(chartData.fromDate) : '',
+        endDate: chartData.endDate ? this.dateUtils.parseDate(chartData.endDate) : '',
+        fromDate: chartData.fromDate ? this.dateUtils.parseDate(chartData.fromDate) : '',
         isPrimaryGroupingByAmount: chartData.isPrimaryGroupingByAmount,
         name: chartData.name,
         chartSlabs: this.getChartSlabsData(chartData)
