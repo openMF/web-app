@@ -88,12 +88,12 @@
         @if (showPaymentDetails) {
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
-            <input type="number" formControlName="accountNumber" matInput />
+            <input formControlName="accountNumber" matInput />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
-            <input type="number" formControlName="checkNumber" matInput />
+            <input formControlName="checkNumber" matInput />
           </mat-form-field>
 
           <mat-form-field>

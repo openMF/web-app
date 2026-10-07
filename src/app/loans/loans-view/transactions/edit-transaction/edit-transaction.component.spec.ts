@@ -124,7 +124,7 @@ describe('EditTransactionComponent', () => {
       externalId: 'must-not-be-sent',
       reversalExternalId: ' rev-1 ',
       note: ' Wrong amount ',
-      accountNumber: 1234,
+      accountNumber: ' ACC-1234 ',
       receiptNumber: ' R-1 '
     });
     return component;
@@ -311,7 +311,7 @@ describe('EditTransactionComponent', () => {
         locale: 'en',
         reversalExternalId: 'rev-1',
         note: 'Wrong amount',
-        paymentDetails: { paymentTypeId: 1, accountNumber: 1234, receiptNumber: 'R-1' }
+        paymentDetails: { paymentTypeId: 1, accountNumber: 'ACC-1234', receiptNumber: 'R-1' }
       });
     });
 
