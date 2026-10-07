@@ -345,7 +345,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           const data = this.loanProductService.isLoanProduct
             ? {
                 transactionDate: this.dateUtils.formatDate(
-                  this.transactionData.date && new Date(this.transactionData.date),
+                  this.transactionData.date && this.dateUtils.parseDate(this.transactionData.date),
                   dateFormat
                 ),
                 transactionAmount: 0,
@@ -399,7 +399,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         const dateFormat = this.settingsService.dateFormat;
         const payload: any = {
           transactionDate: this.dateUtils.formatDate(
-            this.transactionData.date && new Date(this.transactionData.date),
+            this.transactionData.date && this.dateUtils.parseDate(this.transactionData.date),
             dateFormat
           ),
           transactionAmount: 0,

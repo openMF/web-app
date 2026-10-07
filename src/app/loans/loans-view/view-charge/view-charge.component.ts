@@ -177,7 +177,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
       new DatepickerBase({
         controlName: 'dueDate',
         label: 'Due Date',
-        value: new Date(this.chargeData.dueDate),
+        value: this.dateUtils.parseDate(this.chargeData.dueDate),
         type: 'date',
         maxDate: this.settingsService.maxAllowedDate,
         required: true

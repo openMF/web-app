@@ -161,7 +161,7 @@ export class EditGroupMeetingComponent implements OnInit {
       }
     });
     this.groupEditMeetingForm.patchValue({
-      startDate: this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
+      startDate: this.calendarTemplate.startDate && this.dateUtils.parseDate(this.calendarTemplate.startDate),
       frequency: this.calendarTemplate.frequency.id,
       interval: `${this.calendarTemplate.interval}`
     });

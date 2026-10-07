@@ -84,7 +84,7 @@ export class SavingsTransactionGeneralTabComponent {
         const dateFormat = this.settingsService.dateFormat;
         const data = {
           transactionDate: this.dateUtils.formatDate(
-            this.transactionData.date && new Date(this.transactionData.date),
+            this.transactionData.date && this.dateUtils.parseDate(this.transactionData.date),
             dateFormat
           ),
           transactionAmount: 0,

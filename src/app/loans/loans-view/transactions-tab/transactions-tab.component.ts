@@ -542,7 +542,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     // transactionDate/transactionAmount are required only by the generic loan adjust endpoint.
     const undoPayload = isLoanProduct
       ? {
-          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
@@ -621,7 +624,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         }
         const operationDate = this.dateUtils.parseDate(transaction.date);
         const payload: { [key: string]: any } = {
-          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale: this.settingsService.language.code
