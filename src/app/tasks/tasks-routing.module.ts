@@ -86,6 +86,12 @@ export const routes: Routes = [
           data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
+          path: 'mass-rejection',
+          component: CreditApplicationsComponent,
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Mass Rejection', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
+        },
+        {
           path: 'pending-prospects',
           component: PendingProspectsComponent,
           data: { title: 'Pending Prospects', permissions: ['READ_PROSPECT'] }
