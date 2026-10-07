@@ -105,3 +105,47 @@ describe('LoansService - Working Capital transaction template', () => {
     expect(req.request.params.get('transactionDate')).toBe('05 January 2026');
   });
 });
+
+describe('LoansService - loan request payload', () => {
+  let service: LoansService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
+        { provide: Dates, useValue: { formatDate: () => '06 October 2026' } }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+  });
+
+  const build = (terms: { interestCalculationPeriodType: number; allowPartialPeriodInterestCalculation: boolean }) =>
+    service.buildLoanRequestPayload(
+      { principalAmount: 10000, disbursementData: [], ...terms },
+      { clientId: 1 },
+      [],
+      'en',
+      'dd MMMM yyyy'
+    );
+
+  it('sends "Calculate interest for exact days in partial period" as chosen', () => {
+    expect(
+      build({ interestCalculationPeriodType: 1, allowPartialPeriodInterestCalculation: true })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(true);
+    expect(
+      build({ interestCalculationPeriodType: 1, allowPartialPeriodInterestCalculation: false })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(false);
+  });
+
+  it('sends false when interest is calculated daily', () => {
+    expect(
+      build({ interestCalculationPeriodType: 0, allowPartialPeriodInterestCalculation: true })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(false);
+  });
+});

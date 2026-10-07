@@ -93,6 +93,8 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
   @Input() loanProductsBasicDetails: LoanProductBasicDetails[];
 
   /** Submit Loans Account */
+  /** Disables the submit button while the loans account is being created */
+  @Input() submitting = false;
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */

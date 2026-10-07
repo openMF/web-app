@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Sledování pokladní zásoby",
+    "description": "Kontrolujte zásobu hotovosti a šeků podle správce, typu transakce a měny.",
+    "all": "Vše",
+    "apply": "Použít filtry",
+    "retry": "Zkusit znovu",
+    "lastUpdated": "Poslední aktualizace",
+    "lastCutOff": "Poslední uzávěrka",
+    "filters": {
+      "custodian": "Uživatel / Správce",
+      "transactionType": "Typ transakce",
+      "currency": "Měna",
+      "showLastCutOff": "Zobrazit poslední uzávěrku"
+    },
+    "types": { "CASH": "Hotovost", "CHECK": "Šek" },
+    "columns": {
+      "user": "Uživatel / Správce",
+      "name": "Název",
+      "type": "Typ",
+      "currency": "Měna",
+      "initialBalance": "Počáteční zůstatek",
+      "inflows": "Kumulované příjmy",
+      "outflows": "Kumulované výdaje",
+      "cutOffs": "Uzávěrky",
+      "balance": "Dostupný zůstatek"
+    },
+    "states": {
+      "loadingFilters": "Načítání filtrů inventáře",
+      "loadingInventory": "Načítání pokladní zásoby",
+      "empty": "Nebyly nalezeny žádné záznamy pokladní zásoby."
+    },
+    "errors": {
+      "context": "Filtry pokladní zásoby nelze načíst.",
+      "inventory": "Pokladní zásobu nelze načíst.",
+      "forbidden": "Nemáte oprávnění zobrazit pokladní zásobu."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Hotovostní a šekové splátky úvěru",

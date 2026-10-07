@@ -83,6 +83,22 @@ describe('ErrorHandlerInterceptor', () => {
     expect(alert).toHaveBeenCalled();
   });
 
+  it.each([
+    'addresses',
+    'services',
+    'schedules'
+  ])('does not alert when the office %s endpoint is absent', (tab) => {
+    // The office tab shows its own "plugin not deployed" message.
+    const result = intercept(`/fineract-provider/api/v2/offices/1/${tab}`, 404);
+    expect(alert).not.toHaveBeenCalled();
+    expect(result).toBe('errored');
+  });
+
+  it('still alerts when saving an office schedule fails', () => {
+    intercept('/fineract-provider/api/v2/offices/1/schedules', 404, 'PUT');
+    expect(alert).toHaveBeenCalled();
+  });
+
   describe('domain rule violations', () => {
     const REVERSE_ONLY_CODE = 'error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed';
 
