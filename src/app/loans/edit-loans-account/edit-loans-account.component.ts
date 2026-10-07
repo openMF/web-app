@@ -271,11 +271,6 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
-
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
       .subscribe((response: any) => {
