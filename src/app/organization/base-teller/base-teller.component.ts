@@ -162,6 +162,16 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
     ]
   },
   {
+    label: 'transactionHistory.title',
+    materialIcon: 'receipt_long',
+    permission: 'READ_BASE_TELLER_TRANSACTION_HISTORY',
+    route: [
+      '/organization',
+      'base-teller',
+      'transaction-history'
+    ]
+  },
+  {
     label: 'labels.heading.Bill and Service Payment',
     fontAwesomeIcon: 'money-check-dollar',
     permission: 'READ_BASE_TELLER_SERVICE_PAYMENT',

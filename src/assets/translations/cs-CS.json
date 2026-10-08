@@ -810,8 +810,10 @@
         "message": "{{count}} poplatek/ky nemohl(y) být odpuštěn(y)."
       }
     },
-    "error.auth.type": "Chyba ověření",
-    "error.auth.message": "Vaše relace vypršela nebo jsou přihlašovací údaje neplatné.",
+    "error.auth.invalidCredentials.type": "Přihlášení se nezdařilo",
+    "error.auth.invalidCredentials.message": "Nesprávné uživatelské jméno nebo heslo. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.",
+    "error.auth.sessionExpired.type": "Relace vypršela",
+    "error.auth.sessionExpired.message": "Vaše relace vypršela. Přihlaste se prosím znovu.",
     "error.token.invalid.type": "Neplatný token",
     "error.token.invalid.message": "Poskytnutý jednorázový token je neplatný.",
     "error.bad.request.type": "Chybný požadavek",
@@ -7064,6 +7066,87 @@
       "options": "Možnosti správy hotovosti nelze načíst",
       "receipt": "Účtenku se nepodařilo načíst"
     }
+  },
+  "transactionHistory": {
+    "title": "Historie transakcí",
+    "description": "Vyhledávejte a kontrolujte dokončené transakce Base Teller, podrobnosti nominálů a účtenky.",
+    "sections": {
+      "searchFilters": "Filtry vyhledávání",
+      "results": "Výsledky transakcí",
+      "totals": "Součty podle měny",
+      "details": "Podrobnosti transakce",
+      "cancellation": "Podrobnosti zrušení",
+      "denominations": "Podrobnosti nominálů",
+      "operationDenominations": "Nominály operace",
+      "changeGiven": "Vrácená hotovost",
+      "receipt": "Účtenka",
+      "report": "Přehled historie transakcí"
+    },
+    "fields": {
+      "all": "Vše",
+      "date": "Datum",
+      "dateFrom": "Datum od",
+      "dateTo": "Datum do",
+      "transactionDate": "Datum transakce",
+      "teller": "Pokladník",
+      "currency": "Měna",
+      "status": "Stav",
+      "type": "Typ",
+      "operation": "Operace",
+      "concept": "Účel",
+      "reference": "Reference",
+      "inflows": "Příjmy",
+      "outflows": "Výdaje",
+      "totalInflows": "Celkové příjmy",
+      "totalOutflows": "Celkové výdaje",
+      "total": "Celkem",
+      "actions": "Akce",
+      "client": "Klient",
+      "identification": "Identifikace",
+      "cashReceived": "Přijatá hotovost",
+      "checksReceived": "Přijaté šeky",
+      "change": "Vrácená částka",
+      "adjustment": "Úprava",
+      "reason": "Důvod",
+      "user": "Uživatel",
+      "denomination": "Nominál",
+      "quantity": "Množství",
+      "amount": "Částka",
+      "generatedAt": "Vygenerováno",
+      "totalRecords": "Celkem záznamů",
+      "notApplicable": "Neuplatňuje se"
+    },
+    "actions": {
+      "search": "Hledat",
+      "clear": "Vymazat",
+      "viewDetails": "Zobrazit podrobnosti",
+      "denominationDetails": "Podrobnosti nominálů",
+      "reprintReceipt": "Znovu vytisknout účtenku",
+      "printResults": "Vytisknout výsledky",
+      "retry": "Zkusit znovu"
+    },
+    "states": {
+      "loadingFilters": "Načítání filtrů…",
+      "loadingHistory": "Načítání historie transakcí…",
+      "loadingDetails": "Načítání podrobností transakce…",
+      "loadingDenominations": "Načítání podrobností nominálů…",
+      "noTransactions": "Nebyly nalezeny žádné transakce.",
+      "noDenominations": "Pro tuto transakci nejsou k dispozici podrobnosti nominálů.",
+      "selectTransaction": "Vyberte transakci pro zobrazení podrobností."
+    },
+    "errors": {
+      "context": "Filtry historie transakcí nelze načíst.",
+      "search": "Historii transakcí nelze načíst.",
+      "detail": "Podrobnosti transakce nelze načíst.",
+      "denominations": "Podrobnosti nominálů nelze načíst.",
+      "receiptUnavailable": "Účtenka pro tuto transakci není k dispozici.",
+      "report": "Přehled historie transakcí nelze načíst."
+    },
+    "validation": {
+      "dateRange": "Datum od musí být dřívější nebo stejné jako datum do.",
+      "referenceLength": "Reference nesmí překročit 200 znaků."
+    },
+    "denominationTypes": { "BANKNOTE": "Bankovka", "COIN": "Mince" }
   },
   "enrollmentStatus": {
     "title": "Stav registrace",

@@ -813,8 +813,10 @@
         "message": "{{count}} Gebühr(en) konnte(n) nicht erlassen werden."
       }
     },
-    "error.auth.type": "Authentifizierungsfehler",
-    "error.auth.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.auth.invalidCredentials.type": "Anmeldung fehlgeschlagen",
+    "error.auth.invalidCredentials.message": "Benutzername oder Passwort ist falsch. Bitte überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut.",
+    "error.auth.sessionExpired.type": "Sitzung abgelaufen",
+    "error.auth.sessionExpired.message": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
     "error.token.invalid.type": "Ungültiger Token",
     "error.token.invalid.message": "Der angegebene Einmaltoken ist ungültig.",
     "error.bad.request.type": "Fehlerhafte Anfrage",
@@ -7067,6 +7069,87 @@
       "options": "Cash-Management-Optionen konnten nicht geladen werden",
       "receipt": "Der Beleg konnte nicht geladen werden"
     }
+  },
+  "transactionHistory": {
+    "title": "Transaktionsverlauf",
+    "description": "Abgeschlossene Base-Teller-Transaktionen, Stückelungsdetails und Belege suchen und prüfen.",
+    "sections": {
+      "searchFilters": "Suchfilter",
+      "results": "Transaktionsergebnisse",
+      "totals": "Summen nach Währung",
+      "details": "Transaktionsdetails",
+      "cancellation": "Stornierungsdetails",
+      "denominations": "Stückelungsdetails",
+      "operationDenominations": "Stückelungen der Transaktion",
+      "changeGiven": "Ausgegebenes Wechselgeld",
+      "receipt": "Beleg",
+      "report": "Bericht zum Transaktionsverlauf"
+    },
+    "fields": {
+      "all": "Alle",
+      "date": "Datum",
+      "dateFrom": "Datum von",
+      "dateTo": "Datum bis",
+      "transactionDate": "Transaktionsdatum",
+      "teller": "Kassenschalter",
+      "currency": "Währung",
+      "status": "Status",
+      "type": "Art",
+      "operation": "Vorgang",
+      "concept": "Konzept",
+      "reference": "Referenz",
+      "inflows": "Zuflüsse",
+      "outflows": "Abflüsse",
+      "totalInflows": "Summe Zuflüsse",
+      "totalOutflows": "Summe Abflüsse",
+      "total": "Gesamt",
+      "actions": "Aktionen",
+      "client": "Kunde",
+      "identification": "Identifikation",
+      "cashReceived": "Erhaltenes Bargeld",
+      "checksReceived": "Erhaltene Schecks",
+      "change": "Wechselgeld",
+      "adjustment": "Anpassung",
+      "reason": "Grund",
+      "user": "Benutzer",
+      "denomination": "Stückelung",
+      "quantity": "Anzahl",
+      "amount": "Betrag",
+      "generatedAt": "Erstellt am",
+      "totalRecords": "Datensätze gesamt",
+      "notApplicable": "Nicht zutreffend"
+    },
+    "actions": {
+      "search": "Suchen",
+      "clear": "Löschen",
+      "viewDetails": "Details anzeigen",
+      "denominationDetails": "Stückelungsdetails",
+      "reprintReceipt": "Beleg erneut drucken",
+      "printResults": "Ergebnisse drucken",
+      "retry": "Erneut versuchen"
+    },
+    "states": {
+      "loadingFilters": "Suchfilter werden geladen…",
+      "loadingHistory": "Transaktionsverlauf wird geladen…",
+      "loadingDetails": "Transaktionsdetails werden geladen…",
+      "loadingDenominations": "Stückelungsdetails werden geladen…",
+      "noTransactions": "Keine Transaktionen gefunden.",
+      "noDenominations": "Für diese Transaktion sind keine Stückelungsdetails verfügbar.",
+      "selectTransaction": "Wählen Sie eine Transaktion aus, um Details anzuzeigen."
+    },
+    "errors": {
+      "context": "Filter für den Transaktionsverlauf konnten nicht geladen werden.",
+      "search": "Transaktionsverlauf konnte nicht geladen werden.",
+      "detail": "Transaktionsdetails konnten nicht geladen werden.",
+      "denominations": "Stückelungsdetails konnten nicht geladen werden.",
+      "receiptUnavailable": "Für diese Transaktion ist kein Beleg verfügbar.",
+      "report": "Bericht zum Transaktionsverlauf konnte nicht geladen werden."
+    },
+    "validation": {
+      "dateRange": "Datum von muss vor oder gleich Datum bis sein.",
+      "referenceLength": "Die Referenz darf höchstens 200 Zeichen lang sein."
+    },
+    "denominationTypes": { "BANKNOTE": "Banknote", "COIN": "Münze" }
   },
   "enrollmentStatus": {
     "title": "Registrierungsstatus",

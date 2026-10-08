@@ -24,14 +24,14 @@
  * created.
  *
  * Cross-framework portability: the pure return shape matches
- * `GeneralStepData` from the page-object barrel, which the React port
- * exports under the same name. Importing a factory from
+ * `GeneralStepData` from `playwright/types`, which has no imports and is
+ * shared verbatim with the React port. Importing a factory from
  * `playwright/factories/...` therefore behaves identically against either
  * web app.
  */
 
 import type { FineractApiClient } from '../fixtures/fineract-api';
-import type { GeneralStepData } from '../pages';
+import type { GeneralStepData } from '../types/test-data.types';
 
 /**
  * Stronger return type for {@link createTestClient}.
