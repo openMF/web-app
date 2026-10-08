@@ -2312,6 +2312,7 @@
       "Reference": "Atsauce"
     },
     "inputs": {
+      "Breach Start Type": "Pārkāpuma sākuma tips",
       "Returned": "Atgriezts",
       "Settled": "Apmaksāts",
       "Check Amount": "Čeka summa",

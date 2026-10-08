@@ -733,6 +733,23 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
     return incomingParameter.map((v) => v.value);
   }
 
+  /**
+   * Resolves a Working Capital start type for display: the view receives a StringEnumOptionData, while the
+   * create/edit preview receives the bare code the form sends, which is looked up in the template options.
+   */
+  getStartTypeOption(
+    startType: StringEnumOptionData | string | null | undefined,
+    options: StringEnumOptionData[] | undefined
+  ): StringEnumOptionData | null {
+    if (!startType) {
+      return null;
+    }
+    if (typeof startType !== 'string') {
+      return startType;
+    }
+    return options?.find((option: StringEnumOptionData) => option.code === startType) ?? null;
+  }
+
   getBreach(): Breach | null {
     if (this.loanProduct.breach) {
       return this.loanProduct.breach;
