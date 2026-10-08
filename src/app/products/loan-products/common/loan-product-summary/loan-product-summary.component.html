@@ -125,6 +125,14 @@
         <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
       </div>
+      @let breachStartTypeOption =
+        getStartTypeOption(loanProduct.breachStartType, loanProductsTemplate?.breachStartTypeOptions);
+      @if (breachStartTypeOption) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+          <span class="flex-60">{{ breachStartTypeOption.value | translateKey: 'catalogs' }}</span>
+        </div>
+      }
     }
     @if (loanProductService.isLoanProduct) {
       @if (!hideToggleInView(loanProduct.allowApprovedDisbursedAmountsOverApplied)) {
@@ -554,10 +562,12 @@
           <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber }}</span>
         </div>
       }
-      @if (loanProduct.delinquencyStartType) {
+      @let delinquencyStartTypeOption =
+        getStartTypeOption(loanProduct.delinquencyStartType, loanProductsTemplate?.delinquencyStartTypeOptions);
+      @if (delinquencyStartTypeOption) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.delinquencyStartType.value | translateKey: 'catalogs' }}</span>
+          <span class="flex-60">{{ delinquencyStartTypeOption.value | translateKey: 'catalogs' }}</span>
         </div>
       }
     }

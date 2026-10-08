@@ -8,6 +8,32 @@
 
 import { Currency, PaymentType } from 'app/shared/models/general.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
+import { StringEnumOptionData } from 'app/shared/models/option-data.model';
+import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
+
+/**
+ * Option lists GET /working-capital-loans/template?clientId&productId returns beside `loanData`;
+ * CreateLoansAccountComponent / EditLoansAccountComponent regroup them under `options`.
+ * Both start types are `StringEnumOptionData` whose `code` (LOAN_CREATION | DISBURSEMENT) is what
+ * POST/PUT expect; the numeric `id` is rejected with `invalid.<type>.start.type`.
+ */
+export interface WorkingCapitalLoanTemplateOptions {
+  breachOptions: Breach[];
+  nearBreachOptions: NearBreach[];
+  delinquencyBucketOptions: DelinquencyBucket[];
+  fundOptions: unknown[];
+  periodFrequencyTypeOptions: StringEnumOptionData[];
+  delinquencyStartTypeOptions: StringEnumOptionData[];
+  breachStartTypeOptions: StringEnumOptionData[];
+}
+
+/** Delinquency and breach settings read from GET /working-capital-loans/{loanId}. */
+export interface WorkingCapitalLoanBreachSettings {
+  delinquencyGraceDays?: number | null;
+  delinquencyStartType?: StringEnumOptionData | null;
+  breachGraceDays?: number | null;
+  breachStartType?: StringEnumOptionData | null;
+}
 
 /** Code value option used to populate the charge-off reason dropdown. */
 export interface WorkingCapitalChargeOffReasonOption {
