@@ -25,34 +25,115 @@
     </h4>
 
     @if (loanProductService.isWorkingCapital) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label>
+      @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+        <mat-form-field class="flex-48">
+          <mat-label
+            >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label
+          >
+          <input
+            type="number"
+            matInput
+            mifosxPositiveNumber
+            min="0"
+            required
+            formControlName="totalPaymentVolume"
+            step="any"
+          />
+          @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+            <mat-error>
+              {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (paymentAmountCalculationStrategy === wcStrategy.ANNUAL_EIR) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Annual EIR' | translate }}</mat-label>
+          <input type="number" matInput min="0" required formControlName="annualEir" step="0.000001" />
+          @if (annualEirBounds.min !== null || annualEirBounds.max !== null) {
+            <mat-hint>
+              @if (annualEirBounds.min !== null) {
+                {{ 'labels.inputs.Minimum' | translate }} {{ annualEirBounds.min | number: '1.0-6' }} %
+              }
+              @if (annualEirBounds.max !== null) {
+                {{ 'labels.inputs.Maximum' | translate }} {{ annualEirBounds.max | number: '1.0-6' }} %
+              }
+            </mat-hint>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('greaterThanZero')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('pattern')) {
+            <mat-error>{{ 'labels.commons.Only up to 6 decimal places allowed' | translate }}</mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('outOfBounds')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }}
+              {{ 'labels.commons.is out of the allowed range' | translate }}
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (paymentAmountCalculationStrategy === wcStrategy.PAYMENT_AMOUNT) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Payment Amount' | translate }}</mat-label>
+          <input type="number" matInput min="0" required formControlName="paymentAmount" step="any" />
+          @if (loansAccountTermsForm.controls.paymentAmount.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Payment Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.paymentAmount.hasError('greaterThanZero')) {
+            <mat-error>
+              {{ 'labels.inputs.Payment Amount' | translate }}
+              {{ 'labels.commons.must be greater than zero' | translate }}
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      <mat-form-field class="flex-23">
+        <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
         <input
           type="number"
           matInput
           mifosxPositiveNumber
           min="0"
-          required
-          formControlName="totalPaymentVolume"
+          [required]="paymentAmountCalculationStrategy !== wcStrategy.TPV"
+          formControlName="discount"
           step="any"
         />
-        @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+        @if (loansAccountTermsForm.controls.discount.hasError('required')) {
           <mat-error>
-            {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
+            {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+        @if (loansAccountTermsForm.controls.discount.hasError('greaterThanZero')) {
+          <mat-error>
+            {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
           </mat-error>
         }
       </mat-form-field>
 
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="discount" step="any" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" step="any" />
-      </mat-form-field>
+      @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
+          <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" step="any" />
+        </mat-form-field>
+      }
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Frequency' | translate }}</mat-label>

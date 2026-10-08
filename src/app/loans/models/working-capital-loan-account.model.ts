@@ -13,7 +13,12 @@ export interface PeriodPaymentRateChange {
   previousRate: number;
   newRate: number;
   reversed: boolean;
+  reversedOnDate?: number[] | null;
   submittedOnDate: number[];
+  /** Annual EIR (%) of the segment this change opened, snapshotted when booked. Null on older rows. */
+  calculatedAnnualEir?: number | null;
+  dailyPaymentAmount?: number | null;
+  segmentTerm?: number | null;
 }
 
 export interface BreachSchedule {

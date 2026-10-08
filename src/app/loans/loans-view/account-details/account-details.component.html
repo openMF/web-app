@@ -55,10 +55,38 @@
               {{ camalize(loanDetails.repaymentFrequencyType.value) | translateKey: 'catalogs' }}
             </div>
           </div>
+          @if (loanDetails.paymentAmountCalculationStrategy?.value) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.paymentAmountCalculationStrategy.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+          }
           @if (has(loanDetails.paymentRate)) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Period Payment Rate' | translate }}</div>
               <div class="fact-value amount">{{ loanDetails.paymentRate | formatNumber }} %</div>
+            </div>
+          }
+          @if (isAnnualEirStrategy() && has(loanDetails.annualEir)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Annual EIR' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.annualEir | number: '1.0-6' }} %</div>
+            </div>
+          }
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Calculated Annual EIR' | translate }}</div>
+            @if (has(loanDetails.calculatedAnnualEir)) {
+              <div class="fact-value amount">{{ loanDetails.calculatedAnnualEir | number: '1.0-6' }} %</div>
+            } @else {
+              <div class="fact-value muted">{{ 'labels.inputs.Not Available' | translate }}</div>
+            }
+          </div>
+          @if (has(loanDetails.periodPaymentAmount)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Period Payment Amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.periodPaymentAmount | formatNumber }}</div>
             </div>
           }
           @if (has(loanDetails.numberOfRepayments)) {

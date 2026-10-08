@@ -151,6 +151,109 @@ describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
   });
 });
 
+describe('LoansAccountTermsStepComponent — Working Capital ANNUAL_EIR strategy', () => {
+  let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
+  let component: LoansAccountTermsStepComponent;
+
+  /** Product priced from an annual EIR of 43.756245 % allowed between 10 % and 60 %. */
+  const ANNUAL_EIR_TEMPLATE: any = {
+    ...WC_PRODUCT_TEMPLATE,
+    product: {
+      ...WC_PRODUCT_TEMPLATE.product,
+      paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+      minAnnualEir: 10,
+      annualEir: 43.756245,
+      maxAnnualEir: 60,
+      discount: 50
+    }
+  };
+
+  /** Account opened on that product with its own annual EIR override. */
+  const ANNUAL_EIR_LOAN_DETAILS: any = {
+    ...WC_LOAN_DETAILS,
+    paymentRate: null,
+    totalPaymentVolume: null,
+    annualEir: 40,
+    paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' }
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LoansAccountTermsStepComponent);
+    component = fixture.componentInstance;
+  });
+
+  function newLoanFromProduct(): void {
+    component.loansAccountProductTemplate = ANNUAL_EIR_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, ANNUAL_EIR_TEMPLATE, true)
+    });
+  }
+
+  it('prefills the annual EIR from the product and drops the TPV inputs from the payload', () => {
+    newLoanFromProduct();
+
+    expect(component.paymentAmountCalculationStrategy).toBe('ANNUAL_EIR');
+    expect(component.loansAccountTermsForm.get('annualEir')!.value).toBe(43.756245);
+    expect(component.annualEirBounds).toEqual({ min: 10, max: 60 });
+
+    const terms = component.loansAccountTerms;
+    expect(terms.annualEir).toBe(43.756245);
+    expect(terms).not.toHaveProperty('totalPaymentVolume');
+    expect(terms).not.toHaveProperty('periodPaymentRate');
+    expect(terms).not.toHaveProperty('paymentAmount');
+  });
+
+  it('validates the annual EIR against the product window and requires a positive discount', () => {
+    newLoanFromProduct();
+    const form = component.loansAccountTermsForm;
+
+    form.get('annualEir')!.setValue(70);
+    expect(form.get('annualEir')!.hasError('outOfBounds')).toBe(true);
+    form.get('annualEir')!.setValue('');
+    expect(form.get('annualEir')!.hasError('required')).toBe(true);
+    form.get('annualEir')!.setValue(0);
+    expect(form.get('annualEir')!.hasError('greaterThanZero')).toBe(true);
+
+    form.get('discount')!.setValue(0);
+    expect(form.get('discount')!.hasError('greaterThanZero')).toBe(true);
+    form.get('discount')!.setValue('');
+    expect(form.get('discount')!.hasError('required')).toBe(true);
+  });
+
+  it('reads the account override when editing', () => {
+    component.loansAccountProductTemplate = ANNUAL_EIR_LOAN_DETAILS;
+    component.loansAccountTemplate = ANNUAL_EIR_LOAN_DETAILS;
+    component.loanId = 1;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, ANNUAL_EIR_LOAN_DETAILS, true)
+    });
+    component.loansAccountProductTemplate = ANNUAL_EIR_TEMPLATE;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(ANNUAL_EIR_LOAN_DETAILS, ANNUAL_EIR_TEMPLATE, false)
+    });
+
+    expect(component.loansAccountTermsForm.get('annualEir')!.value).toBe(40);
+    expect(component.loansAccountTerms).not.toHaveProperty('totalPaymentVolume');
+  });
+});
+
 describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
   let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
   let component: LoansAccountTermsStepComponent;

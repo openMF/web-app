@@ -195,6 +195,20 @@ export interface LoanProduct {
   breachId?: number;
   nearBreach?: NearBreach;
   nearBreachId?: number;
+  /** TPV (default) | ANNUAL_EIR | PAYMENT_AMOUNT. Option object on GET, enum name on POST/PUT. */
+  paymentAmountCalculationStrategy?: StringEnumOptionData | string | null;
+  paymentAmountCalculationStrategyOptions?: StringEnumOptionData[];
+  periodPaymentRate?: number | null;
+  minPeriodPaymentRate?: number | null;
+  maxPeriodPaymentRate?: number | null;
+  /** Contractual annual EIR (%), up to 6 decimals. Only under ANNUAL_EIR. */
+  annualEir?: number | null;
+  minAnnualEir?: number | null;
+  maxAnnualEir?: number | null;
+  paymentAmount?: number | null;
+  minPaymentAmount?: number | null;
+  maxPaymentAmount?: number | null;
+  discount?: number | null;
 }
 
 export interface AllowAttributeOverrides {

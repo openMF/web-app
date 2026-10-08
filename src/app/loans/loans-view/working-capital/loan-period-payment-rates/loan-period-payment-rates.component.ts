@@ -32,6 +32,10 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 @Component({
   selector: 'mifosx-loan-period-payment-rates',
@@ -70,11 +74,18 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
   /** Future effective dates are allowed: the rate is recorded now and takes over on its own date. */
   maxEffectiveDate: Date = this.settingsService.maxFutureDate;
 
+  /**
+   * Only TPV loans can change their period payment rate: the backend vetoes ANNUAL_EIR and
+   * PAYMENT_AMOUNT loans with `rate.change.not.allowed.for.<strategy>.strategy`.
+   */
+  canAddPaymentRate = true;
+
   loanPaymentRatesColumns: string[] = [
     'id',
     'effectiveDate',
     'previousRate',
     'newRate',
+    'calculatedAnnualEir',
     'submittedOnDate'
   ];
 
@@ -83,10 +94,14 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
   ngOnInit(): void {
     this.loanId = this.route.parent.snapshot.params['loanId'];
 
-    const disbursementDate = this.route.parent.snapshot.data?.['loanDetailsData']?.timeline?.actualDisbursementDate;
+    const loanDetails = this.route.parent.snapshot.data?.['loanDetailsData'];
+    const disbursementDate = loanDetails?.timeline?.actualDisbursementDate;
     if (disbursementDate) {
       this.minEffectiveDate = this.dateUtils.parseDate(disbursementDate);
     }
+    this.canAddPaymentRate =
+      resolvePaymentAmountCalculationStrategy(loanDetails?.paymentAmountCalculationStrategy) ===
+      WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
 
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
