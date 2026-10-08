@@ -2307,6 +2307,7 @@
       "Reference": "सन्दर्भ"
     },
     "inputs": {
+      "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
       "Returned": "फिर्ता भएको",
       "Settled": "भुक्तानी गरिएको",
       "Check Amount": "चेक रकम",

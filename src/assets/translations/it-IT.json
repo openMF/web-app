@@ -2307,6 +2307,7 @@
       "Reference": "Riferimento"
     },
     "inputs": {
+      "Breach Start Type": "Tipo di inizio violazione",
       "Returned": "Restituito",
       "Settled": "Saldato",
       "Check Amount": "Importo dell'assegno",

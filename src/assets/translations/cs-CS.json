@@ -2305,6 +2305,7 @@
       "Schedules": "Rozvrhy"
     },
     "inputs": {
+      "Breach Start Type": "Typ začátku porušení",
       "Returned": "Vráceno",
       "Settled": "Uhrazeno",
       "Check Amount": "Částka šeku",

@@ -2309,6 +2309,7 @@
       "Reference": "Referenz"
     },
     "inputs": {
+      "Breach Start Type": "Starttyp des Verstoßes",
       "Returned": "Zurückgegeben",
       "Settled": "Beglichen",
       "Check Amount": "Scheckbetrag",

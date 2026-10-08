@@ -2304,6 +2304,7 @@
       "Reference": "참조"
     },
     "inputs": {
+      "Breach Start Type": "위반 시작 유형",
       "Returned": "반환됨",
       "Settled": "결제 완료",
       "Check Amount": "수표 금액",

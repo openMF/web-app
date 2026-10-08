@@ -2306,6 +2306,7 @@
       "Edit Guarantor": "Edit Guarantor"
     },
     "inputs": {
+      "Breach Start Type": "Breach Start Type",
       "Returned": "Returned",
       "Settled": "Settled",
       "Account moves out of NPA only on arrears completion": "Account moves out of NPA only on arrears completion",

@@ -117,7 +117,8 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
-        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
       };
     }
     if (this.loansAccountProductTemplate.loanProductId) {
@@ -332,7 +333,8 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     // No Empty values to be sent.
     [
       'delinquencyGraceDays',
-      'delinquencyStartType'
+      'delinquencyStartType',
+      'breachStartType'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {
         delete payload[attr];

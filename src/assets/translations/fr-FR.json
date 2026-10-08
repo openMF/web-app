@@ -2307,6 +2307,7 @@
       "Reference": "Référence"
     },
     "inputs": {
+      "Breach Start Type": "Type de début de manquement",
       "Returned": "Retourné",
       "Settled": "Réglé",
       "Check Amount": "Montant du chèque",

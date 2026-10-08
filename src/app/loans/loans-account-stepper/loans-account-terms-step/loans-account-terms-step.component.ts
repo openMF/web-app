@@ -196,6 +196,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   allowAttributeOverrides: any | null = null;
 
   delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+  breachStartTypeOptions: StringEnumOptionData[] = [];
   delinquencyBucketOptions: DelinquencyBucket[] = [];
   breachOptions: Breach[] = [];
   nearBreachOptions: NearBreach[] = [];
@@ -362,6 +363,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.currency = this.resolveCurrency(this.loansAccountTermsData);
       this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
       this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
+      this.breachStartTypeOptions = this.loansAccountTermsData.options?.breachStartTypeOptions ?? [];
       this.delinquencyBucketOptions = this.loansAccountTermsData.options?.delinquencyBucketOptions ?? [];
       this.breachOptions = this.loansAccountTermsData.options?.breachOptions ?? [];
       this.nearBreachOptions = this.loansAccountTermsData.options?.nearBreachOptions ?? [];
@@ -389,7 +391,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           delinquencyBucketId: this.loansAccountTermsData.delinquencyBucket?.id,
           breachId: this.loansAccountTermsData.breach?.id,
           nearBreachId: this.loansAccountTermsData.nearBreach?.id,
-          breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0
+          breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0,
+          breachStartType: this.loansAccountTermsData.breachStartType?.code ?? ''
         });
         // New Loan — solo inicializar si el producto realmente cambió
       } else if (productChanged) {
@@ -401,7 +404,9 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           delinquencyBucketId: this.loansAccountTermsData.product.delinquencyBucket?.id || '',
           breachId: this.loansAccountTermsData.product.breach?.id || '',
           nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || '',
-          breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0
+          breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0,
+          // The template does not copy the product's breachStartType into loanData; the backend inherits it when omitted.
+          breachStartType: this.loansAccountTermsData.product.breachStartType?.code ?? ''
         });
         this.cdr.markForCheck();
       }
@@ -560,10 +565,11 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             ? this.loansAccountTermsData.delinquencyGraceDays
             : this.loansAccountTermsData.delinquencyGraceDays ||
               this.loansAccountTermsData.product?.delinquencyGraceDays,
+          // The backend parses the enum name (code); the numeric id is rejected with invalid.delinquency.start.type.
           delinquencyStartType: isEditingAccount
-            ? this.loansAccountTermsData.delinquencyStartType?.id
-            : this.loansAccountTermsData.delinquencyStartType?.id ||
-              this.loansAccountTermsData.product?.delinquencyStartType?.id,
+            ? this.loansAccountTermsData.delinquencyStartType?.code
+            : this.loansAccountTermsData.delinquencyStartType?.code ||
+              this.loansAccountTermsData.product?.delinquencyStartType?.code,
           delinquencyBucketId: isEditingAccount
             ? this.loansAccountTermsData.delinquencyBucket?.id
             : this.loansAccountTermsData.delinquencyBucket?.id ||
@@ -576,7 +582,12 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             : this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product?.nearBreach?.id,
           breachGraceDays: isEditingAccount
             ? (this.loansAccountTermsData.breachGraceDays ?? '')
-            : (this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product?.breachGraceDays ?? '')
+            : (this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product?.breachGraceDays ?? ''),
+          breachStartType: isEditingAccount
+            ? (this.loansAccountTermsData.breachStartType?.code ?? '')
+            : (this.loansAccountTermsData.breachStartType?.code ??
+              this.loansAccountTermsData.product?.breachStartType?.code ??
+              '')
         });
       }
     }
@@ -886,7 +897,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         delinquencyBucketId: [''],
         breachId: [''],
         nearBreachId: [''],
-        breachGraceDays: ['']
+        breachGraceDays: [''],
+        breachStartType: ['']
       });
     }
   }

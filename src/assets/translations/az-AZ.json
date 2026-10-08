@@ -2270,6 +2270,7 @@
       "Edit Guarantor": "Zaminin məlumatlarını redaktə et"
     },
     "inputs": {
+      "Breach Start Type": "Pozuntunun başlanğıc növü",
       "Returned": "Qaytarılıb",
       "Settled": "Hesablaşma tamamlanıb",
       "Account moves out of NPA only on arrears completion": "Hesab yalnız gecikmiş borc tam ödənildikdə problemli aktiv statusundan çıxarılır",
