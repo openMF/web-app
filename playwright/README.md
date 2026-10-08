@@ -23,7 +23,7 @@ The first command installs the project dependencies. The second downloads the Ch
 
 ### Check your setup without a backend
 
-Some specs test the helpers in `playwright/utils`, `playwright/pages`, `playwright/fixtures` and part of `playwright/factories`. They need no browser, no web app and no Fineract, so they are the quickest way to confirm your setup works:
+Some specs test the helpers in `playwright/utils`, `playwright/config`, `playwright/pages`, `playwright/fixtures` and part of `playwright/factories`. They need no browser, no web app and no Fineract, so they are the quickest way to confirm your setup works:
 
 ```bash
 npx playwright test --project=unit
@@ -136,11 +136,18 @@ playwright/
 
 The specs in `tests/` are grouped into `charges`, `clients`, `groups`, `kyc`, `loans` and `savings`, with a few general specs such as login at the top level.
 
+Imports follow the layers, so the same page objects and test data code can be reused by the React web app's suite:
+
+- `config/` holds everything that differs between the two apps: selectors, routes and behaviour flags. Page objects read routes and URLs through it, for example with `appRoutePath()` and `isAtRoute()` from `config/routes.ts`, rather than reading `url.hash` directly.
+- `pages/` may import `config/`, `types/` and `utils/`.
+- `factories/`, `fixtures/` and `types/` never import from `pages/`. Shared shapes such as `GeneralStepData` live in `types/`.
+- `utils/` is shared runtime code with nothing specific to either web app, so any folder may import it.
+
 ## Playwright projects
 
 `playwright.config.ts` splits the suite into projects:
 
-1. `unit` runs the helper specs from `playwright/utils`, `playwright/pages`, `playwright/fixtures` and two factory specs. It needs no browser and no backend.
+1. `unit` runs the helper specs from `playwright/utils`, `playwright/config`, `playwright/pages`, `playwright/fixtures` and two factory specs. It needs no browser and no backend.
 2. `integration` runs the `*.factory.spec.ts` files in `playwright/factories` against a real Fineract, without starting a browser.
 3. `setup` runs `auth.setup.ts`, which logs in once and stores the session in `playwright/.auth/user.json`.
 4. `chromium` runs every spec in `playwright/tests` except the ones under `playwright/tests/admin` and `playwright/tests/restricted`, which belong to the role projects described below. It depends on `setup`, so every spec starts already logged in as the default user.
