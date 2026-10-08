@@ -158,6 +158,10 @@ export class LoanAmortizationScheduleTabComponent implements OnInit {
     }
   }
 
+  has(value: unknown): boolean {
+    return value !== null && value !== undefined;
+  }
+
   getStatus(payment: Payment): PaymentStatus {
     return this.statusMap.get(payment.paymentNo) ?? 'projected';
   }

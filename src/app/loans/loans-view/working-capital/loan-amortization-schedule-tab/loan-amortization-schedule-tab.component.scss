@@ -31,6 +31,12 @@
 
 .amortization-container {
   @include shared.card-container;
+  @include shared.fact-sheet;
+}
+
+/* ── Pricing facts (strategy, rates, day count) ─────────────── */
+.pricing-facts {
+  border-bottom: 1px solid var(--ch-border);
 }
 
 /* ── Progress strip ──────────────────────────────────────────── */
