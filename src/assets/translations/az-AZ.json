@@ -13,7 +13,10 @@
       "currency": "Valyuta",
       "showLastCutOff": "Son bağlanışı göstər"
     },
-    "types": { "CASH": "Nağd pul", "CHECK": "Çek" },
+    "types": {
+      "CASH": "Nağd pul",
+      "CHECK": "Çek"
+    },
     "columns": {
       "user": "İstifadəçi / Məsul şəxs",
       "name": "Ad",
@@ -241,7 +244,11 @@
       "updating": "Yenilənir...",
       "updatingCategory": "{{category}} yenilənir"
     },
-    "categories": { "ACCOUNTING": "Mühasibat", "GENERAL": "Ümumi kataloqlar", "USERS": "İstifadəçilər" },
+    "categories": {
+      "ACCOUNTING": "Mühasibat",
+      "GENERAL": "Ümumi kataloqlar",
+      "USERS": "İstifadəçilər"
+    },
     "errors": {
       "alreadyRunning": "Bu kataloq yeniləməsi artıq icra olunur",
       "interrupted": "Əvvəlki kataloq yeniləməsi dayandırıldı. Yenidən cəhd edin",
@@ -259,7 +266,10 @@
       "status": "Status",
       "yes": "Bəli"
     },
-    "messages": { "loading": "Kataloq yeniləmə statusları yüklənir...", "success": "Kataloqlar yeniləndi" },
+    "messages": {
+      "loading": "Kataloq yeniləmə statusları yüklənir...",
+      "success": "Kataloqlar yeniləndi"
+    },
     "status": {
       "CURRENT": "Cari",
       "FAILED": "Yeniləmə uğursuz oldu",
@@ -446,9 +456,6 @@
     "validation.msg.loan.principal.is.greater.than.max": "{{params[0].value}} əsas borc məbləği etibarsızdır. Maksimum əsas borc məbləğindən ({{params[1].value}}) az və ya ona bərabər olmalıdır.",
     "validation.msg.loan.principal.is.less.than.min": "{{params[0].value}} əsas borc məbləği etibarsızdır. Minimum əsas borc məbləğindən ({{params[1].value}}) çox və ya ona bərabər olmalıdır.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Mühasibat uçotu növü məcburidir.",
-    "labels.alt.Center profile placeholder": "Mərkəz profili üçün yer tutucu",
-    "labels.alt.Group profile placeholder": "Qrup profili üçün yer tutucu",
-    "labels.commons.Only up to 6 decimal places allowed": "Ən çox 6 onluq mərtəbəyə icazə verilir.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Mühasibat uçotu növü etibarsızdır. {{params[1].value}} ilə {{params[2].value}} arasında, sərhədlər daxil olmaqla, ədəd olmalıdır.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Gündəlik hesablama üçün natamam hissəli ödənişin hesablanmasına icazə verilə bilməz",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Dəyişən hissəli ödəniş gündəlik faiz hesablanması və ya natamam dövr üçün faiz hesablanmasına icazə seçimi ilə istifadə olunmalıdır",
@@ -471,7 +478,6 @@
     "validation.msg.loanproduct.feeToIncomeAccountMappings[4].incomeAccountId.cannot.be.blank": "Haqqa məxsus gəlir hesablarının konfiqurasiyasında gəlir hesabı boş ola bilməz",
     "validation.msg.loanproduct.fundId.not.greater.than.zero": "Fond etibarsızdır.",
     "validation.msg.loanproduct.fundSourceAccountId.cannot.be.blank": "Fond mənbəyi məcburidir.",
-    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments ": "Faiz hesablanması üzrə güzəşt müddəti ödəniş sayından az və ya ona bərabər olmalıdır.",
     "validation.msg.loanproduct.graceOnInterestCharged.not.zero.or.greater": "Faiz hesablanması üzrə güzəşt müddəti sıfır və ya daha böyük qiymət olmalıdır.",
     "validation.msg.loanproduct.graceOnInterestPayment..mustBeLessThan.numberOfRepayments": "Kredit məhsulunun “Faiz ödənişi üzrə güzəşt müddəti” ödəniş sayından az olmalıdır.",
     "validation.msg.loanproduct.graceOnInterestPayment.mustBeLessThan.numberOfRepayments": "Faiz ödənişləri üzrə güzəşt müddəti ödəniş sayından az olmalıdır.",
@@ -624,7 +630,6 @@
     "validation.msg.savingsproduct.description.cannot.be.blank": "Təsvir məcburidir.",
     "validation.msg.savingsproduct.description.exceeds.max.length": "Təsvir {{params[0].value}} simvoldan uzun ola bilməz.",
     "validation.msg.savingsproduct.digitsAfterDecimal.is.not.within.expected.range": "Daxil edilmiş onluq mərtəbələrin sayı `{{params[0].value}}` qiymətinə bərabərdir və {{params[1].value}} ilə {{params[2].value}} arasında ədəd olmalıdır.",
-    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank ": "Haqlardan gəlir hesabı məcburidir",
     "validation.msg.savingsproduct.insufficient.balance": "Hesabınızdakı qalıq ${{balance}} təşkil edir",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.cannot.be.blank": "Faiz hesablanması (ildəki günlərin sayı) məcburidir.",
     "validation.msg.savingsproduct.interestCalculationDaysInYearType.is.not.one.of.expected.enumerations": "Faiz hesablanması (ildəki günlərin sayı) `[ {{params[1].value}} ]` qiymətlərindən biri olmalıdır.",
@@ -821,7 +826,40 @@
       "futureDate": "Vaxtından əvvəl ödəniş tarixi gələcəkdə ola bilməz.",
       "dateOutOfRange": "Vaxtından əvvəl ödəniş tarixi icazə verilən aralıqdan kənardadır.",
       "amountMustBePositive": "Əməliyyat məbləği 0-dan böyük olmalıdır."
-    }
+    },
+    "validation.msg.loanproduct.graceOnInterestCharged.mustBeLessThan.numberOfRepayments": "Hesablanmış faiz üzrə güzəşt müddəti ödənişlərin sayından az və ya ona bərabər olmalıdır.",
+    "validation.msg.savingsproduct.incomeFromFeeAccountId.cannot.be.blank": "Haqlardan gəlir hesabı məcburidir",
+    "tenantManagement": {
+      "type": "Tenantların idarə edilməsi",
+      "unauthorized": "Tenantların idarə edilməsi sessiyanız artıq etibarlı deyil. Yenidən daxil olun.",
+      "notAvailable": "Bu server tenantların idarə edilməsini dəstəkləmir. Fineract tenant idarəetmə plaqini quraşdırılmayıb.",
+      "unknown": "Tenantların idarə edilməsi sorğusunu tamamlamaq mümkün olmadı.",
+      "signInRejected": "Baş istifadəçinin giriş məlumatları rədd edildi. Tenantların idarə edilməsi üçün tenant istifadəçisi deyil, baş istifadəçi tələb olunur."
+    },
+    "error.msg.loan.transaction.adjustment.is.only.allowed.to.repayment.or.waiver.or.creditbalancerefund.or.capitalizedIncome.or.capitalizedIncomeAdjustment.or.buyDownFee.or.buyDownFeeAdjustment.transactions": "Yalnız ödəniş, haqqdan imtina, hesablama, kredit qalığının qaytarılması, kapitallaşdırılmış gəlir, kapitallaşdırılmış gəlirə düzəliş, faiz dərəcəsinin azaldılması haqqı və ya həmin haqqa düzəliş əməliyyatlarına düzəliş etmək olar.",
+    "error.msg.loan.transfer.transaction.update.not.allowed": "Bu əməliyyat hesablararası köçürmənin bir hissəsidir və ona düzəliş etmək olmaz.",
+    "error.msg.loan.written.off.update.not.allowed": "Kredit silinib, buna görə onun əməliyyatlarına düzəliş etmək olmaz.",
+    "error.msg.loan.transaction.update.not.allowed": "Bu əməliyyat başqa əməliyyatla əlaqəli olduğuna görə ona düzəliş etmək olmaz.",
+    "error.msg.loan.transaction.error.msg.loan.transaction.update.not.allowed": "Bu növ əməliyyatı yalnız geri almaq olar: məbləğini dəyişmək olmaz.",
+    "loan.cannot.be.reopened.as.it.is.foreclosured": "Kredit vaxtından əvvəl bağlandığı üçün onu yenidən açmaq olmaz.",
+    "error.msg.loan.transaction.capitalizedIncomeAdjustment.cannot.be.adjusted": "Kapitallaşdırılmış gəlirə düzəlişi yalnız geri almaq olar: məbləğini dəyişmək olmaz.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.adjusted": "Faiz dərəcəsinin azaldılması haqqını yalnız geri almaq olar: məbləğini dəyişmək olmaz.",
+    "error.msg.loan.transaction.buy.down.fee.adjustment.cannot.be.adjusted": "Faiz dərəcəsinin azaldılması haqqına düzəlişi yalnız geri almaq olar: məbləğini dəyişmək olmaz.",
+    "error.msg.loan.transaction.buy.down.fee.cannot.be.reversed.when.adjusted": "Faiz dərəcəsinin azaldılması haqqına geri alınmamış düzəliş olduqda haqqı geri almaq olmaz.",
+    "error.msg.tenant.connection.credentials.rejected": "Verilənlər bazası serveri bu tenantın giriş məlumatlarını qəbul etmədi.",
+    "error.msg.tenant.schema.creation.not.permitted": "Verilənlər bazası istifadəçisinin verilənlər bazası yaratmaq icazəsi yoxdur. Ona bu icazəni verin və ya tenantı yaratmazdan əvvəl verilənlər bazasını yaradın.",
+    "error.msg.tenant.schema.absent": "Verilənlər bazası serverində bu adda verilənlər bazası yoxdur.",
+    "error.msg.tenant.connection.failed": "Tenantın verilənlər bazasına qoşulmaq mümkün olmadı.",
+    "validation.cannotBeginWithSpecialCharacterOrNumber": "{{field}} xüsusi simvol və ya rəqəmlə başlaya bilməz",
+    "validation.maxMustBeGreaterOrEqualToMin": "Maksimum qiymət minimum qiymətdən böyük və ya ona bərabər olmalıdır",
+    "validation.mustBeAnInteger": "{{field}} tam ədəd olmalıdır",
+    "validation.mustBeGreaterThan": "{{field}} {{other}} qiymətindən böyük olmalıdır",
+    "validation.mustBeGreaterThanZero": "{{field}} sıfırdan böyük olmalıdır",
+    "validation.sharesMinDefaultMaxOrder": "Minimum qiymət standart qiymətdən, standart qiymət isə maksimum qiymətdən böyük ola bilməz",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Bu haqq həmin kreditə aid deyil.",
+    "wc.loan.charge.waiver.inactive.charge": "Haqq aktiv olmadığı üçün ondan imtina etmək olmaz.",
+    "wc.loan.charge.waiver.invalid.status": "Kreditin cari vəziyyətinə görə haqqdan imtina etmək olmaz.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Haqqın imtina ediləcək ödənilməmiş məbləği qalmayıb."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
@@ -1206,7 +1244,14 @@
       "Upload Report Design": "Hesabat tərtibatını yüklə",
       "Mass Reject": "Kütləvi rədd et",
       "Reject Selected": "Seçilənləri rədd et",
-      "Hide": "Gizlət"
+      "Hide": "Gizlət",
+      "Sign In": "Daxil ol",
+      "Sign Out": "Çıx",
+      "Adjust": "Düzəliş et",
+      "Reverse": "Geri al",
+      "Create Tenant": "Tenant yarat",
+      "Test Connection": "Bağlantını yoxla",
+      "Post Dividends": "Dividendləri hesaba yaz"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -1489,7 +1534,11 @@
       "unmarried": "subay",
       "xbrlmapping": "Genişləndirilə bilən biznes hesabatı dilinin uyğunlaşdırılması",
       "Enabled": "Aktivdir",
-      "Disabled": "Deaktiv"
+      "Disabled": "Deaktiv",
+      "ACTIVE": "Aktiv",
+      "INACTIVE": "Qeyri-aktiv",
+      "SUSPENDED": "Dayandırılıb",
+      "other": "Digər"
     },
     "commons": {
       "50 characters long": "50 simvol uzunluğunda",
@@ -1547,7 +1596,8 @@
       "must be after or equal to start date": "başlama tarixindən sonra və ya həmin tarixdə olmalıdır",
       "Yes": "Bəli",
       "No": "Xeyr",
-      "No classification data available": "Təsnifat məlumatları yoxdur"
+      "No classification data available": "Təsnifat məlumatları yoxdur",
+      "Only up to 6 decimal places allowed": "Ən çox 6 onluq mərtəbəyə icazə verilir."
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Parol ən azı 1, ən çox 50 simvoldan ibarət olmalıdır",
@@ -2205,7 +2255,19 @@
       "Advanced Configuration": "Genişləndirilmiş konfiqurasiya",
       "Mass Reject Credit Applications": "Kredit müraciətlərinin kütləvi rəddi",
       "Mass Rejection": "Kütləvi rədd",
-      "Enrollment Details": "Qeydiyyat təfərrüatları"
+      "Enrollment Details": "Qeydiyyat təfərrüatları",
+      "Tenant Management": "Tenantların idarə edilməsi",
+      "Tenant Management Sign In": "Tenantların idarə edilməsinə giriş",
+      "Database Connection": "Verilənlər bazasına bağlantı",
+      "Reverse Transaction": "Əməliyyatı geri al",
+      "Create Tenant": "Tenant yarat",
+      "Edit Tenant": "Tenantı redaktə et",
+      "Tenant Details": "Tenant məlumatları",
+      "Preview": "Önizləmə",
+      "Configuration": "Konfiqurasiya",
+      "Edit Charge Amount": "Haqqın məbləğini redaktə et",
+      "Edit Charge Date": "Haqqın tarixini redaktə et",
+      "Edit Guarantor": "Zaminin məlumatlarını redaktə et"
     },
     "inputs": {
       "Returned": "Qaytarılıb",
@@ -3753,7 +3815,6 @@
       "Total Records": "Qeydlərin ümumi sayı",
       "Total records": "Qeydlərin ümumi sayı",
       "Total Repaid": "Geri ödənilmiş cəmi məbləğ",
-      "Total Savings": "Əmanətlərin cəmi",
       "Total Shares": "Payların cəmi",
       "Total Value": "Ümumi dəyər",
       "Total Withdrawals": "Çıxarılan vəsaitlərin cəmi",
@@ -3852,7 +3913,6 @@
       "Website": "Veb sayt",
       "Wednesday": "Çərşənbə",
       "Weekly": "Həftəlik",
-      "Witdhold Tax Group": "Ödəmə mənbəyində tutulan vergi qrupu",
       "Withdraw Balance": "Qalıq vəsaiti çıxar",
       "Withdraw Money From Saving Account": "Əmanət hesabından pul çıxar",
       "Withdrawal Date": "Vəsaitin çıxarılma tarixi",
@@ -4249,7 +4309,42 @@
       "Withdrawn": "Geri götürülüb",
       "Registration Status": "Qeydiyyatın vəziyyəti",
       "Unknown": "Naməlum",
-      "Pending": "Gözləyir"
+      "Pending": "Gözləyir",
+      "Account Balance": "Hesab qalığı",
+      "Available Savings": "İstifadə edilə bilən əmanət",
+      "Withhold Tax Group": "Ödəmə mənbəyində tutulan vergi qrupu",
+      "Tenant Identifier": "Tenant identifikatoru",
+      "Time Zone": "Saat qurşağı",
+      "Contact Email": "Əlaqə e-poçtu",
+      "Master Username": "Baş istifadəçinin istifadəçi adı",
+      "Master Password": "Baş istifadəçinin parolu",
+      "Schema Name": "Sxemin adı",
+      "Schema Server": "Sxem serveri",
+      "Schema Server Port": "Sxem serverinin portu",
+      "Schema Username": "Sxem istifadəçisinin adı",
+      "Schema Connection Parameters": "Sxemə qoşulma parametrləri",
+      "Auto Update": "Avtomatik yeniləmə",
+      "Search by identifier or name": "İdentifikator və ya ad üzrə axtar",
+      "Schema Password": "Sxem parolu",
+      "Allow Overdraft": "Overdrafta icazə ver",
+      "Annual Fee": "İllik haqq",
+      "Annual Fees": "İllik haqlar",
+      "Charge Date": "Haqqın tarixi",
+      "Confirm Reject": "Rədd etməni təsdiqlə",
+      "Deposit": "Əmanət",
+      "Deposit Term In multiple of": "Əmanət müddətinin misli",
+      "Deposit Type": "Əmanət növü",
+      "GL Name": "Baş kitabın adı",
+      "Interest On Overdraft": "Overdraft üzrə faiz",
+      "Maximum Shares per Client": "Hər müştəri üçün maksimum pay sayı",
+      "Message": "Mesaj",
+      "Min Balance Required for Interest Calculation": "Faiz hesablanması üçün tələb olunan minimum qalıq",
+      "Minimum Shares per Client": "Hər müştəri üçün minimum pay sayı",
+      "Nominal interest rate frequency": "Nominal faiz dərəcəsinin tezliyi",
+      "On Hold Funds": "Bloklanmış vəsaitlər",
+      "Payment": "Ödəniş",
+      "Export Date": "İxrac tarixi",
+      "Label": "Etiket"
     },
     "links": {
       "Community": "İcma",
@@ -4504,7 +4599,12 @@
       "the Transaction Type": "əməliyyat növünü",
       "Are you sure you want to undo the charge-off": "Silinməni geri almaq istədiyinə əminsən?",
       "Breach evaluation will stop": "Pozuntunun qiymətləndirilməsi {{date}} tarixində dayanır. Əvvəlki nəticələr qeydlərdə saxlanılır, lakin yenidən aktivləşdirilənədək gizlədilir.",
-      "Breach evaluation will resume": "Pozuntunun qiymətləndirilməsi {{date}} tarixində bərpa olunur. Kredit həmin tarixdən yenidən qiymətləndirilir."
+      "Breach evaluation will resume": "Pozuntunun qiymətləndirilməsi {{date}} tarixində bərpa olunur. Kredit həmin tarixdən yenidən qiymətləndirilir.",
+      "This will reopen the loan account": "Kredit hesabı bağlanıb və ya artıq ödəniş edilib: bu əməliyyat hesabı yenidən açacaq.",
+      "Activate tenant": "{{identifier}} tenantını aktivləşdir",
+      "Deactivate tenant": "{{identifier}} tenantını deaktivləşdir — yenidən aktivləşdirilənə qədər bütün sorğuları rədd ediləcək",
+      "Suspend tenant": "{{identifier}} tenantının fəaliyyətini dayandır — yenidən aktivləşdirilənə qədər bütün sorğuları rədd ediləcək",
+      "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
       "Select a client from the list": "Siyahıdan müştəri seç",
@@ -4679,9 +4779,9 @@
       "Button for individual account": "Bu düymə fərdi hesablar, qruplar və mərkəzlər üçün istifadə ediləcək",
       "Buy Down Fees": "Faiz dərəcəsinin azaldılması haqları",
       "Cancel Pending Sale": "Gözləyən satışı ləğv et",
+      "Base Teller": "Əsas kassir",
       "Cash denomination total must equal the funding amount": "Nominal üzrə nağd pulun cəmi maliyyələşdirmə məbləğinə bərabər olmalıdır.",
       "Cash denomination total must equal the transaction amount": "Nominal üzrə nağd pulun cəmi əməliyyat məbləğinə bərabər olmalıdır.",
-      "Base Teller": "Əsas kassir",
       "Cash received cannot be less than the check amount": "Alınmış nağd pul çek məbləğindən az ola bilməz.",
       "Cashier Transactions": "Kassir əməliyyatları",
       "Cashiers": "Kassirlər",
@@ -5675,7 +5775,49 @@
       "Loading pending prospects": "Gözləyən potensial müştərilər yüklənir",
       "No pending prospects found": "Gözləyən potensial müştəri tapılmadı",
       "Unable to load pending prospects": "Gözləyən potensial müştəriləri yükləmək mümkün olmadı",
-      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç."
+      "The amount could not be re-quoted for this date. Pick the date again to retry.": "Bu tarix üçün məbləği yenidən hesablamaq mümkün olmadı. Yenidən cəhd etmək üçün tarixi təkrar seç.",
+      "Near Breach": "Pozuntuya yaxın",
+      "In Progress": "Davam edir",
+      "Signed in as master user": "Baş istifadəçi kimi daxil olunub",
+      "No tenants found": "Tenant tapılmadı",
+      "Unrecognised status": "Tanınmayan vəziyyət",
+      "Manage the tenants of this installation": "Bu quraşdırmanın tenantlarını idarə et",
+      "Tenant management master context": "Tenantların idarə edilməsi bütün tenantlardan yuxarı səviyyədə aparılır, buna görə ayrıca baş istifadəçi tələb olunur. Tenantın öz istifadəçisi tenant daxilində yüksək səlahiyyətlərə malik olsa belə, buraya daxil ola bilməz.",
+      "Tenant database password write only": "Verilənlər bazasının parolu şifrələnmiş şəkildə saxlanılır və server tərəfindən geri qaytarılmır, buna görə onu burada göstərmək mümkün deyil.",
+      "Adjust": "Düzəliş et",
+      "Identifies the new transaction created by the adjustment": "Düzəliş nəticəsində yaradılan yeni əməliyyatı müəyyən edir",
+      "Identifies the reversal of the original transaction": "İlkin əməliyyatın geri alınmasını müəyyən edir",
+      "Tenant identifier format": "Kiçik hərflər, rəqəmlər, defis və alt xətt; sonradan dəyişdirilə bilməz.",
+      "Schema name format": "Hərf və ya alt xətlə başlayan hərflər, rəqəmlər və alt xətt; ən çox 63 simvol.",
+      "Port range": "1 ilə 65535 arasında port daxil edin.",
+      "Tenant database created if absent": "Verilənlər bazası mövcud deyilsə yaradılır; mövcuddursa yenidən istifadə olunur, heç vaxt boşaldılmır.",
+      "Schema connection parameters hint": "Əlavə JDBC parametrləri, məsələn, başqa hostdakı verilənlər bazası üçün sslmode=verify-full.",
+      "Testing the connection": "Bağlantı yoxlanılır…",
+      "Provisioning a tenant takes a while": "Verilənlər bazasının yaradılması və miqrasiyası bir dəqiqə çəkə bilər. Bitənə qədər bu səhifəni açıq saxlayın.",
+      "Tenant identifier cannot be changed": "Dəyişdirilə bilməz — hər sorğu tenantı bu identifikatora görə seçir.",
+      "Schema name cannot be changed": "Dəyişdirilə bilməz — tenantın məlumatları artıq orada saxlanılır.",
+      "Leave blank to clear": "Təmizləmək üçün boş buraxın.",
+      "Leave blank to keep the stored password": "Saxlanmış parolu dəyişməmək üçün boş buraxın.",
+      "Enter the password to test": "Bağlantını yoxlamaq üçün verilənlər bazasının parolunu daxil edin. Saxlanmış parol geri qaytarılmır.",
+      "Deactivate before removing": "Silməzdən əvvəl tenantı deaktivləşdirin.",
+      "Test connection on create hint": "Serveri, giriş məlumatlarını və verilənlər bazasının mövcudluğunu yoxlayır.",
+      "Schema username hint": "Həmin serverdə mövcud olan verilənlər bazası istifadəçisi. Bu istifadəçinin verilənlər bazası yaratmaq icazəsi olmalıdır.",
+      "Schema password hint": "Həmin istifadəçinin mövcud parolu. Plaqin verilənlər bazasını yaradır, istifadəçini yox; buna görə burada yeni parol təyin etmirsiniz.",
+      "Database server did not answer": "Verilənlər bazası serveri həmin host və portda cavab vermədi.",
+      "Database server refused the credentials": "Verilənlər bazası serveri bu giriş məlumatlarını qəbul etmədi.",
+      "Existing database will be reused": "Giriş məlumatları düzgündür və bu adda verilənlər bazası mövcuddur. Baza boşaldılmadan yenidən istifadə olunacaq.",
+      "Database will be created on submit": "Giriş məlumatları düzgündür. Verilənlər bazası hələ mövcud deyil və təsdiq zamanı yaradılacaq.",
+      "Tenant database answered": "Verilənlər bazası cavab verdi.",
+      "Tenant database is missing": "Giriş məlumatları düzgündür, lakin serverdə bu adda verilənlər bazası yoxdur.",
+      "Prove the connection before saving": "Dəyişdirilmiş verilənlər bazası məlumatlarını saxlamazdan əvvəl bağlantını yoxlayın. Server onları yoxlamadan qəbul edir; miqrasiyası mümkün olmayan tenant bütün tenantların növbəti yenidən başlamasına mane olur.",
+      "Export the data to CSV file": "Məlumatları CSV faylına ixrac et",
+      "Export the data to XLS file": "Məlumatları XLS faylına ixrac et",
+      "No penalties found": "Cərimə tapılmadı",
+      "Report Output Type": "Hesabatın çıxış formatı",
+      "Closed": "Bağlanıb",
+      "Dashboard Export": "İdarə panelindən ixrac",
+      "Generated on": "Yaradılma tarixi",
+      "Automated export": "Bu məlumatlar Mifos X Qlobal İdarə Panelindən avtomatik ixrac edilib"
     },
     "permissions": {
       "actions": {
@@ -5974,7 +6116,9 @@
       "No Upcoming Charges Found": "Qarşıdan gələn haqq tapılmadı",
       "unableToUpdateDiscount": "Endirimi yeniləmək mümkün olmadı.",
       "validationSaved": "Yoxlama məlumatları uğurla yadda saxlanıldı.",
-      "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi."
+      "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi.",
+      "identityDescriptionsUpdated": "Şəxsiyyət sənədlərinin təsvirləri yeniləndi.",
+      "identityDescriptionsUpdateFailed": "Bəzi şəxsiyyət sənədlərinin təsvirlərini yeniləmək mümkün olmadı."
     },
     "cbild": {
       "fields": {
@@ -6105,6 +6249,10 @@
         "own.account": "Öz hesabı",
         "other.bank": "Digər bank"
       }
+    },
+    "alt": {
+      "Center profile placeholder": "Mərkəz profili üçün yer tutucu",
+      "Group profile placeholder": "Qrup profili üçün yer tutucu"
     }
   },
   "languages": {
@@ -6337,7 +6485,13 @@
     "loan product will become inactive and unavailable to clients": "Kredit məhsulunun qeyri-aktiv olacağı və müştərilərə təqdim olunmayacağı tarix. Boş saxlanılarsa, kredit məhsulu heç vaxt qeyri-aktiv olmayacaq.",
     "Reporting Dashboard": "Mərkəzi bank üçün fərdi kredit məlumatları üzrə hesabat paneli",
     "Nothing left to recover": "Bu kredit üzrə bərpa ediləcək qalıq məbləğ yoxdur.",
-    "Reverse the recovery payments first": "Kredit üzrə bərpa ödənişləri olduğu müddətdə silinməni geri almaq mümkün deyil. Əvvəlcə həmin ödənişləri geri alın."
+    "Reverse the recovery payments first": "Kredit üzrə bərpa ödənişləri olduğu müddətdə silinməni geri almaq mümkün deyil. Əvvəlcə həmin ödənişləri geri alın.",
+    "Enables definition and tracking inactive Savings Accounts": "Qeyri-aktiv əmanət hesablarını təyin etməyə və izləməyə imkan verir",
+    "External Id is a unique identifier": "Xarici ID unikal identifikatordur",
+    "Fields are used to define the minimum, default, and maximum period payment rate": "Bu sahələr minimum, standart və maksimum dövri ödəniş dərəcəsini təyin edir",
+    "Frequency must be a positive integer": "Tezlik müsbət tam ədəd olmalıdır",
+    "Frequency must be greater than zero": "Tezlik sıfırdan böyük olmalıdır",
+    "Make Payment": "Ödəniş et"
   },
   "countries": {
     "AF": "Əfqanıstan",
@@ -6462,10 +6616,12 @@
         "success": "Müştəri uğurla bağlandı."
       },
       "reject": {
-        "success": "Müştəri uğurla rədd edildi."
+        "success": "Müştəri uğurla rədd edildi.",
+        "failure": "Müştərini rədd etmək mümkün olmadı."
       },
       "withdraw": {
-        "success": "Müştərinin müraciəti uğurla geri götürüldü."
+        "success": "Müştərinin müraciəti uğurla geri götürüldü.",
+        "failure": "Müştərinin müraciətini geri götürmək mümkün olmadı."
       },
       "reactivate": {
         "success": "Müştəri uğurla yenidən aktivləşdirildi.",
@@ -6476,7 +6632,8 @@
         "failure": "Müştərini aktivləşdirmək mümkün olmadı."
       },
       "acceptTransfer": {
-        "success": "Müştərinin köçürülməsi uğurla qəbul edildi."
+        "success": "Müştərinin köçürülməsi uğurla qəbul edildi.",
+        "failure": "Müştərinin köçürülməsini qəbul etmək mümkün olmadı."
       },
       "rejectTransfer": {
         "success": "Müştərinin köçürülməsi uğurla rədd edildi."
@@ -6485,17 +6642,20 @@
         "success": "Müştərinin köçürülməsi uğurla geri alındı."
       },
       "undoRejection": {
-        "success": "Müştərinin rədd edilməsi uğurla geri alındı."
+        "success": "Müştərinin rədd edilməsi uğurla geri alındı.",
+        "failure": "Müştərinin rədd edilməsini geri almaq mümkün olmadı."
       },
       "transfer": {
         "success": "Müştərinin köçürülməsi uğurla təklif edildi.",
         "failure": "Müştərinin köçürülməsini təklif etmək mümkün olmadı."
       },
       "addCharge": {
-        "success": "Müştərinin haqqı uğurla əlavə edildi."
+        "success": "Müştərinin haqqı uğurla əlavə edildi.",
+        "failure": "Müştəriyə haqq əlavə etmək mümkün olmadı."
       },
       "addCollateral": {
-        "success": "Müştərinin girovu uğurla əlavə edildi."
+        "success": "Müştərinin girovu uğurla əlavə edildi.",
+        "failure": "Müştəriyə girov əlavə etmək mümkün olmadı."
       },
       "assignStaff": {
         "success": "Əməkdaş müştəriyə uğurla təyin edildi.",
@@ -6913,6 +7073,52 @@
       "clientNotFound": "Müştəri tapılmadı.",
       "forbidden": "Bu qeydiyyat məlumatına baxmaq icazəniz yoxdur.",
       "generic": "Qeydiyyat statusunu yükləmək mümkün olmadı. Yenidən cəhd edin."
+    }
+  },
+  "creditOrigination": {
+    "title": "Kreditin rəsmiləşdirilməsi vəziyyəti",
+    "loading": "Kreditin rəsmiləşdirilməsi vəziyyəti yüklənir...",
+    "empty": "Bu müraciət üzrə kreditin rəsmiləşdirilməsi vəziyyəti mövcud deyil.",
+    "retry": "Yenidən cəhd et",
+    "currentStage": "Cari mərhələ",
+    "errors": {
+      "unauthorized": "Kreditin rəsmiləşdirilməsi vəziyyətinə baxmaq üçün daxil olun.",
+      "forbidden": "Kreditin rəsmiləşdirilməsi vəziyyətinə baxmaq icazəniz yoxdur.",
+      "notFound": "Kredit müraciəti və ya onun rəsmiləşdirmə paneli tapılmadı.",
+      "generic": "Kreditin rəsmiləşdirilməsi vəziyyətini yükləmək mümkün olmadı. Yenidən cəhd edin."
+    },
+    "stages": {
+      "ONBOARDING": "Qeydiyyata qəbul",
+      "COMPLIANCE": "Uyğunluğun yoxlanması",
+      "PARAMETRIC_SCORE": "Parametrik bal",
+      "FILE_INTEGRATION": "Faylların inteqrasiyası",
+      "CREDIT_ANALYSIS": "Kredit təhlili",
+      "APPROVAL": "Təsdiq",
+      "LEGAL_INSTRUMENTATION": "Hüquqi sənədləşdirmə",
+      "DISBURSEMENT": "Kreditin verilməsi",
+      "RECOVERY": "Borcun tutulması"
+    },
+    "statuses": {
+      "COMPLETED": "Tamamlanıb",
+      "CURRENT": "Cari",
+      "PENDING": "Gözləmədə",
+      "REJECTED": "Rədd edilib",
+      "BLOCKED": "Bloklanıb",
+      "FAILED": "Uğursuz olub",
+      "CANCELLED": "Ləğv edilib",
+      "WITHDRAWN": "Geri götürülüb",
+      "WRITTEN_OFF": "Silinib"
+    },
+    "fields": {
+      "completedOn": "Tamamlanma tarixi",
+      "source": "Mənbə",
+      "sourceStatus": "Mənbənin vəziyyəti",
+      "actor": "İcraçı",
+      "sourceReference": "Mənbənin istinad nömrəsi",
+      "transactionId": "Əməliyyat ID-si",
+      "amount": "Məbləğ",
+      "loanStatus": "Kreditin vəziyyəti",
+      "reason": "Səbəb"
     }
   }
 }
