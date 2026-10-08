@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, Component, OnChanges, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { CurrencyPipe } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -37,6 +38,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   /** Shares Account and Product Template */
   @Input() sharesAccountProductTemplate: any;
@@ -101,7 +103,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
           this.sharesAccountTemplate.lockinPeriod && this.sharesAccountTemplate.lockPeriodTypeEnum.id,
         applicationDate:
           this.sharesAccountTemplate.purchasedShares[0].purchasedDate &&
-          new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
+          this.dateUtils.parseDate(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
         allowDividendCalculationForInactiveClients:
           this.sharesAccountTemplate.allowDividendCalculationForInactiveClients
       });
