@@ -45,12 +45,21 @@ export class ShareProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.shareProductsTemplate.currencyOptions;
+    // A saved product returns its decimal places and multiples inside `currency`.
+    const currency = this.shareProductsTemplate.currency;
+    const isEditing = this.shareProductsTemplate.id !== undefined && this.shareProductsTemplate.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.shareProductsTemplate.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.shareProductsTemplate.inMultiplesOf ?? '');
 
     this.shareProductCurrencyForm.patchValue({
-      currencyCode: this.shareProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.shareProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.shareProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.shareProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();
