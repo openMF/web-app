@@ -89,20 +89,55 @@
     </div>
     @if (loanProductService.isWorkingCapital) {
       <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
-        <span class="flex-60"
-          >{{ loanProduct.periodPaymentRate | formatNumber }} (Min
-          {{
-            (loanProduct.minPeriodPaymentRate ? loanProduct.minPeriodPaymentRate : loanProduct.periodPaymentRate)
-              | formatNumber
-          }}
-          : Max
-          {{
-            (loanProduct.maxPeriodPaymentRate ? loanProduct.maxPeriodPaymentRate : loanProduct.periodPaymentRate)
-              | formatNumber
-          }})
-        </span>
+        <span class="flex-40">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}:</span>
+        <span class="flex-60">{{ paymentAmountCalculationStrategyLabel() | translateKey: 'catalogs' }}</span>
       </div>
+      @switch (paymentAmountCalculationStrategy()) {
+        @case (wcStrategy.ANNUAL_EIR) {
+          <div class="flex-fill layout-row">
+            <span class="flex-40">{{ 'labels.inputs.Annual EIR' | translate }}:</span>
+            <span class="flex-60"
+              >{{ loanProduct.annualEir | number: '1.0-6' }} % (Min
+              {{ (loanProduct.minAnnualEir ? loanProduct.minAnnualEir : loanProduct.annualEir) | number: '1.0-6' }}
+              : Max
+              {{ (loanProduct.maxAnnualEir ? loanProduct.maxAnnualEir : loanProduct.annualEir) | number: '1.0-6' }})
+            </span>
+          </div>
+        }
+        @case (wcStrategy.PAYMENT_AMOUNT) {
+          <div class="flex-fill layout-row">
+            <span class="flex-40">{{ 'labels.inputs.Payment Amount' | translate }}:</span>
+            <span class="flex-60"
+              >{{ loanProduct.paymentAmount | formatNumber }} (Min
+              {{
+                (loanProduct.minPaymentAmount ? loanProduct.minPaymentAmount : loanProduct.paymentAmount) | formatNumber
+              }}
+              : Max
+              {{
+                (loanProduct.maxPaymentAmount ? loanProduct.maxPaymentAmount : loanProduct.paymentAmount)
+                  | formatNumber
+              }})
+            </span>
+          </div>
+        }
+        @default {
+          <div class="flex-fill layout-row">
+            <span class="flex-40">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
+            <span class="flex-60"
+              >{{ loanProduct.periodPaymentRate | formatNumber }} (Min
+              {{
+                (loanProduct.minPeriodPaymentRate ? loanProduct.minPeriodPaymentRate : loanProduct.periodPaymentRate)
+                  | formatNumber
+              }}
+              : Max
+              {{
+                (loanProduct.maxPeriodPaymentRate ? loanProduct.maxPeriodPaymentRate : loanProduct.periodPaymentRate)
+                  | formatNumber
+              }})
+            </span>
+          </div>
+        }
+      }
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Discount' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.discount | formatNumber }}</span>

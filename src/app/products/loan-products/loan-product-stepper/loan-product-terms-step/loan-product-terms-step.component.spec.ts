@@ -126,3 +126,136 @@ describe('LoanProductTermsStepComponent', () => {
     );
   });
 });
+
+describe('LoanProductTermsStepComponent — Working Capital pricing strategy', () => {
+  function wcTemplate(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+    return {
+      minPrincipal: 100,
+      principal: 1000,
+      maxPrincipal: 5000,
+      repaymentEvery: 1,
+      repaymentFrequencyType: { id: 'DAYS' },
+      periodFrequencyTypeOptions: [{ id: 'DAYS', value: 'Days' }],
+      paymentAmountCalculationStrategyOptions: [
+        { id: 'TPV', code: 'TPV', value: 'Total Payment Volume' },
+        { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+        { id: 'PAYMENT_AMOUNT', code: 'PAYMENT_AMOUNT', value: 'Payment Amount' }
+      ],
+      ...overrides
+    };
+  }
+
+  function createComponent(template: Record<string, unknown>): LoanProductTermsStepComponent {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: { navigate: jest.fn(), url: '' } },
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        {
+          provide: ProcessingStrategyService,
+          useValue: { advancedTransactionProcessingStrategy: of(false) }
+        },
+        { provide: MatDialog, useValue: { open: jest.fn() } },
+        { provide: TranslateService, useValue: { instant: (key: string): string => key } }
+      ]
+    });
+
+    return TestBed.runInInjectionContext(() => {
+      const component = new LoanProductTermsStepComponent();
+      component.loanProductsTemplate = template;
+      component.ngOnInit();
+      return component;
+    });
+  }
+
+  it('defaults to TPV and only sends the period payment rate group', () => {
+    const component = createComponent(wcTemplate({ periodPaymentRate: 18, discount: 0 }));
+
+    expect(component.paymentAmountCalculationStrategy).toBe('TPV');
+    expect(component.loanProductTermsForm.valid).toBe(true);
+    const terms = component.loanProductTerms;
+    expect(terms.periodPaymentRate).toBe(18);
+    expect(terms).not.toHaveProperty('annualEir');
+    expect(terms).not.toHaveProperty('minAnnualEir');
+    expect(terms).not.toHaveProperty('paymentAmount');
+  });
+
+  it('loads an ANNUAL_EIR product and keeps its rate window', () => {
+    const component = createComponent(
+      wcTemplate({
+        paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+        minAnnualEir: 10,
+        annualEir: 43.756245,
+        maxAnnualEir: 60,
+        discount: 50
+      })
+    );
+
+    expect(component.paymentAmountCalculationStrategy).toBe('ANNUAL_EIR');
+    expect(component.loanProductTermsForm.valid).toBe(true);
+    const terms = component.loanProductTerms;
+    expect(terms.annualEir).toBe(43.756245);
+    expect(terms.minAnnualEir).toBe(10);
+    expect(terms.maxAnnualEir).toBe(60);
+    expect(terms).not.toHaveProperty('periodPaymentRate');
+    expect(terms).not.toHaveProperty('paymentAmount');
+  });
+
+  it('clears the TPV inputs and requires annual EIR and a positive discount when switching to ANNUAL_EIR', () => {
+    const component = createComponent(wcTemplate({ periodPaymentRate: 18, discount: 0 }));
+
+    component.loanProductTermsForm.get('paymentAmountCalculationStrategy')!.setValue('ANNUAL_EIR');
+
+    const form = component.loanProductTermsForm;
+    expect(form.get('periodPaymentRate')!.value).toBeNull();
+    expect(form.get('annualEir')!.hasError('required')).toBe(true);
+    expect(form.get('discount')!.hasError('greaterThanZero')).toBe(true);
+
+    form.get('annualEir')!.setValue(0);
+    expect(form.get('annualEir')!.hasError('greaterThanZero')).toBe(true);
+
+    form.get('minAnnualEir')!.setValue(10);
+    form.get('maxAnnualEir')!.setValue(20);
+    form.get('annualEir')!.setValue(25);
+    expect(form.get('annualEir')!.hasError('outOfBounds')).toBe(true);
+
+    form.get('annualEir')!.setValue(15);
+    form.get('discount')!.setValue(50);
+    expect(form.valid).toBe(true);
+    expect(component.loanProductTerms).not.toHaveProperty('periodPaymentRate');
+  });
+
+  it('switching back to TPV drops the annual EIR group and requires the period payment rate again', () => {
+    const component = createComponent(
+      wcTemplate({
+        paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+        annualEir: 43.756245,
+        discount: 50
+      })
+    );
+
+    component.loanProductTermsForm.get('paymentAmountCalculationStrategy')!.setValue('TPV');
+
+    const form = component.loanProductTermsForm;
+    expect(form.get('annualEir')!.value).toBeNull();
+    expect(form.get('periodPaymentRate')!.hasError('required')).toBe(true);
+    expect(form.get('discount')!.valid).toBe(true);
+    expect(component.loanProductTerms).not.toHaveProperty('annualEir');
+  });
+
+  it('PAYMENT_AMOUNT requires a positive daily payment amount and discount', () => {
+    const component = createComponent(wcTemplate({ periodPaymentRate: 18 }));
+
+    component.loanProductTermsForm.get('paymentAmountCalculationStrategy')!.setValue('PAYMENT_AMOUNT');
+    const form = component.loanProductTermsForm;
+    expect(form.get('paymentAmount')!.hasError('required')).toBe(true);
+    form.get('paymentAmount')!.setValue(12.5);
+    form.get('discount')!.setValue(30);
+
+    expect(form.valid).toBe(true);
+    const terms = component.loanProductTerms;
+    expect(terms.paymentAmount).toBe(12.5);
+    expect(terms).not.toHaveProperty('periodPaymentRate');
+    expect(terms).not.toHaveProperty('annualEir');
+  });
+});

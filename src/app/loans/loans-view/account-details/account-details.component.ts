@@ -15,7 +15,11 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
-import { WorkingCapitalNearBreachActions } from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WorkingCapitalNearBreachActions,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 interface TimelineStep {
   label: string;
@@ -65,6 +69,14 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
 
   has(value: unknown): boolean {
     return value !== null && value !== undefined;
+  }
+
+  /** Working Capital: the contractual annual EIR only exists under the ANNUAL_EIR strategy. */
+  isAnnualEirStrategy(): boolean {
+    return (
+      resolvePaymentAmountCalculationStrategy(this.loanDetails?.paymentAmountCalculationStrategy) ===
+      WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.ANNUAL_EIR
+    );
   }
 
   hasDiscountSection(): boolean {

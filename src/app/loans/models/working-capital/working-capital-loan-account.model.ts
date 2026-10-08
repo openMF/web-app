@@ -8,6 +8,95 @@
 
 import { Currency, PaymentType } from 'app/shared/models/general.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
+import { StringEnumOptionData } from 'app/shared/models/option-data.model';
+
+/**
+ * Which input the Working Capital daily payment is solved from. Mirrors the backend enum
+ * WorkingCapitalPaymentAmountCalculationStrategy; the API serialises it as a StringEnumOptionData
+ * whose `id` is the enum name.
+ */
+export const WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY = {
+  TPV: 'TPV',
+  ANNUAL_EIR: 'ANNUAL_EIR',
+  PAYMENT_AMOUNT: 'PAYMENT_AMOUNT'
+} as const;
+
+export type WorkingCapitalPaymentAmountCalculationStrategy =
+  (typeof WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY)[keyof typeof WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY];
+
+/** Fallback options for the strategy select when the template does not carry them. */
+export const WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS: StringEnumOptionData[] = [
+  { id: 'TPV', code: 'TPV', value: 'Total Payment Volume' },
+  { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+  { id: 'PAYMENT_AMOUNT', code: 'PAYMENT_AMOUNT', value: 'Payment Amount' }
+];
+
+/**
+ * Pricing inputs that belong to each strategy. The backend rejects any input of another strategy
+ * with `not.allowed.for.<strategy>.strategy`, so forms must only send the active group.
+ */
+export const WC_PRICING_FIELDS_BY_STRATEGY: Record<WorkingCapitalPaymentAmountCalculationStrategy, string[]> = {
+  TPV: [
+    'periodPaymentRate',
+    'minPeriodPaymentRate',
+    'maxPeriodPaymentRate',
+    'totalPaymentVolume'
+  ],
+  ANNUAL_EIR: [
+    'annualEir',
+    'minAnnualEir',
+    'maxAnnualEir'
+  ],
+  PAYMENT_AMOUNT: [
+    'paymentAmount',
+    'minPaymentAmount',
+    'maxPaymentAmount'
+  ]
+};
+
+/**
+ * Reads the strategy from either shape the API uses (plain enum name on requests, option
+ * object on responses). Missing or unknown values fall back to TPV, the backend default.
+ */
+export function resolvePaymentAmountCalculationStrategy(
+  value: StringEnumOptionData | string | null | undefined
+): WorkingCapitalPaymentAmountCalculationStrategy {
+  const raw = typeof value === 'string' ? value : (value?.id ?? value?.code);
+  const key = (raw ?? '').toString().trim().toUpperCase();
+  return key in WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY
+    ? (key as WorkingCapitalPaymentAmountCalculationStrategy)
+    : WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
+}
+
+/** Pricing keys of every strategy except the active one; the caller strips them from the payload. */
+export function inactivePricingFields(strategy: WorkingCapitalPaymentAmountCalculationStrategy): string[] {
+  return Object.entries(WC_PRICING_FIELDS_BY_STRATEGY)
+    .filter(([key]) => key !== strategy)
+    .flatMap(
+      ([
+        ,
+        fields
+      ]) => fields
+    );
+}
+
+/**
+ * EIR-related fields of GET /working-capital-loans/{loanId}. The three rates share the word EIR
+ * but mean different things: `annualEir` is the contractual input (ANNUAL_EIR strategy only),
+ * `calculatedAnnualEir` is the annual rate the engine resolved for any EIR amortization (null
+ * for FLAT or before the schedule exists), and the schedule's `effectiveInterestRate` is the
+ * daily periodic rate derived from it.
+ */
+export interface WorkingCapitalLoanPricing {
+  paymentAmountCalculationStrategy?: StringEnumOptionData | null;
+  annualEir?: number | null;
+  calculatedAnnualEir?: number | null;
+  paymentAmount?: number | null;
+  periodPaymentAmount?: number | null;
+  numberOfRepayments?: number | null;
+  totalPaymentVolume?: number | null;
+  paymentRate?: number | null;
+}
 
 /** Code value option used to populate the charge-off reason dropdown. */
 export interface WorkingCapitalChargeOffReasonOption {
@@ -60,16 +149,22 @@ export interface WorkingCapitalMarkAsFraudRequest {
   fraud: boolean;
 }
 
+/** Response of GET /working-capital-loans/{loanId}/amortization-schedule. Field names follow ProjectedAmortizationScheduleData. */
 export interface ProjectedAmortizationSchedule {
-  originationFeeAmount: number;
+  discountFeeAmount: number;
   netDisbursementAmount: number;
-  totalPaymentValue: number;
-  periodPaymentRate: number;
+  totalPaymentVolume: number | null;
+  periodPaymentRate: number | null;
+  /** Which input the plan was solved from; decides which of the three inputs beside it is set. */
+  paymentAmountCalculationStrategy?: StringEnumOptionData | null;
+  annualEir?: number | null;
+  paymentAmount?: number | null;
   npvDayCount: number;
   expectedDisbursementDate: Date;
   expectedPaymentAmount: number;
-  loanTerm: number;
-  effectiveInterestRate: number;
+  originalPaymentNumber: number;
+  /** DAILY periodic rate derived from calculatedAnnualEir. Null for FLAT amortization. */
+  effectiveInterestRate: number | null;
   payments: Payment[];
 }
 
