@@ -43,6 +43,8 @@ import { CashInventoryComponent } from './base-teller/cash-inventory/cash-invent
 import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
+import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -585,6 +587,15 @@ const routes: Routes = [
             breadcrumb: 'web1232.views.holdings',
             view: 'holdings',
             permission: 'READ_CASH_HOLDINGS'
+          }
+        },
+        {
+          path: 'base-teller/transaction-history',
+          component: TransactionHistoryComponent,
+          canActivate: [transactionHistoryGuard],
+          data: {
+            title: 'transactionHistory.title',
+            breadcrumb: 'transactionHistory.title'
           }
         },
         {

@@ -7060,6 +7060,87 @@
       "receipt": "No se pudo cargar el recibo"
     }
   },
+  "transactionHistory": {
+    "title": "Historial de transacciones",
+    "description": "Busque y revise transacciones de Base Teller completadas, detalles de denominaciones y recibos.",
+    "sections": {
+      "searchFilters": "Filtros de búsqueda",
+      "results": "Resultados de transacciones",
+      "totals": "Totales por moneda",
+      "details": "Detalles de la transacción",
+      "cancellation": "Detalles de cancelación",
+      "denominations": "Detalles de denominaciones",
+      "operationDenominations": "Denominaciones de la operación",
+      "changeGiven": "Cambio entregado",
+      "receipt": "Recibo",
+      "report": "Informe del historial de transacciones"
+    },
+    "fields": {
+      "all": "Todos",
+      "date": "Fecha",
+      "dateFrom": "Fecha desde",
+      "dateTo": "Fecha hasta",
+      "transactionDate": "Fecha de transacción",
+      "teller": "Cajero",
+      "currency": "Moneda",
+      "status": "Estado",
+      "type": "Tipo",
+      "operation": "Operación",
+      "concept": "Concepto",
+      "reference": "Referencia",
+      "inflows": "Entradas",
+      "outflows": "Salidas",
+      "totalInflows": "Total de entradas",
+      "totalOutflows": "Total de salidas",
+      "total": "Total",
+      "actions": "Acciones",
+      "client": "Cliente",
+      "identification": "Identificación",
+      "cashReceived": "Efectivo recibido",
+      "checksReceived": "Cheques recibidos",
+      "change": "Cambio",
+      "adjustment": "Ajuste",
+      "reason": "Motivo",
+      "user": "Usuario",
+      "denomination": "Denominación",
+      "quantity": "Cantidad",
+      "amount": "Monto",
+      "generatedAt": "Generado el",
+      "totalRecords": "Registros totales",
+      "notApplicable": "No aplica"
+    },
+    "actions": {
+      "search": "Buscar",
+      "clear": "Limpiar",
+      "viewDetails": "Ver detalles",
+      "denominationDetails": "Detalles de denominaciones",
+      "reprintReceipt": "Reimprimir recibo",
+      "printResults": "Imprimir resultados",
+      "retry": "Reintentar"
+    },
+    "states": {
+      "loadingFilters": "Cargando filtros…",
+      "loadingHistory": "Cargando historial de transacciones…",
+      "loadingDetails": "Cargando detalles de la transacción…",
+      "loadingDenominations": "Cargando detalles de denominaciones…",
+      "noTransactions": "No se encontraron transacciones.",
+      "noDenominations": "No hay detalles de denominaciones disponibles para esta transacción.",
+      "selectTransaction": "Seleccione una transacción para ver sus detalles."
+    },
+    "errors": {
+      "context": "No se pudieron cargar los filtros del historial.",
+      "search": "No se pudo cargar el historial de transacciones.",
+      "detail": "No se pudieron cargar los detalles de la transacción.",
+      "denominations": "No se pudieron cargar los detalles de denominaciones.",
+      "receiptUnavailable": "El recibo no está disponible para esta transacción.",
+      "report": "No se pudo cargar el informe del historial."
+    },
+    "validation": {
+      "dateRange": "Fecha desde debe ser anterior o igual a Fecha hasta.",
+      "referenceLength": "La referencia no debe superar los 200 caracteres."
+    },
+    "denominationTypes": { "BANKNOTE": "Billete", "COIN": "Moneda" }
+  },
   "enrollmentStatus": {
     "title": "Estado de enrolamiento",
     "description": "Revise las etapas de enrolamiento y el tiempo de espera de este cliente.",

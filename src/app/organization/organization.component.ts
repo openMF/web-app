@@ -65,6 +65,7 @@ export class OrganizationComponent implements AfterViewInit {
     'CREATE_CASH_DEPOSIT',
     'READ_CASH_OPERATION_HISTORY',
     'READ_CASH_HOLDINGS',
+    'READ_BASE_TELLER_TRANSACTION_HISTORY',
     ...(this.productionMode ? ['READ_BASE_TELLER_SERVICE_PAYMENT'] : [])
   ];
   /* Reference of manage offices */
