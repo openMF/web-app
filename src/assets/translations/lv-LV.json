@@ -7065,6 +7065,87 @@
       "receipt": "Kvītu nevarēja ielādēt"
     }
   },
+  "transactionHistory": {
+    "title": "Darījumu vēsture",
+    "description": "Meklējiet un pārskatiet pabeigtos Base Teller darījumus, nominālu informāciju un kvītis.",
+    "sections": {
+      "searchFilters": "Meklēšanas filtri",
+      "results": "Darījumu rezultāti",
+      "totals": "Kopsummas pēc valūtas",
+      "details": "Darījuma informācija",
+      "cancellation": "Atcelšanas informācija",
+      "denominations": "Nominālu informācija",
+      "operationDenominations": "Darījuma nomināli",
+      "changeGiven": "Izdotais atlikums",
+      "receipt": "Kvīts",
+      "report": "Darījumu vēstures pārskats"
+    },
+    "fields": {
+      "all": "Visi",
+      "date": "Datums",
+      "dateFrom": "Datums no",
+      "dateTo": "Datums līdz",
+      "transactionDate": "Darījuma datums",
+      "teller": "Kasieris",
+      "currency": "Valūta",
+      "status": "Statuss",
+      "type": "Tips",
+      "operation": "Operācija",
+      "concept": "Mērķis",
+      "reference": "Atsauce",
+      "inflows": "Ienākošie līdzekļi",
+      "outflows": "Izejošie līdzekļi",
+      "totalInflows": "Kopā ienākošie",
+      "totalOutflows": "Kopā izejošie",
+      "total": "Kopā",
+      "actions": "Darbības",
+      "client": "Klients",
+      "identification": "Identifikācija",
+      "cashReceived": "Saņemtā skaidrā nauda",
+      "checksReceived": "Saņemtie čeki",
+      "change": "Atlikums",
+      "adjustment": "Korekcija",
+      "reason": "Iemesls",
+      "user": "Lietotājs",
+      "denomination": "Nomināls",
+      "quantity": "Daudzums",
+      "amount": "Summa",
+      "generatedAt": "Izveidots",
+      "totalRecords": "Ierakstu kopskaits",
+      "notApplicable": "Nav piemērojams"
+    },
+    "actions": {
+      "search": "Meklēt",
+      "clear": "Notīrīt",
+      "viewDetails": "Skatīt informāciju",
+      "denominationDetails": "Nominālu informācija",
+      "reprintReceipt": "Drukāt kvīti atkārtoti",
+      "printResults": "Drukāt rezultātus",
+      "retry": "Mēģināt vēlreiz"
+    },
+    "states": {
+      "loadingFilters": "Ielādē filtrus…",
+      "loadingHistory": "Ielādē darījumu vēsturi…",
+      "loadingDetails": "Ielādē darījuma informāciju…",
+      "loadingDenominations": "Ielādē nominālu informāciju…",
+      "noTransactions": "Darījumi nav atrasti.",
+      "noDenominations": "Šim darījumam nominālu informācija nav pieejama.",
+      "selectTransaction": "Izvēlieties darījumu, lai skatītu tā informāciju."
+    },
+    "errors": {
+      "context": "Neizdevās ielādēt darījumu vēstures filtrus.",
+      "search": "Neizdevās ielādēt darījumu vēsturi.",
+      "detail": "Neizdevās ielādēt darījuma informāciju.",
+      "denominations": "Neizdevās ielādēt nominālu informāciju.",
+      "receiptUnavailable": "Šī darījuma kvīts nav pieejama.",
+      "report": "Neizdevās ielādēt darījumu vēstures pārskatu."
+    },
+    "validation": {
+      "dateRange": "Datumam no jābūt pirms datuma līdz vai vienādam ar to.",
+      "referenceLength": "Atsauce nedrīkst pārsniegt 200 rakstzīmes."
+    },
+    "denominationTypes": { "BANKNOTE": "Banknote", "COIN": "Monēta" }
+  },
   "enrollmentStatus": {
     "title": "Reģistrācijas statuss",
     "description": "Pārskatiet šī klienta reģistrācijas posmus un gaidīšanas laiku.",

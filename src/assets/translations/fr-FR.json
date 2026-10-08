@@ -7068,6 +7068,87 @@
       "receipt": "Le reçu n'a pas pu être chargé"
     }
   },
+  "transactionHistory": {
+    "title": "Historique des transactions",
+    "description": "Rechercher et consulter les transactions Base Teller terminées, les détails des coupures et les reçus.",
+    "sections": {
+      "searchFilters": "Filtres de recherche",
+      "results": "Résultats des transactions",
+      "totals": "Totaux par devise",
+      "details": "Détails de la transaction",
+      "cancellation": "Détails de l’annulation",
+      "denominations": "Détails des coupures",
+      "operationDenominations": "Coupures de l’opération",
+      "changeGiven": "Monnaie rendue",
+      "receipt": "Reçu",
+      "report": "Rapport de l’historique des transactions"
+    },
+    "fields": {
+      "all": "Tous",
+      "date": "Date",
+      "dateFrom": "Date de début",
+      "dateTo": "Date de fin",
+      "transactionDate": "Date de transaction",
+      "teller": "Guichetier",
+      "currency": "Devise",
+      "status": "Statut",
+      "type": "Type",
+      "operation": "Opération",
+      "concept": "Concept",
+      "reference": "Référence",
+      "inflows": "Entrées",
+      "outflows": "Sorties",
+      "totalInflows": "Total des entrées",
+      "totalOutflows": "Total des sorties",
+      "total": "Total",
+      "actions": "Actions",
+      "client": "Client",
+      "identification": "Identification",
+      "cashReceived": "Espèces reçues",
+      "checksReceived": "Chèques reçus",
+      "change": "Monnaie",
+      "adjustment": "Ajustement",
+      "reason": "Motif",
+      "user": "Utilisateur",
+      "denomination": "Coupure",
+      "quantity": "Quantité",
+      "amount": "Montant",
+      "generatedAt": "Généré le",
+      "totalRecords": "Nombre total",
+      "notApplicable": "Sans objet"
+    },
+    "actions": {
+      "search": "Rechercher",
+      "clear": "Effacer",
+      "viewDetails": "Voir les détails",
+      "denominationDetails": "Détails des coupures",
+      "reprintReceipt": "Réimprimer le reçu",
+      "printResults": "Imprimer les résultats",
+      "retry": "Réessayer"
+    },
+    "states": {
+      "loadingFilters": "Chargement des filtres…",
+      "loadingHistory": "Chargement de l’historique…",
+      "loadingDetails": "Chargement des détails…",
+      "loadingDenominations": "Chargement des coupures…",
+      "noTransactions": "Aucune transaction trouvée.",
+      "noDenominations": "Aucun détail de coupure disponible pour cette transaction.",
+      "selectTransaction": "Sélectionnez une transaction pour afficher ses détails."
+    },
+    "errors": {
+      "context": "Impossible de charger les filtres de l’historique.",
+      "search": "Impossible de charger l’historique des transactions.",
+      "detail": "Impossible de charger les détails de la transaction.",
+      "denominations": "Impossible de charger les détails des coupures.",
+      "receiptUnavailable": "Le reçu n’est pas disponible pour cette transaction.",
+      "report": "Impossible de charger le rapport de l’historique."
+    },
+    "validation": {
+      "dateRange": "La date de début doit être antérieure ou égale à la date de fin.",
+      "referenceLength": "La référence ne doit pas dépasser 200 caractères."
+    },
+    "denominationTypes": { "BANKNOTE": "Billet", "COIN": "Pièce" }
+  },
   "enrollmentStatus": {
     "title": "Statut d'inscription",
     "description": "Consultez les étapes d’inscription et le délai d’attente de ce client.",

@@ -7065,6 +7065,87 @@
       "receipt": "영수증을 로드할 수 없습니다."
     }
   },
+  "transactionHistory": {
+    "title": "거래 내역",
+    "description": "완료된 Base Teller 거래, 권종 상세 정보 및 영수증을 검색하고 검토합니다.",
+    "sections": {
+      "searchFilters": "검색 필터",
+      "results": "거래 결과",
+      "totals": "통화별 합계",
+      "details": "거래 상세 정보",
+      "cancellation": "취소 상세 정보",
+      "denominations": "권종 상세 정보",
+      "operationDenominations": "거래 권종",
+      "changeGiven": "지급된 거스름돈",
+      "receipt": "영수증",
+      "report": "거래 내역 보고서"
+    },
+    "fields": {
+      "all": "전체",
+      "date": "날짜",
+      "dateFrom": "시작일",
+      "dateTo": "종료일",
+      "transactionDate": "거래일",
+      "teller": "창구 직원",
+      "currency": "통화",
+      "status": "상태",
+      "type": "유형",
+      "operation": "작업",
+      "concept": "항목",
+      "reference": "참조",
+      "inflows": "유입",
+      "outflows": "유출",
+      "totalInflows": "총 유입",
+      "totalOutflows": "총 유출",
+      "total": "합계",
+      "actions": "작업",
+      "client": "고객",
+      "identification": "식별 정보",
+      "cashReceived": "수취 현금",
+      "checksReceived": "수취 수표",
+      "change": "거스름돈",
+      "adjustment": "조정",
+      "reason": "사유",
+      "user": "사용자",
+      "denomination": "권종",
+      "quantity": "수량",
+      "amount": "금액",
+      "generatedAt": "생성 시각",
+      "totalRecords": "총 레코드",
+      "notApplicable": "해당 없음"
+    },
+    "actions": {
+      "search": "검색",
+      "clear": "지우기",
+      "viewDetails": "상세 보기",
+      "denominationDetails": "권종 상세 정보",
+      "reprintReceipt": "영수증 재출력",
+      "printResults": "결과 인쇄",
+      "retry": "다시 시도"
+    },
+    "states": {
+      "loadingFilters": "검색 필터를 불러오는 중…",
+      "loadingHistory": "거래 내역을 불러오는 중…",
+      "loadingDetails": "거래 상세 정보를 불러오는 중…",
+      "loadingDenominations": "권종 상세 정보를 불러오는 중…",
+      "noTransactions": "거래를 찾을 수 없습니다.",
+      "noDenominations": "이 거래에 사용할 수 있는 권종 상세 정보가 없습니다.",
+      "selectTransaction": "상세 정보를 보려면 거래를 선택하세요."
+    },
+    "errors": {
+      "context": "거래 내역 필터를 불러올 수 없습니다.",
+      "search": "거래 내역을 불러올 수 없습니다.",
+      "detail": "거래 상세 정보를 불러올 수 없습니다.",
+      "denominations": "권종 상세 정보를 불러올 수 없습니다.",
+      "receiptUnavailable": "이 거래의 영수증을 사용할 수 없습니다.",
+      "report": "거래 내역 보고서를 불러올 수 없습니다."
+    },
+    "validation": {
+      "dateRange": "시작일은 종료일과 같거나 이전이어야 합니다.",
+      "referenceLength": "참조는 200자를 초과할 수 없습니다."
+    },
+    "denominationTypes": { "BANKNOTE": "지폐", "COIN": "동전" }
+  },
   "enrollmentStatus": {
     "title": "등록 상태",
     "description": "이 고객의 등록 단계와 대기 시간을 검토합니다.",

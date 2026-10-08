@@ -7068,6 +7068,87 @@
       "receipt": "रसिद लोड गर्न सकिएन"
     }
   },
+  "transactionHistory": {
+    "title": "कारोबार इतिहास",
+    "description": "पूरा भएका Base Teller कारोबार, दर विवरण र रसिदहरू खोज्नुहोस् र समीक्षा गर्नुहोस्।",
+    "sections": {
+      "searchFilters": "खोज फिल्टरहरू",
+      "results": "कारोबार नतिजाहरू",
+      "totals": "मुद्राअनुसार जम्मा",
+      "details": "कारोबार विवरण",
+      "cancellation": "रद्द विवरण",
+      "denominations": "दर विवरण",
+      "operationDenominations": "कारोबारका दरहरू",
+      "changeGiven": "फिर्ता दिइएको रकम",
+      "receipt": "रसिद",
+      "report": "कारोबार इतिहास प्रतिवेदन"
+    },
+    "fields": {
+      "all": "सबै",
+      "date": "मिति",
+      "dateFrom": "मिति देखि",
+      "dateTo": "मिति सम्म",
+      "transactionDate": "कारोबार मिति",
+      "teller": "टेलर",
+      "currency": "मुद्रा",
+      "status": "स्थिति",
+      "type": "प्रकार",
+      "operation": "कार्य",
+      "concept": "विवरण",
+      "reference": "सन्दर्भ",
+      "inflows": "आम्दानी",
+      "outflows": "खर्च",
+      "totalInflows": "कुल आम्दानी",
+      "totalOutflows": "कुल खर्च",
+      "total": "जम्मा",
+      "actions": "कार्यहरू",
+      "client": "ग्राहक",
+      "identification": "पहिचान",
+      "cashReceived": "प्राप्त नगद",
+      "checksReceived": "प्राप्त चेक",
+      "change": "फिर्ता",
+      "adjustment": "समायोजन",
+      "reason": "कारण",
+      "user": "प्रयोगकर्ता",
+      "denomination": "दर",
+      "quantity": "परिमाण",
+      "amount": "रकम",
+      "generatedAt": "तयार गरिएको समय",
+      "totalRecords": "कुल अभिलेख",
+      "notApplicable": "लागू हुँदैन"
+    },
+    "actions": {
+      "search": "खोज्नुहोस्",
+      "clear": "खाली गर्नुहोस्",
+      "viewDetails": "विवरण हेर्नुहोस्",
+      "denominationDetails": "दर विवरण",
+      "reprintReceipt": "रसिद पुनः छाप्नुहोस्",
+      "printResults": "नतिजा छाप्नुहोस्",
+      "retry": "फेरि प्रयास गर्नुहोस्"
+    },
+    "states": {
+      "loadingFilters": "खोज फिल्टरहरू लोड हुँदैछन्…",
+      "loadingHistory": "कारोबार इतिहास लोड हुँदैछ…",
+      "loadingDetails": "कारोबार विवरण लोड हुँदैछ…",
+      "loadingDenominations": "दर विवरण लोड हुँदैछ…",
+      "noTransactions": "कुनै कारोबार फेला परेन।",
+      "noDenominations": "यस कारोबारका लागि दर विवरण उपलब्ध छैन।",
+      "selectTransaction": "विवरण हेर्न कारोबार चयन गर्नुहोस्।"
+    },
+    "errors": {
+      "context": "कारोबार इतिहासका फिल्टरहरू लोड गर्न सकिएन।",
+      "search": "कारोबार इतिहास लोड गर्न सकिएन।",
+      "detail": "कारोबार विवरण लोड गर्न सकिएन।",
+      "denominations": "दर विवरण लोड गर्न सकिएन।",
+      "receiptUnavailable": "यस कारोबारका लागि रसिद उपलब्ध छैन।",
+      "report": "कारोबार इतिहास प्रतिवेदन लोड गर्न सकिएन।"
+    },
+    "validation": {
+      "dateRange": "सुरु मिति अन्त्य मितिभन्दा अघि वा बराबर हुनुपर्छ।",
+      "referenceLength": "सन्दर्भ २०० अक्षरभन्दा बढी हुनु हुँदैन।"
+    },
+    "denominationTypes": { "BANKNOTE": "नोट", "COIN": "सिक्का" }
+  },
   "enrollmentStatus": {
     "title": "दर्ता स्थिति",
     "description": "यस ग्राहकको दर्ताका चरणहरू र प्रतीक्षा समय हेर्नुहोस्।",

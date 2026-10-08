@@ -7070,6 +7070,87 @@
       "receipt": "Der Beleg konnte nicht geladen werden"
     }
   },
+  "transactionHistory": {
+    "title": "Transaktionsverlauf",
+    "description": "Abgeschlossene Base-Teller-Transaktionen, Stückelungsdetails und Belege suchen und prüfen.",
+    "sections": {
+      "searchFilters": "Suchfilter",
+      "results": "Transaktionsergebnisse",
+      "totals": "Summen nach Währung",
+      "details": "Transaktionsdetails",
+      "cancellation": "Stornierungsdetails",
+      "denominations": "Stückelungsdetails",
+      "operationDenominations": "Stückelungen der Transaktion",
+      "changeGiven": "Ausgegebenes Wechselgeld",
+      "receipt": "Beleg",
+      "report": "Bericht zum Transaktionsverlauf"
+    },
+    "fields": {
+      "all": "Alle",
+      "date": "Datum",
+      "dateFrom": "Datum von",
+      "dateTo": "Datum bis",
+      "transactionDate": "Transaktionsdatum",
+      "teller": "Kassenschalter",
+      "currency": "Währung",
+      "status": "Status",
+      "type": "Art",
+      "operation": "Vorgang",
+      "concept": "Konzept",
+      "reference": "Referenz",
+      "inflows": "Zuflüsse",
+      "outflows": "Abflüsse",
+      "totalInflows": "Summe Zuflüsse",
+      "totalOutflows": "Summe Abflüsse",
+      "total": "Gesamt",
+      "actions": "Aktionen",
+      "client": "Kunde",
+      "identification": "Identifikation",
+      "cashReceived": "Erhaltenes Bargeld",
+      "checksReceived": "Erhaltene Schecks",
+      "change": "Wechselgeld",
+      "adjustment": "Anpassung",
+      "reason": "Grund",
+      "user": "Benutzer",
+      "denomination": "Stückelung",
+      "quantity": "Anzahl",
+      "amount": "Betrag",
+      "generatedAt": "Erstellt am",
+      "totalRecords": "Datensätze gesamt",
+      "notApplicable": "Nicht zutreffend"
+    },
+    "actions": {
+      "search": "Suchen",
+      "clear": "Löschen",
+      "viewDetails": "Details anzeigen",
+      "denominationDetails": "Stückelungsdetails",
+      "reprintReceipt": "Beleg erneut drucken",
+      "printResults": "Ergebnisse drucken",
+      "retry": "Erneut versuchen"
+    },
+    "states": {
+      "loadingFilters": "Suchfilter werden geladen…",
+      "loadingHistory": "Transaktionsverlauf wird geladen…",
+      "loadingDetails": "Transaktionsdetails werden geladen…",
+      "loadingDenominations": "Stückelungsdetails werden geladen…",
+      "noTransactions": "Keine Transaktionen gefunden.",
+      "noDenominations": "Für diese Transaktion sind keine Stückelungsdetails verfügbar.",
+      "selectTransaction": "Wählen Sie eine Transaktion aus, um Details anzuzeigen."
+    },
+    "errors": {
+      "context": "Filter für den Transaktionsverlauf konnten nicht geladen werden.",
+      "search": "Transaktionsverlauf konnte nicht geladen werden.",
+      "detail": "Transaktionsdetails konnten nicht geladen werden.",
+      "denominations": "Stückelungsdetails konnten nicht geladen werden.",
+      "receiptUnavailable": "Für diese Transaktion ist kein Beleg verfügbar.",
+      "report": "Bericht zum Transaktionsverlauf konnte nicht geladen werden."
+    },
+    "validation": {
+      "dateRange": "Datum von muss vor oder gleich Datum bis sein.",
+      "referenceLength": "Die Referenz darf höchstens 200 Zeichen lang sein."
+    },
+    "denominationTypes": { "BANKNOTE": "Banknote", "COIN": "Münze" }
+  },
   "enrollmentStatus": {
     "title": "Registrierungsstatus",
     "description": "Prüfen Sie die Registrierungsphasen und Wartezeit dieses Kunden.",

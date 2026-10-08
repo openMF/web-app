@@ -7065,6 +7065,87 @@
       "receipt": "Risiti haikuweza kupakiwa"
     }
   },
+  "transactionHistory": {
+    "title": "Historia ya miamala",
+    "description": "Tafuta na uhakiki miamala ya Base Teller iliyokamilika, maelezo ya madhehebu na risiti.",
+    "sections": {
+      "searchFilters": "Vichujio vya utafutaji",
+      "results": "Matokeo ya miamala",
+      "totals": "Jumla kwa sarafu",
+      "details": "Maelezo ya muamala",
+      "cancellation": "Maelezo ya kughairi",
+      "denominations": "Maelezo ya madhehebu",
+      "operationDenominations": "Madhehebu ya muamala",
+      "changeGiven": "Chenji iliyotolewa",
+      "receipt": "Risiti",
+      "report": "Ripoti ya historia ya miamala"
+    },
+    "fields": {
+      "all": "Zote",
+      "date": "Tarehe",
+      "dateFrom": "Tarehe kuanzia",
+      "dateTo": "Tarehe hadi",
+      "transactionDate": "Tarehe ya muamala",
+      "teller": "Mhudumu",
+      "currency": "Sarafu",
+      "status": "Hali",
+      "type": "Aina",
+      "operation": "Operesheni",
+      "concept": "Dhana",
+      "reference": "Rejeleo",
+      "inflows": "Mapato",
+      "outflows": "Matumizi",
+      "totalInflows": "Jumla ya mapato",
+      "totalOutflows": "Jumla ya matumizi",
+      "total": "Jumla",
+      "actions": "Vitendo",
+      "client": "Mteja",
+      "identification": "Utambulisho",
+      "cashReceived": "Fedha taslimu zilizopokelewa",
+      "checksReceived": "Hundi zilizopokelewa",
+      "change": "Chenji",
+      "adjustment": "Marekebisho",
+      "reason": "Sababu",
+      "user": "Mtumiaji",
+      "denomination": "Dhehebu",
+      "quantity": "Idadi",
+      "amount": "Kiasi",
+      "generatedAt": "Imetengenezwa",
+      "totalRecords": "Jumla ya rekodi",
+      "notApplicable": "Haitumiki"
+    },
+    "actions": {
+      "search": "Tafuta",
+      "clear": "Futa",
+      "viewDetails": "Tazama maelezo",
+      "denominationDetails": "Maelezo ya madhehebu",
+      "reprintReceipt": "Chapisha risiti tena",
+      "printResults": "Chapisha matokeo",
+      "retry": "Jaribu tena"
+    },
+    "states": {
+      "loadingFilters": "Inapakia vichujio…",
+      "loadingHistory": "Inapakia historia ya miamala…",
+      "loadingDetails": "Inapakia maelezo ya muamala…",
+      "loadingDenominations": "Inapakia maelezo ya madhehebu…",
+      "noTransactions": "Hakuna miamala iliyopatikana.",
+      "noDenominations": "Hakuna maelezo ya madhehebu kwa muamala huu.",
+      "selectTransaction": "Chagua muamala ili kuona maelezo yake."
+    },
+    "errors": {
+      "context": "Imeshindikana kupakia vichujio vya historia ya miamala.",
+      "search": "Imeshindikana kupakia historia ya miamala.",
+      "detail": "Imeshindikana kupakia maelezo ya muamala.",
+      "denominations": "Imeshindikana kupakia maelezo ya madhehebu.",
+      "receiptUnavailable": "Risiti haipatikani kwa muamala huu.",
+      "report": "Imeshindikana kupakia ripoti ya historia ya miamala."
+    },
+    "validation": {
+      "dateRange": "Tarehe ya kuanzia lazima iwe kabla au sawa na tarehe ya mwisho.",
+      "referenceLength": "Rejeleo lisizidi herufi 200."
+    },
+    "denominationTypes": { "BANKNOTE": "Noti", "COIN": "Sarafu" }
+  },
   "enrollmentStatus": {
     "title": "Hali ya usajili",
     "description": "Kagua hatua za usajili na muda wa kusubiri wa mteja huyu.",
