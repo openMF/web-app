@@ -7016,6 +7016,87 @@
       "receipt": "Qəbzi yükləmək mümkün olmadı"
     }
   },
+  "transactionHistory": {
+    "title": "Əməliyyat tarixçəsi",
+    "description": "Tamamlanmış Base Teller əməliyyatlarını, nominal məlumatlarını və qəbzləri axtarın və nəzərdən keçirin.",
+    "sections": {
+      "searchFilters": "Axtarış filtrləri",
+      "results": "Əməliyyat nəticələri",
+      "totals": "Valyuta üzrə cəmlər",
+      "details": "Əməliyyat məlumatları",
+      "cancellation": "Ləğv məlumatları",
+      "denominations": "Nominal məlumatları",
+      "operationDenominations": "Əməliyyat nominalları",
+      "changeGiven": "Verilən qalığı",
+      "receipt": "Qəbz",
+      "report": "Əməliyyat tarixçəsi hesabatı"
+    },
+    "fields": {
+      "all": "Hamısı",
+      "date": "Tarix",
+      "dateFrom": "Başlanğıc tarixi",
+      "dateTo": "Son tarix",
+      "transactionDate": "Əməliyyat tarixi",
+      "teller": "Kassir",
+      "currency": "Valyuta",
+      "status": "Status",
+      "type": "Növ",
+      "operation": "Əməliyyat",
+      "concept": "Təyinat",
+      "reference": "İstinad",
+      "inflows": "Daxilolmalar",
+      "outflows": "Çıxışlar",
+      "totalInflows": "Ümumi daxilolmalar",
+      "totalOutflows": "Ümumi çıxışlar",
+      "total": "Cəmi",
+      "actions": "Əməliyyatlar",
+      "client": "Müştəri",
+      "identification": "İdentifikasiya",
+      "cashReceived": "Alınan nağd pul",
+      "checksReceived": "Alınan çeklər",
+      "change": "Qalıq",
+      "adjustment": "Düzəliş",
+      "reason": "Səbəb",
+      "user": "İstifadəçi",
+      "denomination": "Nominal",
+      "quantity": "Miqdar",
+      "amount": "Məbləğ",
+      "generatedAt": "Yaradılma vaxtı",
+      "totalRecords": "Ümumi qeydlər",
+      "notApplicable": "Tətbiq edilmir"
+    },
+    "actions": {
+      "search": "Axtar",
+      "clear": "Təmizlə",
+      "viewDetails": "Məlumatlara bax",
+      "denominationDetails": "Nominal məlumatları",
+      "reprintReceipt": "Qəbzi yenidən çap et",
+      "printResults": "Nəticələri çap et",
+      "retry": "Yenidən cəhd et"
+    },
+    "states": {
+      "loadingFilters": "Filtrlər yüklənir…",
+      "loadingHistory": "Əməliyyat tarixçəsi yüklənir…",
+      "loadingDetails": "Əməliyyat məlumatları yüklənir…",
+      "loadingDenominations": "Nominal məlumatları yüklənir…",
+      "noTransactions": "Əməliyyat tapılmadı.",
+      "noDenominations": "Bu əməliyyat üçün nominal məlumatı mövcud deyil.",
+      "selectTransaction": "Məlumatlarına baxmaq üçün əməliyyat seçin."
+    },
+    "errors": {
+      "context": "Əməliyyat tarixçəsi filtrlərini yükləmək mümkün olmadı.",
+      "search": "Əməliyyat tarixçəsini yükləmək mümkün olmadı.",
+      "detail": "Əməliyyat məlumatlarını yükləmək mümkün olmadı.",
+      "denominations": "Nominal məlumatlarını yükləmək mümkün olmadı.",
+      "receiptUnavailable": "Bu əməliyyat üçün qəbz mövcud deyil.",
+      "report": "Əməliyyat tarixçəsi hesabatını yükləmək mümkün olmadı."
+    },
+    "validation": {
+      "dateRange": "Başlanğıc tarixi son tarixdən əvvəl və ya ona bərabər olmalıdır.",
+      "referenceLength": "İstinad 200 simvoldan çox olmamalıdır."
+    },
+    "denominationTypes": { "BANKNOTE": "Əskinas", "COIN": "Sikkə" }
+  },
   "enrollmentStatus": {
     "title": "Qəbulun vəziyyəti",
     "description": "Bu müştəri üçün qeydiyyat mərhələlərini və gözləmə müddətini nəzərdən keçirin.",
