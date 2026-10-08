@@ -810,8 +810,10 @@
         "message": "{{count}} maksa(-u) nevarēja atlaist."
       }
     },
-    "error.auth.type": "Autentifikācijas kļūda",
-    "error.auth.message": "Jūsu sesija ir beigusies vai akreditācijas dati nav derīgi.",
+    "error.auth.invalidCredentials.type": "Pieteikšanās neizdevās",
+    "error.auth.invalidCredentials.message": "Nepareizs lietotājvārds vai parole. Lūdzu, pārbaudiet savus pieteikšanās datus un mēģiniet vēlreiz.",
+    "error.auth.sessionExpired.type": "Sesija beigusies",
+    "error.auth.sessionExpired.message": "Jūsu sesija ir beigusies. Lūdzu, piesakieties vēlreiz.",
     "error.token.invalid.type": "Nederīgs tokens",
     "error.token.invalid.message": "Norādītais vienreizējais tokens nav derīgs.",
     "error.bad.request.type": "Nepareizs pieprasījums",

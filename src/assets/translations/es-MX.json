@@ -814,8 +814,10 @@
         "message": "{{count}} cargo(s) no pudieron ser condonados."
       }
     },
-    "error.auth.type": "Error de autenticación",
-    "error.auth.message": "Su sesión ha expirado o las credenciales son inválidas.",
+    "error.auth.invalidCredentials.type": "Error de inicio de sesión",
+    "error.auth.invalidCredentials.message": "Nombre de usuario o contraseña incorrectos. Verifique sus credenciales e intente nuevamente.",
+    "error.auth.sessionExpired.type": "Sesión expirada",
+    "error.auth.sessionExpired.message": "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
     "error.token.invalid.type": "Token inválido",
     "error.token.invalid.message": "El token de un solo uso proporcionado es inválido.",
     "error.bad.request.type": "Solicitud incorrecta",

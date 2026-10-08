@@ -810,8 +810,10 @@
         "message": "{{count}} ada haikuweza kusamehewa."
       }
     },
-    "error.auth.type": "Hitilafu ya uthibitishaji",
-    "error.auth.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.auth.invalidCredentials.type": "Kuingia kumeshindikana",
+    "error.auth.invalidCredentials.message": "Jina la mtumiaji au nenosiri si sahihi. Tafadhali kagua taarifa zako za kuingia na ujaribu tena.",
+    "error.auth.sessionExpired.type": "Muda wa kipindi umeisha",
+    "error.auth.sessionExpired.message": "Muda wa kipindi chako umeisha. Tafadhali ingia tena.",
     "error.token.invalid.type": "Tokeni batili",
     "error.token.invalid.message": "Tokeni ya matumizi moja iliyotolewa si sahihi.",
     "error.bad.request.type": "Ombi baya",

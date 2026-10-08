@@ -813,8 +813,10 @@
         "message": "{{count}} frais n'ont pas pu être remis."
       }
     },
-    "error.auth.type": "Erreur d'authentification",
-    "error.auth.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.auth.invalidCredentials.type": "Échec de la connexion",
+    "error.auth.invalidCredentials.message": "Nom d'utilisateur ou mot de passe incorrect. Veuillez vérifier vos identifiants et réessayer.",
+    "error.auth.sessionExpired.type": "Session expirée",
+    "error.auth.sessionExpired.message": "Votre session a expiré. Veuillez vous reconnecter.",
     "error.token.invalid.type": "Jeton invalide",
     "error.token.invalid.message": "Le jeton à usage unique fourni est invalide.",
     "error.bad.request.type": "Requête incorrecte",
