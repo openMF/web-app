@@ -86,7 +86,7 @@ export class EditCenterMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditCenterMeetingForm();
     this.buildDependencies();
   }
@@ -163,7 +163,8 @@ export class EditCenterMeetingComponent implements OnInit {
     this.centerEditMeetingForm.patchValue({
       startDate: this.calendarTemplate.startDate && this.dateUtils.parseDate(this.calendarTemplate.startDate),
       frequency: this.calendarTemplate.frequency.id,
-      interval: `${this.calendarTemplate.interval}`
+      // Fineract stores an interval of 1 without INTERVAL in the recurrence and returns it as -1.
+      interval: `${this.calendarTemplate.interval > 0 ? this.calendarTemplate.interval : 1}`
     });
   }
 

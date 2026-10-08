@@ -813,8 +813,10 @@
         "message": "{{count}} costo/i non ha/hanno potuto essere rinunciato/i."
       }
     },
-    "error.auth.type": "Errore di autenticazione",
-    "error.auth.message": "La sessione è scaduta o le credenziali non sono valide.",
+    "error.auth.invalidCredentials.type": "Accesso non riuscito",
+    "error.auth.invalidCredentials.message": "Nome utente o password non corretti. Verificare le credenziali e riprovare.",
+    "error.auth.sessionExpired.type": "Sessione scaduta",
+    "error.auth.sessionExpired.message": "La sessione è scaduta. Effettuare di nuovo l'accesso.",
     "error.token.invalid.type": "Token non valido",
     "error.token.invalid.message": "Il token monouso fornito non è valido.",
     "error.bad.request.type": "Richiesta errata",
@@ -7065,6 +7067,87 @@
       "options": "Impossibile caricare le opzioni di gestione della liquidità",
       "receipt": "Impossibile caricare la ricevuta"
     }
+  },
+  "transactionHistory": {
+    "title": "Cronologia transazioni",
+    "description": "Cerca e consulta le transazioni Base Teller completate, i dettagli dei tagli e le ricevute.",
+    "sections": {
+      "searchFilters": "Filtri di ricerca",
+      "results": "Risultati transazioni",
+      "totals": "Totali per valuta",
+      "details": "Dettagli transazione",
+      "cancellation": "Dettagli annullamento",
+      "denominations": "Dettagli tagli",
+      "operationDenominations": "Tagli dell’operazione",
+      "changeGiven": "Resto erogato",
+      "receipt": "Ricevuta",
+      "report": "Report cronologia transazioni"
+    },
+    "fields": {
+      "all": "Tutti",
+      "date": "Data",
+      "dateFrom": "Data da",
+      "dateTo": "Data a",
+      "transactionDate": "Data transazione",
+      "teller": "Cassiere",
+      "currency": "Valuta",
+      "status": "Stato",
+      "type": "Tipo",
+      "operation": "Operazione",
+      "concept": "Causale",
+      "reference": "Riferimento",
+      "inflows": "Entrate",
+      "outflows": "Uscite",
+      "totalInflows": "Totale entrate",
+      "totalOutflows": "Totale uscite",
+      "total": "Totale",
+      "actions": "Azioni",
+      "client": "Cliente",
+      "identification": "Identificazione",
+      "cashReceived": "Contanti ricevuti",
+      "checksReceived": "Assegni ricevuti",
+      "change": "Resto",
+      "adjustment": "Rettifica",
+      "reason": "Motivo",
+      "user": "Utente",
+      "denomination": "Taglio",
+      "quantity": "Quantità",
+      "amount": "Importo",
+      "generatedAt": "Generato il",
+      "totalRecords": "Record totali",
+      "notApplicable": "Non applicabile"
+    },
+    "actions": {
+      "search": "Cerca",
+      "clear": "Cancella",
+      "viewDetails": "Visualizza dettagli",
+      "denominationDetails": "Dettagli tagli",
+      "reprintReceipt": "Ristampa ricevuta",
+      "printResults": "Stampa risultati",
+      "retry": "Riprova"
+    },
+    "states": {
+      "loadingFilters": "Caricamento filtri…",
+      "loadingHistory": "Caricamento cronologia transazioni…",
+      "loadingDetails": "Caricamento dettagli transazione…",
+      "loadingDenominations": "Caricamento dettagli tagli…",
+      "noTransactions": "Nessuna transazione trovata.",
+      "noDenominations": "Nessun dettaglio dei tagli disponibile per questa transazione.",
+      "selectTransaction": "Seleziona una transazione per visualizzarne i dettagli."
+    },
+    "errors": {
+      "context": "Impossibile caricare i filtri della cronologia.",
+      "search": "Impossibile caricare la cronologia transazioni.",
+      "detail": "Impossibile caricare i dettagli della transazione.",
+      "denominations": "Impossibile caricare i dettagli dei tagli.",
+      "receiptUnavailable": "La ricevuta non è disponibile per questa transazione.",
+      "report": "Impossibile caricare il report della cronologia."
+    },
+    "validation": {
+      "dateRange": "Data da deve essere precedente o uguale a Data a.",
+      "referenceLength": "Il riferimento non può superare 200 caratteri."
+    },
+    "denominationTypes": { "BANKNOTE": "Banconota", "COIN": "Moneta" }
   },
   "enrollmentStatus": {
     "title": "Stato registrazione",
