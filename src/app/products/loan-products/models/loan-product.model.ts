@@ -191,6 +191,10 @@ export interface LoanProduct {
   writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
 
   // Working Capital attributes
+  delinquencyStartType?: StringEnumOptionData | null;
+  delinquencyStartTypeOptions?: StringEnumOptionData[];
+  breachStartType?: StringEnumOptionData | null;
+  breachStartTypeOptions?: StringEnumOptionData[];
   breach?: Breach;
   breachId?: number;
   nearBreach?: NearBreach;

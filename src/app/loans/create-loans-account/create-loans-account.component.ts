@@ -144,7 +144,8 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
-        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
       };
     }
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
@@ -363,6 +364,7 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     [
       'delinquencyGraceDays',
       'delinquencyStartType',
+      'breachStartType',
       'delinquencyBucketId'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {

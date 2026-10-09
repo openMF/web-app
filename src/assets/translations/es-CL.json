@@ -2307,6 +2307,7 @@
       "Reference": "Referencia"
     },
     "inputs": {
+      "Breach Start Type": "Tipo de inicio de incumplimiento",
       "Returned": "Devuelto",
       "Settled": "Pagado",
       "Check Amount": "Monto del cheque",

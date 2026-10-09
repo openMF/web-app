@@ -190,8 +190,9 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           : null,
         npvDayCount: this.loanProductsTemplate.npvDayCount,
         delinquencyGraceDays: this.loanProductsTemplate.delinquencyGraceDays,
+        // The backend parses the enum name (code); the numeric id is rejected with invalid.delinquency.start.type.
         delinquencyStartType: this.loanProductsTemplate.delinquencyStartType
-          ? this.loanProductsTemplate.delinquencyStartType.id
+          ? this.loanProductsTemplate.delinquencyStartType.code
           : null,
         breachId: this.loanProductsTemplate.breach?.id ?? null,
         nearBreachId: this.loanProductsTemplate.nearBreach?.id ?? null,

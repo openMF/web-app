@@ -2307,6 +2307,7 @@
       "Create Savings Product": "Criar produto de poupança"
     },
     "inputs": {
+      "Breach Start Type": "Tipo de início de violação",
       "Returned": "Devolvido",
       "Settled": "Liquidado",
       "Check Amount": "Montante do cheque",

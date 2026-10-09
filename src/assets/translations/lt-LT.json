@@ -2304,6 +2304,7 @@
       "Reference": "Nuoroda"
     },
     "inputs": {
+      "Breach Start Type": "Pažeidimo pradžios tipas",
       "Returned": "Grąžintas",
       "Settled": "Apmokėtas",
       "Check Amount": "Čekio suma",

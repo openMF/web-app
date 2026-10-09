@@ -94,7 +94,7 @@
         <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
         <mat-select formControlName="delinquencyStartType">
           @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
-            <mat-option [value]="delinquencyStartType.id">
+            <mat-option [value]="delinquencyStartType.code">
               {{ delinquencyStartType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -168,6 +168,17 @@
         <mat-form-field class="flex-23">
           <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
           <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+        </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Breach Start Type' | translate }}</mat-label>
+          <mat-select formControlName="breachStartType">
+            @for (breachStartType of breachStartTypeOptions; track breachStartType) {
+              <mat-option [value]="breachStartType.code">
+                {{ breachStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
         </mat-form-field>
       }
     }

@@ -129,6 +129,7 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
 
   repaymentFrequencyTypeOption: OptionData | null = null;
   delinquencyStartTypeOption: StringEnumOptionData | null = null;
+  breachStartTypeOption: StringEnumOptionData | null = null;
 
   constructor() {
     super();
@@ -163,9 +164,14 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
         this.loansAccount?.delinquencyStartType,
         options.delinquencyStartTypeOptions ?? []
       );
+      this.breachStartTypeOption = this.stringEnumOptionDataLookUp(
+        this.loansAccount?.breachStartType,
+        options.breachStartTypeOptions ?? []
+      );
     } else {
       this.repaymentFrequencyTypeOption = null;
       this.delinquencyStartTypeOption = null;
+      this.breachStartTypeOption = null;
     }
   }
 

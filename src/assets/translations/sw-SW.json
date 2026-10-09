@@ -2304,6 +2304,7 @@
       "Create Savings Product": "Unda Bidhaa ya Akiba"
     },
     "inputs": {
+      "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
       "Returned": "Imerudishwa",
       "Settled": "Imelipwa",
       "Check Amount": "Kiasi cha hundi",

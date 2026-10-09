@@ -153,6 +153,95 @@ describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
   });
 });
 
+describe('LoansAccountTermsStepComponent — Working Capital breach start type', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  const BREACH_START_TYPE_OPTIONS = [
+    { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' },
+    { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' }
+  ];
+
+  /** Product that defaults breaches to start on disbursement; the template does not copy it into loanData. */
+  const TEMPLATE_WITH_BREACH_START: any = {
+    ...WC_PRODUCT_TEMPLATE,
+    product: {
+      ...WC_PRODUCT_TEMPLATE.product,
+      breachStartType: { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' }
+    },
+    options: { ...WC_PRODUCT_TEMPLATE.options, breachStartTypeOptions: BREACH_START_TYPE_OPTIONS }
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+  });
+
+  it('prefills the select with the product default code and exposes the template options', () => {
+    component.loansAccountProductTemplate = TEMPLATE_WITH_BREACH_START;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, TEMPLATE_WITH_BREACH_START, true)
+    });
+
+    expect(component.breachStartTypeOptions).toEqual(BREACH_START_TYPE_OPTIONS);
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+
+  it('leaves the select empty when the product has no breach start type', () => {
+    component.loansAccountProductTemplate = WC_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_PRODUCT_TEMPLATE, true)
+    });
+
+    expect(component.loansAccountTerms.breachStartType).toBe('');
+    expect(component.loansAccountTermsForm.valid).toBe(false);
+    expect(component.loansAccountTermsForm.get('breachStartType')!.valid).toBe(true);
+  });
+
+  it('binds both start types by code, never by numeric id', () => {
+    component.loanId = 1;
+    const details = {
+      ...WC_LOAN_DETAILS,
+      delinquencyStartType: { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' }
+    };
+    component.loansAccountProductTemplate = details;
+    component.loansAccountTemplate = details;
+    component.ngOnChanges({ loansAccountProductTemplate: new SimpleChange(undefined, details, true) });
+    component.ngOnInit();
+
+    expect(component.loansAccountTerms.delinquencyStartType).toBe('LOAN_CREATION');
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+
+  it('maps the account code into the control when editing', () => {
+    component.loanId = 1;
+    component.loansAccountProductTemplate = WC_LOAN_DETAILS;
+    component.loansAccountTemplate = WC_LOAN_DETAILS;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_LOAN_DETAILS, true)
+    });
+    component.ngOnInit();
+
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+});
+
 describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
   let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
   let component: LoansAccountTermsStepComponent;

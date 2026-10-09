@@ -133,6 +133,13 @@
       </div>
     }
 
+    @if (loansAccount.breachStartType) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+        <span class="flex-60">{{ breachStartTypeOption?.value | translateKey: 'catalogs' }}</span>
+      </div>
+    }
+
     @if (loansAccount.delinquencyBucketId) {
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
