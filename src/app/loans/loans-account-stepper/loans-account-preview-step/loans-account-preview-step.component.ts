@@ -46,6 +46,12 @@ import { LongTextComponent } from 'app/shared/long-text/long-text.component';
 import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
 import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
  * Create Loans Account Preview Step
@@ -129,6 +135,11 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
 
   repaymentFrequencyTypeOption: OptionData | null = null;
   delinquencyStartTypeOption: StringEnumOptionData | null = null;
+  /** Working Capital: strategy inherited from the product, resolved from the template. */
+  paymentAmountCalculationStrategy: WorkingCapitalPaymentAmountCalculationStrategy =
+    WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
+  paymentAmountCalculationStrategyOption: StringEnumOptionData | null = null;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
 
   constructor() {
     super();
@@ -155,6 +166,14 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
     }
     if (this.loanProductService.isWorkingCapital) {
       const options = this.loansAccountProductTemplate.options ?? {};
+      const product = this.loansAccountProductTemplate.product ?? {};
+      this.paymentAmountCalculationStrategy = resolvePaymentAmountCalculationStrategy(
+        product.paymentAmountCalculationStrategy
+      );
+      this.paymentAmountCalculationStrategyOption = this.stringEnumOptionDataLookUp(
+        this.paymentAmountCalculationStrategy,
+        product.paymentAmountCalculationStrategyOptions ?? WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS
+      );
       this.repaymentFrequencyTypeOption = this.optionDataLookUp(
         this.loansAccount?.repaymentFrequencyType,
         options.periodFrequencyTypeOptions ?? []

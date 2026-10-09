@@ -97,17 +97,40 @@
       </span>
     </div>
     <div class="flex-fill">
-      <span class="flex-30"
-        >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}:</span
-      >
-      <span class="flex-70">
-        {{
-          loansAccount.totalPaymentVolume
-            | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
-        }}
-        <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
-      </span>
+      <span class="flex-30">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}:</span>
+      <span class="flex-70">{{ paymentAmountCalculationStrategyOption?.value | translateKey: 'catalogs' }}</span>
     </div>
+    @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+      <div class="flex-fill">
+        <span class="flex-30"
+          >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}:</span
+        >
+        <span class="flex-70">
+          {{
+            loansAccount.totalPaymentVolume
+              | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
+          <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
+        </span>
+      </div>
+    }
+    @if (paymentAmountCalculationStrategy === wcStrategy.ANNUAL_EIR) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Annual EIR' | translate }}:</span>
+        <span class="flex-70">{{ loansAccount.annualEir | number: '1.0-6' }} %</span>
+      </div>
+    }
+    @if (paymentAmountCalculationStrategy === wcStrategy.PAYMENT_AMOUNT) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Payment Amount' | translate }}:</span>
+        <span class="flex-70">
+          {{
+            loansAccount.paymentAmount | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
+          <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
+        </span>
+      </div>
+    }
 
     @if (loansAccount.discount) {
       <div class="flex-fill">
@@ -158,10 +181,12 @@
       </div>
     }
 
-    <div class="flex-fill">
-      <span class="flex-30">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
-      <span class="flex-70"> {{ loansAccount.periodPaymentRate | formatNumber }} % </span>
-    </div>
+    @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
+        <span class="flex-70"> {{ loansAccount.periodPaymentRate | formatNumber }} % </span>
+      </div>
+    }
 
     <div class="flex-fill">
       <span class="flex-30">{{ 'labels.inputs.Period Payment Frequency' | translate }}:</span>
