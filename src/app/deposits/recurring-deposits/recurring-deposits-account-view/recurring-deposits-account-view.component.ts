@@ -140,7 +140,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
 
     if (this.recurringDepositsAccountData.charges && this.recurringDepositsAccountData.status.value === 'Matured') {
       this.charges.forEach((element: any) => {
-        if (element.name === 'Annual fee - INR') {
+        if (element.chargeTimeType?.id === 7) {
           this.buttonConfig.addOption({
             name: 'Apply Annual Fees',
             taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
@@ -158,7 +158,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       }
       if (this.recurringDepositsAccountData.charges) {
         this.charges.forEach((element: any) => {
-          if (element.name === 'Annual fee - INR') {
+          if (element.chargeTimeType?.id === 7) {
             this.buttonConfig.addOption({
               name: 'Apply Annual Fees',
               taskPermissionName: 'APPLYANNUALFEE_SAVINGSACCOUNT'
