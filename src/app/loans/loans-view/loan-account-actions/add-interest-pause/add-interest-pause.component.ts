@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
@@ -20,7 +20,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -52,8 +53,8 @@ export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent i
    * and initialize with the required values
    */
   ngOnInit() {
-    this.maturityDate = new Date(this.dataObject.timeline.expectedMaturityDate);
-    this.maxDate = new Date(this.dataObject.timeline.expectedMaturityDate);
+    this.maturityDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
+    this.maxDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
     this.startDate = new Date(this.settingsService.businessDate);
     if (this.startDate > this.maxDate) {
       this.startDate = this.maxDate;

@@ -23,7 +23,7 @@ import { SearchResolver } from './search.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'search',
+      path: '',
       component: SearchPageComponent,
       data: { title: 'Search', breadcrumb: 'Search' },
       runGuardsAndResolvers: 'paramsOrQueryParamsChange',

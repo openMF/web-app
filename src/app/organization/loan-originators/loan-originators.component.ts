@@ -7,7 +7,18 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -63,12 +74,14 @@ import { ExternalIdentifierComponent } from 'app/shared/external-identifier/exte
     MatPaginator,
     MatIconButton,
     ExternalIdentifierComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanOriginatorsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
   private dialog = inject(MatDialog);
 
@@ -98,9 +111,11 @@ export class LoanOriginatorsComponent implements OnInit {
   @ViewChild('templateTableLoanOriginators') templateTableLoanOriginators: TemplateRef<any>;
 
   constructor() {
-    this.route.data.subscribe((data: { loanOriginatorsData: LoanOriginator[] }) => {
-      this.loanOriginatorsData = data.loanOriginatorsData;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanOriginatorsData: LoanOriginator[] }) => {
+        this.loanOriginatorsData = data.loanOriginatorsData;
+      });
   }
 
   /**
@@ -135,9 +150,12 @@ export class LoanOriginatorsComponent implements OnInit {
     });
     deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteLoanOriginator(loanOriginator.id).subscribe(() => {
-          this.router.navigate(['/organization/manage-loan-originators']);
-        });
+        this.organizationService
+          .deleteLoanOriginator(loanOriginator.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['/organization/manage-loan-originators']);
+          });
       }
     });
   }

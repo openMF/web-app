@@ -15,6 +15,7 @@
             mat-card-md-image
             class="profile-image"
             matTooltip="{{ 'tooltips.Savings Account' | translate }}"
+            [alt]="'tooltips.Savings Account' | translate"
             [src]="'assets/images/savings_account_placeholder.png'"
           />
         </div>
@@ -105,7 +106,7 @@
             <button
               mat-icon-button
               [matMenuTriggerFor]="accountMenu"
-              aria-label="Loan account actions"
+              [attr.aria-label]="'labels.text.Savings Account Actions' | translate"
               yPosition="below"
             >
               <mat-icon matListIcon class="actions-menu">
@@ -154,6 +155,31 @@
         >
           {{ 'labels.inputs.General' | translate }}
         </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./dashboard']"
+          routerLinkActive
+          #dashboard="routerLinkActive"
+          [active]="dashboard.isActive"
+        >
+          {{ 'labels.inputs.Dashboard' | translate }}
+        </a>
+        @if (savingsAccountData.clientId) {
+          <ng-container *mifosxHasPermission="'READ_CLIENT'">
+            <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNT'">
+              <a
+                mat-tab-link
+                *mifosxHasPermission="'READ_ENROLLMENT_STATUS'"
+                [routerLink]="['./acquisition-status']"
+                routerLinkActive
+                #acquisitionStatus="routerLinkActive"
+                [active]="acquisitionStatus.isActive"
+              >
+                {{ 'acquisition.title' | translate }}
+              </a>
+            </ng-container>
+          </ng-container>
+        }
         <a
           mat-tab-link
           [routerLink]="['./transactions']"
@@ -213,7 +239,7 @@
             #datatable="routerLinkActive"
             [active]="datatable.isActive"
           >
-            {{ savingsDatatable.registeredTableName }}
+            {{ savingsDatatable.registeredTableName | datatableDisplayLabel }}
           </a>
         }
       </nav>

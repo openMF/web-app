@@ -7,7 +7,7 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -76,7 +76,8 @@ interface JobDataType {
     MatDialogActions,
     FaIconComponent,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomParametersPopoverComponent implements OnInit {
   private systemService = inject(SystemService);

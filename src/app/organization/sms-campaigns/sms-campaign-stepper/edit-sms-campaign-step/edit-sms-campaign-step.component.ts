@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Output, Input, EventEmitter, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  Validators,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, Output, Input, EventEmitter, inject } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -26,6 +21,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters/edit-business-rule-parameters.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Edit SMS Campaign step.
  */
@@ -37,12 +33,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     EditBusinessRuleParametersComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditSmsCampaignStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private reportService = inject(ReportsService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
@@ -50,7 +48,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
   @Input() smsCampaign: any;
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: UntypedFormGroup;
+  smsCampaignDetailsForm: FormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
@@ -121,9 +119,12 @@ export class EditSmsCampaignStepComponent implements OnInit {
    * Gets Template parameters and disables the SMS form.
    */
   getParameters() {
-    this.reportService.getReportParams(this.smsCampaign.reportName).subscribe((response: ReportParameter[]) => {
-      this.paramData = response;
-    });
+    this.reportService
+      .getReportParams(this.smsCampaign.reportName)
+      .pipe(take(1))
+      .subscribe((response: ReportParameter[]) => {
+        this.paramData = response;
+      });
     this.smsCampaignDetailsForm.disable();
   }
 
@@ -141,7 +142,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
     if (this.smsCampaign.triggerType.value === 'Schedule') {
       this.smsCampaignDetailsForm.addControl(
         'recurrenceStartDate',
-        new UntypedFormControl(new Date(this.smsCampaign.recurrenceStartDate))
+        new FormControl(this.dateUtils.parseDate(this.smsCampaign.recurrenceStartDate))
       );
     }
   }

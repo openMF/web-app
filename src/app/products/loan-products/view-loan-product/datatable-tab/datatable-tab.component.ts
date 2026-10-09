@@ -6,10 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { EntityDatatableTabComponent } from '../../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductService } from '../../services/loan-product.service';
 
 @Component({
   selector: 'mifosx-datatable-tab',
@@ -18,14 +20,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     EntityDatatableTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatatableTabComponent {
   private route = inject(ActivatedRoute);
+  private loanProductService = inject(LoanProductService);
+  private translateService = inject(TranslateService);
 
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
+
+  get entityType(): string {
+    return this.loanProductService.isWorkingCapital
+      ? this.translateService.instant('labels.inputs.Working Capital Loan Product')
+      : this.translateService.instant('labels.inputs.Loan Product');
+  }
 
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('productId');

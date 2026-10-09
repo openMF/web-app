@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
       args:
         - BUILD_ENVIRONMENT_OPTIONS=--configuration production
-        - BUILDER_IMAGE=node:20-alpine
-        - NGINX_IMAGE=nginx:1.19.3
+        - BUILDER_IMAGE=node:24-alpine3.23
+        - NGINX_IMAGE=nginx:1.31.6-alpine3.24
         - NPM_REGISTRY_URL=https://registry.npmjs.org/
         - PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
         - PUPPETEER_CHROMIUM_REVISION_ARG=1011831
@@ -21,7 +21,13 @@ services:
       - FINERACT_API_VERSION=/v1
       - FINERACT_PLATFORM_TENANT_IDENTIFIER=default
       - MIFOS_DEFAULT_LANGUAGE=en-US
-      - MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,es-CL,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
+      - MIFOS_SUPPORTED_LANGUAGES=az-AZ,cs-CS,de-DE,en-US,es-MX,es-CL,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
       - MIFOS_SESSION_IDLE_TIMEOUT=300000
       - MIFOS_PRELOAD_CLIENTS=true
       - MIFOS_DEFAULT_CHAR_DELIMITER=,
+      # Mifos Copilot: off by default. Both variables are needed for real AI responses,
+      # MIFOS_ENABLE_COPILOT=true to show the panel and MIFOS_COPILOT_MCP_BASE_URL
+      # pointing at a Copilot gateway. Enabling the panel with an empty URL uses the
+      # built-in mock replies.
+      - MIFOS_ENABLE_COPILOT=false
+      - MIFOS_COPILOT_MCP_BASE_URL=

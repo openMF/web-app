@@ -6,19 +6,372 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-table {
-  th {
-    text-align: left;
-    font-weight: 500;
-    padding: 0 0.4rem 0 0;
+:host {
+  --je-blue-700: #1565c0;
+  --je-blue-600: #1976d2;
+  --je-blue-400: #42a5f5;
+  --je-blue-100: #bbdefb;
+  --je-blue-50: #e3f2fd;
+  --je-blue-20: #f0f7ff;
+  --je-surface: #fff;
+  --je-surface-alt: #f4f7fb;
+  --je-surface-h: #ebf2fa;
+  --je-border: #dde5f0;
+  --je-text-1: #0d1b2a;
+  --je-text-2: #4a6785;
+  --je-text-3: #8fa5bc;
+  --je-paid: #2e7d32;
+  --je-paid-bg: #e8f5e9;
+  --je-partial: #e65100;
+  --je-partial-bg: #fff3e0;
+  --je-alert: #c62828;
+  --je-alert-bg: #ffebee;
+  --je-debit: #1d4ed8;
+  --je-debit-bg: #eff6ff;
+  --je-credit: #2e7d32;
+  --je-credit-bg: #e8f5e9;
+  --je-manual: #7c3aed;
+  --je-manual-bg: #f3e8ff;
 
-    &.header {
-      text-align: center;
-      padding: 0.4rem 0.4rem 0 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  display: block;
+}
+
+:host-context(.dark-theme) {
+  --je-blue-700: #5b9bd5;
+  --je-blue-600: #7ab3e0;
+  --je-blue-100: #1a3a60;
+  --je-blue-50: #0a2040;
+  --je-blue-20: #0d1f35;
+  --je-surface: #1a2535;
+  --je-surface-alt: #101d2d;
+  --je-surface-h: #132032;
+  --je-border: #1e3050;
+  --je-text-1: #e2ebf6;
+  --je-text-2: #8baecf;
+  --je-text-3: #6a8fad;
+  --je-paid: #66bb6a;
+  --je-paid-bg: #172b1a;
+  --je-partial: #ffa726;
+  --je-partial-bg: #281c0b;
+  --je-alert: #ef9a9a;
+  --je-alert-bg: #2b1212;
+  --je-debit: #7ab3e0;
+  --je-debit-bg: #0a2040;
+  --je-credit: #66bb6a;
+  --je-credit-bg: #172b1a;
+  --je-manual: #b794f6;
+  --je-manual-bg: #1f0f3d;
+}
+
+.je-modal {
+  min-width: 480px;
+  max-width: 600px;
+}
+
+/* ── Head ────────────────────────────────────────────────────── */
+.modal-head {
+  position: relative;
+  padding: 22px 24px 18px;
+  background: var(--je-surface);
+  border-bottom: 1px solid var(--je-border);
+  margin: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--je-blue-700), transparent);
+  }
+}
+
+.modal-eyebrow {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--je-text-3);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.modal-title h2 {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--je-text-1);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+
+  .id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--je-blue-700);
+    margin-left: 8px;
+    font-weight: 500;
+  }
+}
+
+.amount-block {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  &.credit {
+    background: var(--je-credit-bg);
+    border: 1px solid color-mix(in srgb, var(--je-credit) 22%, transparent);
+
+    .kind {
+      color: var(--je-credit);
+    }
+
+    .value {
+      color: var(--je-credit);
     }
   }
 
-  td {
-    padding: 0 0.4rem 0 0;
+  &.debit {
+    background: var(--je-debit-bg);
+    border: 1px solid color-mix(in srgb, var(--je-debit) 22%, transparent);
+
+    .kind {
+      color: var(--je-debit);
+    }
+
+    .value {
+      color: var(--je-debit);
+    }
+  }
+
+  .kind {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .sym {
+    color: var(--je-text-3);
+    font-size: 13px;
+    font-weight: 400;
+  }
+}
+
+/* ── Body ────────────────────────────────────────────────────── */
+.modal-body {
+  padding: 20px 24px 6px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.field-section {
+  margin-bottom: 18px;
+
+  h3 {
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--je-blue-700);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 12px;
+      background: var(--je-blue-700);
+      border-radius: 2px;
+    }
+  }
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--je-border);
+  font-size: 13px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.field-label {
+  flex: 0 0 130px;
+  color: var(--je-text-3);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.field-value {
+  flex: 1;
+  color: var(--je-text-1);
+  font-weight: 500;
+  word-break: break-word;
+
+  &.mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+}
+
+.currency-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .flag {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--je-blue-700), var(--je-blue-400));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.02em;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .muted {
+    color: var(--je-text-3);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+}
+
+/* ── Type pills ──────────────────────────────────────────────── */
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &.asset {
+    background: var(--je-blue-50);
+    color: var(--je-blue-700);
+    border-color: var(--je-blue-100);
+
+    &::before {
+      background: var(--je-blue-700);
+    }
+  }
+
+  &.liability {
+    background: var(--je-partial-bg);
+    color: var(--je-partial);
+    border-color: color-mix(in srgb, var(--je-partial) 22%, transparent);
+
+    &::before {
+      background: var(--je-partial);
+    }
+  }
+
+  &.equity {
+    background: var(--je-manual-bg);
+    color: var(--je-manual);
+    border-color: color-mix(in srgb, var(--je-manual) 22%, transparent);
+
+    &::before {
+      background: var(--je-manual);
+    }
+  }
+
+  &.income {
+    background: var(--je-paid-bg);
+    color: var(--je-paid);
+    border-color: color-mix(in srgb, var(--je-paid) 22%, transparent);
+
+    &::before {
+      background: var(--je-paid);
+    }
+  }
+
+  &.expense {
+    background: var(--je-alert-bg);
+    color: var(--je-alert);
+    border-color: color-mix(in srgb, var(--je-alert) 22%, transparent);
+
+    &::before {
+      background: var(--je-alert);
+    }
+  }
+}
+
+/* ── Foot ────────────────────────────────────────────────────── */
+.modal-foot {
+  padding: 14px 24px 18px;
+  background: var(--je-surface-alt);
+  border-top: 1px solid var(--je-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .audit {
+    font-size: 11.5px;
+    color: var(--je-text-3);
+
+    b {
+      color: var(--je-text-2);
+      font-weight: 500;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .je-modal {
+    min-width: auto;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .field-label {
+    flex: none;
   }
 }

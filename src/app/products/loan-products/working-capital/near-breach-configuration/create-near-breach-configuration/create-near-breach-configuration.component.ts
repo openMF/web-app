@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -25,7 +25,8 @@ import { catchError } from 'rxjs';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     InputPositiveIntegerComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateNearBreachConfigurationComponent implements OnInit {
   private route = inject(ActivatedRoute);

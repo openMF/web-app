@@ -6,10 +6,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ThemingService } from './theming.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 import { M3IconComponent } from '../m3-ui/m3-icon/m3-icon.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -20,14 +21,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
+    MatTooltip,
     M3IconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemeToggleComponent implements OnInit, OnChanges {
   private themingService = inject(ThemingService);
   private settingsService = inject(SettingsService);
 
   darkModeOn: boolean;
+
+  /** Translation key describing the theme the toggle will switch to. */
+  get themeToggleLabel(): string {
+    return this.darkModeOn ? 'tooltips.Switch to light theme' : 'tooltips.Switch to dark theme';
+  }
 
   ngOnInit(): void {
     this.darkModeOn = !!this.settingsService.themeDarkEnabled;

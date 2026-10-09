@@ -1,0 +1,132 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="cbild-audit-trail">
+  <!-- Header -->
+  <mat-card class="cbild-header-card">
+    <mat-card-content>
+      <div class="cbild-header-row">
+        <div class="cbild-header-title">
+          <mat-icon>history</mat-icon>
+          <span>{{ 'labels.cbild.auditTrail.title' | translate }}</span>
+        </div>
+        <span class="cbild-total-badge">
+          {{ totalElements }} {{ 'labels.cbild.auditTrail.totalEntries' | translate }}
+        </span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Date Filter -->
+  <mat-card class="cbild-filter-card">
+    <mat-card-content>
+      <h3 class="cbild-section-title">
+        <mat-icon>filter_list</mat-icon>
+        {{ 'labels.cbild.auditTrail.filterTitle' | translate }}
+      </h3>
+      <mat-divider></mat-divider>
+      <div class="cbild-filter-row">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.cbild.auditTrail.startDate' | translate }}</mat-label>
+          <input matInput type="text" placeholder="2026-08-01T00:00" [(ngModel)]="startDate" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.cbild.auditTrail.endDate' | translate }}</mat-label>
+          <input matInput type="text" placeholder="2026-08-07T23:59" [(ngModel)]="endDate" />
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="isLoading || !startDate || !endDate"
+          (click)="applyFilter()"
+        >
+          <mat-icon>search</mat-icon>
+          {{ 'labels.cbild.auditTrail.apply' | translate }}
+        </button>
+
+        <button mat-stroked-button [disabled]="isLoading" (click)="clearFilter()">
+          <mat-icon>clear</mat-icon>
+          {{ 'labels.cbild.auditTrail.clear' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading bar -->
+  @if (isLoading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <!-- Audit Entries -->
+  @if (!isLoading && entries.length === 0) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>{{ 'labels.cbild.auditTrail.noEntries' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (!isLoading && entries.length > 0) {
+    <mat-card class="cbild-entries-card">
+      <mat-card-content>
+        @for (entry of entries; track entry.id) {
+          <div class="cbild-audit-entry">
+            <div class="cbild-entry-header">
+              <div class="cbild-entry-left">
+                <span class="cbild-entry-id">#{{ entry.id }}</span>
+                <span class="cbild-entry-action">{{ entry.action }}</span>
+                <span class="cbild-entry-entity">{{ entry.entityType }}</span>
+              </div>
+              <span [class]="'cbild-result-badge ' + getResultClass(entry.result)">
+                {{ entry.result }}
+              </span>
+            </div>
+
+            <mat-divider class="cbild-entry-divider"></mat-divider>
+
+            <div class="cbild-entry-details">
+              <div class="cbild-detail-row">
+                <span class="cbild-label">{{ 'labels.cbild.auditTrail.performedBy' | translate }}</span>
+                <span class="cbild-value">{{ entry.performedBy }}</span>
+              </div>
+              <div class="cbild-detail-row">
+                <span class="cbild-label">{{ 'labels.cbild.auditTrail.createdAt' | translate }}</span>
+                <span class="cbild-value">{{ entry.createdAt | dateFormat }}</span>
+              </div>
+              <div class="cbild-detail-row">
+                <span class="cbild-label">{{ 'labels.cbild.auditTrail.duration' | translate }}</span>
+                <span class="cbild-value">{{ entry.durationMs }} ms</span>
+              </div>
+              <div class="cbild-detail-row">
+                <span class="cbild-label">{{ 'labels.cbild.auditTrail.requestId' | translate }}</span>
+                <span class="cbild-value cbild-request-id">{{ entry.requestId }}</span>
+              </div>
+            </div>
+          </div>
+
+          @if (!$last) {
+            <mat-divider class="cbild-between-entries"></mat-divider>
+          }
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Paginator -->
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[10, 20, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  }
+</div>

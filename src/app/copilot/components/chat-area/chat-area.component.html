@@ -1,0 +1,164 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="chat-body" #messageContainer (click)="onBodyClick($event)" (scroll)="onScroll()">
+  <!-- Empty / welcome state -->
+  <div *ngIf="messages.length === 0" class="welcome">
+    <span class="welcome__badge">{{ greetingTime | translate }}</span>
+    <h1 class="welcome__heading">{{ 'copilot.welcomeHeading' | translate }}</h1>
+    <mifosx-quick-chips
+      class="welcome__prompts"
+      [prompts]="emptySuggestions"
+      [outline]="true"
+      (selected)="promptSelected.emit($event)"
+    >
+    </mifosx-quick-chips>
+  </div>
+
+  <!-- Older messages are held back rather than rendered and hidden, so a long conversation
+       does not cost DOM that is re-checked on every token of the reply at the bottom. -->
+  <button type="button" class="show-earlier" *ngIf="hiddenCount > 0" (click)="revealEarlier()">
+    {{ 'copilot.showEarlier' | translate: { count: hiddenCount } }}
+  </button>
+
+  <!-- Message list -->
+  <ng-container *ngFor="let msg of visibleMessages; trackBy: trackByMessageId">
+    <div
+      class="msg"
+      [class.msg--user]="msg.role === 'user'"
+      [class.msg--ai]="msg.role === 'assistant'"
+      [attr.data-message-id]="msg.role === 'user' ? msg.id : null"
+    >
+      <!-- Mounted for the whole reply, waiting included. It used to appear only once the first
+           token landed, so the answer arriving swapped one avatar for another and shifted the
+           conversation as it did. The same element now carries the wait and the answer, and the
+           state it is in is a class rather than a different element. -->
+      <div
+        *ngIf="msg.role === 'assistant'"
+        class="msg__avatar"
+        [class.msg__avatar--thinking]="phaseFor(msg) === 'thinking'"
+        [class.msg__avatar--streaming]="phaseFor(msg) === 'streaming'"
+      >
+        <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
+      </div>
+      <div class="msg__content">
+        <div class="msg__bubble" *ngIf="msg.content?.trim() || msg.role === 'user'">
+          <span *ngIf="msg.role === 'user'">{{ msg.content }}</span>
+          <span
+            *ngIf="msg.role === 'assistant'"
+            class="msg__text"
+            [class.msg__text--streaming]="msg.isStreaming"
+            [innerHTML]="msg.content | markdown: !!msg.isStreaming"
+          ></span>
+        </div>
+        <span class="msg__time">{{ relativeTime(msg.timestamp) }}</span>
+
+        <!-- Action cards -->
+        <div *ngIf="msg.actionCards?.length" class="cards">
+          <mifosx-action-card
+            *ngFor="let card of msg.actionCards"
+            [card]="card"
+            (action)="cardAction.emit($event)"
+            (route)="cardRoute.emit($event)"
+          >
+          </mifosx-action-card>
+        </div>
+
+        <!-- Try again. The gateway says whether waiting will help; without this the only
+             way to act on that was to type the question out a second time. -->
+        <button
+          *ngIf="msg.retryPrompt && !isStreaming"
+          type="button"
+          class="retry-button"
+          (click)="retryRequested.emit(msg.retryPrompt!)"
+          [attr.aria-label]="'copilot.actions.tryAgain' | translate"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+            />
+          </svg>
+          <span>{{ 'copilot.actions.tryAgain' | translate }}</span>
+        </button>
+
+        <!-- How the answer was reached, below it rather than above: a preamble frames an
+             answer before it is read, and this is meant to be scrutiny, not framing. -->
+        <mifosx-thinking-trail
+          *ngIf="msg.role === 'assistant'"
+          [messageId]="msg.id"
+          [steps]="msg.steps"
+          [workingNotes]="msg.workingNotes"
+          [turnMs]="msg.turnMs"
+          [notesElapsedMs]="msg.notesElapsedMs"
+          [phase]="phaseFor(msg)"
+        >
+        </mifosx-thinking-trail>
+
+        <!-- What can be done with a finished reply: take it, ask again, rate it.
+             Withheld while a card is pending, when the turn is not over yet. -->
+        <mifosx-message-actions
+          *ngIf="msg.role === 'assistant' && !msg.isStreaming && msg.content?.trim() && !isStreaming"
+          [message]="msg"
+          (repeatRequested)="repeatRequested.emit($event)"
+          (voted)="voteChanged.emit({ messageId: msg.id, vote: $event })"
+          (exportRequested)="exportRequested.emit($event)"
+          (shareRequested)="shareRequested.emit($event)"
+        >
+        </mifosx-message-actions>
+
+        <!-- Follow-up chips -->
+        <mifosx-quick-chips
+          *ngIf="msg.suggestedPrompts?.length && !isStreaming"
+          class="chips"
+          [prompts]="msg.suggestedPrompts || []"
+          (selected)="promptSelected.emit($event)"
+        >
+        </mifosx-quick-chips>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Pending write action: rendered in the conversation flow, scrolls with it.
+       aria-live announces the pending confirmation so it is not silent for screen readers. -->
+  <div
+    *ngIf="pendingCard"
+    class="msg msg--ai"
+    role="region"
+    aria-live="polite"
+    [attr.aria-label]="'copilot.confirm.pendingAnnouncement' | translate"
+  >
+    <div class="msg__avatar">
+      <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
+    </div>
+    <div class="msg__content">
+      <div class="cards">
+        <mifosx-confirmation-card
+          #confirmCard
+          [card]="pendingCard"
+          (confirmed)="confirmPending.emit()"
+          (cancelled)="cancelPending.emit()"
+        >
+        </mifosx-confirmation-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- What a screen reader is told about the reply.
+       Announcing the answer as it streams would read it a word at a time and repeat every
+       partial sentence, so only the state is announced live; the finished answer is read from
+       the bubble itself, which is ordinary document text. -->
+  <p class="sr-only" role="status" aria-live="polite">
+    {{ (isStreaming ? 'copilot.a11y.working' : lastReplyDone ? 'copilot.a11y.replyReady' : '') | translate }}
+  </p>
+
+  <!-- The typing indicator that used to sit here is gone. It answered "is a turn running and
+       is the bubble still empty", which is true for the whole reasoning phase, while the trail
+       inside the draft answered "is a turn running" and drew its own live line: against a local
+       model that thinks for half a minute before answering, an officer watched bouncing dots
+       and a pulsing timer at once. The trail's line is now the only one, and the draft's own
+       avatar carries the waiting state. -->
+</div>

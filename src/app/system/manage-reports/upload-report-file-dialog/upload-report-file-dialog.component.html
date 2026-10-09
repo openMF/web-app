@@ -1,0 +1,33 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ 'labels.heading.Upload Report Design' | translate }}</h1>
+
+<div class="m-l-10 m-r-10">
+  <p class="report-design-hint">{{ 'labels.text.Upload a BIRT report design' | translate }}</p>
+
+  <mifosx-file-upload flex="60%" [acceptFilter]="acceptFilter" (change)="onFileSelect($event)"></mifosx-file-upload>
+
+  @if (file) {
+    <p class="report-design-summary">
+      <span class="report-design-name">{{ file.name }}</span>
+      <span class="report-design-size">{{ fileSizeInKb }} {{ 'labels.text.KB' | translate }}</span>
+    </p>
+  }
+
+  @if (errorKey) {
+    <p class="report-design-error">{{ errorKey | translate }}</p>
+  }
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button mat-raised-button color="primary" [disabled]="!file" [mat-dialog-close]="{ file: file }">
+      {{ 'labels.buttons.Upload' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

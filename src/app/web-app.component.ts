@@ -8,7 +8,7 @@
 
 /* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
@@ -46,6 +46,7 @@ import { ThemingService } from './shared/theme-toggle/theming.service';
 const log = new Logger('MifosX');
 
 import { registerLocaleData } from '@angular/common';
+import localeAZ from '@angular/common/locales/az';
 import localeCS from '@angular/common/locales/cs';
 import localeEN from '@angular/common/locales/en';
 import localeES from '@angular/common/locales/es';
@@ -60,6 +61,7 @@ import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+registerLocaleData(localeAZ);
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -94,7 +96,8 @@ registerLocaleData(localeSW);
   ],
 
   // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WebAppComponent implements OnInit, OnDestroy {
   buttonConfig: KeyboardShortcutsConfiguration;
@@ -188,12 +191,22 @@ export class WebAppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((event) => {
-        const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
+        const rawTitle = event['title'];
+        if (!rawTitle) {
+          this.i18nService
+            .translate('APP_NAME')
+            .pipe(take(1))
+            .subscribe((t: any) => this.titleService.setTitle(t));
+          return;
+        }
+        const translationKey = rawTitle.includes('.') ? rawTitle : `labels.text.${rawTitle}`;
         this.i18nService
-          .translate(title)
+          .translate(translationKey)
           .pipe(take(1))
-          .subscribe((titleTranslated: any) => {
-            this.titleService.setTitle(titleTranslated);
+          .subscribe((translated: any) => {
+            // If the translation key was not found, ngx-translate returns the key itself
+            const finalTitle = translated === translationKey ? rawTitle : translated;
+            this.titleService.setTitle(finalTitle);
           });
       });
 
@@ -242,6 +255,18 @@ export class WebAppComponent implements OnInit, OnDestroy {
       this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
     }
     this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
+
+    // Apply the tenant's brand colour: the cached value is painted first so
+    // there is no flash, then refreshed from the server. Read anonymously, so
+    // it does not wait for authentication and the login screen is branded too.
+    //
+    // Deliberately after the server and tenant are settled above: the read
+    // carries no credentials, so the tenant header is the only thing saying
+    // whose branding to return. Re-run when the session changes, since signing
+    // in can switch tenant; it is a no-op for a tenant already read.
+    this.authenticationService.isAuthenticated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.themeStorageService.loadTenantTheme());
 
     // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {

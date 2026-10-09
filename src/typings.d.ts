@@ -33,6 +33,7 @@ interface Window {
     displayTenantSelector?: string;
     /** Production mode - when true, shows minimal hero with only branding at bottom */
     productionMode?: string | boolean;
+    enableGlobalDashboard?: string | boolean;
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;
     sessionIdleTimeout?: number;

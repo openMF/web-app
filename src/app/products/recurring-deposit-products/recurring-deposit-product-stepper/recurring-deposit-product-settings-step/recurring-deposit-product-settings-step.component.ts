@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -33,7 +33,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -73,11 +74,11 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
           : '',
         inMultiplesOfDepositTerm: this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm,
         inMultiplesOfDepositTermTypeId: this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType
-          ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm.id
+          ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType.id
           : '',
         maxDepositTerm: this.recurringDepositProductsTemplate.maxDepositTerm,
         maxDepositTermTypeId: this.recurringDepositProductsTemplate.maxDepositTermType
-          ? this.recurringDepositProductsTemplate.minDepositTermType.id
+          ? this.recurringDepositProductsTemplate.maxDepositTermType.id
           : '',
         preClosurePenalApplicable: this.recurringDepositProductsTemplate.preClosurePenalApplicable,
         preClosurePenalInterest: this.recurringDepositProductsTemplate.preClosurePenalInterest,

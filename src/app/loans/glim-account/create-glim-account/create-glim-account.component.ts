@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -47,9 +56,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGlimAccountComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private loansService = inject(LoansService);
@@ -96,10 +107,12 @@ export class CreateGlimAccountComponent {
    * @param {ClientsService} clientService Client Service
    */
   constructor() {
-    this.route.data.subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
-      this.loansAccountTemplate = data.loansAccountTemplate;
-      this.dataSource = data.groupsData.activeClientMembers;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
+        this.loansAccountTemplate = data.loansAccountTemplate;
+        this.dataSource = data.groupsData.activeClientMembers;
+      });
   }
 
   /**

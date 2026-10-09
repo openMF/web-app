@@ -6,22 +6,50 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/**
+ * Rendered both inside the new wizard and by the Classic create/edit steppers,
+ * so every value falls back to a Material token when the `--lp-*` layer is not
+ * inherited from a loan-product creation host.
+ */
+
 table {
   width: 100%;
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em;
+  @include lpt.table-card;
+}
+
+/**
+ * This step's own `color="primary"` buttons. Material declares the container
+ * colour directly on the element, which beats anything inherited, so they need
+ * the element-level override to pick up the contrast-corrected accent in dark
+ * mode. (The wizard hides this step's trailing nav row, but the Add-charge
+ * action and the Classic stepper both still render primary buttons here.)
+ *
+ * `:host` prefixed so encapsulation puts this at (0,4,0) and it out-specifies
+ * `.dark-theme .mat-mdc-raised-button.mat-primary` outright, rather than
+ * winning on stylesheet order.
+ */
+:host .mat-mdc-raised-button.mat-primary,
+:host .mat-mdc-unelevated-button.mat-primary {
+  @include lpt.primary-button;
 }
 
 h3 {
-  font-weight: 500;
+  margin: 0 0 var(--lp-space-16, 1rem);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text, var(--mat-app-text-color, inherit));
 }
 
 mat-divider {
-  margin: 1em 0 2em;
+  margin: var(--lp-space-16, 1rem) 0 var(--lp-space-24, 1.5rem);
 }
 
 .margin-t {
-  margin-top: 1em;
+  margin-top: var(--lp-space-16, 1rem);
 }

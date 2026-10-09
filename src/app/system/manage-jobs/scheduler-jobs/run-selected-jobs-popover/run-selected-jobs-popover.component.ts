@@ -7,7 +7,16 @@
  */
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, OnInit, Output, QueryList, ViewChildren, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren,
+  inject
+} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -57,7 +66,8 @@ export interface JobDataType {
     MatDialogActions,
     FaIconComponent,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RunSelectedJobsPopoverComponent implements OnInit {
   private systemService = inject(SystemService);

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -28,7 +28,8 @@ export interface ReAgePreviewDialogData {
     MatDialogActions,
     MatButton,
     RepaymentScheduleTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReAgePreviewDialogComponent {
   dialogRef = inject<MatDialogRef<ReAgePreviewDialogComponent>>(MatDialogRef);

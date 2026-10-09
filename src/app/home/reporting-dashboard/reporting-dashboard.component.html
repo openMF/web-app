@@ -1,0 +1,150 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="cbild-reporting-dashboard">
+  <!-- Role selector -->
+  <mat-card class="cbild-role-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.cbild.dashboard.role' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+          @for (role of roles; track role.value) {
+            <mat-option [value]="role.value">{{ role.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        class="cbild-batch-btn"
+        [disabled]="isBatchRunning || isLoading"
+        (click)="runBatch()"
+      >
+        @if (isBatchRunning) {
+          <mat-icon>hourglass_empty</mat-icon>
+        } @else {
+          <mat-icon>play_arrow</mat-icon>
+        }
+        {{ 'labels.cbild.dashboard.runBatch' | translate }}
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading bar -->
+  @if (isLoading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <!-- Stat cards -->
+  @if (!isLoading && !hasError) {
+    <div class="cbild-stats-row">
+      <mat-card class="cbild-stat-card">
+        <mat-card-content>
+          <p class="cbild-stat-label">{{ 'labels.cbild.dashboard.total' | translate }}</p>
+          <p class="cbild-stat-value cbild-stat-total">{{ totalElements }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="cbild-stat-card">
+        <mat-card-content>
+          <p class="cbild-stat-label">{{ 'labels.cbild.dashboard.accepted' | translate }}</p>
+          <p class="cbild-stat-value cbild-stat-accepted">{{ acceptedCount }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="cbild-stat-card">
+        <mat-card-content>
+          <p class="cbild-stat-label">{{ 'labels.cbild.dashboard.pendingRetry' | translate }}</p>
+          <p class="cbild-stat-value cbild-stat-pending">{{ pendingRetryCount }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="cbild-stat-card">
+        <mat-card-content>
+          <p class="cbild-stat-label">{{ 'labels.cbild.dashboard.permanentlyFailed' | translate }}</p>
+          <p class="cbild-stat-value cbild-stat-failed">{{ permanentlyFailedCount }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+
+  <!-- Submission history table -->
+  @if (!isLoading && !hasError && dataSource.data.length > 0) {
+    <mat-card class="cbild-table-card">
+      <mat-card-content>
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="clientId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.clientId' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.clientId }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="triggerType">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.triggerType' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.triggerType }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.status' | translate }}</th>
+              <td mat-cell *matCellDef="let row">
+                <span [class]="'cbild-status-badge ' + getStatusClass(row.status)">
+                  {{ row.status }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cdcReferenceId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.cdcRef' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.cdcReferenceId || '—' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="expiryDate">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.expiry' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.expiryDate || '—' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="submittedAt">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.cbild.dashboard.submittedAt' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.submittedAt | dateFormat }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator
+            [length]="totalElements"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[10, 20, 50]"
+            showFirstLastButtons
+            (page)="onPageChange($event.pageIndex, $event.pageSize)"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Empty state -->
+  @if (!isLoading && !hasError && dataSource.data.length === 0) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon>inbox</mat-icon>
+        <p>{{ 'labels.cbild.dashboard.noSubmissions' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Error state -->
+  @if (hasError && !isLoading) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ 'labels.cbild.errors.unexpected' | translate }}</p>
+        <button mat-stroked-button color="primary" (click)="loadHistory()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

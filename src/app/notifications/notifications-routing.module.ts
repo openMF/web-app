@@ -23,7 +23,7 @@ import { NotificationsResolver } from './notifications.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'notifications',
+      path: '',
       component: NotificationsPageComponent,
       data: { title: 'Notifications', breadcrumb: 'Notifications' },
       resolve: {

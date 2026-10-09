@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatStepperNext,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -44,12 +45,20 @@ export class SavingProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.savingProductsTemplate.currencyOptions;
+    const currency = this.savingProductsTemplate?.currency;
+    const isEditing = this.savingProductsTemplate?.id !== undefined && this.savingProductsTemplate?.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.savingProductsTemplate?.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.savingProductsTemplate?.inMultiplesOf ?? '');
 
     this.savingProductCurrencyForm.patchValue({
-      currencyCode: this.savingProductsTemplate?.currency?.code || this.currencyData?.[0]?.code || '',
-      digitsAfterDecimal: this.savingProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.savingProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.savingProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData?.[0]?.code || '',
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();

@@ -16,28 +16,26 @@
 module.exports = [
   {
     context: ['/fineract-provider'],
-    target: 'http://localhost:8443',
-    pathRewrite: { '^/fineract-provider': '' },
+    target: 'https://localhost:8443',
     changeOrigin: true,
     secure: false,
     logLevel: 'debug',
-    onProxyReq: function (proxyReq, req, res) {
-      const rewrittenPath = (req.url || '').replace(/^\/fineract-provider/, '');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'https://localhost:8443' + req.url);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> https://localhost:8443 -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   },
@@ -48,28 +46,28 @@ module.exports = [
     changeOrigin: true,
     secure: true,
     logLevel: 'debug',
-    onProxyReq: function (proxyReq, req, res) {
-      // Inject API key server-side (same as nginx proxy_set_header in production)
-      const apiKey = process.env.EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY || '';
-      if (apiKey) {
-        proxyReq.setHeader('X-Gravitee-Api-Key', apiKey);
-      }
-      const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        // Inject API key server-side (same as nginx proxy_set_header in production)
+        const apiKey = process.env.EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY || '';
+        if (apiKey) {
+          proxyReq.setHeader('X-Gravitee-Api-Key', apiKey);
+        }
+        const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'https://apis.mifos.community' + rewrittenPath);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> https://apis.mifos.community -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   },
@@ -80,29 +78,29 @@ module.exports = [
     changeOrigin: true,
     secure: false,
     logLevel: 'debug',
-    onProxyReq: function (proxyReq, req, res) {
-      // Inject API key server-side (same as nginx proxy_set_header in production)
-      const apiKey = process.env.MIFOS_REMITTANCE_API_KEY || '';
-      const apiHeader = process.env.MIFOS_REMITTANCE_API_HEADER || 'X-Gravitee-Api-Key';
-      if (apiKey) {
-        proxyReq.setHeader(apiHeader, apiKey);
-      }
-      const rewrittenPath = (req.url || '').replace(/^\/remittance-api/, '/1.0/remittance');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        // Inject API key server-side (same as nginx proxy_set_header in production)
+        const apiKey = process.env.MIFOS_REMITTANCE_API_KEY || '';
+        const apiHeader = process.env.MIFOS_REMITTANCE_API_HEADER || 'X-Gravitee-Api-Key';
+        if (apiKey) {
+          proxyReq.setHeader(apiHeader, apiKey);
+        }
+        const rewrittenPath = (req.url || '').replace(/^\/remittance-api/, '/1.0/remittance');
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'http://54.225.231.146:8080' + rewrittenPath);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> http://54.225.231.146:8080 -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   }

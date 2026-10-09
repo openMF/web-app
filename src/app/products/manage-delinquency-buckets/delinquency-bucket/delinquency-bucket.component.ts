@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -50,7 +50,8 @@ import { DelinquencyBucketBaseComponent } from '../delinquency-base.component';
     MatMenu,
     MatMenuTrigger,
     MatMenuItem
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DelinquencyBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
   delinquencyBucketData: any;

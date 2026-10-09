@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -67,7 +67,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     FindPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTaxGroupComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -185,7 +186,7 @@ export class EditTaxGroupComponent implements OnInit {
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        value: taxComponent.startDate ? new Date(taxComponent.startDate) : new Date(),
+        value: taxComponent.startDate ? this.dateUtils.parseDate(taxComponent.startDate) : new Date(),
         label: 'Start Date',
         minDate: this.minDate,
         maxDate: this.maxDate,
@@ -225,8 +226,8 @@ export class EditTaxGroupComponent implements OnInit {
     this.taxGroupData.taxAssociations.forEach((taxComponentData: any) => {
       const chart = {
         id: taxComponentData.id,
-        startDate: taxComponentData.startDate ? new Date(taxComponentData.startDate) : '',
-        endDate: taxComponentData.endDate ? new Date(taxComponentData.endDate) : '',
+        startDate: taxComponentData.startDate ? this.dateUtils.parseDate(taxComponentData.startDate) : '',
+        endDate: taxComponentData.endDate ? this.dateUtils.parseDate(taxComponentData.endDate) : '',
         taxComponentId: taxComponentData.taxComponent.id,
         isNew: false
       };

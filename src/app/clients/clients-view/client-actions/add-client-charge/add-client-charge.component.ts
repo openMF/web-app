@@ -7,15 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
+/** rxjs Imports */
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
@@ -33,22 +32,25 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./add-client-charge.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddClientChargeComponent implements OnInit {
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly dateUtils = inject(Dates);
   private readonly clientsService = inject(ClientsService);
   private readonly settingsService = inject(SettingsService);
   private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Clients Charge form. */
-  clientChargeForm: UntypedFormGroup;
+  clientChargeForm: FormGroup;
   /** clients charge options. */
   clientChargeOptions: any;
   /** clients Id */
@@ -60,7 +62,7 @@ export class AddClientChargeComponent implements OnInit {
    * Retrieves charge template data from `resolve`
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -76,41 +78,51 @@ export class AddClientChargeComponent implements OnInit {
    * Subscribe to form controls value changes
    */
   buildDependencies() {
-    this.clientChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
-        this.chargeDetails = data;
-        const chargeTimeType = data.chargeTimeType.id;
-        if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
-          this.chargeDetails.dueDateNotRequired = true;
+    this.clientChargeForm.controls.chargeId.valueChanges
+      .pipe(
+        switchMap((chargeId) => this.clientsService.getChargeAndTemplate(chargeId).pipe(catchError(() => EMPTY))),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (data: any) => {
+          this.chargeDetails = data;
+          const chargeTimeType = data.chargeTimeType.id;
+          if (
+            data.chargeTimeType.value === 'Withdrawal Fee' ||
+            data.chargeTimeType.value === 'Saving No Activity Fee'
+          ) {
+            this.chargeDetails.dueDateNotRequired = true;
+          }
+          if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
+            this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
+          }
+          if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.clientChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          } else {
+            this.clientChargeForm.removeControl('dueDate');
+          }
+          if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.clientChargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          } else {
+            this.clientChargeForm.removeControl('feeOnMonthDay');
+          }
+          if (chargeTimeType.value === 'Monthly Fee') {
+            this.clientChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          } else {
+            this.clientChargeForm.removeControl('feeInterval');
+          }
+          this.clientChargeForm.patchValue({
+            amount: data.amount,
+            chargeCalculationType: data.chargeCalculationType.id,
+            chargeTimeType: data.chargeTimeType.id
+          });
+          // OnPush component mutating a field inside an async HTTP
+          // subscribe: nothing marks the view dirty, so the
+          // `@if (chargeDetails)` block (amount, dates, echoes) never
+          // renders. Mark for check.
+          this.changeDetectorRef.markForCheck();
         }
-        if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
-          this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
-        }
-        if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-        } else {
-          this.clientChargeForm.removeControl('dueDate');
-        }
-        if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
-        } else {
-          this.clientChargeForm.removeControl('feeOnMonthDay');
-        }
-        if (chargeTimeType.value === 'Monthly Fee') {
-          this.clientChargeForm.addControl(
-            'feeInterval',
-            new UntypedFormControl(data.feeInterval, Validators.required)
-          );
-        } else {
-          this.clientChargeForm.removeControl('feeInterval');
-        }
-        this.clientChargeForm.patchValue({
-          amount: data.amount,
-          chargeCalculationType: data.chargeCalculationType.id,
-          chargeTimeType: data.chargeTimeType.id
-        });
       });
-    });
   }
 
   /**

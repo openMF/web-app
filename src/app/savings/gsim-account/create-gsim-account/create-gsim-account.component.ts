@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -44,7 +45,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountChargesStepComponent,
     SavingsActiveClientMembersComponent,
     SavingsAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGsimAccountComponent {
   private route = inject(ActivatedRoute);
@@ -52,6 +54,7 @@ export class CreateGsimAccountComponent {
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account Template */
   savingsAccountTemplate: any;
@@ -84,10 +87,12 @@ export class CreateGsimAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountTemplate: any; groupsData: any }) => {
-      this.savingsAccountTemplate = data.savingsAccountTemplate;
-      this.dataSource = data.groupsData.activeClientMembers;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountTemplate: any; groupsData: any }) => {
+        this.savingsAccountTemplate = data.savingsAccountTemplate;
+        this.dataSource = data.groupsData.activeClientMembers;
+      });
   }
 
   /**

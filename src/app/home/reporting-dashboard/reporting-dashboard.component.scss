@@ -1,0 +1,133 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cbild-reporting-dashboard {
+  padding: 16px;
+}
+
+.cbild-role-card {
+  margin-bottom: 16px;
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  mat-form-field {
+    width: 240px;
+  }
+}
+
+.cbild-batch-btn {
+  height: 40px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.cbild-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  .cbild-stat-card {
+    flex: 1 1 calc(25% - 16px);
+    min-width: 160px;
+  }
+}
+
+.cbild-stat-card {
+  text-align: center;
+}
+
+.cbild-stat-label {
+  font-size: 12px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  margin-bottom: 8px;
+}
+
+.cbild-stat-value {
+  font-size: 32px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.cbild-stat-total {
+  color: var(--mdc-theme-primary, #009fdf);
+}
+
+.cbild-stat-accepted {
+  color: var(--mdc-theme-success, #16a34a);
+}
+
+.cbild-stat-pending {
+  color: var(--mdc-theme-warning, #d97706);
+}
+
+.cbild-stat-failed {
+  color: var(--mdc-theme-error, #dc2626);
+}
+
+.cbild-table-card {
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+}
+
+.cbild-status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.cbild-status-accepted {
+  background: var(--cbild-status-accepted-bg, #dcfce7);
+  color: var(--cbild-status-accepted-fg, #16a34a);
+}
+
+.cbild-status-rejected {
+  background: var(--cbild-status-rejected-bg, #fee2e2);
+  color: var(--cbild-status-rejected-fg, #dc2626);
+}
+
+.cbild-status-pending {
+  background: var(--cbild-status-pending-bg, #fef9c3);
+  color: var(--cbild-status-pending-fg, #d97706);
+}
+
+.cbild-status-failed {
+  background: var(--cbild-status-failed-bg, #fee2e2);
+  color: var(--cbild-status-failed-fg, #991b1b);
+}
+
+.cbild-empty-card {
+  margin-bottom: 16px;
+}
+
+.cbild-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  gap: 16px;
+  color: var(--mdc-theme-text-disabled-on-background, rgb(0 0 0 / 38%));
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+  }
+}

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -31,7 +31,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     InputAmountComponent,
     MatSlideToggle,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -97,7 +98,7 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.recoveryRepaymentLoanForm.patchValue({
       transactionAmount: this.dataObject.amount,
-      transactionDate: new Date(this.dataObject.date)
+      transactionDate: this.dateUtils.parseDate(this.dataObject.date)
     });
   }
 

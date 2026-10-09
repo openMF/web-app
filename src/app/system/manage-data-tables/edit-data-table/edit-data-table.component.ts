@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -68,7 +68,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditDataTableComponent implements OnInit {
   private systemService = inject(SystemService);
@@ -192,9 +193,11 @@ export class EditDataTableComponent implements OnInit {
       m_center: 'center_id',
       m_office: 'office_id',
       m_loan: 'loan_id',
+      m_wc_loan: 'wc_loan_id',
       m_savings_account: 'savings_account_id',
       m_savings_account_transaction: 'savings_transaction_id',
       m_product_loan: 'product_loan_id',
+      m_wc_loan_product: 'wc_product_loan_id',
       m_savings_product: 'savings_product_id',
       m_share_product: 'share_product_id'
     };
@@ -236,7 +239,10 @@ export class EditDataTableComponent implements OnInit {
     this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
     this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
     for (let index = 0; index < this.columnData.length; index++) {
-      this.columnData[index].columnDisplayType = this.getColumnType(this.columnData[index].columnDisplayType);
+      this.columnData[index].columnDisplayType = this.getColumnType(
+        this.columnData[index].columnDisplayType,
+        this.columnData[index].columnType
+      );
       this.columnData[index].type = 'existing';
     }
     this.showEntitySubType = this.dataTableData.applicationTableName === 'm_client';
@@ -265,6 +271,7 @@ export class EditDataTableComponent implements OnInit {
   addColumn() {
     this.dataForDialog.columnName = undefined;
     this.dataForDialog.columnDisplayType = undefined;
+    this.dataForDialog.columnType = undefined;
     this.dataForDialog.isColumnNullable = false;
     this.dataForDialog.isColumnUnique = false;
     this.dataForDialog.isColumnIndexed = false;
@@ -282,6 +289,7 @@ export class EditDataTableComponent implements OnInit {
         const newColumn: DatatableColumn = {
           columnName: response.name,
           columnDisplayType: response.type,
+          columnType: response.type === 'json' ? 'JSON' : undefined,
           isColumnNullable: !response.mandatory,
           isColumnUnique: response.unique,
           isColumnIndexed: response.indexed,
@@ -324,6 +332,7 @@ export class EditDataTableComponent implements OnInit {
   editColumn(column: any) {
     this.dataForDialog.columnName = column.columnName;
     this.dataForDialog.columnDisplayType = column.columnDisplayType;
+    this.dataForDialog.columnType = column.columnType;
     this.dataForDialog.isColumnNullable = !column.isColumnNullable;
     this.dataForDialog.isColumnUnique = column.isColumnUnique;
     this.dataForDialog.isColumnIndexed = column.isColumnIndexed;
@@ -440,13 +449,24 @@ export class EditDataTableComponent implements OnInit {
    * @param {string} columnDisplayType Column Display Type.
    * @returns {string} Column Type.
    */
-  getColumnType(columnDisplayType: string): string {
+  getColumnType(columnDisplayType: string, columnType?: string): string {
+    return this.normalizeColumnType(columnDisplayType, columnType);
+  }
+
+  normalizeColumnType(columnDisplayType: string, columnType?: string): string {
+    if (columnDisplayType === 'TEXT' && columnType && columnType.toString().toLowerCase() === 'json') {
+      return 'json';
+    }
     switch (columnDisplayType) {
       case 'INTEGER': {
         return 'Number';
       }
       case 'CODELOOKUP': {
         return 'Dropdown';
+      }
+      case 'JSON':
+      case 'json': {
+        return 'json';
       }
       default: {
         return columnDisplayType[0] + columnDisplayType.substring(1).toLowerCase();

@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -53,6 +53,11 @@ import {
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  depositProductChartSlabsValidator,
+  getDepositProductChartSlabsErrorKey,
+  normalizeDepositProductInterestRateCharts
+} from 'app/products/deposit-product-interest-rate-chart.util';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -85,7 +90,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -241,8 +247,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   getChartsDetailsData() {
     this.chartDetailData.forEach((chartData: ChartData) => {
       const chart: Chart = {
-        endDate: chartData.endDate ? new Date(chartData.endDate) : '',
-        fromDate: chartData.fromDate ? new Date(chartData.fromDate) : '',
+        endDate: chartData.endDate ? this.dateUtils.parseDate(chartData.endDate) : '',
+        fromDate: chartData.fromDate ? this.dateUtils.parseDate(chartData.fromDate) : '',
         isPrimaryGroupingByAmount: chartData.isPrimaryGroupingByAmount,
         name: chartData.name,
         description: chartData.description,
@@ -333,7 +339,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   createChartForm(): UntypedFormGroup {
-    return this.formBuilder.group({
+    const chartForm = this.formBuilder.group({
       id: [null],
       name: [''],
       description: [''],
@@ -345,6 +351,12 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       isPrimaryGroupingByAmount: [false],
       chartSlabs: this.formBuilder.array([], Validators.required)
     });
+    const chartSlabs = chartForm.get('chartSlabs') as UntypedFormArray;
+    chartSlabs.setValidators([
+      Validators.required,
+      depositProductChartSlabsValidator(() => chartForm.get('isPrimaryGroupingByAmount')?.value)
+    ]);
+    return chartForm;
   }
 
   addChart() {
@@ -372,6 +384,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
               'amountRange'
             ];
         this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
+        (this.charts.at(chartIndex).get('chartSlabs') as UntypedFormArray).updateValueAndValidity();
       });
   }
 
@@ -435,6 +448,10 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         formArray.removeAt(index);
       }
     });
+  }
+
+  getChartSlabsErrorKey(chartSlabs: UntypedFormArray): string | null {
+    return getDepositProductChartSlabsErrorKey(chartSlabs.errors, 'fixeddeposit');
   }
 
   getData(formType: string, values?: any) {
@@ -535,7 +552,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         delete chart.id;
       }
     }
-    return fixedDepositProductInterestRateChart;
+    return normalizeDepositProductInterestRateCharts(fixedDepositProductInterestRateChart);
   }
 }
 

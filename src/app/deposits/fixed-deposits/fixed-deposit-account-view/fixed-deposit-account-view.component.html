@@ -15,6 +15,7 @@
             mat-card-md-image
             class="profile-image"
             matTooltip="{{ 'tooltips.Fixed Deposits Account' | translate }}"
+            [alt]="'tooltips.Fixed Deposits Account' | translate"
             [src]="'assets/images/fd_account_placeholder.png'"
           />
         </div>
@@ -175,7 +176,7 @@
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
         >
-          {{ savingsDatatable.registeredTableName }}
+          {{ savingsDatatable.registeredTableName | datatableDisplayLabel }}
         </a>
       }
     </nav>

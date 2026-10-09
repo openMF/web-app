@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import {
+  ChangeDetectionStrategy,
   Component,
   OnInit,
   Input,
@@ -19,8 +20,10 @@ import {
   TemplateRef,
   AfterContentChecked,
   ChangeDetectorRef,
+  DestroyRef,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -72,7 +75,8 @@ import { DocumentationLinksService } from 'app/shared/services/documentation-lin
     ThemeToggleComponent,
     MatMenu,
     MatMenuItem
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
   private breakpointObserver = inject(BreakpointObserver);
@@ -83,11 +87,44 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   private dialog = inject(MatDialog);
   private changeDetector = inject(ChangeDetectorRef);
   private documentationLinks = inject(DocumentationLinksService);
+  private destroyRef = inject(DestroyRef);
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
   /* Template for popover on institution */
   @ViewChild('templateInstitution') templateInstitution: TemplateRef<any>;
+  /* Reference of accounting */
+  @ViewChild('accounting', { read: ElementRef }) accounting: ElementRef<any>;
+  /* Template for popover on accounting */
+  @ViewChild('templateAccounting') templateAccounting: TemplateRef<any>;
+  /* Reference of reports */
+  @ViewChild('reports', { read: ElementRef }) reports: ElementRef<any>;
+  /* Template for popover on reports */
+  @ViewChild('templateReports') templateReports: TemplateRef<any>;
+  /* Reference of admin */
+  @ViewChild('admin', { read: ElementRef }) admin: ElementRef<any>;
+  /* Template for popover on admin */
+  @ViewChild('templateAdmin') templateAdmin: TemplateRef<any>;
+  /* Reference of configWizard */
+  @ViewChild('configWizard', { read: ElementRef }) configWizard: ElementRef<any>;
+  /* Template for popover on configWizard */
+  @ViewChild('templateConfigWizard') templateConfigWizard: TemplateRef<any>;
+  /* Reference of globalSearch */
+  @ViewChild('globalSearch') globalSearch: ElementRef<any>;
+  /* Template for popover on globalSearch */
+  @ViewChild('templateGlobalSearch') templateGlobalSearch: TemplateRef<any>;
+  /* Reference of languageSelector */
+  @ViewChild('languageSelector') languageSelector: ElementRef<any>;
+  /* Template for popover on languageSelector */
+  @ViewChild('templateLanguageSelector') templateLanguageSelector: TemplateRef<any>;
+  /* Reference of notifications */
+  @ViewChild('notifications') notifications: ElementRef<any>;
+  /* Template for popover on notifications */
+  @ViewChild('templateNotifications') templateNotifications: TemplateRef<any>;
+  /* Reference of themeToggle */
+  @ViewChild('themeToggle') themeToggle: ElementRef<any>;
+  /* Template for popover on themeToggle */
+  @ViewChild('templateThemePicker') templateThemePicker: TemplateRef<any>;
   /* Reference of appMenu */
   @ViewChild('appMenu') appMenu: ElementRef<any>;
   /* Template for popover on appMenu */
@@ -111,7 +148,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * Subscribes to breakpoint for handset.
    */
   ngOnInit() {
-    this.isHandset$.subscribe((isHandset) => {
+    this.isHandset$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isHandset) => {
       if (isHandset && this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);
       }
@@ -170,6 +207,69 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       return;
     }
     setTimeout(() => this.popoverService.open(template, target, 'bottom', true, {}), 200);
+  }
+
+  /**
+   * Steps of the toolbar tour, in order. A step's target is undefined when
+   * its element isn't rendered, e.g. a menu hidden by mifosxHasPermission.
+   */
+  private get toolbarTourSteps(): { name: string; template: TemplateRef<any>; target: ElementRef<any> | undefined }[] {
+    return [
+      { name: 'institution', template: this.templateInstitution, target: this.institution },
+      { name: 'accounting', template: this.templateAccounting, target: this.accounting },
+      { name: 'reports', template: this.templateReports, target: this.reports },
+      { name: 'admin', template: this.templateAdmin, target: this.admin },
+      { name: 'configWizard', template: this.templateConfigWizard, target: this.configWizard },
+      { name: 'globalSearch', template: this.templateGlobalSearch, target: this.globalSearch },
+      { name: 'languageSelector', template: this.templateLanguageSelector, target: this.languageSelector },
+      { name: 'notifications', template: this.templateNotifications, target: this.notifications },
+      { name: 'themePicker', template: this.templateThemePicker, target: this.themeToggle },
+      { name: 'appMenu', template: this.templateAppMenu, target: this.appMenu }
+    ];
+  }
+
+  /**
+   * Shows the first toolbar tour step that is rendered for the current user.
+   */
+  showFirstTourStep(): void {
+    const first = this.toolbarTourSteps.find((step) => step.target);
+    if (first) {
+      this.showPopover(first.template, first.target);
+    } else {
+      this.nextStep();
+    }
+  }
+
+  /**
+   * Shows the next rendered toolbar tour step after the current one,
+   * or moves on to the sidenav tour if there is none.
+   * @param current Name of the current step.
+   */
+  showNextTourStep(current: string): void {
+    const steps = this.toolbarTourSteps;
+    const currentIndex = steps.findIndex((step) => step.name === current);
+    const next = steps.slice(currentIndex + 1).find((step) => step.target);
+    if (next) {
+      this.showPopover(next.template, next.target);
+    } else {
+      this.nextStep();
+    }
+  }
+
+  /**
+   * Shows the previous rendered toolbar tour step before the current one,
+   * or the current step again if there is none.
+   * @param current Name of the current step.
+   */
+  showPreviousTourStep(current: string): void {
+    const steps = this.toolbarTourSteps;
+    const currentIndex = steps.findIndex((step) => step.name === current);
+    const previous = steps
+      .slice(0, currentIndex)
+      .reverse()
+      .find((step) => step.target);
+    const step = previous ?? steps[currentIndex];
+    this.showPopover(step.template, step.target);
   }
 
   /**
@@ -236,7 +336,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   ngAfterViewInit() {
     if (this.configurationWizardService.showToolbar) {
       setTimeout(() => {
-        this.showPopover(this.templateInstitution, this.institution.nativeElement);
+        this.showFirstTourStep();
       });
     }
 

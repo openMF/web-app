@@ -5,7 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -48,9 +49,11 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     MatRow,
     MatIconButton,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private loansService = inject(LoansService);
   private translateService = inject(TranslateService);
@@ -76,12 +79,22 @@ export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
     super();
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.loanId = this.route.parent?.parent?.snapshot.paramMap.get('loanId');
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.loanStatus = data.loanDetailsData.status;
-    });
-    this.route.parent.data.subscribe((data: { loanOriginatorsData: any }) => {
-      this.loanOriginatorsData = data.loanOriginatorsData.originators;
-    });
+    this.loanOriginatorsData = [];
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanDetailsData: any }) => {
+        this.loanStatus = data.loanDetailsData.status;
+        if ('originators' in data.loanDetailsData) {
+          this.loanOriginatorsData = data.loanDetailsData.originators;
+        }
+      });
+    if (this.loanProductService.isLoanProduct) {
+      this.route.parent.data
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((data: { loanOriginatorsData: any }) => {
+          this.loanOriginatorsData = data.loanOriginatorsData.originators ?? [];
+        });
+    }
   }
 
   detachLoanOriginator(loanOriginator: LoanOriginator): void {
@@ -102,9 +115,11 @@ export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
     });
     detachCodeDialogRef.afterClosed().subscribe((response?: { confirm?: boolean }) => {
       if (response?.confirm && this.loanId) {
-        this.loansService.detachLoanOriginator(this.loanId, String(loanOriginator.id)).subscribe((response) => {
-          this.reload();
-        });
+        this.loansService
+          .detachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, String(loanOriginator.id))
+          .subscribe((response) => {
+            this.reload();
+          });
       }
     });
   }

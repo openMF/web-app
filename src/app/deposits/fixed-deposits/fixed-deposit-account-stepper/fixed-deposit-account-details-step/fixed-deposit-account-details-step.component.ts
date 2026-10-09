@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
@@ -31,12 +32,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private fixedDepositsService = inject(FixedDepositsService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
@@ -79,7 +82,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
           productId: this.fixedDepositsAccountTemplate.depositProductId,
           submittedOnDate:
             this.fixedDepositsAccountTemplate.timeline.submittedOnDate &&
-            new Date(this.fixedDepositsAccountTemplate.timeline.submittedOnDate),
+            this.dateUtils.parseDate(this.fixedDepositsAccountTemplate.timeline.submittedOnDate),
           externalId: this.fixedDepositsAccountTemplate.externalId || ''
         });
       }

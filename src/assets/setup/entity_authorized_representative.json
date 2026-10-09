@@ -1,0 +1,55 @@
+{
+  "datatableName": "entity_authorized_representative",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "position",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "national_id",
+      "type": "String",
+      "length": 80,
+      "mandatory": false
+    },
+    {
+      "name": "tax_id",
+      "type": "String",
+      "length": 80,
+      "mandatory": false
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "email",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "birthdate",
+      "type": "Date",
+      "mandatory": false
+    },
+    {
+      "name": "nationality",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    }
+  ]
+}

@@ -6,138 +6,151 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<h1 mat-dialog-title>{{ 'labels.heading.View Journal Entry' | translate }}</h1>
+<div class="je-modal" [attr.data-direction]="isCredit ? 'credit' : 'debit'">
+  <div class="modal-head" mat-dialog-title>
+    <div class="modal-eyebrow">{{ 'labels.heading.View Journal Entry' | translate }}</div>
+    <div class="modal-title">
+      <h2>
+        {{ data.journalEntry.glAccountName }}
+        <span class="id">#{{ data.journalEntry.id }}</span>
+      </h2>
+    </div>
 
-<div mat-dialog-content>
-  <table>
-    <tr>
-      <th>{{ 'labels.inputs.Office' | translate }}</th>
-      <td>{{ data.journalEntry.officeName }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Entry ID' | translate }}</th>
-      <td>{{ data.journalEntry.id }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Transaction ID' | translate }}</th>
-      <td>{{ data.journalEntry.transactionId }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Transaction Date' | translate }}</th>
-      <td>{{ data.journalEntry.transactionDate | dateFormat }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Type' | translate }}</th>
-      <td>{{ data.journalEntry.glAccountType.value }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Account Code' | translate }}</th>
-      <td>{{ data.journalEntry.glAccountId }}</td>
-    </tr>
-
-    <tr>
-      <th>{{ 'labels.inputs.Account Name' | translate }}</th>
-      <td>{{ data.journalEntry.glAccountName }}</td>
-    </tr>
-
-    <tr>
-      <th>
-        @if (data.journalEntry.entryType.value === 'CREDIT') {
-          <span>{{ 'labels.inputs.Credit' | translate }}</span>
+    <div class="amount-block" [ngClass]="isCredit ? 'credit' : 'debit'">
+      <div class="kind">
+        @if (isCredit) {
+          {{ 'labels.inputs.Credit' | translate }}
+        } @else {
+          {{ 'labels.inputs.Debit' | translate }}
         }
-        @if (data.journalEntry.entryType.value === 'DEBIT') {
-          <span>{{ 'labels.inputs.Debit' | translate }}</span>
-        }
-      </th>
-      <td>{{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}</td>
-    </tr>
+      </div>
+      <div class="value">
+        <span class="sym">{{ data.journalEntry.currency.displaySymbol }}</span>
+        {{ data.journalEntry.amount | formatNumber }}
+      </div>
+    </div>
+  </div>
 
-    <tr>
-      <th>{{ 'labels.inputs.Currency' | translate }}</th>
-      <td>({{ data.journalEntry.currency.code }}) {{ data.journalEntry.currency.name }}</td>
-    </tr>
+  <div mat-dialog-content class="modal-body">
+    <div class="field-section">
+      <h3>{{ 'labels.inputs.Identification' | translate }}</h3>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Office' | translate }}</div>
+        <div class="field-value">{{ data.journalEntry.officeName }}</div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Entry ID' | translate }}</div>
+        <div class="field-value mono">{{ data.journalEntry.id }}</div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Transaction ID' | translate }}</div>
+        <div class="field-value mono">{{ data.journalEntry.transactionId }}</div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Transaction Date' | translate }}</div>
+        <div class="field-value mono">{{ data.journalEntry.transactionDate | dateFormat }}</div>
+      </div>
+    </div>
 
-    @if (data.journalEntry.referenceNumber) {
-      <tr>
-        <th>{{ 'labels.inputs.Reference Number' | translate }}</th>
-        <td>{{ data.journalEntry.referenceNumber }}</td>
-      </tr>
-    }
-
-    @if (data.journalEntry.comments) {
-      <tr>
-        <th>{{ 'labels.inputs.Comments' | translate }}</th>
-        <td>{{ data.journalEntry.comments }}</td>
-      </tr>
-    }
+    <div class="field-section">
+      <h3>{{ 'labels.inputs.Account Details' | translate }}</h3>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Type' | translate }}</div>
+        <div class="field-value">
+          <span class="type-pill" [ngClass]="glAccountTypeClass(data.journalEntry.glAccountType.value)">
+            {{ data.journalEntry.glAccountType.value }}
+          </span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Account Code' | translate }}</div>
+        <div class="field-value mono">{{ data.journalEntry.glAccountId }}</div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Account Name' | translate }}</div>
+        <div class="field-value">{{ data.journalEntry.glAccountName }}</div>
+      </div>
+      <div class="field-row">
+        <div class="field-label">{{ 'labels.inputs.Currency' | translate }}</div>
+        <div class="field-value">
+          <span class="currency-chip">
+            <span class="flag">{{ data.journalEntry.currency.displaySymbol }}</span>
+            <span class="mono">{{ data.journalEntry.currency.code }}</span>
+            <span class="muted">{{ data.journalEntry.currency.name }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
 
     @if (existsPaymentDetails) {
-      <tr>
-        <th colspan="2" class="header">{{ 'labels.inputs.Payment Details' | translate }}</th>
-      </tr>
+      <div class="field-section">
+        <h3>{{ 'labels.inputs.Payment Details' | translate }}</h3>
+        @if (data.journalEntry.transactionDetails.paymentDetails?.paymentType) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Payment Type' | translate }}</div>
+            <div class="field-value">{{ data.journalEntry.transactionDetails.paymentDetails.paymentType.name }}</div>
+          </div>
+        }
+        @if (data.journalEntry.transactionDetails.paymentDetails?.accountNumber) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Account Number' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.transactionDetails.paymentDetails.accountNumber }}</div>
+          </div>
+        }
+        @if (data.journalEntry.transactionDetails.paymentDetails?.checkNumber) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Cheque Number' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.transactionDetails.paymentDetails.checkNumber }}</div>
+          </div>
+        }
+        @if (data.journalEntry.transactionDetails.paymentDetails?.routingCode) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Routing Code' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.transactionDetails.paymentDetails.routingCode }}</div>
+          </div>
+        }
+        @if (data.journalEntry.transactionDetails.paymentDetails?.receiptNumber) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Receipt Number' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.transactionDetails.paymentDetails.receiptNumber }}</div>
+          </div>
+        }
+        @if (data.journalEntry.transactionDetails.paymentDetails?.bankNumber) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Bank Number' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.transactionDetails.paymentDetails.bankNumber }}</div>
+          </div>
+        }
+      </div>
     }
 
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.paymentType) {
-      <tr>
-        <th>{{ 'labels.inputs.Payment Type' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.paymentType.name }}</td>
-      </tr>
+    @if (data.journalEntry.referenceNumber || data.journalEntry.comments) {
+      <div class="field-section">
+        <h3>{{ 'labels.inputs.Notes' | translate }}</h3>
+        @if (data.journalEntry.referenceNumber) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Reference Number' | translate }}</div>
+            <div class="field-value mono">{{ data.journalEntry.referenceNumber }}</div>
+          </div>
+        }
+        @if (data.journalEntry.comments) {
+          <div class="field-row">
+            <div class="field-label">{{ 'labels.inputs.Comments' | translate }}</div>
+            <div class="field-value">{{ data.journalEntry.comments }}</div>
+          </div>
+        }
+      </div>
     }
+  </div>
 
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.accountNumber) {
-      <tr>
-        <th>{{ 'labels.inputs.Account Number' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.accountNumber }}</td>
-      </tr>
-    }
-
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.checkNumber) {
-      <tr>
-        <th>{{ 'labels.inputs.Cheque Number' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.checkNumber }}</td>
-      </tr>
-    }
-
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.routingCode) {
-      <tr>
-        <th>{{ 'labels.inputs.Routing Code' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.routingCode }}</td>
-      </tr>
-    }
-
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.receiptNumber) {
-      <tr>
-        <th>{{ 'labels.inputs.Receipt Number' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.receiptNumber }}</td>
-      </tr>
-    }
-
-    @if (existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.bankNumber) {
-      <tr>
-        <th>{{ 'labels.inputs.Bank Number' | translate }}</th>
-        <td>{{ data.journalEntry.transactionDetails.paymentDetails.bankNumber }}</td>
-      </tr>
-    }
-
-    @if (existsPaymentDetails) {
-      <tr>
-        <th>{{ 'labels.inputs.Created by' | translate }}</th>
-        <td>{{ data.journalEntry.createdByUserName }}</td>
-      </tr>
-    }
-
-    <tr>
-      <th>{{ 'labels.inputs.Submitted on' | translate }}</th>
-      <td>{{ data.journalEntry.submittedOnDate | datetimeFormat }}</td>
-    </tr>
-  </table>
+  <div mat-dialog-actions class="modal-foot">
+    <div class="audit">
+      {{ 'labels.inputs.Created By' | translate }}
+      <b>{{ data.journalEntry.createdByUserName }}</b>
+      &nbsp;·&nbsp;
+      {{ 'labels.inputs.Submitted on' | translate }}
+      <b>{{ data.journalEntry.submittedOnDate | datetimeFormat }}</b>
+    </div>
+    <button mat-button mat-dialog-close class="btn-close">{{ 'labels.buttons.Close' | translate }}</button>
+  </div>
 </div>
-
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
-</mat-dialog-actions>

@@ -9,7 +9,20 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 import { BasePage } from './BasePage';
+import { CLOSE_CLIENT_SELECTORS } from '../config/selectors';
+import { ROUTES } from '../config/routes';
 
+/**
+ * CloseClientPage - Page Object for the Mifos X close-client action form.
+ *
+ * Consumes Layer-2 contracts:
+ *   - selectors: `CLOSE_CLIENT_SELECTORS` (form fields)
+ *   - routes:    `ROUTES.clientAction(id, 'Close')`
+ *
+ * Confirm/Cancel buttons are resolved by accessible name (the value of
+ * `CLOSE_CLIENT_SELECTORS.confirmButton` / `cancelButton`) so the same
+ * code path works against the React counterpart.
+ */
 export class CloseClientPage extends BasePage {
   readonly url: string;
 
@@ -23,39 +36,35 @@ export class CloseClientPage extends BasePage {
     private readonly clientId: number
   ) {
     super(page);
-    this.url = `/#/clients/${clientId}/actions/Close`;
+    this.url = ROUTES.clientAction(clientId, 'Close');
   }
 
   /**
    * Returns the closure date input used by the close-client form.
-   * @returns The locator for the closure date input
    */
   get closureDateInput(): Locator {
-    return this.page.locator('input[formcontrolname="closureDate"]');
+    return this.page.locator(CLOSE_CLIENT_SELECTORS.closureDateInput);
   }
 
   /**
    * Returns the closure reason select field.
-   * @returns The locator for the closure reason select
    */
   get closureReasonSelect(): Locator {
-    return this.page.locator('mat-select[formcontrolname="closureReasonId"]');
+    return this.page.locator(CLOSE_CLIENT_SELECTORS.closureReasonSelect);
   }
 
   /**
    * Returns the form submission control for closing the client.
-   * @returns The locator for the confirm button
    */
   get confirmButton(): Locator {
-    return this.page.getByRole('button', { name: 'Confirm' });
+    return this.page.getByRole('button', { name: CLOSE_CLIENT_SELECTORS.confirmButton });
   }
 
   /**
    * Returns the cancel control that navigates back to the client view.
-   * @returns The locator for the cancel button
    */
   get cancelButton(): Locator {
-    return this.page.getByRole('button', { name: 'Cancel' });
+    return this.page.getByRole('button', { name: CLOSE_CLIENT_SELECTORS.cancelButton });
   }
 
   /**

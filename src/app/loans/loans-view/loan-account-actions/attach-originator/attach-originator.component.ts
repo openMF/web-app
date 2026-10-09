@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services. */
@@ -24,7 +24,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   styleUrl: './attach-originator.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AttachOriginatorComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -65,8 +66,10 @@ export class AttachOriginatorComponent extends LoanAccountActionsBaseComponent i
    */
   submit() {
     const approveLoanFormData = this.attachLoanOriginatorForm.value;
-    this.loanService.attachLoanOriginator(this.loanId, approveLoanFormData.originatorId).subscribe((response: any) => {
-      this.gotoLoanDefaultView();
-    });
+    this.loanService
+      .attachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, approveLoanFormData.originatorId)
+      .subscribe((response: any) => {
+        this.gotoLoanView('originators');
+      });
   }
 }

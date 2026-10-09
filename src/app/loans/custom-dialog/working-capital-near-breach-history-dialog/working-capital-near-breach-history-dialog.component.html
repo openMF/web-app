@@ -1,0 +1,100 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="dialog-header">
+  <h1 mat-dialog-title class="dialog-title">{{ 'labels.heading.Near Breach History' | translate }}</h1>
+</div>
+
+<div mat-dialog-content class="layout-column">
+  @if (data.nearBreachData.length > 0) {
+    <table class="mat-elevation-z1 near-breach-table" mat-table [dataSource]="data.nearBreachData">
+      <!-- Group header row -->
+      <ng-container matColumnDef="grpBlankStart">
+        <th mat-header-cell *matHeaderCellDef class="grp-blank"></th>
+      </ng-container>
+      <ng-container matColumnDef="grpPrevious">
+        <th mat-header-cell *matHeaderCellDef class="grp-header grp-previous" [attr.colspan]="2">
+          {{ 'labels.inputs.Previous' | translate }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="grpNew">
+        <th mat-header-cell *matHeaderCellDef class="grp-header grp-new" [attr.colspan]="2">
+          {{ 'labels.inputs.New' | translate }}
+        </th>
+      </ng-container>
+      <ng-container matColumnDef="grpBlankEnd">
+        <th mat-header-cell *matHeaderCellDef class="grp-blank"></th>
+      </ng-container>
+
+      <!-- Columns -->
+      <ng-container matColumnDef="effectiveDate">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Effective Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.effectiveDate | dateFormat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="previousThreshold">
+        <th mat-header-cell *matHeaderCellDef class="col-previous col-grp-start">
+          {{ 'labels.inputs.Threshold' | translate }}
+        </th>
+        <td mat-cell class="col-previous col-grp-start" *matCellDef="let item">
+          {{ item.previousThreshold | formatNumber }} %
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="previousFrequency">
+        <th mat-header-cell *matHeaderCellDef class="col-previous col-grp-end">
+          {{ 'labels.inputs.Frequency' | translate }}
+        </th>
+        <td mat-cell class="col-previous col-grp-end" *matCellDef="let item">
+          {{ item.previousFrequency | formatNumber: '' : 0 }}
+          {{ item.previousFrequencyType | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="newThreshold">
+        <th mat-header-cell *matHeaderCellDef class="col-new col-grp-start">
+          {{ 'labels.inputs.Threshold' | translate }}
+        </th>
+        <td mat-cell class="col-new col-grp-start" *matCellDef="let item">{{ item.newThreshold | formatNumber }} %</td>
+      </ng-container>
+
+      <ng-container matColumnDef="newFrequency">
+        <th mat-header-cell *matHeaderCellDef class="col-new col-grp-end">
+          {{ 'labels.inputs.Frequency' | translate }}
+        </th>
+        <td mat-cell class="col-new col-grp-end" *matCellDef="let item">
+          {{ item.newFrequency | formatNumber: '' : 0 }}
+          {{ item.newFrequencyType | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reversed">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reversed' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          <span
+            class="reversed-indicator"
+            [class.reversed-yes]="item.reversed"
+            [class.reversed-no]="!item.reversed"
+            [attr.aria-label]="item.reversed | yesNo"
+            [attr.title]="item.reversed | yesNo"
+          ></span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="groupHeaderColumns" class="group-row"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  } @else {
+    <span>{{ 'labels.text.No data found' | translate }}</span>
+  }
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
+</mat-dialog-actions>

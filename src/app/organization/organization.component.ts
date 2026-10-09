@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -18,6 +26,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { environment } from 'environments/environment';
 
 /**
  * Organization component.
@@ -33,7 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatIcon,
     FaIconComponent,
     MatLine
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrganizationComponent implements AfterViewInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -42,6 +52,22 @@ export class OrganizationComponent implements AfterViewInit {
   private popoverService = inject(PopoverService);
 
   shouldShowFundMapping = false;
+  productionMode = environment.productionMode === true;
+  readonly baseTellerPermissions = [
+    'READ_BASE_TELLER_CASH_ALLOCATION',
+    'READ_BASE_TELLER_CASH_INVENTORY',
+    'READ_TELLER',
+    'DEPOSIT_SAVINGSACCOUNT',
+    'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT',
+    'READ_BASE_TELLER_CREDIT_PAYMENT',
+    'READ_CASHIER_CLOSING',
+    'READ_GLOBAL_SETTLEMENT',
+    'CREATE_CASH_DEPOSIT',
+    'READ_CASH_OPERATION_HISTORY',
+    'READ_CASH_HOLDINGS',
+    'READ_BASE_TELLER_TRANSACTION_HISTORY',
+    ...(this.productionMode ? ['READ_BASE_TELLER_SERVICE_PAYMENT'] : [])
+  ];
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
   /* Template for popover on manage offices */
@@ -66,8 +92,8 @@ export class OrganizationComponent implements AfterViewInit {
   @ViewChild('manageFunds') manageFunds: ElementRef<any>;
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
-  // Initialize an array of 18 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(19).fill(false);
+  // Initialize an array of menu toggle values, all set to false
+  arrowBooleans: boolean[] = new Array(24).fill(false);
 
   /**
    * Popover function

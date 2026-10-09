@@ -1,0 +1,115 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <div class="layout-row align-start">
+    <div class="m-b-10">
+      <h3>{{ 'labels.heading.Services' | translate }}</h3>
+    </div>
+    <div class="action-button m-b-10 gap-25px">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addService()"
+        [disabled]="isLoading || isSaving || isPluginUnavailable"
+        *mifosxHasPermission="'CREATE_OFFICE'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="service-state">
+      <mat-spinner diameter="36"></mat-spinner>
+      <span>{{ 'labels.text.Loading data' | translate }}</span>
+    </div>
+  }
+
+  @if (isPluginUnavailable && !isLoading) {
+    <div class="service-state unavailable-state">
+      <span>{{ 'labels.text.Office Services management requires the Savings Plugin to be deployed' | translate }}</span>
+    </div>
+  }
+
+  @if (hasError && !isLoading && !isPluginUnavailable) {
+    <div class="service-state error-state">
+      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+      <button mat-button color="primary" (click)="loadOfficeServices()">
+        {{ 'labels.buttons.Retry' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && !hasError && !isPluginUnavailable && !officeServices.length) {
+    <div class="service-state empty-state">
+      <span>{{ 'labels.text.No data found' | translate }}</span>
+      <button mat-raised-button color="primary" (click)="addService()" *mifosxHasPermission="'CREATE_OFFICE'">
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && !hasError && !isPluginUnavailable && officeServices.length) {
+    <div class="mat-elevation-z1 table-container">
+      <table mat-table [dataSource]="officeServices">
+        <ng-container matColumnDef="serviceName">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Service Name' | translate }}</th>
+          <td mat-cell *matCellDef="let service">
+            {{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceExternalId">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
+          <td mat-cell *matCellDef="let service">
+            {{ service.serviceExternalId || ('labels.inputs.Not Provided' | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="workingHours">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Working Hours' | translate }}</th>
+          <td mat-cell *matCellDef="let service">
+            {{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+          <td mat-cell *matCellDef="let service">
+            <button
+              mat-button
+              color="primary"
+              (click)="editService(service)"
+              [disabled]="isSaving || isPluginUnavailable"
+              matTooltip="{{ 'labels.buttons.Edit' | translate }}"
+              [attr.aria-label]="'labels.buttons.Edit' | translate"
+              *mifosxHasPermission="'UPDATE_OFFICE'"
+            >
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteService(service)"
+              [disabled]="isSaving || isPluginUnavailable"
+              matTooltip="{{ 'labels.buttons.Delete' | translate }}"
+              [attr.aria-label]="'labels.buttons.Delete' | translate"
+              *mifosxHasPermission="'DELETE_OFFICE'"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  }
+</div>

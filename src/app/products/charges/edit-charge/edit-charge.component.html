@@ -183,28 +183,30 @@
             </mifosx-gl-account-selector>
           }
 
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
-            @if (chargeData.taxGroup) {
-              <mat-select formControlName="taxGroupId">
-                @for (taxGroup of chargeData.taxGroupOptions; track taxGroup) {
-                  <mat-option [value]="taxGroup.id">
-                    {{ taxGroup.name }}
-                  </mat-option>
-                }
-              </mat-select>
-            }
+          @if (chargeForm.controls.chargeAppliesTo.value !== 5) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
+              @if (chargeData.taxGroup) {
+                <mat-select formControlName="taxGroupId">
+                  @for (taxGroup of chargeData.taxGroupOptions; track taxGroup) {
+                    <mat-option [value]="taxGroup.id">
+                      {{ taxGroup.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              }
 
-            @if (!chargeData.taxGroup) {
-              <mat-select formControlName="taxGroupId">
-                @for (taxGroup of chargeData.taxGroupOptions; track taxGroup) {
-                  <mat-option [value]="taxGroup.id">
-                    {{ taxGroup.name }}
-                  </mat-option>
-                }
-              </mat-select>
-            }
-          </mat-form-field>
+              @if (!chargeData.taxGroup) {
+                <mat-select formControlName="taxGroupId">
+                  @for (taxGroup of chargeData.taxGroupOptions; track taxGroup) {
+                    <mat-option [value]="taxGroup.id">
+                      {{ taxGroup.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              }
+            </mat-form-field>
+          }
 
           @if (addFeeFrequency) {
             <div class="password-never-expires-wrapper checkbox flex-48">
@@ -249,22 +251,22 @@
               }
             </mat-form-field>
           }
-        </div>
 
-        <div class="layout-row-wrap gap-2percent layout-lt-md-column form-section">
-          <div class="password-never-expires-wrapper flex-48">
-            <mat-checkbox labelPosition="before" formControlName="active">
-              {{ 'labels.status.Active' | translate }}
-            </mat-checkbox>
-          </div>
-
-          @if (showPenalty) {
-            <div class="send-password-to-email-wrapper flex-48">
-              <mat-checkbox labelPosition="before" formControlName="penalty">
-                {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}
+          <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
+            <div class="flex-50 active-wrapper">
+              <mat-checkbox labelPosition="before" formControlName="active">
+                {{ 'labels.status.Active' | translate }}
               </mat-checkbox>
             </div>
-          }
+
+            @if (showPenalty) {
+              <div class="flex-50 active-wrapper">
+                <mat-checkbox labelPosition="before" formControlName="penalty">
+                  {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}
+                </mat-checkbox>
+              </div>
+            }
+          </div>
         </div>
       </mat-card-content>
 

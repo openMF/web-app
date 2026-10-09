@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -43,11 +44,13 @@ import { PositiveIntegerDirective } from 'app/directives/positive-integer.direct
     FaIconComponent,
     MatStepperNext,
     PositiveIntegerDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   @Input() isNew = true;
   @Input() recurringDepositsAccountTemplate: any;
@@ -114,7 +117,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         depositPeriodFrequencyId: recurringDepositsAccount.minDepositTermType.id,
         expectedFirstDepositOnDate:
           recurringDepositsAccount.expectedFirstDepositOnDate &&
-          new Date(recurringDepositsAccount.expectedFirstDepositOnDate),
+          this.dateUtils.parseDate(recurringDepositsAccount.expectedFirstDepositOnDate),
         recurringFrequency: recurringDepositsAccount.recurringFrequency,
         recurringFrequencyType: recurringDepositsAccount.recurringFrequencyType
           ? recurringDepositsAccount.recurringFrequencyType.id

@@ -6,32 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.account-card {
-  .header {
-    .profile-image-container {
-      .client-image-button {
-        min-width: 26px;
-        padding: 0 6px;
-        margin: 4px;
-        line-height: 25px;
-      }
+@use 'assets/styles/entity-header' as entity;
 
-      .signature {
-        color: white;
-        text-align: center;
-        margin: 0;
-        padding: 2%;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
+/* Shared entity-header system: tokens, projected header content and tabs. */
+@include entity.tokens;
+@include entity.header-content;
+@include entity.tabs;
 
 .account-overview {
-  color: white;
   min-width: 85%;
   margin-left: 10px;
 }
@@ -40,6 +22,20 @@
   display: flex;
 }
 
-.mat-card-title-group {
-  width: 100%;
+/* ── Client-specific header content (image actions + signature) ── */
+mifosx-account-header {
+  .client-image-button {
+    min-width: 26px;
+    padding: 0 6px;
+    margin: 4px 2px;
+    line-height: 25px;
+  }
+
+  .signature {
+    color: var(--md-sys-color-on-primary, #fff);
+    text-align: center;
+    margin: 0;
+    padding: 2%;
+    cursor: pointer;
+  }
 }

@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports. */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
@@ -43,6 +44,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AttachOriginatorComponent } from './attach-originator/attach-originator.component';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { UpdateDiscountComponent } from './update-discount/update-discount.component';
+import { NearBreachConfigComponent } from '../working-capital/loan-account-actions/near-breach-config/near-breach-config.component';
+import { BreachConfigComponent } from '../working-capital/loan-account-actions/breach-config/breach-config.component';
+import { WorkingCapitalChargeOffComponent } from '../working-capital/loan-account-actions/charge-off/charge-off.component';
+import { WorkingCapitalWriteOffComponent } from '../working-capital/loan-account-actions/write-off/write-off.component';
+import { WorkingCapitalUndoWriteOffComponent } from '../working-capital/loan-account-actions/undo-write-off/undo-write-off.component';
+import { WorkingCapitalRecoveryPaymentComponent } from '../working-capital/loan-account-actions/recovery-payment/recovery-payment.component';
+import { WorkingCapitalPrepayLoanComponent } from '../working-capital/loan-account-actions/prepay-loan/prepay-loan.component';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
  * Loan Account Actions component.
@@ -84,12 +93,27 @@ import { UpdateDiscountComponent } from './update-discount/update-discount.compo
     AddInterestPauseComponent,
     UndoWriteOffComponent,
     AttachOriginatorComponent,
-    UpdateDiscountComponent
-  ]
+    UpdateDiscountComponent,
+    NearBreachConfigComponent,
+    BreachConfigComponent,
+    WorkingCapitalChargeOffComponent,
+    WorkingCapitalWriteOffComponent,
+    WorkingCapitalUndoWriteOffComponent,
+    WorkingCapitalRecoveryPaymentComponent,
+    WorkingCapitalPrepayLoanComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanAccountActionsComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private loanProductService = inject(LoanProductService);
+
+  /** Whether the current account is a Working Capital loan. */
+  get isWorkingCapital(): boolean {
+    return this.loanProductService.isWorkingCapital;
+  }
 
   /** Loan Details Data */
   navigationData: any;
@@ -136,7 +160,9 @@ export class LoanAccountActionsComponent {
     'Buy Down Fee': boolean;
     'Undo Write-off': boolean;
     'Attach Loan Originator': boolean;
-    'Update discount': boolean;
+    'Discount Fee': boolean;
+    'Update Near Breach': boolean;
+    'Update Breach': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -178,7 +204,9 @@ export class LoanAccountActionsComponent {
     'Buy Down Fee': false,
     'Undo Write-off': false,
     'Attach Loan Originator': false,
-    'Update discount': false
+    'Discount Fee': false,
+    'Update Near Breach': false,
+    'Update Breach': false
   };
 
   actionButtonData: any;
@@ -192,11 +220,11 @@ export class LoanAccountActionsComponent {
     // Safely access data with optional chaining
     this.navigationData = currentNavigation?.extras?.state?.data;
 
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
       this.actionButtonData = data.actionButtonData ? data.actionButtonData : {};
     });
 
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.actionName = params['action'];
       if (this.actionName === 'Change Loan Officer') {
         this.actionName = 'Assign Loan Officer';

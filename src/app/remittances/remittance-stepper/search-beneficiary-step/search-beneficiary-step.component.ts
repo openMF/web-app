@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -26,7 +26,8 @@ import { ValidatedRecipient } from '../../models/beneficiary.model';
     MatIcon
   ],
   templateUrl: './search-beneficiary-step.component.html',
-  styleUrls: ['./search-beneficiary-step.component.scss']
+  styleUrls: ['./search-beneficiary-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBeneficiaryStepComponent implements OnInit {
   @Input() vendor: RemittanceVendor | null = null;

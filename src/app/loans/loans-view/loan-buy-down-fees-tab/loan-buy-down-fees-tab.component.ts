@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -44,7 +44,8 @@ import { DateFormatPipe } from '@pipes/date-format.pipe';
     MatRow,
     FormatNumberPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanBuyDownFeesTabComponent implements OnInit {
   private route = inject(ActivatedRoute);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
@@ -33,7 +33,8 @@ import { PositiveIntegerDirective } from 'app/directives/positive-integer.direct
     FaIconComponent,
     MatStepperNext,
     PositiveIntegerDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);

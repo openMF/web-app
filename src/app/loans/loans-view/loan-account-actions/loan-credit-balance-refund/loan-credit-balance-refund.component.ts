@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
@@ -23,7 +23,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -54,13 +55,17 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
     }
   }
 
+  get requiredPermission(): string {
+    return this.isWorkingCapital ? 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN' : 'CREDITBALANCEREFUND_LOAN';
+  }
+
   /**
    * Creates the create close form.
    */
   createCreditBalanceLoanForm() {
     this.creditBalanceLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(),
+        this.isWorkingCapital ? this.settingsService.businessDate : new Date(),
         Validators.required
       ],
       transactionAmount: [
@@ -74,7 +79,7 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
 
   setCreditBalanceLoanDetails() {
     this.creditBalanceLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount
+      transactionAmount: this.dataObject.amount ?? this.dataObject.expectedAmount
     });
   }
 
@@ -92,9 +97,11 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
       dateFormat,
       locale
     };
-    const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+    const request = this.isWorkingCapital
+      ? this.loanService.applyWorkingCapitalLoanActionCommand(this.loanId, data, 'creditBalanceRefund')
+      : this.loanService.submitLoanActionButton(this.loanId, data, this.dataObject.type.code.split('.')[1]);
+    request.subscribe((_response: any) => {
       this.gotoLoanView('transactions');
     });
   }

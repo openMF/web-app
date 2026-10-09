@@ -1,0 +1,273 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container cash-allocation">
+  <mat-card>
+    <mat-card-content>
+      <h2>{{ 'cashAllocation.title' | translate }}</h2>
+
+      @if (isLoading) {
+        <div class="loading-state">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>{{ 'cashAllocation.status.loading' | translate }}</span>
+        </div>
+      }
+
+      @if (errorMessage) {
+        <div class="error-message" role="alert">{{ errorMessage | translate }}</div>
+      }
+
+      @if (!receipt && context && !isLoading) {
+        @if (context.currencies.length === 0) {
+          <div class="empty-state">{{ 'cashAllocation.empty.currencies' | translate }}</div>
+        } @else {
+          <form [formGroup]="allocationForm" (ngSubmit)="preview()">
+            <div class="form-grid">
+              <mat-form-field>
+                <mat-label>{{ 'cashAllocation.labels.operation' | translate }}</mat-label>
+                <mat-select formControlName="operationType" (selectionChange)="operationChanged()">
+                  @for (operation of operationTypes; track operation) {
+                    <mat-option [value]="operation">
+                      {{ 'cashAllocation.operations.' + operation | translate }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>{{ 'cashAllocation.labels.currency' | translate }}</mat-label>
+                <mat-select formControlName="currencyCode" (selectionChange)="currencyChanged()">
+                  @for (currency of context.currencies; track currency.code) {
+                    <mat-option [value]="currency.code"> {{ currency.code }} — {{ currency.name }} </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="context-summary">
+              <div>
+                <span>{{ 'cashAllocation.labels.businessDate' | translate }}</span
+                ><strong>{{ context.businessDate }}</strong>
+              </div>
+              <div>
+                <span>{{ 'cashAllocation.labels.office' | translate }}</span
+                ><strong>{{ context.officeName }}</strong>
+              </div>
+              <div>
+                <span>{{ 'cashAllocation.labels.vaultBalance' | translate }}</span
+                ><strong>{{ context.vaultBalance }} {{ allocationForm.controls.currencyCode.value }}</strong>
+              </div>
+            </div>
+
+            @if (operationType === 'OPERATIONAL_TELLER_ALLOCATION') {
+              <mat-form-field class="full-width">
+                <mat-label>{{ 'cashAllocation.labels.transferFrom' | translate }}</mat-label>
+                <mat-select formControlName="sourceCashierId" required>
+                  @for (cashier of sourceCashiers; track cashier.cashierId) {
+                    <mat-option [value]="cashier.cashierId">
+                      {{ cashier.cashierName }} — {{ cashier.tellerName }} ({{ cashier.currentBalance }}
+                      {{ allocationForm.controls.currencyCode.value }})
+                    </mat-option>
+                  }
+                </mat-select>
+                @if (sourceCashiers.length === 0) {
+                  <mat-hint>{{ 'cashAllocation.empty.headCashiers' | translate }}</mat-hint>
+                }
+              </mat-form-field>
+            }
+
+            @if (operationType !== 'SAFE_VAULT_OPENING') {
+              <mat-form-field class="full-width">
+                <mat-label>{{ 'cashAllocation.labels.transferTo' | translate }}</mat-label>
+                <mat-select formControlName="destinationCashierId" required>
+                  @for (cashier of destinationCashiers; track cashier.cashierId) {
+                    <mat-option [value]="cashier.cashierId">
+                      {{ cashier.cashierName }} — {{ cashier.tellerName }}
+                    </mat-option>
+                  }
+                </mat-select>
+                @if (destinationCashiers.length === 0) {
+                  <mat-hint>{{ 'cashAllocation.empty.cashiers' | translate }}</mat-hint>
+                }
+              </mat-form-field>
+            }
+
+            <section class="denominations">
+              <h3>{{ 'cashAllocation.labels.denominationBreakdown' | translate }}</h3>
+              @if (denominations.length === 0) {
+                <div class="empty-state">{{ 'cashAllocation.empty.denominations' | translate }}</div>
+              } @else {
+                <div class="denomination-header">
+                  <span>{{ 'cashAllocation.labels.type' | translate }}</span>
+                  <span>{{ 'cashAllocation.labels.denomination' | translate }}</span>
+                  <span>{{ 'cashAllocation.labels.quantity' | translate }}</span>
+                  <span>{{ 'cashAllocation.labels.subtotal' | translate }}</span>
+                </div>
+                <div formArrayName="denominations">
+                  @for (
+                    denomination of denominations.controls;
+                    track denomination.controls.denominationId.value;
+                    let index = $index
+                  ) {
+                    <div class="denomination-row" [formGroupName]="index">
+                      <span>{{
+                        'cashAllocation.denominationTypes.' + denomination.controls.type.value | translate
+                      }}</span>
+                      <strong
+                        >{{ denomination.controls.value.value }}
+                        {{ allocationForm.controls.currencyCode.value }}</strong
+                      >
+                      <mat-form-field>
+                        <mat-label>{{ 'cashAllocation.labels.quantity' | translate }}</mat-label>
+                        <input matInput type="number" min="0" step="1" formControlName="quantity" />
+                        @if (denomination.controls.quantity.hasError('integer')) {
+                          <mat-error>{{ 'cashAllocation.errors.integerQuantity' | translate }}</mat-error>
+                        }
+                      </mat-form-field>
+                      <strong>{{ lineTotal(denomination) }} {{ allocationForm.controls.currencyCode.value }}</strong>
+                    </div>
+                  }
+                </div>
+                <div class="allocation-total">
+                  <span>{{ 'cashAllocation.labels.totalCash' | translate }}</span>
+                  <strong>{{ total }} {{ allocationForm.controls.currencyCode.value }}</strong>
+                </div>
+              }
+            </section>
+
+            <mat-form-field class="full-width">
+              <mat-label>{{ 'cashAllocation.labels.note' | translate }}</mat-label>
+              <textarea matInput formControlName="note" rows="3" maxlength="500"></textarea>
+            </mat-form-field>
+
+            <div class="actions">
+              @if (canRetryPost && errorMessage) {
+                <button mat-stroked-button type="button" (click)="retryPosting()" [disabled]="isPosting">
+                  {{ 'cashAllocation.actions.retrySameTransaction' | translate }}
+                </button>
+              }
+              <button mat-raised-button color="primary" type="submit" [disabled]="!canPreview">
+                @if (isPreviewing || isPosting) {
+                  {{ 'cashAllocation.status.processing' | translate }}
+                } @else {
+                  {{ 'cashAllocation.actions.preview' | translate }}
+                }
+              </button>
+            </div>
+          </form>
+        }
+      }
+
+      @if (receipt) {
+        <section class="receipt">
+          <h3>{{ 'cashAllocation.receipt.title' | translate }}</h3>
+          <dl class="receipt-details">
+            <div>
+              <dt>{{ 'cashAllocation.receipt.reference' | translate }}</dt>
+              <dd>{{ receipt.reference }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.operation' | translate }}</dt>
+              <dd>{{ 'cashAllocation.operations.' + receipt.operationType | translate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.receipt.status' | translate }}</dt>
+              <dd>{{ receipt.status }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.businessDate' | translate }}</dt>
+              <dd>{{ receipt.businessDate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.office' | translate }}</dt>
+              <dd>{{ receipt.officeName }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.source' | translate }}</dt>
+              <dd>{{ receipt.source }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.destination' | translate }}</dt>
+              <dd>{{ receipt.destination }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.labels.totalCash' | translate }}</dt>
+              <dd>{{ receipt.totalAmount }} {{ receipt.currencyCode }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.receipt.operator' | translate }}</dt>
+              <dd>{{ receipt.initiatedByUsername }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.receipt.createdOn' | translate }}</dt>
+              <dd>{{ receipt.createdOn }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.receipt.completedOn' | translate }}</dt>
+              <dd>{{ receipt.completedOn }}</dd>
+            </div>
+            @if (receipt.sourceBalanceBefore !== null && receipt.sourceBalanceBefore !== undefined) {
+              <div>
+                <dt>{{ 'cashAllocation.receipt.sourceBefore' | translate }}</dt>
+                <dd>{{ receipt.sourceBalanceBefore }} {{ receipt.currencyCode }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'cashAllocation.receipt.sourceAfter' | translate }}</dt>
+                <dd>{{ receipt.sourceBalanceAfter }} {{ receipt.currencyCode }}</dd>
+              </div>
+            }
+            <div>
+              <dt>{{ 'cashAllocation.receipt.destinationBefore' | translate }}</dt>
+              <dd>{{ receipt.destinationBalanceBefore }} {{ receipt.currencyCode }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'cashAllocation.receipt.destinationAfter' | translate }}</dt>
+              <dd>{{ receipt.destinationBalanceAfter }} {{ receipt.currencyCode }}</dd>
+            </div>
+            @if (receipt.accountingTransactionId) {
+              <div>
+                <dt>{{ 'cashAllocation.receipt.accountingTransaction' | translate }}</dt>
+                <dd>{{ receipt.accountingTransactionId }}</dd>
+              </div>
+            }
+          </dl>
+
+          <h4>{{ 'cashAllocation.labels.denominationBreakdown' | translate }}</h4>
+          <div class="receipt-denominations">
+            @for (denomination of receipt.denominations; track denomination.identifier) {
+              <div>
+                <span>{{ denomination.value }} × {{ denomination.quantity }}</span>
+                <strong>{{ denomination.subtotal }} {{ receipt.currencyCode }}</strong>
+              </div>
+            }
+          </div>
+
+          <div class="actions receipt-actions">
+            <button mat-stroked-button type="button" (click)="newOperation()">
+              {{ 'cashAllocation.actions.newOperation' | translate }}
+            </button>
+            <button mat-raised-button color="primary" type="button" (click)="printReceipt()" [disabled]="isReprinting">
+              {{ 'cashAllocation.actions.printReceipt' | translate }}
+            </button>
+            @if (canReprint) {
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="reprintReceipt()"
+                [disabled]="isReprinting"
+              >
+                {{ 'cashAllocation.actions.reprintReceipt' | translate }}
+              </button>
+            }
+          </div>
+        </section>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

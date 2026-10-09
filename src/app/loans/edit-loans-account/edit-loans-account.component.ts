@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -43,9 +44,11 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     LoansAccountChargesStepComponent,
     LoansAccountScheduleStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoansAccountComponent extends LoanProductBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
   private loansService = inject(LoansService);
@@ -78,21 +81,23 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
     this.loanId = this.route.snapshot.params['loanId'];
-    this.route.data.subscribe(
-      (data: { loansAccountAndTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loansAccountAndTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
         this.loansAccountAndTemplate = data.loansAccountAndTemplate;
         if (this.loanProductService.isLoanProduct) {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
         } else if (this.loanProductService.isWorkingCapital) {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+          // The working capital loan details endpoint serializes the client and product
+          // as flat fields (clientId/loanProductId) instead of nested objects.
           this.getWorkingCapitalLoanProductTemplate(
-            this.loansAccountProductTemplate.client.id,
-            this.loansAccountProductTemplate.product.id
+            this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+            this.loansAccountProductTemplate.product?.id ?? this.loansAccountProductTemplate.loanProductId
           );
         }
         this.loanProductsBasicDetails = data.loanProductsBasicDetails;
-      }
-    );
+      });
   }
 
   /**
@@ -266,11 +271,6 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
-
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
       .subscribe((response: any) => {
@@ -288,7 +288,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     const dateFormat = this.settingsService.dateFormat;
     const payload = {
       ...this.loansAccount,
-      clientId: this.loansAccountProductTemplate.client.id,
+      clientId: this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       locale,
@@ -314,11 +314,32 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       ) {
         delete payload['discount'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+      }
     }
 
-    // No Empty discount value to be sent
-    if (payload['discount'] == null || payload['discount'] === '') {
-      delete payload['discount'];
+    // No Empty values to be sent.
+    [
+      'delinquencyGraceDays',
+      'delinquencyStartType'
+    ].forEach((attr: string) => {
+      if (payload[attr] === null || payload[attr] === '') {
+        delete payload[attr];
+      }
+    });
+    if (payload['delinquencyBucketId'] === '') {
+      payload['delinquencyBucketId'] = null;
     }
 
     this.loansService

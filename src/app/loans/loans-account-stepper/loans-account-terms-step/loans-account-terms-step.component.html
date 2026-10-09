@@ -27,8 +27,16 @@
     @if (loanProductService.isWorkingCapital) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" required formControlName="totalPayment" />
-        @if (loansAccountTermsForm.controls.totalPayment.hasError('highAmountValue')) {
+        <input
+          type="number"
+          matInput
+          mifosxPositiveNumber
+          min="0"
+          required
+          formControlName="totalPaymentVolume"
+          step="any"
+        />
+        @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
           <mat-error>
             {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
@@ -38,12 +46,12 @@
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="discount" />
+        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="discount" step="any" />
       </mat-form-field>
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" />
+        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" step="any" />
       </mat-form-field>
 
       <mat-form-field class="flex-23">
@@ -55,6 +63,7 @@
           mifosxPositiveNumber
           min="1"
           formControlName="repaymentEvery"
+          step="1"
           matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
         />
         @if (loansAccountTermsForm.controls.repaymentEvery.hasError('required')) {
@@ -78,7 +87,7 @@
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+        <input type="number" min="0" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
       </mat-form-field>
 
       <mat-form-field class="flex-23">
@@ -90,6 +99,27 @@
             </mat-option>
           }
         </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyBucketId">
+          @for (delinquencyBucket of delinquencyBucketOptions; track delinquencyBucket) {
+            <mat-option [value]="delinquencyBucket.id">
+              {{ delinquencyBucket.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (loansAccountTermsForm.controls.delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'delinquencyBucketId')"
+          >
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
       </mat-form-field>
 
       <mat-form-field class="flex-48">
@@ -134,13 +164,18 @@
             </button>
           }
         </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+        </mat-form-field>
       }
     }
 
     @if (loanProductService.isLoanProduct) {
       <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Loan Term' | translate }}</mat-label>
-        <input type="number" matInput required formControlName="loanTermFrequency" min="0" />
+        <input type="number" matInput required formControlName="loanTermFrequency" min="0" step="1" />
         @if (loansAccountTermsForm.controls.loanTermFrequency.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Loan Term' | translate }} {{ 'labels.commons.is' | translate }}
@@ -169,7 +204,7 @@
       @if (hasFixedLength()) {
         <mat-form-field class="flex-fill flex-20">
           <mat-label>{{ 'labels.inputs.Fixed Length' | translate }}</mat-label>
-          <input type="number" matInput formControlName="fixedLength" />
+          <input type="number" matInput formControlName="fixedLength" step="1" />
         </mat-form-field>
       }
       @if (hasFixedLength()) {
@@ -188,6 +223,7 @@
           required
           formControlName="numberOfRepayments"
           min="0"
+          step="1"
           matTooltip="{{ 'tooltips.Enter the total count of repayments' | translate }}"
         />
         @if (loansAccountTermsForm.controls.numberOfRepayments.hasError('required')) {
@@ -201,7 +237,7 @@
       @if (loansAccountTermsData?.canDefineInstallmentAmount) {
         <mat-form-field class="flex-fill flex-23">
           <mat-label>{{ 'labels.inputs.Installment Amount' | translate }}</mat-label>
-          <input type="number" matInput formControlName="fixedEmiAmount" />
+          <input type="number" matInput formControlName="fixedEmiAmount" step="any" />
         </mat-form-field>
       }
 
@@ -249,6 +285,7 @@
           required
           formControlName="repaymentEvery"
           min="0"
+          step="1"
           matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
         />
         @if (loansAccountTermsForm.controls.repaymentEvery.hasError('required')) {
@@ -316,9 +353,31 @@
       <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Nominal interest rate' | translate }}</h4>
 
       @if (!loansAccountTermsData?.isLoanProductLinkedToFloatingRate) {
-        <mat-form-field class="flex-fill flex-23">
-          <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }} %</mat-label>
-          <input type="number" matInput formControlName="interestRatePerPeriod" min="0" step="0.01" />
+        <mat-form-field class="flex-fill flex-23 interest-rate-field">
+          <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            mifosxPositiveNumber
+            formControlName="interestRatePerPeriod"
+            min="0"
+            step="any"
+          />
+          <span matSuffix>%</span>
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('required')) {
+            <mat-error>{{ 'errors.validation.required' | translate }}</mat-error>
+          }
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('min')) {
+            <mat-error>
+              {{
+                'errors.validation.mustBeAtLeast'
+                  | translate: { field: ('labels.inputs.Nominal interest rate' | translate), min: 0 }
+              }}
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('pattern')) {
+            <mat-error>{{ 'errors.validation.maxDecimals' | translate: { decimals: 6 } }}</mat-error>
+          }
         </mat-form-field>
         <mat-form-field class="flex-fill flex-23">
           <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -370,7 +429,7 @@
         @if (isEqualPrincipalPayments()) {
           <mat-form-field class="flex-fill flex-23">
             <mat-label>{{ 'labels.inputs.Principal Percentage Per Installment' | translate }}</mat-label>
-            <input type="number" matInput formControlName="fixedPrincipalPercentagePerInstallment" />
+            <input type="number" matInput formControlName="fixedPrincipalPercentagePerInstallment" step="any" />
           </mat-form-field>
         }
         <mat-checkbox
@@ -500,6 +559,7 @@
           type="number"
           formControlName="inArrearsTolerance"
           min="0"
+          step="any"
           matTooltip="{{ 'tooltips.With Arrears tolerance' | translate }}"
         />
       </mat-form-field>
@@ -511,6 +571,7 @@
           type="number"
           formControlName="graceOnInterestCharged"
           min="0"
+          step="1"
           matTooltip="{{ 'tooltips.If the Interest Free Period' | translate }}"
         />
       </mat-form-field>
@@ -522,17 +583,17 @@
 
       <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Grace on principal payment' | translate }}</mat-label>
-        <input type="number" matInput formControlName="graceOnPrincipalPayment" min="0" />
+        <input type="number" matInput formControlName="graceOnPrincipalPayment" min="0" step="1" />
       </mat-form-field>
 
       <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Grace on interest payment' | translate }}</mat-label>
-        <input type="number" matInput formControlName="graceOnInterestPayment" min="0" />
+        <input type="number" matInput formControlName="graceOnInterestPayment" min="0" step="1" />
       </mat-form-field>
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.On arrears ageing' | translate }}</mat-label>
-        <input type="number" matInput formControlName="graceOnArrearsAgeing" min="0" />
+        <input type="number" matInput formControlName="graceOnArrearsAgeing" min="0" step="1" />
       </mat-form-field>
 
       @if (isDelinquencyEnabled()) {
@@ -689,7 +750,7 @@
         <div class="flex-100 layout-row">
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}</mat-label>
-            <input matInput type="number" formControlName="maxOutstandingLoanBalance" min="0" />
+            <input matInput type="number" formControlName="maxOutstandingLoanBalance" min="0" step="any" />
             @if (loansAccountTermsForm.controls.maxOutstandingLoanBalance.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}

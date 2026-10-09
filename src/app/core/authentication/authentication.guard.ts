@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
@@ -30,14 +30,17 @@ export class AuthenticationGuard {
    *
    * @returns {boolean} True if user is authenticated.
    */
-  canActivate(): boolean {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.authenticationService.isAuthenticated()) {
       return true;
     }
 
     log.debug('User not authenticated, redirecting to login...');
-    this.authenticationService.logout();
-    this.router.navigate(['/login'], { replaceUrl: true });
+    this.authenticationService.logout(state.url);
+    this.router.navigate(['/login'], {
+      replaceUrl: true,
+      queryParams: { returnUrl: state.url }
+    });
     return false;
   }
 }

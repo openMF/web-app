@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Output, EventEmitter, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import {
@@ -24,6 +24,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
+import { hasCoordinateValue } from 'app/clients/utils/address-coordinate.util';
+import { environment } from 'environments/environment';
 
 /**
  * Client Preview Step Component
@@ -46,15 +48,24 @@ import { LegalFormId } from 'app/clients/models/legal-form.enum';
     FindPipe,
     DateFormatPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientPreviewStepComponent {
+  readonly hasCoordinateValue = hasCoordinateValue;
+
+  get clientAddressLocationEnabled(): boolean {
+    return environment.enableClientAddressLocation;
+  }
+
   /** Client Address field configuration */
   @Input() clientAddressFieldConfig: any;
   /** Client Template */
   @Input() clientTemplate: any;
   /** Client Object */
   @Input() client: any;
+  /** Disables the submit button while the client is being created */
+  @Input() submitting = false;
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();

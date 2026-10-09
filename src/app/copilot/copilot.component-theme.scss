@@ -1,0 +1,901 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+// Fixed semantic status colors - NOT part of the Material palette (success / warning).
+// These intentionally stay constant so cards keep their success/warning meaning.
+$copilot-success: #10b981;
+$copilot-warning: #f59e0b;
+
+/**
+ * Colors for the Mifos Copilot panel, driven entirely by the active Material
+ * theme. Called once for light and once for dark (under `.dark-theme`) from
+ * src/theme/mifosx-theme.scss - dark mode is derived automatically, so there is
+ * no hand-rolled dark block. Structure lives in copilot-panel.component.scss.
+ *
+ * Hybrid theming: brand (primary/accent) is identical in both palettes, so the
+ * AI's blue identity stays fixed while surfaces/text/borders follow light/dark.
+ */
+@mixin copilot-component-theme($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $foreground: map.get($theme, foreground);
+  $background: map.get($theme, background);
+  $is-dark: map.get($theme, is-dark);
+
+  // Brand
+  $p100: mat.m2-get-color-from-palette($primary, 100);
+  $p500: mat.m2-get-color-from-palette($primary, 500);
+  $p700: mat.m2-get-color-from-palette($primary, 700);
+  $on-primary: mat.m2-get-contrast-color-from-palette($primary, 500);
+  $a500: mat.m2-get-color-from-palette($accent, 500);
+  $warn500: mat.m2-get-color-from-palette($warn, 500);
+  $warn700: mat.m2-get-color-from-palette($warn, 700);
+  $on-warn: mat.m2-get-contrast-color-from-palette($warn, 500);
+
+  // Brand text/tint that reads well in both modes (lighter blue on dark).
+  $brand-text: if($is-dark, $p100, $p500);
+  $brand-tint: mat.m2-get-color-from-palette($primary, 500, 0.1);
+  $brand-ring: mat.m2-get-color-from-palette($primary, 500, 0.5);
+
+  // Surfaces & text from the theme (flip automatically in dark).
+  $surface: map.get($background, card);
+  $muted: map.get($background, hover);
+  $border: mat.m2-get-color-from-palette($foreground, divider);
+  $text-1: mat.m2-get-color-from-palette($foreground, text);
+  $text-2: mat.m2-get-color-from-palette($foreground, secondary-text);
+  $text-3: mat.m2-get-color-from-palette($foreground, hint-text);
+
+  // Semantic (status) - fixed hues, mode-aware text/bg.
+  $success-text: if($is-dark, #6ee7b7, #047857);
+  $success-bg: rgba($copilot-success, 0.12);
+  $warning-text: if($is-dark, #fbbf24, $copilot-warning);
+  $warning-bg: rgba($copilot-warning, 0.12);
+  $danger-bg: rgba($warn500, 0.12);
+  $danger-text: if($is-dark, #fca5a5, $warn700);
+  $scroll-thumb: rgba(if($is-dark, #fff, #000), 0.08);
+  $disabled-send: if($is-dark, #555, #c7cdd4);
+
+  // Glassmorphic panel backdrop (translucent, branches on mode).
+  $glass-bg: if($is-dark, rgb(15 23 42 / 60%), rgb(255 255 255 / 70%));
+  $glass-border: if($is-dark, rgb(255 255 255 / 10%), rgb(255 255 255 / 30%));
+
+  // Structural separators: the rule under the topbar, above the bottom nav, and between
+  // preference rows. Material's divider is 12% of the foreground, which is the right answer
+  // on an opaque surface and the wrong one here: this panel is 70% white over a blurred page,
+  // so at that alpha whatever is behind shows through the line and the topbar looks as though
+  // it has no rule at all. Solid in light mode so the blur cannot wash it out; left as an
+  // alpha in dark, where a faint light edge on a dark ground reads perfectly well.
+  $divider: if($is-dark, rgb(255 255 255 / 12%), #dbdfe6);
+
+  // The track of a switch that is off. It is a control rather than a separator, so it has to
+  // read as present at a glance, which the divider is deliberately too quiet to do.
+  $switch-off: if($is-dark, rgb(255 255 255 / 26%), #c3c9d4);
+
+  .mifos-copilot {
+    /* FAB */
+    .ai-fab {
+      /* A light from above over the brand gradient, so the launcher reads as a raised object
+         rather than a flat disc. The highlight is the only thing added; the blue underneath is
+         the same brand ramp it has always been. */
+      background:
+        radial-gradient(circle at 50% 0%, rgb(255 255 255 / 22%), rgb(255 255 255 / 0%) 62%),
+        linear-gradient(135deg, $p500, $p700);
+      color: $on-primary;
+      box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+
+      /* The idle halo, kept fainter in dark mode: the same alpha that reads as a soft glow on
+         a light page reads as a hard rim on a dark one. */
+      --copilot-fab-aura: #{mat.m2-get-color-from-palette($primary, 500, if($is-dark, 0.38, 0.45))};
+
+      &:hover {
+        box-shadow: 0 8px 28px mat.m2-get-color-from-palette($primary, 500, 0.5);
+      }
+    }
+
+    /* Glass panel - translucent backdrop, mode-aware via $glass-* */
+    .chat-page {
+      background: $glass-bg;
+      border-color: $glass-border;
+    }
+
+    /* Topbar */
+    .topbar {
+      border-bottom-color: $divider;
+
+      &__brand {
+        color: $text-1;
+      }
+
+      &__session-label {
+        color: $text-3;
+      }
+
+      &__session-value {
+        color: $text-1;
+      }
+
+      &__btn {
+        background: $surface;
+        border-color: $divider;
+
+        svg {
+          fill: $text-2;
+        }
+
+        &:hover {
+          background: $muted;
+        }
+      }
+
+      &__new-chat {
+        color: $brand-text;
+        border-color: $brand-ring;
+
+        svg {
+          fill: $brand-text;
+        }
+
+        &:hover {
+          background: $brand-tint;
+          border-color: $brand-text;
+        }
+      }
+    }
+
+    /* Scrollbars */
+    .chat-body::-webkit-scrollbar-thumb {
+      background: $scroll-thumb;
+    }
+
+    /* Welcome */
+    .welcome {
+      &__badge {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &__heading {
+        color: $text-1;
+      }
+    }
+
+    /* Messages */
+    .msg {
+      &--user .msg__bubble {
+        background: linear-gradient(135deg, $p500, $p700);
+        color: $on-primary;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($primary, 500, 0.2);
+      }
+
+      &--ai .msg__bubble {
+        background: $surface;
+        color: $text-1;
+        border: 1px solid $border;
+      }
+
+      &__bubble .md-inline-code {
+        background: rgba(if($is-dark, #fff, #000), 0.06);
+      }
+
+      &__bubble .md-code {
+        background: rgba(if($is-dark, #fff, #000), 0.06);
+      }
+
+      /* The border lives on the wrapper now, so the bar and the code read as one object. */
+      &__bubble .md-code-wrap {
+        border: 1px solid $border;
+      }
+
+      &__bubble .md-code__bar {
+        background: rgba(if($is-dark, #fff, #000), 0.1);
+        border-bottom: 1px solid $border;
+        color: $text-3;
+      }
+
+      &__bubble .md-code__copy {
+        color: $text-2;
+
+        svg {
+          fill: currentcolor;
+        }
+
+        &:hover {
+          background: rgba(if($is-dark, #fff, #000), 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: -2px;
+        }
+      }
+
+      &__bubble .md-code__copy--done svg {
+        fill: $success-text;
+      }
+
+      &__text--streaming::after {
+        border-left: 2px solid $brand-text;
+      }
+
+      /* Syntax colour. Held to four roles: more than that in a chat bubble reads as noise,
+         and these four are what make a payload skimmable. Both sets are checked for contrast
+         against the code block's own ground, which is a tint of the bubble rather than white. */
+      &__bubble .hl-keyword {
+        color: if($is-dark, #c4a7fb, #6d28d9);
+      }
+
+      &__bubble .hl-string {
+        color: if($is-dark, #86efac, #047857);
+      }
+
+      &__bubble .hl-number {
+        color: if($is-dark, #fbbf24, #b45309);
+      }
+
+      &__bubble .hl-comment {
+        color: $text-3;
+        font-style: italic;
+      }
+
+      &__bubble .md-heading {
+        color: $text-1;
+      }
+
+      &__bubble .md-quote {
+        border-left-color: $border;
+        color: $text-2;
+      }
+
+      &__bubble .md-link {
+        color: $brand-text;
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: 2px;
+        }
+      }
+
+      &__bubble .md-table {
+        th {
+          background: rgba(if($is-dark, #fff, #000), 0.08);
+          border-bottom: 2px solid $border;
+        }
+
+        td {
+          border-bottom: 1px solid $border;
+        }
+
+        tr:last-child td {
+          border-bottom: none;
+        }
+      }
+
+      &__bubble .md-table-wrap {
+        border: 1px solid $border;
+      }
+
+      &__avatar {
+        background: $surface;
+        border-color: $border;
+      }
+
+      &__time {
+        color: $text-3;
+      }
+    }
+
+    /* The waiting ring, in brand blue at both ends of the theme. Handed to the structural
+       sheet as custom properties because they are consumed inside keyframes, which cannot read
+       Sass variables scoped to this mixin. The launcher carries the same ring as the avatar
+       inside the panel, so the two states read as one feature rather than two. */
+    .msg__avatar--thinking,
+    .msg__avatar--streaming,
+    .ai-fab {
+      --copilot-thinking-ring: #{$brand-ring};
+      --copilot-fab-focus: #{$brand-ring};
+
+      /* The disc the X is cut out of, following the mode rather than opposing it: dark on a
+         dark page, light on a light one, so the launcher sits in its surroundings instead of
+         punching a bright hole in them. The wedges stay brand blue in both. */
+      --copilot-mark-disc: #{if($is-dark, #14304a, #f6f9fb)};
+    }
+
+    /* Action cards */
+    .card {
+      background: $surface;
+      border-color: $border;
+
+      &::before {
+        background: linear-gradient(90deg, $p500, $p100);
+      }
+
+      &--confirm::before {
+        background: linear-gradient(90deg, $warn500, $warn700);
+      }
+
+      &--insight::before {
+        background: linear-gradient(90deg, $copilot-success, $a500);
+      }
+
+      &__icon-wrap {
+        background: $brand-tint;
+
+        &--client {
+          background: $brand-tint;
+        }
+
+        &--loan {
+          background: $warning-bg;
+        }
+
+        &--savings,
+        &--insight {
+          background: $success-bg;
+        }
+
+        &--confirmation {
+          background: $danger-bg;
+        }
+      }
+
+      &__type-icon {
+        fill: $brand-text;
+      }
+
+      &__icon-wrap--loan &__type-icon {
+        fill: $warning-text;
+      }
+
+      &__icon-wrap--savings &__type-icon,
+      &__icon-wrap--insight &__type-icon {
+        fill: $copilot-success;
+      }
+
+      &__icon-wrap--confirmation &__type-icon {
+        fill: $warn500;
+      }
+
+      &__badge {
+        color: $brand-text;
+
+        &--loan {
+          color: $warning-text;
+        }
+
+        &--savings,
+        &--insight {
+          color: $success-text;
+        }
+
+        &--confirmation {
+          color: $danger-text;
+        }
+      }
+
+      &__title {
+        color: $text-1;
+      }
+
+      &__row {
+        border-bottom-color: $border;
+      }
+
+      &__label {
+        color: $text-3;
+      }
+
+      &__value {
+        color: $text-1;
+      }
+
+      &__warn-stripe {
+        background: $danger-bg;
+        color: $danger-text;
+
+        svg {
+          fill: $warn500;
+        }
+      }
+
+      &__actions {
+        border-top-color: $border;
+      }
+
+      &__btn--primary {
+        background: linear-gradient(135deg, $p500, $p700);
+        color: $on-primary;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($primary, 500, 0.25);
+      }
+
+      &__btn--warn {
+        background: linear-gradient(135deg, $warn500, $warn700);
+        color: $on-warn;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($warn, 500, 0.25);
+      }
+
+      &__btn--accent {
+        background: $muted;
+        color: $text-1;
+        border-color: $border;
+      }
+    }
+
+    /* Try again, offered when the gateway said waiting would help */
+    .retry-button {
+      background: $surface;
+      color: $text-2;
+      border-color: $divider;
+
+      svg {
+        fill: $text-3;
+      }
+
+      &:hover {
+        background: $brand-tint;
+        border-color: $p100;
+        color: $brand-text;
+
+        svg {
+          fill: $brand-text;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: 2px;
+      }
+    }
+
+    /* How the answer was reached. Quiet enough not to compete with the answer, legible
+       enough to read on a branch monitor under fluorescent light: a real muted token rather
+       than opacity, which compounds unpredictably with the theme. */
+
+    .show-earlier {
+      background: $muted;
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: 2px;
+      }
+    }
+
+    /* The questions asked this session. Reads as a quiet overlay: it sits above the
+       conversation, so it needs its own ground to stay legible over text. */
+    .prompt-nav {
+      background: $surface;
+      border: 1px solid $border;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, if($is-dark, 0.4, 0.08));
+    }
+
+    .prompt-nav__toggle {
+      color: $text-2;
+
+      svg {
+        fill: currentcolor;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item {
+      color: $text-2;
+
+      .prompt-nav__rule {
+        background: $border;
+      }
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item--active {
+      color: $brand-text;
+      font-weight: 600;
+
+      .prompt-nav__rule {
+        background: $brand-text;
+      }
+    }
+
+    .trail__live {
+      color: $text-2;
+    }
+
+    .trail__live-dot {
+      background: $brand-text;
+    }
+
+    .trail__live-time {
+      color: $text-3;
+    }
+
+    .trail__section {
+      background: $muted;
+    }
+
+    .trail__summary {
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .trail__chevron {
+      fill: $text-3;
+    }
+
+    .trail__count {
+      color: $text-3;
+    }
+
+    .trail__step {
+      color: $text-2;
+    }
+
+    .trail__tick svg {
+      fill: $success-text;
+    }
+
+    .trail__step-time {
+      color: $text-3;
+    }
+
+    .trail__note,
+    .trail__caution {
+      color: $text-3;
+    }
+
+    .trail__notes {
+      color: $text-2;
+    }
+
+    /* Copy / repeat / rate, under a finished reply */
+    .msg-actions {
+      &__button {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          background: $muted;
+
+          svg {
+            fill: $brand-text;
+          }
+        }
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: 1px;
+        }
+
+        /* The rating the officer chose, held visibly. */
+        &--on svg {
+          fill: $brand-text;
+        }
+
+        /* A copy that landed, confirmed in the colour that means it worked. */
+        &--done svg {
+          fill: $success-text;
+        }
+      }
+
+      &__divider {
+        background: $divider;
+      }
+    }
+
+    /* Preferences */
+    .prefs {
+      &__section-title {
+        color: $text-3;
+      }
+
+      &__row {
+        border-bottom-color: $divider;
+      }
+
+      &__label-title {
+        color: $text-1;
+      }
+
+      &__label-hint {
+        color: $text-2;
+      }
+
+      &__switch {
+        background: $switch-off;
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+        }
+
+        &--on {
+          background: $p500;
+        }
+      }
+
+      &__switch-thumb {
+        background: $surface;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+      }
+
+      &__button {
+        background: $surface;
+        color: $text-1;
+        border-color: $divider;
+
+        &:hover:not(:disabled) {
+          background: $muted;
+        }
+
+        /* Erasing saved conversations cannot be undone, and should not look routine. */
+        &--danger {
+          color: $warn500;
+          border-color: $warn500;
+
+          &:hover:not(:disabled) {
+            background: $warn500;
+            color: $on-warn;
+          }
+        }
+      }
+
+      &__facts {
+        color: $text-2;
+      }
+    }
+
+    /* Prompt chips */
+    .prompt-chip {
+      background: $surface;
+      color: $text-1;
+      border-color: $border;
+
+      &:hover {
+        background: $brand-tint;
+        border-color: $p100;
+        color: $brand-text;
+      }
+    }
+
+    /* Footer / input bar */
+    .chat-footer {
+      &__input-bar {
+        background: $surface;
+        border-color: $border;
+
+        &:focus-within {
+          border-color: $brand-ring;
+          box-shadow: 0 0 0 4px mat.m2-get-color-from-palette($primary, 500, 0.08);
+        }
+      }
+
+      &__icon-btn {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover:not(:disabled) {
+          background: $muted;
+
+          svg {
+            fill: $brand-text;
+          }
+        }
+      }
+
+      &__input {
+        color: $text-1;
+
+        &::placeholder {
+          color: $text-3;
+        }
+      }
+
+      &__send {
+        background: linear-gradient(135deg, $p500, $p700);
+        box-shadow: 0 4px 14px mat.m2-get-color-from-palette($primary, 500, 0.3);
+
+        svg {
+          fill: $on-primary;
+        }
+
+        &:hover:not(:disabled) {
+          box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+        }
+
+        &:disabled {
+          background: $disabled-send;
+        }
+      }
+
+      &__stop {
+        background: linear-gradient(135deg, $warn500, $warn700);
+        box-shadow: 0 4px 14px mat.m2-get-color-from-palette($warn, 500, 0.3);
+
+        svg {
+          fill: $on-warn;
+        }
+      }
+
+      &__disclaimer {
+        color: $text-3;
+      }
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      background: $surface;
+      border-top-color: $divider;
+
+      &__item {
+        color: $text-3;
+
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          color: $text-2;
+          background: $muted;
+
+          svg {
+            fill: $text-2;
+          }
+        }
+
+        &--active {
+          color: $brand-text;
+          background: $brand-tint;
+
+          svg {
+            fill: $brand-text;
+          }
+
+          &:hover {
+            color: $brand-text;
+            background: $brand-tint;
+
+            svg {
+              fill: $brand-text;
+            }
+          }
+        }
+      }
+    }
+
+    /* Recent chats */
+    .recent-chats {
+      &__empty-icon {
+        fill: $text-3;
+      }
+
+      &__empty-title {
+        color: $text-2;
+      }
+
+      &__empty-subtitle {
+        color: $text-3;
+      }
+
+      &__item {
+        background: $surface;
+        border-color: $border;
+
+        &:hover {
+          border-color: $p100;
+        }
+      }
+
+      &__item-icon {
+        background: $brand-tint;
+
+        svg {
+          fill: $brand-text;
+        }
+      }
+
+      &__item-title {
+        color: $text-1;
+      }
+
+      &__item-preview {
+        color: $text-2;
+      }
+
+      &__item-meta {
+        color: $text-3;
+      }
+
+      &__item-delete {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          background: $danger-bg;
+
+          svg {
+            fill: $danger-text;
+          }
+        }
+      }
+    }
+
+    /* Help center */
+    .help-center {
+      &__section-icon svg {
+        fill: $text-2;
+      }
+
+      &__section-title {
+        color: $text-1;
+      }
+
+      &__item {
+        background: $surface;
+        border-color: $border;
+        color: $text-1;
+
+        svg {
+          fill: $copilot-success;
+        }
+
+        &--muted {
+          color: $text-2;
+
+          svg {
+            fill: $text-3;
+          }
+        }
+      }
+
+      &__prompt {
+        background: $surface;
+        border-color: $border;
+        color: $brand-text;
+
+        svg {
+          fill: $brand-text;
+        }
+
+        &:hover {
+          border-color: $p100;
+        }
+      }
+    }
+  }
+}

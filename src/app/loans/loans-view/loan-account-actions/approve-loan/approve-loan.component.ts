@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
@@ -31,9 +32,11 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     InputAmountComponent,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
 
@@ -53,7 +56,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
   constructor() {
     super();
     this.maxDate = this.settingsService.maxFutureDate;
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;
     });
@@ -85,7 +88,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
         Validators.required
       ],
       expectedDisbursementDate: [
-        new Date(this.loanData.expectedDisbursementDate),
+        this.dateUtils.parseDate(this.loanData.expectedDisbursementDate),
         Validators.required
       ],
       approvedLoanAmount: [
@@ -95,7 +98,13 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
       note: ['']
     });
     if (this.isWorkingCapital) {
-      this.approveLoanForm.addControl('discountAmount', new UntypedFormControl());
+      this.approveLoanForm.addControl(
+        'discountAmount',
+        new UntypedFormControl({
+          value: this.loanData.discountAmount,
+          disabled: this.loanData.overrideDiscountDisabled
+        })
+      );
     }
   }
 

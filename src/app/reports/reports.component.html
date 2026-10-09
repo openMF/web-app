@@ -6,45 +6,275 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container">
-  <div class="layout-row gap-20px">
-    <mat-form-field class="flex-fill">
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)" />
-    </mat-form-field>
+<div class="reports-catalog">
+  <!-- ── Page header ────────────────────────────────────────── -->
+  <header class="page-head">
+    <div class="page-head-text">
+      <h1 class="page-title">
+        {{ 'labels.heading.Reports Catalog' | translate }}
+        <span class="page-title-mark"> {{ totalCount }}&nbsp;{{ 'labels.text.available' | translate }} </span>
+      </h1>
+    </div>
+  </header>
+
+  <!-- ── Toolbar ────────────────────────────────────────────── -->
+  <div class="toolbar">
+    <div class="search">
+      <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        type="text"
+        [placeholder]="'labels.inputs.Filter' | translate"
+        [value]="searchTerm"
+        (input)="onSearchInput($any($event.target).value)"
+      />
+      <button
+        type="button"
+        class="search-clear"
+        *ngIf="searchTerm.length > 0"
+        (click)="onSearchInput('')"
+        [attr.aria-label]="'labels.buttons.Clear' | translate"
+      >
+        ×
+      </button>
+    </div>
+
+    <span class="toolbar-spacer"></span>
+
+    <button type="button" class="btn btn-ghost" *ngIf="hasActiveFilters()" (click)="clearFilters()">
+      {{ 'labels.buttons.Reset' | translate }}
+    </button>
   </div>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="reportName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ 'labels.text.BIRT' | translate }}
-        </th>
-        <td mat-cell *matCellDef="let report">{{ report.reportName }}</td>
-      </ng-container>
+  <!-- ── Engine chip rail ───────────────────────────────────── -->
+  <div class="chip-rail">
+    <span class="chip-rail-label">{{ 'labels.text.Filter by engine' | translate }}</span>
 
-      <ng-container matColumnDef="reportType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Type' | translate }}</th>
-        <td mat-cell *matCellDef="let report">{{ 'labels.text.' + report.reportType | translate }}</td>
-      </ng-container>
+    <button type="button" class="chip" [class.active]="selectedEngine === null" (click)="setEngineFilter(null)">
+      <span class="dot dot-all"></span>
+      {{ 'labels.text.All' | translate }}
+      <span class="count">{{ totalCount }}</span>
+    </button>
 
-      <ng-container matColumnDef="reportCategory">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Category' | translate }}</th>
-        <td mat-cell *matCellDef="let report">
+    <button
+      type="button"
+      class="chip"
+      *ngFor="let engine of engines"
+      [class.active]="selectedEngine === engine"
+      (click)="setEngineFilter(engine)"
+    >
+      <span class="dot" [ngClass]="'dot-' + engine.toLowerCase()"></span>
+      {{ engine }}
+      <span class="count">{{ engineCounts[engine] }}</span>
+    </button>
+
+    <span class="chip-rail-end"> {{ filteredCount }} / {{ totalCount }} </span>
+  </div>
+
+  <!-- ── Pinned strip ───────────────────────────────────────── -->
+  <section class="pinned-strip" *ngIf="pinnedReports.length > 0">
+    <div class="pinned-head">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+        </svg>
+        {{ 'labels.text.Pinned' | translate }}
+      </h2>
+      <span class="pinned-head-rule"></span>
+      <span class="pinned-head-meta"> {{ pinnedReports.length }} / 6 </span>
+    </div>
+
+    <div class="pinned-grid">
+      <a
+        *ngFor="let report of pinnedReports; trackBy: trackById"
+        class="feature-card"
+        [ngClass]="'t-' + report.reportType.toLowerCase()"
+        [routerLink]="['/reports', 'run', report.reportName]"
+        [queryParams]="{ type: report.reportType, id: report.id }"
+      >
+        <div class="fc-top">
+          <span class="fc-engine" [ngClass]="'eng-' + report.reportType.toLowerCase()">
+            {{ report.reportType | translateKey: 'text' }}
+          </span>
+          <button
+            type="button"
+            class="fc-pin pinned-on"
+            (click)="togglePin(report, $event)"
+            [matTooltip]="'labels.buttons.Unpin' | translate"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="fc-title">{{ report.reportName }}</div>
+        <div class="fc-cat">
           {{ cleanTranslatedCategory(getCategoryKey(report.reportCategory) | translate) }}
-        </td>
-      </ng-container>
+        </div>
+        <div class="fc-foot">
+          <span class="fc-run">
+            {{ 'labels.buttons.Run' | translate }}
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        class="select-row"
-        [routerLink]="['/reports', 'run', row.reportName]"
-        [queryParams]="{ type: row.reportType, id: row.id }"
-      ></tr>
-    </table>
+  <!-- ── Catalog ────────────────────────────────────────────── -->
+  <section class="catalog">
+    <div
+      class="group"
+      *ngFor="let group of paginatedGroups; trackBy: trackByCategory"
+      [class.collapsed]="isGroupCollapsed(group.categoryKey)"
+    >
+      <div class="group-head" (click)="toggleGroup(group.categoryKey)">
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+        <h3>{{ cleanTranslatedCategory(group.categoryKey | translate) }}</h3>
+        <div class="group-meta">{{ group.reports.length }}</div>
+      </div>
 
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-  </div>
+      <div class="group-body">
+        <a
+          *ngFor="let report of group.reports; trackBy: trackById; let i = index"
+          class="row"
+          [ngClass]="'t-' + report.reportType.toLowerCase()"
+          [style.animationDelay]="i * 0.04 + 's'"
+          [routerLink]="['/reports', 'run', report.reportName]"
+          [queryParams]="{ type: report.reportType, id: report.id }"
+        >
+          <span class="r-rail"></span>
+
+          <div class="r-glyph" [ngClass]="'eng-' + report.reportType.toLowerCase()">
+            <svg
+              *ngIf="report.reportType === 'Table'"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <path d="M3 9h18M9 3v18"></path>
+            </svg>
+            <svg
+              *ngIf="report.reportType === 'Pentaho'"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 3v9l7 4"></path>
+            </svg>
+            <svg
+              *ngIf="report.reportType === 'BIRT'"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <path d="M14 2v6h6"></path>
+            </svg>
+            <svg
+              *ngIf="report.reportType === 'Chart'"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M3 3v18h18"></path>
+              <path d="M7 14l4-4 4 3 6-7"></path>
+            </svg>
+            <svg
+              *ngIf="report.reportType === 'SMS'"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.38 8.38 0 0 1 3 11.5C3 6.81 7.03 3 12 3s9 3.81 9 8.5z"
+              ></path>
+            </svg>
+          </div>
+
+          <div class="r-main">
+            <div class="r-name">
+              <svg
+                *ngIf="isPinned(report.id)"
+                class="pinned-icon"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+              </svg>
+              <span class="r-name-text">{{ report.reportName }}</span>
+            </div>
+            <div class="r-meta">
+              <span>{{ cleanTranslatedCategory(getCategoryKey(report.reportCategory) | translate) }}</span>
+            </div>
+          </div>
+
+          <span class="r-engine" [ngClass]="'eng-' + report.reportType.toLowerCase()">
+            {{ report.reportType | translateKey: 'text' }}
+          </span>
+
+          <div class="r-actions">
+            <button
+              type="button"
+              class="r-icon"
+              [class.pinned-on]="isPinned(report.id)"
+              [disabled]="!isPinned(report.id) && isPinLimitReached()"
+              [matTooltip]="(isPinned(report.id) ? 'labels.buttons.Unpin' : 'labels.buttons.Pin') | translate"
+              (click)="togglePin(report, $event)"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+              </svg>
+            </button>
+            <span class="r-run">
+              {{ 'labels.buttons.Run' | translate }}
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="paginatedGroups.length === 0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <p>{{ 'labels.text.No reports match your filters' | translate }}</p>
+      <button type="button" class="btn btn-ghost" (click)="clearFilters()" *ngIf="hasActiveFilters()">
+        {{ 'labels.buttons.Reset' | translate }}
+      </button>
+    </div>
+
+    <mat-paginator
+      [length]="filteredCount"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </section>
 </div>

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -65,7 +65,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
@@ -481,17 +482,12 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(0);
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.disable();
         } else {
-          this.loanProductTermsForm
-            .get('minInterestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.minInterestRatePerPeriod);
+          const interestRateValues = this.getInterestRateValues();
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(interestRateValues.min);
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.enable();
-          this.loanProductTermsForm
-            .get('interestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.interestRatePerPeriod);
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.patchValue(interestRateValues.default);
           this.loanProductTermsForm.get('interestRatePerPeriod')!.enable();
-          this.loanProductTermsForm
-            .get('maxInterestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.maxInterestRatePerPeriod);
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(interestRateValues.max);
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.enable();
         }
         this.validateAdvancedPaymentStrategyControls();
@@ -572,7 +568,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         };
       case 'NominalInterestRate':
         return {
-          title: this.translateService.instant('labels.heading.Nominal Interest Rate by loan cycle'),
+          title: this.translateService.instant('labels.inputs.Annual interest rate by loan cycle'),
           formfields: this.getFormfields(values)
         };
     }
@@ -658,5 +654,29 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     } else {
       this.loanProductTermsForm.get('fixedLength')!.patchValue(null);
     }
+  }
+
+  private getInterestRateValues(): { min: any; default: any; max: any } {
+    if (this.isZeroInterestTemplate()) {
+      return {
+        min: '',
+        default: '',
+        max: ''
+      };
+    }
+
+    return {
+      min: this.loanProductsTemplate.minInterestRatePerPeriod,
+      default: this.loanProductsTemplate.interestRatePerPeriod,
+      max: this.loanProductsTemplate.maxInterestRatePerPeriod
+    };
+  }
+
+  private isZeroInterestTemplate(): boolean {
+    return (
+      this.loanProductsTemplate.minInterestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.interestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.maxInterestRatePerPeriod === 0
+    );
   }
 }

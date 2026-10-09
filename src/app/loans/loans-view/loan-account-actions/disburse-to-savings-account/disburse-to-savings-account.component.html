@@ -65,7 +65,7 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!disbursementForm.valid"
+            [disabled]="!disbursementForm.valid || isSubmitting"
             *mifosxHasPermission="'DISBURSETOSAVINGS_LOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}

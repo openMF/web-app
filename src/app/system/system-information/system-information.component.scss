@@ -32,6 +32,17 @@
   .info-value {
     font-weight: 600;
     color: var(--md-sys-color-on-surface, #333);
+    overflow-wrap: anywhere;
+  }
+
+  .info-hash {
+    font-weight: 500;
+    font-family: monospace;
+    color: var(--md-sys-color-on-surface-variant, #555);
+
+    &::before {
+      content: ' - ';
+    }
   }
 }
 
@@ -87,6 +98,10 @@
 
     .info-value {
       color: rgb(255 255 255 / 87%);
+    }
+
+    .info-hash {
+      color: #bbb;
     }
   }
 

@@ -22,8 +22,7 @@
         }
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>r{{ 'labels.commons.equired' | translate }}</strong>
+        {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Currency' | translate) } }}
       </mat-error>
     </mat-form-field>
 

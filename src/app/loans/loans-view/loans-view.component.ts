@@ -7,12 +7,18 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationExtras, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
+/** rxjs Imports */
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { ErrorHandlerService } from 'app/core/error-handler/error-handler.service';
 
 /** Custom Buttons Configuration */
 import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
@@ -20,13 +26,25 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import {
+  WorkingCapitalUndoChargeOffDialogComponent,
+  WorkingCapitalUndoChargeOffDialogResult,
+  buildWorkingCapitalUndoChargeOffPayload
+} from './working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
+import {
+  WorkingCapitalMarkAsFraudDialogComponent,
+  WorkingCapitalMarkAsFraudDialogData,
+  WorkingCapitalMarkAsFraudDialogResult
+} from './working-capital/loan-account-actions/mark-as-fraud-dialog/mark-as-fraud-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
+import { mapWorkingCapitalWriteOffBalance } from '../models/working-capital/working-capital-loan-account.model';
 import { Currency } from 'app/shared/models/general.model';
+import { SettingsService } from 'app/settings/settings.service';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { MatCardHeader, MatCardTitleGroup, MatCardTitle } from '@angular/material/card';
+import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 import { SvgIconComponent } from '../../shared/svg-icon/svg-icon.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, CurrencyPipe } from '@angular/common';
@@ -38,12 +56,13 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { StatusLookupPipe } from '@pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { SystemService } from 'app/system/system.service';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -51,11 +70,9 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
   styleUrls: ['./loans-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatCardHeader,
-    MatCardTitleGroup,
+    AccountHeaderComponent,
     SvgIconComponent,
     MatTooltip,
-    MatCardTitle,
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
@@ -72,27 +89,30 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     MatTabNavPanel,
     RouterOutlet,
     CurrencyPipe,
-    StatusLookupPipe,
     DateFormatPipe,
-    FormatNumberPipe
-  ]
+    FormatNumberPipe,
+    StatusLookupPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansViewComponent extends LoanProductBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   loansService = inject(LoansService);
   private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private errorHandler = inject(ErrorHandlerService);
+  private systemService = inject(SystemService);
   dialog = inject(MatDialog);
 
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
-  loanDatatables: any;
+  loanDatatables: any[] = [];
   /** Whether datatable filtering has completed */
   datatablesReady = false;
-  /** Recalculate Interest */
-  recalculateInterest: any;
   /** loan Arrears Delinquency config value */
-  loanDisplayArrearsDelinquency: number;
+  loanDisplayArrearsDelinquency = 0;
   /** Status */
   status: string;
   entityType: string;
@@ -117,47 +137,81 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     const loansService = this.loansService;
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
-    this.route.data.subscribe(
-      (data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
-        this.loanDetailsData = data.loanDetailsData;
-        if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product.name;
-        }
-        this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
-        this.loanStatus = this.loanDetailsData.status;
-        this.currency = this.loanDetailsData.currency;
-        if (this.loanProductService.isLoanProduct) {
-          this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-          this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-          loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
-          if (this.loanStatus.active) {
-            this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-              if (!lt.manuallyReversed) {
-                if (lt.type.reAge) {
-                  this.loanReAged = true;
-                } else if (lt.type.reAmortize) {
-                  this.loanReAmortized = true;
-                }
-              }
-            });
-          }
-          // Filter datatables based on entity datatable checks
-          this.filterDatatablesByProduct();
-        }
-        this.setConditionalButtons();
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetailsData = data.loanDetailsData;
+      if (!this.loanDetailsData.loanProductName) {
+        this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
       }
-    );
+      this.loanStatus = this.loanDetailsData.status;
+      // The action menu is rebuilt at the end of this block, so the status it
+      // reads has to come from the details that were just resolved: ngOnInit
+      // does not run again when the route reuses this component.
+      this.status = this.loanDetailsData.status?.value;
+      this.currency = this.loanDetailsData.currency;
+      if (this.loanProductService.isLoanProduct) {
+        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+        loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
+        if (this.loanStatus.active) {
+          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+            if (!lt.manuallyReversed) {
+              if (lt.type.reAge) {
+                this.loanReAged = true;
+              } else if (lt.type.reAmortize) {
+                this.loanReAmortized = true;
+              }
+            }
+          });
+        }
+      }
+      this.loadDeferredRouteData();
+      this.setConditionalButtons();
+    });
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
+  /**
+   * Loads account metadata that is not required to activate the General route.
+   * This keeps the account header and General tab responsive while the optional
+   * datatable navigation and arrears display configuration are retrieved.
+   */
+  loadDeferredRouteData(): void {
+    this.datatablesReady = false;
+    const appTable = this.loanProductService.isWorkingCapital ? 'm_wc_loan' : 'm_loan';
+
+    this.loansService
+      .getLoanDataTables(appTable)
+      .pipe(
+        catchError(() => of([])),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanDatatables: any) => {
+        this.loanDatatables = loanDatatables || [];
+
+        if (this.loanProductService.isLoanProduct) {
+          this.filterDatatablesByProduct();
+        } else {
+          this.datatablesReady = true;
+        }
+      });
+
+    this.systemService
+      .getConfigurationByName('loan-arrears-delinquency-display-data')
+      .pipe(
+        catchError(() => of({ value: 0 })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((loanArrearsDelinquencyConfig) => {
+        this.loanDisplayArrearsDelinquency = loanArrearsDelinquencyConfig?.value || 0;
+      });
+  }
+
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       if (this.loanId != params['loanId']) {
         this.loanId = params['loanId'];
         this.reload();
       }
     });
-    this.recalculateInterest = this.loanDetailsData?.recalculateInterest || true;
     this.status = this.loanDetailsData?.status?.value;
     this.loanStatus = this.loanDetailsData?.status;
     this.loanSubStatus = this.loanDetailsData?.subStatus === undefined ? null : this.loanDetailsData?.subStatus;
@@ -256,10 +310,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanDetailsData) {
       return;
     }
-    this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
+    this.buttonConfig = new LoansAccountButtonConfiguration(
+      this.loanProductService.isWorkingCapital,
+      this.status,
+      this.loanSubStatus
+    );
     if (this.canShowWorkingCapitalDiscountUpdate()) {
       this.buttonConfig.addButton({
-        name: 'Update discount',
+        name: 'Discount Fee',
         icon: 'edit',
         taskPermissionName: 'UPDATEDISCOUNT_WORKINGCAPITALLOAN'
       });
@@ -272,7 +330,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
 
-      if (this.loanDetailsData.isVariableInstallmentsAllowed) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.isVariableInstallmentsAllowed) {
         this.buttonConfig.addOption({
           name: 'Edit Repayment Schedule',
           icon: 'edit',
@@ -286,14 +344,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
     } else if (this.status === 'Active') {
-      if (this.loanDetailsData.enableBuyDownFee) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.enableBuyDownFee) {
         this.buttonConfig.addButton({
           name: 'Buy Down Fee',
           icon: 'plus',
           taskPermissionName: 'BUYDOWNFEE_LOAN'
         });
       }
-      if (this.loanDetailsData.enableIncomeCapitalization) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.enableIncomeCapitalization) {
         this.buttonConfig.addButton({
           name: 'Capitalized Income',
           icon: 'coins',
@@ -308,21 +366,28 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           taskPermissionName: 'DISBURSE_LOAN'
         });
       }
-      if (this.loanDetailsData.canDisburse) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.canDisburse) {
         this.buttonConfig.addButton({
           name: 'Disburse to Savings',
           icon: 'piggy-bank',
           taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
         });
       }
-      if (this.loanDetailsData.multiDisburseLoan && this.disburseTransactionNo > 1) {
+      if (
+        this.loanProductService.isLoanProduct &&
+        this.loanDetailsData.multiDisburseLoan &&
+        this.disburseTransactionNo > 1
+      ) {
         this.buttonConfig.addButton({
           name: 'Undo Last Disbursal',
           icon: 'undo',
           taskPermissionName: 'DISBURSALLASTUNDO_LOAN'
         });
       }
-      if (this.recalculateInterest) {
+      // An interest pause suspends interest accrual, which the backend only
+      // accepts on a loan that recalculates interest: without it the request is
+      // rejected with loan.must.have.recalculate.interest.enabled.
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.isInterestRecalculationEnabled) {
         this.buttonConfig.addButton({
           name: 'Add Interest Pause',
           icon: 'calendar',
@@ -339,7 +404,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
 
-      if (this.recalculateInterest) {
+      // Any active loan with a balance can be paid off, so this is unconditional.
+      // Working Capital declares its own Prepay Loan entry in the button
+      // configuration, with the Working Capital repayment permission.
+      if (this.loanProductService.isLoanProduct) {
         this.buttonConfig.addButton({
           name: 'Prepay Loan',
           icon: 'coins',
@@ -348,49 +416,89 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
 
       // Allow ChargeOff only If there loan is not already ChargeOff
-      if (!this.loanDetailsData.chargedOff) {
+      if (this.loanProductService.isLoanProduct) {
+        if (!this.loanDetailsData.chargedOff) {
+          this.buttonConfig.addButton({
+            name: 'Charge-Off',
+            icon: 'coins',
+            taskPermissionName: 'CHARGEOFF_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Charge-Off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOCHARGEOFF_LOAN'
+          });
+        }
+
+        // Allow Re-Ageing only when there is not any Re-Age transaction
+        if (!this.loanReAged) {
+          this.buttonConfig.addButton({
+            name: 'Re-Age',
+            icon: 'calendar',
+            taskPermissionName: 'REAGE_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Re-Age',
+            icon: 'undo',
+            taskPermissionName: 'UNDO_REAGE_LOAN'
+          });
+        }
+
+        if (!this.loanReAmortized) {
+          this.buttonConfig.addButton({
+            name: 'Re-Amortize',
+            icon: 'calendar-alt',
+            taskPermissionName: 'REAMORTIZE_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Re-Amortize',
+            icon: 'undo',
+            taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
+          });
+        }
+      }
+
+      // Allow Charge-Off only if the Working Capital loan is not already charged off
+      if (this.loanProductService.isWorkingCapital) {
+        if (!this.loanDetailsData.chargedOff) {
+          this.buttonConfig.addButton({
+            name: 'Charge-Off',
+            icon: 'coins',
+            taskPermissionName: 'CHARGEOFF_WORKINGCAPITALLOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Charge-Off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOCHARGEOFF_WORKINGCAPITALLOAN'
+          });
+        }
+      }
+
+      // Only Available when Near Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.nearBreach != null) {
         this.buttonConfig.addButton({
-          name: 'Charge-Off',
-          icon: 'coins',
-          taskPermissionName: 'CHARGEOFF_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Charge-Off',
-          icon: 'undo',
-          taskPermissionName: 'UNDOCHARGEOFF_LOAN'
+          name: 'Update Near Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_NEAR_BREACH_ACTION'
         });
       }
 
-      // Allow Re-Ageing only when there is not any Re-Age transaction
-      if (!this.loanReAged) {
+      // Only Available when Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.breach != null) {
         this.buttonConfig.addButton({
-          name: 'Re-Age',
-          icon: 'calendar',
-          taskPermissionName: 'REAGE_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Re-Age',
-          icon: 'undo',
-          taskPermissionName: 'UNDO_REAGE_LOAN'
+          name: 'Update Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_BREACH_ACTION'
         });
       }
-
-      if (!this.loanReAmortized) {
-        this.buttonConfig.addButton({
-          name: 'Re-Amortize',
-          icon: 'calendar-alt',
-          taskPermissionName: 'REAMORTIZE_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Re-Amortize',
-          icon: 'undo',
-          taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
-        });
-      }
-    } else if (this.status === 'Closed (obligations met)' || this.status === 'Overpaid') {
+    } else if (
+      this.loanProductService.isLoanProduct &&
+      (this.status === 'Closed (obligations met)' || this.status === 'Overpaid')
+    ) {
       if (this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',
@@ -406,6 +514,52 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     }
+
+    // Recovery gating for a written-off Working Capital loan. Both rules read
+    // the same figures, so they are mapped once here.
+    if (this.loanProductService.isWorkingCapital && this.status === 'Closed (written off)') {
+      const writeOffBalance = mapWorkingCapitalWriteOffBalance(this.loanDetailsData.balance);
+      if (writeOffBalance) {
+        if (writeOffBalance.writtenOffOutstanding <= 0) {
+          this.buttonConfig.disableButton('Recovery Payment', 'tooltips.Nothing left to recover');
+        }
+        // Undoing the write-off would restore the full balance while the money
+        // already recovered stays booked as income: the same money counted twice.
+        if (writeOffBalance.totalRecovered > 0) {
+          this.buttonConfig.disableButton('Undo Write-off', 'tooltips.Reverse the recovery payments first');
+        }
+      }
+    }
+
+    // Fraud flag for Working Capital loans. It sits outside the status branches
+    // above because the backend only restricts marking: the loan must be active
+    // to be flagged, but clearing the flag stays valid in every status, and
+    // hiding it elsewhere would strand a loan that was flagged by mistake.
+    if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.fraud) {
+        this.buttonConfig.addButton({
+          name: 'Unmark as Fraud',
+          icon: 'user-shield',
+          taskPermissionName: 'SETFRAUD_WORKINGCAPITALLOAN'
+        });
+      } else if (this.status === 'Active') {
+        this.buttonConfig.addButton({
+          name: 'Mark as Fraud',
+          icon: 'user-shield',
+          taskPermissionName: 'SETFRAUD_WORKINGCAPITALLOAN'
+        });
+      }
+    }
+  }
+
+  /**
+   * Whether the account is a written-off Working Capital loan.
+   *
+   * A written-off loan looks exactly like a settled one - closed, zero balance -
+   * so the header needs an explicit marker to tell them apart.
+   */
+  get isWorkingCapitalWrittenOff(): boolean {
+    return this.loanProductService.isWorkingCapital && !!this.loanDetailsData?.writtenOffOnDate;
   }
 
   loanAction(actionName: string) {
@@ -433,6 +587,12 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       case 'Undo Re-Amortize':
       case 'Undo Charge-Off':
         this.undoLoanAction(actionName);
+        break;
+      case 'Mark as Fraud':
+        this.setWorkingCapitalFraud(true);
+        break;
+      case 'Unmark as Fraud':
+        this.setWorkingCapitalFraud(false);
         break;
       default:
         const navigationExtras: NavigationExtras = {
@@ -493,6 +653,11 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
 
   undoLoanAction(actionName: string): void {
     actionName = actionName.replace('Undo ', '');
+    // Working Capital charge-off is undone through its own resource and dialog.
+    if (this.loanProductService.isWorkingCapital && actionName === 'Charge-Off') {
+      this.undoWorkingCapitalChargeOff();
+      return;
+    }
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
@@ -526,18 +691,80 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     });
   }
 
+  /** Opens the Working Capital undo charge-off dialog and posts the command on confirmation. */
+  private undoWorkingCapitalChargeOff(): void {
+    const dialogRef = this.dialog.open<
+      WorkingCapitalUndoChargeOffDialogComponent,
+      unknown,
+      WorkingCapitalUndoChargeOffDialogResult
+    >(WorkingCapitalUndoChargeOffDialogComponent);
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
+        this.loansService
+          .applyWorkingCapitalLoanActionCommand(String(this.loanId), payload, 'undoChargeOff')
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => this.reload());
+      });
+  }
+
+  /**
+   * Opens the fraud confirmation dialog and sets the flag on confirmation.
+   * The flag changes neither the loan status nor its transactions, so the view
+   * is reloaded explicitly; otherwise the action button would keep its previous
+   * label and the change would look like it never happened.
+   * @param fraud Target value of the fraud flag
+   */
+  private setWorkingCapitalFraud(fraud: boolean): void {
+    const dialogRef = this.dialog.open<
+      WorkingCapitalMarkAsFraudDialogComponent,
+      WorkingCapitalMarkAsFraudDialogData,
+      WorkingCapitalMarkAsFraudDialogResult
+    >(WorkingCapitalMarkAsFraudDialogComponent, { data: { fraud } });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        this.loansService
+          .markWorkingCapitalLoanAsFraud(String(this.loanId), fraud)
+          .pipe(
+            catchError((error) => this.errorHandler.handleError(error, 'Working Capital Loan Fraud Flag')),
+            takeUntilDestroyed(this.destroyRef)
+          )
+          .subscribe({
+            next: () => this.reload(),
+            // The error handler already reported it through the snackbar.
+            error: () => undefined
+          });
+      });
+  }
+
   iconLoanStatusColor() {
     if (!this.loanDetailsData) {
       return '';
     }
-    if (this.loanDetailsData.chargedOff) {
-      return 'loanStatusType.chargeoff';
-    }
-    if (this.isContractTermination(this.loanSubStatus)) {
-      return 'loanSubStatusType.contractTermination';
-    }
-    if (this.loanDetailsData.inArrears) {
-      return 'loanStatusType.activeOverdue';
+    if (this.loanProductService.isLoanProduct) {
+      if (this.loanDetailsData.chargedOff) {
+        return 'loanStatusType.chargeoff';
+      }
+      if (this.isContractTermination(this.loanSubStatus)) {
+        return 'loanSubStatusType.contractTermination';
+      }
+      if (this.loanDetailsData.inArrears) {
+        return 'loanStatusType.activeOverdue';
+      }
+    } else if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
+        return 'loanStatusType.activeOverdue';
+      }
     }
     return this.loanDetailsData.status?.code;
   }
@@ -549,8 +776,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (this.loanDetailsData.chargedOff) {
       return 'Chargeoff';
     }
-    if (this.loanDetailsData.inArrears) {
-      return 'activeOverdue';
+    if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
+        return 'activeOverdue';
+      }
+    } else {
+      if (this.loanDetailsData.inArrears) {
+        return 'activeOverdue';
+      }
     }
     return this.loanDetailsData.status?.code;
   }
@@ -592,6 +825,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanProductService.isWorkingCapital || !this.loanDetailsData) {
       return false;
     }
-    return this.loanDetailsData?.status?.active === true;
+    return !this.loanDetailsData?.discountFee && this.loanDetailsData?.status?.active === true;
   }
 }

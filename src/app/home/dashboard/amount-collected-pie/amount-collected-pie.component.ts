@@ -7,8 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -38,7 +38,8 @@ Chart.register(...registerables);
     MatCardHeader,
     FaIconComponent,
     NgStyle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AmountCollectedPieComponent implements OnInit {
   private homeService = inject(HomeService);
@@ -50,7 +51,7 @@ export class AmountCollectedPieComponent implements OnInit {
   private currentTheme = 'light-theme';
 
   /** Static Form control for office Id */
-  officeId = new UntypedFormControl();
+  officeId = new FormControl();
   /** Office Data */
   officeData: any;
   /** Chart.js chart */
@@ -66,7 +67,7 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -91,7 +92,7 @@ export class AmountCollectedPieComponent implements OnInit {
    * Subscribes to value changes of office Id fetches chart data accordingly.
    */
   getChartData() {
-    this.officeId.valueChanges.subscribe((value: number) => {
+    this.officeId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: number) => {
       this.homeService.getCollectedAmount(value).subscribe((response: any) => {
         const data = Object.entries(response[0]).map((entry) => entry[1]);
         if (!(data[0] === 0 && data[1] === 0)) {

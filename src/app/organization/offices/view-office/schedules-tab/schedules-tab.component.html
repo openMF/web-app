@@ -1,0 +1,112 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <div class="layout-row align-start">
+    <div class="m-b-10">
+      <h3>{{ 'labels.heading.Schedules' | translate }}</h3>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="schedule-state">
+      <mat-spinner diameter="36"></mat-spinner>
+      <span>{{ 'labels.text.Loading data' | translate }}</span>
+    </div>
+  }
+
+  @if (isPluginUnavailable && !isLoading) {
+    <div class="schedule-state unavailable-state">
+      <span>{{
+        'labels.text.Office Schedules management requires the Savings Plugin to be deployed' | translate
+      }}</span>
+    </div>
+  }
+
+  @if (hasError && !isLoading && !isPluginUnavailable) {
+    <div class="schedule-state error-state">
+      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+      <button mat-button color="primary" (click)="loadOfficeSchedules()">
+        {{ 'labels.buttons.Retry' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (saveError && !isLoading && !isPluginUnavailable) {
+    <div class="schedule-state error-state compact-state">
+      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+    </div>
+  }
+
+  @if (!isLoading && !hasError && !isPluginUnavailable) {
+    <form [formGroup]="schedulesForm" (ngSubmit)="submit()">
+      <div class="schedule-table" formArrayName="days">
+        <div class="schedule-header">
+          <span class="day-column">{{ 'labels.inputs.Day' | translate }}</span>
+          <span class="enabled-column">{{ 'labels.inputs.Enabled' | translate }}</span>
+          <span class="time-column">{{ 'labels.inputs.Opening Time' | translate }}</span>
+          <span class="time-column">{{ 'labels.inputs.Closing Time' | translate }}</span>
+        </div>
+
+        @for (dayControl of days.controls; track dayControl.get('weekday')?.value) {
+          <div class="schedule-row" [formGroupName]="$index">
+            <div class="weekday-label day-column">
+              {{ getWeekdayLabelKey(dayControl) | translate }}
+            </div>
+            <mat-checkbox
+              class="enabled-column"
+              formControlName="enabled"
+              (change)="setDayEnabled(dayControl, $event.checked)"
+              [attr.aria-label]="'labels.inputs.Enabled' | translate"
+            ></mat-checkbox>
+            <mat-form-field appearance="outline" class="time-column">
+              <mat-label>{{ 'labels.inputs.Opening Time' | translate }}</mat-label>
+              <input
+                matInput
+                type="time"
+                formControlName="openingTime"
+                [readonly]="isSaving"
+                (input)="refreshClosingTime(dayControl)"
+              />
+              @if (hasTimeRequiredError(dayControl, 'openingTime')) {
+                <mat-error>{{
+                  'errors.validation.requiredField' | translate: { label: ('labels.inputs.Opening Time' | translate) }
+                }}</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="time-column">
+              <mat-label>{{ 'labels.inputs.Closing Time' | translate }}</mat-label>
+              <input matInput type="time" formControlName="closingTime" [readonly]="isSaving" />
+              @if (hasTimeRequiredError(dayControl, 'closingTime')) {
+                <mat-error>{{
+                  'errors.validation.requiredField' | translate: { label: ('labels.inputs.Closing Time' | translate) }
+                }}</mat-error>
+              }
+              @if (hasTimeOrderError(dayControl)) {
+                <mat-error>{{ 'errors.validation.openingTimeBeforeClosingTime' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        }
+      </div>
+
+      <div class="schedule-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="schedulesForm.invalid || isSaving"
+          *mifosxHasPermission="'UPDATE_OFFICE'"
+        >
+          <fa-icon icon="save" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Save Changes' | translate }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

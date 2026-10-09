@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CollateralsService } from '../collaterals.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,13 +50,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewCollateralComponent {
   private route = inject(ActivatedRoute);
   private collateralsService = inject(CollateralsService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   clientCollateralData: any;
 
@@ -67,7 +70,7 @@ export class ViewCollateralComponent {
   ];
 
   constructor() {
-    this.route.data.subscribe((data: { clientCollateralData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientCollateralData: any }) => {
       this.clientCollateralData = data.clientCollateralData;
     });
   }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -22,6 +22,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Floating Rate Period Dialog Component.
  */
@@ -37,12 +38,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<FloatingRatePeriodDialogComponent>>(MatDialogRef);
   formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   data = inject(MAT_DIALOG_DATA);
 
   /** Floating Rate Period Form. */
@@ -61,7 +64,7 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
     this.minDate = tomorrow;
 
     let rowDisabled = false;
-    if (this.data?.fromDate && new Date(this.data.fromDate) < this.minDate) {
+    if (this.data?.fromDate && this.dateUtils.parseDate(this.data.fromDate) < this.minDate) {
       rowDisabled = true;
     }
     if (this.data?.isNew) {
@@ -69,7 +72,7 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
     }
     this.floatingRatePeriodForm = this.formBuilder.group({
       fromDate: [
-        { value: this.data?.fromDate ? new Date(this.data.fromDate) : '', disabled: rowDisabled },
+        { value: this.data?.fromDate ? this.dateUtils.parseDate(this.data.fromDate) : '', disabled: rowDisabled },
         Validators.required
       ],
       interestRate: [
@@ -80,7 +83,8 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
         ]
       ],
       isDifferentialToBaseLendingRate: [
-        { value: this.data?.isDifferentialToBaseLendingRate ?? false, disabled: rowDisabled }]
+        { value: this.data?.isDifferentialToBaseLendingRate ?? false, disabled: rowDisabled }
+      ]
     });
   }
 

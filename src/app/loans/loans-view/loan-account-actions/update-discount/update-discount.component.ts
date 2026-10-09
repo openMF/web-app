@@ -7,9 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
@@ -17,45 +17,72 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { PositiveNumberDirective } from 'app/directives/positive-number.directive';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
-import { WorkingCapitalLoanDiscountUpdateRequest } from 'app/loans/loans.service';
+import { Currency } from 'app/shared/models/general.model';
+import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
+import {
+  WorkingCapitalLoanDiscountUpdateRequest,
+  WorkingCapitalLoanTransaction
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
- * Update discount action for Working Capital Loan.
+ * Discount Fee action for Working Capital Loan.
  */
 @Component({
   selector: 'mifosx-update-discount',
   standalone: true,
   templateUrl: './update-discount.component.html',
+  styleUrls: ['./update-discount.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
-    PositiveNumberDirective
-  ]
+    InputAmountComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private alertService = inject(AlertService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   readonly maxNoteLength = 500;
+  readonly maxExternalIdLength = 100;
 
-  updateDiscountForm: UntypedFormGroup;
-  isSubmitting = false;
+  currency: Currency | null = null;
+  disbursementTransactionId: number = 0;
+  disbursementDate: number[] | string | null = null;
+
+  constructor() {
+    super();
+  }
+
+  updateDiscountForm!: FormGroup;
   submitErrorMessage = '';
-  discountValue = 0;
+  isSubmitting = false;
 
   ngOnInit(): void {
-    this.discountValue = this.dataObject?.discount ?? this.dataObject?.discountAmount ?? 0;
+    const transactions: WorkingCapitalLoanTransaction[] = this.dataObject?.content ?? [];
+    const disburseTransaction = transactions.find(
+      (transaction) => transaction.type?.disbursement && !transaction.reversed
+    );
+    if (disburseTransaction) {
+      this.currency = disburseTransaction.currency;
+      this.disbursementTransactionId = disburseTransaction.id;
+      this.disbursementDate = disburseTransaction.transactionDate;
+    }
     this.updateDiscountForm = this.formBuilder.group({
-      discountAmount: [
-        this.discountValue,
+      transactionAmount: [
+        this.dataObject?.discount ?? this.dataObject?.transactionAmount ?? '',
         [
           Validators.required,
           Validators.min(0),
           amountValueValidator()
         ]
+      ],
+      externalId: [
+        '',
+        Validators.maxLength(this.maxExternalIdLength)
       ],
       note: [
         '',
@@ -65,33 +92,40 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
   }
 
   submit(): void {
-    if (!this.updateDiscountForm.valid || this.isSubmitting) {
+    if (
+      this.updateDiscountForm == null ||
+      !this.updateDiscountForm.valid ||
+      this.isSubmitting ||
+      this.disbursementTransactionId <= 0
+    ) {
       return;
     }
 
-    this.isSubmitting = true;
     this.submitErrorMessage = '';
+    this.isSubmitting = true;
 
     const formValue = this.updateDiscountForm.value;
     const payload: WorkingCapitalLoanDiscountUpdateRequest = {
-      discountAmount: Number(formValue.discountAmount),
-      note: formValue.note,
+      transactionAmount: Number(formValue.transactionAmount),
+      relatedResourceId: this.disbursementTransactionId,
+      externalId: formValue.externalId || undefined,
+      note: formValue.note || undefined,
       locale: this.settingsService.language.code,
       dateFormat: this.settingsService.dateFormat
     };
 
-    this.loanService.updateWorkingCapitalLoanDiscount(this.loanId, payload).subscribe({
+    this.loanService.applyWorkingCapitalLoanActionCommand(this.loanId, payload, 'discountFee').subscribe({
       next: () => {
         this.alertService.alert({
           type: 'Success',
           message: this.translateService.instant('labels.messages.workingCapitalDiscountUpdated')
         });
-        this.isSubmitting = false;
         this.gotoLoanDefaultView();
       },
       error: (error: HttpErrorResponse) => {
-        this.submitErrorMessage = this.mapDiscountError(error);
         this.isSubmitting = false;
+        this.cdr.markForCheck();
+        this.submitErrorMessage = this.mapDiscountError(error);
       }
     });
   }

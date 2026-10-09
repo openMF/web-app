@@ -133,6 +133,16 @@
       opacity: 0.7;
     }
   }
+
+  a.entity-link {
+    color: var(--md-sys-color-primary, #1074b9);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
 }
 
 // PDF Modal Overlay

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
@@ -45,6 +54,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { UntypedFormControl } from '@angular/forms';
 import { LOAN_PRODUCT_TYPE, PRODUCT_TYPES } from './models/loan-product.model';
 import { LoanProductBaseComponent } from './common/loan-product-base.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'mifosx-loan-products',
@@ -72,7 +82,8 @@ import { LoanProductBaseComponent } from './common/loan-product-base.component';
     MatMenuItem,
     StatusLookupPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductsComponent extends LoanProductBaseComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
@@ -84,6 +95,12 @@ export class LoanProductsComponent extends LoanProductBaseComponent implements O
   private errorHandler = inject(ErrorHandlerService);
 
   loanProductSelector = new UntypedFormControl();
+
+  /**
+   * Production mode (MIFOS_PRODUCTION_MODE) - hides the Convenient loan product creation flow,
+   * leaving Classic as the only way to create a loan product.
+   */
+  productionMode = environment.productionMode === true;
 
   loanProductsData: any;
   displayedColumns: string[] = [

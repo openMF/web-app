@@ -9,7 +9,7 @@
 <div class="tab-container mat-typography">
   <div class="layout-row align-start">
     <div class="m-b-10">
-      <h3>{{ datatableName }}</h3>
+      <h3>{{ formatTabLabel(datatableName) }}</h3>
     </div>
     <div class="action-button m-b-7 gap-10px">
       <span *mifosxHasPermission="'CREATE_' + datatableName">
@@ -28,7 +28,7 @@
         }
       </ng-container>
       <ng-container *mifosxHasPermission="'DELETE_' + datatableName">
-        @if (datatableData.length > 0) {
+        @if (datatableData.data.length > 0) {
           <span>
             <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
               <fa-icon icon="trash" class="m-r-10"></fa-icon>
@@ -40,15 +40,19 @@
     </div>
   </div>
 
-  <mat-card class="data-table-card m-t-10">
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading datatables' | translate"></mifosx-page-loader>
+  }
+
+  <mat-card [hidden]="isLoading" class="data-table-card m-t-10">
     <mat-card-content>
       <div class="table-scroll-wrapper">
-        <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z2 m-b-25">
+        <table #dataTable mat-table [dataSource]="datatableData" matSort class="mat-elevation-z2 m-b-25">
           @for (datatableColumn of datatableColumns; track datatableColumn; let i = $index) {
             <ng-container [matColumnDef]="datatableColumn">
               @if (i === 0) {
                 <th mat-header-cell *matHeaderCellDef class="checkbox-column"></th>
-                <td mat-cell *matCellDef="let data">
+                <td mat-cell *matCellDef="let data" class="selection-cell">
                   <mat-checkbox
                     class="center"
                     (click)="$event.stopPropagation()"
@@ -58,10 +62,47 @@
                   </mat-checkbox>
                 </td>
               }
-              @if (i > 0) {
-                <th mat-header-cell class="right" *matHeaderCellDef>{{ getInputName(datatableColumn) }}</th>
-                <td mat-cell class="right" *matCellDef="let data" [ngClass]="isToDelete(data)">
-                  {{ formatValue(data, datatableColumn) }}
+              @if (datatableColumn === ACTIONS_NAME_FIELD) {
+                <th mat-header-cell *matHeaderCellDef class="actions-column"></th>
+                <td mat-cell *matCellDef="let data" class="actions-cell">
+                  <span *mifosxHasPermission="'UPDATE_' + datatableName">
+                    <span class="mobile-cell-label">{{ 'labels.buttons.Edit' | translate }}</span>
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      type="button"
+                      [attr.aria-label]="'labels.buttons.Edit' | translate"
+                      [matTooltip]="'labels.buttons.Edit' | translate"
+                      (click)="edit(data); $event.stopPropagation()"
+                    >
+                      <fa-icon icon="edit"></fa-icon>
+                    </button>
+                  </span>
+                </td>
+              }
+              @if (i > 0 && datatableColumn !== ACTIONS_NAME_FIELD) {
+                <th mat-header-cell class="right" *matHeaderCellDef mat-sort-header>
+                  {{ getInputName(datatableColumn) }}
+                </th>
+                <td
+                  mat-cell
+                  class="right responsive-data-cell"
+                  *matCellDef="let data"
+                  [ngClass]="isToDelete(data)"
+                  [attr.data-label]="getInputName(datatableColumn)"
+                >
+                  <span class="mobile-cell-label">{{ getInputName(datatableColumn) }}</span>
+                  <span
+                    class="cell-value"
+                    [ngClass]="{
+                      'json-value': datatables.isJson(
+                        getColumnDisplayType(datatableColumn),
+                        getColumnType(datatableColumn)
+                      )
+                    }"
+                  >
+                    {{ formatValue(data, datatableColumn) }}
+                  </span>
                 </td>
               }
             </ng-container>
@@ -71,6 +112,7 @@
           <tr mat-row *matRowDef="let row; columns: datatableColumns" class="data-row"></tr>
         </table>
       </div>
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>

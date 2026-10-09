@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -27,7 +27,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -154,16 +155,18 @@ export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent imp
 
     // Waive penalties first if selected, then submit reschedule
     if (this.waivePenalties.value && this.selectedPenalties.length > 0) {
-      this.penaltyManagementService.waivePenalties(this.loanId, this.selectedPenalties).subscribe({
-        next: () => {
-          this.submitReschedule(data);
-        },
-        error: (error: any) => {
-          console.error('Error waiving penalties:', error);
-          // Continue with reschedule even if waive fails
-          this.submitReschedule(data);
-        }
-      });
+      this.penaltyManagementService
+        .waivePenalties(this.loanProductService.loanAccountPath, this.loanId, this.selectedPenalties)
+        .subscribe({
+          next: () => {
+            this.submitReschedule(data);
+          },
+          error: (error: any) => {
+            console.error('Error waiving penalties:', error);
+            // Continue with reschedule even if waive fails
+            this.submitReschedule(data);
+          }
+        });
     } else {
       this.submitReschedule(data);
     }

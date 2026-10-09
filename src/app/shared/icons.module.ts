@@ -50,9 +50,11 @@ import {
   faFilePdf,
   faFileUpload,
   faFileWord,
+  faFilter,
   faFillDrip,
   faGlobe,
   faHandHoldingUsd,
+  faHistory,
   faHome,
   faKey,
   faLink,
@@ -143,7 +145,14 @@ import {
   faPercent,
   faMoneyCheckDollar,
   faSackDollar,
-  faCheckDouble
+  faCheckDouble,
+  faUserPlus,
+  faChartPie,
+  faWallet,
+  faChartArea,
+  faInbox,
+  faExchangeAlt,
+  faSlidersH
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -209,6 +218,7 @@ export class IconsModule {
       faFilePdf,
       faFileUpload,
       faFileWord,
+      faFilter,
       faFileExcel,
       faFileExport,
       faFillDrip,
@@ -217,6 +227,7 @@ export class IconsModule {
       faHandHoldingHeart,
       faHandHoldingUsd,
       faHeart,
+      faHistory,
       faHome,
       faKey,
       faLaptopCode,
@@ -294,7 +305,14 @@ export class IconsModule {
       faReceipt,
       faTableCells,
       faSave,
-      faUnlink
+      faUnlink,
+      faUserPlus,
+      faChartPie,
+      faWallet,
+      faChartArea,
+      faInbox,
+      faExchangeAlt,
+      faSlidersH
     );
   }
 }

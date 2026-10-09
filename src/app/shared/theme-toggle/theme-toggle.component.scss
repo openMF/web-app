@@ -5,3 +5,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+:host button {
+  color: rgb(255 255 255 / 72%);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: rgb(255 255 255 / 15%);
+    color: #fff;
+  }
+}

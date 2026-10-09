@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -33,11 +34,13 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     MatSlideToggle,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisburseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private destroyRef = inject(DestroyRef);
 
   /** Payment Type Options */
   paymentTypes: any;
@@ -50,8 +53,9 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan Form */
-  disbursementLoanForm: UntypedFormGroup;
-  currency: Currency;
+  disbursementLoanForm!: UntypedFormGroup;
+  currency!: Currency;
+  readonly maxExternalIdLength = 100;
 
   constructor() {
     super();
@@ -88,7 +92,30 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       note: ''
     });
     if (this.isWorkingCapital) {
-      this.disbursementLoanForm.addControl('discountAmount', new UntypedFormControl());
+      this.disbursementLoanForm.addControl(
+        'discountAmount',
+        new UntypedFormControl({
+          value: this.dataObject.discountAmount,
+          disabled: this.dataObject.overrideDiscountDisabled
+        })
+      );
+      this.disbursementLoanForm.addControl(
+        'discountExternalId',
+        new UntypedFormControl('', Validators.maxLength(this.maxExternalIdLength))
+      );
+      this.disbursementLoanForm.setValidators((group) => {
+        const a = group.get('externalId')?.value;
+        const b = group.get('discountExternalId')?.value;
+        return a && b && a === b ? { discountExternalIdEqualsExternalId: true } : null;
+      });
+      this.disbursementLoanForm
+        .get('discountAmount')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((value) => {
+          if (value == null || value === '' || Number(value) <= 0) {
+            this.disbursementLoanForm.get('discountExternalId')!.setValue('');
+          }
+        });
     }
   }
 

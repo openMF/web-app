@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -37,7 +37,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     MatSlideToggle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTransactionComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -96,7 +97,7 @@ export class EditTransactionComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createEditTransactionForm();
     this.editTransactionForm.patchValue({
-      transactionDate: this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
+      transactionDate: this.transactionTemplateData.date && this.dateUtils.parseDate(this.transactionTemplateData.date),
       transactionAmount: this.transactionTemplateData.amount,
       paymentTypeId: this.transactionTemplateData.paymentTypeId
     });

@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -22,9 +23,11 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForeclosureComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
 
@@ -48,7 +51,7 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
   createforeclosureForm() {
     this.foreclosureForm = this.formBuilder.group({
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       outstandingPrincipalPortion: [{ value: this.dataObject.principalPortion || 0, disabled: true }],
@@ -64,9 +67,12 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
   }
 
   onChanges(): void {
-    this.foreclosureForm.get('transactionDate').valueChanges.subscribe((val) => {
-      this.retrieveLoanForeclosureTemplate(val);
-    });
+    this.foreclosureForm
+      .get('transactionDate')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((val) => {
+        this.retrieveLoanForeclosureTemplate(val);
+      });
   }
 
   retrieveLoanForeclosureTemplate(val: any) {

@@ -48,10 +48,16 @@ export interface LoanDelinquencyAction {
   action: string;
   startDate: number[];
   endDate: number[];
+  effectiveEndDate?: number[];
   createdById: number;
   createdOn: Date;
   updatedById: number;
   lastModifiedOn: Date;
+  /** Payment rule, returned only for RESCHEDULE actions on working capital loans */
+  minimumPayment?: number;
+  minimumPaymentType?: string;
+  frequency?: number;
+  frequencyType?: string;
 }
 
 export interface DelinquencyPausePeriod {
@@ -157,6 +163,22 @@ export interface BuyDownFeeAmortizationDetails {
 
 export interface EditablePeriod extends RepaymentSchedulePeriod {
   changed?: boolean;
+  /** True when the due date differs from the unmodified schedule, to highlight the date cell. */
+  dueDateChanged?: boolean;
+  /** Formatted due date of the unmodified schedule, kept as the key for schedule variation records. */
+  originalDueDate?: string;
+  /** Installment amount of the unmodified schedule, to detect reverted edits. */
+  originalTotalDueForPeriod?: number;
+  /** Raw due date of the unmodified schedule, to restore the row when it is marked for deletion. */
+  originalDueDateValue?: number[];
+  /** True when the installment is marked for deletion via `exceptions.deletedinstallments`. */
+  deleted?: boolean;
+}
+
+/** Delete/restore toggle of one installment, keyed by its unmodified due date. */
+export interface ScheduleDeleteRecord {
+  dueDate: string;
+  deleted: boolean;
 }
 
 export interface EditableRepaymentSchedule extends RepaymentSchedule {
@@ -168,9 +190,15 @@ export interface RepaymentScheduleEditCache {
   data: RepaymentSchedulePeriod;
 }
 
+/**
+ * One entry of the `exceptions.modifiedinstallments` array of the Fineract
+ * loan schedule variations API. `dueDate` identifies the original installment;
+ * `installmentAmount` and `modifiedDueDate` carry the requested changes.
+ */
 export interface ScheduleChangeRecord {
   dueDate: string;
-  installmentAmount: number;
+  installmentAmount?: number;
+  modifiedDueDate?: string;
 }
 
 export interface LoanOriginator {
@@ -178,8 +206,8 @@ export interface LoanOriginator {
   externalId: string;
   name: string;
   status: string;
-  originatorType: CodeValue;
-  channelType: CodeValue;
+  originatorType?: CodeValue;
+  channelType?: CodeValue;
 }
 
 export interface DelinquencyRangeSchedule {
@@ -188,7 +216,8 @@ export interface DelinquencyRangeSchedule {
   periodNumber: number;
   fromDate: string;
   toDate: string;
-  expectedAmount: number;
+  /** Null when the period was administratively reset — render as empty, not 0. */
+  expectedAmount: number | null;
   paidAmount: number;
   outstandingAmount: number;
   minPaymentCriteriaMet?: boolean;

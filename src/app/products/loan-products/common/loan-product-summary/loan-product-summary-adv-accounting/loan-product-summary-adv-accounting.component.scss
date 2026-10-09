@@ -1,0 +1,52 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/helper';
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/* Accent only — see loan-product-summary.component.scss. */
+:host {
+  @include lpt.accent-tokens;
+}
+
+:host-context(.dark-theme) {
+  @include lpt.accent-dark-tokens;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+th:first-child,
+td:first-child {
+  width: 50%;
+}
+
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Hardcoded #4461e2 → themed accent; `!important` dropped. See the sibling
+   loan-product-summary.component.scss for the full rationale. */
+.mat-h3,
+.mat-h4 {
+  margin-top: var(--lp-space-16, 1rem);
+  color: var(--lp-accent);
+}
+
+.mat-h3 {
+  font-weight: 500;
+}
+
+.mat-h4 {
+  font-weight: 400;
+}

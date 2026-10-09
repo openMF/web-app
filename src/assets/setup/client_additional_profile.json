@@ -1,0 +1,68 @@
+{
+  "datatableName": "client_additional_profile",
+  "apptableName": "m_client",
+  "entitySubType": "Person",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "nationality",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "tax_id",
+      "type": "String",
+      "length": 50,
+      "mandatory": false
+    },
+    {
+      "name": "home_phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "digital_id",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "state_region_of_birth",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "country_of_birth",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "marital_status",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "matrimonial_property_regime",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "spouse_name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "spouse_occupation",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    }
+  ]
+}

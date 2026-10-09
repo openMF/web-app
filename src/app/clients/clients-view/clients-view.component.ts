@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -25,19 +26,11 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { CreditBureauService } from 'app/credit-bureau/credit-bureau.service';
 import { LegalFormId } from '../models/legal-form.enum';
-import {
-  MatCard,
-  MatCardHeader,
-  MatCardTitleGroup,
-  MatCardMdImage,
-  MatCardTitle,
-  MatCardSubtitle,
-  MatCardContent
-} from '@angular/material/card';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCardMdImage } from '@angular/material/card';
+import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass } from '@angular/common';
 import { EntityNameComponent } from '../../shared/entity-name/entity-name.component';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -45,10 +38,11 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
+import { AccountHeaderComponent } from 'app/shared/account-header/account-header.component';
 
 @Component({
   selector: 'mifosx-clients-view',
@@ -56,18 +50,14 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   styleUrls: ['./clients-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatCardHeader,
-    MatCardTitleGroup,
+    AccountHeaderComponent,
     MatCardMdImage,
     MatTooltip,
-    MatCardTitle,
-    NgClass,
     EntityNameComponent,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
-    MatCardSubtitle,
     AccountNumberComponent,
     ExternalIdentifierComponent,
     MatMenu,
@@ -77,9 +67,10 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet,
-    StatusLookupPipe,
-    DateFormatPipe
-  ]
+    DateFormatPipe,
+    StatusLookupPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsViewComponent implements OnInit {
   complianceHideClientData = environment.complianceHideClientData;
@@ -135,8 +126,10 @@ export class ClientsViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private clientsService = inject(ClientsService);
+  private creditBureauService = inject(CreditBureauService);
   private _sanitizer = inject(DomSanitizer);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   clientViewData: any;
   clientDatatables: any;
@@ -144,14 +137,16 @@ export class ClientsViewComponent implements OnInit {
   clientTemplateData: any;
 
   constructor() {
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
-      this.clientViewData = data.clientViewData;
-      this.clientDatatables = this.filterDatatablesByClientSubtype(
-        data.clientDatatables,
-        data.clientViewData?.legalForm?.id
-      );
-      this.clientTemplateData = data.clientTemplateData;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
+        this.clientViewData = data.clientViewData;
+        this.clientDatatables = this.filterDatatablesByClientSubtype(
+          data.clientDatatables,
+          data.clientViewData?.legalForm?.id
+        );
+        this.clientTemplateData = data.clientTemplateData;
+      });
   }
 
   /**
@@ -419,11 +414,23 @@ export class ClientsViewComponent implements OnInit {
       data: { deleteContext: `the profile image of ${this.clientViewData.displayName}` }
     });
     deleteClientImageDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientsService.deleteClientProfileImage(this.clientViewData.id).subscribe(() => {
           this.reload();
         });
       }
     });
+  }
+
+  /**
+   * Returns true if the current CB-ILD role is COMPLIANCE.
+   * Used to show/hide Audit Trail tab in the client profile nav.
+   */
+  get isCbildCompliance(): boolean {
+    return this.creditBureauService.getRole() === 'COMPLIANCE';
+  }
+
+  get cbIldEnabled(): boolean {
+    return environment.cbIldEnabled;
   }
 }
