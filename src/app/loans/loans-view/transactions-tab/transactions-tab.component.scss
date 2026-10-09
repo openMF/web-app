@@ -6,81 +6,264 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use 'assets/styles/helper';
-@use 'assets/styles/colours' as *;
+@use '../loan-tab-shared' as shared;
 
-.container {
-  padding-bottom: 2%;
-  max-width: 100%;
+/* ── Transaction-type tokens (shared with view-transaction) ── */
+@include shared.transaction-type-tokens;
 
-  .transaction-buttons {
-    padding-bottom: 1rem;
-    padding-top: 1rem;
+.transactions-container {
+  @include shared.card-container;
+}
 
-    .accruals {
-      padding-top: 1%;
-    }
-  }
+.toolbar {
+  @include shared.toolbar;
 
-  table {
-    width: 100%;
-
-    .account-action-button {
-      min-width: 26px;
-      padding: 0 0 3px;
-      margin: 0 2%;
-      line-height: 25px;
-    }
-
-    .strike {
-      text-decoration: line-through;
-      color: $status-active-overdue;
-    }
-
-    .linked {
-      color: $status-approved;
-    }
-
-    .accrual {
-      color: $msg-default;
-    }
-
-    .down-payment {
-      color: $status-downpayment;
-    }
-
-    .chargeoff {
-      color: $status-chargeoff;
-    }
-
-    .reage {
-      color: $status-reage;
-    }
-
-    .reamortize {
-      color: $status-reamortize;
-    }
+  .toggle-group {
+    @include shared.toolbar-toggle-group;
   }
 }
 
-.select-row:hover {
+.btn-export {
+  @include shared.btn-export;
+}
+
+/* ── Table wrapper ───────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* ── Angular Material table overrides (scoped) ───────────────── */
+:host ::ng-deep {
+  /* Group header row */
+  .group-header-row {
+    height: 28px;
+  }
+
+  .group-header-row .mat-mdc-header-cell {
+    background: var(--ch-surface-h);
+    border-bottom: none;
+    padding: 0 16px;
+  }
+
+  /* Main header row */
+  .mat-mdc-header-row:not(.group-header-row) {
+    background: var(--ch-surface-h);
+  }
+
+  .mat-mdc-header-row:not(.group-header-row) .mat-mdc-header-cell {
+    background: var(--ch-surface-h);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ch-text-2);
+    border-bottom: 2px solid var(--ch-border);
+    padding: 0 16px;
+    white-space: nowrap;
+  }
+
+  /* Header cells for breakdown group */
+  .mat-mdc-header-row:not(.group-header-row) .mat-mdc-header-cell.breakdown-header {
+    background: var(--ch-blue-20);
+    color: var(--ch-blue-700);
+  }
+
+  /* Data rows */
+  .mat-mdc-row {
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom-color: var(--ch-border);
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: var(--ch-text-1);
+    background: var(--ch-surface);
+  }
+
+  .mat-mdc-row .mat-mdc-cell.breakdown-cell {
+    background: var(--ch-blue-20);
+  }
+
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background: var(--ch-blue-20) !important;
+  }
+
+  /* Breakdown column brackets (data cells only; group header uses its own border) */
+  .mat-mdc-cell.breakdown-start {
+    border-left: 2px solid var(--ch-blue-100);
+  }
+
+  .mat-mdc-cell.breakdown-end {
+    border-right: 2px solid var(--ch-blue-100);
+  }
+
+  /* Alignment helpers */
+  .mat-mdc-header-cell.col-r,
+  .mat-mdc-cell.col-r {
+    text-align: right;
+  }
+
+  .mat-mdc-header-cell.col-c,
+  .mat-mdc-cell.col-c {
+    text-align: center;
+  }
+
+  /* Narrow columns */
+  .mat-mdc-header-cell.col-narrow,
+  .mat-mdc-cell.col-narrow {
+    width: 48px;
+    min-width: 48px;
+  }
+
+  /* Row state: reversed — dim + strikethrough (badge and actions cells excluded) */
+  .row-reversed .mat-mdc-cell:not(.no-strike) {
+    text-decoration: line-through;
+    color: var(--ch-text-3) !important;
+  }
+
+  /* Row state: accrual — muted */
+  .row-accrual .mat-mdc-cell {
+    color: var(--ch-text-3);
+  }
+
+  /* Row left-border per transaction type */
+  .row-disbursement .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-disbursement);
+  }
+
+  .row-repayment .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-repayment);
+  }
+
+  .row-accrual .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-accrual);
+  }
+
+  .row-reversed .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-reversed);
+  }
+
+  .row-down-payment .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-downpayment);
+  }
+
+  .row-chargeoff .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-chargeoff);
+  }
+
+  // Recovery payments are income after a write-off, not debt reduction, so the
+  // row is marked apart from a plain repayment.
+  .row-recovery .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-recovery);
+  }
+
+  .row-reage .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-reage);
+  }
+
+  .row-reamortize .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-reamortize);
+  }
+
+  .row-linked .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-linked);
+  }
+
+  .row-discount .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-discount);
+  }
+
+  /* Paginator */
+  .mat-mdc-paginator {
+    background: var(--ch-surface-h);
+    border-top: 1px solid var(--ch-border);
+    color: var(--ch-text-2);
+    font-size: 12px;
+  }
+
+  .mat-mdc-paginator .mat-mdc-icon-button.mat-primary {
+    color: var(--ch-blue-700);
+  }
+}
+
+/* ── Group header cells ──────────────────────────────────────── */
+.group-cell {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+  user-select: none;
+}
+
+.group-breakdown {
+  color: var(--ch-blue-700);
+  border-top: 2px solid var(--ch-blue-600);
+  background: var(--ch-blue-20) !important;
+}
+
+/* ── ID cell ─────────────────────────────────────────────────── */
+.tx-id {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 12px;
+  color: var(--ch-text-2);
+}
+
+/* ── Transaction type badges (shared with view-transaction) ──── */
+@include shared.transaction-badges;
+
+/* ── Monospace amounts (mirrors charges-tab .mono) ───────────── */
+.mono {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 13px;
+}
+
+.amt-balance {
+  color: var(--ch-blue-700);
+  font-weight: 500;
+}
+
+/* ── Action button (same as charges-tab .act-btn) ────────────── */
+.act-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.act-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--ch-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ch-text-2);
   cursor: pointer;
-  font-weight: 800;
-}
+  transition:
+    border-color 0.14s ease,
+    color 0.14s ease,
+    background 0.14s ease;
 
-.td-min-space {
-  min-width: 60px;
-}
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+  }
 
-.filter-box {
-  min-width: 280px;
-}
+  &:hover {
+    border-color: var(--ch-blue-700);
+    color: var(--ch-blue-700);
+    background: var(--ch-blue-50);
+  }
 
-.transaction-button {
-  min-width: 180px;
-}
-
-.action-button {
-  width: 100%;
-  height: 100%;
+  &:focus-visible {
+    outline: 2px solid var(--ch-blue-600);
+    outline-offset: 1px;
+  }
 }

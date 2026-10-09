@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
@@ -33,11 +35,14 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     MatSlideToggle,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrepayLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Payment Types */
   paymentTypes: any;
@@ -57,6 +62,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
   prepayData: any;
   currency: Currency | null = null;
   contractTermination: boolean;
+  maturityDate: Date | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -78,7 +84,9 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     this.contractTermination = this.dataObject['actionName'] == 'Contract Termination';
     this.maxDate = this.settingsService.businessDate;
     this.createprepayLoanForm();
-    if (!this.contractTermination) {
+    if (this.contractTermination) {
+      this.setContractTerminationDetails();
+    } else {
       this.setPrepayLoanDetails();
     }
     if (this.dataObject.currency) {
@@ -92,6 +100,10 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
   createprepayLoanForm() {
     if (this.contractTermination) {
       this.prepayLoanForm = this.formBuilder.group({
+        transactionDate: [
+          this.settingsService.businessDate,
+          Validators.required
+        ],
         externalId: [''],
         note: ['']
       });
@@ -120,16 +132,60 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     this.prepayLoanForm.patchValue({
       transactionAmount: this.dataObject.amount
     });
-    this.prepayLoanForm.get('transactionDate').valueChanges.subscribe((transactionDate: string) => {
-      const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
+    this.prepayLoanForm
+      .get('transactionDate')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((transactionDate: string) => {
+        const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
 
-      this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
-        this.prepayData = response;
-        this.prepayLoanForm.patchValue({
-          transactionAmount: this.prepayData.amount
+        this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
+          this.prepayData = response;
+          this.prepayLoanForm.patchValue({
+            transactionAmount: this.prepayData.amount
+          });
         });
       });
+  }
+
+  /**
+   * Bounds the contract termination date and keeps the payoff preview in step with it.
+   */
+  setContractTerminationDetails() {
+    this.minDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
+
+    this.loanService.getLoanAccountDetails(this.loanId).subscribe((loanDetails: any) => {
+      const actualMaturityDate = loanDetails?.timeline?.actualMaturityDate;
+      if (actualMaturityDate) {
+        this.maturityDate = this.dateUtils.parseDate(actualMaturityDate);
+        const lastAllowedDate = new Date(
+          this.maturityDate.getFullYear(),
+          this.maturityDate.getMonth(),
+          this.maturityDate.getDate() - 1
+        );
+        // terminating on the business date stays allowed even after maturity: the backend applies the
+        // maturity bound to future dates only
+        this.maxDate = this.dateUtils.isBefore(lastAllowedDate, this.minDate) ? this.minDate : lastAllowedDate;
+        this.cdr.markForCheck();
+      }
     });
+
+    this.prepayLoanForm
+      .get('transactionDate')
+      .valueChanges.pipe(
+        // an unreadable typed date arrives as null, and quoting that would silently fall back to the business date
+        filter((date): date is Date => date instanceof Date && !isNaN(date.getTime())),
+        map((date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
+        distinctUntilChanged(),
+        switchMap((terminationDate) =>
+          this.loanService.getLoanContractTerminationTemplate(this.loanId, terminationDate)
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((response: any) => {
+        this.prepayData = response;
+        this.cdr.markForCheck();
+      });
   }
 
   /**
@@ -180,8 +236,17 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
   }
 
   submitContractTermination() {
+    const contractTerminationFormData = this.prepayLoanForm.value;
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const prevTransactionDate: Date = this.prepayLoanForm.value.transactionDate;
+    if (contractTerminationFormData.transactionDate instanceof Date) {
+      contractTerminationFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    }
     const data = {
-      ...this.prepayLoanForm.value
+      ...contractTerminationFormData,
+      dateFormat,
+      locale
     };
     this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
       this.gotoLoanDefaultView();

@@ -26,6 +26,7 @@
                   <td>
                     <mifosx-external-identifier
                       externalId="{{ savingsAccountData.externalId }}"
+                      [completed]="true"
                     ></mifosx-external-identifier>
                   </td>
                 }
@@ -120,7 +121,7 @@
           <tbody>
             @if (savingsAccountData.summary.totalWithdrawals) {
               <tr>
-                <td>{{ 'labels.inputs.Total Withdrawls' | translate }}</td>
+                <td>{{ 'labels.inputs.Total Withdrawals' | translate }}</td>
                 <td class="r-amount">
                   {{
                     savingsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2'
@@ -338,6 +339,7 @@
                 <td>
                   <mifosx-external-identifier
                     externalId="{{ savingsAccountData.externalId }}"
+                    [completed]="true"
                   ></mifosx-external-identifier>
                 </td>
               }

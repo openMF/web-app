@@ -20,6 +20,23 @@ const loadedEnv = window.env || {};
 const parsedMinLength = Number(loadedEnv.minPasswordLength);
 const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
 
+// Domain labels can't contain dots, so `example..com` can't slip through as a valid host.
+const DEFAULT_EMAIL_REGEX = '^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$';
+function isValidRegex(pattern: string): boolean {
+  try {
+    new RegExp(pattern);
+    return true;
+  } catch {
+    return false;
+  }
+}
+// Guards against a malformed override (e.g. an unbalanced `[`) throwing inside
+// Validators.pattern and preventing the Create Client form from opening.
+const resolvedEmailRegex =
+  loadedEnv.externalEmailRegex && isValidRegex(loadedEnv.externalEmailRegex)
+    ? loadedEnv.externalEmailRegex
+    : DEFAULT_EMAIL_REGEX;
+
 export const environment = {
   production: false,
   version: env.mifos_x.version,
@@ -59,14 +76,15 @@ export const environment = {
   },
   defaultLanguage: loadedEnv.defaultLanguage || 'en-US',
   supportedLanguages:
-    loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+    loadedEnv.supportedLanguages || 'az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   defaultFormatDate: loadedEnv.defaultFormatDate || '',
   defaultFormatDatetime: loadedEnv.defaultFormatDatetime || '',
   preloadClients: loadedEnv['preloadClients'] || true,
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',
 
-  displayBackEndInfo: loadedEnv.displayBackEndInfo || 'true',
+  // Backend info is available in the System Information view, so it is hidden by default
+  displayBackEndInfo: loadedEnv.displayBackEndInfo || 'false',
   displayTenantSelector: loadedEnv.displayTenantSelector || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv.productionMode === 'true' || loadedEnv.productionMode === true || false,
@@ -90,6 +108,25 @@ export const environment = {
   mifosInterbankTransfersEnabled:
     window.env?.mifosInterbankTransfersEnabled !== 'false' && window.env?.mifosInterbankTransfersEnabled !== false,
 
+  /**
+   * Tenant Management administration UI: deployment master switch.
+   * Off by default; set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management
+   * plugin is installed. A server without it has no /v1/admin/tenants endpoint at all, so the
+   * section stays hidden rather than offering a feature that cannot work.
+   */
+  enableTenantManagement:
+    loadedEnv.enableTenantManagement === 'true' || loadedEnv.enableTenantManagement === true || false,
+
+  /**
+   * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).
+   * Off by default; set MIFOS_ENABLE_COPILOT=true to load the panel for a deployment.
+   * When off, the panel never renders and its lazy chunk is never downloaded.
+   */
+  enableCopilot: loadedEnv.enableCopilot === 'true' || loadedEnv.enableCopilot === true || false,
+  /** Base URL of the Mifos MCP server the Copilot talks to. */
+  // 'mock' serves fixture responses until a Copilot gateway is deployed (ADR-001).
+  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'mock',
+
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
   mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '',
@@ -111,12 +148,18 @@ export const environment = {
   externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
   externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
 
+  /** Email format validation regex, overridable per deployment. */
+  externalEmailRegex: resolvedEmailRegex,
+
   /**
    * Postal Code Lookup — auto-fill city/state/country from postal code.
    * Uses external Zippopotam.us API. Disable for deployments with strict privacy requirements.
    */
   enablePostalCodeLookup:
     loadedEnv.enablePostalCodeLookup === 'true' || loadedEnv.enablePostalCodeLookup === true || false,
+
+  enableClientAddressLocation:
+    loadedEnv.enableClientAddressLocation === 'true' || loadedEnv.enableClientAddressLocation === true || false,
 
   minPasswordLength: resolvedMinPasswordLength,
   passwordRegex:
@@ -138,7 +181,13 @@ export const environment = {
    */
   productionModeEnableRBAC:
     loadedEnv.productionModeEnableRBAC === 'true' || loadedEnv.productionModeEnableRBAC === true || false,
+  enableGlobalDashboard:
+    loadedEnv.enableGlobalDashboard === 'true' || loadedEnv.enableGlobalDashboard === true || false,
 
+  /** CB-ILD Credit Bureau plugin base URL — must be HTTPS in production */
+  /** CB-ILD feature flag — set cbIldEnabled=true in env to show CB-ILD tabs */
+  cbIldEnabled: loadedEnv.cbIldEnabled === 'true' || loadedEnv.cbIldEnabled === true || false,
+  pluginBaseUrl: loadedEnv.pluginBaseUrl || 'http://localhost:8084',
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
     oidcServerEnabled:

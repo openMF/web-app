@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivateCenterComponent } from './activate-center/activate-center.component';
 import { CenterAssignStaffComponent } from './center-assign-staff/center-assign-staff.component';
@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     EditCenterMeetingScheduleComponent,
     ManageGroupsComponent,
     StaffAssignmentHistoryComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CenterActionsComponent {
   private route = inject(ActivatedRoute);

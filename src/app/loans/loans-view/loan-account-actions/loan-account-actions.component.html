@@ -19,7 +19,11 @@
   <mifosx-foreclosure [dataObject]="actionButtonData"></mifosx-foreclosure>
 }
 @if (actions['Prepay Loan'] || actions['Contract Termination']) {
-  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+  @if (isWorkingCapital && actions['Prepay Loan']) {
+    <mifosx-working-capital-prepay-loan [dataObject]="actionButtonData"></mifosx-working-capital-prepay-loan>
+  } @else {
+    <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+  }
 }
 @if (actions['Make Repayment']) {
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
@@ -49,7 +53,11 @@
   <mifosx-waive-interest [dataObject]="actionButtonData"></mifosx-waive-interest>
 }
 @if (actions['Write Off']) {
-  <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-write-off [dataObject]="actionButtonData"></mifosx-working-capital-write-off>
+  } @else {
+    <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
+  }
 }
 @if (actions['Close (as Rescheduled)']) {
   <mifosx-close-as-rescheduled [dataObject]="actionButtonData"></mifosx-close-as-rescheduled>
@@ -58,7 +66,11 @@
   <mifosx-loan-reschedule [dataObject]="actionButtonData"></mifosx-loan-reschedule>
 }
 @if (actions['Recovery Payment']) {
-  <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-recovery-payment [dataObject]="actionButtonData"></mifosx-working-capital-recovery-payment>
+  } @else {
+    <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  }
 }
 @if (actions['View Guarantors']) {
   <mifosx-view-guarantors [dataObject]="actionButtonData"></mifosx-view-guarantors>
@@ -97,7 +109,11 @@
   <mifosx-edit-repayment-schedule></mifosx-edit-repayment-schedule>
 }
 @if (actions['Charge-Off']) {
-  <mifosx-charge-off [dataObject]="actionButtonData"></mifosx-charge-off>
+  @if (loanProductService.isWorkingCapital) {
+    <mifosx-wc-charge-off [dataObject]="actionButtonData"></mifosx-wc-charge-off>
+  } @else {
+    <mifosx-charge-off [dataObject]="actionButtonData"></mifosx-charge-off>
+  }
 }
 @if (actions['Sell Loan'] || actions['Buy Back Loan']) {
   <mifosx-asset-transfer-loan></mifosx-asset-transfer-loan>
@@ -112,11 +128,21 @@
   <mifosx-add-interest-pause [dataObject]="navigationData"></mifosx-add-interest-pause>
 }
 @if (actions['Undo Write-off']) {
-  <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-undo-write-off [dataObject]="actionButtonData"></mifosx-working-capital-undo-write-off>
+  } @else {
+    <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>
+  }
 }
 @if (actions['Attach Loan Originator']) {
   <mifosx-attach-originator [dataObject]="actionButtonData"></mifosx-attach-originator>
 }
-@if (actions['Update discount']) {
+@if (actions['Discount Fee']) {
   <mifosx-update-discount [dataObject]="actionButtonData"></mifosx-update-discount>
+}
+@if (actions['Update Near Breach']) {
+  <mifosx-near-breach-config [dataObject]="actionButtonData"></mifosx-near-breach-config>
+}
+@if (actions['Update Breach']) {
+  <mifosx-breach-config [dataObject]="actionButtonData"></mifosx-breach-config>
 }

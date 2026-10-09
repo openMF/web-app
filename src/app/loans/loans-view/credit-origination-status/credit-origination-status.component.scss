@@ -1,0 +1,149 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.credit-origination-status {
+  padding: 24px 16px;
+}
+
+.state-panel,
+.state-card mat-card-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  min-height: 160px;
+  text-align: center;
+}
+
+.error-state mat-icon {
+  height: 32px;
+  width: 32px;
+}
+
+.stage-flow {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 16px 0 24px;
+}
+
+.stage {
+  display: flex;
+  flex: 1 0 256px;
+  min-width: 256px;
+  position: relative;
+}
+
+.stage-marker {
+  align-items: center;
+  background: var(--md-sys-color-surface-variant);
+  border-radius: 50%;
+  display: flex;
+  flex: 0 0 40px;
+  height: 40px;
+  justify-content: center;
+  margin-right: 8px;
+  position: relative;
+  width: 40px;
+  z-index: 1;
+}
+
+.connector {
+  background: var(--md-sys-color-outline-variant);
+  height: 2px;
+  left: 40px;
+  position: absolute;
+  right: -24px;
+  top: 16px;
+}
+
+.stage-card {
+  flex: 1;
+  margin-top: 48px;
+}
+
+.stage-card h3 {
+  min-height: 48px;
+  margin-top: 0;
+}
+
+.current-stage .stage-card {
+  border: 2px solid var(--md-sys-color-primary);
+}
+
+.current-indicator {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+dl div {
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 50% 50%;
+  padding: 8px 0;
+}
+
+dt {
+  font-weight: 500;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.status-completed {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.status-current {
+  background: var(--md-sys-color-tertiary-container);
+  color: var(--md-sys-color-on-tertiary-container);
+}
+
+.status-pending {
+  background: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.status-rejected,
+.status-blocked,
+.status-failed,
+.status-cancelled,
+.status-withdrawn,
+.status-written-off {
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+}
+
+@media (width <= 959px) {
+  .stage-flow {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .stage {
+    flex-basis: auto;
+    min-width: 0;
+  }
+
+  .stage-card {
+    margin-top: 0;
+  }
+
+  .connector {
+    height: auto;
+    inset: 40px auto -24px 16px;
+    width: 2px;
+  }
+}

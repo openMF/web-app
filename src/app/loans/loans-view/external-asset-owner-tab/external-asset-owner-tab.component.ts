@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
@@ -56,9 +57,11 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     DecimalPipe,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExternalAssetOwnerTabComponent extends LoanAccountTabBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private externalAssetOwner = inject(ExternalAssetOwner);
@@ -82,11 +85,13 @@ export class ExternalAssetOwnerTabComponent extends LoanAccountTabBaseComponent 
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { loanTransfersData: any; activeTransferData: any }) => {
-      this.loanTransfersData = data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
-      this.activeTransferData = data.activeTransferData || null;
-      this.existActiveTransfer = data.activeTransferData && data.activeTransferData.transferId != null;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanTransfersData: any; activeTransferData: any }) => {
+        this.loanTransfersData = data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
+        this.activeTransferData = data.activeTransferData || null;
+        this.existActiveTransfer = data.activeTransferData && data.activeTransferData.transferId != null;
+      });
   }
 
   ngOnInit(): void {
@@ -142,7 +147,7 @@ export class ExternalAssetOwnerTabComponent extends LoanAccountTabBaseComponent 
       data: { cancelContext: `the Asset Transfer with the Owner External Id ${this.currentItem.owner.externalId} ` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.cancel) {
+      if (response?.cancel) {
         const payload: any = {
           transferExternalId: this.currentItem.transferExternalId
         };

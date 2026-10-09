@@ -12,4 +12,5 @@
 export interface Alert {
   type: string;
   message: string;
+  enabled?: boolean;
 }

@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -51,10 +52,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     DateFormatPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListTransactionsComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** List Transactions Data */
   listTransactionData: any;
@@ -76,7 +79,7 @@ export class ListTransactionsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { listTransactionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { listTransactionData: any }) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);
       this.dataSource.paginator = this.paginator;

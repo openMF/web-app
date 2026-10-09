@@ -7,24 +7,21 @@
 -->
 
 <div class="container">
-  <div class="dashboard-layout">
-    <mat-card class="search-card">
-      <mat-card-content>
-        <mat-form-field>
-          <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
-          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText" />
-        </mat-form-field>
-
-        <mat-autocomplete #activitySearch="matAutocomplete">
-          @for (activity of filteredActivities | async; track activity) {
-            <mat-option [routerLink]="activity.path">
-              <span>{{ activity.activity }}</span>
-            </mat-option>
-          }
-        </mat-autocomplete>
-      </mat-card-content>
-    </mat-card>
-
-    <mifosx-analytics-dashboard [dashboard]="dashboardDefinition" [offices]="offices"></mifosx-analytics-dashboard>
-  </div>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="{{ 'labels.heading.Dashboard' | translate }}">
+      <div class="dashboard-layout">
+        <mifosx-analytics-dashboard
+          [dashboard]="dashboardDefinition"
+          [offices]="offices"
+          [products]="products"
+          [clientGroups]="clientGroups"
+        ></mifosx-analytics-dashboard>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'labels.heading.Onboarding Board' | translate }}">
+      <ng-template matTabContent>
+        <mifosx-onboarding-board></mifosx-onboarding-board>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>

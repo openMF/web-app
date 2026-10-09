@@ -243,6 +243,42 @@ describe('ClientsService', () => {
     });
   });
 
+  describe('Client Document Requests', () => {
+    it('should download client document attachment for a valid document id', async () => {
+      const mockDocument = new Blob(['profile-image'], { type: 'image/png' });
+      const resultPromise = firstValueFrom(service.downloadClientDocument('123', '45'));
+
+      const req = httpMock.expectOne((r) => r.url === '/clients/123/documents/45/attachment' && r.method === 'GET');
+      expect(req.request.responseType).toBe('blob');
+
+      req.flush(mockDocument);
+      const result = await resultPromise;
+      expect(result).toBe(mockDocument);
+    });
+
+    it('should not request client document attachment for invalid document ids', async () => {
+      const invalidDocumentIds = [
+        '-1',
+        null,
+        undefined,
+        Number.NaN,
+        Number.POSITIVE_INFINITY,
+        'Infinity',
+        '0',
+        0,
+        '-5'
+      ];
+
+      for (const documentId of invalidDocumentIds) {
+        await expect(firstValueFrom(service.downloadClientDocument('123', documentId))).rejects.toThrow(
+          'Invalid client document id.'
+        );
+      }
+
+      httpMock.expectNone((r) => r.url.includes('/clients/123/documents/'));
+    });
+  });
+
   describe('Client Family Members', () => {
     it('should fetch family members (GET /clients/:id/familymembers)', async () => {
       const mockMembers = [

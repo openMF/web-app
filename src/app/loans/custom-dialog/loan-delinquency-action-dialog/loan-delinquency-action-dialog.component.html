@@ -8,46 +8,48 @@
 
 <h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
 
-<div mat-dialog-content [formGroup]="delinquencyActionForm" class="layout-column">
-  <mat-form-field class="flex-48" (click)="validFromDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="minDate"
-      [max]="maxDate"
-      [matDatepicker]="validFromDatePicker"
-      required
-      formControlName="startDate"
-    />
-    <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #validFromDatePicker></mat-datepicker>
-    @if (delinquencyActionForm.controls.startDate.hasError('required')) {
-      <mat-error>
-        {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    }
-  </mat-form-field>
+<div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <div class="layout-column">
+    <mat-form-field class="flex-48" (click)="validFromDatePicker.open()">
+      <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="validFromDatePicker"
+        required
+        formControlName="startDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #validFromDatePicker></mat-datepicker>
+      @if (delinquencyActionForm.controls.startDate.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field class="flex-48" (click)="validTillDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="delinquencyActionForm.value.startDate"
-      [max]="maxDate"
-      [matDatepicker]="validTillDatePicker"
-      required
-      formControlName="endDate"
-    />
-    <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #validTillDatePicker></mat-datepicker>
-    @if (delinquencyActionForm.controls.endDate.hasError('required')) {
-      <mat-error>
-        {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    }
-  </mat-form-field>
+    <mat-form-field class="flex-48" (click)="validTillDatePicker.open()">
+      <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="delinquencyActionForm.value.startDate"
+        [max]="maxDate"
+        [matDatepicker]="validTillDatePicker"
+        required
+        formControlName="endDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #validTillDatePicker></mat-datepicker>
+      @if (delinquencyActionForm.controls.endDate.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+  </div>
 </div>
 
 <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">

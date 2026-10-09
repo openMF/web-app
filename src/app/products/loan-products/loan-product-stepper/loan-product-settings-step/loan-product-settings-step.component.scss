@@ -6,8 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use 'assets/styles/colours' as *;
-
 h3,
 h4 {
   font-weight: 500;
@@ -33,7 +31,9 @@ mat-divider {
   margin-top: 1em;
 }
 
-.by-default {
-  color: rgba($status-approved, 0.7);
-  font-weight: 700;
-}
+/*
+ * `.by-default` lived here with a hardcoded `rgba($status-approved, 0.7)`
+ * (1.55:1 on the dark surface), but no template in the app applies that class —
+ * it was dead. Removed rather than re-themed, which also drops this file's last
+ * dependency on the `colours` partial.
+ */

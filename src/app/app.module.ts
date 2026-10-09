@@ -10,13 +10,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  HttpBackend,
-  HttpClient,
-  provideHttpClient,
-  withInterceptorsFromDi,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
+import { HttpBackend, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /** Environment Configuration */
 
@@ -29,37 +23,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
 /** Custom Modules */
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
-import { LoginModule } from './login/login.module';
-import { SettingsModule } from './settings/settings.module';
-import { NavigationModule } from './navigation/navigation.module';
-import { ClientsModule } from './clients/clients.module';
-import { GroupsModule } from './groups/groups.module';
-import { CentersModule } from './centers/centers.module';
-import { AccountingModule } from './accounting/accounting.module';
-import { SystemModule } from './system/system.module';
-import { ProductsModule } from './products/products.module';
-import { OrganizationModule } from './organization/organization.module';
-import { TemplatesModule } from './templates/templates.module';
-import { UsersModule } from './users/users.module';
-import { ReportsModule } from './reports/reports.module';
-import { SearchModule } from './search/search.module';
-import { NotificationsModule } from './notifications/notifications.module';
-import { CollectionsModule } from './collections/collections.module';
-import { ProfileModule } from './profile/profile.module';
-import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
-import { RemittancesModule } from './remittances/remittances.module';
 import { PortalModule } from '@angular/cdk/portal';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
-import {
-  TranslateLoader,
-  TranslateModule,
-  MissingTranslationHandler,
-  MissingTranslationHandlerParams
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AuthenticationInterceptor as TokenInterceptor } from './core/authentication/authentication.interceptor';
@@ -68,23 +38,8 @@ import { AuthService } from './zitadel/auth.service';
 import { environment } from '../environments/environment';
 import { CallbackComponent } from './zitadel/callback/callback.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
-
-export class CustomMissingTranslationHandler implements MissingTranslationHandler {
-  handle(params: MissingTranslationHandlerParams): string {
-    // Remove the 'labels.catalogs.' prefix and return the fallback value
-    return params.key.replace('labels.catalogs.', '');
-  }
-}
-
-/**
- * App Module
- *
- * Core module and all feature modules should be imported here in proper order.
- */
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+import { provideLottieOptions } from 'ngx-lottie';
+import { CustomMissingTranslationHandler } from './core/translation/missing-translation.handler';
 
 @NgModule({
   declarations: [WebAppComponent],
@@ -102,6 +57,10 @@ export function HttpLoaderFactory(http: HttpClient) {
           LocationStrategy
         ]
       },
+      // Without a default language ngx-translate has no catalogue to fall back on, so any key a
+      // locale is missing reaches the missing-translation handler and renders as a raw dotted key.
+      // Falling back to en-US degrades a gap to English instead, which is the readable failure.
+      defaultLanguage: 'en-US',
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomMissingTranslationHandler }
     }),
     BrowserModule,
@@ -109,26 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PortalModule,
     CoreModule,
     HomeModule,
-    LoginModule,
-    ProfileModule,
-    SettingsModule,
-    NavigationModule,
-    ClientsModule,
-    ReportsModule,
-    GroupsModule,
-    CentersModule,
-    AccountingModule,
-    SystemModule,
-    ProductsModule,
-    OrganizationModule,
-    TemplatesModule,
-    UsersModule,
-    NotificationsModule,
-    SearchModule,
-    CollectionsModule,
-    TasksModule,
     ConfigurationWizardModule,
-    RemittancesModule,
     AppRoutingModule,
     NotFoundComponent,
     CallbackComponent,
@@ -141,7 +81,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: !environment.OIDC.oidcServerEnabled ? TokenInterceptor : ZitadelTokenInterceptor,
       multi: true
-    }
+    },
+    provideLottieOptions({
+      player: () => import('lottie-web')
+    })
   ]
 })
 export class AppModule {}

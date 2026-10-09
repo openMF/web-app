@@ -8,26 +8,56 @@
 
 <div class="container">
   <mat-card>
-    <div class="system-info-section">
-      <table class="system-info-table">
-        <tr>
-          <td class="info-label">{{ 'labels.version.Tenant' | translate }}</td>
-          <td class="info-value">{{ tenant }}</td>
-        </tr>
-        <tr>
-          <td class="info-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
-          <td class="info-value">{{ mifosVersion }}</td>
-        </tr>
-        <tr>
-          <td class="info-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
-          <td class="info-value">{{ fineractVersion }}</td>
-        </tr>
-        <tr>
-          <td class="info-label">{{ 'labels.version.Server' | translate }}</td>
-          <td class="info-value">{{ server }}</td>
-        </tr>
-      </table>
-    </div>
+    @if (systemInformation$ | async; as systemInformation) {
+      <div class="system-info-section">
+        <table class="system-info-table">
+          <tr>
+            <td class="info-label">{{ 'labels.version.Tenant' | translate }}</td>
+            <td class="info-value">{{ systemInformation.tenant }}</td>
+          </tr>
+          <tr>
+            <td class="info-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
+            <td class="info-value">
+              {{ systemInformation.webApp.version }}
+              @if (systemInformation.webApp.hash) {
+                <span class="info-hash">{{ systemInformation.webApp.hash }}</span>
+              }
+            </td>
+          </tr>
+          <tr>
+            <td class="info-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
+            <td class="info-value">
+              {{ systemInformation.fineract.version }}
+              @if (systemInformation.fineract.hash) {
+                <span class="info-hash">{{ systemInformation.fineract.hash }}</span>
+              }
+            </td>
+          </tr>
+          <tr>
+            <td class="info-label">{{ 'labels.version.Server' | translate }}</td>
+            <td class="info-value">{{ systemInformation.server }}</td>
+          </tr>
+          <tr>
+            <td class="info-label">{{ 'labels.version.Username' | translate }}</td>
+            <td class="info-value">{{ systemInformation.username }}</td>
+          </tr>
+          <tr>
+            <td class="info-label">{{ 'labels.version.Name' | translate }}</td>
+            <td class="info-value">{{ systemInformation.name }}</td>
+          </tr>
+          @if (systemInformation.businessDate) {
+            <tr>
+              <td class="info-label">{{ 'labels.text.Current Business Date' | translate }}</td>
+              <td class="info-value">{{ systemInformation.businessDate | date: 'dd MMMM yyyy' }}</td>
+            </tr>
+          }
+          <tr>
+            <td class="info-label">{{ 'labels.version.Render Time' | translate }}</td>
+            <td class="info-value">{{ systemInformation.renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}</td>
+          </tr>
+        </table>
+      </div>
+    }
 
     <div class="licensing-section">
       <h2>{{ 'labels.heading.Software Licensing' | translate }}</h2>

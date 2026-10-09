@@ -244,7 +244,7 @@ export interface AdvancedMappingDTO {
 
 export interface AccountingMappingDTO {
   value: CodeValue;
-  glAccount: GLAccount;
+  glAccount: GLAccount | null;
 }
 
 export interface Breach {

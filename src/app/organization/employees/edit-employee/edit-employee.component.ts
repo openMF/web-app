@@ -7,9 +7,11 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
@@ -28,11 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditEmployeeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private settingsService = inject(SettingsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -45,21 +49,12 @@ export class EditEmployeeComponent implements OnInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  editEmployeeForm: UntypedFormGroup;
+  editEmployeeForm: FormGroup;
   /** Office data. */
   officeData: any;
 
-  /**
-   * Retrieves the offices data from `resolve`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {Dates} dateUtils Date Utils to format date.
-   */
   constructor() {
-    this.route.data.subscribe((data: { employee: any; offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { employee: any; offices: any }) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
     });
@@ -86,21 +81,21 @@ export class EditEmployeeComponent implements OnInit {
         this.employeeData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       lastname: [
         this.employeeData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       isLoanOfficer: [this.employeeData.isLoanOfficer],
       mobileNo: [this.employeeData.mobileNo],
       isActive: [this.employeeData.isActive],
       joiningDate: [
-        this.employeeData.joiningDate && new Date(this.employeeData.joiningDate),
+        this.employeeData.joiningDate && this.dateUtils.parseDate(this.employeeData.joiningDate),
         Validators.required
       ]
     });
@@ -123,14 +118,17 @@ export class EditEmployeeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateEmployee(this.employeeData.id, data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.organizationService
+      .updateEmployee(this.employeeData.id, data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

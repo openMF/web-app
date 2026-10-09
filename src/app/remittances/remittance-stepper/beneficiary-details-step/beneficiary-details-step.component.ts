@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatIcon } from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +34,8 @@ interface ClientSearchResult {
     MatAutocompleteModule
   ],
   templateUrl: './beneficiary-details-step.component.html',
-  styleUrls: ['./beneficiary-details-step.component.scss']
+  styleUrls: ['./beneficiary-details-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeneficiaryDetailsStepComponent implements OnInit {
   @Input() recipientData: ValidatedRecipient | null = null;

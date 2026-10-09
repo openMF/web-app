@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -26,15 +27,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./create-standing-instructions.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateStandingInstructionsComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private accountTransfersService = inject(AccountTransfersService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Standing Instructions Data */
   standingIntructionsTemplate: any;
@@ -45,7 +49,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = true;
   /** Edit Standing Instructions form. */
-  createStandingInstructionsForm: UntypedFormGroup;
+  createStandingInstructionsForm: FormGroup;
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */
@@ -95,11 +99,13 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
-      this.standingIntructionsTemplate = data.standingIntructionsTemplate;
-      this.setParams();
-      this.setOptions();
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { standingIntructionsTemplate: any }) => {
+        this.standingIntructionsTemplate = data.standingIntructionsTemplate;
+        this.setParams();
+        this.setOptions();
+      });
   }
 
   /** Sets the value from the URL */
@@ -223,8 +229,8 @@ export class CreateStandingInstructionsComponent implements OnInit {
     this.fromAccountTypeData = this.standingIntructionsTemplate.fromAccountTypeOptions;
     this.fromAccountData = this.standingIntructionsTemplate.fromAccountOptions;
     this.destinationTypeData = [
-      { id: 1, value: 'own account' },
-      { id: 2, value: 'with in bank' }
+      { id: 1, value: 'labels.selections.standingInstructions.own.account' },
+      { id: 2, value: 'labels.selections.standingInstructions.other.bank' }
     ];
     this.toOfficeTypeData = this.standingIntructionsTemplate.toOfficeOptions;
     this.toClientTypeData = this.standingIntructionsTemplate.toClientOptions;
@@ -239,26 +245,84 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Changes the value on change of destination value
    */
   buildDependencies() {
-    this.createStandingInstructionsForm.get('destination').valueChanges.subscribe((destination: any) => {
-      if (destination === 1) {
-        this.allowclientedit = false;
-        this.createStandingInstructionsForm.patchValue({
-          toOfficeId: this.officeId,
-          toClientId: this.clientId
-        });
-        this.ToOfficeId = true;
-        this.ToClientId = true;
-        this.changeEvent();
-      } else {
-        this.allowclientedit = true;
-        this.createStandingInstructionsForm.patchValue({
-          toOfficeId: '',
-          toClientId: ''
-        });
-        this.createStandingInstructionsForm.controls['toOfficeId'].enable();
-        this.createStandingInstructionsForm.controls['toClientId'].enable();
-      }
+    this.createStandingInstructionsForm
+      .get('destination')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((destination: any) => {
+        if (destination === 1) {
+          this.allowclientedit = false;
+          this.createStandingInstructionsForm.patchValue({
+            toOfficeId: this.officeId,
+            toClientId: this.clientId
+          });
+          this.ToOfficeId = true;
+          this.ToClientId = true;
+          this.changeEvent();
+        } else {
+          this.allowclientedit = true;
+          this.createStandingInstructionsForm.patchValue({
+            toOfficeId: '',
+            toClientId: ''
+          });
+          this.createStandingInstructionsForm.controls['toOfficeId'].enable();
+          this.createStandingInstructionsForm.controls['toClientId'].enable();
+        }
+        this.cdr.markForCheck();
+      });
+
+    const simpleConditions = [
+      { source: 'instructionType', target: 'amount' },
+      { source: 'recurrenceType', target: 'recurrenceInterval' },
+      { source: 'recurrenceType', target: 'recurrenceFrequency' }
+    ];
+
+    simpleConditions.forEach((cond) => {
+      this.applyConditionalValidation(cond.source, cond.target, (val) => val === 1);
     });
+
+    this.createStandingInstructionsForm
+      .get('recurrenceType')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        const recurrenceType = this.createStandingInstructionsForm.get('recurrenceType')?.value;
+        const recurrenceFrequency = this.createStandingInstructionsForm.get('recurrenceFrequency')?.value;
+        const targetControl = this.createStandingInstructionsForm.get('recurrenceOnMonthDay');
+        const shouldRequire = recurrenceType === 1 && (recurrenceFrequency === 2 || recurrenceFrequency === 3);
+
+        if (shouldRequire) {
+          targetControl?.setValidators([Validators.required]);
+        } else {
+          targetControl?.clearValidators();
+        }
+        targetControl?.updateValueAndValidity();
+      });
+
+    this.applyConditionalValidation(
+      'recurrenceFrequency',
+      'recurrenceOnMonthDay',
+      (val) => this.createStandingInstructionsForm.get('recurrenceType')?.value === 1 && (val === 2 || val === 3)
+    );
+  }
+
+  private applyConditionalValidation(
+    sourceControlName: string,
+    targetControlName: string,
+    condition: (value: any) => boolean
+  ) {
+    this.createStandingInstructionsForm
+      .get(sourceControlName)
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        const targetControl = this.createStandingInstructionsForm.get(targetControlName);
+
+        if (condition(value)) {
+          targetControl?.setValidators([Validators.required]);
+        } else {
+          targetControl?.clearValidators();
+        }
+
+        targetControl?.updateValueAndValidity();
+      });
   }
 
   /** Executes on change of various select options */
@@ -269,6 +333,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
       .subscribe((response: any) => {
         this.standingIntructionsTemplate = response;
         this.setOptions();
+        this.cdr.markForCheck();
       });
   }
 

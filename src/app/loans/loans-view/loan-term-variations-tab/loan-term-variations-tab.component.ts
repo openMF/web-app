@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -57,9 +58,11 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     MatRow,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private dates = inject(Dates);
   private settingsService = inject(SettingsService);
@@ -97,7 +100,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
 
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
@@ -224,7 +227,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
       data: { deleteContext: `interest pause from ${variation.startDate} to ${variation.endDate}` }
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
           this.reload();
         });
@@ -259,7 +262,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         if (response.data.value.startDate <= response.data.value.endDate) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;

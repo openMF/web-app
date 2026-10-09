@@ -1,0 +1,178 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="savings-dashboard">
+  <!-- Account Card -->
+  <div class="account-hero-card">
+    <div class="hero-left">
+      <div class="hero-chip-icon">
+        <svg width="36" height="26" viewBox="0 0 40 30" fill="none">
+          <rect x="1" y="1" width="38" height="28" rx="4" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+          <rect x="6" y="8" width="12" height="8" rx="2" fill="rgba(255,255,255,0.6)" />
+          <line x1="18" y1="10" x2="34" y2="10" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+          <line x1="18" y1="14" x2="30" y2="14" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+          <line x1="18" y1="18" x2="26" y2="18" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+        </svg>
+      </div>
+      <div class="hero-account-number">{{ accountNo }}</div>
+      <div class="hero-product-name">{{ productName }}</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-balance-label">{{ 'labels.inputs.Current Balance' | translate }}</div>
+      <div class="hero-balance-value">{{ currencySymbol }}{{ currentBalance | number: '1.2-2' }}</div>
+      @if (interestRate) {
+        <div class="hero-interest-rate">
+          <fa-icon icon="percent" class="hero-rate-icon"></fa-icon>
+          {{ interestRate | number: '1.2-2' }}% {{ 'labels.text.p.a.' | translate }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- KPI Metrics Strip -->
+  <div class="kpi-strip">
+    <div class="kpi-tile kpi-balance">
+      <div class="kpi-icon-wrap balance-icon">
+        <fa-icon icon="wallet"></fa-icon>
+      </div>
+      <div class="kpi-content">
+        <div class="kpi-label">{{ 'labels.inputs.Available Balance' | translate }}</div>
+        <div class="kpi-value">{{ currencySymbol }}{{ availableBalance | number: '1.2-2' }}</div>
+      </div>
+    </div>
+
+    <div class="kpi-tile kpi-deposits">
+      <div class="kpi-icon-wrap deposits-icon">
+        <fa-icon icon="arrow-down"></fa-icon>
+      </div>
+      <div class="kpi-content">
+        <div class="kpi-label">{{ 'labels.inputs.Total Deposits' | translate }}</div>
+        <div class="kpi-value">{{ currencySymbol }}{{ totalDeposits | number: '1.2-2' }}</div>
+      </div>
+    </div>
+
+    <div class="kpi-tile kpi-withdrawals">
+      <div class="kpi-icon-wrap withdrawals-icon">
+        <fa-icon icon="arrow-up"></fa-icon>
+      </div>
+      <div class="kpi-content">
+        <div class="kpi-label">{{ 'labels.inputs.Total Withdrawals' | translate }}</div>
+        <div class="kpi-value">{{ currencySymbol }}{{ totalWithdrawals | number: '1.2-2' }}</div>
+      </div>
+    </div>
+
+    <div class="kpi-tile kpi-interest">
+      <div class="kpi-icon-wrap interest-icon">
+        <fa-icon icon="chart-line"></fa-icon>
+      </div>
+      <div class="kpi-content">
+        <div class="kpi-label">{{ 'labels.inputs.Interest Earned' | translate }}</div>
+        <div class="kpi-value">{{ currencySymbol }}{{ interestEarned | number: '1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content: side-by-side graphs -->
+  <div class="dashboard-body">
+    <!-- Balance Trend Chart -->
+    <mat-card class="dashboard-card trend-card">
+      <mat-card-header class="chart-card-header">
+        <mat-card-title>
+          <fa-icon icon="chart-area" class="card-title-icon"></fa-icon>
+          {{ 'labels.heading.Balance Trend' | translate }}
+        </mat-card-title>
+        <div class="chart-type-segmented-control">
+          <button
+            type="button"
+            class="segment-btn"
+            [class.active]="balanceTrendChartType === 'line'"
+            (click)="changeBalanceTrendChartType('line')"
+            [matTooltip]="'labels.heading.Line Trend' | translate"
+            [attr.aria-label]="'labels.heading.Line Trend' | translate"
+            [attr.aria-pressed]="balanceTrendChartType === 'line'"
+          >
+            <fa-icon icon="chart-line" class="chart-symbol-icon"></fa-icon>
+          </button>
+          <button
+            type="button"
+            class="segment-btn"
+            [class.active]="balanceTrendChartType === 'bar'"
+            (click)="changeBalanceTrendChartType('bar')"
+            [matTooltip]="'labels.heading.Bar Chart' | translate"
+            [attr.aria-label]="'labels.heading.Bar Chart' | translate"
+            [attr.aria-pressed]="balanceTrendChartType === 'bar'"
+          >
+            <fa-icon icon="chart-bar" class="chart-symbol-icon"></fa-icon>
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container trend-chart-container">
+          <canvas #balanceTrendChart></canvas>
+          @if (!savingsAccountData) {
+            <div class="no-data-message">{{ 'labels.text.Loading data' | translate }}...</div>
+          } @else if (balanceValues.length === 0) {
+            <div class="no-data-message">{{ 'labels.text.No transaction data available' | translate }}</div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Transaction Split Doughnut -->
+    <mat-card class="dashboard-card split-card">
+      <mat-card-header class="chart-card-header">
+        <mat-card-title>
+          <fa-icon icon="chart-pie" class="card-title-icon"></fa-icon>
+          {{ 'labels.heading.Transaction Split' | translate }}
+        </mat-card-title>
+        <div class="chart-type-segmented-control">
+          <button
+            type="button"
+            class="segment-btn"
+            [class.active]="txnSplitChartType === 'doughnut'"
+            (click)="changeTxnSplitChartType('doughnut')"
+            [matTooltip]="'labels.heading.Ring Chart' | translate"
+            [attr.aria-label]="'labels.heading.Ring Chart' | translate"
+            [attr.aria-pressed]="txnSplitChartType === 'doughnut'"
+          >
+            <svg
+              class="chart-symbol-svg"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3.5"
+            >
+              <circle cx="12" cy="12" r="7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="segment-btn"
+            [class.active]="txnSplitChartType === 'pie'"
+            (click)="changeTxnSplitChartType('pie')"
+            [matTooltip]="'labels.heading.Pie Chart' | translate"
+            [attr.aria-label]="'labels.heading.Pie Chart' | translate"
+            [attr.aria-pressed]="txnSplitChartType === 'pie'"
+          >
+            <fa-icon icon="chart-pie" class="chart-symbol-icon"></fa-icon>
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container split-chart-container">
+          <canvas #txnSplitChart></canvas>
+          @if (!savingsAccountData) {
+            <div class="no-data-message">{{ 'labels.text.Loading data' | translate }}...</div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

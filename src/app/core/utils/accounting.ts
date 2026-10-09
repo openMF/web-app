@@ -40,7 +40,7 @@ export class Accounting {
     } else {
       return [
         'NONE',
-        'CASH_BASED'
+        'ACC_DEF_REV_AM'
       ];
     }
   }
@@ -58,6 +58,8 @@ export class Accounting {
       return 'Accrual (upfront)';
     } else if (value.startsWith('CASH')) {
       return 'Cash';
+    } else if (value === 'ACC_DEF_REV_AM') {
+      return 'ACC_DEF_REV_AM';
     } else if (value === 'NONE') {
       return 'NONE';
     }

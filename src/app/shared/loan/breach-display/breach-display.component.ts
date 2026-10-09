@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormatNumberPipe } from '@pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { Breach, NearBreach } from 'app/products/loan-products/models/loan-product.model';
@@ -18,7 +18,8 @@ import { Breach, NearBreach } from 'app/products/loan-products/models/loan-produ
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreachDisplayComponent {
   @Input() breach: Breach | null = null;

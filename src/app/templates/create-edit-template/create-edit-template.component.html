@@ -96,18 +96,60 @@
 
     <mat-card-content>
       <div role="editor" class="editor-wrapper">
-        <label for="template-text-editor" class="required-label required-label-editor">
-          {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
-        </label>
-        @if (editorVisible) {
-          <editor
-            id="template-text-editor"
-            #tinymceEditor
-            [init]="tinymceConfig"
-            [initialValue]="templateData.template?.text || ''"
-            licenseKey="gpl"
-            [formControl]="templateForm.controls.text"
-          ></editor>
+        <div class="editor-header">
+          <label
+            [attr.for]="textFormat === 'html' ? 'template-text-editor' : 'template-text-plain'"
+            class="required-label required-label-editor"
+          >
+            {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
+          </label>
+          <div class="text-format-toggle" role="group" [attr.aria-label]="'labels.inputs.Text Format' | translate">
+            @for (option of textFormatOptions; track option.value) {
+              @if (textFormat === option.value) {
+                <button type="button" mat-raised-button color="primary" aria-pressed="true">
+                  {{ option.label | translate }}
+                </button>
+              } @else {
+                <button
+                  type="button"
+                  mat-stroked-button
+                  color="primary"
+                  aria-pressed="false"
+                  (click)="setTextFormat(option.value)"
+                >
+                  {{ option.label | translate }}
+                </button>
+              }
+            }
+          </div>
+        </div>
+        @if (textFormat === 'html') {
+          @if (editorVisible) {
+            <editor
+              id="template-text-editor"
+              #tinymceEditor
+              [init]="tinymceConfig"
+              licenseKey="gpl"
+              [formControl]="templateForm.controls.text"
+            ></editor>
+          }
+        } @else {
+          <mat-form-field class="plain-text-field">
+            <textarea
+              id="template-text-plain"
+              matInput
+              #plainTextEditor
+              rows="10"
+              required
+              [formControl]="templateForm.controls.text"
+            ></textarea>
+            @if (templateForm.controls.text.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Text' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
         }
       </div>
     </mat-card-content>

@@ -23,7 +23,7 @@ import { OfficesResolver } from './offices.resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'navigation',
+      path: '',
       component: NavigationComponent,
       data: { title: 'Navigation', breadcrumb: 'Navigation' },
       resolve: {

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -26,7 +26,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     FaIconComponent,
     MatStepperNext,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -44,12 +45,22 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
+    // A saved product returns its decimal places and multiples inside `currency`.
+    const currency = this.recurringDepositProductsTemplate.currency;
+    const isEditing =
+      this.recurringDepositProductsTemplate.id !== undefined && this.recurringDepositProductsTemplate.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.recurringDepositProductsTemplate.inMultiplesOf ?? '');
 
     this.recurringDepositProductCurrencyForm.patchValue({
-      currencyCode: this.recurringDepositProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.recurringDepositProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.recurringDepositProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();

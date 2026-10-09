@@ -14,45 +14,121 @@
   max-width: 84rem;
   width: 90%;
   overflow-wrap: break-word;
+  padding: 1.5rem 0 0.625rem;
+}
 
-  .breadcrumb {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0;
-    line-height: 40px;
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
 
-    .breadcrumb-title {
-      font-size: 1.25rem;
-      font-weight: 400;
-    }
+.title-row {
+  display: flex;
+  align-items: stretch;
+}
 
-    .separator::before {
-      content: '';
-      border: 1.5px solid $mid-grey;
-      margin: 0 0.6rem;
-      font-size: 1.25rem;
-      font-weight: 400;
-    }
+.breadcrumb-title {
+  display: block;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: $dark-grey;
+  letter-spacing: -0.022em;
+  line-height: 1.25;
+  padding-left: 0.75rem;
+  border-left: 3px solid $status-approved;
+  animation: bc-slide-in 0.2s ease-out both;
+}
 
-    .breadcrumb-label {
-      display: inline;
+.breadcrumb-trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0 0 0 calc(0.75rem + 3px);
+  margin: 0;
+  gap: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: $asbestos;
+}
+
+.breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  color: $status-approved;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.125rem 0.3rem;
+  border-radius: 4px;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background-color: rgb(68 97 226 / 7%);
+    color: #2d4bc8;
+  }
+
+  &--home {
+    mat-icon {
       font-size: 1rem;
-
-      .breadcrumb-link {
-        a {
-          text-decoration: none;
-          color: $status-approved;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-
-        &::after {
-          content: '/';
-          margin: 0 0.4rem;
-        }
-      }
+      width: 1rem;
+      height: 1rem;
+      line-height: 1;
     }
+  }
+}
+
+.breadcrumb-text {
+  color: $asbestos;
+  padding: 0.125rem 0.3rem;
+}
+
+.breadcrumb-current {
+  color: $concrete;
+  font-weight: 400;
+  padding: 0.125rem 0.3rem;
+}
+
+.breadcrumb-chevron {
+  color: $mid-grey;
+  font-size: 1.15rem;
+  line-height: 1;
+  margin: 0 0.05rem;
+  user-select: none;
+}
+
+:host-context(.dark-theme) {
+  .breadcrumb-title {
+    color: $white;
+  }
+
+  .breadcrumb-current,
+  .breadcrumb-text {
+    color: $silver;
+  }
+
+  .breadcrumb-link {
+    &:hover {
+      background-color: rgb(68 97 226 / 15%);
+      color: #8ca4f5;
+    }
+  }
+}
+
+@keyframes bc-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

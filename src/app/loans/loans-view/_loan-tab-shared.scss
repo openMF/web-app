@@ -1,0 +1,386 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* ── Design tokens (charges-tab design system) ─────────────── */
+:host {
+  --ch-blue-700: #1565c0;
+  --ch-blue-600: #1976d2;
+  --ch-blue-100: #bbdefb;
+  --ch-blue-50: #e3f2fd;
+  --ch-blue-20: #f0f7ff;
+  --ch-surface: #fff;
+  --ch-surface-alt: #f4f7fb;
+  --ch-surface-h: #ebf2fa;
+  --ch-border: #dde5f0;
+  --ch-text-1: #0d1b2a;
+  --ch-text-2: #4a6785;
+  --ch-text-3: #8fa5bc;
+  --ch-paid: #2e7d32;
+  --ch-paid-bg: #e8f5e9;
+  --ch-partial: #e65100;
+  --ch-partial-bg: #fff3e0;
+  --ch-alert: #c62828;
+  --ch-alert-bg: #ffebee;
+  --ch-zero: #b0bec5;
+
+  font-family: 'DM Sans', system-ui, sans-serif;
+  display: block;
+}
+
+/* ── Dark mode token overrides ─────────────────────────────── */
+:host-context(.dark-theme) {
+  --ch-blue-700: #5b9bd5;
+  --ch-blue-600: #7ab3e0;
+  --ch-blue-100: #1a3a60;
+  --ch-blue-50: #0a2040;
+  --ch-blue-20: #0d1f35;
+  --ch-surface: #1a2535;
+  --ch-surface-alt: #101d2d;
+  --ch-surface-h: #132032;
+  --ch-border: #1e3050;
+  --ch-text-1: #e2ebf6;
+  --ch-text-2: #8baecf;
+  --ch-text-3: #6a8fad;
+  --ch-paid: #66bb6a;
+  --ch-paid-bg: #172b1a;
+  --ch-partial: #ffa726;
+  --ch-partial-bg: #281c0b;
+  --ch-alert: #ef9a9a;
+  --ch-alert-bg: #2b1212;
+  --ch-zero: #6a8fad;
+}
+
+/* ── Transaction-type tokens (transactions list + detail) ──── */
+@mixin transaction-type-tokens {
+  :host {
+    --tx-repayment: var(--ch-paid);
+    --tx-repayment-bg: var(--ch-paid-bg);
+    --tx-disbursement: var(--ch-blue-700);
+    --tx-disbursement-bg: var(--ch-blue-50);
+    --tx-accrual: var(--ch-text-3);
+    --tx-accrual-bg: var(--ch-surface-h);
+    --tx-reversed: var(--ch-alert);
+    --tx-reversed-bg: var(--ch-alert-bg);
+    --tx-downpayment: #6a1b9a;
+    --tx-downpayment-bg: #f3e5f5;
+    --tx-chargeoff: var(--ch-partial);
+    --tx-chargeoff-bg: var(--ch-partial-bg);
+    --tx-reage: #283593;
+    --tx-reage-bg: #e8eaf6;
+    --tx-reamortize: #00695c;
+    --tx-reamortize-bg: #e0f2f1;
+    --tx-discount: #5d4037;
+    --tx-discount-bg: #efebe9;
+    --tx-linked: var(--ch-paid);
+    --tx-linked-bg: var(--ch-paid-bg);
+    --tx-recovery: #00838f;
+    --tx-recovery-bg: #e0f7fa;
+
+    /* Neutral fallback for transaction types without a dedicated badge class.
+       Built on the secondary text/surface tokens so it follows both themes. */
+    --tx-default: var(--ch-text-2);
+    --tx-default-bg: var(--ch-surface-h);
+  }
+
+  :host-context(.dark-theme) {
+    --tx-downpayment: #ce93d8;
+    --tx-downpayment-bg: #1a0a26;
+    --tx-reage: #9fa8da;
+    --tx-reage-bg: #0d1230;
+    --tx-reamortize: #80cbc4;
+    --tx-reamortize-bg: #002f2b;
+    --tx-discount: #bcaaa4;
+    --tx-discount-bg: #231613;
+    --tx-recovery: #4dd0e1;
+    --tx-recovery-bg: #06282e;
+  }
+}
+
+/* ── Transaction-type badges (same system as charges-tab) ──── */
+$transaction-type-keys:
+  'repayment', 'disbursement', 'accrual', 'reversed', 'downpayment', 'chargeoff', 'reage', 'reamortize', 'discount',
+  'linked', 'recovery';
+
+@mixin transaction-badges {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    /* Neutral default so a type without a generated badge-* class still
+       renders as an intentional pill instead of unstyled text. */
+    background: var(--tx-default-bg);
+    color: var(--tx-default);
+    border: 1px solid var(--tx-default);
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--tx-default);
+    }
+  }
+
+  @each $key in $transaction-type-keys {
+    .badge-#{$key} {
+      background: var(--tx-#{$key}-bg);
+      color: var(--tx-#{$key});
+      border-color: var(--tx-#{$key});
+
+      .badge-dot {
+        background: var(--tx-#{$key});
+      }
+    }
+  }
+}
+
+/* ── Reusable layout mixins ────────────────────────────────── */
+@mixin card-container {
+  border: 1px solid var(--ch-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ch-surface-alt);
+  box-shadow: 0 1px 3px rgb(13 43 94 / 6%);
+  margin: 16px;
+}
+
+@mixin toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--ch-surface-h);
+  border-bottom: 1px solid var(--ch-border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@mixin toolbar-toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Fact-sheet layout (general / account-details tabs) ────── */
+@mixin fact-sheet {
+  .section {
+    padding: 18px 20px 22px;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--ch-border);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ch-text-2);
+  }
+
+  .section-hint {
+    font-size: 11.5px;
+    color: var(--ch-text-3);
+  }
+
+  .fact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--ch-surface);
+    border: 1px solid var(--ch-border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .fact {
+    flex: 1 1 25%;
+    min-width: 200px;
+    padding: 12px 16px;
+    margin: -1px 0 0 -1px;
+    border-top: 1px solid var(--ch-border);
+    border-left: 1px solid var(--ch-border);
+  }
+
+  .fact.span-2 {
+    flex-basis: 50%;
+    min-width: 280px;
+  }
+
+  .fact-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ch-text-3);
+    margin-bottom: 4px;
+  }
+
+  .fact-value {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ch-text-1);
+    overflow-wrap: anywhere;
+  }
+
+  .fact-value.amount {
+    font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+    font-size: 13px;
+  }
+
+  .fact-value.muted {
+    color: var(--ch-text-3);
+    font-weight: 400;
+  }
+
+  @media (width <= 520px) {
+    .fact,
+    .fact.span-2 {
+      flex-basis: 100%;
+      min-width: 100%;
+    }
+  }
+}
+
+/* Toolbar action buttons (charges-tab design system) */
+@mixin btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font:
+    600 13px 'DM Sans',
+    sans-serif;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ch-blue-600);
+    outline-offset: 1px;
+  }
+}
+
+@mixin btn-action-primary {
+  @include btn-action;
+
+  background: var(--ch-blue-700);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: var(--ch-blue-600);
+  }
+}
+
+@mixin btn-action-ghost {
+  @include btn-action;
+
+  background: var(--ch-surface);
+  color: var(--ch-text-2);
+  border-color: var(--ch-border);
+
+  &:hover:not(:disabled) {
+    color: var(--ch-text-1);
+    border-color: var(--ch-text-3);
+  }
+}
+
+@mixin btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--ch-blue-100);
+  border-radius: 4px;
+  background: var(--ch-blue-50);
+  color: var(--ch-blue-700);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.14s ease,
+    color 0.14s ease,
+    background 0.14s ease;
+
+  &:hover {
+    border-color: var(--ch-blue-700);
+    background: var(--ch-blue-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ch-blue-600);
+    outline-offset: 1px;
+  }
+}
+
+/* ── Account flag badges ───────────────────────────────────── */
+
+// Flag colours are solid fills, so they need a darker tone than the $status-*
+// palette for white label text to stay legible. These are the light variants of
+// the charge-off and alert tokens, used as backgrounds rather than as text.
+$flag-charged-off: #e65100;
+$flag-fraud: #c62828;
+
+// Pill marking an account-level flag. Shared by the account header, where it
+// sits on the dark blue card next to the status pill, and the general tab, so a
+// charged-off account is marked the same way wherever it appears.
+@mixin account-flag-badge($background) {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #fff;
+  background-color: $background;
+}
+
+// Declares both flag badge classes. Include it in any component that renders
+// one of them; the classes themselves stay identical across components.
+@mixin account-flag-badges {
+  .charged-off-badge {
+    @include account-flag-badge($flag-charged-off);
+  }
+
+  // Red separates fraud from the amber charge-off pill so the two flags never
+  // blur together when an account carries both.
+  .fraud-badge {
+    @include account-flag-badge($flag-fraud);
+
+    margin-left: 8px;
+  }
+}

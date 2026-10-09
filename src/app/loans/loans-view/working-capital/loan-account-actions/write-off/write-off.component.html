@@ -1,0 +1,85 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container mat-elevation-z8">
+  <mat-card>
+    <form [formGroup]="writeOffForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-column">
+          <mat-form-field (click)="writeOffDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Write off on' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="writeOffDatePicker"
+              required
+              formControlName="transactionDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="writeOffDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #writeOffDatePicker></mat-datepicker>
+            @if (writeOffForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Write Off Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+
+          @if (outstandingAmount !== null) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+              <input matInput [value]="outstandingAmount" disabled />
+            </mat-form-field>
+          }
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Reason for Write-Off' | translate }}</mat-label>
+            <mat-select formControlName="writeoffReasonId">
+              @for (writeOffReason of writeOffReasonOptions; track writeOffReason.id) {
+                <mat-option [value]="writeOffReason.id">
+                  {{ writeOffReason.name }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="note"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+              maxlength="1000"
+            ></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!writeOffForm.valid || isSubmitting"
+            *mifosxHasPermission="'WRITEOFF_WORKINGCAPITALLOAN'"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

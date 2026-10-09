@@ -8,9 +8,14 @@
 
 <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
   @if (displayL && iconVisible) {
-    <span class="m-l-5" (click)="copyValue()"
-      ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
-    ></span>
+    <button
+      mat-icon-button
+      class="copy-btn m-l-5"
+      (click)="copyValue(); $event.stopPropagation()"
+      [attr.aria-label]="'labels.text.Copy Account Number' | translate"
+    >
+      <fa-icon icon="copy" size="sm" [title]="'labels.text.Copy Account Number' | translate"></fa-icon>
+    </button>
   }
   @if (accountType) {
     <span class="m-l-5">
@@ -21,8 +26,13 @@
     <span class="m-l-5">{{ accountNo }}</span>
   }
   @if (displayR && iconVisible) {
-    <span class="m-l-3" (click)="copyValue()"
-      ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
-    ></span>
+    <button
+      mat-icon-button
+      class="copy-btn m-l-3"
+      (click)="copyValue(); $event.stopPropagation()"
+      [attr.aria-label]="'labels.text.Copy Account Number' | translate"
+    >
+      <fa-icon icon="copy" size="sm" [title]="'labels.text.Copy Account Number' | translate"></fa-icon>
+    </button>
   }
 </span>

@@ -11,7 +11,7 @@ i.e.
 As DevOps I want Health liveness Probe on the microservice so that the health of the service can be monitored.
 
 **Tasks:**  
- i.e.
+i.e.
 
 1.  Add negative use-cases to Unit tests
 2.  Add Integration tests
@@ -20,7 +20,7 @@ As DevOps I want Health liveness Probe on the microservice so that the health of
 **Acceptance Criteria:**
 
 - [ ] [LIST ITEMS]  
-       i.e.
+      i.e.
 
 - [ ] Negative use-cases for Unit Tests in the "common streaming library"
 - [ ] Integration tests in the "common streaming library"

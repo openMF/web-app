@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditConfigurationComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -82,7 +83,7 @@ export class EditConfigurationComponent implements OnInit {
       description: [{ value: this.configuration.description, disabled: true }],
       value: [this.configuration.value],
       stringValue: [this.configuration.stringValue],
-      dateValue: [this.configuration.dateValue]
+      dateValue: [this.configuration.dateValue ? this.dateUtils.parseDate(this.configuration.dateValue) : null]
     });
   }
 

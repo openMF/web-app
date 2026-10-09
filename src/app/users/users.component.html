@@ -7,6 +7,15 @@
 -->
 
 <div class="container m-b-20 layout-row align-end gap-20px">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['self-service']"
+    *mifosxHasPermission="'READ_SELFSERVICEUSER'"
+  >
+    <fa-icon icon="users" class="m-r-10"></fa-icon>
+    {{ 'labels.text.Self Service Users' | translate }}
+  </button>
   <div #buttonCreateUser class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>

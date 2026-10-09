@@ -32,7 +32,7 @@
             <mat-select required formControlName="transferType" (selectionChange)="changeEvent()">
               @for (transferType of transferTypeData; track transferType) {
                 <mat-option [value]="transferType.id">
-                  {{ transferType.value }}
+                  {{ 'labels.selections.standingInstructions.' + transferType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -49,7 +49,7 @@
             <mat-select required formControlName="priority">
               @for (priorityType of priorityTypeData; track priorityType) {
                 <mat-option [value]="priorityType.id">
-                  {{ priorityType.value }}
+                  {{ 'labels.selections.standingInstructions.' + priorityType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -66,7 +66,7 @@
             <mat-select required formControlName="status">
               @for (statusType of statusTypeData; track statusType) {
                 <mat-option [value]="statusType.id">
-                  {{ statusType.value }}
+                  {{ 'labels.selections.standingInstructions.' + statusType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -83,7 +83,7 @@
             <mat-select required formControlName="fromAccountType" (selectionChange)="changeEvent()">
               @for (fromAccountType of fromAccountTypeData; track fromAccountType) {
                 <mat-option [value]="fromAccountType.id">
-                  {{ fromAccountType.value }}
+                  {{ 'labels.selections.standingInstructions.' + fromAccountType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -117,7 +117,7 @@
             <mat-select required formControlName="destination">
               @for (destinationType of destinationTypeData; track destinationType) {
                 <mat-option [value]="destinationType.id">
-                  {{ destinationType.value }}
+                  {{ destinationType.value | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -168,7 +168,7 @@
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
               @for (toAccountType of toAccountTypeData; track toAccountType) {
                 <mat-option [value]="toAccountType.id">
-                  {{ toAccountType.value }}
+                  {{ 'labels.selections.standingInstructions.' + toAccountType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -202,7 +202,7 @@
             <mat-select formControlName="instructionType">
               @for (instructionsType of instructionTypeData; track instructionsType) {
                 <mat-option [value]="instructionsType.id">
-                  {{ instructionsType.value }}
+                  {{ 'labels.selections.standingInstructions.' + instructionsType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -214,16 +214,18 @@
             }
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-            <input type="number" matInput required formControlName="amount" />
-            @if (createStandingInstructionsForm.controls.amount.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+          @if (createStandingInstructionsForm.controls.instructionType.value === 1) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+              <input type="number" matInput formControlName="amount" />
+              @if (createStandingInstructionsForm.controls.amount.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
           <mat-form-field class="flex-48" (click)="validFromDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Validity from' | translate }}</mat-label>
@@ -270,7 +272,7 @@
             <mat-select required formControlName="recurrenceType">
               @for (recurrenceType of recurrenceTypeData; track recurrenceType) {
                 <mat-option [value]="recurrenceType.id">
-                  {{ recurrenceType.value }}
+                  {{ 'labels.selections.standingInstructions.' + recurrenceType.code | translate }}
                 </mat-option>
               }
             </mat-select>
@@ -282,53 +284,62 @@
             }
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Interval' | translate }}</mat-label>
-            <input type="number" matInput required formControlName="recurrenceInterval" />
-            @if (createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Recurrence Interval' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Recurrence Frequency' | translate }}</mat-label>
-            <mat-select required formControlName="recurrenceFrequency">
-              @for (recurrenceFrequencyType of recurrenceFrequencyTypeData; track recurrenceFrequencyType) {
-                <mat-option [value]="recurrenceFrequencyType.id">
-                  {{ recurrenceFrequencyType.value }}
-                </mat-option>
+          @if (createStandingInstructionsForm.controls.recurrenceType.value === 1) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Interval' | translate }}</mat-label>
+              <input type="number" matInput formControlName="recurrenceInterval" />
+              @if (createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Recurrence Interval' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
               }
-            </mat-select>
-            @if (createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Recurrence Frequency' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+            </mat-form-field>
+          }
 
-          <mat-form-field class="flex-48" (click)="recurrenceOnMonthDayDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.On Month Day' | translate }}</mat-label>
-            <input
-              required
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="recurrenceOnMonthDayDatePicker"
-              formControlName="recurrenceOnMonthDay"
-            />
-            <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
-            @if (createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.On Month Day' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+          @if (createStandingInstructionsForm.controls.recurrenceType.value === 1) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Recurrence Frequency' | translate }}</mat-label>
+              <mat-select formControlName="recurrenceFrequency">
+                @for (recurrenceFrequencyType of recurrenceFrequencyTypeData; track recurrenceFrequencyType) {
+                  <mat-option [value]="recurrenceFrequencyType.id">
+                    {{ 'labels.selections.standingInstructions.' + recurrenceFrequencyType.code | translate }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Recurrence Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
+
+          @if (
+            createStandingInstructionsForm.controls.recurrenceType.value === 1 &&
+            (createStandingInstructionsForm.controls.recurrenceFrequency.value === 2 ||
+              createStandingInstructionsForm.controls.recurrenceFrequency.value === 3)
+          ) {
+            <mat-form-field class="flex-48" (click)="recurrenceOnMonthDayDatePicker.open()">
+              <mat-label>{{ 'labels.inputs.On Month Day' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="recurrenceOnMonthDayDatePicker"
+                formControlName="recurrenceOnMonthDay"
+              />
+              <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
+              @if (createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.On Month Day' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
         </div>
       </mat-card-content>
 

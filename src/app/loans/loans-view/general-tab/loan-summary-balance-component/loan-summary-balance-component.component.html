@@ -1,0 +1,44 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (summary) {
+  <div class="section-head">
+    <h3 class="section-title">{{ 'labels.heading.Loan Summary' | translate }}</h3>
+    @if (currency) {
+      <span class="section-hint">{{ currency.name }} · {{ currency.code }}</span>
+    }
+  </div>
+  <div class="matrix-wrap">
+    <table class="matrix" [attr.aria-label]="'labels.heading.Loan Summary' | translate">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          @for (col of columns; track col.key) {
+            <th scope="col">{{ 'labels.inputs.' + col.label | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows; track row.property) {
+          <tr [class.total]="row.isTotal">
+            <td class="rowlabel">{{ 'labels.inputs.' + row.property | translate }}</td>
+            @for (col of columns; track col.key) {
+              <td
+                [class.zero]="!row[col.key]"
+                [class.paid]="col.key === 'paid' && row[col.key] > 0"
+                [class.due]="col.key === 'overdue' && row[col.key] > 0"
+              >
+                {{ row[col.key] | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

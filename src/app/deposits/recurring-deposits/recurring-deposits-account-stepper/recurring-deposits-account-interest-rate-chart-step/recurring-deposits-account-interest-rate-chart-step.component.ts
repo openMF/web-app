@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import {
   MatTable,
   MatColumnDef,
@@ -63,7 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountInterestRateChartStepComponent implements OnInit, OnChanges {
   @Input() recurringDepositsAccountTemplate: any;

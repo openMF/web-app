@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
@@ -33,7 +33,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -63,8 +64,8 @@ export class LoanProductDetailsStepComponent extends LoanProductBaseComponent im
       description: this.loanProductsTemplate.description,
       externalId: this.loanProductsTemplate.externalId,
       fundId: this.loanProductsTemplate.fundId,
-      startDate: this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
-      closeDate: this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
+      startDate: this.loanProductsTemplate.startDate && this.dateUtils.parseDate(this.loanProductsTemplate.startDate),
+      closeDate: this.loanProductsTemplate.closeDate && this.dateUtils.parseDate(this.loanProductsTemplate.closeDate),
       includeInBorrowerCycle: this.loanProductsTemplate.includeInBorrowerCycle
     });
   }

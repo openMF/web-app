@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, Input, inject } from '@angular/core';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
@@ -36,7 +36,8 @@ Chart.register(...registerables);
     MatButtonToggleGroup,
     MatButtonToggle,
     NgStyle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartComponent implements OnChanges {
   private reportsService = inject(ReportsService);

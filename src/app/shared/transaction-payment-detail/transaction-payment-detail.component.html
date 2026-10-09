@@ -7,13 +7,15 @@
 -->
 
 <div class="layout-row-wrap card-content">
-  <div class="flex-50 mat-body-strong">
-    {{ 'labels.inputs.Payment Type' | translate }}
-  </div>
+  @if (paymentDetailData.paymentType) {
+    <div class="flex-50 mat-body-strong">
+      {{ 'labels.inputs.Payment Type' | translate }}
+    </div>
 
-  <div class="flex-50">
-    {{ paymentDetailData.paymentType.name }}
-  </div>
+    <div class="flex-50">
+      {{ paymentDetailData.paymentType.name }}
+    </div>
+  }
 </div>
 @if (hasSomeValue()) {
   <table>

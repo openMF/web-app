@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -42,7 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountTermsStepComponent,
     SavingsAccountChargesStepComponent,
     SavingsAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateSavingsAccountComponent {
   private route = inject(ActivatedRoute);
@@ -50,7 +52,13 @@ export class CreateSavingsAccountComponent {
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
+  /** True while the create request is in flight. */
+  isSubmitting = false;
+  /** Idempotency key reused if the same submission is retried. */
+  submitIdempotencyKey?: string;
   /** Savings Account Template */
   savingsAccountTemplate: any;
   /** Savings Account Product Template */
@@ -75,7 +83,7 @@ export class CreateSavingsAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountTemplate: any }) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
     });
   }
@@ -124,6 +132,9 @@ export class CreateSavingsAccountComponent {
    * Creates a new share account.
    */
   submit() {
+    if (!this.startSubmit()) {
+      return;
+    }
     // TODO: Update once language and date settings are setup
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -149,14 +160,43 @@ export class CreateSavingsAccountComponent {
     } else {
       savingsAccount.groupId = this.savingsAccountTemplate.groupId;
     }
-    this.savingsService.createSavingsAccount(savingsAccount).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
+    this.savingsService.createSavingsAccount(savingsAccount, this.submitIdempotencyKey).subscribe({
+      next: (response: any) => {
+        this.submitIdempotencyKey = undefined;
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      },
+      error: () => this.submitFailed()
     });
+  }
+
+  /**
+   * Marks the submission as in flight and creates its idempotency key.
+   * @returns false if a submission is already in flight.
+   */
+  private startSubmit(): boolean {
+    if (this.isSubmitting) {
+      return false;
+    }
+    if (!this.submitIdempotencyKey) {
+      this.submitIdempotencyKey =
+        globalThis.crypto?.randomUUID?.() ?? `create-savings-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+    return true;
+  }
+
+  /** Allows submitting again after the request failed. */
+  private submitFailed(): void {
+    // Fineract replays the stored response for a reused key, so a corrected form needs a new key.
+    this.submitIdempotencyKey = undefined;
+    this.isSubmitting = false;
+    this.cdr.markForCheck();
   }
 }

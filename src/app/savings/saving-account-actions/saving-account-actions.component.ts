@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ApproveSavingsAccountComponent } from './approve-savings-account/approve-savings-account.component';
@@ -23,6 +24,7 @@ import { SavingsAccountTransactionsComponent } from './savings-account-transacti
 import { CloseSavingsAccountComponent } from './close-savings-account/close-savings-account.component';
 import { ApplyAnnualFeesSavingsAccountComponent } from './apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 import { ManageSavingsAccountComponent } from './manage-savings-account/manage-savings-account.component';
+import { LinkPaymentSystemComponent } from './link-payment-system/link-payment-system.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -46,11 +48,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountTransactionsComponent,
     CloseSavingsAccountComponent,
     ApplyAnnualFeesSavingsAccountComponent,
-    ManageSavingsAccountComponent
-  ]
+    ManageSavingsAccountComponent,
+    LinkPaymentSystemComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingAccountActionsComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
@@ -74,6 +79,7 @@ export class SavingAccountActionsComponent {
     'Unblock Deposit': boolean;
     'Block Withdrawal': boolean;
     'Unblock Withdrawal': boolean;
+    'Link to payment system': boolean;
   } = {
     Approve: false,
     Reject: false,
@@ -94,7 +100,8 @@ export class SavingAccountActionsComponent {
     'Block Deposit': false,
     'Unblock Deposit': false,
     'Block Withdrawal': false,
-    'Unblock Withdrawal': false
+    'Unblock Withdrawal': false,
+    'Link to payment system': false
   };
 
   currency: Currency;
@@ -103,7 +110,7 @@ export class SavingAccountActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
       if (data.savingsAccountActionData) {
         this.currency = data.savingsAccountActionData.currency;
       }

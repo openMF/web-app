@@ -25,9 +25,12 @@
             <div
               class="thumb"
               [class.clickable]="isPreviewable(document)"
-              role="button"
-              tabindex="0"
-              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+              [class.has-pdf]="!!pdfThumbnails[document.id]"
+              [attr.role]="isPreviewable(document) ? 'button' : null"
+              [attr.tabindex]="isPreviewable(document) ? 0 : null"
+              [attr.aria-label]="
+                isPreviewable(document) ? ('labels.buttons.Preview' | translate) + ': ' + document.name : null
+              "
               (keydown.enter)="isPreviewable(document) && openPreview(document)"
               (keydown.space)="isPreviewable(document) && openPreview(document)"
               (click)="isPreviewable(document) && openPreview(document)"
@@ -39,10 +42,35 @@
                   [title]="document.name"
                   loading="lazy"
                 />
+              } @else if (pdfThumbnails[document.id]) {
+                <iframe
+                  class="pdf-thumb"
+                  [src]="pdfThumbnails[document.id]"
+                  [title]="document.name"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  loading="lazy"
+                ></iframe>
+              } @else if (spreadsheetThumbnailRows(document).length) {
+                <table class="spreadsheet-thumb" aria-hidden="true">
+                  @for (row of spreadsheetThumbnailRows(document); track $index) {
+                    <tr>
+                      @for (cell of row; track $index) {
+                        <td>{{ cell }}</td>
+                      }
+                    </tr>
+                  }
+                </table>
               } @else {
-                <div class="placeholder">
+                <div
+                  class="placeholder"
+                  [attr.title]="isPreviewable(document) ? null : ('labels.text.PreviewNotAvailable' | translate)"
+                >
                   <fa-icon icon="file"></fa-icon>
                   <span>{{ document.fileName || document.name }}</span>
+                  @if (!isPreviewable(document)) {
+                    <span class="hint">{{ 'labels.text.PreviewNotAvailable' | translate }}</span>
+                  }
                 </div>
               }
               @if (isPreviewable(document)) {
@@ -59,12 +87,33 @@
               @if (document.description) {
                 <div class="description">{{ document.description }}</div>
               }
+              @if (document.issuanceDate || document.expiryDate) {
+                <div class="meta">
+                  @if (document.issuanceDate) {
+                    <span
+                      >{{ 'labels.inputs.Issuance Date' | translate }}: {{ document.issuanceDate | dateFormat }}</span
+                    >
+                  }
+                  @if (document.expiryDate) {
+                    <span>{{ 'labels.inputs.Expiry Date' | translate }}: {{ document.expiryDate | dateFormat }}</span>
+                  }
+                </div>
+              }
               <div class="actions">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="downloadDocument(document)"
+                  [title]="'labels.buttons.Download' | translate"
+                  [attr.aria-label]="('labels.buttons.Download' | translate) + ': ' + document.name"
+                >
+                  <fa-icon icon="download"></fa-icon>
+                </button>
                 <button
                   mat-icon-button
                   color="warn"
                   (click)="deleteDocument(document.id, document.name)"
-                  title="Delete"
+                  [title]="'labels.buttons.Delete' | translate"
                   [attr.aria-label]="'labels.buttons.Delete' | translate"
                   *mifosxHasPermission="'DELETE_DOCUMENT'"
                 >

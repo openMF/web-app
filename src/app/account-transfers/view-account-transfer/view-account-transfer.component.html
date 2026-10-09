@@ -10,8 +10,8 @@
   <div class="container m-b-20 align-end gap-2px">
     @if (!viewAccountTransferData.reversed) {
       <span>
-        <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'">
-          <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
+        <button mat-raised-button color="warn" *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'" (click)="undoTransfer()">
+          <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.undo_account_transfer' | translate }}
         </button>
       </span>
     }

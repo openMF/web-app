@@ -6,24 +6,63 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<button mat-icon-button [matMenuTriggerFor]="themeMenu" matTooltip="{{ 'tooltips.Color Schemes' | translate }}">
-  <fa-icon icon="fill-drip" size="lg"></fa-icon>
-</button>
+<div class="mifosx-theme-picker" role="radiogroup" [attr.aria-label]="'tooltips.Color Schemes' | translate">
+  @for (theme of themes; track theme.id; let i = $index) {
+    <button
+      type="button"
+      role="radio"
+      class="mifosx-theme-picker-swatch"
+      [class.is-selected]="currentTheme.id === theme.id"
+      [style.background]="theme.primary"
+      [attr.aria-checked]="currentTheme.id === theme.id"
+      [attr.aria-label]="'labels.inputs.' + theme.name | translate"
+      [tabindex]="isTabbable(i) ? 0 : -1"
+      [matTooltip]="'labels.inputs.' + theme.name | translate"
+      (click)="installTheme(theme)"
+      (keydown)="onKeydown($event, i)"
+    >
+      @if (currentTheme.id === theme.id) {
+        <fa-icon class="mifosx-theme-chosen-icon" icon="check" aria-hidden="true"></fa-icon>
+      }
+    </button>
+  }
+</div>
 
-<mat-menu class="mifosx-theme-picker-menu" #themeMenu="matMenu" x-position="before">
-  <mat-grid-list cols="2">
-    @for (theme of themes; track theme) {
-      <mat-grid-tile>
-        <div mat-menu-item (click)="installTheme(theme)">
-          <div class="mifosx-theme-picker-swatch">
-            @if (currentTheme.href === theme.href) {
-              <fa-icon class="mifosx-theme-chosen-icon" icon="check-circle" size="lg"></fa-icon>
-            }
-            <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
-            <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
-          </div>
-        </div>
-      </mat-grid-tile>
+<div class="mifosx-theme-picker-custom">
+  <span
+    class="mifosx-theme-picker-swatch mifosx-theme-picker-custom-swatch"
+    [class.is-selected]="currentTheme.isCustom"
+    [style.background]="currentTheme.isCustom ? currentTheme.primary : null"
+    [matTooltip]="'labels.inputs.Custom Color' | translate"
+  >
+    <input
+      type="color"
+      class="mifosx-theme-picker-custom-well"
+      [value]="customColor"
+      [attr.aria-label]="'labels.inputs.Custom Color' | translate"
+      (input)="onCustomColorPicked($event)"
+    />
+    @if (currentTheme.isCustom) {
+      <fa-icon class="mifosx-theme-chosen-icon" icon="check" aria-hidden="true"></fa-icon>
     }
-  </mat-grid-list>
-</mat-menu>
+  </span>
+
+  <mat-form-field class="mifosx-theme-picker-custom-field">
+    <mat-label>{{ 'labels.inputs.Custom Color' | translate }}</mat-label>
+    <input
+      matInput
+      type="text"
+      maxlength="7"
+      spellcheck="false"
+      autocomplete="off"
+      [value]="customColor"
+      (change)="onCustomHexEntered($event)"
+    />
+  </mat-form-field>
+</div>
+
+@if (contrastAdjusted) {
+  <p class="mifosx-theme-picker-note">
+    {{ 'labels.text.Custom color darkened for legibility' | translate }}
+  </p>
+}

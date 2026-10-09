@@ -1,0 +1,90 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="prefs">
+  <section class="prefs__section">
+    <h2 class="prefs__section-title">{{ 'copilot.preferences.panelTitle' | translate }}</h2>
+
+    <div class="prefs__row">
+      <div class="prefs__label">
+        <span class="prefs__label-title">{{ 'copilot.preferences.fullScreen' | translate }}</span>
+        <span class="prefs__label-hint">{{ 'copilot.preferences.fullScreenHint' | translate }}</span>
+      </div>
+      <button
+        type="button"
+        class="prefs__switch"
+        role="switch"
+        [class.prefs__switch--on]="isFullScreen"
+        [attr.aria-checked]="isFullScreen"
+        [attr.aria-label]="'copilot.preferences.fullScreen' | translate"
+        (click)="fullScreenToggled.emit()"
+      >
+        <span class="prefs__switch-thumb"></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="prefs__section">
+    <h2 class="prefs__section-title">{{ 'copilot.preferences.historyTitle' | translate }}</h2>
+
+    <div class="prefs__row">
+      <div class="prefs__label">
+        <span class="prefs__label-title">{{ 'copilot.preferences.keepHistory' | translate }}</span>
+        <span class="prefs__label-hint">{{ 'copilot.preferences.keepHistoryHint' | translate }}</span>
+      </div>
+      <button
+        type="button"
+        class="prefs__switch"
+        role="switch"
+        [class.prefs__switch--on]="historyEnabled"
+        [attr.aria-checked]="historyEnabled"
+        [attr.aria-label]="'copilot.preferences.keepHistory' | translate"
+        (click)="historyToggled.emit(!historyEnabled)"
+      >
+        <span class="prefs__switch-thumb"></span>
+      </button>
+    </div>
+
+    <div class="prefs__row">
+      <div class="prefs__label">
+        <span class="prefs__label-title">{{ 'copilot.preferences.clearHistory' | translate }}</span>
+        <span class="prefs__label-hint">
+          {{ 'copilot.preferences.savedCount' | translate: { count: savedConversations } }}
+        </span>
+      </div>
+
+      <!-- The first press arms the button; the second erases. Nothing here can be undone. -->
+      <div class="prefs__actions" *ngIf="!confirmingClear">
+        <button
+          type="button"
+          class="prefs__button prefs__button--danger"
+          [disabled]="savedConversations === 0"
+          (click)="requestClear()"
+        >
+          {{ 'copilot.preferences.clearHistoryAction' | translate }}
+        </button>
+      </div>
+      <div class="prefs__actions" *ngIf="confirmingClear">
+        <button type="button" class="prefs__button" (click)="cancelClear()">
+          {{ 'copilot.preferences.cancel' | translate }}
+        </button>
+        <button type="button" class="prefs__button prefs__button--danger" (click)="requestClear()">
+          {{ 'copilot.preferences.clearHistoryConfirm' | translate }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="prefs__section">
+    <h2 class="prefs__section-title">{{ 'copilot.preferences.aboutTitle' | translate }}</h2>
+    <ul class="prefs__facts">
+      <li>{{ 'copilot.preferences.aboutPermissions' | translate }}</li>
+      <li>{{ 'copilot.preferences.aboutConfirmation' | translate }}</li>
+      <li>{{ 'copilot.preferences.aboutStorage' | translate }}</li>
+    </ul>
+  </section>
+</div>

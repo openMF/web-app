@@ -1,0 +1,33 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container base-teller">
+  <mat-card class="workflow-card">
+    <mat-card-content>
+      <h2>{{ 'labels.text.Base Teller' | translate }}</h2>
+
+      <div class="workflow-grid">
+        @for (workflow of workflows; track workflow.route) {
+          <a class="workflow-link" *mifosxHasPermission="workflow.permission" [routerLink]="workflow.route">
+            <div class="workflow-block">
+              @if (workflow.fontAwesomeIcon) {
+                <span class="workflow-icon" aria-hidden="true">
+                  <fa-icon [icon]="workflow.fontAwesomeIcon" size="lg"></fa-icon>
+                </span>
+              } @else {
+                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon>
+              }
+              <span class="workflow-title">{{ workflow.label | translate }}</span>
+              <mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
+            </div>
+          </a>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

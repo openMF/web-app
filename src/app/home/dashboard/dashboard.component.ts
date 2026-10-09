@@ -7,17 +7,19 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { AsyncPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
+import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
+import { OnboardingBoardComponent } from './onboarding-board/onboarding-board.component';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Dashboard component.
@@ -29,17 +31,21 @@ import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.confi
   styleUrls: ['./dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
     DashboardEngineComponent,
-    AsyncPipe
-  ]
+    MatTab,
+    MatTabContent,
+    MatTabGroup,
+    OnboardingBoardComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
   /** Search Text. */
-  searchText: UntypedFormControl = new UntypedFormControl();
+  searchText: FormControl = new FormControl();
   /** Filtered Activities. */
   filteredActivities!: Observable<any[]>;
   /** All User Activities. */
@@ -48,10 +54,16 @@ export class DashboardComponent implements OnInit {
   dashboardDefinition = GLOBAL_ANALYTICS_DASHBOARD;
   /** Office options from resolver */
   offices: any[] = [];
+  /** Product options */
+  products: any[] = [];
+  /** Client group options */
+  clientGroups: any[] = [];
 
   constructor() {
-    this.route.data.subscribe((data: { offices: any[] }) => {
+    this.route.data.subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
       this.offices = data.offices || [];
+      this.products = data.products || [];
+      this.clientGroups = data.clientGroups || [];
     });
   }
 
@@ -76,6 +88,8 @@ export class DashboardComponent implements OnInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter(
+      (activity) => this.translateService.instant(activity.activity).toLowerCase().indexOf(filterValue) === 0
+    );
   }
 }

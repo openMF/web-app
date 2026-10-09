@@ -7,12 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { Router } from '@angular/router';
-
-/** rxjs Imports */
-
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 /**
  * Interface for version information.
@@ -29,6 +26,7 @@ export interface VersionInfo {
 import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { AlertService } from '../core/alert/alert.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -49,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
+import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
 
 /**
  * Login component.
@@ -71,9 +70,10 @@ import { VersionService } from '../system/version.service';
     MatMenu,
     MatMenuItem,
     M3IconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   /** Whether to show the tenant selector dropdown */
   showTenantSelector = true;
   /** Show version info table if env allows */
@@ -85,9 +85,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
-
+  private route = inject(ActivatedRoute);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private authenticationService = inject(AuthenticationService);
 
   public environment = environment;
 
@@ -106,12 +108,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   resetPassword = false;
   /** True if user requires two factor authentication. */
   twoFactorAuthenticationRequired = false;
-  /** Subscription to alerts. */
-  alert$: Subscription;
   logoPath = 'assets/images/default_home.png';
   logoPathDark = 'assets/images/white-mifos.png';
-  /** Subscription to theme changes. */
-  theme$: Subscription;
 
   themeDarkEnabled: boolean = false;
 
@@ -119,11 +117,16 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Subscribes to alert event of alert service and theme changes.
    */
   ngOnInit() {
+    if (this.authenticationService.isAuthenticated()) {
+      this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
+      return;
+    }
+
     this.showTenantSelector = this.calculateTenantSelectorVisibility();
     this.updateLogo();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     // Subscribe to theme changes
-    this.theme$ = this.themingService.theme.subscribe((value: string) => {
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     });
 
@@ -131,7 +134,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
     // Subscribe to alerts
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alertService.alertEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === this.translateService.instant('errors.auth.passwordExpired.type')) {
         this.twoFactorAuthenticationRequired = false;
@@ -142,7 +145,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }
@@ -179,15 +182,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Unsubscribes from alerts and theme changes.
+   * Destination the authentication guard preserved before redirecting here.
+   * @returns {string} The requested route, or the dashboard when none is safe to restore.
    */
-  ngOnDestroy() {
-    if (this.alert$) {
-      this.alert$.unsubscribe();
-    }
-    if (this.theme$) {
-      this.theme$.unsubscribe();
-    }
+  private preservedReturnUrl(): string {
+    return sanitizeReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));
   }
 
   reloadSettings(): void {
@@ -205,10 +204,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (environment.displayTenantSelector === 'false') {
       return false;
     }
-    const tenantIds = environment.fineractPlatformTenantIds
-      .split(',')
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0);
+    // The configured list, plus any identifier tenant management has seen on this installation, so
+    // a deployment that registers tenants through the API does not have to also list them in the
+    // environment as well. Without that feature the second list is empty and this is the configured
+    // list unchanged.
+    const configured: string[] = environment.fineractPlatformTenantIds.split(',');
+    const known: string[] = this.settingsService.tenantIdentifiers ?? [];
+    const tenantIds = [
+      ...new Set([
+        ...configured,
+        ...known
+      ])
+    ]
+      .map((id: string) => id.trim())
+      .filter((id: string) => id.length > 0);
     if (tenantIds.length === 0 || (tenantIds.length === 1 && tenantIds[0] === 'default')) {
       return false;
     }

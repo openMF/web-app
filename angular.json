@@ -38,6 +38,11 @@
               "src/assets",
               {
                 "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "assets/leaflet"
+              },
+              {
+                "glob": "**/*",
                 "input": "node_modules/tinymce",
                 "output": "assets/tinymce"
               }
@@ -45,6 +50,7 @@
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/@fortawesome/fontawesome-free/css/v4-shims.css",
+              "node_modules/leaflet/dist/leaflet.css",
               "src/main.scss",
               {
                 "inject": false,
@@ -54,6 +60,7 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
+              "leaflet",
               "lodash",
               "tinymce",
               "moment"
@@ -137,85 +144,6 @@
               "src/**/*.ts",
               "src/**/*.html"
             ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "mifosx-web-app:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mifosx-web-app:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "mifosx-web-app:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mifosx-web-app:serve:production"
-            }
-          }
-        }
-      }
-    },
-    "mifosx-web-app-e2e": {
-      "root": "e2e",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "mifosx-web-app-e2e:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mifosx-web-app-e2e:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "e2e/**/*.ts",
-              "e2e/**/*.html"
-            ]
-          }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "mifosx-web-app-e2e:serve",
-            "configFile": "e2e/cypress.json"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "mifosx-web-app-e2e:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false,
-            "configFile": "e2e/cypress.json"
           }
         }
       }

@@ -18,7 +18,7 @@ import { SystemService } from '../../system.service';
 /**
  * Configurations data resolver.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GlobalConfigurationsResolver {
   private systemService = inject(SystemService);
 

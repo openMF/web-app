@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, ViewChild, ChangeDetectorRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, ChangeDetectorRef, inject } from '@angular/core';
 import { MatStepper, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { STANDALONE_SHARED_IMPORTS } from '../../standalone-shared.module';
 
@@ -44,7 +44,8 @@ import { PaymentReceiptStepComponent } from '../remittance-stepper/payment-recei
     PaymentReceiptStepComponent
   ],
   templateUrl: './process-remittance.component.html',
-  styleUrls: ['./process-remittance.component.scss']
+  styleUrls: ['./process-remittance.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProcessRemittanceComponent {
   @ViewChild('stepper') stepper!: MatStepper;

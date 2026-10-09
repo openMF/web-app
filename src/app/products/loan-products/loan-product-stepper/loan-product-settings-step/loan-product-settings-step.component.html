@@ -115,6 +115,11 @@
             </button>
           }
         </mat-form-field>
+
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+        </mat-form-field>
       }
 
       @if (loanProductSettingsForm.value.enableNearBreach) {
@@ -879,7 +884,7 @@
             <mat-label>{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}</mat-label>
             <input type="number" matInput formControlName="mandatoryGuarantee" required min="0" />
             <mat-error>
-              {{ 'labels.inputs.Mandatory Guarantee' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Mandatory Guarantee(%)' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

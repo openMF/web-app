@@ -7,7 +7,11 @@
 -->
 
 <div class="container">
-  <div class="mat-elevation-z1 m-b-25" [hidden]="!accountWithTransactions">
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading savings transactions' | translate"></mifosx-page-loader>
+  }
+
+  <div class="mat-elevation-z1 m-b-25" [hidden]="!accountWithTransactions || isLoading">
     <div class="layout-row align-end">
       @if (checkStatus()) {
         <div class="action-button m-b-20 layout-row gap-20px">
@@ -136,7 +140,7 @@
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
-            @if (!transaction.reversed) {
+            @if (!transaction.reversed && !transaction.transfer) {
               <span>
                 <button
                   mat-menu-item
@@ -145,6 +149,18 @@
                 >
                   <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
                   <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+                </button>
+              </span>
+            }
+            @if (!transaction.reversed && transaction.transfer) {
+              <span>
+                <button
+                  mat-menu-item
+                  *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'"
+                  (click)="undoTransfer(transaction, $event)"
+                >
+                  <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                  <span>{{ 'buttons.undo_account_transfer' | translate }}</span>
                 </button>
               </span>
             }

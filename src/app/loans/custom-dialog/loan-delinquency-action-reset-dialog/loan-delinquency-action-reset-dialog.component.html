@@ -1,0 +1,35 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
+
+<div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <p class="reset-info">
+    {{ 'labels.dialogContext.Reset neutralizes overdue delinquency periods effective today' | translate }}
+  </p>
+  <div class="layout-column">
+    <mat-checkbox class="flex-98" formControlName="startNewPeriod">
+      <p>{{ 'labels.inputs.Start new period' | translate }}</p>
+    </mat-checkbox>
+    <p class="hint-text">
+      {{ 'labels.dialogContext.Start new period splits the current period today' | translate }}
+    </p>
+    @if (delinquencyActionForm.value.startNewPeriod) {
+      <p class="reset-info-emphasis">
+        {{ 'labels.dialogContext.A new clean period will start today' | translate }}
+      </p>
+    }
+  </div>
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: delinquencyActionForm }">
+    {{ 'labels.buttons.Reset' | translate }}
+  </button>
+</mat-dialog-actions>

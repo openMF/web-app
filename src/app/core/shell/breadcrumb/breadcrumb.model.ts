@@ -6,10 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { Params } from '@angular/router';
+
 /**
  * Breadcrumb model.
  */
 export interface Breadcrumb {
   label: string;
   url: string;
+  queryParams?: Params;
 }

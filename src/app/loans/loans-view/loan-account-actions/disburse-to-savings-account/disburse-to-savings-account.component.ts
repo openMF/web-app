@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
@@ -25,11 +25,13 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     InputAmountComponent,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -38,6 +40,8 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
   /** Disbursement Loan form. */
   disbursementForm: UntypedFormGroup;
   currency: Currency;
+  /** Prevents duplicate submissions */
+  isSubmitting = false;
 
   constructor() {
     super();
@@ -91,6 +95,12 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
    * Submit Disburse Form.
    */
   submit() {
+    if (this.disbursementForm.invalid || this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+
     const disbursementLoanFormData = this.disbursementForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -107,13 +117,19 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.loanActionButtons(this.loanId, 'disbursetosavings', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], {
-        queryParams: {
-          productType: this.loanProductService.productType.value
-        },
-        relativeTo: this.route
-      });
+    this.loanService.loanActionButtons(this.loanId, 'disbursetosavings', data).subscribe({
+      next: (response: any) => {
+        this.router.navigate(['../../general'], {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        });
+      },
+      error: (error: any) => {
+        this.isSubmitting = false;
+        this.cdr.markForCheck();
+      }
     });
   }
 }

@@ -25,11 +25,16 @@ import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edi
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
 import { UploadDocumentDialogComponent } from './clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
+import { BureauReadinessComponent } from './clients-view/bureau-readiness/bureau-readiness.component';
+import { CreditProfileComponent } from './clients-view/credit-profile/credit-profile.component';
+import { DisputeManagementComponent } from './clients-view/dispute-management/dispute-management.component';
+import { AuditTrailComponent } from './clients-view/audit-trail/audit-trail.component';
 import { EditNotesDialogComponent } from './clients-view/custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
+import { EnrollmentStatusComponent } from './clients-view/enrollment-status/enrollment-status.component';
 import { ChargesOverviewComponent } from './clients-view/charges/charges-overview/charges-overview.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ClientAssignStaffComponent } from './clients-view/client-actions/client-assign-staff/client-assign-staff.component';
@@ -81,12 +86,17 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     ClientsViewComponent,
     GeneralTabComponent,
     PersonalDataTabComponent,
+    EnrollmentStatusComponent,
     FamilyMembersTabComponent,
     AddFamilyMemberComponent,
     EditFamilyMemberComponent,
     IdentitiesTabComponent,
     UploadDocumentDialogComponent,
     NotesTabComponent,
+    BureauReadinessComponent,
+    CreditProfileComponent,
+    DisputeManagementComponent,
+    AuditTrailComponent,
     EditNotesDialogComponent,
     DocumentsTabComponent,
     DatatableTabComponent,

@@ -11,27 +11,25 @@
     <form [formGroup]="prepayLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
-          @if (!contractTermination) {
-            <mat-form-field (click)="transactionDatePicker.open()">
-              <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-              <input
-                matInput
-                [min]="minDate"
-                [max]="maxDate"
-                [matDatepicker]="transactionDatePicker"
-                required
-                formControlName="transactionDate"
-              />
-              <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #transactionDatePicker></mat-datepicker>
-              @if (prepayLoanForm.controls.transactionDate.hasError('required')) {
-                <mat-error>
-                  {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              }
-            </mat-form-field>
-          }
+          <mat-form-field (click)="transactionDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transactionDatePicker"
+              required
+              formControlName="transactionDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            @if (prepayLoanForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
 
           <div class="layout-row-wrap">
             <div class="flex-50 mat-body-strong">

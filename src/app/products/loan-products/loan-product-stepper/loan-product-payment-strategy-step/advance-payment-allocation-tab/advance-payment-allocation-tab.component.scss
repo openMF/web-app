@@ -6,33 +6,45 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use 'assets/styles/colours' as *;
-
 tr:hover {
   cursor: move;
 }
 
+/**
+ * The drag preview is a clone of the row that CDK re-parents to `<body>`, so it
+ * leaves this component's custom-property scope behind. `--lp-surface` is
+ * therefore expected to be undefined at that point and the Material token —
+ * which *is* declared on `html` / `.dark-theme` — takes over. Previously this
+ * was a flat `$white`, which meant dragging in dark mode produced a white slab.
+ */
 .cdk-drag-preview {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: var(--lp-radius-sm, 0.5rem);
+  border: 1px solid var(--lp-outline, var(--mat-card-outlined-outline-color, rgb(0 0 0 / 12%)));
   box-shadow:
     0 5px 5px -3px rgb(0 0 0 / 20%),
     0 8px 10px 1px rgb(0 0 0 / 14%),
     0 3px 14px 2px rgb(0 0 0 / 12%);
   display: table;
-  background-color: $white;
+  background-color: var(--lp-surface, var(--mat-card-elevated-container-color, #fff));
+  color: var(--lp-text, var(--mat-app-text-color, inherit));
 }
 
 .cdk-drag-preview td {
   flex-grow: 2;
-  font-size: 14px;
-  padding: 4px;
+  font-size: 0.875rem;
+  padding: var(--lp-space-8, 0.5rem);
   vertical-align: middle;
 }
 
+/**
+ * The drop gap. Was `$status-approved` at 20% opacity — an off-theme indigo
+ * that read as a muddy smear on dark surfaces. A tint of the accent keeps it
+ * visible on both without needing `opacity`.
+ */
 .cdk-drag-placeholder {
-  background-color: $status-approved;
-  opacity: 0.2;
+  background-color: var(--lp-accent-tint, rgb(16 116 185 / 12%));
+  border: 1px dashed var(--lp-accent, currentcolor);
 }
 
 .cdk-drag-animating {
@@ -42,4 +54,11 @@ tr:hover {
 
 .cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdk-drag-animating,
+  .cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
+    transition: none;
+  }
 }

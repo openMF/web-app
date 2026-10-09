@@ -1,0 +1,66 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container mat-elevation-z8">
+  @if (nearBreachConfigForm) {
+    <mat-card>
+      <form [formGroup]="nearBreachConfigForm" (ngSubmit)="submit()">
+        <mat-card-content>
+          <div class="layout-column">
+            <mifosx-input-positive-integer
+              class="flex-48"
+              [inputFormControl]="nearBreachConfigForm.controls.nearBreachFrequency"
+              [inputLabel]="'Frequency'"
+              [isRequired]="true"
+              [minVal]="'1'"
+            ></mifosx-input-positive-integer>
+
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
+              <mat-select required formControlName="nearBreachFrequencyType">
+                @for (frequencyType of frequencyTypeOptions; track frequencyType) {
+                  <mat-option [value]="frequencyType.id">
+                    {{ frequencyType.code | translateKey: 'catalogs' }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (nearBreachConfigForm.controls.nearBreachFrequencyType.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mifosx-input-amount
+              class="flex-48"
+              [inputFormControl]="nearBreachConfigForm.controls.nearBreachThreshold"
+              [inputLabel]="'Near Breach Threshold'"
+              [isRequired]="true"
+              [minVal]="'0.01'"
+            ></mifosx-input-amount>
+          </div>
+
+          <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+            <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+              {{ 'labels.buttons.Cancel' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!nearBreachConfigForm.valid || isSubmitting"
+              *mifosxHasPermission="'CREATE_WC_NEAR_BREACH_ACTION'"
+            >
+              {{ 'labels.buttons.Submit' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  }
+</div>

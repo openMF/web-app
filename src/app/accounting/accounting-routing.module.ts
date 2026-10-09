@@ -76,7 +76,7 @@ import { ExternalAssetConfigurationResolver } from './common-resolvers/external-
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'accounting',
+      path: '',
       data: { title: 'Accounting', breadcrumb: 'Accounting' },
       children: [
         {

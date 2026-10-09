@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -29,18 +30,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoClientTransferComponent implements OnInit {
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly clientsService = inject(ClientsService);
   private readonly settingsService = inject(SettingsService);
   private readonly dateUtils = inject(Dates);
   private readonly route = inject(ActivatedRoute);
   private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
 
   /** Undo Client Transfer form. */
-  undoClientTransferForm: UntypedFormGroup;
+  undoClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -53,7 +56,7 @@ export class UndoClientTransferComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -71,7 +74,7 @@ export class UndoClientTransferComponent implements OnInit {
    */
   createUndoClientTransferForm() {
     this.undoClientTransferForm = this.formBuilder.group({
-      transferDate: { value: new Date(this.transferDate), disabled: true },
+      transferDate: { value: this.dateUtils.parseDate(this.transferDate), disabled: true },
       note: ['']
     });
   }

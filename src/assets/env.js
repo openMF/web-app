@@ -44,6 +44,9 @@
   // Show minimal production hero on login page
   window['env']['productionMode'] = '';
 
+  // Enable Global Dashboard feature
+  window['env']['enableGlobalDashboard'] = false;
+
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '';
 
@@ -89,6 +92,8 @@
   window['env']['mifosInterbankTransfersApiProvider'] = '';
   window['env']['mifosInterbankTransfersApiVersion'] = '';
   window['env']['mifosInterbankTransfersEnabled'] = 'true';
+  window['env']['cbIldEnabled'] = 'false';
+  window['env']['pluginBaseUrl'] = 'http://localhost:8084';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '';
@@ -97,6 +102,18 @@
   window['env']['mifosRemittanceEnabled'] = false;
   window['env']['mifosRemittanceApiClientHeader'] = '';
   window['env']['mifosRemittanceApiClientKey'] = '';
+
+  // Mifos Copilot AI assistant
+  // Set enableCopilot to 'true' to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = false;
+  // Base URL of the Copilot gateway, which holds the LLM key server-side and runs banking
+  // tools as the logged-in officer. Leave empty to use the built-in mock responses.
+  window['env']['copilotMcpBaseUrl'] = '';
+
+  // Tenant Management administration UI
+  // Set to true where the Fineract tenant management plugin is installed (off by default; a server
+  // without it has no tenant administration API, so the section stays hidden)
+  window['env']['enableTenantManagement'] = false;
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to true to enable RBAC, false (default) for backward compatibility
@@ -112,9 +129,15 @@
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
+  // Email format validation regex (optional override; leave empty to use the built-in default)
+  window['env']['externalEmailRegex'] = '';
+
   // Postal Code Lookup (auto-fill address from postal code via external API)
   // Set to 'true' to enable, 'false' (default) to disable
   window['env']['enablePostalCodeLookup'] = 'false';
+
+  // Client Address Location (latitude, longitude, and map)
+  window['env']['enableClientAddressLocation'] = false;
 
   // Password Configuration
   window['env']['minPasswordLength'] = 8;

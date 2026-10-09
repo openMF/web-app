@@ -29,7 +29,7 @@
         <span class="flex-60">{{ loanProduct.fundName }}</span>
       </div>
     }
-    @if (loanProductService.isLoanProduct) {
+    @if (loanProductService.isLoanProduct && !hideToggleInView(loanProduct.includeInBorrowerCycle)) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Include in Customer Loan Counter' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.includeInBorrowerCycle | yesNo }}</span>
@@ -57,7 +57,7 @@
     <mat-divider [inset]="true"></mat-divider>
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}:</span>
-      <span class="flex-60">{{ loanProduct.currency.code }}</span>
+      <span class="flex-60">{{ loanProduct.currency?.code }}</span>
     </div>
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
@@ -121,12 +121,20 @@
           <span class="flex-60"><mifosx-breach-display [singleRow]="false" [nearBreach]="getNearBreach()" /></span>
         </div>
       }
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
+      </div>
     }
     @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Allow Approved / Disbursed Amounts Over Applied' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.allowApprovedDisbursedAmountsOverApplied)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40"
+            >{{ 'labels.inputs.Allow Approved / Disbursed Amounts Over Applied' | translate }}:</span
+          >
+          <span class="flex-60">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.allowApprovedDisbursedAmountsOverApplied) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Over Amount' | translate }}:</span>
@@ -155,17 +163,19 @@
             ')'
         }}</span>
       </div>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Linked to floating interest rates' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.isLinkedToFloatingInterestRates)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Linked to floating interest rates' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
+        </div>
+      }
       @if (!loanProduct.isLinkedToFloatingInterestRates) {
         <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
+          <span class="flex-40">{{ 'labels.inputs.Annual interest rate' | translate }}:</span>
           <span class="flex-60"
             >{{
               loanProduct.interestRatePerPeriod +
-                ' (Min: ' +
+                ' % (Min: ' +
                 (loanProduct.minInterestRatePerPeriod
                   ? loanProduct.minInterestRatePerPeriod
                   : loanProduct.interestRatePerPeriod) +
@@ -210,15 +220,17 @@
           </div>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Terms vary based on loan cycle' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
-      </div>
-      @if (loanProduct.principalVariationsForBorrowerCycle?.length) {
+      @if (!hideToggleInView(loanProduct.useBorrowerCycle)) {
         <div class="flex-fill layout-row">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
+          <span class="flex-40">{{ 'labels.inputs.Terms vary based on loan cycle' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
+        </div>
+      }
+      @if (loanProduct.principalVariationsForBorrowerCycle?.length) {
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.principalVariationsForBorrowerCycle"
           >
@@ -258,10 +270,10 @@
         </div>
       }
       @if (loanProduct.numberOfRepaymentVariationsForBorrowerCycle?.length) {
-        <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Number of Repayments by loan cycle' | translate }}</h4>
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Number of repayments by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.numberOfRepaymentVariationsForBorrowerCycle"
           >
@@ -301,10 +313,10 @@
         </div>
       }
       @if (loanProduct.interestRateVariationsForBorrowerCycle?.length) {
-        <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Nominal Interest Rate by loan cycle' | translate }}</h4>
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Annual interest rate by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.interestRateVariationsForBorrowerCycle"
           >
@@ -396,10 +408,12 @@
       </div>
     }
     @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isEqualAmortization | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.isEqualAmortization)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isEqualAmortization | yesNo }}</span>
+        </div>
+      }
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Interest Method' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.interestType?.value | translateKey: 'catalogs' }}</span>
@@ -414,10 +428,12 @@
         >
         <span class="flex-60">{{ loanProduct.allowPartialPeriodInterestCalculation | yesNo }}</span>
       </div>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.interestRecognitionOnDisbursementDate)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
+        </div>
+      }
       <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Loan Schedule' | translate }}</h3>
       <mat-divider [inset]="true"></mat-divider>
       <div class="flex-fill layout-row">
@@ -476,23 +492,25 @@
           </span>
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Down Payments' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.enableDownPayment | yesNo }}</span>
-      </div>
-      @if (loanProduct.enableDownPayment) {
-        <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%):</span>
-          <span class="flex-60">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+      @if (showDownPaymentsSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Down Payments' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.enableDownPayment | yesNo }}</span>
         </div>
-      }
-      @if (loanProduct.enableDownPayment) {
-        <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
-        </div>
+        @if (loanProduct.enableDownPayment) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <span class="flex-40">{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%):</span>
+            <span class="flex-60">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+          </div>
+        }
+        @if (loanProduct.enableDownPayment) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <span class="flex-40">{{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}:</span>
+            <span class="flex-60">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
+          </div>
+        }
       }
       @if (isAdvancedPaymentAllocation) {
         <div class="flex-100 layout-row-wrap responsive-column">
@@ -617,10 +635,12 @@
           <span class="flex-60">{{ loanProduct.principalThresholdForLastInstallment }}</span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Variable Installments allowed' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.allowVariableInstallments)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Variable Installments allowed' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.allowVariableInstallments) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Variable Installments' | translate }}:</span>
@@ -633,16 +653,20 @@
           }}</span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.canUseForTopup | yesNo }}</span>
-      </div>
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Recalculate Interest' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.canUseForTopup)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.canUseForTopup | yesNo }}</span>
+        </div>
+      }
+      @if (showInterestRecalculationSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Recalculate Interest' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.isInterestRecalculationEnabled) {
         <div>
           <div class="flex-fill layout-row-wrap responsive-column">
@@ -783,36 +807,40 @@
           }
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
-      </div>
+      @if (showGuaranteeSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.holdGuaranteeFunds) {
         <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
+          <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}:</span>
           <span class="flex-60">{{ loanProduct.productGuaranteeData.mandatoryGuarantee }}</span>
           @if (loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds) {
             <div class="flex-fill layout-row">
-              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds' | translate }} (%):</span>
+              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds(%)' | translate }}:</span>
               <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds }}</span>
             </div>
           }
           @if (loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor) {
             <div class="flex-fill layout-row">
-              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds' | translate }} (%):</span>
+              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}:</span>
               <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor }}</span>
             </div>
           }
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Loan Tranche Details' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Enable Multiple Disbursals' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
-      </div>
+      @if (showTrancheSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Loan Tranche Details' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Enable Multiple Disbursals' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.multiDisburseLoan) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>
@@ -1037,8 +1065,6 @@
           </div>
         }
       </div>
-    }
-    @if (isAdvancedPaymentAllocation) {
       <div class="flex-100 layout-row-wrap responsive-column">
         <h3 class="mat-h3 flex-100">{{ 'labels.inputs.Buy down fees' | translate }}</h3>
         <mat-divider [inset]="true"></mat-divider>
@@ -1295,191 +1321,18 @@
             </mifosx-gl-account-display>
           }
           @if (isAdvancedAccountingEnabled()) {
-            <div class="flex-fill layout-row-wrap responsive-column">
-              <h3 class="mat-h3 flex-100">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
-              <mat-divider [inset]="true"></mat-divider>
-              @if (paymentChannelToFundSourceMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
-                  </h4>
-                  <table class="mat-elevation-z1 flex-100" mat-table [dataSource]="paymentChannelToFundSourceMappings">
-                    <ng-container matColumnDef="paymentTypeId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Payment Type' | translate }}</th>
-                      <td mat-cell *matCellDef="let paymentFundSource">
-                        {{ paymentFundSource.paymentType.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="fundSourceAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fund Source' | translate }}</th>
-                      <td mat-cell *matCellDef="let paymentFundSource">
-                        {{ paymentFundSource.fundSourceAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (feeToIncomeAccountMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}
-                  </h4>
-                  <table class="mat-elevation-z1 flex-100" mat-table [dataSource]="feeToIncomeAccountMappings">
-                    <ng-container matColumnDef="chargeId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.catalogs.Fees' | translate }}</th>
-                      <td mat-cell *matCellDef="let feesIncome">
-                        {{ feesIncome.charge.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="incomeAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let feesIncome">
-                        @if (feesIncome.incomeAccount) {
-                          <span>
-                            {{ feesIncome.incomeAccount.name }}
-                          </span>
-                        }
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (penaltyToIncomeAccountMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
-                  </h4>
-                  <table class="mat-elevation-z1 flex-100" mat-table [dataSource]="penaltyToIncomeAccountMappings">
-                    <ng-container matColumnDef="chargeId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
-                      <td mat-cell *matCellDef="let penaltyIncome">
-                        {{ penaltyIncome.charge.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="incomeAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let penaltyIncome">
-                        {{ penaltyIncome.incomeAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (chargeOffReasonToExpenseAccountMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Map Charge-off reasons to Expense accounts' | translate }}
-                  </h4>
-                  <table
-                    class="mat-elevation-z1 flex-100"
-                    mat-table
-                    [dataSource]="chargeOffReasonToExpenseAccountMappings"
-                  >
-                    <ng-container matColumnDef="chargeOffReasonCodeValueId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge-off reason' | translate }}</th>
-                      <td mat-cell *matCellDef="let chargeOffReasonToExpenseAccountMapping">
-                        {{ chargeOffReasonToExpenseAccountMapping.reasonCodeValue.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expenseAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expense Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let chargeOffReasonToExpenseAccountMapping">
-                        ({{ chargeOffReasonToExpenseAccountMapping.expenseAccount.glCode }})
-                        {{ chargeOffReasonToExpenseAccountMapping.expenseAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (buydownFeeClassificationToIncomeAccountMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Buydown Fee classifications to Income accounts' | translate }}
-                  </h4>
-                  <table
-                    class="mat-elevation-z1 flex-100"
-                    mat-table
-                    [dataSource]="buydownFeeClassificationToIncomeAccountMappings"
-                  >
-                    <ng-container matColumnDef="chargeOffReasonCodeValueId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
-                      <td mat-cell *matCellDef="let classificationToIncomeAccountMapping">
-                        {{ classificationToIncomeAccountMapping.classificationCodeValue.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expenseAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let classificationToIncomeAccountMapping">
-                        ({{ classificationToIncomeAccountMapping.incomeAccount.glCode }})
-                        {{ classificationToIncomeAccountMapping.incomeAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (capitalizedIncomeClassificationToIncomeAccountMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.Capitalized Income classifications to Income accounts' | translate }}
-                  </h4>
-                  <table
-                    class="mat-elevation-z1 flex-100"
-                    mat-table
-                    [dataSource]="capitalizedIncomeClassificationToIncomeAccountMappings"
-                  >
-                    <ng-container matColumnDef="chargeOffReasonCodeValueId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
-                      <td mat-cell *matCellDef="let capitalizedIncomeClassificationToIncomeAccountMapping">
-                        {{ capitalizedIncomeClassificationToIncomeAccountMapping.classificationCodeValue.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expenseAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let capitalizedIncomeClassificationToIncomeAccountMapping">
-                        ({{ capitalizedIncomeClassificationToIncomeAccountMapping.incomeAccount.glCode }})
-                        {{ capitalizedIncomeClassificationToIncomeAccountMapping.incomeAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-              @if (writeOffReasonsToExpenseMappings?.length > 0) {
-                <div class="flex-100 layout-row-wrap responsive-column">
-                  <h4 class="mat-h4 flex-100">
-                    {{ 'labels.heading.WriteOff reasons to Expense accounts' | translate }}
-                  </h4>
-                  <table class="mat-elevation-z1 flex-100" mat-table [dataSource]="writeOffReasonsToExpenseMappings">
-                    <ng-container matColumnDef="chargeOffReasonCodeValueId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.WriteOff Reason' | translate }}</th>
-                      <td mat-cell *matCellDef="let writeOffReasonsToExpenseMapping">
-                        {{ writeOffReasonsToExpenseMapping.reasonCodeValue.name }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="expenseAccountId">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expense Account' | translate }}</th>
-                      <td mat-cell *matCellDef="let writeOffReasonsToExpenseMapping">
-                        ({{ writeOffReasonsToExpenseMapping.expenseAccount.glCode }})
-                        {{ writeOffReasonsToExpenseMapping.expenseAccount.name }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
-                  </table>
-                </div>
-              }
-            </div>
+            <mifosx-loan-product-summary-adv-accounting
+              [paymentChannelToFundSourceMappings]="paymentChannelToFundSourceMappings"
+              [feeToIncomeAccountMappings]="feeToIncomeAccountMappings"
+              [penaltyToIncomeAccountMappings]="penaltyToIncomeAccountMappings"
+              [chargeOffReasonToExpenseAccountMappings]="chargeOffReasonToExpenseAccountMappings"
+              [buydownFeeClassificationToIncomeAccountMappings]="buydownFeeClassificationToIncomeAccountMappings"
+              [capitalizedIncomeClassificationToIncomeAccountMappings]="
+                capitalizedIncomeClassificationToIncomeAccountMappings
+              "
+              [writeOffReasonsToExpenseMappings]="writeOffReasonsToExpenseMappings"
+            >
+            </mifosx-loan-product-summary-adv-accounting>
           }
         </div>
       </div>

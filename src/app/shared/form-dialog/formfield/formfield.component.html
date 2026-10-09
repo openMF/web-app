@@ -19,6 +19,7 @@
             [required]="formfield.required"
             [attr.min]="formfield.min"
             [attr.max]="formfield.max"
+            [attr.step]="formfield.step"
           />
         }
         @if (form.controls[formfield.controlName].hasError('max')) {
@@ -87,6 +88,31 @@
         <mat-error>
           {{ formfield.label }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+  }
+
+  @if (formfield.controlType === 'textarea') {
+    <mat-form-field class="flex-fill">
+      <mat-label>{{ formfield.label }}</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="6"
+        cdkAutosizeMaxRows="18"
+        [formControlName]="formfield.controlName"
+        [required]="formfield.required"
+      ></textarea>
+      @if (form.controls[formfield.controlName].hasError('required')) {
+        <mat-error>
+          {{ formfield.label }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (form.controls[formfield.controlName].hasError('json')) {
+        <mat-error>
+          {{ 'labels.inputs.Invalid JSON' | translate }}
         </mat-error>
       }
     </mat-form-field>

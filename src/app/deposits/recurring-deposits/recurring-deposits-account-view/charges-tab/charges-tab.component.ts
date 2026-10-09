@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -64,7 +64,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChargesTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -172,7 +173,7 @@ export class ChargesTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ') +
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id:') +
           `${chargeId} ?`
       }
     });

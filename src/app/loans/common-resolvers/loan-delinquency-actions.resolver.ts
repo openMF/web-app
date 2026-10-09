@@ -29,6 +29,8 @@ export class LoanDelinquencyActionsResolver extends LoanBaseResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getDelinquencyActions(this.loanAccountPath, loanId);
+    if (!isNaN(+loanId)) {
+      return this.loansService.getDelinquencyActions(this.loanAccountPath, loanId);
+    }
   }
 }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -61,7 +61,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     ChargesFilterPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);
@@ -134,7 +135,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
       })
     ];
     const data = {
-      title: this.translateService.instant('labels.heading.Edit Charge'),
+      title: this.translateService.instant('labels.text.Edit Charge'),
       layout: { addButtonText: 'Submit' },
       formfields: formfields
     };

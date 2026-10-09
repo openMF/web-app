@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditGroupMeetingScheduleComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -72,7 +73,9 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    // Fineract rejects a revised meeting date before the business date.
+    this.minDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditMeetingScheduleForm();
   }
 
@@ -100,11 +103,10 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const reschedulebasedOnMeetingDates = true;
-    const prevOldDate: Date = new Date(this.groupEditMeetingScheduleForm.value.presentMeetingDate);
+    // The existing meeting dates come from Fineract as [year, month, day] arrays.
+    const presentMeetingDate: Date = this.dateUtils.parseDate(groupEditMeetingScheduleFormData.presentMeetingDate);
+    groupEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(presentMeetingDate, dateFormat);
     const prevNewDate: Date = this.groupEditMeetingScheduleForm.value.newMeetingDate;
-    if (groupEditMeetingScheduleFormData.presentMeetingDate instanceof Date) {
-      groupEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
-    }
     if (groupEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
       groupEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);
     }

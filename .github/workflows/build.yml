@@ -4,16 +4,16 @@ name: build-run
 on:
   # Triggers the workflow on push or pull request events for specific branches
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
   pull_request:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    name: Run Lint, Build and Deploy
+    name: Run Lint and Build
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -21,13 +21,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Use Node.js 22
+      - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          # no support for lts as of now with github actions.
-          # issue link : https://github.com/actions/setup-node/issues/26
-          # lts/gallium node v19.7.0 (npm v9.5.0)
-          node-version: '24.14.0'
+          node-version: '24.16.0'
 
       - name: Remove node_modules
         run: rm -rf node_modules
@@ -54,6 +51,11 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint "src" --config .htmlhintrc
 
+      - name: Verify git repository
+        run: |
+          git fsck --full || true
+          git gc --aggressive || true
+
       - name: Check file headers
         run: |
           echo "Checking for MPL-2.0 license headers in changed files..."
@@ -74,23 +76,7 @@ jobs:
           fi
 
           echo "📋 Checking $(echo "$CHANGED_FILES" | wc -l) changed file(s)..."
-          echo "$CHANGED_FILES"
-
-          # Run header check on changed files
           echo "$CHANGED_FILES" | xargs node scripts/check-file-headers.js
 
       - name: Run production build
         run: npm run build:prod
-
-      - name: Deploy to github pages
-        if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/web-app/browser
-          #without preserve it only builds if you have untracked files
-          PRESERVE: true
-          # github user name and email shows up in the logs,
-          # so it would be better to make it silent.
-          SILENT: true

@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -16,19 +25,20 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
+import { UsersService } from 'app/users/users.service';
 import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateService } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
-import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
+import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
@@ -36,41 +46,118 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   styleUrls: ['./datatable-single-row.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageLoaderComponent,
     FaIconComponent,
     MatDivider,
     MatCard,
     MatCardContent,
     NgClass,
-    CdkTextareaAutosize,
     MatIconButton,
     MatTooltip,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    PrettyPrintPipe
-  ]
+    FormatNumberPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableSingleRowComponent implements OnInit {
+export class DatatableSingleRowComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
   public datatables = inject(Datatables);
   private systemService = inject(SystemService);
+  private usersService = inject(UsersService);
+  private translateService = inject(TranslateService);
 
-  @Input() dataObject: any;
+  @Input() dataObject: {
+    columnHeaders: { columnName: string; columnDisplayType?: string; columnType?: string }[];
+    data: { row: any[] }[];
+  };
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
+  isLoading = false;
+  resolvedUserNames = new Map<number, string>();
 
   formatTabLabel(label: string): string {
-    return formatTabLabel(label);
+    return this.translateDatatableLabel(label, formatDatatableDisplayLabel(label));
+  }
+
+  formatDisplayLabel(label: string): string {
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
+  }
+
+  getSystemColumnTranslationKey(columnName: string): string | null {
+    switch (columnName) {
+      case 'created_at':
+        return 'labels.inputs.Created At';
+      case 'updated_at':
+        return 'labels.inputs.Updated At';
+      default:
+        return null;
+    }
   }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
+      this.changeDetectorRef.markForCheck();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.dataObject) {
+      this.resolveUserNames();
+      this.changeDetectorRef.markForCheck();
+    }
+  }
+
+  private resolveUserNames(): void {
+    if (!this.dataObject || !this.dataObject.data || !this.dataObject.data[0]) {
+      return;
+    }
+    const row = this.dataObject.data[0].row;
+
+    this.dataObject.columnHeaders.forEach((column: { columnName: string }, index: number) => {
+      const lowerName = column.columnName.toLowerCase();
+      if (
+        lowerName === 'createdby_id' ||
+        lowerName === 'created_by_id' ||
+        lowerName === 'lastmodifiedby_id' ||
+        lowerName === 'last_modified_by_id'
+      ) {
+        const userId = row[index] as number;
+        if (userId && !this.resolvedUserNames.has(userId)) {
+          this.usersService.getUser(userId.toString()).subscribe({
+            next: (user: { firstname?: string; lastname?: string }) => {
+              if (user && user.firstname && user.lastname) {
+                this.resolvedUserNames.set(userId, `${user.firstname} ${user.lastname}`);
+                this.changeDetectorRef.markForCheck();
+              }
+            },
+            error: (err) => {
+              console.warn(`Could not resolve user name for ID ${userId}. Falling back to numeric ID.`, err);
+            }
+          });
+        }
+      }
+    });
+  }
+
+  getResolvedUserName(columnName: string, value: number | null | undefined): string | null {
+    if (!value) return null;
+    const lowerName = columnName.toLowerCase();
+    if (
+      lowerName === 'createdby_id' ||
+      lowerName === 'created_by_id' ||
+      lowerName === 'lastmodifiedby_id' ||
+      lowerName === 'last_modified_by_id'
+    ) {
+      return this.resolvedUserNames.get(value) || null;
+    }
+    return null;
   }
 
   add() {
@@ -85,7 +172,7 @@ export class DatatableSingleRowComponent implements OnInit {
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: this.getAddDialogTitle(),
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -101,12 +188,30 @@ export class DatatableSingleRowComponent implements OnInit {
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
+            this.isLoading = true;
+            this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.resolveUserNames();
+              this.isLoading = false;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
     });
+  }
+
+  getAddDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Add')} ${this.formatTabLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  private getTranslatedEntityType(): string {
+    const entityTypeKey = `labels.text.${this.entityType}`;
+    const translatedEntityType = this.translateService.instant(entityTypeKey);
+
+    return translatedEntityType === entityTypeKey ? this.entityType : translatedEntityType;
   }
 
   edit() {
@@ -129,6 +234,11 @@ export class DatatableSingleRowComponent implements OnInit {
         formfield.value = this.dataObject.data[0].row[columns[index].idx]
           ? this.dateUtils.parseDatetime(this.dataObject.data[0].row[columns[index].idx])
           : '';
+      } else if (
+        formfield.controlType === 'textarea' &&
+        this.datatables.isJson(columns[index].columnDisplayType, columns[index].columnType)
+      ) {
+        formfield.value = this.datatables.formatJsonValue(this.dataObject.data[0].row[columns[index].idx]);
       } else {
         formfield.value = this.dataObject.data[0].row[columns[index].idx]
           ? this.dataObject.data[0].row[columns[index].idx]
@@ -137,7 +247,9 @@ export class DatatableSingleRowComponent implements OnInit {
       return formfield;
     });
     const data = {
-      title: 'Edit ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: `${this.translateService.instant('labels.buttons.Edit')} ${this.formatTabLabel(
+        this.datatableName
+      )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`,
       formfields: formfields,
       layout: { addButtonText: 'Submit' },
       pristine: false
@@ -155,8 +267,13 @@ export class DatatableSingleRowComponent implements OnInit {
         this.systemService
           .editEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
+            this.isLoading = true;
+            this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.resolveUserNames();
+              this.isLoading = false;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
@@ -165,13 +282,21 @@ export class DatatableSingleRowComponent implements OnInit {
 
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the contents of ${formatTabLabel(this.datatableName)}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.text.the contents of')} ${this.formatTabLabel(
+          this.datatableName
+        )}`
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.dataObject = dataObject;
+            this.isLoading = false;
+            this.changeDetectorRef.markForCheck();
           });
         });
       }
@@ -211,8 +336,14 @@ export class DatatableSingleRowComponent implements OnInit {
       case 'CODELOOKUP': {
         return columnDisplayType;
       }
+      case 'BOOLEAN': {
+        return columnDisplayType;
+      }
+      case 'JSON': {
+        return columnDisplayType;
+      }
       case 'TEXT': {
-        if (columnType === 'JSON') {
+        if (this.datatables.isJson(columnType)) {
           return 'JSON';
         } else {
           return columnDisplayType;
@@ -225,7 +356,20 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   getInputName(attr: string): string {
-    return this.datatables.getName(attr);
+    const label = this.datatables.getName(attr);
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
+  }
+
+  formatValue(value: any): any {
+    if (typeof value === 'boolean') {
+      return this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+    }
+
+    return value;
+  }
+
+  formatJsonValue(value: any): string {
+    return this.datatables.formatJsonValue(value);
   }
 
   isValidUrl(urlString: string): boolean {
@@ -234,5 +378,16 @@ export class DatatableSingleRowComponent implements OnInit {
 
   openSite(siteUrl: string) {
     window.open(siteUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  private translateDatatableLabel(rawLabel: string, displayLabel: string): string {
+    const rawKey = `labels.inputs.${rawLabel}`;
+    const translatedRawLabel = this.translateService.instant(rawKey);
+    if (translatedRawLabel !== rawKey) {
+      return translatedRawLabel;
+    }
+    const displayKey = `labels.inputs.${displayLabel}`;
+    const translatedDisplayLabel = this.translateService.instant(displayKey);
+    return translatedDisplayLabel === displayKey ? displayLabel : translatedDisplayLabel;
   }
 }

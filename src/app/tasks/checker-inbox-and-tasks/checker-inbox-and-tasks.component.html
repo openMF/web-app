@@ -11,14 +11,14 @@
     <mat-card-content>
       <div class="card-heading pending-tasks-heading">{{ 'labels.heading.Pending Tasks' | translate }}</div>
       <mat-divider></mat-divider>
-      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
+      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel" [disablePagination]="true">
         <a
           mat-tab-link
           [routerLink]="['./checker-inbox']"
           routerLinkActive
           #checkerInbox="routerLinkActive"
           [active]="checkerInbox.isActive"
-          *mifosxHasPermission="'ALL_FUNCTIONS_READ'"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
           {{ 'labels.inputs.Checker Inbox' | translate }}
         </a>
@@ -44,6 +44,16 @@
         </a>
         <a
           mat-tab-link
+          [routerLink]="['./council-approval']"
+          routerLinkActive
+          #councilApproval="routerLinkActive"
+          [active]="councilApproval.isActive"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
+        >
+          {{ 'labels.text.Council Approval' | translate }}
+        </a>
+        <a
+          mat-tab-link
           [routerLink]="['./loan-disbursal']"
           routerLinkActive
           #loanDisbursal="routerLinkActive"
@@ -61,6 +71,46 @@
           *mifosxHasPermission="'RESCHEDULE_LOAN'"
         >
           {{ 'labels.inputs.Reschedule Loan' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./requests']"
+          routerLinkActive
+          #creditRequests="routerLinkActive"
+          [active]="creditRequests.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.inputs.Requests' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./credit']"
+          routerLinkActive
+          #creditTaskSection="routerLinkActive"
+          [active]="creditTaskSection.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.inputs.Credit' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./mass-rejection']"
+          routerLinkActive
+          #massRejection="routerLinkActive"
+          [active]="massRejection.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.heading.Mass Rejection' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./pending-prospects']"
+          routerLinkActive
+          #pendingProspects="routerLinkActive"
+          [active]="pendingProspects.isActive"
+          *mifosxHasPermission="'READ_PROSPECT'"
+        >
+          {{ 'labels.inputs.Pending Prospects' | translate }}
         </a>
       </nav>
 

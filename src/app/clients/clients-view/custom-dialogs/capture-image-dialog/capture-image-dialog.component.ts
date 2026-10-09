@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  Renderer2,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { NgStyle } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -27,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   dialogRef = inject<MatDialogRef<CaptureImageDialogComponent>>(MatDialogRef);

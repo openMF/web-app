@@ -10,6 +10,7 @@ import { inject, Injectable } from '@angular/core';
 import { LOAN_PRODUCT_TYPE, LoanProductType } from '../models/loan-product.model';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { LoanAccountPath } from 'app/loans/loans.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +22,24 @@ export class LoanProductService {
 
   constructor() {}
 
-  initialize(productType: string): void {
-    if (productType !== null) {
-      if (productType === 'loan') {
-        this.productType.next(LOAN_PRODUCT_TYPE.LOAN);
-      } else if (productType === 'working-capital') {
-        this.productType.next(LOAN_PRODUCT_TYPE.WORKING_CAPITAL);
-      }
-    }
+  /**
+   * WC and term products have independent id sequences, so the same numeric id can exist in both.
+   * Only an explicit `working-capital` query param selects WC; missing/unknown defaults to term loan.
+   */
+  static fromQueryParam(productType: string | null | undefined): LoanProductType {
+    return productType === LOAN_PRODUCT_TYPE.WORKING_CAPITAL
+      ? LOAN_PRODUCT_TYPE.WORKING_CAPITAL
+      : LOAN_PRODUCT_TYPE.LOAN;
+  }
+
+  static appTableFor(productType: string | null | undefined): string {
+    return LoanProductService.fromQueryParam(productType) === LOAN_PRODUCT_TYPE.WORKING_CAPITAL
+      ? 'm_wc_loan_product'
+      : 'm_product_loan';
+  }
+
+  initialize(productType: string | null | undefined): void {
+    this.productType.next(LoanProductService.fromQueryParam(productType));
   }
 
   get isWorkingCapital(): boolean {
@@ -49,7 +60,7 @@ export class LoanProductService {
     return this.isLoanProduct ? 'loanproducts' : 'working-capital-loan-products';
   }
 
-  get loanAccountPath(): string {
+  get loanAccountPath(): LoanAccountPath {
     return this.isLoanProduct ? 'loans' : 'working-capital-loans';
   }
 

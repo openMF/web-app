@@ -14,40 +14,36 @@
   </div>
 
   <div class="tab-container mat-typography compact-view">
-    <div class="layout-row-wrap responsive-column compact-details condensed">...</div>
-  </div>
-</div>
-
-<div class="tab-container mat-typography compact-view">
-  <div class="layout-row-wrap responsive-column compact-details condensed">
-    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
-    <div class="flex-50 right">
-      {{ officeData.parentName ? officeData.parentName : 'N/A' }}
-    </div>
-    <hr class="section-divider" />
-
-    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Opened On' | translate }}</div>
-    <div class="flex-50 right">
-      {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
-    </div>
-    <hr class="section-divider" />
-
-    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Name Decorated' | translate }}</div>
-    <div class="flex-50 right">
-      {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
-    </div>
-    <hr class="section-divider" />
-
-    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
-    @if (officeData.externalId) {
+    <div class="layout-row-wrap responsive-column compact-details condensed">
+      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
       <div class="flex-50 right">
-        <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+        {{ officeData.parentName ? officeData.parentName : 'N/A' }}
       </div>
-    }
-    @if (!officeData.externalId) {
+      <hr class="section-divider" />
+
+      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Opened On' | translate }}</div>
       <div class="flex-50 right">
-        {{ 'labels.inputs.Unassigned' | translate }}
+        {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
       </div>
-    }
+      <hr class="section-divider" />
+
+      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Name Decorated' | translate }}</div>
+      <div class="flex-50 right">
+        {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
+      </div>
+      <hr class="section-divider" />
+
+      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
+      @if (officeData.externalId) {
+        <div class="flex-50 right">
+          <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+        </div>
+      }
+      @if (!officeData.externalId) {
+        <div class="flex-50 right">
+          {{ 'labels.inputs.Unassigned' | translate }}
+        </div>
+      }
+    </div>
   </div>
 </div>

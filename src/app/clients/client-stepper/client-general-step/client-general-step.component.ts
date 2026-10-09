@@ -7,20 +7,24 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, inject } from '@angular/core';
 import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { filter, switchMap } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
+import { environment } from 'environments/environment';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -47,17 +51,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClientGeneralStepComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(UntypedFormBuilder);
+export class ClientGeneralStepComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private clientService = inject(ClientsService);
   externalNationalIdService = inject(ExternalNationalIdService);
-
-  /** Subject to trigger unsubscription on destroy */
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
@@ -68,11 +71,13 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
+  /** Maximum date allowed for fields that accept future dates. */
+  maxFutureDate = this.settingsService.maxFutureDate;
 
   /** Client Template */
   @Input() clientTemplate: any;
   /** Create Client Form */
-  createClientForm: UntypedFormGroup;
+  createClientForm: FormGroup;
 
   /** Office Options */
   officeOptions: any;
@@ -133,7 +138,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       mobileNo: [''],
       emailAddress: [
         '',
-        Validators.email
+        Validators.pattern(environment.externalEmailRegex)
       ],
       dateOfBirth: [''],
       clientTypeId: [''],
@@ -166,7 +171,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   buildDependencies() {
     this.createClientForm
       .get('legalFormId')
-      .valueChanges.pipe(takeUntil(this.destroy$))
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((legalFormId: number) => {
         this.legalFormChangeEvent.emit({ legalForm: legalFormId });
         if (legalFormId === LegalFormId.PERSON) {
@@ -174,17 +179,17 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
           this.createClientForm.removeControl('clientNonPersonDetails');
           this.createClientForm.addControl(
             'firstname',
-            new UntypedFormControl('', [
+            new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
-          this.createClientForm.addControl('middlename', new UntypedFormControl('', Validators.pattern('(^[A-z]).*')));
+          this.createClientForm.addControl('middlename', new FormControl('', Validators.pattern('(^[A-Za-z]).*')));
           this.createClientForm.addControl(
             'lastname',
-            new UntypedFormControl('', [
+            new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
         } else {
@@ -193,9 +198,9 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
           this.createClientForm.removeControl('lastname');
           this.createClientForm.addControl(
             'fullname',
-            new UntypedFormControl('', [
+            new FormControl('', [
               Validators.required,
-              Validators.pattern('(^[A-z]).*')
+              Validators.pattern('(^[A-Za-z]).*')
             ])
           );
           this.createClientForm.addControl(
@@ -216,20 +221,20 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
     this.createClientForm.get('legalFormId').patchValue(LegalFormId.PERSON);
     this.createClientForm
       .get('active')
-      .valueChanges.pipe(takeUntil(this.destroy$))
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((active: boolean) => {
         if (active) {
-          this.createClientForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+          this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
         } else {
           this.createClientForm.removeControl('activationDate');
         }
       });
     this.createClientForm
       .get('addSavings')
-      .valueChanges.pipe(takeUntil(this.destroy$))
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((active: boolean) => {
         if (active) {
-          this.createClientForm.addControl('savingsProductId', new UntypedFormControl('', Validators.required));
+          this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
         } else {
           this.createClientForm.removeControl('savingsProductId');
         }
@@ -239,16 +244,11 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       .valueChanges.pipe(
         filter((officeId: number) => !!officeId),
         switchMap((officeId: number) => this.clientService.getClientWithOfficeTemplate(officeId)),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((clientTemplate: any) => {
         this.staffOptions = clientTemplate.staffOptions;
       });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {

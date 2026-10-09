@@ -27,7 +27,6 @@ export class LoanDelinquencyDataResolver extends LoanBaseResolver {
   constructor() {
     super();
   }
-
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}
@@ -36,9 +35,9 @@ export class LoanDelinquencyDataResolver extends LoanBaseResolver {
     this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      if (this.isLoanProduct) {
-        return this.loansService.getDelinquencyData(loanId);
-      }
+      return this.isLoanProduct
+        ? this.loansService.getDelinquencyData(loanId)
+        : this.loansService.getWorkingCapitalLoanDetails(loanId);
     }
   }
 }

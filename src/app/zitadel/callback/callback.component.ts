@@ -6,15 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'mifosx-callback',
-  templateUrl: './callback.component.html'
+  templateUrl: './callback.component.html',
+  imports: [LoaderComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CallbackComponent implements OnInit {
   private router = inject(Router);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -45,7 +45,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -63,7 +64,7 @@ export class TransactionsTabComponent implements OnInit {
     'totalShares',
     'purchasedOrRedeemedPrice',
     'chargeAmount',
-    'amountRecievedOrReturned'
+    'amountReceivedOrReturned'
   ];
 
   /**

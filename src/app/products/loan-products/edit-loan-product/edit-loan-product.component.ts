@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -67,7 +75,8 @@ import { LoanProductBaseComponent } from '../common/loan-product-base.component'
     LoanProductDeferredIncomeRecognitionStepComponent,
     LoanProductAccountingStepComponent,
     LoanProductPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoanProductComponent extends LoanProductBaseComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
@@ -413,15 +422,6 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
       }
       delete loanProduct['useDueForRepaymentsConfigurations'];
     }
-
-    // No Empty values to be sent
-    [
-      'nearBreachId'
-    ].forEach((attr: string) => {
-      if (loanProduct[attr] === null || loanProduct[attr] === '') {
-        delete loanProduct[attr];
-      }
-    });
 
     this.productsService
       .updateLoanProduct(this.loanProductService.loanProductPath, this.loanProductAndTemplate.id, loanProduct)

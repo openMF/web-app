@@ -8,12 +8,29 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { DecimalPipe, NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  AfterViewInit,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTooltip } from '@angular/material/tooltip';
+import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
 import {
   MatTable,
+  MatTableDataSource,
   MatColumnDef,
   MatHeaderCellDef,
   MatHeaderCell,
@@ -30,6 +47,7 @@ import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -38,6 +56,14 @@ import { SystemService } from 'app/system/system.service';
 import * as _ from 'lodash';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
+
+interface DatatableColumnHeader {
+  columnName: string;
+  columnDisplayType?: string;
+  columnType?: string;
+  columnValues?: { id: number; value: string }[];
+}
 
 @Component({
   selector: 'mifosx-datatable-multi-row',
@@ -45,6 +71,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./datatable-multi-row.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageLoaderComponent,
     FaIconComponent,
     MatCard,
     MatCardContent,
@@ -55,28 +82,37 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCellDef,
     MatCell,
     MatCheckbox,
+    MatIconButton,
+    MatPaginator,
+    MatSort,
+    MatSortHeader,
+    MatTooltip,
     NgClass,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
+export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   formatTabLabel(label: string): string {
-    return formatTabLabel(label);
+    return this.translateDatatableLabel(label, formatDatatableDisplayLabel(label));
   }
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
   private systemService = inject(SystemService);
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
-  private datatables = inject(Datatables);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  public datatables = inject(Datatables);
   private dateFormat = inject(DateFormatPipe);
   private dateTimeFormat = inject(DatetimeFormatPipe);
   private numberFormat = inject(DecimalPipe);
+  private translateService = inject(TranslateService);
 
   SELECT_NAME_FIELD = 'select';
+  ACTIONS_NAME_FIELD = 'actions';
   /** Data Object */
   @Input() dataObject: any;
   @Input() entityId: string;
@@ -87,7 +123,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
-  datatableData: any;
+  datatableData = new MatTableDataSource<any>([]);
 
   /** Toggle button visibility */
   showDeleteBotton: boolean;
@@ -98,6 +134,8 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   /** Data Table Reference */
   @ViewChild('dataTable') dataTableRef: MatTable<Element>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Fetches data table name from route params.
@@ -107,9 +145,16 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     this.selection = new SelectionModel(true, []);
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
+      this.changeDetectorRef.markForCheck();
     });
     this.setData();
     this.isSelected = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.datatableData.paginator = this.paginator;
+    this.datatableData.sort = this.sort;
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -117,11 +162,22 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setData();
+    if (changes.dataObject && this.dataObject) {
+      this.selection = new SelectionModel(true, []);
+      this.isSelected = false;
+      this.setData();
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   setData() {
-    this.datatableColumns = [this.SELECT_NAME_FIELD];
+    if (!this.dataObject) {
+      return;
+    }
+    this.datatableColumns = [
+      this.SELECT_NAME_FIELD,
+      this.ACTIONS_NAME_FIELD
+    ];
     this.dataObject.columnHeaders.filter((columnHeader: any) => {
       if (!this.datatables.isEntityId(columnHeader.columnName)) {
         this.datatableColumns.push(columnHeader.columnName);
@@ -129,7 +185,10 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       }
     });
 
-    this.datatableData = this.dataObject.data;
+    this.datatableData = new MatTableDataSource(this.dataObject.data || []);
+    this.datatableData.sortingDataAccessor = (data: any, sortHeaderId: string) => this.getSortValue(data, sortHeaderId);
+    this.datatableData.paginator = this.paginator;
+    this.datatableData.sort = this.sort;
     if (this.dataTableRef) {
       this.dataTableRef.renderRows();
     }
@@ -138,19 +197,33 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   resetData() {
     this.datatableName = null;
     this.datatableColumns = null;
-    this.datatableData = null;
+    this.datatableData = new MatTableDataSource<any>([]);
   }
 
   getData() {
+    const pageIndex = this.paginator?.pageIndex;
+    const pageSize = this.paginator?.pageSize;
     this.isLoading = true;
-    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-      this.dataObject.data = dataObject.data;
-      this.showDeleteBotton = false;
-      if (this.dataTableRef) {
-        this.setData();
+    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe({
+      next: (dataObject: any) => {
+        this.dataObject.data = dataObject.data;
+        this.showDeleteBotton = false;
+        if (this.dataTableRef) {
+          this.setData();
+        }
+        if (this.paginator && pageIndex !== undefined && pageSize !== undefined) {
+          this.paginator.pageSize = pageSize;
+          const lastPageIndex = Math.max(Math.ceil(this.datatableData.data.length / pageSize) - 1, 0);
+          this.paginator.pageIndex = Math.min(pageIndex, lastPageIndex);
+        }
+        this.isSelected = false;
+        this.isLoading = false;
+        this.changeDetectorRef.markForCheck();
+      },
+      error: () => {
+        this.isLoading = false;
+        this.changeDetectorRef.markForCheck();
       }
-      this.isSelected = false;
-      this.isLoading = false;
     });
   }
 
@@ -167,7 +240,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: this.getAddDialogTitle(),
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -180,6 +253,8 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe((result: any) => {
@@ -189,15 +264,107 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     });
   }
 
+  getAddDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Add')} ${this.formatTabLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  /**
+   * Updates the selected row in the given multi row data table.
+   */
+  edit(row: any) {
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
+    const dateTransformColumns: string[] = [];
+    const columns = this.datatables.filterSystemColumns(this.dataObject.columnHeaders);
+    const formfields: FormfieldBase[] = this.datatables
+      .getFormfields(columns, dateTransformColumns, dataTableEntryObject)
+      .map((formfield: FormfieldBase, index: number) => {
+        const column = columns[index];
+        const value = row.row[column.idx];
+        if (value === null || value === undefined) {
+          formfield.value = value;
+        } else if (formfield.controlType === 'datepicker') {
+          formfield.value = this.dateUtils.parseDate(value);
+        } else if (formfield.controlType === 'datetimepicker') {
+          formfield.value = this.dateUtils.parseDatetime(value);
+        } else if (
+          formfield.controlType === 'textarea' &&
+          this.datatables.isJson(column.columnDisplayType, column.columnType)
+        ) {
+          formfield.value = this.datatables.formatJsonValue(value);
+        } else {
+          formfield.value = value;
+        }
+        return formfield;
+      });
+    const data = {
+      title: this.getEditDialogTitle(),
+      formfields: formfields,
+      layout: { addButtonText: 'labels.buttons.Save' },
+      pristine: false
+    };
+    const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
+    editDialogRef.afterClosed().subscribe((response: any) => {
+      if (response?.data) {
+        dateTransformColumns.forEach((column) => {
+          if (
+            response.data.value[column] !== null &&
+            response.data.value[column] !== undefined &&
+            response.data.value[column] !== ''
+          ) {
+            response.data.value[column] = this.dateUtils.formatDate(
+              response.data.value[column],
+              dataTableEntryObject.dateFormat
+            );
+          }
+        });
+        dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
+        this.systemService
+          .editEntityDatatableEntryOneToMany(this.entityId, row.row[0], this.datatableName, dataTableEntryObject)
+          .subscribe({
+            next: () => {
+              this.getData();
+            },
+            error: () => {
+              this.isLoading = false;
+              this.changeDetectorRef.markForCheck();
+            }
+          });
+      }
+    });
+  }
+
+  getEditDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Edit')} ${this.formatTabLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  private getTranslatedEntityType(): string {
+    const entityTypeKey = `labels.text.${this.entityType}`;
+    const translatedEntityType = this.translateService.instant(entityTypeKey);
+
+    return translatedEntityType === entityTypeKey ? this.entityType : translatedEntityType;
+  }
+
   /**
    * Deletes all rows of the given multi row data table.
    */
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `the contents of ${formatTabLabel(this.datatableName)}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.text.the contents of')} ${this.formatTabLabel(
+          this.datatableName
+        )}`
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.getData();
         });
@@ -211,22 +378,30 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   deleteSelected() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
-        deleteContext: `the ${this.selection.selected.length} items selected of ${formatTabLabel(this.datatableName)}`
+        deleteContext: `${this.translateService.instant('labels.text.the')} ${
+          this.selection.selected.length
+        } ${this.translateService.instant('labels.text.items selected of')} ${this.formatTabLabel(this.datatableName)}`
       }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
+          this.isLoading = true;
+          this.changeDetectorRef.markForCheck();
           this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
-            this.datatableData.forEach((item: any, index: any) => {
+            this.datatableData.data.forEach((item: any, index: any) => {
               if (item.row[0] === data.row[0]) {
-                this.datatableData.splice(index, 1);
+                const datatableRows = this.datatableData.data;
+                datatableRows.splice(index, 1);
+                this.datatableData.data = datatableRows;
                 this.dataTableRef.renderRows();
                 this.selection = new SelectionModel(true, []);
                 this.isSelected = this.selection.selected.length > 0;
               }
             });
+            this.isLoading = false;
+            this.changeDetectorRef.markForCheck();
           });
         });
       } else {
@@ -244,7 +419,9 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
         if (columnHeader.columnName === columnName) {
           const columnDisplayType = columnHeader.columnDisplayType;
           value = data.row[idx];
-          if (columnDisplayType === 'DATE') {
+          if (typeof value === 'boolean') {
+            value = this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+          } else if (columnDisplayType === 'DATE') {
             value = this.dateFormat.transform(value);
           } else if (columnDisplayType === 'DATETIME') {
             value = this.dateTimeFormat.transform(value);
@@ -259,6 +436,8 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
               const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === value);
               value = codeValue ? codeValue.value : value;
             }
+          } else if (this.datatables.isJson(columnDisplayType, columnHeader.columnType)) {
+            value = this.datatables.formatJsonValue(value);
           }
           return true;
         }
@@ -268,10 +447,70 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     return value;
   }
 
+  getSortValue(data: any, columnName: string): string | number {
+    if (
+      columnName === this.SELECT_NAME_FIELD ||
+      columnName === this.ACTIONS_NAME_FIELD ||
+      !this.dataObject?.columnHeaders
+    ) {
+      return '';
+    }
+    const columnIndex = this.dataObject.columnHeaders.findIndex(
+      (columnHeader: any) => columnHeader.columnName === columnName
+    );
+    if (columnIndex === -1) {
+      return '';
+    }
+    const columnHeader = this.dataObject.columnHeaders[columnIndex];
+    const value = data.row[columnIndex];
+    const isMissingValue = value === null || value === undefined || value === '';
+    if (this.datatables.isJson(columnHeader.columnDisplayType, columnHeader.columnType)) {
+      return this.datatables.formatJsonValue(value).toLocaleLowerCase();
+    }
+    switch (columnHeader.columnDisplayType) {
+      case 'INTEGER':
+      case 'DECIMAL': {
+        const numericValue = Number(value);
+        return isMissingValue || Number.isNaN(numericValue) ? Number.NEGATIVE_INFINITY : numericValue;
+      }
+      case 'DATE':
+      case 'DATETIME': {
+        const dateValue = new Date(value).getTime();
+        return isMissingValue || Number.isNaN(dateValue) ? Number.NEGATIVE_INFINITY : dateValue;
+      }
+      case 'CODELOOKUP': {
+        if (isMissingValue) {
+          return '';
+        }
+        const codeValue = columnHeader.columnValues?.find((cv: any) => cv.id === value);
+        return (codeValue ? codeValue.value : value).toString().toLocaleLowerCase();
+      }
+      default:
+        if (isMissingValue) {
+          return '';
+        }
+        return value.toString().toLocaleLowerCase();
+    }
+  }
+
+  getColumnDisplayType(columnName: string): string {
+    return this.getColumnHeader(columnName)?.columnDisplayType || '';
+  }
+
+  getColumnType(columnName: string): string {
+    return this.getColumnHeader(columnName)?.columnType || '';
+  }
+
+  private getColumnHeader(columnName: string): DatatableColumnHeader | undefined {
+    return this.dataObject?.columnHeaders?.find(
+      (columnHeader: DatatableColumnHeader) => columnHeader.columnName === columnName
+    );
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected;
-    return this.datatableData.length === numSelected;
+    const numSelected = this.selection.selected.length;
+    return this.datatableData.data.length === numSelected;
   }
 
   isAnySelected() {
@@ -281,7 +520,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(change: MatCheckboxChange): void {
     if (change.checked) {
-      this.datatableData.forEach((row: any) => this.selection.select(row));
+      this.datatableData.data.forEach((row: any) => this.selection.select(row));
     } else {
       this.selection = new SelectionModel(true, []);
     }
@@ -308,7 +547,34 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     return '';
   }
 
+  getSystemColumnTranslationKey(columnName: string): string | null {
+    switch (columnName) {
+      case 'created_at':
+        return 'labels.inputs.Created At';
+      case 'updated_at':
+        return 'labels.inputs.Updated At';
+      default:
+        return null;
+    }
+  }
+
   getInputName(attr: string): string {
-    return this.datatables.getName(attr);
+    const translationKey = this.getSystemColumnTranslationKey(attr);
+    if (translationKey) {
+      return this.translateService.instant(translationKey);
+    }
+    const label = this.datatables.getName(attr);
+    return this.translateDatatableLabel(label, this.datatables.toDisplayLabel(label));
+  }
+
+  private translateDatatableLabel(rawLabel: string, displayLabel: string): string {
+    const rawKey = `labels.inputs.${rawLabel}`;
+    const translatedRawLabel = this.translateService.instant(rawKey);
+    if (translatedRawLabel !== rawKey) {
+      return translatedRawLabel;
+    }
+    const displayKey = `labels.inputs.${displayLabel}`;
+    const translatedDisplayLabel = this.translateService.instant(displayKey);
+    return translatedDisplayLabel === displayKey ? displayLabel : translatedDisplayLabel;
   }
 }

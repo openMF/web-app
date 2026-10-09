@@ -104,12 +104,17 @@
       });
     </script>
 
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <mifosx-web-app>
       <div class="loader-wrapper">
-        <div class="bottom triangle"></div>
-        <div class="top triangle"></div>
-        <div class="left triangle"></div>
-        <div class="right triangle"></div>
+        <lottie-player
+          class="lottie-spinner"
+          src="assets/loading_animation.json"
+          background="transparent"
+          speed="1"
+          loop
+          autoplay
+        ></lottie-player>
       </div>
     </mifosx-web-app>
   </body>

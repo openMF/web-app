@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -27,7 +27,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./edit-tax-component.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTaxComponentComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -94,7 +95,7 @@ export class EditTaxComponentComponent implements OnInit {
           Validators.max(100)
         ]
       ],
-      startDate: [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
+      startDate: [this.taxComponentData.startDate && this.dateUtils.parseDate(this.taxComponentData.startDate)],
       creditAccountType: [
         {
           value: creditAccountTypeValue,

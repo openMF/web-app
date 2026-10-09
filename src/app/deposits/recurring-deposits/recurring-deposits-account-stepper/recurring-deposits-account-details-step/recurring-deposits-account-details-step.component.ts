@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
@@ -31,12 +32,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private recurringDepositsService = inject(RecurringDepositsService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   /** Recurring Deposits Account Template */
   @Input() recurringDepositsAccountTemplate: any;
@@ -79,7 +82,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
           productId: this.recurringDepositsAccountTemplate.depositProductId,
           submittedOnDate:
             this.recurringDepositsAccountTemplate.timeline.submittedOnDate &&
-            new Date(this.recurringDepositsAccountTemplate.timeline.submittedOnDate),
+            this.dateUtils.parseDate(this.recurringDepositsAccountTemplate.timeline.submittedOnDate),
           externalId: this.recurringDepositsAccountTemplate.externalId
         });
       }

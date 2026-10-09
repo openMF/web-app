@@ -1,0 +1,42 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.client-link {
+  align-items: center;
+  display: inline-flex;
+  margin-right: 0.5rem;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.gap-16px {
+  gap: 16px;
+}
+
+.m-b-16 {
+  margin-bottom: 16px;
+}
+
+.self-service-indicator {
+  margin-right: 0.25rem;
+}
+
+.self-service-true {
+  color: #32cd32;
+}
+
+.self-service-false {
+  color: #f44336;
+}
+
+.empty-state {
+  padding: 1rem;
+  text-align: center;
+}

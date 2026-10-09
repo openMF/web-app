@@ -19,6 +19,7 @@ export class FormfieldBase {
   validators?: ValidatorFn[];
   min?: number | null;
   max?: number | null;
+  step?: string | number | null;
 
   constructor(
     options: {
@@ -31,6 +32,7 @@ export class FormfieldBase {
       validators?: ValidatorFn[];
       min?: number | null;
       max?: number | null;
+      step?: string | number | null;
     } = {}
   ) {
     this.controlType = options.controlType || '';
@@ -42,5 +44,6 @@ export class FormfieldBase {
     this.validators = options.validators === undefined ? [] : options.validators;
     this.min = options.min === undefined ? null : options.min;
     this.max = options.max === undefined ? null : options.max;
+    this.step = options.step === undefined ? null : options.step;
   }
 }

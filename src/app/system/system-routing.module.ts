@@ -55,7 +55,13 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
 import { SystemComponent } from './system.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
+import { TenantManagementComponent } from './tenant-management/tenant-management.component';
+import { TenantsComponent } from './tenant-management/tenants.component';
+import { CreateTenantComponent } from './tenant-management/create-tenant/create-tenant.component';
+import { EditTenantComponent } from './tenant-management/edit-tenant/edit-tenant.component';
+import { ViewTenantComponent } from './tenant-management/view-tenant/view-tenant.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ManageDashboardsComponent } from './manage-dashboards/manage-dashboards.component';
 
 /** Custom Resolvers */
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
@@ -70,6 +76,7 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
 import { GlobalConfigurationsResolver } from './configurations/global-configurations-tab/global-configurations.resolver';
+import { ThemeComponent } from './theme/theme.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
 import { EntityToEntityMappingResolver } from './entity-to-entity-mapping/entity-to-entity-mapping.resolver';
@@ -102,7 +109,7 @@ import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.re
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'system',
+      path: '',
       data: { title: 'System', breadcrumb: 'System' },
       children: [
         {
@@ -478,6 +485,11 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'theme',
+          component: ThemeComponent,
+          data: { title: 'Theme', breadcrumb: 'Theme' }
+        },
+        {
           path: 'configurations',
           data: { title: 'Configurations', breadcrumb: 'Configurations' },
           children: [
@@ -585,6 +597,41 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'tenant-management',
+          component: TenantManagementComponent,
+          data: { title: 'Tenant Management', breadcrumb: 'Tenant Management' },
+          // Deliberately no resolvers anywhere below: this API is called with a master credential
+          // the section signs in for, which may not exist yet when the route activates. A resolver
+          // would fire an unauthenticated request before the sign-in card could render, so every
+          // page here fetches its own data once the credential is in place.
+          children: [
+            {
+              path: '',
+              component: TenantsComponent
+            },
+            {
+              path: 'create',
+              component: CreateTenantComponent,
+              data: { title: 'Create Tenant', breadcrumb: 'Create' }
+            },
+            {
+              path: ':id',
+              data: { title: 'View Tenant', routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewTenantComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditTenantComponent,
+                  data: { title: 'Edit Tenant', breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                }
+              ]
+            }
+          ]
+        },
+        {
           path: 'system-information',
           component: SystemInformationComponent,
           data: { title: 'System Information', breadcrumb: 'System Information' }
@@ -593,6 +640,11 @@ const routes: Routes = [
           path: 'about-us',
           component: AboutUsComponent,
           data: { title: 'About Us', breadcrumb: 'About Us' }
+        },
+        {
+          path: 'manage-dashboards',
+          component: ManageDashboardsComponent,
+          data: { title: 'Manage Dashboards', breadcrumb: 'Manage Dashboards' }
         },
         {
           path: 'audit-trails',
@@ -635,7 +687,6 @@ const routes: Routes = [
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     SurveyResolver,
-    GlobalConfigurationsResolver,
     GlobalConfigurationResolver,
     AmazonS3ConfigurationResolver,
     EmailConfigurationResolver,

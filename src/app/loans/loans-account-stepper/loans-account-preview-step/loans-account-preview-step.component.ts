@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -35,8 +43,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
 import { LongTextComponent } from 'app/shared/long-text/long-text.component';
-import { Breach, NearBreach } from 'app/products/loan-products/models/loan-product.model';
+import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
 
 /**
  * Create Loans Account Preview Step
@@ -69,7 +78,8 @@ import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-di
     TranslatePipe,
     LongTextComponent,
     BreachDisplayComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent implements OnChanges {
   /** Loans Account Template */
@@ -83,6 +93,8 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
   @Input() loanProductsBasicDetails: LoanProductBasicDetails[];
 
   /** Submit Loans Account */
+  /** Disables the submit button while the loans account is being created */
+  @Input() submitting = false;
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
@@ -115,11 +127,17 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
   dataSource: any;
   productEnableDownPayment = false;
 
+  repaymentFrequencyTypeOption: OptionData | null = null;
+  delinquencyStartTypeOption: StringEnumOptionData | null = null;
+
   constructor() {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.loansAccountProductTemplate?.product) {
+      return;
+    }
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
     if (this.activeClientMembers) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
@@ -135,6 +153,34 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
         .filter((member: any) => member.selected)
         .reduce((acc: number, member: any) => acc + (member.principal ?? 0), 0);
     }
+    if (this.loanProductService.isWorkingCapital) {
+      const options = this.loansAccountProductTemplate.options ?? {};
+      this.repaymentFrequencyTypeOption = this.optionDataLookUp(
+        this.loansAccount?.repaymentFrequencyType,
+        options.periodFrequencyTypeOptions ?? []
+      );
+      this.delinquencyStartTypeOption = this.stringEnumOptionDataLookUp(
+        this.loansAccount?.delinquencyStartType,
+        options.delinquencyStartTypeOptions ?? []
+      );
+    } else {
+      this.repaymentFrequencyTypeOption = null;
+      this.delinquencyStartTypeOption = null;
+    }
+  }
+
+  private optionDataLookUp(itemId: any, optionsData: any[]): OptionData | null {
+    const match = optionsData.find((o: any) => o.id === itemId);
+    return match ? { id: match.id, code: match.code, value: match.value || match.name } : null;
+  }
+
+  private stringEnumOptionDataLookUp(itemId: any, optionsData: any[]): StringEnumOptionData | null {
+    const match = optionsData.find((o: any) => o.id === itemId || o.code === itemId);
+    return match ? { id: match.id, code: match.code, value: match.value } : null;
+  }
+
+  originatorsLabel(originators: { externalId: string }[]): string {
+    return (originators ?? []).map((originator) => originator.externalId).join(', ');
   }
 
   loanProductName(id: number): string {
@@ -155,8 +201,22 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
     return fund ? fund.name : '';
   }
 
-  camalize(word: string) {
+  camalize(word: unknown): string {
+    if (typeof word !== 'string' || word.length === 0) {
+      return '';
+    }
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  getDelinquencyBucket(delinquencyBucketId: number | null | undefined): DelinquencyBucket | null {
+    if (delinquencyBucketId === null || delinquencyBucketId === undefined) {
+      return null;
+    }
+    return (
+      this.loansAccountProductTemplate.options?.delinquencyBucketOptions?.find(
+        (b: DelinquencyBucket) => b.id === delinquencyBucketId
+      ) || null
+    );
   }
 
   getBreach(breachId: number | null | undefined): Breach | null {

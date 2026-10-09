@@ -7,8 +7,19 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -26,16 +37,18 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
   styleUrl: './edit-loan-originator.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoanOriginatorComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   /** Loan Originator form. */
-  loanOriginatorForm: UntypedFormGroup | null = null;
+  loanOriginatorForm: FormGroup | null = null;
   /** Form data. */
   loanOriginatorsData: LoanOriginator;
   loanOriginatorsTemplateData: any;
@@ -49,13 +62,15 @@ export class EditLoanOriginatorComponent implements OnInit {
   @ViewChild('templateCreateLoanOriginatorForm') templateCreateLoanOriginatorForm: TemplateRef<any>;
 
   constructor() {
-    this.route.data.subscribe((data: { loanOriginatorData: LoanOriginator; loanOriginatorsTemplateData: any }) => {
-      this.loanOriginatorsData = data.loanOriginatorData;
-      this.loanOriginatorsTemplateData = data.loanOriginatorsTemplateData;
-      this.statusOptions = data.loanOriginatorsTemplateData.statusOptions;
-      this.originatorTypeOptions = data.loanOriginatorsTemplateData.originatorTypeOptions;
-      this.channelTypeOptions = data.loanOriginatorsTemplateData.channelTypeOptions;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanOriginatorData: LoanOriginator; loanOriginatorsTemplateData: any }) => {
+        this.loanOriginatorsData = data.loanOriginatorData;
+        this.loanOriginatorsTemplateData = data.loanOriginatorsTemplateData;
+        this.statusOptions = data.loanOriginatorsTemplateData.statusOptions;
+        this.originatorTypeOptions = data.loanOriginatorsTemplateData.originatorTypeOptions;
+        this.channelTypeOptions = data.loanOriginatorsTemplateData.channelTypeOptions;
+      });
   }
 
   /**
@@ -106,8 +121,11 @@ export class EditLoanOriginatorComponent implements OnInit {
     const data = {
       ...loanOriginatorFormData
     };
-    this.organizationService.updateLoanOriginator(this.loanOriginatorsData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../..'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updateLoanOriginator(this.loanOriginatorsData.id, data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../..'], { relativeTo: this.route });
+      });
   }
 }

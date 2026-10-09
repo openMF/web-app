@@ -37,6 +37,14 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr *matNoDataRow>
+        <td class="no-data-cell" [attr.colspan]="displayedColumns.length">
+          {{
+            (filterValue ? 'labels.inputs.No records match the selected filter' : 'labels.text.No data found')
+              | translate
+          }}
+        </td>
+      </tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

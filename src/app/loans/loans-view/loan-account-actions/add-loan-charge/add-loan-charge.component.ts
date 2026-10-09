@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
@@ -24,10 +25,12 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   styleUrls: ['./add-loan-charge.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
   private dateUtils = inject(Dates);
 
   /** Minimum Due Date allowed. */
@@ -35,7 +38,8 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Loan Charge form. */
-  loanChargeForm: UntypedFormGroup;
+  loanChargeForm!: FormGroup;
+  isSubmitting = signal(false);
   /** loan charge options. */
   loanChargeOptions: {
     id: number;
@@ -60,10 +64,14 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
    */
   constructor() {
     super();
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
     this.loanId = this.route.snapshot.params['loanId'];
+  }
+
+  get requiredPermission(): string {
+    return this.isWorkingCapital ? 'CREATE_WORKINGCAPITALLOANCHARGE' : 'CREATE_LOANCHARGE';
   }
 
   /**
@@ -72,21 +80,23 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.createLoanChargeForm();
-    this.loanChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      const chargeDetails = this.loanChargeOptions.find((option) => {
-        return option.id === chargeId;
+    this.loanChargeForm.controls['chargeId'].valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeId) => {
+        const chargeDetails = this.loanChargeOptions.find((option) => option.id === chargeId);
+        if (chargeDetails) {
+          if (chargeDetails.chargeTimeType.id === 2) {
+            this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          } else {
+            this.loanChargeForm.removeControl('dueDate');
+          }
+          this.loanChargeForm.patchValue({
+            amount: chargeDetails.amount,
+            chargeCalculation: chargeDetails.chargeCalculationType.value,
+            chargeTime: chargeDetails.chargeTimeType.value
+          });
+        }
       });
-      if (chargeDetails.chargeTimeType.id === 2) {
-        this.loanChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-      } else {
-        this.loanChargeForm.removeControl('dueDate');
-      }
-      this.loanChargeForm.patchValue({
-        amount: chargeDetails.amount,
-        chargeCalculation: chargeDetails.chargeCalculationType.value,
-        chargeTime: chargeDetails.chargeTimeType.value
-      });
-    });
   }
 
   /**
@@ -108,10 +118,12 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
   }
 
   submit() {
+    if (this.isSubmitting() || !this.loanChargeForm?.valid) return;
+    this.isSubmitting.set(true);
     const loanChargeFormData = this.loanChargeForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevDueDate: Date = this.loanChargeForm.value.dueDate;
+    const prevDueDate: Date = loanChargeFormData.dueDate;
     if (loanChargeFormData.dueDate instanceof Date) {
       loanChargeFormData.dueDate = this.dateUtils.formatDate(prevDueDate, dateFormat);
     }
@@ -120,8 +132,9 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       dateFormat,
       locale
     };
-    this.loanService.createLoanCharge(this.loanId, 'charges', data).subscribe((res) => {
-      this.gotoLoanDefaultView();
+    this.loanService.createLoanCharge(this.loanProductService.loanAccountPath, this.loanId, data).subscribe({
+      next: () => this.gotoLoanView('charges'),
+      error: () => this.isSubmitting.set(false)
     });
   }
 }

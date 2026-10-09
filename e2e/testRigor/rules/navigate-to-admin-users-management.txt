@@ -1,2 +1,0 @@
-click "Admin"
-click "Users" below "Admin"

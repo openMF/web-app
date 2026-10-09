@@ -80,6 +80,20 @@
           </mat-icon>
           <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
+        @if (cbIldEnabled) {
+          <mat-list-item
+            [routerLink]="['/reporting-dashboard']"
+            [matTooltipPosition]="tooltipPosition"
+            matTooltip="{{ 'tooltips.Reporting Dashboard' | translate }}"
+            routerLinkActive="active-menu"
+            [routerLinkActiveOptions]="{ exact: false }"
+          >
+            <mat-icon matListIcon>
+              <fa-icon icon="file-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <a matLine #reportingDashboard>{{ 'labels.menus.Reporting Dashboard' | translate }}</a>
+          </mat-list-item>
+        }
         <mat-list-item
           [routerLink]="['/navigation']"
           [matTooltipPosition]="tooltipPosition"
@@ -99,7 +113,7 @@
           matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-          *mifosxHasPermission="'READ_MAKERCHECKER'"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
@@ -225,14 +239,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('logo')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateUserPanel, userPanel, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('logo')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -245,18 +255,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateLogo, logo, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('userPanel')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('userPanel')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -269,18 +271,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateUserPanel, userPanel, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('frequentlyAccessed')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('frequentlyAccessed')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -293,18 +287,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('dashboard')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNavigation, navigation, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('dashboard')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -317,18 +303,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('navigation')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('navigation')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -341,18 +319,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNavigation, navigation, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('frequentPostings')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('frequentPostings')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -365,18 +335,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('createJournalEntry')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateChartOfAccounts, chartOfAccounts, 'top', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('createJournalEntry')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -389,14 +351,10 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPreviousTourStep('chartOfAccounts')">
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+    <button mat-raised-button color="primary" (click)="popover.close(); showNextTourStep('chartOfAccounts')">
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
