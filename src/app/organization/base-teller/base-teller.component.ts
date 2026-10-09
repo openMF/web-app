@@ -32,6 +32,16 @@ export interface BaseTellerWorkflow {
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
   {
+    label: 'cashExchange.title',
+    materialIcon: 'currency_exchange',
+    permission: 'READ_BASE_TELLER_CASH_EXCHANGE',
+    route: [
+      '/organization',
+      'base-teller',
+      'cash-exchange'
+    ]
+  },
+  {
     label: 'labels.heading.Catalog Updates',
     materialIcon: 'sync',
     permission: 'READ_BASE_TELLER_CATALOG_UPDATE',
