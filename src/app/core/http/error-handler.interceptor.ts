@@ -67,14 +67,28 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
    * the codes are stored as flat dotted keys. Returns null when the code has no
    * translation, so the caller can fall back to the server message.
    * @param code Globalisation code sent by the backend
+   * @param args Values the backend sent with the error, shown in the message
    */
-  private translateErrorCode(code: string | undefined): string | null {
+  private translateErrorCode(code: string | undefined, args?: { value?: unknown }[]): string | null {
     if (!code) {
       return null;
     }
     const key = `errors.${code}`;
-    const translated = this.translate.instant(key);
+    const translated = this.translate.instant(key, this.toTranslationParams(args));
     return translated && translated !== key ? translated : null;
+  }
+
+  /**
+   * The error texts show the backend's `args` as `{{params[0].value}}`. The translate parser
+   * reads `params[0]` as a plain key, not as an array index, so each arg is set under that key.
+   * @param args Values the backend sent with the error
+   */
+  private toTranslationParams(args?: { value?: unknown }[]): Record<string, unknown> {
+    const params: Record<string, unknown> = {};
+    (args ?? []).forEach((arg, index) => {
+      params[`params[${index}]`] = arg;
+    });
+    return params;
   }
 
   /**
@@ -143,7 +157,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         // error, not on the envelope, so it is looked up here before falling
         // back to the raw message the server sent.
         errorMessage =
-          this.translateErrorCode(nestedCode) ||
+          this.translateErrorCode(nestedCode, nestedError.args) ||
           nestedError.defaultUserMessage?.replace(/\\./g, ' ') ||
           nestedError.developerMessage?.replace(/\\./g, ' ');
       }
