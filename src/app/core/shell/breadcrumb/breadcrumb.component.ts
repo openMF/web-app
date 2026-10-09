@@ -161,7 +161,6 @@ export class BreadcrumbComponent implements AfterViewInit {
                 const routeData: Data = route.snapshot.data;
                 if (routeData.breadcrumb === 'Clients') {
                   breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);
-                  currentUrl += `/general`;
                 } else if (routeData.breadcrumb === 'Groups') {
                   breadcrumbLabel = routeData.groupViewData.name;
                 } else if (routeData.breadcrumb === 'Centers') {
