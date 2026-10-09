@@ -267,7 +267,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     ) {
       delete loansAccountData.isFloatingInterestRate;
     }
-    loansAccountData.principal = loansAccountData.principalAmount;
+    // Send the principal as a number: Fineract reads a text amount with the request locale,
+    // so "1500.75" would be saved as 150075 in es, de or pt.
+    loansAccountData.principal = Number(loansAccountData.principalAmount);
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
