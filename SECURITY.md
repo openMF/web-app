@@ -7,19 +7,18 @@ We use this section to tell people about which versions of your project are curr
 | Version | Supported          |
 | ------- | ------------------ |
 | main    | :white_check_mark: |
-| < x.x   | :x:                 |
+| < x.x   | :x:                |
 
 ## Reporting a Vulnerability
 
 The Mifos community take security bugs seriously.
 We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
 
-> **Please do not report security vulnerabilities through public GitHub issues, Jira, Slack discussions, or pull requests.**. 
+> **Please do not report security vulnerabilities through public GitHub issues, Jira, Slack discussions, or pull requests.**.
 
-Instead, please report them by emailing:  
+Instead, please report them by emailing:
 
 **security-disclosure@mifos.org**
-
 
 Please include as much of the following information as possible to help us triage your report more quickly:
 
@@ -40,7 +39,7 @@ Please include as much of the following information as possible to help us triag
 
 ## Scope
 
-This policy applies to the repositories under the [openMF](https://github.com/openMF) organization unless it is clearly marked as experimental not for production use.  
+This policy applies to the repositories under the [openMF](https://github.com/openMF) organization unless it is clearly marked as experimental not for production use.
 
 Given that Mifos supports Financial Services, we treat issues affecting the following with the highest priority:
 
