@@ -8,7 +8,7 @@
 
 import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
@@ -128,12 +128,15 @@ describe('ErrorHandlerInterceptor', () => {
      * @param translations Keys the translate service knows about
      * @param asArrayBuffer Sends the body encoded, as requests that ask for an
      * ArrayBuffer response receive it
+     * @param args Values the backend sends with the nested error
      */
     function interceptDomainRuleViolation(
       nestedCode: string,
       translations: { [key: string]: string } = {},
-      asArrayBuffer = false
+      asArrayBuffer = false,
+      args?: { value: unknown }[]
     ): void {
+      const parser = new TranslateDefaultParser();
       TestBed.resetTestingModule();
       alert = jest.fn();
       TestBed.configureTestingModule({
@@ -142,7 +145,9 @@ describe('ErrorHandlerInterceptor', () => {
           { provide: AlertService, useValue: { alert } },
           {
             provide: TranslateService,
-            useValue: { instant: (key: string) => translations[key] ?? key }
+            useValue: {
+              instant: (key: string, params?: object) => parser.interpolate(translations[key] ?? key, params)
+            }
           }
         ]
       });
@@ -153,7 +158,8 @@ describe('ErrorHandlerInterceptor', () => {
         errors: [
           {
             userMessageGlobalisationCode: nestedCode,
-            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit'
+            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit',
+            ...(args && { args })
           }
         ]
       };
@@ -190,6 +196,29 @@ describe('ErrorHandlerInterceptor', () => {
 
       expect(alert).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('shows the values the backend sends with the error in the translated message', () => {
+      const PRINCIPAL_RANGE_CODE = 'validation.msg.loan.principal.amount.is.not.within.min.max.range';
+      interceptDomainRuleViolation(
+        PRINCIPAL_RANGE_CODE,
+        {
+          [`errors.${PRINCIPAL_RANGE_CODE}`]:
+            'Principal amount {{params[0].value}} is invalid. Must be an amount between {{params[1].value}} and {{params[2].value}} inclusive.'
+        },
+        false,
+        [
+          { value: 150075 },
+          { value: 100 },
+          { value: 100000 }
+        ]
+      );
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Principal amount 150075 is invalid. Must be an amount between 100 and 100000 inclusive.'
+        })
       );
     });
 

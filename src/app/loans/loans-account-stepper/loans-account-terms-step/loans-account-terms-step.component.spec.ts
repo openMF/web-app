@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { DatePipe } from '@angular/common';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -76,6 +77,7 @@ describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
         { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
         { provide: Router, useValue: {} },
         { provide: MatDialog, useValue: {} },
+        DatePipe,
         { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
         {
           provide: ActivatedRoute,
@@ -162,6 +164,7 @@ describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
         { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
         { provide: Router, useValue: {} },
         { provide: MatDialog, useValue: {} },
+        DatePipe,
         { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
         {
           provide: ActivatedRoute,
@@ -256,6 +259,7 @@ describe('LoansAccountTermsStepComponent — principal decimals', () => {
         { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
         { provide: Router, useValue: {} },
         { provide: MatDialog, useValue: {} },
+        DatePipe,
         { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
         {
           provide: ActivatedRoute,
@@ -316,5 +320,50 @@ describe('LoansAccountTermsStepComponent — principal decimals', () => {
     });
 
     expect(principal().value).toBe(50000);
+  });
+});
+
+describe('LoansAccountTermsStepComponent — editing a loan application', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { loanId: '10' }, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+  });
+
+  it('shows the saved first repayment date in the date picker', () => {
+    // GET /loans/{id}/template returns the date as a [year, month, day] array.
+    const loanTemplate = {
+      ...LOAN_PRODUCT_TEMPLATE,
+      accountNo: '000000010',
+      loanProductId: 1,
+      expectedFirstRepaymentOnDate: [
+        2026,
+        11,
+        15
+      ]
+    };
+    component.loansAccountProductTemplate = LOAN_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = loanTemplate;
+
+    component.ngOnInit();
+
+    expect(component.loansAccountTermsForm.get('repaymentsStartingFromDate')!.value).toEqual(new Date(2026, 10, 15));
   });
 });

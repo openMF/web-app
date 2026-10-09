@@ -31,6 +31,7 @@ import {
   NearBreach
 } from 'app/products/loan-products/models/loan-product.model';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -109,6 +110,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
@@ -467,13 +469,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
 
       if (this.loansAccountTermsData) {
         if (this.loansAccountTermsData.loanProductId) {
-          let formattedDate = null;
-          if (this.loansAccountTermsData.expectedFirstRepaymentOnDate) {
-            const repaymentDate = new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate);
-            formattedDate = this.formatDateToDDMMYYYY(repaymentDate);
-          }
+          const expectedFirstRepaymentOnDate = this.loansAccountTermsData.expectedFirstRepaymentOnDate;
           this.loansAccountTermsForm.patchValue({
-            repaymentsStartingFromDate: this.loansAccountTermsData.expectedFirstRepaymentOnDate && formattedDate
+            repaymentsStartingFromDate:
+              expectedFirstRepaymentOnDate && this.dateUtils.parseDate(expectedFirstRepaymentOnDate)
           });
         }
         if (this.isDelinquencyEnabled()) {
@@ -615,13 +614,6 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       }
     }
     return null;
-  }
-
-  formatDateToDDMMYYYY(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
   }
 
   /** Custom Validators for the form */

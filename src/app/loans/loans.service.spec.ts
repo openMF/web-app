@@ -148,4 +148,17 @@ describe('LoansService - loan request payload', () => {
         .allowPartialPeriodInterestCalculation
     ).toBe(false);
   });
+
+  it('sends the principal typed in the form as a number', () => {
+    const payload = service.buildLoanRequestPayload(
+      { principalAmount: '1500.75', disbursementData: [] },
+      { clientId: 1 },
+      [],
+      'es',
+      'dd MMMM yyyy'
+    );
+
+    expect(payload.principal).toBe(1500.75);
+    expect(payload.principalAmount).toBeUndefined();
+  });
 });
