@@ -60,7 +60,11 @@
                     }
                     @case ('INTEGER') {
                       <span>
-                        {{ dataObject.data[0].row[i] }}
+                        @if (getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i])) {
+                          {{ getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i]) }}
+                        } @else {
+                          {{ formatValue(dataObject.data[0].row[i]) }}
+                        }
                       </span>
                     }
                     @case ('DECIMAL') {
@@ -79,18 +83,16 @@
                     }
                     @case ('TEXT') {
                       <span class="long-text">
-                        {{ dataObject.data[0].row[i] }}
+                        {{ formatValue(dataObject.data[0].row[i]) }}
+                      </span>
+                    }
+                    @case ('BOOLEAN') {
+                      <span>
+                        {{ formatValue(dataObject.data[0].row[i]) }}
                       </span>
                     }
                     @case ('JSON') {
-                      <textarea
-                        cdkTextareaAutosize="true"
-                        cdkAutosizeMaxRows="20"
-                        cdkAutosizeMinRows="1"
-                        class="json-textarea"
-                        [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-                      >
-                      </textarea>
+                      <pre class="json-value">{{ formatJsonValue(dataObject.data[0].row[i]) }}</pre>
                     }
                     @default {
                       <div class="default-value">
@@ -112,7 +114,7 @@
                           </span>
                           {{ dataObject.data[0].row[i] }}
                         } @else {
-                          {{ dataObject.data[0].row[i] }}
+                          {{ formatValue(dataObject.data[0].row[i]) }}
                         }
                       </div>
                     }

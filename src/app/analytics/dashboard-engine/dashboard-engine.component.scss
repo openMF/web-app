@@ -79,17 +79,15 @@
 }
 
 .export-btn {
-  height: 56px;
-
-  /* Match the exact height of the outline dropdowns */
-  padding: 0 24px;
-  border-color: #1e88e5;
-  color: #1565c0;
+  height: 40px;
+  line-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
   border-radius: 4px;
   font-weight: 500;
   margin-left: auto;
-
-  /* Push it to the right if there's extra space, or just let it sit naturally */
 }
 
 /* ── Metric summary grid ── */

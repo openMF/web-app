@@ -1,0 +1,136 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Reused so the panel inherits the same tokens (and their dark-theme
+// overrides) as the tabs it is embedded in.
+@use '../../loan-tab-shared' as shared;
+
+.recovery-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── The three figures ─────────────────────────────────────── */
+.recovery-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.figure {
+  flex: 1 1 160px;
+  min-width: 140px;
+  padding: 16px;
+  border: 1px solid var(--ch-border);
+  border-radius: 8px;
+  background: var(--ch-surface);
+}
+
+.figure-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+  margin-bottom: 8px;
+}
+
+.figure-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+}
+
+// Recovered is the good news: green, one step below the lead figure.
+.figure-recovered {
+  border-color: var(--ch-paid);
+  background: var(--ch-paid-bg);
+
+  .figure-value {
+    color: var(--ch-paid);
+  }
+}
+
+// Pending recovery is the number the officer acts on, so it gets the strongest
+// treatment of the three.
+.figure-lead {
+  border-color: var(--ch-partial);
+  background: var(--ch-partial-bg);
+
+  .figure-value {
+    font-size: 20px;
+    color: var(--ch-partial);
+  }
+}
+
+/* ── Progress bar ──────────────────────────────────────────── */
+.progress-track {
+  height: 8px;
+  border-radius: 8px;
+  background: var(--ch-surface-h);
+  border: 1px solid var(--ch-border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--ch-blue-600);
+  transition: width 200ms ease;
+}
+
+.progress-complete {
+  background: var(--ch-paid);
+}
+
+.progress-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ch-text-2);
+}
+
+.progress-percent {
+  font-weight: 600;
+}
+
+.recovery-complete-tag {
+  padding: 2px 8px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--ch-paid-bg);
+  color: var(--ch-paid);
+  border: 1px solid var(--ch-paid);
+}
+
+/* ── Written-off breakdown ─────────────────────────────────── */
+.recovery-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 12.5px;
+  color: var(--ch-text-2);
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.breakdown-label {
+  color: var(--ch-text-3);
+}
+
+.breakdown-value {
+  font-weight: 600;
+  color: var(--ch-text-1);
+}

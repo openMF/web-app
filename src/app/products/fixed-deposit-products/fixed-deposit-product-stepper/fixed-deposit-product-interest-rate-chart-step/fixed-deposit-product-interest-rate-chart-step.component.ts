@@ -247,8 +247,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   getChartsDetailsData() {
     this.chartDetailData.forEach((chartData: ChartData) => {
       const chart: Chart = {
-        endDate: chartData.endDate ? new Date(chartData.endDate) : '',
-        fromDate: chartData.fromDate ? new Date(chartData.fromDate) : '',
+        endDate: chartData.endDate ? this.dateUtils.parseDate(chartData.endDate) : '',
+        fromDate: chartData.fromDate ? this.dateUtils.parseDate(chartData.fromDate) : '',
         isPrimaryGroupingByAmount: chartData.isPrimaryGroupingByAmount,
         name: chartData.name,
         description: chartData.description,

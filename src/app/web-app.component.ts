@@ -46,6 +46,7 @@ import { ThemingService } from './shared/theme-toggle/theming.service';
 const log = new Logger('MifosX');
 
 import { registerLocaleData } from '@angular/common';
+import localeAZ from '@angular/common/locales/az';
 import localeCS from '@angular/common/locales/cs';
 import localeEN from '@angular/common/locales/en';
 import localeES from '@angular/common/locales/es';
@@ -60,6 +61,7 @@ import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+registerLocaleData(localeAZ);
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -197,7 +199,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
             .subscribe((t: any) => this.titleService.setTitle(t));
           return;
         }
-        const translationKey = `labels.text.${rawTitle}`;
+        const translationKey = rawTitle.includes('.') ? rawTitle : `labels.text.${rawTitle}`;
         this.i18nService
           .translate(translationKey)
           .pipe(take(1))

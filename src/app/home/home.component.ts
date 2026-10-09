@@ -35,6 +35,7 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
@@ -72,6 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
 
   enableGlobalDashboard = environment.enableGlobalDashboard === true;
 
@@ -108,6 +110,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
     this.tenant = this.tenantIdentifier();
+    this.allActivities = this.getPermittedActivities();
     this.setFilteredActivities();
     if (!this.authenticationService.hasDialogBeenShown()) {
       this.dialog.open(WarningDialogComponent);
@@ -120,7 +123,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges.pipe(
-      map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
+      map((activity: any) => (typeof activity === 'string' ? activity : activity?.activity)),
       map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
     );
   }
@@ -132,7 +135,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter((activity) => this.activityLabel(activity).toLowerCase().includes(filterValue));
+  }
+
+  activityLabel(activity: any): string {
+    return this.translateService.instant(activity.activity);
+  }
+
+  private getPermittedActivities(): any[] {
+    return activities.filter((activity: any) => !activity.permission || this.hasPermission(activity.permission));
+  }
+
+  private hasPermission(permission: string): boolean {
+    if (!environment.productionModeEnableRBAC) {
+      return true;
+    }
+    const userPermissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return (
+      userPermissions.includes('ALL_FUNCTIONS') ||
+      (permission.startsWith('READ_') && userPermissions.includes('ALL_FUNCTIONS_READ')) ||
+      userPermissions.includes(permission)
+    );
   }
 
   /**
@@ -157,7 +180,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showHome) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+        // The dashboard button is only rendered when the global dashboard is enabled.
+        if (this.buttonDashboard) {
+          this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+        } else {
+          this.showPopover(this.templateSearchActivity, this.searchActivity.nativeElement, 'bottom', true);
+        }
       });
     }
     if (this.configurationWizardService.showHomeSearchActivity) {
@@ -200,6 +228,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/home']);
       }
     });
+  }
+
+  /**
+   * Back from the search activity step: shows the dashboard button step,
+   * or goes back to the breadcrumbs if the dashboard button isn't rendered.
+   */
+  searchActivityBack() {
+    if (this.buttonDashboard) {
+      this.showPopover(this.templateButtonDashboard, this.buttonDashboard, 'bottom', true);
+    } else {
+      this.previousStep();
+    }
   }
 
   /**

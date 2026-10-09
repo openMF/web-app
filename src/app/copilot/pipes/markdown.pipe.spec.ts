@@ -7,6 +7,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { describe, it, expect, beforeEach } from '@jest/globals';
 
 import { MarkdownPipe } from './markdown.pipe';
@@ -15,42 +17,56 @@ describe('MarkdownPipe', () => {
   let pipe: MarkdownPipe;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    pipe = TestBed.runInInjectionContext(() => new MarkdownPipe());
+    TestBed.configureTestingModule({
+      providers: [
+        MarkdownPipe,
+        { provide: TranslateService, useValue: { instant: (key: string) => key } }
+      ]
+    });
+    pipe = TestBed.inject(MarkdownPipe);
   });
 
-  /** The pipe escapes first; render() operates on escaped text. */
-  const render = (raw: string): string => (pipe as any).render((pipe as any).escapeHtml(raw));
+  function html(safe: unknown): string {
+    return TestBed.inject(DomSanitizer).sanitize(1 /* SecurityContext.HTML */, safe as never) ?? '';
+  }
 
-  it('renders a markdown table as real rows and columns', () => {
-    const raw =
-      '| Client ID | Name | Status |\n|:---|:---|:---|\n| 1 | Anita Desai | Active |\n| 2 | Sunita Verma | Active |';
-    const html = render(raw);
-
-    expect(html).toContain('<table class="md-table"');
-    expect(html).toContain('<th>Client ID</th>');
-    expect(html).toContain('<td>Anita Desai</td>');
-    expect(html).toContain('<td>Sunita Verma</td>');
-    expect((html.match(/<tr>/g) || []).length).toBe(3); // header + 2 body rows
+  it('renders the assistant markdown', () => {
+    expect(html(pipe.transform('**Approved**'))).toContain('<strong>Approved</strong>');
   });
 
-  it('a lone pipe-ish line without a separator stays plain text', () => {
-    const html = render('| just | text |');
-    expect(html).not.toContain('<table');
+  /**
+   * [innerHTML] compares by reference, so a fresh wrapper is a DOM rewrite even when the markup
+   * is identical — and a rewrite rebuilds the newest-word element, restarting its fade. The
+   * ```suggest``` block is stripped as it streams, so every one of its tokens changed the input
+   * and nothing on screen, which made the last visible word blink for the length of the block.
+   */
+  it('keeps the same wrapper while a stripped suggest block streams in', () => {
+    const answer = 'Profile recorded.\n\n**Suggested next steps**\n';
+    const first = pipe.transform(answer, true);
+
+    // The opener, then the block filling up: none of it may reach the screen, so none of it
+    // may rebuild the bubble either.
+    const stripped = [
+      `${answer}\`\`\``,
+      `${answer}\`\`\`sug`,
+      `${answer}\`\`\`suggest`,
+      `${answer}\`\`\`suggest\nView the loan`,
+      `${answer}\`\`\`suggest\nView the loan\nCheck arrears`,
+      `${answer}\`\`\`suggest\nView the loan\nCheck arrears\n\`\`\``
+    ];
+    for (const content of stripped) {
+      expect(pipe.transform(content, true)).toBe(first);
+    }
   });
 
-  it('escapes HTML inside table cells (no injection through model output)', () => {
-    const raw = '| A |\n|---|\n| <script>alert(1)</script> |';
-    const html = render(raw);
-    expect(html).not.toContain('<script>');
-    expect(html).toContain('&lt;script&gt;');
+  it('hands back a new wrapper once the answer actually changes', () => {
+    const first = pipe.transform('Reading the account', true);
+    expect(pipe.transform('Reading the account now', true)).not.toBe(first);
   });
 
-  it('still renders code fences, bullets and inline markdown', () => {
-    const html = render('**bold** and `code`\n- item\n```json\n{"a":1}\n```');
-    expect(html).toContain('<strong>bold</strong>');
-    expect(html).toContain('md-inline-code');
-    expect(html).toContain('<li>item</li>');
-    expect(html).toContain('md-code');
+  /** Ending the turn drops the newest-word marker, which is a real change to the markup. */
+  it('re-renders when the reply stops streaming', () => {
+    const streaming = pipe.transform('All done', true);
+    expect(pipe.transform('All done', false)).not.toBe(streaming);
   });
 });

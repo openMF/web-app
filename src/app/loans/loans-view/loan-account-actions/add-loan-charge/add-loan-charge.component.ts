@@ -70,6 +70,10 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
+  get requiredPermission(): string {
+    return this.isWorkingCapital ? 'CREATE_WORKINGCAPITALLOANCHARGE' : 'CREATE_LOANCHARGE';
+  }
+
   /**
    * Creates the Loan Charge form.
    */

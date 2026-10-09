@@ -11,7 +11,7 @@
  *
  * DISPLAY-ONLY (ADR-001 §04): the gateway mints the authoritative
  * Idempotency-Key server-side at action-card creation and ignores any
- * client-supplied key — a client-controllable dedup key would be a tampering
+ * client-supplied key, because a client-controllable dedup key would be a tampering
  * vector against Fineract's CommandSource dedup. This factory remains for
  * client-side labels and tracing only. Pure logic, see idempotency.spec.ts.
  */

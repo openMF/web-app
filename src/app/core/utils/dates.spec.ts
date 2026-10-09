@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeEN from '@angular/common/locales/en';
 import { Dates } from './dates';
+
+registerLocaleData(localeEN);
 
 describe('Dates', () => {
   let service: Dates;
@@ -97,6 +100,22 @@ describe('Dates', () => {
           expect(service.angularToMomentFormat(f.angular)).toBe(f.moment);
         });
       });
+    });
+  });
+
+  describe('formatDate', () => {
+    it('should fall back to moment formatting for a valid date when locale is unregistered', () => {
+      localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'xx', code: 'xx' }));
+      const date = new Date(2025, 0, 15);
+      const result = service.formatDate(date, 'yyyy-MM-dd');
+      expect(result).toBe('2025-01-15');
+      localStorage.removeItem('mifosXLanguage');
+    });
+
+    it('should throw for an invalid timestamp instead of returning "Invalid date"', () => {
+      localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'xx', code: 'xx' }));
+      expect(() => service.formatDate('not-a-date', 'yyyy-MM-dd')).toThrow();
+      localStorage.removeItem('mifosXLanguage');
     });
   });
 });

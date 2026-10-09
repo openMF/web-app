@@ -106,9 +106,10 @@ export default defineConfig({
 
   // Configure projects for authentication setup and browser testing.
   //
-  // `unit` exists for pure-logic utility specs under
-  // `playwright/utils/*.spec.ts` so retry/sleep infrastructure can be
-  // validated without a browser, app server, or backend.
+  // `unit` exists for pure-logic specs under `playwright/utils`,
+  // `playwright/config` and a few other folders, so retry/sleep
+  // infrastructure and the route helpers can be validated without a
+  // browser, app server, or backend.
   //
   // Multi-role storageState scaffold (proposal WA-2.2):
   //   setup              → playwright/.auth/user.json        (default role, always on)
@@ -133,6 +134,7 @@ export default defineConfig({
       name: 'unit',
       testMatch: [
         /playwright\/utils\/.*\.spec\.ts/,
+        /playwright\/config\/.*\.spec\.ts/,
         /playwright\/pages\/.*\.spec\.ts/,
         /playwright\/fixtures\/.*\.spec\.ts/,
         /playwright\/factories\/client\.spec\.ts/,

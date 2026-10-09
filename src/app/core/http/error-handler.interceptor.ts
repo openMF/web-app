@@ -62,6 +62,30 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return error;
   }
 
+  /**
+   * Resolves a backend globalisation code against the `errors` section, where
+   * the codes are stored as flat dotted keys. Returns null when the code has no
+   * translation, so the caller can fall back to the server message.
+   * @param code Globalisation code sent by the backend
+   */
+  private translateErrorCode(code: string | undefined): string | null {
+    if (!code) {
+      return null;
+    }
+    const key = `errors.${code}`;
+    const translated = this.translate.instant(key);
+    return translated && translated !== key ? translated : null;
+  }
+
+  /**
+   * Whether the request is the Basic Auth login call. The URL may or may not
+   * carry the API prefix at this point, so only the path suffix is compared.
+   * @param request Request that failed
+   */
+  private isLoginRequest(request: HttpRequest<any>): boolean {
+    return request.method === 'POST' && request.url.split('?')[0].endsWith('/authentication');
+  }
+
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     // Tenant branding is cosmetic and optional: the endpoint is absent on
     // deployments without the self-service plugin. Let the caller fall back to
@@ -106,35 +130,60 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         : nestedMessage
       : topLevelMessage;
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        if (
-          response.error.errors[0].userMessageGlobalisationCode &&
-          this.databaseErrorCodes.indexOf(response.error.errors[0].userMessageGlobalisationCode) > -1
-        ) {
-          errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
-        } else {
-          errorMessage =
-            response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-            response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-        }
+    // Read the nested error from the parsed body rather than from the raw
+    // response, so a body delivered as an ArrayBuffer goes through the same
+    // lookup instead of falling back to the untranslated server message.
+    const nestedError = errorBody?.errors?.[0];
+    if (nestedError) {
+      const nestedCode = nestedError.userMessageGlobalisationCode;
+      if (nestedCode && this.databaseErrorCodes.indexOf(nestedCode) > -1) {
+        errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
+      } else {
+        // A domain rule violation carries the meaningful code on the nested
+        // error, not on the envelope, so it is looked up here before falling
+        // back to the raw message the server sent.
+        errorMessage =
+          this.translateErrorCode(nestedCode) ||
+          nestedError.defaultUserMessage?.replace(/\\./g, ' ') ||
+          nestedError.developerMessage?.replace(/\\./g, ' ');
       }
-      if ('parameterName' in errorBody.errors[0]) {
-        parameterName = errorBody.errors[0].parameterName;
+      if ('parameterName' in nestedError) {
+        parameterName = nestedError.parameterName;
       }
     }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
     // Analytics dashboard reports that don't exist on this server are silently handled by the data service fallbacks
     const isAnalyticsReport404 = status === 404 && request.url.includes('/runreports/');
+    // A business date exists only once it has been set on this instance, so its absence is a valid
+    // state: the footer falls back to the system date instead of interrupting the user with an
+    // alert. The trailing slash keeps the business date list lookup out of this exception.
+    const isBusinessDate404 = status === 404 && request.method === 'GET' && request.url.includes('/businessdate/');
+    // The office Address, Services and Schedules tabs show their own message when the plugin
+    // providing these endpoints isn't deployed, so a 404 on loading them isn't an error.
+    const isOfficePluginLookup404 =
+      status === 404 &&
+      request.method === 'GET' &&
+      /\/v2\/offices\/[^/]+\/(addresses|services|schedules)(\?|$)/.test(request.url);
 
-    if (!environment.production && !isClientImage404 && !isAnalyticsReport404) {
+    if (
+      !environment.production &&
+      !isClientImage404 &&
+      !isAnalyticsReport404 &&
+      !isBusinessDate404 &&
+      !isOfficePluginLookup404
+    ) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
+      // A rejected Basic Auth login has no session to expire, so it gets its own
+      // wording. OAuth signs in on the provider's page, so there every 401 or 400
+      // means the token held by the user is no longer valid, as does any other 401.
+      const isRejectedBasicLogin = !environment.oauth.enabled && status === 401 && this.isLoginRequest(request);
+      const authKey = isRejectedBasicLogin ? 'invalidCredentials' : 'sessionExpired';
       this.alertService.alert({
-        type: this.translate.instant('errors.error.auth.type'),
-        message: this.translate.instant('errors.error.auth.message')
+        type: this.translate.instant(`errors.error.auth.${authKey}.type`),
+        message: this.translate.instant(`errors.error.auth.${authKey}.message`)
       });
     } else if (
       status === 403 &&
@@ -157,7 +206,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
       });
     } else if (status === 404) {
-      if (isClientImage404 || isAnalyticsReport404) {
+      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404 || isOfficePluginLookup404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({

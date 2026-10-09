@@ -14,12 +14,14 @@ import {
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
+import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'mifosx-loans-account-datatable-step',
@@ -30,7 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    CdkTextareaAutosize
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -38,6 +41,7 @@ export class LoansAccountDatatableStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+  private datatableService = inject(Datatables);
 
   /** Input Fields Data */
   @Input() datatableData: any;
@@ -61,9 +65,16 @@ export class LoansAccountDatatableStepComponent implements OnInit {
       if (!input.isColumnNullable) {
         if (this.isNumeric(input.columnDisplayType)) {
           inputItems[input.controlName] = new UntypedFormControl(0, [Validators.required]);
+        } else if (this.isJson(input)) {
+          inputItems[input.controlName] = new UntypedFormControl('', [
+            Validators.required,
+            this.datatableService.jsonValidator
+          ]);
         } else {
           inputItems[input.controlName] = new UntypedFormControl('', [Validators.required]);
         }
+      } else if (this.isJson(input)) {
+        inputItems[input.controlName] = new UntypedFormControl('', [this.datatableService.jsonValidator]);
       } else {
         inputItems[input.controlName] = new UntypedFormControl('');
       }
@@ -102,8 +113,12 @@ export class LoansAccountDatatableStepComponent implements OnInit {
     return this.isColumnType(columnType, 'TEXT');
   }
 
+  isJson(datatableInput: any) {
+    return this.datatableService.isJson(datatableInput.columnDisplayType, datatableInput.columnType);
+  }
+
   isColumnType(columnType: string, expectedType: string) {
-    return columnType === expectedType;
+    return this.datatableService.isColumnType(columnType, expectedType);
   }
 
   get payload(): any {

@@ -15,6 +15,7 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -26,6 +27,24 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
+import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
+import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
+import { ReturnedCheckPaymentComponent } from './base-teller/returned-check-payment/returned-check-payment.component';
+import { returnedCheckPaymentGuard } from './base-teller/returned-check-payment/returned-check-payment.guard';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
+import { creditPaymentGuard } from './base-teller/credit-payment/credit-payment.guard';
+import { ServicePaymentComponent } from './base-teller/service-payment/service-payment.component';
+import { servicePaymentGuard } from './base-teller/service-payment/service-payment.guard';
+import { CashManagementComponent } from './base-teller/cash-management/cash-management.component';
+import { cashManagementGuard } from './base-teller/cash-management/cash-management.guard';
+import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
+import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
+import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
+import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
+import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
+import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -439,6 +458,154 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'base-teller',
+          pathMatch: 'full',
+          component: BaseTellerComponent,
+          data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/catalog-updates',
+          component: CatalogUpdatesComponent,
+          canActivate: [catalogUpdatesGuard],
+          data: {
+            title: 'labels.heading.Catalog Updates',
+            breadcrumb: 'labels.heading.Catalog Updates'
+          }
+        },
+        {
+          path: 'base-teller/cash-allocations',
+          component: CashAllocationComponent,
+          canActivate: [cashAllocationGuard],
+          data: {
+            title: 'cashAllocation.title',
+            breadcrumb: 'cashAllocation.title'
+          }
+        },
+        {
+          path: 'base-teller/cash-inventory',
+          component: CashInventoryComponent,
+          canActivate: [cashInventoryGuard],
+          data: {
+            title: 'cashInventory.title',
+            breadcrumb: 'cashInventory.title'
+          }
+        },
+        {
+          path: 'base-teller/savings-account-openings',
+          component: SavingsAccountOpeningComponent,
+          data: { title: 'Savings Account Opening', breadcrumb: 'Savings Account Opening' }
+        },
+        {
+          path: 'base-teller/savings-account-deposits',
+          component: SavingsAccountDepositComponent,
+          data: {
+            title: 'labels.heading.Savings Account Deposit',
+            breadcrumb: 'labels.heading.Savings Account Deposit'
+          }
+        },
+        {
+          path: 'base-teller/returned-check-payments',
+          component: ReturnedCheckPaymentComponent,
+          canActivate: [returnedCheckPaymentGuard],
+          data: {
+            title: 'labels.heading.Returned Check Payment',
+            breadcrumb: 'labels.heading.Returned Check Payment'
+          }
+        },
+        {
+          path: 'base-teller/credit-payments',
+          component: CreditPaymentComponent,
+          canActivate: [creditPaymentGuard],
+          data: {
+            title: 'creditPayment.heading.title',
+            breadcrumb: 'creditPayment.heading.title'
+          }
+        },
+        {
+          path: 'base-teller/cash-register-closing',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.closing',
+            breadcrumb: 'web1232.views.closing',
+            view: 'closing',
+            permission: 'READ_CASHIER_CLOSING'
+          }
+        },
+        {
+          path: 'base-teller/global-cash-count',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.global',
+            breadcrumb: 'web1232.views.global',
+            view: 'global',
+            permission: 'READ_GLOBAL_SETTLEMENT'
+          }
+        },
+        {
+          path: 'base-teller/deposit-in-transit',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.deposit-in-transit',
+            breadcrumb: 'web1232.views.deposit-in-transit',
+            view: 'deposit-in-transit',
+            permission: 'CREATE_CASH_DEPOSIT'
+          }
+        },
+        {
+          path: 'base-teller/bank-deposit',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.bank-deposit',
+            breadcrumb: 'web1232.views.bank-deposit',
+            view: 'bank-deposit',
+            permission: 'CREATE_CASH_DEPOSIT'
+          }
+        },
+        {
+          path: 'base-teller/cash-operation-history',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.history',
+            breadcrumb: 'web1232.views.history',
+            view: 'history',
+            permission: 'READ_CASH_OPERATION_HISTORY'
+          }
+        },
+        {
+          path: 'base-teller/cash-on-hand',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.holdings',
+            breadcrumb: 'web1232.views.holdings',
+            view: 'holdings',
+            permission: 'READ_CASH_HOLDINGS'
+          }
+        },
+        {
+          path: 'base-teller/transaction-history',
+          component: TransactionHistoryComponent,
+          canActivate: [transactionHistoryGuard],
+          data: {
+            title: 'transactionHistory.title',
+            breadcrumb: 'transactionHistory.title'
+          }
+        },
+        {
+          path: 'base-teller/service-payments',
+          component: ServicePaymentComponent,
+          canActivate: [servicePaymentGuard],
+          data: {
+            title: 'Bill and Service Payment',
+            breadcrumb: 'Bill and Service Payment'
+          }
         },
         {
           path: 'tellers',

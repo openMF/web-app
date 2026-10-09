@@ -29,6 +29,8 @@ import { DocumentsTabComponent } from './clients-view/documents-tab/documents-ta
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
+import { EnrollmentStatusComponent } from './clients-view/enrollment-status/enrollment-status.component';
+import { enrollmentStatusGuard } from './clients-view/enrollment-status/enrollment-status.guard';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
@@ -107,7 +109,16 @@ const routes: Routes = [
             {
               path: 'personal-data',
               component: PersonalDataTabComponent,
-              data: { title: 'Personal Data', breadcrumb: 'Personal Data', routeParamBreadcrumb: false }
+              data: {
+                title: 'labels.inputs.Personal Data',
+                breadcrumb: 'labels.inputs.Personal Data',
+                routeParamBreadcrumb: false
+              },
+              resolve: {
+                clientIdentities: ClientIdentitiesResolver,
+                clientIdentifierTemplate: ClientIdentifierTemplateResolver,
+                clientDocuments: ClientDocumentsResolver
+              }
             },
             {
               path: 'address',
@@ -154,6 +165,7 @@ const routes: Routes = [
                 }
               ]
             },
+
             {
               path: 'identities',
               component: IdentitiesTabComponent,
@@ -177,6 +189,17 @@ const routes: Routes = [
               data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
               resolve: {
                 clientNotes: ClientNotesResolver
+              }
+            },
+            {
+              path: 'enrollment-status',
+              component: EnrollmentStatusComponent,
+              canActivate: [enrollmentStatusGuard],
+              data: {
+                title: 'labels.inputs.Enrollment Status',
+                breadcrumb: 'labels.inputs.Enrollment Status',
+                routeParamBreadcrumb: false,
+                permissions: ['READ_ENROLLMENT_STATUS']
               }
             },
             {

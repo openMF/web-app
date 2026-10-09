@@ -16,6 +16,7 @@
       accountImage
       mat-card-md-image
       class="profile-image"
+      [alt]="complianceHideClientData ? maskName(clientViewData.displayName) : clientViewData.displayName"
       [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
     />
 
@@ -63,6 +64,9 @@
         [display]="'right'"
         [hideCopy]="complianceHideClientData"
       ></mifosx-entity-name>
+      <span class="account-status-pill" [ngClass]="clientViewData.status.code | statusLookup">
+        {{ 'labels.status.' + clientViewData.status.value | translate }}
+      </span>
     </ng-container>
 
     <!-- Actions menu trigger -->
@@ -137,7 +141,9 @@
                   <td>
                     @for (group of clientViewData.groups; track group) {
                       <span>
-                        <span class="m-r-3">{{ group.name }}</span>
+                        <a class="m-r-3 entity-link" [routerLink]="['/groups', group.id, 'general']">{{
+                          group.name
+                        }}</a>
                       </span>
                     }
                   </td>
@@ -282,7 +288,11 @@
   </mat-menu>
 
   <mat-menu #Actions="matMenu">
-    <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
+    @if (clientViewData.status.value !== 'Closed') {
+      <span
+        ><button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button></span
+      >
+    }
     <button mat-menu-item (click)="doAction('Transfer Client')">
       {{ 'labels.buttons.Transfer Client' | translate }}
     </button>
@@ -447,6 +457,7 @@
         </svg>
         {{ 'labels.inputs.Family Members' | translate }}
       </a>
+
       <a
         mat-tab-link
         [routerLink]="['./identities']"
@@ -488,6 +499,20 @@
           ></path>
         </svg>
         {{ 'labels.inputs.Notes' | translate }}
+      </a>
+      <a
+        mat-tab-link
+        [routerLink]="['./enrollment-status']"
+        routerLinkActive
+        #enrollmentStatus="routerLinkActive"
+        [active]="enrollmentStatus.isActive"
+        *mifosxHasPermission="'READ_ENROLLMENT_STATUS'"
+      >
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19V9M10 19V5M16 19v-8M22 19H2"></path>
+          <path d="m3 7 6-4 6 6 6-5"></path>
+        </svg>
+        {{ 'labels.inputs.Enrollment Status' | translate }}
       </a>
       @if (cbIldEnabled) {
         <a

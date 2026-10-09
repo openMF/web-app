@@ -6,7 +6,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="clients-container">
+<div class="entity-list-container">
   <!-- ── Toolbar (single line) ──────────────────────────────── -->
   <div class="toolbar">
     <div class="search m-r-60">
@@ -35,8 +35,15 @@
       }
     </div>
 
-    <label class="toggle" (click)="toggleShowClosed()">
-      <span class="switch" [class.on]="showClosedAccounts"></span>
+    <label class="toggle">
+      <input
+        type="checkbox"
+        class="toggle-input"
+        [checked]="showClosedAccounts"
+        (change)="toggleShowClosed()"
+        (keydown.enter)="toggleShowClosed()"
+      />
+      <span class="switch" [class.on]="showClosedAccounts" aria-hidden="true"></span>
       {{ 'labels.buttons.Show Closed Accounts' | translate }}
     </label>
 
@@ -76,21 +83,68 @@
     <div class="list-header">
       <span></span>
       <span></span>
-      <span class="sortable" [class.active]="sortAttribute === 'displayName'" (click)="setSort('displayName')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'displayName'"
+        [class.desc]="sortAttribute === 'displayName' && sortDirection === 'desc'"
+        (click)="setSort('displayName')"
+      >
         {{ 'labels.inputs.name' | translate }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
         </svg>
-      </span>
+      </button>
       <span>{{ 'labels.inputs.Status' | translate }}</span>
-      <span class="sortable" [class.active]="sortAttribute === 'accountNumber'" (click)="setSort('accountNumber')">
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'accountNumber'"
+        [class.desc]="sortAttribute === 'accountNumber' && sortDirection === 'desc'"
+        (click)="setSort('accountNumber')"
+      >
         {{ 'labels.inputs.Account No' | translate }}
-      </span>
-      <span class="sortable" [class.active]="sortAttribute === 'externalId'" (click)="setSort('externalId')">
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="sortable"
+        [class.active]="sortAttribute === 'externalId'"
+        [class.desc]="sortAttribute === 'externalId' && sortDirection === 'desc'"
+        (click)="setSort('externalId')"
+      >
         {{ 'labels.inputs.External Id' | translate }}
-      </span>
+        <svg
+          class="sort-arrow"
+          viewBox="5 4.5 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </button>
       <span>{{ 'labels.inputs.Office Name' | translate }}</span>
-      <span></span>
     </div>
 
     @for (row of dataSource.data; track row.id) {
@@ -104,7 +158,7 @@
           {{ initials(row.displayName) }}
         </div>
         <div class="name-block">
-          <span class="name">{{ hideClientData ? maskName(row.displayName) : row.displayName }}</span>
+          <span class="name" [title]="displayedName(row)">{{ displayedName(row) }}</span>
           @if (metaDate(row); as date) {
             <span class="name-meta">
               {{ legalFormLabel(row) | translate }} · {{ metaDateLabel(row) | translate }} {{ date | dateFormat }}
@@ -113,10 +167,14 @@
             <span class="name-meta">{{ legalFormLabel(row) | translate }}</span>
           }
         </div>
-        <span class="status-pill" [ngClass]="severity(row)">
-          <span class="dot"></span>
-          {{ 'labels.status.' + row.status.value | translate }}
-        </span>
+        @if (row.status?.value) {
+          <span class="status-pill" [ngClass]="severity(row)" [title]="'labels.status.' + row.status.value | translate">
+            <span class="dot"></span>
+            <span class="label">{{ 'labels.status.' + row.status.value | translate }}</span>
+          </span>
+        } @else {
+          <span class="muted-dash">—</span>
+        }
         <span class="mono"
           ><mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number
         ></span>
@@ -128,17 +186,6 @@
           }
         </span>
         <span class="office">{{ row.officeName }}</span>
-        <button
-          class="row-action"
-          (click)="$event.stopPropagation()"
-          [attr.aria-label]="'labels.buttons.More' | translate"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="12" cy="5" r="1"></circle>
-            <circle cx="12" cy="19" r="1"></circle>
-          </svg>
-        </button>
       </div>
     }
 
@@ -163,14 +210,19 @@
           {{ totalPages() }}
         </span>
         <div class="page-nav">
-          <button class="page-btn" [disabled]="currentPage === 0" (click)="goToPage(0)" aria-label="First page">
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(0)"
+            [attr.aria-label]="'labels.text.First Page' | translate"
+          >
             «
           </button>
           <button
             class="page-btn"
             [disabled]="currentPage === 0"
             (click)="goToPage(currentPage - 1)"
-            aria-label="Previous page"
+            [attr.aria-label]="'labels.text.Previous Page' | translate"
           >
             ‹
           </button>
@@ -178,7 +230,7 @@
             class="page-btn"
             [disabled]="currentPage >= totalPages() - 1"
             (click)="goToPage(currentPage + 1)"
-            aria-label="Next page"
+            [attr.aria-label]="'labels.text.Next Page' | translate"
           >
             ›
           </button>
@@ -186,7 +238,7 @@
             class="page-btn"
             [disabled]="currentPage >= totalPages() - 1"
             (click)="goToPage(totalPages() - 1)"
-            aria-label="Last page"
+            [attr.aria-label]="'labels.text.Last Page' | translate"
           >
             »
           </button>

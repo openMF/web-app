@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,6 +37,7 @@ export class NotesTabComponent implements OnInit {
   private clientsService = inject(ClientsService);
   private authenticationService = inject(AuthenticationService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Client ID */
   entityId: string;
@@ -72,9 +73,15 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   editNote(noteId: string, noteContent: any, index: number) {
-    this.clientsService.editClientNote(this.entityId, noteId, noteContent).subscribe(() => {
-      this.entityNotes[index].note = noteContent.note;
-    });
+    this.clientsService
+      .editClientNote(this.entityId, noteId, noteContent)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.entityNotes = this.entityNotes.map((entityNote: any) =>
+          entityNote.id === noteId ? { ...entityNote, note: noteContent.note } : entityNote
+        );
+        this.cdr.markForCheck();
+      });
   }
 
   /**
@@ -83,22 +90,33 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   deleteNote(noteId: string, index: number) {
-    this.clientsService.deleteClientNote(this.entityId, noteId).subscribe(() => {
-      this.entityNotes.splice(index, 1);
-    });
+    this.clientsService
+      .deleteClientNote(this.entityId, noteId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.entityNotes = this.entityNotes.filter((entityNote: any) => entityNote.id !== noteId);
+        this.cdr.markForCheck();
+      });
   }
 
   /**
    * Creates a client note.
    */
   addNote(noteContent: any) {
-    this.clientsService.createClientNote(this.entityId, noteContent).subscribe((response: any) => {
-      this.entityNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: noteContent.note
+    this.clientsService
+      .createClientNote(this.entityId, noteContent)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        this.entityNotes = [
+          ...this.entityNotes,
+          {
+            id: response.resourceId,
+            createdByUsername: this.username,
+            createdOn: new Date(),
+            note: noteContent.note
+          }
+        ];
+        this.cdr.markForCheck();
       });
-    });
   }
 }

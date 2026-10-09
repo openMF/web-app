@@ -15,9 +15,12 @@ import {
   OnInit,
   ViewChild,
   inject,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  NgZone
 } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import lightGallery from 'lightgallery';
 import lgFullscreen from 'lightgallery/plugins/fullscreen';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
@@ -25,14 +28,25 @@ import lgZoom from 'lightgallery/plugins/zoom';
 import type { LightGallery } from 'lightgallery/lightgallery';
 import type { GalleryItem } from 'lightgallery/lg-utils';
 import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
+import { AlertService } from 'app/core/alert/alert.service';
 import { ClientsService } from 'app/clients/clients.service';
+import { Dates } from 'app/core/utils/dates';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
-import { Observable, throwError } from 'rxjs';
+import { DocumentPreviewService, PDF_GALLERY_THUMBNAIL } from 'app/shared/services/document-preview.service';
+import { SpreadsheetPreview, SpreadsheetPreviewService } from 'app/shared/services/spreadsheet-preview.service';
+import { SpreadsheetPreviewDialogComponent } from 'app/shared/documents/spreadsheet-preview-dialog/spreadsheet-preview-dialog.component';
+import { Observable, firstValueFrom, throwError } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
+
+/** How much of a sheet fits legibly on a card before it stops being a glance and starts being noise. */
+const THUMBNAIL_ROWS = 5;
+const THUMBNAIL_COLUMNS = 4;
 
 @Component({
   selector: 'mifosx-entity-documents-tab',
@@ -41,7 +55,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   standalone: true,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent
+    FaIconComponent,
+    MatIconButton
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -51,7 +66,13 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   private savingsService = inject(SavingsService);
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
   private documentPreviewService = inject(DocumentPreviewService);
+  private spreadsheetPreviewService = inject(SpreadsheetPreviewService);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
+  private ngZone = inject(NgZone);
+  private sanitizer = inject(DomSanitizer);
 
   @ViewChild('lightboxRoot', { static: true }) lightboxRoot: ElementRef<HTMLElement>;
 
@@ -63,6 +84,14 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   @Input() callbackDelete: (documentId: string) => void;
 
   previewThumbnails: Record<string, string> = {};
+  pdfThumbnails: Record<string, SafeResourceUrl> = {};
+  /** Parsed spreadsheets, reused by both the card's mini grid and the viewer dialog. */
+  spreadsheetPreviews: Record<string, SpreadsheetPreview> = {};
+  /**
+   * Parses in flight, keyed by document id. The card starts one on load and a click can arrive
+   * before it settles, so callers share the pending promise rather than each fetching the file.
+   */
+  private spreadsheetLoads = new Map<string, Promise<SpreadsheetPreview>>();
   private lightboxInstance: LightGallery | null = null;
   private readonly lightboxPlugins = [
     lgZoom,
@@ -97,6 +126,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
         formData.append('description', dialogResponse.description);
+        formData.append('dateFormat', Dates.DEFAULT_DATEFORMAT);
+        formData.append('locale', this.settingsService.language.code);
+        this.appendOptionalDate(formData, 'issuanceDate', dialogResponse.issuanceDate);
+        this.appendOptionalDate(formData, 'expiryDate', dialogResponse.expiryDate);
         this.callbackUpload(formData).subscribe((res: any) => {
           const newDocument = {
             id: res.resourceId,
@@ -104,6 +137,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
             parentEntityId: this.entityId,
             name: dialogResponse.fileName,
             description: dialogResponse.description,
+            issuanceDate: this.formatDocumentDate(dialogResponse.issuanceDate),
+            expiryDate: this.formatDocumentDate(dialogResponse.expiryDate),
             fileName: dialogResponse.file.name
           };
           this.entityDocuments.push(newDocument);
@@ -131,8 +166,28 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         this.documentPreviewService.release(documentId);
         this.previewThumbnails = { ...this.previewThumbnails };
         delete this.previewThumbnails[documentId];
+        this.pdfThumbnails = { ...this.pdfThumbnails };
+        delete this.pdfThumbnails[documentId];
+        this.spreadsheetPreviews = { ...this.spreadsheetPreviews };
+        delete this.spreadsheetPreviews[documentId];
+        this.spreadsheetLoads.delete(documentId);
         this.cdr.markForCheck();
       }
+    });
+  }
+
+  /**
+   * Save the document to disk. Offered for every document, not just the ones without a preview:
+   * for file types the browser cannot render inline — spreadsheets, word processor documents,
+   * plain text — this is the only way to get at the contents at all.
+   */
+  downloadDocument(document: any): void {
+    if (!this.isValidDocumentId(document?.id)) {
+      return;
+    }
+    this.getDownloadObservable(document.id).subscribe({
+      next: (blob: Blob) => downloadBlob(blob, this.resolveDownloadName(document)),
+      error: (error: any) => console.error('Unable to download document', document.id, error)
     });
   }
 
@@ -140,12 +195,32 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     return this.isValidDocumentId(document?.id) && this.documentPreviewService.isPreviewable(document);
   }
 
+  /** Rows shown on the card itself, as a taste of the sheet rather than a usable grid. */
+  spreadsheetThumbnailRows(document: any): string[][] {
+    const sheet = this.spreadsheetPreviews[document?.id]?.sheets?.[0];
+    return (sheet?.rows ?? []).slice(0, THUMBNAIL_ROWS).map((row) => row.slice(0, THUMBNAIL_COLUMNS));
+  }
+
+  isSpreadsheet(document: any): boolean {
+    return this.isPreviewable(document) && this.documentPreviewService.getPreviewType(document) === 'spreadsheet';
+  }
+
+  /**
+   * Open whichever viewer suits the document: a spreadsheet becomes a grid in its own dialog,
+   * everything else a slide in the lightbox carousel.
+   */
   async openPreview(document: any): Promise<void> {
     if (!this.isPreviewable(document)) {
       return;
     }
+    if (this.isSpreadsheet(document)) {
+      await this.openSpreadsheetPreview(document);
+      return;
+    }
     try {
-      const previewables = this.entityDocuments.filter((doc: any) => this.isPreviewable(doc));
+      const previewables = this.entityDocuments.filter((doc: any) =>
+        this.documentPreviewService.isGalleryPreviewable(doc)
+      );
       const galleryItems: GalleryItem[] = [];
 
       for (const item of previewables) {
@@ -159,7 +234,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           }
           galleryItems.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
+            thumb: preview.type === 'image' ? preview.url : PDF_GALLERY_THUMBNAIL,
             subHtml: this.buildSubHtml(item),
             iframe: preview.type === 'pdf'
           });
@@ -191,6 +266,63 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Unable to open preview', error);
     }
+  }
+
+  private async openSpreadsheetPreview(document: any): Promise<void> {
+    try {
+      const preview = await this.resolveSpreadsheetPreview(document);
+      // Back inside Angular's zone: see loadSpreadsheetPreview. A dialog opened outside it is
+      // attached but never change-detected, so it renders nothing at all.
+      this.ngZone.run(() =>
+        this.dialog.open(SpreadsheetPreviewDialogComponent, {
+          data: { name: document.fileName || document.name, preview },
+          width: '56rem',
+          maxWidth: '95vw'
+        })
+      );
+    } catch (error) {
+      console.error('Unable to open spreadsheet preview', document?.id, error);
+      this.reportSpreadsheetFailure();
+    }
+  }
+
+  /** A preview that cannot be built has to say so; silence is indistinguishable from a dead button. */
+  private reportSpreadsheetFailure(): void {
+    this.ngZone.run(() =>
+      this.alertService.alert({
+        type: 'error',
+        message: this.translateService.instant('labels.text.SpreadsheetPreviewFailed')
+      })
+    );
+  }
+
+  /** Parse once per document: the card's mini grid and the dialog share the same result. */
+  private resolveSpreadsheetPreview(document: any): Promise<SpreadsheetPreview> {
+    const cached = this.spreadsheetPreviews[document.id];
+    if (cached) {
+      return Promise.resolve(cached);
+    }
+    const pending = this.spreadsheetLoads.get(document.id);
+    if (pending) {
+      return pending;
+    }
+    const load = this.loadSpreadsheetPreview(document).finally(() => this.spreadsheetLoads.delete(document.id));
+    this.spreadsheetLoads.set(document.id, load);
+    return load;
+  }
+
+  private async loadSpreadsheetPreview(document: any): Promise<SpreadsheetPreview> {
+    const blob = await firstValueFrom(this.getDownloadObservable(document.id));
+    const preview = await this.spreadsheetPreviewService.load(blob, document.fileName || document.name);
+    // The spreadsheet reader is pulled in with a dynamic import, and that promise is native — zone.js
+    // does not patch it — so everything after the await runs outside Angular's zone. Publishing the
+    // result there would mark the view dirty without any tick ever being scheduled to flush it, and
+    // the card would sit on its placeholder forever.
+    this.ngZone.run(() => {
+      this.spreadsheetPreviews = { ...this.spreadsheetPreviews, [document.id]: preview };
+      this.cdr.markForCheck();
+    });
+    return preview;
   }
 
   private destroyLightbox(): void {
@@ -227,8 +359,34 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       : '';
   }
 
+  private appendOptionalDate(formData: FormData, key: string, value: Date | string | null | undefined): void {
+    const formattedDate = this.formatDocumentDate(value);
+    if (formattedDate) {
+      formData.append(key, formattedDate);
+    }
+  }
+
+  private formatDocumentDate(value: Date | string | null | undefined): string {
+    if (!value) {
+      return '';
+    }
+    if (value instanceof Date) {
+      const month = `${value.getMonth() + 1}`.padStart(2, '0');
+      const day = `${value.getDate()}`.padStart(2, '0');
+      return `${value.getFullYear()}-${month}-${day}`;
+    }
+    return value;
+  }
+
   private setThumbnail(document: any): void {
     if (!this.isPreviewable(document)) {
+      return;
+    }
+    if (this.isSpreadsheet(document)) {
+      // A failure here only costs the card its mini grid; the click path reports it properly.
+      this.resolveSpreadsheetPreview(document).catch((error) =>
+        console.error('Unable to read spreadsheet', document?.id, error)
+      );
       return;
     }
     this.documentPreviewService
@@ -237,9 +395,20 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         if (preview.type === 'image') {
           this.previewThumbnails = { ...this.previewThumbnails, [document.id]: preview.url };
           this.cdr.markForCheck();
+        } else if (preview.type === 'pdf') {
+          this.pdfThumbnails = { ...this.pdfThumbnails, [document.id]: this.buildPdfThumbnailUrl(preview.url) };
+          this.cdr.markForCheck();
         }
       })
       .catch((): void => undefined);
+  }
+
+  /**
+   * Point the card's iframe at the PDF with the browser viewer's chrome switched off, fitted to
+   * the card width. The URL is trusted because it is an object URL this app created itself.
+   */
+  private buildPdfThumbnailUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`);
   }
 
   private prefetchThumbnails(): void {
@@ -247,6 +416,11 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       return;
     }
     this.entityDocuments.forEach((doc: any) => this.setThumbnail(doc));
+  }
+
+  /** The stored file name carries the extension the browser needs to open the download. */
+  private resolveDownloadName(document: any): string {
+    return document?.fileName || document?.name || `document-${document?.id}`;
   }
 
   private isValidDocumentId(documentId: string | number | null | undefined): boolean {

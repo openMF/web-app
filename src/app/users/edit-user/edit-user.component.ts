@@ -89,14 +89,14 @@ export class EditUserComponent implements OnInit {
         this.userData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       lastname: [
         this.userData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       passwordNeverExpires: [this.userData.passwordNeverExpires],

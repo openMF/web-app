@@ -8,25 +8,33 @@
 
 import { OptionData } from 'app/shared/models/option-data.model';
 
+/**
+ * One entry of the account actions menu.
+ *
+ * `disabled` and `disabledTooltip` let an action stay visible while being
+ * blocked by a business rule, so the user reads why instead of discovering it
+ * through a rejected request.
+ */
+export interface LoansAccountButton {
+  name: string;
+  icon?: string;
+  taskPermissionName?: string;
+  disabled?: boolean;
+  disabledTooltip?: string;
+}
+
 /** Loan/Working Capital Account Buttons Configuration */
 export class LoansAccountButtonConfiguration {
-  optionArray: {
-    name: string;
-    taskPermissionName?: string;
-  }[];
+  optionArray: LoansAccountButton[];
 
-  optionPaymentArray: {
-    name: string;
-    taskPermissionName?: string;
-  }[];
+  optionPaymentArray: LoansAccountButton[];
 
-  buttonsArray: {
-    name: string;
-    icon: string;
-    taskPermissionName?: string;
-  }[];
+  buttonsArray: LoansAccountButton[];
+
+  private readonly isWorkingCapital: boolean;
 
   constructor(isWorkingCapital: boolean, status: string, substatus: OptionData) {
+    this.isWorkingCapital = isWorkingCapital;
     if (!isWorkingCapital) {
       this.setOptions(status, substatus);
       this.setButtons(status);
@@ -111,7 +119,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Credit Balance Refund',
             icon: 'coins',
-            taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND'
+            taskPermissionName: 'CREDITBALANCEREFUND_LOAN'
           },
           {
             name: 'Make Repayment',
@@ -173,7 +181,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
           },
           {
             name: 'Disburse',
@@ -192,12 +200,19 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
           },
           {
             name: 'Make Repayment',
             icon: 'coins',
-            taskPermissionName: 'REPAYMENT_LOAN'
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
+          // A prepayment is posted as a repayment for the full outstanding
+          // balance, so it is the repayment permission that gates it.
+          {
+            name: 'Prepay Loan',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
           },
           {
             name: 'Payout Refund',
@@ -211,8 +226,21 @@ export class LoansAccountButtonConfiguration {
           }
         ];
         break;
+      // Repayment, Goodwill Credit, Payout Refund and Add Loan Charge share the same rule on the
+      // backend: they are accepted while the loan is Active, Closed (obligations met) or Overpaid.
+      // Posting one of them reopens the loan, which is the reason the backend allows them.
       case 'Closed (obligations met)':
         this.buttonsArray = [
+          {
+            name: 'Add Loan Charge',
+            icon: 'plus',
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
+          },
+          {
+            name: 'Make Repayment',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
           {
             name: 'Goodwill Credit',
             icon: 'coins',
@@ -228,15 +256,42 @@ export class LoansAccountButtonConfiguration {
       case 'Overpaid':
         this.buttonsArray = [
           {
+            name: 'Add Loan Charge',
+            icon: 'plus',
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
+          },
+          {
+            name: 'Make Repayment',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
+          {
+            name: 'Goodwill Credit',
+            icon: 'coins',
+            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
+          },
+          {
             name: 'Payout Refund',
             icon: 'coins',
             taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
+          },
+          // Only an overpaid loan carries a credit balance to refund.
+          {
+            name: 'Credit Balance Refund',
+            icon: 'coins',
+            taskPermissionName: 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN'
           }
         ];
         break;
       case 'Closed (written off)':
-        // Terminal state: only Undo Write-off remains available.
+        // The loan stays closed: a recovery payment records money collected
+        // after the write-off without reopening it.
         this.buttonsArray = [
+          {
+            name: 'Recovery Payment',
+            icon: 'briefcase',
+            taskPermissionName: 'RECOVERYPAYMENT_WORKINGCAPITALLOAN'
+          },
           {
             name: 'Undo Write-off',
             icon: 'undo',
@@ -413,12 +468,29 @@ export class LoansAccountButtonConfiguration {
     }
   }
 
-  addOption(option: { name: string; icon?: string; taskPermissionName?: string }) {
+  addOption(option: LoansAccountButton) {
     this.optionArray.push(option);
   }
 
-  addButton(option: { name: string; icon: string; taskPermissionName?: string }) {
+  addButton(option: LoansAccountButton) {
     this.buttonsArray.push(option);
+  }
+
+  /**
+   * Blocks an action that is visible but not allowed right now.
+   *
+   * The button is kept in the menu on purpose: hiding it would leave the user
+   * wondering where the action went, while a disabled entry with a tooltip
+   * states the rule.
+   * @param name Action name as declared in the configuration
+   * @param tooltipKey Translation key explaining why it is blocked
+   */
+  disableButton(name: string, tooltipKey: string) {
+    const button = this.buttonsArray?.find((item) => item.name === name);
+    if (button) {
+      button.disabled = true;
+      button.disabledTooltip = tooltipKey;
+    }
   }
 
   private isContractTermination(substatus: OptionData): boolean {
@@ -435,7 +507,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: this.isWorkingCapital ? 'CREATE_WORKINGCAPITALLOANCHARGE' : 'CREATE_LOANCHARGE'
           },
           {
             name: 'Approve',

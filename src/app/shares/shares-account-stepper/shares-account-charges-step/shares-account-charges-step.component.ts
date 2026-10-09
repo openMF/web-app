@@ -135,7 +135,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
       })
     ];
     const data = {
-      title: this.translateService.instant('labels.heading.Edit Charge'),
+      title: this.translateService.instant('labels.text.Edit Charge'),
       layout: { addButtonText: 'Submit' },
       formfields: formfields
     };

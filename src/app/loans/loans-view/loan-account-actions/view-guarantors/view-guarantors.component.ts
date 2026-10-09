@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
@@ -61,10 +61,13 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 })
 export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent implements OnInit {
   dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
 
-  loanData: any;
+  loanData: any = {};
   guarantorDetails: any;
   showDeletedGuarantorsAccounts = false;
+  /** Delinquency summary, only read when opening the guarantor details dialog. */
+  private delinquent: any;
   guarantorsDisplayedColumns: string[] = [
     'fullname',
     'relationship',
@@ -87,24 +90,25 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
       // Fallback: fetch from API (e.g. on page refresh)
       this.loanService.getLoanAccountAssociationDetails(this.loanId).subscribe((data: any) => {
         this.loanData = data || {};
+        this.cdr.markForCheck();
       });
     }
   }
 
   ngOnInit() {
-    this.guarantorDetails = this.dataObject.guarantors;
+    // The resolver supplies GET /loans/{loanId}/guarantors, which is the guarantor list itself.
+    this.guarantorDetails = this.dataObject;
 
-    // Get delinquency data for available disbursement amount with over applied
+    // Available disbursement amount with over applied, shown in the guarantor details dialog.
     this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.dataObject.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-      // Also check if it's in delinquent object
-      if (delinquencyData.delinquent) {
-        this.dataObject.delinquent = delinquencyData.delinquent;
-      }
+      // Fineract nests the amount in `delinquent`; older versions return it at the root.
+      this.delinquent =
+        delinquencyData.availableDisbursementAmountWithOverApplied === undefined
+          ? delinquencyData.delinquent
+          : {
+              ...delinquencyData.delinquent,
+              availableDisbursementAmountWithOverApplied: delinquencyData.availableDisbursementAmountWithOverApplied
+            };
     });
   }
 
@@ -126,10 +130,12 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
   }
 
   viewGuarantorDetails(guarantorData: any) {
-    const viewGuarantorDetailsDialogRef = this.dialog.open(LoansAccountViewGuarantorDetailsDialogComponent, {
-      data: { guarantorData: guarantorData, loanData: this.loanData }
+    this.dialog.open(LoansAccountViewGuarantorDetailsDialogComponent, {
+      data: {
+        guarantorData: guarantorData,
+        loanData: { ...this.loanData, delinquent: this.delinquent ?? this.loanData.delinquent }
+      }
     });
-    viewGuarantorDetailsDialogRef.afterClosed().subscribe(() => {});
   }
 
   editGuarantor(guarantorData: any) {
@@ -165,6 +171,7 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
   private refreshGuarantors() {
     this.loanService.getGuarantors(this.loanId).subscribe((data: any) => {
       this.guarantorDetails = data;
+      this.cdr.markForCheck();
     });
   }
 }

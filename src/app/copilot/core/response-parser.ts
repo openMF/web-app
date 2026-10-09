@@ -13,7 +13,7 @@ const SUGGEST_BLOCK = /```suggest\s*([\s\S]*?)```/gi;
  *
  * Deliberately narrow (ADR-001 §04): approvable action cards arrive ONLY as typed SSE
  * events constructed server-side from the parsed function call. Model prose that merely
- * looks like an action card renders as plain text — the fenced ```action_card``` parsing
+ * looks like an action card renders as plain text, since the fenced ```action_card``` parsing
  * path was removed so the LLM can never author the content a human approves against.
  */
 export class ResponseParser {

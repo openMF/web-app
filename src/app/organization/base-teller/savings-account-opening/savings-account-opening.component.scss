@@ -1,0 +1,145 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.base-teller-opening {
+  .workflow-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin: 0 0 24px;
+  }
+
+  .form-grid,
+  .summary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .form-grid mat-form-field,
+  .summary-grid div {
+    flex: 1 1 220px;
+  }
+
+  .summary-grid {
+    margin: 8px 0 16px;
+
+    div {
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: 4px;
+      padding: 16px;
+      min-height: 64px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.72;
+      margin-bottom: 8px;
+    }
+
+    strong {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .toggle-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .funding-panel {
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .section-heading,
+  .total-row,
+  .denomination-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .section-heading h3 {
+    margin: 0;
+  }
+
+  .denomination-row {
+    flex-wrap: wrap;
+
+    mat-form-field {
+      flex: 1 1 220px;
+    }
+  }
+
+  .line-total {
+    min-width: 120px;
+
+    span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.72;
+    }
+  }
+
+  .total-row {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgb(0 0 0 / 12%);
+  }
+
+  .error,
+  .error-message {
+    color: #b00020;
+  }
+
+  .message {
+    margin: 16px 0;
+    padding: 16px;
+    border-radius: 4px;
+    background: rgb(176 0 32 / 8%);
+  }
+
+  .muted {
+    opacity: 0.72;
+    margin: 8px 0 0;
+  }
+
+  .receipt {
+    margin-top: 24px;
+  }
+}
+
+@media print {
+  .base-teller-opening {
+    h2,
+    mat-step-header,
+    .step-actions,
+    .receipt-actions,
+    .preview-summary,
+    .error-message {
+      display: none !important;
+    }
+
+    .workflow-card {
+      box-shadow: none;
+      margin: 0;
+      max-width: none;
+    }
+
+    .receipt {
+      margin-top: 0;
+    }
+  }
+}

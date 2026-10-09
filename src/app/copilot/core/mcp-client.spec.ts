@@ -96,21 +96,54 @@ describe('McpClient', () => {
 
   it('maps a snake_case action_card payload to a PendingAction', async () => {
     const fetchFn = fetchWithChunks([
-      'event: action_card\ndata: {"card_id":"card-7","tool":"fineract_loan_approve",' +
-        '"args":{"loanId":4521},"human_summary":"Approve loan #4521","idempotency_key":"srv-1",' +
-        '"expires_at":"2026-08-09T12:00:00Z"}\n\n',
+      'event: action_card\ndata: {"card_id":"card-7","tool":"mifos_loan_approve",' +
+        '"args":{"loanId":4521},"human_summary":"Approve Agriculture Term Loan for Rajesh Kumar",' +
+        '"idempotency_key":"srv-1","expires_at":"2026-08-09T12:00:00Z"}\n\n',
       'event: done\ndata: {}\n\n'
     ]);
     const events = await collect(client(fetchFn).chat(REQUEST, {}));
 
     expect(events[0].pendingAction).toEqual({
       cardId: 'card-7',
-      tool: 'fineract_loan_approve',
+      tool: 'mifos_loan_approve',
       args: { loanId: 4521 },
-      humanSummary: 'Approve loan #4521',
+      display: [],
+      humanSummary: 'Approve Agriculture Term Loan for Rajesh Kumar',
       idempotencyKey: 'srv-1',
       expiresAt: '2026-08-09T12:00:00Z'
     });
+  });
+
+  it('keeps the gateway ordering of the rows the officer reads', async () => {
+    // The gateway decides what comes first (who and which account, then what changes);
+    // the transport must not reorder or drop those rows.
+    const fetchFn = fetchWithChunks([
+      'event: action_card\ndata: {"card_id":"card-8","tool":"mifos_loan_approve","args":{"loanId":12},' +
+        '"rows":{"Client":"Aisha Bello","Loan account":"000000012","Product":"Weekly Loan",' +
+        '"Approved amount":"USD 28,000.00","Approval date":"21 August 2026"},' +
+        '"human_summary":"Approve Weekly Loan for Aisha Bello"}\n\n',
+      'event: done\ndata: {}\n\n'
+    ]);
+    const events = await collect(client(fetchFn).chat(REQUEST, {}));
+
+    expect(events[0].pendingAction?.display).toEqual([
+      { label: 'Client', value: 'Aisha Bello' },
+      { label: 'Loan account', value: '000000012' },
+      { label: 'Product', value: 'Weekly Loan' },
+      { label: 'Approved amount', value: 'USD 28,000.00' },
+      { label: 'Approval date', value: '21 August 2026' }
+    ]);
+  });
+
+  it('drops blank rows rather than rendering an empty line on the card', async () => {
+    const fetchFn = fetchWithChunks([
+      'event: action_card\ndata: {"card_id":"card-9","tool":"mifos_loan_approve","args":{},' +
+        '"rows":{"Client":"Aisha Bello","Product":"","Approved amount":null}}\n\n',
+      'event: done\ndata: {}\n\n'
+    ]);
+    const events = await collect(client(fetchFn).chat(REQUEST, {}));
+
+    expect(events[0].pendingAction?.display).toEqual([{ label: 'Client', value: 'Aisha Bello' }]);
   });
 
   it('skips malformed frames without surfacing an error', async () => {

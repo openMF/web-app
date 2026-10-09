@@ -11,7 +11,7 @@
     <div #buttonDashboard class="in-block">
       <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
         <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
-        Global Dashboard
+        {{ 'labels.menus.Global Financial Dashboard' | translate }}
       </button>
     </div>
   </div>
@@ -37,7 +37,7 @@
       <mat-autocomplete #activitySearch="matAutocomplete">
         @for (activity of filteredActivities | async; track activity) {
           <mat-option [routerLink]="activity.path">
-            <span>{{ activity.activity }}</span>
+            <span>{{ activity.activity | translate }}</span>
           </mat-option>
         }
       </mat-autocomplete>
@@ -105,11 +105,7 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); searchActivityBack()">
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

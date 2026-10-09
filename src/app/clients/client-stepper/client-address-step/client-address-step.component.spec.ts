@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -87,6 +87,18 @@ describe('ClientAddressStepComponent', () => {
     component.clientAddressFieldConfig = fieldConfiguration();
     component.clientTemplate = { address: [addressTemplate] };
     formGroupService = TestBed.inject(FormGroupService);
+    const translateService = TestBed.inject(TranslateService);
+    translateService.setTranslation('en', {
+      labels: {
+        inputs: {
+          'Address Line': 'Shared Address Line',
+          'Address Line 1': 'Address Line One Label',
+          'Address Line 2': 'Address Line Two Label',
+          'Address Line 3': 'Address Line Three Label'
+        }
+      }
+    });
+    translateService.use('en');
   });
 
   it('should accept latitude and longitude fields in the address form', () => {
@@ -102,6 +114,14 @@ describe('ClientAddressStepComponent', () => {
     expect(formFields.some((field) => field.controlName === 'street')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'townVillage')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'countyDistrict')).toBe(true);
+  });
+
+  it('should use independent address line translation keys', () => {
+    const formFields = component.getAddressFormFields();
+
+    expect(formFields.find((field) => field.controlName === 'addressLine1')?.label).toBe('Address Line One Label');
+    expect(formFields.find((field) => field.controlName === 'addressLine2')?.label).toBe('Address Line Two Label');
+    expect(formFields.find((field) => field.controlName === 'addressLine3')?.label).toBe('Address Line Three Label');
   });
 
   it('should populate WEB-1125 address fields when editing', () => {

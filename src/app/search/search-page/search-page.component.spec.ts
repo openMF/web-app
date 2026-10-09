@@ -17,7 +17,7 @@ import { of } from 'rxjs';
 import { describe, expect, it, jest } from '@jest/globals';
 
 import { AlertService } from 'app/core/alert/alert.service';
-import { SearchData } from '../search.model';
+import { JournalEntryLine, SearchData } from '../search.model';
 import { SearchPageComponent } from './search-page.component';
 
 describe('SearchPageComponent', () => {
@@ -25,7 +25,7 @@ describe('SearchPageComponent', () => {
   let fixture: ComponentFixture<SearchPageComponent>;
   let router: { navigate: jest.Mock };
 
-  const setup = async (searchResults: SearchData[]) => {
+  const setup = async (searchResults: SearchData[], journalEntries: JournalEntryLine[] = []) => {
     router = {
       navigate: jest.fn()
     };
@@ -39,7 +39,8 @@ describe('SearchPageComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            data: of({ searchResults })
+            data: of({ searchResults: { entities: searchResults, journalEntries } }),
+            snapshot: { queryParams: { query: '' } }
           }
         },
         { provide: Router, useValue: router },
@@ -257,6 +258,98 @@ describe('SearchPageComponent', () => {
       'loans-accounts',
       10,
       'general'
+    ]);
+  });
+
+  it('navigates group-owned loans through the groups route', async () => {
+    await setup([]);
+
+    component.navigate(
+      searchResult({
+        entityType: 'LOAN',
+        entityId: 10,
+        parentId: 43,
+        parentType: 'group'
+      })
+    );
+
+    expect(router.navigate).toHaveBeenCalledWith([
+      'groups',
+      43,
+      'loans-accounts',
+      10,
+      'general'
+    ]);
+  });
+
+  it('navigates group-owned savings accounts through the groups route', async () => {
+    await setup([]);
+
+    component.navigate(
+      searchResult({
+        entityType: 'SAVING',
+        entityId: 15,
+        parentId: 43,
+        parentType: 'group',
+        subEntityType: 'depositAccountType.savingsDeposit'
+      })
+    );
+
+    expect(router.navigate).toHaveBeenCalledWith([
+      'groups',
+      43,
+      'savings-accounts',
+      15,
+      'transactions'
+    ]);
+  });
+
+  it('keeps fixed deposit navigation under clients where its routes live', async () => {
+    await setup([]);
+
+    component.navigate(
+      searchResult({
+        entityType: 'SAVING',
+        entityId: 16,
+        parentId: 42,
+        parentType: 'client',
+        subEntityType: 'depositAccountType.fixedDeposit'
+      })
+    );
+
+    expect(router.navigate).toHaveBeenCalledWith([
+      'clients',
+      42,
+      'fixed-deposits-accounts',
+      16,
+      'transactions'
+    ]);
+  });
+
+  it('renders one accounting entry row per transaction and navigates to its journal entry view', async () => {
+    await setup(
+      [],
+      [
+        { id: 1, officeName: 'Head Office', transactionId: 'L784', reversed: false },
+        { id: 2, officeName: 'Head Office', transactionId: 'L784', reversed: false }
+      ]
+    );
+
+    expect(tableText()).toContain('L784');
+    expect(tableText()).toContain('Head Office');
+
+    const rows = (fixture.nativeElement as HTMLElement).querySelectorAll('.results-table tbody tr');
+    expect(rows.length).toBe(1);
+
+    const row = (fixture.nativeElement as HTMLElement).querySelector('.results-table tbody tr') as HTMLElement;
+    row.click();
+
+    expect(router.navigate).toHaveBeenCalledWith([
+      '/accounting',
+      'journal-entries',
+      'transactions',
+      'view',
+      'L784'
     ]);
   });
 });

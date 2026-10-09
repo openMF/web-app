@@ -1,0 +1,54 @@
+{
+  "datatableName": "entity_resource_provider_beneficial_owner",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "owner_type",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "ownership_percentage",
+      "type": "Decimal",
+      "mandatory": false
+    },
+    {
+      "name": "nationality",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "tax_id",
+      "type": "String",
+      "length": 80,
+      "mandatory": false
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "email",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "address",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}

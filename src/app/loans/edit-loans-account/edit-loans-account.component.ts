@@ -89,9 +89,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
         } else if (this.loanProductService.isWorkingCapital) {
           this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+          // The working capital loan details endpoint serializes the client and product
+          // as flat fields (clientId/loanProductId) instead of nested objects.
           this.getWorkingCapitalLoanProductTemplate(
-            this.loansAccountProductTemplate.client.id,
-            this.loansAccountProductTemplate.product.id
+            this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+            this.loansAccountProductTemplate.product?.id ?? this.loansAccountProductTemplate.loanProductId
           );
         }
         this.loanProductsBasicDetails = data.loanProductsBasicDetails;
@@ -269,11 +271,6 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
-
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
       .subscribe((response: any) => {
@@ -291,7 +288,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     const dateFormat = this.settingsService.dateFormat;
     const payload = {
       ...this.loansAccount,
-      clientId: this.loansAccountProductTemplate.client.id,
+      clientId: this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       locale,
@@ -317,9 +314,22 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       ) {
         delete payload['discount'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+      }
     }
 
-    // No Empty values to be sent
+    // No Empty values to be sent.
     [
       'delinquencyGraceDays',
       'delinquencyStartType'
@@ -328,6 +338,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         delete payload[attr];
       }
     });
+    if (payload['delinquencyBucketId'] === '') {
+      payload['delinquencyBucketId'] = null;
+    }
 
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)

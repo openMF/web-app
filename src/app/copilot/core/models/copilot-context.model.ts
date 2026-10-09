@@ -28,7 +28,7 @@ export interface CopilotContext {
   language: string;
   /**
    * Origin of the Fineract backend THIS UI is connected to. The gateway compares it
-   * against its own FINERACT_BASE_URL and refuses to run on a mismatch — the Copilot
+   * against its own FINERACT_BASE_URL and refuses to run on a mismatch, so the Copilot
    * must never write to a different bank than the one on the officer's screen.
    */
   backendOrigin?: string;

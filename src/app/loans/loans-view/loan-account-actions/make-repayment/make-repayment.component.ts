@@ -9,6 +9,8 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject, ChangeDetectorRef, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -16,11 +18,13 @@ import { Dates } from 'app/core/utils/dates';
 import { Currency, PaymentType } from 'app/shared/models/general.model';
 import { PenaltyManagementService } from 'app/loans/services/penalty-management.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { WorkingCapitalTransactionTemplateCommand } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
  * Loan Make Repayment Component
@@ -44,6 +48,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
   private alertService = inject(AlertService);
+  private translate = inject(TranslateService);
 
   /** Payment Type Options */
   paymentTypes: PaymentType[] = [];
@@ -53,6 +58,13 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   waivePenalties = false;
   /** Prevents duplicate submissions */
   isSubmitting = false;
+  /** Whether a Working Capital re-quote is in flight after a date change; blocks submitting a stale amount. */
+  isQuoteLoading = false;
+  /**
+   * Whether the last Working Capital re-quote failed, leaving the amount on screen belonging to a different date.
+   * Blocks submitting until a re-quote succeeds; picking the date again retries.
+   */
+  isQuoteStale = false;
   /** Penalties list */
   penalties: any[] = [];
   /** Selected penalty IDs */
@@ -96,11 +108,72 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     if (this.loanProductService.isLoanProduct && this.isRepayment()) {
       this.loadPenalties();
     }
+    this.watchWorkingCapitalQuoteDate();
+  }
+
+  /**
+   * The Working Capital transaction template behind each action this component serves. A payout refund is posted as a
+   * repayment and has no template of its own, so it quotes the repayment one - exactly as the route resolver already
+   * resolves it. An action absent from this map has no Working Capital template and is never re-quoted.
+   */
+  private static readonly WORKING_CAPITAL_QUOTE_COMMANDS: Readonly<
+    Record<string, WorkingCapitalTransactionTemplateCommand>
+  > = {
+    repayment: 'repayment',
+    payoutRefund: 'repayment',
+    goodwillCredit: 'goodwillCredit'
+  };
+
+  /**
+   * Re-quotes the prefilled amount when a Working Capital user changes the transaction date, because that amount is
+   * the loan's outstanding principal as of the date chosen.
+   *
+   * Gated on the product type so term and progressive loans keep their current behaviour of issuing no request at all.
+   * Only the amount is patched - the response deliberately does not replace dataObject, which the penalty-waiver
+   * recalculation reads from.
+   *
+   * A failed re-quote leaves the previous date's amount on screen, so it is marked stale and submit is blocked rather
+   * than letting that amount be posted against the new date. The distinct check lets the same date through again once
+   * that has happened, so picking it a second time retries instead of being swallowed as a duplicate.
+   */
+  private watchWorkingCapitalQuoteDate(): void {
+    const quoteCommand = MakeRepaymentComponent.WORKING_CAPITAL_QUOTE_COMMANDS[this.command];
+    if (!this.isWorkingCapital || !quoteCommand) {
+      return;
+    }
+    this.repaymentLoanForm.controls['transactionDate'].valueChanges
+      .pipe(
+        filter((date): date is Date => !!date),
+        map((date: Date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
+        distinctUntilChanged((previous: string, current: string) => previous === current && !this.isQuoteStale),
+        tap(() => {
+          this.isQuoteLoading = true;
+          this.cdr.markForCheck();
+        }),
+        switchMap((quoteDate: string) =>
+          this.loanService
+            .getWorkingCapitalLoanTransactionTemplate(this.loanId, quoteCommand, quoteDate)
+            .pipe(catchError(() => of(null)))
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((template: any) => {
+        this.isQuoteLoading = false;
+        this.isQuoteStale = !template;
+        if (template) {
+          this.originalAmount = Number(template.expectedAmount) || 0;
+          this.repaymentLoanForm.patchValue({ transactionAmount: this.originalAmount });
+        }
+        this.cdr.markForCheck();
+      });
   }
 
   get requiredPermission(): string {
     if (this.loanProductService.isWorkingCapital && this.command === 'payoutRefund') {
       return 'PAYOUTREFUND_WORKINGCAPITALLOAN';
+    }
+    if (this.loanProductService.isWorkingCapital && this.command === 'repayment') {
+      return 'REPAYMENT_WORKINGCAPITALLOAN';
     }
     const map: Record<string, string> = {
       repayment: 'REPAYMENT_LOAN',
@@ -222,9 +295,11 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       .subscribe({
         next: (penalties: any[]) => {
           this.penalties = penalties;
+          this.cdr.markForCheck();
         },
         error: () => {
           this.penalties = [];
+          this.cdr.markForCheck();
         }
       });
   }
@@ -313,7 +388,9 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     });
 
     // Calculate new transaction amount
-    const newAmount = Math.max(0, baseAmount - totalWaived);
+    const decimalPlaces = this.currency?.decimalPlaces ?? 2;
+    const multiplier = Math.pow(10, decimalPlaces);
+    const newAmount = Math.max(0, Math.round((baseAmount - totalWaived) * multiplier) / multiplier);
 
     // Allow zero when fully waived
     this.updateTransactionAmountValidators(this.waivePenalties && newAmount === 0);
@@ -343,7 +420,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
 
   /** Submits the repayment form */
   submit() {
-    if (this.repaymentLoanForm?.invalid || this.isSubmitting) {
+    if (this.repaymentLoanForm?.invalid || this.isSubmitting || this.isQuoteLoading || this.isQuoteStale) {
       return;
     }
     this.isSubmitting = true;
@@ -407,8 +484,10 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
             error: () => {
               this.alertService.alert({
                 type: 'Warning',
-                message: 'Some penalties could not be waived. Proceeding with repayment.'
+                message: this.translate.instant('Failed to waive penalties. Please try again.')
               });
+              this.isSubmitting = false;
+              this.cdr.markForCheck();
             }
           });
       } else {

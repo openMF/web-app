@@ -331,6 +331,12 @@
         </div>
         <div class="fact-grid">
           @if (loanProductService.isWorkingCapital) {
+            @if (loanDetails.delinquencyBucket?.name) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Delinquency Bucket' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.delinquencyBucket.name }}</div>
+              </div>
+            }
             @if (has(loanDetails.breachGraceDays)) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Breach Grace Days' | translate }}</div>

@@ -1,0 +1,78 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (writeOffBalance) {
+  <div class="recovery-panel">
+    <div class="recovery-figures">
+      <div class="figure">
+        <div class="figure-label">{{ 'labels.inputs.Written Off Amount' | translate }}</div>
+        <div class="figure-value">
+          {{ writeOffBalance.totalWrittenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+        </div>
+      </div>
+      <div class="figure figure-recovered">
+        <div class="figure-label">{{ 'labels.inputs.Total Recovered' | translate }}</div>
+        <div class="figure-value">
+          {{ writeOffBalance.totalRecovered | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+        </div>
+      </div>
+      <div class="figure figure-lead">
+        <div class="figure-label">{{ 'labels.inputs.Pending Recovery' | translate }}</div>
+        <div class="figure-value">
+          {{ writeOffBalance.writtenOffOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="recovery-progress">
+      <div
+        class="progress-track"
+        role="progressbar"
+        [attr.aria-label]="'labels.heading.Progress Bar' | translate"
+        [attr.aria-valuenow]="writeOffBalance.recoveredPercentage"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <div
+          class="progress-fill"
+          [class.progress-complete]="writeOffBalance.fullyRecovered"
+          [style.width.%]="writeOffBalance.recoveredPercentage"
+        ></div>
+      </div>
+      <div class="progress-caption">
+        <span class="progress-percent">{{ writeOffBalance.recoveredPercentage | number: '1.0-0' }}%</span>
+        @if (writeOffBalance.fullyRecovered) {
+          <span class="recovery-complete-tag">{{ 'labels.text.Recovery Completed' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    @if (writeOffBalance.principalWrittenOff || writeOffBalance.feeWrittenOff || writeOffBalance.penaltyWrittenOff) {
+      <div class="recovery-breakdown">
+        <div class="breakdown-item">
+          <span class="breakdown-label">{{ 'labels.inputs.Principal' | translate }}</span>
+          <span class="breakdown-value">
+            {{ writeOffBalance.principalWrittenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">{{ 'labels.inputs.Fees' | translate }}</span>
+          <span class="breakdown-value">
+            {{ writeOffBalance.feeWrittenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">{{ 'labels.inputs.Penalties' | translate }}</span>
+          <span class="breakdown-value">
+            {{ writeOffBalance.penaltyWrittenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+}

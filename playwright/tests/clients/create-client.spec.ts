@@ -15,7 +15,6 @@ import {
   type FamilyMemberData
 } from '../../pages';
 import { buildTestClientPayload } from '../../factories';
-import { BEHAVIOR } from '../../config/behavior';
 
 /**
  * Create-Client CRUD spec (PR-2 / WA-3.2 part 1).
@@ -56,19 +55,8 @@ test.describe('Create Client — CRUD', () => {
    */
   const createdClientIds: number[] = [];
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     createdClientIds.length = 0;
-
-    // Playwright `storageState` only restores localStorage / cookies.
-    // The Angular app reads its session token from sessionStorage, so
-    // copy it across on every page load (matches `auth.setup.ts` and
-    // the close-client spec).
-    await page.addInitScript((storageKey) => {
-      const creds = localStorage.getItem(storageKey);
-      if (creds) {
-        sessionStorage.setItem(storageKey, creds);
-      }
-    }, BEHAVIOR.authStorageKey);
   });
 
   test.afterEach(async ({ fineractApi }) => {

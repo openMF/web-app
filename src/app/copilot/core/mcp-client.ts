@@ -12,7 +12,8 @@ import {
   McpErrorCode,
   McpStreamEvent,
   McpStreamEventType,
-  PendingAction
+  PendingAction,
+  CardRow
 } from './models/mcp-response.model';
 import { ActionCard } from './models/action-card.model';
 
@@ -35,6 +36,7 @@ const CARD_ID_PATTERN = /^[A-Za-z0-9_-]+$/;
 
 const VALID_EVENT_TYPES: ReadonlyArray<McpStreamEventType> = [
   'token',
+  'thinking',
   'tool_call',
   'action_card',
   'suggest',
@@ -45,13 +47,13 @@ const VALID_EVENT_TYPES: ReadonlyArray<McpStreamEventType> = [
 /**
  * Low-level, framework-agnostic transport for wire contract v1: POSTs a JSON
  * body and consumes the SSE response via fetch + ReadableStream. Native
- * EventSource is unusable here — it can neither POST a body nor set the
+ * EventSource is unusable here: it can neither POST a body nor set the
  * Authorization/tenant headers this contract requires.
  *
  * Retry policy (ADR-001): a chat turn is NOT idempotent, so this client never
  * retries automatically. Cancel/retry is a visible user action.
  *
- * No Angular dependency — see mcp-client.spec.ts. The DI wrapper lives in
+ * No Angular dependency, see mcp-client.spec.ts. The DI wrapper lives in
  * services/mcp-client.service.ts.
  */
 export class McpClient {
@@ -70,7 +72,7 @@ export class McpClient {
     signal?: AbortSignal
   ): AsyncIterable<McpStreamEvent> {
     if (!CARD_ID_PATTERN.test(cardId)) {
-      // Dot-segments etc. survive encodeURIComponent — refuse anything but plain ids.
+      // Dot-segments etc. survive encodeURIComponent, so refuse anything but plain ids.
       return this.singleErrorStream('INTERNAL', 'Invalid confirmation reference.', false);
     }
     const path = `/copilot/api/v1/actions/${encodeURIComponent(cardId)}/decision`;
@@ -79,7 +81,7 @@ export class McpClient {
 
   private async *singleErrorStream(
     code: McpErrorCode,
-    message: string,
+    message: string | undefined,
     retryable: boolean
   ): AsyncGenerator<McpStreamEvent> {
     yield this.errorEvent(code, message, retryable);
@@ -89,7 +91,7 @@ export class McpClient {
    * POST `body` and yield parsed SSE events until 'done', end-of-stream, or
    * abort. Transport failures surface as a terminal 'error' event rather than
    * a thrown exception, so consumers have a single event-driven code path.
-   * A user-initiated abort ends the stream silently — stopping is not an error.
+   * A user-initiated abort ends the stream silently, since stopping is not an error.
    */
   private async *stream(
     path: string,
@@ -98,7 +100,7 @@ export class McpClient {
     signal?: AbortSignal
   ): AsyncGenerator<McpStreamEvent> {
     if (signal?.aborted) {
-      return; // Cancelled before the (lazy) generator ever ran — never send the POST.
+      return; // Cancelled before the (lazy) generator ever ran, so never send the POST.
     }
     const fetchFn = this.options.fetchFn ?? fetch.bind(globalThis);
     const controller = new AbortController();
@@ -164,13 +166,19 @@ export class McpClient {
       }
     } catch (error) {
       if (signal?.aborted) {
-        return; // User pressed stop — end silently.
+        return; // User pressed stop, so end silently.
       }
       if (timedOut) {
-        yield this.errorEvent('LLM_UNAVAILABLE', 'Timed out waiting for the assistant to respond.', true);
+        yield this.errorEvent('LLM_UNAVAILABLE', undefined, true);
         return;
       }
-      yield this.errorEvent('INTERNAL', error instanceof Error ? error.message : String(error), false);
+      // The detail goes to the console, not to the officer. A transport failure surfaces from
+      // the browser as "Failed to fetch", which is what a blocked CORS preflight, a DNS
+      // failure and an unreachable host all look like from here: it tells whoever is
+      // configuring the deployment something, and tells a loan officer nothing at all. The
+      // panel says it could not reach the assistant, which is the part that is true and useful.
+      console.error('Copilot transport failed', error);
+      yield this.errorEvent('INTERNAL', undefined, false);
     } finally {
       clearTimeout(timeout);
       signal?.removeEventListener('abort', onOuterAbort);
@@ -218,12 +226,25 @@ export class McpClient {
     switch (type) {
       case 'token':
         return { type, token: String(payload['delta'] ?? payload['token'] ?? '') };
+      case 'thinking': {
+        const phase = payload['phase'];
+        return {
+          type,
+          thinkingPhase: phase === 'start' || phase === 'end' ? phase : 'delta',
+          thinking: payload['delta'] != null ? String(payload['delta']) : undefined,
+          thinkingElapsedMs: typeof payload['elapsed_ms'] === 'number' ? payload['elapsed_ms'] : undefined
+        };
+      }
       case 'tool_call':
         return {
           type,
           toolName: payload['tool'] != null ? String(payload['tool']) : undefined,
+          // The gateway names the step; falling back to the raw tool id keeps an older
+          // gateway working rather than showing the officer an empty row.
+          toolLabel: payload['label'] != null ? String(payload['label']) : undefined,
           toolPhase: payload['phase'] === 'finished' ? 'finished' : 'started',
           readOnly: payload['read_only'] === true,
+          durationMs: typeof payload['duration_ms'] === 'number' ? payload['duration_ms'] : undefined,
           summary: payload['summary'] != null ? String(payload['summary']) : undefined
         };
       case 'action_card':
@@ -248,6 +269,25 @@ export class McpClient {
     }
   }
 
+  /**
+   * Rows arrive as an ordered object so the gateway controls what the officer reads first
+   * (who and which account, then what changes). Blank values are dropped rather than shown
+   * as an empty line.
+   */
+  private toDisplayRows(raw: unknown): CardRow[] {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+      return [];
+    }
+    return Object.entries(raw as Record<string, unknown>)
+      .map(
+        ([
+          label,
+          value
+        ]) => ({ label, value: value == null ? '' : String(value) })
+      )
+      .filter((row) => row.label.trim().length > 0 && row.value.trim().length > 0);
+  }
+
   /** An action_card with a card_id awaits approval; without one it is display-only. */
   private normalizeActionCard(payload: Record<string, unknown>): McpStreamEvent {
     const cardId = payload['card_id'];
@@ -261,6 +301,7 @@ export class McpClient {
         cardId: String(cardId),
         tool: String(payload['tool'] ?? ''),
         args: this.toRecord(payload['args']),
+        display: this.toDisplayRows(payload['rows']),
         humanSummary: String(payload['human_summary'] ?? payload['summary'] ?? ''),
         idempotencyKey: payload['idempotency_key'] != null ? String(payload['idempotency_key']) : undefined,
         expiresAt: payload['expires_at'] != null ? String(payload['expires_at']) : undefined
@@ -310,7 +351,7 @@ export class McpClient {
         }
       }
     } catch {
-      // Non-JSON error body — keep the status-derived defaults.
+      // Non-JSON error body, so keep the status-derived defaults.
     }
     return this.errorEvent(code, message, retryable);
   }
@@ -328,7 +369,7 @@ export class McpClient {
     return codes.includes(value as McpErrorCode) ? (value as McpErrorCode) : 'INTERNAL';
   }
 
-  private errorEvent(errorCode: McpErrorCode, message: string, retryable: boolean): McpStreamEvent {
+  private errorEvent(errorCode: McpErrorCode, message: string | undefined, retryable: boolean): McpStreamEvent {
     return { type: 'error', errorCode, message, retryable };
   }
 

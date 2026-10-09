@@ -8,10 +8,12 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, map, switchMap } from 'rxjs';
+
+import { AcquisitionBoard } from './models/acquisition-board.model';
 
 export interface SinpeSubscriptionPayload {
   clientId: string | number;
@@ -82,6 +84,20 @@ export class SavingsService {
   getSavingsAccountData(accountId: string): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
+  }
+
+  /**
+   * Retrieves the backend-owned acquisition status for a client's savings account.
+   * @param clientId Client id that owns the savings account.
+   * @param savingsAccountId Savings account id.
+   * @returns Acquisition board returned by the savings plugin.
+   */
+  getAcquisitionBoard(clientId: string | number, savingsAccountId: string | number): Observable<AcquisitionBoard> {
+    const configurableHttp = this.http as HttpClient & { skipErrorHandler?: () => HttpClient };
+    const http = configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
+    return http.get<AcquisitionBoard>(
+      `/v2/onboarding/cases/${clientId}/accounts/${savingsAccountId}/acquisition-board`
+    );
   }
 
   /**
@@ -260,8 +276,12 @@ export class SavingsService {
    * @param {any} savingsAccount Savings Account
    * @returns {Observable<any>}
    */
-  createSavingsAccount(savingsAccount: any): Observable<any> {
-    return this.http.post('/savingsaccounts', savingsAccount);
+  createSavingsAccount(savingsAccount: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post('/savingsaccounts', savingsAccount, { headers });
   }
 
   /**

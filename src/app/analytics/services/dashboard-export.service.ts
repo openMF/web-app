@@ -6,13 +6,27 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AnalyticsWidgetState } from '../models/analytics-dashboard.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardExportService {
+  private translateService = inject(TranslateService);
+
+  private getTranslation(key: string, fallback?: string): string {
+    if (!key) {
+      return fallback || '';
+    }
+    const translated = this.translateService.instant(key);
+    if (translated && translated !== key) {
+      return translated;
+    }
+    return fallback !== undefined ? fallback : key;
+  }
+
   /**
    * Export dashboard data as CSV
    * @param widgets Dashboard widgets with data
@@ -26,8 +40,8 @@ export class DashboardExportService {
 
     // Add timestamp
     data.push([
-      'Export Date',
-      new Date().toLocaleString()
+      this.getTranslation('labels.inputs.Export Date', 'Export Date'),
+      new Date().toLocaleString(this.translateService.currentLang || undefined)
     ]);
     data.push([]);
 
@@ -43,19 +57,20 @@ export class DashboardExportService {
       if (widget.state.metricValue !== undefined) {
         // Metric widget
         data.push([
-          'Metric Value',
+          this.getTranslation('labels.inputs.Value', 'Value'),
           widget.state.metricValue.toString()
         ]);
       } else if (widget.state.datasets && widget.state.labels) {
         // Chart widget
         const headers = [
-          'Label',
-          ...widget.state.datasets.map((d) => d.labelKey)
+          this.getTranslation('labels.inputs.Label', 'Label'),
+          ...widget.state.datasets.map((d) => this.getTranslation(d.labelKey, d.labelKey))
         ];
         data.push(headers);
 
         widget.state.labels.forEach((label, index) => {
-          const row = [label];
+          const rowLabel = widget.state.translateLabels ? this.getTranslation(label, label) : label;
+          const row = [rowLabel];
           widget.state.datasets?.forEach((dataset) => {
             row.push((dataset.data[index] || 0).toString());
           });
@@ -89,17 +104,40 @@ export class DashboardExportService {
     widgets: { id: string; title: string; state: AnalyticsWidgetState }[],
     fileName: string = 'dashboard'
   ): void {
-    // Note: This requires jsPDF and html2canvas libraries
-    // For now, provide a placeholder implementation that uses browser's print function
-    // In production, integrate with jsPDF/html2canvas
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    iframe.style.visibility = 'hidden';
+    document.body.appendChild(iframe);
 
-    const printWindow = window.open('', '', 'height=600,width=800');
-    if (printWindow) {
+    const doc = iframe.contentWindow?.document;
+    if (doc) {
       const htmlContent = this.generatePDFHTML(widgets);
-      printWindow.document.write(htmlContent);
-      printWindow.document.close();
-      printWindow.focus();
-      printWindow.print();
+      doc.open();
+      doc.write(htmlContent);
+      doc.close();
+
+      const cleanup = () => {
+        setTimeout(() => {
+          if (document.body.contains(iframe)) {
+            document.body.removeChild(iframe);
+          }
+        }, 100);
+      };
+
+      if (iframe.contentWindow) {
+        iframe.contentWindow.onafterprint = cleanup;
+      }
+
+      setTimeout(() => {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+        setTimeout(cleanup, 1000);
+      }, 150);
     }
   }
 
@@ -107,10 +145,19 @@ export class DashboardExportService {
    * Generate HTML for PDF export
    */
   private generatePDFHTML(widgets: { id: string; title: string; state: AnalyticsWidgetState }[]): string {
+    const dashboardTitle = this.getTranslation('labels.text.Dashboard Export', 'Dashboard Export');
+    const generatedOnText = this.getTranslation('labels.text.Generated on', 'Generated on');
+    const labelHeaderText = this.getTranslation('labels.inputs.Label', 'Label');
+    const metricValText = this.getTranslation('labels.inputs.Value', 'Value');
+    const footerText = this.getTranslation(
+      'labels.text.Automated export',
+      'This is an automated export from Mifos X Global Dashboard'
+    );
+
     let html = `
       <html>
         <head>
-          <title>Dashboard Export</title>
+          <title>${dashboardTitle}</title>
           <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
             h1 { color: #333; }
@@ -123,8 +170,8 @@ export class DashboardExportService {
           </style>
         </head>
         <body>
-          <h1>Dashboard Export</h1>
-          <p>Generated on: ${new Date().toLocaleString()}</p>
+          <h1>${dashboardTitle}</h1>
+          <p>${generatedOnText}: ${new Date().toLocaleString(this.translateService.currentLang || undefined)}</p>
     `;
 
     widgets.forEach((widget) => {
@@ -135,19 +182,21 @@ export class DashboardExportService {
       html += `<h2>${widget.title}</h2>`;
 
       if (widget.state.metricValue !== undefined) {
-        html += `<p class="metric">Value: ${widget.state.metricValue}</p>`;
+        html += `<p class="metric">${metricValText}: ${widget.state.metricValue}</p>`;
       } else if (widget.state.datasets && widget.state.labels) {
         html += '<table>';
         html += '<tr>';
-        html += '<th>Label</th>';
+        html += `<th>${labelHeaderText}</th>`;
         widget.state.datasets.forEach((dataset) => {
-          html += `<th>${dataset.labelKey}</th>`;
+          const translatedHeader = this.getTranslation(dataset.labelKey, dataset.labelKey);
+          html += `<th>${translatedHeader}</th>`;
         });
         html += '</tr>';
 
         widget.state.labels.forEach((label, index) => {
+          const rowLabel = widget.state.translateLabels ? this.getTranslation(label, label) : label;
           html += '<tr>';
-          html += `<td>${label}</td>`;
+          html += `<td>${rowLabel}</td>`;
           widget.state.datasets?.forEach((dataset) => {
             html += `<td>${dataset.data[index] || 0}</td>`;
           });
@@ -159,7 +208,7 @@ export class DashboardExportService {
 
     html += `
           <div class="footer">
-            <p>This is an automated export from Mifos X Global Dashboard</p>
+            <p>${footerText}</p>
           </div>
         </body>
       </html>

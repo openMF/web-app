@@ -53,7 +53,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: [],
+  providers: [OfficesResolver],
   exports: [RouterModule]
 })
 export class CollectionsRoutingModule {}

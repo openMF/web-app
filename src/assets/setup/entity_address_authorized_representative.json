@@ -1,0 +1,68 @@
+{
+  "datatableName": "entity_address_authorized_representative",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "representative_name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "street",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "street_number",
+      "type": "String",
+      "length": 40,
+      "mandatory": false
+    },
+    {
+      "name": "apartment_number",
+      "type": "String",
+      "length": 40,
+      "mandatory": false
+    },
+    {
+      "name": "neighborhood",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "zip_code",
+      "type": "String",
+      "length": 20,
+      "mandatory": false
+    },
+    {
+      "name": "municipality_city",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "locality_borough_town",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "state",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "country",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    }
+  ]
+}

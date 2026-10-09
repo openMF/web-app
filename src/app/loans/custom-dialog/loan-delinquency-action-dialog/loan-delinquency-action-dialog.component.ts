@@ -18,6 +18,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-loan-delinquency-action-dialog',
@@ -37,6 +38,7 @@ export class LoanDelinquencyActionDialogComponent {
   dialogRef = inject<MatDialogRef<LoanDelinquencyActionDialogComponent>>(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
   private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
 
   delinquencyActionForm: UntypedFormGroup;
   /** Minimum date allowed. */
@@ -51,7 +53,7 @@ export class LoanDelinquencyActionDialogComponent {
   createDelinquencyActionForm() {
     this.delinquencyActionForm = this.formBuilder.group({
       startDate: [
-        new Date(),
+        new Date(this.settingsService.businessDate),
         Validators.required
       ],
       endDate: [

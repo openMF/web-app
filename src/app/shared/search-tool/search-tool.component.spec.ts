@@ -43,37 +43,25 @@ describe('SearchToolComponent', () => {
     fixture.detectChanges();
   };
 
-  it('maps transaction resource filters to backend resource names', async () => {
-    await setup();
-
-    expect(component.resourceOptions).toEqual(
-      expect.arrayContaining([
-        { name: 'TXN Loans', value: 'loanTransactions' },
-        { name: 'TXN Savings', value: 'savingsTransactions' }
-      ])
-    );
-  });
-
-  it('includes transaction resources in All search', async () => {
-    await setup();
-
-    expect(component.resource.value).toBe(
-      'clients,clientIdentifiers,groups,savings,shares,loans,loanTransactions,savingsTransactions'
-    );
-  });
-
-  it('passes the selected transaction resource to search navigation', async () => {
+  it('navigates to the search page with only the query; scoping happens on the results page', async () => {
     await setup();
     component.query.patchValue('123');
-    component.resource.patchValue('loanTransactions');
 
     component.search();
 
     expect(router.navigate).toHaveBeenCalledWith(['/search'], {
       queryParams: {
-        query: '123',
-        resource: 'loanTransactions'
+        query: '123'
       }
     });
+  });
+
+  it('closes the modal when a search is executed', async () => {
+    await setup();
+    component.searchVisible = true;
+
+    component.search();
+
+    expect(component.searchVisible).toBe(false);
   });
 });

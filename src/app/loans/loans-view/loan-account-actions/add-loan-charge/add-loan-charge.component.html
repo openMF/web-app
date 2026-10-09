@@ -80,7 +80,7 @@
             mat-raised-button
             color="primary"
             [disabled]="!loanChargeForm.valid || isSubmitting()"
-            *mifosxHasPermission="'CREATE_LOANCHARGE'"
+            *mifosxHasPermission="requiredPermission"
           >
             {{ 'labels.buttons.Submit' | translate }}
           </button>

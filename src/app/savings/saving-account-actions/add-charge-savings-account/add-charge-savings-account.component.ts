@@ -12,6 +12,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
+/** rxjs Imports */
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -72,16 +76,19 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * Creates the Savings Charge form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createSavingsChargeForm();
     this.buildDependencies();
   }
 
   buildDependencies() {
     this.savingsChargeForm.controls.chargeId.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((chargeId) => {
-        this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+      .pipe(
+        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (data: any) => {
           this.chargeDetails = data;
           const chargeTimeType = data.chargeTimeType.id;
           if (
@@ -113,7 +120,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
             chargeCalculationType: data.chargeCalculationType.id,
             chargeTimeType: data.chargeTimeType.id
           });
-        });
+        }
       });
   }
 

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
@@ -33,6 +33,7 @@ export class NotesTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private loansService = inject(LoansService);
   private authenticationService = inject(AuthenticationService);
+  private cdr = inject(ChangeDetectorRef);
 
   entityId: string;
   username: string;
@@ -42,6 +43,9 @@ export class NotesTabComponent implements OnInit {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['loanId'];
+    this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanNotes: any }) => {
       this.entityNotes = data.loanNotes;
     });
@@ -55,24 +59,32 @@ export class NotesTabComponent implements OnInit {
 
   addNote(noteContent: any) {
     this.loansService.createLoanNote(this.entityId, noteContent).subscribe((response: any) => {
-      this.entityNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: noteContent.note
-      });
+      this.entityNotes = [
+        ...this.entityNotes,
+        {
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: noteContent.note
+        }
+      ];
+      this.cdr.markForCheck();
     });
   }
 
   editNote(noteId: string, noteContent: any, index: number) {
     this.loansService.editLoanNote(this.entityId, noteId, noteContent).subscribe(() => {
-      this.entityNotes[index].note = noteContent.note;
+      this.entityNotes = this.entityNotes.map((entityNote: any) =>
+        entityNote.id === noteId ? { ...entityNote, note: noteContent.note } : entityNote
+      );
+      this.cdr.markForCheck();
     });
   }
 
   deleteNote(noteId: string, index: number) {
     this.loansService.deleteLoanNote(this.entityId, noteId).subscribe(() => {
-      this.entityNotes.splice(index, 1);
+      this.entityNotes = this.entityNotes.filter((entityNote: any) => entityNote.id !== noteId);
+      this.cdr.markForCheck();
     });
   }
 }

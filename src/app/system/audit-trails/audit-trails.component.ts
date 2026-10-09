@@ -235,16 +235,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * sort change and page change.
    */
   ngAfterViewInit() {
-    this.user.valueChanges
-      .pipe(
-        map((value) => (value.id ? value.id : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'makerId');
-        })
-      )
-      .subscribe();
+    this.clearFilterWhenEmptied(this.user, 'makerId');
 
     this.fromDate.valueChanges
       .pipe(
@@ -336,38 +327,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-    this.actionName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'actionName');
-        })
-      )
-      .subscribe();
-
-    this.entityName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'entityName');
-        })
-      )
-      .subscribe();
-
-    this.checker.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue.id, 'checkerId');
-        })
-      )
-      .subscribe();
+    this.clearFilterWhenEmptied(this.actionName, 'actionName');
+    this.clearFilterWhenEmptied(this.entityName, 'entityName');
+    this.clearFilterWhenEmptied(this.checker, 'checkerId');
 
     //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -408,12 +370,30 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {string} property Property to filter data by.
    */
   applyFilter(filterValue: string, property: string) {
+    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
+    if (this.filterAuditTrailsBy[findIndex].value === filterValue) {
+      return;
+    }
     if (this.paginator) {
       this.paginator.pageIndex = 0;
     }
-    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
     this.filterAuditTrailsBy[findIndex].value = filterValue;
     this.loadAuditTrailsPage();
+  }
+
+  /**
+   * Clears an autocomplete filter once its input is emptied.
+   * A selection is applied by the autocomplete's `optionSelected` output, so half-typed text never
+   * reaches the server: it is not a valid option and the request would come back with no records.
+   * @param {UntypedFormControl} control Autocomplete form control.
+   * @param {string} property Filter property the control feeds.
+   */
+  private clearFilterWhenEmptied(control: UntypedFormControl, property: string): void {
+    control.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value) => {
+      if (!value) {
+        this.applyFilter('', property);
+      }
+    });
   }
 
   /**

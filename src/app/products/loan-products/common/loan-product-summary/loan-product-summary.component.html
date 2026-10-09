@@ -227,10 +227,10 @@
         </div>
       }
       @if (loanProduct.principalVariationsForBorrowerCycle?.length) {
-        <div class="flex-fill layout-row">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.principalVariationsForBorrowerCycle"
           >
@@ -270,10 +270,10 @@
         </div>
       }
       @if (loanProduct.numberOfRepaymentVariationsForBorrowerCycle?.length) {
-        <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Number of Repayments by loan cycle' | translate }}</h4>
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Number of repayments by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.numberOfRepaymentVariationsForBorrowerCycle"
           >
@@ -313,10 +313,10 @@
         </div>
       }
       @if (loanProduct.interestRateVariationsForBorrowerCycle?.length) {
-        <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Annual interest rate by loan cycle' | translate }}</h4>
+        <div class="flex-fill layout-column">
+          <h4 class="mat-h4">{{ 'labels.inputs.Annual interest rate by loan cycle' | translate }}</h4>
           <table
-            class="mat-elevation-z1 flex-fill"
+            class="mat-elevation-z1 variation-table"
             mat-table
             [dataSource]="loanProduct.interestRateVariationsForBorrowerCycle"
           >
@@ -817,17 +817,17 @@
       }
       @if (loanProduct.holdGuaranteeFunds) {
         <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
+          <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}:</span>
           <span class="flex-60">{{ loanProduct.productGuaranteeData.mandatoryGuarantee }}</span>
           @if (loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds) {
             <div class="flex-fill layout-row">
-              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds' | translate }} (%):</span>
+              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds(%)' | translate }}:</span>
               <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds }}</span>
             </div>
           }
           @if (loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor) {
             <div class="flex-fill layout-row">
-              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds' | translate }} (%):</span>
+              <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}:</span>
               <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor }}</span>
             </div>
           }

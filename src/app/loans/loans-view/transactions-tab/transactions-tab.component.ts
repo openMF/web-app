@@ -43,6 +43,7 @@ import {
   buildWorkingCapitalUndoChargeOffPayload
 } from '../working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { resolveRecoveryPaymentErrorMessage } from '../working-capital/recovery-payment-error.helper';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -60,6 +61,19 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../loan-transaction-type.helper';
+import {
+  adjustmentReopensLoan,
+  canAdjustLoanTransaction,
+  canAdjustWorkingCapitalTransaction,
+  canReverseLoanTransaction,
+  loanAllowsReversal
+} from '../loan-transaction-adjust.helper';
+import {
+  appendReversalFields,
+  buildReversalDialogConfig,
+  REOPEN_LOAN_WARNING_KEY
+} from '../loan-transaction-reversal.helper';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -317,6 +331,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * BUY_DOWN_FEE_ADJUSTMENT:41
    * BUY_DOWN_FEE_AMORTIZATION:42
    * DISCOUNT_FEE:44
+   * DISCOUNT_FEE_AMORTIZATION:45
+   * DISCOUNT_FEE_ADJUSTMENT:46
+   * DISCOUNT_FEE_AMORTIZATION_ADJUSTMENT:47
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -343,24 +360,81 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       40,
       41,
       42,
-      44
+      44,
+      45,
+      46,
+      47
     ].includes(transactionsData.type.id);
   }
 
-  allowUndoTransaction(transaction: LoanTransaction) {
-    if (transaction.manuallyReversed || transaction.reversed) {
+  allowUndoTransaction(transaction: LoanTransaction): boolean {
+    const alreadyReversed = transaction.manuallyReversed || transaction.reversed;
+    if (alreadyReversed || this.hasChargebackRelation(transaction)) {
       return false;
     }
-    // Charge-off is never undone through the generic adjust command; it has its
-    // own menu entry. Matched by code as well because Working Capital does not
-    // always send the chargeoff flag.
-    return !(
-      transaction.type.disbursement ||
-      this.isChargeOff(transaction.type) ||
-      this.isReAgoeOrReAmortize(transaction.type) ||
-      transaction.type.interestRefund ||
-      this.isDiscountFee(transaction.type) ||
-      transaction.type.contractTermination
+    // Working Capital keeps its own reversal rules, matched by code as well
+    // because it does not always send the type flags. The Term Loan branch is
+    // the adjust command's own gate plus write-off, which has its own undo
+    // command wired in `undoTransaction()`; charge-off, re-age, re-amortize and
+    // contract termination are undone from their own entries.
+    return this.loanProductService.isWorkingCapital
+      ? !(
+          transaction.type.disbursement ||
+          this.isChargeOff(transaction.type) ||
+          this.isReAgoeOrReAmortize(transaction.type) ||
+          transaction.type.interestRefund ||
+          this.isDiscountFee(transaction.type) ||
+          transaction.type.contractTermination
+        )
+      : (canReverseLoanTransaction(transaction.type, alreadyReversed) &&
+          loanAllowsReversal(transaction.type, this.loanDetailsData?.loanScheduleType)) ||
+          this.isWriteOff(transaction.type);
+  }
+
+  /**
+   * True when the transaction can be re-submitted with a new date, amount and
+   * payment details. Each product has its own adjust command with its own gate.
+   * @param transaction Transaction of the row
+   */
+  allowAdjustTransaction(transaction: LoanTransaction): boolean {
+    const alreadyReversed = transaction.manuallyReversed || transaction.reversed;
+    return this.loanProductService.isWorkingCapital
+      ? canAdjustWorkingCapitalTransaction(transaction.type, alreadyReversed)
+      : !this.hasChargebackRelation(transaction) && canAdjustLoanTransaction(transaction.type, alreadyReversed);
+  }
+
+  /** Permission of the adjust command the row posts, which differs per product. */
+  get adjustPermission(): string {
+    return this.loanProductService.isWorkingCapital ? 'ADJUST_WORKINGCAPITALLOAN' : 'ADJUST_LOAN';
+  }
+
+  /**
+   * The backend rejects both reversing and adjusting a transaction that is
+   * linked to a chargeback.
+   * @param transaction Transaction of the row
+   */
+  private hasChargebackRelation(transaction: LoanTransaction): boolean {
+    return !!transaction.transactionRelations?.some((relation: any) => relation.relationType === 'CHARGEBACK');
+  }
+
+  /**
+   * Opens the adjust form for the transaction of the row.
+   * @param transaction Transaction of the row
+   * @param $event Mouse Event
+   */
+  adjustTransaction(transaction: LoanTransaction, $event: MouseEvent): void {
+    $event.stopPropagation();
+    this.router.navigate(
+      [
+        transaction.id,
+        'edit'
+      ],
+      {
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        },
+        relativeTo: this.route
+      }
     );
   }
 
@@ -372,6 +446,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isChargeOff(transaction.type)) return 'badge-chargeoff';
     if (this.isReAge(transaction.type)) return 'badge-reage';
     if (this.isReAmortize(transaction.type)) return 'badge-reamortize';
+    if (isDiscountFeeKindTransaction(transaction.type)) return 'badge-discount';
+    if (this.isRecoveryRepayment(transaction.type)) return 'badge-recovery';
     if (transaction.transactionRelations?.length > 0) return 'badge-linked';
     return 'badge-repayment';
   }
@@ -394,6 +470,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     }
     if (this.isReAmortize(transaction.type)) {
       return 'reamortize';
+    }
+    if (this.isRecoveryRepayment(transaction.type)) {
+      return 'recovery';
     }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'linked';
@@ -423,6 +502,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (this.isReAmortize(transaction.type)) {
       return 'row-reamortize';
     }
+    if (isDiscountFeeKindTransaction(transaction.type)) {
+      return 'row-discount';
+    }
+    if (this.isRecoveryRepayment(transaction.type)) {
+      return 'row-recovery';
+    }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'row-linked';
     }
@@ -447,6 +532,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const dateFormat = this.settingsService.dateFormat;
     const loanId = this.route.parent.parent.snapshot.params['loanId'];
     const isLoanProduct = this.loanProductService.isLoanProduct;
+    // Write-off has its own command and Working Capital its own rules; every
+    // other Term Loan reversal goes through the adjust command with a note.
+    if (isLoanProduct && !this.isWriteOff(transaction.type)) {
+      this.reverseTermLoanTransaction(loanId, transaction);
+      return;
+    }
     let command = 'undo';
     let operationDate = this.dateUtils.parseDate(transaction.date);
     let payload: any = {};
@@ -454,7 +545,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     // transactionDate/transactionAmount are required only by the generic loan adjust endpoint.
     const undoPayload = isLoanProduct
       ? {
-          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
@@ -472,13 +566,16 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
           this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          ' ' +
           `${transaction.type.value}` +
+          ' ' +
           this.translateService.instant('labels.dialogContext.with id') +
+          ' ' +
           `${transaction.id}`
       }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         let transactionId = transaction.id;
         if (command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
           transactionId = null;
@@ -491,15 +588,72 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               this.reload();
             });
         } else {
-          this.loansService
-            .applyWorkingCapitalLoanActionCommand(loanId, payload, command, transactionId)
-            .subscribe((responseCmd: any) => {
+          this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, command, transactionId).subscribe({
+            next: () => {
               transaction.reversed = true;
               this.reload();
-            });
+            },
+            error: (error: unknown) => this.reportWorkingCapitalUndoError(error)
+          });
         }
       }
     });
+  }
+
+  /**
+   * Reverses a Term Loan transaction through the adjust command. A zero amount
+   * means reverse only: the original transaction is reversed and no replacement
+   * is created.
+   * @param loanId Loan id
+   * @param transaction Transaction of the row
+   */
+  private reverseTermLoanTransaction(loanId: string, transaction: LoanTransaction): void {
+    const dateFormat = this.settingsService.dateFormat;
+    this.dialog
+      .open(
+        FormDialogComponent,
+        buildReversalDialogConfig(
+          this.translateService,
+          'labels.heading.Reverse Transaction',
+          'labels.buttons.Reverse',
+          adjustmentReopensLoan(this.loanDetailsData?.status) ? REOPEN_LOAN_WARNING_KEY : undefined
+        )
+      )
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (!response?.data) {
+          return;
+        }
+        const operationDate = this.dateUtils.parseDate(transaction.date);
+        const payload: { [key: string]: any } = {
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
+          transactionAmount: 0,
+          dateFormat,
+          locale: this.settingsService.language.code
+        };
+        appendReversalFields(payload, response.data.value);
+        this.loansService
+          .executeLoansAccountTransactionsCommand(loanId, 'adjust', payload, transaction.id)
+          .subscribe(() => {
+            transaction.manuallyReversed = true;
+            this.reload();
+          });
+      });
+  }
+
+  /**
+   * The adjust command reverses the transaction; the dedicated commands undo a
+   * loan level action, so the menu entry names them differently.
+   * @param transaction Transaction of the row
+   */
+  undoLabelKey(transaction: LoanTransaction): string {
+    return this.loanProductService.isWorkingCapital || this.isWriteOff(transaction.type)
+      ? 'tooltips.Undo Transaction'
+      : 'labels.buttons.Reverse';
   }
 
   /** Working Capital charge-off transactions expose a dedicated undo action in the row menu. */
@@ -534,9 +688,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         }
         const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
         // The undo charge-off command targets the loan, not a single transaction.
-        this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, 'undoChargeOff').subscribe(() => {
-          transaction.reversed = true;
-          this.reload();
+        this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, 'undoChargeOff').subscribe({
+          next: () => {
+            transaction.reversed = true;
+            this.reload();
+          },
+          error: (error: unknown) => this.reportWorkingCapitalUndoError(error)
         });
       });
   }
@@ -553,7 +710,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
         this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
           this.reload();
@@ -562,16 +719,20 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     });
   }
 
-  private isAccrual(transactionType: LoanTransactionType): boolean {
-    return transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge';
-  }
-
   private isChargeOff(transactionType: LoanTransactionType): boolean {
     return transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff';
   }
 
   isWriteOff(transactionType: LoanTransactionType): boolean {
     return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
+  }
+
+  /**
+   * A recovery payment is money collected after a write-off. It is recognised as
+   * income instead of reducing debt, so it is marked apart from a repayment.
+   */
+  isRecoveryRepayment(transactionType: LoanTransactionType): boolean {
+    return transactionType.recoveryRepayment || transactionType.code === 'loanTransactionType.recoveryRepayment';
   }
 
   private isDownPayment(transactionType: LoanTransactionType): boolean {
@@ -590,26 +751,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
   }
 
-  private isBuyDownFeeAmortization(transactionType: LoanTransactionType): boolean {
-    return (
-      transactionType.buyDownFeeAmortizationAdjustment ||
-      transactionType.code === 'loanTransactionType.buyDownFeeAmortizationAdjustment'
-    );
-  }
-
   private isAccrualKindOf(transactionType: LoanTransactionType): boolean {
-    return (
-      this.isAccrual(transactionType) ||
-      this.isCapitalizedIncomeAmortization(transactionType) ||
-      this.isBuyDownFeeAmortization(transactionType)
-    );
-  }
-
-  private isCapitalizedIncomeAmortization(transactionType: LoanTransactionType): boolean {
-    return (
-      transactionType.capitalizedIncomeAmortization ||
-      transactionType.code === 'loanTransactionType.capitalizedIncomeAmortization'
-    );
+    return isAccrualKindTransaction(transactionType);
   }
 
   private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {
@@ -717,6 +860,21 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       });
   }
 
+  /**
+   * Reports a failed Working Capital reversal with the backend's own rule.
+   *
+   * HTTP 403 is expected for anyone but a super user: the generic undo command
+   * is authorized with a permission derived at runtime that is not seeded, so
+   * the message says so instead of showing a bare error.
+   * @param error Failed HTTP response
+   */
+  private reportWorkingCapitalUndoError(error: unknown): void {
+    const alert = resolveRecoveryPaymentErrorMessage(error, this.translateService);
+    if (alert) {
+      this.alertService.alert(alert);
+    }
+  }
+
   displaySubMenu(transaction: LoanTransaction): boolean {
     if (this.isReAgoeOrReAmortize(transaction.type) && transaction.manuallyReversed) {
       return false;
@@ -769,7 +927,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
-            if (response.data) {
+            if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
               if (response.data.value.amount <= transactionAmount) {
@@ -850,7 +1008,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
-            if (response.data) {
+            if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
               if (response.data.value.amount <= transactionAmount) {

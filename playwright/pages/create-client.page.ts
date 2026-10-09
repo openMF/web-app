@@ -12,52 +12,9 @@ import { BasePage } from './BasePage';
 import { fillIfVisible, selectOption } from './material-form-helpers';
 import { CREATE_CLIENT_SELECTORS } from '../config/selectors';
 import { ROUTES } from '../config/routes';
+import type { LegalForm, GeneralStepData } from '../types/test-data.types';
 
-/**
- * Logical legal-form labels accepted by `fillGeneralStep`.
- *
- * Maps 1:1 to `LegalFormId` in the app domain (PERSON=1, ENTITY=2)
- * so React's create-client wizard can reuse the same vocabulary.
- */
-export type LegalForm = 'PERSON' | 'ENTITY';
-
-/**
- * Data accepted by `CreateClientPage.fillGeneralStep`.
- *
- * Only `office` and `legalForm` are required by the form. Name fields
- * become required dynamically based on the chosen legal form
- * (firstname/lastname for PERSON, fullname for ENTITY) — the helper
- * enforces that at runtime.
- */
-export interface GeneralStepData {
-  office: string;
-  legalForm: LegalForm;
-  firstname?: string;
-  middlename?: string;
-  lastname?: string;
-  fullname?: string;
-  externalId?: string;
-  mobileNo?: string;
-  email?: string;
-  /**
-   * Date of birth / incorporation date, formatted per the Angular
-   * `BEHAVIOR.dateFormat` ("DD MMMM YYYY", e.g. "01 January 2000").
-   */
-  dateOfBirth?: string;
-  clientType?: string;
-  clientClassification?: string;
-  /**
-   * Submitted-on date — defaults to today's business date in the
-   * Angular form; override only when the spec needs a specific value.
-   */
-  submittedOnDate?: string;
-  /**
-   * When true, ticks the "Active" checkbox and fills `activationDate`.
-   * `activationDate` is required when `active === true`.
-   */
-  active?: boolean;
-  activationDate?: string;
-}
+export type { LegalForm, GeneralStepData };
 
 /**
  * Data accepted by `CreateClientPage.fillFamilyStep` (one entry per

@@ -12,15 +12,28 @@
   <div class="layout-column">
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Minimum Payment' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumPayment" />
+      <input type="number" matInput formControlName="minimumPayment" [errorStateMatcher]="minimumPaymentMatcher" />
       @if (delinquencyActionForm.controls.minimumPayment.hasError('highAmountValue')) {
         <mat-error>{{ 'labels.commons.Invalid amount format' | translate }}</mat-error>
+      }
+      @if (delinquencyActionForm.hasError('minimumPaymentRequired')) {
+        <mat-error>
+          {{ 'labels.inputs.Minimum Payment' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (delinquencyActionForm.hasError('minimumPaymentNotPositive')) {
+        <mat-error>
+          {{ 'labels.inputs.Minimum Payment' | translate }}
+          {{ 'labels.commons.Must be greater than 0' | translate }}
+        </mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Minimum Payment Type' | translate }}</mat-label>
       <mat-select formControlName="minimumPaymentType" [errorStateMatcher]="minimumPaymentTypeMatcher">
+        <mat-option value="">{{ 'None' | translateKey: 'catalogs' }}</mat-option>
         @for (minimumPaymentType of minimumPaymentTypeOptions; track minimumPaymentType) {
           <mat-option [value]="minimumPaymentType.id">
             {{ minimumPaymentType.value | translateKey: 'catalogs' }}
@@ -54,6 +67,7 @@
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Period Payment Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="frequencyType" [errorStateMatcher]="frequencyTypeMatcher">
+        <mat-option value="">{{ 'None' | translateKey: 'catalogs' }}</mat-option>
         @for (frequencyType of frequencyTypeOptions; track frequencyType) {
           <mat-option [value]="frequencyType.id">
             {{ frequencyType.value | translateKey: 'catalogs' }}

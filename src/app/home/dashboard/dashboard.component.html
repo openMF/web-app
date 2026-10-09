@@ -7,12 +7,21 @@
 -->
 
 <div class="container">
-  <div class="dashboard-layout">
-    <mifosx-analytics-dashboard
-      [dashboard]="dashboardDefinition"
-      [offices]="offices"
-      [products]="products"
-      [clientGroups]="clientGroups"
-    ></mifosx-analytics-dashboard>
-  </div>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="{{ 'labels.heading.Dashboard' | translate }}">
+      <div class="dashboard-layout">
+        <mifosx-analytics-dashboard
+          [dashboard]="dashboardDefinition"
+          [offices]="offices"
+          [products]="products"
+          [clientGroups]="clientGroups"
+        ></mifosx-analytics-dashboard>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'labels.heading.Onboarding Board' | translate }}">
+      <ng-template matTabContent>
+        <mifosx-onboarding-board></mifosx-onboarding-board>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>

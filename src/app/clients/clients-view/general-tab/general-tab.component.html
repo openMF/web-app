@@ -27,7 +27,7 @@
         <span class="kpi-value">{{ performanceHistory.lastLoanAmount | formatNumber }}</span>
       </div>
       <div class="kpi-card savings">
-        <span class="kpi-label">{{ 'labels.inputs.Total Savings' | translate }}</span>
+        <span class="kpi-label">{{ 'labels.inputs.Available Savings' | translate }}</span>
         <span class="kpi-value">{{ performanceHistory.totalSavings | formatNumber }}</span>
         <span class="kpi-sub">{{ performanceHistory.activeSavings }} {{ 'labels.inputs.Active' | translate }}</span>
       </div>
@@ -318,6 +318,12 @@
                 <span class="product-type-chip savings">{{ 'labels.heading.Saving Accounts' | translate }}</span>
               </div>
             </div>
+            <div class="acc-external-id">
+              @if (saving.externalId) {
+                <div class="acc-external-id-label">{{ 'labels.inputs.External Id' | translate }}</div>
+                <div class="acc-external-id-value">{{ saving.externalId }}</div>
+              }
+            </div>
             <div class="acc-product">
               <div class="acc-product-name">
                 <mifosx-long-text [textValue]="saving.productName" chars="40"></mifosx-long-text>
@@ -332,9 +338,15 @@
               }
             </div>
             <div class="acc-balance-block">
-              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-label">{{ 'labels.inputs.Account Balance' | translate }}</div>
               <div class="acc-balance-value savings">
                 {{ saving.accountBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Available Balance' | translate }}</div>
+              <div class="acc-balance-value savings">
+                {{ saving.availableBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
               </div>
             </div>
             <div class="acc-actions" (click)="$event.stopPropagation()">

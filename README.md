@@ -34,6 +34,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
     - [Date Formats](#date-and-datetime-format-settings)
     - [Session & Performance](#session--performance-settings)
     - [Password Policy](#password-policy-settings)
+    - [Email Validation](#email-validation-settings)
     - [UI Display](#ui-display-settings)
     - [OAUTH](#oauth-settings)
     - [OIDC](#oidc-settings)
@@ -45,6 +46,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - [Production Mode](#production-mode)
 - [Interbank Transfer Menu](#interbank-transfer-menu)
 - [Role-Based Access Control](#role-based-access-control-rbac)
+- [Mifos Copilot](#mifos-copilot)
 - [Releases](#releases)
 - [Contributing](#contributing)
 - [Related Projects](#related-projects)
@@ -56,6 +58,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
 - [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
+- [Financial Analytics Dashboards Documentation](./Dashboard.md)
 - [AI Assistance Test Results](./AI.md)
 
 ## Installation Guide
@@ -125,13 +128,17 @@ Choose ONE of the following methods to install the web app:
 
 #### Method 2: Docker Container Only
 
-1. Build the Docker image:
+1. Pull the Docker image:
+
+   ```bash
+   docker pull openmf/web-app:1.15.0
    ```
-   docker build -t openmf/web-app:latest .
-   ```
+
+   _(Note: You can use `:latest` for the newest stable release, or `:dev` for the latest development build. Pinning to a specific version like `:1.15.0` is recommended for production.)_
+
 2. Run the container:
-   ```
-   docker run -d -p 4200:80 openmf/web-app:latest
+   ```bash
+   docker run -d -p 4200:80 --env-file .env openmf/web-app:1.15.0
    ```
 3. Access the application at `http://localhost:4200/`
 
@@ -193,7 +200,7 @@ FINERACT_API_ACTUATOR=/fineract-provider
 FINERACT_API_VERSION=/v1
 FINERACT_PLATFORM_TENANT_IDENTIFIER=default
 MIFOS_DEFAULT_LANGUAGE=en-US
-MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
+MIFOS_SUPPORTED_LANGUAGES=az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
 MIFOS_PRELOAD_CLIENTS=true
 MIFOS_DEFAULT_CHAR_DELIMITER=,
 ```
@@ -284,10 +291,10 @@ All these environment variables can be set when using Docker or Docker Compose:
 
 #### Language Settings (i18n)
 
-| Variable                  | Description                 | Default Value                                                           |
-| ------------------------- | --------------------------- | ----------------------------------------------------------------------- |
-| MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
-| MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
+| Variable                  | Description                 | Default Value                                                                 |
+| ------------------------- | --------------------------- | ----------------------------------------------------------------------------- |
+| MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                         |
+| MIFOS_SUPPORTED_LANGUAGES | List of supported languages | az-AZ,cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
 
 #### Date and Datetime Format Settings
 
@@ -325,20 +332,21 @@ These values are read by the application when it starts and are used as the defa
 
 Available languages:
 
-| Language   | Code | File       |
-| ---------- | ---- | ---------- |
-| Czech      | cs   | cs-CS.json |
-| German     | de   | de-DE.json |
-| English    | en   | en-US.json |
-| Spanish    | es   | es-MX.json |
-| French     | fr   | fr-FR.json |
-| Italian    | it   | it-IT.json |
-| Korean     | ko   | ko-KO.json |
-| Lithuanian | lt   | lt-LT.json |
-| Latvian    | lv   | lv-LV.json |
-| Nepali     | ne   | ne-NE.json |
-| Portuguese | pt   | pt-PT.json |
-| Swahili    | sw   | sw-SW.json |
+| Language    | Code | File       |
+| ----------- | ---- | ---------- |
+| Azerbaijani | az   | az-AZ.json |
+| Czech       | cs   | cs-CS.json |
+| German      | de   | de-DE.json |
+| English     | en   | en-US.json |
+| Spanish     | es   | es-MX.json |
+| French      | fr   | fr-FR.json |
+| Italian     | it   | it-IT.json |
+| Korean      | ko   | ko-KO.json |
+| Lithuanian  | lt   | lt-LT.json |
+| Latvian     | lv   | lv-LV.json |
+| Nepali      | ne   | ne-NE.json |
+| Portuguese  | pt   | pt-PT.json |
+| Swahili     | sw   | sw-SW.json |
 
 #### Session & Performance Settings
 
@@ -373,6 +381,14 @@ Password validation for Basic Authentication can be configured via environment v
 MIFOS_MIN_PASSWORD_LENGTH=8
 MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
 ```
+
+#### Email Validation Settings
+
+| Variable             | Description                                           | Default Value                                                         |
+| -------------------- | ----------------------------------------------------- | --------------------------------------------------------------------- |
+| EXTERNAL_EMAIL_REGEX | Regex pattern used to validate the client email field | `^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$` |
+
+If `EXTERNAL_EMAIL_REGEX` is not set, or is not a valid regular expression, the application falls back to the default pattern above. The email field is optional; the pattern is only checked when a value is entered.
 
 #### UI Display Settings
 
@@ -573,7 +589,32 @@ Set `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true` to activate permission-based UI con
 - **PLD Officer (AML)**: Anti-money laundering monitoring
 - **Product Owner**: Product and system configuration
 
+## Mifos Copilot
+
+Mifos Copilot is an AI assistant panel inside the web app. An officer types what they need in
+plain language, and the Copilot finds clients, reads repayment schedules, and submits, approves
+and disburses loans. Anything that changes a record pauses first: the reply stops and shows a
+confirmation card naming the client, the product and the amount, and nothing runs until a human
+approves it.
+
+The web app never holds an LLM key and never calls a model directly. It talks only to the
+Copilot Gateway, which keeps the key server-side and runs every banking action with the
+logged-in officer's own Fineract credential, so existing permissions and the audit trail still
+apply.
+
+- **[Copilot Gateway documentation](https://github.com/openMF/mcp-mifosx/blob/main/gateway/README.md)** covers how it works, the tools it can use, the confirmation flow, and how to run and deploy the gateway.
+- **[Gateway repository](https://github.com/openMF/mcp-mifosx)** is where the gateway lives.
+- [Mifos Copilot Settings](#mifos-copilot-settings) lists the two environment variables that turn the panel on and point it at a gateway.
+
+The panel is off by default. With `MIFOS_COPILOT_MCP_BASE_URL` empty it answers from built-in
+mock responses and contacts no server, which is enough for demos and UI work without running a
+gateway.
+
 ## Releases
+
+The Mifos X Web App uses Semantic Versioning. You can find all formal releases, changelogs, and their supported Apache Fineract® versions on the [GitHub Releases](https://github.com/openMF/web-app/releases) page.
+
+For details on the release process and Docker Hub tagging strategy, see [docs/RELEASE.md](./docs/RELEASE.md).
 
 ### 1.0.0 (Tag: 1.0.0-fineract1.11)
 

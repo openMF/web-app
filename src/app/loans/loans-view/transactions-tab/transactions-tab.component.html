@@ -197,11 +197,23 @@
                 <span>{{ 'tooltips.Create Interest Refund' | translate }}</span>
               </button>
             }
+            @if (allowAdjustTransaction(transaction)) {
+              <button
+                mat-menu-item
+                *mifosxHasPermission="adjustPermission"
+                (click)="adjustTransaction(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="edit" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'labels.buttons.Adjust' | translate }}</span>
+              </button>
+            }
             @if (allowUndoTransaction(transaction)) {
               <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
                 <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-                <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+                <span>{{ undoLabelKey(transaction) | translate }}</span>
               </button>
+            }
+            @if (showTransaction(transaction)) {
               <button mat-menu-item (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
                 <mat-icon><fa-icon icon="receipt" size="sm"></fa-icon></mat-icon>
                 <span>{{ 'tooltips.View Receipts' | translate }}</span>

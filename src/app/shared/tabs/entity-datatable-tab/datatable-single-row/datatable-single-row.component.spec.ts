@@ -8,6 +8,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +22,7 @@ import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
+import { UsersService } from 'app/users/users.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -33,6 +36,8 @@ describe('DatatableSingleRowComponent', () => {
   const createDataObject = () => ({
     columnHeaders: [
       { columnName: 'id', columnDisplayType: 'INTEGER' },
+      { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
+      { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
       {
         columnName: 'Marital Status_cd_Estado Civil',
         columnDisplayType: 'CODELOOKUP',
@@ -49,6 +54,8 @@ describe('DatatableSingleRowComponent', () => {
       {
         row: [
           7,
+          true,
+          false,
           12,
           'Ada',
           '2025-01-15T12:30:00Z',
@@ -63,11 +70,18 @@ describe('DatatableSingleRowComponent', () => {
   const getDataItemText = (index: number, selector: string): string =>
     getDataItems()[index].querySelector(selector).textContent.replace(/\s+/g, ' ').trim();
 
+  const setDataObject = (dataObject: any) => {
+    fixture.componentRef.setInput('dataObject', dataObject);
+    fixture.detectChanges();
+  };
+
   beforeEach(async () => {
     const translations: Record<string, string> = {
       'labels.buttons.Add': 'Agregar',
       'labels.text.Client': 'Cliente',
       'labels.text.for': 'para',
+      'labels.buttons.Yes': 'Sí',
+      'labels.buttons.No': 'No',
       'labels.inputs.Created At': 'Creado en',
       'labels.inputs.Updated At': 'Actualizado en'
     };
@@ -104,6 +118,7 @@ describe('DatatableSingleRowComponent', () => {
         DateFormatPipe,
         DatetimeFormatPipe,
         { provide: SystemService, useValue: { getEntityDatatable: jest.fn() } },
+        { provide: UsersService, useValue: { getUser: jest.fn(() => of({})) } },
         {
           provide: SettingsService,
           useValue: {
@@ -127,21 +142,85 @@ describe('DatatableSingleRowComponent', () => {
   });
 
   it('displays the configured field name for a Code Value column label', () => {
-    expect(getDataItemText(1, '.data-label')).toBe('Estado Civil');
+    expect(getDataItemText(3, '.data-label')).toBe('Estado Civil');
   });
 
   it('renders the Code Value display value', () => {
-    expect(getDataItemText(1, '.data-value')).toBe('Married');
+    expect(getDataItemText(3, '.data-value')).toBe('Married');
+  });
+
+  it('renders boolean values as translated Yes and No labels', () => {
+    expect(getDataItemText(1, '.data-value')).toBe('Sí');
+    expect(getDataItemText(2, '.data-value')).toBe('No');
   });
 
   it('leaves normal single-row field labels unchanged', () => {
-    expect(getDataItemText(2, '.data-label')).toBe('First Name');
-    expect(getDataItemText(2, '.data-value')).toBe('Ada');
+    expect(getDataItemText(4, '.data-label')).toBe('First Name');
+    expect(getDataItemText(4, '.data-value')).toBe('Ada');
+  });
+
+  it('renders long field labels and text values in wrapping containers', () => {
+    const longFieldName = 'very_long_customer_information_field_name_that_should_wrap_completely';
+    const longValue =
+      'This is a very long customer information value that should wrap across multiple lines instead of being truncated or hidden.';
+    setDataObject({
+      columnHeaders: [{ columnName: longFieldName, columnDisplayType: 'TEXT' }],
+      data: [{ row: [longValue] }]
+    });
+
+    const dataItem = getDataItems()[0];
+    const label = dataItem.querySelector('.data-label') as HTMLElement;
+    const value = dataItem.querySelector('.data-value') as HTMLElement;
+    const longText = dataItem.querySelector('.long-text') as HTMLElement;
+    const stylesheet = readFileSync(join(__dirname, 'datatable-single-row.component.scss'), 'utf8');
+
+    expect(label.textContent.replace(/\s+/g, ' ').trim()).toBe(
+      'Very Long Customer Information Field Name That Should Wrap Completely'
+    );
+    expect(value.textContent.trim()).toBe(longValue);
+    expect(longText.textContent.trim()).toBe(longValue);
+    expect(dataItem.classList).toContain('data-item');
+    expect(stylesheet).toContain('align-items: stretch;');
+    expect(stylesheet).toContain('align-items: flex-start;');
+    expect(stylesheet).toContain('min-width: 0;');
+  });
+
+  it('renders JSON values as formatted structured text', () => {
+    setDataObject({
+      columnHeaders: [{ columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON' }],
+      data: [{ row: ['{"customerType":"business","risk":{"score":12},"tags":["priority"]}'] }]
+    });
+
+    const jsonValue = fixture.nativeElement.querySelector('.json-value') as HTMLElement;
+
+    expect(jsonValue.textContent).toContain('"customerType": "business"');
+    expect(jsonValue.textContent).toContain('"score": 12');
+    expect(jsonValue.textContent).toContain('"tags": [');
+    expect(jsonValue.textContent).not.toContain('[object Object]');
+  });
+
+  it('uses a JSON textarea with validation for adding JSON fields', () => {
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'profile', columnDisplayType: 'TEXT', columnType: 'JSON', isColumnNullable: false }
+      ],
+      data: []
+    });
+
+    component.add();
+
+    const dialogData = (matDialog.open.mock.calls[0][1] as any).data;
+    const jsonField = dialogData.formfields[0] as any;
+
+    expect(jsonField.controlType).toBe('textarea');
+    expect(jsonField.required).toBe(true);
+    expect(jsonField.validators[0]({ value: '{"name":"John",}' })).toEqual({ json: true });
+    expect(jsonField.validators[0]({ value: '{"name":"John"}' })).toBeNull();
   });
 
   it('translates single-row system timestamp labels', () => {
-    expect(getDataItemText(3, '.data-label')).toBe('Creado en');
-    expect(getDataItemText(4, '.data-label')).toBe('Actualizado en');
+    expect(getDataItemText(5, '.data-label')).toBe('Creado en');
+    expect(getDataItemText(6, '.data-label')).toBe('Actualizado en');
   });
 
   it('translates the Add dialog title while preserving the Data Table name', () => {

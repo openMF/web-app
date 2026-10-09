@@ -19,19 +19,17 @@
       </mat-form-field>
       <button
         mat-raised-button
-        color="success"
         *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
         (click)="bulkLoanReschedule('Approve')"
-        class="tasks-action-btn"
+        class="tasks-action-btn mat-success"
       >
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>
       <button
         mat-raised-button
-        color="reject"
         *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
         (click)="bulkLoanReschedule('Reject')"
-        class="tasks-action-btn"
+        class="tasks-action-btn mat-reject"
       >
         <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
       </button>

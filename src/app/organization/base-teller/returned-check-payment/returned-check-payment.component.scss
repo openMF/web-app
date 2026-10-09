@@ -1,0 +1,140 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.returned-check-payment {
+  .workflow-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin: 0 0 24px;
+  }
+
+  .form-grid,
+  .summary-grid,
+  .totals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .form-grid mat-form-field,
+  .summary-grid div,
+  .totals-grid div {
+    flex: 1 1 224px;
+  }
+
+  .summary-grid,
+  .totals-grid {
+    margin: 16px 0;
+
+    div {
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: 4px;
+      min-height: 64px;
+      padding: 16px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 8px;
+      opacity: 0.72;
+    }
+  }
+
+  .cash-panel {
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .section-heading,
+  .denomination-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .section-heading h3 {
+    margin: 0;
+  }
+
+  .denomination-row mat-form-field {
+    flex: 1 1 224px;
+  }
+
+  .line-total {
+    min-width: 128px;
+
+    span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.72;
+    }
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 960px;
+    width: 100%;
+  }
+
+  .selected-row {
+    background: rgb(63 81 181 / 8%);
+  }
+
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .message {
+    border-radius: 4px;
+    margin: 16px 0;
+    padding: 16px;
+  }
+
+  .error,
+  .error-message {
+    color: #b00020;
+  }
+
+  .error-message {
+    background: rgb(176 0 32 / 8%);
+  }
+
+  .empty-state {
+    background: rgb(0 0 0 / 4%);
+  }
+}
+
+@media print {
+  .returned-check-payment {
+    h2,
+    mat-step-header,
+    .step-actions,
+    .error-message {
+      display: none !important;
+    }
+
+    .workflow-card {
+      box-shadow: none;
+      margin: 0;
+      max-width: none;
+    }
+  }
+}

@@ -86,6 +86,9 @@ export class ApproveFixedDepositsAccountComponent implements OnInit {
    * if successful redirects to the fixed deposit account.
    */
   submit() {
+    if (this.approveFixedDepositsAccountForm.invalid) {
+      return;
+    }
     const approveFixedDepositsAccountFormData = this.approveFixedDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;

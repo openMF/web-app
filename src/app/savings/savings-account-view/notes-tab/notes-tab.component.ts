@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -29,6 +29,7 @@ export class NotesTabComponent {
   private savingsService = inject(SavingsService);
   private authenticationService = inject(AuthenticationService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   entityId: string;
   username: string;
@@ -38,6 +39,9 @@ export class NotesTabComponent {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['savingAccountId'];
+    this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingAccountNotes: any }) => {
       this.entityNotes = data.savingAccountNotes;
     });
@@ -45,24 +49,32 @@ export class NotesTabComponent {
 
   addNote(noteContent: any) {
     this.savingsService.createSavingsNote(this.entityId, noteContent).subscribe((response: any) => {
-      this.entityNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: noteContent.note
-      });
+      this.entityNotes = [
+        ...this.entityNotes,
+        {
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: noteContent.note
+        }
+      ];
+      this.cdr.markForCheck();
     });
   }
 
   editNote(noteId: string, noteContent: any, index: number) {
     this.savingsService.editSavingsNote(this.entityId, noteId, noteContent).subscribe(() => {
-      this.entityNotes[index].note = noteContent.note;
+      this.entityNotes = this.entityNotes.map((entityNote: any) =>
+        entityNote.id === noteId ? { ...entityNote, note: noteContent.note } : entityNote
+      );
+      this.cdr.markForCheck();
     });
   }
 
   deleteNote(noteId: string, index: number) {
     this.savingsService.deleteSavingsNote(this.entityId, noteId).subscribe(() => {
-      this.entityNotes.splice(index, 1);
+      this.entityNotes = this.entityNotes.filter((entityNote: any) => entityNote.id !== noteId);
+      this.cdr.markForCheck();
     });
   }
 }

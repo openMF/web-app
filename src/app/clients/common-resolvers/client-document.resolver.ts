@@ -11,7 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -25,10 +26,13 @@ export class ClientDocumentsResolver {
 
   /**
    * Returns the Client's Documents data.
+   * Falls back to an empty array when the user lacks READ_DOCUMENT permission.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientDocuments(clientId);
+    return this.clientsService
+      .getClientDocuments(clientId)
+      .pipe(catchError((err) => (err.status === 403 ? of([]) : throwError(() => err))));
   }
 }

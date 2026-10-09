@@ -77,7 +77,7 @@ export class UndoWriteOffComponent extends LoanAccountActionsBaseComponent imple
     const operationDate = this.settingsService.businessDate;
     const data = {
       ...undoWriteOffLoanFormData,
-      transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+      transactionDate: this.dateUtils.formatDate(operationDate && this.dateUtils.parseDate(operationDate), dateFormat),
       transactionAmount: 0,
       dateFormat,
       locale

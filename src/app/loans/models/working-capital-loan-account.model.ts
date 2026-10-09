@@ -13,7 +13,7 @@ export interface PeriodPaymentRateChange {
   previousRate: number;
   newRate: number;
   reversed: boolean;
-  createdDate: number[];
+  submittedOnDate: number[];
 }
 
 export interface BreachSchedule {

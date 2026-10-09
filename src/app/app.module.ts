@@ -29,12 +29,7 @@ import { PortalModule } from '@angular/cdk/portal';
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
-import {
-  TranslateLoader,
-  TranslateModule,
-  MissingTranslationHandler,
-  MissingTranslationHandlerParams
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AuthenticationInterceptor as TokenInterceptor } from './core/authentication/authentication.interceptor';
@@ -44,13 +39,7 @@ import { environment } from '../environments/environment';
 import { CallbackComponent } from './zitadel/callback/callback.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { provideLottieOptions } from 'ngx-lottie';
-
-export class CustomMissingTranslationHandler implements MissingTranslationHandler {
-  handle(params: MissingTranslationHandlerParams): string {
-    // Remove the 'labels.catalogs.' prefix and return the fallback value
-    return params.key.replace('labels.catalogs.', '');
-  }
-}
+import { CustomMissingTranslationHandler } from './core/translation/missing-translation.handler';
 
 @NgModule({
   declarations: [WebAppComponent],
@@ -68,6 +57,10 @@ export class CustomMissingTranslationHandler implements MissingTranslationHandle
           LocationStrategy
         ]
       },
+      // Without a default language ngx-translate has no catalogue to fall back on, so any key a
+      // locale is missing reaches the missing-translation handler and renders as a raw dotted key.
+      // Falling back to en-US degrades a gap to English instead, which is the readable failure.
+      defaultLanguage: 'en-US',
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomMissingTranslationHandler }
     }),
     BrowserModule,

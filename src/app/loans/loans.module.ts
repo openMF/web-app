@@ -41,6 +41,7 @@ import { LoanTrancheDetailsComponent } from './loans-view/loan-tranche-details/l
 import { CloseAsRescheduledComponent } from './loans-view/loan-account-actions/close-as-rescheduled/close-as-rescheduled.component';
 import { LoanRescheduleComponent } from './loans-view/loan-account-actions/loan-reschedule/loan-reschedule.component';
 import { LoanCollateralTabComponent } from './loans-view/loan-collateral-tab/loan-collateral-tab.component';
+import { LoanGuarantorsTabComponent } from './loans-view/loan-guarantors-tab/loan-guarantors-tab.component';
 import { CreateLoansAccountComponent } from './create-loans-account/create-loans-account.component';
 import { LoansAccountDetailsStepComponent } from './loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from './loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
@@ -128,6 +129,7 @@ import { LoansActiveClientMembersComponent } from './loans-account-stepper/loans
     CloseAsRescheduledComponent,
     LoanRescheduleComponent,
     LoanCollateralTabComponent,
+    LoanGuarantorsTabComponent,
     CreateLoansAccountComponent,
     LoansAccountDetailsStepComponent,
     LoansAccountTermsStepComponent,

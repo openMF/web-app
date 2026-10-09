@@ -9,7 +9,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import * as L from 'leaflet';
@@ -57,6 +57,7 @@ describe('AddressTabComponent', () => {
   let clientsService: jest.Mocked<ClientsService>;
   let dialog: jest.Mocked<MatDialog>;
   let formGroupService: FormGroupService;
+  let translateService: TranslateService;
 
   const addressTemplate = {
     addressTypeIdOptions: [
@@ -162,6 +163,23 @@ describe('AddressTabComponent', () => {
     fixture = TestBed.createComponent(AddressTabComponent);
     component = fixture.componentInstance;
     formGroupService = TestBed.inject(FormGroupService);
+    translateService = TestBed.inject(TranslateService);
+    translateService.setTranslation('en', {
+      labels: {
+        buttons: {
+          Yes: 'Yes',
+          No: 'No'
+        },
+        inputs: {
+          'Address Line': 'Shared Address Line',
+          'Address Line 1': 'Address Line One Label',
+          'Address Line 2': 'Address Line Two Label',
+          'Address Line 3': 'Address Line Three Label'
+        }
+      }
+    });
+    translateService.setDefaultLang('en');
+    translateService.use('en');
   });
 
   function expandFirstAddressPanel() {
@@ -174,6 +192,14 @@ describe('AddressTabComponent', () => {
     const panel = fixture.debugElement.query(By.directive(MatExpansionPanel)).componentInstance as MatExpansionPanel;
     panel.afterCollapse.emit();
     fixture.detectChanges();
+  }
+
+  function getActiveStatusElement(): HTMLElement {
+    const element = fixture.nativeElement.querySelector('[data-testid="client-address-active-status"]') as HTMLElement;
+
+    expect(element).not.toBeNull();
+
+    return element;
   }
 
   it('should show latitude and longitude fields when enabled', () => {
@@ -189,6 +215,20 @@ describe('AddressTabComponent', () => {
     expect(formFields.some((field) => field.controlName === 'street')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'townVillage')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'countyDistrict')).toBe(true);
+  });
+
+  it('should use independent address line translation keys in add and edit forms', () => {
+    const addFormFields = component.getAddressFormFields('add');
+    const editFormFields = component.getAddressFormFields('edit', component.clientAddressData[0]);
+
+    [
+      addFormFields,
+      editFormFields
+    ].forEach((formFields) => {
+      expect(formFields.find((field) => field.controlName === 'addressLine1')?.label).toBe('Address Line One Label');
+      expect(formFields.find((field) => field.controlName === 'addressLine2')?.label).toBe('Address Line Two Label');
+      expect(formFields.find((field) => field.controlName === 'addressLine3')?.label).toBe('Address Line Three Label');
+    });
   });
 
   it('should populate missing address fields when editing', () => {
@@ -417,6 +457,45 @@ describe('AddressTabComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('MG Road');
     expect(fixture.nativeElement.textContent).toContain('Indiranagar');
     expect(fixture.nativeElement.textContent).toContain('Bangalore Urban');
+  });
+
+  it('should display active address status as translated Yes', () => {
+    component.clientAddressData[0].isActive = true;
+
+    fixture.detectChanges();
+
+    const activeStatusElement = getActiveStatusElement();
+    expect(activeStatusElement.textContent).toContain('Yes');
+    expect(activeStatusElement.textContent).not.toContain('true');
+  });
+
+  it('should display inactive address status as translated No', () => {
+    component.clientAddressData[0].isActive = false;
+
+    fixture.detectChanges();
+
+    const activeStatusElement = getActiveStatusElement();
+    expect(activeStatusElement.textContent).toContain('No');
+    expect(activeStatusElement.textContent).not.toContain('false');
+  });
+
+  it('should display address active status using non-English translations', () => {
+    translateService.setTranslation('fr', {
+      labels: {
+        buttons: {
+          Yes: 'Oui',
+          No: 'Non'
+        }
+      }
+    });
+    translateService.use('fr');
+    component.clientAddressData[0].isActive = false;
+
+    fixture.detectChanges();
+
+    const activeStatusElement = getActiveStatusElement();
+    expect(activeStatusElement.textContent).toContain('Non');
+    expect(activeStatusElement.textContent).not.toContain('false');
   });
 
   it('should display saved coordinates and render the map for valid coordinates', () => {

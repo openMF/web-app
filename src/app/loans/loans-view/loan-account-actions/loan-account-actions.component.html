@@ -19,7 +19,11 @@
   <mifosx-foreclosure [dataObject]="actionButtonData"></mifosx-foreclosure>
 }
 @if (actions['Prepay Loan'] || actions['Contract Termination']) {
-  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+  @if (isWorkingCapital && actions['Prepay Loan']) {
+    <mifosx-working-capital-prepay-loan [dataObject]="actionButtonData"></mifosx-working-capital-prepay-loan>
+  } @else {
+    <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+  }
 }
 @if (actions['Make Repayment']) {
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
@@ -62,7 +66,11 @@
   <mifosx-loan-reschedule [dataObject]="actionButtonData"></mifosx-loan-reschedule>
 }
 @if (actions['Recovery Payment']) {
-  <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-recovery-payment [dataObject]="actionButtonData"></mifosx-working-capital-recovery-payment>
+  } @else {
+    <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+  }
 }
 @if (actions['View Guarantors']) {
   <mifosx-view-guarantors [dataObject]="actionButtonData"></mifosx-view-guarantors>

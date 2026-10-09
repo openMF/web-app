@@ -420,8 +420,11 @@ export class GeneralTabComponent implements OnDestroy {
       }
       return false;
     }).length;
-    // Total Savings: sum of balances
-    this.performanceHistory.totalSavings = allSavings.reduce((sum: number, s: any) => sum + (s.accountBalance || 0), 0);
+    // Available Savings: sum of balances net of holds; Fineract before 1.15 omits availableBalance
+    this.performanceHistory.totalSavings = allSavings.reduce(
+      (sum: number, s: any) => sum + (s.availableBalance ?? s.accountBalance ?? 0),
+      0
+    );
   }
 
   /**

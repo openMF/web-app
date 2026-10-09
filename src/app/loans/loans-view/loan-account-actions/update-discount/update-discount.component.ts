@@ -20,7 +20,10 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
-import { WorkingCapitalLoanDiscountUpdateRequest } from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import {
+  WorkingCapitalLoanDiscountUpdateRequest,
+  WorkingCapitalLoanTransaction
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
  * Discount Fee action for Working Capital Loan.
@@ -48,6 +51,7 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
 
   currency: Currency | null = null;
   disbursementTransactionId: number = 0;
+  disbursementDate: number[] | string | null = null;
 
   constructor() {
     super();
@@ -58,10 +62,14 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
   isSubmitting = false;
 
   ngOnInit(): void {
-    if (this.dataObject?.content && this.dataObject?.content.length > 0) {
-      const disburseTransaction = this.dataObject?.content[0];
+    const transactions: WorkingCapitalLoanTransaction[] = this.dataObject?.content ?? [];
+    const disburseTransaction = transactions.find(
+      (transaction) => transaction.type?.disbursement && !transaction.reversed
+    );
+    if (disburseTransaction) {
       this.currency = disburseTransaction.currency;
       this.disbursementTransactionId = disburseTransaction.id;
+      this.disbursementDate = disburseTransaction.transactionDate;
     }
     this.updateDiscountForm = this.formBuilder.group({
       transactionAmount: [
@@ -84,7 +92,12 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
   }
 
   submit(): void {
-    if (this.updateDiscountForm == null || !this.updateDiscountForm.valid || this.isSubmitting) {
+    if (
+      this.updateDiscountForm == null ||
+      !this.updateDiscountForm.valid ||
+      this.isSubmitting ||
+      this.disbursementTransactionId <= 0
+    ) {
       return;
     }
 

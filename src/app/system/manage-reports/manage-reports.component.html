@@ -13,6 +13,12 @@
       {{ 'labels.buttons.Create Report' | translate }}
     </button>
   </div>
+  <div class="in-block">
+    <button mat-raised-button color="primary" (click)="uploadReportDesign()" *mifosxHasPermission="'CREATE_REPORT'">
+      <fa-icon icon="upload" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Upload Report Design' | translate }}
+    </button>
+  </div>
 </div>
 
 <div class="container">

@@ -9,7 +9,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { LOGIN_SELECTORS } from '../config/selectors';
-import { ROUTES } from '../config/routes';
+import { ROUTES, appRoutePath, toAppRoutePath } from '../config/routes';
 import { BEHAVIOR } from '../config/behavior';
 
 /**
@@ -154,7 +154,7 @@ export class LoginPage extends BasePage {
     const errorLocator = this.page.locator(LOGIN_SELECTORS.errorMessage);
     const result = await Promise.race([
       this.page
-        .waitForURL((url) => !url.hash.startsWith('#/login'), {
+        .waitForURL((url) => !appRoutePath(url).startsWith(toAppRoutePath(ROUTES.login)), {
           timeout: 30000,
           waitUntil: 'networkidle'
         })

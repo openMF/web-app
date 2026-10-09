@@ -7,31 +7,121 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatPaginator } from '@angular/material/paginator';
-import {
-  MatTableDataSource,
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SearchData } from '../search.model';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { JournalEntryLine, SearchData, SearchResultsBundle } from '../search.model';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
-import { MatIconButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { TranslateService } from '@ngx-translate/core';
+
+/** Scope segments shown above the results. */
+type DomainKey = 'all' | 'people' | 'accounts' | 'transactions' | 'accounting';
+
+/** Result sections, in display order. */
+type GroupKey =
+  | 'clients'
+  | 'groupsCenters'
+  | 'loans'
+  | 'savingsDeposits'
+  | 'shares'
+  | 'loanTransactions'
+  | 'savingsTransactions'
+  | 'accountingEntries';
+
+/** Contextual refine filters within a domain. */
+type SubKey =
+  | 'any'
+  | 'clients'
+  | 'groupsCenters'
+  | 'loans'
+  | 'savings'
+  | 'fixedDeposits'
+  | 'recurringDeposits'
+  | 'shares'
+  | 'loanTransactions'
+  | 'savingsTransactions';
+
+type StatusTone = 'active' | 'pending' | 'closed';
+
+interface GroupDef {
+  key: GroupKey;
+  domain: DomainKey;
+  labelKey: string;
+  hue: string;
+}
+
+interface SubFilterDef {
+  key: SubKey;
+  labelKey: string;
+  hue?: string;
+}
+
+/** Display-ready row derived from a search result or a journal entry. */
+interface SearchRow {
+  group: GroupKey;
+  sub: SubKey | null;
+  hue: string;
+  name: string;
+  detail: string;
+  accountNo: string;
+  externalId: string;
+  linkedToLabelKey: string;
+  linkedToName: string;
+  statusLabel: string;
+  statusTone: StatusTone;
+  entity?: SearchData;
+  journalTransactionId?: string;
+}
+
+interface VisibleGroup {
+  def: GroupDef;
+  rows: SearchRow[];
+}
+
+const GROUP_DEFS: GroupDef[] = [
+  { key: 'clients', domain: 'people', labelKey: 'labels.text.Clients', hue: 'client' },
+  { key: 'groupsCenters', domain: 'people', labelKey: 'labels.text.Groups & Centers', hue: 'group' },
+  { key: 'loans', domain: 'accounts', labelKey: 'labels.text.Loans', hue: 'loan' },
+  { key: 'savingsDeposits', domain: 'accounts', labelKey: 'labels.text.Savings & Deposits', hue: 'saving' },
+  { key: 'shares', domain: 'accounts', labelKey: 'labels.text.Shares', hue: 'share' },
+  { key: 'loanTransactions', domain: 'transactions', labelKey: 'labels.text.Loan Transactions', hue: 'loan' },
+  { key: 'savingsTransactions', domain: 'transactions', labelKey: 'labels.text.Savings Transactions', hue: 'saving' },
+  { key: 'accountingEntries', domain: 'accounting', labelKey: 'labels.text.Accounting Entries', hue: 'journal' }
+];
+
+const GROUP_DOMAINS: Record<GroupKey, DomainKey> = GROUP_DEFS.reduce(
+  (domains, def) => ({ ...domains, [def.key]: def.domain }),
+  {} as Record<GroupKey, DomainKey>
+);
+
+const SUB_FILTER_DEFS: Record<DomainKey, SubFilterDef[]> = {
+  all: [],
+  people: [
+    { key: 'any', labelKey: 'labels.text.Any' },
+    { key: 'clients', labelKey: 'labels.text.Clients', hue: 'client' },
+    { key: 'groupsCenters', labelKey: 'labels.text.Groups & Centers', hue: 'group' }
+  ],
+  accounts: [
+    { key: 'any', labelKey: 'labels.text.Any' },
+    { key: 'loans', labelKey: 'labels.text.Loans', hue: 'loan' },
+    { key: 'savings', labelKey: 'labels.text.Savings', hue: 'saving' },
+    { key: 'fixedDeposits', labelKey: 'labels.text.Fixed Deposits', hue: 'saving' },
+    { key: 'recurringDeposits', labelKey: 'labels.text.Recurring Deposits', hue: 'saving' },
+    { key: 'shares', labelKey: 'labels.text.Shares', hue: 'share' }
+  ],
+  transactions: [
+    { key: 'any', labelKey: 'labels.text.Any' },
+    { key: 'loanTransactions', labelKey: 'labels.text.Loan Transactions', hue: 'loan' },
+    { key: 'savingsTransactions', labelKey: 'labels.text.Savings Transactions', hue: 'saving' }
+  ],
+  accounting: []
+};
+
+/** The backend caps every /search response at this many rows. */
+const SEARCH_RESULT_LIMIT = 50;
 
 /**
  * Search Page Component
@@ -42,22 +132,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./search-page.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
     AccountNumberComponent,
-    ExternalIdentifierComponent,
-    MatIconButton,
-    MatTooltip,
-    FaIconComponent,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
-    MatPaginator
+    ExternalIdentifierComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -68,47 +144,98 @@ export class SearchPageComponent {
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
 
-  /** Flags if number of search results exceed 200 */
-  overload: boolean;
-  /** Datasource for loans disbursal table */
-  dataSource: MatTableDataSource<SearchData>;
-  /** Displayed Columns for serach results */
-  displayedColumns: string[] = [
-    'entityType',
-    'entityName',
-    'entityAccount',
-    'externalId',
-    'parentType',
-    'parentName',
-    'details'
+  /** Scope segments, in display order. */
+  readonly domains: { key: DomainKey; labelKey: string }[] = [
+    { key: 'all', labelKey: 'labels.text.All' },
+    { key: 'people', labelKey: 'labels.text.People' },
+    { key: 'accounts', labelKey: 'labels.text.Accounts' },
+    { key: 'transactions', labelKey: 'labels.text.Transactions' },
+    { key: 'accounting', labelKey: 'labels.text.Accounting' }
   ];
-  /** Paginator for the table */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  /** In-page search box, kept in sync with the query param. */
+  query = new FormControl<string>('', { nonNullable: true });
+
+  queryText = '';
+  selectedDomain: DomainKey = 'all';
+  selectedSub: SubKey = 'any';
+  domainCounts: Record<DomainKey, number> = { all: 0, people: 0, accounts: 0, transactions: 0, accounting: 0 };
+  visibleGroups: VisibleGroup[] = [];
+  totalCount = 0;
+  shownCount = 0;
   hasResults = false;
+  limitReached = false;
 
-  /**
-   * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
-   */
+  private rows: SearchRow[] = [];
+
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { searchResults: any }) => {
-      this.dataSource = new MatTableDataSource(data.searchResults);
-      this.dataSource.paginator = this.paginator;
-      this.hasResults = data.searchResults.length > 0;
-      this.overload = data.searchResults.length > 200 ? true : false;
-      if (this.overload) {
-        this.dataSource = new MatTableDataSource(data.searchResults.slice(0, 200));
-      }
-      this.cdr.markForCheck();
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { searchResults: SearchResultsBundle }) => {
+        this.queryText = this.route.snapshot.queryParams['query'] || '';
+        this.query.patchValue(this.queryText);
+        this.rows = this.buildRows(data.searchResults);
+        this.totalCount = this.rows.length;
+        this.hasResults = this.rows.length > 0;
+        this.limitReached = (data.searchResults?.entities || []).length >= SEARCH_RESULT_LIMIT;
+        this.domainCounts = this.countByDomain(this.rows);
+        this.selectedDomain = 'all';
+        this.selectedSub = 'any';
+        this.refresh();
+        this.cdr.markForCheck();
+      });
+  }
+
+  get subFilters(): SubFilterDef[] {
+    return SUB_FILTER_DEFS[this.selectedDomain];
+  }
+
+  /** Re-runs the search with the current query; the route resolver reloads the data. */
+  search(): void {
+    this.router.navigate(['/search'], { queryParams: { query: this.query.value } });
+  }
+
+  selectDomain(domain: DomainKey): void {
+    this.selectedDomain = domain;
+    this.selectedSub = 'any';
+    this.refresh();
+  }
+
+  selectSub(sub: SubKey): void {
+    this.selectedSub = sub;
+    this.refresh();
+  }
+
+  /** Opens the details page behind a result row. */
+  open(row: SearchRow): void {
+    if (row.journalTransactionId) {
+      this.router.navigate([
+        '/accounting',
+        'journal-entries',
+        'transactions',
+        'view',
+        row.journalTransactionId
+      ]);
+      return;
+    }
+    if (row.entity) {
+      this.navigate(row.entity);
+    }
+  }
+
+  /** Keyboard variant of open(): space scrolls the page by default, so prevent it first. */
+  openFromKeyboard(event: Event, row: SearchRow): void {
+    event.preventDefault();
+    this.open(row);
   }
 
   /**
-   * Returns link to entity view page.
-   * @param {any} entity Entity
+   * Returns link to entity view page. Loans and savings resolve their parent
+   * route from parentType, since the backend reports both client- and
+   * group-owned accounts through the same entity types.
+   * @param {SearchData} entity Entity
    */
-  navigate(entity: SearchData) {
+  navigate(entity: SearchData): void {
     if (this.isLoanTransaction(entity)) {
       this.navigateToTransaction(entity, 'loans-accounts');
       return;
@@ -155,6 +282,7 @@ export class SearchPageComponent {
         ]);
         break;
       case 'SAVING':
+        // Fixed and recurring deposit routes only exist under clients.
         if (entity.subEntityType === 'depositAccountType.recurringDeposit') {
           this.router.navigate([
             'clients',
@@ -173,7 +301,7 @@ export class SearchPageComponent {
           ]);
         } else if (entity.subEntityType === 'depositAccountType.savingsDeposit') {
           this.router.navigate([
-            'clients',
+            this.parentRoute(entity),
             entity.parentId,
             'savings-accounts',
             entity.entityId,
@@ -183,7 +311,7 @@ export class SearchPageComponent {
         break;
       case 'LOAN':
         this.router.navigate([
-          'clients',
+          this.parentRoute(entity),
           entity.parentId,
           'loans-accounts',
           entity.entityId,
@@ -193,11 +321,142 @@ export class SearchPageComponent {
     }
   }
 
-  getEntityName(entity: SearchData): string {
-    if (!this.isTransaction(entity)) {
-      return this.emptyIfMissing(entity.entityName);
-    }
+  private refresh(): void {
+    this.visibleGroups = GROUP_DEFS.map((def) => ({
+      def,
+      rows: this.rows.filter((row) => row.group === def.key && this.matchesScope(row))
+    })).filter((group) => group.rows.length > 0);
+    this.shownCount = this.visibleGroups.reduce((count, group) => count + group.rows.length, 0);
+    this.cdr.markForCheck();
+  }
 
+  private matchesScope(row: SearchRow): boolean {
+    return (
+      (this.selectedDomain === 'all' || GROUP_DOMAINS[row.group] === this.selectedDomain) &&
+      (this.selectedSub === 'any' || row.sub === this.selectedSub)
+    );
+  }
+
+  private countByDomain(rows: SearchRow[]): Record<DomainKey, number> {
+    const counts: Record<DomainKey, number> = {
+      all: rows.length,
+      people: 0,
+      accounts: 0,
+      transactions: 0,
+      accounting: 0
+    };
+    rows.forEach((row) => {
+      counts[GROUP_DOMAINS[row.group]] += 1;
+    });
+    return counts;
+  }
+
+  private buildRows(bundle: SearchResultsBundle): SearchRow[] {
+    const entityRows = (bundle?.entities || [])
+      .map((entity) => this.buildEntityRow(entity))
+      .filter((row): row is SearchRow => row !== null);
+    return entityRows.concat(this.buildJournalRows(bundle?.journalEntries || []));
+  }
+
+  private buildEntityRow(entity: SearchData): SearchRow | null {
+    switch (entity.entityType) {
+      case 'CLIENT':
+        return this.entityRow(entity, 'clients', 'clients', 'client', 'labels.inputs.Office');
+      case 'CLIENTIDENTIFIER':
+        return this.entityRow(entity, 'clients', 'clients', 'id', 'labels.inputs.Client');
+      case 'GROUP':
+        return this.entityRow(entity, 'groupsCenters', 'groupsCenters', 'group', 'labels.inputs.Office');
+      case 'CENTER':
+        return this.entityRow(entity, 'groupsCenters', 'groupsCenters', 'center', 'labels.inputs.Office');
+      case 'LOAN':
+        return this.entityRow(entity, 'loans', 'loans', 'loan', this.parentLabelKey(entity));
+      case 'SAVING':
+        return this.entityRow(
+          entity,
+          'savingsDeposits',
+          this.savingSubKey(entity),
+          'saving',
+          this.parentLabelKey(entity)
+        );
+      case 'SHARE':
+        return this.entityRow(entity, 'shares', 'shares', 'share', 'labels.inputs.Client');
+      case 'LOAN_TRANSACTION':
+        return this.transactionRow(entity, 'loanTransactions', 'loanTransactions', 'loan');
+      case 'SAVINGS_TRANSACTION':
+        return this.transactionRow(entity, 'savingsTransactions', 'savingsTransactions', 'saving');
+      default:
+        return null;
+    }
+  }
+
+  private entityRow(
+    entity: SearchData,
+    group: GroupKey,
+    sub: SubKey,
+    hue: string,
+    linkedToLabelKey: string
+  ): SearchRow {
+    return {
+      group,
+      sub,
+      hue,
+      name: this.emptyIfMissing(entity.entityName),
+      detail: '',
+      accountNo: this.emptyIfMissing(entity.entityAccountNo),
+      externalId: this.emptyIfMissing(entity.entityExternalId),
+      linkedToLabelKey,
+      linkedToName: this.emptyIfMissing(entity.parentName),
+      statusLabel: this.translateStatus(entity.entityStatus?.value),
+      statusTone: this.statusTone(entity.entityStatus?.code),
+      entity
+    };
+  }
+
+  private transactionRow(entity: SearchData, group: GroupKey, sub: SubKey, hue: string): SearchRow {
+    return {
+      group,
+      sub,
+      hue,
+      name: this.transactionName(entity),
+      detail: this.emptyIfMissing(entity.entityName),
+      accountNo: this.emptyIfMissing(entity.accountNo || entity.entityAccountNo),
+      externalId: this.emptyIfMissing(
+        entity.transactionExternalId || entity.transactionRefNo || entity.entityExternalId
+      ),
+      linkedToLabelKey: this.parentLabelKey(entity),
+      linkedToName: this.emptyIfMissing(entity.parentName),
+      statusLabel: this.translateStatus(entity.entityStatus?.value),
+      statusTone: this.statusTone(entity.entityStatus?.code),
+      entity
+    };
+  }
+
+  /** Journal entry lines share a transaction id; one row is shown per transaction. */
+  private buildJournalRows(lines: JournalEntryLine[]): SearchRow[] {
+    const byTransaction = new Map<string, JournalEntryLine>();
+    lines.forEach((line) => {
+      const existing = byTransaction.get(line.transactionId);
+      if (!existing || (line.reversed && !existing.reversed)) {
+        byTransaction.set(line.transactionId, line);
+      }
+    });
+    return Array.from(byTransaction.values()).map((line): SearchRow => ({
+      group: 'accountingEntries',
+      sub: null,
+      hue: 'journal',
+      name: `${this.translateService.instant('labels.text.Journal Entry')} ${line.transactionId}`,
+      detail: '',
+      accountNo: this.emptyIfMissing(line.transactionId),
+      externalId: '',
+      linkedToLabelKey: 'labels.inputs.Office',
+      linkedToName: this.emptyIfMissing(line.officeName),
+      statusLabel: this.translateService.instant(line.reversed ? 'labels.text.Reversed' : 'labels.text.Posted'),
+      statusTone: line.reversed ? 'closed' : 'active',
+      journalTransactionId: line.transactionId
+    }));
+  }
+
+  private transactionName(entity: SearchData): string {
     const transactionType = this.formatTransactionType(entity.transactionType);
     const transactionId = this.emptyIfMissing(entity.transactionId);
 
@@ -208,36 +467,47 @@ export class SearchPageComponent {
     return transactionType || transactionId;
   }
 
-  getAccountNo(entity: SearchData): string {
-    return this.emptyIfMissing(
-      this.isTransaction(entity) ? entity.accountNo || entity.entityAccountNo : entity.entityAccountNo
-    );
-  }
-
-  getExternalId(entity: SearchData): string {
-    const externalId = this.isTransaction(entity)
-      ? entity.transactionExternalId || entity.transactionRefNo || entity.entityExternalId
-      : entity.entityExternalId;
-
-    return this.emptyIfMissing(externalId);
-  }
-
-  getParentType(entity: SearchData): string {
-    const officeParentEntityTypes = [
-      'CLIENT',
-      'GROUP',
-      'CENTER'
-    ];
-
-    if (officeParentEntityTypes.includes(entity.entityType)) {
-      return this.translateService.instant('labels.inputs.Office');
+  private savingSubKey(entity: SearchData): SubKey {
+    if (entity.subEntityType === 'depositAccountType.fixedDeposit') {
+      return 'fixedDeposits';
     }
-
-    return this.translateService.instant(this.getParentTypeLabel(entity.parentType));
+    if (entity.subEntityType === 'depositAccountType.recurringDeposit') {
+      return 'recurringDeposits';
+    }
+    return 'savings';
   }
 
-  private isTransaction(entity: SearchData): boolean {
-    return this.isLoanTransaction(entity) || this.isSavingsTransaction(entity);
+  /** Backend status values (e.g. "Active") have translations under labels.status. */
+  private translateStatus(statusValue: string | null | undefined): string {
+    if (!statusValue) {
+      return '';
+    }
+    const key = `labels.status.${statusValue}`;
+    const translated = this.translateService.instant(key);
+    return translated === key ? statusValue : translated;
+  }
+
+  private statusTone(statusCode: string | null | undefined): StatusTone {
+    const code = (statusCode || '').toLowerCase();
+    if (code.includes('active')) {
+      return 'active';
+    }
+    if (code.includes('closed') || code.includes('rejected') || code.includes('withdrawn')) {
+      return 'closed';
+    }
+    return 'pending';
+  }
+
+  private parentLabelKey(entity: SearchData): string {
+    return this.isGroupParent(entity) ? 'labels.inputs.Group' : 'labels.inputs.Client';
+  }
+
+  private parentRoute(entity: SearchData): string {
+    return this.isGroupParent(entity) ? 'groups' : 'clients';
+  }
+
+  private isGroupParent(entity: SearchData): boolean {
+    return entity.parentType?.toLowerCase() === 'group';
   }
 
   private isLoanTransaction(entity: SearchData): boolean {
@@ -253,9 +523,8 @@ export class SearchPageComponent {
       return;
     }
 
-    const parentRoute = entity.parentType === 'group' ? 'groups' : 'clients';
     const commands = [
-      parentRoute,
+      this.parentRoute(entity),
       entity.parentId,
       accountRoute,
       entity.accountId,
@@ -280,13 +549,5 @@ export class SearchPageComponent {
     }
 
     return transactionType.charAt(0).toUpperCase() + transactionType.slice(1);
-  }
-
-  private getParentTypeLabel(parentType: string | null | undefined): string {
-    if (parentType?.toLowerCase() === 'group') {
-      return 'labels.inputs.Group';
-    }
-
-    return 'labels.inputs.Client';
   }
 }

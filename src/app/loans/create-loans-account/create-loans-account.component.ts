@@ -101,6 +101,10 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
 
   loanProductsBasicDetails: LoanProductBasicDetails[] | null = null;
   productType: string | null = null;
+  /** True while the create request is in flight. */
+  isSubmitting = false;
+  /** Idempotency key reused if the same submission is retried. */
+  submitIdempotencyKey?: string;
 
   /**
    * Sets loans account create form.
@@ -232,10 +236,39 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
 
   submit(): void {
     if (this.loanProductService.isLoanProduct) {
-      this.submitLoanProduct();
+      if (this.startSubmit()) {
+        this.submitLoanProduct();
+      }
     } else if (this.loanProductService.isWorkingCapital) {
-      this.submitWorkingCapitalProduct();
+      if (this.startSubmit()) {
+        this.submitWorkingCapitalProduct();
+      }
     }
+  }
+
+  /**
+   * Marks the submission as in flight and creates its idempotency key.
+   * @returns false if a submission is already in flight.
+   */
+  private startSubmit(): boolean {
+    if (this.isSubmitting) {
+      return false;
+    }
+    if (!this.submitIdempotencyKey) {
+      this.submitIdempotencyKey =
+        globalThis.crypto?.randomUUID?.() ?? `create-loan-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+    return true;
+  }
+
+  /** Allows submitting again after the request failed. */
+  private submitFailed(): void {
+    // Fineract replays the stored response for a reused key, so a corrected form needs a new key.
+    this.submitIdempotencyKey = undefined;
+    this.isSubmitting = false;
+    this.cdr.markForCheck();
   }
 
   submitLoanProduct() {
@@ -258,21 +291,25 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     }
 
     this.loansService
-      .createLoansAccount(this.loanProductService.loanAccountPath, payload)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId,
-            'general'
-          ],
-          {
-            queryParams: {
-              productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
-          }
-        );
+      .createLoansAccount(this.loanProductService.loanAccountPath, payload, this.submitIdempotencyKey)
+      .subscribe({
+        next: (response: any) => {
+          this.submitIdempotencyKey = undefined;
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId,
+              'general'
+            ],
+            {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
+            }
+          );
+        },
+        error: () => this.submitFailed()
       });
   }
 
@@ -314,12 +351,19 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         delete payload['breachId'];
         delete payload['nearBreachId'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+      }
     }
 
     // No Empty values to be sent
     [
       'delinquencyGraceDays',
-      'delinquencyStartType'
+      'delinquencyStartType',
+      'delinquencyBucketId'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {
         delete payload[attr];
@@ -327,21 +371,25 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     });
 
     this.loansService
-      .createLoansAccount(this.loanProductService.loanAccountPath, payload)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId,
-            'general'
-          ],
-          {
-            queryParams: {
-              productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
-          }
-        );
+      .createLoansAccount(this.loanProductService.loanAccountPath, payload, this.submitIdempotencyKey)
+      .subscribe({
+        next: (response: any) => {
+          this.submitIdempotencyKey = undefined;
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId,
+              'general'
+            ],
+            {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
+            }
+          );
+        },
+        error: () => this.submitFailed()
       });
   }
 }

@@ -66,7 +66,7 @@ export class WaiveInterestComponent extends LoanAccountActionsBaseComponent impl
         Validators.required
       ],
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       note: ['']

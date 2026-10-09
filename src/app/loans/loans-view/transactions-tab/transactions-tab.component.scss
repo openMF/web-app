@@ -8,36 +8,8 @@
 
 @use '../loan-tab-shared' as shared;
 
-/* ── Component-specific tokens (transaction state) ─────────── */
-:host {
-  --tx-disbursement: var(--ch-blue-700);
-  --tx-disbursement-bg: var(--ch-blue-50);
-  --tx-repayment: var(--ch-paid);
-  --tx-repayment-bg: var(--ch-paid-bg);
-  --tx-accrual: var(--ch-text-3);
-  --tx-accrual-bg: var(--ch-surface-h);
-  --tx-reversed: var(--ch-alert);
-  --tx-reversed-bg: var(--ch-alert-bg);
-  --tx-downpayment: #6a1b9a;
-  --tx-downpayment-bg: #f3e5f5;
-  --tx-chargeoff: var(--ch-partial);
-  --tx-chargeoff-bg: var(--ch-partial-bg);
-  --tx-reage: #283593;
-  --tx-reage-bg: #e8eaf6;
-  --tx-reamortize: #00695c;
-  --tx-reamortize-bg: #e0f2f1;
-  --tx-linked: var(--ch-paid);
-  --tx-linked-bg: var(--ch-paid-bg);
-}
-
-:host-context(.dark-theme) {
-  --tx-downpayment: #ce93d8;
-  --tx-downpayment-bg: #1a0a26;
-  --tx-reage: #9fa8da;
-  --tx-reage-bg: #0d1230;
-  --tx-reamortize: #80cbc4;
-  --tx-reamortize-bg: #002f2b;
-}
+/* ── Transaction-type tokens (shared with view-transaction) ── */
+@include shared.transaction-type-tokens;
 
 .transactions-container {
   @include shared.card-container;
@@ -181,6 +153,12 @@
     border-left: 3px solid var(--tx-chargeoff);
   }
 
+  // Recovery payments are income after a write-off, not debt reduction, so the
+  // row is marked apart from a plain repayment.
+  .row-recovery .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-recovery);
+  }
+
   .row-reage .mat-mdc-cell:first-child {
     border-left: 3px solid var(--tx-reage);
   }
@@ -191,6 +169,10 @@
 
   .row-linked .mat-mdc-cell:first-child {
     border-left: 3px solid var(--tx-linked);
+  }
+
+  .row-discount .mat-mdc-cell:first-child {
+    border-left: 3px solid var(--tx-discount);
   }
 
   /* Paginator */
@@ -229,115 +211,8 @@
   color: var(--ch-text-2);
 }
 
-/* ── Transaction type badges (same system as charges-tab) ────── */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  border: 1px solid transparent;
-  white-space: nowrap;
-
-  .badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-}
-
-.badge-disbursement {
-  background: var(--tx-disbursement-bg);
-  color: var(--tx-disbursement);
-  border-color: var(--tx-disbursement);
-
-  .badge-dot {
-    background: var(--tx-disbursement);
-  }
-}
-
-.badge-repayment {
-  background: var(--tx-repayment-bg);
-  color: var(--tx-repayment);
-  border-color: var(--tx-repayment);
-
-  .badge-dot {
-    background: var(--tx-repayment);
-  }
-}
-
-.badge-accrual {
-  background: var(--tx-accrual-bg);
-  color: var(--tx-accrual);
-  border-color: var(--tx-accrual);
-
-  .badge-dot {
-    background: var(--tx-accrual);
-  }
-}
-
-.badge-reversed {
-  background: var(--tx-reversed-bg);
-  color: var(--tx-reversed);
-  border-color: var(--tx-reversed);
-
-  .badge-dot {
-    background: var(--tx-reversed);
-  }
-}
-
-.badge-downpayment {
-  background: var(--tx-downpayment-bg);
-  color: var(--tx-downpayment);
-  border-color: var(--tx-downpayment);
-
-  .badge-dot {
-    background: var(--tx-downpayment);
-  }
-}
-
-.badge-chargeoff {
-  background: var(--tx-chargeoff-bg);
-  color: var(--tx-chargeoff);
-  border-color: var(--tx-chargeoff);
-
-  .badge-dot {
-    background: var(--tx-chargeoff);
-  }
-}
-
-.badge-reage {
-  background: var(--tx-reage-bg);
-  color: var(--tx-reage);
-  border-color: var(--tx-reage);
-
-  .badge-dot {
-    background: var(--tx-reage);
-  }
-}
-
-.badge-reamortize {
-  background: var(--tx-reamortize-bg);
-  color: var(--tx-reamortize);
-  border-color: var(--tx-reamortize);
-
-  .badge-dot {
-    background: var(--tx-reamortize);
-  }
-}
-
-.badge-linked {
-  background: var(--tx-linked-bg);
-  color: var(--tx-linked);
-  border-color: var(--tx-linked);
-
-  .badge-dot {
-    background: var(--tx-linked);
-  }
-}
+/* ── Transaction type badges (shared with view-transaction) ──── */
+@include shared.transaction-badges;
 
 /* ── Monospace amounts (mirrors charges-tab .mono) ───────────── */
 .mono {

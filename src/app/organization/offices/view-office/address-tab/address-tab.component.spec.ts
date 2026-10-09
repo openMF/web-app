@@ -10,7 +10,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { of, throwError } from 'rxjs';
@@ -147,6 +147,18 @@ describe('Office AddressTabComponent', () => {
     TestBed.inject(FaIconLibrary).addIcons(faPlus, faEdit, faTrash);
     fixture = TestBed.createComponent(AddressTabComponent);
     component = fixture.componentInstance;
+    const translateService = TestBed.inject(TranslateService);
+    translateService.setTranslation('en', {
+      labels: {
+        inputs: {
+          'Address Line': 'Shared Address Line',
+          'Address Line 1': 'Address Line One Label',
+          'Address Line 2': 'Address Line Two Label',
+          'Address Line 3': 'Address Line Three Label'
+        }
+      }
+    });
+    translateService.use('en');
   });
 
   it('loads office addresses and address template options', () => {
@@ -253,6 +265,16 @@ describe('Office AddressTabComponent', () => {
     expect(component.isPluginUnavailable).toBe(true);
     expect(component.hasError).toBe(false);
     expect(component.officeAddresses).toEqual([]);
+  });
+
+  it('should use independent address line translation keys in office address forms', () => {
+    const formFields = (component as any).getAddressFormFields(officeAddress);
+
+    expect(formFields.find((field: any) => field.controlName === 'addressLine1')?.label).toBe('Address Line One Label');
+    expect(formFields.find((field: any) => field.controlName === 'addressLine2')?.label).toBe('Address Line Two Label');
+    expect(formFields.find((field: any) => field.controlName === 'addressLine3')?.label).toBe(
+      'Address Line Three Label'
+    );
   });
 
   it('updates an existing office address by office address id', () => {

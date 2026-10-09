@@ -157,8 +157,28 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     this.selection.changed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.cdr.detectChanges());
   }
 
+  /**
+   * Working Capital waives the whole outstanding amount of a single charge, so
+   * the only gate is having something left to waive: the backend rejects an
+   * `amount` parameter and accepts the command on an active loan regardless of
+   * the charge time type. Term Loan keeps its own rule, where a paid or already
+   * waived charge, a disbursement charge or a non-active loan closes the action
+   * through `actionFlag`.
+   */
+  allowWaive(charge: LoanCharge): boolean {
+    return this.loanProductService.isWorkingCapital
+      ? this.status === 'Active' && charge.amountOutstanding > 0
+      : !charge.actionFlag;
+  }
+
+  /** Permission of the waive command the row posts, which differs per product. */
+  get waivePermission(): string {
+    return this.loanProductService.isWorkingCapital ? 'WAIVE_WORKINGCAPITALLOANCHARGE' : 'WAIVE_LOANCHARGE';
+  }
+
   private buildColumns(): void {
-    const hasMultiple = this.chargesData.length > 1;
+    // Selection only exists to bulk-waive, which Working Capital does not support.
+    const hasMultiple = this.chargesData.length > 1 && !this.loanProductService.isWorkingCapital;
     this.displayedColumns = [
       ...(hasMultiple ? ['select'] : []),
       'name',
@@ -259,7 +279,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
@@ -291,7 +311,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       }
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.loansService
           .executeLoansAccountChargesCommand(
             this.loanProductService.loanAccountPath,
@@ -322,7 +342,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         this.loansService
@@ -342,7 +362,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       data: { deleteContext: `charge id:${chargeId}` }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService
           .deleteLoansAccountCharge(this.loanProductService.loanAccountPath, this.loanDetails.id, chargeId)
           .subscribe(() => this.reload());
@@ -382,8 +402,12 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     return charge.amount > 0 ? Math.round((charge.amountPaid / charge.amount) * 100) : 0;
   }
 
+  /**
+   * Working Capital charges carry no `waived` flag, only the waived amount, so
+   * the state is derived from it instead.
+   */
   isWaived(charge: LoanCharge): boolean {
-    return charge.waived;
+    return this.loanProductService.isWorkingCapital ? charge.amountWaived > 0 : charge.waived;
   }
 
   isPaid(charge: LoanCharge): boolean {

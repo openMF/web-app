@@ -55,6 +55,96 @@
   --ch-zero: #6a8fad;
 }
 
+/* ── Transaction-type tokens (transactions list + detail) ──── */
+@mixin transaction-type-tokens {
+  :host {
+    --tx-repayment: var(--ch-paid);
+    --tx-repayment-bg: var(--ch-paid-bg);
+    --tx-disbursement: var(--ch-blue-700);
+    --tx-disbursement-bg: var(--ch-blue-50);
+    --tx-accrual: var(--ch-text-3);
+    --tx-accrual-bg: var(--ch-surface-h);
+    --tx-reversed: var(--ch-alert);
+    --tx-reversed-bg: var(--ch-alert-bg);
+    --tx-downpayment: #6a1b9a;
+    --tx-downpayment-bg: #f3e5f5;
+    --tx-chargeoff: var(--ch-partial);
+    --tx-chargeoff-bg: var(--ch-partial-bg);
+    --tx-reage: #283593;
+    --tx-reage-bg: #e8eaf6;
+    --tx-reamortize: #00695c;
+    --tx-reamortize-bg: #e0f2f1;
+    --tx-discount: #5d4037;
+    --tx-discount-bg: #efebe9;
+    --tx-linked: var(--ch-paid);
+    --tx-linked-bg: var(--ch-paid-bg);
+    --tx-recovery: #00838f;
+    --tx-recovery-bg: #e0f7fa;
+
+    /* Neutral fallback for transaction types without a dedicated badge class.
+       Built on the secondary text/surface tokens so it follows both themes. */
+    --tx-default: var(--ch-text-2);
+    --tx-default-bg: var(--ch-surface-h);
+  }
+
+  :host-context(.dark-theme) {
+    --tx-downpayment: #ce93d8;
+    --tx-downpayment-bg: #1a0a26;
+    --tx-reage: #9fa8da;
+    --tx-reage-bg: #0d1230;
+    --tx-reamortize: #80cbc4;
+    --tx-reamortize-bg: #002f2b;
+    --tx-discount: #bcaaa4;
+    --tx-discount-bg: #231613;
+    --tx-recovery: #4dd0e1;
+    --tx-recovery-bg: #06282e;
+  }
+}
+
+/* ── Transaction-type badges (same system as charges-tab) ──── */
+$transaction-type-keys:
+  'repayment', 'disbursement', 'accrual', 'reversed', 'downpayment', 'chargeoff', 'reage', 'reamortize', 'discount',
+  'linked', 'recovery';
+
+@mixin transaction-badges {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    /* Neutral default so a type without a generated badge-* class still
+       renders as an intentional pill instead of unstyled text. */
+    background: var(--tx-default-bg);
+    color: var(--tx-default);
+    border: 1px solid var(--tx-default);
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--tx-default);
+    }
+  }
+
+  @each $key in $transaction-type-keys {
+    .badge-#{$key} {
+      background: var(--tx-#{$key}-bg);
+      color: var(--tx-#{$key});
+      border-color: var(--tx-#{$key});
+
+      .badge-dot {
+        background: var(--tx-#{$key});
+      }
+    }
+  }
+}
+
 /* ── Reusable layout mixins ────────────────────────────────── */
 @mixin card-container {
   border: 1px solid var(--ch-border);

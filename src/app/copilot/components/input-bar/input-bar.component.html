@@ -22,7 +22,8 @@
       </button>
       <input
         #messageInput
-        [(ngModel)]="userInput"
+        [ngModel]="text"
+        (ngModelChange)="textChange.emit($event)"
         (keydown)="onKeyDown($event)"
         [placeholder]="'copilot.input.placeholder' | translate"
         [disabled]="isStreaming"
@@ -44,7 +45,7 @@
         <button
           type="button"
           *ngIf="!isStreaming"
-          [disabled]="!userInput.trim()"
+          [disabled]="!text.trim()"
           (click)="submit()"
           class="chat-footer__send"
           [attr.aria-label]="'copilot.input.send' | translate"

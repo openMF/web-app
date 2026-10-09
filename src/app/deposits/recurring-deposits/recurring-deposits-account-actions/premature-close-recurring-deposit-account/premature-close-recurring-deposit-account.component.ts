@@ -84,6 +84,9 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
+    if (this.prematureCloseRecurringDepositsAccountForm.invalid) {
+      return;
+    }
     const prematureCloseRecurringDepositsAccountFormData = this.prematureCloseRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;

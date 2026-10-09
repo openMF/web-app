@@ -45,13 +45,13 @@
             <span>{{ 'labels.inputs.Street' | translate }} : {{ address.street }}<br /></span>
           }
           @if (isFieldEnabled('addressLine1')) {
-            <span>{{ 'labels.inputs.Address Line' | translate }} 1 : {{ address.addressLine1 }}<br /></span>
+            <span>{{ 'labels.inputs.Address Line 1' | translate }} : {{ address.addressLine1 }}<br /></span>
           }
           @if (isFieldEnabled('addressLine2')) {
-            <span>{{ 'labels.inputs.Address Line' | translate }} 2 : {{ address.addressLine2 }}<br /></span>
+            <span>{{ 'labels.inputs.Address Line 2' | translate }} : {{ address.addressLine2 }}<br /></span>
           }
           @if (isFieldEnabled('addressLine3')) {
-            <span>{{ 'labels.inputs.Address Line' | translate }} 3 : {{ address.addressLine3 }}<br /></span>
+            <span>{{ 'labels.inputs.Address Line 3' | translate }} : {{ address.addressLine3 }}<br /></span>
           }
           @if (isFieldEnabled('townVillage')) {
             <span>{{ 'labels.inputs.Town / Village' | translate }} : {{ address.townVillage }}<br /></span>
@@ -92,7 +92,9 @@
             <span>{{ 'labels.inputs.Longitude' | translate }} : {{ address.longitude }}<br /></span>
           }
           @if (isFieldEnabled('isActive')) {
-            <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
+            <span data-testid="client-address-active-status"
+              >{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive | yesNo }}<br
+            /></span>
           }
         </p>
         @if (

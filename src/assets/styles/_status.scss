@@ -64,6 +64,68 @@
   }
 }
 
+/* ── Account status pill ─────────────────────────────────────────
+   Inline pill shown next to the entity name/account number in the
+   account headers (loans, clients, groups, centers). Background is
+   driven by the same status class the status dot uses (statusLookup),
+   so the pill and dot always agree in colour.
+──────────────────────────────────────────────────────────────── */
+.account-status-pill {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #fff;
+  background-color: $status-inactive;
+
+  &.status-active {
+    background-color: $status-active;
+  }
+
+  &.status-active-overdue,
+  &.status-block {
+    background-color: $status-active-overdue;
+  }
+
+  &.status-pending {
+    background-color: $status-pending;
+  }
+
+  &.status-approved {
+    background-color: $status-approved;
+  }
+
+  &.status-overpaid {
+    background-color: $status-overpaid;
+  }
+
+  &.status-chargeoff {
+    background-color: $status-chargeoff;
+  }
+
+  &.status-matured {
+    background-color: $status-matured;
+  }
+
+  &.status-transfer-progress {
+    background-color: $status-transfer-progress;
+  }
+
+  &.status-transfer-hold {
+    background-color: $status-transfer-hold;
+  }
+
+  &.subStatus-contract-termination {
+    background-color: $subStatus-contract-termination;
+  }
+}
+
 /* ── Row-state tokens ────────────────────────────────────────────
    Reusable left-border status indicator for mat-table rows.
    Apply one class to <tr mat-row>:

@@ -41,7 +41,7 @@
 
   @if (loanProductService.isLoanProduct && loansAccount.loanPurposeId) {
     <div class="flex-fill">
-      <span class="flex-30">{{ 'labels.inputs.Loan purpose' | translate }}:</span>
+      <span class="flex-30">{{ 'labels.heading.Loan Purpose' | translate }}:</span>
       <span class="flex-70">{{
         loansAccount.loanPurposeId | find: loansAccountProductTemplate.loanPurposeOptions : 'id' : 'name'
       }}</span>
@@ -130,6 +130,13 @@
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
         <span class="flex-60">{{ camalize(delinquencyStartTypeOption?.value) | translateKey: 'catalogs' }}</span>
+      </div>
+    }
+
+    @if (loansAccount.delinquencyBucketId) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
+        <span class="flex-60">{{ getDelinquencyBucket(loansAccount.delinquencyBucketId)?.name }}</span>
       </div>
     }
 
@@ -273,7 +280,7 @@
         <span class="flex-30">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
         <span class="flex-60"
           >{{ loansAccount.interestRatePerPeriod }}&nbsp;&nbsp;{{
-            loansAccountProductTemplate.interestRateFrequencyType.value
+            loansAccountProductTemplate.interestRateFrequencyType.value | translateKey: 'catalogs'
           }}</span
         >
       </div>
@@ -405,7 +412,7 @@
       <div class="layout-row-wrap responsive-column flex-fill margin-t">
         <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
         <mat-divider class="flex-fill"></mat-divider>
-        <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
+        <table class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
@@ -415,7 +422,7 @@
           <ng-container matColumnDef="chargeCalculationType">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeCalculationType.value }}
+              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="amount">
@@ -427,7 +434,7 @@
           <ng-container matColumnDef="chargeTimeType">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
-              {{ charge.chargeTimeType.value }}
+              {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="date">
@@ -476,7 +483,9 @@
           </ng-container>
           <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+            </td>
           </ng-container>
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
@@ -484,7 +493,7 @@
           </ng-container>
           <ng-container matColumnDef="collectedon">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-            <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
+            <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="overdueChargesDisplayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: overdueChargesDisplayedColumns"></tr>
@@ -499,14 +508,10 @@
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}
   </button>
-  <button
-    mat-raised-button
-    [routerLink]="['../..']"
-    [queryParams]="{ productType: loanProductService.productType.value }"
-  >
+  <button mat-raised-button [routerLink]="['..']" [queryParams]="{ productType: loanProductService.productType.value }">
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submitEvent.emit()">
+  <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitEvent.emit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

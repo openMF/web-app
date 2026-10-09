@@ -17,6 +17,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { LoanSummaryBalanceComponentComponent } from './loan-summary-balance-component/loan-summary-balance-component.component';
+import { WorkingCapitalRecoveryPanelComponent } from '../working-capital/loan-recovery-panel/loan-recovery-panel.component';
 
 @Component({
   selector: 'mifosx-general-tab',
@@ -29,7 +30,8 @@ import { LoanSummaryBalanceComponentComponent } from './loan-summary-balance-com
     CurrencyPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    LoanSummaryBalanceComponentComponent
+    LoanSummaryBalanceComponentComponent,
+    WorkingCapitalRecoveryPanelComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -54,7 +56,8 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
       this.currencyCode = this.loanDetails.currency.code;
       if (this.loanDetails.transactions) {
         this.hasChargeBack = this.loanDetails.transactions.some(
-          (transaction: any) => transaction.type.code === 'loanTransactionType.chargeback'
+          (transaction: any) =>
+            transaction.type.code === 'loanTransactionType.chargeback' && !transaction.manuallyReversed
         );
       }
     });

@@ -19,7 +19,10 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   includeInBorrowerCycle: true,
   digitsAfterDecimal: 2,
   inMultiplesOf: 1,
-  installmentAmountInMultiplesOf: 10,
+  // Row 11 of every sheet in the workbook: the `Default Value` column is 1 (the 10 in column E is
+  // the `All Params` boilerplate sample, not a per-product figure). An instalment is a plain split of
+  // the financed amount and must not be rounded up to the nearest 10.
+  installmentAmountInMultiplesOf: 1,
   useBorrowerCycle: false,
   isLinkedToFloatingInterestRates: false,
   allowApprovedDisbursedAmountsOverApplied: false,
@@ -108,6 +111,30 @@ export interface FormField {
   placeholder?: string;
   hint?: string;
   maxLength?: number;
+  /**
+   * Lower bound for a `number` field. Emitted as `Validators.min` and mirrored onto the input's
+   * `min` attribute. Mirrors the floors Classic declares on the same control.
+   */
+  min?: number;
+  /**
+   * Maximum number of decimal places a `number` field accepts; `0` means whole numbers only.
+   * Emitted as the same `Validators.pattern` Classic uses (`^\d+([.,]\d{1,N})?$`, `^\d+$` for 0),
+   * so the guided form rejects exactly what the Classic step rejects.
+   *
+   * Classic expresses every numeric constraint it has as a floor, a decimal-place pattern, or both —
+   * there is no upper bound outside the down-payment percentage, which `syncConditionalValidators`
+   * already covers with the shared `rangeValidator(0, 100)`. Hence no `max` here.
+   */
+  decimals?: number;
+  /**
+   * Marks a field Fineract counts in repayment periods rather than in a fixed calendar unit, naming
+   * the frequency control that decides what one period actually is. The wizard renders that unit as
+   * a hint, so a `3` on a weekly product reads as three weekly periods rather than three months.
+   *
+   * Typed to the one frequency control the config has today: widening it is a one-word change, and
+   * until then the compiler points at every caller that would need the hint text generalised.
+   */
+  periodUnitFrom?: 'repaymentFrequencyType';
   options?: SelectOption[];
 }
 /**
@@ -118,22 +145,55 @@ export interface FormField {
  * - `review`: the summary/confirmation step.
  */
 export type FormStepKind =
-  'fields' | 'payment-allocation' | 'charges' | 'accounting' | 'interest-refund' | 'deferred-income' | 'review';
+  | 'fields'
+  | 'payment-allocation'
+  | 'charges'
+  | 'accounting'
+  | 'interest-refund'
+  | 'deferred-income'
+  | 'borrower-cycle'
+  | 'review';
+/**
+ * The four Classic step components the wizard can host INSTEAD of rendering a step's `fields`
+ * config: `LoanProductDetailsStepComponent`, `LoanProductCurrencyStepComponent`,
+ * `LoanProductTermsStepComponent` and `LoanProductSettingsStepComponent`.
+ *
+ * The wizard already reuses Classic's other six steps (payment allocation, charges, accounting,
+ * interest refund, deferred income, borrower cycle) for every profile. These four were the only ones
+ * re-declared as config fields, and that re-declaration was the sole source of the
+ * Custom/Advanced-vs-Classic divergence. Custom/Advanced now hosts the real components, so its field
+ * set, validation and payload are Classic's by construction rather than by maintenance.
+ *
+ * Guided profiles keep rendering the `fields` config: their whole purpose is to expose a curated
+ * subset, which the full Classic steps would defeat.
+ */
+export type ClassicStep = 'details' | 'currency' | 'terms' | 'settings';
+
 export interface FormStep {
   id: number;
   title: string;
   icon: string;
   fields: FormField[];
   kind?: FormStepKind;
+  /**
+   * The Classic component that replaces this step's `fields` rendering when the profile uses the
+   * Classic steps (see {@link usesClassicSteps}). Absent for steps with no Classic counterpart.
+   */
+  classicStep?: ClassicStep;
+}
+
+/**
+ * Profiles that host Classic's four step components instead of the config-driven field grid.
+ * Custom/Advanced is the only one: it is the "complete control" mode, so its surface must be exactly
+ * Classic's. Every guided template renders its curated `fields` config instead.
+ */
+export function usesClassicSteps(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'custom-advanced';
 }
 
 export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Custom / Advanced',
-    // Fully qualified translation key (rather than literal display text like the other cards below) so
-    // this specific description can be localized; the template applies `| translate` to every card's
-    // `description`, and untranslated literal text safely falls through the missing-translation handler
-    // unchanged, so this doesn't require touching the other, not-yet-translated cards.
     description: 'labels.text.Complete control over every aspect of product behavior',
     active: true,
     disabled: false,
@@ -144,7 +204,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Personal Loan',
     description:
-      'Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation.',
+      'labels.text.Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation',
     active: true,
     disabled: false,
     route: 'personal-loan',
@@ -152,7 +212,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Two Wheeler Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Finance for new or used two-wheelers with quick approval and flexible down payment options',
     active: true,
@@ -163,14 +222,14 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.JLG Loan',
     description:
-      'Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities.',
-    active: false,
-    disabled: true,
+      'labels.text.Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities',
+    active: true,
+    disabled: false,
+    route: 'jlg-loan',
     icon: 'group'
   },
   {
     name: 'labels.text.Education Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration',
     active: true,
@@ -180,7 +239,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Home Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description: 'labels.text.Long-tenure financing to purchase, construct, or renovate a residential property',
     active: true,
     disabled: false,
@@ -189,7 +247,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Mortgage Loan (LAP)',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Loan against property where an existing residential or commercial asset is pledged as collateral',
     active: true,
@@ -201,7 +258,6 @@ export const PRODUCT_CARDS: ProductCard[] = [
     // Renamed from 'Agri Loan' to match the template's full product name everywhere else
     // (profile label, breadcrumb, page title).
     name: 'labels.text.Agriculture Loan',
-    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles',
     active: true,
@@ -211,46 +267,51 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Auto Loan',
-    description: 'Financing for new or used car purchases with structured EMIs over a chosen tenure.',
-    active: false,
-    disabled: true,
+    description: 'labels.text.Financing for new or used car purchases with structured EMIs over a chosen tenure',
+    active: true,
+    disabled: false,
+    route: 'auto-loan',
     icon: 'directions_car'
   },
   {
     name: 'labels.text.Gold Loan',
     description:
-      'Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.',
-    active: false,
-    disabled: true,
+      'labels.text.Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork',
+    active: true,
+    disabled: false,
+    route: 'gold-loan',
     icon: 'diamond'
   },
   {
     name: 'labels.text.Consumer Durable Loan',
     description:
-      'Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.',
-    active: false,
-    disabled: true,
+      'labels.text.Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options',
+    active: true,
+    disabled: false,
+    route: 'consumer-durable-loan',
     icon: 'devices'
   },
   {
     name: 'labels.text.Loan vs Securities / FD',
     description:
-      'Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment.',
-    active: false,
-    disabled: true,
+      'labels.text.Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment',
+    active: true,
+    disabled: false,
+    route: 'loan-against-securities',
     icon: 'account_balance'
   },
   {
     name: 'labels.text.Credit Card EMI',
-    description: 'Converts card spends or available credit limit into structured EMIs.',
-    active: false,
-    disabled: true,
+    description: 'labels.text.Converts card spends or available credit limit into structured EMIs',
+    active: true,
+    disabled: false,
+    route: 'credit-card-emi-loan',
     icon: 'credit_card'
   },
   {
     name: 'labels.text.BNPL',
     description:
-      'Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.',
+      'labels.text.Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments',
     active: true,
     disabled: false,
     route: 'bnpl-loan',
@@ -259,7 +320,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Invoice Discounting',
     description:
-      'Short-term financing against unpaid invoices to improve business cash flow before customer payment is due.',
+      'labels.text.Short-term financing against unpaid invoices to improve business cash flow before customer payment is due',
     active: false,
     disabled: true,
     icon: 'receipt_long'
@@ -267,7 +328,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Merchant Cash Advance',
     description:
-      'Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions.',
+      'labels.text.Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions',
     active: false,
     disabled: true,
     icon: 'storefront'
@@ -275,7 +336,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'labels.text.Line of Credit',
     description:
-      'A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized.',
+      'labels.text.A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized',
     active: false,
     disabled: true,
     icon: 'credit_score'
@@ -286,23 +347,27 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   interestRateFrequencyType: { '2': 'Per month', '3': 'Per year' },
   repaymentFrequencyType: { '0': 'Days', '1': 'Weeks', '2': 'Months' },
   amortizationType: { '0': 'Equal principal payments', '1': 'Equal installments' },
-  interestType: { '0': 'Declining balance', '1': 'Flat' },
+  interestType: { '0': 'Declining Balance', '1': 'Flat' },
   interestCalculationPeriodType: { '0': 'Daily', '1': 'Same as repayment period' },
-  daysInYearType: { '1': 'Actual', '360': '360 days', '364': '364 days', '365': '365 days' },
-  daysInMonthType: { '1': 'Same as in year', '30': '30 days' },
-  accountingRule: { '1': 'None', '2': 'Cash-based', '3': 'Accrual (periodic)', '4': 'Accrual (upfront)' },
+  daysInYearType: { '1': 'Actual', '360': '360 Days', '364': '364 Days', '365': '365 Days' },
+  daysInMonthType: { '1': 'Actual', '30': '30 Days' },
+  accountingRule: { '1': 'None', '2': 'Cash', '3': 'Accrual (periodic)', '4': 'Accrual (upfront)' },
   currencyCode: { INR: 'Indian Rupee (₹)', USD: 'US Dollar ($)', EUR: 'Euro (€)', GBP: 'British Pound (£)' },
   transactionProcessingStrategyCode: {
-    'interest-principal-penalties-fees-order-strategy': 'Interest → Principal → Penalties → Fees',
-    'principal-interest-penalties-fees-order-strategy': 'Principal → Interest → Penalties → Fees',
-    'mifos-standard-strategy': 'Mifos standard',
-    'early-repayment-strategy': 'Early repayment'
+    'interest-principal-penalties-fees-order-strategy': 'Interest, Principal, Penalties, Fees Order',
+    'principal-interest-penalties-fees-order-strategy': 'Principal, Interest, Penalties, Fees Order',
+    'mifos-standard-strategy': 'Penalties, Fees, Interest, Principal order',
+    'early-repayment-strategy': 'Early Repayment Strategy'
   },
   canUseForTopup: { true: 'Yes', false: 'No' },
   isInterestRecalculationEnabled: { true: 'Enabled', false: 'Disabled' },
   allowPartialPeriodInterestCalculation: { true: 'Yes', false: 'No' },
   isEqualAmortization: { true: 'Yes', false: 'No' },
-  delinquencyBucketId: { '': 'None', '1': 'Bucket 1 – Standard', '2': 'Bucket 2 – Aggressive' },
+  // Only the "None" choice: every real bucket is named by the tenant, so the Review resolves its
+  // label from the field's template-sourced options (`formatFieldValue`) rather than from a static
+  // map that could only ever guess. The two invented entries that used to live here
+  // ('Bucket 1 – Standard', 'Bucket 2 – Aggressive') named buckets that exist on no tenant.
+  delinquencyBucketId: { '': 'None' },
   canDefineInstallmentAmount: { true: 'Yes', false: 'No' },
   allowVariableInstallments: { true: 'Yes', false: 'No' },
   multiDisburseLoan: { true: 'Yes', false: 'No' },
@@ -312,7 +377,7 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   isLinkedToFloatingInterestRates: { true: 'Yes', false: 'No' },
   allowApprovedDisbursedAmountsOverApplied: { true: 'Yes', false: 'No' },
   interestRecognitionOnDisbursementDate: { true: 'Yes', false: 'No' },
-  repaymentStartDateType: { '1': 'Disbursement date' },
+  repaymentStartDateType: { '1': 'Disbursement Date' },
   accountMovesOutOfNPAOnlyOnArrearsCompletion: { true: 'Yes', false: 'No' },
   holdGuaranteeFunds: { true: 'Yes', false: 'No' },
   disallowExpectedDisbursements: { true: 'Yes', false: 'No' },
@@ -334,10 +399,23 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   overAppliedCalculationType: { '': 'None', Percentage: 'Percentage', Amount: 'Amount' }
 };
 
+/**
+ * The "no bucket" choice on the delinquency bucket select. Classic offers this as a clear button next
+ * to its dropdown (`clearProperty('delinquencyBucketId')` in loan-product-settings-step.component.ts,
+ * which also resets `enableInstallmentLevelDelinquency`); the wizard renders it as an option instead,
+ * so the empty value has to be declared rather than sourced from the template. `buildPayload`
+ * normalizes '' to null, and the same guard clears the installment-level flag.
+ *
+ * Declared above {@link FORM_STEPS} because that array literal references it at module-evaluation
+ * time — moving it down beside NTH_DAY_ON_DAY_OPTION would put it in the temporal dead zone.
+ */
+export const DELINQUENCY_BUCKET_NONE_OPTION: SelectOption = { value: '', label: 'None' };
+
 export const FORM_STEPS: FormStep[] = [
   {
     id: 1,
-    title: 'Details',
+    title: 'labels.heading.Details',
+    classicStep: 'details',
     icon: 'ti-id',
     fields: [
       {
@@ -345,7 +423,8 @@ export const FORM_STEPS: FormStep[] = [
         key: 'name',
         type: 'text',
         required: true,
-        placeholder: 'labels.placeholders.Example loan product name'
+        placeholder: 'labels.placeholders.Example loan product name',
+        maxLength: 100
       },
       {
         label: 'labels.inputs.Short Name',
@@ -354,7 +433,7 @@ export const FORM_STEPS: FormStep[] = [
         required: true,
         placeholder: 'labels.placeholders.Example short name',
         maxLength: 4,
-        hint: 'max 4 chars'
+        hint: 'labels.text.max 4 chars'
       },
       {
         label: 'labels.inputs.External ID',
@@ -366,7 +445,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Description',
         key: 'description',
         type: 'textarea',
-        placeholder: 'labels.placeholders.Example description'
+        placeholder: 'labels.placeholders.Example description',
+        maxLength: 500
       },
       {
         label: 'labels.inputs.Start Date',
@@ -385,45 +465,50 @@ export const FORM_STEPS: FormStep[] = [
   },
   {
     id: 2,
-    title: 'Currency',
+    title: 'labels.heading.Currency',
+    classicStep: 'currency',
     icon: 'ti-currency-dollar',
     fields: [
+      // The tenant's configured currencies, sourced from the backend template at render time exactly
+      // like Classic, via TEMPLATE_OPTION_SOURCES. Left empty here rather than carrying a hardcoded
+      // four-currency list, which offered choices the tenant may not have and hid the ones it does.
       {
         label: 'labels.inputs.CURRENCY',
         key: 'currencyCode',
         type: 'select',
         required: true,
-        options: [
-          { value: 'INR', label: 'INR – Indian Rupee' },
-          { value: 'USD', label: 'USD – US Dollar' },
-          { value: 'EUR', label: 'EUR – Euro' },
-          { value: 'GBP', label: 'GBP – British Pound' }
-        ]
+        options: []
       },
       {
         label: 'labels.inputs.Decimal Places',
         key: 'digitsAfterDecimal',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 2'
+        required: true,
+        placeholder: 'labels.placeholders.Example 2',
+        min: 0
       },
       {
         label: 'labels.inputs.Currency In Multiples Of',
         key: 'inMultiplesOf',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
+        required: true,
+        placeholder: 'labels.placeholders.Example 1',
+        min: 0
       },
       {
         label: 'labels.inputs.Installment in multiples of',
         key: 'installmentAmountInMultiplesOf',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 10'
+        placeholder: 'labels.placeholders.Example 10',
+        min: 0
       },
       { label: 'labels.inputs.Use borrower cycle', key: 'useBorrowerCycle', type: 'checkbox' }
     ]
   },
   {
     id: 3,
-    title: 'Terms',
+    title: 'labels.heading.Terms',
+    classicStep: 'terms',
     icon: 'ti-calculator',
     fields: [
       {
@@ -431,21 +516,29 @@ export const FORM_STEPS: FormStep[] = [
         key: 'principal',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 50000'
+        placeholder: 'labels.placeholders.Example 50000',
+        min: 1
       },
       {
         label: 'labels.inputs.Number of Repayments',
         key: 'numberOfRepayments',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 12'
+        placeholder: 'labels.placeholders.Example 12',
+        min: 1,
+        decimals: 0
       },
       {
-        label: 'labels.inputs.Annual interest rate',
+        // Classic heads the same control "Annual interest rate" (loan-product-terms-step) while
+        // offering a Per month / Per year frequency select right beside it, so the guided form takes
+        // Fineract's own name for the field instead — the one its validators report errors under.
+        label: 'labels.inputs.Nominal interest rate',
         key: 'interestRatePerPeriod',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 12'
+        placeholder: 'labels.placeholders.Example 12',
+        min: 0,
+        decimals: 6
       },
       {
         label: 'labels.inputs.Interest rate frequency',
@@ -462,7 +555,8 @@ export const FORM_STEPS: FormStep[] = [
         key: 'repaymentEvery',
         type: 'number',
         required: true,
-        placeholder: 'labels.placeholders.Example 1'
+        placeholder: 'labels.placeholders.Example 1',
+        min: 1
       },
       {
         label: 'labels.inputs.Repaid every – period',
@@ -505,7 +599,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Minimum days between disbursal and first repayment',
         key: 'minimumDaysBetweenDisbursalAndFirstRepayment',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 5'
+        placeholder: 'labels.placeholders.Example 5',
+        min: 0
       },
       {
         label: 'labels.inputs.Interest recognition on disbursement date',
@@ -516,13 +611,30 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.Repayment start date type',
         key: 'repaymentStartDateType',
         type: 'select',
-        options: [{ value: 1, label: 'Disbursement date' }]
+        options: [{ value: 1, label: 'Disbursement Date' }]
       }
     ]
   },
   {
+    // The "Terms vary based on loan cycle" surface (sheet rows 26, 27 and 29), rendered by
+    // `LoanProductBorrowerCycleStepComponent`. Only JLG marks those rows Applicable, and the step is
+    // additionally gated on the `useBorrowerCycle` control — see `visibleSteps`. It carries no
+    // config-driven fields: the component owns three FormArrays and emits them, because the wizard's
+    // single flat FormGroup cannot hold arrays of objects.
+    //
+    // Placed immediately after Terms because the per-cycle bands ARE the product's terms — Classic
+    // renders the same block inside its Terms step. Declaration order is what `visibleSteps`
+    // preserves, so this is what fixes the operator-facing ordering.
+    id: 12,
+    title: 'labels.inputs.Terms vary based on loan cycle',
+    icon: 'ti-repeat',
+    kind: 'borrower-cycle',
+    fields: []
+  },
+  {
     id: 4,
-    title: 'Settings',
+    title: 'labels.heading.Settings',
+    classicStep: 'settings',
     icon: 'ti-settings',
     fields: [
       {
@@ -541,7 +653,7 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         required: true,
         options: [
-          { value: 0, label: 'Declining balance' },
+          { value: 0, label: 'Declining Balance' },
           { value: 1, label: 'Flat' }
         ]
       },
@@ -581,16 +693,20 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         required: true,
         options: [
+          // Fineract's own names for these strategies, which is what the backend template supplies
+          // and what `labels.catalogs` is keyed by. They were full translation keys, from before the
+          // options were rendered through the catalogs namespace — a key here now resolves to itself
+          // and puts `labels.inputs.…` on screen.
           {
             value: 'interest-principal-penalties-fees-order-strategy',
-            label: 'labels.inputs.Interest → Principal → Penalties → Fees'
+            label: 'Interest, Principal, Penalties, Fees Order'
           },
           {
             value: 'principal-interest-penalties-fees-order-strategy',
-            label: 'labels.inputs.Principal → Interest → Penalties → Fees'
+            label: 'Principal, Interest, Penalties, Fees Order'
           },
-          { value: 'mifos-standard-strategy', label: 'Mifos standard' },
-          { value: 'early-repayment-strategy', label: 'Early repayment' }
+          { value: 'mifos-standard-strategy', label: 'Penalties, Fees, Interest, Principal order' },
+          { value: 'early-repayment-strategy', label: 'Early Repayment Strategy' }
         ]
       },
       {
@@ -603,22 +719,28 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'labels.inputs.Grace on principal payment (months)',
+        label: 'labels.inputs.Grace on principal payment',
         key: 'graceOnPrincipalPayment',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
-        label: 'labels.inputs.Grace on interest payment (months)',
+        label: 'labels.inputs.Grace on interest payment',
         key: 'graceOnInterestPayment',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
-        label: 'labels.inputs.Interest free period (months)',
+        label: 'labels.inputs.Interest free period',
         key: 'interestFreePeriod',
         type: 'number',
-        placeholder: '0'
+        placeholder: '0',
+        min: 0,
+        periodUnitFrom: 'repaymentFrequencyType'
       },
       {
         label: 'labels.inputs.Days in Year',
@@ -626,9 +748,9 @@ export const FORM_STEPS: FormStep[] = [
         type: 'select',
         options: [
           { value: 1, label: 'Actual' },
-          { value: 360, label: '360 days' },
-          { value: 364, label: '364 days' },
-          { value: 365, label: '365 days' }
+          { value: 360, label: '360 Days' },
+          { value: 364, label: '364 Days' },
+          { value: 365, label: '365 Days' }
         ]
       },
       {
@@ -648,15 +770,16 @@ export const FORM_STEPS: FormStep[] = [
         key: 'daysInMonthType',
         type: 'select',
         options: [
-          { value: 1, label: 'Same as in year' },
-          { value: 30, label: '30 days' }
+          { value: 1, label: 'Actual' },
+          { value: 30, label: '30 Days' }
         ]
       },
       {
         label: 'labels.inputs.Principal threshold (%) for last installment',
         key: 'principalThresholdForLastInstallment',
         type: 'number',
-        placeholder: '5'
+        placeholder: '5',
+        min: 0
       },
       { label: 'labels.inputs.Allow top-up loans', key: 'canUseForTopup', type: 'checkbox' },
       { label: 'labels.inputs.Recalculate Interest', key: 'isInterestRecalculationEnabled', type: 'checkbox' },
@@ -761,14 +884,14 @@ export const FORM_STEPS: FormStep[] = [
         type: 'checkbox'
       },
       {
+        // The tenant's own delinquency buckets, sourced from the backend template at render time
+        // exactly like Classic, via TEMPLATE_OPTION_SOURCES. Only the "None" choice is declared here:
+        // it is the wizard's equivalent of Classic's clear button, not a bucket, so it has no template
+        // counterpart and must survive a template-less render.
         label: 'labels.inputs.Delinquency Bucket',
         key: 'delinquencyBucketId',
         type: 'select',
-        options: [
-          { value: '', label: 'None' },
-          { value: '1', label: 'Bucket 1 – Standard' },
-          { value: '2', label: 'Bucket 2 – Aggressive' }
-        ]
+        options: [DELINQUENCY_BUCKET_NONE_OPTION]
       },
       { label: 'labels.inputs.Define installment amount', key: 'canDefineInstallmentAmount', type: 'checkbox' },
       { label: 'labels.inputs.Allow variable installments', key: 'allowVariableInstallments', type: 'checkbox' },
@@ -788,19 +911,22 @@ export const FORM_STEPS: FormStep[] = [
         label: 'labels.inputs.In arrears tolerance',
         key: 'inArrearsTolerance',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 50'
+        placeholder: 'labels.placeholders.Example 50',
+        min: 0
       },
       {
         label: 'labels.inputs.Grace on Arrears Ageing',
         key: 'graceOnArrearsAgeing',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 5'
+        placeholder: 'labels.placeholders.Example 5',
+        min: 0
       },
       {
         label: 'labels.inputs.Overdue days for NPA',
         key: 'overdueDaysForNPA',
         type: 'number',
-        placeholder: 'labels.placeholders.Example 90'
+        placeholder: 'labels.placeholders.Example 90',
+        min: 0
       },
       {
         label: 'labels.inputs.Account moves out of NPA only on arrears completion',
@@ -915,7 +1041,7 @@ export const FORM_STEPS: FormStep[] = [
     // Reuses the Classic Payment Allocation UI (see loan-product-wizard.component.html). Carries no
     // config-driven fields; visibility is driven by the selected repayment strategy in the component.
     id: 9,
-    title: 'Payment Allocation',
+    title: 'labels.heading.Payment Allocation',
     icon: 'ti-arrows-sort',
     kind: 'payment-allocation',
     fields: []
@@ -926,7 +1052,7 @@ export const FORM_STEPS: FormStep[] = [
     // — identical dropdowns, filters and payload as Classic — instead of free-text names. The selected
     // full charge objects are folded into the backend `charges` array by `buildChargeReferences`.
     id: 5,
-    title: 'Charges',
+    title: 'labels.heading.Charges',
     icon: 'ti-coin',
     kind: 'charges',
     fields: []
@@ -939,7 +1065,7 @@ export const FORM_STEPS: FormStep[] = [
     // in buildPayloadForSubmit, mirroring Classic's `...loanProductAccountingStep.loanProductAccounting`
     // spread, so Cash / Accrual (periodic) / Accrual (upfront) all send every required account id.
     id: 6,
-    title: 'Accounting',
+    title: 'labels.heading.Accounting',
     icon: 'ti-report',
     kind: 'accounting',
     fields: []
@@ -950,7 +1076,7 @@ export const FORM_STEPS: FormStep[] = [
     // strategy, which is the same gate Classic applies, so the wizard shows this step under exactly
     // that condition (see `visibleSteps`).
     id: 10,
-    title: 'Interest Refunds',
+    title: 'labels.heading.Interest Refunds',
     icon: 'ti-receipt-refund',
     kind: 'interest-refund',
     fields: []
@@ -964,36 +1090,12 @@ export const FORM_STEPS: FormStep[] = [
     // add/removeControl logic and `Validators.required`, so the conditional behaviour is reused
     // rather than reimplemented.
     id: 11,
-    title: 'Deferred Income Recognition',
+    title: 'labels.heading.Deferred Income Recognition',
     icon: 'ti-cash-banknote',
     kind: 'deferred-income',
     fields: []
   },
-  {
-    id: 7,
-    title: 'Advanced Configuration',
-    icon: 'ti-panel',
-    fields: [
-      {
-        label: 'labels.inputs.Use global config values for repayment event',
-        key: 'useGlobalConfigForRepaymentEvent',
-        type: 'checkbox'
-      },
-      {
-        label: 'labels.inputs.Due days for repayment event',
-        key: 'dueDaysForRepaymentEvent',
-        type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
-      },
-      {
-        label: 'labels.inputs.OverDue days for repayment event',
-        key: 'overDueDaysForRepaymentEvent',
-        type: 'number',
-        placeholder: 'labels.placeholders.Example 1'
-      }
-    ]
-  },
-  { id: 8, title: 'Review', icon: 'ti-eye', kind: 'review', fields: [] }
+  { id: 8, title: 'labels.buttons.Preview', icon: 'ti-eye', kind: 'review', fields: [] }
 ];
 
 export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null> = {
@@ -1107,7 +1209,20 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
 };
 
 export type LoanWizardProfileMode =
-  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl' | 'home' | 'mortgage';
+  | 'personal'
+  | 'custom-advanced'
+  | 'two-wheeler'
+  | 'education'
+  | 'agriculture'
+  | 'bnpl'
+  | 'home'
+  | 'mortgage'
+  | 'gold'
+  | 'auto'
+  | 'jlg'
+  | 'consumer-durable'
+  | 'credit-card-emi'
+  | 'loan-against-securities';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1160,7 +1275,12 @@ export function forcesProgressiveStack(profileMode: LoanWizardProfileMode): bool
  * construction-linked home loan disburses against build stages rather than in one lump sum.
  */
 export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'education' || profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
+  return (
+    profileMode === 'education' ||
+    profileMode === 'bnpl' ||
+    profileMode === 'credit-card-emi' ||
+    isHomeOrMortgageProfile(profileMode)
+  );
 }
 
 /**
@@ -1171,7 +1291,7 @@ export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): bo
  * Home and Mortgage are the same case (Home L / Mortage L row 57).
  */
 export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi' || isHomeOrMortgageProfile(profileMode);
 }
 
 /**
@@ -1180,7 +1300,7 @@ export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode):
  * `supportedInterestRefundTypes` instead of the template's default list.
  */
 export function rendersInterestRefundStep(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl';
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi';
 }
 
 /**
@@ -1189,7 +1309,7 @@ export function rendersInterestRefundStep(profileMode: LoanWizardProfileMode): b
  * the note in {@link sanitizeCreateLoanProductPayload} for why this is opt-in per profile.
  */
 export function dropsDisabledOverAppliedFields(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl';
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi';
 }
 
 /**
@@ -1200,6 +1320,19 @@ export function dropsDisabledOverAppliedFields(profileMode: LoanWizardProfileMod
  */
 export function rendersDeferredIncomeStep(profileMode: LoanWizardProfileMode): boolean {
   return profileMode === 'bnpl';
+}
+
+/**
+ * Profiles that render the borrower-cycle variations step — the sheet's "Terms vary based on loan
+ * cycle" rows (26, 27 and 29). JLG is the only sheet in the workbook that marks them Applicable: a
+ * joint liability group member's entitlement is expected to grow with each completed cycle, so the
+ * product carries per-cycle principal, tenure and rate bands.
+ *
+ * The step is additionally gated on the `useBorrowerCycle` control at render time (sheet row 12, which
+ * JLG also marks Applicable), mirroring Classic's `@if (loanProductTermsForm.value.useBorrowerCycle)`.
+ */
+export function rendersBorrowerCycleStep(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'jlg';
 }
 
 /** Fewest tranches a `multiDisburseLoan: true` product can be created with — used as the floor and
@@ -1258,6 +1391,12 @@ export const INTEREST_RECALCULATION_FIELDS: readonly string[] = [
  * `visibleFields`, so the wizard and Classic always offer the identical choices.
  */
 export const TEMPLATE_OPTION_SOURCES: Record<string, string> = {
+  // Classic's currency step fills its dropdown from `loanProductsTemplate.currencyOptions`
+  // (loan-product-currency-step.component.ts), i.e. the currencies actually configured on the tenant.
+  currencyCode: 'currencyOptions',
+  // Classic's settings step fills its bucket dropdown from `loanProductsTemplate.delinquencyBucketOptions`
+  // (loan-product-settings-step.component.ts), i.e. the buckets actually configured on the tenant.
+  delinquencyBucketId: 'delinquencyBucketOptions',
   preClosureInterestCalculationStrategy: 'preClosureInterestCalculationStrategyOptions',
   rescheduleStrategyMethod: 'rescheduleStrategyTypeOptions',
   interestRecalculationCompoundingMethod: 'interestRecalculationCompoundingTypeOptions',
@@ -1355,6 +1494,247 @@ const HOME_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the Gold L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 32, 33, 35, 37, 41, 42, 43, 44, 49, 52, 71. The remaining
+ * `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal, numberOfRepayments,
+ * the interest/repayment terms, amortization, interest method, interest calculation period, repayment
+ * strategy, the three grace fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin
+ * with, so they need no entry here.
+ *
+ * Row 16 ("Installment day calculation from", sample "Disbursement Date") is deliberately NOT listed:
+ * it and row 28 (`repaymentStartDateType`, sample 1) are the same backend field, and the sheet marks
+ * the first Applicable and the second Hidden. The wizard's select offers exactly that one option, so
+ * `isProfileOrStrategyDeterminedField` hides it for every profile — the same resolution Home and BNPL
+ * made for the identical contradiction on their own sheets.
+ */
+const GOLD_VISIBLE_KEYS: readonly string[] = [
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  // Row 41. Gold is the only sheet so far that marks the arrears tolerance Applicable: the pledged
+  // ornament is revalued and auctioned on default, so the tolerance band is a real underwriting lever
+  // rather than a fixed product constant.
+  'inArrearsTolerance',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'holdGuaranteeFunds',
+  'delinquencyBucketId'
+];
+
+/**
+ * Keys the Auto L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 15, 32, 33, 35, 37, 42, 43, 44, 49, 53, 67, 68, 69, 71. The
+ * remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Row 16 ("Installment day calculation from") is deliberately NOT listed, for the same reason it is
+ * omitted from {@link GOLD_VISIBLE_KEYS} — see the note there.
+ */
+const AUTO_VISIBLE_KEYS: readonly string[] = [
+  'isLinkedToFloatingInterestRates',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  // Rows 67-69. Unlike Two Wheeler — which pins the toggle on and exposes only the percentage — the
+  // Auto sheet marks all three down-payment fields Applicable, so the whole trio is editable. This is
+  // the structural difference between this profile and Gold, whose sheet keeps the trio on the master
+  // defaults.
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'delinquencyBucketId'
+];
+
+/**
+ * Keys the JLG L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 7, 12, 26, 27, 29, 32, 33, 35, 37, 42, 43, 44, 49, 53, 71. The
+ * remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Rows 7/12 and 26/27/29 are what make this sheet unlike every other one in the workbook: JLG is the
+ * only product whose terms vary by the borrower's loan cycle, which is the defining microfinance
+ * pattern — a group member's entitlement grows with each successfully repaid cycle. Rows 26/27/29 are
+ * therefore rendered by the dedicated `borrower-cycle` step rather than as flat form controls; see
+ * {@link rendersBorrowerCycleStep}.
+ */
+const JLG_VISIBLE_KEYS: readonly string[] = [
+  'includeInBorrowerCycle',
+  'useBorrowerCycle',
+  'principalVariationsForBorrowerCycle',
+  'numberOfRepaymentVariationsForBorrowerCycle',
+  'interestRateVariationsForBorrowerCycle',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  'delinquencyBucketId'
+];
+
+/**
+ * Keys the Consumer Durable L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS}
+ * would otherwise pin. Sheet rows, in order: 32, 33, 35, 37, 42, 43, 44, 49, 51, 53, 67, 68, 69, 71.
+ * The remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Row 16 needs no exemption on this sheet: unlike Home, Gold and Auto — where row 16 is Applicable and
+ * contradicts the Hidden row 28 for the same backend field — Consumer Durable marks it Not Applicable
+ * with the sample as its default, so `repaymentStartDateType` simply stays hidden.
+ */
+const CONSUMER_DURABLE_VISIBLE_KEYS: readonly string[] = [
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  // Row 51. Unique to this sheet among the profiles shipped so far: a customer who has repaid one
+  // appliance is the prime candidate for financing the next, so top-up is a real product lever here
+  // rather than the fixed `false` every other guided template pins.
+  'canUseForTopup',
+  'isInterestRecalculationEnabled',
+  // Rows 67-69, all three Applicable — the same shape as Auto. Point-of-sale finance is quoted as
+  // "pay X% today, the rest over N months", so the down payment is the headline commercial term.
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'delinquencyBucketId'
+];
+
+/**
+ * Keys the Card L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 17, 18, 19, 25, 32, 33, 35, 37, 42, 43, 44, 49, 53, 54, 55,
+ * 56, 57, 58, 67, 68, 69, 70, 71, 72, 76. The remaining `Applicable = Y` rows (name, shortName,
+ * externalId, currencyCode, principal, numberOfRepayments, the interest/repayment terms,
+ * amortization, interest method, interest calculation period, repayment strategy, the three grace
+ * fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin with.
+ *
+ * This is BNPL's list exactly, minus `enableIncomeCapitalization` and `enableBuydownFees`: the Card L
+ * sheet marks rows 77-78 Not Applicable, so a card EMI product does not render the Deferred Income
+ * Recognition step even though it does render the Interest Refund step (row 76). It is the first
+ * profile to take one of that pair without the other — see {@link rendersInterestRefundStep} and
+ * {@link rendersDeferredIncomeStep}.
+ *
+ * Row 16 is deliberately NOT listed. It and row 28 (`repaymentStartDateType`) are the same backend
+ * field, and the sheet marks the first Applicable and the second Hidden. The wizard's select offers
+ * exactly that one option, so `isProfileOrStrategyDeterminedField` hides it for every profile — the
+ * same resolution Home, Gold, Auto and BNPL made for the identical contradiction.
+ */
+const CREDIT_CARD_EMI_VISIBLE_KEYS: readonly string[] = [
+  'allowApprovedDisbursedAmountsOverApplied',
+  'overAppliedCalculationType',
+  'overAppliedNumber',
+  'interestRecognitionOnDisbursementDate',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  'multiDisburseLoan',
+  'maxTrancheCount',
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements',
+  'allowFullTermForTranche',
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'loanChargeOffBehaviour',
+  'delinquencyBucketId',
+  'enableInstallmentLevelDelinquency',
+  // Owned by the reused Classic Interest Refund step (row 76), so the step's emitted value — not a
+  // pinned default — drives the payload.
+  'supportedInterestRefundTypes'
+];
+
+/**
+ * Keys the LAS L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 15, 32, 33, 35, 37, 42, 43, 44, 49, 52, 53, 71. The remaining
+ * `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal, numberOfRepayments,
+ * the interest/repayment terms, amortization, interest method, interest calculation period, repayment
+ * strategy, the three grace fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin with.
+ *
+ * Two Applicable rows are deliberately NOT listed, both because the sheet contradicts itself:
+ *
+ * - Row 16 ("Installment day calculation from") and row 28 (`repaymentStartDateType`) are the same
+ *   backend field, marked Applicable and Hidden respectively. The wizard's select offers exactly that
+ *   one option, so `isProfileOrStrategyDeterminedField` hides it for every profile — the resolution
+ *   Home, Gold, Auto and BNPL all made for this identical pair.
+ *
+ * - Row 58 (`allowFullTermForTranche`) is Applicable while rows 54-57 — `multiDisburseLoan` and the
+ *   rest of the multi-disburse family — are all Not Applicable. A "full term for tranche" flag is
+ *   meaningless without tranches: it is gated on `multiDisburseLoan` in the UI and dropped from the
+ *   payload entirely for any profile outside {@link sendsMultiDisburseFields}, which this one is.
+ *   Exposing it alone would render a control that cannot affect the product, so the family is treated
+ *   as Not Applicable as a whole — the reading rows 54-57 support.
+ */
+const LOAN_AGAINST_SECURITIES_VISIBLE_KEYS: readonly string[] = [
+  // Row 15. Securities-backed lending is commonly priced off a floating benchmark, so this profile
+  // exposes the link — the same call Home and Auto make, and the opposite of Gold and JLG.
+  'isLinkedToFloatingInterestRates',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  // Row 52. The pledged portfolio is held as security, so the guarantee-funds machinery is a real
+  // control here, as it is for Home and Gold.
+  'holdGuaranteeFunds',
+  'isInterestRecalculationEnabled',
+  'delinquencyBucketId'
+];
+
+/**
+ * A per-call copy of {@link HIDDEN_DEFAULTS} with its mutable values isolated.
+ *
+ * A bare `{ ...HIDDEN_DEFAULTS }` is a SHALLOW copy, so the borrower-cycle variation arrays
+ * (`principalVariationsForBorrowerCycle` and siblings) would be the same array instance in every
+ * object `hiddenDefaultsFor` ever returns — and in the module-level constant itself. Nothing mutates
+ * them in place today (the borrower-cycle step assigns a fresh array rather than pushing), but a
+ * single future `payload.principalVariationsForBorrowerCycle.push(...)` would silently corrupt every
+ * profile for the lifetime of the page. Copying the arrays here keeps each caller's object its own.
+ */
+function cloneHiddenDefaults(): Record<string, unknown> {
+  const clone: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
+  for (const [
+    key,
+    value
+  ] of Object.entries(clone)) {
+    if (Array.isArray(value)) {
+      clone[key] = [...value];
+    }
+  }
+  return clone;
+}
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1362,7 +1742,7 @@ const HOME_VISIBLE_KEYS: readonly string[] = [
  */
 export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<string, unknown> {
   if (profileMode === 'two-wheeler') {
-    const defaults: Record<string, unknown> = { ...HIDDEN_DEFAULTS, description: 'Two Wheeler Loan Product' };
+    const defaults: Record<string, unknown> = { ...cloneHiddenDefaults(), description: 'Two Wheeler Loan Product' };
     // The down payment percentage is THE commercial lever of a two wheeler product (it is how
     // lenders control loan-to-value on a fast-depreciating asset), so this profile exposes it as a
     // visible, editable Settings control — see PROFILE_EXTRA_VISIBLE_FIELDS. `enableDownPayment`
@@ -1377,7 +1757,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'education') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Education Loan Product',
       // No down payment concept in an education loan — overrides the base hidden true. The sanitize
       // step then drops the two down-payment dependents exactly as it does for Classic.
@@ -1419,7 +1799,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'agriculture') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: 'Agriculture Loan Product',
       // Production credit carries no down payment concept — overrides the base hidden true; the
       // sanitize step then drops the two down-payment dependents.
@@ -1461,11 +1841,8 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (profileMode === 'bnpl') {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
-      description: 'BNPL Loan Product',
-      // Spreadsheet row 11 pins the installment multiple to 1, not the base default of 10: a BNPL
-      // instalment is a plain split of the cart value and must not be rounded up to the nearest 10.
-      installmentAmountInMultiplesOf: 1
+      ...cloneHiddenDefaults(),
+      description: 'BNPL Loan Product'
     };
     // Every key below is marked `is Applicable = Y` in the BNPL sheet, so BNPL renders it as an
     // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
@@ -1477,7 +1854,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   if (isHomeOrMortgageProfile(profileMode)) {
     const defaults: Record<string, unknown> = {
-      ...HIDDEN_DEFAULTS,
+      ...cloneHiddenDefaults(),
       description: profileMode === 'mortgage' ? 'Mortgage Loan Product' : 'Home Loan Product'
     };
     // Every key below is marked `is Applicable = Y` on the Home L sheet, so the profile renders it as
@@ -1488,8 +1865,123 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     }
     return defaults;
   }
+  if (profileMode === 'gold') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'Gold Loan Product',
+      // Row 54 is the only sheet row in the workbook that pins `multiDisburseLoan` to an explicit
+      // FALSE (Home marks the whole tranche family Applicable; the older guided sheets leave the
+      // Default Value blank). A gold loan disburses once against a single pledged lot, so the whole
+      // family stays hidden AND is dropped from the payload — Gold is absent from both
+      // `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Overriding the base `true` here
+      // matters even though the key never reaches the payload: `hiddenDefaultsFor` also feeds the
+      // wizard's hidden-key set, and PROFILE_INITIAL_OVERRIDES seeds the matching FormControl false so
+      // the reused Classic Charges step stops offering tranche-only charges.
+      multiDisburseLoan: false,
+      // Row 53, pinned FALSE. Interest recalculation is meaningless on a short bullet-style pledge
+      // loan, and Home is the profile that exposes it — Gold's sheet marks it Not Applicable.
+      isInterestRecalculationEnabled: false,
+      // Row 15, Not Applicable (Home marks it Applicable). Gold is quoted at a fixed rate for the
+      // pledge period; the base hidden `false` already matches, and it stays hidden.
+      isLinkedToFloatingInterestRates: false
+    };
+    // Every key below is marked `is Applicable = Y` on the Gold L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
+    // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of GOLD_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'auto') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'Auto Loan Product'
+      // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so unlike
+      // Gold — whose row 54 pins an explicit FALSE — it simply inherits the master defaults and is
+      // dropped from the payload wholesale, since Auto is absent from `sendsMultiDisburseFields` and
+      // `sendsOutstandingLoanBalance`. That is exactly what Two Wheeler, the closest existing analogue,
+      // already does.
+    };
+    // Every key below is marked `is Applicable = Y` on the Auto L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
+    // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of AUTO_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'jlg') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'JLG Loan Product',
+      // Row 67, pinned FALSE, overriding the base hidden `true`. A joint liability group loan has no
+      // down payment concept — the group's guarantee is the security — so the sanitize step then drops
+      // the two down-payment dependents exactly as it does for Education and Agriculture.
+      enableDownPayment: false,
+      // Row 15, Not Applicable with an explicit FALSE. Group lending is quoted at a fixed rate for the
+      // cycle; the base hidden `false` already matches and it stays hidden.
+      isLinkedToFloatingInterestRates: false
+    };
+    // Every key below is marked `is Applicable = Y` on the JLG L sheet, so the profile renders it as an
+    // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input — and for the
+    // three variation arrays it would clobber the borrower-cycle step's collected rows with `[]`.
+    for (const exposedKey of JLG_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'consumer-durable') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'Consumer Durable Loan Product'
+      // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so it
+      // inherits the master defaults and is dropped from the payload wholesale — this profile is absent
+      // from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment as Auto
+      // and Two Wheeler; only Gold's sheet pins an explicit FALSE.
+    };
+    // Every key below is marked `is Applicable = Y` on the Consumer Durable L sheet, so the profile
+    // renders it as an editable control. Each must be REMOVED (not overridden) from the hidden
+    // defaults, because the guided merge spreads `defaults` last and would clobber the user's input.
+    for (const exposedKey of CONSUMER_DURABLE_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'credit-card-emi') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'Credit Card EMI Loan Product'
+    };
+    // Every key below is marked `is Applicable = Y` on the Card L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of CREDIT_CARD_EMI_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'loan-against-securities') {
+    const defaults: Record<string, unknown> = {
+      ...cloneHiddenDefaults(),
+      description: 'Loan vs Securities / FD Product'
+      // The multi-disburse family (rows 54-58) is Not Applicable with blank Default Values, so it
+      // inherits the master defaults and is dropped from the payload wholesale — this profile is
+      // absent from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment
+      // as Auto and Consumer Durable; see LOAN_AGAINST_SECURITIES_VISIBLE_KEYS for why row 58 does not
+      // change that.
+    };
+    // Every key below is marked `is Applicable = Y` on the LAS L sheet, so the profile renders it as an
+    // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of LOAN_AGAINST_SECURITIES_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
   if (profileMode === 'custom-advanced') {
-    const d: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
+    const d: Record<string, unknown> = { ...cloneHiddenDefaults() };
     delete d.canDefineInstallmentAmount;
     delete d.allowVariableInstallments;
     delete d.multiDisburseLoan;
@@ -1508,7 +2000,7 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     delete d.daysInYearCustomStrategy;
     return d;
   }
-  return { ...HIDDEN_DEFAULTS };
+  return { ...cloneHiddenDefaults() };
 }
 
 /**
@@ -1626,7 +2118,137 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
   },
   home: HOME_AND_MORTGAGE_INITIAL_OVERRIDES,
   // Identical product-level configuration to Home — see isHomeOrMortgageProfile.
-  mortgage: HOME_AND_MORTGAGE_INITIAL_OVERRIDES
+  mortgage: HOME_AND_MORTGAGE_INITIAL_OVERRIDES,
+  gold: {
+    // Rows 35/36/37, resolved exactly as Home and BNPL resolve the same three: the sheet's Progressive
+    // schedule cannot coexist with the non-advanced strategy row 36 samples, because Fineract only
+    // accepts loanScheduleProcessingType (and the other Progressive-only settings) alongside the
+    // advanced payment allocation strategy. Progressive wins and the strategy is seeded to match.
+    // Seeded rather than pinned because row 35 marks the schedule type Applicable.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 54's explicit FALSE. The control is hidden for this profile, but it still has to carry the
+    // sheet's value: the reused Classic Charges step binds to it (`chargesMultiDisburseControl`) and
+    // would otherwise offer tranche-only charges on a single-disbursal product. See hiddenDefaultsFor.
+    multiDisburseLoan: false,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Gold L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
+    // seeding a loan-to-value or a pledge tenure here would invent commercial policy the sheet does
+    // not state.
+  },
+  auto: {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold and BNPL apply
+    // to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 67/68/69, seeded to the sheet's sample values. Down payment is intrinsic to vehicle finance
+    // (it is how the lender controls loan-to-value on a depreciating asset), so the toggle is seeded on
+    // — INITIAL_FORM_STATE seeds it false — and all three stay editable, per the sheet.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Auto L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
+    // seeding a headline ticket size or tenure here would invent commercial policy the sheet does not
+    // state.
+  },
+  jlg: {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold and BNPL apply
+    // to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 12. The defining JLG feature, and the gate the borrower-cycle step renders behind, so the
+    // toggle is seeded ON — INITIAL_FORM_STATE seeds it false — and stays editable per the sheet.
+    useBorrowerCycle: true,
+    // Row 7, Applicable and seeded on: a JLG product only makes sense if the member's completed loans
+    // are counted, since that counter is what the cycle variations key off.
+    includeInBorrowerCycle: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The JLG L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column. It
+    // matters more here than elsewhere: the per-cycle bands entered in the borrower-cycle step are the
+    // real ticket sizes, so seeding a headline figure would actively mislead.
+  },
+  'consumer-durable': {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold, Auto and BNPL
+    // apply to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 67/68/69, seeded to the sheet's sample values. Point-of-sale finance is sold as "pay X%
+    // today, the rest over N months", so the toggle is seeded on — INITIAL_FORM_STATE seeds it false —
+    // and all three stay editable, per the sheet. Same shape as Auto.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Consumer Durable L sheet carries the same
+    // 10000 / 12% / 12 boilerplate every other sheet inherits from `All Params`, with a blank Default
+    // Value column, so seeding a headline ticket size or tenure would invent commercial policy the
+    // sheet does not state.
+  },
+  'credit-card-emi': {
+    // Rows 35/36/37. Progressive is the sheet's schedule type, and Fineract only accepts the advanced
+    // payment allocation strategy — and therefore loanScheduleProcessingType, chargeOffBehaviour and
+    // supportedInterestRefundTypes — on a Progressive product. Row 36 samples a non-advanced strategy,
+    // which cannot coexist with row 35, so Progressive wins and the strategy is seeded to match. This
+    // matters more here than elsewhere: three of this profile's Applicable rows are gated on it.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 40. The promotional interest-free window at the start of the plan — the "no cost EMI" a card
+    // issuer advertises. Rows 38/39 sample 120 for the two grace fields against 12 repayments, which
+    // Fineract rejects (grace must be < numberOfRepayments), so those keep the neutral 0 seed and stay
+    // editable, exactly as BNPL resolved the same rows.
+    interestFreePeriod: 1,
+    // Rows 54-58. A card EMI draws against a limit rather than disbursing once, so the tranche family
+    // is Applicable here (unlike Gold, Auto or Consumer Durable) and the toggle is seeded on.
+    multiDisburseLoan: true,
+    maxTrancheCount: 4,
+    outstandingLoanBalance: 100000,
+    // Rows 67/68/69, seeded to the sheet's sample values and all three editable.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Card L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column.
+  },
+  'loan-against-securities': {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold, Auto, Consumer
+    // Durable and BNPL apply to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The LAS L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column. It
+    // matters here in particular: the advance against a portfolio is a loan-to-value calculation made
+    // per pledge, so any seeded ticket size would be arbitrary.
+  }
 };
 
 /**
@@ -1668,7 +2290,65 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableInstallmentLevelDelinquency'
   ],
   home: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS,
-  mortgage: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS
+  mortgage: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS,
+  // Gold L row 52 — Applicable on the sheet but in the wizard's custom-only list, so it needs the same
+  // second-gate exemption Home needs. The three guarantee inputs come with `holdGuaranteeFunds`: they
+  // are custom-only for the same reason it is, and the sheet marks the guarantee feature Applicable as
+  // a whole rather than listing its dependents separately.
+  gold: [
+    'holdGuaranteeFunds',
+    ...GUARANTEE_FUNDS_DEPENDENT_FIELDS
+  ],
+  // Auto L rows 15 and 67-69 — Applicable on the sheet but in the wizard's custom-only list, so they
+  // need the same second-gate exemption Home, Gold and BNPL need. Unlike Two Wheeler, which exposes
+  // only the percentage, the whole down-payment trio is editable here.
+  auto: [
+    'isLinkedToFloatingInterestRates',
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment'
+  ],
+  // JLG L rows 7 and 12 — Applicable on the sheet but in the wizard's custom-only list, so they need
+  // the same second-gate exemption Home, Gold and BNPL need. `useBorrowerCycle` additionally gates the
+  // borrower-cycle step, so it must be reachable for the operator to turn the feature off.
+  jlg: [
+    'includeInBorrowerCycle',
+    'useBorrowerCycle'
+  ],
+  // Consumer Durable L rows 67-69 — Applicable on the sheet but in the wizard's custom-only list, so
+  // they need the same second-gate exemption Auto and BNPL need. Unlike Auto, the floating-rate link
+  // (row 15) is Not Applicable here, so it is deliberately absent.
+  'consumer-durable': [
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment'
+  ],
+  // Card L marks these Applicable even though the wizard's custom-only list hides them for most guided
+  // profiles. Dropping them from the hidden defaults is not enough on its own: `isCustomOnlyField` is a
+  // second, independent gate in the wizard's `visibleFields`. Same set BNPL needs, since the two sheets
+  // agree on every one of these rows.
+  'credit-card-emi': [
+    'allowApprovedDisbursedAmountsOverApplied',
+    'overAppliedCalculationType',
+    'overAppliedNumber',
+    'interestRecognitionOnDisbursementDate',
+    'outstandingLoanBalance',
+    'disallowExpectedDisbursements',
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment',
+    'loanChargeOffBehaviour',
+    'enableInstallmentLevelDelinquency'
+  ],
+  // LAS L rows 15 and 52 — Applicable on the sheet but in the wizard's custom-only list, so they need
+  // the same second-gate exemption Home and Gold need. The three guarantee inputs come with
+  // `holdGuaranteeFunds`: they are custom-only for the same reason it is, and the sheet marks the
+  // guarantee feature Applicable as a whole rather than listing its dependents separately.
+  'loan-against-securities': [
+    'isLinkedToFloatingInterestRates',
+    'holdGuaranteeFunds',
+    ...GUARANTEE_FUNDS_DEPENDENT_FIELDS
+  ]
 };
 
 /** Wizard header eyebrow, one translation key per profile. */
@@ -1680,7 +2360,13 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   agriculture: 'labels.text.Agriculture Loan',
   bnpl: 'labels.text.BNPL',
   home: 'labels.text.Home Loan',
-  mortgage: 'labels.text.Mortgage Loan (LAP)'
+  mortgage: 'labels.text.Mortgage Loan (LAP)',
+  gold: 'labels.text.Gold Loan',
+  auto: 'labels.text.Auto Loan',
+  jlg: 'labels.text.JLG Loan',
+  'consumer-durable': 'labels.text.Consumer Durable Loan',
+  'credit-card-emi': 'labels.text.Credit Card EMI',
+  'loan-against-securities': 'labels.text.Loan vs Securities / FD'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -1695,7 +2381,22 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'agriculture-loan': { profileMode: 'agriculture', pageTitle: 'labels.heading.Create Agriculture Loan' },
   'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' },
   'home-loan': { profileMode: 'home', pageTitle: 'labels.heading.Create Home Loan' },
-  'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' }
+  'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' },
+  'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' },
+  'auto-loan': { profileMode: 'auto', pageTitle: 'labels.heading.Create Auto Loan' },
+  'jlg-loan': { profileMode: 'jlg', pageTitle: 'labels.heading.Create JLG Loan' },
+  'consumer-durable-loan': {
+    profileMode: 'consumer-durable',
+    pageTitle: 'labels.heading.Create Consumer Durable Loan'
+  },
+  'credit-card-emi-loan': {
+    profileMode: 'credit-card-emi',
+    pageTitle: 'labels.heading.Create Credit Card EMI Loan'
+  },
+  'loan-against-securities': {
+    profileMode: 'loan-against-securities',
+    pageTitle: 'labels.heading.Create Loan vs Securities / FD'
+  }
 };
 
 /**

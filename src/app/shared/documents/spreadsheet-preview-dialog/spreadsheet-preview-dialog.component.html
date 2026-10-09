@@ -1,0 +1,67 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title class="spreadsheet-title">{{ data.name }}</h1>
+
+<div mat-dialog-content class="spreadsheet-content">
+  @if (isEmpty) {
+    <p class="muted">{{ 'labels.text.SpreadsheetPreviewEmpty' | translate }}</p>
+  } @else {
+    @if (sheets.length > 1) {
+      <div class="sheet-tabs" role="tablist">
+        @for (sheet of sheets; track sheet.name; let i = $index) {
+          <button
+            type="button"
+            role="tab"
+            class="sheet-tab"
+            [class.active]="i === activeSheetIndex"
+            [attr.aria-selected]="i === activeSheetIndex"
+            (click)="selectSheet(i)"
+          >
+            {{ sheet.name }}
+          </button>
+        }
+      </div>
+    }
+
+    @if (activeSheet) {
+      <div class="grid-scroll">
+        <table class="spreadsheet-grid">
+          <thead>
+            <tr>
+              <th scope="col" class="gutter"></th>
+              @for (label of columnLabels; track label) {
+                <th scope="col">{{ label }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of activeSheet.rows; track trackByIndex($index); let rowIndex = $index) {
+              <tr>
+                <th scope="row" class="gutter">{{ rowIndex + 1 }}</th>
+                @for (label of columnLabels; track label; let columnIndex = $index) {
+                  <td [title]="row[columnIndex]">{{ row[columnIndex] }}</td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (data.preview.truncated) {
+        <p class="muted truncation-note">
+          {{ 'labels.text.SpreadsheetPreviewTruncated' | translate: { rows: maxRows, columns: maxColumns } }}
+        </p>
+      }
+    }
+  }
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
+</mat-dialog-actions>

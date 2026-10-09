@@ -471,6 +471,22 @@
             </mat-list-item>
           </div>
 
+          <div #baseTeller>
+            <mat-list-item *mifosxHasPermission="baseTellerPermissions">
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['base-teller']">
+                  <mat-icon>
+                    <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>{{ 'labels.text.Base Teller' | translate }}</div>
+                </a>
+                <div class="menu-right-section">
+                  <fa-icon icon="chevron-right" size="md"></fa-icon>
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #workingDays>
             <mat-list-item *mifosxHasPermission="'READ_WORKINGDAYS'">
               <div class="menu-list-item-content">

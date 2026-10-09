@@ -47,11 +47,10 @@
     <h3 matSubheader>{{ 'labels.heading.Client Members' | translate }}</h3>
 
     @if (clientMembers?.length) {
-      <mat-nav-list>
+      <div class="member-list">
         @for (client of clientMembers; track client; let i = $index) {
-          <div mat-list-item>
-            <span matLine class="p-t-10">{{ client.displayName }}</span>
-            <div class="flex-fill"></div>
+          <div class="member-row">
+            <span class="member-name">{{ client.displayName }}</span>
             <button
               mat-icon-button
               color="warn"
@@ -63,7 +62,7 @@
             </button>
           </div>
         }
-      </mat-nav-list>
+      </div>
     }
   </mat-card>
 </div>

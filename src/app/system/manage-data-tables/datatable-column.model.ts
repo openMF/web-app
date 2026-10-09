@@ -9,6 +9,7 @@
 export interface DatatableColumn {
   columnName: string;
   columnDisplayType: string;
+  columnType?: string;
   isColumnNullable: boolean;
   columnLength: string;
   columnCode: string;

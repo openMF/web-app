@@ -74,6 +74,12 @@ export class ClientsComponent implements OnInit, OnDestroy {
       .join(' ');
   }
 
+  /** Name as shown in the list, masked when client data must be hidden. */
+  displayedName(row: any): string {
+    const name: string = row?.displayName ?? '';
+    return this.hideClientData ? this.maskName(name) : name;
+  }
+
   /** Two-letter uppercase initials from a display name. */
   initials(name: string): string {
     return nameInitials(name);

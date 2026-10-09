@@ -68,12 +68,33 @@ $copilot-warning: #f59e0b;
   $glass-bg: if($is-dark, rgb(15 23 42 / 60%), rgb(255 255 255 / 70%));
   $glass-border: if($is-dark, rgb(255 255 255 / 10%), rgb(255 255 255 / 30%));
 
+  // Structural separators: the rule under the topbar, above the bottom nav, and between
+  // preference rows. Material's divider is 12% of the foreground, which is the right answer
+  // on an opaque surface and the wrong one here: this panel is 70% white over a blurred page,
+  // so at that alpha whatever is behind shows through the line and the topbar looks as though
+  // it has no rule at all. Solid in light mode so the blur cannot wash it out; left as an
+  // alpha in dark, where a faint light edge on a dark ground reads perfectly well.
+  $divider: if($is-dark, rgb(255 255 255 / 12%), #dbdfe6);
+
+  // The track of a switch that is off. It is a control rather than a separator, so it has to
+  // read as present at a glance, which the divider is deliberately too quiet to do.
+  $switch-off: if($is-dark, rgb(255 255 255 / 26%), #c3c9d4);
+
   .mifos-copilot {
     /* FAB */
     .ai-fab {
-      background: linear-gradient(135deg, $p500, $p700);
+      /* A light from above over the brand gradient, so the launcher reads as a raised object
+         rather than a flat disc. The highlight is the only thing added; the blue underneath is
+         the same brand ramp it has always been. */
+      background:
+        radial-gradient(circle at 50% 0%, rgb(255 255 255 / 22%), rgb(255 255 255 / 0%) 62%),
+        linear-gradient(135deg, $p500, $p700);
       color: $on-primary;
       box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+
+      /* The idle halo, kept fainter in dark mode: the same alpha that reads as a soft glow on
+         a light page reads as a hard rim on a dark one. */
+      --copilot-fab-aura: #{mat.m2-get-color-from-palette($primary, 500, if($is-dark, 0.38, 0.45))};
 
       &:hover {
         box-shadow: 0 8px 28px mat.m2-get-color-from-palette($primary, 500, 0.5);
@@ -88,7 +109,7 @@ $copilot-warning: #f59e0b;
 
     /* Topbar */
     .topbar {
-      border-bottom-color: $border;
+      border-bottom-color: $divider;
 
       &__brand {
         color: $text-1;
@@ -104,7 +125,7 @@ $copilot-warning: #f59e0b;
 
       &__btn {
         background: $surface;
-        border-color: $border;
+        border-color: $divider;
 
         svg {
           fill: $text-2;
@@ -167,7 +188,80 @@ $copilot-warning: #f59e0b;
 
       &__bubble .md-code {
         background: rgba(if($is-dark, #fff, #000), 0.06);
+      }
+
+      /* The border lives on the wrapper now, so the bar and the code read as one object. */
+      &__bubble .md-code-wrap {
         border: 1px solid $border;
+      }
+
+      &__bubble .md-code__bar {
+        background: rgba(if($is-dark, #fff, #000), 0.1);
+        border-bottom: 1px solid $border;
+        color: $text-3;
+      }
+
+      &__bubble .md-code__copy {
+        color: $text-2;
+
+        svg {
+          fill: currentcolor;
+        }
+
+        &:hover {
+          background: rgba(if($is-dark, #fff, #000), 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: -2px;
+        }
+      }
+
+      &__bubble .md-code__copy--done svg {
+        fill: $success-text;
+      }
+
+      &__text--streaming::after {
+        border-left: 2px solid $brand-text;
+      }
+
+      /* Syntax colour. Held to four roles: more than that in a chat bubble reads as noise,
+         and these four are what make a payload skimmable. Both sets are checked for contrast
+         against the code block's own ground, which is a tint of the bubble rather than white. */
+      &__bubble .hl-keyword {
+        color: if($is-dark, #c4a7fb, #6d28d9);
+      }
+
+      &__bubble .hl-string {
+        color: if($is-dark, #86efac, #047857);
+      }
+
+      &__bubble .hl-number {
+        color: if($is-dark, #fbbf24, #b45309);
+      }
+
+      &__bubble .hl-comment {
+        color: $text-3;
+        font-style: italic;
+      }
+
+      &__bubble .md-heading {
+        color: $text-1;
+      }
+
+      &__bubble .md-quote {
+        border-left-color: $border;
+        color: $text-2;
+      }
+
+      &__bubble .md-link {
+        color: $brand-text;
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: 2px;
+        }
       }
 
       &__bubble .md-table {
@@ -199,13 +293,20 @@ $copilot-warning: #f59e0b;
       }
     }
 
-    .typing__dots {
-      background: $surface;
-      border-color: $border;
+    /* The waiting ring, in brand blue at both ends of the theme. Handed to the structural
+       sheet as custom properties because they are consumed inside keyframes, which cannot read
+       Sass variables scoped to this mixin. The launcher carries the same ring as the avatar
+       inside the panel, so the two states read as one feature rather than two. */
+    .msg__avatar--thinking,
+    .msg__avatar--streaming,
+    .ai-fab {
+      --copilot-thinking-ring: #{$brand-ring};
+      --copilot-fab-focus: #{$brand-ring};
 
-      span {
-        background: $p500;
-      }
+      /* The disc the X is cut out of, following the mode rather than opposing it: dark on a
+         dark page, light on a light one, so the launcher sits in its surroundings instead of
+         punching a bright hole in them. The wedges stay brand blue in both. */
+      --copilot-mark-disc: #{if($is-dark, #14304a, #f6f9fb)};
     }
 
     /* Action cards */
@@ -328,6 +429,255 @@ $copilot-warning: #f59e0b;
       }
     }
 
+    /* Try again, offered when the gateway said waiting would help */
+    .retry-button {
+      background: $surface;
+      color: $text-2;
+      border-color: $divider;
+
+      svg {
+        fill: $text-3;
+      }
+
+      &:hover {
+        background: $brand-tint;
+        border-color: $p100;
+        color: $brand-text;
+
+        svg {
+          fill: $brand-text;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: 2px;
+      }
+    }
+
+    /* How the answer was reached. Quiet enough not to compete with the answer, legible
+       enough to read on a branch monitor under fluorescent light: a real muted token rather
+       than opacity, which compounds unpredictably with the theme. */
+
+    .show-earlier {
+      background: $muted;
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: 2px;
+      }
+    }
+
+    /* The questions asked this session. Reads as a quiet overlay: it sits above the
+       conversation, so it needs its own ground to stay legible over text. */
+    .prompt-nav {
+      background: $surface;
+      border: 1px solid $border;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, if($is-dark, 0.4, 0.08));
+    }
+
+    .prompt-nav__toggle {
+      color: $text-2;
+
+      svg {
+        fill: currentcolor;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item {
+      color: $text-2;
+
+      .prompt-nav__rule {
+        background: $border;
+      }
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .prompt-nav__item--active {
+      color: $brand-text;
+      font-weight: 600;
+
+      .prompt-nav__rule {
+        background: $brand-text;
+      }
+    }
+
+    .trail__live {
+      color: $text-2;
+    }
+
+    .trail__live-dot {
+      background: $brand-text;
+    }
+
+    .trail__live-time {
+      color: $text-3;
+    }
+
+    .trail__section {
+      background: $muted;
+    }
+
+    .trail__summary {
+      color: $text-2;
+
+      &:hover {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $brand-ring;
+        outline-offset: -2px;
+      }
+    }
+
+    .trail__chevron {
+      fill: $text-3;
+    }
+
+    .trail__count {
+      color: $text-3;
+    }
+
+    .trail__step {
+      color: $text-2;
+    }
+
+    .trail__tick svg {
+      fill: $success-text;
+    }
+
+    .trail__step-time {
+      color: $text-3;
+    }
+
+    .trail__note,
+    .trail__caution {
+      color: $text-3;
+    }
+
+    .trail__notes {
+      color: $text-2;
+    }
+
+    /* Copy / repeat / rate, under a finished reply */
+    .msg-actions {
+      &__button {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          background: $muted;
+
+          svg {
+            fill: $brand-text;
+          }
+        }
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+          outline-offset: 1px;
+        }
+
+        /* The rating the officer chose, held visibly. */
+        &--on svg {
+          fill: $brand-text;
+        }
+
+        /* A copy that landed, confirmed in the colour that means it worked. */
+        &--done svg {
+          fill: $success-text;
+        }
+      }
+
+      &__divider {
+        background: $divider;
+      }
+    }
+
+    /* Preferences */
+    .prefs {
+      &__section-title {
+        color: $text-3;
+      }
+
+      &__row {
+        border-bottom-color: $divider;
+      }
+
+      &__label-title {
+        color: $text-1;
+      }
+
+      &__label-hint {
+        color: $text-2;
+      }
+
+      &__switch {
+        background: $switch-off;
+
+        &:focus-visible {
+          outline: 2px solid $brand-ring;
+        }
+
+        &--on {
+          background: $p500;
+        }
+      }
+
+      &__switch-thumb {
+        background: $surface;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+      }
+
+      &__button {
+        background: $surface;
+        color: $text-1;
+        border-color: $divider;
+
+        &:hover:not(:disabled) {
+          background: $muted;
+        }
+
+        /* Erasing saved conversations cannot be undone, and should not look routine. */
+        &--danger {
+          color: $warn500;
+          border-color: $warn500;
+
+          &:hover:not(:disabled) {
+            background: $warn500;
+            color: $on-warn;
+          }
+        }
+      }
+
+      &__facts {
+        color: $text-2;
+      }
+    }
+
     /* Prompt chips */
     .prompt-chip {
       background: $surface;
@@ -409,7 +759,7 @@ $copilot-warning: #f59e0b;
     /* Bottom nav */
     .bottom-nav {
       background: $surface;
-      border-top-color: $border;
+      border-top-color: $divider;
 
       &__item {
         color: $text-3;

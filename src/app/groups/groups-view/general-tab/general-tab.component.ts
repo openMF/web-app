@@ -72,6 +72,8 @@ export class GeneralTabComponent {
   glimAccounts: any;
   /** Group Summary */
   groupSummary: any;
+  /** Group data from the parent route (timeline, roles, members). */
+  groupViewData: any;
   /** Group's Client Members */
   groupClientMembers: any;
   /** Columns to be Displayed for client members table */
@@ -148,8 +150,22 @@ export class GeneralTabComponent {
       }
     );
     this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+      this.groupViewData = data.groupViewData;
       this.groupClientMembers = data.groupViewData.clientMembers;
     });
+  }
+
+  /** Group role flagged as Leader, if one is assigned. */
+  get groupLeader(): any {
+    return this.groupViewData?.groupRoles?.find((groupRole: any) => groupRole.role?.name === 'Leader');
+  }
+
+  get activeMembersCount(): number {
+    return this.groupViewData?.activeClientMembers?.length ?? 0;
+  }
+
+  get totalMembersCount(): number {
+    return this.groupViewData?.clientMembers?.length ?? 0;
   }
 
   /**

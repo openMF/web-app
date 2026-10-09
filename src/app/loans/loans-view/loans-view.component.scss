@@ -16,63 +16,15 @@
   font-size: 14px;
 }
 
-// Loan status pill shown inline, next to the account number.
-// Background is driven by the same status class the status dot uses
-// (statusLookup), so the pill and dot always agree in colour.
-.account-status-pill {
-  display: inline-block;
-  margin-left: 12px;
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  vertical-align: middle;
-  color: #fff;
-  background-color: $status-inactive;
-
-  &.status-active {
-    background-color: $status-active;
-  }
-
-  &.status-active-overdue,
-  &.status-block {
-    background-color: $status-active-overdue;
-  }
-
-  &.status-pending {
-    background-color: $status-pending;
-  }
-
-  &.status-approved {
-    background-color: $status-approved;
-  }
-
-  &.status-overpaid {
-    background-color: $status-overpaid;
-  }
-
-  &.status-chargeoff {
-    background-color: $status-chargeoff;
-  }
-
-  &.status-matured {
-    background-color: $status-matured;
-  }
-
-  &.subStatus-contract-termination {
-    background-color: $subStatus-contract-termination;
-  }
-}
+// The loan status pill (.account-status-pill) is defined globally in
+// assets/styles/_status.scss and shared with the client/group/center headers.
 
 .account-overview {
   min-width: 80%;
   font-weight: 400;
 }
 
-// Written-off pill shown in the account header for Working Capital loans.
+// Written-off pill shown in the write-off banner for Working Capital loans.
 .written-off-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -81,7 +33,49 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  color: #fff;
   background-color: var(--md-sys-color-error, #b3261e);
+}
+
+// Banner marking a written-off account. A written-off loan is closed with a
+// zero balance, exactly like a settled one, so the state gets its own strip
+// under the header instead of a line lost inside the metadata table.
+.written-off-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 16px 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border-left: 4px solid var(--md-sys-color-error, #b3261e);
+  background-color: rgb(179 38 30 / 8%);
+  font-size: 14px;
+}
+
+.banner-item {
+  font-weight: 500;
+}
+
+// Wrapper carrying the tooltip of a blocked menu action. Needs to be a block so
+// the menu item inside keeps the full width of the panel.
+.menu-item-wrapper {
+  display: block;
+}
+
+// Reason a menu action is blocked, read by screen readers only: the tooltip on
+// the wrapper needs a hover the disabled item never receives.
+.menu-item-reason {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .datatable-scroll-x {

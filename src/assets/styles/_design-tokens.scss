@@ -37,6 +37,20 @@
   --ds-alert-bg: #ffebee;
   --ds-zero: #b0bec5;
 
+  /* Semantic action colours (button fills)
+
+     Deliberately identical in light and dark theme: these encode the *meaning*
+     of an action, not a surface, so the hue must not shift between themes.
+     Both pass WCAG AA against --ds-action-on-fill (5.13:1 and 5.62:1).
+     Hover and press states come from Material's state layer, so no separate
+     hover fills are needed. Shares hex values with --ds-paid / --ds-alert above
+     by coincidence of palette, not by derivation: those are status *text* that
+     lightens in dark theme, these are action *fills* that must not. Change one
+     without assuming the other follows. */
+  --ds-action-approve: #2e7d32;
+  --ds-action-reject: #c62828;
+  --ds-action-on-fill: #fff;
+
   /* Elevation */
   --ds-shadow-xs: 0 1px 2px rgb(13 43 94 / 6%);
   --ds-shadow-sm: 0 2px 8px rgb(13 43 94 / 10%);

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   templateUrl: './quick-chips.component.html',
-  styleUrls: ['./quick-chips.component.scss']
+  styleUrls: ['./quick-chips.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuickChipsComponent {
   @Input() prompts: string[] = [];

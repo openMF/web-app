@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
@@ -27,7 +28,7 @@ import { mockChatStream, mockDecisionStream } from './mcp-fixtures';
  * DI wrapper around the framework-agnostic core McpClient.
  *
  * Responsibilities:
- *  - build the per-request headers (Authorization, tenant, correlation id) —
+ *  - build the per-request headers (Authorization, tenant, correlation id),
  *    the app's AuthenticationInterceptor only covers the Fineract origin, so
  *    the Copilot transport must set them itself;
  *  - adapt the async event stream into an RxJS Observable whose unsubscribe
@@ -40,8 +41,16 @@ export class McpClientService {
   private readonly config = inject(COPILOT_CONFIG);
   private readonly authenticationService = inject(AuthenticationService);
   private readonly settingsService = inject(SettingsService);
+  private readonly translate = inject(TranslateService);
 
   private client?: McpClient;
+
+  /**
+   * Demo mode answers in the officer's language like the real gateway does, so the
+   * fixtures resolve their copy through the same translation files as the rest of the UI.
+   */
+  private readonly translator = (key: string, params?: Record<string, unknown>): string =>
+    this.translate.instant(key, params);
 
   /** True when no real gateway is configured and fixtures answer instead. */
   get isMockMode(): boolean {
@@ -52,7 +61,7 @@ export class McpClientService {
   /** Stream a chat turn as Observable events; unsubscribing cancels the request. */
   chat(request: McpChatRequest): Observable<McpStreamEvent> {
     if (this.isMockMode) {
-      return this.toObservable(() => mockChatStream(request));
+      return this.toObservable(() => mockChatStream(request, this.translator, this.translate.currentLang));
     }
     return this.toObservable((signal) => this.mcpClient().chat(request, this.buildHeaders(), signal));
   }
@@ -60,7 +69,7 @@ export class McpClientService {
   /** Approve/reject a pending action; the stream continues the paused turn. */
   decision(cardId: string, decision: 'approve' | 'reject', clientMsgId: string): Observable<McpStreamEvent> {
     if (this.isMockMode) {
-      return this.toObservable(() => mockDecisionStream(cardId, decision));
+      return this.toObservable(() => mockDecisionStream(cardId, decision, this.translator));
     }
     return this.toObservable((signal) =>
       this.mcpClient().decision(cardId, { decision, clientMsgId }, this.buildHeaders(), signal)
@@ -106,7 +115,7 @@ export class McpClientService {
       'Fineract-Platform-TenantId': this.settingsService.tenantIdentifier || environment.fineractPlatformTenantId,
       'X-Correlation-Id': this.correlationId()
     };
-    // Prefer the OAuth access token whenever one exists — environment flags may not reflect
+    // Prefer the OAuth access token whenever one exists, because environment flags may not reflect
     // the runtime auth mode (OIDC can be enabled via env.js), but an accessToken on the
     // credentials is definitive. Basic key is the fallback for Basic-auth deployments.
     const credentials = this.authenticationService.getCredentials();

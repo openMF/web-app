@@ -19,10 +19,9 @@
       </mat-form-field>
       <button
         mat-raised-button
-        color="success"
         *mifosxHasPermission="['APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         (click)="disburseLoan()"
-        class="tasks-action-btn"
+        class="tasks-action-btn mat-success"
       >
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.menus.Disburse' | translate }}
       </button>

@@ -77,6 +77,7 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
 
   hasWcDelinquencyFacts(): boolean {
     return (
+      !!this.loanDetails.delinquencyBucket?.name ||
       this.has(this.loanDetails.breachGraceDays) ||
       this.has(this.loanDetails.delinquencyGraceDays) ||
       !!this.loanDetails.delinquencyStartType ||

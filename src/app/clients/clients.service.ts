@@ -16,6 +16,17 @@ import { map, catchError } from 'rxjs/operators';
 
 import { environment } from 'environments/environment';
 
+export interface ClientIdentifierPayload {
+  documentTypeId: number | string;
+  documentKey: string;
+  description?: string;
+  dateFormat: string;
+  locale: string;
+  issuanceDate: string | null;
+  expiryDate: string | null;
+  status?: 'Active' | 'Inactive';
+}
+
 /**
  * Clients service.
  */
@@ -77,8 +88,12 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
-  createClient(client: any) {
-    return this.http.post(`/clients`, client);
+  createClient(client: any, idempotencyKey?: string) {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/clients`, client, { headers });
   }
 
   updateClient(clientId: string, client: any) {
@@ -271,8 +286,12 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/identifiers/template`);
   }
 
-  addClientIdentifier(clientId: string, identifierData: any) {
+  addClientIdentifier(clientId: string, identifierData: ClientIdentifierPayload) {
     return this.http.post(`/clients/${clientId}/identifiers`, identifierData);
+  }
+
+  editClientIdentifier(clientId: string, identifierId: string, identifierData: ClientIdentifierPayload) {
+    return this.http.put(`/clients/${clientId}/identifiers/${identifierId}`, identifierData);
   }
 
   deleteClientIdentifier(clientId: string, identifierId: string) {

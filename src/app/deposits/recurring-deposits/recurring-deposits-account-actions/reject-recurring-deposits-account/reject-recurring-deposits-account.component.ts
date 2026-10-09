@@ -86,6 +86,9 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
+    if (this.rejectRecurringDepositsAccountForm.invalid) {
+      return;
+    }
     const rejectRecurringDepositsAccountFormData = this.rejectRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;

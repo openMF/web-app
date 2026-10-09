@@ -102,6 +102,27 @@
       </mat-form-field>
 
       <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyBucketId">
+          @for (delinquencyBucket of delinquencyBucketOptions; track delinquencyBucket) {
+            <mat-option [value]="delinquencyBucket.id">
+              {{ delinquencyBucket.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (loansAccountTermsForm.controls.delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'delinquencyBucketId')"
+          >
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>
         <mat-select formControlName="breachId" class="breach-id-select" panelClass="breach-select-panel">
           <mat-select-trigger>
@@ -334,8 +355,29 @@
       @if (!loansAccountTermsData?.isLoanProductLinkedToFloatingRate) {
         <mat-form-field class="flex-fill flex-23 interest-rate-field">
           <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }}</mat-label>
-          <input type="number" matInput formControlName="interestRatePerPeriod" min="0" step="0.01" />
+          <input
+            type="number"
+            matInput
+            mifosxPositiveNumber
+            formControlName="interestRatePerPeriod"
+            min="0"
+            step="any"
+          />
           <span matSuffix>%</span>
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('required')) {
+            <mat-error>{{ 'errors.validation.required' | translate }}</mat-error>
+          }
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('min')) {
+            <mat-error>
+              {{
+                'errors.validation.mustBeAtLeast'
+                  | translate: { field: ('labels.inputs.Nominal interest rate' | translate), min: 0 }
+              }}
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.get('interestRatePerPeriod')?.hasError('pattern')) {
+            <mat-error>{{ 'errors.validation.maxDecimals' | translate: { decimals: 6 } }}</mat-error>
+          }
         </mat-form-field>
         <mat-form-field class="flex-fill flex-23">
           <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>

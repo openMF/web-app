@@ -10,6 +10,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 
 const localeFiles = [
+  'az-AZ.json',
   'cs-CS.json',
   'de-DE.json',
   'en-US.json',

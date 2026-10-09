@@ -75,7 +75,7 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
     'effectiveDate',
     'previousRate',
     'newRate',
-    'createdDate'
+    'submittedOnDate'
   ];
 
   constructor() {}

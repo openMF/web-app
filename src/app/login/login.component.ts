@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 /**
  * Interface for version information.
@@ -26,6 +26,7 @@ export interface VersionInfo {
 import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { AlertService } from '../core/alert/alert.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 import { VersionService } from '../system/version.service';
+import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
 
 /**
  * Login component.
@@ -83,9 +85,11 @@ export class LoginComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  private authenticationService = inject(AuthenticationService);
 
   public environment = environment;
 
@@ -113,6 +117,11 @@ export class LoginComponent implements OnInit {
    * Subscribes to alert event of alert service and theme changes.
    */
   ngOnInit() {
+    if (this.authenticationService.isAuthenticated()) {
+      this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
+      return;
+    }
+
     this.showTenantSelector = this.calculateTenantSelectorVisibility();
     this.updateLogo();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
@@ -136,7 +145,7 @@ export class LoginComponent implements OnInit {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        this.router.navigateByUrl(this.preservedReturnUrl(), { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }
@@ -172,6 +181,14 @@ export class LoginComponent implements OnInit {
     this.server = this.settingsService.server;
   }
 
+  /**
+   * Destination the authentication guard preserved before redirecting here.
+   * @returns {string} The requested route, or the dashboard when none is safe to restore.
+   */
+  private preservedReturnUrl(): string {
+    return sanitizeReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));
+  }
+
   reloadSettings(): void {
     this.settingsService.setTenantIdentifier('');
     this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
@@ -187,10 +204,20 @@ export class LoginComponent implements OnInit {
     if (environment.displayTenantSelector === 'false') {
       return false;
     }
-    const tenantIds = environment.fineractPlatformTenantIds
-      .split(',')
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0);
+    // The configured list, plus any identifier tenant management has seen on this installation, so
+    // a deployment that registers tenants through the API does not have to also list them in the
+    // environment as well. Without that feature the second list is empty and this is the configured
+    // list unchanged.
+    const configured: string[] = environment.fineractPlatformTenantIds.split(',');
+    const known: string[] = this.settingsService.tenantIdentifiers ?? [];
+    const tenantIds = [
+      ...new Set([
+        ...configured,
+        ...known
+      ])
+    ]
+      .map((id: string) => id.trim())
+      .filter((id: string) => id.length > 0);
     if (tenantIds.length === 0 || (tenantIds.length === 1 && tenantIds[0] === 'default')) {
       return false;
     }

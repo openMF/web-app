@@ -31,3 +31,17 @@ export interface EntityStatus {
   code: string;
   value: string;
 }
+
+/** Single journal entry line as returned by GET /journalentries. */
+export interface JournalEntryLine {
+  id: number;
+  officeName: string;
+  transactionId: string;
+  reversed: boolean;
+}
+
+/** Combined payload produced by the search resolver. */
+export interface SearchResultsBundle {
+  entities: SearchData[];
+  journalEntries: JournalEntryLine[];
+}

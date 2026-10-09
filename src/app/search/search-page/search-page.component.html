@@ -7,68 +7,148 @@
 -->
 
 <div class="container">
-  @if (hasResults) {
-    <mat-card class="layout-column gap-2percent">
-      @if (overload) {
-        <mat-error>{{ 'error.Searched query resulted more than 200 records' | translate }}</mat-error>
+  <div class="page-head">
+    <h1>
+      <span class="ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+      </span>
+      {{ 'labels.text.Search results' | translate }}
+      @if (queryText) {
+        <span class="query-chip">&ldquo;{{ queryText }}&rdquo;</span>
       }
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="entityType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Type' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">{{ entity.entityType }}</td>
-        </ng-container>
-        <ng-container matColumnDef="entityName">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Name' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">{{ getEntityName(entity) }}</td>
-        </ng-container>
-        <ng-container matColumnDef="entityAccount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">
-            <mifosx-account-number display="left" [accountNo]="getAccountNo(entity)"></mifosx-account-number>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="externalId">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">
-            <mifosx-external-identifier [externalId]="getExternalId(entity)"></mifosx-external-identifier>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="parentType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Parent Type' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">{{ getParentType(entity) }}</td>
-        </ng-container>
-        <ng-container matColumnDef="parentName">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Parent Name' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">{{ entity.parentName || '' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="details">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Details' | translate }}</th>
-          <td mat-cell *matCellDef="let entity" class="view-details">
-            <button
-              mat-icon-button
-              matTooltip="{{ 'tooltips.View Entity' | translate }}"
-              (click)="navigate(entity)"
-              matTooltipPosition="right"
-            >
-              <fa-icon icon="eye" size="lg"></fa-icon>
-            </button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let entity; columns: displayedColumns"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-    </mat-card>
+    </h1>
+    <span class="count"
+      ><strong>{{ totalCount }}</strong> {{ 'labels.text.matches' | translate }}</span
+    >
+  </div>
+
+  <div class="search-panel">
+    <form class="search-row" (ngSubmit)="search()">
+      <div class="search-input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+        <input
+          type="text"
+          [formControl]="query"
+          [placeholder]="'labels.text.Search by account number, name, external ID or transaction ID' | translate"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+      <button type="submit" class="btn-search">{{ 'labels.text.Search' | translate }}</button>
+    </form>
+
+    <div class="segments">
+      @for (domain of domains; track domain.key) {
+        <button type="button" class="seg" [class.on]="selectedDomain === domain.key" (click)="selectDomain(domain.key)">
+          {{ domain.labelKey | translate }} <span class="n">{{ domainCounts[domain.key] }}</span>
+        </button>
+      }
+    </div>
+
+    @if (subFilters.length > 0) {
+      <div class="sub-row">
+        <span class="lbl">{{ 'labels.text.Refine' | translate }}</span>
+        @for (sub of subFilters; track sub.key) {
+          <button type="button" class="sub" [class.on]="selectedSub === sub.key" (click)="selectSub(sub.key)">
+            @if (sub.hue) {
+              <span class="dot" [ngClass]="'dot--' + sub.hue"></span>
+            }
+            {{ sub.labelKey | translate }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (hasResults) {
+    <div class="results-panel">
+      @if (limitReached) {
+        <div class="overload">
+          {{ 'labels.text.Result limit reached. Refine your query to narrow the results.' | translate }}
+        </div>
+      }
+      @for (group of visibleGroups; track group.def.key) {
+        <div class="group-head">
+          <span class="dot" [ngClass]="'dot--' + group.def.hue"></span>
+          {{ group.def.labelKey | translate }}
+          <span class="n">{{ group.rows.length }}</span>
+        </div>
+        <table class="results-table">
+          <tbody>
+            @for (row of group.rows; track row) {
+              <tr
+                [ngClass]="'accent--' + row.hue"
+                tabindex="0"
+                role="button"
+                (click)="open(row)"
+                (keydown.enter)="open(row)"
+                (keydown.space)="openFromKeyboard($event, row)"
+              >
+                <td class="cell-entity">
+                  <div class="ent-name">{{ row.name }}</div>
+                  @if (row.detail) {
+                    <div class="ent-sub">{{ row.detail }}</div>
+                  }
+                </td>
+                <td class="cell-account">
+                  @if (row.accountNo) {
+                    <mifosx-account-number display="left" [accountNo]="row.accountNo"></mifosx-account-number>
+                  }
+                </td>
+                <td class="cell-external hide-sm">
+                  <mifosx-external-identifier [externalId]="row.externalId"></mifosx-external-identifier>
+                </td>
+                <td class="cell-parent hide-sm">
+                  @if (row.linkedToName) {
+                    <span class="who">{{ row.linkedToLabelKey | translate }}</span>
+                    <span class="name">{{ row.linkedToName }}</span>
+                  }
+                </td>
+                <td class="cell-status">
+                  @if (row.statusLabel) {
+                    <span class="pill" [ngClass]="'pill--' + row.statusTone">{{ row.statusLabel }}</span>
+                  }
+                </td>
+                <td class="cell-go">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                    <path d="m9 6 6 6-6 6" />
+                  </svg>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+      <div class="foot">
+        <span
+          >{{ shownCount }} {{ 'labels.text.of' | translate }} {{ totalCount }}
+          {{ 'labels.text.matches' | translate }}</span
+        >
+      </div>
+    </div>
   }
 
   @if (!hasResults) {
-    <mat-card class="layout-column gap-2percent">
-      <div class="alert">
-        <div class="message">
-          <i class="fa fa-exclamation-circle alert-check"></i>
-          {{ 'labels.text.No data found' | translate }}
-        </div>
+    <div class="empty-card">
+      <div class="ring">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
       </div>
-    </mat-card>
+      <p class="big">{{ 'labels.text.No results found' | translate }}</p>
+      <p class="hint">
+        {{
+          'labels.text.Check the account number, external ID or transaction ID, or search across all entity types.'
+            | translate
+        }}
+      </p>
+    </div>
   }
 </div>

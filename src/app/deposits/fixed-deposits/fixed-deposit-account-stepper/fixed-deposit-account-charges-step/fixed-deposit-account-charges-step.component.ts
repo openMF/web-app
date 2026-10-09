@@ -172,6 +172,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         label: 'Date',
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
+        maxDate: this.settingsService.maxFutureDate,
         required: false
       })
     ];

@@ -97,7 +97,7 @@ export class ClientAddressStepComponent {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = false;
         for (const key in normalizedAddressData) {
@@ -128,7 +128,7 @@ export class ClientAddressStepComponent {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = address.isActive;
         for (const key in normalizedAddressData) {
@@ -152,7 +152,7 @@ export class ClientAddressStepComponent {
       }
     });
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientAddressData.splice(index, 1);
       }
     });
@@ -244,7 +244,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine1')
         ? new InputBase({
             controlName: 'addressLine1',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
+            label: this.translateService.instant('labels.inputs.Address Line 1'),
             value: address ? address.addressLine1 : '',
             type: 'text',
             order: 3
@@ -255,7 +255,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine2')
         ? new InputBase({
             controlName: 'addressLine2',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
+            label: this.translateService.instant('labels.inputs.Address Line 2'),
             value: address ? address.addressLine2 : '',
             type: 'text',
             order: 4
@@ -266,7 +266,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine3')
         ? new InputBase({
             controlName: 'addressLine3',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
+            label: this.translateService.instant('labels.inputs.Address Line 3'),
             value: address ? address.addressLine3 : '',
             type: 'text',
             order: 5

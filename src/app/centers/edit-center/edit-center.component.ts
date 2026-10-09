@@ -88,7 +88,7 @@ export class EditCenterComponent implements OnInit {
         this.centerData.name,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       staffId: [this.centerData.staffId],
@@ -98,7 +98,7 @@ export class EditCenterComponent implements OnInit {
       this.editCenterForm.addControl(
         'activationDate',
         new UntypedFormControl(
-          this.centerData.activationDate ? this.centerData.activationDate : new Date(),
+          this.centerData.activationDate ? this.dateUtils.parseDate(this.centerData.activationDate) : new Date(),
           Validators.required
         )
       );
@@ -121,7 +121,6 @@ export class EditCenterComponent implements OnInit {
     }
     const data = {
       ...editCenterFormData,
-      name: this.centerData.name,
       dateFormat,
       locale
     };
