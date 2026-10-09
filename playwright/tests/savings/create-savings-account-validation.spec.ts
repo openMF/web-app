@@ -21,15 +21,6 @@ import { CreateSavingsAccountPage } from '../../pages/savings/create-savings-acc
  * not fail the happy-path spec — it would just make it flaky.
  */
 test.describe('Savings account · Create form validation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('hides every detail field until a product is selected', async ({ page, apiSetup, cleanupGuard }) => {
     await apiSetup.ensureMinimalSavingsProduct();
     const client = await createActiveTestClient(apiSetup, cleanupGuard);

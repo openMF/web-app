@@ -182,16 +182,17 @@ export class EditClientComponent implements OnInit {
       active: this.clientDataAndTemplate.active,
       mobileNo: this.clientDataAndTemplate.mobileNo,
       emailAddress: this.clientDataAndTemplate.emailAddress,
-      dateOfBirth: this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
+      dateOfBirth:
+        this.clientDataAndTemplate.dateOfBirth && this.dateUtils.parseDate(this.clientDataAndTemplate.dateOfBirth),
       clientTypeId: this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
       clientClassificationId:
         this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
       submittedOnDate:
         this.clientDataAndTemplate.timeline.submittedOnDate &&
-        new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
+        this.dateUtils.parseDate(this.clientDataAndTemplate.timeline.submittedOnDate),
       activationDate:
         this.clientDataAndTemplate.timeline.activatedOnDate &&
-        new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
+        this.dateUtils.parseDate(this.clientDataAndTemplate.timeline.activatedOnDate)
     });
     if (this.clientDataAndTemplate.legalForm) {
       this.legalFormId = this.clientDataAndTemplate.legalForm.id;
@@ -281,7 +282,8 @@ export class EditClientComponent implements OnInit {
                 Validators.required
               ],
               incorpValidityTillDate: [
-                clientNonPersonDetails.incorpValidityTillDate && new Date(clientNonPersonDetails.incorpValidityTillDate)
+                clientNonPersonDetails.incorpValidityTillDate &&
+                  this.dateUtils.parseDate(clientNonPersonDetails.incorpValidityTillDate)
               ],
               incorpNumber: [clientNonPersonDetails.incorpNumber],
               mainBusinessLineId: [

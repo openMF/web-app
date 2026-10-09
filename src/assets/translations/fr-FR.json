@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Suivi de l’inventaire de caisse",
+    "description": "Consultez l’inventaire des espèces et des chèques par dépositaire, type de transaction et devise.",
+    "all": "Tous",
+    "apply": "Appliquer les filtres",
+    "retry": "Réessayer",
+    "lastUpdated": "Dernière mise à jour",
+    "lastCutOff": "Dernière clôture",
+    "filters": {
+      "custodian": "Utilisateur / Dépositaire",
+      "transactionType": "Type de transaction",
+      "currency": "Devise",
+      "showLastCutOff": "Afficher la dernière clôture"
+    },
+    "types": { "CASH": "Espèces", "CHECK": "Chèque" },
+    "columns": {
+      "user": "Utilisateur / Dépositaire",
+      "name": "Nom",
+      "type": "Type",
+      "currency": "Devise",
+      "initialBalance": "Solde initial",
+      "inflows": "Entrées cumulées",
+      "outflows": "Sorties cumulées",
+      "cutOffs": "Clôtures",
+      "balance": "Solde disponible"
+    },
+    "states": {
+      "loadingFilters": "Chargement des filtres d’inventaire",
+      "loadingInventory": "Chargement de l’inventaire de caisse",
+      "empty": "Aucun enregistrement d’inventaire de caisse trouvé."
+    },
+    "errors": {
+      "context": "Impossible de charger les filtres de l’inventaire de caisse.",
+      "inventory": "Impossible de charger l’inventaire de caisse.",
+      "forbidden": "Vous n’êtes pas autorisé à consulter l’inventaire de caisse."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Remboursements de prêt en espèces et par chèque",
@@ -776,8 +813,10 @@
         "message": "{{count}} frais n'ont pas pu être remis."
       }
     },
-    "error.auth.type": "Erreur d'authentification",
-    "error.auth.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.auth.invalidCredentials.type": "Échec de la connexion",
+    "error.auth.invalidCredentials.message": "Nom d'utilisateur ou mot de passe incorrect. Veuillez vérifier vos identifiants et réessayer.",
+    "error.auth.sessionExpired.type": "Session expirée",
+    "error.auth.sessionExpired.message": "Votre session a expiré. Veuillez vous reconnecter.",
     "error.token.invalid.type": "Jeton invalide",
     "error.token.invalid.message": "Le jeton à usage unique fourni est invalide.",
     "error.bad.request.type": "Requête incorrecte",
@@ -853,7 +892,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} doit être supérieur à zéro",
     "validation.sharesMinDefaultMaxOrder": "Le minimum doit être inférieur ou égal à la valeur par défaut, et la valeur par défaut inférieure ou égale au maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Solde insuffisant. Le solde de votre compte est de {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "L'heure d'ouverture doit précéder l'heure de fermeture."
+    "validation.openingTimeBeforeClosingTime": "L'heure d'ouverture doit précéder l'heure de fermeture.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Les frais n'appartiennent pas à ce prêt.",
+    "wc.loan.charge.waiver.inactive.charge": "Les frais ne peuvent pas être annulés car ils ne sont pas actifs.",
+    "wc.loan.charge.waiver.invalid.status": "Les frais ne peuvent pas être annulés en raison du statut actuel du prêt.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Les frais n'ont aucun montant restant dû à annuler."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1234,6 +1277,7 @@
       "Save": "Enregistrer",
       "Upload Report Design": "Télécharger un modèle de rapport",
       "Mass Reject": "Rejeter en masse",
+      "Reject Selected": "Rejeter la sélection",
       "Hide": "Masquer",
       "Sign In": "Se connecter",
       "Sign Out": "Se déconnecter",
@@ -2236,6 +2280,7 @@
       "Deferred Income Recognition": "Comptabilisation des produits différés",
       "Advanced Configuration": "Configuration avancée",
       "Mass Reject Credit Applications": "Rejet groupé des demandes de crédit",
+      "Mass Rejection": "Rejet groupé",
       "Enrollment Details": "Détails de l'inscription",
       "Tenant Management": "Gestion des locataires",
       "Tenant Management Sign In": "Connexion à la gestion des locataires",
@@ -7022,6 +7067,87 @@
       "options": "Les options de gestion de trésorerie n'ont pas pu être chargées",
       "receipt": "Le reçu n'a pas pu être chargé"
     }
+  },
+  "transactionHistory": {
+    "title": "Historique des transactions",
+    "description": "Rechercher et consulter les transactions Base Teller terminées, les détails des coupures et les reçus.",
+    "sections": {
+      "searchFilters": "Filtres de recherche",
+      "results": "Résultats des transactions",
+      "totals": "Totaux par devise",
+      "details": "Détails de la transaction",
+      "cancellation": "Détails de l’annulation",
+      "denominations": "Détails des coupures",
+      "operationDenominations": "Coupures de l’opération",
+      "changeGiven": "Monnaie rendue",
+      "receipt": "Reçu",
+      "report": "Rapport de l’historique des transactions"
+    },
+    "fields": {
+      "all": "Tous",
+      "date": "Date",
+      "dateFrom": "Date de début",
+      "dateTo": "Date de fin",
+      "transactionDate": "Date de transaction",
+      "teller": "Guichetier",
+      "currency": "Devise",
+      "status": "Statut",
+      "type": "Type",
+      "operation": "Opération",
+      "concept": "Concept",
+      "reference": "Référence",
+      "inflows": "Entrées",
+      "outflows": "Sorties",
+      "totalInflows": "Total des entrées",
+      "totalOutflows": "Total des sorties",
+      "total": "Total",
+      "actions": "Actions",
+      "client": "Client",
+      "identification": "Identification",
+      "cashReceived": "Espèces reçues",
+      "checksReceived": "Chèques reçus",
+      "change": "Monnaie",
+      "adjustment": "Ajustement",
+      "reason": "Motif",
+      "user": "Utilisateur",
+      "denomination": "Coupure",
+      "quantity": "Quantité",
+      "amount": "Montant",
+      "generatedAt": "Généré le",
+      "totalRecords": "Nombre total",
+      "notApplicable": "Sans objet"
+    },
+    "actions": {
+      "search": "Rechercher",
+      "clear": "Effacer",
+      "viewDetails": "Voir les détails",
+      "denominationDetails": "Détails des coupures",
+      "reprintReceipt": "Réimprimer le reçu",
+      "printResults": "Imprimer les résultats",
+      "retry": "Réessayer"
+    },
+    "states": {
+      "loadingFilters": "Chargement des filtres…",
+      "loadingHistory": "Chargement de l’historique…",
+      "loadingDetails": "Chargement des détails…",
+      "loadingDenominations": "Chargement des coupures…",
+      "noTransactions": "Aucune transaction trouvée.",
+      "noDenominations": "Aucun détail de coupure disponible pour cette transaction.",
+      "selectTransaction": "Sélectionnez une transaction pour afficher ses détails."
+    },
+    "errors": {
+      "context": "Impossible de charger les filtres de l’historique.",
+      "search": "Impossible de charger l’historique des transactions.",
+      "detail": "Impossible de charger les détails de la transaction.",
+      "denominations": "Impossible de charger les détails des coupures.",
+      "receiptUnavailable": "Le reçu n’est pas disponible pour cette transaction.",
+      "report": "Impossible de charger le rapport de l’historique."
+    },
+    "validation": {
+      "dateRange": "La date de début doit être antérieure ou égale à la date de fin.",
+      "referenceLength": "La référence ne doit pas dépasser 200 caractères."
+    },
+    "denominationTypes": { "BANKNOTE": "Billet", "COIN": "Pièce" }
   },
   "enrollmentStatus": {
     "title": "Statut d'inscription",

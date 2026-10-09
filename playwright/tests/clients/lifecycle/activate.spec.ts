@@ -24,15 +24,6 @@ const SUBMITTED_ON_DATE = '01 January 2024';
 const ACTIVATION_DATE = '02 January 2024';
 
 test.describe('Client lifecycle · Activate (Pending → Active)', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('activates a pending client from the client actions flow', async ({
     page,
     fineractApi,

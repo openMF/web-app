@@ -95,7 +95,7 @@ export class EditEmployeeComponent implements OnInit {
       mobileNo: [this.employeeData.mobileNo],
       isActive: [this.employeeData.isActive],
       joiningDate: [
-        this.employeeData.joiningDate && new Date(this.employeeData.joiningDate),
+        this.employeeData.joiningDate && this.dateUtils.parseDate(this.employeeData.joiningDate),
         Validators.required
       ]
     });

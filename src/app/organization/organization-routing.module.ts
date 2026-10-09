@@ -39,8 +39,12 @@ import { CashManagementComponent } from './base-teller/cash-management/cash-mana
 import { cashManagementGuard } from './base-teller/cash-management/cash-management.guard';
 import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
 import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
+import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
+import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -477,6 +481,15 @@ const routes: Routes = [
           }
         },
         {
+          path: 'base-teller/cash-inventory',
+          component: CashInventoryComponent,
+          canActivate: [cashInventoryGuard],
+          data: {
+            title: 'cashInventory.title',
+            breadcrumb: 'cashInventory.title'
+          }
+        },
+        {
           path: 'base-teller/savings-account-openings',
           component: SavingsAccountOpeningComponent,
           data: { title: 'Savings Account Opening', breadcrumb: 'Savings Account Opening' }
@@ -571,6 +584,15 @@ const routes: Routes = [
             breadcrumb: 'web1232.views.holdings',
             view: 'holdings',
             permission: 'READ_CASH_HOLDINGS'
+          }
+        },
+        {
+          path: 'base-teller/transaction-history',
+          component: TransactionHistoryComponent,
+          canActivate: [transactionHistoryGuard],
+          data: {
+            title: 'transactionHistory.title',
+            breadcrumb: 'transactionHistory.title'
           }
         },
         {

@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Kasos inventoriaus stebėjimas",
+    "description": "Peržiūrėkite grynųjų ir čekių inventorių pagal saugotoją, operacijos tipą ir valiutą.",
+    "all": "Visi",
+    "apply": "Taikyti filtrus",
+    "retry": "Bandyti dar kartą",
+    "lastUpdated": "Paskutinį kartą atnaujinta",
+    "lastCutOff": "Paskutinis uždarymas",
+    "filters": {
+      "custodian": "Naudotojas / Saugotojas",
+      "transactionType": "Operacijos tipas",
+      "currency": "Valiuta",
+      "showLastCutOff": "Rodyti paskutinį uždarymą"
+    },
+    "types": { "CASH": "Grynieji", "CHECK": "Čekis" },
+    "columns": {
+      "user": "Naudotojas / Saugotojas",
+      "name": "Pavadinimas",
+      "type": "Tipas",
+      "currency": "Valiuta",
+      "initialBalance": "Pradinis likutis",
+      "inflows": "Sukauptos įplaukos",
+      "outflows": "Sukauptos išmokos",
+      "cutOffs": "Uždarymai",
+      "balance": "Galimas likutis"
+    },
+    "states": {
+      "loadingFilters": "Įkeliami inventoriaus filtrai",
+      "loadingInventory": "Įkeliamas kasos inventorius",
+      "empty": "Kasos inventoriaus įrašų nerasta."
+    },
+    "errors": {
+      "context": "Nepavyko įkelti kasos inventoriaus filtrų.",
+      "inventory": "Nepavyko įkelti kasos inventoriaus.",
+      "forbidden": "Neturite teisės peržiūrėti kasos inventoriaus."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Grynieji ir čekių mokėjimai už paskolą",
@@ -773,8 +810,10 @@
         "message": "{{count}} mokesčio(-ių) nepavyko atleisti."
       }
     },
-    "error.auth.type": "Autentifikacijos klaida",
-    "error.auth.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.auth.invalidCredentials.type": "Prisijungti nepavyko",
+    "error.auth.invalidCredentials.message": "Neteisingas naudotojo vardas arba slaptažodis. Patikrinkite prisijungimo duomenis ir bandykite dar kartą.",
+    "error.auth.sessionExpired.type": "Sesija baigėsi",
+    "error.auth.sessionExpired.message": "Jūsų sesija baigėsi. Prisijunkite iš naujo.",
     "error.token.invalid.type": "Neteisingas žetonas",
     "error.token.invalid.message": "Pateiktas vienkartinis žetonas yra neteisingas.",
     "error.bad.request.type": "Bloga užklausa",
@@ -850,7 +889,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} turi būti didesnis nei nulis",
     "validation.sharesMinDefaultMaxOrder": "Mažiausia reikšmė turi būti mažesnė arba lygi numatytajai, o numatytoji – mažesnė arba lygi didžiausiai",
     "validation.msg.savingsproduct.insufficient.balance": "Nepakankamas likutis. Jūsų sąskaitos likutis yra {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo."
+    "validation.openingTimeBeforeClosingTime": "Atidarymo laikas turi būti anksčiau nei uždarymo.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Mokestis nepriklauso šiai paskolai.",
+    "wc.loan.charge.waiver.inactive.charge": "Mokesčio negalima atsisakyti, nes jis nėra aktyvus.",
+    "wc.loan.charge.waiver.invalid.status": "Mokesčio negalima atsisakyti dėl dabartinės paskolos būsenos.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1231,6 +1274,7 @@
       "Save": "Išsaugoti",
       "Upload Report Design": "Įkelti ataskaitos maketą",
       "Mass Reject": "Atmesti masiškai",
+      "Reject Selected": "Atmesti pasirinktus",
       "Hide": "Slėpti",
       "Sign In": "Prisijungti",
       "Sign Out": "Atsijungti",
@@ -2233,6 +2277,7 @@
       "Deferred Income Recognition": "Atidėtųjų pajamų pripažinimas",
       "Advanced Configuration": "Išplėstinė konfigūracija",
       "Mass Reject Credit Applications": "Masinis kredito paraiškų atmetimas",
+      "Mass Rejection": "Masinis atmetimas",
       "Enrollment Details": "Registracijos informacija",
       "Tenant Management": "Nuomininkų valdymas",
       "Tenant Management Sign In": "Prisijungimas prie nuomininkų valdymo",
@@ -7019,6 +7064,87 @@
       "options": "Nepavyko įkelti grynųjų pinigų valdymo parinkčių",
       "receipt": "Nepavyko įkelti kvito"
     }
+  },
+  "transactionHistory": {
+    "title": "Operacijų istorija",
+    "description": "Ieškokite ir peržiūrėkite užbaigtas Base Teller operacijas, nominalų informaciją ir kvitus.",
+    "sections": {
+      "searchFilters": "Paieškos filtrai",
+      "results": "Operacijų rezultatai",
+      "totals": "Sumos pagal valiutą",
+      "details": "Operacijos informacija",
+      "cancellation": "Atšaukimo informacija",
+      "denominations": "Nominalų informacija",
+      "operationDenominations": "Operacijos nominalai",
+      "changeGiven": "Atiduota grąža",
+      "receipt": "Kvitas",
+      "report": "Operacijų istorijos ataskaita"
+    },
+    "fields": {
+      "all": "Visi",
+      "date": "Data",
+      "dateFrom": "Data nuo",
+      "dateTo": "Data iki",
+      "transactionDate": "Operacijos data",
+      "teller": "Kasininkas",
+      "currency": "Valiuta",
+      "status": "Būsena",
+      "type": "Tipas",
+      "operation": "Operacija",
+      "concept": "Paskirtis",
+      "reference": "Nuoroda",
+      "inflows": "Įplaukos",
+      "outflows": "Išmokos",
+      "totalInflows": "Iš viso įplaukų",
+      "totalOutflows": "Iš viso išmokų",
+      "total": "Iš viso",
+      "actions": "Veiksmai",
+      "client": "Klientas",
+      "identification": "Identifikacija",
+      "cashReceived": "Gauti grynieji",
+      "checksReceived": "Gauti čekiai",
+      "change": "Grąža",
+      "adjustment": "Koregavimas",
+      "reason": "Priežastis",
+      "user": "Naudotojas",
+      "denomination": "Nominalas",
+      "quantity": "Kiekis",
+      "amount": "Suma",
+      "generatedAt": "Sugeneruota",
+      "totalRecords": "Iš viso įrašų",
+      "notApplicable": "Netaikoma"
+    },
+    "actions": {
+      "search": "Ieškoti",
+      "clear": "Išvalyti",
+      "viewDetails": "Peržiūrėti informaciją",
+      "denominationDetails": "Nominalų informacija",
+      "reprintReceipt": "Pakartotinai spausdinti kvitą",
+      "printResults": "Spausdinti rezultatus",
+      "retry": "Bandyti dar kartą"
+    },
+    "states": {
+      "loadingFilters": "Įkeliami filtrai…",
+      "loadingHistory": "Įkeliama operacijų istorija…",
+      "loadingDetails": "Įkeliama operacijos informacija…",
+      "loadingDenominations": "Įkeliama nominalų informacija…",
+      "noTransactions": "Operacijų nerasta.",
+      "noDenominations": "Šiai operacijai nominalų informacijos nėra.",
+      "selectTransaction": "Pasirinkite operaciją, kad matytumėte jos informaciją."
+    },
+    "errors": {
+      "context": "Nepavyko įkelti operacijų istorijos filtrų.",
+      "search": "Nepavyko įkelti operacijų istorijos.",
+      "detail": "Nepavyko įkelti operacijos informacijos.",
+      "denominations": "Nepavyko įkelti nominalų informacijos.",
+      "receiptUnavailable": "Šios operacijos kvitas nepasiekiamas.",
+      "report": "Nepavyko įkelti operacijų istorijos ataskaitos."
+    },
+    "validation": {
+      "dateRange": "Data nuo turi būti ankstesnė arba lygi datai iki.",
+      "referenceLength": "Nuoroda negali būti ilgesnė nei 200 simbolių."
+    },
+    "denominationTypes": { "BANKNOTE": "Banknotas", "COIN": "Moneta" }
   },
   "enrollmentStatus": {
     "title": "Registracijos būsena",

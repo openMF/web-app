@@ -74,7 +74,7 @@ export class UndoClientTransferComponent implements OnInit {
    */
   createUndoClientTransferForm() {
     this.undoClientTransferForm = this.formBuilder.group({
-      transferDate: { value: new Date(this.transferDate), disabled: true },
+      transferDate: { value: this.dateUtils.parseDate(this.transferDate), disabled: true },
       note: ['']
     });
   }

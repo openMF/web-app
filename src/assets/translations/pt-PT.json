@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Monitorização do inventário de caixa",
+    "description": "Consulte o inventário de numerário e cheques por custodiante, tipo de transação e moeda.",
+    "all": "Todos",
+    "apply": "Aplicar filtros",
+    "retry": "Tentar novamente",
+    "lastUpdated": "Última atualização",
+    "lastCutOff": "Último fecho",
+    "filters": {
+      "custodian": "Utilizador / Custodiante",
+      "transactionType": "Tipo de transação",
+      "currency": "Moeda",
+      "showLastCutOff": "Mostrar último fecho"
+    },
+    "types": { "CASH": "Numerário", "CHECK": "Cheque" },
+    "columns": {
+      "user": "Utilizador / Custodiante",
+      "name": "Nome",
+      "type": "Tipo",
+      "currency": "Moeda",
+      "initialBalance": "Saldo inicial",
+      "inflows": "Entradas acumuladas",
+      "outflows": "Saídas acumuladas",
+      "cutOffs": "Fechos",
+      "balance": "Saldo disponível"
+    },
+    "states": {
+      "loadingFilters": "A carregar filtros do inventário",
+      "loadingInventory": "A carregar inventário de caixa",
+      "empty": "Não foram encontrados registos de inventário de caixa."
+    },
+    "errors": {
+      "context": "Não foi possível carregar os filtros do inventário de caixa.",
+      "inventory": "Não foi possível carregar o inventário de caixa.",
+      "forbidden": "Não tem permissão para consultar o inventário de caixa."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Pagamentos de empréstimos em numerário e cheque",
@@ -776,8 +813,10 @@
         "message": "{{count}} encargo(s) não puderam ser dispensados."
       }
     },
-    "error.auth.type": "Erro de autenticação",
-    "error.auth.message": "A sua sessão expirou ou as credenciais são inválidas.",
+    "error.auth.invalidCredentials.type": "Falha no início de sessão",
+    "error.auth.invalidCredentials.message": "Nome de utilizador ou palavra-passe incorretos. Verifique as suas credenciais e tente novamente.",
+    "error.auth.sessionExpired.type": "Sessão expirada",
+    "error.auth.sessionExpired.message": "A sua sessão expirou. Inicie sessão novamente.",
     "error.token.invalid.type": "Token inválido",
     "error.token.invalid.message": "O token de uso único fornecido é inválido.",
     "error.bad.request.type": "Pedido incorreto",
@@ -853,7 +892,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} deve ser maior do que zero",
     "validation.sharesMinDefaultMaxOrder": "O mínimo deve ser menor ou igual ao valor predefinido, e o predefinido menor ou igual ao máximo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insuficiente. O saldo da sua conta é {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "A hora de abertura deve ser anterior à de fecho."
+    "validation.openingTimeBeforeClosingTime": "A hora de abertura deve ser anterior à de fecho.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "O encargo não pertence a este empréstimo.",
+    "wc.loan.charge.waiver.inactive.charge": "O encargo não pode ser perdoado porque não está ativo.",
+    "wc.loan.charge.waiver.invalid.status": "O encargo não pode ser perdoado devido ao estado atual do empréstimo.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "O encargo não tem valor em dívida para perdoar."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1234,6 +1277,7 @@
       "Save": "Guardar",
       "Upload Report Design": "Carregar modelo de relatório",
       "Mass Reject": "Rejeitar em massa",
+      "Reject Selected": "Rejeitar selecionados",
       "Hide": "Ocultar",
       "Sign In": "Iniciar sessão",
       "Sign Out": "Terminar sessão",
@@ -2235,6 +2279,7 @@
       "Deferred Income Recognition": "Reconhecimento de receita diferida",
       "Advanced Configuration": "Configuração avançada",
       "Mass Reject Credit Applications": "Rejeição em massa de candidaturas de crédito",
+      "Mass Rejection": "Rejeição em massa",
       "Enrollment Details": "Detalhes da inscrição",
       "Tenant Management": "Gestão de inquilinos",
       "Tenant Management Sign In": "Iniciar sessão na gestão de inquilinos",
@@ -7022,6 +7067,87 @@
       "options": "Não foi possível carregar as opções de gerenciamento de caixa",
       "receipt": "Não foi possível carregar o recibo"
     }
+  },
+  "transactionHistory": {
+    "title": "Histórico de transações",
+    "description": "Pesquise e reveja transações Base Teller concluídas, detalhes de denominações e recibos.",
+    "sections": {
+      "searchFilters": "Filtros de pesquisa",
+      "results": "Resultados das transações",
+      "totals": "Totais por moeda",
+      "details": "Detalhes da transação",
+      "cancellation": "Detalhes do cancelamento",
+      "denominations": "Detalhes das denominações",
+      "operationDenominations": "Denominações da operação",
+      "changeGiven": "Troco entregue",
+      "receipt": "Recibo",
+      "report": "Relatório do histórico de transações"
+    },
+    "fields": {
+      "all": "Todos",
+      "date": "Data",
+      "dateFrom": "Data inicial",
+      "dateTo": "Data final",
+      "transactionDate": "Data da transação",
+      "teller": "Caixa",
+      "currency": "Moeda",
+      "status": "Estado",
+      "type": "Tipo",
+      "operation": "Operação",
+      "concept": "Conceito",
+      "reference": "Referência",
+      "inflows": "Entradas",
+      "outflows": "Saídas",
+      "totalInflows": "Total de entradas",
+      "totalOutflows": "Total de saídas",
+      "total": "Total",
+      "actions": "Ações",
+      "client": "Cliente",
+      "identification": "Identificação",
+      "cashReceived": "Numerário recebido",
+      "checksReceived": "Cheques recebidos",
+      "change": "Troco",
+      "adjustment": "Ajuste",
+      "reason": "Motivo",
+      "user": "Utilizador",
+      "denomination": "Denominação",
+      "quantity": "Quantidade",
+      "amount": "Montante",
+      "generatedAt": "Gerado em",
+      "totalRecords": "Total de registos",
+      "notApplicable": "Não aplicável"
+    },
+    "actions": {
+      "search": "Pesquisar",
+      "clear": "Limpar",
+      "viewDetails": "Ver detalhes",
+      "denominationDetails": "Detalhes das denominações",
+      "reprintReceipt": "Reimprimir recibo",
+      "printResults": "Imprimir resultados",
+      "retry": "Tentar novamente"
+    },
+    "states": {
+      "loadingFilters": "A carregar filtros…",
+      "loadingHistory": "A carregar histórico de transações…",
+      "loadingDetails": "A carregar detalhes da transação…",
+      "loadingDenominations": "A carregar detalhes das denominações…",
+      "noTransactions": "Não foram encontradas transações.",
+      "noDenominations": "Não existem detalhes de denominações para esta transação.",
+      "selectTransaction": "Selecione uma transação para ver os detalhes."
+    },
+    "errors": {
+      "context": "Não foi possível carregar os filtros do histórico.",
+      "search": "Não foi possível carregar o histórico de transações.",
+      "detail": "Não foi possível carregar os detalhes da transação.",
+      "denominations": "Não foi possível carregar os detalhes das denominações.",
+      "receiptUnavailable": "O recibo não está disponível para esta transação.",
+      "report": "Não foi possível carregar o relatório do histórico."
+    },
+    "validation": {
+      "dateRange": "A data inicial deve ser anterior ou igual à data final.",
+      "referenceLength": "A referência não pode exceder 200 caracteres."
+    },
+    "denominationTypes": { "BANKNOTE": "Nota", "COIN": "Moeda" }
   },
   "enrollmentStatus": {
     "title": "Estado da inscrição",

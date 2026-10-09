@@ -77,6 +77,15 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return translated && translated !== key ? translated : null;
   }
 
+  /**
+   * Whether the request is the Basic Auth login call. The URL may or may not
+   * carry the API prefix at this point, so only the path suffix is compared.
+   * @param request Request that failed
+   */
+  private isLoginRequest(request: HttpRequest<any>): boolean {
+    return request.method === 'POST' && request.url.split('?')[0].endsWith('/authentication');
+  }
+
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     // Tenant branding is cosmetic and optional: the endpoint is absent on
     // deployments without the self-service plugin. Let the caller fall back to
@@ -149,15 +158,32 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     // state: the footer falls back to the system date instead of interrupting the user with an
     // alert. The trailing slash keeps the business date list lookup out of this exception.
     const isBusinessDate404 = status === 404 && request.method === 'GET' && request.url.includes('/businessdate/');
+    // The office Address, Services and Schedules tabs show their own message when the plugin
+    // providing these endpoints isn't deployed, so a 404 on loading them isn't an error.
+    const isOfficePluginLookup404 =
+      status === 404 &&
+      request.method === 'GET' &&
+      /\/v2\/offices\/[^/]+\/(addresses|services|schedules)(\?|$)/.test(request.url);
 
-    if (!environment.production && !isClientImage404 && !isAnalyticsReport404 && !isBusinessDate404) {
+    if (
+      !environment.production &&
+      !isClientImage404 &&
+      !isAnalyticsReport404 &&
+      !isBusinessDate404 &&
+      !isOfficePluginLookup404
+    ) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
+      // A rejected Basic Auth login has no session to expire, so it gets its own
+      // wording. OAuth signs in on the provider's page, so there every 401 or 400
+      // means the token held by the user is no longer valid, as does any other 401.
+      const isRejectedBasicLogin = !environment.oauth.enabled && status === 401 && this.isLoginRequest(request);
+      const authKey = isRejectedBasicLogin ? 'invalidCredentials' : 'sessionExpired';
       this.alertService.alert({
-        type: this.translate.instant('errors.error.auth.type'),
-        message: this.translate.instant('errors.error.auth.message')
+        type: this.translate.instant(`errors.error.auth.${authKey}.type`),
+        message: this.translate.instant(`errors.error.auth.${authKey}.message`)
       });
     } else if (
       status === 403 &&
@@ -180,7 +206,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
       });
     } else if (status === 404) {
-      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404) {
+      if (isClientImage404 || isAnalyticsReport404 || isBusinessDate404 || isOfficePluginLookup404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({

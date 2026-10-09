@@ -211,7 +211,7 @@
         </div>
 
         @if (editClientForm.contains('clientNonPersonDetails')) {
-          <div class="flex-100 layout-row-wrap gap-2percent column-on-small" formGroupName="clientNonPersonDetails">
+          <div class="responsive-row" formGroupName="clientNonPersonDetails">
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
               <mat-select formControlName="constitutionId" required>
@@ -255,7 +255,7 @@
                 [title]="'labels.inputs.Incorporation No' | translate"
               />
             </mat-form-field>
-            <mat-form-field class="flex-98">
+            <mat-form-field class="flex-100">
               <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
               <textarea
                 matInput

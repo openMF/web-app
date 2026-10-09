@@ -23,7 +23,7 @@ The first command installs the project dependencies. The second downloads the Ch
 
 ### Check your setup without a backend
 
-Some specs test the helpers in `playwright/utils`, `playwright/pages`, `playwright/fixtures` and part of `playwright/factories`. They need no browser, no web app and no Fineract, so they are the quickest way to confirm your setup works:
+Some specs test the helpers in `playwright/utils`, `playwright/config`, `playwright/pages`, `playwright/fixtures` and part of `playwright/factories`. They need no browser, no web app and no Fineract, so they are the quickest way to confirm your setup works:
 
 ```bash
 npx playwright test --project=unit
@@ -126,7 +126,7 @@ playwright/
 ├── global-setup.ts            readiness probe for Fineract and the web app, CI only
 ├── config/                    shared selectors, routes, roles and behaviour contracts
 ├── factories/                 create clients, groups, loans, savings, charges and users through the API
-├── fixtures/                  the fineractApi and apiSetup test fixtures
+├── fixtures/                  the session restore and the fineractApi and apiSetup test fixtures
 ├── pages/                     page objects, one per screen or dialog
 ├── types/                     shared test data types
 ├── utils/                     retry, readiness, naming, cleanup and sleep helpers
@@ -136,11 +136,18 @@ playwright/
 
 The specs in `tests/` are grouped into `charges`, `clients`, `groups`, `kyc`, `loans` and `savings`, with a few general specs such as login at the top level.
 
+Imports follow the layers, so the same page objects and test data code can be reused by the React web app's suite:
+
+- `config/` holds everything that differs between the two apps: selectors, routes and behaviour flags. Page objects read routes and URLs through it, for example with `appRoutePath()` and `isAtRoute()` from `config/routes.ts`, rather than reading `url.hash` directly.
+- `pages/` may import `config/`, `types/` and `utils/`.
+- `factories/`, `fixtures/` and `types/` never import from `pages/`. Shared shapes such as `GeneralStepData` live in `types/`.
+- `utils/` is shared runtime code with nothing specific to either web app, so any folder may import it.
+
 ## Playwright projects
 
 `playwright.config.ts` splits the suite into projects:
 
-1. `unit` runs the helper specs from `playwright/utils`, `playwright/pages`, `playwright/fixtures` and two factory specs. It needs no browser and no backend.
+1. `unit` runs the helper specs from `playwright/utils`, `playwright/config`, `playwright/pages`, `playwright/fixtures` and two factory specs. It needs no browser and no backend.
 2. `integration` runs the `*.factory.spec.ts` files in `playwright/factories` against a real Fineract, without starting a browser.
 3. `setup` runs `auth.setup.ts`, which logs in once and stores the session in `playwright/.auth/user.json`.
 4. `chromium` runs every spec in `playwright/tests` except the ones under `playwright/tests/admin` and `playwright/tests/restricted`, which belong to the role projects described below. It depends on `setup`, so every spec starts already logged in as the default user.
@@ -165,7 +172,7 @@ A few rules keep the suite consistent, and ESLint enforces the first two:
 
 1. Do not navigate to the login page from a spec. The `setup` project has already logged in, so start from the page you are testing. The `mifosx-playwright/no-direct-login-goto` rule catches this.
 2. Do not call `waitForTimeout`. Wait for something on the page instead. If you really need a fixed delay, use `loggedSleep(ms, reason)` from `playwright/utils/sleep.ts`, which records the wait in `sleeps.json`. The `mifosx-playwright/no-bare-wait-for-timeout` rule catches this.
-3. Import `test` and `expect` from `playwright/fixtures/test-fixtures.ts` so that you get the `fineractApi` and `apiSetup` fixtures.
+3. Import `test` and `expect` from `playwright/fixtures/test-fixtures.ts` so that you get the `fineractApi` and `apiSetup` fixtures. It builds on `playwright/fixtures/auth-session.ts`, which puts the logged in session back into every page the test opens, so do not add your own `addInitScript` for credentials. A spec that needs no API fixtures can import `test` from `auth-session.ts` instead.
 4. Keep locators in page objects and assertions in specs. Page objects extend `BasePage` and are exported from `playwright/pages/index.ts`.
 5. Create the data a test needs through the API, using the factories in `playwright/factories`, rather than clicking through the UI.
 6. Every new file needs the MPL 2.0 license header. The commit hook checks for it.

@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from '../alert/alert.service';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
+import { environment } from '../../../environments/environment';
 
 describe('ErrorHandlerInterceptor', () => {
   let interceptor: ErrorHandlerInterceptor;
@@ -23,8 +24,8 @@ describe('ErrorHandlerInterceptor', () => {
    * @returns 'errored' when the failure is passed through silently, 'threw'
    * when the interceptor rethrows after alerting.
    */
-  function intercept(url: string, status: number, method: 'GET' | 'PUT' = 'GET'): string {
-    const request = method === 'PUT' ? new HttpRequest('PUT', url, {}) : new HttpRequest('GET', url);
+  function intercept(url: string, status: number, method: 'GET' | 'PUT' | 'POST' = 'GET'): string {
+    const request = method === 'GET' ? new HttpRequest('GET', url) : new HttpRequest(method, url, {});
     const response = new HttpErrorResponse({ status, url, error: { defaultUserMessage: 'boom' } });
     try {
       let outcome = 'none';
@@ -80,6 +81,22 @@ describe('ErrorHandlerInterceptor', () => {
 
   it('still alerts when the business date list is missing', () => {
     intercept('/fineract-provider/api/v1/businessdate', 404);
+    expect(alert).toHaveBeenCalled();
+  });
+
+  it.each([
+    'addresses',
+    'services',
+    'schedules'
+  ])('does not alert when the office %s endpoint is absent', (tab) => {
+    // The office tab shows its own "plugin not deployed" message.
+    const result = intercept(`/fineract-provider/api/v2/offices/1/${tab}`, 404);
+    expect(alert).not.toHaveBeenCalled();
+    expect(result).toBe('errored');
+  });
+
+  it('still alerts when saving an office schedule fails', () => {
+    intercept('/fineract-provider/api/v2/offices/1/schedules', 404, 'PUT');
     expect(alert).toHaveBeenCalled();
   });
 
@@ -184,6 +201,39 @@ describe('ErrorHandlerInterceptor', () => {
           message: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit'
         })
       );
+    });
+  });
+
+  it('reports invalid credentials when the login call is rejected', () => {
+    intercept('/fineract-provider/api/v1/authentication', 401, 'POST');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.invalidCredentials.type',
+      message: 'errors.error.auth.invalidCredentials.message'
+    });
+  });
+
+  it('reports an expired session when any other call is unauthorized', () => {
+    intercept('/fineract-provider/api/v1/clients', 401);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it.each([
+    400,
+    401
+  ])('reports an expired session for an OAuth %i, even on the login endpoint', (status) => {
+    const oauthEnabled = environment.oauth.enabled;
+    environment.oauth.enabled = true;
+    try {
+      intercept('/fineract-provider/api/v1/authentication', status, 'POST');
+    } finally {
+      environment.oauth.enabled = oauthEnabled;
+    }
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
     });
   });
 });

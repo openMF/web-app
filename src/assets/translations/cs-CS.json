@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Sledování pokladní zásoby",
+    "description": "Kontrolujte zásobu hotovosti a šeků podle správce, typu transakce a měny.",
+    "all": "Vše",
+    "apply": "Použít filtry",
+    "retry": "Zkusit znovu",
+    "lastUpdated": "Poslední aktualizace",
+    "lastCutOff": "Poslední uzávěrka",
+    "filters": {
+      "custodian": "Uživatel / Správce",
+      "transactionType": "Typ transakce",
+      "currency": "Měna",
+      "showLastCutOff": "Zobrazit poslední uzávěrku"
+    },
+    "types": { "CASH": "Hotovost", "CHECK": "Šek" },
+    "columns": {
+      "user": "Uživatel / Správce",
+      "name": "Název",
+      "type": "Typ",
+      "currency": "Měna",
+      "initialBalance": "Počáteční zůstatek",
+      "inflows": "Kumulované příjmy",
+      "outflows": "Kumulované výdaje",
+      "cutOffs": "Uzávěrky",
+      "balance": "Dostupný zůstatek"
+    },
+    "states": {
+      "loadingFilters": "Načítání filtrů inventáře",
+      "loadingInventory": "Načítání pokladní zásoby",
+      "empty": "Nebyly nalezeny žádné záznamy pokladní zásoby."
+    },
+    "errors": {
+      "context": "Filtry pokladní zásoby nelze načíst.",
+      "inventory": "Pokladní zásobu nelze načíst.",
+      "forbidden": "Nemáte oprávnění zobrazit pokladní zásobu."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Hotovostní a šekové splátky úvěru",
@@ -773,8 +810,10 @@
         "message": "{{count}} poplatek/ky nemohl(y) být odpuštěn(y)."
       }
     },
-    "error.auth.type": "Chyba ověření",
-    "error.auth.message": "Vaše relace vypršela nebo jsou přihlašovací údaje neplatné.",
+    "error.auth.invalidCredentials.type": "Přihlášení se nezdařilo",
+    "error.auth.invalidCredentials.message": "Nesprávné uživatelské jméno nebo heslo. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.",
+    "error.auth.sessionExpired.type": "Relace vypršela",
+    "error.auth.sessionExpired.message": "Vaše relace vypršela. Přihlaste se prosím znovu.",
     "error.token.invalid.type": "Neplatný token",
     "error.token.invalid.message": "Poskytnutý jednorázový token je neplatný.",
     "error.bad.request.type": "Chybný požadavek",
@@ -852,7 +891,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} musí být větší než nula",
     "validation.sharesMinDefaultMaxOrder": "Minimum musí být menší nebo rovno výchozí hodnotě a výchozí hodnota menší nebo rovna maximu",
     "validation.msg.savingsproduct.insufficient.balance": "Nedostatečný zůstatek. Zůstatek na vašem účtu je {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Čas otevření musí předcházet času uzavření."
+    "validation.openingTimeBeforeClosingTime": "Čas otevření musí předcházet času uzavření.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Poplatek nepatří k tomuto úvěru.",
+    "wc.loan.charge.waiver.inactive.charge": "Poplatek nelze prominout, protože není aktivní.",
+    "wc.loan.charge.waiver.invalid.status": "Poplatek nelze prominout kvůli aktuálnímu stavu úvěru.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Poplatek nemá žádnou nesplacenou částku k prominutí."
   },
   "labels": {
     "version": {
@@ -1232,6 +1275,7 @@
       "Save": "Uložit",
       "Upload Report Design": "Nahrát návrh zprávy",
       "Mass Reject": "Hromadně zamítnout",
+      "Reject Selected": "Zamítnout vybrané",
       "Hide": "Skrýt",
       "Sign In": "Přihlásit se",
       "Sign Out": "Odhlásit se",
@@ -2234,6 +2278,7 @@
       "Deferred Income Recognition": "Vykazování odložených výnosů",
       "Advanced Configuration": "Pokročilá konfigurace",
       "Mass Reject Credit Applications": "Hromadně zamítnout žádosti o úvěr",
+      "Mass Rejection": "Hromadné zamítnutí",
       "Enrollment Details": "Podrobnosti registrace",
       "Tenant Management": "Správa tenantů",
       "Tenant Management Sign In": "Přihlášení do správy tenantů",
@@ -7021,6 +7066,87 @@
       "options": "Možnosti správy hotovosti nelze načíst",
       "receipt": "Účtenku se nepodařilo načíst"
     }
+  },
+  "transactionHistory": {
+    "title": "Historie transakcí",
+    "description": "Vyhledávejte a kontrolujte dokončené transakce Base Teller, podrobnosti nominálů a účtenky.",
+    "sections": {
+      "searchFilters": "Filtry vyhledávání",
+      "results": "Výsledky transakcí",
+      "totals": "Součty podle měny",
+      "details": "Podrobnosti transakce",
+      "cancellation": "Podrobnosti zrušení",
+      "denominations": "Podrobnosti nominálů",
+      "operationDenominations": "Nominály operace",
+      "changeGiven": "Vrácená hotovost",
+      "receipt": "Účtenka",
+      "report": "Přehled historie transakcí"
+    },
+    "fields": {
+      "all": "Vše",
+      "date": "Datum",
+      "dateFrom": "Datum od",
+      "dateTo": "Datum do",
+      "transactionDate": "Datum transakce",
+      "teller": "Pokladník",
+      "currency": "Měna",
+      "status": "Stav",
+      "type": "Typ",
+      "operation": "Operace",
+      "concept": "Účel",
+      "reference": "Reference",
+      "inflows": "Příjmy",
+      "outflows": "Výdaje",
+      "totalInflows": "Celkové příjmy",
+      "totalOutflows": "Celkové výdaje",
+      "total": "Celkem",
+      "actions": "Akce",
+      "client": "Klient",
+      "identification": "Identifikace",
+      "cashReceived": "Přijatá hotovost",
+      "checksReceived": "Přijaté šeky",
+      "change": "Vrácená částka",
+      "adjustment": "Úprava",
+      "reason": "Důvod",
+      "user": "Uživatel",
+      "denomination": "Nominál",
+      "quantity": "Množství",
+      "amount": "Částka",
+      "generatedAt": "Vygenerováno",
+      "totalRecords": "Celkem záznamů",
+      "notApplicable": "Neuplatňuje se"
+    },
+    "actions": {
+      "search": "Hledat",
+      "clear": "Vymazat",
+      "viewDetails": "Zobrazit podrobnosti",
+      "denominationDetails": "Podrobnosti nominálů",
+      "reprintReceipt": "Znovu vytisknout účtenku",
+      "printResults": "Vytisknout výsledky",
+      "retry": "Zkusit znovu"
+    },
+    "states": {
+      "loadingFilters": "Načítání filtrů…",
+      "loadingHistory": "Načítání historie transakcí…",
+      "loadingDetails": "Načítání podrobností transakce…",
+      "loadingDenominations": "Načítání podrobností nominálů…",
+      "noTransactions": "Nebyly nalezeny žádné transakce.",
+      "noDenominations": "Pro tuto transakci nejsou k dispozici podrobnosti nominálů.",
+      "selectTransaction": "Vyberte transakci pro zobrazení podrobností."
+    },
+    "errors": {
+      "context": "Filtry historie transakcí nelze načíst.",
+      "search": "Historii transakcí nelze načíst.",
+      "detail": "Podrobnosti transakce nelze načíst.",
+      "denominations": "Podrobnosti nominálů nelze načíst.",
+      "receiptUnavailable": "Účtenka pro tuto transakci není k dispozici.",
+      "report": "Přehled historie transakcí nelze načíst."
+    },
+    "validation": {
+      "dateRange": "Datum od musí být dřívější nebo stejné jako datum do.",
+      "referenceLength": "Reference nesmí překročit 200 znaků."
+    },
+    "denominationTypes": { "BANKNOTE": "Bankovka", "COIN": "Mince" }
   },
   "enrollmentStatus": {
     "title": "Stav registrace",

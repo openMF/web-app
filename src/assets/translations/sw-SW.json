@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Ufuatiliaji wa hesabu ya fedha",
+    "description": "Kagua hesabu ya fedha na hundi kwa mtunzaji, aina ya muamala na sarafu.",
+    "all": "Zote",
+    "apply": "Tumia vichujio",
+    "retry": "Jaribu tena",
+    "lastUpdated": "Ilisasishwa mwisho",
+    "lastCutOff": "Kufungwa kwa mwisho",
+    "filters": {
+      "custodian": "Mtumiaji / Mtunzaji",
+      "transactionType": "Aina ya muamala",
+      "currency": "Sarafu",
+      "showLastCutOff": "Onyesha kufungwa kwa mwisho"
+    },
+    "types": { "CASH": "Fedha taslimu", "CHECK": "Hundi" },
+    "columns": {
+      "user": "Mtumiaji / Mtunzaji",
+      "name": "Jina",
+      "type": "Aina",
+      "currency": "Sarafu",
+      "initialBalance": "Salio la mwanzo",
+      "inflows": "Mapato yaliyokusanywa",
+      "outflows": "Matumizi yaliyokusanywa",
+      "cutOffs": "Kufungwa",
+      "balance": "Salio linalopatikana"
+    },
+    "states": {
+      "loadingFilters": "Inapakia vichujio vya hesabu",
+      "loadingInventory": "Inapakia hesabu ya fedha",
+      "empty": "Hakuna rekodi za hesabu ya fedha zilizopatikana."
+    },
+    "errors": {
+      "context": "Imeshindwa kupakia vichujio vya hesabu ya fedha.",
+      "inventory": "Imeshindwa kupakia hesabu ya fedha.",
+      "forbidden": "Huna ruhusa ya kuona hesabu ya fedha."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Malipo ya mkopo kwa pesa taslimu na hundi",
@@ -773,8 +810,10 @@
         "message": "{{count}} ada haikuweza kusamehewa."
       }
     },
-    "error.auth.type": "Hitilafu ya uthibitishaji",
-    "error.auth.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.auth.invalidCredentials.type": "Kuingia kumeshindikana",
+    "error.auth.invalidCredentials.message": "Jina la mtumiaji au nenosiri si sahihi. Tafadhali kagua taarifa zako za kuingia na ujaribu tena.",
+    "error.auth.sessionExpired.type": "Muda wa kipindi umeisha",
+    "error.auth.sessionExpired.message": "Muda wa kipindi chako umeisha. Tafadhali ingia tena.",
     "error.token.invalid.type": "Tokeni batili",
     "error.token.invalid.message": "Tokeni ya matumizi moja iliyotolewa si sahihi.",
     "error.bad.request.type": "Ombi baya",
@@ -850,7 +889,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} lazima iwe kubwa kuliko sifuri",
     "validation.sharesMinDefaultMaxOrder": "Kiwango cha chini lazima kiwe kidogo au sawa na chaguo-msingi, na chaguo-msingi kiwe kidogo au sawa na kiwango cha juu",
     "validation.msg.savingsproduct.insufficient.balance": "Salio halitoshi. Salio la akaunti yako ni {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga."
+    "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
+    "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
+    "wc.loan.charge.waiver.invalid.status": "Ada haiwezi kusamehewa kwa sababu ya hali ya sasa ya mkopo.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1231,6 +1274,7 @@
       "Save": "Hifadhi",
       "Upload Report Design": "Pakia Muundo wa Ripoti",
       "Mass Reject": "Kataa kwa wingi",
+      "Reject Selected": "Kataa zilizochaguliwa",
       "Hide": "Ficha",
       "Sign In": "Ingia",
       "Sign Out": "Toka",
@@ -2232,6 +2276,7 @@
       "Deferred Income Recognition": "Utambuzi wa mapato ulioahirishwa",
       "Advanced Configuration": "Usanidi wa kina",
       "Mass Reject Credit Applications": "Kukataa maombi ya mkopo kwa wingi",
+      "Mass Rejection": "Kukataa kwa wingi",
       "Enrollment Details": "Maelezo ya usajili",
       "Tenant Management": "Usimamizi wa tenant",
       "Tenant Management Sign In": "Ingia kwenye usimamizi wa tenant",
@@ -7019,6 +7064,87 @@
       "options": "Chaguo za usimamizi wa pesa hazikuweza kupakiwa",
       "receipt": "Risiti haikuweza kupakiwa"
     }
+  },
+  "transactionHistory": {
+    "title": "Historia ya miamala",
+    "description": "Tafuta na uhakiki miamala ya Base Teller iliyokamilika, maelezo ya madhehebu na risiti.",
+    "sections": {
+      "searchFilters": "Vichujio vya utafutaji",
+      "results": "Matokeo ya miamala",
+      "totals": "Jumla kwa sarafu",
+      "details": "Maelezo ya muamala",
+      "cancellation": "Maelezo ya kughairi",
+      "denominations": "Maelezo ya madhehebu",
+      "operationDenominations": "Madhehebu ya muamala",
+      "changeGiven": "Chenji iliyotolewa",
+      "receipt": "Risiti",
+      "report": "Ripoti ya historia ya miamala"
+    },
+    "fields": {
+      "all": "Zote",
+      "date": "Tarehe",
+      "dateFrom": "Tarehe kuanzia",
+      "dateTo": "Tarehe hadi",
+      "transactionDate": "Tarehe ya muamala",
+      "teller": "Mhudumu",
+      "currency": "Sarafu",
+      "status": "Hali",
+      "type": "Aina",
+      "operation": "Operesheni",
+      "concept": "Dhana",
+      "reference": "Rejeleo",
+      "inflows": "Mapato",
+      "outflows": "Matumizi",
+      "totalInflows": "Jumla ya mapato",
+      "totalOutflows": "Jumla ya matumizi",
+      "total": "Jumla",
+      "actions": "Vitendo",
+      "client": "Mteja",
+      "identification": "Utambulisho",
+      "cashReceived": "Fedha taslimu zilizopokelewa",
+      "checksReceived": "Hundi zilizopokelewa",
+      "change": "Chenji",
+      "adjustment": "Marekebisho",
+      "reason": "Sababu",
+      "user": "Mtumiaji",
+      "denomination": "Dhehebu",
+      "quantity": "Idadi",
+      "amount": "Kiasi",
+      "generatedAt": "Imetengenezwa",
+      "totalRecords": "Jumla ya rekodi",
+      "notApplicable": "Haitumiki"
+    },
+    "actions": {
+      "search": "Tafuta",
+      "clear": "Futa",
+      "viewDetails": "Tazama maelezo",
+      "denominationDetails": "Maelezo ya madhehebu",
+      "reprintReceipt": "Chapisha risiti tena",
+      "printResults": "Chapisha matokeo",
+      "retry": "Jaribu tena"
+    },
+    "states": {
+      "loadingFilters": "Inapakia vichujio…",
+      "loadingHistory": "Inapakia historia ya miamala…",
+      "loadingDetails": "Inapakia maelezo ya muamala…",
+      "loadingDenominations": "Inapakia maelezo ya madhehebu…",
+      "noTransactions": "Hakuna miamala iliyopatikana.",
+      "noDenominations": "Hakuna maelezo ya madhehebu kwa muamala huu.",
+      "selectTransaction": "Chagua muamala ili kuona maelezo yake."
+    },
+    "errors": {
+      "context": "Imeshindikana kupakia vichujio vya historia ya miamala.",
+      "search": "Imeshindikana kupakia historia ya miamala.",
+      "detail": "Imeshindikana kupakia maelezo ya muamala.",
+      "denominations": "Imeshindikana kupakia maelezo ya madhehebu.",
+      "receiptUnavailable": "Risiti haipatikani kwa muamala huu.",
+      "report": "Imeshindikana kupakia ripoti ya historia ya miamala."
+    },
+    "validation": {
+      "dateRange": "Tarehe ya kuanzia lazima iwe kabla au sawa na tarehe ya mwisho.",
+      "referenceLength": "Rejeleo lisizidi herufi 200."
+    },
+    "denominationTypes": { "BANKNOTE": "Noti", "COIN": "Sarafu" }
   },
   "enrollmentStatus": {
     "title": "Hali ya usajili",

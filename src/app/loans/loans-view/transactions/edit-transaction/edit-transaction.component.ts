@@ -34,8 +34,8 @@ interface AdjustTransactionForm {
   reversalExternalId: FormControl<string | null>;
   note: FormControl<string | null>;
   paymentTypeId: FormControl<number | null>;
-  accountNumber: FormControl<number | null>;
-  checkNumber: FormControl<number | null>;
+  accountNumber: FormControl<string | null>;
+  checkNumber: FormControl<string | null>;
   routingCode: FormControl<string | null>;
   receiptNumber: FormControl<string | null>;
   bankNumber: FormControl<string | null>;
@@ -164,7 +164,7 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     // payment type in the payment detail, where Term Loan flattens them.
     const date = this.isWorkingCapital ? template.transactionDate : template.date;
     this.editTransactionForm.patchValue({
-      transactionDate: date && new Date(date),
+      transactionDate: date && this.dateUtils.parseDate(date),
       transactionAmount: this.isWorkingCapital ? template.transactionAmount : template.amount,
       paymentTypeId: this.isWorkingCapital
         ? (template.paymentDetailData?.paymentType?.id ?? null)
@@ -198,8 +198,8 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       reversalExternalId: new FormControl<string | null>(null, Validators.maxLength(100)),
       note: new FormControl<string | null>(null, Validators.maxLength(1000)),
       paymentTypeId: new FormControl<number | null>(null),
-      accountNumber: new FormControl<number | null>(null),
-      checkNumber: new FormControl<number | null>(null),
+      accountNumber: new FormControl<string | null>(null),
+      checkNumber: new FormControl<string | null>(null),
       routingCode: new FormControl<string | null>(null),
       receiptNumber: new FormControl<string | null>(null),
       bankNumber: new FormControl<string | null>(null)

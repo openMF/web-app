@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "नगद मौज्दात अनुगमन",
+    "description": "जिम्मेवार व्यक्ति, कारोबार प्रकार र मुद्राअनुसार नगद तथा चेक मौज्दात समीक्षा गर्नुहोस्।",
+    "all": "सबै",
+    "apply": "फिल्टर लागू गर्नुहोस्",
+    "retry": "पुनः प्रयास गर्नुहोस्",
+    "lastUpdated": "पछिल्लो अद्यावधिक",
+    "lastCutOff": "पछिल्लो बन्द",
+    "filters": {
+      "custodian": "प्रयोगकर्ता / जिम्मेवार व्यक्ति",
+      "transactionType": "कारोबार प्रकार",
+      "currency": "मुद्रा",
+      "showLastCutOff": "पछिल्लो बन्द देखाउनुहोस्"
+    },
+    "types": { "CASH": "नगद", "CHECK": "चेक" },
+    "columns": {
+      "user": "प्रयोगकर्ता / जिम्मेवार व्यक्ति",
+      "name": "नाम",
+      "type": "प्रकार",
+      "currency": "मुद्रा",
+      "initialBalance": "प्रारम्भिक मौज्दात",
+      "inflows": "सञ्चित आम्दानी",
+      "outflows": "सञ्चित निकासी",
+      "cutOffs": "बन्दहरू",
+      "balance": "उपलब्ध मौज्दात"
+    },
+    "states": {
+      "loadingFilters": "मौज्दात फिल्टर लोड हुँदैछ",
+      "loadingInventory": "नगद मौज्दात लोड हुँदैछ",
+      "empty": "नगद मौज्दात अभिलेख फेला परेन।"
+    },
+    "errors": {
+      "context": "नगद मौज्दात फिल्टर लोड गर्न सकिएन।",
+      "inventory": "नगद मौज्दात लोड गर्न सकिएन।",
+      "forbidden": "तपाईंलाई नगद मौज्दात हेर्ने अनुमति छैन।"
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "नगद तथा चेकमार्फत ऋण भुक्तानी",
@@ -776,8 +813,10 @@
         "message": "{{count}} शुल्क माफ गर्न सकिएन।"
       }
     },
-    "error.auth.type": "प्रमाणीकरण त्रुटि",
-    "error.auth.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.auth.invalidCredentials.type": "लगइन असफल भयो",
+    "error.auth.invalidCredentials.message": "प्रयोगकर्ता नाम वा पासवर्ड गलत छ। कृपया आफ्नो विवरण जाँच गरेर फेरि प्रयास गर्नुहोस्।",
+    "error.auth.sessionExpired.type": "सत्र समाप्त भयो",
+    "error.auth.sessionExpired.message": "तपाईंको सत्र समाप्त भएको छ। कृपया फेरि लगइन गर्नुहोस्।",
     "error.token.invalid.type": "अमान्य टोकन",
     "error.token.invalid.message": "प्रदान गरिएको एक पटकको टोकन अमान्य छ।",
     "error.bad.request.type": "खराब अनुरोध",
@@ -853,7 +892,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} शून्य भन्दा ठूलो हुनुपर्छ",
     "validation.sharesMinDefaultMaxOrder": "न्यूनतम पूर्वनिर्धारित भन्दा सानो वा बराबर हुनुपर्छ, र पूर्वनिर्धारित अधिकतम भन्दा सानो वा बराबर हुनुपर्छ",
     "validation.msg.savingsproduct.insufficient.balance": "अपर्याप्त मौज्दात। तपाईंको खाताको मौज्दात {{balance}} छ।",
-    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।"
+    "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "यो शुल्क यस ऋणको होइन।",
+    "wc.loan.charge.waiver.inactive.charge": "शुल्क सक्रिय नभएकाले मिनाहा गर्न सकिँदैन।",
+    "wc.loan.charge.waiver.invalid.status": "ऋणको हालको स्थितिका कारण शुल्क मिनाहा गर्न सकिँदैन।",
+    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1234,6 +1277,7 @@
       "Save": "सुरक्षित गर्नुहोस्",
       "Upload Report Design": "रिपोर्ट डिजाइन अपलोड गर्नुहोस्",
       "Mass Reject": "सामूहिक अस्वीकार",
+      "Reject Selected": "चयन गरिएका अस्वीकार गर्नुहोस्",
       "Hide": "लुकाउनुहोस्",
       "Sign In": "साइन इन",
       "Sign Out": "साइन आउट",
@@ -2236,6 +2280,7 @@
       "Deferred Income Recognition": "स्थगित आय पहिचान",
       "Advanced Configuration": "उन्नत कन्फिगरेसन",
       "Mass Reject Credit Applications": "क्रेडिट आवेदनहरू सामूहिक अस्वीकार",
+      "Mass Rejection": "सामूहिक अस्वीकृति",
       "Enrollment Details": "दर्ता विवरण",
       "Tenant Management": "टेनेन्ट व्यवस्थापन",
       "Tenant Management Sign In": "टेनेन्ट व्यवस्थापनमा साइन इन",
@@ -7022,6 +7067,87 @@
       "options": "नगद व्यवस्थापन विकल्पहरू लोड गर्न सकिएन",
       "receipt": "रसिद लोड गर्न सकिएन"
     }
+  },
+  "transactionHistory": {
+    "title": "कारोबार इतिहास",
+    "description": "पूरा भएका Base Teller कारोबार, दर विवरण र रसिदहरू खोज्नुहोस् र समीक्षा गर्नुहोस्।",
+    "sections": {
+      "searchFilters": "खोज फिल्टरहरू",
+      "results": "कारोबार नतिजाहरू",
+      "totals": "मुद्राअनुसार जम्मा",
+      "details": "कारोबार विवरण",
+      "cancellation": "रद्द विवरण",
+      "denominations": "दर विवरण",
+      "operationDenominations": "कारोबारका दरहरू",
+      "changeGiven": "फिर्ता दिइएको रकम",
+      "receipt": "रसिद",
+      "report": "कारोबार इतिहास प्रतिवेदन"
+    },
+    "fields": {
+      "all": "सबै",
+      "date": "मिति",
+      "dateFrom": "मिति देखि",
+      "dateTo": "मिति सम्म",
+      "transactionDate": "कारोबार मिति",
+      "teller": "टेलर",
+      "currency": "मुद्रा",
+      "status": "स्थिति",
+      "type": "प्रकार",
+      "operation": "कार्य",
+      "concept": "विवरण",
+      "reference": "सन्दर्भ",
+      "inflows": "आम्दानी",
+      "outflows": "खर्च",
+      "totalInflows": "कुल आम्दानी",
+      "totalOutflows": "कुल खर्च",
+      "total": "जम्मा",
+      "actions": "कार्यहरू",
+      "client": "ग्राहक",
+      "identification": "पहिचान",
+      "cashReceived": "प्राप्त नगद",
+      "checksReceived": "प्राप्त चेक",
+      "change": "फिर्ता",
+      "adjustment": "समायोजन",
+      "reason": "कारण",
+      "user": "प्रयोगकर्ता",
+      "denomination": "दर",
+      "quantity": "परिमाण",
+      "amount": "रकम",
+      "generatedAt": "तयार गरिएको समय",
+      "totalRecords": "कुल अभिलेख",
+      "notApplicable": "लागू हुँदैन"
+    },
+    "actions": {
+      "search": "खोज्नुहोस्",
+      "clear": "खाली गर्नुहोस्",
+      "viewDetails": "विवरण हेर्नुहोस्",
+      "denominationDetails": "दर विवरण",
+      "reprintReceipt": "रसिद पुनः छाप्नुहोस्",
+      "printResults": "नतिजा छाप्नुहोस्",
+      "retry": "फेरि प्रयास गर्नुहोस्"
+    },
+    "states": {
+      "loadingFilters": "खोज फिल्टरहरू लोड हुँदैछन्…",
+      "loadingHistory": "कारोबार इतिहास लोड हुँदैछ…",
+      "loadingDetails": "कारोबार विवरण लोड हुँदैछ…",
+      "loadingDenominations": "दर विवरण लोड हुँदैछ…",
+      "noTransactions": "कुनै कारोबार फेला परेन।",
+      "noDenominations": "यस कारोबारका लागि दर विवरण उपलब्ध छैन।",
+      "selectTransaction": "विवरण हेर्न कारोबार चयन गर्नुहोस्।"
+    },
+    "errors": {
+      "context": "कारोबार इतिहासका फिल्टरहरू लोड गर्न सकिएन।",
+      "search": "कारोबार इतिहास लोड गर्न सकिएन।",
+      "detail": "कारोबार विवरण लोड गर्न सकिएन।",
+      "denominations": "दर विवरण लोड गर्न सकिएन।",
+      "receiptUnavailable": "यस कारोबारका लागि रसिद उपलब्ध छैन।",
+      "report": "कारोबार इतिहास प्रतिवेदन लोड गर्न सकिएन।"
+    },
+    "validation": {
+      "dateRange": "सुरु मिति अन्त्य मितिभन्दा अघि वा बराबर हुनुपर्छ।",
+      "referenceLength": "सन्दर्भ २०० अक्षरभन्दा बढी हुनु हुँदैन।"
+    },
+    "denominationTypes": { "BANKNOTE": "नोट", "COIN": "सिक्का" }
   },
   "enrollmentStatus": {
     "title": "दर्ता स्थिति",

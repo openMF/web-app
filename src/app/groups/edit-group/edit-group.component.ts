@@ -70,7 +70,8 @@ export class EditGroupComponent implements OnInit {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate =
-        data.groupViewData.timeline.submittedOnDate && new Date(data.groupViewData.timeline.submittedOnDate);
+        data.groupViewData.timeline.submittedOnDate &&
+        this.dateUtils.parseDate(data.groupViewData.timeline.submittedOnDate);
     });
   }
 
@@ -118,7 +119,7 @@ export class EditGroupComponent implements OnInit {
       this.editGroupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       this.editGroupForm
         .get('activationDate')
-        .patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
+        .patchValue(this.groupData.activationDate && this.dateUtils.parseDate(this.groupData.activationDate));
     } else {
       this.editGroupForm.removeControl('activationDate');
     }

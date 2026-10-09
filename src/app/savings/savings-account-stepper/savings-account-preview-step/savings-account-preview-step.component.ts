@@ -95,6 +95,8 @@ export class SavingsAccountPreviewStepComponent implements OnChanges {
   ];
 
   /** Form submission event */
+  /** Disables the submit button while the savings account is being created */
+  @Input() submitting = false;
   @Output() submitEvent = new EventEmitter();
 
   ngOnChanges(): void {

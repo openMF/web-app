@@ -98,7 +98,14 @@ describe('EditTransactionComponent', () => {
           provide: SettingsService,
           useValue: { businessDate, dateFormat: 'dd MMMM yyyy', language: { code: 'en' } }
         },
-        { provide: Dates, useValue: { formatDate: () => '10 June 2026' } }
+        {
+          provide: Dates,
+          useValue: {
+            formatDate: () => '10 June 2026',
+            parseDate: (value: any) =>
+              Array.isArray(value) ? new Date(value[0], value[1] - 1, value[2]) : new Date(value)
+          }
+        }
       ]
     });
 
@@ -124,7 +131,7 @@ describe('EditTransactionComponent', () => {
       externalId: 'must-not-be-sent',
       reversalExternalId: ' rev-1 ',
       note: ' Wrong amount ',
-      accountNumber: 1234,
+      accountNumber: ' ACC-1234 ',
       receiptNumber: ' R-1 '
     });
     return component;
@@ -311,7 +318,7 @@ describe('EditTransactionComponent', () => {
         locale: 'en',
         reversalExternalId: 'rev-1',
         note: 'Wrong amount',
-        paymentDetails: { paymentTypeId: 1, accountNumber: 1234, receiptNumber: 'R-1' }
+        paymentDetails: { paymentTypeId: 1, accountNumber: 'ACC-1234', receiptNumber: 'R-1' }
       });
     });
 

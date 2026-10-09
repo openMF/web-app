@@ -76,3 +76,15 @@ export { CreateSavingsAccountPage } from './savings/create-savings-account.page'
 export { SavingsAccountViewPage } from './savings/savings-account-view.page';
 export { SavingsAccountActionPage, type SavingsAccountAction } from './savings/savings-account-action.page';
 export { SavingsTransactionPage, type SavingsTransactionType } from './savings/savings-transaction.page';
+
+// ── Group page objects ─────────────────────────────────────────────
+
+export { CreateGroupPage } from './groups/create-group.page';
+export { GroupViewPage } from './groups/group-view.page';
+export { ManageGroupMembersPage, MANAGE_MEMBERS_ACTION } from './groups/manage-group-members.page';
+
+// ── Client KYC page objects ────────────────────────────────────────
+
+export { ClientIdentifiersPage } from './kyc/client-identifiers.page';
+export { ClientNotesPage } from './kyc/client-notes.page';
+export { FamilyMembersPage, type FamilyMemberFormData } from './kyc/family-members.page';

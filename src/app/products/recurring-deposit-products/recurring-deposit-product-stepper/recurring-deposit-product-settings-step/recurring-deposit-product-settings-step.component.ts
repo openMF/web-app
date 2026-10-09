@@ -74,11 +74,11 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
           : '',
         inMultiplesOfDepositTerm: this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm,
         inMultiplesOfDepositTermTypeId: this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType
-          ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm.id
+          ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType.id
           : '',
         maxDepositTerm: this.recurringDepositProductsTemplate.maxDepositTerm,
         maxDepositTermTypeId: this.recurringDepositProductsTemplate.maxDepositTermType
-          ? this.recurringDepositProductsTemplate.minDepositTermType.id
+          ? this.recurringDepositProductsTemplate.maxDepositTermType.id
           : '',
         preClosurePenalApplicable: this.recurringDepositProductsTemplate.preClosurePenalApplicable,
         preClosurePenalInterest: this.recurringDepositProductsTemplate.preClosurePenalInterest,

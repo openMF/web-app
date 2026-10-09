@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Cash Inventory Monitoring",
+    "description": "Review cash and check inventory by custodian, transaction type and currency.",
+    "all": "All",
+    "apply": "Apply Filters",
+    "retry": "Retry",
+    "lastUpdated": "Last Updated",
+    "lastCutOff": "Last Cut-off",
+    "filters": {
+      "custodian": "User / Custodian",
+      "transactionType": "Transaction Type",
+      "currency": "Currency",
+      "showLastCutOff": "Show Last Cut-off"
+    },
+    "types": { "CASH": "Cash", "CHECK": "Check" },
+    "columns": {
+      "user": "User / Custodian",
+      "name": "Name",
+      "type": "Type",
+      "currency": "Currency",
+      "initialBalance": "Initial Balance",
+      "inflows": "Accumulated Inflows",
+      "outflows": "Accumulated Outflows",
+      "cutOffs": "Cut-offs",
+      "balance": "Available Balance"
+    },
+    "states": {
+      "loadingFilters": "Loading inventory filters",
+      "loadingInventory": "Loading cash inventory",
+      "empty": "No cash inventory records found."
+    },
+    "errors": {
+      "context": "Unable to load cash inventory filters.",
+      "inventory": "Unable to load cash inventory.",
+      "forbidden": "You do not have permission to view cash inventory."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Cash and Check Credit Payments",
@@ -774,8 +811,10 @@
         "message": "{{count}} charge(s) could not be waived."
       }
     },
-    "error.auth.type": "Authentication Error",
-    "error.auth.message": "Your session has expired or the credentials are invalid.",
+    "error.auth.invalidCredentials.type": "Login Failed",
+    "error.auth.invalidCredentials.message": "Incorrect username or password. Please check your credentials and try again.",
+    "error.auth.sessionExpired.type": "Session Expired",
+    "error.auth.sessionExpired.message": "Your session has expired. Please log in again.",
     "error.token.invalid.type": "Invalid Token",
     "error.token.invalid.message": "The provided one time token is invalid.",
     "error.bad.request.type": "Bad Request",
@@ -852,7 +891,11 @@
     "validation.mustBeAnInteger": "{{field}} must be an integer",
     "validation.mustBeGreaterThan": "{{field}} must be greater than {{other}}",
     "validation.mustBeGreaterThanZero": "{{field}} must be greater than zero",
-    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum"
+    "validation.sharesMinDefaultMaxOrder": "Minimum must be less than or equal to default, and default must be less than or equal to maximum",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "The charge does not belong to this loan.",
+    "wc.loan.charge.waiver.inactive.charge": "The charge cannot be waived because it is not active.",
+    "wc.loan.charge.waiver.invalid.status": "The charge cannot be waived because of the current status of the loan.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1236,6 +1279,7 @@
       "Save": "Save",
       "Upload Report Design": "Upload Report Design",
       "Mass Reject": "Mass Reject",
+      "Reject Selected": "Reject Selected",
       "Hide": "Hide",
       "Sign In": "Sign In",
       "Sign Out": "Sign Out",
@@ -2246,6 +2290,7 @@
       "Deferred Income Recognition": "Deferred Income Recognition",
       "Advanced Configuration": "Advanced Configuration",
       "Mass Reject Credit Applications": "Mass Reject Credit Applications",
+      "Mass Rejection": "Mass Rejection",
       "Enrollment Details": "Enrollment Details",
       "Tenant Management": "Tenant Management",
       "Tenant Management Sign In": "Tenant Management Sign In",
@@ -7007,6 +7052,90 @@
       "operation": "Deposit could not be completed",
       "options": "Cash-management options could not be loaded",
       "receipt": "Receipt could not be loaded"
+    }
+  },
+  "transactionHistory": {
+    "title": "Transaction History",
+    "description": "Search and review completed Base Teller transactions, denomination details, and receipts.",
+    "sections": {
+      "searchFilters": "Search Filters",
+      "results": "Transaction Results",
+      "totals": "Totals by Currency",
+      "details": "Transaction Details",
+      "cancellation": "Cancellation Details",
+      "denominations": "Denomination Details",
+      "operationDenominations": "Operation Denominations",
+      "changeGiven": "Change Given",
+      "receipt": "Receipt",
+      "report": "Transaction History Report"
+    },
+    "fields": {
+      "all": "All",
+      "date": "Date",
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "transactionDate": "Transaction Date",
+      "teller": "Teller",
+      "currency": "Currency",
+      "status": "Status",
+      "type": "Type",
+      "operation": "Operation",
+      "concept": "Concept",
+      "reference": "Reference",
+      "inflows": "Inflows",
+      "outflows": "Outflows",
+      "totalInflows": "Total Inflows",
+      "totalOutflows": "Total Outflows",
+      "total": "Total",
+      "actions": "Actions",
+      "client": "Client",
+      "identification": "Identification",
+      "cashReceived": "Cash Received",
+      "checksReceived": "Checks Received",
+      "change": "Change",
+      "adjustment": "Adjustment",
+      "reason": "Reason",
+      "user": "User",
+      "denomination": "Denomination",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "generatedAt": "Generated At",
+      "totalRecords": "Total Records",
+      "notApplicable": "Not Applicable"
+    },
+    "actions": {
+      "search": "Search",
+      "clear": "Clear",
+      "viewDetails": "View Details",
+      "denominationDetails": "Denomination Details",
+      "reprintReceipt": "Reprint Receipt",
+      "printResults": "Print Results",
+      "retry": "Retry"
+    },
+    "states": {
+      "loadingFilters": "Loading search filters…",
+      "loadingHistory": "Loading transaction history…",
+      "loadingDetails": "Loading transaction details…",
+      "loadingDenominations": "Loading denomination details…",
+      "noTransactions": "No transactions found.",
+      "noDenominations": "No denomination details available for this transaction.",
+      "selectTransaction": "Select a transaction to view its details."
+    },
+    "errors": {
+      "context": "Unable to load transaction history filters.",
+      "search": "Unable to load transaction history.",
+      "detail": "Unable to load transaction details.",
+      "denominations": "Unable to load denomination details.",
+      "receiptUnavailable": "Receipt is not available for this transaction.",
+      "report": "Unable to load the transaction history report."
+    },
+    "validation": {
+      "dateRange": "Date From must be on or before Date To.",
+      "referenceLength": "Reference must not exceed 200 characters."
+    },
+    "denominationTypes": {
+      "BANKNOTE": "Banknote",
+      "COIN": "Coin"
     }
   },
   "enrollmentStatus": {

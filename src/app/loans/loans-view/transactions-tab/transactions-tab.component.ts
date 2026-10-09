@@ -66,7 +66,8 @@ import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalTransaction,
-  canReverseLoanTransaction
+  canReverseLoanTransaction,
+  loanAllowsReversal
 } from '../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -385,7 +386,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           this.isDiscountFee(transaction.type) ||
           transaction.type.contractTermination
         )
-      : canReverseLoanTransaction(transaction.type, alreadyReversed) || this.isWriteOff(transaction.type);
+      : (canReverseLoanTransaction(transaction.type, alreadyReversed) &&
+          loanAllowsReversal(transaction.type, this.loanDetailsData?.loanScheduleType)) ||
+          this.isWriteOff(transaction.type);
   }
 
   /**
@@ -542,7 +545,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     // transactionDate/transactionAmount are required only by the generic loan adjust endpoint.
     const undoPayload = isLoanProduct
       ? {
-          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
@@ -621,7 +627,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         }
         const operationDate = this.dateUtils.parseDate(transaction.date);
         const payload: { [key: string]: any } = {
-          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            operationDate && this.dateUtils.parseDate(operationDate),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale: this.settingsService.language.code

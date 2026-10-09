@@ -39,6 +39,15 @@ describe('BaseTellerComponent', () => {
         ]
       },
       {
+        materialIcon: 'inventory_2',
+        permission: 'READ_BASE_TELLER_CASH_INVENTORY',
+        route: [
+          '/organization',
+          'base-teller',
+          'cash-inventory'
+        ]
+      },
+      {
         fontAwesomeIcon: 'piggy-bank',
         permission: 'READ_TELLER',
         route: [
@@ -129,6 +138,15 @@ describe('BaseTellerComponent', () => {
         ]
       },
       {
+        materialIcon: 'receipt_long',
+        permission: 'READ_BASE_TELLER_TRANSACTION_HISTORY',
+        route: [
+          '/organization',
+          'base-teller',
+          'transaction-history'
+        ]
+      },
+      {
         fontAwesomeIcon: 'money-check-dollar',
         permission: 'READ_BASE_TELLER_SERVICE_PAYMENT',
         route: [
@@ -144,13 +162,13 @@ describe('BaseTellerComponent', () => {
     environment.productionMode = false;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(11);
+    expect(component.workflows).toHaveLength(14);
   });
 
   it('shows Bill and Service Payment when production mode is enabled', () => {
     environment.productionMode = true;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(12);
+    expect(component.workflows).toHaveLength(15);
   });
 });

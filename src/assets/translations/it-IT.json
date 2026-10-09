@@ -1,4 +1,41 @@
 {
+  "cashInventory": {
+    "title": "Monitoraggio dell’inventario di cassa",
+    "description": "Esamina l’inventario di contanti e assegni per custode, tipo di transazione e valuta.",
+    "all": "Tutti",
+    "apply": "Applica filtri",
+    "retry": "Riprova",
+    "lastUpdated": "Ultimo aggiornamento",
+    "lastCutOff": "Ultima chiusura",
+    "filters": {
+      "custodian": "Utente / Custode",
+      "transactionType": "Tipo di transazione",
+      "currency": "Valuta",
+      "showLastCutOff": "Mostra ultima chiusura"
+    },
+    "types": { "CASH": "Contanti", "CHECK": "Assegno" },
+    "columns": {
+      "user": "Utente / Custode",
+      "name": "Nome",
+      "type": "Tipo",
+      "currency": "Valuta",
+      "initialBalance": "Saldo iniziale",
+      "inflows": "Entrate accumulate",
+      "outflows": "Uscite accumulate",
+      "cutOffs": "Chiusure",
+      "balance": "Saldo disponibile"
+    },
+    "states": {
+      "loadingFilters": "Caricamento filtri inventario",
+      "loadingInventory": "Caricamento inventario di cassa",
+      "empty": "Nessun record di inventario di cassa trovato."
+    },
+    "errors": {
+      "context": "Impossibile caricare i filtri dell’inventario di cassa.",
+      "inventory": "Impossibile caricare l’inventario di cassa.",
+      "forbidden": "Non hai il permesso di visualizzare l’inventario di cassa."
+    }
+  },
   "creditPayment": {
     "heading": {
       "title": "Pagamenti di prestiti in contanti e con assegno",
@@ -776,8 +813,10 @@
         "message": "{{count}} costo/i non ha/hanno potuto essere rinunciato/i."
       }
     },
-    "error.auth.type": "Errore di autenticazione",
-    "error.auth.message": "La sessione è scaduta o le credenziali non sono valide.",
+    "error.auth.invalidCredentials.type": "Accesso non riuscito",
+    "error.auth.invalidCredentials.message": "Nome utente o password non corretti. Verificare le credenziali e riprovare.",
+    "error.auth.sessionExpired.type": "Sessione scaduta",
+    "error.auth.sessionExpired.message": "La sessione è scaduta. Effettuare di nuovo l'accesso.",
     "error.token.invalid.type": "Token non valido",
     "error.token.invalid.message": "Il token monouso fornito non è valido.",
     "error.bad.request.type": "Richiesta errata",
@@ -853,7 +892,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} deve essere maggiore di zero",
     "validation.sharesMinDefaultMaxOrder": "Il minimo deve essere minore o uguale al valore predefinito e il valore predefinito minore o uguale al massimo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insufficiente. Il saldo del tuo conto è di {{balance}}.",
-    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura."
+    "validation.openingTimeBeforeClosingTime": "L'orario di apertura deve precedere quello di chiusura.",
+    "wc.loan.charge.waiver.charge.not.belongs.to.loan": "L'onere non appartiene a questo prestito.",
+    "wc.loan.charge.waiver.inactive.charge": "L'onere non può essere condonato perché non è attivo.",
+    "wc.loan.charge.waiver.invalid.status": "L'onere non può essere condonato a causa dello stato attuale del prestito.",
+    "wc.loan.charge.waiver.no.outstanding.amount": "L'onere non ha alcun importo residuo da condonare."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1234,6 +1277,7 @@
       "Save": "Salva",
       "Upload Report Design": "Carica modello di rapporto",
       "Mass Reject": "Rifiuta in massa",
+      "Reject Selected": "Rifiuta selezionate",
       "Hide": "Nascondi",
       "Sign In": "Accedi",
       "Sign Out": "Esci",
@@ -2236,6 +2280,7 @@
       "Deferred Income Recognition": "Rilevazione dei risconti passivi",
       "Advanced Configuration": "Configurazione avanzata",
       "Mass Reject Credit Applications": "Rifiuto massivo delle richieste di credito",
+      "Mass Rejection": "Rifiuto massivo",
       "Enrollment Details": "Dettagli registrazione",
       "Tenant Management": "Gestione dei tenant",
       "Tenant Management Sign In": "Accesso alla gestione dei tenant",
@@ -7022,6 +7067,87 @@
       "options": "Impossibile caricare le opzioni di gestione della liquidità",
       "receipt": "Impossibile caricare la ricevuta"
     }
+  },
+  "transactionHistory": {
+    "title": "Cronologia transazioni",
+    "description": "Cerca e consulta le transazioni Base Teller completate, i dettagli dei tagli e le ricevute.",
+    "sections": {
+      "searchFilters": "Filtri di ricerca",
+      "results": "Risultati transazioni",
+      "totals": "Totali per valuta",
+      "details": "Dettagli transazione",
+      "cancellation": "Dettagli annullamento",
+      "denominations": "Dettagli tagli",
+      "operationDenominations": "Tagli dell’operazione",
+      "changeGiven": "Resto erogato",
+      "receipt": "Ricevuta",
+      "report": "Report cronologia transazioni"
+    },
+    "fields": {
+      "all": "Tutti",
+      "date": "Data",
+      "dateFrom": "Data da",
+      "dateTo": "Data a",
+      "transactionDate": "Data transazione",
+      "teller": "Cassiere",
+      "currency": "Valuta",
+      "status": "Stato",
+      "type": "Tipo",
+      "operation": "Operazione",
+      "concept": "Causale",
+      "reference": "Riferimento",
+      "inflows": "Entrate",
+      "outflows": "Uscite",
+      "totalInflows": "Totale entrate",
+      "totalOutflows": "Totale uscite",
+      "total": "Totale",
+      "actions": "Azioni",
+      "client": "Cliente",
+      "identification": "Identificazione",
+      "cashReceived": "Contanti ricevuti",
+      "checksReceived": "Assegni ricevuti",
+      "change": "Resto",
+      "adjustment": "Rettifica",
+      "reason": "Motivo",
+      "user": "Utente",
+      "denomination": "Taglio",
+      "quantity": "Quantità",
+      "amount": "Importo",
+      "generatedAt": "Generato il",
+      "totalRecords": "Record totali",
+      "notApplicable": "Non applicabile"
+    },
+    "actions": {
+      "search": "Cerca",
+      "clear": "Cancella",
+      "viewDetails": "Visualizza dettagli",
+      "denominationDetails": "Dettagli tagli",
+      "reprintReceipt": "Ristampa ricevuta",
+      "printResults": "Stampa risultati",
+      "retry": "Riprova"
+    },
+    "states": {
+      "loadingFilters": "Caricamento filtri…",
+      "loadingHistory": "Caricamento cronologia transazioni…",
+      "loadingDetails": "Caricamento dettagli transazione…",
+      "loadingDenominations": "Caricamento dettagli tagli…",
+      "noTransactions": "Nessuna transazione trovata.",
+      "noDenominations": "Nessun dettaglio dei tagli disponibile per questa transazione.",
+      "selectTransaction": "Seleziona una transazione per visualizzarne i dettagli."
+    },
+    "errors": {
+      "context": "Impossibile caricare i filtri della cronologia.",
+      "search": "Impossibile caricare la cronologia transazioni.",
+      "detail": "Impossibile caricare i dettagli della transazione.",
+      "denominations": "Impossibile caricare i dettagli dei tagli.",
+      "receiptUnavailable": "La ricevuta non è disponibile per questa transazione.",
+      "report": "Impossibile caricare il report della cronologia."
+    },
+    "validation": {
+      "dateRange": "Data da deve essere precedente o uguale a Data a.",
+      "referenceLength": "Il riferimento non può superare 200 caratteri."
+    },
+    "denominationTypes": { "BANKNOTE": "Banconota", "COIN": "Moneta" }
   },
   "enrollmentStatus": {
     "title": "Stato registrazione",
