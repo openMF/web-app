@@ -32,4 +32,16 @@
       margin-left: 2%;
     }
   }
+
+  .empty-state {
+    padding: 24px 16px;
+    text-align: center;
+    color: #757575;
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
 }

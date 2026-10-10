@@ -88,5 +88,11 @@
         </mat-expansion-panel>
       }
     </mat-accordion>
+
+    @if (clientFamilyMembers?.length === 0) {
+      <div class="empty-state">
+        <p>{{ 'labels.messages.No Family Members Added' | translate }}</p>
+      </div>
+    }
   </router-outlet>
 </div>
