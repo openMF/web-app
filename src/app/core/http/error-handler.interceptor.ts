@@ -101,6 +101,14 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
+    const status = response.status;
+    // Cash Exchange maps backend failures to safe, localized messages in its workflow.
+    // Match the endpoint regardless of the API prefix used by a gateway.
+    // A 401 still needs the shared session-expired alert.
+    if (status !== 401 && /\/base-teller\/cash-exchanges(?:[/?]|$)/.test(request.url)) {
+      return throwError(() => response);
+    }
+
     // Tenant branding is cosmetic and optional: the endpoint is absent on
     // deployments without the self-service plugin. Let the caller fall back to
     // the default colour silently instead of interrupting the user with an
@@ -112,7 +120,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       return throwError(() => response);
     }
 
-    const status = response.status;
     const errorBody = this.parseErrorBody(response.error);
 
     // Translate top-level globalisation code if present
