@@ -48,6 +48,29 @@ describe('ErrorHandlerInterceptor', () => {
     interceptor = TestBed.inject(ErrorHandlerInterceptor);
   });
 
+  const cashExchangeUrls = [
+    '/base-teller/cash-exchanges/preview',
+    'https://gateway.example.test/custom/path/base-teller/cash-exchanges/preview'
+  ];
+
+  it.each(cashExchangeUrls)('lets Cash Exchange map backend errors at %s', (url) => {
+    expect(intercept(url, 403)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it.each(cashExchangeUrls)('still alerts when a Cash Exchange request at %s finds an expired session', (url) => {
+    expect(intercept(url, 401)).toBe('threw');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it('does not mistake a similarly named endpoint for Cash Exchange', () => {
+    expect(intercept('/base-teller/cash-exchanges-history', 403)).toBe('threw');
+    expect(alert).toHaveBeenCalled();
+  });
+
   it('does not alert when the branding endpoint is absent', () => {
     // Deployment without the self-service plugin.
     const result = intercept(`/fineract-provider/api/v1${BRANDING_API_PATH}`, 404);
