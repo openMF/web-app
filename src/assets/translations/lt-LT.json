@@ -5184,6 +5184,8 @@
       "No transaction data available": "Nėra jokių operacijos duomenų",
       "No transactions yet": "Dar nėra jokių operacijų",
       "No repayments and disbursal": "Pasirinktam klientui ir susitikimo datai nėra galimybės grąžinti ir išmokėti",
+      "No meetings for collection sheet": "Pasirinktą dieną nė vienas centras neturi susitikimo su šiuo darbuotoju",
+      "No dues for collection sheet": "Pasirinktai susitikimo datai nėra mokėtinų paskolų ar santaupų įmokų",
       "No report data was generated": "Ataskaitos duomenys nebuvo sukurti",
       "No reports match your filters": "Nėra ataskaitų, atitinkančių filtrus",
       "No transaction was found": "Sandorio nerasta.",

@@ -5184,6 +5184,8 @@
       "No transaction data available": "Nav pieejami transakciju dati",
       "No transactions yet": "Vēl nav nevienas transakcijas",
       "No repayments and disbursal": "Atlasītajam klientam un tikšanās datumam atmaksas un izmaksas nav pieejamas",
+      "No meetings for collection sheet": "Nevienam centram izvēlētajā datumā nav tikšanās ar šo darbinieku",
+      "No dues for collection sheet": "Izvēlētajā tikšanās datumā nav jāveic neviens aizdevuma vai uzkrājumu maksājums",
       "No report data was generated": "Pārskata dati netika ģenerēti",
       "No reports match your filters": "Filtriem neatbilst neviens pārskats",
       "No transaction was found": "Darījums netika atrasts.",

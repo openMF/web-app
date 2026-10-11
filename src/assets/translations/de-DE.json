@@ -5188,6 +5188,8 @@
       "No transaction data available": "Keine Transaktionsdaten verfügbar",
       "No transactions yet": "Noch keine Transaktionen",
       "No repayments and disbursal": "Für ausgewählte Kunden und Besprechungstermine sind keine Rückzahlungen und Auszahlungen möglich",
+      "No meetings for collection sheet": "Kein Zentrum hat am ausgewählten Datum ein Treffen für diesen Mitarbeiter",
+      "No dues for collection sheet": "Für das ausgewählte Besprechungsdatum sind keine Kredit- oder Sparzahlungen fällig",
       "No report data was generated": "Es wurden keine Berichtsdaten generiert",
       "No reports match your filters": "Keine Berichte entsprechen deinen Filtern",
       "No transaction was found": "Es wurde keine Transaktion gefunden.",

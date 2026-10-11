@@ -5183,6 +5183,8 @@
       "No transaction data available": "거래 데이터가 없습니다",
       "No transactions yet": "아직 거래가 없습니다",
       "No repayments and disbursal": "선택한 고객 및 미팅 날짜에 대해서는 상환 및 지불이 불가능합니다.",
+      "No meetings for collection sheet": "선택한 날짜에 이 직원의 모임이 있는 센터가 없습니다",
+      "No dues for collection sheet": "선택한 모임 날짜에 납부할 대출 또는 저축 금액이 없습니다",
       "No report data was generated": "보고서 데이터가 생성되지 않았습니다.",
       "No reports match your filters": "필터와 일치하는 보고서가 없습니다",
       "No transaction was found": "거래가 발견되지 않았습니다.",

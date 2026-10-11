@@ -5302,6 +5302,8 @@
       "No transaction data available": "Əməliyyat məlumatı yoxdur",
       "No transactions yet": "Hələ əməliyyat yoxdur",
       "No repayments and disbursal": "Seçilmiş müştəri və görüş tarixi üçün kredit ödənişi və kreditin verilməsi yoxdur",
+      "No meetings for collection sheet": "Seçilmiş tarixdə bu işçi üçün heç bir mərkəzin görüşü yoxdur",
+      "No dues for collection sheet": "Seçilmiş görüş tarixi üçün heç bir kredit və ya əmanət ödənişi yoxdur",
       "No report data was generated": "Hesabat məlumatı yaradılmadı",
       "No reports match your filters": "Süzgəclərinə uyğun hesabat yoxdur",
       "No transaction was found": "Əməliyyat tapılmadı.",

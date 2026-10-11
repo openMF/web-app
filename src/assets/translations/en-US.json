@@ -5340,6 +5340,8 @@
       "No transaction data available": "No transaction data available",
       "No transactions yet": "No transactions yet",
       "No repayments and disbursal": "No repayments and disbursal are available for selected client and meeting date",
+      "No meetings for collection sheet": "No center has a meeting on the selected date for this staff member",
+      "No dues for collection sheet": "No loan or savings payments are due for the selected meeting date",
       "No report data was generated": "No report data was generated",
       "No reports match your filters": "No reports match your filters",
       "No transaction was found": "No transaction was found.",
