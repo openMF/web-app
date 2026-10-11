@@ -94,6 +94,12 @@ import { MatAccordion } from '@angular/material/expansion';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
+import {
+  SEMI_MONTHLY_LAST_DAY_OF_MONTH,
+  isSemiMonthly,
+  isValidRepaymentDayPair,
+  secondRepaymentDayOptions
+} from 'app/shared/loan/semi-monthly/semi-monthly';
 
 /**
  * Fallback currency symbols for the Review banner, keyed by ISO currency code. Used only when the
@@ -421,6 +427,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
   // Previous values of the two controllers whose transitions Classic reacts to with an explicit
   // `patchValue` reset — see `syncDependentResets`.
   private lastSeenMultiDisburseLoan?: boolean;
+  /** Previous pass's semi-monthly state; only a true -> false transition clears the first day. */
+  private lastSeenSemiMonthly: boolean | undefined;
   private lastSeenProgressiveSchedule?: boolean;
   // Classic-mode bridge between the hosted Classic forms and the controls the Charges step binds to.
   private readonly classicMirrorSubscriptions: Subscription[] = [];
@@ -954,7 +962,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
    * required message hidden until the user has actually visited the control. Keeping this a flat key
    * lets each `@if` in the template stay one level deep with a `<mat-error>` at its root.
    */
-  fieldErrorKey(field: FormField): 'required' | 'min' | 'pattern' | 'maxlength' | null {
+  fieldErrorKey(field: FormField): 'required' | 'min' | 'max' | 'pattern' | 'maxlength' | null {
     const control = this.form?.get(field.key);
     if (!control) {
       return null;
@@ -964,6 +972,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     }
     if (control.hasError('min')) {
       return 'min';
+    }
+    if (control.hasError('max')) {
+      return 'max';
     }
     if (control.hasError('pattern')) {
       return 'pattern';
@@ -992,7 +1003,38 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     if (periodUnitHint) {
       return periodUnitHint;
     }
+    if (field.key === 'secondRepaymentDayOfMonth') {
+      return this.semiMonthlyDueDaysHint();
+    }
     return field.hint ? this.translateService.instant(field.hint) : null;
+  }
+
+  /**
+   * The pair of due days a semi-monthly product will collect on, as the operator configured them.
+   * Null until both days form a valid pair.
+   */
+  private semiMonthlyDueDaysHint(): string | null {
+    const first = Number(this.form?.get('firstRepaymentDayOfMonth')?.value);
+    const second = Number(this.form?.get('secondRepaymentDayOfMonth')?.value);
+    if (!isValidRepaymentDayPair(first, second)) {
+      return null;
+    }
+    return second === SEMI_MONTHLY_LAST_DAY_OF_MONTH
+      ? this.translateService.instant('labels.text.Semi-monthly due days last day', { first })
+      : this.translateService.instant('labels.text.Semi-monthly due days', { first, second });
+  }
+
+  /** Second-day options: the days after the selected first day, with 31 shown as the last day of the month. */
+  private secondRepaymentDayFieldOptions(): { value: number; label: string }[] {
+    const lastDayLabel = this.translateService.instant('labels.text.Last day of the month');
+    return secondRepaymentDayOptions(this.form?.get('firstRepaymentDayOfMonth')?.value).map((day) => ({
+      value: day,
+      label: day === SEMI_MONTHLY_LAST_DAY_OF_MONTH ? lastDayLabel : String(day)
+    }));
+  }
+
+  private get isSemiMonthlyFrequency(): boolean {
+    return isSemiMonthly(this.form?.get('repaymentFrequencyType')?.value);
   }
 
   /**
@@ -1043,6 +1085,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
         // Selects Classic also fills from the backend template (the interest recalculation family and
         // the charge-off behaviour). Resolved here so both flows offer the identical choices.
+        if (field.key === 'secondRepaymentDayOfMonth') {
+          return { ...field, options: this.secondRepaymentDayFieldOptions() };
+        }
+
         const templateOptions = this.getTemplateSourcedOptions(field.key);
         if (templateOptions) {
           return { ...field, options: templateOptions };
@@ -1130,6 +1176,15 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         }
 
         if (this.isProfileOrStrategyDeterminedField(field.key)) {
+          return false;
+        }
+
+        // The due days only exist for the semi-monthly frequency, mirroring the Classic Terms step's
+        // `@if (isSemiMonthly())` block.
+        if (
+          (field.key === 'firstRepaymentDayOfMonth' || field.key === 'secondRepaymentDayOfMonth') &&
+          !this.isSemiMonthlyFrequency
+        ) {
           return false;
         }
 
@@ -2456,6 +2511,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
             rangeValidator(0, 100)
           ] : []
     );
+    // Classic's Terms step attaches `required` to both due days only while the frequency is
+    // semi-monthly; the selects only offer valid days, so no range validators are needed.
+    this.applyValidators('firstRepaymentDayOfMonth', this.isSemiMonthlyFrequency ? [Validators.required] : []);
+    this.applyValidators('secondRepaymentDayOfMonth', this.isSemiMonthlyFrequency ? [Validators.required] : []);
 
     // The interest recalculation family carries `Validators.required` in Classic only on the controls
     // it actually registers for the chosen frequency — which is exactly the set the nested visibility
@@ -2496,6 +2555,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     if (!this.form) {
       return;
     }
+    this.syncSemiMonthlyControls();
     const multiDisburseLoan = !!this.form.get('multiDisburseLoan')?.value;
     const isProgressive = this.isProgressiveSchedule;
 
@@ -2554,6 +2614,41 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
         rescheduleControl?.setValue(rescheduleOptions[0].value, { emitEvent: false });
       }
     }
+  }
+
+  /**
+   * Classic's Terms step (`applySemiMonthlyRules`) locks "repaid every" to 1 while the frequency is
+   * semi-monthly — the backend rejects any other value — and clears both due days when the operator
+   * switches AWAY from semi-monthly, because the backend rejects them on every other frequency. Only
+   * the transition clears (like `lastSeenMultiDisburseLoan`), so a value typed while the field is
+   * hidden is left alone and `buildPayload` strips it. A second day no longer after the first one is
+   * cleared too. Values are patched with `emitEvent: false`: this runs inside the form's own
+   * valueChanges handler.
+   */
+  private syncSemiMonthlyControls(): void {
+    const repaymentEvery = this.form.get('repaymentEvery');
+    const firstDay = this.form.get('firstRepaymentDayOfMonth');
+    const secondDay = this.form.get('secondRepaymentDayOfMonth');
+    if (!repaymentEvery || !firstDay || !secondDay) {
+      return;
+    }
+    if (secondDay.value != null && firstDay.value != null && Number(secondDay.value) <= Number(firstDay.value)) {
+      secondDay.setValue(null, { emitEvent: false });
+    }
+    const semiMonthly = this.isSemiMonthlyFrequency;
+    if (semiMonthly) {
+      if (repaymentEvery.value !== 1) {
+        repaymentEvery.setValue(1, { emitEvent: false });
+      }
+      if (repaymentEvery.enabled) {
+        repaymentEvery.disable({ emitEvent: false });
+      }
+    } else if (this.lastSeenSemiMonthly === true) {
+      repaymentEvery.enable({ emitEvent: false });
+      firstDay.setValue(null, { emitEvent: false });
+      secondDay.setValue(null, { emitEvent: false });
+    }
+    this.lastSeenSemiMonthly = semiMonthly;
   }
 
   /**
@@ -2637,6 +2732,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
     }
     if (typeof field.min === 'number') {
       validators.push(Validators.min(field.min));
+    }
+    if (typeof field.max === 'number') {
+      validators.push(Validators.max(field.max));
     }
     if (typeof field.decimals === 'number') {
       validators.push(Validators.pattern(decimalPlacesPattern(field.decimals)));

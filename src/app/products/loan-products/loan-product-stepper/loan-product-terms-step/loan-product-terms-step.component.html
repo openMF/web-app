@@ -659,6 +659,40 @@
       </mat-error>
     </mat-form-field>
 
+    @if (loanProductService.isLoanProduct && isSemiMonthly()) {
+      <mat-form-field class="flex-30">
+        <mat-label>{{ 'labels.inputs.First repayment day of month' | translate }}</mat-label>
+        <mat-select formControlName="firstRepaymentDayOfMonth" required>
+          @for (day of firstRepaymentDayOptions; track day) {
+            <mat-option [value]="day">{{ day }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          {{ 'labels.inputs.First repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-30">
+        <mat-label>{{ 'labels.inputs.Second repayment day of month' | translate }}</mat-label>
+        <mat-select formControlName="secondRepaymentDayOfMonth" required>
+          @for (day of secondRepaymentDayOptions(); track day) {
+            <mat-option [value]="day">
+              {{ day | semiMonthlyDay }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{
+          loanProductTermsForm.value.firstRepaymentDayOfMonth
+            | semiMonthlyDueDays: loanProductTermsForm.value.secondRepaymentDayOfMonth
+        }}</mat-hint>
+        <mat-error>
+          {{ 'labels.inputs.Second repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+    }
+
     @if (loanProductService.isLoanProduct) {
       @if (allowFixedLength()) {
         <h4 class="mat-h4 flex-30">

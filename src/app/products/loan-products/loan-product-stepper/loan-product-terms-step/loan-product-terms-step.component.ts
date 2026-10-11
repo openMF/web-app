@@ -6,7 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -40,6 +50,13 @@ import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
+import {
+  applyRepaymentDaysToPayload,
+  firstRepaymentDayOptions,
+  isSemiMonthly,
+  secondRepaymentDayOptions
+} from 'app/shared/loan/semi-monthly/semi-monthly';
+import { SemiMonthlyDayPipe, SemiMonthlyDueDaysPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
 
 @Component({
   selector: 'mifosx-loan-product-terms-step',
@@ -64,11 +81,14 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    FindPipe
+    FindPipe,
+    SemiMonthlyDayPipe,
+    SemiMonthlyDueDaysPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private processingStrategyService = inject(ProcessingStrategyService);
   private dialog = inject(MatDialog);
@@ -87,6 +107,8 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
   overAppliedCalculationTypeData: any;
   repaymentFrequencyTypeData: any;
   repaymentStartDateTypeOptions: any;
+  /** Semi-monthly first-day options (1–27). */
+  readonly firstRepaymentDayOptions = firstRepaymentDayOptions();
 
   displayedColumns: string[] = [
     'valueConditionType',
@@ -143,6 +165,14 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         interestRecognitionOnDisbursementDate: this.loanProductsTemplate.interestRecognitionOnDisbursementDate || false,
         interestRateFrequencyType: this.loanProductsTemplate.interestRateFrequencyType?.id,
         repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType?.id,
+        // A product moved off semi-monthly keeps its old days on the backend, so they are only
+        // prefilled while the product is still semi-monthly.
+        firstRepaymentDayOfMonth: isSemiMonthly(this.loanProductsTemplate.repaymentFrequencyType)
+          ? (this.loanProductsTemplate.firstRepaymentDayOfMonth ?? null)
+          : null,
+        secondRepaymentDayOfMonth: isSemiMonthly(this.loanProductsTemplate.repaymentFrequencyType)
+          ? (this.loanProductsTemplate.secondRepaymentDayOfMonth ?? null)
+          : null,
         repaymentStartDateType: this.loanProductsTemplate.repaymentStartDateType?.id || 1
       });
 
@@ -293,6 +323,10 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           '',
           Validators.required
         ],
+        // Only meaningful for the semi-monthly frequency; validators are attached/removed by
+        // `setConditionalControls` as the frequency changes.
+        firstRepaymentDayOfMonth: [null],
+        secondRepaymentDayOfMonth: [null],
         minimumDaysBetweenDisbursalAndFirstRepayment: [
           '',
           []
@@ -473,6 +507,22 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         }
       });
 
+      this.loanProductTermsForm
+        .get('repaymentFrequencyType')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((repaymentFrequencyType) => this.applySemiMonthlyRules(isSemiMonthly(repaymentFrequencyType)));
+
+      // A first day on or after the selected second day leaves no valid second day, so it is cleared.
+      this.loanProductTermsForm
+        .get('firstRepaymentDayOfMonth')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((firstDay) => {
+          const secondDay = this.loanProductTermsForm.get('secondRepaymentDayOfMonth')!;
+          if (secondDay.value != null && firstDay != null && Number(secondDay.value) <= Number(firstDay)) {
+            secondDay.setValue(null);
+          }
+        });
+
       this.zeroInterest.valueChanges.subscribe((zeroInterest) => {
         if (zeroInterest) {
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(0);
@@ -622,8 +672,47 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     return formfields;
   }
 
+  /**
+   * Semi-monthly products carry both due days (mandatory, set as a pair) and are always repaid every
+   * single period — the backend rejects any other `repaymentEvery`. Any other frequency rejects the
+   * days, so they are cleared and their validators dropped.
+   */
+  private applySemiMonthlyRules(semiMonthly: boolean): void {
+    const firstDay = this.loanProductTermsForm.get('firstRepaymentDayOfMonth');
+    const secondDay = this.loanProductTermsForm.get('secondRepaymentDayOfMonth');
+    const repaymentEvery = this.loanProductTermsForm.get('repaymentEvery');
+    if (!firstDay || !secondDay || !repaymentEvery) {
+      return;
+    }
+    if (semiMonthly) {
+      firstDay.setValidators(Validators.required);
+      secondDay.setValidators(Validators.required);
+      repaymentEvery.setValue(1);
+      repaymentEvery.disable();
+    } else {
+      firstDay.clearValidators();
+      firstDay.setValue(null);
+      secondDay.clearValidators();
+      secondDay.setValue(null);
+      repaymentEvery.enable();
+    }
+    firstDay.updateValueAndValidity();
+    secondDay.updateValueAndValidity();
+  }
+
+  /** Second-day options: only the days after the selected first day. */
+  secondRepaymentDayOptions(): number[] {
+    return secondRepaymentDayOptions(this.loanProductTermsForm.get('firstRepaymentDayOfMonth')?.value);
+  }
+
+  isSemiMonthly(): boolean {
+    return isSemiMonthly(this.loanProductTermsForm.get('repaymentFrequencyType')?.value);
+  }
+
   get loanProductTerms() {
     const formValue = this.loanProductTermsForm.getRawValue();
+    // The backend rejects the days on any frequency other than semi-monthly, and takes them only as a pair.
+    applyRepaymentDaysToPayload(formValue, formValue.repaymentFrequencyType);
     // Normalize decimal separators: convert comma to dot for backend compatibility
     const normalizeDecimal = (value: any) => {
       if (typeof value === 'string' && value.includes(',')) {

@@ -65,6 +65,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import {
+  SEMI_MONTHLY_FREQUENCY_TYPE,
+  SemiMonthlyRepaymentDays,
+  applyRepaymentDaysToPayload,
+  firstRepaymentDayOptions,
+  isSemiMonthly,
+  isValidRepaymentDayPair,
+  secondRepaymentDayOptions,
+  semiMonthlyDueDateValidator
+} from 'app/shared/loan/semi-monthly/semi-monthly';
+import { SemiMonthlyDayPipe, SemiMonthlyDueDaysPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
 
 interface DisbursementData {
   id?: number;
@@ -102,7 +113,9 @@ interface DisbursementData {
     FindPipe,
     DateFormatPipe,
     YesnoPipe,
-    BreachDisplayComponent
+    BreachDisplayComponent,
+    SemiMonthlyDayPipe,
+    SemiMonthlyDueDaysPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -203,6 +216,12 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   nearBreachOptions: NearBreach[] = [];
   allowAttributeOverridesBreach: boolean = true;
   allowAttributeOverridesDelinquencyBucket: boolean = true;
+  /** Whether the product lets the loan override "repaid every" (drives re-enabling after semi-monthly). */
+  private repaymentEveryOverridable = true;
+  /** Semi-monthly first-day options (1–27). */
+  readonly firstRepaymentDayOptions = firstRepaymentDayOptions();
+  /** Due days the loan being edited already has; an unchanged pair is left out of the request. */
+  private savedRepaymentDays: Partial<SemiMonthlyRepaymentDays> | null = null;
 
   constructor() {
     super();
@@ -250,6 +269,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           numberOfRepayments: this.loansAccountTermsData.numberOfRepayments,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType.id,
+          ...this.templateRepaymentDays(),
           amortizationType: this.loansAccountTermsData.amortizationType.id,
           isEqualAmortization: this.loansAccountTermsData.isEqualAmortization,
           interestType: this.loansAccountTermsData.interestType.id,
@@ -312,10 +332,14 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         }
 
         const allowAttributeOverrides = this.loansAccountTermsData.product.allowAttributeOverrides;
+        this.repaymentEveryOverridable = !!allowAttributeOverrides.repaymentEvery;
         if (!allowAttributeOverrides.repaymentEvery) {
           this.loansAccountTermsForm.controls.repaymentEvery.disable();
           this.loansAccountTermsForm.controls.repaymentFrequencyType.disable();
         }
+        // The frequency listener is registered in ngOnInit, which runs after the first ngOnChanges,
+        // so the semi-monthly rules are applied explicitly here for the seeded frequency.
+        this.applySemiMonthlyRules();
         if (!allowAttributeOverrides.interestType) {
           this.loansAccountTermsForm.controls.interestType.disable();
         }
@@ -491,6 +515,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           numberOfRepayments: this.loansAccountTermsData.numberOfRepayments,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType.id,
+          ...this.templateRepaymentDays(),
           amortizationType: this.loansAccountTermsData.amortizationType.id,
           isEqualAmortization: this.loansAccountTermsData.isEqualAmortization,
           interestType: this.loansAccountTermsData.interestType.id,
@@ -521,6 +546,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.setCustomValidators();
       this.setLoanTermListener();
       this.setNumericFieldListeners();
+      this.applySemiMonthlyRules();
 
       if (this.allowAddDisbursementDetails()) {
         this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
@@ -632,7 +658,111 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           repaymentFrequencyNthDayType?.updateValueAndValidity();
           repaymentFrequencyDayOfWeekType?.updateValueAndValidity();
         });
+        this.applySemiMonthlyRules();
       });
+
+    // A first day on or after the selected second day leaves no valid second day, so it is cleared.
+    this.loansAccountTermsForm
+      .get('firstRepaymentDayOfMonth')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((firstDay) => {
+        const secondDay = this.loansAccountTermsForm.get('secondRepaymentDayOfMonth');
+        if (secondDay?.value != null && firstDay != null && Number(secondDay.value) <= Number(firstDay)) {
+          secondDay.setValue(null);
+        }
+      });
+
+    // The first repayment date is only valid on one of the two configured due days.
+    this.loansAccountTermsForm
+      .get('secondRepaymentDayOfMonth')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.loansAccountTermsForm.get('repaymentsStartingFromDate')?.updateValueAndValidity());
+    this.loansAccountTermsForm
+      .get('firstRepaymentDayOfMonth')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.loansAccountTermsForm.get('repaymentsStartingFromDate')?.updateValueAndValidity());
+  }
+
+  isSemiMonthly(): boolean {
+    return isSemiMonthly(this.loansAccountTermsForm.get('repaymentFrequencyType')?.value);
+  }
+
+  /** The configured pair of due days when the loan is semi-monthly and both are set, `null` otherwise. */
+  configuredRepaymentDays(): SemiMonthlyRepaymentDays | null {
+    if (!this.isSemiMonthly()) {
+      return null;
+    }
+    const firstRepaymentDayOfMonth = Number(this.loansAccountTermsForm.get('firstRepaymentDayOfMonth')?.value);
+    const secondRepaymentDayOfMonth = Number(this.loansAccountTermsForm.get('secondRepaymentDayOfMonth')?.value);
+    return isValidRepaymentDayPair(firstRepaymentDayOfMonth, secondRepaymentDayOfMonth)
+      ? { firstRepaymentDayOfMonth, secondRepaymentDayOfMonth }
+      : null;
+  }
+
+  /** Second-day options: only the days after the selected first day. */
+  secondRepaymentDayOptions(): number[] {
+    return secondRepaymentDayOptions(this.loansAccountTermsForm.get('firstRepaymentDayOfMonth')?.value);
+  }
+
+  /**
+   * The due days to prefill from the template — the product's on a new loan, the loan's own when
+   * editing. A non semi-monthly product or loan can still carry days left from an earlier
+   * semi-monthly configuration (the backend keeps them), so they are only taken for semi-monthly.
+   */
+  private templateRepaymentDays(): Partial<SemiMonthlyRepaymentDays> {
+    const semiMonthly = isSemiMonthly(this.loansAccountTermsData.repaymentFrequencyType);
+    const days = {
+      firstRepaymentDayOfMonth: semiMonthly ? (this.loansAccountTermsData.firstRepaymentDayOfMonth ?? null) : null,
+      secondRepaymentDayOfMonth: semiMonthly ? (this.loansAccountTermsData.secondRepaymentDayOfMonth ?? null) : null
+    };
+    if (this.isEditingLoan()) {
+      this.savedRepaymentDays = days;
+    }
+    return days;
+  }
+
+  /** True when the form edits an existing loan application rather than creating one. */
+  private isEditingLoan(): boolean {
+    return this.loanId != null && !!this.loansAccountTemplate?.accountNo;
+  }
+
+  /**
+   * Semi-monthly loans: both due days are mandatory, "repaid every" is always 1 and the loan term is
+   * counted in semi-monthly periods, so the term frequency type must match — the backend rejects any
+   * other combination. Any other frequency rejects the days, so they are cleared.
+   */
+  private applySemiMonthlyRules(): void {
+    const firstDay = this.loansAccountTermsForm.get('firstRepaymentDayOfMonth');
+    const secondDay = this.loansAccountTermsForm.get('secondRepaymentDayOfMonth');
+    const repaymentEvery = this.loansAccountTermsForm.get('repaymentEvery');
+    const loanTermFrequencyType = this.loansAccountTermsForm.get('loanTermFrequencyType');
+    if (!firstDay || !secondDay || !repaymentEvery) {
+      return;
+    }
+    if (this.isSemiMonthly()) {
+      firstDay.setValidators(Validators.required);
+      secondDay.setValidators(Validators.required);
+      if (repaymentEvery.value !== 1) {
+        repaymentEvery.setValue(1);
+      }
+      repaymentEvery.disable();
+      if (loanTermFrequencyType && !isSemiMonthly(loanTermFrequencyType.value)) {
+        // emitEvent: false — the term-type listener would echo the value back into the repayment
+        // frequency and re-enter this method.
+        loanTermFrequencyType.setValue(SEMI_MONTHLY_FREQUENCY_TYPE, { emitEvent: false });
+      }
+    } else {
+      firstDay.clearValidators();
+      firstDay.setValue(null, { emitEvent: false });
+      secondDay.clearValidators();
+      secondDay.setValue(null, { emitEvent: false });
+      if (this.repaymentEveryOverridable) {
+        repaymentEvery.enable();
+      }
+    }
+    firstDay.updateValueAndValidity({ emitEvent: false });
+    secondDay.updateValueAndValidity({ emitEvent: false });
+    this.loansAccountTermsForm.get('repaymentsStartingFromDate')?.updateValueAndValidity({ emitEvent: false });
   }
 
   /** Custom Listeners for the form to calculate Loan Term */
@@ -641,7 +771,9 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       .get('numberOfRepayments')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((numberOfRepayments) => {
-        const repaymentEvery: number = this.loansAccountTermsForm.value.repaymentEvery;
+        // Raw value: "repaid every" is a disabled control for semi-monthly loans (and when the product
+        // disallows overriding it), and `form.value` omits disabled controls.
+        const repaymentEvery: number = this.loansAccountTermsForm.getRawValue().repaymentEvery;
         this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
       });
 
@@ -649,7 +781,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       .get('repaymentEvery')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((repaymentEvery) => {
-        const numberOfRepayments: number = this.loansAccountTermsForm.value.numberOfRepayments;
+        const numberOfRepayments: number = this.loansAccountTermsForm.getRawValue().numberOfRepayments;
         this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
       });
 
@@ -778,7 +910,13 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ],
         repaymentFrequencyNthDayType: [''],
         repaymentFrequencyDayOfWeekType: [''],
-        repaymentsStartingFromDate: [''],
+        // Only meaningful for the semi-monthly frequency; validators are managed by `applySemiMonthlyRules`.
+        firstRepaymentDayOfMonth: [null],
+        secondRepaymentDayOfMonth: [null],
+        repaymentsStartingFromDate: [
+          '',
+          semiMonthlyDueDateValidator(() => this.configuredRepaymentDays())
+        ],
         interestChargedFromDate: [''],
         interestRatePerPeriod: [
           '',
@@ -1054,7 +1192,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
    * Returns loans account terms form value.
    */
   get loansAccountTerms() {
-    return this.loansAccountTermsForm.getRawValue();
+    const terms = this.loansAccountTermsForm.getRawValue();
+    // Both days or neither; an edited loan whose days did not change sends neither and keeps them.
+    applyRepaymentDaysToPayload(terms, terms.repaymentFrequencyType, this.savedRepaymentDays);
+    return terms;
   }
 
   get loanCollateral() {

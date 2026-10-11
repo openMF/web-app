@@ -108,6 +108,16 @@
               }
             </div>
           </div>
+          @if (isSemiMonthly(loanDetails.repaymentFrequencyType)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.First repayment day of month' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.firstRepaymentDayOfMonth }}</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Second repayment day of month' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.secondRepaymentDayOfMonth | semiMonthlyDay }}</div>
+            </div>
+          }
           @if (loanDetails.fixedLength) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Fixed Length' | translate }}</div>

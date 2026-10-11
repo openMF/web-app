@@ -12,6 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { SemiMonthlyDayPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
@@ -30,6 +32,7 @@ interface TimelineStep {
   styleUrls: ['./account-details.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    SemiMonthlyDayPipe,
     NgClass,
     DateFormatPipe,
     FormatNumberPipe,
@@ -38,6 +41,9 @@ interface TimelineStep {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccountDetailsComponent extends LoanProductBaseComponent {
+  /** Semi-monthly due days are only shown for that frequency; other products/loans may keep stale ones. */
+  readonly isSemiMonthly = isSemiMonthly;
+
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
 
