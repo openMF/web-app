@@ -5187,6 +5187,8 @@
       "No transaction data available": "कुनै कारोबार डेटा उपलब्ध छैन",
       "No transactions yet": "अहिलेसम्म कुनै कारोबार भएको छैन",
       "No repayments and disbursal": "चयनित ग्राहक र बैठक मितिको लागि कुनै भुक्तानी र वितरण उपलब्ध छैन",
+      "No meetings for collection sheet": "चयन गरिएको मितिमा यस कर्मचारीका लागि कुनै पनि केन्द्रको बैठक छैन",
+      "No dues for collection sheet": "चयन गरिएको बैठक मितिका लागि कुनै ऋण वा बचत भुक्तानी बाँकी छैन",
       "No report data was generated": "कुनै रिपोर्ट डाटा उत्पन्न भएको छैन",
       "No reports match your filters": "फिल्टरसँग कुनै रिपोर्ट मेल खाँदैन",
       "No transaction was found": "कुनै लेनदेन फेला परेन।",

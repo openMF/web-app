@@ -5184,6 +5184,8 @@
       "No transaction data available": "Hakuna data ya miamala inayopatikana",
       "No transactions yet": "Bado hakuna miamala",
       "No repayments and disbursal": "Hakuna malipo na malipo yanayopatikana kwa mteja aliyechaguliwa na tarehe ya mkutano",
+      "No meetings for collection sheet": "Hakuna kituo chenye mkutano katika tarehe iliyochaguliwa kwa mfanyakazi huyu",
+      "No dues for collection sheet": "Hakuna malipo ya mkopo au akiba yanayodaiwa kwa tarehe ya mkutano iliyochaguliwa",
       "No report data was generated": "Hakuna data ya ripoti iliyotolewa",
       "No reports match your filters": "Hakuna ripoti zinazolingana na vichungi",
       "No transaction was found": "Hakuna muamala uliopatikana.",

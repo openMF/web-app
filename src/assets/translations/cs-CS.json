@@ -5185,6 +5185,8 @@
       "No transaction data available": "Nejsou k dispozici žádné údaje o transakcích",
       "No transactions yet": "Zatím žádné transakce",
       "No repayments and disbursal": "Pro vybraného klienta a datum schůzky nejsou nalezeny žádné splátky a výplaty",
+      "No meetings for collection sheet": "Žádné centrum nemá ve vybraném datu schůzku s tímto pracovníkem",
+      "No dues for collection sheet": "Pro vybrané datum schůzky nejsou splatné žádné platby úvěrů ani spoření",
       "No report data was generated": "Nebyla vygenerována žádná data přehledu",
       "No reports match your filters": "Žádné sestavy neodpovídají filtrům",
       "No transaction was found": "Nebyla nalezena žádná transakce.",

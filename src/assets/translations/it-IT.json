@@ -5187,6 +5187,8 @@
       "No transaction data available": "Nessun dato di transazione disponibile",
       "No transactions yet": "Nessuna transazione ancora",
       "No repayments and disbursal": "Non sono trovati rimborsi ed esborsi per il cliente selezionato e la data della riunione",
+      "No meetings for collection sheet": "Nessun centro ha una riunione nella data selezionata per questo membro del personale",
+      "No dues for collection sheet": "Nessun pagamento di prestiti o risparmi è dovuto per la data della riunione selezionata",
       "No report data was generated": "Nessun dato del report è stato generato",
       "No reports match your filters": "Nessun report corrisponde ai filtri",
       "No transaction was found": "Nessuna transazione è stata trovata.",
