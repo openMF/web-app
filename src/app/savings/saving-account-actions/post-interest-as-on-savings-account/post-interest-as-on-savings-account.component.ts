@@ -92,7 +92,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
     }
     const data = {
       ...postInterestSavingsAccountFormData,
-      IsPostInterestAsOn: true,
+      isPostInterestAsOn: true,
       dateFormat,
       locale
     };
