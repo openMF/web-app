@@ -306,8 +306,7 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
   private gotoTransactionList(): void {
     this.router.navigate(
       [
-        '../',
-        '../'
+        '../..'
       ],
       {
         queryParams: {
