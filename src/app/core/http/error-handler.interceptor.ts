@@ -100,8 +100,34 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return request.method === 'POST' && request.url.split('?')[0].endsWith('/authentication');
   }
 
+  private isClosingAuthorizationFailure(error: unknown): boolean {
+    let body = this.parseErrorBody(error);
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch {
+        return false;
+      }
+    }
+    const codes = [
+      body?.userMessageGlobalisationCode,
+      ...(Array.isArray(body?.errors) ? body.errors.map((item: any) => item?.userMessageGlobalisationCode) : [])
+    ];
+    return codes.some((code) => typeof code === 'string' && code.includes('authorization.'));
+  }
+
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    // Keep credential-bearing closing errors out of the generic response-body logger.
+    if (/\/base-teller\/end-of-day-closing(?:[/?]|$)/.test(request.url)) {
+      if (status === 401 && !this.isClosingAuthorizationFailure(response.error)) {
+        this.alertService.alert({
+          type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+          message: this.translate.instant('errors.error.auth.sessionExpired.message')
+        });
+      }
+      return throwError(() => response);
+    }
     // Cash Exchange maps backend failures to safe, localized messages in its workflow.
     // Match the endpoint regardless of the API prefix used by a gateway.
     // A 401 still needs the shared session-expired alert.

@@ -24,9 +24,14 @@ describe('ErrorHandlerInterceptor', () => {
    * @returns 'errored' when the failure is passed through silently, 'threw'
    * when the interceptor rethrows after alerting.
    */
-  function intercept(url: string, status: number, method: 'GET' | 'PUT' | 'POST' = 'GET'): string {
+  function intercept(
+    url: string,
+    status: number,
+    method: 'GET' | 'PUT' | 'POST' = 'GET',
+    error: unknown = { defaultUserMessage: 'boom' }
+  ): string {
     const request = method === 'GET' ? new HttpRequest('GET', url) : new HttpRequest(method, url, {});
-    const response = new HttpErrorResponse({ status, url, error: { defaultUserMessage: 'boom' } });
+    const response = new HttpErrorResponse({ status, url, error });
     try {
       let outcome = 'none';
       (interceptor as any).handleError(response, request).subscribe({ error: () => (outcome = 'errored') });
@@ -69,6 +74,31 @@ describe('ErrorHandlerInterceptor', () => {
   it('does not mistake a similarly named endpoint for Cash Exchange', () => {
     expect(intercept('/base-teller/cash-exchanges-history', 403)).toBe('threw');
     expect(alert).toHaveBeenCalled();
+  });
+
+  const closingUrls = [
+    '/base-teller/end-of-day-closing',
+    'https://gateway.example.test/custom/path/base-teller/end-of-day-closing/preview'
+  ];
+
+  it.each(closingUrls)('keeps closing authorization failures local at %s', (url) => {
+    const error = { errors: [{ userMessageGlobalisationCode: 'authorization.invalid' }] };
+    expect(intercept(url, 401, 'POST', error)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it.each(closingUrls)('alerts for an expired closing session at %s', (url) => {
+    expect(intercept(url, 401)).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it('keeps serialized closing authorization failures local', () => {
+    const error = JSON.stringify({ userMessageGlobalisationCode: 'authorization.required' });
+    expect(intercept('/base-teller/end-of-day-closing', 401, 'POST', error)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
   });
 
   it('does not alert when the branding endpoint is absent', () => {
