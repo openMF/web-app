@@ -31,6 +31,11 @@ export interface BaseTellerWorkflow {
 }
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
+  { label: 'eod.title', materialIcon: 'point_of_sale', permission: 'READ_BASE_TELLER_END_OF_DAY_CLOSING', route: [
+      '/organization',
+      'base-teller',
+      'end-of-day-cash-closing'
+    ] },
   {
     label: 'cashExchange.title',
     materialIcon: 'currency_exchange',

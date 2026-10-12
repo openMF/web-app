@@ -15,6 +15,8 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { EndOfDayClosingComponent } from './base-teller/end-of-day-cash-closing/end-of-day-closing.component';
+import { endOfDayClosingGuard } from './base-teller/end-of-day-cash-closing/end-of-day-closing.guard';
 import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
@@ -466,6 +468,12 @@ const routes: Routes = [
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/end-of-day-cash-closing',
+          component: EndOfDayClosingComponent,
+          canActivate: [endOfDayClosingGuard],
+          data: { title: 'eod.title', breadcrumb: 'eod.title' }
         },
         {
           path: 'base-teller/catalog-updates',
