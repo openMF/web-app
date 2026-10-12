@@ -24,7 +24,7 @@ import { environment } from '../../environments/environment';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, shareReplay } from 'rxjs/operators';
 
 /** Custom Imports. */
 import { activities } from './activities';
@@ -87,6 +87,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   searchText: FormControl = new FormControl();
   /** Filtered Activities. */
   filteredActivities: Observable<any[]>;
+  /** Whether a completed search matched no activities. */
+  noResults$: Observable<boolean>;
   /** All User Activities. */
   allActivities: any[] = activities;
 
@@ -122,9 +124,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * Sets filtered activities for autocomplete.
    */
   setFilteredActivities() {
-    this.filteredActivities = this.searchText.valueChanges.pipe(
+    // One filtered result per query, shared by the option list and the empty state,
+    // so the activity index is only filtered once per keystroke.
+    const search$ = this.searchText.valueChanges.pipe(
       map((activity: any) => (typeof activity === 'string' ? activity : activity?.activity)),
-      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+      map((activityName: string) => ({
+        activityName,
+        matches: activityName ? this.filterActivity(activityName) : this.allActivities
+      })),
+      shareReplay({ bufferSize: 1, refCount: true })
+    );
+
+    this.filteredActivities = search$.pipe(map(({ matches }) => matches));
+
+    // The empty state is only meaningful once a non-empty query has actually been
+    // filtered, so an empty (or cleared) query and a pending filter never count.
+    this.noResults$ = search$.pipe(
+      map(({ activityName, matches }) => !!activityName && matches.length === 0),
+      startWith(false)
     );
   }
 
