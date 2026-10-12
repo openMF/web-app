@@ -137,7 +137,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
       this.useDueDate = config.stringValue === 'due-date';
     });
-    this.chargesData = this.loanDetails.charges;
+    this.chargesData = this.loanDetails.charges ?? [];
     this.status = this.loanDetails.status.value;
     let actionFlag: boolean;
     this.chargesData.forEach((element: any) => {
