@@ -67,6 +67,17 @@ describe('ClientAssignStaffComponent', () => {
     expect(component.clientAssignStaffForm).toBeDefined();
   });
 
+  it('should require a staff member before the form can be submitted', () => {
+    const staffId = component.clientAssignStaffForm.controls.staffId;
+
+    expect(component.clientAssignStaffForm.valid).toBe(false);
+    expect(staffId.hasError('required')).toBe(true);
+
+    staffId.setValue(1);
+
+    expect(component.clientAssignStaffForm.valid).toBe(true);
+  });
+
   it('should call API with assignStaff command on submit', () => {
     component.clientAssignStaffForm.patchValue({ staffId: 1 });
 
