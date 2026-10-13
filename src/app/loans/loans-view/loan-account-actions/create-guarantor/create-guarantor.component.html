@@ -24,6 +24,9 @@
                   {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.name' | translate) } }}
                 </mat-error>
               }
+              @if (newGuarantorForm.controls.name.hasError('clientNotPicked')) {
+                <mat-error>{{ 'labels.text.Select a client from the list' | translate }}</mat-error>
+              }
             </mat-form-field>
             <mat-autocomplete
               autoActiveFirstOption
