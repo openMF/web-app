@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -63,7 +63,10 @@ export class GroupAssignStaffComponent implements OnInit {
    */
   createGroupAssignStaffForm() {
     this.groupAssignStaffForm = this.formBuilder.group({
-      staffId: ['']
+      staffId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
