@@ -10,6 +10,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerInput } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -183,5 +185,130 @@ describe('ClientGeneralStepComponent WEB-748 email validation', () => {
   it('rejects a double-dot domain', () => {
     emailControl().patchValue('client@example..com');
     expect(emailControl().hasError('pattern')).toBe(true);
+  });
+});
+
+describe('ClientGeneralStepComponent WEB-1312 inclusive gender options', () => {
+  let fixture: ComponentFixture<ClientGeneralStepComponent>;
+  let component: ClientGeneralStepComponent;
+
+  /** Gender code values as Fineract returns them, including inclusive options. */
+  const genderOptions = [
+    { id: 28, name: 'Male' },
+    { id: 29, name: 'Female' },
+    { id: 30, name: 'Non-binary' },
+    { id: 31, name: 'Prefer not to say' }
+  ];
+
+  const clientTemplate: any = {
+    officeOptions: [{ id: 1, name: 'Head Office' }],
+    staffOptions: [],
+    clientLegalFormOptions: [
+      { id: LegalFormId.PERSON, value: 'PERSON' },
+      { id: LegalFormId.ENTITY, value: 'ENTITY' }
+    ],
+    clientTypeOptions: [],
+    clientClassificationOptions: [],
+    clientNonPersonMainBusinessLineOptions: [],
+    clientNonPersonConstitutionOptions: [],
+    genderOptions,
+    savingProductOptions: []
+  };
+
+  /** The Gender `MatSelect`, as bound in the template. */
+  function genderSelect(): MatSelect {
+    return fixture.debugElement
+      .query(By.css('mat-select[formcontrolname="genderId"]'))
+      .injector.get<MatSelect>(MatSelect);
+  }
+
+  function genderControl() {
+    return component.createClientForm.get('genderId');
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ClientGeneralStepComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        provideNativeDateAdapter(),
+        provideNoopAnimations(),
+        { provide: CdkStepper, useValue: { next: jest.fn(), previous: jest.fn() } },
+        { provide: Dates, useValue: { formatDate: jest.fn(() => '15 January 2026') } },
+        {
+          provide: SettingsService,
+          useValue: {
+            businessDate: new Date(2026, 0, 15),
+            maxFutureDate: new Date(2100, 0, 1),
+            dateFormat: 'dd MMMM yyyy',
+            language: { code: 'en-US' }
+          }
+        },
+        { provide: ClientsService, useValue: { getClientWithOfficeTemplate: jest.fn(() => of(clientTemplate)) } }
+      ]
+    }).compileComponents();
+
+    const faIconLibrary = TestBed.inject(FaIconLibrary);
+    faIconLibrary.addIcons(
+      ...Object.keys(solidIcons)
+        .filter((key) => key !== 'fas' && key !== 'prefix' && key.startsWith('fa'))
+        .map((icon) => (solidIcons as any)[icon])
+    );
+
+    fixture = TestBed.createComponent(ClientGeneralStepComponent);
+    component = fixture.componentInstance;
+    component.clientTemplate = clientTemplate;
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    TestBed.inject(OverlayContainer).ngOnDestroy?.();
+  });
+
+  it('renders every backend-provided gender option in the selector', () => {
+    genderSelect().open();
+    fixture.detectChanges();
+
+    const rendered = fixture.debugElement
+      .queryAll(By.css('mat-option'))
+      .map((option) => option.nativeElement.textContent.trim());
+
+    expect(rendered).toEqual([
+      'Male',
+      'Female',
+      'Non-binary',
+      'Prefer not to say'
+    ]);
+  });
+
+  it('binds each option to its Fineract code-value id', () => {
+    const options = genderSelect().options.map((option) => option.value);
+
+    expect(options).toEqual([
+      28,
+      29,
+      30,
+      31
+    ]);
+  });
+
+  it('stores the code-value id of a selected additional option', () => {
+    genderSelect().open();
+    fixture.detectChanges();
+
+    const nonBinary = fixture.debugElement
+      .queryAll(By.css('mat-option'))
+      .find((option) => option.nativeElement.textContent.trim() === 'Non-binary');
+    nonBinary!.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(genderControl().value).toBe(30);
+  });
+
+  it('leaves gender unanswered (optional) when no option is selected', () => {
+    expect(genderControl().value).toBe('');
+    expect(genderControl().valid).toBe(true);
   });
 });
