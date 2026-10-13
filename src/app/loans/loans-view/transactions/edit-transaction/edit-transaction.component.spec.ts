@@ -176,8 +176,7 @@ describe('EditTransactionComponent', () => {
     // route, leaving the rewritten loan data unresolved.
     expect(routerStub.navigate).toHaveBeenCalledWith(
       [
-        '../',
-        '../'
+        '../..'
       ],
       expect.any(Object)
     );

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -86,6 +95,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
   private dataReloadService = inject(DataReloadService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   officesData: any;
   loanOfficerData: any = [];
@@ -163,6 +173,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.refreshData();
+        this.cdr.markForCheck();
       });
 
     this.maxDate = this.settingsService.businessDate;
@@ -171,6 +182,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       this.Success = true;
       setTimeout(() => {
         this.Success = false;
+        this.cdr.markForCheck();
       }, 3000);
     }
     this.createCollectionSheetForm();
@@ -218,6 +230,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       )
       .subscribe((response: any) => {
         this.loanOfficerData = response;
+        this.cdr.markForCheck();
       });
   }
 
@@ -231,6 +244,8 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
         client.loans.forEach((loan: any) => {
           const loanData = {
             ...loan,
+            // Fineract sends the dues split by component, there is no totalDue in the response.
+            totalDue: Math.round((Number(loan.principalDue ?? 0) + Number(loan.interestDue ?? 0)) * 100) / 100,
             clientName: client.clientName,
             clientId: client.clientId
           };
@@ -272,7 +287,8 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
     if (isNaN(chargesDue)) {
       chargesDue = 0;
     }
-    return Math.ceil((Number(principalInterestDue) + Number(chargesDue)) * 100) / 100;
+    // Round to the nearest cent: Math.ceil turned float noise (100.18 + 0.2 = 100.38000000000001) into an extra cent.
+    return Math.round((Number(principalInterestDue) + Number(chargesDue)) * 100) / 100;
   }
 
   /**
@@ -374,13 +390,13 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
                   ? 300
                   : 400
           };
-          if (response.data.paymentTypeId !== '') {
-            savingsTransaction['paymentTypeId'] = response.data.paymentTypeId;
-            savingsTransaction['accountNumber'] = response.data.accountNumber;
-            savingsTransaction['checkNumber'] = response.data.checkNumber;
-            savingsTransaction['routingCode'] = response.data.routingCode;
-            savingsTransaction['receiptNumber'] = response.data.receiptNumber;
-            savingsTransaction['bankNumber'] = response.data.bankNumber;
+          if (response.data.value.paymentTypeId !== '') {
+            savingsTransaction['paymentTypeId'] = response.data.value.paymentTypeId;
+            savingsTransaction['accountNumber'] = response.data.value.accountNumber;
+            savingsTransaction['checkNumber'] = response.data.value.checkNumber;
+            savingsTransaction['routingCode'] = response.data.value.routingCode;
+            savingsTransaction['receiptNumber'] = response.data.value.receiptNumber;
+            savingsTransaction['bankNumber'] = response.data.value.bankNumber;
           }
           if (savingsTransaction.transactionAmount > 0) {
             this.bulkSavingsDueTransactions.push(savingsTransaction);
@@ -414,8 +430,11 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
         this.noData = true;
         setTimeout(() => {
           this.noData = false;
+          this.cdr.markForCheck();
         }, 3000);
       }
+      // OnPush: the response arrives after the click, so the view has to be told to update.
+      this.cdr.markForCheck();
     });
   }
 
