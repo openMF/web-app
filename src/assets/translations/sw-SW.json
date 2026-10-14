@@ -899,7 +899,10 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
     "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
     "wc.loan.charge.waiver.invalid.status": "Ada haiwezi kusamehewa kwa sababu ya hali ya sasa ya mkopo.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Aina hii ya muamala haiwezi kurekebishwa kwa tofauti kwenye mkopo wa mtaji wa kazi.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Kiasi cha marekebisho hakiwezi kuwa sifuri.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Marekebisho hayawezi kupunguza muamala chini ya sifuri."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1293,7 +1296,8 @@
       "Convert": "Badilisha",
       "Deleting": "Inafuta",
       "Inactivate": "Zima",
-      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo"
+      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
+      "Adjust by Difference": "Rekebisha kwa Tofauti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -4393,7 +4397,9 @@
       "PERSON": "Mtu binafsi",
       "Payment": "Malipo",
       "Export Date": "Tarehe ya Kuhamisha",
-      "Label": "Lebo"
+      "Label": "Lebo",
+      "Original Amount": "Kiasi Asilia",
+      "Resulting Amount": "Kiasi Kinachotokana"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5870,7 +5876,11 @@
       "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Remaining discount fee available to adjust": "Ada ya punguzo iliyosalia inayoweza kurekebishwa",
-      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo"
+      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo",
+      "Adjust by Difference": "Rekebisha kwa Tofauti",
+      "The adjustment amount cannot be zero": "Kiasi cha marekebisho hakiwezi kuwa sifuri",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Marekebisho yanafuta kiasi, kwa hivyo muamala unatenguliwa bila mbadala",
+      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza"
     },
     "permissions": {
       "actions": {

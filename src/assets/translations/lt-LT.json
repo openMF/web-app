@@ -899,7 +899,10 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Mokestis nepriklauso šiai paskolai.",
     "wc.loan.charge.waiver.inactive.charge": "Mokesčio negalima atsisakyti, nes jis nėra aktyvus.",
     "wc.loan.charge.waiver.invalid.status": "Mokesčio negalima atsisakyti dėl dabartinės paskolos būsenos.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Šio tipo operacijos apyvartinio kapitalo paskolai negalima koreguoti skirtumu.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Koregavimo suma negali būti nulis.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Koregavimas negali sumažinti operacijos žemiau nulio."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1293,7 +1296,8 @@
       "Convert": "Konvertuoti",
       "Deleting": "Šalinama",
       "Inactivate": "Deaktyvuoti",
-      "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas"
+      "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
+      "Adjust by Difference": "Koreguoti skirtumu"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -4393,7 +4397,9 @@
       "PERSON": "Fizinis asmuo",
       "Payment": "Mokėjimas",
       "Export Date": "Eksporto data",
-      "Label": "Etiketė"
+      "Label": "Etiketė",
+      "Original Amount": "Pradinė suma",
+      "Resulting Amount": "Galutinė suma"
     },
     "links": {
       "Community": "bendruomenė",
@@ -5870,7 +5876,11 @@
       "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio",
       "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
       "Remaining discount fee available to adjust": "Likęs nuolaidos mokestis, kurį galima koreguoti",
-      "Cannot precede the discount fee date": "Negali būti ankstesnė nei nuolaidos mokesčio data"
+      "Cannot precede the discount fee date": "Negali būti ankstesnė nei nuolaidos mokesčio data",
+      "Adjust by Difference": "Koreguoti skirtumu",
+      "The adjustment amount cannot be zero": "Koregavimo suma negali būti nulis",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Koregavimas panaikina sumą, todėl operacija atšaukiama be pakeitimo",
+      "A positive amount increases the transaction and a negative one decreases it": "Teigiama suma operaciją padidina, neigiama – sumažina"
     },
     "permissions": {
       "actions": {
