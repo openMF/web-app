@@ -81,6 +81,7 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
       this.has(this.loanDetails.breachGraceDays) ||
       this.has(this.loanDetails.delinquencyGraceDays) ||
       !!this.loanDetails.delinquencyStartType ||
+      !!this.loanDetails.breachStartType ||
       !!this.loanDetails.breach ||
       !!this.loanDetails.nearBreach
     );

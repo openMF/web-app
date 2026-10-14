@@ -263,7 +263,8 @@ export class FundMappingComponent implements OnInit {
     this.isCollapsed = true;
     const fundMappingFormData = this.fundMappingForm.value;
     const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
+    // POST /search/advance binds loanFromDate/loanToDate as ISO dates and ignores dateFormat
+    const dateFormat = 'yyyy-MM-dd';
     const prevLoanFromDate: Date = this.fundMappingForm.value.loanFromDate;
     const prevLoanToDate: Date = this.fundMappingForm.value.loanToDate;
     if (fundMappingFormData.loanFromDate instanceof Date) {

@@ -628,7 +628,7 @@ This is the first official release of the Mifos® X web application:
 
 ## Contributing
 
-We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTING.md) before submitting pull requests.
+We welcome contributions! Before opening a pull request, please read our [contribution guidelines](./CONTRIBUTING.md) for the contribution workflow and PR review and communication guidance.
 
 ## Related Projects
 

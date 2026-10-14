@@ -115,6 +115,9 @@ export class LoanActionButtonResolver {
       return this.loansService.getLoanActionTemplate(loanId, 'reAge');
     } else if (loanActionButton === 'Re-Amortize') {
       return this.loansService.getLoanActionTemplate(loanId, 'reAmortization');
+    } else if (loanActionButton === 'Add Interest Pause') {
+      // Loaded here, not from the navigation state, so the page also works after a reload.
+      return this.loansService.getLoanAccountDetails(loanId);
     } else if (loanActionButton === 'Attach Loan Originator') {
       return this.organizationService.getLoanOriginators();
     } else if (loanActionButton === 'Discount Fee') {

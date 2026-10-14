@@ -34,6 +34,13 @@
         </mat-form-field>
       </div>
 
+      @if (noResults$ | async) {
+        <div class="empty-state" role="status">
+          <p>{{ 'labels.messages.No matching activities found' | translate }}</p>
+          <p>{{ 'labels.messages.Try a different search term' | translate }}</p>
+        </div>
+      }
+
       <mat-autocomplete #activitySearch="matAutocomplete">
         @for (activity of filteredActivities | async; track activity) {
           <mat-option [routerLink]="activity.path">

@@ -202,16 +202,22 @@ export const CREATE_CLIENT_SELECTORS: CreateClientSelectors = {
 /**
  * Selector contract for the Mifos X clients list page (`/#/clients`).
  *
- * The list renders a custom toolbar (search box + Create Client CTA)
- * and a div-based table where each `.list-row` carries a routerLink
- * to `/clients/:id/general`. The React port will replace the divs
- * with a shadcn `<DataTable>` but the logical contract — search box,
- * primary CTA, row click — is unchanged.
+ * The list renders a custom toolbar (search box + status filter + Create
+ * Client CTA) and a div-based table where each `.list-row` carries a
+ * routerLink to `/clients/:id/general`. The React port will replace the
+ * divs with a shadcn `<DataTable>` but the logical contract — search box,
+ * status filter, primary CTA, row click — is unchanged.
  */
 export interface ClientsListSelectors {
   searchInput: string;
   searchClearButton: string;
   showClosedToggle: string;
+  /** Multi-select status filter rendered as a compact outline mat-select. */
+  statusFilter: string;
+  /** Inline (×) button shown next to the filter once a status is selected. */
+  statusFilterClear: string;
+  /** An option inside the status filter's overlay panel, addressed by label. */
+  statusFilterOption: string;
   createClientButton: string;
   importClientButton: string;
   loadingBar: string;
@@ -230,6 +236,9 @@ export const CLIENTS_LIST_SELECTORS: ClientsListSelectors = {
   searchInput: '.entity-list-container .search input[type="text"]',
   searchClearButton: '.entity-list-container .search-clear',
   showClosedToggle: '.entity-list-container .toggle',
+  statusFilter: '.entity-list-container .status-filter mat-select',
+  statusFilterClear: '.entity-list-container .status-filter-clear',
+  statusFilterOption: '.mat-mdc-select-panel mat-option',
   createClientButton: 'Create Client',
   importClientButton: 'Import Client',
   loadingBar: '.entity-list-container .loading-bar',

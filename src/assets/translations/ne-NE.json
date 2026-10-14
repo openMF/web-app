@@ -415,6 +415,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "पूर्ववत गर्न सकिने कुनै सक्रिय रिसेट छैन।",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "ऋणमा उल्लंघन तालिका छैन।",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "यो उल्लंघन अवधि पहिले नै रिसेट गरिएको छ। फेरि रिसेट गर्नु अघि अवस्थित रिसेट पूर्ववत गर्नुहोस्।",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "शुल्क समायोजनको मिति शुल्कको भुक्तानी मितिभन्दा अगाडिको हुन सक्दैन।",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "शुल्क समायोजन कुनै पनि शुल्कसँग जोडिएको छैन, त्यसैले यसलाई समायोजन गर्न सकिँदैन।",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "यस प्रकारको कारोबार कार्यशील पुँजी कर्जामा समायोजन गर्न सकिँदैन।",
+    "wc.loan.charge.adjustment.invalid.status": "ऋणको हालको स्थितिमा शुल्क समायोजन अनुमति छैन।",
+    "wc.loan.charge.adjustment.inactive.charge": "निष्क्रिय शुल्कमा शुल्क समायोजन अनुमति छैन।",
+    "wc.loan.charge.adjustment.invalid.amount": "रकम समायोजनका लागि उपलब्ध शुल्क रकमभन्दा बढी हुन सक्दैन।",
     "error.resource.notImplemented.type": "कार्यान्वयन भएको छैन",
     "error.resource.notImplemented.message": "कार्यान्वयन नभएको कार्यक्षमता!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
@@ -1021,6 +1027,7 @@
       "Chargeback": "चार्जब्याक",
       "Charges Overview": "शुल्क अवलोकन",
       "Clear": "मेटाउनुहोस्",
+      "Clear status filter": "स्थिति फिल्टर मेटाउनुहोस्",
       "Clear All": "सबै हटाउनुहोस्",
       "Client Screen Reports": "ग्राहक स्क्रिन रिपोर्टहरू",
       "Close": "बन्द गर्नुहोस्",
@@ -1288,7 +1295,8 @@
       "Post Dividends": "लाभांश पोस्ट गर्नुहोस्",
       "Convert": "रूपान्तरण गर्नुहोस्",
       "Deleting": "मेटाउँदै",
-      "Inactivate": "निष्क्रिय पार्नुहोस्"
+      "Inactivate": "निष्क्रिय पार्नुहोस्",
+      "Discount Fee Adjustment": "छुट शुल्क समायोजन"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -2307,6 +2315,7 @@
       "Reference": "सन्दर्भ"
     },
     "inputs": {
+      "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
       "Returned": "फिर्ता भएको",
       "Settled": "भुक्तानी गरिएको",
       "Check Amount": "चेक रकम",
@@ -5861,7 +5870,10 @@
       "Closed": "बन्द गरियो",
       "Dashboard Export": "ड्यासबोर्ड निर्यात",
       "Generated on": "उत्पन्न मिति",
-      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो"
+      "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
+      "Discount Fee Adjustment": "छुट शुल्क समायोजन",
+      "Remaining discount fee available to adjust": "समायोजन गर्न उपलब्ध बाँकी छुट शुल्क",
+      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन"
     },
     "permissions": {
       "actions": {
@@ -6158,12 +6170,15 @@
       "No Data Found": "कुनै डाटा फेला परेन",
       "No Family Members Added": "अझै कुनै परिवारको सदस्य थपिएको छैन",
       "No Identities Found": "कुनै पहिचान भेटिएनन्",
+      "No matching activities found": "मिल्दो गतिविधिहरू भेटिएन",
       "No Upcoming Charges Found": "कुनै आगामी शुल्कहरू भेटिएनन्",
+      "Try a different search term": "अर्को खोजशब्द प्रयास गर्नुहोस्",
       "unableToUpdateDiscount": "छुट अपडेट गर्न सकिएन।",
       "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।",
       "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
       "identityDescriptionsUpdated": "पहिचान विवरणहरू सफलतापूर्वक अद्यावधिक भए।",
-      "identityDescriptionsUpdateFailed": "केही पहिचान विवरणहरू अद्यावधिक गर्न असफल भए।"
+      "identityDescriptionsUpdateFailed": "केही पहिचान विवरणहरू अद्यावधिक गर्न असफल भए।",
+      "unableToAdjustDiscountFee": "छुट शुल्क समायोजन गर्न सकिएन।"
     },
     "selections": {
       "standingInstructions": {
@@ -7303,5 +7318,65 @@
     "completedAt": "सम्पन्न समय",
     "continue": "जारी राख्नुहोस्",
     "checksTitle": "अन्तिम नगद बन्दका चेकहरू"
+  },
+  "transactionReversal": {
+    "date": "लेनदेन मिति",
+    "search": "खोज्नुहोस्",
+    "user": "प्रयोगकर्ता",
+    "operation": "कार्य",
+    "amount": "रकम",
+    "currency": "मुद्रा",
+    "denomination": "सम्प्रदाय",
+    "type": "प्रकार",
+    "quantity": "मात्रा",
+    "checks": "चेक",
+    "checkAmount": "चेक रकम",
+    "bank": "बैंक",
+    "checkNumber": "चेक नम्बर",
+    "cancel": "रद्द गर्नुहोस्",
+    "errors": {
+      "invalidAuthorization": "अमान्य प्राधिकरण",
+      "insufficientCash": "अपर्याप्त नगद",
+      "forbidden": "तपाईंसँग यो कारोबार उल्टाउने अनुमति छैन ।",
+      "network": "समूहगत सर्भरलाई जडान गर्न अक्षम ।",
+      "cashTotal": "नगद विवरण आवश्यक रकमसँग मेल खाँदैन ।",
+      "checks": "जाँच विवरणहरू मूल कारोबारसँग मेल खाँदैन ।",
+      "alreadyReversed": "पहिले नै उल्टाइएको छ",
+      "unsupported": "असमर्थित कारोबार प्रकार",
+      "duplicate": "यो रिभर्सल पहिले नै पेश गरिएको छ ।",
+      "generic": "कारोबार उल्टाउन असमर्थ",
+      "closedSession": "क्यासियर सत्र बन्द छ ।",
+      "stale": "कारोबार अवस्था परिवर्तन भयो । फेरि खोजी गर्नुहोस् ।",
+      "conflict": "अर्को उल्टो प्रगतिमा छ । फेरि प्रयास गर्नुहोस् ।"
+    },
+    "authorizationRequired": "प्रमाणीकरण नम्बर आवश्यक छ ।",
+    "title": "कारोबार उल्ट्याउने",
+    "authorization": "प्रमाणीकरण नम्बर",
+    "dateRequired": "कारोबार मिति आवश्यक छ ।",
+    "operationType": "सञ्चालन प्रकार",
+    "select": "छनौट गर्नुहोस्",
+    "reversible": "उल्टाउन सकिने",
+    "detail": "उल्टाउने विवरण",
+    "status": "स्थिति / योग्यता",
+    "notReversible": "उल्टाउन नसकिने",
+    "cashBreakdown": "नगद विवरण",
+    "requiredAmount": "आवश्यक नगद रकम",
+    "breakdownTotal": "तोडफोडको योगफल प्रविष्ट गरियो",
+    "cashToReturn": "दराजमा फिर्ता गरिएको नगद",
+    "cashToRemove": "दराजबाट निकालिने नगद",
+    "preview": "रिभर्सल पूर्वावलोकन",
+    "confirmTitle": "कारोबार उल्टाउने पुष्टि गर्नुहोस्",
+    "cashEffect": "नगद रिभर्सल प्रभाव",
+    "difference": "बाँकी भिन्नता",
+    "checkEffect": "रिभर्सल प्रभाव जाँच गर्नुहोस्",
+    "warning": "यो उल्ट्याउँदा लेखा, नगद र जाँच स्थिति परिवर्तन हुनेछ ।",
+    "loading": "लोड हुँदैछ...",
+    "bills": "नोट",
+    "coins": "सिक्का",
+    "available": "उपलब्ध",
+    "addCheck": "जाँच थप्नुहोस्",
+    "removeCheck": "जाँच हटाउनुहोस्",
+    "confirm": "रिभर्सल पुष्टि गर्नुहोस्",
+    "success": "सफल रिभर्सल"
   }
 }

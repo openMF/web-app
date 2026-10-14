@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "실행 취소할 활성 초기화가 없습니다.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "대출에 위반 일정이 없습니다.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "이 위반 기간은 이미 초기화되었습니다. 다시 초기화하려면 기존 초기화를 먼저 실행 취소하세요.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "수수료 조정 날짜는 수수료 만기일보다 이전일 수 없습니다.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "수수료 조정이 어떤 수수료에도 연결되어 있지 않아 조정할 수 없습니다.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "이 거래 유형은 운전자본 대출에서 조정할 수 없습니다.",
+    "wc.loan.charge.adjustment.invalid.status": "현재 대출 상태에서는 수수료 조정이 허용되지 않습니다.",
+    "wc.loan.charge.adjustment.inactive.charge": "비활성 수수료에는 수수료 조정이 허용되지 않습니다.",
+    "wc.loan.charge.adjustment.invalid.amount": "금액은 조정 가능한 수수료 금액보다 클 수 없습니다.",
     "error.resource.notImplemented.type": "구현되지 않음",
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
@@ -1018,6 +1024,7 @@
       "Chargeback": "지불 거절",
       "Charges Overview": "요금 개요",
       "Clear": "지우기",
+      "Clear status filter": "상태 필터 지우기",
       "Clear All": "모두 지우기",
       "Client Screen Reports": "클라이언트 화면 보고서",
       "Close": "닫다",
@@ -1285,7 +1292,8 @@
       "Post Dividends": "배당금 기표",
       "Convert": "변환",
       "Deleting": "삭제 중",
-      "Inactivate": "비활성화"
+      "Inactivate": "비활성화",
+      "Discount Fee Adjustment": "할인 수수료 조정"
     },
     "catalogs": {
       "% Amount": "양",
@@ -2304,6 +2312,7 @@
       "Reference": "참조"
     },
     "inputs": {
+      "Breach Start Type": "위반 시작 유형",
       "Returned": "반환됨",
       "Settled": "결제 완료",
       "Check Amount": "수표 금액",
@@ -5858,7 +5867,10 @@
       "Closed": "종료됨",
       "Dashboard Export": "대시보드 내보내기",
       "Generated on": "생성 일시",
-      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다"
+      "Automated export": "Mifos X 글로벌 대시보드에서 자동으로 내보낸 파일입니다",
+      "Discount Fee Adjustment": "할인 수수료 조정",
+      "Remaining discount fee available to adjust": "조정 가능한 잔여 할인 수수료",
+      "Cannot precede the discount fee date": "할인 수수료 날짜보다 이전일 수 없습니다"
     },
     "permissions": {
       "actions": {
@@ -6155,12 +6167,15 @@
       "No Data Found": "데이터를 찾을 수 없음",
       "No Family Members Added": "아직 가족 구성원이 추가되지 않았습니다",
       "No Identities Found": "신원 정보가 없습니다",
+      "No matching activities found": "일치하는 활동이 없습니다",
       "No Upcoming Charges Found": "예정된 요금이 없습니다",
+      "Try a different search term": "다른 검색어를 입력해 보세요",
       "unableToUpdateDiscount": "할인을 업데이트할 수 없습니다.",
       "validationSaved": "검증 데이터가 성공적으로 저장되었습니다.",
       "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
       "identityDescriptionsUpdated": "신분증 설명이 성공적으로 수정되었습니다.",
-      "identityDescriptionsUpdateFailed": "일부 신분증 설명을 수정하지 못했습니다."
+      "identityDescriptionsUpdateFailed": "일부 신분증 설명을 수정하지 못했습니다.",
+      "unableToAdjustDiscountFee": "할인 수수료를 조정할 수 없습니다."
     },
     "selections": {
       "standingInstructions": {
@@ -7300,5 +7315,65 @@
     "completedAt": "완료 일시",
     "continue": "계속",
     "checksTitle": "최종 현금 마감 수표"
+  },
+  "transactionReversal": {
+    "date": "거래 날짜",
+    "search": "찾다",
+    "user": "사용자",
+    "operation": "작업",
+    "amount": "금액",
+    "currency": "통화",
+    "denomination": "명칭",
+    "type": "유형",
+    "quantity": "수량",
+    "checks": "수표",
+    "checkAmount": "수표 금액",
+    "bank": "은행",
+    "checkNumber": "수표번호",
+    "cancel": "취소",
+    "errors": {
+      "invalidAuthorization": "유효하지 않은 승인",
+      "insufficientCash": "현금 부족",
+      "forbidden": "이 거래를 취소할 권한이 없습니다.",
+      "network": "서버에 연결할 수 없습니다",
+      "alreadyReversed": "이미 취소됨",
+      "checks": "수표 세부 정보가 원래 거래와 일치하지 않습니다.",
+      "cashTotal": "현금 상세 내역이 필요한 금액과 일치하지 않습니다.",
+      "unsupported": "지원하지 않는 트랜젝션 타입",
+      "duplicate": "이 결제취소는 이미 제출되었습니다.",
+      "generic": "거래를 취소할 수 없음",
+      "closedSession": "계산원 세션이 종료되었습니다.",
+      "stale": "거래 상태가 변경되었습니다. 다시 검색하세요.",
+      "conflict": "다른 결제취소가 진행 중입니다. 다시 시도하세요."
+    },
+    "authorization": "현금 승인번호",
+    "title": "거래취소",
+    "dateRequired": "거래 날짜는 필수 항목입니다.",
+    "authorizationRequired": "승인 번호가 필요합니다.",
+    "operationType": "처리 유형",
+    "select": "선택",
+    "notReversible": "되돌릴 수 없음",
+    "status": "상태/자격 요건",
+    "reversible": "리버서블",
+    "detail": "결제취소 세부정보",
+    "requiredAmount": "필요한 현금 금액",
+    "cashBreakdown": "현금 내역",
+    "cashToReturn": "현금이 서랍으로 반환됨",
+    "breakdownTotal": "입력된 내역 합계",
+    "cashToRemove": "서랍에서 꺼낼 현금",
+    "difference": "잔여 차이",
+    "cashEffect": "현금 환입 효과",
+    "confirmTitle": "거래취소 확인",
+    "preview": "결제취소 미리보기",
+    "checkEffect": "환입 효과 확인",
+    "warning": "이 결제취소로 인해 회계, 현금, 수표 상태가 변경됩니다.",
+    "loading": "로드 중…",
+    "bills": "지폐",
+    "coins": "동전",
+    "available": "사용 가능",
+    "addCheck": "수표 추가",
+    "removeCheck": "수표 삭제",
+    "confirm": "결제취소 확인",
+    "success": "결제취소 성공"
   }
 }

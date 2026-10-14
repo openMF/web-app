@@ -378,6 +378,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Geri alınacaq aktiv pozuntu sıfırlaması yoxdur.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Kredit üçün pozuntu cədvəli yoxdur.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Bu pozuntu dövrü artıq sıfırlanıb. Yenidən sıfırlamazdan əvvəl mövcud sıfırlamanı geri alın.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Haqqa düzəliş tarixi haqqın son ödəniş tarixindən əvvəl ola bilməz.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Haqqa düzəliş heç bir haqqla əlaqələndirilmədiyi üçün ona düzəliş edilə bilməz.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Dövriyyə kapitalı kreditində bu əməliyyat növünə düzəliş edilə bilməz.",
+    "wc.loan.charge.adjustment.invalid.status": "Kreditin cari vəziyyətinə görə haqqa düzəliş etmək olmaz.",
+    "wc.loan.charge.adjustment.inactive.charge": "Aktiv olmayan haqqa düzəliş etmək olmaz.",
+    "wc.loan.charge.adjustment.invalid.amount": "Məbləğ haqqın düzəliş üçün mövcud məbləğindən çox ola bilməz.",
     "linkedSavingsAccountOwnership": "Əlaqələndirilmiş əmanət hesabı seçilmiş müştəriyə məxsus deyil.",
     "clientNotInGSIM": "ID-si {{id}} olan müştəri qrup əmanətlərinin fərdi monitorinqində mövcud deyil.",
     "Capitalized Income amount adjusted already adjusted": "Kapitallaşdırılmış gəlir məbləğinə artıq düzəliş edilib",
@@ -985,6 +991,7 @@
       "Chargeback": "Ödənişi geri tələb et",
       "Charges Overview": "Haqların icmalı",
       "Clear": "Təmizlə",
+      "Clear status filter": "Status filtrini təmizlə",
       "Finalize": "Yekunlaşdır",
       "Clear All": "Hamısını təmizlə",
       "Client Screen Reports": "Müştəri ekranının hesabatları",
@@ -1251,7 +1258,8 @@
       "Reverse": "Geri al",
       "Create Tenant": "Tenant yarat",
       "Test Connection": "Bağlantını yoxla",
-      "Post Dividends": "Dividendləri hesaba yaz"
+      "Post Dividends": "Dividendləri hesaba yaz",
+      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -2270,6 +2278,7 @@
       "Edit Guarantor": "Zaminin məlumatlarını redaktə et"
     },
     "inputs": {
+      "Breach Start Type": "Pozuntunun başlanğıc növü",
       "Returned": "Qaytarılıb",
       "Settled": "Hesablaşma tamamlanıb",
       "Account moves out of NPA only on arrears completion": "Hesab yalnız gecikmiş borc tam ödənildikdə problemli aktiv statusundan çıxarılır",
@@ -5819,7 +5828,10 @@
       "Closed": "Bağlanıb",
       "Dashboard Export": "İdarə panelindən ixrac",
       "Generated on": "Yaradılma tarixi",
-      "Automated export": "Bu məlumatlar Mifos X Qlobal İdarə Panelindən avtomatik ixrac edilib"
+      "Automated export": "Bu məlumatlar Mifos X Qlobal İdarə Panelindən avtomatik ixrac edilib",
+      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
+      "Remaining discount fee available to adjust": "Düzəliş üçün mövcud qalan endirim haqqı",
+      "Cannot precede the discount fee date": "Endirim haqqı tarixindən əvvəl ola bilməz"
     },
     "permissions": {
       "actions": {
@@ -6116,12 +6128,15 @@
       "No Data Found": "Məlumat tapılmadı",
       "No Family Members Added": "Hələ ailə üzvü əlavə edilməyib",
       "No Identities Found": "Şəxsiyyət sənədi tapılmadı",
+      "No matching activities found": "Uyğun fəaliyyətlər tapılmadı",
       "No Upcoming Charges Found": "Qarşıdan gələn haqq tapılmadı",
+      "Try a different search term": "Yeni axtarış sözü ilə yoxlayın",
       "unableToUpdateDiscount": "Endirimi yeniləmək mümkün olmadı.",
       "validationSaved": "Yoxlama məlumatları uğurla yadda saxlanıldı.",
       "workingCapitalDiscountUpdated": "Dövriyyə kapitalı üzrə endirim uğurla yeniləndi.",
       "identityDescriptionsUpdated": "Şəxsiyyət sənədlərinin təsvirləri yeniləndi.",
-      "identityDescriptionsUpdateFailed": "Bəzi şəxsiyyət sənədlərinin təsvirlərini yeniləmək mümkün olmadı."
+      "identityDescriptionsUpdateFailed": "Bəzi şəxsiyyət sənədlərinin təsvirlərini yeniləmək mümkün olmadı.",
+      "unableToAdjustDiscountFee": "Endirim haqqını düzəltmək mümkün olmadı."
     },
     "cbild": {
       "fields": {
@@ -7299,5 +7314,65 @@
     "continue": "Davam et",
     "checksTitle": "Kassanın yekun bağlanması çekləri",
     "bank": "Bank"
+  },
+  "transactionReversal": {
+    "date": "Əməliyyat tarixi",
+    "search": "Axtar",
+    "user": "İstifadəçi",
+    "operation": "Əməliyyat",
+    "amount": "Məbləğ",
+    "currency": "Valyuta",
+    "denomination": "Denominasiya",
+    "type": "Növ",
+    "quantity": "Kəmiyyət",
+    "checks": "Çeklər",
+    "checkAmount": "Çek məbləği",
+    "bank": "Bank",
+    "checkNumber": "Çek nömrəsi",
+    "cancel": "Ləğv et",
+    "errors": {
+      "invalidAuthorization": "Yanlış icazə",
+      "insufficientCash": "Kifayət qədər nağd pul yoxdur",
+      "forbidden": "Bu əməliyyatı geri qaytarmaq üçün icazəniz yoxdur.",
+      "cashTotal": "Nağd pulun təhlili tələb olunan məbləğə uyğun gəlmir.",
+      "network": "Serverə qoşulmaq mümkün deyil.",
+      "checks": "Təfərrüatların yoxlanması ilkin əməliyyata uyğun gəlmir.",
+      "unsupported": "Dəstəklənməyən əməliyyat növü",
+      "alreadyReversed": "Artıq ləğv edilib",
+      "generic": "Tranzaksiyanı tərsinə çevirmək mümkün deyil",
+      "closedSession": "Kassa sessiyası bağlanıb.",
+      "stale": "Əməliyyat vəziyyəti dəyişdi. Yenidən axtarın.",
+      "conflict": "Başqa bir dönəm də davam edir. Yenidən cəhd edin.",
+      "duplicate": "Bu ləğvetmə artıq təqdim edilib."
+    },
+    "title": "Əməliyyatın Qaytarılması",
+    "authorization": "Avtorizasiya Nömr",
+    "authorizationRequired": "Avtorizasiya nömrəsi tələb olunur.",
+    "dateRequired": "Əməliyyat tarixi tələb olunur.",
+    "operationType": "İstismar Növü",
+    "select": "Seçin",
+    "status": "Status / Uyğunluq",
+    "reversible": "Qaytarıla bilən",
+    "notReversible": "Bərpa Olunan Deyil",
+    "detail": "Tərslik Təfərrüatı",
+    "requiredAmount": "Tələb olunan nağd pul məbləği",
+    "cashBreakdown": "Nağd Pul Təhlili",
+    "cashToRemove": "Silinəcək nağd pul",
+    "breakdownTotal": "Daxil edilmiş Təhlil Cəmi",
+    "cashToReturn": "Nağd pul Çertyojçuya qaytarıldı",
+    "difference": "Qalan fərq",
+    "confirmTitle": "Əməliyyatın Geri Qaytarılmasını Təsdiq Edin",
+    "preview": "Tərcüməyə önbaxış",
+    "cashEffect": "Nağd Pulun Geri Qaytarılması Effekti",
+    "checkEffect": "Yoxlama Geri Qaytarma Effekti",
+    "confirm": "Geri Qaytarmanı təsdiq et",
+    "loading": "Yüklənir...",
+    "bills": "Əskinas",
+    "coins": "Sikkə",
+    "available": "Mövcuddur",
+    "addCheck": "Yoxlama əlavə et",
+    "removeCheck": "Yoxlamanı sil",
+    "success": "Müvəffəqiyyətli Geri Qaytarma",
+    "warning": "Bu ləğvetmə mühasibat uçotunu, nağd pulu dəyişəcək və ştatı yoxlayacaq."
   }
 }

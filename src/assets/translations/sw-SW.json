@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Hakuna uwekaji upya unaotumika wa kutengua.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Mkopo hauna ratiba ya ukiukaji.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Kipindi hiki cha ukiukaji tayari kimewekwa upya. Tengua uwekaji upya uliopo kabla ya kuweka upya tena.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Tarehe ya marekebisho ya ada haiwezi kuwa kabla ya tarehe ya kuiva kwa ada.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Marekebisho ya ada hayajaunganishwa na ada yoyote, kwa hivyo hayawezi kurekebishwa.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Aina hii ya muamala haiwezi kurekebishwa katika mkopo wa mtaji wa kufanyia kazi.",
+    "wc.loan.charge.adjustment.invalid.status": "Marekebisho ya ada hayaruhusiwi kwa hali ya sasa ya mkopo.",
+    "wc.loan.charge.adjustment.inactive.charge": "Marekebisho ya ada hayaruhusiwi kwa ada isiyo hai.",
+    "wc.loan.charge.adjustment.invalid.amount": "Kiasi hakiwezi kuzidi kiasi cha ada kinachopatikana kwa marekebisho.",
     "error.resource.notImplemented.type": "Haijatekelezwa",
     "error.resource.notImplemented.message": "Utendaji haujatekelezwa!",
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
@@ -1018,6 +1024,7 @@
       "Chargeback": "Urejeshaji malipo",
       "Charges Overview": "Muhtasari wa Gharama",
       "Clear": "Futa",
+      "Clear status filter": "Futa kichujio cha hali",
       "Clear All": "Futa vyote",
       "Client Screen Reports": "Ripoti za Skrini ya Mteja",
       "Close": "Funga",
@@ -1285,7 +1292,8 @@
       "Post Dividends": "Weka Gawio",
       "Convert": "Badilisha",
       "Deleting": "Inafuta",
-      "Inactivate": "Zima"
+      "Inactivate": "Zima",
+      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -2304,6 +2312,7 @@
       "Create Savings Product": "Unda Bidhaa ya Akiba"
     },
     "inputs": {
+      "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
       "Returned": "Imerudishwa",
       "Settled": "Imelipwa",
       "Check Amount": "Kiasi cha hundi",
@@ -5858,7 +5867,10 @@
       "Closed": "Imefungwa",
       "Dashboard Export": "Uhamishaji wa Dashibodi",
       "Generated on": "Imetolewa tarehe",
-      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X"
+      "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
+      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
+      "Remaining discount fee available to adjust": "Ada ya punguzo iliyosalia inayoweza kurekebishwa",
+      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo"
     },
     "permissions": {
       "actions": {
@@ -6155,12 +6167,15 @@
       "No Data Found": "Hakuna Data Imepatikana",
       "No Family Members Added": "Bado hakuna mwanachama wa familia aliyeongezwa",
       "No Identities Found": "Hakuna vitambulisho vilivyopatikana",
+      "No matching activities found": "Hakuna shughuli zinazolingana zilizopatikana",
       "No Upcoming Charges Found": "Hakuna malipo yanayokuja yaliyopatikana",
+      "Try a different search term": "Jaribu neno lingine la utafutaji",
       "unableToUpdateDiscount": "Haikuwezekana kusasisha punguzo.",
       "validationSaved": "Data ya uthibitishaji imehifadhiwa kwa mafanikio.",
       "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa.",
       "identityDescriptionsUpdated": "Maelezo ya vitambulisho yamesasishwa kwa mafanikio.",
-      "identityDescriptionsUpdateFailed": "Baadhi ya maelezo ya vitambulisho hayakuweza kusasishwa."
+      "identityDescriptionsUpdateFailed": "Baadhi ya maelezo ya vitambulisho hayakuweza kusasishwa.",
+      "unableToAdjustDiscountFee": "Imeshindwa kurekebisha ada ya punguzo."
     },
     "selections": {
       "standingInstructions": {
@@ -7300,5 +7315,65 @@
     "completedAt": "Imekamilika saa",
     "continue": "Endelea",
     "checksTitle": "Hundi za kufunga fedha kwa mwisho"
+  },
+  "transactionReversal": {
+    "date": "Tarehe ya Muamala",
+    "search": "Tafuta",
+    "user": "Mtumiaji",
+    "operation": "Operesheni",
+    "amount": "Kiasi",
+    "currency": "Sarafu",
+    "denomination": "Dhehebu",
+    "type": "Aina",
+    "quantity": "Kiasi",
+    "checks": "Hundi",
+    "checkAmount": "Kiasi cha hundi",
+    "bank": "Benki",
+    "checkNumber": "Nambari ya hundi",
+    "cancel": "Ghairi",
+    "errors": {
+      "invalidAuthorization": "Idhini si halali",
+      "insufficientCash": "Fedha hazitoshi",
+      "forbidden": "Huna ruhusa ya kubatilisha muamala huu.",
+      "network": "Imeshindwa kuunganisha kwenye seva.",
+      "cashTotal": "Mchanganuo wa pesa haulingani na kiasi kinachohitajika.",
+      "alreadyReversed": "Tayari Imerudishwa",
+      "checks": "Maelezo ya ukaguzi hayalingani na muamala wa awali.",
+      "unsupported": "Aina ya muamala isiyotumika",
+      "generic": "Imeshindwa Kubadilisha Muamala",
+      "closedSession": "Kipindi cha keshia kimefungwa.",
+      "stale": "Hali ya muamala imebadilika. Tafuta tena.",
+      "conflict": "Mabadiliko mengine yanaendelea. Jaribu tena.",
+      "duplicate": "Ubadilishaji huu tayari umewasilishwa."
+    },
+    "authorization": "Idhini idadi",
+    "authorizationRequired": "Nambari ya Uidhinishaji inahitajika.",
+    "title": "Kubatilisha Muamala",
+    "operationType": "Aina ya Uendeshaji",
+    "dateRequired": "Tarehe ya Muamala inahitajika.",
+    "select": "Chagua",
+    "reversible": "Inaweza kubadilishwa",
+    "status": "Hali / Ustahiki",
+    "detail": "Maelezo ya Kubadilisha",
+    "notReversible": "Haiwezi kubadilishwa",
+    "requiredAmount": "Kiasi cha Pesa Taslimu kinachohitajika",
+    "cashBreakdown": "Mchanganuo wa Fedha",
+    "cashToRemove": "Pesa taslimu za Kuondoa",
+    "breakdownTotal": "Jumla ya Mchanganuo Uliowekwa",
+    "cashToReturn": "Pesa taslimu zimerejeshwa kwenye Droo",
+    "difference": "Tofauti Iliyobaki",
+    "cashEffect": "Athari ya Kubadili Fedha",
+    "confirmTitle": "Thibitisha Kubadilisha Muamala",
+    "checkEffect": "Angalia Athari ya Kugeuza",
+    "preview": "Hakiki Upembuzi yakinifu",
+    "warning": "Mabadiliko haya yatabadilisha hali ya uhasibu, pesa taslimu na hundi.",
+    "loading": "Inapakia ...",
+    "bills": "Noti",
+    "coins": "Sarafu",
+    "available": "Inayopatikana",
+    "addCheck": "Ongeza Ukaguzi",
+    "removeCheck": "Ondoa Ukaguzi",
+    "confirm": "Thibitisha Kubadilisha",
+    "success": "Ubadilishaji uliofanikiwa"
   }
 }

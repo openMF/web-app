@@ -343,6 +343,12 @@
                 <div class="fact-value amount">{{ loanDetails.breachGraceDays | formatNumber }}</div>
               </div>
             }
+            @if (loanDetails.breachStartType) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Breach Start Type' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.breachStartType?.value | translateKey: 'catalogs' }}</div>
+              </div>
+            }
             @if (has(loanDetails.delinquencyGraceDays)) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Delinquency Grace Days' | translate }}</div>

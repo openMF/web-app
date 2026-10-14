@@ -415,6 +415,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Non c'è alcun ripristino attivo da annullare.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Il prestito non ha un piano di violazione.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Questo periodo di violazione è già stato ripristinato. Annulla il ripristino esistente prima di ripristinare di nuovo.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "La data della rettifica della commissione non può essere anteriore alla data di scadenza della commissione.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "La rettifica della commissione non è collegata ad alcuna commissione, quindi non può essere rettificata.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Questo tipo di transazione non può essere rettificato su un prestito per capitale circolante.",
+    "wc.loan.charge.adjustment.invalid.status": "Le rettifiche delle commissioni non sono consentite per lo stato attuale del prestito.",
+    "wc.loan.charge.adjustment.inactive.charge": "Le rettifiche delle commissioni non sono consentite su una commissione non attiva.",
+    "wc.loan.charge.adjustment.invalid.amount": "L'importo non può essere superiore all'importo della commissione disponibile per la rettifica.",
     "error.resource.notImplemented.type": "Non implementato",
     "error.resource.notImplemented.message": "Funzionalità non implementata!",
     "linkedSavingsAccountOwnership": "Il conto di risparmio collegato non appartiene al cliente selezionato.",
@@ -1021,6 +1027,7 @@
       "Chargeback": "Riaddebito",
       "Charges Overview": "Panoramica delle tariffe",
       "Clear": "Cancella",
+      "Clear status filter": "Cancella filtro di stato",
       "Clear All": "Cancella tutto",
       "Client Screen Reports": "Rapporti sullo schermo del cliente",
       "Close": "Vicino",
@@ -1288,7 +1295,8 @@
       "Post Dividends": "Registra dividendi",
       "Convert": "Converti",
       "Deleting": "Eliminazione",
-      "Inactivate": "Disattiva"
+      "Inactivate": "Disattiva",
+      "Discount Fee Adjustment": "Rettifica della commissione di sconto"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -2307,6 +2315,7 @@
       "Reference": "Riferimento"
     },
     "inputs": {
+      "Breach Start Type": "Tipo di inizio violazione",
       "Returned": "Restituito",
       "Settled": "Saldato",
       "Check Amount": "Importo dell'assegno",
@@ -5861,7 +5870,10 @@
       "Closed": "Chiuso",
       "Dashboard Export": "Esportazione del cruscotto",
       "Generated on": "Generato il",
-      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X"
+      "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X",
+      "Discount Fee Adjustment": "Rettifica della commissione di sconto",
+      "Remaining discount fee available to adjust": "Commissione di sconto residua disponibile per la rettifica",
+      "Cannot precede the discount fee date": "Non può precedere la data della commissione di sconto"
     },
     "permissions": {
       "actions": {
@@ -6158,12 +6170,15 @@
       "No Data Found": "Nessun dato trovato",
       "No Family Members Added": "Nessun membro della famiglia è stato ancora aggiunto",
       "No Identities Found": "Nessuna identità trovata",
+      "No matching activities found": "Nessuna attività corrispondente trovata",
       "No Upcoming Charges Found": "Nessun addebito imminente trovato",
+      "Try a different search term": "Prova con un altro termine di ricerca",
       "unableToUpdateDiscount": "Impossibile aggiornare lo sconto.",
       "validationSaved": "Dati di convalida salvati con successo.",
       "workingCapitalDiscountUpdated": "Lo sconto del prestito di capitale circolante è stato aggiornato correttamente.",
       "identityDescriptionsUpdated": "Le descrizioni dei documenti d'identità sono state aggiornate correttamente.",
-      "identityDescriptionsUpdateFailed": "Alcune descrizioni dei documenti d'identità non sono state aggiornate."
+      "identityDescriptionsUpdateFailed": "Alcune descrizioni dei documenti d'identità non sono state aggiornate.",
+      "unableToAdjustDiscountFee": "Impossibile rettificare la commissione di sconto."
     },
     "selections": {
       "standingInstructions": {
@@ -7303,5 +7318,65 @@
     "completedAt": "Completata il",
     "continue": "Continua",
     "checksTitle": "Assegni della chiusura finale di cassa"
+  },
+  "transactionReversal": {
+    "date": "Data della transazione",
+    "search": "Ricerca",
+    "user": "Utente",
+    "operation": "Operazione",
+    "amount": "Importo",
+    "currency": "Valuta",
+    "denomination": "Denominazione",
+    "type": "Tipo",
+    "quantity": "Quantità",
+    "checks": "Assegni",
+    "checkAmount": "Importo dell'assegno",
+    "bank": "Banca",
+    "checkNumber": "Numero assegno",
+    "cancel": "Annulla",
+    "errors": {
+      "invalidAuthorization": "Autorizzazione non valida",
+      "insufficientCash": "Contante insufficiente",
+      "forbidden": "Non disponi dell'autorizzazione per annullare questa transazione.",
+      "cashTotal": "La ripartizione di cassa non corrisponde all'importo richiesto.",
+      "network": "Impossibile connettersi al server.",
+      "checks": "I dettagli del controllo non corrispondono alla transazione originale.",
+      "alreadyReversed": "Cessione già avvenuta",
+      "unsupported": "Tipo di transazione non supportato.",
+      "generic": "Impossibile stornare la transazione",
+      "closedSession": "Sessione chiusa.",
+      "stale": "Stato della transazione modificato. Cerca di nuovo.",
+      "conflict": "È in corso un'altra inversione. Riprova.",
+      "duplicate": "Questo storno è già stato inviato."
+    },
+    "title": "Storno transazione",
+    "authorization": "Numero di autorizzazione",
+    "operationType": "Tipo di operazione",
+    "authorizationRequired": "Il numero di autorizzazione è obbligatorio.",
+    "dateRequired": "La data della transazione è obbligatoria.",
+    "reversible": "Il reversibile",
+    "notReversible": "Non reversibile:",
+    "select": "Seleziona",
+    "status": "Stato / Idoneità",
+    "detail": "Dettaglio storno",
+    "cashBreakdown": "Dettaglio di cassa",
+    "requiredAmount": "Importo in contanti richiesto",
+    "breakdownTotal": "Totale suddivisione inserito",
+    "cashToRemove": "Contanti da rimuovere",
+    "cashToReturn": "Contanti restituiti al cassetto",
+    "confirmTitle": "Conferma storno transazione",
+    "difference": "Differenza rimanente",
+    "preview": "Anteprima storno",
+    "cashEffect": "Effetto di storno di cassa",
+    "checkEffect": "Verifica effetto di inversione",
+    "warning": "Questo storno cambierà lo stato contabile, di cassa e di assegno.",
+    "confirm": "Conferma storno",
+    "loading": "Caricamento in corso...",
+    "bills": "Banconota",
+    "coins": "Moneta",
+    "available": "Disponibile",
+    "addCheck": "Aggiungi Check",
+    "removeCheck": "Rimuovi assegno",
+    "success": "Storno riuscito"
   }
 }

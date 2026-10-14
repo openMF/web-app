@@ -414,6 +414,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Neexistuje žádný aktivní reset, který by bylo možné vrátit.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Úvěr nemá plán porušení.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Toto období porušení již bylo resetováno. Před dalším resetem vraťte stávající reset.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Datum úpravy poplatku nesmí předcházet datu splatnosti poplatku.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Úprava poplatku není spojena s žádným poplatkem, a proto ji nelze upravit.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Tento typ transakce nelze u úvěru na provozní kapitál upravit.",
+    "wc.loan.charge.adjustment.invalid.status": "Úpravy poplatků nejsou v aktuálním stavu úvěru povoleny.",
+    "wc.loan.charge.adjustment.inactive.charge": "Úpravy poplatků nejsou u neaktivního poplatku povoleny.",
+    "wc.loan.charge.adjustment.invalid.amount": "Částka nesmí být vyšší než částka poplatku dostupná pro úpravu.",
     "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",
     "clientNotInGSIM": "Klient s ID {{id}} není přítomen v GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Výše kapitalizovaného příjmu již upravená",
@@ -1019,6 +1025,7 @@
       "Chargeback": "Zpětné zúčtování",
       "Charges Overview": "Přehled poplatků",
       "Clear": "Vymazat",
+      "Clear status filter": "Vymazat filtr stavu",
       "Clear All": "Vymazat vše",
       "Client Screen Reports": "Zprávy na obrazovce klienta",
       "Close": "Zavřít",
@@ -1286,7 +1293,8 @@
       "Post Dividends": "Zaúčtovat dividendy",
       "Convert": "Převést",
       "Deleting": "Mazání",
-      "Inactivate": "Deaktivovat"
+      "Inactivate": "Deaktivovat",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -2305,6 +2313,7 @@
       "Schedules": "Rozvrhy"
     },
     "inputs": {
+      "Breach Start Type": "Typ začátku porušení",
       "Returned": "Vráceno",
       "Settled": "Uhrazeno",
       "Check Amount": "Částka šeku",
@@ -5859,7 +5868,10 @@
       "Closed": "Uzavřeno",
       "Dashboard Export": "Export přehledu",
       "Generated on": "Vygenerováno",
-      "Automated export": "Toto je automatický export z globálního přehledu Mifos X"
+      "Automated export": "Toto je automatický export z globálního přehledu Mifos X",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu",
+      "Remaining discount fee available to adjust": "Zbývající poplatek za slevu k úpravě",
+      "Cannot precede the discount fee date": "Nesmí předcházet datu poplatku za slevu"
     },
     "permissions": {
       "actions": {
@@ -6092,12 +6104,15 @@
       "No Data Found": "Žádná data nenalezena",
       "No Family Members Added": "Zatím nebyli přidáni žádní členové rodiny",
       "No Identities Found": "Žádné identity nenalezeny",
+      "No matching activities found": "Nebyla nalezena žádná odpovídající aktivita",
       "No Upcoming Charges Found": "Žádné nadcházející poplatky nenalezeny",
+      "Try a different search term": "Zkuste jiný hledaný výraz",
       "unableToUpdateDiscount": "Slevu nelze aktualizovat.",
       "validationSaved": "Ověřovací data byla úspěšně uložena.",
       "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována.",
       "identityDescriptionsUpdated": "Popisy dokladů totožnosti byly úspěšně aktualizovány.",
-      "identityDescriptionsUpdateFailed": "Některé popisy dokladů totožnosti se nepodařilo aktualizovat."
+      "identityDescriptionsUpdateFailed": "Některé popisy dokladů totožnosti se nepodařilo aktualizovat.",
+      "unableToAdjustDiscountFee": "Poplatek za slevu se nepodařilo upravit."
     },
     "selections": {
       "standingInstructions": {
@@ -7302,5 +7317,65 @@
     "continue": "Pokračovat",
     "checksTitle": "Šeky konečné uzávěrky pokladny",
     "reference": "Reference"
+  },
+  "transactionReversal": {
+    "date": "Datum transakce",
+    "search": "Vyhledávání",
+    "user": "Uživatel",
+    "operation": "Operace",
+    "amount": "Částka",
+    "currency": "Měna",
+    "denomination": "Denominace",
+    "type": "Typ",
+    "quantity": "množství",
+    "checks": "Kontroly",
+    "checkAmount": "Částka šeku",
+    "bank": "Banka",
+    "checkNumber": "Číslo šeku",
+    "cancel": "zrušení",
+    "errors": {
+      "invalidAuthorization": "Neplatná autorizace",
+      "insufficientCash": "Nedostatek hotovosti",
+      "forbidden": "Nemáte oprávnění ke zrušení této transakce.",
+      "unsupported": "Nepodporovaný typ transakce",
+      "alreadyReversed": "Již vráceno",
+      "cashTotal": "Rozpis hotovosti neodpovídá požadované částce.",
+      "checks": "Podrobnosti kontroly neodpovídají původní transakci.",
+      "network": "Nelze se připojit k serveru:",
+      "generic": "Nelze zvrátit transakci",
+      "closedSession": "Pokladní relace je uzavřena.",
+      "stale": "Stav transakce se změnil. Hledat znovu.",
+      "conflict": "Probíhá další zrušení. Zkuste to znovu.",
+      "duplicate": "Toto zrušení již bylo odesláno."
+    },
+    "authorization": "Registrační číslo",
+    "title": "Zrušení transakcí",
+    "operationType": "Typ operace",
+    "dateRequired": "Datum transakce je povinné.",
+    "authorizationRequired": "Je vyžadováno autorizační číslo.",
+    "reversible": "zvratných",
+    "status": "Stav / způsobilost",
+    "select": "Vyberte",
+    "notReversible": "Nevratné",
+    "detail": "Podrobnosti o obrácení",
+    "requiredAmount": "Požadovaná částka v hotovosti",
+    "cashBreakdown": "Rozpis hotovosti",
+    "breakdownTotal": "Zadaná celková částka rozpisu",
+    "cashToRemove": "Hotovost k odstranění",
+    "cashToReturn": "Hotovost vrácena do zásuvky",
+    "cashEffect": "Efekt vrácení hotovosti",
+    "preview": "Zrušení náhledu",
+    "confirmTitle": "Potvrdit zrušení transakce",
+    "checkEffect": "Zkontrolovat reverzní efekt",
+    "difference": "Zbývající rozdíl",
+    "success": "Úspěšné zrušení",
+    "confirm": "Potvrdit vrácení platby",
+    "loading": "Loading…",
+    "bills": "Bankovka",
+    "coins": "Mince",
+    "available": "K dispozici",
+    "addCheck": "Přidat šek",
+    "removeCheck": "Odstranit šek",
+    "warning": "Toto zrušení změní stav účetnictví, hotovosti a kontroly."
   }
 }

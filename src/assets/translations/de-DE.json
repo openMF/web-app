@@ -417,6 +417,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Es gibt keine aktive Zurücksetzung, die rückgängig gemacht werden kann.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Das Darlehen hat keinen Verstoßplan.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Diese Verstoßperiode wurde bereits zurückgesetzt. Machen Sie die bestehende Zurücksetzung rückgängig, bevor Sie erneut zurücksetzen.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Das Datum der Gebührenanpassung darf nicht vor dem Fälligkeitsdatum der Gebühr liegen.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Die Gebührenanpassung ist mit keiner Gebühr verknüpft und kann daher nicht angepasst werden.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Dieser Transaktionstyp kann bei einem Betriebsmittelkredit nicht angepasst werden.",
+    "wc.loan.charge.adjustment.invalid.status": "Gebührenanpassungen sind im aktuellen Status des Kredits nicht zulässig.",
+    "wc.loan.charge.adjustment.inactive.charge": "Gebührenanpassungen sind bei einer inaktiven Gebühr nicht zulässig.",
+    "wc.loan.charge.adjustment.invalid.amount": "Der Betrag darf den für die Anpassung verfügbaren Gebührenbetrag nicht überschreiten.",
     "linkedSavingsAccountOwnership": "Verknüpftes Sparkonto gehört nicht zum ausgewählten Kunden.",
     "clientNotInGSIM": "Kunde mit der ID {{id}} ist nicht in GSIM vorhanden.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalisiertes Einkommen Betrag angepasst bereits angepasst",
@@ -1023,6 +1029,7 @@
       "Chargeback": "Rückbuchung",
       "Charges Overview": "Gebührenübersicht",
       "Clear": "Löschen",
+      "Clear status filter": "Statusfilter löschen",
       "Clear All": "Alle löschen",
       "Client Screen Reports": "Kundenbildschirmberichte",
       "Close": "Schließen",
@@ -1290,7 +1297,8 @@
       "Post Dividends": "Dividenden buchen",
       "Convert": "Umwandeln",
       "Deleting": "Wird gelöscht",
-      "Inactivate": "Deaktivieren"
+      "Inactivate": "Deaktivieren",
+      "Discount Fee Adjustment": "Anpassung der Rabattgebühr"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -2309,6 +2317,7 @@
       "Reference": "Referenz"
     },
     "inputs": {
+      "Breach Start Type": "Starttyp des Verstoßes",
       "Returned": "Zurückgegeben",
       "Settled": "Beglichen",
       "Check Amount": "Scheckbetrag",
@@ -5863,7 +5872,10 @@
       "Closed": "Geschlossen",
       "Dashboard Export": "Dashboard-Export",
       "Generated on": "Erstellt am",
-      "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard"
+      "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard",
+      "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
+      "Remaining discount fee available to adjust": "Verbleibende anpassbare Rabattgebühr",
+      "Cannot precede the discount fee date": "Darf nicht vor dem Datum der Rabattgebühr liegen"
     },
     "permissions": {
       "actions": {
@@ -6096,12 +6108,15 @@
       "No Data Found": "Keine Daten gefunden",
       "No Family Members Added": "Es wurden noch keine Familienmitglieder hinzugefügt",
       "No Identities Found": "Keine Identitäten gefunden",
+      "No matching activities found": "Keine passenden Aktivitäten gefunden",
       "No Upcoming Charges Found": "Keine anstehenden Gebühren gefunden",
+      "Try a different search term": "Versuchen Sie einen anderen Suchbegriff",
       "unableToUpdateDiscount": "Rabatt konnte nicht aktualisiert werden.",
       "validationSaved": "Validierungsdaten erfolgreich gespeichert.",
       "workingCapitalDiscountUpdated": "Betriebskapitalrabatt wurde erfolgreich aktualisiert.",
       "identityDescriptionsUpdated": "Die Beschreibungen der Ausweisdokumente wurden erfolgreich aktualisiert.",
-      "identityDescriptionsUpdateFailed": "Einige Beschreibungen der Ausweisdokumente konnten nicht aktualisiert werden."
+      "identityDescriptionsUpdateFailed": "Einige Beschreibungen der Ausweisdokumente konnten nicht aktualisiert werden.",
+      "unableToAdjustDiscountFee": "Die Rabattgebühr konnte nicht angepasst werden."
     },
     "selections": {
       "standingInstructions": {
@@ -7305,5 +7320,65 @@
     "checksTitle": "Schecks des endgültigen Kassenabschlusses",
     "status": "Status",
     "bank": "Bank"
+  },
+  "transactionReversal": {
+    "date": "Transaktionsdatum",
+    "search": "Suchen",
+    "user": "Benutzer",
+    "operation": "Vorgang",
+    "amount": "Betrag",
+    "currency": "Währung",
+    "denomination": "Konfession",
+    "type": "Typ",
+    "quantity": "Menge",
+    "checks": "Schecks",
+    "checkAmount": "Scheckbetrag",
+    "bank": "Bank",
+    "checkNumber": "Schecknummer",
+    "cancel": "Stornieren",
+    "errors": {
+      "invalidAuthorization": "Ungültige Autorisierung",
+      "insufficientCash": "Nicht genügend Bargeld",
+      "forbidden": "Sie haben keine Berechtigung, diese Transaktion rückgängig zu machen.",
+      "cashTotal": "Die Bargeldaufschlüsselung stimmt nicht mit dem erforderlichen Betrag überein.",
+      "network": "Verbindung zum Server kann nicht hergestellt werden",
+      "checks": "Scheckdetails stimmen nicht mit der ursprünglichen Transaktion überein.",
+      "alreadyReversed": "Schon umgekehrt",
+      "unsupported": "Nicht unterstützte Transaktionsart",
+      "duplicate": "Diese Stornierung wurde bereits eingereicht.",
+      "generic": "Transaktion kann nicht zurückgebucht werden",
+      "closedSession": "Die Sitzung wurde bereits beendet.",
+      "stale": "Transaktionsstatus geändert. Erneut suchen.",
+      "conflict": "Eine weitere Umkehrung ist im Gange. Versuchen Sie es erneut."
+    },
+    "dateRequired": "Transaktionsdatum ist erforderlich.",
+    "operationType": "Vorgangstyp",
+    "authorization": "Autorisierungsnummer",
+    "title": "Transaktionsrückbuchung",
+    "authorizationRequired": "Autorisierungsnummer ist erforderlich.",
+    "reversible": "Umkehrbar",
+    "select": "Auswählen",
+    "status": "Status / Berechtigung",
+    "notReversible": "Nicht reversibel",
+    "detail": "Stornierungsdetail",
+    "requiredAmount": "Erforderlicher Barbetrag",
+    "cashToRemove": "Bargeld zum Entfernen",
+    "cashBreakdown": "Aufschlüsselung der Barmittel",
+    "breakdownTotal": "Eingegebene Aufschlüsselung Gesamtsumme",
+    "cashToReturn": "Bargeld an Schublade zurückgegeben",
+    "difference": "Verbleibende Differenz",
+    "confirmTitle": "Transaktionsstornierung bestätigen",
+    "preview": "Vorschau Stornierung",
+    "checkEffect": "Umkehrungseffekt prüfen",
+    "cashEffect": "Cash-Reversal-Effekt",
+    "success": "Erfolgreiche Stornierung",
+    "confirm": "Stornierung bestätigen",
+    "warning": "Diese Stornierung ändert den Status der Buchhaltung, der Barmittel und der Schecks.",
+    "loading": "Wird geladen ...",
+    "bills": "Banknote",
+    "coins": "Münze",
+    "available": "Verfügbar",
+    "addCheck": "Überprüfung hinzufügen",
+    "removeCheck": "Check-in entfernen"
   }
 }

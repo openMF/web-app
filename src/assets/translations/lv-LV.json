@@ -412,6 +412,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Nav aktīvas atiestatīšanas, ko atsaukt.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Aizdevumam nav pārkāpuma grafika.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Šis pārkāpuma periods jau ir atiestatīts. Pirms atkārtotas atiestatīšanas atsauciet esošo atiestatīšanu.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "Maksas korekcijas datums nedrīkst būt agrāks par maksas termiņa datumu.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "Maksas korekcija nav saistīta ne ar vienu maksu, tāpēc to nevar koriģēt.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Šāda veida darījumu apgrozāmā kapitāla aizdevumam nevar koriģēt.",
+    "wc.loan.charge.adjustment.invalid.status": "Maksas korekcijas nav atļautas pašreizējā aizdevuma statusā.",
+    "wc.loan.charge.adjustment.inactive.charge": "Maksas korekcijas nav atļautas neaktīvai maksai.",
+    "wc.loan.charge.adjustment.invalid.amount": "Summa nedrīkst pārsniegt korekcijai pieejamo maksas summu.",
     "error.resource.notImplemented.type": "Nav ieviests",
     "error.resource.notImplemented.message": "Neieviesta funkcionalitāte!",
     "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",
@@ -1018,6 +1024,7 @@
       "Chargeback": "Atmaksa",
       "Charges Overview": "Izmaksu pārskats",
       "Clear": "Notīrīt",
+      "Clear status filter": "Notīrīt statusa filtru",
       "Clear All": "Notīrīt visu",
       "Client Screen Reports": "Klienta ekrāna pārskati",
       "Close": "Aizvērt",
@@ -1285,7 +1292,8 @@
       "Post Dividends": "Grāmatot dividendes",
       "Convert": "Konvertēt",
       "Deleting": "Dzēš",
-      "Inactivate": "Deaktivizēt"
+      "Inactivate": "Deaktivizēt",
+      "Discount Fee Adjustment": "Atlaides maksas korekcija"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2304,6 +2312,7 @@
       "Reference": "Atsauce"
     },
     "inputs": {
+      "Breach Start Type": "Pārkāpuma sākuma tips",
       "Returned": "Atgriezts",
       "Settled": "Apmaksāts",
       "Check Amount": "Čeka summa",
@@ -5858,7 +5867,10 @@
       "Closed": "Slēgts",
       "Dashboard Export": "Paneļa eksports",
       "Generated on": "Ģenerēts",
-      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa"
+      "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
+      "Discount Fee Adjustment": "Atlaides maksas korekcija",
+      "Remaining discount fee available to adjust": "Atlikusī atlaides maksa, ko var koriģēt",
+      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma"
     },
     "permissions": {
       "actions": {
@@ -6155,12 +6167,15 @@
       "No Data Found": "Dati nav atrasti",
       "No Family Members Added": "Vēl nav pievienots neviens ģimenes loceklis",
       "No Identities Found": "Nav atrastas identitātes",
+      "No matching activities found": "Atbilstošas aktivitātes nav atrastas",
       "No Upcoming Charges Found": "Nav atrasts gaidāmo maksājumu",
+      "Try a different search term": "Mēģiniet citu meklēšanas vārdu",
       "unableToUpdateDiscount": "Neizdevās atjaunināt atlaidi.",
       "validationSaved": "Validācijas dati veiksmīgi saglabāti.",
       "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
       "identityDescriptionsUpdated": "Identitātes dokumentu apraksti veiksmīgi atjaunināti.",
-      "identityDescriptionsUpdateFailed": "Dažus identitātes dokumentu aprakstus neizdevās atjaunināt."
+      "identityDescriptionsUpdateFailed": "Dažus identitātes dokumentu aprakstus neizdevās atjaunināt.",
+      "unableToAdjustDiscountFee": "Neizdevās koriģēt atlaides maksu."
     },
     "selections": {
       "standingInstructions": {
@@ -7300,5 +7315,65 @@
     "completedAt": "Pabeigts",
     "continue": "Turpināt",
     "checksTitle": "Galīgās kases slēgšanas čeki"
+  },
+  "transactionReversal": {
+    "date": "Darījuma datums",
+    "search": "Meklēt",
+    "user": "Lietotājs",
+    "operation": "Operācija",
+    "amount": "Summa",
+    "currency": "Valūta",
+    "denomination": "Denominācija",
+    "type": "Veids",
+    "quantity": "Daudzums",
+    "checks": "Čeki",
+    "checkAmount": "Čeka summa",
+    "bank": "Banka",
+    "checkNumber": "Čeka numurs",
+    "cancel": "Atcelt",
+    "errors": {
+      "invalidAuthorization": "Nederīga autorizācija",
+      "insufficientCash": "Nepietiek skaidras naudas",
+      "forbidden": "Jums nav atļaujas atcelt šo darījumu.",
+      "alreadyReversed": "Jau atsaukts",
+      "cashTotal": "Sadalījums skaidrā naudā neatbilst nepieciešamajai summai.",
+      "checks": "Pārbaudes informācija neatbilst sākotnējam darījumam.",
+      "network": "Nevar izveidot savienojumu ar serveri.",
+      "unsupported": "Neatbalstīts darījuma veids",
+      "duplicate": "Šis atsaukums jau ir iesniegts.",
+      "generic": "Nevar atsaukt darījumu",
+      "closedSession": "Kases sesija ir slēgta.",
+      "stale": "Darījuma statuss ir mainīts. Meklējiet vēlreiz.",
+      "conflict": "Notiek vēl viena atcelšana. Mēģiniet vēlreiz."
+    },
+    "operationType": "Darbības tips",
+    "title": "Darījumu atcelšana",
+    "authorizationRequired": "Jānorāda autorizācijas numurs.",
+    "authorization": "Autorizācija numurs",
+    "dateRequired": "Jānorāda darījuma datums.",
+    "reversible": "atgriezeniskās",
+    "select": "Izvēlēlies",
+    "status": "Statuss / atbilstība",
+    "notReversible": "Nav atgriezenisks",
+    "detail": "Detalizēta informācija par atsaukšanu",
+    "requiredAmount": "Nepieciešamā skaidras naudas summa",
+    "cashBreakdown": "Skaidras naudas sadalījums",
+    "cashToRemove": "Izņemt",
+    "cashToReturn": "Atgrieztā nauda atvilktnē",
+    "breakdownTotal": "Ievadītā sadalījuma kopsumma",
+    "difference": "Atlikusī atšķirība",
+    "confirmTitle": "Apstiprināt darījuma atsaukšanu",
+    "preview": "Priekšskatīt atsaukšanu",
+    "cashEffect": "Skaidras naudas atgriešanas efekts",
+    "checkEffect": "Pārbaudīt atcelšanas efektu",
+    "warning": "Šī atcelšana mainīs uzskaites, kases un čeka stāvokli.",
+    "loading": "Notiek ielāde...",
+    "bills": "Banknote",
+    "coins": "Monēta",
+    "available": "Pieejams",
+    "addCheck": "Pievienot čeku",
+    "removeCheck": "Noņemt čeku",
+    "confirm": "Apstiprināt atsaukšanu",
+    "success": "Veiksmīga atsaukšana"
   }
 }

@@ -415,6 +415,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Il n'y a aucune réinitialisation active à annuler.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Le prêt n'a pas de calendrier de manquement.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Cette période de manquement a déjà été réinitialisée. Annulez la réinitialisation existante avant de réinitialiser à nouveau.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "La date de l'ajustement de frais ne peut pas être antérieure à la date d'échéance des frais.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "L'ajustement de frais n'est lié à aucun frais et ne peut donc pas être ajusté.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Ce type de transaction ne peut pas être ajusté sur un prêt de fonds de roulement.",
+    "wc.loan.charge.adjustment.invalid.status": "Les ajustements de frais ne sont pas autorisés pour le statut actuel du prêt.",
+    "wc.loan.charge.adjustment.inactive.charge": "Les ajustements de frais ne sont pas autorisés sur des frais inactifs.",
+    "wc.loan.charge.adjustment.invalid.amount": "Le montant ne peut pas être supérieur au montant des frais disponible pour l'ajustement.",
     "error.resource.notImplemented.type": "Non implémenté",
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
@@ -1021,6 +1027,7 @@
       "Chargeback": "Rétrofacturation",
       "Charges Overview": "Aperçu des frais",
       "Clear": "Effacer",
+      "Clear status filter": "Effacer le filtre de statut",
       "Clear All": "Tout effacer",
       "Client Screen Reports": "Rapports d'écran client",
       "Close": "Fermer",
@@ -1288,7 +1295,8 @@
       "Post Dividends": "Comptabiliser les dividendes",
       "Convert": "Convertir",
       "Deleting": "Suppression",
-      "Inactivate": "Désactiver"
+      "Inactivate": "Désactiver",
+      "Discount Fee Adjustment": "Ajustement des frais de remise"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -2307,6 +2315,7 @@
       "Reference": "Référence"
     },
     "inputs": {
+      "Breach Start Type": "Type de début de manquement",
       "Returned": "Retourné",
       "Settled": "Réglé",
       "Check Amount": "Montant du chèque",
@@ -5861,7 +5870,10 @@
       "Closed": "Clôturé",
       "Dashboard Export": "Export du tableau de bord",
       "Generated on": "Généré le",
-      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X"
+      "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
+      "Discount Fee Adjustment": "Ajustement des frais de remise",
+      "Remaining discount fee available to adjust": "Frais de remise restants pouvant être ajustés",
+      "Cannot precede the discount fee date": "Ne peut pas précéder la date des frais de remise"
     },
     "permissions": {
       "actions": {
@@ -6158,12 +6170,15 @@
       "No Data Found": "Aucune donnée trouvé",
       "No Family Members Added": "Aucun membre de la famille n'a encore été ajouté",
       "No Identities Found": "Aucune identité trouvée",
+      "No matching activities found": "Aucune activité correspondante trouvée",
       "No Upcoming Charges Found": "Aucun frais à venir trouvé",
+      "Try a different search term": "Essayez un autre terme de recherche",
       "unableToUpdateDiscount": "Impossible de mettre à jour le rabais.",
       "validationSaved": "Données de validation enregistrées avec succès.",
       "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès.",
       "identityDescriptionsUpdated": "Les descriptions des pièces d'identité ont été mises à jour.",
-      "identityDescriptionsUpdateFailed": "Certaines descriptions de pièces d'identité n'ont pas pu être mises à jour."
+      "identityDescriptionsUpdateFailed": "Certaines descriptions de pièces d'identité n'ont pas pu être mises à jour.",
+      "unableToAdjustDiscountFee": "Impossible d'ajuster les frais de remise."
     },
     "selections": {
       "standingInstructions": {
@@ -7303,5 +7318,65 @@
     "continue": "Continuer",
     "checksTitle": "Chèques de clôture finale de caisse",
     "date": "Date"
+  },
+  "transactionReversal": {
+    "date": "Date de la transaction",
+    "search": "Recherche",
+    "user": "Utilisateur",
+    "operation": "Opération",
+    "amount": "Montant",
+    "currency": "Devise",
+    "denomination": "Dénomination",
+    "type": "Type",
+    "quantity": "Quantité",
+    "checks": "Chèques",
+    "checkAmount": "Montant du chèque",
+    "bank": "Banque",
+    "checkNumber": "Numéro de chèque",
+    "cancel": "Annuler",
+    "errors": {
+      "invalidAuthorization": "Autorisation invalide",
+      "insufficientCash": "Espèces insuffisantes",
+      "forbidden": "Vous n'êtes pas autorisé à annuler cette transaction.",
+      "cashTotal": "La répartition de la trésorerie ne correspond pas au montant requis.",
+      "checks": "Les détails de la vérification ne correspondent pas à la transaction d'origine.",
+      "alreadyReversed": "Déjà inversé",
+      "unsupported": "Type de transaction non pris en charge",
+      "network": "Impossible de se connecter au serveur.",
+      "generic": "Impossible d'inverser la transaction",
+      "closedSession": "La session est close.",
+      "stale": "L'état de la transaction a changé. Recherchez à nouveau.",
+      "conflict": "Une autre inversion est en cours. Réessayez.",
+      "duplicate": "Cette inversion a déjà été soumise."
+    },
+    "title": "Annulation de transactions",
+    "operationType": "Type d'opération",
+    "authorization": "Numéro d'autorisation",
+    "authorizationRequired": "Le numéro d'autorisation est requis.",
+    "dateRequired": "Une date de transaction est requise",
+    "reversible": "Réversible",
+    "select": "Sélectionner",
+    "notReversible": "Non réversible",
+    "status": "B. État de la situation quant à l&apos;admissibilité",
+    "detail": "Détail de l'inversion",
+    "cashBreakdown": "Répartition de la trésorerie",
+    "requiredAmount": "Montant en espèces requis",
+    "cashToRemove": "Espèces à retirer",
+    "cashToReturn": "Argent retourné au tiroir",
+    "breakdownTotal": "Total de la répartition saisie",
+    "preview": "Aperçu de l'inversion",
+    "difference": "Différence restante",
+    "confirmTitle": "Confirmer l'annulation de la transaction",
+    "checkEffect": "Vérifier l'effet d'inversion",
+    "cashEffect": "Effet de reversement de trésorerie",
+    "warning": "Cette inversion modifiera la comptabilité, la trésorerie et l'état des chèques.",
+    "loading": "Chargement…",
+    "bills": "Billet",
+    "coins": "Pièce",
+    "available": "Disponible",
+    "addCheck": "Ajouter vérifier",
+    "removeCheck": "Retirez et contrôlez.",
+    "confirm": "Confirmer l'inversion",
+    "success": "Renversement réussi"
   }
 }

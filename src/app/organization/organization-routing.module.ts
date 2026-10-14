@@ -49,6 +49,8 @@ import { CashExchangeComponent } from './base-teller/cash-exchange/cash-exchange
 import { cashExchangeGuard } from './base-teller/cash-exchange/cash-exchange.guard';
 import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
 import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
+import { TransactionReversalComponent } from './base-teller/transaction-reversal/transaction-reversal.component';
+import { transactionReversalGuard } from './base-teller/transaction-reversal/transaction-reversal.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -613,6 +615,12 @@ const routes: Routes = [
             title: 'transactionHistory.title',
             breadcrumb: 'transactionHistory.title'
           }
+        },
+        {
+          path: 'base-teller/transaction-reversal',
+          component: TransactionReversalComponent,
+          canActivate: [transactionReversalGuard],
+          data: { title: 'transactionReversal.title', breadcrumb: 'transactionReversal.title' }
         },
         {
           path: 'base-teller/service-payments',

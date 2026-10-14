@@ -415,6 +415,12 @@
     "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Não há nenhuma redefinição ativa para desfazer.",
     "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "O empréstimo não tem calendário de incumprimento.",
     "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Este período de incumprimento já foi redefinido. Desfaça a redefinição existente antes de redefinir novamente.",
+    "validation.msg.wc.loan.charge.adjustment.invalid.date": "A data do ajuste do encargo não pode ser anterior à data de vencimento do encargo.",
+    "validation.msg.wc.loan.charge.adjustment.relation.not.found": "O ajuste do encargo não está associado a nenhum encargo, pelo que não pode ser ajustado.",
+    "validation.msg.wc.loan.transaction.adjust.not.supported": "Este tipo de transação não pode ser ajustado num empréstimo de fundo de maneio.",
+    "wc.loan.charge.adjustment.invalid.status": "Os ajustes de encargos não são permitidos para o estado atual do empréstimo.",
+    "wc.loan.charge.adjustment.inactive.charge": "Os ajustes de encargos não são permitidos num encargo inativo.",
+    "wc.loan.charge.adjustment.invalid.amount": "O montante não pode ser superior ao montante do encargo disponível para ajuste.",
     "error.resource.notImplemented.type": "Não implementado",
     "error.resource.notImplemented.message": "Funcionalidade não implementada!",
     "linkedSavingsAccountOwnership": "A conta poupança vinculada não pertence ao cliente selecionado.",
@@ -1021,6 +1027,7 @@
       "Chargeback": "Estorno",
       "Charges Overview": "Visão geral das cobranças",
       "Clear": "Limpar",
+      "Clear status filter": "Limpar filtro de estado",
       "Clear All": "Limpar tudo",
       "Client Screen Reports": "Relatórios de tela do cliente",
       "Close": "Fechar",
@@ -1288,7 +1295,8 @@
       "Post Dividends": "Lançar dividendos",
       "Convert": "Converter",
       "Deleting": "A eliminar",
-      "Inactivate": "Inativar"
+      "Inactivate": "Inativar",
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -2307,6 +2315,7 @@
       "Create Savings Product": "Criar produto de poupança"
     },
     "inputs": {
+      "Breach Start Type": "Tipo de início de violação",
       "Returned": "Devolvido",
       "Settled": "Liquidado",
       "Check Amount": "Montante do cheque",
@@ -5861,7 +5870,10 @@
       "Closed": "Encerrado",
       "Dashboard Export": "Exportação do painel",
       "Generated on": "Gerado em",
-      "Automated export": "Esta é uma exportação automática do painel global do Mifos X"
+      "Automated export": "Esta é uma exportação automática do painel global do Mifos X",
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
+      "Remaining discount fee available to adjust": "Taxa de desconto restante disponível para ajuste",
+      "Cannot precede the discount fee date": "Não pode ser anterior à data da taxa de desconto"
     },
     "permissions": {
       "actions": {
@@ -6158,12 +6170,15 @@
       "No Data Found": "Nenhum dado encontrado",
       "No Family Members Added": "Nenhum membro da família foi adicionado ainda",
       "No Identities Found": "Nenhuma identidade encontrada",
+      "No matching activities found": "Nenhuma atividade correspondente encontrada",
       "No Upcoming Charges Found": "Nenhuma cobrança futura encontrada",
+      "Try a different search term": "Tente outro termo de pesquisa",
       "unableToUpdateDiscount": "Não foi possível atualizar o desconto.",
       "validationSaved": "Dados de validação guardados com sucesso.",
       "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso.",
       "identityDescriptionsUpdated": "As descrições de identidade foram atualizadas com sucesso.",
-      "identityDescriptionsUpdateFailed": "Algumas descrições de identidade não puderam ser atualizadas."
+      "identityDescriptionsUpdateFailed": "Algumas descrições de identidade não puderam ser atualizadas.",
+      "unableToAdjustDiscountFee": "Não foi possível ajustar a taxa de desconto."
     },
     "selections": {
       "standingInstructions": {
@@ -7303,5 +7318,65 @@
     "completedAt": "Concluído em",
     "continue": "Continuar",
     "checksTitle": "Cheques do fecho final de caixa"
+  },
+  "transactionReversal": {
+    "date": "Data da transação",
+    "search": "Procurar",
+    "user": "Do utilizador",
+    "operation": "Operação",
+    "amount": "Quantidade",
+    "currency": "Moeda",
+    "denomination": "Denominação",
+    "type": "Tipo",
+    "quantity": "Quantidade",
+    "checks": "Cheques",
+    "checkAmount": "Montante do cheque",
+    "bank": "Banco",
+    "checkNumber": "Número do cheque",
+    "cancel": "Cancelar",
+    "errors": {
+      "invalidAuthorization": "Autorização inválida",
+      "insufficientCash": "Numerário insuficiente",
+      "forbidden": "Não tem permissão para reverter esta transação.",
+      "cashTotal": "O detalhamento de caixa não corresponde ao valor necessário.",
+      "alreadyReversed": "Já Invertido",
+      "checks": "Os detalhes da verificação não correspondem à transação original.",
+      "network": "Impossível conectar-se ao servidor.",
+      "unsupported": "Tipo de Transação Sem Suporte",
+      "generic": "Não é possível reverter a transação",
+      "closedSession": "A sessão do caixa está encerrada.",
+      "stale": "O estado da transação foi alterado. Pesquise novamente.",
+      "conflict": "Outra reversão está em andamento. Tente novamente.",
+      "duplicate": "Este estorno já foi enviado."
+    },
+    "title": "Reversão de operações",
+    "authorization": "Número de Autorização",
+    "operationType": "Tipo de operação",
+    "dateRequired": "A Data da Transação é obrigatória.",
+    "authorizationRequired": "O número de autorização é obrigatório.",
+    "select": "Selecione",
+    "reversible": "Reversível",
+    "status": "Status / Elegibilidade",
+    "notReversible": "Não reversível",
+    "detail": "Detalhe da reversão",
+    "cashToRemove": "Para retirar",
+    "requiredAmount": "Valor em dinheiro necessário",
+    "cashBreakdown": "Discriminação do Caixa",
+    "cashToReturn": "Dinheiro devolvido à gaveta",
+    "breakdownTotal": "Total de Discriminação Introduzida",
+    "preview": "Pré-visualizar Reversão",
+    "confirmTitle": "Confirmar Reversão da Transação",
+    "difference": "Diferença Restante",
+    "cashEffect": "Efeito de Reversão de Caixa",
+    "checkEffect": "Verificar efeito de reversão",
+    "confirm": "Confirmar reversão",
+    "warning": "Essa reversão mudará o estado contábil, de caixa e de cheque.",
+    "loading": "A carregar…",
+    "bills": "Nota",
+    "coins": "Moeda",
+    "available": "Disponível",
+    "addCheck": "Adicionar Cheque",
+    "removeCheck": "Remover cheque?",
+    "success": "Reversão bem-sucedida"
   }
 }

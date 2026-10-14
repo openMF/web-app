@@ -157,6 +157,15 @@ describe('BaseTellerComponent', () => {
         ]
       },
       {
+        materialIcon: 'undo',
+        permission: 'READ_BASE_TELLER_TRANSACTION_REVERSAL',
+        route: [
+          '/organization',
+          'base-teller',
+          'transaction-reversal'
+        ]
+      },
+      {
         fontAwesomeIcon: 'money-check-dollar',
         permission: 'READ_BASE_TELLER_SERVICE_PAYMENT',
         route: [
@@ -172,13 +181,13 @@ describe('BaseTellerComponent', () => {
     environment.productionMode = false;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(16);
+    expect(component.workflows).toHaveLength(17);
   });
 
   it('shows Bill and Service Payment when production mode is enabled', () => {
     environment.productionMode = true;
     const component = new BaseTellerComponent();
 
-    expect(component.workflows).toHaveLength(17);
+    expect(component.workflows).toHaveLength(18);
   });
 });
