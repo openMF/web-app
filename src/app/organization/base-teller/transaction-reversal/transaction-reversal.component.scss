@@ -1,0 +1,45 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.reversal {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+
+  .search-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .denomination-grid {
+    display: grid;
+    grid-template-columns: repeat(4, calc(25% - 12px));
+    align-items: center;
+    gap: 16px;
+  }
+
+  .error {
+    color: var(--mdc-theme-error, #b3261e);
+  }
+}
+
+@media (width <= 600px) {
+  .reversal .denomination-grid {
+    grid-template-columns: repeat(2, calc(50% - 8px));
+  }
+}

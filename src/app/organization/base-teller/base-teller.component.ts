@@ -187,6 +187,16 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
     ]
   },
   {
+    label: 'transactionReversal.title',
+    materialIcon: 'undo',
+    permission: 'READ_BASE_TELLER_TRANSACTION_REVERSAL',
+    route: [
+      '/organization',
+      'base-teller',
+      'transaction-reversal'
+    ]
+  },
+  {
     label: 'labels.heading.Bill and Service Payment',
     fontAwesomeIcon: 'money-check-dollar',
     permission: 'READ_BASE_TELLER_SERVICE_PAYMENT',
