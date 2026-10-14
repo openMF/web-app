@@ -1959,6 +1959,7 @@
       "Institutional Operations & Dashboard Management": "Operazioni istituzionali e gestione dei cruscotti",
       "Institutional Operations Overview": "Panoramica delle Operazioni Istituzionali",
       "Active Loans Portfolio": "Portafoglio Prestiti Attivi",
+      "Sign Out": "Esci",
       "Total Savings Balance": "Saldo Totale Risparmi",
       "Total Share Capital": "Capitale Sociale Totale",
       "Shareholders": "Azionisti",
@@ -4617,6 +4618,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Da oggi inizierà un nuovo periodo pulito.",
+      "Are you sure you want to log out": "Sei sicuro di voler uscire?",
       "Are you sure you want to resume the breach pause": "Sei sicuro di voler riprendere la violazione dopo la pausa ?",
       "Are you sure you want to undo the last breach reset": "Sei sicuro di voler annullare l'ultimo ripristino della violazione? Questo annulla il contrassegno di ripristino e il ricalcolo dell'importo scaduto; una divisione del periodo creata riavviando il periodo dalla data di ripristino non viene annullata.",
       "Are you sure you want Unassign Staff": "Sei sicuro di voler deassegnare il personale",

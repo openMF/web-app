@@ -1959,6 +1959,7 @@
       "Institutional Operations & Dashboard Management": "संस्थागत सञ्चालन र ड्यासबोर्ड व्यवस्थापन",
       "Institutional Operations Overview": "संस्थागत सञ्चालन अवलोकन",
       "Active Loans Portfolio": "सक्रिय ऋण पोर्टफोलियो",
+      "Sign Out": "साइन आउट",
       "Total Savings Balance": "कुल बचत ब्यालेन्स",
       "Total Share Capital": "कुल शेयर पूँजी",
       "Shareholders": "शेयरधारकहरू",
@@ -4617,6 +4618,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "आजबाट नयाँ सफा अवधि सुरु हुनेछ।",
+      "Are you sure you want to log out": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं लग आउट गर्न चाहनुहुन्छ?",
       "Are you sure you want to resume the breach pause": "के तपाईं उल्लंघन रोकी राखिएको अवस्था पुनः सुरु गर्न चाहनुहुन्छ?",
       "Are you sure you want to undo the last breach reset": "के तपाईं पछिल्लो उल्लंघन रिसेट पूर्ववत गर्न निश्चित हुनुहुन्छ? यसले रिसेट चिन्ह र भुक्तानी बाँकी रकमको पुनर्गणना फिर्ता गर्छ; रिसेट मितिबाट अवधि पुनः सुरु गरेर बनेको अवधि विभाजन फिर्ता हुँदैन।",
       "Are you sure you want Unassign Staff": "के तपाईं निश्चित हुनुहुन्छ कि तपाईंले कर्मचारीलाई अनपाइन्ट गर्न चाहनुहुन्छ?",

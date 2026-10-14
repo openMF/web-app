@@ -1961,6 +1961,7 @@
       "Institutional Operations & Dashboard Management": "Operaciones institucionales y gestión de paneles",
       "Institutional Operations Overview": "Resumen de Operaciones Institucionales",
       "Active Loans Portfolio": "Cartera de Préstamos Activos",
+      "Sign Out": "Cerrar sesión",
       "Total Savings Balance": "Saldo Total de Ahorros",
       "Total Share Capital": "Capital Social Total",
       "Shareholders": "Accionistas",
@@ -4611,6 +4612,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Se abrirá un periodo nuevo y limpio a partir de hoy.",
+      "Are you sure you want to log out": "¿Estás seguro de que deseas cerrar sesión?",
       "Are you sure you want to resume the breach pause": "¿Estás seguro de que quieres reanudar la pausa del incumplimiento?",
       "Are you sure you want to undo the last breach reset": "¿Estás seguro de que quieres deshacer el último reinicio de incumplimiento? Esto revierte la marca de reinicio y el recálculo del monto vencido; una división de período creada al reiniciar el período desde la fecha de reinicio no se revierte.",
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
