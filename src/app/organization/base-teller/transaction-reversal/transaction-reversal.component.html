@@ -1,0 +1,237 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container reversal">
+  <mat-card>
+    <mat-card-content>
+      <h2>{{ 'transactionReversal.title' | translate }}</h2>
+      @if (loading) {
+        <mat-spinner diameter="32" [attr.aria-label]="'transactionReversal.loading' | translate"></mat-spinner>
+      }
+      <div [formGroup]="form" class="search-form">
+        <mat-form-field>
+          <mat-label>{{ 'transactionReversal.date' | translate }}</mat-label>
+          <input matInput type="date" formControlName="transactionDate" required />
+          @if (form.controls.transactionDate.touched && form.controls.transactionDate.invalid) {
+            <mat-error>{{ 'transactionReversal.dateRequired' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'transactionReversal.authorization' | translate }}</mat-label>
+          <input matInput type="password" formControlName="authorizationNumber" autocomplete="off" required />
+          @if (form.controls.authorizationNumber.touched && form.controls.authorizationNumber.invalid) {
+            <mat-error>{{ 'transactionReversal.authorizationRequired' | translate }}</mat-error>
+          }
+        </mat-form-field>
+        <button
+          mat-flat-button
+          type="button"
+          (click)="search()"
+          [disabled]="searching || loading || previewing || submitting || !context"
+        >
+          {{ 'transactionReversal.search' | translate }}
+        </button>
+      </div>
+      @if (error) {
+        <p class="error" role="alert">{{ error | translate }}</p>
+      }
+      @if (searching || detailLoading || previewing || submitting) {
+        <mat-spinner diameter="32" [attr.aria-label]="'transactionReversal.loading' | translate"></mat-spinner>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  @if (rows.length) {
+    <mat-card>
+      <mat-card-content>
+        <div class="table-scroll">
+          <table mat-table [dataSource]="rows">
+            <ng-container matColumnDef="date"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.date' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.original.transactionDate | date: 'medium' }}</td></ng-container
+            >
+            <ng-container matColumnDef="user"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.user' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.user }}</td></ng-container
+            >
+            <ng-container matColumnDef="type"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.operationType' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.operationType }}</td></ng-container
+            >
+            <ng-container matColumnDef="operation"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.operation' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.original.operation }}</td></ng-container
+            >
+            <ng-container matColumnDef="amount"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.amount' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.amount }}</td></ng-container
+            >
+            <ng-container matColumnDef="currency"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.currency' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.original.currencyCode }}</td></ng-container
+            >
+            <ng-container matColumnDef="status"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.status' | translate }}</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.original.status }} ·
+                {{
+                  (row.eligibility.reversible ? 'transactionReversal.reversible' : 'transactionReversal.notReversible')
+                    | translate
+                }}
+                @if (!row.eligibility.reversible && row.eligibility.reason) {
+                  <span>({{ row.eligibility.reason }})</span>
+                }
+              </td></ng-container
+            >
+            <ng-container matColumnDef="select"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.select' | translate }}</th>
+              <td mat-cell *matCellDef="let row">
+                <button
+                  mat-button
+                  type="button"
+                  (click)="select(row)"
+                  [disabled]="
+                    !row.eligibility.reversible || !context?.canCreate || detailLoading || previewing || submitting
+                  "
+                  [attr.aria-label]="('transactionReversal.select' | translate) + ' ' + row.original.historyId"
+                >
+                  {{ 'transactionReversal.select' | translate }}
+                </button>
+              </td></ng-container
+            >
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns"></tr>
+          </table>
+        </div>
+        <mat-paginator
+          [length]="total"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50, 100]"
+          [disabled]="previewing || submitting"
+          (page)="page($event)"
+        ></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (detail; as selected) {
+    <mat-card>
+      <mat-card-content>
+        <h3>{{ 'transactionReversal.detail' | translate }}</h3>
+        <p>
+          {{ selected.businessDate }} · {{ selected.operation }} · {{ selected.amount }} {{ selected.currencyCode }}
+        </p>
+        @if (!selected.eligibility.reversible) {
+          <p class="error" role="alert">{{ selected.eligibility.reason }}</p>
+        }
+        @if (selected.cashAmount > 0) {
+          <h3>{{ 'transactionReversal.cashBreakdown' | translate }}</h3>
+          <p>
+            {{ 'transactionReversal.requiredAmount' | translate }}: {{ selected.cashAmount }}
+            {{ selected.currencyCode }}
+          </p>
+          @if (needsRemoval()) {
+            <h4>{{ 'transactionReversal.cashToRemove' | translate }}</h4>
+            <div class="denomination-grid header">
+              <span>{{ 'transactionReversal.denomination' | translate }}</span
+              ><span>{{ 'transactionReversal.type' | translate }}</span
+              ><span>{{ 'transactionReversal.quantity' | translate }}</span
+              ><span>{{ 'transactionReversal.amount' | translate }}</span>
+            </div>
+            @for (denomination of selected.denominations; track denomination.id) {
+              <div class="denomination-grid">
+                <span>{{ denomination.value }}</span>
+                <span>
+                  @if (denomination.type === 'NOTE') {
+                    {{ 'transactionReversal.bills' | translate }}
+                  } @else if (denomination.type === 'COIN') {
+                    {{ 'transactionReversal.coins' | translate }}
+                  } @else {
+                    {{ denomination.type }}
+                  }
+                </span>
+                <mat-form-field
+                  ><mat-label>{{ 'transactionReversal.quantity' | translate }}</mat-label
+                  ><input matInput type="number" min="0" step="1" [formControl]="quantities.get(denomination.id)!"
+                /></mat-form-field>
+                <span>{{ amountFor(denomination, false) }}</span>
+              </div>
+            }
+            <p>{{ 'transactionReversal.breakdownTotal' | translate }}: {{ totalFor(false) }}</p>
+            <p>{{ 'transactionReversal.difference' | translate }}: {{ difference(false) }}</p>
+          }
+          @if (needsReturn()) {
+            <h4>{{ 'transactionReversal.cashToReturn' | translate }}</h4>
+            <div class="denomination-grid header">
+              <span>{{ 'transactionReversal.denomination' | translate }}</span
+              ><span>{{ 'transactionReversal.type' | translate }}</span
+              ><span>{{ 'transactionReversal.quantity' | translate }}</span
+              ><span>{{ 'transactionReversal.amount' | translate }}</span>
+            </div>
+            @for (denomination of selected.denominations; track denomination.id) {
+              <div class="denomination-grid">
+                <span>{{ denomination.value }}</span>
+                <span>
+                  @if (denomination.type === 'NOTE') {
+                    {{ 'transactionReversal.bills' | translate }}
+                  } @else if (denomination.type === 'COIN') {
+                    {{ 'transactionReversal.coins' | translate }}
+                  } @else {
+                    {{ denomination.type }}
+                  }
+                </span>
+                <mat-form-field
+                  ><mat-label>{{ 'transactionReversal.quantity' | translate }}</mat-label
+                  ><input
+                    matInput
+                    type="number"
+                    min="0"
+                    step="1"
+                    [formControl]="returnedQuantities.get(denomination.id)!"
+                /></mat-form-field>
+                <span>{{ amountFor(denomination, true) }}</span>
+              </div>
+            }
+            <p>{{ 'transactionReversal.breakdownTotal' | translate }}: {{ totalFor(true) }}</p>
+            <p>{{ 'transactionReversal.difference' | translate }}: {{ difference(true) }}</p>
+          }
+        }
+        @if (selected.checks.length) {
+          <h3>{{ 'transactionReversal.checks' | translate }}</h3>
+          <p>
+            {{ 'transactionReversal.checkAmount' | translate }}: {{ selected.checkAmount }} {{ selected.currencyCode }}
+          </p>
+          @for (check of selected.checks; track check.id) {
+            <p>
+              {{ 'transactionReversal.bank' | translate }}: {{ check.bank }} ·
+              {{ 'transactionReversal.checkNumber' | translate }}: {{ check.checkNumber }} ·
+              {{ 'transactionReversal.checkAmount' | translate }}: {{ check.amount }}
+            </p>
+          }
+        }
+        <button mat-flat-button type="button" (click)="showPreview()" [disabled]="!canPreview()">
+          {{ 'transactionReversal.preview' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (result; as completed) {
+    <mat-card
+      ><mat-card-content role="status">
+        <h3>{{ 'transactionReversal.success' | translate }}</h3>
+        <p>{{ completed.sourceReversalReference }} · {{ completed.originalHistoryId }}</p>
+        <p>
+          {{ completed.reversedAt | date: 'medium' }} · {{ completed.amount }} {{ completed.currencyCode }} ·
+          {{ completed.status }}
+        </p>
+      </mat-card-content></mat-card
+    >
+  }
+</div>
