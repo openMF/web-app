@@ -100,7 +100,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return request.method === 'POST' && request.url.split('?')[0].endsWith('/authentication');
   }
 
-  private isClosingAuthorizationFailure(error: unknown): boolean {
+  private isTellerAuthorizationFailure(error: unknown): boolean {
     let body = this.parseErrorBody(error);
     if (typeof body === 'string') {
       try {
@@ -118,9 +118,19 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    // Pickup authorization bodies must never reach generic logging or raw error alerts.
+    if (/\/base-teller\/cash-drawer-pickups(?:[/?]|$)/.test(request.url)) {
+      if (status === 401 && !this.isTellerAuthorizationFailure(response.error)) {
+        this.alertService.alert({
+          type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+          message: this.translate.instant('errors.error.auth.sessionExpired.message')
+        });
+      }
+      return throwError(() => response);
+    }
     // Keep credential-bearing closing errors out of the generic response-body logger.
     if (/\/base-teller\/end-of-day-closing(?:[/?]|$)/.test(request.url)) {
-      if (status === 401 && !this.isClosingAuthorizationFailure(response.error)) {
+      if (status === 401 && !this.isTellerAuthorizationFailure(response.error)) {
         this.alertService.alert({
           type: this.translate.instant('errors.error.auth.sessionExpired.type'),
           message: this.translate.instant('errors.error.auth.sessionExpired.message')

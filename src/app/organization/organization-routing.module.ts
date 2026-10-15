@@ -45,6 +45,8 @@ import { CashInventoryComponent } from './base-teller/cash-inventory/cash-invent
 import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { CashDrawerPickupComponent } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.component';
+import { cashDrawerPickupGuard } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.guard';
 import { CashExchangeComponent } from './base-teller/cash-exchange/cash-exchange.component';
 import { cashExchangeGuard } from './base-teller/cash-exchange/cash-exchange.guard';
 import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
@@ -600,6 +602,12 @@ const routes: Routes = [
             view: 'holdings',
             permission: 'READ_CASH_HOLDINGS'
           }
+        },
+        {
+          path: 'base-teller/cash-drawer-pickup',
+          component: CashDrawerPickupComponent,
+          canActivate: [cashDrawerPickupGuard],
+          data: { title: 'cashPickup.title', breadcrumb: 'cashPickup.title' }
         },
         {
           path: 'base-teller/cash-exchange',
