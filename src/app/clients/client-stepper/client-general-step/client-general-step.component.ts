@@ -24,6 +24,7 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
+import { COUNTRY_CALLING_CODES, composeMobileNumber } from 'app/clients/utils/country-calling-code.util';
 import { environment } from 'environments/environment';
 
 /** Custom Services */
@@ -97,6 +98,8 @@ export class ClientGeneralStepComponent implements OnInit {
   genderOptions: any;
   /** Saving Product Options */
   savingProductOptions: any;
+  /** Country calling code options for the mobile number. */
+  countryCallingCodes = COUNTRY_CALLING_CODES;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -135,6 +138,7 @@ export class ClientGeneralStepComponent implements OnInit {
       accountNo: [''],
       externalId: [''],
       genderId: [''],
+      mobileNoCountryCode: [''],
       mobileNo: [''],
       emailAddress: [
         '',
@@ -262,6 +266,8 @@ export class ClientGeneralStepComponent implements OnInit {
     const generalDetails = this.createClientForm.getRawValue();
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
+    generalDetails.mobileNo = composeMobileNumber(generalDetails.mobileNoCountryCode, generalDetails.mobileNo);
+    delete generalDetails.mobileNoCountryCode;
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {
         delete generalDetails[key];
