@@ -933,14 +933,17 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         });
       } else {
         this.loanProductSettingsForm.patchValue({
-          delinquencyBucketId: ''
+          delinquencyBucketId: '',
+          delinquencyGraceDays: null,
+          delinquencyStartType: ''
         });
       }
     } else if (propertyName === 'breachId') {
       this.loanProductSettingsForm.patchValue({
         breachId: '',
         nearBreachId: '',
-        breachGraceDays: null
+        breachGraceDays: null,
+        breachStartType: null
       });
     } else if (propertyName === 'nearBreachId') {
       this.loanProductSettingsForm.patchValue({
@@ -969,6 +972,14 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     }
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
+    }
+    if (!productSettings['delinquencyBucketId']) {
+      productSettings['delinquencyGraceDays'] = null;
+      productSettings['delinquencyStartType'] = null;
+    }
+    if (!productSettings['breachId']) {
+      productSettings['breachGraceDays'] = null;
+      productSettings['breachStartType'] = null;
     }
     return productSettings;
   }
