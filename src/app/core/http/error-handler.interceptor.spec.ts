@@ -53,6 +53,50 @@ describe('ErrorHandlerInterceptor', () => {
     interceptor = TestBed.inject(ErrorHandlerInterceptor);
   });
 
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('keeps pickup error bodies out of generic alerts and logging (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    const warn = jest.spyOn(console, 'warn');
+    expect(
+      intercept('/fineract-provider/api/v2/base-teller/cash-drawer-pickups', status, 'POST', {
+        developerMessage: 'sensitive credential or SQL text'
+      })
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    expect(warn).not.toHaveBeenCalled();
+    log.mockRestore();
+    warn.mockRestore();
+  });
+
+  it.each([
+    '/v2/base-teller/cash-drawer-pickups/context',
+    'https://gateway.example.test/custom/base-teller/cash-drawer-pickups'
+  ])('shows a safe session-expired alert for pickup 401 at %s', (url) => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept(url, 401, 'POST', { developerMessage: 'sensitive server error' })).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    { userMessageGlobalisationCode: 'authorization.invalid' },
+    { errors: [{ userMessageGlobalisationCode: 'error.msg.base.teller.pickup.authorization.invalid' }] },
+    JSON.stringify({ errors: [{ userMessageGlobalisationCode: 'authorization.invalid' }] })
+  ])('keeps pickup authorization 401 failures local without a session-expired alert', (body) => {
+    expect(intercept('/v2/base-teller/cash-drawer-pickups', 401, 'POST', body)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
   const cashExchangeUrls = [
     '/base-teller/cash-exchanges/preview',
     'https://gateway.example.test/custom/path/base-teller/cash-exchanges/preview'
