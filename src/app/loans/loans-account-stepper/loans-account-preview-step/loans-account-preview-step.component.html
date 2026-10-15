@@ -142,32 +142,23 @@
       </div>
     }
 
-    @if (loansAccount.delinquencyGraceDays) {
-      <div class="flex-fill">
-        <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
-        <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
-      </div>
-    }
-
-    @if (loansAccount.delinquencyStartType) {
-      <div class="flex-fill">
-        <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
-        <span class="flex-60">{{ camalize(delinquencyStartTypeOption?.value) | translateKey: 'catalogs' }}</span>
-      </div>
-    }
-
-    @if (loansAccount.breachStartType) {
-      <div class="flex-fill">
-        <span class="flex-30">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
-        <span class="flex-60">{{ breachStartTypeOption?.value | translateKey: 'catalogs' }}</span>
-      </div>
-    }
-
     @if (loansAccount.delinquencyBucketId) {
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
         <span class="flex-60">{{ getDelinquencyBucket(loansAccount.delinquencyBucketId)?.name }}</span>
       </div>
+      @if (loansAccount.delinquencyGraceDays || loansAccount.delinquencyGraceDays === 0) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
+          <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
+        </div>
+      }
+      @if (loansAccount.delinquencyStartType) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
+          <span class="flex-60">{{ camalize(delinquencyStartTypeOption?.value) | translateKey: 'catalogs' }}</span>
+        </div>
+      }
     }
 
     @if (loansAccount.breachId) {
@@ -177,6 +168,12 @@
           ><mifosx-breach-display [singleRow]="false" [breach]="getBreach(loansAccount.breachId)"
         /></span>
       </div>
+      @if (loansAccount.breachStartType) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+          <span class="flex-60">{{ breachStartTypeOption?.value | translateKey: 'catalogs' }}</span>
+        </div>
+      }
     }
 
     @if (loansAccount.nearBreachId) {

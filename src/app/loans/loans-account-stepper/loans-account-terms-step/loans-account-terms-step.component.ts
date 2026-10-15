@@ -1118,6 +1118,24 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       // The backend answers `not.allowed.for.<strategy>.strategy` to any pricing input of
       // another strategy, so only the active group may reach the request.
       inactivePricingFields(this.paymentAmountCalculationStrategy).forEach((name) => delete terms[name]);
+      // Same idea as loan-product-settings-step: cleared form values must be null, not ''.
+      // Omitting them inherits the product on create and keeps the previous loan value on update.
+      ([
+          'delinquencyBucketId',
+          'breachId',
+          'nearBreachId',
+          'delinquencyGraceDays',
+          'delinquencyStartType',
+          'breachGraceDays',
+          'breachStartType'
+        ] as const).forEach((key) => {
+        if (terms[key] === '') {
+          terms[key] = null;
+        }
+      });
+      if (terms.breachId == null) {
+        terms.nearBreachId = null;
+      }
     }
     return terms;
   }
@@ -1224,13 +1242,16 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   clearProperty($event: Event, propertyName: string): void {
     if (propertyName === 'delinquencyBucketId') {
       this.loansAccountTermsForm.patchValue({
-        delinquencyBucketId: ''
+        delinquencyBucketId: '',
+        delinquencyGraceDays: '',
+        delinquencyStartType: ''
       });
     } else if (propertyName === 'breachId') {
       this.loansAccountTermsForm.patchValue({
         breachId: '',
         nearBreachId: '',
-        breachGraceDays: ''
+        breachGraceDays: '',
+        breachStartType: ''
       });
     } else if (propertyName === 'nearBreachId') {
       this.loansAccountTermsForm.patchValue({
