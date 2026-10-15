@@ -31,6 +31,11 @@ export interface BaseTellerWorkflow {
 }
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
+  { label: 'cashPickup.title', materialIcon: 'move_down', permission: 'READ_BASE_TELLER_CASH_DRAWER_PICKUP', route: [
+      '/organization',
+      'base-teller',
+      'cash-drawer-pickup'
+    ] },
   { label: 'eod.title', materialIcon: 'point_of_sale', permission: 'READ_BASE_TELLER_END_OF_DAY_CLOSING', route: [
       '/organization',
       'base-teller',
