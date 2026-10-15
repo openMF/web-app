@@ -334,10 +334,24 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       }
     }
 
+    // Grace/start type require parent bucket/breach. Use form values before override
+    // stripping, so locked parents inherited from the product still count.
+    const effectiveDelinquencyBucketId = this.loansAccount.delinquencyBucketId;
+    const effectiveBreachId = this.loansAccount.breachId;
+    if (!effectiveDelinquencyBucketId) {
+      delete payload['delinquencyGraceDays'];
+      delete payload['delinquencyStartType'];
+    }
+    if (!effectiveBreachId) {
+      delete payload['breachGraceDays'];
+      delete payload['breachStartType'];
+    }
+
     // No Empty values to be sent.
     [
       'delinquencyGraceDays',
       'delinquencyStartType',
+      'breachGraceDays',
       'breachStartType'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {

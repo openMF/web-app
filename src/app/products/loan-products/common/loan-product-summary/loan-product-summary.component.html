@@ -121,17 +121,19 @@
           <span class="flex-60"><mifosx-breach-display [singleRow]="false" [nearBreach]="getNearBreach()" /></span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
-      </div>
-      @let breachStartTypeOption =
-        getStartTypeOption(loanProduct.breachStartType, loanProductsTemplate?.breachStartTypeOptions);
-      @if (breachStartTypeOption) {
+      @if (getBreach()) {
         <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
-          <span class="flex-60">{{ breachStartTypeOption.value | translateKey: 'catalogs' }}</span>
+          <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
         </div>
+        @let breachStartTypeOption =
+          getStartTypeOption(loanProduct.breachStartType, loanProductsTemplate?.breachStartTypeOptions);
+        @if (breachStartTypeOption) {
+          <div class="flex-fill layout-row">
+            <span class="flex-40">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+            <span class="flex-60">{{ breachStartTypeOption.value | translateKey: 'catalogs' }}</span>
+          </div>
+        }
       }
     }
     @if (loanProductService.isLoanProduct) {
@@ -555,8 +557,8 @@
         <span class="flex-60">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
       </div>
     }
-    @if (loanProductService.isWorkingCapital) {
-      @if (loanProduct.delinquencyGraceDays) {
+    @if (loanProductService.isWorkingCapital && loanProduct.delinquencyBucket) {
+      @if (loanProduct.delinquencyGraceDays || loanProduct.delinquencyGraceDays === 0) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
           <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber }}</span>

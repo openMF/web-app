@@ -1103,13 +1103,16 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   clearProperty($event: Event, propertyName: string): void {
     if (propertyName === 'delinquencyBucketId') {
       this.loansAccountTermsForm.patchValue({
-        delinquencyBucketId: ''
+        delinquencyBucketId: '',
+        delinquencyGraceDays: '',
+        delinquencyStartType: ''
       });
     } else if (propertyName === 'breachId') {
       this.loansAccountTermsForm.patchValue({
         breachId: '',
         nearBreachId: '',
-        breachGraceDays: ''
+        breachGraceDays: '',
+        breachStartType: ''
       });
     } else if (propertyName === 'nearBreachId') {
       this.loansAccountTermsForm.patchValue({
