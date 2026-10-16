@@ -259,6 +259,137 @@ describe('LoansAccountTermsStepComponent — Working Capital breach start type',
   });
 });
 
+describe('LoansAccountTermsStepComponent — Working Capital grace days and start type overrides', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  const DELINQUENCY_SETTINGS = [
+    'delinquencyBucketId',
+    'delinquencyGraceDays',
+    'delinquencyStartType'
+  ];
+  const BREACH_SETTINGS = [
+    'breachId',
+    'nearBreachId',
+    'breachGraceDays',
+    'breachStartType'
+  ];
+
+  /** Template for a product whose override switches are set to the given values. */
+  function templateFor(id: number, overrides: { delinquencyBucketClassification: boolean; breach: boolean }): any {
+    return {
+      ...WC_PRODUCT_TEMPLATE,
+      product: {
+        ...WC_PRODUCT_TEMPLATE.product,
+        id,
+        delinquencyGraceDays: 0,
+        delinquencyStartType: { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' },
+        breachGraceDays: 5,
+        breachStartType: { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' },
+        allowAttributeOverrides: { ...WC_PRODUCT_TEMPLATE.product.allowAttributeOverrides, ...overrides }
+      }
+    };
+  }
+
+  function selectProduct(template: any): void {
+    const previous = component.loansAccountProductTemplate;
+    component.loansAccountProductTemplate = template;
+    component.ngOnChanges({ loansAccountProductTemplate: new SimpleChange(previous, template, !previous) });
+  }
+
+  function disabled(names: string[]): boolean[] {
+    return names.map((name) => component.loansAccountTermsForm.get(name)!.disabled);
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+    component.loansAccountTemplate = {};
+  });
+
+  it('locks delinquency grace days and start type with the bucket, independently of breach', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: false, breach: true }));
+
+    expect(disabled(DELINQUENCY_SETTINGS)).toEqual([
+      true,
+      true,
+      true
+    ]);
+    expect(disabled(BREACH_SETTINGS)).toEqual([
+      false,
+      false,
+      false,
+      false
+    ]);
+    // Locked fields still show the product default.
+    expect(component.loansAccountTerms.delinquencyGraceDays).toBe(0);
+    expect(component.loansAccountTerms.delinquencyStartType).toBe('LOAN_CREATION');
+  });
+
+  it('locks breach grace days and start type with the breach, independently of delinquency', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: false }));
+
+    expect(disabled(DELINQUENCY_SETTINGS)).toEqual([
+      false,
+      false,
+      false
+    ]);
+    expect(disabled(BREACH_SETTINGS)).toEqual([
+      true,
+      true,
+      true,
+      true
+    ]);
+  });
+
+  it('re-evaluates the lock and resets to the new product defaults when the product changes', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({ delinquencyGraceDays: 9, breachGraceDays: 9 });
+
+    selectProduct(templateFor(12, { delinquencyBucketClassification: false, breach: false }));
+
+    expect(
+      disabled([
+        ...DELINQUENCY_SETTINGS,
+        ...BREACH_SETTINGS
+      ]).every(Boolean)
+    ).toBe(true);
+    expect(component.loansAccountTerms.delinquencyGraceDays).toBe(0);
+    expect(component.loansAccountTerms.breachGraceDays).toBe(5);
+  });
+
+  it('rejects negative or fractional grace days when they can be overridden', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    const delinquencyGraceDays = component.loansAccountTermsForm.get('delinquencyGraceDays')!;
+    const breachGraceDays = component.loansAccountTermsForm.get('breachGraceDays')!;
+
+    delinquencyGraceDays.setValue(-1);
+    breachGraceDays.setValue(1.5);
+    expect(delinquencyGraceDays.hasError('positiveInteger')).toBe(true);
+    expect(breachGraceDays.hasError('positiveInteger')).toBe(true);
+
+    delinquencyGraceDays.setValue(0);
+    breachGraceDays.setValue(3);
+    expect(delinquencyGraceDays.valid).toBe(true);
+    expect(breachGraceDays.valid).toBe(true);
+  });
+});
+
 describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
   let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
   let component: LoansAccountTermsStepComponent;

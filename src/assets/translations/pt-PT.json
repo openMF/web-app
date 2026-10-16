@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "O encargo não pertence a este empréstimo.",
     "wc.loan.charge.waiver.inactive.charge": "O encargo não pode ser perdoado porque não está ativo.",
     "wc.loan.charge.waiver.invalid.status": "O encargo não pode ser perdoado devido ao estado atual do empréstimo.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "O encargo não tem valor em dívida para perdoar."
+    "wc.loan.charge.waiver.no.outstanding.amount": "O encargo não tem valor em dívida para perdoar.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -5873,7 +5883,8 @@
       "Automated export": "Esta é uma exportação automática do painel global do Mifos X",
       "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
       "Remaining discount fee available to adjust": "Taxa de desconto restante disponível para ajuste",
-      "Cannot precede the discount fee date": "Não pode ser anterior à data da taxa de desconto"
+      "Cannot precede the discount fee date": "Não pode ser anterior à data da taxa de desconto",
+      "Defined by product": "Definido pelo produto"
     },
     "permissions": {
       "actions": {
@@ -6551,6 +6562,8 @@
     "Frequency must be a positive integer": "A frequência deve ser um número inteiro positivo",
     "Frequency must be greater than zero": "A frequência deve ser maior do que zero",
     "Make Payment": "Efetuar pagamento",
+    "Delinquency bucket classification override also unlocks": "Também permite substituir os dias de carência e o tipo de início do incumprimento na conta de empréstimo.",
+    "Breach override also unlocks": "Também permite substituir o near breach, os dias de carência e o tipo de início do breach na conta de empréstimo.",
     "Reporting Dashboard": "Painel de relatórios CB-ILD"
   },
   "countries": {
