@@ -148,6 +148,9 @@ import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-origin
 import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
 import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
 
+import { AccountTransfersComponent } from './base-teller/account-transfers/account-transfers.component';
+import { accountTransferGuard } from './base-teller/account-transfers/account-transfer.guard';
+
 /** Organization Routes */
 const routes: Routes = [
   Route.withShell([
@@ -472,6 +475,12 @@ const routes: Routes = [
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/account-transfers',
+          component: AccountTransfersComponent,
+          canActivate: [accountTransferGuard],
+          data: { title: 'accountTransfer.title', breadcrumb: 'accountTransfer.title' }
         },
         {
           path: 'base-teller/end-of-day-cash-closing',

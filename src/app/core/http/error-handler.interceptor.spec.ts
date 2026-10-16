@@ -97,6 +97,38 @@ describe('ErrorHandlerInterceptor', () => {
     expect(alert).not.toHaveBeenCalled();
   });
 
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('lets account transfers render safe local errors (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v2/base-teller/account-transfers/preview',
+        status,
+        'POST',
+        'java.sql private trace'
+      )
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it('uses a safe session-expired alert for account transfer authentication errors', () => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/v2/base-teller/account-transfers/context', 401, 'GET', 'private server trace')).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
   const cashExchangeUrls = [
     '/base-teller/cash-exchanges/preview',
     'https://gateway.example.test/custom/path/base-teller/cash-exchanges/preview'

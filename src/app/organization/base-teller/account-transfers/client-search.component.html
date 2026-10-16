@@ -1,0 +1,75 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div [formGroup]="form">
+  @if (!method) {
+    <mat-form-field
+      ><mat-label>{{ 'accountTransfer.searchBy' | translate }}</mat-label>
+      <mat-select formControlName="method"
+        ><mat-option value="clientNumber">{{ 'accountTransfer.clientNumber' | translate }}</mat-option
+        ><mat-option value="name">{{ 'accountTransfer.clientName' | translate }}</mat-option></mat-select
+      >
+    </mat-form-field>
+  }
+  <mat-form-field
+    ><mat-label>{{
+      (method === 'name' || (!method && form.controls.method.value === 'name')
+        ? 'accountTransfer.clientName'
+        : 'accountTransfer.clientNumber'
+      ) | translate
+    }}</mat-label>
+    <input
+      matInput
+      formControlName="query"
+      (keydown.enter)="$event.preventDefault(); search()"
+      maxlength="100"
+      required
+    />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    type="button"
+    (click)="search()"
+    [disabled]="loading || form.invalid || !form.controls.query.value.trim()"
+  >
+    {{ 'accountTransfer.search' | translate }}
+  </button>
+</div>
+@if (loading) {
+  <mat-progress-bar mode="indeterminate" [attr.aria-label]="'accountTransfer.loading' | translate" />
+}
+@if (error) {
+  <p role="alert">{{ error | translate }}</p>
+}
+<div aria-live="polite">
+  @if (searched && !clients.length) {
+    <p>{{ 'accountTransfer.noClients' | translate }}</p>
+  }
+  @for (client of clients; track client.clientId) {
+    <p>
+      <button mat-stroked-button type="button" (click)="choose(client)" [disabled]="!client.active">
+        {{ client.clientNumber }} · {{ client.displayName }}
+      </button>
+      <span> {{ client.clientType }} · {{ client.status }} · {{ client.officeName }}</span>
+    </p>
+  }
+</div>
+@if (searched && total > 10) {
+  <button mat-button type="button" (click)="search(offset - 10)" [disabled]="loading || offset === 0">
+    {{ 'accountTransfer.previous' | translate }}
+  </button>
+  <span>{{ offset + 1 }}–{{ offset + clients.length }} / {{ total }}</span>
+  <button
+    mat-button
+    type="button"
+    (click)="search(offset + 10)"
+    [disabled]="loading || offset + clients.length >= total"
+  >
+    {{ 'accountTransfer.next' | translate }}
+  </button>
+}
