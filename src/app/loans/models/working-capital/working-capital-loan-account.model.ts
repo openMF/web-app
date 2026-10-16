@@ -115,10 +115,10 @@ export interface Payment {
 export interface WorkingCapitalBalances {
   id: number;
   principalOutstanding: number;
-  totalPaidPrincipal: number;
-  totalPayment: number;
-  realizedIncome: number;
-  unrealizedIncome: number;
+  principalPaid?: number;
+  totalRepayment?: number;
+  realizedIncomeFromDiscountFee?: number;
+  unrealizedIncomeFromDiscountFee?: number;
   overpaymentAmount: number;
   breachPastDueAmount: number | null | undefined;
   /** Gross amount written off. It does not go down as recoveries come in. */

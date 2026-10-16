@@ -55,10 +55,54 @@
               {{ camalize(loanDetails.repaymentFrequencyType.value) | translateKey: 'catalogs' }}
             </div>
           </div>
+          @if (loanDetails.paymentAmountCalculationStrategy) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.paymentAmountCalculationStrategy?.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+          }
           @if (has(loanDetails.paymentRate)) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Period Payment Rate' | translate }}</div>
               <div class="fact-value amount">{{ loanDetails.paymentRate | formatNumber }} %</div>
+            </div>
+          }
+          @if (has(loanDetails.effectivePaymentRate)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Effective Payment Rate' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.effectivePaymentRate | formatNumber }} %</div>
+            </div>
+          }
+          @if (loanProductService.isWorkingCapital && has(loanDetails.totalPaymentVolume)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Total Payment Volume' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.totalPaymentVolume | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.paymentAmount)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Payment Amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.paymentAmount | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.annualEir)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Annual EIR' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.annualEir | formatNumber }} %</div>
+            </div>
+          }
+          @if (has(loanDetails.calculatedAnnualEir)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Calculated Annual EIR' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.calculatedAnnualEir | formatNumber }} %</div>
+            </div>
+          }
+          @if (has(loanDetails.periodPaymentAmount)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Period Payment Amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.periodPaymentAmount | formatNumber }}</div>
             </div>
           }
           @if (has(loanDetails.numberOfRepayments)) {
@@ -349,6 +393,18 @@
                 <div class="fact-value">{{ loanDetails.breachStartType?.value | translateKey: 'catalogs' }}</div>
               </div>
             }
+            @if (has(loanDetails.breachStartDate)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Breach Start Date' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.breachStartDate | dateFormat }}</div>
+              </div>
+            }
+            @if (has(loanDetails.breachEffectiveStartDate)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Breach Effective Start Date' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.breachEffectiveStartDate | dateFormat }}</div>
+              </div>
+            }
             @if (has(loanDetails.delinquencyGraceDays)) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Delinquency Grace Days' | translate }}</div>
@@ -359,6 +415,18 @@
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Delinquency Start Type' | translate }}</div>
                 <div class="fact-value">{{ loanDetails.delinquencyStartType?.value | translateKey: 'catalogs' }}</div>
+              </div>
+            }
+            @if (has(loanDetails.delinquencyStartDate)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Delinquency Start Date' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.delinquencyStartDate | dateFormat }}</div>
+              </div>
+            }
+            @if (has(loanDetails.delinquencyEffectiveStartDate)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Delinquency Effective Start Date' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.delinquencyEffectiveStartDate | dateFormat }}</div>
               </div>
             }
             @if (loanDetails.breach) {
