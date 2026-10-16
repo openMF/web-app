@@ -32,6 +32,7 @@ import { MatDivider } from '@angular/material/divider';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -50,7 +51,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatIconButton
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -253,6 +255,12 @@ export class ClientGeneralStepComponent implements OnInit {
 
   getDateLabel(legalFormId: number, values: string[]): string {
     return legalFormId === LegalFormId.PERSON ? values[0] : values[1];
+  }
+
+  clearProperty($event: Event, propertyName: string): void {
+    this.createClientForm.get(propertyName)?.patchValue('');
+    this.createClientForm.markAsDirty();
+    $event.stopPropagation();
   }
 
   /**
