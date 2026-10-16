@@ -49,6 +49,8 @@ import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filt
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { SemiMonthlyDayPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../loan-product-base.component';
@@ -61,6 +63,7 @@ import { LoanProductSummaryAdvAccountingComponent } from './loan-product-summary
   styleUrls: ['./loan-product-summary.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    SemiMonthlyDayPipe,
     MatDivider,
     MatTable,
     MatColumnDef,
@@ -86,6 +89,9 @@ import { LoanProductSummaryAdvAccountingComponent } from './loan-product-summary
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductSummaryComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
+  /** Semi-monthly due days are only shown for that frequency; other products/loans may keep stale ones. */
+  readonly isSemiMonthly = isSemiMonthly;
+
   private accounting = inject(Accounting);
   protected loanProductService = inject(LoanProductService);
 

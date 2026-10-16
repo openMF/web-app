@@ -39,6 +39,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { SemiMonthlyDayPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
@@ -56,6 +58,7 @@ import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.
   styleUrls: ['./loans-account-preview-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    SemiMonthlyDayPipe,
     ExternalIdentifierComponent,
     MatDivider,
     MatTable,
@@ -82,6 +85,9 @@ import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent implements OnChanges {
+  /** Semi-monthly due days are only shown for that frequency; other products/loans may keep stale ones. */
+  readonly isSemiMonthly = isSemiMonthly;
+
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   /** Loans Account Product Template */
