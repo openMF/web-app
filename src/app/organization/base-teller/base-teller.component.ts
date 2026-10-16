@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 
@@ -17,6 +17,10 @@ import { IconName } from '@fortawesome/fontawesome-svg-core';
 
 /** Custom Modules */
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+/** Workflow permissions */
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
 /** Environment */
 import { environment } from 'environments/environment';
@@ -31,6 +35,11 @@ export interface BaseTellerWorkflow {
 }
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
+  { label: 'accountTransfer.title', materialIcon: 'swap_horiz', permission: 'READ_ACCOUNTTRANSFER', route: [
+      '/organization',
+      'base-teller',
+      'account-transfers'
+    ] },
   { label: 'cashPickup.title', materialIcon: 'move_down', permission: 'READ_BASE_TELLER_CASH_DRAWER_PICKUP', route: [
       '/organization',
       'base-teller',
@@ -231,9 +240,18 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseTellerComponent {
+  private readonly authentication = inject(AuthenticationService);
   readonly productionMode = environment.productionMode === true;
 
+  get otherOperations(): readonly BaseTellerWorkflow[] {
+    return canReadTransfers(this.authentication.getCredentials()?.permissions ?? [])
+      ? BASE_TELLER_WORKFLOWS.filter((w) => w.permission === 'READ_ACCOUNTTRANSFER')
+      : [];
+  }
+
   get workflows(): readonly BaseTellerWorkflow[] {
-    return BASE_TELLER_WORKFLOWS.filter((workflow) => !workflow.productionOnly || this.productionMode);
+    return BASE_TELLER_WORKFLOWS.filter(
+      (workflow) => (!workflow.productionOnly || this.productionMode) && workflow.permission !== 'READ_ACCOUNTTRANSFER'
+    );
   }
 }
