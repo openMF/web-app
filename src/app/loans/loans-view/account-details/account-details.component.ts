@@ -91,9 +91,13 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
     return (
       !!this.loanDetails.delinquencyBucket?.name ||
       this.has(this.loanDetails.breachGraceDays) ||
+      !!this.loanDetails.breachStartType ||
+      this.has(this.loanDetails.breachStartDate) ||
+      this.has(this.loanDetails.breachEffectiveStartDate) ||
       this.has(this.loanDetails.delinquencyGraceDays) ||
       !!this.loanDetails.delinquencyStartType ||
-      !!this.loanDetails.breachStartType ||
+      this.has(this.loanDetails.delinquencyStartDate) ||
+      this.has(this.loanDetails.delinquencyEffectiveStartDate) ||
       !!this.loanDetails.breach ||
       !!this.loanDetails.nearBreach
     );
