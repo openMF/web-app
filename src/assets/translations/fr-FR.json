@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Les frais n'appartiennent pas à ce prêt.",
     "wc.loan.charge.waiver.inactive.charge": "Les frais ne peuvent pas être annulés car ils ne sont pas actifs.",
     "wc.loan.charge.waiver.invalid.status": "Les frais ne peuvent pas être annulés en raison du statut actuel du prêt.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Les frais n'ont aucun montant restant dû à annuler."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Les frais n'ont aucun montant restant dû à annuler.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Cette valeur ne peut pas être modifiée : le produit ne le permet pas."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -5882,7 +5892,8 @@
       "Automated export": "Ceci est un export automatique du tableau de bord global Mifos X",
       "Discount Fee Adjustment": "Ajustement des frais de remise",
       "Remaining discount fee available to adjust": "Frais de remise restants pouvant être ajustés",
-      "Cannot precede the discount fee date": "Ne peut pas précéder la date des frais de remise"
+      "Cannot precede the discount fee date": "Ne peut pas précéder la date des frais de remise",
+      "Defined by product": "Défini par le produit"
     },
     "permissions": {
       "actions": {
@@ -6562,6 +6573,8 @@
     "Frequency must be a positive integer": "La fréquence doit être un entier positif",
     "Frequency must be greater than zero": "La fréquence doit être supérieure à zéro",
     "Make Payment": "Effectuer un paiement",
+    "Delinquency bucket classification override also unlocks": "Permet aussi de modifier les jours de grâce et le type de début de l'impayé sur le compte de prêt.",
+    "Breach override also unlocks": "Permet aussi de modifier le near breach, les jours de grâce et le type de début du breach sur le compte de prêt.",
     "Reporting Dashboard": "Tableau de bord des rapports CB-ILD"
   },
   "countries": {

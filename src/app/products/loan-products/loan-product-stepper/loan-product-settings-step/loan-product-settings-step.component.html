@@ -1002,13 +1002,19 @@
       }
       @if (loanProductService.isWorkingCapital) {
         <div formGroupName="allowAttributeOverrides" class="flex-fill layout-row-wrap gap-2percent responsive-column">
-          <mat-checkbox labelPosition="before" formControlName="breach" class="margin-v flex-48">
+          <mat-checkbox
+            labelPosition="before"
+            formControlName="breach"
+            class="margin-v flex-48"
+            matTooltip="{{ 'tooltips.Breach override also unlocks' | translate }}"
+          >
             {{ 'labels.inputs.Breach' | translate }}
           </mat-checkbox>
           <mat-checkbox
             labelPosition="before"
             formControlName="delinquencyBucketClassification"
             class="margin-v flex-48"
+            matTooltip="{{ 'tooltips.Delinquency bucket classification override also unlocks' | translate }}"
           >
             {{ 'labels.inputs.Delinquency Bucket Classification' | translate }}
           </mat-checkbox>
