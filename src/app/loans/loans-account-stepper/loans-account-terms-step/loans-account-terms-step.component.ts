@@ -64,6 +64,7 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
+import { positiveIntegerValidator } from 'app/shared/validators/positive-integer.validator';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
 
 interface DisbursementData {
@@ -401,7 +402,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         this.loansAccountTermsForm.patchValue({
           discount: this.loansAccountTermsData.product.discount || '',
           principalAmount: this.loansAccountTermsData.product.principal,
-          delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays || '',
+          delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays ?? '',
           delinquencyStartType: this.loansAccountTermsData.product.delinquencyStartType?.code || '',
           delinquencyBucketId: this.loansAccountTermsData.product.delinquencyBucket?.id || '',
           breachId: this.loansAccountTermsData.product.breach?.id || '',
@@ -444,9 +445,14 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ) {
           this.allowAttributeOverridesDelinquencyBucket = false;
           this.loansAccountTermsForm.controls.delinquencyBucketId.disable();
+          // Grace days and start type follow the bucket override switch (FINERACT-2684).
+          this.loansAccountTermsForm.controls.delinquencyGraceDays.disable();
+          this.loansAccountTermsForm.controls.delinquencyStartType.disable();
         } else {
           this.allowAttributeOverridesDelinquencyBucket = true;
           this.loansAccountTermsForm.controls.delinquencyBucketId.enable();
+          this.loansAccountTermsForm.controls.delinquencyGraceDays.enable();
+          this.loansAccountTermsForm.controls.delinquencyStartType.enable();
         }
         if (!this.allowAttributeOverrides.breach || this.allowAttributeOverrides.breach === false) {
           this.allowAttributeOverridesBreach = false;
@@ -886,17 +892,23 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           '',
           Validators.required
         ],
+        // The backend validates both grace days with integerZeroOrGreater.
         delinquencyGraceDays: [
           '',
           [
-            Validators.min(0)
+            positiveIntegerValidator()
           ]
         ],
         delinquencyStartType: [''],
         delinquencyBucketId: [''],
         breachId: [''],
         nearBreachId: [''],
-        breachGraceDays: [''],
+        breachGraceDays: [
+          '',
+          [
+            positiveIntegerValidator()
+          ]
+        ],
         breachStartType: ['']
       });
     }

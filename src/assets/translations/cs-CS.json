@@ -901,7 +901,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Poplatek nepatří k tomuto úvěru.",
     "wc.loan.charge.waiver.inactive.charge": "Poplatek nelze prominout, protože není aktivní.",
     "wc.loan.charge.waiver.invalid.status": "Poplatek nelze prominout kvůli aktuálnímu stavu úvěru.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Poplatek nemá žádnou nesplacenou částku k prominutí."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Poplatek nemá žádnou nesplacenou částku k prominutí.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje."
   },
   "labels": {
     "version": {
@@ -5871,7 +5881,8 @@
       "Automated export": "Toto je automatický export z globálního přehledu Mifos X",
       "Discount Fee Adjustment": "Úprava poplatku za slevu",
       "Remaining discount fee available to adjust": "Zbývající poplatek za slevu k úpravě",
-      "Cannot precede the discount fee date": "Nesmí předcházet datu poplatku za slevu"
+      "Cannot precede the discount fee date": "Nesmí předcházet datu poplatku za slevu",
+      "Defined by product": "Definováno produktem"
     },
     "permissions": {
       "actions": {
@@ -6550,6 +6561,8 @@
     "Frequency must be a positive integer": "Frekvence musí být kladné celé číslo",
     "Frequency must be greater than zero": "Frekvence musí být větší než nula",
     "Make Payment": "Provést platbu",
+    "Delinquency bucket classification override also unlocks": "Umožňuje také přepsat dny odkladu a typ začátku prodlení na úvěrovém účtu.",
+    "Breach override also unlocks": "Umožňuje také přepsat near breach, dny odkladu a typ začátku breach na úvěrovém účtu.",
     "Reporting Dashboard": "Přehled hlášení CB-ILD"
   },
   "countries": {

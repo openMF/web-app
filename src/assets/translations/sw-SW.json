@@ -899,7 +899,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
     "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
     "wc.loan.charge.waiver.invalid.status": "Ada haiwezi kusamehewa kwa sababu ya hali ya sasa ya mkopo.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -5870,7 +5880,8 @@
       "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Remaining discount fee available to adjust": "Ada ya punguzo iliyosalia inayoweza kurekebishwa",
-      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo"
+      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo",
+      "Defined by product": "Imefafanuliwa na bidhaa"
     },
     "permissions": {
       "actions": {
@@ -6548,6 +6559,8 @@
     "Frequency must be a positive integer": "Marudio lazima yawe namba kamili chanya",
     "Frequency must be greater than zero": "Marudio lazima yawe makubwa kuliko sifuri",
     "Make Payment": "Fanya Malipo",
+    "Delinquency bucket classification override also unlocks": "Pia inaruhusu kubadilisha siku za msamaha na aina ya mwanzo wa ucheleweshaji kwenye akaunti ya mkopo.",
+    "Breach override also unlocks": "Pia inaruhusu kubadilisha near breach, siku za msamaha na aina ya mwanzo wa breach kwenye akaunti ya mkopo.",
     "Reporting Dashboard": "Dashibodi ya Ripoti ya CB-ILD"
   },
   "countries": {
