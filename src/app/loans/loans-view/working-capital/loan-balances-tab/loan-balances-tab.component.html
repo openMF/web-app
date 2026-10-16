@@ -21,14 +21,14 @@
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Total Paid Principal' | translate }} </span>
         <span class="flex-30 r-amount">{{
-          loanBalances.totalPaidPrincipal ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          loanBalances.principalPaid ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
         }}</span>
       </div>
 
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Total Payment' | translate }} </span>
         <span class="flex-30 r-amount">{{
-          loanBalances.totalPayment ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          loanBalances.totalRepayment ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
         }}</span>
       </div>
 
