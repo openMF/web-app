@@ -118,6 +118,16 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    // Account transfers render safe localized errors, including text response bodies.
+    if (/\/base-teller\/account-transfers(?:[/?]|$)/.test(request.url)) {
+      if (status === 401) {
+        this.alertService.alert({
+          type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+          message: this.translate.instant('errors.error.auth.sessionExpired.message')
+        });
+      }
+      return throwError(() => response);
+    }
     // Pickup authorization bodies must never reach generic logging or raw error alerts.
     if (/\/base-teller\/cash-drawer-pickups(?:[/?]|$)/.test(request.url)) {
       if (status === 401 && !this.isTellerAuthorizationFailure(response.error)) {

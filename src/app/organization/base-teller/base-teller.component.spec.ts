@@ -8,10 +8,18 @@
 
 import { afterEach, describe, expect, it } from '@jest/globals';
 
+import { TestBed } from '@angular/core/testing';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 import { BASE_TELLER_WORKFLOWS, BaseTellerComponent } from './base-teller.component';
 
 describe('BaseTellerComponent', () => {
+  function component(permissions: string[] = ['ALL_FUNCTIONS']) {
+    TestBed.configureTestingModule({
+      providers: [{ provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions }) } }]
+    });
+    return TestBed.runInInjectionContext(() => new BaseTellerComponent());
+  }
   const originalProductionMode = environment.productionMode;
 
   afterEach(() => {
@@ -20,6 +28,11 @@ describe('BaseTellerComponent', () => {
 
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
+      { materialIcon: 'swap_horiz', permission: 'READ_ACCOUNTTRANSFER', route: [
+          '/organization',
+          'base-teller',
+          'account-transfers'
+        ] },
       { materialIcon: 'move_down', permission: 'READ_BASE_TELLER_CASH_DRAWER_PICKUP', route: [
           '/organization',
           'base-teller',
@@ -182,17 +195,24 @@ describe('BaseTellerComponent', () => {
     ]);
   });
 
+  it('hides transfers without permission even if legacy RBAC is off', () => {
+    expect(component([]).otherOperations).toEqual([]);
+  });
+  it('shows transfers under Other Operations with exact read permission', () => {
+    expect(component(['READ_ACCOUNTTRANSFER']).otherOperations).toHaveLength(1);
+  });
+
   it('hides Bill and Service Payment when production mode is disabled', () => {
     environment.productionMode = false;
-    const component = new BaseTellerComponent();
+    const instance = component();
 
-    expect(component.workflows).toHaveLength(18);
+    expect(instance.workflows).toHaveLength(18);
   });
 
   it('shows Bill and Service Payment when production mode is enabled', () => {
     environment.productionMode = true;
-    const component = new BaseTellerComponent();
+    const instance = component();
 
-    expect(component.workflows).toHaveLength(19);
+    expect(instance.workflows).toHaveLength(19);
   });
 });
