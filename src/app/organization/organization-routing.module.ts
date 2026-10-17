@@ -6,6 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
+import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
+
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -475,6 +478,12 @@ const routes: Routes = [
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/cash-transfers-between-tellers',
+          component: CashTransfersBetweenTellersComponent,
+          canActivate: [cashTransferGuard],
+          data: { title: 'cashTellerTransfer.title', breadcrumb: 'cashTellerTransfer.title' }
         },
         {
           path: 'base-teller/account-transfers',
