@@ -1956,6 +1956,7 @@
       "Institutional Operations & Dashboard Management": "Iestādes darbība un paneļu pārvaldība",
       "Institutional Operations Overview": "Institucionālo operāciju pārskats",
       "Active Loans Portfolio": "Aktīvais aizdevumu portfelis",
+      "Sign Out": "Atteikties",
       "Total Savings Balance": "Kopējais uzkrājumu atlikums",
       "Total Share Capital": "Kopējais pamatkapitāls",
       "Shareholders": "Akcionāri",
@@ -4614,6 +4615,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "No šodienas sāksies jauns, tīrs periods.",
+      "Are you sure you want to log out": "Vai tiešām vēlaties izrakstīties?",
       "Are you sure you want to resume the breach pause": "Vai esat pārliecināts, ka vēlaties atsākt pārtraukumu?",
       "Are you sure you want to undo the last breach reset": "Vai tiešām vēlaties atsaukt pēdējo pārkāpuma atiestatīšanu? Tas atceļ atiestatīšanas atzīmi un kavētās summas pārrēķinu; perioda sadalījums, kas izveidots, restartējot periodu no atiestatīšanas datuma, netiek atcelts.",
       "Are you sure you want Unassign Staff": "Vai tiešām vēlaties atcelt darbinieka piešķiršanu?",

@@ -1928,6 +1928,7 @@
       "Initial Funding": "İlkin maliyyələşdirmə",
       "Institutional Operations Overview": "Təşkilatın əməliyyatlarının icmalı",
       "Active Loans Portfolio": "Aktiv kredit portfeli",
+      "Sign Out": "Çıx",
       "Total Savings Balance": "Ümumi əmanət balansı",
       "Total Share Capital": "Ümumi pay kapitalı",
       "Shareholders": "Payçılar",
@@ -4574,6 +4575,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Bu gündən yeni, pozuntusuz dövr başlayacaq.",
+      "Are you sure you want to log out": "Çıxış etmək istədiyinizə əminsiniz?",
       "Are you sure you want to resume the breach pause": "Pozuntunun qiymətləndirilməsinə verilmiş fasilədən sonra davam etmək istədiyinə əminsən?",
       "Are you sure you want to undo the last breach reset": "Son pozuntu sıfırlamasını geri almaq istədiyinə əminsən? Bu əməl sıfırlama işarəsini və gecikmiş borcun yenidən hesablanmasını geri alır; dövrün sıfırlama tarixindən yenidən başlanması nəticəsində yaranmış dövr bölgüsü geri alınmır.",
       "Are you sure you want Unassign Staff": "Əməkdaşın təyinatını ləğv etmək istədiyinə əminsən?",

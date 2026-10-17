@@ -1956,6 +1956,7 @@
       "Institutional Operations & Dashboard Management": "기관 운영 및 대시보드 관리",
       "Institutional Operations Overview": "기관 운영 개요",
       "Active Loans Portfolio": "활성 대출 포트폴리오",
+      "Sign Out": "로그아웃",
       "Total Savings Balance": "총 저축 잔액",
       "Total Share Capital": "총 납입자본금",
       "Shareholders": "주주",
@@ -4614,6 +4615,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "오늘부터 새로운 깨끗한 기간이 시작됩니다.",
+      "Are you sure you want to log out": "로그아웃하시겠습니까?",
       "Are you sure you want to resume the breach pause": "중단된 작업을 재개하시겠습니까?",
       "Are you sure you want to undo the last breach reset": "마지막 위반 초기화를 실행 취소하시겠습니까? 초기화 표시와 연체 금액 재계산이 되돌려집니다. 초기화 날짜부터 기간을 다시 시작하여 생성된 기간 분할은 되돌려지지 않습니다.",
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
