@@ -6,6 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
+import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
+
 import { TestBed } from '@angular/core/testing';
 import { RouterModule, ROUTES, Route } from '@angular/router';
 import { OrganizationRoutingModule } from './organization-routing.module';
@@ -25,6 +28,9 @@ describe('Organization pickup routing', () => {
       ]);
     }
     const routes = flatten(TestBed.inject(ROUTES).flat());
+    const transfer = routes.find((route) => route.path === 'base-teller/cash-transfers-between-tellers');
+    expect(transfer?.component).toBe(CashTransfersBetweenTellersComponent);
+    expect(transfer?.canActivate).toContain(cashTransferGuard);
     const pickup = routes.find((route) => route.path === 'base-teller/cash-drawer-pickup');
     expect(pickup?.component).toBe(CashDrawerPickupComponent);
     expect(pickup?.canActivate).toContain(cashDrawerPickupGuard);

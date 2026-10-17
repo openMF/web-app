@@ -20,6 +20,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Workflow permissions */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { canReadCashTransfers } from './cash-transfers-between-tellers/cash-transfer.guard';
 import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
 /** Environment */
@@ -35,6 +36,11 @@ export interface BaseTellerWorkflow {
 }
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
+  { label: 'cashTellerTransfer.title', materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
+      '/organization',
+      'base-teller',
+      'cash-transfers-between-tellers'
+    ] },
   { label: 'accountTransfer.title', materialIcon: 'swap_horiz', permission: 'READ_ACCOUNTTRANSFER', route: [
       '/organization',
       'base-teller',
@@ -244,14 +250,20 @@ export class BaseTellerComponent {
   readonly productionMode = environment.productionMode === true;
 
   get otherOperations(): readonly BaseTellerWorkflow[] {
-    return canReadTransfers(this.authentication.getCredentials()?.permissions ?? [])
-      ? BASE_TELLER_WORKFLOWS.filter((w) => w.permission === 'READ_ACCOUNTTRANSFER')
-      : [];
+    const permissions = this.authentication.getCredentials()?.permissions ?? [];
+    return BASE_TELLER_WORKFLOWS.filter(
+      (w) =>
+        (w.permission === 'READ_ACCOUNTTRANSFER' && canReadTransfers(permissions)) ||
+        (w.permission === 'READ_BASE_TELLER_CASH_TRANSFER' && canReadCashTransfers(permissions))
+    );
   }
 
   get workflows(): readonly BaseTellerWorkflow[] {
     return BASE_TELLER_WORKFLOWS.filter(
-      (workflow) => (!workflow.productionOnly || this.productionMode) && workflow.permission !== 'READ_ACCOUNTTRANSFER'
+      (workflow) => (!workflow.productionOnly || this.productionMode) && ![
+          'READ_ACCOUNTTRANSFER',
+          'READ_BASE_TELLER_CASH_TRANSFER'
+        ].includes(workflow.permission)
     );
   }
 }

@@ -28,6 +28,11 @@ describe('BaseTellerComponent', () => {
 
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
+      { materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
+          '/organization',
+          'base-teller',
+          'cash-transfers-between-tellers'
+        ] },
       { materialIcon: 'swap_horiz', permission: 'READ_ACCOUNTTRANSFER', route: [
           '/organization',
           'base-teller',
@@ -200,6 +205,12 @@ describe('BaseTellerComponent', () => {
   });
   it('shows transfers under Other Operations with exact read permission', () => {
     expect(component(['READ_ACCOUNTTRANSFER']).otherOperations).toHaveLength(1);
+  });
+
+  it('shows physical cash transfers under Other Operations with the backend permission', () => {
+    expect(component(['READ_BASE_TELLER_CASH_TRANSFER']).otherOperations.map((w) => w.label)).toEqual([
+      'cashTellerTransfer.title'
+    ]);
   });
 
   it('hides Bill and Service Payment when production mode is disabled', () => {
