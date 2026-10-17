@@ -33,6 +33,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 import { GlAccountSelectorComponent } from '../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -48,7 +49,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     GlAccountSelectorComponent,
     MatIconButton,
     FaIconComponent,
-    CdkTextareaAutosize
+    CdkTextareaAutosize,
+    MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

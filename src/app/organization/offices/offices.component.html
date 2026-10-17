@@ -134,7 +134,12 @@
                 {{ office.name }}
               </mat-card-title>
               <div class="flex align-end">
-                <button mat-icon-button (click)="closeOffice()">
+                <button
+                  mat-icon-button
+                  [attr.aria-label]="'labels.buttons.Close' | translate"
+                  [matTooltip]="'labels.buttons.Close' | translate"
+                  (click)="closeOffice()"
+                >
                   <fa-icon icon="times"></fa-icon>
                 </button>
               </div>
