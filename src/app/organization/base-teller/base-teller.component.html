@@ -28,6 +28,20 @@
           </a>
         }
       </div>
+      @if (outflows.length) {
+        <h3>{{ 'accountTransfer.outflows' | translate }}</h3>
+        <div class="workflow-grid">
+          @for (workflow of outflows; track workflow.route) {
+            <a class="workflow-link" [routerLink]="workflow.route">
+              <div class="workflow-block">
+                <mat-icon class="workflow-icon" aria-hidden="true">{{ workflow.materialIcon }}</mat-icon>
+                <span class="workflow-title">{{ workflow.label | translate }}</span>
+                <mat-icon class="workflow-arrow" aria-hidden="true">chevron_right</mat-icon>
+              </div>
+            </a>
+          }
+        </div>
+      }
       @if (otherOperations.length) {
         <h3>{{ 'accountTransfer.otherOperations' | translate }}</h3>
         <div class="workflow-grid">

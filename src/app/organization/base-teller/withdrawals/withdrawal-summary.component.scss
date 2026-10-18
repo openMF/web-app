@@ -1,0 +1,237 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.withdrawal-summary {
+  color: var(--ds-text-1);
+
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+
+  .amount-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 24px;
+    background: var(--ds-blue-50);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .amount-banner span {
+    color: var(--ds-text-2);
+    font-size: 0.875rem;
+  }
+
+  .amount-banner strong {
+    display: block;
+    color: var(--ds-blue-700);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .record-status {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .record-status mat-icon {
+    color: var(--ds-paid);
+  }
+
+  .record-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, calc(100% / 3)));
+    margin: 16px 0 24px;
+  }
+
+  .record-details > div {
+    padding: 16px;
+    border-bottom: 1px solid var(--ds-border);
+    min-width: 0;
+  }
+
+  dt,
+  small {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  dd {
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
+    font-weight: 500;
+  }
+
+  small {
+    display: block;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  .summary-section {
+    margin-top: 24px;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    margin-bottom: 16px;
+  }
+
+  h4 {
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+  }
+
+  table {
+    width: 100%;
+    background: var(--ds-surface);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  th {
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+  }
+
+  td,
+  th {
+    padding: 16px;
+  }
+
+  td {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .summary-totals {
+    display: flex;
+    gap: 24px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding: 16px;
+    background: var(--ds-surface-alt);
+  }
+
+  .summary-totals p {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .summary-totals span {
+    color: var(--ds-text-2);
+  }
+
+  .financial-effects,
+  .flows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, calc(50% - 8px)));
+    gap: 16px;
+  }
+
+  .financial-effects > div {
+    padding: 16px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .financial-effects span {
+    display: block;
+    color: var(--ds-text-2);
+    font-size: 0.875rem;
+  }
+
+  .financial-effects strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .flows {
+    margin-top: 16px;
+  }
+
+  .flows > div {
+    padding: 16px;
+  }
+
+  .flows p {
+    color: var(--ds-text-2);
+  }
+}
+
+@media (width <= 600px) {
+  .withdrawal-summary {
+    .record-details {
+      grid-template-columns: repeat(2, minmax(0, 50%));
+    }
+
+    .amount-banner {
+      padding: 16px;
+    }
+
+    .amount-banner strong {
+      font-size: 1.5rem;
+    }
+
+    .financial-effects,
+    .flows {
+      grid-template-columns: 100%;
+    }
+
+    td,
+    th {
+      padding: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .record-details > div {
+      padding: 16px 8px;
+    }
+  }
+}
+
+@media print {
+  .withdrawal-summary {
+    .amount-banner {
+      background: transparent;
+      padding: 16px;
+    }
+
+    .record-details {
+      grid-template-columns: repeat(3, minmax(0, calc(100% / 3)));
+    }
+
+    .summary-section {
+      break-inside: avoid;
+    }
+
+    .amount-banner strong {
+      color: inherit;
+    }
+
+    .record-details > div {
+      padding: 8px;
+    }
+  }
+}

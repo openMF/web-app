@@ -129,6 +129,24 @@ describe('ErrorHandlerInterceptor', () => {
     log.mockRestore();
   });
 
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('keeps withdrawal identification and server error text out of shared logs and alerts (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept('/v2/base-teller/withdrawals/preview', status, 'POST', {
+        developerMessage: 'private identification and SQL'
+      })
+    ).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
   const cashExchangeUrls = [
     '/base-teller/cash-exchanges/preview',
     'https://gateway.example.test/custom/path/base-teller/cash-exchanges/preview'
