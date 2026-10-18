@@ -49,6 +49,11 @@ import {
   PERSON_PERSONAL_DATA_DATATABLES
 } from 'app/clients/models/personal-data-datatables.model';
 import { normalizeAddressCoordinates } from 'app/clients/utils/address-coordinate.util';
+import {
+  COUNTRY_CALLING_CODES,
+  composeMobileNumber,
+  splitMobileNumber
+} from 'app/clients/utils/country-calling-code.util';
 
 /**
  * Edit Client Component
@@ -125,6 +130,8 @@ export class EditClientComponent implements OnInit {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
+  /** Country calling code options for the mobile number. */
+  countryCallingCodes = COUNTRY_CALLING_CODES;
   legalFormId = LegalFormId.PERSON;
   /** Production mode flag. */
   productionMode = environment.productionMode === true;
@@ -171,6 +178,9 @@ export class EditClientComponent implements OnInit {
     this.setOptions();
     this.buildDependencies();
     this.legalFormId = LegalFormId.PERSON;
+    const { isoCode: mobileNoCountryCode, localNumber: mobileNo } = splitMobileNumber(
+      this.clientDataAndTemplate.mobileNo
+    );
     this.editClientForm.patchValue({
       officeId: this.clientDataAndTemplate.officeId,
       staffId: this.clientDataAndTemplate.staffId,
@@ -180,7 +190,8 @@ export class EditClientComponent implements OnInit {
       genderId: this.clientDataAndTemplate.gender && this.clientDataAndTemplate.gender.id,
       isStaff: this.clientDataAndTemplate.isStaff,
       active: this.clientDataAndTemplate.active,
-      mobileNo: this.clientDataAndTemplate.mobileNo,
+      mobileNoCountryCode,
+      mobileNo,
       emailAddress: this.clientDataAndTemplate.emailAddress,
       dateOfBirth:
         this.clientDataAndTemplate.dateOfBirth && this.dateUtils.parseDate(this.clientDataAndTemplate.dateOfBirth),
@@ -215,6 +226,7 @@ export class EditClientComponent implements OnInit {
       accountNo: [{ value: '', disabled: true }],
       externalId: [''],
       genderId: [''],
+      mobileNoCountryCode: [''],
       mobileNo: [''],
       emailAddress: [
         '',
@@ -571,6 +583,11 @@ export class EditClientComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const editClientFormValue: any = this.editClientForm.getRawValue();
+    editClientFormValue.mobileNo = composeMobileNumber(
+      editClientFormValue.mobileNoCountryCode,
+      editClientFormValue.mobileNo
+    );
+    delete editClientFormValue.mobileNoCountryCode;
     const clientData = {
       ...editClientFormValue,
       dateOfBirth:
