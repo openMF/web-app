@@ -44,6 +44,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { remittanceConfig } from '../../../remittances/remittance.config';
+import { LogoutDialogComponent } from 'app/shared/logout-dialog/logout-dialog.component';
 
 import { catchError, finalize, of, take } from 'rxjs';
 
@@ -161,6 +162,23 @@ export class SidenavComponent implements OnInit, AfterViewInit {
         finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
       )
       .subscribe();
+  }
+
+  /**
+   * Opens the logout confirmation dialog and only runs the existing logout flow
+   * once the operator confirms. Cancelling or dismissing the dialog preserves
+   * the authenticated session.
+   */
+  confirmLogout() {
+    this.dialog
+      .open(LogoutDialogComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.logout();
+        }
+      });
   }
 
   /**

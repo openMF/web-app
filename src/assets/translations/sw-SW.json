@@ -1965,6 +1965,7 @@
       "Institutional Operations & Dashboard Management": "Shughuli za Taasisi na Usimamizi wa Dashibodi",
       "Institutional Operations Overview": "Muhtasari wa Shughuli za Kitaasisi",
       "Active Loans Portfolio": "Kwingineko ya Mikopo Inayotumika",
+      "Sign Out": "Toka",
       "Total Savings Balance": "Jumla ya Salio la Akiba",
       "Total Share Capital": "Jumla ya Mtaji wa Hisa",
       "Shareholders": "Wanahisa",
@@ -4624,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Kipindi kipya safi kitaanza kuanzia leo.",
+      "Are you sure you want to log out": "Je, una uhakika unataka kutoka?",
       "Are you sure you want to resume the breach pause": "Je, una hakika unataka kuendelea na kusitishwa kwa ukiukaji?",
       "Are you sure you want to undo the last breach reset": "Je, una hakika unataka kutengua uwekaji upya wa mwisho wa ukiukaji? Hii inatengua alama ya uwekaji upya na ukokotoaji upya wa kiasi kilichochelewa; mgawanyo wa kipindi ulioundwa kwa kuanzisha upya kipindi kuanzia tarehe ya uwekaji upya haurejeshwi.",
       "Are you sure you want Unassign Staff": "Je, una uhakika unataka kuondoa wafanyakazi?",

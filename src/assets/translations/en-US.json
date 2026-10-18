@@ -1974,6 +1974,7 @@
       "Initial Funding": "Initial Funding",
       "Institutional Operations Overview": "Institutional Operations Overview",
       "Active Loans Portfolio": "Active Loans Portfolio",
+      "Sign Out": "Sign Out",
       "Total Savings Balance": "Total Savings Balance",
       "Total Share Capital": "Total Share Capital",
       "Shareholders": "Shareholders",
@@ -4620,6 +4621,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "A new clean period will start from today.",
+      "Are you sure you want to log out": "Are you sure you want to log out?",
       "Are you sure you want to resume the breach pause": "Are you sure you want to resume the breach pause",
       "Are you sure you want to undo the last breach reset": "Are you sure you want to undo the last breach reset? This reverts the reset flag and the past-due recalculation; a period split created by restarting the period from the reset date is not reverted.",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
