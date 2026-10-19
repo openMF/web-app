@@ -1,0 +1,491 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container withdrawals" [attr.aria-busy]="busy">
+  <mat-card class="withdrawal-card">
+    <mat-card-content>
+      <div class="workflow">
+        <header class="workflow-header">
+          <div class="heading-group">
+            <span class="header-icon" aria-hidden="true"><mat-icon>account_balance_wallet</mat-icon></span>
+            <div>
+              <h2>{{ 'withdrawal.new' | translate }}</h2>
+              <p>{{ 'withdrawal.subtitle' | translate }}</p>
+            </div>
+          </div>
+          @if (context) {
+            <div class="drawer-badge">
+              <mat-icon aria-hidden="true">verified_user</mat-icon>
+              <div>
+                <strong>{{ context.cashier.cashierName }}</strong
+                ><span>{{ context.cashier.officeName }} · {{ context.businessDate }}</span>
+              </div>
+            </div>
+          }
+        </header>
+        @if (busy) {
+          <mat-progress-bar mode="indeterminate" [attr.aria-label]="'accountTransfer.loading' | translate" />
+        }
+        @if (error && (context || completed || preview || uncertain)) {
+          <div role="alert" class="notice error">
+            <mat-icon aria-hidden="true">error_outline</mat-icon>
+            <p>{{ error | translate }}</p>
+          </div>
+        }
+        @if (context || preview || completed || uncertain) {
+          <ol class="progress-steps" [attr.aria-label]="'withdrawal.title' | translate">
+            @for (
+              label of [
+                'withdrawal.customer',
+                'withdrawal.selectAccount',
+                'withdrawal.method',
+                'withdrawal.details',
+                'accountTransfer.general',
+                'accountTransfer.COMPLETED'
+              ];
+              track label;
+              let i = $index
+            ) {
+              <li [class.done]="step > i" [attr.aria-current]="step === i ? 'step' : null">
+                <span class="step-number" aria-hidden="true">
+                  @if (step > i) {
+                    <mat-icon>check</mat-icon>
+                  } @else {
+                    {{ i + 1 }}
+                  }</span
+                ><span>{{ label | translate }}</span>
+              </li>
+            }
+          </ol>
+        }
+        @if (uncertain) {
+          <section class="section-panel recovery-panel">
+            <h3>{{ 'withdrawal.uncertain' | translate }}</h3>
+            <p>{{ 'withdrawal.recoveryHelp' | translate }}</p>
+            <mat-form-field appearance="outline"
+              ><mat-label>{{ 'withdrawal.identificationReference' | translate }}</mat-label
+              ><input matInput [formControl]="recoveryIdentity" autocomplete="off" [readonly]="busy"
+            /></mat-form-field>
+            <button
+              mat-flat-button
+              color="primary"
+              class="primary-action"
+              (click)="retryWithdrawal()"
+              [disabled]="busy"
+            >
+              {{ 'withdrawal.retrySame' | translate }}
+            </button>
+            <div class="recovery-review">
+              <p>{{ 'withdrawal.reviewRecovery' | translate }}</p>
+              <mat-checkbox [formControl]="recoveryReviewed">{{
+                'withdrawal.reviewAcknowledgement' | translate
+              }}</mat-checkbox>
+              <div class="actions">
+                <button mat-stroked-button (click)="discardRecovery()" [disabled]="busy || !recoveryReviewed.value">
+                  {{ 'withdrawal.discardRecovery' | translate }}
+                </button>
+              </div>
+            </div>
+          </section>
+        } @else if (completed; as record) {
+          <div class="completion-banner">
+            <mat-icon aria-hidden="true">check_circle</mat-icon>
+            <h3 role="status">{{ 'withdrawal.success' | translate }}</h3>
+          </div>
+          <mifosx-withdrawal-summary [record]="record" />
+          <div class="actions">
+            @if (canReprint) {
+              <button mat-flat-button color="primary" class="primary-action" (click)="printReceipt()" [disabled]="busy">
+                <mat-icon aria-hidden="true">print</mat-icon>{{ 'accountTransfer.print' | translate }}
+              </button>
+            }
+            <button mat-stroked-button (click)="continueWithCustomer()" [disabled]="busy">
+              {{ 'withdrawal.continueCustomer' | translate }}
+            </button>
+            <button mat-button (click)="reset()" [disabled]="busy">{{ 'withdrawal.new' | translate }}</button>
+          </div>
+        } @else if (preview; as record) {
+          <div class="section-heading">
+            <h3>{{ 'accountTransfer.general' | translate }}</h3>
+            <span class="status-chip"
+              ><mat-icon aria-hidden="true">verified</mat-icon>{{ 'withdrawal.validated' | translate }}</span
+            >
+          </div>
+          <mifosx-withdrawal-summary [record]="record" />
+          <div class="actions confirmation-actions">
+            <button mat-button (click)="back()" [disabled]="busy">{{ 'accountTransfer.back' | translate }}</button>
+            <button mat-button (click)="reset()" [disabled]="busy">{{ 'accountTransfer.cancel' | translate }}</button>
+            @if (canCreate) {
+              <button
+                mat-flat-button
+                color="primary"
+                class="primary-action"
+                (click)="confirmWithdrawal()"
+                [disabled]="busy"
+              >
+                <mat-icon aria-hidden="true">check</mat-icon>{{ 'withdrawal.confirm' | translate }}
+              </button>
+            }
+          </div>
+        } @else if (!context) {
+          @if (!busy) {
+            <section class="setup-state" role="alert">
+              <span class="setup-icon"
+                ><mat-icon aria-hidden="true">{{
+                  error === 'withdrawal.drawerRequired' ? 'point_of_sale' : 'lock_outline'
+                }}</mat-icon></span
+              >
+              <h3>
+                {{
+                  (error === 'withdrawal.drawerRequired' ? 'withdrawal.drawerSetup' : 'withdrawal.setupRequired')
+                    | translate
+                }}
+              </h3>
+              <p>{{ error || 'withdrawal.unavailable' | translate }}</p>
+              <button mat-flat-button color="primary" class="primary-action" (click)="loadContext()" [disabled]="busy">
+                <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'accountTransfer.retry' | translate }}
+              </button>
+            </section>
+          }
+        } @else {
+          @if (!canCreate) {
+            <div class="notice" role="status">
+              <mat-icon aria-hidden="true">info_outline</mat-icon>
+              <p>{{ 'withdrawal.readOnly' | translate }}</p>
+            </div>
+          }
+          @if (!customer) {
+            <section class="search-section">
+              <div class="section-heading">
+                <div>
+                  <h3>{{ 'withdrawal.search' | translate }}</h3>
+                  <p>{{ 'withdrawal.searchHint' | translate }}</p>
+                </div>
+              </div>
+              <form [formGroup]="search" (ngSubmit)="searchCustomers()" class="search-form">
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"
+                  ><mat-label>{{ 'accountTransfer.searchBy' | translate }}</mat-label
+                  ><mat-select formControlName="field"
+                    ><mat-option value="name">{{ 'accountTransfer.clientName' | translate }}</mat-option
+                    ><mat-option value="clientNumber">{{
+                      'accountTransfer.clientNumber' | translate
+                    }}</mat-option></mat-select
+                  ></mat-form-field
+                >
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"
+                  ><mat-label>{{
+                    (search.controls.field.value === 'name'
+                      ? 'accountTransfer.clientName'
+                      : 'accountTransfer.clientNumber'
+                    ) | translate
+                  }}</mat-label
+                  ><input matInput formControlName="value" maxlength="100" autocomplete="off" /><mat-icon
+                    matPrefix
+                    aria-hidden="true"
+                    >search</mat-icon
+                  ></mat-form-field
+                >
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="primary-action search-action"
+                  type="submit"
+                  [disabled]="busy || search.invalid"
+                >
+                  <mat-icon aria-hidden="true">search</mat-icon>{{ 'withdrawal.search' | translate }}
+                </button>
+              </form>
+              <div class="customer-list">
+                @for (c of customers; track c.clientId) {
+                  <button
+                    mat-button
+                    class="customer-option"
+                    (click)="selectCustomer(c)"
+                    [disabled]="busy || !c.eligible"
+                  >
+                    <span class="customer-result"
+                      ><span class="avatar" aria-hidden="true">{{ c.displayName.charAt(0) }}</span
+                      ><span class="customer-copy"
+                        ><strong>{{ c.displayName }}</strong
+                        ><span>{{ c.clientNumber }} · {{ c.clientType }} · {{ c.officeName }}</span></span
+                      ><span class="status-chip">{{ c.status }}</span
+                      ><mat-icon aria-hidden="true">chevron_right</mat-icon></span
+                    >
+                  </button>
+                } @empty {
+                  <div class="search-empty" role="status">
+                    <mat-icon aria-hidden="true">{{ searched ? 'search_off' : 'person_search' }}</mat-icon>
+                    <h4>{{ (searched ? 'accountTransfer.noClients' : 'withdrawal.customer') | translate }}</h4>
+                    <p>{{ 'withdrawal.searchHint' | translate }}</p>
+                  </div>
+                }
+              </div>
+              @if (searched && totalCustomers > pageSize) {
+                <mat-paginator
+                  [length]="totalCustomers"
+                  [pageSize]="pageSize"
+                  [pageIndex]="offset / pageSize"
+                  [hidePageSize]="true"
+                  [disabled]="busy"
+                  (page)="page($event)"
+                />
+              }
+            </section>
+          } @else {
+            <div class="selected-customer">
+              <span class="avatar" aria-hidden="true"><mat-icon>person</mat-icon></span>
+              <div class="customer-copy">
+                <small>{{ 'withdrawal.customer' | translate }}</small
+                ><strong>{{ customer.displayName }}</strong
+                ><span>{{ customer.clientNumber }} · {{ customer.officeName }}</span>
+              </div>
+              <div class="customer-actions">
+                <button mat-button (click)="reset()" [disabled]="busy">{{ 'withdrawal.search' | translate }}</button
+                ><button mat-button (click)="reset(true)" [disabled]="busy">
+                  <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'cashExchange.refresh' | translate }}
+                </button>
+              </div>
+            </div>
+            <section class="account-section">
+              <h3>{{ 'withdrawal.selectAccount' | translate }}</h3>
+              <mat-form-field appearance="outline" class="account-select" subscriptSizing="dynamic"
+                ><mat-label>{{ 'withdrawal.selectAccount' | translate }}</mat-label
+                ><mat-select
+                  [value]="account?.accountId"
+                  (selectionChange)="selectAccount($event.value)"
+                  [disabled]="busy"
+                >
+                  @for (a of accounts; track a.accountId) {
+                    <mat-option [value]="a.accountId" [disabled]="!a.withdrawalEligible"
+                      >{{ a.accountNumber }} · {{ a.productName }} · {{ a.currencyCode }}
+                      {{ a.availableAmount | withdrawalMoney: a.decimalPlaces }}</mat-option
+                    >
+                  }
+                </mat-select></mat-form-field
+              >
+              @if (accountsLoaded && !accounts.length) {
+                <div class="notice" role="status">
+                  <mat-icon aria-hidden="true">info_outline</mat-icon>
+                  <p>{{ 'accountTransfer.noSources' | translate }}</p>
+                </div>
+              }
+              @if (account; as a) {
+                <div class="account-overview">
+                  <div>
+                    <small>{{ 'accountTransfer.product' | translate }}</small
+                    ><strong>{{ a.productName }}</strong>
+                  </div>
+                  <div>
+                    <small>{{ 'accountTransfer.currency' | translate }}</small
+                    ><strong>{{ a.currencyCode }}</strong>
+                  </div>
+                  <div>
+                    <small>{{ 'accountTransfer.status' | translate }}</small
+                    ><strong>{{ a.status }}</strong>
+                  </div>
+                  <div class="available-balance">
+                    <small>{{ 'accountTransfer.available' | translate }}</small
+                    ><strong>{{ a.currencyCode }} {{ a.availableAmount | withdrawalMoney: a.decimalPlaces }}</strong>
+                  </div>
+                </div>
+                @if (!a.withdrawalEligible) {
+                  <div class="notice error" role="alert">
+                    <mat-icon aria-hidden="true">error_outline</mat-icon>
+                    <div>
+                      <p>{{ 'withdrawal.ineligible' | translate }}</p>
+                      @for (reason of a.restrictions; track reason) {
+                        <p>{{ 'withdrawal.restrictions.' + reason | translate }}</p>
+                      }
+                    </div>
+                  </div>
+                }
+                <form [formGroup]="form" (ngSubmit)="previewWithdrawal()">
+                  <div class="method-section">
+                    <div>
+                      <h3>{{ 'withdrawal.method' | translate }}</h3>
+                      <mat-form-field appearance="outline" subscriptSizing="dynamic"
+                        ><mat-label>{{ 'withdrawal.method' | translate }}</mat-label
+                        ><mat-select formControlName="method" (selectionChange)="switchMethod()">
+                          @if (context.supportedMethods.includes('CASH')) {
+                            <mat-option value="CASH">{{ 'cashInventory.types.CASH' | translate }}</mat-option>
+                          }
+                          <mat-option value="CHECK" [disabled]="true"
+                            >{{ 'cashInventory.types.CHECK' | translate }} —
+                            {{ 'withdrawal.notAvailable' | translate }}</mat-option
+                          ></mat-select
+                        ></mat-form-field
+                      >
+                    </div>
+                    @if (!context.checkCapabilities.supported) {
+                      <div class="capability-note">
+                        <mat-icon aria-hidden="true">info_outline</mat-icon>
+                        <p>{{ 'withdrawal.checkHint' | translate }}</p>
+                      </div>
+                    }
+                  </div>
+                  @if (form.controls.method.value === 'CASH') {
+                    <div class="section-heading">
+                      <h3>{{ 'withdrawal.details' | translate }}</h3>
+                      <span class="currency-label">{{ a.currencyCode }}</span>
+                    </div>
+                    <div class="panels input-panel">
+                      <mat-form-field appearance="outline"
+                        ><mat-label>{{ 'withdrawal.amount' | translate }} ({{ a.currencyCode }})</mat-label
+                        ><input matInput formControlName="amount" inputmode="decimal" autocomplete="off" /><mat-error>{{
+                          'withdrawal.invalidAmount' | translate
+                        }}</mat-error></mat-form-field
+                      >
+                      <mat-form-field appearance="outline"
+                        ><mat-label>{{ 'withdrawal.paymentType' | translate }}</mat-label
+                        ><mat-select formControlName="paymentTypeId">
+                          @for (type of context.cashPaymentTypes; track type.id) {
+                            <mat-option [value]="type.id">{{ type.name }}</mat-option>
+                          }</mat-select
+                        ><mat-error>{{ 'withdrawal.paymentRequired' | translate }}</mat-error></mat-form-field
+                      >
+                      <mat-form-field appearance="outline"
+                        ><mat-label>{{ 'withdrawal.identificationType' | translate }}</mat-label
+                        ><mat-select formControlName="identificationTypeId">
+                          @for (type of context.identificationTypes; track type.id) {
+                            <mat-option [value]="type.id">{{ type.name }}</mat-option>
+                          }</mat-select
+                        ><mat-error>{{ 'withdrawal.invalidIdentification' | translate }}</mat-error></mat-form-field
+                      >
+                      <mat-form-field appearance="outline"
+                        ><mat-label>{{ 'withdrawal.identificationReference' | translate }}</mat-label
+                        ><input
+                          matInput
+                          formControlName="identificationReference"
+                          autocomplete="off"
+                          maxlength="1000"
+                        /><mat-error>{{ 'withdrawal.invalidIdentification' | translate }}</mat-error></mat-form-field
+                      >
+                    </div>
+                    <p class="identity-help">
+                      <mat-icon aria-hidden="true">privacy_tip</mat-icon>{{ 'withdrawal.identityHelp' | translate }}
+                    </p>
+                    <div class="section-heading">
+                      <h3>{{ 'cashTellerTransfer.breakdown' | translate }}</h3>
+                      <span class="balance-state" [class.is-balanced]="balanced"
+                        ><mat-icon aria-hidden="true">{{ balanced ? 'check_circle' : 'pending' }}</mat-icon
+                        >{{ (balanced ? 'cashExchange.balanced' : 'cashExchange.notBalanced') | translate }}</span
+                      >
+                    </div>
+                    <div formArrayName="quantities" class="denomination-panels">
+                      @for (type of ['BANKNOTE', 'COIN']; track type) {
+                        <section class="denomination-group">
+                          <h4>
+                            <mat-icon aria-hidden="true">{{ type === 'COIN' ? 'toll' : 'payments' }}</mat-icon
+                            >{{
+                              (type === 'COIN' ? 'cashTellerTransfer.coins' : 'cashTellerTransfer.bills') | translate
+                            }}
+                          </h4>
+                          <div class="denomination-heading">
+                            <span>{{ 'cashExchange.denomination' | translate }}</span
+                            ><span>{{ 'cashExchange.available' | translate }}</span
+                            ><span>{{ 'withdrawal.quantity' | translate }}</span
+                            ><span>{{ 'cashExchange.amount' | translate }}</span>
+                          </div>
+                          @for (d of denominations; track d.denominationId; let i = $index) {
+                            @if (d.denominationType === type) {
+                              <div class="denomination-row" [class.out-of-stock]="d.availableQuantity === 0">
+                                <strong>{{ d.denominationValue | withdrawalMoney: a.decimalPlaces }}</strong
+                                ><span class="available-quantity">{{ d.availableQuantity }}</span
+                                ><mat-form-field appearance="outline" subscriptSizing="dynamic"
+                                  ><mat-label
+                                    >{{ 'withdrawal.quantity' | translate }} ({{
+                                      d.denominationValue | withdrawalMoney: a.decimalPlaces
+                                    }})</mat-label
+                                  ><input
+                                    matInput
+                                    type="number"
+                                    inputmode="numeric"
+                                    min="0"
+                                    step="1"
+                                    [max]="d.availableQuantity"
+                                    [formControlName]="i"
+                                  /><mat-error>{{
+                                    'cashTellerTransfer.invalidQuantity' | translate
+                                  }}</mat-error></mat-form-field
+                                ><span class="line-amount">{{ lineAmount(i) | withdrawalMoney: a.decimalPlaces }}</span>
+                              </div>
+                            }
+                          }
+                        </section>
+                      }
+                    </div>
+                    @if (!denominations.length) {
+                      <p role="status">{{ 'cashExchange.empty' | translate }}</p>
+                    }
+                    <div class="cash-totals">
+                      <div>
+                        <small>{{ 'cashTellerTransfer.totalBills' | translate }}</small
+                        ><strong
+                          >{{ a.currencyCode }} {{ total('BANKNOTE') | withdrawalMoney: a.decimalPlaces }}</strong
+                        >
+                      </div>
+                      <div>
+                        <small>{{ 'cashTellerTransfer.totalCoins' | translate }}</small
+                        ><strong>{{ a.currencyCode }} {{ total('COIN') | withdrawalMoney: a.decimalPlaces }}</strong>
+                      </div>
+                      <div class="cash-total">
+                        <small>{{ 'cashTellerTransfer.total' | translate }}</small
+                        ><strong>{{ a.currencyCode }} {{ total() | withdrawalMoney: a.decimalPlaces }}</strong>
+                      </div>
+                    </div>
+                    <div class="actions confirmation-actions">
+                      <button mat-button type="button" (click)="reset()" [disabled]="busy">
+                        {{ 'accountTransfer.cancel' | translate }}</button
+                      ><button mat-flat-button color="primary" class="primary-action" type="submit" [disabled]="!ready">
+                        {{ 'cashTellerTransfer.continue' | translate
+                        }}<mat-icon iconPositionEnd aria-hidden="true">arrow_forward</mat-icon>
+                      </button>
+                    </div>
+                  }
+                </form>
+              }
+            </section>
+          }
+        }
+        @if (!uncertain) {
+          <footer class="workflow-footer">
+            <a mat-button routerLink="/organization/base-teller"
+              ><mat-icon aria-hidden="true">arrow_back</mat-icon>{{ 'accountTransfer.backToTeller' | translate }}</a
+            >
+            <mat-expansion-panel
+              class="receipt-lookup"
+              [expanded]="receiptLookupOpen"
+              (opened)="receiptLookupOpen = true"
+              (closed)="receiptLookupOpen = false"
+              ><mat-expansion-panel-header
+                ><mat-panel-title
+                  ><mat-icon aria-hidden="true">receipt_long</mat-icon
+                  >{{ 'accountTransfer.reprint' | translate }}</mat-panel-title
+                ></mat-expansion-panel-header
+              >
+              <div class="receipt-lookup-form">
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"
+                  ><mat-label>{{ 'withdrawal.recordId' | translate }}</mat-label
+                  ><input matInput [formControl]="receiptId" inputmode="numeric" /></mat-form-field
+                ><button mat-stroked-button (click)="retrieve()" [disabled]="busy || receiptId.invalid">
+                  {{ 'withdrawal.retrieve' | translate }}
+                </button>
+              </div></mat-expansion-panel
+            >
+          </footer>
+        }
+      </div>
+      @if (printedReceipt; as record) {
+        <div class="receipt">
+          <h2>{{ 'withdrawal.receipt' | translate }}</h2>
+          <mifosx-withdrawal-summary [record]="record" />
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

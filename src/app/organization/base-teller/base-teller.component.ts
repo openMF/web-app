@@ -21,6 +21,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /** Workflow permissions */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { canReadCashTransfers } from './cash-transfers-between-tellers/cash-transfer.guard';
+import { canReadWithdrawals } from './withdrawals/withdrawal.guard';
 import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
 /** Environment */
@@ -248,6 +249,23 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
 export class BaseTellerComponent {
   private readonly authentication = inject(AuthenticationService);
   readonly productionMode = environment.productionMode === true;
+
+  get outflows(): readonly BaseTellerWorkflow[] {
+    return canReadWithdrawals(this.authentication.getCredentials()?.permissions ?? [])
+      ? [
+          {
+            label: 'withdrawal.title',
+            materialIcon: 'payments',
+            permission: 'READ_BASE_TELLER_WITHDRAWAL',
+            route: [
+              '/organization',
+              'base-teller',
+              'withdrawals'
+            ]
+          }
+        ]
+      : [];
+  }
 
   get otherOperations(): readonly BaseTellerWorkflow[] {
     const permissions = this.authentication.getCredentials()?.permissions ?? [];
