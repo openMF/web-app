@@ -200,6 +200,26 @@ describe('BaseTellerComponent', () => {
     ]);
   });
 
+  it.each([
+    { permissions: [] as string[], visible: false },
+    { permissions: ['READ_BASE_TELLER_WITHDRAWAL'], visible: false },
+    { permissions: [
+        'READ_BASE_TELLER_WITHDRAWAL',
+        'READ_CLIENT',
+        'READ_SAVINGSACCOUNT'
+      ], visible: true },
+    { permissions: ['ALL_FUNCTIONS_READ'], visible: true }
+  ])('checks backend read permissions for the Outflows card: $permissions', ({ permissions, visible }) => {
+    const outflows = component(permissions).outflows;
+    expect(outflows).toHaveLength(visible ? 1 : 0);
+    if (visible)
+      expect(outflows[0].route).toEqual([
+        '/organization',
+        'base-teller',
+        'withdrawals'
+      ]);
+  });
+
   it('hides transfers without permission even if legacy RBAC is off', () => {
     expect(component([]).otherOperations).toEqual([]);
   });
