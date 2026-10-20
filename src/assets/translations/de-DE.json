@@ -1004,6 +1004,7 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Clone": "Klonen",
       "Finalize": "Abschließen",
       "New Operation": "Neuer Vorgang",
       "Select Check": "Scheck auswählen",
@@ -1173,7 +1174,6 @@
       "Import Client": "Client importieren",
       "Import Employees": "Mitarbeiter importieren",
       "Import Group": "Gruppe importieren",
-      "Import Loan Product": "Kreditprodukt importieren",
       "Import Offices": "Importbüros",
       "Initiate Dividend": "Dividende einleiten",
       "Is Self Service": "Ist Selbstbedienung",
@@ -1239,7 +1239,6 @@
       "Search": "Suchen",
       "Search Instructions": "Suchanweisungen",
       "Select All": "Wählen Sie Alle",
-      "Select a JSON file containing the loan product definition": "Wählen Sie eine JSON-Datei mit der Kreditproduktdefinition aus",
       "Sell Loan": "Kredite verkaufen",
       "Settle Cash": "Bargeld begleichen",
       "Setup Accounting": "Buchhaltung einrichten",
@@ -4716,6 +4715,8 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Clone": "Klonen",
+      "Clone Loan Product": "Darlehensprodukt klonen",
       "Near Breach": "Nahe Verletzung",
       "In Progress": "In Bearbeitung",
       "Cash received cannot be less than the check amount": "Der erhaltene Bargeldbetrag darf nicht niedriger als der Scheckbetrag sein.",

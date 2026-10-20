@@ -999,6 +999,7 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Clone": "Klonēt",
       "Finalize": "Pabeigt",
       "New Operation": "Jauna operācija",
       "Select Check": "Atlasīt čeku",
@@ -1168,7 +1169,6 @@
       "Import Client": "Importēt klientu",
       "Import Employees": "Importēt darbiniekus",
       "Import Group": "Importēšanas grupa",
-      "Import Loan Product": "Importēt aizdevuma produktu",
       "Import Offices": "Importa biroji",
       "Initiate Dividend": "Ierosināt dividendes",
       "Is Self Service": "Ir pašapkalpošanās",
@@ -1234,7 +1234,6 @@
       "Search": "Meklēt",
       "Search Instructions": "Meklēšanas instrukcijas",
       "Select All": "Izvēlēties visus",
-      "Select a JSON file containing the loan product definition": "Atlasiet JSON failu, kas satur aizdevuma produkta definīciju",
       "Sell Loan": "Pārdod aizdevumu",
       "Settle Cash": "Norēķini skaidrā naudā",
       "Setup Accounting": "Uzstādīt grāmatvedību",
@@ -4711,6 +4710,8 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Clone": "Klonēt",
+      "Clone Loan Product": "Klonēt aizdevuma produktu",
       "Near Breach": "Tuvu pārkāpumam",
       "In Progress": "Norisinās",
       "Cash received cannot be less than the check amount": "Saņemtā skaidrā nauda nedrīkst būt mazāka par čeka summu.",

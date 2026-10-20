@@ -1002,6 +1002,7 @@
       "Home": "Maison"
     },
     "buttons": {
+      "Clone": "Cloner",
       "Finalize": "Finaliser",
       "New Operation": "Nouvelle opération",
       "Select Check": "Sélectionner le chèque",
@@ -1171,7 +1172,6 @@
       "Import Client": "Importer un client",
       "Import Employees": "Importer des employés",
       "Import Group": "Groupe d'importation",
-      "Import Loan Product": "Importer un produit de prêt",
       "Import Offices": "Bureaux d'importation",
       "Initiate Dividend": "Initier le dividende",
       "Is Self Service": "Est libre-service",
@@ -1237,7 +1237,6 @@
       "Search": "Recherche",
       "Search Instructions": "Instructions de recherche",
       "Select All": "Tout sélectionner",
-      "Select a JSON file containing the loan product definition": "Sélectionnez un fichier JSON contenant la définition du produit de prêt",
       "Sell Loan": "Vendre un prêt",
       "Settle Cash": "Règlement en espèces",
       "Setup Accounting": "Configurer la comptabilité",
@@ -4714,6 +4713,8 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "Clone": "Cloner",
+      "Clone Loan Product": "Cloner le produit de prêt",
       "Near Breach": "Proche du manquement",
       "In Progress": "En cours",
       "Cash received cannot be less than the check amount": "Les espèces reçues ne peuvent pas être inférieures au montant du chèque.",

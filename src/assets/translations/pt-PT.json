@@ -1002,6 +1002,7 @@
       "Home": "Lar"
     },
     "buttons": {
+      "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nova operação",
       "Select Check": "Selecionar cheque",
@@ -1171,7 +1172,6 @@
       "Import Client": "Cliente de importação",
       "Import Employees": "Importar funcionários",
       "Import Group": "Grupo de importação",
-      "Import Loan Product": "Importar produto de empréstimo",
       "Import Offices": "Escritórios de Importação",
       "Initiate Dividend": "Iniciar Dividendo",
       "Is Self Service": "É autoatendimento",
@@ -1237,7 +1237,6 @@
       "Search": "Procurar",
       "Search Instructions": "Instruções de pesquisa",
       "Select All": "Selecionar tudo",
-      "Select a JSON file containing the loan product definition": "Selecione um arquivo JSON contendo a definição do produto de empréstimo",
       "Sell Loan": "Vender empréstimo",
       "Settle Cash": "Liquidar dinheiro",
       "Setup Accounting": "Configurar contabilidade",
@@ -4714,6 +4713,8 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Clone": "Clonar",
+      "Clone Loan Product": "Clonar produto de empréstimo",
       "Near Breach": "Perto do incumprimento",
       "In Progress": "Em curso",
       "Cash received cannot be less than the check amount": "O numerário recebido não pode ser inferior ao montante do cheque.",

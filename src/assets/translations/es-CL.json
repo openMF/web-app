@@ -1002,6 +1002,7 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nueva operación",
       "Select Check": "Seleccionar cheque",
@@ -1173,7 +1174,6 @@
       "Import Client": "Importar cliente",
       "Import Employees": "Importar empleados",
       "Import Group": "Importar grupo",
-      "Import Loan Product": "Importar producto de crédito",
       "Import Offices": "Oficinas de Importación",
       "Initiate Dividend": "Iniciar dividendo",
       "Is Self Service": "Es usuario de autoservicio",
@@ -1240,7 +1240,6 @@
       "Search": "Buscar",
       "Search Instructions": "Instrucciones de búsqueda",
       "Select All": "Seleccionar todo",
-      "Select a JSON file containing the loan product definition": "Seleccione un archivo JSON que contenga la definición del producto de crédito",
       "Sell Loan": "Vender el Crédito",
       "Settle Cash": "Liquidar efectivo",
       "Setup Accounting": "Configurar contabilidad",
@@ -4714,6 +4713,8 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Clone": "Clonar",
+      "Clone Loan Product": "Clonar producto de Crédito",
       "Near Breach": "Cerca de incumplimiento",
       "In Progress": "En curso",
       "Cash received cannot be less than the check amount": "El efectivo recibido no puede ser menor que el monto del cheque.",
