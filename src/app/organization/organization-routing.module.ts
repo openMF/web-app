@@ -20,6 +20,8 @@ import { Route } from '../core/route/route.service';
 import { OrganizationComponent } from './organization.component';
 import { EndOfDayClosingComponent } from './base-teller/end-of-day-cash-closing/end-of-day-closing.component';
 import { endOfDayClosingGuard } from './base-teller/end-of-day-cash-closing/end-of-day-closing.guard';
+import { WithdrawalComponent } from './base-teller/withdrawals/withdrawal.component';
+import { withdrawalGuard } from './base-teller/withdrawals/withdrawal.guard';
 import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
@@ -478,6 +480,12 @@ const routes: Routes = [
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/withdrawals',
+          component: WithdrawalComponent,
+          canActivate: [withdrawalGuard],
+          data: { title: 'withdrawal.title', breadcrumb: 'withdrawal.title' }
         },
         {
           path: 'base-teller/cash-transfers-between-tellers',

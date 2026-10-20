@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { WithdrawalComponent } from './base-teller/withdrawals/withdrawal.component';
+import { withdrawalGuard } from './base-teller/withdrawals/withdrawal.guard';
 import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
 import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
 
@@ -31,6 +33,9 @@ describe('Organization pickup routing', () => {
     const transfer = routes.find((route) => route.path === 'base-teller/cash-transfers-between-tellers');
     expect(transfer?.component).toBe(CashTransfersBetweenTellersComponent);
     expect(transfer?.canActivate).toContain(cashTransferGuard);
+    const withdrawal = routes.find((route) => route.path === 'base-teller/withdrawals');
+    expect(withdrawal?.component).toBe(WithdrawalComponent);
+    expect(withdrawal?.canActivate).toContain(withdrawalGuard);
     const pickup = routes.find((route) => route.path === 'base-teller/cash-drawer-pickup');
     expect(pickup?.component).toBe(CashDrawerPickupComponent);
     expect(pickup?.canActivate).toContain(cashDrawerPickupGuard);
