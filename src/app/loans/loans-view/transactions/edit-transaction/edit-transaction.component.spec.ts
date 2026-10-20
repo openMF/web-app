@@ -30,7 +30,8 @@ describe('EditTransactionComponent', () => {
     ],
     amount: 150,
     externalId: 'original-external-id',
-    paymentTypeId: 1,
+    // Fineract returns the payment type only inside paymentDetailData, never as a flat paymentTypeId.
+    paymentDetailData: { id: 9, paymentType: { id: 1, name: 'Money Transfer' } },
     manuallyReversed: false,
     currency: { code: 'EUR', displaySymbol: '€' },
     paymentTypeOptions: [{ id: 1, name: 'Money Transfer' }]
@@ -165,6 +166,12 @@ describe('EditTransactionComponent', () => {
     expect(component.editTransactionForm.controls.paymentTypeId.value).toBe(1);
     // Re-sending the original id would collide with the row kept as reversed.
     expect(component.editTransactionForm.controls.externalId.value).toBeNull();
+  });
+
+  it('leaves the payment type empty when the term loan transaction has no payment detail', () => {
+    const component = createComponent({ ...repaymentTemplate, paymentDetailData: null });
+
+    expect(component.editTransactionForm.controls.paymentTypeId.value).toBeNull();
   });
 
   it('posts the adjust command against the transaction being adjusted', () => {
