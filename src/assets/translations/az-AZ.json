@@ -963,6 +963,7 @@
       "Adjustment": "Düzəliş et",
       "Advanced Options": "Əlavə seçimlər",
       "Advanced Search": "Ətraflı axtarış",
+      "Clone": "Klonla",
       "Disable Delinquency": "Gecikmənin qiymətləndirilməsini söndür",
       "Enable Delinquency": "Gecikmənin qiymətləndirilməsini aktivləşdir",
       "Pin": "Sancaqla",
@@ -4625,6 +4626,8 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Clone": "Klonla",
+      "Clone Loan Product": "Kredit məhsulunu klonla",
       "Select a client from the list": "Siyahıdan müştəri seç",
       "Complete these steps to preview the product": "Məhsula önbaxış üçün bu addımları tamamla",
       "Complete these steps before creating the product": "Məhsulu yaratmazdan əvvəl bu addımları tamamla",

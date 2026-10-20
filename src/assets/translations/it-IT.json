@@ -970,6 +970,7 @@
       "Home": "Casa"
     },
     "buttons": {
+      "Clone": "Clona",
       "Finalize": "Finalizza",
       "New Operation": "Nuova operazione",
       "Select Check": "Seleziona assegno",
@@ -4668,6 +4669,8 @@
       "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
+      "Clone": "Clona",
+      "Clone Loan Product": "Clona prodotto di prestito",
       "Near Breach": "Vicino alla violazione",
       "In Progress": "In corso",
       "Cash received cannot be less than the check amount": "I contanti ricevuti non possono essere inferiori all'importo dell'assegno.",

@@ -19,6 +19,15 @@
   >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
   </button>
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['../clone']"
+    [queryParams]="{ productType: loanProductService.productType.value }"
+    *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+  >
+    <fa-icon icon="copy" class="m-r-10"></fa-icon>{{ 'labels.buttons.Clone' | translate }}
+  </button>
 </div>
 
 <mifosx-loan-product-summary
