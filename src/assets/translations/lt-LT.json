@@ -999,6 +999,7 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Clone": "Klonuoti",
       "Finalize": "Užbaigti",
       "New Operation": "Nauja operacija",
       "Select Check": "Pasirinkti čekį",
@@ -1168,7 +1169,6 @@
       "Import Client": "Importuoti klientą",
       "Import Employees": "Importuoti darbuotojus",
       "Import Group": "Importo grupė",
-      "Import Loan Product": "Importuoti paskolos produktą",
       "Import Offices": "Importo biurai",
       "Initiate Dividend": "Inicijuoti dividendus",
       "Is Self Service": "Savitarna",
@@ -1234,7 +1234,6 @@
       "Search": "Paieška",
       "Search Instructions": "Paieškos instrukcijos",
       "Select All": "Pasirinkti viską",
-      "Select a JSON file containing the loan product definition": "Pasirinkite JSON failą su paskolos produkto apibrėžimu",
       "Sell Loan": "Parduoti paskolą",
       "Settle Cash": "Atsiskaityti grynaisiais",
       "Setup Accounting": "Nustatykite apskaitą",
@@ -4711,6 +4710,8 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "Clone": "Klonuoti",
+      "Clone Loan Product": "Klonuoti paskolos produktą",
       "Near Breach": "Artėja pažeidimas",
       "In Progress": "Vykdoma",
       "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",

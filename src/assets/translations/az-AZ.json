@@ -995,6 +995,7 @@
       "Adjustment": "Düzəliş et",
       "Advanced Options": "Əlavə seçimlər",
       "Advanced Search": "Ətraflı axtarış",
+      "Clone": "Klonla",
       "Disable Delinquency": "Gecikmənin qiymətləndirilməsini söndür",
       "Enable Delinquency": "Gecikmənin qiymətləndirilməsini aktivləşdir",
       "Pin": "Sancaqla",
@@ -1138,7 +1139,6 @@
       "Import Client": "Müştəri idxal et",
       "Import Employees": "Əməkdaşları idxal et",
       "Import Group": "Qrup idxal et",
-      "Import Loan Product": "Kredit məhsulu idxal et",
       "Import Offices": "Filialları idxal et",
       "Inactivate": "Deaktivləşdir",
       "Initiate Dividend": "Dividend ödənişini başlat",
@@ -1208,7 +1208,6 @@
       "Search": "Axtar",
       "Search Instructions": "Tapşırıqları axtar",
       "Select All": "Hamısını seç",
-      "Select a JSON file containing the loan product definition": "Kredit məhsulunun tərifini ehtiva edən JSON faylını seç.",
       "Sell Loan": "Krediti sat",
       "Settle Cash": "Nağd vəsait üzrə hesablaşmanı apar",
       "Setup Accounting": "Mühasibat uçotunu qur",
@@ -4671,6 +4670,8 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Clone": "Klonla",
+      "Clone Loan Product": "Kredit məhsulunu klonla",
       "Select a client from the list": "Siyahıdan müştəri seç",
       "Complete these steps to preview the product": "Məhsula önbaxış üçün bu addımları tamamla",
       "Complete these steps before creating the product": "Məhsulu yaratmazdan əvvəl bu addımları tamamla",

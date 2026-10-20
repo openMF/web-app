@@ -1000,6 +1000,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Clone": "Klonovat",
       "Finalize": "Dokončit",
       "New Operation": "Nová operace",
       "Select Check": "Vybrat šek",
@@ -1169,7 +1170,6 @@
       "Import Client": "Importovat klienta",
       "Import Employees": "Import zaměstnanců",
       "Import Group": "Skupina importu",
-      "Import Loan Product": "Importovat úvěrový produkt",
       "Import Offices": "Dovozní kanceláře",
       "Initiate Dividend": "Iniciovat dividendu",
       "Is Self Service": "Je samoobsluha",
@@ -1235,7 +1235,6 @@
       "Search": "Vyhledávání",
       "Search Instructions": "Pokyny pro vyhledávání",
       "Select All": "Vybrat vše",
-      "Select a JSON file containing the loan product definition": "Vyberte soubor JSON obsahující definici úvěrového produktu",
       "Sell Loan": "Prodat půjčku",
       "Settle Cash": "Vyrovnat hotovost",
       "Setup Accounting": "Nastavení účetnictví",
@@ -4712,6 +4711,8 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Clone": "Klonovat",
+      "Clone Loan Product": "Klonovat produkt půjčky",
       "Near Breach": "Blízko porušení",
       "In Progress": "Probíhá",
       "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",

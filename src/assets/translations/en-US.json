@@ -1031,6 +1031,7 @@
       "Adjustment": "Adjustment",
       "Advanced Options": "Advanced Options",
       "Advanced Search": "Advanced Search",
+      "Clone": "Clone",
       "Disable Delinquency": "Disable Delinquency",
       "Enable Delinquency": "Enable Delinquency",
       "Pin": "Pin",
@@ -1174,7 +1175,6 @@
       "Import Client": "Import Client",
       "Import Employees": "Import Employees",
       "Import Group": "Import Group",
-      "Import Loan Product": "Import Loan Product",
       "Import Offices": "Import Offices",
       "Inactivate": "Inactivate",
       "Initiate Dividend": "Initiate Dividend",
@@ -1244,7 +1244,6 @@
       "Search": "Search",
       "Search Instructions": "Search Instructions",
       "Select All": "Select All",
-      "Select a JSON file containing the loan product definition": "Select a JSON file containing the loan product definition",
       "Sell Loan": "Sell Loan",
       "Settle Cash": "Settle Cash",
       "Setup Accounting": "Setup Accounting",
@@ -4709,6 +4708,8 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Clone": "Clone",
+      "Clone Loan Product": "Clone Loan Product",
       "Near Breach": "Near Breach",
       "In Progress": "In Progress",
       "Select a client from the list": "Select a client from the list",

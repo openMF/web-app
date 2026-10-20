@@ -999,6 +999,7 @@
       "Home": "Nyumbani"
     },
     "buttons": {
+      "Clone": "Nakili",
       "Finalize": "Kamilisha",
       "New Operation": "Operesheni mpya",
       "Select Check": "Chagua hundi",
@@ -1168,7 +1169,6 @@
       "Import Client": "Ingiza Mteja",
       "Import Employees": "Wafanyikazi wa Kuagiza",
       "Import Group": "Kundi la Ingiza",
-      "Import Loan Product": "Ingiza Bidhaa ya Mkopo",
       "Import Offices": "Ofisi za Kuagiza",
       "Initiate Dividend": "Anzisha Gawio",
       "Is Self Service": "Ni huduma binafsi",
@@ -1234,7 +1234,6 @@
       "Search": "Tafuta",
       "Search Instructions": "Tafuta Maelekezo",
       "Select All": "Chagua Zote",
-      "Select a JSON file containing the loan product definition": "Chagua faili ya JSON yenye ufafanuzi wa bidhaa ya mkopo",
       "Sell Loan": "Kuuza mkopo",
       "Settle Cash": "Maliza Pesa",
       "Setup Accounting": "Weka Uhasibu",
@@ -4711,6 +4710,8 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Clone": "Nakili",
+      "Clone Loan Product": "Nakili Bidhaa ya Mkopo",
       "Near Breach": "Karibu na ukiukaji",
       "In Progress": "Inaendelea",
       "Cash received cannot be less than the check amount": "Pesa taslimu zilizopokelewa haziwezi kuwa chini ya kiasi cha hundi.",

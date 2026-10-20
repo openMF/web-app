@@ -1002,6 +1002,7 @@
       "Home": "घर"
     },
     "buttons": {
+      "Clone": "क्लोन गर्नुहोस्",
       "Finalize": "अन्तिम रूप दिनुहोस्",
       "New Operation": "नयाँ कारोबार",
       "Select Check": "चेक चयन गर्नुहोस्",
@@ -1171,7 +1172,6 @@
       "Import Client": "ग्राहक आयात गर्नुहोस्",
       "Import Employees": "कर्मचारी आयात गर्नुहोस्",
       "Import Group": "आयात समूह",
-      "Import Loan Product": "ऋण उत्पादन आयात गर्नुहोस्",
       "Import Offices": "आयात कार्यालयहरू",
       "Initiate Dividend": "लाभांश प्रारम्भ गर्नुहोस्",
       "Is Self Service": "आत्म सेवा हो",
@@ -1237,7 +1237,6 @@
       "Search": "खोज्नुहोस्",
       "Search Instructions": "खोज निर्देशनहरू",
       "Select All": "सबै छान्नु",
-      "Select a JSON file containing the loan product definition": "ऋण उत्पादन परिभाषा भएको JSON फाइल चयन गर्नुहोस्",
       "Sell Loan": "ऋण बेच्नुहोस्",
       "Settle Cash": "नगद मिलाउनुहोस्",
       "Setup Accounting": "लेखा सेटअप गर्नुहोस्",
@@ -4714,6 +4713,8 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Clone": "क्लोन गर्नुहोस्",
+      "Clone Loan Product": "ऋण उत्पादन क्लोन गर्नुहोस्",
       "Near Breach": "उल्लङ्घनको नजिक",
       "In Progress": "प्रगतिमा",
       "Cash received cannot be less than the check amount": "प्राप्त नगद चेक रकमभन्दा कम हुन सक्दैन।",
