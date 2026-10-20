@@ -99,6 +99,36 @@ describe('Datatables JSON support', () => {
     ]);
   });
 
+  it('lets mandatory boolean columns be saved unchecked', () => {
+    const [
+      mandatoryFlag,
+      optionalFlag
+    ] = datatables.getFormfields(
+      [
+        { columnName: 'mandatory_flag', columnDisplayType: 'BOOLEAN', isColumnNullable: false },
+        { columnName: 'optional_flag', columnDisplayType: 'BOOLEAN', isColumnNullable: true }
+      ],
+      [],
+      {}
+    );
+
+    expect(mandatoryFlag.value).toBe(false);
+    expect(mandatoryFlag.required).toBe(false);
+    expect(optionalFlag.value).toBe('');
+    expect(optionalFlag.required).toBe(false);
+  });
+
+  it('does not limit date columns to dates from the year 2000 on', () => {
+    const [dateOfBirth] = datatables.getFormfields(
+      [{ columnName: 'date_of_birth', columnDisplayType: 'DATE', isColumnNullable: true }],
+      [],
+      {}
+    );
+
+    expect(dateOfBirth.minDate).toBeNull();
+    expect(dateOfBirth.maxDate).toEqual(new Date(2030, 0, 1));
+  });
+
   it.each([
     [
       'nested object',
