@@ -168,7 +168,16 @@
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
+        <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
+        @if (loansAccountTermsForm.controls.delinquencyGraceDays.hasError('positiveInteger')) {
+          <mat-error>
+            {{ 'labels.inputs.Delinquency Grace Days' | translate }}
+            {{ 'labels.commons.Must be a positive integer' | translate }}
+          </mat-error>
+        }
+        @if (!allowAttributeOverridesDelinquencyBucket) {
+          <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+        }
       </mat-form-field>
 
       <mat-form-field class="flex-23">
@@ -180,6 +189,9 @@
             </mat-option>
           }
         </mat-select>
+        @if (!allowAttributeOverridesDelinquencyBucket) {
+          <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+        }
       </mat-form-field>
 
       <mat-form-field class="flex-48">
@@ -248,7 +260,16 @@
 
         <mat-form-field class="flex-23">
           <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
-          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+          <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+          @if (loansAccountTermsForm.controls.breachGraceDays.hasError('positiveInteger')) {
+            <mat-error>
+              {{ 'labels.inputs.Breach Grace Days' | translate }}
+              {{ 'labels.commons.Must be a positive integer' | translate }}
+            </mat-error>
+          }
+          @if (!allowAttributeOverridesBreach) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
         </mat-form-field>
 
         <mat-form-field class="flex-23">
@@ -260,6 +281,9 @@
               </mat-option>
             }
           </mat-select>
+          @if (!allowAttributeOverridesBreach) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
         </mat-form-field>
       }
     }
