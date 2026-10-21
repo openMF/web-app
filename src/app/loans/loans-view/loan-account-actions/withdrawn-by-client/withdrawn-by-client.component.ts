@@ -59,7 +59,7 @@ export class WithdrawnByClientComponent extends LoanAccountActionsBaseComponent 
   createWithdrawnByClientLoanForm() {
     this.withdrawnByClientLoanForm = this.formBuilder.group({
       withdrawnOnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       note: ''

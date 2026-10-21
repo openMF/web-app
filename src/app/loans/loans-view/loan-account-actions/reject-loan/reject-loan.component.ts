@@ -62,7 +62,7 @@ export class RejectLoanComponent extends LoanAccountActionsBaseComponent impleme
   setRejectLoanForm() {
     this.rejectLoanForm = this.formBuilder.group({
       rejectedOnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       note: ['']

@@ -61,7 +61,7 @@ export class AssignLoanOfficerComponent extends LoanAccountActionsBaseComponent 
         Validators.required
       ],
       assignmentDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ]
     });

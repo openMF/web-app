@@ -80,7 +80,7 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
   createRecoveryRepaymentLoanForm() {
     this.recoveryRepaymentLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       transactionAmount: [
@@ -96,10 +96,11 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
   /** Sets Recovery Payment Loan Details */
   setRecoveryRepaymentLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
-    this.recoveryRepaymentLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount,
-      transactionDate: this.dateUtils.parseDate(this.dataObject.date)
-    });
+    this.recoveryRepaymentLoanForm.patchValue({ transactionAmount: this.dataObject.amount });
+    // The recovery template has no date, and parseDate(undefined) would give the computer's date.
+    if (this.dataObject.date) {
+      this.recoveryRepaymentLoanForm.patchValue({ transactionDate: this.dateUtils.parseDate(this.dataObject.date) });
+    }
   }
 
   /**

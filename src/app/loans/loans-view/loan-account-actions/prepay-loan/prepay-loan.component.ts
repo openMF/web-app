@@ -110,7 +110,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     } else {
       this.prepayLoanForm = this.formBuilder.group({
         transactionDate: [
-          new Date(),
+          this.settingsService.businessDate,
           Validators.required
         ],
         transactionAmount: [
