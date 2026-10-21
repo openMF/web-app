@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "L'onere non appartiene a questo prestito.",
     "wc.loan.charge.waiver.inactive.charge": "L'onere non può essere condonato perché non è attivo.",
     "wc.loan.charge.waiver.invalid.status": "L'onere non può essere condonato a causa dello stato attuale del prestito.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "L'onere non ha alcun importo residuo da condonare."
+    "wc.loan.charge.waiver.no.outstanding.amount": "L'onere non ha alcun importo residuo da condonare.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Questo valore non può essere modificato: il prodotto non lo consente."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -5882,7 +5892,8 @@
       "Automated export": "Questa è un'esportazione automatica dal cruscotto globale di Mifos X",
       "Discount Fee Adjustment": "Rettifica della commissione di sconto",
       "Remaining discount fee available to adjust": "Commissione di sconto residua disponibile per la rettifica",
-      "Cannot precede the discount fee date": "Non può precedere la data della commissione di sconto"
+      "Cannot precede the discount fee date": "Non può precedere la data della commissione di sconto",
+      "Defined by product": "Definito dal prodotto"
     },
     "permissions": {
       "actions": {
@@ -6562,6 +6573,8 @@
     "Frequency must be a positive integer": "La frequenza deve essere un numero intero positivo",
     "Frequency must be greater than zero": "La frequenza deve essere maggiore di zero",
     "Make Payment": "Effettua pagamento",
+    "Delinquency bucket classification override also unlocks": "Consente anche di modificare i giorni di tolleranza e il tipo di inizio della morosità sul conto di prestito.",
+    "Breach override also unlocks": "Consente anche di modificare il near breach, i giorni di tolleranza e il tipo di inizio del breach sul conto di prestito.",
     "Reporting Dashboard": "Cruscotto dei report CB-ILD"
   },
   "countries": {

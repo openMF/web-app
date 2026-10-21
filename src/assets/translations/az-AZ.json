@@ -865,7 +865,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Bu haqq həmin kreditə aid deyil.",
     "wc.loan.charge.waiver.inactive.charge": "Haqq aktiv olmadığı üçün ondan imtina etmək olmaz.",
     "wc.loan.charge.waiver.invalid.status": "Kreditin cari vəziyyətinə görə haqqdan imtina etmək olmaz.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Haqqın imtina ediləcək ödənilməmiş məbləği qalmayıb."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Haqqın imtina ediləcək ödənilməmiş məbləği qalmayıb.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
@@ -5840,7 +5850,8 @@
       "Automated export": "Bu məlumatlar Mifos X Qlobal İdarə Panelindən avtomatik ixrac edilib",
       "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
       "Remaining discount fee available to adjust": "Düzəliş üçün mövcud qalan endirim haqqı",
-      "Cannot precede the discount fee date": "Endirim haqqı tarixindən əvvəl ola bilməz"
+      "Cannot precede the discount fee date": "Endirim haqqı tarixindən əvvəl ola bilməz",
+      "Defined by product": "Məhsul tərəfindən müəyyən edilib"
     },
     "permissions": {
       "actions": {
@@ -6520,7 +6531,9 @@
     "Fields are used to define the minimum, default, and maximum period payment rate": "Bu sahələr minimum, standart və maksimum dövri ödəniş dərəcəsini təyin edir",
     "Frequency must be a positive integer": "Tezlik müsbət tam ədəd olmalıdır",
     "Frequency must be greater than zero": "Tezlik sıfırdan böyük olmalıdır",
-    "Make Payment": "Ödəniş et"
+    "Make Payment": "Ödəniş et",
+    "Delinquency bucket classification override also unlocks": "Kredit hesabında gecikmə üzrə güzəşt günlərini və başlanğıc növünü də dəyişməyə imkan verir.",
+    "Breach override also unlocks": "Kredit hesabında near breach, breach güzəşt günlərini və başlanğıc növünü də dəyişməyə imkan verir."
   },
   "countries": {
     "AF": "Əfqanıstan",
