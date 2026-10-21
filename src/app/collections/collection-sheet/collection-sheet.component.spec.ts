@@ -25,6 +25,9 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 
 describe('CollectionSheetComponent', () => {
+  /** A business date behind the computer clock, as on a tenant whose close of business has not run yet. */
+  const businessDate = new Date(2026, 9, 15);
+
   let component: CollectionSheetComponent;
   let fixture: ComponentFixture<CollectionSheetComponent>;
   let centersService: { getAllMeetingFallCenters: jest.Mock<any> };
@@ -84,7 +87,13 @@ describe('CollectionSheetComponent', () => {
         },
         {
           provide: SettingsService,
-          useValue: { maxFutureDate: new Date(), dateFormat: 'dd MMMM yyyy', language: { code: 'en' }, decimals: 2 }
+          useValue: {
+            maxFutureDate: new Date(),
+            businessDate,
+            dateFormat: 'dd MMMM yyyy',
+            language: { code: 'en' },
+            decimals: 2
+          }
         },
         { provide: Dates, useValue: { formatDate: () => '11 October 2026' } }
       ]
@@ -96,6 +105,10 @@ describe('CollectionSheetComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     component.collectionSheetForm.patchValue({ officeId: 1, staffId: 3 });
+  });
+
+  it('starts on the business date, so the payments are not posted on a later date', () => {
+    expect(component.collectionSheetForm.value.meetingDate).toBe(businessDate);
   });
 
   it('shows a message when no center meets on the selected date', () => {
