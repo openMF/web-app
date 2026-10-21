@@ -323,7 +323,13 @@ export class CashAllocationComponent implements OnInit {
       this.denominations.push(
         this.formBuilder.group({
           denominationId: new FormControl(denomination.identifier, { nonNullable: true }),
-          type: new FormControl(denomination.type, { nonNullable: true }),
+          type: new FormControl(
+            [
+              'NOTE',
+              'BILL'
+            ].includes(denomination.type) ? 'BANKNOTE' : denomination.type,
+            { nonNullable: true }
+          ),
           value: new FormControl(String(denomination.value), { nonNullable: true }),
           quantity: new FormControl<number | null>(0, [
             Validators.required,
