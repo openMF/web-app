@@ -6,14 +6,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ApplicationRef, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemingService {
-  private ref = inject(ApplicationRef);
+  private settingsService = inject(SettingsService);
 
   private darkModeOn = false;
 
@@ -24,24 +25,10 @@ export class ThemingService {
   theme = new BehaviorSubject('light-theme'); // <- initial theme
 
   constructor() {
-    // Initially check if dark mode is enabled on system
-    this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    // If dark mode is enabled then directly switch to the dark-theme
-    this.setDarkMode(this.darkModeOn);
-
-    // Watch for changes of the preference
-    window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
-      const turnOn = e.matches;
-      this.theme.next(turnOn ? 'dark-theme' : 'light-theme');
-
-      // Trigger refresh of UI
-      this.ref.tick();
-    });
+    this.setInitialDarkMode();
   }
 
   isDarkMode(): boolean {
-    this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     return this.darkModeOn;
   }
 
@@ -59,6 +46,6 @@ export class ThemingService {
   }
 
   setInitialDarkMode(): void {
-    this.setDarkMode(this.darkModeOn);
+    this.setDarkMode(!!this.settingsService.themeDarkEnabled);
   }
 }
