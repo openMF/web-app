@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "यो शुल्क यस ऋणको होइन।",
     "wc.loan.charge.waiver.inactive.charge": "शुल्क सक्रिय नभएकाले मिनाहा गर्न सकिँदैन।",
     "wc.loan.charge.waiver.invalid.status": "ऋणको हालको स्थितिका कारण शुल्क मिनाहा गर्न सकिँदैन।",
-    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।"
+    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -5882,7 +5892,8 @@
       "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
       "Discount Fee Adjustment": "छुट शुल्क समायोजन",
       "Remaining discount fee available to adjust": "समायोजन गर्न उपलब्ध बाँकी छुट शुल्क",
-      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन"
+      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन",
+      "Defined by product": "उत्पादनद्वारा परिभाषित"
     },
     "permissions": {
       "actions": {
@@ -6562,6 +6573,8 @@
     "Frequency must be a positive integer": "आवृत्ति सकारात्मक पूर्णांक हुनुपर्छ",
     "Frequency must be greater than zero": "आवृत्ति शून्य भन्दा ठूलो हुनुपर्छ",
     "Make Payment": "भुक्तानी गर्नुहोस्",
+    "Delinquency bucket classification override also unlocks": "ऋण खातामा बक्यौता छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
+    "Breach override also unlocks": "ऋण खातामा near breach, breach छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
     "Reporting Dashboard": "CB-ILD प्रतिवेदन ड्यासबोर्ड"
   },
   "countries": {
