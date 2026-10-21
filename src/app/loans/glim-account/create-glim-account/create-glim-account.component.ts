@@ -37,6 +37,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoansAccountScheduleStepComponent } from '../../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBasicDetails } from '../../models/loan-product.model';
+import { LOAN_PRODUCT_TYPE } from 'app/products/loan-products/models/loan-product.model';
 
 @Component({
   selector: 'mifosx-create-glim-account',
@@ -82,6 +84,8 @@ export class CreateGlimAccountComponent {
 
   /** Loans Account Template */
   loansAccountTemplate: any;
+  /** Products offered on the details step; GLIM supports term loan products only. */
+  loanProductsBasicDetails: LoanProductBasicDetails[] = [];
   /** Loans Account Product Template */
   loansAccountProductTemplate: any | null = null;
   /** Table Data Source */
@@ -109,10 +113,15 @@ export class CreateGlimAccountComponent {
   constructor() {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
-        this.loansAccountTemplate = data.loansAccountTemplate;
-        this.dataSource = data.groupsData.activeClientMembers;
-      });
+      .subscribe(
+        (data: { loansAccountTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[]; groupsData: any }) => {
+          this.loansAccountTemplate = data.loansAccountTemplate;
+          this.loanProductsBasicDetails = (data.loanProductsBasicDetails ?? []).filter(
+            (product: LoanProductBasicDetails) => product.productType === LOAN_PRODUCT_TYPE.LOAN
+          );
+          this.dataSource = data.groupsData.activeClientMembers;
+        }
+      );
   }
 
   /**
