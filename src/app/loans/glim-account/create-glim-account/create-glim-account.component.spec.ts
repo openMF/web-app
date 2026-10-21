@@ -18,6 +18,62 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from '../../loans.service';
 import { CreateGlimAccountComponent } from './create-glim-account.component';
+import { LoanProductBasicDetails } from '../../models/loan-product.model';
+
+/** GET /loanproducts/basic-details: term loan products and a Working Capital product. */
+const PRODUCTS: LoanProductBasicDetails[] = [
+  { id: 6, productType: 'loan', name: 'Group Loan', shortName: 'GL', description: '', currency: undefined },
+  {
+    id: 2,
+    productType: 'working-capital',
+    name: 'Working Capital',
+    shortName: 'WC',
+    description: '',
+    currency: undefined
+  },
+  { id: 1, productType: 'loan', name: 'Individual Loan', shortName: 'IL', description: '', currency: undefined }
+];
+
+describe('CreateGlimAccountComponent', () => {
+  function create(loanProductsBasicDetails: any) {
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({
+              loansAccountTemplate: { group: { id: 1, name: 'Group' } },
+              loanProductsBasicDetails,
+              groupsData: { activeClientMembers: [
+                  { id: 4 },
+                  { id: 5 }
+                ] }
+            })
+          }
+        },
+        { provide: Router, useValue: {} },
+        { provide: LoansService, useValue: {} },
+        { provide: SettingsService, useValue: {} },
+        { provide: ClientsService, useValue: {} },
+        { provide: Dates, useValue: {} },
+        { provide: I18nService, useValue: {} }
+      ]
+    });
+    return TestBed.runInInjectionContext(() => new CreateGlimAccountComponent());
+  }
+
+  it('keeps only the term loan products from the route', () => {
+    const component = create(PRODUCTS);
+    expect(component.loanProductsBasicDetails.map((product) => product.id)).toEqual([
+      6,
+      1
+    ]);
+  });
+
+  it('offers no products instead of failing when the route has none', () => {
+    expect(create(undefined).loanProductsBasicDetails).toEqual([]);
+  });
+});
 
 describe('CreateGlimAccountComponent batch request', () => {
   /** Builds the /batches body for a GLIM application with the given member principals. */
