@@ -5828,6 +5828,7 @@
       "Schema name cannot be changed": "Dəyişdirilə bilməz — tenantın məlumatları artıq orada saxlanılır.",
       "Leave blank to clear": "Təmizləmək üçün boş buraxın.",
       "Leave blank to keep the stored password": "Saxlanmış parolu dəyişməmək üçün boş buraxın.",
+      "Leave blank to keep the stored server key": "Saxlanmış server açarını dəyişməmək üçün boş buraxın.",
       "Enter the password to test": "Bağlantını yoxlamaq üçün verilənlər bazasının parolunu daxil edin. Saxlanmış parol geri qaytarılmır.",
       "Deactivate before removing": "Silməzdən əvvəl tenantı deaktivləşdirin.",
       "Test connection on create hint": "Serveri, giriş məlumatlarını və verilənlər bazasının mövcudluğunu yoxlayır.",

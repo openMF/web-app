@@ -5730,6 +5730,7 @@
       "Schema name cannot be changed": "Non modifiable : les données du locataire s’y trouvent déjà.",
       "Leave blank to clear": "Laissez vide pour effacer.",
       "Leave blank to keep the stored password": "Laissez vide pour conserver le mot de passe enregistré.",
+      "Leave blank to keep the stored server key": "Laissez vide pour conserver la clé du serveur enregistrée.",
       "Enter the password to test": "Saisissez le mot de passe de la base de données pour tester la connexion. Celui qui est enregistré n’est jamais renvoyé.",
       "Deactivate before removing": "Désactivez le locataire avant de le supprimer.",
       "Test connection on create hint": "Vérifie le serveur, les identifiants et si la base de données existe déjà.",

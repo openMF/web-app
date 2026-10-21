@@ -5728,6 +5728,7 @@
       "Schema name cannot be changed": "Negalima keisti — nuomininko duomenys jau yra ten.",
       "Leave blank to clear": "Palikite tuščią, kad išvalytumėte.",
       "Leave blank to keep the stored password": "Palikite tuščią, kad išsaugotumėte esamą slaptažodį.",
+      "Leave blank to keep the stored server key": "Palikite tuščią, kad išsaugotumėte esamą serverio raktą.",
       "Enter the password to test": "Įveskite duomenų bazės slaptažodį ryšiui patikrinti. Išsaugotas slaptažodis niekada negrąžinamas.",
       "Deactivate before removing": "Prieš pašalindami nuomininką, jį deaktyvuokite.",
       "Test connection on create hint": "Patikrina serverį, prisijungimo duomenis ir ar duomenų bazė jau yra.",

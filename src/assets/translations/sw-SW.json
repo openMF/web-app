@@ -5728,6 +5728,7 @@
       "Schema name cannot be changed": "Haiwezi kubadilishwa — data ya tenant tayari iko humo.",
       "Leave blank to clear": "Acha wazi ili kufuta.",
       "Leave blank to keep the stored password": "Acha wazi ili kubakiza nenosiri lililohifadhiwa.",
+      "Leave blank to keep the stored server key": "Acha wazi ili kubakiza ufunguo wa seva uliohifadhiwa.",
       "Enter the password to test": "Weka nenosiri la hifadhidata ili kujaribu muunganisho. Lile lililohifadhiwa halirudishwi kamwe.",
       "Deactivate before removing": "Zima tenant kabla ya kuiondoa.",
       "Test connection on create hint": "Hukagua seva, vitambulisho, na kama hifadhidata tayari ipo.",

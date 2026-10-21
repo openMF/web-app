@@ -5864,6 +5864,7 @@
       "Schema name cannot be changed": "Cannot be changed — the tenant’s data already lives there.",
       "Leave blank to clear": "Leave blank to clear.",
       "Leave blank to keep the stored password": "Leave blank to keep the stored password.",
+      "Leave blank to keep the stored server key": "Leave blank to keep the stored server key.",
       "Enter the password to test": "Enter the database password to test the connection. The stored one is never returned.",
       "Deactivate before removing": "Deactivate the tenant before removing it.",
       "Test connection on create hint": "Checks the server, the credentials, and whether the database already exists.",
