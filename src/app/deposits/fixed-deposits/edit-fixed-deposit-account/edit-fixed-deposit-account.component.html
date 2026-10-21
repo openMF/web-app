@@ -64,7 +64,7 @@
       </mifosx-fixed-deposit-account-settings-step>
     </mat-step>
 
-    <mat-step>
+    <mat-step [stepControl]="fixedDepositAccountInterestRateChartForm">
       <ng-template matStepLabel>{{ 'labels.inputs.INTEREST RATE CHART' | translate }}</ng-template>
 
       <mifosx-fixed-deposit-account-interest-rate-chart-step

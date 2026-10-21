@@ -64,7 +64,7 @@
       </mifosx-recurring-deposits-account-settings-step>
     </mat-step>
 
-    <mat-step>
+    <mat-step [stepControl]="recurringDepositAccountInterestRateChartForm">
       <ng-template matStepLabel>{{ 'labels.inputs.INTEREST RATE CHART' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-interest-rate-chart-step

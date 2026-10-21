@@ -13,7 +13,10 @@
       "currency": "Currency",
       "showLastCutOff": "Show Last Cut-off"
     },
-    "types": { "CASH": "Cash", "CHECK": "Check" },
+    "types": {
+      "CASH": "Cash",
+      "CHECK": "Check"
+    },
     "columns": {
       "user": "User / Custodian",
       "name": "Name",
@@ -241,7 +244,11 @@
       "updating": "Updating...",
       "updatingCategory": "Updating {{category}}"
     },
-    "categories": { "ACCOUNTING": "Accounting", "GENERAL": "General Catalogs", "USERS": "Users" },
+    "categories": {
+      "ACCOUNTING": "Accounting",
+      "GENERAL": "General Catalogs",
+      "USERS": "Users"
+    },
     "errors": {
       "alreadyRunning": "This catalog update is already running",
       "interrupted": "The previous catalog update was interrupted. Please retry",
@@ -259,7 +266,10 @@
       "status": "Status",
       "yes": "Yes"
     },
-    "messages": { "loading": "Loading catalog update statuses...", "success": "The catalogs have been updated" },
+    "messages": {
+      "loading": "Loading catalog update statuses...",
+      "success": "The catalogs have been updated"
+    },
     "status": {
       "CURRENT": "Current",
       "FAILED": "Update Failed",
@@ -1656,7 +1666,8 @@
       "Yes": "Yes",
       "No": "No",
       "No classification data available": "No classification data available",
-      "Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed."
+      "Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed.",
+      "must be greater than 0": "must be greater than 0"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Password must be at least 1 character and not more than 50 characters long",
@@ -4408,7 +4419,10 @@
       "On Hold Funds": "On Hold Funds",
       "Payment": "Payment",
       "Export Date": "Export Date",
-      "Label": "Label"
+      "Label": "Label",
+      "Override Product Interest Rate Chart": "Override Product Interest Rate Chart",
+      "Nominal Annual Interest Rate": "Nominal Annual Interest Rate",
+      "Interest Rate Chart Overridden": "Interest Rate Chart Overridden"
     },
     "links": {
       "Community": "Community",
@@ -4847,7 +4861,6 @@
       "Cancel Pending Sale": "Cancel Pending Sale",
       "Cash denomination total must equal the funding amount": "Cash denomination total must equal the funding amount.",
       "Cash denomination total must equal the transaction amount": "Cash denomination total must equal the transaction amount.",
-      "Base Teller": "Base Teller",
       "Cash received cannot be less than the check amount": "Cash received cannot be less than the check amount.",
       "Cashier Transactions": "Cashier Transactions",
       "Cashiers": "Cashiers",
@@ -7610,7 +7623,6 @@
     "drawerSetup": "Open a cash drawer to get started",
     "setupRequired": "This withdrawal workspace needs attention",
     "checkHint": "Check issuance is not enabled. You can continue with cash.",
-
     "title": "Cash and Check Withdrawals",
     "customer": "Customer",
     "selectAccount": "Select Account",
