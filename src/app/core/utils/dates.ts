@@ -52,7 +52,12 @@ export class Dates {
 
   public formatDateAsString(value: Date, dateFormat: string): string {
     const momentFormat = this.angularToMomentFormat(dateFormat);
-    return moment(value).format(momentFormat);
+    // Month names must be in the UI language, which is the locale sent to Fineract with the date. Moment's global
+    // locale can't be trusted for this: importing a moment locale file switches it to that locale.
+    const localized = moment(value).locale(this.getMomentLocale(this.language));
+    // Some locales (e.g. Nepali) also write digits in their own script; preparse turns them back into ASCII digits,
+    // which is what Fineract parses. It returns the text unchanged for the other locales.
+    return localized.localeData().preparse(localized.format(momentFormat));
   }
 
   public angularToMomentFormat(angularFormat: string): string {

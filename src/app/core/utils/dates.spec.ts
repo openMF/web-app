@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEN from '@angular/common/locales/en';
+import moment from 'moment';
+import 'moment/locale/cs';
+import 'moment/locale/es';
+import 'moment/locale/ne';
 import { Dates } from './dates';
 
 registerLocaleData(localeEN);
@@ -100,6 +104,43 @@ describe('Dates', () => {
           expect(service.angularToMomentFormat(f.angular)).toBe(f.moment);
         });
       });
+    });
+  });
+
+  describe('formatDateAsString', () => {
+    const christmasEve = new Date(2026, 11, 24);
+    // setup-jest.ts replaces localStorage with jest.fn() mocks, so the stored UI language is stubbed on getItem.
+    const getItem = localStorage.getItem as jest.Mock;
+    const useLanguage = (code: string) =>
+      getItem.mockImplementation((key: string) =>
+        key === 'mifosXLanguage' ? JSON.stringify({ name: code, code }) : null
+      );
+
+    afterEach(() => {
+      getItem.mockReset();
+      moment.locale('en');
+    });
+
+    it('writes month names in English for an English UI even when another moment locale is global', () => {
+      // Importing a moment locale file makes it the global locale, as the date pipe's imports do in the app.
+      moment.locale('cs');
+      useLanguage('en-US');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 December 2026');
+    });
+
+    it('writes month names in the UI language, which is the locale sent with the date', () => {
+      useLanguage('es-MX');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 diciembre 2026');
+    });
+
+    it('keeps ASCII digits for a locale that writes its own digits', () => {
+      useLanguage('ne');
+      expect(service.formatDateAsString(christmasEve, 'yyyy-MM-dd')).toBe('2026-12-24');
+    });
+
+    it('falls back to English when no UI language is stored', () => {
+      moment.locale('cs');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 December 2026');
     });
   });
 
