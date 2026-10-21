@@ -82,12 +82,14 @@ export class Datatables {
           return new InputBase(inputOptions);
         }
         case 'BOOLEAN':
+          // A required checkbox only accepts `true`, so a mandatory column could never be saved as "No".
+          // Default mandatory columns to `false` instead, which always satisfies the NOT NULL constraint.
           return new CheckboxBase({
             controlName: column.columnName,
             label: displayLabel,
-            value: '',
+            value: column.isColumnNullable ? '' : false,
             type: 'checkbox',
-            required: column.isColumnNullable ? false : true
+            required: false
           });
         case 'CODELOOKUP':
           return new SelectBase({
@@ -102,13 +104,17 @@ export class Datatables {
           if (!dataTableEntryObject.dateFormat) {
             dataTableEntryObject.dateFormat = Dates.DEFAULT_DATEFORMAT;
           }
-          return new DatepickerBase({
+          const datepicker = new DatepickerBase({
             controlName: column.columnName,
             label: displayLabel,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
             required: column.isColumnNullable ? false : true
           });
+          // DatepickerBase defaults the minimum to 2000-01-01, which silently invalidates stored dates such as
+          // birth dates and keeps the edit dialog's submit button disabled. Data table dates have no lower bound.
+          datepicker.minDate = null;
+          return datepicker;
         }
         case 'DATETIME': {
           dateTransformColumns.push(column.columnName);
