@@ -9,12 +9,19 @@
 <div class="content responsive-column">
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
-  <div class="flex-fill">
-    <span class="flex-30">{{ 'labels.inputs.Client' | translate }}:</span>
-    <span class="flex-70">
-      {{ loansAccountProductTemplate.clientName || loansAccountProductTemplate.client.displayName }}
-    </span>
-  </div>
+  @if (loansAccountProductTemplate.clientName || loansAccountProductTemplate.client) {
+    <div class="flex-fill" data-testid="client-row">
+      <span class="flex-30">{{ 'labels.inputs.Client' | translate }}:</span>
+      <span class="flex-70">
+        {{ loansAccountProductTemplate.clientName || loansAccountProductTemplate.client.displayName }}
+      </span>
+    </div>
+  } @else if (loansAccountProductTemplate.group) {
+    <div class="flex-fill" data-testid="group-row">
+      <span class="flex-30">{{ 'labels.inputs.Group' | translate }}:</span>
+      <span class="flex-70">{{ loansAccountProductTemplate.group.name }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-30">{{ 'labels.inputs.Product Type' | translate }}:</span>
