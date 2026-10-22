@@ -60,6 +60,7 @@ import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
@@ -103,7 +104,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTab,
     ExternalIdentifierComponent,
     DatePipe,
-    DateFormatPipe
+    DateFormatPipe,
+    MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
