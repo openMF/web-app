@@ -28,6 +28,11 @@ describe('BaseTellerComponent', () => {
 
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
+      { materialIcon: 'currency_exchange', permission: 'READ_BASE_TELLER_FX', route: [
+          '/organization',
+          'base-teller',
+          'foreign-currency'
+        ] },
       { materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
           '/organization',
           'base-teller',

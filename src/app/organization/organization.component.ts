@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { hasFxPermission } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
@@ -53,7 +55,12 @@ export class OrganizationComponent implements AfterViewInit {
 
   shouldShowFundMapping = false;
   productionMode = environment.productionMode === true;
+  private readonly fxAuthentication = inject(AuthenticationService);
+  get canReadFxRates() {
+    return hasFxPermission(this.fxAuthentication.getCredentials()?.permissions ?? [], 'READ_BASE_TELLER_FX_RATE');
+  }
   readonly baseTellerPermissions = [
+    'READ_BASE_TELLER_FX',
     'READ_BASE_TELLER_CASH_ALLOCATION',
     'READ_BASE_TELLER_CASH_INVENTORY',
     'READ_TELLER',
