@@ -5728,6 +5728,7 @@
       "Schema name cannot be changed": "Nevar mainīt — nomnieka dati jau atrodas tur.",
       "Leave blank to clear": "Atstājiet tukšu, lai notīrītu.",
       "Leave blank to keep the stored password": "Atstājiet tukšu, lai saglabātu esošo paroli.",
+      "Leave blank to keep the stored server key": "Atstājiet tukšu, lai saglabātu esošo servera atslēgu.",
       "Enter the password to test": "Ievadiet datubāzes paroli, lai pārbaudītu savienojumu. Saglabātā parole nekad netiek atgriezta.",
       "Deactivate before removing": "Pirms nomnieka noņemšanas deaktivizējiet to.",
       "Test connection on create hint": "Pārbauda serveri, akreditācijas datus un to, vai datubāze jau pastāv.",

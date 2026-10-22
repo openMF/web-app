@@ -5731,6 +5731,7 @@
       "Schema name cannot be changed": "परिवर्तन गर्न सकिँदैन — टेनेन्टको डाटा पहिल्यै त्यहाँ छ।",
       "Leave blank to clear": "हटाउन खाली छोड्नुहोस्।",
       "Leave blank to keep the stored password": "भण्डारण गरिएको पासवर्ड राख्न खाली छोड्नुहोस्।",
+      "Leave blank to keep the stored server key": "भण्डारण गरिएको सर्भर कुञ्जी राख्न खाली छोड्नुहोस्।",
       "Enter the password to test": "जडान परीक्षण गर्न डाटाबेस पासवर्ड प्रविष्ट गर्नुहोस्। भण्डारण गरिएको पासवर्ड कहिल्यै फिर्ता गरिँदैन।",
       "Deactivate before removing": "टेनेन्ट हटाउनुअघि निष्क्रिय पार्नुहोस्।",
       "Test connection on create hint": "सर्भर, प्रमाणहरू, र डाटाबेस पहिल्यै छ कि छैन जाँच्छ।",
