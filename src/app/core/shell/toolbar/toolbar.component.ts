@@ -53,6 +53,7 @@ import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../.
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
+import { LogoutDialogComponent } from 'app/shared/logout-dialog/logout-dialog.component';
 
 /**
  * Toolbar component.
@@ -187,6 +188,23 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
         finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
       )
       .subscribe();
+  }
+
+  /**
+   * Opens the logout confirmation dialog and only runs the existing logout flow
+   * once the operator confirms. Cancelling or dismissing the dialog preserves
+   * the authenticated session.
+   */
+  confirmLogout() {
+    this.dialog
+      .open(LogoutDialogComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.logout();
+        }
+      });
   }
 
   /**

@@ -899,7 +899,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Mokestis nepriklauso šiai paskolai.",
     "wc.loan.charge.waiver.inactive.charge": "Mokesčio negalima atsisakyti, nes jis nėra aktyvus.",
     "wc.loan.charge.waiver.invalid.status": "Mokesčio negalima atsisakyti dėl dabartinės paskolos būsenos.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Mokestis neturi likusios sumos, kurios būtų galima atsisakyti.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Šios reikšmės pakeisti negalima: produktas to neleidžia."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1956,6 +1966,7 @@
       "Institutional Operations & Dashboard Management": "Institucijos veikla ir skydelių valdymas",
       "Institutional Operations Overview": "Institucinių operacijų apžvalga",
       "Active Loans Portfolio": "Aktyvių paskolų portfelis",
+      "Sign Out": "Atsijungti",
       "Total Savings Balance": "Bendras santaupų likutis",
       "Total Share Capital": "Bendras akcinis kapitalas",
       "Shareholders": "Akcininkai",
@@ -4614,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Nuo šiandien prasidės naujas švarus laikotarpis.",
+      "Are you sure you want to log out": "Ar tikrai norite atsijungti?",
       "Are you sure you want to resume the breach pause": "Ar tikrai norite atnaujinti pažeidimo sustabdymą?",
       "Are you sure you want to undo the last breach reset": "Ar tikrai norite atšaukti paskutinį pažeidimo atstatymą? Tai atšaukia atstatymo žymą ir pradelstos sumos perskaičiavimą; laikotarpio padalijimas, sukurtas iš naujo pradedant laikotarpį nuo atstatymo datos, nėra atšaukiamas.",
       "Are you sure you want Unassign Staff": "Ar tikrai norite atšaukti darbuotojo priskyrimą?",
@@ -5718,6 +5730,7 @@
       "Schema name cannot be changed": "Negalima keisti — nuomininko duomenys jau yra ten.",
       "Leave blank to clear": "Palikite tuščią, kad išvalytumėte.",
       "Leave blank to keep the stored password": "Palikite tuščią, kad išsaugotumėte esamą slaptažodį.",
+      "Leave blank to keep the stored server key": "Palikite tuščią, kad išsaugotumėte esamą serverio raktą.",
       "Enter the password to test": "Įveskite duomenų bazės slaptažodį ryšiui patikrinti. Išsaugotas slaptažodis niekada negrąžinamas.",
       "Deactivate before removing": "Prieš pašalindami nuomininką, jį deaktyvuokite.",
       "Test connection on create hint": "Patikrina serverį, prisijungimo duomenis ir ar duomenų bazė jau yra.",
@@ -5879,7 +5892,8 @@
       "Automated export": "Tai automatinis eksportas iš „Mifos X“ visuotinio skydelio",
       "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
       "Remaining discount fee available to adjust": "Likęs nuolaidos mokestis, kurį galima koreguoti",
-      "Cannot precede the discount fee date": "Negali būti ankstesnė nei nuolaidos mokesčio data"
+      "Cannot precede the discount fee date": "Negali būti ankstesnė nei nuolaidos mokesčio data",
+      "Defined by product": "Nustatyta produkto"
     },
     "permissions": {
       "actions": {
@@ -6559,6 +6573,8 @@
     "Frequency must be a positive integer": "Dažnumas turi būti teigiamas sveikasis skaičius",
     "Frequency must be greater than zero": "Dažnumas turi būti didesnis nei nulis",
     "Make Payment": "Atlikti mokėjimą",
+    "Delinquency bucket classification override also unlocks": "Taip pat leidžia paskolos sąskaitoje keisti vėlavimo atidėjimo dienas ir pradžios tipą.",
+    "Breach override also unlocks": "Taip pat leidžia paskolos sąskaitoje keisti near breach, breach atidėjimo dienas ir pradžios tipą.",
     "Reporting Dashboard": "CB-ILD ataskaitų skydelis"
   },
   "countries": {

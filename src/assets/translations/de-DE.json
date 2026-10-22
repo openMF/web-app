@@ -904,7 +904,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Die Gebühr gehört nicht zu diesem Kredit.",
     "wc.loan.charge.waiver.inactive.charge": "Die Gebühr kann nicht erlassen werden, da sie nicht aktiv ist.",
     "wc.loan.charge.waiver.invalid.status": "Die Gebühr kann aufgrund des aktuellen Status des Kredits nicht erlassen werden.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Die Gebühr hat keinen offenen Betrag, der erlassen werden könnte."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Die Gebühr hat keinen offenen Betrag, der erlassen werden könnte.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1961,6 +1971,7 @@
       "Institutional Operations & Dashboard Management": "Institutioneller Betrieb und Dashboard-Verwaltung",
       "Institutional Operations Overview": "Übersicht über den institutionellen Betrieb",
       "Active Loans Portfolio": "Aktives Kreditportfolio",
+      "Sign Out": "Abmelden",
       "Total Savings Balance": "Gesamtsparguthaben",
       "Total Share Capital": "Gesamtes Grundkapital",
       "Shareholders": "Aktionäre",
@@ -4619,6 +4630,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Ab heute beginnt eine neue, saubere Periode.",
+      "Are you sure you want to log out": "Sind Sie sicher, dass Sie sich abmelden möchten ?",
       "Are you sure you want to resume the breach pause": "Sind Sie sicher, dass Sie den Verstoß wirklich fortsetzen",
       "Are you sure you want to undo the last breach reset": "Sind Sie sicher, dass Sie die letzte Zurücksetzung des Verstoßes rückgängig machen möchten? Dies macht die Zurücksetzungsmarkierung und die Neuberechnung des überfälligen Betrags rückgängig; eine Aufteilung der Periode durch den Neustart ab dem Zurücksetzungsdatum wird nicht rückgängig gemacht.",
       "Are you sure you want Unassign Staff": "Sind Sie sicher, dass Sie das Personal freistellen möchten",
@@ -5722,6 +5734,7 @@
       "Schema name cannot be changed": "Nicht änderbar — die Daten des Mandanten liegen bereits dort.",
       "Leave blank to clear": "Leer lassen, um den Wert zu löschen.",
       "Leave blank to keep the stored password": "Leer lassen, um das gespeicherte Passwort zu behalten.",
+      "Leave blank to keep the stored server key": "Leer lassen, um den gespeicherten Serverschlüssel zu behalten.",
       "Enter the password to test": "Geben Sie das Datenbankpasswort ein, um die Verbindung zu testen. Das gespeicherte wird nie zurückgegeben.",
       "Deactivate before removing": "Deaktivieren Sie den Mandanten, bevor Sie ihn entfernen.",
       "Test connection on create hint": "Prüft den Server, die Zugangsdaten und ob die Datenbank bereits existiert.",
@@ -5884,7 +5897,8 @@
       "Automated export": "Dies ist ein automatischer Export aus dem Mifos X Global Dashboard",
       "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
       "Remaining discount fee available to adjust": "Verbleibende anpassbare Rabattgebühr",
-      "Cannot precede the discount fee date": "Darf nicht vor dem Datum der Rabattgebühr liegen"
+      "Cannot precede the discount fee date": "Darf nicht vor dem Datum der Rabattgebühr liegen",
+      "Defined by product": "Durch das Produkt festgelegt"
     },
     "permissions": {
       "actions": {
@@ -6564,6 +6578,8 @@
     "Frequency must be a positive integer": "Die Häufigkeit muss eine positive ganze Zahl sein",
     "Frequency must be greater than zero": "Die Häufigkeit muss größer als null sein",
     "Make Payment": "Zahlung vornehmen",
+    "Delinquency bucket classification override also unlocks": "Erlaubt auch, Kulanztage und Starttyp des Zahlungsverzugs im Darlehenskonto zu überschreiben.",
+    "Breach override also unlocks": "Erlaubt auch, Near Breach, Breach-Kulanztage und Breach-Starttyp im Darlehenskonto zu überschreiben.",
     "Reporting Dashboard": "CB-ILD-Berichts-Dashboard"
   },
   "countries": {

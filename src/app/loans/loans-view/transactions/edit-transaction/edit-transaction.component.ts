@@ -160,15 +160,13 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     // creates, not the one being adjusted, so it is left empty: re-sending the
     // original id collides with the row that stays in the ledger as reversed.
     const template = this.transactionTemplateData;
-    // Working Capital names the fields after the transaction and nests the
-    // payment type in the payment detail, where Term Loan flattens them.
+    // Working Capital names the date and amount after the transaction. Both products
+    // return the payment type only inside the payment detail.
     const date = this.isWorkingCapital ? template.transactionDate : template.date;
     this.editTransactionForm.patchValue({
       transactionDate: date && this.dateUtils.parseDate(date),
       transactionAmount: this.isWorkingCapital ? template.transactionAmount : template.amount,
-      paymentTypeId: this.isWorkingCapital
-        ? (template.paymentDetailData?.paymentType?.id ?? null)
-        : template.paymentTypeId
+      paymentTypeId: template.paymentDetailData?.paymentType?.id ?? null
     });
   }
 

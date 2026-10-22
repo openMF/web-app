@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "यो शुल्क यस ऋणको होइन।",
     "wc.loan.charge.waiver.inactive.charge": "शुल्क सक्रिय नभएकाले मिनाहा गर्न सकिँदैन।",
     "wc.loan.charge.waiver.invalid.status": "ऋणको हालको स्थितिका कारण शुल्क मिनाहा गर्न सकिँदैन।",
-    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।"
+    "wc.loan.charge.waiver.no.outstanding.amount": "शुल्कमा मिनाहा गर्न बाँकी रकम छैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "यो मान परिवर्तन गर्न सकिँदैन: उत्पादनले अनुमति दिँदैन।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1959,6 +1969,7 @@
       "Institutional Operations & Dashboard Management": "संस्थागत सञ्चालन र ड्यासबोर्ड व्यवस्थापन",
       "Institutional Operations Overview": "संस्थागत सञ्चालन अवलोकन",
       "Active Loans Portfolio": "सक्रिय ऋण पोर्टफोलियो",
+      "Sign Out": "साइन आउट",
       "Total Savings Balance": "कुल बचत ब्यालेन्स",
       "Total Share Capital": "कुल शेयर पूँजी",
       "Shareholders": "शेयरधारकहरू",
@@ -4617,6 +4628,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "आजबाट नयाँ सफा अवधि सुरु हुनेछ।",
+      "Are you sure you want to log out": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं लग आउट गर्न चाहनुहुन्छ?",
       "Are you sure you want to resume the breach pause": "के तपाईं उल्लंघन रोकी राखिएको अवस्था पुनः सुरु गर्न चाहनुहुन्छ?",
       "Are you sure you want to undo the last breach reset": "के तपाईं पछिल्लो उल्लंघन रिसेट पूर्ववत गर्न निश्चित हुनुहुन्छ? यसले रिसेट चिन्ह र भुक्तानी बाँकी रकमको पुनर्गणना फिर्ता गर्छ; रिसेट मितिबाट अवधि पुनः सुरु गरेर बनेको अवधि विभाजन फिर्ता हुँदैन।",
       "Are you sure you want Unassign Staff": "के तपाईं निश्चित हुनुहुन्छ कि तपाईंले कर्मचारीलाई अनपाइन्ट गर्न चाहनुहुन्छ?",
@@ -5721,6 +5733,7 @@
       "Schema name cannot be changed": "परिवर्तन गर्न सकिँदैन — टेनेन्टको डाटा पहिल्यै त्यहाँ छ।",
       "Leave blank to clear": "हटाउन खाली छोड्नुहोस्।",
       "Leave blank to keep the stored password": "भण्डारण गरिएको पासवर्ड राख्न खाली छोड्नुहोस्।",
+      "Leave blank to keep the stored server key": "भण्डारण गरिएको सर्भर कुञ्जी राख्न खाली छोड्नुहोस्।",
       "Enter the password to test": "जडान परीक्षण गर्न डाटाबेस पासवर्ड प्रविष्ट गर्नुहोस्। भण्डारण गरिएको पासवर्ड कहिल्यै फिर्ता गरिँदैन।",
       "Deactivate before removing": "टेनेन्ट हटाउनुअघि निष्क्रिय पार्नुहोस्।",
       "Test connection on create hint": "सर्भर, प्रमाणहरू, र डाटाबेस पहिल्यै छ कि छैन जाँच्छ।",
@@ -5882,7 +5895,8 @@
       "Automated export": "यो Mifos X ग्लोबल ड्यासबोर्डबाट स्वचालित निर्यात हो",
       "Discount Fee Adjustment": "छुट शुल्क समायोजन",
       "Remaining discount fee available to adjust": "समायोजन गर्न उपलब्ध बाँकी छुट शुल्क",
-      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन"
+      "Cannot precede the discount fee date": "छुट शुल्क मितिभन्दा अघिको हुन सक्दैन",
+      "Defined by product": "उत्पादनद्वारा परिभाषित"
     },
     "permissions": {
       "actions": {
@@ -6562,6 +6576,8 @@
     "Frequency must be a positive integer": "आवृत्ति सकारात्मक पूर्णांक हुनुपर्छ",
     "Frequency must be greater than zero": "आवृत्ति शून्य भन्दा ठूलो हुनुपर्छ",
     "Make Payment": "भुक्तानी गर्नुहोस्",
+    "Delinquency bucket classification override also unlocks": "ऋण खातामा बक्यौता छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
+    "Breach override also unlocks": "ऋण खातामा near breach, breach छुट दिन र सुरु प्रकार पनि परिवर्तन गर्न अनुमति दिन्छ।",
     "Reporting Dashboard": "CB-ILD प्रतिवेदन ड्यासबोर्ड"
   },
   "countries": {

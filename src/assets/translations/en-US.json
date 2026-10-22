@@ -901,7 +901,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "The charge does not belong to this loan.",
     "wc.loan.charge.waiver.inactive.charge": "The charge cannot be waived because it is not active.",
     "wc.loan.charge.waiver.invalid.status": "The charge cannot be waived because of the current status of the loan.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive."
+    "wc.loan.charge.waiver.no.outstanding.amount": "The charge has no outstanding amount left to waive.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1964,6 +1974,7 @@
       "Initial Funding": "Initial Funding",
       "Institutional Operations Overview": "Institutional Operations Overview",
       "Active Loans Portfolio": "Active Loans Portfolio",
+      "Sign Out": "Sign Out",
       "Total Savings Balance": "Total Savings Balance",
       "Total Share Capital": "Total Share Capital",
       "Shareholders": "Shareholders",
@@ -4610,6 +4621,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "A new clean period will start from today.",
+      "Are you sure you want to log out": "Are you sure you want to log out?",
       "Are you sure you want to resume the breach pause": "Are you sure you want to resume the breach pause",
       "Are you sure you want to undo the last breach reset": "Are you sure you want to undo the last breach reset? This reverts the reset flag and the past-due recalculation; a period split created by restarting the period from the reset date is not reverted.",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
@@ -5854,6 +5866,7 @@
       "Schema name cannot be changed": "Cannot be changed — the tenant’s data already lives there.",
       "Leave blank to clear": "Leave blank to clear.",
       "Leave blank to keep the stored password": "Leave blank to keep the stored password.",
+      "Leave blank to keep the stored server key": "Leave blank to keep the stored server key.",
       "Enter the password to test": "Enter the database password to test the connection. The stored one is never returned.",
       "Deactivate before removing": "Deactivate the tenant before removing it.",
       "Test connection on create hint": "Checks the server, the credentials, and whether the database already exists.",
@@ -5876,7 +5889,8 @@
       "Automated export": "This is an automated export from Mifos X Global Dashboard",
       "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Remaining discount fee available to adjust": "Remaining discount fee available to adjust",
-      "Cannot precede the discount fee date": "Cannot precede the discount fee date"
+      "Cannot precede the discount fee date": "Cannot precede the discount fee date",
+      "Defined by product": "Defined by product"
     },
     "permissions": {
       "actions": {
@@ -6556,7 +6570,9 @@
     "Fields are used to define the minimum, default, and maximum period payment rate": "Fields are used to define the minimum, default, and maximum period payment rate",
     "Frequency must be a positive integer": "Frequency must be a positive integer",
     "Frequency must be greater than zero": "Frequency must be greater than zero",
-    "Make Payment": "Make Payment"
+    "Make Payment": "Make Payment",
+    "Delinquency bucket classification override also unlocks": "Also allows overriding the delinquency grace days and delinquency start type on the loan account.",
+    "Breach override also unlocks": "Also allows overriding the near breach, breach grace days and breach start type on the loan account."
   },
   "countries": {
     "AF": "Afghanistan",

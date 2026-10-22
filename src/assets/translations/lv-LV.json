@@ -899,7 +899,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Maksa nepieder šim aizdevumam.",
     "wc.loan.charge.waiver.inactive.charge": "Maksu nevar atcelt, jo tā nav aktīva.",
     "wc.loan.charge.waiver.invalid.status": "Maksu nevar atcelt pašreizējā aizdevuma statusa dēļ.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Maksai nav atlikušās summas, ko varētu atcelt."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Maksai nav atlikušās summas, ko varētu atcelt.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Šo vērtību nevar mainīt: produkts to neatļauj."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1956,6 +1966,7 @@
       "Institutional Operations & Dashboard Management": "Iestādes darbība un paneļu pārvaldība",
       "Institutional Operations Overview": "Institucionālo operāciju pārskats",
       "Active Loans Portfolio": "Aktīvais aizdevumu portfelis",
+      "Sign Out": "Atteikties",
       "Total Savings Balance": "Kopējais uzkrājumu atlikums",
       "Total Share Capital": "Kopējais pamatkapitāls",
       "Shareholders": "Akcionāri",
@@ -4614,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "No šodienas sāksies jauns, tīrs periods.",
+      "Are you sure you want to log out": "Vai tiešām vēlaties izrakstīties?",
       "Are you sure you want to resume the breach pause": "Vai esat pārliecināts, ka vēlaties atsākt pārtraukumu?",
       "Are you sure you want to undo the last breach reset": "Vai tiešām vēlaties atsaukt pēdējo pārkāpuma atiestatīšanu? Tas atceļ atiestatīšanas atzīmi un kavētās summas pārrēķinu; perioda sadalījums, kas izveidots, restartējot periodu no atiestatīšanas datuma, netiek atcelts.",
       "Are you sure you want Unassign Staff": "Vai tiešām vēlaties atcelt darbinieka piešķiršanu?",
@@ -5718,6 +5730,7 @@
       "Schema name cannot be changed": "Nevar mainīt — nomnieka dati jau atrodas tur.",
       "Leave blank to clear": "Atstājiet tukšu, lai notīrītu.",
       "Leave blank to keep the stored password": "Atstājiet tukšu, lai saglabātu esošo paroli.",
+      "Leave blank to keep the stored server key": "Atstājiet tukšu, lai saglabātu esošo servera atslēgu.",
       "Enter the password to test": "Ievadiet datubāzes paroli, lai pārbaudītu savienojumu. Saglabātā parole nekad netiek atgriezta.",
       "Deactivate before removing": "Pirms nomnieka noņemšanas deaktivizējiet to.",
       "Test connection on create hint": "Pārbauda serveri, akreditācijas datus un to, vai datubāze jau pastāv.",
@@ -5879,7 +5892,8 @@
       "Automated export": "Šis ir automātisks eksports no Mifos X globālā paneļa",
       "Discount Fee Adjustment": "Atlaides maksas korekcija",
       "Remaining discount fee available to adjust": "Atlikusī atlaides maksa, ko var koriģēt",
-      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma"
+      "Cannot precede the discount fee date": "Nedrīkst būt pirms atlaides maksas datuma",
+      "Defined by product": "Noteikts produktā"
     },
     "permissions": {
       "actions": {
@@ -6559,6 +6573,8 @@
     "Frequency must be a positive integer": "Biežumam jābūt pozitīvam veselam skaitlim",
     "Frequency must be greater than zero": "Biežumam jābūt lielākam par nulli",
     "Make Payment": "Veikt maksājumu",
+    "Delinquency bucket classification override also unlocks": "Ļauj aizdevuma kontā mainīt arī kavējuma labvēlības dienas un sākuma veidu.",
+    "Breach override also unlocks": "Ļauj aizdevuma kontā mainīt arī near breach, breach labvēlības dienas un sākuma veidu.",
     "Reporting Dashboard": "CB-ILD pārskatu panelis"
   },
   "countries": {

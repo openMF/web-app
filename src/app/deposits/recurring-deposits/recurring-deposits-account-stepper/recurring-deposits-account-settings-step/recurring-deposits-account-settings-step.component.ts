@@ -113,8 +113,11 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
           ? recurringDepositsAccount.preClosurePenalInterestOnType.id
           : '',
         minBalanceForInterestCalculation: recurringDepositsAccount.minBalanceForInterestCalculation,
-        depositPeriod: recurringDepositsAccount.minDepositTerm,
-        depositPeriodFrequencyId: recurringDepositsAccount.minDepositTermType.id,
+        // A new application starts at the product's minimum term; an existing account keeps its own term.
+        depositPeriod: this.isNew ? recurringDepositsAccount.minDepositTerm : recurringDepositsAccount.depositPeriod,
+        depositPeriodFrequencyId: this.isNew
+          ? recurringDepositsAccount.minDepositTermType?.id
+          : recurringDepositsAccount.depositPeriodFrequency?.id,
         expectedFirstDepositOnDate:
           recurringDepositsAccount.expectedFirstDepositOnDate &&
           this.dateUtils.parseDate(recurringDepositsAccount.expectedFirstDepositOnDate),

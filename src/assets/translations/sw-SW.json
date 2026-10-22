@@ -899,7 +899,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
     "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
     "wc.loan.charge.waiver.invalid.status": "Ada haiwezi kusamehewa kwa sababu ya hali ya sasa ya mkopo.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa."
+    "wc.loan.charge.waiver.no.outstanding.amount": "Ada haina kiasi kilichosalia cha kusamehewa.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1955,6 +1965,7 @@
       "Institutional Operations & Dashboard Management": "Shughuli za Taasisi na Usimamizi wa Dashibodi",
       "Institutional Operations Overview": "Muhtasari wa Shughuli za Kitaasisi",
       "Active Loans Portfolio": "Kwingineko ya Mikopo Inayotumika",
+      "Sign Out": "Toka",
       "Total Savings Balance": "Jumla ya Salio la Akiba",
       "Total Share Capital": "Jumla ya Mtaji wa Hisa",
       "Shareholders": "Wanahisa",
@@ -4614,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Kipindi kipya safi kitaanza kuanzia leo.",
+      "Are you sure you want to log out": "Je, una uhakika unataka kutoka?",
       "Are you sure you want to resume the breach pause": "Je, una hakika unataka kuendelea na kusitishwa kwa ukiukaji?",
       "Are you sure you want to undo the last breach reset": "Je, una hakika unataka kutengua uwekaji upya wa mwisho wa ukiukaji? Hii inatengua alama ya uwekaji upya na ukokotoaji upya wa kiasi kilichochelewa; mgawanyo wa kipindi ulioundwa kwa kuanzisha upya kipindi kuanzia tarehe ya uwekaji upya haurejeshwi.",
       "Are you sure you want Unassign Staff": "Je, una uhakika unataka kuondoa wafanyakazi?",
@@ -5718,6 +5730,7 @@
       "Schema name cannot be changed": "Haiwezi kubadilishwa — data ya tenant tayari iko humo.",
       "Leave blank to clear": "Acha wazi ili kufuta.",
       "Leave blank to keep the stored password": "Acha wazi ili kubakiza nenosiri lililohifadhiwa.",
+      "Leave blank to keep the stored server key": "Acha wazi ili kubakiza ufunguo wa seva uliohifadhiwa.",
       "Enter the password to test": "Weka nenosiri la hifadhidata ili kujaribu muunganisho. Lile lililohifadhiwa halirudishwi kamwe.",
       "Deactivate before removing": "Zima tenant kabla ya kuiondoa.",
       "Test connection on create hint": "Hukagua seva, vitambulisho, na kama hifadhidata tayari ipo.",
@@ -5879,7 +5892,8 @@
       "Automated export": "Huu ni uhamishaji wa kiotomatiki kutoka Dashibodi ya Kimataifa ya Mifos X",
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Remaining discount fee available to adjust": "Ada ya punguzo iliyosalia inayoweza kurekebishwa",
-      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo"
+      "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo",
+      "Defined by product": "Imefafanuliwa na bidhaa"
     },
     "permissions": {
       "actions": {
@@ -6559,6 +6573,8 @@
     "Frequency must be a positive integer": "Marudio lazima yawe namba kamili chanya",
     "Frequency must be greater than zero": "Marudio lazima yawe makubwa kuliko sifuri",
     "Make Payment": "Fanya Malipo",
+    "Delinquency bucket classification override also unlocks": "Pia inaruhusu kubadilisha siku za msamaha na aina ya mwanzo wa ucheleweshaji kwenye akaunti ya mkopo.",
+    "Breach override also unlocks": "Pia inaruhusu kubadilisha near breach, siku za msamaha na aina ya mwanzo wa breach kwenye akaunti ya mkopo.",
     "Reporting Dashboard": "Dashibodi ya Ripoti ya CB-ILD"
   },
   "countries": {

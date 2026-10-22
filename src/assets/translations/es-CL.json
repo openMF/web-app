@@ -902,7 +902,17 @@
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "El cargo no pertenece a este préstamo.",
     "wc.loan.charge.waiver.inactive.charge": "El cargo no se puede condonar porque no está activo.",
     "wc.loan.charge.waiver.invalid.status": "El cargo no se puede condonar por el estado actual del préstamo.",
-    "wc.loan.charge.waiver.no.outstanding.amount": "El cargo no tiene saldo pendiente por condonar."
+    "wc.loan.charge.waiver.no.outstanding.amount": "El cargo no tiene saldo pendiente por condonar.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyBucketId.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyGraceDays.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.delinquencyStartType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachId.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.nearBreachId.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachGraceDays.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite.",
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor no se puede modificar: el producto no lo permite."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1959,6 +1969,7 @@
       "Institutional Operations & Dashboard Management": "Operaciones institucionales y gestión de paneles",
       "Institutional Operations Overview": "Resumen de Operaciones Institucionales",
       "Active Loans Portfolio": "Cartera de Préstamos Activos",
+      "Sign Out": "Cerrar sesión",
       "Total Savings Balance": "Saldo Total de Ahorros",
       "Total Share Capital": "Capital Social Total",
       "Shareholders": "Accionistas",
@@ -4617,6 +4628,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Se abrirá un periodo nuevo y limpio a partir de hoy.",
+      "Are you sure you want to log out": "¿Estás seguro de que deseas cerrar sesión?",
       "Are you sure you want to resume the breach pause": "¿Estás seguro de que quieres reanudar la pausa del incumplimiento?",
       "Are you sure you want to undo the last breach reset": "¿Estás seguro de que quieres deshacer el último reinicio de incumplimiento? Esto revierte la marca de reinicio y el recálculo del monto vencido; una división de período creada al reiniciar el período desde la fecha de reinicio no se revierte.",
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
@@ -5721,6 +5733,7 @@
       "Schema name cannot be changed": "No se puede cambiar: los datos de la instancia ya están ahí.",
       "Leave blank to clear": "Déjelo en blanco para borrarlo.",
       "Leave blank to keep the stored password": "Déjelo en blanco para conservar la contraseña guardada.",
+      "Leave blank to keep the stored server key": "Déjelo en blanco para conservar la clave del servidor guardada.",
       "Enter the password to test": "Introduzca la contraseña de la base de datos para probar la conexión. La guardada nunca se devuelve.",
       "Deactivate before removing": "Desactive la instancia antes de eliminarla.",
       "Test connection on create hint": "Comprueba el servidor, las credenciales y si la base de datos ya existe.",
@@ -5882,7 +5895,8 @@
       "Automated export": "Esta es una exportación automática del panel global de Mifos X",
       "Discount Fee Adjustment": "Ajuste de Comisión de Descuento",
       "Remaining discount fee available to adjust": "Comisión de descuento disponible para ajustar",
-      "Cannot precede the discount fee date": "No puede ser anterior a la fecha de la comisión de descuento"
+      "Cannot precede the discount fee date": "No puede ser anterior a la fecha de la comisión de descuento",
+      "Defined by product": "Definido por el producto"
     },
     "permissions": {
       "actions": {
@@ -6562,6 +6576,8 @@
     "Frequency must be a positive integer": "La frecuencia debe ser un número entero positivo",
     "Frequency must be greater than zero": "La frecuencia debe ser mayor que cero",
     "Make Payment": "Realizar pago",
+    "Delinquency bucket classification override also unlocks": "También permite modificar los días de gracia y el tipo de inicio de la morosidad en la cuenta de préstamo.",
+    "Breach override also unlocks": "También permite modificar el near breach, los días de gracia y el tipo de inicio del breach en la cuenta de préstamo.",
     "Reporting Dashboard": "Panel de reportes CB-ILD"
   },
   "countries": {

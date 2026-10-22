@@ -13,6 +13,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { buildExternalServiceUpdate, MASKED_EXTERNAL_SERVICE_PROPERTIES } from '../../external-service-update';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -45,6 +46,8 @@ export class EditEmailComponent implements OnInit {
   emailConfigurationData: any;
   /** Email Configuration Form */
   emailConfigurationForm: UntypedFormGroup;
+  /** Email Configuration form value as loaded. */
+  initialEmailConfiguration: Record<string, unknown>;
 
   /**
    * Retrieves the Email configuration data from `resolve`.
@@ -76,10 +79,8 @@ export class EditEmailComponent implements OnInit {
         this.emailConfigurationData[0].value,
         Validators.required
       ],
-      password: [
-        this.emailConfigurationData[1].value,
-        Validators.required
-      ],
+      /** Fineract returns the password masked, so it starts empty and blank means keep it. */
+      password: [''],
       host: [
         this.emailConfigurationData[2].value,
         Validators.required
@@ -101,6 +102,7 @@ export class EditEmailComponent implements OnInit {
         Validators.required
       ]
     });
+    this.initialEmailConfiguration = this.emailConfigurationForm.value;
   }
 
   /**
@@ -108,10 +110,17 @@ export class EditEmailComponent implements OnInit {
    * if successful redirects to view Email configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('SMTP', this.emailConfigurationForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    const emailConfiguration = buildExternalServiceUpdate(
+      this.initialEmailConfiguration,
+      this.emailConfigurationForm.value,
+      MASKED_EXTERNAL_SERVICE_PROPERTIES.SMTP
+    );
+    if (Object.keys(emailConfiguration).length === 0) {
+      this.router.navigate(['../'], { relativeTo: this.route });
+      return;
+    }
+    this.systemService.updateExternalConfiguration('SMTP', emailConfiguration).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }
