@@ -5727,6 +5727,7 @@
       "Schema name cannot be changed": "변경할 수 없습니다. 테넌트의 데이터가 이미 그곳에 있습니다.",
       "Leave blank to clear": "지우려면 비워 두세요.",
       "Leave blank to keep the stored password": "저장된 비밀번호를 유지하려면 비워 두세요.",
+      "Leave blank to keep the stored server key": "저장된 서버 키를 유지하려면 비워 두세요.",
       "Enter the password to test": "연결을 테스트하려면 데이터베이스 비밀번호를 입력하세요. 저장된 비밀번호는 반환되지 않습니다.",
       "Deactivate before removing": "테넌트를 제거하기 전에 비활성화하세요.",
       "Test connection on create hint": "서버, 자격 증명, 그리고 데이터베이스가 이미 있는지 확인합니다.",

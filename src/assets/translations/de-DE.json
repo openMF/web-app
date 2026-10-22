@@ -5732,6 +5732,7 @@
       "Schema name cannot be changed": "Nicht änderbar — die Daten des Mandanten liegen bereits dort.",
       "Leave blank to clear": "Leer lassen, um den Wert zu löschen.",
       "Leave blank to keep the stored password": "Leer lassen, um das gespeicherte Passwort zu behalten.",
+      "Leave blank to keep the stored server key": "Leer lassen, um den gespeicherten Serverschlüssel zu behalten.",
       "Enter the password to test": "Geben Sie das Datenbankpasswort ein, um die Verbindung zu testen. Das gespeicherte wird nie zurückgegeben.",
       "Deactivate before removing": "Deaktivieren Sie den Mandanten, bevor Sie ihn entfernen.",
       "Test connection on create hint": "Prüft den Server, die Zugangsdaten und ob die Datenbank bereits existiert.",
