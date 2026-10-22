@@ -1966,6 +1966,7 @@
       "Institutional Operations & Dashboard Management": "Institucijos veikla ir skydelių valdymas",
       "Institutional Operations Overview": "Institucinių operacijų apžvalga",
       "Active Loans Portfolio": "Aktyvių paskolų portfelis",
+      "Sign Out": "Atsijungti",
       "Total Savings Balance": "Bendras santaupų likutis",
       "Total Share Capital": "Bendras akcinis kapitalas",
       "Shareholders": "Akcininkai",
@@ -4624,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Nuo šiandien prasidės naujas švarus laikotarpis.",
+      "Are you sure you want to log out": "Ar tikrai norite atsijungti?",
       "Are you sure you want to resume the breach pause": "Ar tikrai norite atnaujinti pažeidimo sustabdymą?",
       "Are you sure you want to undo the last breach reset": "Ar tikrai norite atšaukti paskutinį pažeidimo atstatymą? Tai atšaukia atstatymo žymą ir pradelstos sumos perskaičiavimą; laikotarpio padalijimas, sukurtas iš naujo pradedant laikotarpį nuo atstatymo datos, nėra atšaukiamas.",
       "Are you sure you want Unassign Staff": "Ar tikrai norite atšaukti darbuotojo priskyrimą?",

@@ -1968,6 +1968,7 @@
       "Institutional Operations & Dashboard Management": "Provoz instituce a správa přehledů",
       "Institutional Operations Overview": "Přehled institucionálních operací",
       "Active Loans Portfolio": "Portfolio aktivních půjček",
+      "Sign Out": "Odhlásit se",
       "Total Savings Balance": "Celkový zůstatek úspor",
       "Total Share Capital": "Celkový základní kapitál",
       "Shareholders": "Akcionáři",
@@ -4625,6 +4626,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Ode dneška začne nové čisté období.",
+      "Are you sure you want to log out": "Jste si jisti, že se chcete odhlásit?",
       "Are you sure you want to resume the breach pause": "Opravdu chcete obnovit porušení?",
       "Are you sure you want to undo the last breach reset": "Opravdu chcete vrátit poslední reset porušení? Tím se vrátí označení resetu a přepočet dlužné částky; rozdělení období vytvořené restartem období od data resetu se nevrátí.",
       "Are you sure you want Unassign Staff": "Opravdu chcete odebrat přiřazení zaměstnance?",
