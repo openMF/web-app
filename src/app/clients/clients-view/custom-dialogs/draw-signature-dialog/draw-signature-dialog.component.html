@@ -13,7 +13,23 @@
     <canvas #signatureCanvas class="signature-canvas"></canvas>
   </div>
 
-  <div align="center">
+  <div class="signature-tools" align="center">
+    <mat-button-toggle-group
+      name="signatureTool"
+      [value]="tool"
+      (change)="setTool($event.value)"
+      [attr.aria-label]="'labels.buttons.Drawing Tool' | translate"
+    >
+      <mat-button-toggle value="draw" [attr.aria-label]="'labels.buttons.Draw' | translate">
+        <fa-icon icon="pen" size="sm"></fa-icon>
+        {{ 'labels.buttons.Draw' | translate }}
+      </mat-button-toggle>
+      <mat-button-toggle value="erase" [attr.aria-label]="'labels.buttons.Eraser' | translate">
+        <fa-icon icon="eraser" size="sm"></fa-icon>
+        {{ 'labels.buttons.Eraser' | translate }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
     <button mat-stroked-button color="primary" (click)="clear()">
       {{ 'labels.buttons.Clear' | translate }}
     </button>
