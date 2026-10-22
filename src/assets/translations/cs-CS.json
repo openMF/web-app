@@ -5729,6 +5729,7 @@
       "Schema name cannot be changed": "Nelze změnit — data tenanta jsou již tam.",
       "Leave blank to clear": "Ponechte prázdné pro vymazání.",
       "Leave blank to keep the stored password": "Ponechte prázdné pro zachování uloženého hesla.",
+      "Leave blank to keep the stored server key": "Ponechte prázdné pro zachování uloženého klíče serveru.",
       "Enter the password to test": "Zadejte heslo k databázi pro test připojení. Uložené heslo se nikdy nevrací.",
       "Deactivate before removing": "Před odstraněním tenanta jej deaktivujte.",
       "Test connection on create hint": "Ověří server, přihlašovací údaje a zda databáze již existuje.",

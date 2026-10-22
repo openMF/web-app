@@ -5731,6 +5731,7 @@
       "Schema name cannot be changed": "No se puede cambiar: los datos de la instancia ya están ahí.",
       "Leave blank to clear": "Déjelo en blanco para borrarlo.",
       "Leave blank to keep the stored password": "Déjelo en blanco para conservar la contraseña guardada.",
+      "Leave blank to keep the stored server key": "Déjelo en blanco para conservar la clave del servidor guardada.",
       "Enter the password to test": "Introduzca la contraseña de la base de datos para probar la conexión. La guardada nunca se devuelve.",
       "Deactivate before removing": "Desactive la instancia antes de eliminarla.",
       "Test connection on create hint": "Comprueba el servidor, las credenciales y si la base de datos ya existe.",

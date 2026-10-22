@@ -5731,6 +5731,7 @@
       "Schema name cannot be changed": "Non modificabile: i dati del tenant si trovano già lì.",
       "Leave blank to clear": "Lascia vuoto per cancellare.",
       "Leave blank to keep the stored password": "Lascia vuoto per mantenere la password memorizzata.",
+      "Leave blank to keep the stored server key": "Lascia vuoto per mantenere la chiave del server memorizzata.",
       "Enter the password to test": "Inserisci la password del database per provare la connessione. Quella memorizzata non viene mai restituita.",
       "Deactivate before removing": "Disattiva il tenant prima di rimuoverlo.",
       "Test connection on create hint": "Verifica il server, le credenziali e se il database esiste già.",
