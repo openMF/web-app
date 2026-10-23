@@ -400,8 +400,8 @@
           fixed of savingAccounts | accountsFilter: 'saving' : (showClosedAccounts ? 'closed' : 'open') : 'isFixed';
           track fixed.id
         ) {
-          <div class="account-row fixed" [routerLink]="['../', 'fixed-deposits-accounts', fixed.id, 'general']">
-            <div class="indicator fixed"></div>
+          <div class="account-row fixed-deposit" [routerLink]="['../', 'fixed-deposits-accounts', fixed.id, 'general']">
+            <div class="indicator fixed-deposit"></div>
             <div class="acc-identity">
               <span class="acc-num">
                 <mifosx-account-number [accountNo]="fixed.accountNo"></mifosx-account-number>
@@ -411,7 +411,9 @@
                   <span class="dot"></span>
                   {{ 'labels.catalogs.' + (fixed.status?.value || 'Unknown') | translate }}
                 </span>
-                <span class="product-type-chip fixed">{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</span>
+                <span class="product-type-chip fixed-deposit">{{
+                  'labels.heading.Fixed Deposit Accounts' | translate
+                }}</span>
               </div>
             </div>
             <div class="acc-product">
@@ -429,7 +431,7 @@
             </div>
             <div class="acc-balance-block">
               <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
-              <div class="acc-balance-value fixed">
+              <div class="acc-balance-value fixed-deposit">
                 {{ fixed.accountBalance | currency: fixed.currency?.code : 'symbol-narrow' : '1.2-2' }}
               </div>
             </div>

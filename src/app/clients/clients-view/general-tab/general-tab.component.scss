@@ -432,7 +432,7 @@
     background: var(--pr-savings);
   }
 
-  &.fixed {
+  &.fixed-deposit {
     background: var(--pr-fixed);
   }
 
@@ -562,7 +562,7 @@
   color: var(--pr-savings);
 }
 
-.product-type-chip.fixed {
+.product-type-chip.fixed-deposit {
   background: var(--pr-fixed-bg);
   color: var(--pr-fixed);
 }
@@ -659,7 +659,7 @@
   color: var(--pr-savings);
 }
 
-.acc-balance-value.fixed {
+.acc-balance-value.fixed-deposit {
   color: var(--pr-fixed);
 }
 
@@ -716,6 +716,44 @@
   text-align: center;
   color: var(--ch-text-3);
   font-size: 13px;
+}
+
+// Keep every FD field in the card when the desktop columns no longer fit.
+@media (width <= 768px) {
+  .account-row.fixed-deposit {
+    display: grid;
+    grid-template-columns: 4px minmax(0, auto);
+    gap: 16px;
+
+    .indicator {
+      grid-column: 1;
+      grid-row: 1 / span 4;
+    }
+
+    .acc-identity,
+    .acc-product,
+    .acc-balance-block,
+    .acc-actions {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    .acc-status-row {
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      white-space: normal;
+    }
+
+    .acc-balance-block {
+      text-align: left;
+    }
+
+    .acc-actions {
+      justify-content: flex-start;
+    }
+  }
 }
 
 /* ── PDF modal preserved ────────────────────────────────────── */
