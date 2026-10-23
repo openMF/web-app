@@ -257,22 +257,31 @@ describe('EditTransactionComponent', () => {
     expect(submittedPayload().bankNumber).toBe('BN-1');
   });
 
-  it('rejects a zero amount, which the adjust command reads as a reversal', () => {
+  it('accepts a zero amount, which the adjust command reads as a reversal', () => {
     const component = createComponent();
 
     component.editTransactionForm.controls.transactionAmount.setValue(0);
 
-    // Reversing is what the Reverse action does, through its own dialog.
-    expect(component.editTransactionForm.controls.transactionAmount.hasError('min')).toBe(true);
-    expect(component.editTransactionForm.valid).toBe(false);
+    expect(component.editTransactionForm.controls.transactionAmount.valid).toBe(true);
+    expect(component.editTransactionForm.valid).toBe(true);
   });
 
-  it('accepts the smallest amount the shared amount validator allows', () => {
+  it('sends a zero amount instead of dropping it', () => {
+    const component = createComponent();
+    component.editTransactionForm.controls.transactionAmount.setValue(0);
+
+    component.submit();
+
+    expect(submittedPayload().transactionAmount).toBe(0);
+  });
+
+  it('rejects a negative amount', () => {
     const component = createComponent();
 
-    component.editTransactionForm.controls.transactionAmount.setValue(0.000001);
+    component.editTransactionForm.controls.transactionAmount.setValue(-1);
 
-    expect(component.editTransactionForm.controls.transactionAmount.valid).toBe(true);
+    expect(component.editTransactionForm.controls.transactionAmount.hasError('min')).toBe(true);
+    expect(component.editTransactionForm.valid).toBe(false);
   });
 
   it('warns that the adjustment reopens a closed or overpaid loan', () => {
@@ -324,6 +333,16 @@ describe('EditTransactionComponent', () => {
         77
       );
       expect(loansServiceStub.executeLoansAccountTransactionsCommand).not.toHaveBeenCalled();
+    });
+
+    it('posts a zero amount so the repayment is just undone', () => {
+      const component = createComponent(workingCapitalRepayment, 'loanStatusType.active', true);
+      component.editTransactionForm.controls.transactionAmount.setValue(0);
+
+      expect(component.editTransactionForm.valid).toBe(true);
+      component.submit();
+
+      expect(submittedWorkingCapitalPayload().transactionAmount).toBe(0);
     });
 
     it('nests the payment details and sends the external id of the replacement', () => {

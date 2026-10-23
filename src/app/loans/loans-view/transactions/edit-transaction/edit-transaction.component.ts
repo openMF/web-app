@@ -43,12 +43,10 @@ interface AdjustTransactionForm {
 
 /**
  * Smallest amount the adjustment accepts. A zero amount is a valid body for the
- * adjust command, but it means reverse only: the original transaction is
- * reversed and no replacement is created. That is what the Reverse action does,
- * so it is kept out of this form. The bound matches the six decimals the shared
- * amount validator allows.
+ * adjust command on both products and means reverse only: the original
+ * transaction is undone and no replacement is created.
  */
-const MIN_ADJUSTMENT_AMOUNT = 0.000001;
+const MIN_ADJUSTMENT_AMOUNT = 0;
 
 /** Payment detail controls, shown and cleared as a single block. */
 const PAYMENT_DETAIL_CONTROLS = [
