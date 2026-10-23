@@ -481,7 +481,7 @@
     "validation.msg.fixeddeposit.chart.slabs.period.range.start.incorrect": "Periodo Debe comenzar con 1",
     "validation.msg.fixeddeposit.chart.slabs.range.end.incorrect": "El período/rango de monto debe finalizar como abierto para el gráfico de tasas de interés",
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "El rango de período/monto tiene un espacio en el gráfico de tasas de interés",
-    "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Rango de período/importe superpuesto para el gráfico de tasas de interés",
+    "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Los rangos de monto y período de las tasas de interés se superponen. Ajusta los rangos.",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "El inicio del rango de período/monto es incorrecto para el gráfico de tasas de interés",
     "validation.msg.interestchart.period.type.is.not.same": "Todos los tramos de un gráfico deben usar el mismo tipo de período.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "El período de contabilización del Depósito Fijo no puede ser inferior al período de capitalización",
