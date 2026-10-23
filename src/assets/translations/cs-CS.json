@@ -981,6 +981,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Clone": "Klonovat",
       "Finalize": "Dokončit",
       "New Operation": "Nová operace",
       "Select Check": "Vybrat šek",
@@ -4684,6 +4685,8 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Clone": "Klonovat",
+      "Clone Loan Product": "Klonovat produkt půjčky",
       "Near Breach": "Blízko porušení",
       "In Progress": "Probíhá",
       "Cash received cannot be less than the check amount": "Přijatá hotovost nesmí být nižší než částka šeku.",

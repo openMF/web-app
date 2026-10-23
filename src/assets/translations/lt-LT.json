@@ -980,6 +980,7 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Clone": "Klonuoti",
       "Finalize": "Užbaigti",
       "New Operation": "Nauja operacija",
       "Select Check": "Pasirinkti čekį",
@@ -4683,6 +4684,8 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "Clone": "Klonuoti",
+      "Clone Loan Product": "Klonuoti paskolos produktą",
       "Near Breach": "Artėja pažeidimas",
       "In Progress": "Vykdoma",
       "Cash received cannot be less than the check amount": "Gautų grynųjų suma negali būti mažesnė už čekio sumą.",
