@@ -224,6 +224,16 @@
     }}</span>
   </div>
 
+  <div class="layout-row flex-100">
+    <span class="flex-40">{{ 'labels.inputs.Override Product Interest Rate Chart' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositAccountData.isRateChartOverridden || false | yesNo }}</span>
+  </div>
+
+  <div class="layout-row flex-100" *ngIf="fixedDepositAccountData.isRateChartOverridden">
+    <span class="flex-40">{{ 'labels.inputs.Nominal Annual Interest Rate' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositAccountData.nominalAnnualInterestRate }} %</span>
+  </div>
+
   <table class="mat-elevation-z1 irc-table" mat-table [dataSource]="interestRateChartData" multiTemplateDataRows>
     <ng-container matColumnDef="period">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>

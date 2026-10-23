@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewChild, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import {
   MatTableDataSource,
   MatTable,
@@ -44,6 +46,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatSlideToggle,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -63,11 +66,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FixedDepositAccountInterestRateChartStepComponent implements OnChanges {
+export class FixedDepositAccountInterestRateChartStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed deposits account and product template */
   @Input() fixedDepositsAccountProductTemplate: any;
+
+  /** Interest Rate Chart Form */
+  interestRateChartForm!: UntypedFormGroup;
 
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
@@ -96,12 +104,72 @@ export class FixedDepositAccountInterestRateChartStepComponent implements OnChan
   /** Interest Rate charts table reference */
   @ViewChild('chartsTable', { static: true }) chartsTableRef: MatTable<Element>;
 
-  constructor() {}
+  constructor() {
+    this.createInterestRateChartForm();
+  }
+
+  createInterestRateChartForm() {
+    this.interestRateChartForm = this.formBuilder.group({
+      isRateChartOverridden: [false],
+      nominalAnnualInterestRate: [{ value: '', disabled: true }]
+    });
+
+    this.interestRateChartForm.get('isRateChartOverridden')?.valueChanges.subscribe((isOverridden: boolean) => {
+      const nominalAnnualInterestRateControl = this.interestRateChartForm.get('nominalAnnualInterestRate');
+      if (isOverridden) {
+        nominalAnnualInterestRateControl?.enable();
+        nominalAnnualInterestRateControl?.setValidators([
+          Validators.required,
+          Validators.min(0.000001)
+        ]);
+      } else {
+        nominalAnnualInterestRateControl?.disable();
+        nominalAnnualInterestRateControl?.clearValidators();
+        nominalAnnualInterestRateControl?.reset();
+      }
+      nominalAnnualInterestRateControl?.updateValueAndValidity();
+    });
+  }
+
+  ngOnInit() {
+    this.patchFormValues();
+  }
 
   ngOnChanges() {
     if (this.fixedDepositsAccountProductTemplate) {
-      this.interestRateChartData = this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs;
-      this.chartsTableRef.renderRows();
+      this.interestRateChartData = this.fixedDepositsAccountProductTemplate.accountChart?.chartSlabs || [];
+      if (this.chartsTableRef) {
+        this.chartsTableRef.renderRows();
+      }
     }
+    this.patchFormValues();
+  }
+
+  private patchFormValues() {
+    if (this.fixedDepositsAccountTemplate?.id && this.fixedDepositsAccountTemplate.isRateChartOverridden) {
+      if (!this.interestRateChartForm.get('isRateChartOverridden')?.value) {
+        this.interestRateChartForm.get('isRateChartOverridden')?.setValue(true);
+        this.interestRateChartForm
+          .get('nominalAnnualInterestRate')
+          ?.setValue(this.fixedDepositsAccountTemplate.nominalAnnualInterestRate);
+      }
+    }
+  }
+
+  /**
+   * Returns interest rate chart form values for payload.
+   */
+  get interestRateChart() {
+    const isRateChartOverridden = this.interestRateChartForm.get('isRateChartOverridden')?.value || false;
+    const nominalAnnualInterestRate = this.interestRateChartForm.get('nominalAnnualInterestRate')?.value;
+    return {
+      isRateChartOverridden,
+      ...(isRateChartOverridden &&
+      nominalAnnualInterestRate !== null &&
+      nominalAnnualInterestRate !== undefined &&
+      nominalAnnualInterestRate !== ''
+        ? { nominalAnnualInterestRate }
+        : {})
+    };
   }
 }

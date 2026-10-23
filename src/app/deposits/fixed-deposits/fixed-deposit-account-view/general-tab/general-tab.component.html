@@ -95,6 +95,10 @@
             <td>{{ fixedDepositsAccountData.nominalAnnualInterestRate }} %</td>
           </tr>
           <tr>
+            <td>{{ 'labels.inputs.Interest Rate Chart Overridden' | translate }}</td>
+            <td>{{ (fixedDepositsAccountData.isRateChartOverridden ? 'Yes' : 'No') | translate }}</td>
+          </tr>
+          <tr>
             <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
             <td>{{ fixedDepositsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
           </tr>

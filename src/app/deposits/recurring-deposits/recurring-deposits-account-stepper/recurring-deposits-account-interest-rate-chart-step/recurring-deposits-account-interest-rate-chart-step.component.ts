@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, ViewChild, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import {
   MatTable,
   MatColumnDef,
@@ -45,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatSlideToggle,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -67,8 +70,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountInterestRateChartStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
+
+  /** Interest Rate Chart Form */
+  interestRateChartForm!: UntypedFormGroup;
 
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
@@ -96,15 +104,73 @@ export class RecurringDepositsAccountInterestRateChartStepComponent implements O
 
   @ViewChild('chartsTable', { static: true }) chartsTableRef: MatTable<Element>;
 
-  constructor() {}
+  constructor() {
+    this.createInterestRateChartForm();
+  }
 
-  ngOnChanges() {
-    if (this.recurringDepositsAccountProductTemplate) {
-      this.interestRateChartData = this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
-    }
+  createInterestRateChartForm() {
+    this.interestRateChartForm = this.formBuilder.group({
+      isRateChartOverridden: [false],
+      nominalAnnualInterestRate: [{ value: '', disabled: true }]
+    });
+
+    this.interestRateChartForm.get('isRateChartOverridden')?.valueChanges.subscribe((isOverridden: boolean) => {
+      const nominalAnnualInterestRateControl = this.interestRateChartForm.get('nominalAnnualInterestRate');
+      if (isOverridden) {
+        nominalAnnualInterestRateControl?.enable();
+        nominalAnnualInterestRateControl?.setValidators([
+          Validators.required,
+          Validators.min(0.000001)
+        ]);
+      } else {
+        nominalAnnualInterestRateControl?.disable();
+        nominalAnnualInterestRateControl?.clearValidators();
+        nominalAnnualInterestRateControl?.reset();
+      }
+      nominalAnnualInterestRateControl?.updateValueAndValidity();
+    });
   }
 
   ngOnInit() {
     this.interestRateChartData = [];
+    this.patchFormValues();
+  }
+
+  ngOnChanges() {
+    if (this.recurringDepositsAccountProductTemplate) {
+      this.interestRateChartData = this.recurringDepositsAccountProductTemplate.accountChart?.chartSlabs || [];
+      if (this.chartsTableRef) {
+        this.chartsTableRef.renderRows();
+      }
+    }
+    this.patchFormValues();
+  }
+
+  private patchFormValues() {
+    if (this.recurringDepositsAccountTemplate?.id && this.recurringDepositsAccountTemplate.isRateChartOverridden) {
+      if (!this.interestRateChartForm.get('isRateChartOverridden')?.value) {
+        this.interestRateChartForm.get('isRateChartOverridden')?.setValue(true);
+        this.interestRateChartForm
+          .get('nominalAnnualInterestRate')
+          ?.setValue(this.recurringDepositsAccountTemplate.nominalAnnualInterestRate);
+      }
+    }
+  }
+
+  /**
+   * Returns interest rate chart form values for payload.
+   */
+  get interestRateChart() {
+    const isRateChartOverridden = this.interestRateChartForm.get('isRateChartOverridden')?.value || false;
+    const nominalAnnualInterestRate = this.interestRateChartForm.get('nominalAnnualInterestRate')?.value;
+    return {
+      isRateChartOverridden,
+      ...(isRateChartOverridden &&
+      nominalAnnualInterestRate !== null &&
+      nominalAnnualInterestRate !== undefined &&
+      nominalAnnualInterestRate !== ''
+        ? { nominalAnnualInterestRate }
+        : {})
+    };
   }
 }

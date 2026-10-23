@@ -6,6 +6,36 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
+<form [formGroup]="interestRateChartForm">
+  <div class="layout-row-wrap gap-2px responsive-column m-b-16">
+    <div class="flex-100 m-b-16">
+      <mat-slide-toggle formControlName="isRateChartOverridden">
+        {{ 'labels.inputs.Override Product Interest Rate Chart' | translate }}
+      </mat-slide-toggle>
+    </div>
+
+    @if (interestRateChartForm.get('isRateChartOverridden')?.value) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Nominal Annual Interest Rate' | translate }}</mat-label>
+        <input matInput type="number" formControlName="nominalAnnualInterestRate" required />
+        <span matSuffix>%</span>
+        @if (interestRateChartForm.get('nominalAnnualInterestRate')?.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Nominal Annual Interest Rate' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+        @if (interestRateChartForm.get('nominalAnnualInterestRate')?.hasError('min')) {
+          <mat-error>
+            {{ 'labels.inputs.Nominal Annual Interest Rate' | translate }}
+            {{ 'labels.commons.must be greater than 0' | translate }}
+          </mat-error>
+        }
+      </mat-form-field>
+    }
+  </div>
+</form>
+
 <div class="layout-column gap-2px">
   <div class="flex-fill" *ngIf="recurringDepositsAccountProductTemplate?.accountChart.name">
     <span class="flex-40">{{ 'labels.inputs.name' | translate }}:</span>
