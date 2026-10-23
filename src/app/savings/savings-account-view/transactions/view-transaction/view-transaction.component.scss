@@ -34,6 +34,7 @@
     .account-card-title {
       color: var(--md-sys-color-on-primary, #fff);
       width: 90%;
+      min-width: 0;
     }
 
     p {
@@ -69,4 +70,12 @@ mat-card-title {
 .account-number-row,
 .external-id-row {
   display: block;
+}
+
+.account-details {
+  min-width: 0;
+}
+
+.external-id-row {
+  overflow-wrap: anywhere;
 }
