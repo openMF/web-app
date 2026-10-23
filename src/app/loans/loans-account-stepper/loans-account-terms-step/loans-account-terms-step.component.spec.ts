@@ -210,7 +210,7 @@ describe('LoansAccountTermsStepComponent — Working Capital breach start type',
       loansAccountProductTemplate: new SimpleChange(undefined, WC_PRODUCT_TEMPLATE, true)
     });
 
-    expect(component.loansAccountTerms.breachStartType).toBe('');
+    expect(component.loansAccountTerms.breachStartType).toBeNull();
     expect(component.loansAccountTermsForm.valid).toBe(false);
     expect(component.loansAccountTermsForm.get('breachStartType')!.valid).toBe(true);
   });
@@ -491,6 +491,22 @@ describe('LoansAccountTermsStepComponent — Working Capital grace days and star
     breachGraceDays.setValue(3);
     expect(delinquencyGraceDays.valid).toBe(true);
     expect(breachGraceDays.valid).toBe(true);
+  });
+
+  it('exposes cleared grace days as null while parents stay set', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({
+      delinquencyBucketId: 2,
+      breachId: 3,
+      delinquencyGraceDays: '',
+      breachGraceDays: ''
+    });
+
+    const terms = component.loansAccountTerms;
+    expect(terms.delinquencyBucketId).toBe(2);
+    expect(terms.breachId).toBe(3);
+    expect(terms.delinquencyGraceDays).toBeNull();
+    expect(terms.breachGraceDays).toBeNull();
   });
 });
 
