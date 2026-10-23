@@ -6,6 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
+import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
+
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,6 +18,10 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { EndOfDayClosingComponent } from './base-teller/end-of-day-cash-closing/end-of-day-closing.component';
+import { endOfDayClosingGuard } from './base-teller/end-of-day-cash-closing/end-of-day-closing.guard';
+import { WithdrawalComponent } from './base-teller/withdrawals/withdrawal.component';
+import { withdrawalGuard } from './base-teller/withdrawals/withdrawal.guard';
 import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
@@ -43,8 +50,14 @@ import { CashInventoryComponent } from './base-teller/cash-inventory/cash-invent
 import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { CashDrawerPickupComponent } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.component';
+import { cashDrawerPickupGuard } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.guard';
+import { CashExchangeComponent } from './base-teller/cash-exchange/cash-exchange.component';
+import { cashExchangeGuard } from './base-teller/cash-exchange/cash-exchange.guard';
 import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
 import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
+import { TransactionReversalComponent } from './base-teller/transaction-reversal/transaction-reversal.component';
+import { transactionReversalGuard } from './base-teller/transaction-reversal/transaction-reversal.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -139,6 +152,9 @@ import { ViewLoanOriginatorComponent } from './loan-originators/view-loan-origin
 import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-originator/edit-loan-originator.component';
 import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
 import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
+
+import { AccountTransfersComponent } from './base-teller/account-transfers/account-transfers.component';
+import { accountTransferGuard } from './base-teller/account-transfers/account-transfer.guard';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -463,6 +479,30 @@ const routes: Routes = [
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
         },
         {
+          path: 'base-teller/withdrawals',
+          component: WithdrawalComponent,
+          canActivate: [withdrawalGuard],
+          data: { title: 'withdrawal.title', breadcrumb: 'withdrawal.title' }
+        },
+        {
+          path: 'base-teller/cash-transfers-between-tellers',
+          component: CashTransfersBetweenTellersComponent,
+          canActivate: [cashTransferGuard],
+          data: { title: 'cashTellerTransfer.title', breadcrumb: 'cashTellerTransfer.title' }
+        },
+        {
+          path: 'base-teller/account-transfers',
+          component: AccountTransfersComponent,
+          canActivate: [accountTransferGuard],
+          data: { title: 'accountTransfer.title', breadcrumb: 'accountTransfer.title' }
+        },
+        {
+          path: 'base-teller/end-of-day-cash-closing',
+          component: EndOfDayClosingComponent,
+          canActivate: [endOfDayClosingGuard],
+          data: { title: 'eod.title', breadcrumb: 'eod.title' }
+        },
+        {
           path: 'base-teller/catalog-updates',
           component: CatalogUpdatesComponent,
           canActivate: [catalogUpdatesGuard],
@@ -587,6 +627,18 @@ const routes: Routes = [
           }
         },
         {
+          path: 'base-teller/cash-drawer-pickup',
+          component: CashDrawerPickupComponent,
+          canActivate: [cashDrawerPickupGuard],
+          data: { title: 'cashPickup.title', breadcrumb: 'cashPickup.title' }
+        },
+        {
+          path: 'base-teller/cash-exchange',
+          component: CashExchangeComponent,
+          canActivate: [cashExchangeGuard],
+          data: { title: 'cashExchange.title', breadcrumb: 'cashExchange.title' }
+        },
+        {
           path: 'base-teller/transaction-history',
           component: TransactionHistoryComponent,
           canActivate: [transactionHistoryGuard],
@@ -594,6 +646,12 @@ const routes: Routes = [
             title: 'transactionHistory.title',
             breadcrumb: 'transactionHistory.title'
           }
+        },
+        {
+          path: 'base-teller/transaction-reversal',
+          component: TransactionReversalComponent,
+          canActivate: [transactionReversalGuard],
+          data: { title: 'transactionReversal.title', breadcrumb: 'transactionReversal.title' }
         },
         {
           path: 'base-teller/service-payments',

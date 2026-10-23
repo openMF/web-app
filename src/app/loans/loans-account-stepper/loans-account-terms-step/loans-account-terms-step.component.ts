@@ -31,6 +31,7 @@ import {
   NearBreach
 } from 'app/products/loan-products/models/loan-product.model';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -63,7 +64,19 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
+import { positiveIntegerValidator } from 'app/shared/validators/positive-integer.validator';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  inactivePricingFields,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import {
+  annualEirValidators,
+  greaterThanZeroValidator,
+  withinBoundsValidator
+} from 'app/shared/validators/working-capital-pricing.validator';
 
 interface DisbursementData {
   id?: number;
@@ -109,6 +122,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
@@ -120,6 +134,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   loansAccountTermsData: any;
+  /** Working Capital: pricing strategy inherited from the product; decides which pricing inputs render and travel. */
+  paymentAmountCalculationStrategy: WorkingCapitalPaymentAmountCalculationStrategy =
+    WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
 
   /** Is Multi Disburse Loan  */
   multiDisburseLoan: any;
@@ -196,6 +214,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   allowAttributeOverrides: any | null = null;
 
   delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+  breachStartTypeOptions: StringEnumOptionData[] = [];
   delinquencyBucketOptions: DelinquencyBucket[] = [];
   breachOptions: Breach[] = [];
   nearBreachOptions: NearBreach[] = [];
@@ -362,6 +381,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.currency = this.resolveCurrency(this.loansAccountTermsData);
       this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
       this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
+      this.breachStartTypeOptions = this.loansAccountTermsData.options?.breachStartTypeOptions ?? [];
       this.delinquencyBucketOptions = this.loansAccountTermsData.options?.delinquencyBucketOptions ?? [];
       this.breachOptions = this.loansAccountTermsData.options?.breachOptions ?? [];
       this.nearBreachOptions = this.loansAccountTermsData.options?.nearBreachOptions ?? [];
@@ -382,6 +402,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
           periodPaymentRate: this.loansAccountTermsData.paymentRate,
           totalPaymentVolume: this.loansAccountTermsData.totalPaymentVolume,
+          annualEir: this.loansAccountTermsData.annualEir,
+          paymentAmount: this.loansAccountTermsData.paymentAmount,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: this.loansAccountTermsData.delinquencyGraceDays,
@@ -389,19 +411,24 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           delinquencyBucketId: this.loansAccountTermsData.delinquencyBucket?.id,
           breachId: this.loansAccountTermsData.breach?.id,
           nearBreachId: this.loansAccountTermsData.nearBreach?.id,
-          breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0
+          breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0,
+          breachStartType: this.loansAccountTermsData.breachStartType?.code ?? ''
         });
         // New Loan — solo inicializar si el producto realmente cambió
       } else if (productChanged) {
         this.loansAccountTermsForm.patchValue({
           discount: this.loansAccountTermsData.product.discount || '',
           principalAmount: this.loansAccountTermsData.product.principal,
-          delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays || '',
+          annualEir: this.loansAccountTermsData.product.annualEir ?? '',
+          paymentAmount: this.loansAccountTermsData.product.paymentAmount ?? '',
+          delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays ?? '',
           delinquencyStartType: this.loansAccountTermsData.product.delinquencyStartType?.code || '',
           delinquencyBucketId: this.loansAccountTermsData.product.delinquencyBucket?.id || '',
           breachId: this.loansAccountTermsData.product.breach?.id || '',
           nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || '',
-          breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0
+          breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0,
+          // The template does not copy the product's breachStartType into loanData; the backend inherits it when omitted.
+          breachStartType: this.loansAccountTermsData.product.breachStartType?.code ?? ''
         });
         this.cdr.markForCheck();
       }
@@ -409,6 +436,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       // (no `product`) — the WC template with `product.allowAttributeOverrides` arrives asynchronously
       // and triggers a second ngOnChanges once loaded.
       if (this.loansAccountProductTemplate.product) {
+        this.applyPaymentAmountCalculationStrategy(this.loansAccountProductTemplate.product);
         this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
         if (
           !this.allowAttributeOverrides.periodPaymentFrequency ||
@@ -437,20 +465,27 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ) {
           this.allowAttributeOverridesDelinquencyBucket = false;
           this.loansAccountTermsForm.controls.delinquencyBucketId.disable();
+          // Grace days and start type follow the bucket override switch (FINERACT-2684).
+          this.loansAccountTermsForm.controls.delinquencyGraceDays.disable();
+          this.loansAccountTermsForm.controls.delinquencyStartType.disable();
         } else {
           this.allowAttributeOverridesDelinquencyBucket = true;
           this.loansAccountTermsForm.controls.delinquencyBucketId.enable();
+          this.loansAccountTermsForm.controls.delinquencyGraceDays.enable();
+          this.loansAccountTermsForm.controls.delinquencyStartType.enable();
         }
         if (!this.allowAttributeOverrides.breach || this.allowAttributeOverrides.breach === false) {
           this.allowAttributeOverridesBreach = false;
           this.loansAccountTermsForm.controls.breachId.disable();
           this.loansAccountTermsForm.controls.nearBreachId.disable();
           this.loansAccountTermsForm.controls.breachGraceDays.disable();
+          this.loansAccountTermsForm.controls.breachStartType.disable();
         } else {
           this.allowAttributeOverridesBreach = true;
           this.loansAccountTermsForm.controls.breachId.enable();
           this.loansAccountTermsForm.controls.nearBreachId.enable();
           this.loansAccountTermsForm.controls.breachGraceDays.enable();
+          this.loansAccountTermsForm.controls.breachStartType.enable();
         }
       }
     }
@@ -467,13 +502,10 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
 
       if (this.loansAccountTermsData) {
         if (this.loansAccountTermsData.loanProductId) {
-          let formattedDate = null;
-          if (this.loansAccountTermsData.expectedFirstRepaymentOnDate) {
-            const repaymentDate = new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate);
-            formattedDate = this.formatDateToDDMMYYYY(repaymentDate);
-          }
+          const expectedFirstRepaymentOnDate = this.loansAccountTermsData.expectedFirstRepaymentOnDate;
           this.loansAccountTermsForm.patchValue({
-            repaymentsStartingFromDate: this.loansAccountTermsData.expectedFirstRepaymentOnDate && formattedDate
+            repaymentsStartingFromDate:
+              expectedFirstRepaymentOnDate && this.dateUtils.parseDate(expectedFirstRepaymentOnDate)
           });
         }
         if (this.isDelinquencyEnabled()) {
@@ -553,17 +585,29 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           principalAmount: isEditingAccount
             ? this.loansAccountTermsData.principal
             : this.loansAccountTermsData.principal || this.loansAccountTermsData.product?.principal,
-          periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
+          // The account response names the rate `paymentRate`; `periodPaymentRate`
+          // only exists on the product template, so reading it here would blank
+          // the value ngOnChanges already read from the account.
+          periodPaymentRate: isEditingAccount
+            ? this.loansAccountTermsData.paymentRate
+            : this.loansAccountTermsData.periodPaymentRate,
+          annualEir: isEditingAccount
+            ? this.loansAccountTermsData.annualEir
+            : (this.loansAccountTermsData.annualEir ?? this.loansAccountTermsData.product?.annualEir ?? ''),
+          paymentAmount: isEditingAccount
+            ? this.loansAccountTermsData.paymentAmount
+            : (this.loansAccountTermsData.paymentAmount ?? this.loansAccountTermsData.product?.paymentAmount ?? ''),
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: isEditingAccount
             ? this.loansAccountTermsData.delinquencyGraceDays
             : this.loansAccountTermsData.delinquencyGraceDays ||
               this.loansAccountTermsData.product?.delinquencyGraceDays,
+          // The backend parses the enum name (code); the numeric id is rejected with invalid.delinquency.start.type.
           delinquencyStartType: isEditingAccount
-            ? this.loansAccountTermsData.delinquencyStartType?.id
-            : this.loansAccountTermsData.delinquencyStartType?.id ||
-              this.loansAccountTermsData.product?.delinquencyStartType?.id,
+            ? this.loansAccountTermsData.delinquencyStartType?.code
+            : this.loansAccountTermsData.delinquencyStartType?.code ||
+              this.loansAccountTermsData.product?.delinquencyStartType?.code,
           delinquencyBucketId: isEditingAccount
             ? this.loansAccountTermsData.delinquencyBucket?.id
             : this.loansAccountTermsData.delinquencyBucket?.id ||
@@ -576,7 +620,12 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             : this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product?.nearBreach?.id,
           breachGraceDays: isEditingAccount
             ? (this.loansAccountTermsData.breachGraceDays ?? '')
-            : (this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product?.breachGraceDays ?? '')
+            : (this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product?.breachGraceDays ?? ''),
+          breachStartType: isEditingAccount
+            ? (this.loansAccountTermsData.breachStartType?.code ?? '')
+            : (this.loansAccountTermsData.breachStartType?.code ??
+              this.loansAccountTermsData.product?.breachStartType?.code ??
+              '')
         });
       }
     }
@@ -615,13 +664,6 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       }
     }
     return null;
-  }
-
-  formatDateToDDMMYYYY(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
   }
 
   /** Custom Validators for the form */
@@ -864,6 +906,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             Validators.max(1000)
           ]
         ],
+        annualEir: [''],
+        paymentAmount: [''],
         repaymentEvery: [
           '',
           [
@@ -876,17 +920,24 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           '',
           Validators.required
         ],
+        // The backend validates both grace days with integerZeroOrGreater.
         delinquencyGraceDays: [
           '',
           [
-            Validators.min(0)
+            positiveIntegerValidator()
           ]
         ],
         delinquencyStartType: [''],
         delinquencyBucketId: [''],
         breachId: [''],
         nearBreachId: [''],
-        breachGraceDays: ['']
+        breachGraceDays: [
+          '',
+          [
+            positiveIntegerValidator()
+          ]
+        ],
+        breachStartType: ['']
       });
     }
   }
@@ -1062,7 +1113,88 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
    * Returns loans account terms form value.
    */
   get loansAccountTerms() {
-    return this.loansAccountTermsForm.getRawValue();
+    const terms = this.loansAccountTermsForm.getRawValue();
+    if (this.loanProductService.isWorkingCapital) {
+      // The backend answers `not.allowed.for.<strategy>.strategy` to any pricing input of
+      // another strategy, so only the active group may reach the request.
+      inactivePricingFields(this.paymentAmountCalculationStrategy).forEach((name) => delete terms[name]);
+    }
+    return terms;
+  }
+
+  /**
+   * Working Capital: shapes the pricing inputs after the product's strategy. TPV keeps the
+   * historical totalPaymentVolume + periodPaymentRate pair; ANNUAL_EIR asks for a positive annual
+   * EIR inside the product window and a positive discount; PAYMENT_AMOUNT asks for a positive daily
+   * payment amount and a positive discount. Inputs of the other strategies are blanked so they never
+   * leak into the payload.
+   */
+  private applyPaymentAmountCalculationStrategy(product: any): void {
+    this.paymentAmountCalculationStrategy = resolvePaymentAmountCalculationStrategy(
+      product?.paymentAmountCalculationStrategy
+    );
+    const form = this.loansAccountTermsForm;
+    const validatorsByStrategy: Record<WorkingCapitalPaymentAmountCalculationStrategy, Record<string, any[]>> = {
+      TPV: {
+        totalPaymentVolume: [
+          Validators.required,
+          amountValueValidator()
+        ],
+        periodPaymentRate: [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(1000)
+        ]
+      },
+      ANNUAL_EIR: {
+        annualEir: [
+          Validators.required,
+          ...annualEirValidators(),
+          withinBoundsValidator(
+            () => product?.minAnnualEir,
+            () => product?.maxAnnualEir
+          )
+        ]
+      },
+      PAYMENT_AMOUNT: {
+        paymentAmount: [
+          Validators.required,
+          greaterThanZeroValidator()
+        ]
+      }
+    };
+    inactivePricingFields(this.paymentAmountCalculationStrategy).forEach((name) => {
+      const control = form.get(name);
+      if (control) {
+        control.clearValidators();
+        control.setValue('', { emitEvent: false });
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    });
+    Object.entries(validatorsByStrategy[this.paymentAmountCalculationStrategy]).forEach(
+      ([
+        name,
+        validators
+      ]) => {
+        const control = form.get(name)!;
+        control.setValidators(validators);
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    );
+    const discount = form.get('discount')!;
+    discount.setValidators(
+      this.paymentAmountCalculationStrategy === WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV ? [] : [
+            Validators.required,
+            greaterThanZeroValidator()
+          ]
+    );
+    discount.updateValueAndValidity({ emitEvent: false });
+  }
+
+  /** Product window shown next to the annual EIR input; null bounds are simply not displayed. */
+  get annualEirBounds(): { min: number | null; max: number | null } {
+    const product = this.loansAccountProductTemplate?.product;
+    return { min: product?.minAnnualEir ?? null, max: product?.maxAnnualEir ?? null };
   }
 
   get loanCollateral() {

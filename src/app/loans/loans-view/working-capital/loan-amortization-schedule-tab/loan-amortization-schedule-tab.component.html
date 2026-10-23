@@ -45,6 +45,56 @@
     </div>
   }
 
+  @if (amortizationSchedule) {
+    <div class="section pricing-facts">
+      <div class="section-head">
+        <h3 class="section-title">{{ 'labels.heading.Pricing' | translate }}</h3>
+      </div>
+      <div class="fact-grid">
+        @if (amortizationSchedule.paymentAmountCalculationStrategy?.value) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}</div>
+            <div class="fact-value">
+              {{ amortizationSchedule.paymentAmountCalculationStrategy.value | translateKey: 'catalogs' }}
+            </div>
+          </div>
+        }
+        @if (has(amortizationSchedule.annualEir)) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Annual EIR' | translate }}</div>
+            <div class="fact-value amount">{{ amortizationSchedule.annualEir | number: '1.0-6' }} %</div>
+          </div>
+        }
+        @if (has(amortizationSchedule.periodPaymentRate)) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Period Payment Rate' | translate }}</div>
+            <div class="fact-value amount">{{ amortizationSchedule.periodPaymentRate | formatNumber }} %</div>
+          </div>
+        }
+        @if (has(amortizationSchedule.paymentAmount)) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Payment Amount' | translate }}</div>
+            <div class="fact-value amount">{{ amortizationSchedule.paymentAmount | formatNumber }}</div>
+          </div>
+        }
+        <div class="fact">
+          <div class="fact-label">{{ 'labels.inputs.Daily Effective Rate' | translate }}</div>
+          @if (has(amortizationSchedule.effectiveInterestRate)) {
+            <div class="fact-value amount">{{ amortizationSchedule.effectiveInterestRate | number: '1.0-6' }} %</div>
+          } @else {
+            <div class="fact-value muted">{{ 'labels.inputs.Not Available' | translate }}</div>
+          }
+        </div>
+        @if (has(amortizationSchedule.npvDayCount)) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Net Present Value day count' | translate }}</div>
+            <div class="fact-value amount">{{ amortizationSchedule.npvDayCount }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
   <div class="toolbar">
     <div class="toggle-group">
       <mat-slide-toggle [checked]="hideProjected" (change)="toggleHideProjected($event)">
@@ -113,7 +163,7 @@
           {{ item.expectedPaymentAmount | formatNumber }}
         </td>
         <td mat-footer-cell class="r-amount footer-total col-expected col-grp-start" *matFooterCellDef>
-          <b>{{ amortizationSchedule?.totalPaymentValue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b>
+          <b>{{ amortizationSchedule?.totalPaymentVolume | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b>
         </td>
       </ng-container>
 

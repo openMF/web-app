@@ -1,0 +1,158 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="cash-exchange">
+  <mat-card-content>
+    <h2>{{ 'cashExchange.title' | translate }}</h2>
+    @if (error) {
+      <p role="alert" class="error">{{ error | translate }}</p>
+    }
+    @if (loading || busy || printing) {
+      <mat-spinner diameter="32" [attr.aria-label]="'cashExchange.loading' | translate"></mat-spinner>
+    }
+    @if (!context && !loading) {
+      <button mat-button (click)="loadContext()">{{ 'cashExchange.retry' | translate }}</button>
+    }
+    <form [formGroup]="form" (ngSubmit)="finish()" class="exchange-form">
+      <div class="panels">
+        <mat-form-field>
+          <mat-label>{{ 'cashExchange.exchangeTo' | translate }}</mat-label>
+          <mat-select formControlName="cashierId">
+            @for (teller of context?.tellers; track teller.id) {
+              <mat-option [value]="teller.id">{{ teller.name }} ({{ teller.code }})</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'cashExchange.currency' | translate }}</mat-label>
+          <mat-select formControlName="currencyCode">
+            @for (currency of context?.currencies; track currency.code) {
+              <mat-option [value]="currency.code">{{ currency.code }} — {{ currency.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      @if (context && (!context.tellers.length || !context.currencies.length)) {
+        <p>{{ 'cashExchange.empty' | translate }}</p>
+      }
+      @if (inventory) {
+        <div class="panels">
+          @for (side of sides; track side) {
+            <section [formArrayName]="side">
+              <h3>
+                {{
+                  side === 'received' ? ('cashExchange.received' | translate) : ('cashExchange.delivered' | translate)
+                }}
+              </h3>
+              <div class="denomination-row headings" aria-hidden="true">
+                <span>{{ 'cashExchange.denomination' | translate }}</span
+                ><span>{{ 'cashExchange.quantity' | translate }}</span
+                ><span>{{ 'cashExchange.amount' | translate }}</span>
+              </div>
+              @for (line of inventory.denominations; track line.denominationId; let i = $index) {
+                <div class="denomination-row">
+                  <span
+                    >{{ displayValue(line.value) }}
+                    @if (side === 'delivered') {
+                      <small>{{ 'cashExchange.available' | translate }}: {{ line.availableQuantity }}</small>
+                    }
+                  </span>
+                  <mat-form-field>
+                    <mat-label>
+                      {{ (side === 'received' ? 'cashExchange.received' : 'cashExchange.delivered') | translate }} ·
+                      {{ 'cashExchange.quantity' | translate }} · {{ displayValue(line.value) }}
+                    </mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      min="0"
+                      step="1"
+                      [max]="side === 'delivered' ? line.availableQuantity : null"
+                      [formControlName]="i"
+                    />
+                    <mat-error>{{
+                      (form.controls[side].at(i).hasError('max') ? 'cashExchange.insufficient' : labels.invalidQuantity)
+                        | translate
+                    }}</mat-error>
+                  </mat-form-field>
+                  <span>{{ amount(side, i) }}</span>
+                </div>
+              }
+              <p class="total">
+                {{ side === 'received' ? (labels.receivedTotal | translate) : (labels.deliveredTotal | translate) }}:
+                <strong>{{ total(side) }} {{ inventory.currencyCode }}</strong>
+              </p>
+            </section>
+          }
+        </div>
+        @if (!inventory.denominations.length) {
+          <p>{{ 'cashExchange.empty' | translate }}</p>
+        }
+      }
+      <div class="actions">
+        @if (inventory) {
+          <div class="summary" aria-live="polite">
+            <span
+              >{{ labels.receivedTotal | translate }}:
+              <strong>{{ total('received') }} {{ inventory.currencyCode }}</strong></span
+            >
+            <span
+              >{{ labels.deliveredTotal | translate }}:
+              <strong>{{ total('delivered') }} {{ inventory.currencyCode }}</strong></span
+            >
+          </div>
+        }
+        <strong role="status">{{
+          balanced ? (labels.balanced | translate) : ('cashExchange.notBalanced' | translate)
+        }}</strong>
+        <button mat-button type="button" (click)="loadInventory()" [disabled]="loading || busy || !!pendingRequest">
+          {{ 'cashExchange.refresh' | translate }}
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!canFinish">
+          {{ 'cashExchange.finish' | translate }}
+        </button>
+      </div>
+    </form>
+    @if (pendingRequest && !busy) {
+      <button mat-raised-button (click)="retry()">{{ 'cashExchange.retry' | translate }}</button>
+    }
+    @if (result) {
+      <div class="success" role="status">
+        <p>{{ 'cashExchange.success' | translate }}</p>
+        <p>{{ result.receiptNumber }}</p>
+      </div>
+      @if (hasPermission('REPRINT')) {
+        <button class="print-action" mat-button (click)="printReceipt()" [disabled]="printing">
+          {{ receipt ? (labels.reprint | translate) : (labels.print | translate) }}
+        </button>
+      }
+    }
+    @if (receipt) {
+      <section class="receipt">
+        <h3>{{ 'cashExchange.title' | translate }} · {{ receipt.receiptNumber }}</h3>
+        <p>{{ 'cashExchange.exchangeTo' | translate }}: {{ receipt.tellerName }}</p>
+        <p>{{ 'cashExchange.currency' | translate }}: {{ receipt.currencyCode }}</p>
+        @for (side of sides; track side) {
+          <h4>
+            {{ side === 'received' ? ('cashExchange.received' | translate) : ('cashExchange.delivered' | translate) }}
+          </h4>
+          @for (
+            line of side === 'received' ? receipt.receivedDenominations : receipt.deliveredDenominations;
+            track line.denominationId
+          ) {
+            <p>{{ line.value }} × {{ line.quantity }} = {{ line.amount }}</p>
+          }
+          <strong
+            >{{ side === 'received' ? (labels.receivedTotal | translate) : (labels.deliveredTotal | translate) }}:
+            {{ side === 'received' ? receipt.receivedAmount : receipt.deliveredAmount }}</strong
+          >
+        }
+      </section>
+    }
+  </mat-card-content>
+</mat-card>

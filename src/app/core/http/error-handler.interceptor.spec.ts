@@ -8,7 +8,7 @@
 
 import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
@@ -24,9 +24,14 @@ describe('ErrorHandlerInterceptor', () => {
    * @returns 'errored' when the failure is passed through silently, 'threw'
    * when the interceptor rethrows after alerting.
    */
-  function intercept(url: string, status: number, method: 'GET' | 'PUT' | 'POST' = 'GET'): string {
+  function intercept(
+    url: string,
+    status: number,
+    method: 'GET' | 'PUT' | 'POST' = 'GET',
+    error: unknown = { defaultUserMessage: 'boom' }
+  ): string {
     const request = method === 'GET' ? new HttpRequest('GET', url) : new HttpRequest(method, url, {});
-    const response = new HttpErrorResponse({ status, url, error: { defaultUserMessage: 'boom' } });
+    const response = new HttpErrorResponse({ status, url, error });
     try {
       let outcome = 'none';
       (interceptor as any).handleError(response, request).subscribe({ error: () => (outcome = 'errored') });
@@ -46,6 +51,148 @@ describe('ErrorHandlerInterceptor', () => {
       ]
     });
     interceptor = TestBed.inject(ErrorHandlerInterceptor);
+  });
+
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('keeps pickup error bodies out of generic alerts and logging (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    const warn = jest.spyOn(console, 'warn');
+    expect(
+      intercept('/fineract-provider/api/v2/base-teller/cash-drawer-pickups', status, 'POST', {
+        developerMessage: 'sensitive credential or SQL text'
+      })
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    expect(warn).not.toHaveBeenCalled();
+    log.mockRestore();
+    warn.mockRestore();
+  });
+
+  it.each([
+    '/v2/base-teller/cash-drawer-pickups/context',
+    'https://gateway.example.test/custom/base-teller/cash-drawer-pickups'
+  ])('shows a safe session-expired alert for pickup 401 at %s', (url) => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept(url, 401, 'POST', { developerMessage: 'sensitive server error' })).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    { userMessageGlobalisationCode: 'authorization.invalid' },
+    { errors: [{ userMessageGlobalisationCode: 'error.msg.base.teller.pickup.authorization.invalid' }] },
+    JSON.stringify({ errors: [{ userMessageGlobalisationCode: 'authorization.invalid' }] })
+  ])('keeps pickup authorization 401 failures local without a session-expired alert', (body) => {
+    expect(intercept('/v2/base-teller/cash-drawer-pickups', 401, 'POST', body)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('lets account transfers render safe local errors (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v2/base-teller/account-transfers/preview',
+        status,
+        'POST',
+        'java.sql private trace'
+      )
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it('uses a safe session-expired alert for account transfer authentication errors', () => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/v2/base-teller/account-transfers/context', 401, 'GET', 'private server trace')).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    500
+  ])('keeps withdrawal identification and server error text out of shared logs and alerts (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept('/v2/base-teller/withdrawals/preview', status, 'POST', {
+        developerMessage: 'private identification and SQL'
+      })
+    ).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  const cashExchangeUrls = [
+    '/base-teller/cash-exchanges/preview',
+    'https://gateway.example.test/custom/path/base-teller/cash-exchanges/preview'
+  ];
+
+  it.each(cashExchangeUrls)('lets Cash Exchange map backend errors at %s', (url) => {
+    expect(intercept(url, 403)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it.each(cashExchangeUrls)('still alerts when a Cash Exchange request at %s finds an expired session', (url) => {
+    expect(intercept(url, 401)).toBe('threw');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it('does not mistake a similarly named endpoint for Cash Exchange', () => {
+    expect(intercept('/base-teller/cash-exchanges-history', 403)).toBe('threw');
+    expect(alert).toHaveBeenCalled();
+  });
+
+  const closingUrls = [
+    '/base-teller/end-of-day-closing',
+    'https://gateway.example.test/custom/path/base-teller/end-of-day-closing/preview'
+  ];
+
+  it.each(closingUrls)('keeps closing authorization failures local at %s', (url) => {
+    const error = { errors: [{ userMessageGlobalisationCode: 'authorization.invalid' }] };
+    expect(intercept(url, 401, 'POST', error)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it.each(closingUrls)('alerts for an expired closing session at %s', (url) => {
+    expect(intercept(url, 401)).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it('keeps serialized closing authorization failures local', () => {
+    const error = JSON.stringify({ userMessageGlobalisationCode: 'authorization.required' });
+    expect(intercept('/base-teller/end-of-day-closing', 401, 'POST', error)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
   });
 
   it('does not alert when the branding endpoint is absent', () => {
@@ -128,12 +275,15 @@ describe('ErrorHandlerInterceptor', () => {
      * @param translations Keys the translate service knows about
      * @param asArrayBuffer Sends the body encoded, as requests that ask for an
      * ArrayBuffer response receive it
+     * @param args Values the backend sends with the nested error
      */
     function interceptDomainRuleViolation(
       nestedCode: string,
       translations: { [key: string]: string } = {},
-      asArrayBuffer = false
+      asArrayBuffer = false,
+      args?: { value: unknown }[]
     ): void {
+      const parser = new TranslateDefaultParser();
       TestBed.resetTestingModule();
       alert = jest.fn();
       TestBed.configureTestingModule({
@@ -142,7 +292,9 @@ describe('ErrorHandlerInterceptor', () => {
           { provide: AlertService, useValue: { alert } },
           {
             provide: TranslateService,
-            useValue: { instant: (key: string) => translations[key] ?? key }
+            useValue: {
+              instant: (key: string, params?: object) => parser.interpolate(translations[key] ?? key, params)
+            }
           }
         ]
       });
@@ -153,7 +305,8 @@ describe('ErrorHandlerInterceptor', () => {
         errors: [
           {
             userMessageGlobalisationCode: nestedCode,
-            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit'
+            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit',
+            ...(args && { args })
           }
         ]
       };
@@ -190,6 +343,29 @@ describe('ErrorHandlerInterceptor', () => {
 
       expect(alert).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('shows the values the backend sends with the error in the translated message', () => {
+      const PRINCIPAL_RANGE_CODE = 'validation.msg.loan.principal.amount.is.not.within.min.max.range';
+      interceptDomainRuleViolation(
+        PRINCIPAL_RANGE_CODE,
+        {
+          [`errors.${PRINCIPAL_RANGE_CODE}`]:
+            'Principal amount {{params[0].value}} is invalid. Must be an amount between {{params[1].value}} and {{params[2].value}} inclusive.'
+        },
+        false,
+        [
+          { value: 150075 },
+          { value: 100 },
+          { value: 100000 }
+        ]
+      );
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Principal amount 150075 is invalid. Must be an amount between 100 and 100000 inclusive.'
+        })
       );
     });
 

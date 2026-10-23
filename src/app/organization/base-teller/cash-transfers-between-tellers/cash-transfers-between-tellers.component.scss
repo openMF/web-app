@@ -1,0 +1,309 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'sass:map';
+@use '../../../../theme/material-palette' as palette;
+
+.cash-transfer {
+  --transfer-primary: var(--mat-sys-primary, #{map.get(palette.$primary-palette, 500)});
+  --transfer-divider: var(--mat-stepper-line-color, rgb(128 128 128 / 24%));
+
+  max-width: 1120px;
+  margin: 0 auto;
+
+  > mat-card-content {
+    padding: 32px;
+  }
+
+  .workflow-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 8px 0 0;
+      color: var(--mat-card-subtitle-text-color, inherit);
+    }
+  }
+
+  .workflow-icon,
+  .setup-icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    color: var(--transfer-primary);
+    background: color-mix(in srgb, var(--transfer-primary) 8%, transparent);
+    border-radius: 8px;
+  }
+
+  .workflow-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .steps {
+    display: flex;
+    list-style: none;
+    padding: 24px 0;
+    margin: 24px 0;
+    border-top: 1px solid var(--transfer-divider);
+    border-bottom: 1px solid var(--transfer-divider);
+
+    li {
+      display: flex;
+      position: relative;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      color: var(--mat-card-subtitle-text-color, inherit);
+    }
+
+    li:not(:last-child)::after {
+      position: absolute;
+      inset-inline-start: calc(50% + 24px);
+      top: 16px;
+      width: calc(100% - 48px);
+      height: 1px;
+      background: var(--transfer-divider);
+      content: '';
+    }
+
+    [aria-current='step'],
+    .completed {
+      color: var(--mat-stepper-header-selected-state-label-text-color, inherit);
+      font-weight: 600;
+
+      .step-number {
+        border-color: var(--transfer-primary);
+        color: var(--mat-sys-on-primary, white);
+        background: var(--transfer-primary);
+      }
+    }
+
+    .completed::after {
+      background: var(--transfer-primary);
+    }
+  }
+
+  .step-number {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border: 1px solid var(--transfer-divider);
+    border-radius: 50%;
+    box-sizing: border-box;
+    font-weight: 600;
+  }
+
+  .step-label {
+    padding: 0 8px;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .setup-panel {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 32px;
+    margin: 8px 0 24px;
+    border: 1px solid var(--transfer-divider);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--transfer-primary) 3%, transparent);
+  }
+
+  .setup-icon {
+    width: 56px;
+    height: 56px;
+
+    mat-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
+    }
+  }
+
+  .setup-body {
+    min-width: 0;
+    max-width: 640px;
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    p {
+      margin: 0 0 24px;
+      line-height: 1.6;
+      color: var(--mat-card-subtitle-text-color, inherit);
+    }
+  }
+
+  .setup-actions,
+  .totals,
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  // The global dark theme forces blue text on all links, including filled Material buttons.
+  .setup-actions [mat-flat-button] {
+    color: var(--mdc-filled-button-label-text-color, white) !important;
+  }
+
+  .selectors {
+    display: grid;
+    grid-template-columns: repeat(2, calc((100% - 24px) / 2));
+    gap: 24px;
+  }
+
+  .currency-panel {
+    margin-top: 24px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  td,
+  th {
+    padding: 8px;
+  }
+
+  .denominations {
+    overflow-x: auto;
+  }
+
+  .actions {
+    margin-top: 24px;
+    padding: 16px 0 0;
+    border-top: 1px solid var(--transfer-divider);
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 0;
+    background: var(--mat-card-elevated-container-color, var(--mat-sys-surface, white));
+    z-index: 1;
+
+    > a:first-child {
+      margin-inline-end: auto;
+    }
+  }
+
+  .error {
+    color: var(--mat-sys-error);
+  }
+
+  .mobile-label,
+  .receipt {
+    display: none;
+  }
+}
+
+@media (width <= 768px) {
+  .cash-transfer {
+    > mat-card-content {
+      padding: 24px 16px;
+    }
+
+    .workflow-header {
+      align-items: flex-start;
+    }
+
+    .steps {
+      flex-wrap: wrap;
+      gap: 16px;
+
+      li {
+        flex: 0 1 calc(50% - 8px);
+        flex-direction: row;
+      }
+
+      li::after {
+        display: none;
+      }
+    }
+
+    .step-label {
+      padding: 0;
+      text-align: start;
+    }
+
+    .setup-panel {
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    .setup-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .selectors {
+      grid-template-columns: 100%;
+    }
+
+    table,
+    tbody,
+    tr,
+    td {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      padding: 8px 0;
+      height: auto;
+    }
+
+    td {
+      border: 0;
+    }
+
+    .mobile-label {
+      display: inline;
+    }
+  }
+}
+
+@media print {
+  .cash-transfer {
+    .workflow {
+      display: none;
+    }
+
+    .receipt {
+      display: block;
+    }
+
+    box-shadow: none;
+  }
+}

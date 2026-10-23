@@ -50,7 +50,7 @@
         <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
         <mat-select formControlName="delinquencyStartType">
           @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
-            <mat-option [value]="delinquencyStartType.id">
+            <mat-option [value]="delinquencyStartType.code">
               {{ delinquencyStartType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -119,6 +119,17 @@
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
           <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+        </mat-form-field>
+
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Breach Start Type' | translate }}</mat-label>
+          <mat-select formControlName="breachStartType">
+            @for (breachStartType of breachStartTypeOptions; track breachStartType.code) {
+              <mat-option [value]="breachStartType.code">
+                {{ breachStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
         </mat-form-field>
       }
 
@@ -991,13 +1002,19 @@
       }
       @if (loanProductService.isWorkingCapital) {
         <div formGroupName="allowAttributeOverrides" class="flex-fill layout-row-wrap gap-2percent responsive-column">
-          <mat-checkbox labelPosition="before" formControlName="breach" class="margin-v flex-48">
+          <mat-checkbox
+            labelPosition="before"
+            formControlName="breach"
+            class="margin-v flex-48"
+            matTooltip="{{ 'tooltips.Breach override also unlocks' | translate }}"
+          >
             {{ 'labels.inputs.Breach' | translate }}
           </mat-checkbox>
           <mat-checkbox
             labelPosition="before"
             formControlName="delinquencyBucketClassification"
             class="margin-v flex-48"
+            matTooltip="{{ 'tooltips.Delinquency bucket classification override also unlocks' | translate }}"
           >
             {{ 'labels.inputs.Delinquency Bucket Classification' | translate }}
           </mat-checkbox>

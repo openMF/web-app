@@ -89,11 +89,6 @@ export class EditStandingInstructionsComponent implements OnInit {
    */
   ngOnInit() {
     this.createEditStandingInstructionsForm();
-    const presentDate = new Date();
-    const n = presentDate.getFullYear();
-    if (this.standingInstructionsData.recurrenceOnMonthDay) {
-      this.standingInstructionsData.recurrenceOnMonthDay.push(n);
-    }
     this.editStandingInstructionsForm.patchValue({
       name: this.standingInstructionsData.name,
       applicant: this.standingInstructionsData.fromClient.displayName,
@@ -114,10 +109,21 @@ export class EditStandingInstructionsComponent implements OnInit {
       recurrenceType: this.standingInstructionsData.recurrenceType.id,
       recurrenceInterval: this.standingInstructionsData.recurrenceInterval,
       recurrenceFrequency: this.standingInstructionsData.recurrenceFrequency.id,
-      recurrenceOnMonthDay:
-        this.standingInstructionsData.recurrenceOnMonthDay &&
-        new Date(this.standingInstructionsData.recurrenceOnMonthDay)
+      recurrenceOnMonthDay: this.getRecurrenceOnMonthDay()
     });
+  }
+
+  /**
+   * The saved day of the month the instruction runs on, in the current year for the date picker.
+   * Fineract returns it as recurrenceOnDay and recurrenceOnMonth (1-12); both are 0 when no day is set.
+   */
+  getRecurrenceOnMonthDay(): Date | null {
+    const day = this.standingInstructionsData.recurrenceOnDay;
+    const month = this.standingInstructionsData.recurrenceOnMonth;
+    if (!day || !month) {
+      return null;
+    }
+    return new Date(new Date().getFullYear(), month - 1, day);
   }
 
   /**
@@ -177,7 +183,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   submit() {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
-    const standingInstructionData = {
+    const standingInstructionData: any = {
       amount: this.editStandingInstructionsForm.value.amount,
       dateFormat,
       instructionType: this.editStandingInstructionsForm.value.instructionType,
@@ -186,15 +192,18 @@ export class EditStandingInstructionsComponent implements OnInit {
       priority: this.editStandingInstructionsForm.value.priority,
       recurrenceFrequency: this.editStandingInstructionsForm.value.recurrenceFrequency,
       recurrenceInterval: this.editStandingInstructionsForm.value.recurrenceInterval,
-      recurrenceOnMonthDay: this.dateUtils.formatDate(
-        this.editStandingInstructionsForm.value.recurrenceOnMonthDay,
-        'dd MMMM'
-      ),
       recurrenceType: this.editStandingInstructionsForm.value.recurrenceType,
       status: this.editStandingInstructionsForm.value.status,
       validFrom: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validFrom, dateFormat),
       validTill: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validTill, dateFormat)
     };
+    // Only send the day when the user changed it: the shown date is built from what Fineract returns, which can differ
+    // from what is stored (e.g. 29 February is returned as the 28th in a non-leap year), and Fineract keeps the saved day
+    // when the field is left out.
+    const recurrenceOnMonthDay = this.editStandingInstructionsForm.get('recurrenceOnMonthDay');
+    if (recurrenceOnMonthDay.dirty) {
+      standingInstructionData.recurrenceOnMonthDay = this.dateUtils.formatDate(recurrenceOnMonthDay.value, 'dd MMMM');
+    }
     this.accountTransfersService
       .updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData)
       .subscribe((response: any) => {

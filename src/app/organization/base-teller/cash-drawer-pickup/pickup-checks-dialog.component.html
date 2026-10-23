@@ -1,0 +1,37 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'cashPickup.checksTitle' | translate }}</h2>
+<mat-dialog-content>
+  @if (!data.checks.length) {
+    <p>{{ 'cashPickup.noChecks' | translate }}</p>
+  }
+  @for (check of data.checks; track check.source + ':' + check.id; let i = $index) {
+    <section class="m-b-16">
+      <mat-checkbox [formControl]="selections.at(i)"
+        >{{ 'cashPickup.selectCheck' | translate }} {{ check.reference }}</mat-checkbox
+      >
+      <p>
+        {{ 'cashPickup.date' | translate }}: {{ check.date }} · {{ 'cashPickup.bank' | translate }}: {{ check.bank }}
+      </p>
+      <p>
+        {{ 'cashPickup.reference' | translate }}: {{ check.reference }} · {{ 'cashPickup.client' | translate }}:
+        {{ check.client }}
+      </p>
+      <p>{{ 'cashPickup.source' | translate }}: {{ data.sourceName }}</p>
+      <p>
+        {{ 'cashPickup.currency' | translate }}: {{ check.currencyCode }} · {{ 'cashPickup.amount' | translate }}:
+        {{ check.amount }}
+      </p>
+    </section>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ 'cashPickup.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="accept()">{{ 'cashPickup.accept' | translate }}</button>
+</mat-dialog-actions>

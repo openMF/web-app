@@ -34,7 +34,12 @@
         >
           <fa-icon icon="cog"></fa-icon>
         </button>
-        <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Sign Out' | translate }}" (click)="logout()">
+        <button
+          class="xs-button"
+          mat-icon-button
+          matTooltip="{{ 'tooltips.Sign Out' | translate }}"
+          (click)="confirmLogout()"
+        >
           <fa-icon icon="sign-out-alt"></fa-icon>
         </button>
       </div>

@@ -24,7 +24,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import * as L from 'leaflet';
+// Default import: leaflet.markercluster registers itself on this Leaflet object, which a namespace import copies in production builds.
+import L from 'leaflet';
 import 'leaflet.markercluster';
 
 /** Charting Imports */

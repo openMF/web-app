@@ -1,0 +1,227 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container transfer-page">
+  <mat-card class="transfer-workflow"
+    ><mat-card-content>
+      <h2 #stageHeading tabindex="-1">
+        {{
+          (receipt
+            ? historicalReceipt
+              ? 'accountTransfer.receipt'
+              : 'accountTransfer.success'
+            : preview
+              ? 'accountTransfer.general'
+              : 'accountTransfer.title'
+          ) | translate
+        }}
+      </h2>
+      @if (busy) {
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'accountTransfer.loading' | translate" />
+        <p role="status">{{ 'accountTransfer.loading_' + busy | translate }}</p>
+      }
+      @if (error) {
+        <p role="alert">{{ error | translate }}</p>
+      }
+      @if (!context && !busy) {
+        <button mat-button (click)="loadContext()">{{ 'accountTransfer.retry' | translate }}</button>
+      }
+      @if (context && !canCreate) {
+        <p role="status">{{ 'accountTransfer.readOnly' | translate }}</p>
+      }
+      @if (context && !preview && !receipt) {
+        <form (submit)="$event.preventDefault(); retrieveReceipt()">
+          <mat-form-field
+            ><mat-label>{{ 'accountTransfer.reference' | translate }}</mat-label
+            ><input matInput [formControl]="receiptReference" inputmode="numeric"
+          /></mat-form-field>
+          <button mat-button type="submit" [disabled]="!!busy || receiptReference.invalid">
+            {{ 'accountTransfer.receipt' | translate }}
+          </button>
+        </form>
+      }
+      @if (context && !preview && !receipt && canCreate) {
+        <h3>{{ 'accountTransfer.step1' | translate }}</h3>
+        @if (!client) {
+          <mifosx-transfer-client-search (selected)="selectClient($event)" />
+        }
+        @if (client) {
+          <p>{{ client.clientNumber }} · {{ client.displayName }} · {{ client.officeName }}</p>
+          <button mat-button (click)="changeClient()" [disabled]="!!busy">
+            {{ 'accountTransfer.changeClient' | translate }}
+          </button>
+          <form [formGroup]="form" (ngSubmit)="showPreview()">
+            <fieldset [disabled]="!!busy">
+              <legend>{{ 'accountTransfer.details' | translate }}</legend>
+              <h3>{{ 'accountTransfer.step2' | translate }}</h3>
+              <mat-form-field
+                ><mat-label>{{ 'accountTransfer.operation' | translate }}</mat-label>
+                <mat-select formControlName="operation" (selectionChange)="changeOperation()" [disabled]="!!busy">
+                  @for (operation of context.operationTypes; track operation) {
+                    <mat-option [value]="operation">{{ 'accountTransfer.' + operation | translate }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (form.controls.operation.value) {
+                <h3>{{ 'accountTransfer.step3' | translate }}</h3>
+                @if (!sources.length && !busy) {
+                  <p role="status">{{ 'accountTransfer.noSources' | translate }}</p>
+                }
+                <mat-form-field
+                  ><mat-label>{{ 'accountTransfer.source' | translate }}</mat-label>
+                  <mat-select formControlName="source" (selectionChange)="changeSource()" [disabled]="!!busy">
+                    @for (account of sources; track accountKey(account)) {
+                      <mat-option [value]="accountKey(account)"
+                        >{{ account.accountNo }} · {{ 'accountTransfer.' + account.accountType | translate }} ·
+                        {{ account.productName }} · {{ account.currencyCode }} · {{ account.status }} ·
+                        {{ account.withdrawableBalance }}</mat-option
+                      >
+                    }
+                  </mat-select>
+                </mat-form-field>
+                @if (source) {
+                  <div class="account-grid">
+                    <section>
+                      <h4>{{ 'accountTransfer.source' | translate }}</h4>
+                      <mifosx-transfer-account-details [account]="source" />
+                    </section>
+                    <section>
+                      <h3>{{ 'accountTransfer.step4' | translate }}</h3>
+                      @if (form.controls.operation.value === 'TO_THIRD_PARTY') {
+                        <mat-form-field
+                          ><mat-label>{{ 'accountTransfer.searchBy' | translate }}</mat-label>
+                          <mat-select formControlName="method" (selectionChange)="changeMethod()" [disabled]="!!busy">
+                            <mat-option value="accountNumber">{{
+                              'accountTransfer.accountNumber' | translate
+                            }}</mat-option>
+                            <mat-option value="clientNumber">{{
+                              'accountTransfer.thirdClientNumber' | translate
+                            }}</mat-option>
+                            <mat-option value="name">{{ 'accountTransfer.thirdName' | translate }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        @if (form.controls.method.value === 'accountNumber') {
+                          <mat-form-field
+                            ><mat-label>{{ 'accountTransfer.accountNumber' | translate }}</mat-label
+                            ><input matInput [formControl]="lookup" (input)="lookupEdited()" maxlength="100"
+                          /></mat-form-field>
+                          <button
+                            mat-stroked-button
+                            type="button"
+                            (click)="lookupAccount()"
+                            [disabled]="!!busy || lookup.invalid || !lookup.value.trim()"
+                          >
+                            {{ 'accountTransfer.searchBeneficiary' | translate }}
+                          </button>
+                        }
+                      }
+                      @if (
+                        form.controls.operation.value === 'TO_THIRD_PARTY' &&
+                        form.controls.method.value !== 'accountNumber'
+                      ) {
+                        <section class="beneficiary-search">
+                          <h4>{{ 'accountTransfer.searchBeneficiary' | translate }}</h4>
+                          @if (form.controls.method.value === 'clientNumber') {
+                            <mifosx-transfer-client-search
+                              method="clientNumber"
+                              (selected)="selectBeneficiary($event)"
+                            />
+                          }
+                          @if (form.controls.method.value === 'name') {
+                            <mifosx-transfer-client-search method="name" (selected)="selectBeneficiary($event)" />
+                          }
+                        </section>
+                      }
+                      @if (form.controls.operation.value === 'BETWEEN_MY_ACCOUNTS' || beneficiary) {
+                        @if (beneficiary) {
+                          <p>{{ beneficiary.clientNumber }} · {{ beneficiary.displayName }}</p>
+                        }
+                        @if (!targets.length && !busy) {
+                          <p role="status">{{ 'accountTransfer.noTargets' | translate }}</p>
+                        }
+                        <mat-form-field
+                          ><mat-label>{{ 'accountTransfer.target' | translate }}</mat-label>
+                          <mat-select formControlName="target" (selectionChange)="selectTarget()" [disabled]="!!busy">
+                            @for (account of targets; track accountKey(account)) {
+                              <mat-option [value]="accountKey(account)"
+                                >{{ account.accountNo }} · {{ 'accountTransfer.' + account.accountType | translate }} ·
+                                {{ account.productName }} · {{ account.currencyCode }} ·
+                                {{ account.status }}</mat-option
+                              >
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                        <mifosx-transfer-account-details [account]="target" />
+                      }
+                    </section>
+                  </div>
+                }
+              }
+              @if (target) {
+                <h3>{{ 'accountTransfer.step5' | translate }}</h3>
+                <mat-form-field
+                  ><mat-label>{{ 'accountTransfer.amount' | translate }} ({{ source?.currencyCode }})</mat-label>
+                  <input
+                    matInput
+                    formControlName="amount"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    (input)="amountChanged()"
+                    required
+                    aria-describedby="amount-help"
+                  />
+                  <mat-hint id="amount-help">{{
+                    'accountTransfer.precision' | translate: { digits: source?.decimalPlaces }
+                  }}</mat-hint>
+                  @if (form.controls.amount.invalid) {
+                    <mat-error>{{ 'accountTransfer.invalidAmount' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+                <button mat-raised-button type="submit" [disabled]="!!busy || form.invalid">
+                  {{ 'accountTransfer.preview' | translate }}
+                </button>
+              }
+            </fieldset>
+          </form>
+        }
+      }
+      @if (preview) {
+        <mifosx-transfer-summary [preview]="preview" />
+        <div class="actions">
+          <button mat-button (click)="back()" [disabled]="!!busy || uncertain">
+            {{ 'accountTransfer.back' | translate }}
+          </button>
+          <button mat-button (click)="reset()" [disabled]="!!busy || uncertain">
+            {{ 'accountTransfer.cancel' | translate }}
+          </button>
+          <button mat-raised-button (click)="confirm()" [disabled]="!!busy || !preview.balanced || !canCreate">
+            {{ (uncertain ? 'accountTransfer.retry' : 'accountTransfer.confirm') | translate }}
+          </button>
+        </div>
+      }
+      @if (receipt) {
+        <mifosx-transfer-summary [receipt]="receipt" />
+        <div class="actions">
+          <button mat-raised-button (click)="printReceipt()" [disabled]="!!busy">
+            {{ (printedReceipt ? 'accountTransfer.reprint' : 'accountTransfer.print') | translate }}
+          </button>
+          <button mat-button (click)="reset()" [disabled]="!!busy">{{ 'accountTransfer.new' | translate }}</button>
+        </div>
+      }
+      @if (!uncertain && busy !== 'submit') {
+        <a mat-button routerLink="/organization/base-teller">{{ 'accountTransfer.backToTeller' | translate }}</a>
+      }
+    </mat-card-content></mat-card
+  >
+  @if (printedReceipt) {
+    <section class="receipt-print">
+      <h2>{{ 'accountTransfer.receipt' | translate }}</h2>
+      <mifosx-transfer-summary [receipt]="printedReceipt" />
+    </section>
+  }
+</div>

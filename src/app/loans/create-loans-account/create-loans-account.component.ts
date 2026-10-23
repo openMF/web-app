@@ -144,7 +144,8 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
-        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
       };
     }
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
@@ -350,12 +351,19 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
       ) {
         delete payload['breachId'];
         delete payload['nearBreachId'];
+        // Locked breach settings are inherited from the product; getRawValue() would still carry the disabled value.
+        // The backend rejects these keys by presence (even null), so they must be absent, not emptied.
+        delete payload['breachGraceDays'];
+        delete payload['breachStartType'];
       }
       if (
         !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
         this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
       ) {
         delete payload['delinquencyBucketId'];
+        // Grace days and start type follow the bucket override switch (FINERACT-2684).
+        delete payload['delinquencyGraceDays'];
+        delete payload['delinquencyStartType'];
       }
     }
 
@@ -363,6 +371,7 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     [
       'delinquencyGraceDays',
       'delinquencyStartType',
+      'breachStartType',
       'delinquencyBucketId'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {

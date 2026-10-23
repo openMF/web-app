@@ -1,0 +1,73 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.transfer-page {
+  max-width: 1200px;
+  margin: auto;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 50%));
+    column-gap: 0;
+
+    section {
+      padding-inline-end: 16px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-block: 24px;
+  }
+
+  .beneficiary-search {
+    margin-block: 24px;
+  }
+
+  .receipt-print {
+    display: none;
+  }
+
+  section {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (width <= 768px) {
+  .transfer-page .account-grid {
+    grid-template-columns: minmax(0, 100%);
+  }
+}
+
+@media print {
+  .transfer-page {
+    .transfer-workflow {
+      display: none;
+    }
+
+    .receipt-print {
+      display: block;
+    }
+  }
+
+  :host {
+    display: block;
+  }
+}

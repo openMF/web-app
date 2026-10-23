@@ -128,7 +128,7 @@
           }
           <div class="fact">
             <div class="fact-label">{{ 'labels.inputs.Currency' | translate }}</div>
-            <div class="fact-value">{{ loanDetails.currency?.name }} · {{ loanDetails.currency?.code }}</div>
+            <div class="fact-value">{{ loanDetails.currency | currencyName }} · {{ loanDetails.currency?.code }}</div>
           </div>
           @if (loanDetails.externalId) {
             <div class="fact span-2">

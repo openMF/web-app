@@ -9,7 +9,7 @@
 /** Angular Imports. */
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
 import { AssignLoanOfficerComponent } from './assign-loan-officer/assign-loan-officer.component';
@@ -107,16 +107,12 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 export class LoanAccountActionsComponent {
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private loanProductService = inject(LoanProductService);
 
   /** Whether the current account is a Working Capital loan. */
   get isWorkingCapital(): boolean {
     return this.loanProductService.isWorkingCapital;
   }
-
-  /** Loan Details Data */
-  navigationData: any;
 
   /** flag object to store possible actions and render appropriate UI to the user */
   actions: {
@@ -216,10 +212,6 @@ export class LoanAccountActionsComponent {
    * @param route Activated Route.
    */
   constructor() {
-    const currentNavigation = this.router.currentNavigation();
-    // Safely access data with optional chaining
-    this.navigationData = currentNavigation?.extras?.state?.data;
-
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
       this.actionButtonData = data.actionButtonData ? data.actionButtonData : {};
     });

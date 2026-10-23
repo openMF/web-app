@@ -30,7 +30,8 @@ describe('EditTransactionComponent', () => {
     ],
     amount: 150,
     externalId: 'original-external-id',
-    paymentTypeId: 1,
+    // Fineract returns the payment type only inside paymentDetailData, never as a flat paymentTypeId.
+    paymentDetailData: { id: 9, paymentType: { id: 1, name: 'Money Transfer' } },
     manuallyReversed: false,
     currency: { code: 'EUR', displaySymbol: '€' },
     paymentTypeOptions: [{ id: 1, name: 'Money Transfer' }]
@@ -73,17 +74,30 @@ describe('EditTransactionComponent', () => {
     isWorkingCapital = false
   ): EditTransactionComponent {
     TestBed.resetTestingModule();
+    // The component sits on `:loanId/transactions/:id/edit`, one level below the
+    // route that declares the loan id, which is what the base component walks up
+    // to when it navigates to a loan tab.
+    const loansContainerRoute: any = {};
+    const transactionRoute: any = {
+      data: of({ loanDetailsAssociationData: { status: { code: loanStatusCode } } }),
+      routeConfig: { path: ':loanId/transactions/:id' },
+      parent: loansContainerRoute
+    };
+    const editRoute: any = {
+      data: of({ loansAccountTransactionTemplate: template }),
+      routeConfig: { path: 'edit' },
+      parent: transactionRoute,
+      snapshot: { params: { loanId: '1' } }
+    };
+    editRoute.pathFromRoot = [
+      loansContainerRoute,
+      transactionRoute,
+      editRoute
+    ];
     TestBed.configureTestingModule({
       providers: [
         FormBuilder,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            data: of({ loansAccountTransactionTemplate: template }),
-            parent: { data: of({ loanDetailsAssociationData: { status: { code: loanStatusCode } } }) },
-            snapshot: { params: { loanId: '1' } }
-          }
-        },
+        { provide: ActivatedRoute, useValue: editRoute },
         { provide: Router, useValue: routerStub },
         { provide: LoansService, useValue: loansServiceStub },
         {
@@ -128,7 +142,7 @@ describe('EditTransactionComponent', () => {
   function createFilledWorkingCapitalComponent(): EditTransactionComponent {
     const component = createComponent(workingCapitalRepayment, 'loanStatusType.active', true);
     component.editTransactionForm.patchValue({
-      externalId: 'must-not-be-sent',
+      externalId: ' new-wc-external-id ',
       reversalExternalId: ' rev-1 ',
       note: ' Wrong amount ',
       accountNumber: ' ACC-1234 ',
@@ -154,6 +168,12 @@ describe('EditTransactionComponent', () => {
     expect(component.editTransactionForm.controls.externalId.value).toBeNull();
   });
 
+  it('leaves the payment type empty when the term loan transaction has no payment detail', () => {
+    const component = createComponent({ ...repaymentTemplate, paymentDetailData: null });
+
+    expect(component.editTransactionForm.controls.paymentTypeId.value).toBeNull();
+  });
+
   it('posts the adjust command against the transaction being adjusted', () => {
     const component = createComponent();
 
@@ -176,8 +196,8 @@ describe('EditTransactionComponent', () => {
     // route, leaving the rewritten loan data unresolved.
     expect(routerStub.navigate).toHaveBeenCalledWith(
       [
-        '../',
-        '../'
+        '1',
+        'transactions'
       ],
       expect.any(Object)
     );
@@ -306,7 +326,7 @@ describe('EditTransactionComponent', () => {
       expect(loansServiceStub.executeLoansAccountTransactionsCommand).not.toHaveBeenCalled();
     });
 
-    it('nests the payment details and never sends the external id', () => {
+    it('nests the payment details and sends the external id of the replacement', () => {
       const component = createFilledWorkingCapitalComponent();
 
       component.submit();
@@ -316,6 +336,7 @@ describe('EditTransactionComponent', () => {
         transactionAmount: 150,
         dateFormat: 'dd MMMM yyyy',
         locale: 'en',
+        externalId: 'new-wc-external-id',
         reversalExternalId: 'rev-1',
         note: 'Wrong amount',
         paymentDetails: { paymentTypeId: 1, accountNumber: 'ACC-1234', receiptNumber: 'R-1' }
@@ -339,11 +360,23 @@ describe('EditTransactionComponent', () => {
       });
     });
 
-    it('navigates away instead of offering the form for a type the command only reverses', () => {
+    it('offers the form for every repayment like type the adjust command accepts', () => {
       [
         22,
         23,
         26
+      ].forEach((typeId) => {
+        routerStub.navigate.mockClear();
+        createComponent({ ...workingCapitalRepayment, type: { id: typeId } }, 'loanStatusType.active', true);
+
+        expect(routerStub.navigate).not.toHaveBeenCalled();
+      });
+    });
+
+    it('navigates away instead of offering the form for a type the command rejects', () => {
+      [
+        1,
+        9
       ].forEach((typeId) => {
         routerStub.navigate.mockClear();
         createComponent({ ...workingCapitalRepayment, type: { id: typeId } }, 'loanStatusType.active', true);

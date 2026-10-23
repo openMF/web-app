@@ -9,11 +9,11 @@
 <h1 mat-dialog-title>{{ 'labels.heading.Keyboard Shortcuts' | translate }}</h1>
 
 <div mat-dialog-content>
-  <div class="layout-column gap-2px">
+  <div class="layout-column">
     @for (item of buttonConfig.buttonCombinations; track item) {
       <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill flex-50">
-        <span class="flex-50">
+      <div class="shortcut-row">
+        <span class="shortcut-combination">
           @if (item.ctrlKey) {
             <span>
               <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
@@ -35,7 +35,7 @@
             >
           }
         </span>
-        <span class="flex-50">{{ item.title }}</span>
+        <span class="shortcut-description">{{ item.title }}</span>
       </div>
     }
   </div>

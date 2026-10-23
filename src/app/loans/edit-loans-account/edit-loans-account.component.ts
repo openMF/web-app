@@ -117,7 +117,8 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
         periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
-        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
       };
     }
     if (this.loansAccountProductTemplate.loanProductId) {
@@ -267,7 +268,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     ) {
       delete loansAccountData.isFloatingInterestRate;
     }
-    loansAccountData.principal = loansAccountData.principalAmount;
+    // Send the principal as a number: Fineract reads a text amount with the request locale,
+    // so "1500.75" would be saved as 150075 in es, de or pt.
+    loansAccountData.principal = Number(loansAccountData.principalAmount);
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
@@ -320,19 +323,27 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       ) {
         delete payload['breachId'];
         delete payload['nearBreachId'];
+        // Locked breach settings are inherited from the product; getRawValue() would still carry the disabled value.
+        // The backend rejects these keys by presence (even null), so they must be absent, not emptied.
+        delete payload['breachGraceDays'];
+        delete payload['breachStartType'];
       }
       if (
         !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
         this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
       ) {
         delete payload['delinquencyBucketId'];
+        // Grace days and start type follow the bucket override switch (FINERACT-2684).
+        delete payload['delinquencyGraceDays'];
+        delete payload['delinquencyStartType'];
       }
     }
 
     // No Empty values to be sent.
     [
       'delinquencyGraceDays',
-      'delinquencyStartType'
+      'delinquencyStartType',
+      'breachStartType'
     ].forEach((attr: string) => {
       if (payload[attr] === null || payload[attr] === '') {
         delete payload[attr];
