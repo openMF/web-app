@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { ChangeDetectorRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from 'app/settings/settings.service';
@@ -15,6 +16,7 @@ describe('CurrencyNamePipe', () => {
   let pipe: CurrencyNamePipe;
   let translateServiceSpy: any;
   let settingsServiceSpy: any;
+  let changeDetectorRefSpy: any;
 
   beforeEach(() => {
     translateServiceSpy = {
@@ -26,12 +28,14 @@ describe('CurrencyNamePipe', () => {
     settingsServiceSpy = {
       language: { code: 'es-MX' }
     };
+    changeDetectorRefSpy = { markForCheck: jest.fn() };
 
     TestBed.configureTestingModule({
       providers: [
         CurrencyNamePipe,
         { provide: TranslateService, useValue: translateServiceSpy },
-        { provide: SettingsService, useValue: settingsServiceSpy }
+        { provide: SettingsService, useValue: settingsServiceSpy },
+        { provide: ChangeDetectorRef, useValue: changeDetectorRefSpy }
       ]
     });
 
@@ -56,5 +60,11 @@ describe('CurrencyNamePipe', () => {
   it('should return empty string for null or undefined input', () => {
     expect(pipe.transform(null)).toBe('');
     expect(pipe.transform(undefined)).toBe('');
+  });
+
+  it('should mark the view for check when the language changes', () => {
+    const onLangChange = translateServiceSpy.onLangChange.subscribe.mock.calls[0][0];
+    onLangChange();
+    expect(changeDetectorRefSpy.markForCheck).toHaveBeenCalled();
   });
 });
