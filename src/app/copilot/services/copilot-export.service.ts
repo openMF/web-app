@@ -321,9 +321,11 @@ export class CopilotExportService {
 
   private pageHtml(exchange: Exchange): string {
     const t = (key: string): string => this.translate.instant(key);
+    // The client name is text somebody typed into Fineract and the asker is a username, so
+    // both are escaped rather than rendered. The labels are the app's own translations.
     const meta = [
-      exchange.clientName ? `${t('copilot.export.client')}: ${exchange.clientName}` : '',
-      exchange.askedBy ? `${t('copilot.export.askedBy')}: ${exchange.askedBy}` : '',
+      exchange.clientName ? `${t('copilot.export.client')}: ${this.escape(exchange.clientName)}` : '',
+      exchange.askedBy ? `${t('copilot.export.askedBy')}: ${this.escape(exchange.askedBy)}` : '',
       new Date(exchange.reply.timestamp).toLocaleString()
     ]
       .filter(Boolean)
