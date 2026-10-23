@@ -478,7 +478,7 @@
     "validation.msg.fixeddeposit.chart.slabs.period.range.start.incorrect": "Period Must start with 1",
     "validation.msg.fixeddeposit.chart.slabs.range.end.incorrect": "Period/Amount range must end as open for interest rate chart",
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "Period/Amount range has gap for interest rate chart",
-    "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Period/Amount range overlapping for interest rate chart",
+    "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Interest rate slabs overlap. Please adjust the amount or period ranges.",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Period/Amount range start is incorrect for interest rate chart",
     "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Fixed Deposit Posting period cannot be less than compounding period",
