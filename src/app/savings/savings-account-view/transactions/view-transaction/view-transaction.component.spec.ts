@@ -11,8 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
+import en from '../../../../../assets/translations/en-US.json';
+import es from '../../../../../assets/translations/es-MX.json';
 import { describe, expect, it, jest } from '@jest/globals';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -21,14 +23,15 @@ import { ViewTransactionComponent } from './view-transaction.component';
 
 describe('Savings ViewTransactionComponent', () => {
   let fixture: ComponentFixture<ViewTransactionComponent>;
+  let routeData: BehaviorSubject<Record<string, unknown>>;
 
   const savingsAccountData = (overrides: Record<string, unknown> = {}) => ({
-    id: 87,
-    accountNo: '000000001',
-    externalId: 'CR92037300110010000087',
-    savingsProductName: 'anvay',
-    clientName: 'an kh',
-    clientAccountNo: '000000001',
+    id: 101,
+    accountNo: '0000067',
+    externalId: 'CR-DEMO-000067',
+    savingsProductName: 'Demo Savings',
+    clientName: 'Synthetic Customer',
+    clientAccountNo: '000000101',
     currency: {
       code: 'USD'
     },
@@ -52,6 +55,11 @@ describe('Savings ViewTransactionComponent', () => {
   const setup = async (accountData = savingsAccountData()) => {
     localStorage.setItem('mifosXLanguage', JSON.stringify({ code: 'en-US' }));
 
+    routeData = new BehaviorSubject<Record<string, unknown>>({
+      savingsAccountData: accountData,
+      transactionDatatables: [{ registeredTableName: 'Demo transaction table' }]
+    });
+
     await TestBed.configureTestingModule({
       imports: [
         ViewTransactionComponent,
@@ -64,13 +72,10 @@ describe('Savings ViewTransactionComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            data: of({
-              savingsAccountData: accountData,
-              transactionDatatables: [{ registeredTableName: 'Rastro valida credito' }]
-            }),
+            data: routeData.asObservable(),
             snapshot: {
               params: {
-                savingAccountId: '87'
+                savingAccountId: '101'
               }
             },
             parent: null
@@ -89,6 +94,11 @@ describe('Savings ViewTransactionComponent', () => {
       ]
     }).compileComponents();
 
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en-US', en);
+    translate.setTranslation('es-MX', es);
+    translate.use('en-US');
+
     fixture = TestBed.createComponent(ViewTransactionComponent);
     fixture.detectChanges();
   };
@@ -98,16 +108,16 @@ describe('Savings ViewTransactionComponent', () => {
   it('renders the savings account profile header on the transaction detail page', async () => {
     await setup();
 
-    expect(text()).toContain('labels.inputs.Savings Product');
-    expect(text()).toContain('anvay');
-    expect(text()).toContain('labels.inputs.Account Number');
-    expect(text()).toContain('000000001');
-    expect(text()).toContain('labels.inputs.External Id');
-    expect(text()).toContain('CR92037300110010000087');
-    expect(text()).toContain('an kh');
-    expect(text()).toContain('labels.heading.Account Overview');
-    expect(text()).toContain('labels.inputs.Current Balance');
-    expect(text()).toContain('labels.inputs.Available Balance');
+    expect(text()).toContain('Savings Product');
+    expect(text()).toContain('Demo Savings');
+    expect(text()).toContain('Account Number');
+    expect(text()).toContain('0000067');
+    expect(text()).toContain('External Id');
+    expect(text()).toContain('CR-DEMO-000067');
+    expect(text()).toContain('Synthetic Customer');
+    expect(text()).toContain('Account Overview');
+    expect(text()).toContain('Current Balance');
+    expect(text()).toContain('Available Balance');
   });
 
   it('does not render the client avatar profile metadata on transaction detail', async () => {
@@ -123,7 +133,84 @@ describe('Savings ViewTransactionComponent', () => {
   it('keeps existing transaction tabs rendered', async () => {
     await setup();
 
-    expect(text()).toContain('labels.heading.General');
-    expect(text()).toContain('Rastro valida credito');
+    expect(text()).toContain('General');
+    expect(text()).toContain('Demo transaction table');
+  });
+
+  it('renders exactly one account External Id between the account number and client name', async () => {
+    await setup();
+    const rows = fixture.nativeElement.querySelectorAll('.external-id-row');
+    expect(rows).toHaveLength(1);
+    expect(rows[0].textContent).toMatch(/External Id\s*:\s*CR-DEMO-000067/);
+    const summary = text();
+    expect(summary.indexOf('Account Number')).toBeLessThan(summary.indexOf('External Id'));
+    expect(summary.indexOf('External Id')).toBeLessThan(summary.indexOf('Synthetic Customer'));
+  });
+
+  it.each([
+    null,
+    undefined,
+    ''
+  ])('omits an empty External Id (%s)', async (externalId) => {
+    await setup(savingsAccountData({ externalId }));
+    expect(fixture.nativeElement.querySelector('.external-id-row')).toBeNull();
+    expect(text()).not.toMatch(/null|undefined/);
+    expect(text()).toContain('Synthetic Customer');
+  });
+
+  it('omits the row when the API omits externalId', async () => {
+    const account = savingsAccountData();
+    delete account.externalId;
+    await setup(account);
+    expect(fixture.nativeElement.querySelector('.external-id-row')).toBeNull();
+  });
+
+  it('preserves the string zero', async () => {
+    await setup(savingsAccountData({ externalId: '0' }));
+    expect(fixture.nativeElement.querySelector('.external-id-row').textContent).toContain('0');
+  });
+
+  it('uses the account identifier even when resolved client and transaction IDs differ', async () => {
+    await setup(savingsAccountData({ externalId: 'ACCOUNT-DEMO-001' }));
+    fixture.autoDetectChanges();
+    routeData.next({
+      ...routeData.value,
+      clientData: { externalId: 'CLIENT-DEMO-001' },
+      savingsAccountTransaction: { externalId: 'TX-DEMO-001' }
+    });
+    await fixture.whenStable();
+    expect(text()).toContain('ACCOUNT-DEMO-001');
+    expect(text()).not.toContain('CLIENT-DEMO-001');
+    expect(text()).not.toContain('TX-DEMO-001');
+  });
+
+  it('refreshes the OnPush summary on reused-route account changes, including an absent ID', async () => {
+    await setup();
+    fixture.autoDetectChanges();
+    routeData.next({
+      ...routeData.value,
+      savingsAccountData: savingsAccountData({ id: 102, accountNo: '0000068', externalId: 'CR-DEMO-000068' })
+    });
+    await fixture.whenStable();
+    expect(text()).toContain('CR-DEMO-000068');
+    expect(text()).not.toContain('CR-DEMO-000067');
+    expect(text()).toContain('0000068');
+    routeData.next({ ...routeData.value, savingsAccountData: savingsAccountData({ externalId: null }) });
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.external-id-row')).toBeNull();
+  });
+
+  it('renders the full long identifier as selectable text', async () => {
+    const externalId = 'ACCOUNT-DEMO-' + 'X'.repeat(88);
+    await setup(savingsAccountData({ externalId }));
+    expect(fixture.nativeElement.querySelector('.external-id-row').textContent).toContain(externalId);
+  });
+
+  it('uses the existing Spanish label without a raw translation key', async () => {
+    await setup();
+    TestBed.inject(TranslateService).use('es-MX');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.external-id-row').textContent).toContain('Id externo');
+    expect(text()).not.toContain('labels.inputs.External Id');
   });
 });
