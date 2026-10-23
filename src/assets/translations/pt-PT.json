@@ -912,7 +912,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Este valor não pode ser substituído: o produto não o permite.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Este tipo de transação não pode ser ajustado por diferença num empréstimo de capital de giro.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "O valor do ajuste não pode ser zero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "O ajuste não pode reduzir a transação abaixo de zero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1306,7 +1309,8 @@
       "Convert": "Converter",
       "Deleting": "A eliminar",
       "Inactivate": "Inativar",
-      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto"
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
+      "Adjust by Difference": "Ajustar por diferença"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -4416,7 +4420,9 @@
       "PERSON": "Pessoa singular",
       "Payment": "Pagamento",
       "Export Date": "Data de exportação",
-      "Label": "Rótulo"
+      "Label": "Rótulo",
+      "Original Amount": "Valor original",
+      "Resulting Amount": "Valor resultante"
     },
     "links": {
       "Community": "Comunidade",
@@ -5896,7 +5902,11 @@
       "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
       "Remaining discount fee available to adjust": "Taxa de desconto restante disponível para ajuste",
       "Cannot precede the discount fee date": "Não pode ser anterior à data da taxa de desconto",
-      "Defined by product": "Definido pelo produto"
+      "Defined by product": "Definido pelo produto",
+      "Adjust by Difference": "Ajustar por diferença",
+      "The adjustment amount cannot be zero": "O valor do ajuste não pode ser zero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "O ajuste anula o valor, pelo que a transação é revertida sem substituição",
+      "A positive amount increases the transaction and a negative one decreases it": "Um valor positivo aumenta a transação e um negativo diminui-a"
     },
     "permissions": {
       "actions": {

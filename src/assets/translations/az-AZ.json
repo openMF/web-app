@@ -875,7 +875,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Bu dəyər dəyişdirilə bilməz: məhsul buna icazə vermir.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Bu əməliyyat növü dövriyyə kapitalı krediti üzrə fərqlə düzəliş edilə bilməz.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Düzəliş məbləği sıfır ola bilməz.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Düzəliş əməliyyatı sıfırdan aşağı sala bilməz."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
@@ -1269,7 +1272,8 @@
       "Create Tenant": "Tenant yarat",
       "Test Connection": "Bağlantını yoxla",
       "Post Dividends": "Dividendləri hesaba yaz",
-      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi"
+      "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
+      "Adjust by Difference": "Fərqlə düzəliş et"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -4373,7 +4377,9 @@
       "On Hold Funds": "Bloklanmış vəsaitlər",
       "Payment": "Ödəniş",
       "Export Date": "İxrac tarixi",
-      "Label": "Etiket"
+      "Label": "Etiket",
+      "Original Amount": "İlkin məbləğ",
+      "Resulting Amount": "Nəticə məbləği"
     },
     "links": {
       "Community": "İcma",
@@ -5854,7 +5860,11 @@
       "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
       "Remaining discount fee available to adjust": "Düzəliş üçün mövcud qalan endirim haqqı",
       "Cannot precede the discount fee date": "Endirim haqqı tarixindən əvvəl ola bilməz",
-      "Defined by product": "Məhsul tərəfindən müəyyən edilib"
+      "Defined by product": "Məhsul tərəfindən müəyyən edilib",
+      "Adjust by Difference": "Fərqlə düzəliş et",
+      "The adjustment amount cannot be zero": "Düzəliş məbləği sıfır ola bilməz",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Düzəliş məbləği ləğv edir, buna görə əməliyyat əvəzsiz geri qaytarılır",
+      "A positive amount increases the transaction and a negative one decreases it": "Müsbət məbləğ əməliyyatı artırır, mənfi məbləğ azaldır"
     },
     "permissions": {
       "actions": {

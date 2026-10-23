@@ -911,7 +911,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Tuto hodnotu nelze přepsat: produkt to nepovoluje.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Tento typ transakce nelze u úvěru na provozní kapitál upravit o rozdíl.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Částka úpravy nesmí být nula.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Úprava nesmí snížit transakci pod nulu."
   },
   "labels": {
     "version": {
@@ -1304,7 +1307,8 @@
       "Convert": "Převést",
       "Deleting": "Mazání",
       "Inactivate": "Deaktivovat",
-      "Discount Fee Adjustment": "Úprava poplatku za slevu"
+      "Discount Fee Adjustment": "Úprava poplatku za slevu",
+      "Adjust by Difference": "Upravit o rozdíl"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -4414,7 +4418,9 @@
       "PERSON": "Fyzická osoba",
       "Payment": "Platba",
       "Export Date": "Datum exportu",
-      "Label": "Popisek"
+      "Label": "Popisek",
+      "Original Amount": "Původní částka",
+      "Resulting Amount": "Výsledná částka"
     },
     "links": {
       "Community": "Společenství",
@@ -5894,7 +5900,11 @@
       "Discount Fee Adjustment": "Úprava poplatku za slevu",
       "Remaining discount fee available to adjust": "Zbývající poplatek za slevu k úpravě",
       "Cannot precede the discount fee date": "Nesmí předcházet datu poplatku za slevu",
-      "Defined by product": "Definováno produktem"
+      "Defined by product": "Definováno produktem",
+      "Adjust by Difference": "Upravit o rozdíl",
+      "The adjustment amount cannot be zero": "Částka úpravy nesmí být nula",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Úprava ruší částku, takže transakce bude stornována bez náhrady",
+      "A positive amount increases the transaction and a negative one decreases it": "Kladná částka transakci zvyšuje, záporná ji snižuje"
     },
     "permissions": {
       "actions": {

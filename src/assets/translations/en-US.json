@@ -911,7 +911,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "This value cannot be overridden: the product does not allow it.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "This transaction type cannot be adjusted by difference on a Working Capital loan.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "The adjustment amount cannot be zero.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "The adjustment cannot decrease the transaction below zero."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1305,7 +1308,8 @@
       "Create Tenant": "Create Tenant",
       "Test Connection": "Test Connection",
       "Post Dividends": "Post Dividends",
-      "Discount Fee Adjustment": "Discount Fee Adjustment"
+      "Discount Fee Adjustment": "Discount Fee Adjustment",
+      "Adjust by Difference": "Adjust by Difference"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -4409,7 +4413,9 @@
       "On Hold Funds": "On Hold Funds",
       "Payment": "Payment",
       "Export Date": "Export Date",
-      "Label": "Label"
+      "Label": "Label",
+      "Original Amount": "Original Amount",
+      "Resulting Amount": "Resulting Amount"
     },
     "links": {
       "Community": "Community",
@@ -5890,7 +5896,11 @@
       "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Remaining discount fee available to adjust": "Remaining discount fee available to adjust",
       "Cannot precede the discount fee date": "Cannot precede the discount fee date",
-      "Defined by product": "Defined by product"
+      "Defined by product": "Defined by product",
+      "Adjust by Difference": "Adjust by Difference",
+      "The adjustment amount cannot be zero": "The adjustment amount cannot be zero",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "The adjustment cancels the amount, so the transaction is reversed without a replacement",
+      "A positive amount increases the transaction and a negative one decreases it": "A positive amount increases the transaction and a negative one decreases it"
     },
     "permissions": {
       "actions": {

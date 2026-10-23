@@ -909,7 +909,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Thamani hii haiwezi kubadilishwa: bidhaa hairuhusu.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Aina hii ya muamala haiwezi kurekebishwa kwa tofauti kwenye mkopo wa mtaji wa kazi.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Kiasi cha marekebisho hakiwezi kuwa sifuri.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Marekebisho hayawezi kupunguza muamala chini ya sifuri."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1303,7 +1306,8 @@
       "Convert": "Badilisha",
       "Deleting": "Inafuta",
       "Inactivate": "Zima",
-      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo"
+      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
+      "Adjust by Difference": "Rekebisha kwa Tofauti"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -4413,7 +4417,9 @@
       "PERSON": "Mtu binafsi",
       "Payment": "Malipo",
       "Export Date": "Tarehe ya Kuhamisha",
-      "Label": "Lebo"
+      "Label": "Lebo",
+      "Original Amount": "Kiasi Asilia",
+      "Resulting Amount": "Kiasi Kinachotokana"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5893,7 +5899,11 @@
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Remaining discount fee available to adjust": "Ada ya punguzo iliyosalia inayoweza kurekebishwa",
       "Cannot precede the discount fee date": "Haiwezi kutangulia tarehe ya ada ya punguzo",
-      "Defined by product": "Imefafanuliwa na bidhaa"
+      "Defined by product": "Imefafanuliwa na bidhaa",
+      "Adjust by Difference": "Rekebisha kwa Tofauti",
+      "The adjustment amount cannot be zero": "Kiasi cha marekebisho hakiwezi kuwa sifuri",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Marekebisho yanafuta kiasi, kwa hivyo muamala unatenguliwa bila mbadala",
+      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza"
     },
     "permissions": {
       "actions": {

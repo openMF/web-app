@@ -56,8 +56,10 @@ import {
   canAdjustLoanTransaction,
   canAdjustWorkingCapitalDiscountFee,
   canAdjustWorkingCapitalTransaction,
+  canAdjustWorkingCapitalTransactionByDelta,
   canReverseLoanTransaction,
-  loanAllowsReversal
+  loanAllowsReversal,
+  WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION
 } from '../../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -129,6 +131,14 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   undoPermission: string = DEFAULT_UNDO_PERMISSION;
   /** Permission required by the Adjust button; each product posts its own adjust command. */
   adjustPermission: string = DEFAULT_UNDO_PERMISSION;
+  /** Permission required by the Adjust by Difference button, a Working Capital command of its own. */
+  readonly adjustByDeltaPermission = WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION;
+  /**
+   * True when the Adjust by Difference button is offered: Working Capital
+   * only, on the types its delta based adjustment accepts. The amount sent is
+   * the signed difference, so it sits beside Adjust rather than replacing it.
+   */
+  allowAdjustByDelta = false;
   /**
    * True when the Discount Fee Adjustment button is offered. Its own command,
    * shown only on a Working Capital discount fee: it draws the remaining
@@ -186,6 +196,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       this.transactionType = this.transactionData?.type ?? null;
       if (!this.transactionType) {
         this.allowEdition = false;
+        this.allowAdjustByDelta = false;
         this.allowUndo = false;
         this.allowChargeback = false;
         this.allowDiscountFeeAdjustment = false;
@@ -210,6 +221,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       this.allowEdition = this.isWorkingCapital
         ? canAdjustWorkingCapitalTransaction(this.transactionType, alreadyReversed)
         : canAdjustLoanTransaction(this.transactionType, alreadyReversed);
+      this.allowAdjustByDelta =
+        this.isWorkingCapital && canAdjustWorkingCapitalTransactionByDelta(this.transactionType, alreadyReversed);
       this.allowUndo = this.isWorkingCapital
         ? this.allowUndoTransaction(alreadyReversed, this.transactionType, !!this.transactionData.wcLoanId)
         : (canReverseLoanTransaction(this.transactionType, alreadyReversed) &&

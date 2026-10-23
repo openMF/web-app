@@ -914,7 +914,10 @@
     "validation.msg.WORKINGCAPITALLOAN.breachStartType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
     "validation.msg.WORKINGCAPITALLOAN.discount.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
     "validation.msg.WORKINGCAPITALLOAN.repaymentEvery.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
-    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht."
+    "validation.msg.WORKINGCAPITALLOAN.repaymentFrequencyType.override.not.allowed.by.product": "Dieser Wert kann nicht überschrieben werden: Das Produkt erlaubt es nicht.",
+    "validation.msg.wc.loan.transaction.adjust.by.delta.not.supported": "Dieser Transaktionstyp kann bei einem Betriebsmitteldarlehen nicht nach Differenz angepasst werden.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.zero.amount.not.supported": "Der Anpassungsbetrag darf nicht null sein.",
+    "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Die Anpassung darf die Transaktion nicht unter null verringern."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -1308,7 +1311,8 @@
       "Convert": "Umwandeln",
       "Deleting": "Wird gelöscht",
       "Inactivate": "Deaktivieren",
-      "Discount Fee Adjustment": "Anpassung der Rabattgebühr"
+      "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
+      "Adjust by Difference": "Nach Differenz anpassen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -4418,7 +4422,9 @@
       "PERSON": "Natürliche Person",
       "Payment": "Zahlung",
       "Export Date": "Exportdatum",
-      "Label": "Bezeichnung"
+      "Label": "Bezeichnung",
+      "Original Amount": "Ursprünglicher Betrag",
+      "Resulting Amount": "Resultierender Betrag"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5898,7 +5904,11 @@
       "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
       "Remaining discount fee available to adjust": "Verbleibende anpassbare Rabattgebühr",
       "Cannot precede the discount fee date": "Darf nicht vor dem Datum der Rabattgebühr liegen",
-      "Defined by product": "Durch das Produkt festgelegt"
+      "Defined by product": "Durch das Produkt festgelegt",
+      "Adjust by Difference": "Nach Differenz anpassen",
+      "The adjustment amount cannot be zero": "Der Anpassungsbetrag darf nicht null sein",
+      "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Die Anpassung hebt den Betrag auf, daher wird die Transaktion ohne Ersatz storniert",
+      "A positive amount increases the transaction and a negative one decreases it": "Ein positiver Betrag erhöht die Transaktion, ein negativer verringert sie"
     },
     "permissions": {
       "actions": {
