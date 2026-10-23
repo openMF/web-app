@@ -1,0 +1,20 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 id="logout-dialog-title" mat-dialog-title>{{ 'labels.heading.Sign Out' | translate }}</h1>
+<mat-dialog-content>
+  <p id="logout-dialog-message">{{ 'labels.dialogContext.Are you sure you want to log out' | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button id="logout-dialog-cancel" mat-raised-button [mat-dialog-close]="false">
+    {{ 'labels.buttons.Cancel' | translate }}
+  </button>
+  <button id="logout-dialog-confirm" mat-raised-button color="primary" [mat-dialog-close]="true">
+    {{ 'labels.buttons.Sign Out' | translate }}
+  </button>
+</mat-dialog-actions>

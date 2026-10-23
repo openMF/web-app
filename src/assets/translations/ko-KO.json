@@ -1966,6 +1966,7 @@
       "Institutional Operations & Dashboard Management": "기관 운영 및 대시보드 관리",
       "Institutional Operations Overview": "기관 운영 개요",
       "Active Loans Portfolio": "활성 대출 포트폴리오",
+      "Sign Out": "로그아웃",
       "Total Savings Balance": "총 저축 잔액",
       "Total Share Capital": "총 납입자본금",
       "Shareholders": "주주",
@@ -4624,6 +4625,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "오늘부터 새로운 깨끗한 기간이 시작됩니다.",
+      "Are you sure you want to log out": "로그아웃하시겠습니까?",
       "Are you sure you want to resume the breach pause": "중단된 작업을 재개하시겠습니까?",
       "Are you sure you want to undo the last breach reset": "마지막 위반 초기화를 실행 취소하시겠습니까? 초기화 표시와 연체 금액 재계산이 되돌려집니다. 초기화 날짜부터 기간을 다시 시작하여 생성된 기간 분할은 되돌려지지 않습니다.",
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
@@ -5727,6 +5729,7 @@
       "Schema name cannot be changed": "변경할 수 없습니다. 테넌트의 데이터가 이미 그곳에 있습니다.",
       "Leave blank to clear": "지우려면 비워 두세요.",
       "Leave blank to keep the stored password": "저장된 비밀번호를 유지하려면 비워 두세요.",
+      "Leave blank to keep the stored server key": "저장된 서버 키를 유지하려면 비워 두세요.",
       "Enter the password to test": "연결을 테스트하려면 데이터베이스 비밀번호를 입력하세요. 저장된 비밀번호는 반환되지 않습니다.",
       "Deactivate before removing": "테넌트를 제거하기 전에 비활성화하세요.",
       "Test connection on create hint": "서버, 자격 증명, 그리고 데이터베이스가 이미 있는지 확인합니다.",

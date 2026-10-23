@@ -1969,6 +1969,7 @@
       "Institutional Operations & Dashboard Management": "Opérations institutionnelles et gestion des tableaux de bord",
       "Institutional Operations Overview": "Aperçu des opérations institutionnelles",
       "Active Loans Portfolio": "Portefeuille de prêts actifs",
+      "Sign Out": "Se déconnecter",
       "Total Savings Balance": "Solde total de l’épargne",
       "Total Share Capital": "Capital social total",
       "Shareholders": "Actionnaires",
@@ -4627,6 +4628,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Une nouvelle période vierge commencera aujourd’hui.",
+      "Are you sure you want to log out": "Êtes-vous sûr de vouloir vous déconnecter ?",
       "Are you sure you want to resume the breach pause": "Êtes-vous sûr de vouloir reprendre le manquement après sa mise en pause ?",
       "Are you sure you want to undo the last breach reset": "Êtes-vous sûr de vouloir annuler la dernière réinitialisation du manquement ? Cela annule l'indicateur de réinitialisation et le recalcul du montant en retard ; une division de période créée par le redémarrage de la période à la date de réinitialisation n'est pas annulée.",
       "Are you sure you want Unassign Staff": "Êtes-vous sûr de vouloir désassigner le personnel",
@@ -5730,6 +5732,7 @@
       "Schema name cannot be changed": "Non modifiable : les données du locataire s’y trouvent déjà.",
       "Leave blank to clear": "Laissez vide pour effacer.",
       "Leave blank to keep the stored password": "Laissez vide pour conserver le mot de passe enregistré.",
+      "Leave blank to keep the stored server key": "Laissez vide pour conserver la clé du serveur enregistrée.",
       "Enter the password to test": "Saisissez le mot de passe de la base de données pour tester la connexion. Celui qui est enregistré n’est jamais renvoyé.",
       "Deactivate before removing": "Désactivez le locataire avant de le supprimer.",
       "Test connection on create hint": "Vérifie le serveur, les identifiants et si la base de données existe déjà.",

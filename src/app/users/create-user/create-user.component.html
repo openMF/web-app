@@ -95,28 +95,10 @@
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (userForm.controls.password.hasError('minlength')) {
-                <mat-error>
-                  {{ 'labels.commons.Password should be at least' | translate }}
-                  <strong>{{ 'labels.commons.12 characters long' | translate }}</strong>
-                </mat-error>
-              }
               @if (userForm.controls.password.hasError('maxlength')) {
                 <mat-error>
                   {{ 'labels.commons.Password should not be more than' | translate }}
                   <strong>{{ 'labels.commons.50 characters long' | translate }}</strong>
-                </mat-error>
-              }
-              @if (
-                userForm.controls.password.hasError('pattern') &&
-                !(userForm.controls.password.hasError('minlength') || userForm.controls.password.hasError('maxlength'))
-              ) {
-                <mat-error>
-                  {{ 'labels.commons.Password should include a' | translate }}
-                  <strong>{{ 'labels.commons.numeral' | translate }}</strong> {{ 'labels.commons.and at' | translate }}
-                  <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong> ,<strong>{{
-                    'labels.commons.lowercase and special character' | translate
-                  }}</strong>
                 </mat-error>
               }
             </mat-form-field>
@@ -133,6 +115,12 @@
                 </mat-error>
               }
             </mat-form-field>
+          }
+
+          @if (!userForm.controls.sendPasswordToEmail.value && passwordPolicyDescription) {
+            <p class="flex-98 password-policy-hint">
+              {{ passwordPolicyDescription | translateKey: 'passwordPreferences' }}
+            </p>
           }
 
           @if (

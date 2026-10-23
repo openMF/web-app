@@ -1971,6 +1971,7 @@
       "Institutional Operations & Dashboard Management": "Institutioneller Betrieb und Dashboard-Verwaltung",
       "Institutional Operations Overview": "Übersicht über den institutionellen Betrieb",
       "Active Loans Portfolio": "Aktives Kreditportfolio",
+      "Sign Out": "Abmelden",
       "Total Savings Balance": "Gesamtsparguthaben",
       "Total Share Capital": "Gesamtes Grundkapital",
       "Shareholders": "Aktionäre",
@@ -4629,6 +4630,7 @@
     },
     "dialogContext": {
       "A new clean period will start today": "Ab heute beginnt eine neue, saubere Periode.",
+      "Are you sure you want to log out": "Sind Sie sicher, dass Sie sich abmelden möchten ?",
       "Are you sure you want to resume the breach pause": "Sind Sie sicher, dass Sie den Verstoß wirklich fortsetzen",
       "Are you sure you want to undo the last breach reset": "Sind Sie sicher, dass Sie die letzte Zurücksetzung des Verstoßes rückgängig machen möchten? Dies macht die Zurücksetzungsmarkierung und die Neuberechnung des überfälligen Betrags rückgängig; eine Aufteilung der Periode durch den Neustart ab dem Zurücksetzungsdatum wird nicht rückgängig gemacht.",
       "Are you sure you want Unassign Staff": "Sind Sie sicher, dass Sie das Personal freistellen möchten",
@@ -5732,6 +5734,7 @@
       "Schema name cannot be changed": "Nicht änderbar — die Daten des Mandanten liegen bereits dort.",
       "Leave blank to clear": "Leer lassen, um den Wert zu löschen.",
       "Leave blank to keep the stored password": "Leer lassen, um das gespeicherte Passwort zu behalten.",
+      "Leave blank to keep the stored server key": "Leer lassen, um den gespeicherten Serverschlüssel zu behalten.",
       "Enter the password to test": "Geben Sie das Datenbankpasswort ein, um die Verbindung zu testen. Das gespeicherte wird nie zurückgegeben.",
       "Deactivate before removing": "Deaktivieren Sie den Mandanten, bevor Sie ihn entfernen.",
       "Test connection on create hint": "Prüft den Server, die Zugangsdaten und ob die Datenbank bereits existiert.",

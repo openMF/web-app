@@ -232,6 +232,7 @@ export class CreateHookComponent implements OnInit {
       config: {
         'Payload URL': string;
         'Content Type'?: string;
+        'Phone Number'?: string;
         'SMS Provider'?: string;
         'SMS Provider Account Id'?: string;
         'SMS Provider Token'?: string;
@@ -244,6 +245,8 @@ export class CreateHookComponent implements OnInit {
       config: {
         'Payload URL': this.hookForm.get('payloadUrl').value,
         'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
+        'Phone Number':
+          this.hookForm.get('name').value === 'SMS Bridge' ? this.hookForm.get('phoneNumber').value : undefined,
         'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
         'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
           ? this.hookForm.get('smsProviderAccountId').value
