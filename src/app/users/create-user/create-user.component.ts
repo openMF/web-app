@@ -16,7 +16,8 @@ import {
   ViewChild,
   AfterViewInit,
   inject,
-  DestroyRef
+  DestroyRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +25,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { ActivePasswordPolicy, UsersService } from '../users.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 
 /** Custom Dialog Component */
@@ -58,6 +59,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   private dialog = inject(MatDialog);
   private passwordsUtility = inject(PasswordsUtility);
   private destroyRef = inject(DestroyRef);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** User form. */
   userForm: FormGroup;
@@ -67,6 +69,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   rolesData: any;
   /** Staff data. */
   staffData: any;
+  /** Description of the active password policy. */
+  passwordPolicyDescription: string | null = null;
 
   /* Reference of create user form */
   @ViewChild('userFormRef') userFormRef: ElementRef<any>;
@@ -96,6 +100,28 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     this.createUserForm();
     this.setStaffData();
     this.setConditionalControls();
+    this.setPasswordPolicy();
+  }
+
+  /**
+   * Gets the active password policy. Fineract checks the password against it,
+   * but only sends its description, so the description is shown as the rule.
+   */
+  setPasswordPolicy() {
+    this.usersService
+      .getActivePasswordPolicy()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (policy: ActivePasswordPolicy) => {
+          this.passwordPolicyDescription = policy?.description ?? null;
+          this.changeDetectorRef.markForCheck();
+        },
+        // Without READ_PASSWORD_PREFERENCES the hint is left out; Fineract still checks the password.
+        error: () => {
+          this.passwordPolicyDescription = null;
+          this.changeDetectorRef.markForCheck();
+        }
+      });
   }
 
   /**
@@ -176,7 +202,15 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
             Validators.email
           ]);
         } else {
-          this.userForm.addControl('password', new FormControl('', this.passwordsUtility.getPasswordValidators()));
+          // Fineract checks the password against the active password policy and
+          // returns the policy description when it does not match.
+          this.userForm.addControl(
+            'password',
+            new FormControl('', [
+              Validators.required,
+              Validators.maxLength(50)
+            ])
+          );
           this.userForm.addControl(
             'repeatPassword',
             new FormControl('', [
