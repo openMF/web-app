@@ -7696,5 +7696,16 @@
       "CURRENCY_UNSUPPORTED": "Die Kontowährung wird nicht unterstützt.",
       "NO_WITHDRAWABLE_FUNDS": "Kein abhebbares Guthaben verfügbar."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Prozessschritt nicht verfügbar",
+    "stepUnavailable": "Ausstehender Schritt konnte nicht ermittelt werden",
+    "statusUnavailable": "Registrierungsstatus nicht verfügbar",
+    "permissionDenied": "Sie haben keine Berechtigung, Interessenten anzuzeigen.",
+    "invalidFilters": "Prüfen Sie die Daten und den Registrierungsstatus und suchen Sie erneut.",
+    "timeout": "Zeitüberschreitung bei der Suche. Bitte erneut versuchen.",
+    "invalidDate": "Geben Sie ein gültiges Datum ein.",
+    "pendingStep": "Ausstehender Schritt",
+    "registrationDate": "Registrierungsdatum"
   }
 }

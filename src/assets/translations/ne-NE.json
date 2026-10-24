@@ -7694,5 +7694,16 @@
       "CURRENCY_UNSUPPORTED": "खाताको मुद्रा समर्थित छैन।",
       "NO_WITHDRAWABLE_FUNDS": "निकासीयोग्य रकम उपलब्ध छैन।"
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "प्रक्रियाको चरण उपलब्ध छैन",
+    "stepUnavailable": "बाँकी चरण निर्धारण गर्न सकिएन",
+    "statusUnavailable": "दर्ता स्थिति उपलब्ध छैन",
+    "permissionDenied": "तपाईंसँग सम्भावित ग्राहक हेर्ने अनुमति छैन।",
+    "invalidFilters": "मिति र दर्ता स्थिति जाँच गरी फेरि खोज्नुहोस्।",
+    "timeout": "खोजको समय सकियो। फेरि प्रयास गर्नुहोस्।",
+    "invalidDate": "मान्य मिति प्रविष्ट गर्नुहोस्।",
+    "pendingStep": "बाँकी चरण",
+    "registrationDate": "दर्ता मिति"
   }
 }

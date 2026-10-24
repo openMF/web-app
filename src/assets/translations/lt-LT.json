@@ -7691,5 +7691,16 @@
       "CURRENCY_UNSUPPORTED": "Sąskaitos valiuta nepalaikoma.",
       "NO_WITHDRAWABLE_FUNDS": "Nėra lėšų, kurias galima išimti."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Proceso etapas nepasiekiamas",
+    "stepUnavailable": "Nepavyko nustatyti laukiančio veiksmo",
+    "statusUnavailable": "Registracijos būsena nepasiekiama",
+    "permissionDenied": "Neturite leidimo peržiūrėti potencialių klientų.",
+    "invalidFilters": "Patikrinkite datas ir registracijos būseną ir ieškokite dar kartą.",
+    "timeout": "Paieškos laikas baigėsi. Bandykite dar kartą.",
+    "invalidDate": "Įveskite tinkamą datą.",
+    "pendingStep": "Laukiantis veiksmas",
+    "registrationDate": "Registracijos data"
   }
 }

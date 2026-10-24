@@ -7683,5 +7683,16 @@
       "CURRENCY_UNSUPPORTED": "The account currency is unsupported.",
       "NO_WITHDRAWABLE_FUNDS": "No withdrawable funds are available."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Process stage unavailable",
+    "stepUnavailable": "Pending step could not be determined",
+    "statusUnavailable": "Registration status unavailable",
+    "permissionDenied": "You do not have permission to view prospects.",
+    "invalidFilters": "Check the dates and registration status, then search again.",
+    "timeout": "The search timed out. Please try again.",
+    "invalidDate": "Enter a valid date.",
+    "pendingStep": "Pending Step",
+    "registrationDate": "Registration Date"
   }
 }

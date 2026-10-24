@@ -23,6 +23,7 @@ import {
   CREDIT_APPLICATIONS_PERMISSION,
   creditApplicationsGuard
 } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
+import { pendingProspectsGuard } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.guard';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
@@ -94,6 +95,7 @@ export const routes: Routes = [
         {
           path: 'pending-prospects',
           component: PendingProspectsComponent,
+          canActivate: [pendingProspectsGuard],
           data: { title: 'Pending Prospects', permissions: ['READ_PROSPECT'] }
         },
         {

@@ -7691,5 +7691,16 @@
       "CURRENCY_UNSUPPORTED": "Konta valūta netiek atbalstīta.",
       "NO_WITHDRAWABLE_FUNDS": "Nav pieejamu līdzekļu izņemšanai."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Procesa posms nav pieejams",
+    "stepUnavailable": "Nevarēja noteikt nepabeigto soli",
+    "statusUnavailable": "Reģistrācijas statuss nav pieejams",
+    "permissionDenied": "Jums nav atļaujas skatīt potenciālos klientus.",
+    "invalidFilters": "Pārbaudiet datumus un reģistrācijas statusu un meklējiet vēlreiz.",
+    "timeout": "Meklēšanas laiks ir beidzies. Mēģiniet vēlreiz.",
+    "invalidDate": "Ievadiet derīgu datumu.",
+    "pendingStep": "Nepabeigtais solis",
+    "registrationDate": "Reģistrācijas datums"
   }
 }
