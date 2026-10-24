@@ -7694,5 +7694,16 @@
       "CURRENCY_UNSUPPORTED": "La moneda de la cuenta no es compatible.",
       "NO_WITHDRAWABLE_FUNDS": "No hay fondos disponibles para retirar."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Etapa del proceso no disponible",
+    "stepUnavailable": "No se pudo determinar el paso pendiente",
+    "statusUnavailable": "Estado de registro no disponible",
+    "permissionDenied": "No tiene permiso para ver los prospectos.",
+    "invalidFilters": "Revise las fechas y el estado de registro y busque de nuevo.",
+    "timeout": "Se agotó el tiempo de búsqueda. Inténtelo de nuevo.",
+    "invalidDate": "Introduzca una fecha válida.",
+    "pendingStep": "Paso pendiente",
+    "registrationDate": "Fecha de registro"
   }
 }

@@ -7694,5 +7694,16 @@
       "CURRENCY_UNSUPPORTED": "La valuta del conto non è supportata.",
       "NO_WITHDRAWABLE_FUNDS": "Non sono disponibili fondi prelevabili."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Fase del processo non disponibile",
+    "stepUnavailable": "Impossibile determinare il passaggio in sospeso",
+    "statusUnavailable": "Stato di registrazione non disponibile",
+    "permissionDenied": "Non hai il permesso di visualizzare i potenziali clienti.",
+    "invalidFilters": "Controlla le date e lo stato di registrazione, quindi ripeti la ricerca.",
+    "timeout": "La ricerca è scaduta. Riprova.",
+    "invalidDate": "Inserisci una data valida.",
+    "pendingStep": "Passaggio in sospeso",
+    "registrationDate": "Data di registrazione"
   }
 }

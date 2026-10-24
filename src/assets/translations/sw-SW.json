@@ -7691,5 +7691,16 @@
       "CURRENCY_UNSUPPORTED": "Sarafu ya akaunti haitumiki.",
       "NO_WITHDRAWABLE_FUNDS": "Hakuna fedha zinazoweza kutolewa."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Hatua ya mchakato haipatikani",
+    "stepUnavailable": "Hatua inayosubiri haikuweza kubainishwa",
+    "statusUnavailable": "Hali ya usajili haipatikani",
+    "permissionDenied": "Huna ruhusa ya kuona wateja watarajiwa.",
+    "invalidFilters": "Kagua tarehe na hali ya usajili, kisha utafute tena.",
+    "timeout": "Muda wa utafutaji umeisha. Jaribu tena.",
+    "invalidDate": "Weka tarehe halali.",
+    "pendingStep": "Hatua inayosubiri",
+    "registrationDate": "Tarehe ya usajili"
   }
 }

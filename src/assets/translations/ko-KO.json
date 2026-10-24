@@ -7691,5 +7691,16 @@
       "CURRENCY_UNSUPPORTED": "계좌 통화는 지원되지 않습니다.",
       "NO_WITHDRAWABLE_FUNDS": "인출 가능한 자금이 없습니다."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "프로세스 단계 정보 없음",
+    "stepUnavailable": "미완료 단계를 확인할 수 없습니다",
+    "statusUnavailable": "등록 상태 정보 없음",
+    "permissionDenied": "잠재 고객을 조회할 권한이 없습니다.",
+    "invalidFilters": "날짜와 등록 상태를 확인한 후 다시 검색하세요.",
+    "timeout": "검색 시간이 초과되었습니다. 다시 시도하세요.",
+    "invalidDate": "유효한 날짜를 입력하세요.",
+    "pendingStep": "미완료 단계",
+    "registrationDate": "등록일"
   }
 }

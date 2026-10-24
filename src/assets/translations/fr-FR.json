@@ -7694,5 +7694,16 @@
       "CURRENCY_UNSUPPORTED": "La devise du compte n’est pas prise en charge.",
       "NO_WITHDRAWABLE_FUNDS": "Aucun fonds disponible pour un retrait."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Étape du processus indisponible",
+    "stepUnavailable": "Impossible de déterminer l’étape en attente",
+    "statusUnavailable": "Statut d’inscription indisponible",
+    "permissionDenied": "Vous n’avez pas l’autorisation de consulter les prospects.",
+    "invalidFilters": "Vérifiez les dates et le statut d’inscription, puis relancez la recherche.",
+    "timeout": "Le délai de recherche a expiré. Réessayez.",
+    "invalidDate": "Saisissez une date valide.",
+    "pendingStep": "Étape en attente",
+    "registrationDate": "Date d’inscription"
   }
 }

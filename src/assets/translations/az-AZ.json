@@ -7690,5 +7690,16 @@
       "CURRENCY_UNSUPPORTED": "Hesabın valyutası dəstəklənmir.",
       "NO_WITHDRAWABLE_FUNDS": "Çıxarıla bilən vəsait yoxdur."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Proses mərhələsi mövcud deyil",
+    "stepUnavailable": "Gözləyən addımı müəyyən etmək mümkün olmadı",
+    "statusUnavailable": "Qeydiyyat statusu mövcud deyil",
+    "permissionDenied": "Potensial müştərilərə baxmaq icazəniz yoxdur.",
+    "invalidFilters": "Tarixləri və qeydiyyat statusunu yoxlayın və yenidən axtarın.",
+    "timeout": "Axtarışın vaxtı bitdi. Yenidən cəhd edin.",
+    "invalidDate": "Etibarlı tarix daxil edin.",
+    "pendingStep": "Gözləyən addım",
+    "registrationDate": "Qeydiyyat tarixi"
   }
 }

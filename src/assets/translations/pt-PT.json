@@ -7694,5 +7694,16 @@
       "CURRENCY_UNSUPPORTED": "A moeda da conta não é suportada.",
       "NO_WITHDRAWABLE_FUNDS": "Não existem fundos disponíveis para levantamento."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Etapa do processo indisponível",
+    "stepUnavailable": "Não foi possível determinar a etapa pendente",
+    "statusUnavailable": "Estado do registo indisponível",
+    "permissionDenied": "Não tem permissão para consultar os potenciais clientes.",
+    "invalidFilters": "Verifique as datas e o estado do registo e pesquise novamente.",
+    "timeout": "O tempo de pesquisa expirou. Tente novamente.",
+    "invalidDate": "Introduza uma data válida.",
+    "pendingStep": "Etapa pendente",
+    "registrationDate": "Data de registo"
   }
 }

@@ -7693,5 +7693,16 @@
       "CURRENCY_UNSUPPORTED": "Měna účtu není podporována.",
       "NO_WITHDRAWABLE_FUNDS": "Nejsou dostupné prostředky k výběru."
     }
+  },
+  "pendingProspects": {
+    "stageUnavailable": "Fáze procesu není dostupná",
+    "stepUnavailable": "Čekající krok nelze určit",
+    "statusUnavailable": "Stav registrace není dostupný",
+    "permissionDenied": "Nemáte oprávnění prohlížet zájemce.",
+    "invalidFilters": "Zkontrolujte data a stav registrace a vyhledejte znovu.",
+    "timeout": "Vypršel čas hledání. Zkuste to znovu.",
+    "invalidDate": "Zadejte platné datum.",
+    "pendingStep": "Čekající krok",
+    "registrationDate": "Datum registrace"
   }
 }
