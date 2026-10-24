@@ -46,7 +46,6 @@ import { catchError } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
-import { OrganizationService } from 'app/organization/organization.service';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -103,7 +102,6 @@ export class CreditApplicationsComponent implements OnInit {
   private tasksService = inject(TasksService);
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
-  private organizationService = inject(OrganizationService);
   private productsService = inject(ProductsService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
@@ -118,6 +116,7 @@ export class CreditApplicationsComponent implements OnInit {
   private routePath = this.route.snapshot.routeConfig?.path;
   isCreditSearch = this.routePath === 'credit' || this.route.snapshot.data['title'] === 'Credit';
   isMassRejection = this.routePath === 'mass-rejection' || this.route.snapshot.data['title'] === 'Mass Rejection';
+  isRequests = !this.isCreditSearch && !this.isMassRejection;
   creditApplicationsForm: UntypedFormGroup = this.createSearchForm();
 
   dataSource = new MatTableDataSource<any>([]);
@@ -138,7 +137,6 @@ export class CreditApplicationsComponent implements OnInit {
   clientTypeOptions: OptionItem[] = [];
   stateOptions: OptionItem[] = [];
   statusOptions: OptionItem[] = [...CREDIT_APPLICATION_STATUS_OPTIONS];
-  currencyOptions: OptionItem[] = [];
 
   pageSize = 10;
   pageIndex = 0;
@@ -468,15 +466,13 @@ export class CreditApplicationsComponent implements OnInit {
     forkJoin({
       loanProducts: this.productsService.getLoanProductsBasicDetails().pipe(catchError(() => of([]))),
       clientTemplate: this.clientsService.getClientTemplate().pipe(catchError(() => of({}))),
-      addressTemplate: this.clientsService.getClientAddressTemplate().pipe(catchError(() => of({}))),
-      currencies: this.organizationService.getCurrencies().pipe(catchError(() => of({})))
+      addressTemplate: this.clientsService.getClientAddressTemplate().pipe(catchError(() => of({})))
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: any) => {
         this.loanProductOptions = data.loanProducts || [];
         this.clientTypeOptions = data.clientTemplate?.clientTypeOptions || [];
         this.stateOptions = data.addressTemplate?.stateProvinceIdOptions || [];
-        this.currencyOptions = data.currencies?.selectedCurrencyOptions || data.currencies?.currencyOptions || [];
         this.changeDetectorRef.markForCheck();
       });
   }
@@ -539,10 +535,7 @@ export class CreditApplicationsComponent implements OnInit {
             stateProvinceId: formValue.stateProvinceId,
             municipality: formValue.municipality,
             productId: formValue.productId,
-            minAmount: formValue.minAmount,
-            maxAmount: formValue.maxAmount,
-            status: formValue.status,
-            currencyCode: formValue.currencyCode
+            maxAmount: formValue.maxAmount
           };
 
     return {
@@ -585,10 +578,7 @@ export class CreditApplicationsComponent implements OnInit {
       stateProvinceId: [''],
       municipality: [''],
       productId: [''],
-      minAmount: [''],
-      maxAmount: [''],
-      status: [''],
-      currencyCode: ['']
+      maxAmount: ['']
     });
   }
 
@@ -618,7 +608,7 @@ export class CreditApplicationsComponent implements OnInit {
       return !this.filterError;
     }
 
-    const hasMinAmount = formValue.minAmount !== '' && formValue.minAmount !== null;
+    const hasMinAmount = this.isCreditSearch && formValue.minAmount !== '' && formValue.minAmount !== null;
     const hasMaxAmount = formValue.maxAmount !== '' && formValue.maxAmount !== null;
     const minAmount = Number(formValue.minAmount);
     const maxAmount = Number(formValue.maxAmount);
@@ -633,10 +623,8 @@ export class CreditApplicationsComponent implements OnInit {
       this.filterError = 'labels.text.From Date cannot be after To Date';
     } else if ((hasMinAmount && minAmount < 0) || (hasMaxAmount && maxAmount < 0)) {
       this.filterError = 'labels.text.Amounts cannot be negative';
-    } else if (hasMinAmount && hasMaxAmount && minAmount > maxAmount) {
+    } else if (this.isCreditSearch && hasMinAmount && hasMaxAmount && minAmount > maxAmount) {
       this.filterError = 'labels.text.Minimum Amount cannot be greater than Maximum Amount';
-    } else if (!this.isCreditSearch && (hasMinAmount || hasMaxAmount) && !formValue.currencyCode) {
-      this.filterError = 'labels.text.Currency is required when filtering by amount';
     }
 
     this.changeDetectorRef.markForCheck();

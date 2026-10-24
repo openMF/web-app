@@ -85,7 +85,7 @@ describe('CheckerInboxAndTasksComponent', () => {
       tab.textContent?.trim()
     );
 
-    expect(tabLabels).toContain('labels.inputs.Requests');
+    expect(tabLabels).toContain('labels.inputs.Credit Applications');
     expect(tabLabels).toContain('labels.inputs.Credit');
     expect(tabLabels).toContain('labels.heading.Mass Rejection');
   });
@@ -97,7 +97,7 @@ describe('CheckerInboxAndTasksComponent', () => {
       tab.textContent?.trim()
     );
 
-    expect(tabLabels).not.toContain('labels.inputs.Requests');
+    expect(tabLabels).not.toContain('labels.inputs.Credit Applications');
     expect(tabLabels).not.toContain('labels.inputs.Credit');
     expect(tabLabels).not.toContain('labels.heading.Mass Rejection');
   });
@@ -109,7 +109,7 @@ describe('CheckerInboxAndTasksComponent', () => {
       tab.textContent?.trim()
     );
     const rescheduleLoanIndex = tabLabels.indexOf('labels.inputs.Reschedule Loan');
-    const requestsIndex = tabLabels.indexOf('labels.inputs.Requests');
+    const requestsIndex = tabLabels.indexOf('labels.inputs.Credit Applications');
     const creditIndex = tabLabels.indexOf('labels.inputs.Credit');
     const massRejectionIndex = tabLabels.indexOf('labels.heading.Mass Rejection');
 
@@ -122,7 +122,7 @@ describe('CheckerInboxAndTasksComponent', () => {
     const routeElement = await navigateToComponent(['READ_LOAN']);
 
     const requestsTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
-      tab.textContent?.includes('labels.inputs.Requests')
+      tab.textContent?.includes('labels.inputs.Credit Applications')
     ) as HTMLAnchorElement;
 
     expect(requestsTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/requests');
@@ -131,8 +131,8 @@ describe('CheckerInboxAndTasksComponent', () => {
   it('routes Credit to the credit applications page', async () => {
     const routeElement = await navigateToComponent(['READ_LOAN']);
 
-    const creditTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find((tab: HTMLElement) =>
-      tab.textContent?.includes('labels.inputs.Credit')
+    const creditTab = Array.from(routeElement.querySelectorAll('a[mat-tab-link]')).find(
+      (tab: HTMLElement) => tab.textContent?.trim() === 'labels.inputs.Credit'
     ) as HTMLAnchorElement;
 
     expect(creditTab.getAttribute('href')).toBe('/checker-inbox-and-tasks/credit');

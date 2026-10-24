@@ -32,6 +32,16 @@
     }
   }
 
+  .requests-filter {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, calc((100% - 32px) / 3)));
+    gap: 16px;
+
+    .filter-actions {
+      grid-column: 1 / -1;
+    }
+  }
+
   .filter-actions {
     display: flex;
     gap: 8px;
@@ -70,13 +80,15 @@
 }
 
 @media (width <= 960px) {
-  .tab-container .credit-search-filter {
+  .tab-container .credit-search-filter,
+  .tab-container .requests-filter {
     grid-template-columns: repeat(2, minmax(0, calc((100% - 16px) / 2)));
   }
 }
 
 @media (width <= 600px) {
-  .tab-container .credit-search-filter {
+  .tab-container .credit-search-filter,
+  .tab-container .requests-filter {
     grid-template-columns: minmax(0, 100%);
   }
 }
