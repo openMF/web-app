@@ -211,7 +211,6 @@ export const CREATE_CLIENT_SELECTORS: CreateClientSelectors = {
 export interface ClientsListSelectors {
   searchInput: string;
   searchClearButton: string;
-  showClosedToggle: string;
   /** Multi-select status filter rendered as a compact outline mat-select. */
   statusFilter: string;
   /** Inline (×) button shown next to the filter once a status is selected. */
@@ -235,7 +234,6 @@ export interface ClientsListSelectors {
 export const CLIENTS_LIST_SELECTORS: ClientsListSelectors = {
   searchInput: '.entity-list-container .search input[type="text"]',
   searchClearButton: '.entity-list-container .search-clear',
-  showClosedToggle: '.entity-list-container .toggle',
   statusFilter: '.entity-list-container .status-filter mat-select',
   statusFilterClear: '.entity-list-container .status-filter-clear',
   statusFilterOption: '.mat-mdc-select-panel mat-option',
