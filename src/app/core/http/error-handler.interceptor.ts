@@ -155,6 +155,14 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       return throwError(() => response);
     }
 
+    // FX renders allowlisted translated domain errors; never surface SQL or server messages.
+    if (
+      status !== 401 &&
+      /\/v2\/(?:foreign-currency\/rates|base-teller\/foreign-currency)(?:[/?]|$)/.test(request.url)
+    ) {
+      return throwError(() => response);
+    }
+
     // Tenant branding is cosmetic and optional: the endpoint is absent on
     // deployments without the self-service plugin. Let the caller fall back to
     // the default colour silently instead of interrupting the user with an

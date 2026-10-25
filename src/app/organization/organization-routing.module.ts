@@ -9,6 +9,7 @@
 import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
 import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
 
+import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -471,6 +472,18 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'foreign-currency/rates',
+          canActivate: [fxRateGuard],
+          loadComponent: () => import('./foreign-currency/fx-rates.component').then((m) => m.FxRatesComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
+        },
+        {
+          path: 'base-teller/foreign-currency',
+          canActivate: [fxTellerGuard],
+          loadComponent: () => import('./foreign-currency/fx-teller.component').then((m) => m.FxTellerComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
         },
         {
           path: 'base-teller',

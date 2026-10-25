@@ -24,6 +24,8 @@ import { canReadCashTransfers } from './cash-transfers-between-tellers/cash-tran
 import { canReadWithdrawals } from './withdrawals/withdrawal.guard';
 import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
+import { hasFxPermission } from '../foreign-currency/foreign-currency.guard';
+
 /** Environment */
 import { environment } from 'environments/environment';
 
@@ -37,6 +39,11 @@ export interface BaseTellerWorkflow {
 }
 
 export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
+  { label: 'fx.title', materialIcon: 'currency_exchange', permission: 'READ_BASE_TELLER_FX', route: [
+      '/organization',
+      'base-teller',
+      'foreign-currency'
+    ] },
   { label: 'cashTellerTransfer.title', materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
       '/organization',
       'base-teller',
@@ -271,6 +278,7 @@ export class BaseTellerComponent {
     const permissions = this.authentication.getCredentials()?.permissions ?? [];
     return BASE_TELLER_WORKFLOWS.filter(
       (w) =>
+        (w.permission === 'READ_BASE_TELLER_FX' && hasFxPermission(permissions, 'READ_BASE_TELLER_FX')) ||
         (w.permission === 'READ_ACCOUNTTRANSFER' && canReadTransfers(permissions)) ||
         (w.permission === 'READ_BASE_TELLER_CASH_TRANSFER' && canReadCashTransfers(permissions))
     );
@@ -280,6 +288,7 @@ export class BaseTellerComponent {
     return BASE_TELLER_WORKFLOWS.filter(
       (workflow) => (!workflow.productionOnly || this.productionMode) && ![
           'READ_ACCOUNTTRANSFER',
+          'READ_BASE_TELLER_FX',
           'READ_BASE_TELLER_CASH_TRANSFER'
         ].includes(workflow.permission)
     );
