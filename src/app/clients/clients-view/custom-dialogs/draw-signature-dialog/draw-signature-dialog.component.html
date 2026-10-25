@@ -13,7 +13,31 @@
     <canvas #signatureCanvas class="signature-canvas"></canvas>
   </div>
 
-  <div align="center">
+  <div class="signature-tools" align="center">
+    <mat-button-toggle-group
+      name="signatureTool"
+      [value]="tool"
+      (change)="setTool($event.value)"
+      [attr.aria-label]="'labels.buttons.Drawing Tool' | translate"
+    >
+      <mat-button-toggle
+        value="draw"
+        data-testid="signature-tool-draw"
+        [attr.aria-label]="'labels.buttons.Draw' | translate"
+      >
+        <fa-icon icon="pen" size="sm"></fa-icon>
+        {{ 'labels.buttons.Draw' | translate }}
+      </mat-button-toggle>
+      <mat-button-toggle
+        value="erase"
+        data-testid="signature-tool-erase"
+        [attr.aria-label]="'labels.buttons.Eraser' | translate"
+      >
+        <fa-icon icon="eraser" size="sm"></fa-icon>
+        {{ 'labels.buttons.Eraser' | translate }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
     <button mat-stroked-button color="primary" (click)="clear()">
       {{ 'labels.buttons.Clear' | translate }}
     </button>
@@ -21,7 +45,7 @@
 
   <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-    <button mat-raised-button color="primary" [disabled]="isEmpty" (click)="confirm()">
+    <button mat-raised-button data-testid="signature-confirm" color="primary" [disabled]="isEmpty" (click)="confirm()">
       {{ 'labels.buttons.Confirm' | translate }}
     </button>
   </mat-dialog-actions>
