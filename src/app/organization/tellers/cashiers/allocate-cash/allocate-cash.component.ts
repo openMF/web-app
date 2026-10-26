@@ -87,7 +87,7 @@ export class AllocateCashComponent implements OnInit {
         }
       ],
       txnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       currencyCode: [
