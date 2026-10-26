@@ -1,0 +1,106 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.catalog-updates {
+  .catalog-updates-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin: 0 0 24px;
+  }
+
+  .loading-state {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+  }
+
+  .catalog-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .catalog-card {
+    display: flex;
+    min-width: 280px;
+    flex: 1 1 calc(33.333% - 16px);
+    flex-direction: column;
+  }
+
+  .catalog-card mat-card-content {
+    flex: 1 1 auto;
+  }
+
+  .catalog-heading {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  .catalog-details {
+    margin: 0;
+  }
+
+  .catalog-details > div {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+  }
+
+  dt {
+    min-width: 112px;
+    flex: 1 1 50%;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+    flex: 1 1 50%;
+    overflow-wrap: anywhere;
+  }
+
+  .status {
+    font-weight: 500;
+  }
+
+  .needs-update {
+    color: var(--mat-sys-error);
+  }
+
+  mat-card-actions {
+    padding: 8px 16px 16px;
+  }
+
+  button mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .message {
+    margin-bottom: 16px;
+  }
+}
+
+@media (width <= 959px) {
+  .catalog-updates .catalog-card {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+}

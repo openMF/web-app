@@ -1,0 +1,726 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { DatePipe } from '@angular/common';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsService } from 'app/settings/settings.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { LoansAccountTermsStepComponent } from './loans-account-terms-step.component';
+
+/**
+ * Response of GET /working-capital-loans/{id}?associations=all for an account
+ * submitted with a payment rate of 18% and a proposed discount fee of 50.
+ */
+const WC_LOAN_DETAILS: any = {
+  id: 1,
+  accountNo: '000000001',
+  clientId: 3,
+  loanProductId: 11,
+  status: { id: 100, code: 'loanStatusType.submitted.and.pending.approval', pendingApproval: true },
+  proposedPrincipal: 100,
+  approvedPrincipal: 0,
+  principal: 100,
+  currency: { code: 'EUR', name: 'Euro', decimalPlaces: 2, displaySymbol: '€' },
+  paymentRate: 18,
+  repaymentEvery: 30,
+  repaymentFrequencyType: { id: 'DAYS', code: 'DAYS', value: 'DAYS' },
+  proposedDiscountFee: 50,
+  delinquencyBucket: { id: 2, name: 'WC_DELINQUENCY_BUCKET', ranges: [] },
+  breachGraceDays: 0,
+  breachStartType: { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' },
+  totalPaymentVolume: 360
+};
+
+/**
+ * Response of GET /working-capital-loans/template?clientId&productId, as reshaped by
+ * EditLoansAccountComponent.setTemplate(): the `loanData` payload plus the option lists.
+ */
+const WC_PRODUCT_TEMPLATE: any = {
+  currency: { code: 'EUR', name: 'Euro', decimalPlaces: 2, displaySymbol: '€' },
+  product: {
+    id: 11,
+    name: 'WCLP_ACC_DEF_REV_AM',
+    principal: 1000,
+    allowAttributeOverrides: {
+      periodPaymentFrequency: true,
+      periodPaymentFrequencyType: true,
+      discountDefault: true,
+      delinquencyBucketClassification: true,
+      breach: true
+    }
+  },
+  options: {
+    periodFrequencyTypeOptions: [],
+    delinquencyStartTypeOptions: [],
+    delinquencyBucketOptions: [],
+    breachOptions: [],
+    nearBreachOptions: []
+  }
+};
+
+describe('LoansAccountTermsStepComponent — Working Capital edit mode', () => {
+  let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { loanId: '1' }, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LoansAccountTermsStepComponent);
+    component = fixture.componentInstance;
+  });
+
+  /** Angular delivers the resolved account to both inputs before the first ngOnChanges. */
+  function firstChange(): void {
+    component.loansAccountProductTemplate = WC_LOAN_DETAILS;
+    component.loansAccountTemplate = WC_LOAN_DETAILS;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_LOAN_DETAILS, true)
+    });
+  }
+
+  /** EditLoansAccountComponent.setTemplate() replaces the input once the async template arrives. */
+  function templateArrivesChange(): void {
+    const previous = component.loansAccountProductTemplate;
+    component.loansAccountProductTemplate = WC_PRODUCT_TEMPLATE;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(previous, WC_PRODUCT_TEMPLATE, false)
+    });
+  }
+
+  function terms() {
+    return component.loansAccountTermsForm.getRawValue();
+  }
+
+  it('fills the form from the account details on the first ngOnChanges', () => {
+    firstChange();
+
+    expect(terms().discount).toBe(50);
+    expect(terms().periodPaymentRate).toBe(18);
+    expect(terms().principalAmount).toBe(100);
+    expect(terms().totalPaymentVolume).toBe(360);
+  });
+
+  it('keeps the values after ngOnInit runs', () => {
+    firstChange();
+    component.ngOnInit();
+
+    expect(terms().discount).toBe(50);
+    expect(terms().periodPaymentRate).toBe(18);
+    expect(terms().totalPaymentVolume).toBe(360);
+  });
+
+  it('keeps the values after the async product template arrives', () => {
+    firstChange();
+    component.ngOnInit();
+    templateArrivesChange();
+
+    expect(terms().discount).toBe(50);
+    expect(terms().periodPaymentRate).toBe(18);
+    expect(terms().totalPaymentVolume).toBe(360);
+  });
+
+  it('keeps the values when the template arrives before ngOnInit', () => {
+    firstChange();
+    templateArrivesChange();
+    component.ngOnInit();
+
+    expect(terms().discount).toBe(50);
+    expect(terms().periodPaymentRate).toBe(18);
+    expect(terms().totalPaymentVolume).toBe(360);
+  });
+});
+
+describe('LoansAccountTermsStepComponent — Working Capital breach start type', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  const BREACH_START_TYPE_OPTIONS = [
+    { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' },
+    { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' }
+  ];
+
+  /** Product that defaults breaches to start on disbursement; the template does not copy it into loanData. */
+  const TEMPLATE_WITH_BREACH_START: any = {
+    ...WC_PRODUCT_TEMPLATE,
+    product: {
+      ...WC_PRODUCT_TEMPLATE.product,
+      breachStartType: { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' }
+    },
+    options: { ...WC_PRODUCT_TEMPLATE.options, breachStartTypeOptions: BREACH_START_TYPE_OPTIONS }
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+  });
+
+  it('prefills the select with the product default code and exposes the template options', () => {
+    component.loansAccountProductTemplate = TEMPLATE_WITH_BREACH_START;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, TEMPLATE_WITH_BREACH_START, true)
+    });
+
+    expect(component.breachStartTypeOptions).toEqual(BREACH_START_TYPE_OPTIONS);
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+
+  it('leaves the select empty when the product has no breach start type', () => {
+    component.loansAccountProductTemplate = WC_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_PRODUCT_TEMPLATE, true)
+    });
+
+    expect(component.loansAccountTerms.breachStartType).toBeNull();
+    expect(component.loansAccountTermsForm.valid).toBe(false);
+    expect(component.loansAccountTermsForm.get('breachStartType')!.valid).toBe(true);
+  });
+
+  it('binds both start types by code, never by numeric id', () => {
+    component.loanId = 1;
+    const details = {
+      ...WC_LOAN_DETAILS,
+      delinquencyStartType: { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' }
+    };
+    component.loansAccountProductTemplate = details;
+    component.loansAccountTemplate = details;
+    component.ngOnChanges({ loansAccountProductTemplate: new SimpleChange(undefined, details, true) });
+    component.ngOnInit();
+
+    expect(component.loansAccountTerms.delinquencyStartType).toBe('LOAN_CREATION');
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+
+  it('locks the breach start type with the other breach settings when the product disallows overrides', () => {
+    const locked: any = {
+      ...TEMPLATE_WITH_BREACH_START,
+      product: {
+        ...TEMPLATE_WITH_BREACH_START.product,
+        allowAttributeOverrides: { ...TEMPLATE_WITH_BREACH_START.product.allowAttributeOverrides, breach: false }
+      }
+    };
+    component.loansAccountProductTemplate = locked;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({ loansAccountProductTemplate: new SimpleChange(undefined, locked, true) });
+
+    expect(component.loansAccountTermsForm.get('breachStartType')!.disabled).toBe(true);
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+
+  it('maps the account code into the control when editing', () => {
+    component.loanId = 1;
+    component.loansAccountProductTemplate = WC_LOAN_DETAILS;
+    component.loansAccountTemplate = WC_LOAN_DETAILS;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, WC_LOAN_DETAILS, true)
+    });
+    component.ngOnInit();
+
+    expect(component.loansAccountTerms.breachStartType).toBe('DISBURSEMENT');
+  });
+});
+
+describe('LoansAccountTermsStepComponent — Working Capital ANNUAL_EIR strategy', () => {
+  let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
+  let component: LoansAccountTermsStepComponent;
+
+  /** Product priced from an annual EIR of 43.756245 % allowed between 10 % and 60 %. */
+  const ANNUAL_EIR_TEMPLATE: any = {
+    ...WC_PRODUCT_TEMPLATE,
+    product: {
+      ...WC_PRODUCT_TEMPLATE.product,
+      paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' },
+      minAnnualEir: 10,
+      annualEir: 43.756245,
+      maxAnnualEir: 60,
+      discount: 50
+    }
+  };
+
+  /** Account opened on that product with its own annual EIR override. */
+  const ANNUAL_EIR_LOAN_DETAILS: any = {
+    ...WC_LOAN_DETAILS,
+    paymentRate: null,
+    totalPaymentVolume: null,
+    annualEir: 40,
+    paymentAmountCalculationStrategy: { id: 'ANNUAL_EIR', code: 'ANNUAL_EIR', value: 'Annual EIR' }
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LoansAccountTermsStepComponent);
+    component = fixture.componentInstance;
+  });
+
+  function newLoanFromProduct(): void {
+    component.loansAccountProductTemplate = ANNUAL_EIR_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, ANNUAL_EIR_TEMPLATE, true)
+    });
+  }
+
+  it('prefills the annual EIR from the product and drops the TPV inputs from the payload', () => {
+    newLoanFromProduct();
+
+    expect(component.paymentAmountCalculationStrategy).toBe('ANNUAL_EIR');
+    expect(component.loansAccountTermsForm.get('annualEir')!.value).toBe(43.756245);
+    expect(component.annualEirBounds).toEqual({ min: 10, max: 60 });
+
+    const terms = component.loansAccountTerms;
+    expect(terms.annualEir).toBe(43.756245);
+    expect(terms).not.toHaveProperty('totalPaymentVolume');
+    expect(terms).not.toHaveProperty('periodPaymentRate');
+    expect(terms).not.toHaveProperty('paymentAmount');
+  });
+
+  it('validates the annual EIR against the product window and requires a positive discount', () => {
+    newLoanFromProduct();
+    const form = component.loansAccountTermsForm;
+
+    form.get('annualEir')!.setValue(70);
+    expect(form.get('annualEir')!.hasError('outOfBounds')).toBe(true);
+    form.get('annualEir')!.setValue('');
+    expect(form.get('annualEir')!.hasError('required')).toBe(true);
+    form.get('annualEir')!.setValue(0);
+    expect(form.get('annualEir')!.hasError('greaterThanZero')).toBe(true);
+
+    form.get('discount')!.setValue(0);
+    expect(form.get('discount')!.hasError('greaterThanZero')).toBe(true);
+    form.get('discount')!.setValue('');
+    expect(form.get('discount')!.hasError('required')).toBe(true);
+  });
+
+  it('reads the account override when editing', () => {
+    component.loansAccountProductTemplate = ANNUAL_EIR_LOAN_DETAILS;
+    component.loansAccountTemplate = ANNUAL_EIR_LOAN_DETAILS;
+    component.loanId = 1;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, ANNUAL_EIR_LOAN_DETAILS, true)
+    });
+    component.loansAccountProductTemplate = ANNUAL_EIR_TEMPLATE;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(ANNUAL_EIR_LOAN_DETAILS, ANNUAL_EIR_TEMPLATE, false)
+    });
+
+    expect(component.loansAccountTermsForm.get('annualEir')!.value).toBe(40);
+    expect(component.loansAccountTerms).not.toHaveProperty('totalPaymentVolume');
+  });
+});
+
+describe('LoansAccountTermsStepComponent — Working Capital grace days and start type overrides', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  const DELINQUENCY_SETTINGS = [
+    'delinquencyBucketId',
+    'delinquencyGraceDays',
+    'delinquencyStartType'
+  ];
+  const BREACH_SETTINGS = [
+    'breachId',
+    'nearBreachId',
+    'breachGraceDays',
+    'breachStartType'
+  ];
+
+  /** Template for a product whose override switches are set to the given values. */
+  function templateFor(id: number, overrides: { delinquencyBucketClassification: boolean; breach: boolean }): any {
+    return {
+      ...WC_PRODUCT_TEMPLATE,
+      product: {
+        ...WC_PRODUCT_TEMPLATE.product,
+        id,
+        delinquencyGraceDays: 0,
+        delinquencyStartType: { id: '1', code: 'LOAN_CREATION', value: 'Loan Creation' },
+        breachGraceDays: 5,
+        breachStartType: { id: '2', code: 'DISBURSEMENT', value: 'Disbursement' },
+        allowAttributeOverrides: { ...WC_PRODUCT_TEMPLATE.product.allowAttributeOverrides, ...overrides }
+      }
+    };
+  }
+
+  function selectProduct(template: any): void {
+    const previous = component.loansAccountProductTemplate;
+    component.loansAccountProductTemplate = template;
+    component.ngOnChanges({ loansAccountProductTemplate: new SimpleChange(previous, template, !previous) });
+  }
+
+  function disabled(names: string[]): boolean[] {
+    return names.map((name) => component.loansAccountTermsForm.get(name)!.disabled);
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: false, isWorkingCapital: true } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+    component.loansAccountTemplate = {};
+  });
+
+  it('locks delinquency grace days and start type with the bucket, independently of breach', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: false, breach: true }));
+
+    expect(disabled(DELINQUENCY_SETTINGS)).toEqual([
+      true,
+      true,
+      true
+    ]);
+    expect(disabled(BREACH_SETTINGS)).toEqual([
+      false,
+      false,
+      false,
+      false
+    ]);
+    // Locked fields still show the product default.
+    expect(component.loansAccountTerms.delinquencyGraceDays).toBe(0);
+    expect(component.loansAccountTerms.delinquencyStartType).toBe('LOAN_CREATION');
+  });
+
+  it('locks breach grace days and start type with the breach, independently of delinquency', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: false }));
+
+    expect(disabled(DELINQUENCY_SETTINGS)).toEqual([
+      false,
+      false,
+      false
+    ]);
+    expect(disabled(BREACH_SETTINGS)).toEqual([
+      true,
+      true,
+      true,
+      true
+    ]);
+  });
+
+  it('re-evaluates the lock and resets to the new product defaults when the product changes', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({ delinquencyGraceDays: 9, breachGraceDays: 9 });
+
+    selectProduct(templateFor(12, { delinquencyBucketClassification: false, breach: false }));
+
+    expect(
+      disabled([
+        ...DELINQUENCY_SETTINGS,
+        ...BREACH_SETTINGS
+      ]).every(Boolean)
+    ).toBe(true);
+    expect(component.loansAccountTerms.delinquencyGraceDays).toBe(0);
+    expect(component.loansAccountTerms.breachGraceDays).toBe(5);
+  });
+
+  it('rejects negative or fractional grace days when they can be overridden', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    const delinquencyGraceDays = component.loansAccountTermsForm.get('delinquencyGraceDays')!;
+    const breachGraceDays = component.loansAccountTermsForm.get('breachGraceDays')!;
+
+    delinquencyGraceDays.setValue(-1);
+    breachGraceDays.setValue(1.5);
+    expect(delinquencyGraceDays.hasError('positiveInteger')).toBe(true);
+    expect(breachGraceDays.hasError('positiveInteger')).toBe(true);
+
+    delinquencyGraceDays.setValue(0);
+    breachGraceDays.setValue(3);
+    expect(delinquencyGraceDays.valid).toBe(true);
+    expect(breachGraceDays.valid).toBe(true);
+  });
+
+  it('exposes cleared grace days as null while parents stay set', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({
+      delinquencyBucketId: 2,
+      breachId: 3,
+      delinquencyGraceDays: '',
+      breachGraceDays: ''
+    });
+
+    const terms = component.loansAccountTerms;
+    expect(terms.delinquencyBucketId).toBe(2);
+    expect(terms.breachId).toBe(3);
+    expect(terms.delinquencyGraceDays).toBeNull();
+    expect(terms.breachGraceDays).toBeNull();
+  });
+});
+
+describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
+  let fixture: ComponentFixture<LoansAccountTermsStepComponent>;
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LoansAccountTermsStepComponent);
+    component = fixture.componentInstance;
+    component.loansAccountTermsData = { product: {}, interestRatePerPeriod: 5 };
+    component.setAdvancedPaymentStrategyControls();
+  });
+
+  function interestRate() {
+    return component.loansAccountTermsForm.get('interestRatePerPeriod')!;
+  }
+
+  it('accepts decimal rates', () => {
+    interestRate().setValue(1202.53);
+    expect(interestRate().valid).toBe(true);
+
+    interestRate().setValue(0.53);
+    expect(interestRate().valid).toBe(true);
+  });
+
+  it('accepts a rate with six decimal places', () => {
+    interestRate().setValue(1.123456);
+
+    expect(interestRate().valid).toBe(true);
+  });
+
+  it('rejects a rate with seven decimal places', () => {
+    interestRate().setValue(1.1234567);
+
+    expect(interestRate().hasError('pattern')).toBe(true);
+  });
+
+  it('rejects a negative rate', () => {
+    interestRate().setValue(-1);
+
+    expect(interestRate().hasError('min')).toBe(true);
+  });
+
+  it('requires a rate', () => {
+    interestRate().setValue(null);
+
+    expect(interestRate().hasError('required')).toBe(true);
+  });
+
+  it('does not rewrite rates below 0.01 while typing', () => {
+    component.setNumericFieldListeners();
+    interestRate().setValue(0.005);
+
+    expect(interestRate().value).toBe(0.005);
+    expect(interestRate().valid).toBe(true);
+  });
+});
+
+/** Response of GET /loans/template?templateType=individual for a plain 800,000 INR loan product. */
+const LOAN_PRODUCT_TEMPLATE: any = {
+  currency: { code: 'INR', name: 'Indian Rupee', decimalPlaces: 2, displaySymbol: '₹' },
+  principal: 800000,
+  termFrequency: 12,
+  termPeriodFrequencyType: { id: 2 },
+  numberOfRepayments: 12,
+  repaymentEvery: 1,
+  repaymentFrequencyType: { id: 2 },
+  amortizationType: { id: 1 },
+  isEqualAmortization: false,
+  interestType: { id: 0 },
+  isLoanProductLinkedToFloatingRate: false,
+  interestCalculationPeriodType: { id: 1 },
+  allowPartialPeriodInterestCalculation: false,
+  interestRateFrequencyType: { id: 3 },
+  interestRatePerPeriod: 12,
+  loanScheduleType: { code: 'loanScheduleType.cumulative' },
+  interestRateFrequencyTypeOptions: [],
+  transactionProcessingStrategyOptions: [],
+  product: { id: 1, principal: 800000, allowAttributeOverrides: {} }
+};
+
+describe('LoansAccountTermsStepComponent — principal decimals', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: {}, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+    component.loansAccountProductTemplate = LOAN_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = {};
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(undefined, LOAN_PRODUCT_TEMPLATE, true)
+    });
+  });
+
+  function principal() {
+    return component.loansAccountTermsForm.get('principalAmount')!;
+  }
+
+  /**
+   * `loansAccountFormValid` is an input that tracks this very form's validity, so it flips
+   * while the user types — a half-entered amount like `800000.` is momentarily invalid. The
+   * re-seed that used to run on every ngOnChanges put the product default back and swallowed
+   * the decimal point the user had just typed.
+   */
+  it('keeps a half-typed amount when an unrelated input flips', () => {
+    principal().setValue('800000.');
+
+    component.loansAccountFormValid = false;
+    component.ngOnChanges({ loansAccountFormValid: new SimpleChange(true, false, false) });
+
+    expect(principal().value).toBe('800000.');
+  });
+
+  it('keeps the finished decimal amount when validity flips back', () => {
+    principal().setValue('800000.90');
+
+    component.loansAccountFormValid = true;
+    component.ngOnChanges({ loansAccountFormValid: new SimpleChange(false, true, false) });
+
+    expect(principal().value).toBe('800000.90');
+  });
+
+  it('still seeds the form from the product template', () => {
+    expect(principal().value).toBe(800000);
+  });
+
+  it('still re-seeds the form when a new product template arrives', () => {
+    principal().setValue('1');
+    const nextTemplate = { ...LOAN_PRODUCT_TEMPLATE, principal: 50000 };
+
+    component.loansAccountProductTemplate = nextTemplate;
+    component.ngOnChanges({
+      loansAccountProductTemplate: new SimpleChange(LOAN_PRODUCT_TEMPLATE, nextTemplate, false)
+    });
+
+    expect(principal().value).toBe(50000);
+  });
+});
+
+describe('LoansAccountTermsStepComponent — editing a loan application', () => {
+  let component: LoansAccountTermsStepComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoansAccountTermsStepComponent],
+      providers: [
+        { provide: LoanProductService, useValue: { isLoanProduct: true, isWorkingCapital: false } },
+        { provide: Router, useValue: {} },
+        { provide: MatDialog, useValue: {} },
+        DatePipe,
+        { provide: SettingsService, useValue: { maxFutureDate: new Date() } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { loanId: '10' }, queryParamMap: new Map() } }
+        }
+      ]
+    })
+      .overrideComponent(LoansAccountTermsStepComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
+
+    component = TestBed.createComponent(LoansAccountTermsStepComponent).componentInstance;
+  });
+
+  it('shows the saved first repayment date in the date picker', () => {
+    // GET /loans/{id}/template returns the date as a [year, month, day] array.
+    const loanTemplate = {
+      ...LOAN_PRODUCT_TEMPLATE,
+      accountNo: '000000010',
+      loanProductId: 1,
+      expectedFirstRepaymentOnDate: [
+        2026,
+        11,
+        15
+      ]
+    };
+    component.loansAccountProductTemplate = LOAN_PRODUCT_TEMPLATE;
+    component.loansAccountTemplate = loanTemplate;
+
+    component.ngOnInit();
+
+    expect(component.loansAccountTermsForm.get('repaymentsStartingFromDate')!.value).toEqual(new Date(2026, 10, 15));
+  });
+});

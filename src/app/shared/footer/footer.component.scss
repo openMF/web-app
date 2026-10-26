@@ -9,6 +9,64 @@
 @use 'assets/styles/helper';
 @use 'assets/styles/colours' as *;
 
+// ===== Business Date (independent of variant) =====
+.business-date-field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.business-date-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ds-text-3);
+}
+
+.business-date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid color-mix(in srgb, var(--ds-paid) 35%, transparent);
+  border-radius: 20px;
+  background: var(--ds-paid-bg);
+  color: var(--ds-paid);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.business-date-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ds-paid);
+  animation: business-date-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes business-date-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-date-dot {
+    animation: none;
+  }
+}
+
 // ===== Compact Mode (Login) =====
 .footer-compact {
   display: flex;
@@ -84,10 +142,6 @@
   .divider {
     margin: 2.5rem 1rem 0.5rem;
     width: 4rem;
-  }
-
-  .business-date {
-    color: $status-approved;
   }
 
   table {

@@ -5,3 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+// Optional caution shown above the fields, e.g. when the command has a side
+// effect on the parent record. Styled with opacity rather than a fixed colour
+// so it reads the same in both themes.
+.form-dialog-warning {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}

@@ -1,2 +1,0 @@
-click "Institution"
-click "Clients" below "Institution"

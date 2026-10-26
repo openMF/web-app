@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatStepperNext,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -44,12 +45,21 @@ export class ShareProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.shareProductsTemplate.currencyOptions;
+    // A saved product returns its decimal places and multiples inside `currency`.
+    const currency = this.shareProductsTemplate.currency;
+    const isEditing = this.shareProductsTemplate.id !== undefined && this.shareProductsTemplate.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.shareProductsTemplate.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.shareProductsTemplate.inMultiplesOf ?? '');
 
     this.shareProductCurrencyForm.patchValue({
-      currencyCode: this.shareProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.shareProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.shareProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.shareProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();

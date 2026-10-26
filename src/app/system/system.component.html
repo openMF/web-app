@@ -467,6 +467,40 @@
             </div>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['theme']" *mifosxHasPermission="'READ_CONFIGURATION'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['theme']">
+                <mat-icon>
+                  <fa-icon icon="fill-drip" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Theme' | translate }}
+                  @if (arrowBooleans[17]) {
+                    <p matLine [routerLink]="['theme']" class="menu-explanation">
+                      {{ 'labels.text.Set the primary color used across this tenant' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
           <mat-list-item [routerLink]="['account-number-preferences']">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['account-number-preferences']">
@@ -534,6 +568,76 @@
               </div>
             </div>
           </mat-list-item>
+
+          <mat-list-item [routerLink]="['manage-dashboards']">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['manage-dashboards']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Manage Dashboards' | translate }}
+                  @if (arrowBooleans[17]) {
+                    <p matLine [routerLink]="['manage-dashboards']" class="menu-explanation">
+                      {{ 'labels.text.Configure dashboard widgets, roles and monitor system performance' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
+          @if (tenantManagementEnabled) {
+            <mat-list-item [routerLink]="['tenant-management']">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['tenant-management']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="sitemap" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Tenant Management' | translate }}
+                    @if (arrowBooleans[14]) {
+                      <p matLine [routerLink]="['tenant-management']" class="menu-explanation">
+                        {{ 'labels.text.Manage the tenants of this installation' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[14]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(14); $event.stopPropagation()"
+                      icon="arrow-down"
+                      size="md"
+                    ></fa-icon>
+                  }
+                  @if (arrowBooleans[14]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(14); $event.stopPropagation()"
+                      icon="arrow-up"
+                      size="md"
+                    ></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          }
 
           <mat-list-item [routerLink]="['about-us']">
             <div class="menu-list-item-content">
@@ -624,7 +728,7 @@
 
 <ng-template #templateMakerCheckerTable let-popover="popover">
   <h2>{{ 'labels.heading.Configure Maker-Checker Tasks' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.“Maker-Checker” principle requires every tasks' | translate }}</p>
+  <p class="mw300">{{ 'labels.text.Maker-Checker principle requires every tasks' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}

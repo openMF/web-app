@@ -1,0 +1,56 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.borrower-cycle {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.borrower-cycle__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.borrower-cycle__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.borrower-cycle__heading {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* The five value columns plus the actions cell overflow a narrow viewport, so the table scrolls
+   inside its own wrapper rather than widening the wizard panel. */
+.borrower-cycle__table-wrapper {
+  overflow-x: auto;
+}
+
+.borrower-cycle__table {
+  width: 100%;
+  min-width: 40rem;
+}
+
+.borrower-cycle__empty {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.borrower-cycle__error {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.875rem;
+}

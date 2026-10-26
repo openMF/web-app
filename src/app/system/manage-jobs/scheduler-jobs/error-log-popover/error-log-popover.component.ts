@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -36,7 +36,8 @@ interface ErrorJobDataType {
     MatDialogActions,
     MatDialogClose,
     DatetimeFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorLogPopoverComponent implements OnInit {
   data = inject<ErrorJobDataType>(MAT_DIALOG_DATA);

@@ -1,0 +1,71 @@
+{
+  "datatableName": "client_beneficiaries",
+  "apptableName": "m_client",
+  "entitySubType": "Person",
+  "multiRow": true,
+  "columns": [
+    {
+      "name": "name",
+      "type": "String",
+      "length": 150,
+      "mandatory": false
+    },
+    {
+      "name": "percentage",
+      "type": "Decimal",
+      "mandatory": false
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "length": 30,
+      "mandatory": false
+    },
+    {
+      "name": "relationship",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "birthdate",
+      "type": "Date",
+      "mandatory": false
+    },
+    {
+      "name": "address",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "neighborhood",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "municipality_city",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "locality_borough_town",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "state",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    },
+    {
+      "name": "nationality",
+      "type": "String",
+      "length": 100,
+      "mandatory": false
+    }
+  ]
+}

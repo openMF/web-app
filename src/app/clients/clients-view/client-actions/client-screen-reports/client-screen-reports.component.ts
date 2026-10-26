@@ -7,8 +7,19 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  SecurityContext,
+  ViewChild,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -27,17 +38,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientScreenReportsComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private clientsService = inject(ClientsService);
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   private renderer = inject(Renderer2);
+  private destroyRef = inject(DestroyRef);
 
   /** Client Screen Reportform. */
-  clientScreenReportForm: UntypedFormGroup;
+  clientScreenReportForm: FormGroup;
   /** Templates Data */
   templatesData: any;
   /** Client Id */
@@ -57,7 +70,7 @@ export class ClientScreenReportsComponent implements OnInit {
    * @param {Renderer2} renderer Renderer 2
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.templatesData = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

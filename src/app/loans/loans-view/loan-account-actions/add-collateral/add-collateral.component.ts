@@ -7,14 +7,13 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Add Collateral component.
@@ -26,20 +25,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCollateralComponent implements OnInit {
+export class AddCollateralComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private loanService = inject(LoansService);
-
-  @Input() dataObject: any;
 
   /** Collateral form. */
   collateralForm: UntypedFormGroup;
-  /** Loan Id. */
-  loanId: string;
+
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.createAddCollateralForm();
@@ -70,11 +67,10 @@ export class AddCollateralComponent implements OnInit {
     this.collateralForm.patchValue({
       collateralTypeId: collateralTypeId
     });
-    const loanId = this.route.snapshot.params['loanId'];
     const collateralForm = this.collateralForm.value;
-    collateralForm.locale = 'en';
-    this.loanService.createLoanCollateral(loanId, collateralForm).subscribe((response: any) => {
-      this.router.navigate(['../../loan-collateral'], { relativeTo: this.route });
+    collateralForm.locale = this.settingsService.language.code;
+    this.loanService.createLoanCollateral(this.loanId, collateralForm).subscribe((response: any) => {
+      this.gotoLoanView('loan-collateral');
     });
   }
 }

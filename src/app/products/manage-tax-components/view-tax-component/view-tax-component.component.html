@@ -39,7 +39,10 @@
 
         @if (taxComponentData.debitAccountType) {
           <div class="flex-50">
-            {{ taxComponentData.debitAccountType.value }}
+            {{
+              'labels.inputs.accounting.' + (taxComponentData.debitAccountType.value?.split('.')[1] || '').toUpperCase()
+                | translate
+            }}
           </div>
         }
 
@@ -51,8 +54,8 @@
 
         @if (taxComponentData.debitAccount) {
           <div class="flex-50">
-            ({{ 'labels.inputs.accounting.' + taxComponentData.debitAccount.glCode }})
-            {{ taxComponentData.debitAccount.name | translate }}
+            ({{ taxComponentData.debitAccount.glCode }})
+            {{ taxComponentData.debitAccount.name }}
           </div>
         }
 
@@ -64,7 +67,10 @@
 
         @if (taxComponentData.creditAccountType) {
           <div class="flex-50">
-            {{ taxComponentData.creditAccountType.value | translateKey: 'catalogs' }}
+            {{
+              'labels.inputs.accounting.' +
+                (taxComponentData.creditAccountType.value?.split('.')[1] || '').toUpperCase() | translate
+            }}
           </div>
         }
 

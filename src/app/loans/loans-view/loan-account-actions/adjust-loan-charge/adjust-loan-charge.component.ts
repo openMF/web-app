@@ -6,21 +6,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { OrganizationService } from 'app/organization/organization.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
 
 @Component({
   selector: 'mifosx-adjust-loan-charge',
@@ -29,15 +23,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatSlideToggle,
-    CdkTextareaAutosize
-  ]
+    CdkTextareaAutosize,
+    InputAmountComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdjustLoanChargeComponent implements OnInit {
+export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
   private organizationService = inject(OrganizationService);
 
   /** Loan Id */
@@ -60,18 +53,16 @@ export class AdjustLoanChargeComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
     this.chargeId = this.route.snapshot.params['id'];
-    this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
-      this.chargeData = data.loansAccountCharge;
-      this.loanDetailsData = data.loanDetailsData;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
+        this.chargeData = data.loansAccountCharge;
+        this.loanDetailsData = data.loanDetailsData;
+      });
   }
 
   /**
@@ -135,9 +126,22 @@ export class AdjustLoanChargeComponent implements OnInit {
     };
     const command = 'adjustment';
     this.loanService
-      .executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId)
-      .subscribe((response: any) => {
-        this.router.navigate(['../..'], { relativeTo: this.route });
+      .executeLoansAccountChargesCommand(
+        this.loanProductService.loanAccountPath,
+        this.loanId,
+        command,
+        data,
+        this.chargeId
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.gotoLoanChargesView();
+        },
+        error: (error) => {}
       });
+  }
+
+  gotoLoanChargesView(): void {
+    this.gotoLoanView('charges');
   }
 }

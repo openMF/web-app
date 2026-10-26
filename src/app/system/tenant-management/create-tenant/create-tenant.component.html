@@ -1,0 +1,210 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <h3 class="mat-body-strong">{{ 'labels.heading.Tenant Details' | translate }}</h3>
+
+      <form [formGroup]="tenantForm">
+        <div class="layout-row-wrap gap-20px">
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Tenant Identifier' | translate }}</mat-label>
+            <input matInput required formControlName="identifier" />
+            <mat-hint>{{ 'labels.text.Tenant identifier format' | translate }}</mat-hint>
+            @if (tenantForm.controls.identifier.hasError('required')) {
+              <mat-error>
+                {{
+                  'errors.validation.requiredField'
+                    | translate: { label: ('labels.inputs.Tenant Identifier' | translate) }
+                }}
+              </mat-error>
+            }
+            @if (tenantForm.controls.identifier.hasError('pattern')) {
+              <mat-error>{{ 'labels.text.Tenant identifier format' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
+            @if (tenantForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Name' | translate) } }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Time Zone' | translate }}</mat-label>
+            <mat-select required formControlName="timezoneId">
+              @for (timezone of timezones(); track timezone) {
+                <mat-option [value]="timezone">{{ timezone }}</mat-option>
+              }
+            </mat-select>
+            @if (tenantForm.controls.timezoneId.hasError('required')) {
+              <mat-error>
+                {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Time Zone' | translate) } }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+              @for (status of statuses(); track status) {
+                <mat-option [value]="status">{{ status | translateKey: 'catalogs' }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Contact Email' | translate }}</mat-label>
+            <input matInput formControlName="contactEmail" />
+            @if (tenantForm.controls.contactEmail.hasError('pattern')) {
+              <mat-error>{{ 'errors.validation.emailInvalid' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+            <input matInput formControlName="description" />
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="m-t-20">
+    <mat-card-content>
+      <h3 class="mat-body-strong">{{ 'labels.heading.Database Connection' | translate }}</h3>
+      <p class="connection-explanation">{{ 'labels.text.Tenant database created if absent' | translate }}</p>
+
+      <form [formGroup]="connectionForm">
+        <div class="layout-row-wrap gap-20px">
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Schema Name' | translate }}</mat-label>
+            <input matInput required formControlName="schemaName" />
+            <mat-hint>{{ 'labels.text.Schema name format' | translate }}</mat-hint>
+            @if (connectionForm.controls.schemaName.hasError('required')) {
+              <mat-error>
+                {{
+                  'errors.validation.requiredField' | translate: { label: ('labels.inputs.Schema Name' | translate) }
+                }}
+              </mat-error>
+            }
+            @if (connectionForm.controls.schemaName.hasError('pattern')) {
+              <mat-error>{{ 'labels.text.Schema name format' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Schema Server' | translate }}</mat-label>
+            <input matInput required formControlName="schemaServer" />
+            @if (connectionForm.controls.schemaServer.hasError('required')) {
+              <mat-error>
+                {{
+                  'errors.validation.requiredField' | translate: { label: ('labels.inputs.Schema Server' | translate) }
+                }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Schema Server Port' | translate }}</mat-label>
+            <input matInput required type="number" formControlName="schemaServerPort" />
+            @if (connectionForm.controls.schemaServerPort.invalid) {
+              <mat-error>{{ 'labels.text.Port range' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Schema Username' | translate }}</mat-label>
+            <input matInput required formControlName="schemaUsername" />
+            <mat-hint>{{ 'labels.text.Schema username hint' | translate }}</mat-hint>
+            @if (connectionForm.controls.schemaUsername.hasError('required')) {
+              <mat-error>
+                {{
+                  'errors.validation.requiredField'
+                    | translate: { label: ('labels.inputs.Schema Username' | translate) }
+                }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <div class="flex-48">
+            <mifosx-input-password
+              formControlName="schemaPassword"
+              [label]="'labels.inputs.Schema Password' | translate"
+              [required]="true"
+            ></mifosx-input-password>
+            <p class="connection-note">{{ 'labels.text.Schema password hint' | translate }}</p>
+          </div>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Schema Connection Parameters' | translate }}</mat-label>
+            <input matInput formControlName="schemaConnectionParameters" />
+            <mat-hint>{{ 'labels.text.Schema connection parameters hint' | translate }}</mat-hint>
+          </mat-form-field>
+
+          <div class="flex-100 m-t-20">
+            <mat-checkbox formControlName="autoUpdate">
+              {{ 'labels.inputs.Auto Update' | translate }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </form>
+
+      <div class="layout-row align-center gap-20px m-t-20">
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="testConnection()"
+          [disabled]="connectionForm.invalid || testing() || submitting()"
+        >
+          <fa-icon icon="link" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Test Connection' | translate }}
+        </button>
+
+        @if (testing()) {
+          <span>{{ 'labels.text.Testing the connection' | translate }}</span>
+        } @else if (verdict(); as result) {
+          <span [class]="result.tone === 'success' ? 'connection-reachable' : 'connection-unreachable'">
+            <fa-icon [icon]="result.tone === 'success' ? 'check-circle' : 'times-circle'" class="m-r-10"></fa-icon>
+            {{ result.key | translate }}
+          </span>
+        } @else {
+          <span class="connection-note">{{ 'labels.text.Test connection on create hint' | translate }}</span>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (submitting()) {
+    <mat-card class="m-t-20">
+      <mat-card-content>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p class="provisioning-note">{{ 'labels.text.Provisioning a tenant takes a while' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <div class="layout-row align-end gap-20px m-t-20 m-b-20">
+    <button mat-raised-button [routerLink]="['../']" [disabled]="submitting()">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="submit()"
+      [disabled]="tenantForm.invalid || connectionForm.invalid || submitting()"
+    >
+      {{ 'labels.buttons.Create Tenant' | translate }}
+    </button>
+  </div>
+</div>

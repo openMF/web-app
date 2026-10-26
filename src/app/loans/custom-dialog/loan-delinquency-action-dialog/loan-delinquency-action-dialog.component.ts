@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -18,6 +18,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-loan-delinquency-action-dialog',
@@ -30,12 +31,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanDelinquencyActionDialogComponent {
   dialogRef = inject<MatDialogRef<LoanDelinquencyActionDialogComponent>>(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
   private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
 
   delinquencyActionForm: UntypedFormGroup;
   /** Minimum date allowed. */
@@ -50,7 +53,7 @@ export class LoanDelinquencyActionDialogComponent {
   createDelinquencyActionForm() {
     this.delinquencyActionForm = this.formBuilder.group({
       startDate: [
-        new Date(),
+        new Date(this.settingsService.businessDate),
         Validators.required
       ],
       endDate: [

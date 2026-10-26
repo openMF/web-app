@@ -8,11 +8,14 @@
 
 /** Select Option model */
 export class SelectOption {
-  id: number;
-  name: string;
+  /** Report SQL picks the value column, so an id can be a code such as 'USD'. */
+  id: number | string;
+  name: string | number;
 
   constructor(options: any[]) {
     this.id = options[0];
-    this.name = options[1];
+    // Fineract's report SQL indents option names with four dots per hierarchy level
+    // (e.g. "........Dubai Branch"), which a mat-option renders literally.
+    this.name = typeof options[1] === 'string' ? options[1].replace(/^\.+/, '') : options[1];
   }
 }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -67,7 +67,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     CurrencyPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChargesTabComponent implements OnInit {
   private savingsService = inject(SavingsService);
@@ -168,7 +169,7 @@ export class ChargesTabComponent implements OnInit {
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
@@ -193,7 +194,7 @@ export class ChargesTabComponent implements OnInit {
   waiveCharge(chargeId: any) {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
@@ -210,7 +211,7 @@ export class ChargesTabComponent implements OnInit {
   inactivateCharge(chargeId: any) {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
@@ -241,7 +242,7 @@ export class ChargesTabComponent implements OnInit {
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     editChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
@@ -267,7 +268,7 @@ export class ChargesTabComponent implements OnInit {
       data: { deleteContext: `charge id:${chargeId}` }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });

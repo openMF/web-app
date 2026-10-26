@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -31,6 +31,8 @@ import { MatDivider } from '@angular/material/divider';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { hasCoordinateValue, normalizeAddressCoordinates } from 'app/clients/utils/address-coordinate.util';
+import { environment } from 'environments/environment';
 
 /**
  * Client Address Step Component
@@ -51,9 +53,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatSlideToggle,
     MatStepperPrevious,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientAddressStepComponent {
+  readonly hasCoordinateValue = hasCoordinateValue;
+
+  get clientAddressLocationEnabled(): boolean {
+    return environment.enableClientAddressLocation;
+  }
+
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
 
@@ -88,15 +97,15 @@ export class ClientAddressStepComponent {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        const addressData = response.data.value;
-        addressData.isActive = false;
-        for (const key in addressData) {
-          if (addressData[key] === '' || addressData[key] === undefined) {
-            delete addressData[key];
+      if (response?.data) {
+        const normalizedAddressData = this.normalizeAddressData(response.data.value);
+        normalizedAddressData.isActive = false;
+        for (const key in normalizedAddressData) {
+          if (normalizedAddressData[key] === '' || normalizedAddressData[key] === undefined) {
+            delete normalizedAddressData[key];
           }
         }
-        this.clientAddressData.push(addressData);
+        this.clientAddressData.push(normalizedAddressData);
       }
     });
   }
@@ -119,15 +128,15 @@ export class ClientAddressStepComponent {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        const addressData = response.data.value;
-        addressData.isActive = address.isActive;
-        for (const key in addressData) {
-          if (addressData[key] === '' || addressData[key] === undefined) {
-            delete addressData[key];
+      if (response?.data) {
+        const normalizedAddressData = this.normalizeAddressData(response.data.value);
+        normalizedAddressData.isActive = address.isActive;
+        for (const key in normalizedAddressData) {
+          if (normalizedAddressData[key] === '' || normalizedAddressData[key] === undefined) {
+            delete normalizedAddressData[key];
           }
         }
-        this.clientAddressData[index] = addressData;
+        this.clientAddressData[index] = normalizedAddressData;
       }
     });
   }
@@ -143,7 +152,7 @@ export class ClientAddressStepComponent {
       }
     });
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientAddressData.splice(index, 1);
       }
     });
@@ -171,7 +180,11 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId);
+    return this.clientTemplate?.address?.[0]?.[fieldName]?.find((fieldObj: any) => fieldObj.id === fieldId);
+  }
+
+  private normalizeAddressData(addressData: any) {
+    return normalizeAddressCoordinates(addressData, this.clientAddressLocationEnabled);
   }
 
   /**
@@ -181,9 +194,14 @@ export class ClientAddressStepComponent {
   getAddressFormFields(address?: any) {
     let formfields: FormfieldBase[] = [];
 
-    for (let index = 0; index < this.clientTemplate.address[0].addressTypeIdOptions.length; index++) {
-      this.clientTemplate.address[0].addressTypeIdOptions[index].name = this.translateService.instant(
-        `labels.catalogs.${this.clientTemplate.address[0].addressTypeIdOptions[index].name}`
+    const addressTemplate = this.clientTemplate?.address?.[0];
+    if (!addressTemplate) {
+      return formfields;
+    }
+
+    for (let index = 0; index < (addressTemplate.addressTypeIdOptions?.length ?? 0); index++) {
+      addressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(
+        `labels.catalogs.${addressTemplate.addressTypeIdOptions[index].name}`
       );
     }
 
@@ -193,7 +211,7 @@ export class ClientAddressStepComponent {
             controlName: 'addressTypeId',
             label: this.translateService.instant('labels.inputs.Address Type'),
             value: address ? address.addressTypeId : '',
-            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].addressTypeIdOptions },
+            options: { label: 'name', value: 'id', data: addressTemplate.addressTypeIdOptions ?? [] },
             order: 1,
             required: true
           })
@@ -226,7 +244,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine1')
         ? new InputBase({
             controlName: 'addressLine1',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
+            label: this.translateService.instant('labels.inputs.Address Line 1'),
             value: address ? address.addressLine1 : '',
             type: 'text',
             order: 3
@@ -237,7 +255,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine2')
         ? new InputBase({
             controlName: 'addressLine2',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
+            label: this.translateService.instant('labels.inputs.Address Line 2'),
             value: address ? address.addressLine2 : '',
             type: 'text',
             order: 4
@@ -248,7 +266,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine3')
         ? new InputBase({
             controlName: 'addressLine3',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
+            label: this.translateService.instant('labels.inputs.Address Line 3'),
             value: address ? address.addressLine3 : '',
             type: 'text',
             order: 5
@@ -283,7 +301,7 @@ export class ClientAddressStepComponent {
             controlName: 'stateProvinceId',
             label: this.translateService.instant('labels.inputs.State / Province'),
             value: address ? address.stateProvinceId : '',
-            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].stateProvinceIdOptions },
+            options: { label: 'name', value: 'id', data: addressTemplate.stateProvinceIdOptions ?? [] },
             order: 8
           })
         : null
@@ -291,11 +309,11 @@ export class ClientAddressStepComponent {
     formfields.push(
       this.isFieldEnabled('countyDistrict')
         ? new InputBase({
-            controlName: 'countryDistrict',
-            label: this.translateService.instant('labels.inputs.Country District'),
+            controlName: 'countyDistrict',
+            label: this.translateService.instant('labels.inputs.County / District'),
             value: address ? address.countyDistrict : '',
             type: 'text',
-            order: 11
+            order: 9
           })
         : null
     );
@@ -305,8 +323,36 @@ export class ClientAddressStepComponent {
             controlName: 'countryId',
             label: this.translateService.instant('labels.inputs.Country'),
             value: address ? address.countryId : '',
-            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].countryIdOptions },
+            options: { label: 'name', value: 'id', data: addressTemplate.countryIdOptions ?? [] },
             order: 10
+          })
+        : null
+    );
+    formfields.push(
+      this.clientAddressLocationEnabled && this.isFieldEnabled('latitude')
+        ? new InputBase({
+            controlName: 'latitude',
+            label: this.translateService.instant('labels.inputs.Latitude'),
+            value: address && this.hasCoordinateValue(address.latitude, 'latitude') ? address.latitude : '',
+            type: 'number',
+            min: -90,
+            max: 90,
+            step: '0.00000001',
+            order: 12
+          })
+        : null
+    );
+    formfields.push(
+      this.clientAddressLocationEnabled && this.isFieldEnabled('longitude')
+        ? new InputBase({
+            controlName: 'longitude',
+            label: this.translateService.instant('labels.inputs.Longitude'),
+            value: address && this.hasCoordinateValue(address.longitude, 'longitude') ? address.longitude : '',
+            type: 'number',
+            min: -180,
+            max: 180,
+            step: '0.00000001',
+            order: 13
           })
         : null
     );

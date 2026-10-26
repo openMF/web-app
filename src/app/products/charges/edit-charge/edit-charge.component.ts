@@ -7,9 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
@@ -33,7 +33,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ValidateOnFocusDirective,
     GlAccountSelectorComponent,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditChargeComponent implements OnInit {
   private productsService = inject(ProductsService);
@@ -162,9 +163,28 @@ export class EditChargeComponent implements OnInit {
         this.showPenalty = false;
         break;
       }
+      case 'Working Capital Loan': {
+        this.chargeTimeTypeOptions = this.chargeData.chargeTimeTypeOptions.filter((chargeTimeType: any) => {
+          return [2].includes(chargeTimeType.id); // Only Specific Due Date
+        });
+        this.chargeCalculationTypeOptions = this.chargeData.chargeCalculationTypeOptions;
+        this.addFeeFrequency = false;
+        this.chargePaymentMode = true;
+        this.chargeForm.addControl(
+          'chargePaymentMode',
+          this.formBuilder.control(this.chargeData.chargePaymentMode.id, Validators.required)
+        );
+        this.showGLAccount = false;
+        this.showPenalty = true;
+        break;
+      }
       default: {
         this.chargeCalculationTypeOptions = this.chargeData.clientChargeCalculationTypeOptions;
-        this.chargeTimeTypeOptions = this.chargeData.clientChargeTimeTypeOptions;
+        this.chargeCalculationTypeOptions = this.chargeData.loanChargeCalculationTypeOptions.filter(
+          (calculationType: any) => {
+            return [1].includes(calculationType.id); // Only Flat
+          }
+        );
         this.showGLAccount = true;
         this.addFeeFrequency = false;
         this.chargeForm.addControl(

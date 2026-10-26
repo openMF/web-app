@@ -6,13 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Currency } from '../models/general.model';
 import { UntypedFormControl } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { MatHint } from '@angular/material/form-field';
 import { FormatAmountDirective } from '../../directives/format-amount.directive';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { amountValueValidator } from '../validators/amount-value.validator';
 
 @Component({
   selector: 'mifosx-input-amount',
@@ -23,30 +24,49 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatAmountDirective,
     MatHint,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputAmountComponent {
+export class InputAmountComponent implements OnInit {
   @Input() isRequired = false;
   @Input() currency: Currency;
   @Input() inputLabel: string;
   @Input() inputFormControl: UntypedFormControl;
   @Input() minVal: number;
   @Input() maxVal: number;
+  /**
+   * Accepts a leading minus sign. Off by default: amounts are unsigned
+   * everywhere except where the field carries a signed difference.
+   */
+  @Input() allowNegative = false;
 
   displayHint = false;
 
   constructor() {}
 
-  numberOnly(event: any): boolean {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode === 46) {
-      if (!(this.inputFormControl.value.indexOf('.') > -1)) {
-        return true;
-      }
-      return false;
-    } else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+  ngOnInit(): void {
+    this.inputFormControl.addValidators(amountValueValidator(this.allowNegative));
+    this.inputFormControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  numberOnly(event: KeyboardEvent): boolean {
+    const charCode = event.which ?? event.keyCode;
+    const currentValue = String(this.inputFormControl?.value ?? '');
+
+    if (charCode === 46 || event.code === 'NumpadDecimal' || event.key === '.' || event.key === 'Decimal') {
+      return !currentValue.includes('.');
+    }
+
+    // The minus sign is only meaningful once, in front of the digits.
+    if (event.key === '-' || event.code === 'NumpadSubtract') {
+      const caretPosition = (event.target as HTMLInputElement | null)?.selectionStart ?? 0;
+      return this.allowNegative && !currentValue.includes('-') && caretPosition === 0;
+    }
+
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
+
     return true;
   }
 }

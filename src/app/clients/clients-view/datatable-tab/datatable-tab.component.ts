@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -18,10 +19,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     EntityDatatableTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatatableTabComponent {
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   entityId: string;
   entityDatatable: any;
@@ -30,9 +34,10 @@ export class DatatableTabComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('clientId');
 
-    this.route.data.subscribe((data: { clientDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientDatatable: any }) => {
       this.entityDatatable = data.clientDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.changeDetectorRef.markForCheck();
     });
   }
 }

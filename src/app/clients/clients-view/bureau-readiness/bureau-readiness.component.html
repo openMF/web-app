@@ -1,0 +1,139 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="cbild-bureau-readiness">
+  <!-- Role selector -->
+  <mat-card class="cbild-role-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Your CB-ILD Role</mat-label>
+        <mat-select [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+          @for (role of roles; track role.value) {
+            <mat-option [value]="role.value">{{ role.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading bar -->
+  @if (isLoading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <!-- Result -->
+  @if (result && !isLoading) {
+    <mat-card class="cbild-result-card">
+      <mat-card-content>
+        <!-- RFC hard veto warning -->
+        @if (isRfcHardVeto()) {
+          <div class="cbild-veto-warning">
+            <mat-icon>block</mat-icon>
+            <span>RFC Tax ID missing — score forced to 0. CDC will never be called.</span>
+          </div>
+        }
+
+        <!-- Status badges -->
+        <div class="cbild-status-row">
+          @if (result.ready) {
+            <span class="cbild-badge cbild-badge-ready"> <mat-icon>check_circle</mat-icon> READY </span>
+          } @else {
+            <span class="cbild-badge cbild-badge-not-ready"> <mat-icon>cancel</mat-icon> NOT READY </span>
+          }
+          @if (result.riskBand) {
+            <span class="cbild-badge" [ngClass]="'cbild-badge-risk-' + result.riskBand.toLowerCase()">
+              Risk: {{ result.riskBand }}
+            </span>
+          }
+          @if (result.scoreDropAlert) {
+            <span class="cbild-badge cbild-badge-alert"> <mat-icon>warning</mat-icon> Score Drop Alert </span>
+          }
+        </div>
+
+        <mat-divider class="cbild-divider"></mat-divider>
+
+        <!-- KYC Score bar -->
+        <div class="cbild-score-section">
+          <div class="cbild-score-header">
+            <span class="cbild-score-label">KYC Completeness Score</span>
+            <span class="cbild-score-value">{{ result.score }} / 100</span>
+          </div>
+          <mat-progress-bar [color]="getScoreColor()" mode="determinate" [value]="result.score"> </mat-progress-bar>
+          @if (result.score < 70) {
+            <p class="cbild-score-hint">
+              Score below 70 — CDC submission blocked until missing fields are completed in Fineract.
+            </p>
+          }
+        </div>
+
+        <mat-divider class="cbild-divider"></mat-divider>
+
+        <!-- FICO score -->
+        @if (result.ficoScore !== null) {
+          <div class="cbild-fico-row">
+            <div>
+              <span class="cbild-fico-label">CDC FICO Score</span>
+              <span class="cbild-fico-value">{{ result.ficoScore }}</span>
+            </div>
+            @if (result.pulledAt) {
+              <span class="cbild-pulled-at">Last pulled: {{ result.pulledAt | date: 'medium' }}</span>
+            }
+          </div>
+          <mat-divider class="cbild-divider"></mat-divider>
+        }
+
+        <!-- Missing fields -->
+        @if (result.missingFields?.length) {
+          <div class="cbild-missing-section">
+            <p class="cbild-missing-title">
+              <mat-icon>warning</mat-icon>
+              Missing or Incomplete Fields ({{ result.missingFields.length }})
+            </p>
+            <mat-list dense>
+              @for (field of result.missingFields; track field) {
+                <mat-list-item>
+                  <mat-icon matListItemIcon [class]="field === 'nationalId' ? 'cbild-icon-veto' : 'cbild-icon-warn'">
+                    {{ field === 'nationalId' ? 'block' : 'info' }}
+                  </mat-icon>
+                  <span matListItemTitle>{{ formatFieldName(field) }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+            <p class="cbild-missing-hint">Complete these fields in Fineract before submitting to CDC.</p>
+          </div>
+        } @else {
+          <div class="cbild-complete">
+            <mat-icon>check_circle</mat-icon>
+            <span>All required fields are complete.</span>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Empty state -->
+  @if (!result && !isLoading && !hasError) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon>search</mat-icon>
+        <p>{{ 'labels.inputs.No bureau data available' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Error state -->
+  @if (hasError && !isLoading) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ 'labels.inputs.Failed to load bureau data' | translate }}</p>
+        <button mat-stroked-button color="primary" (click)="loadReadiness()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

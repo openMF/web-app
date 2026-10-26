@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatCell,
   MatCellDef,
@@ -41,9 +42,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanDeferredIncomeTabComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
 
   capitalizedIncomeData: LoanCapitalizedIncomeData[] = [];
@@ -61,15 +64,17 @@ export class LoanDeferredIncomeTabComponent {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.capitalizedIncomeData = [];
-    this.route.parent.data.subscribe((data: { loanDeferredIncomeData: LoanDeferredIncomeData }) => {
-      data.loanDeferredIncomeData.capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
-        this.capitalizedIncomeData.push({
-          amount: item.amount,
-          amortizedAmount: item.amortizedAmount ?? 0,
-          unrecognizedAmount: item.unrecognizedAmount ?? 0,
-          amountAdjustment: item.amountAdjustment ?? 0
+    this.route.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanDeferredIncomeData: LoanDeferredIncomeData }) => {
+        data.loanDeferredIncomeData.capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
+          this.capitalizedIncomeData.push({
+            amount: item.amount,
+            amortizedAmount: item.amortizedAmount ?? 0,
+            unrecognizedAmount: item.unrecognizedAmount ?? 0,
+            amountAdjustment: item.amountAdjustment ?? 0
+          });
         });
       });
-    });
   }
 }

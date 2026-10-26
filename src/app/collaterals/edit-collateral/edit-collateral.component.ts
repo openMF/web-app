@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -22,17 +23,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./edit-collateral.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCollateralComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private collateralService = inject(CollateralsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Client Collateral Form */
-  clientCollateralForm: UntypedFormGroup;
+  clientCollateralForm: FormGroup;
   /** Client Collateral Options */
   clientCollateralOptions: any;
   /** Client Id */
@@ -49,7 +52,7 @@ export class EditCollateralComponent implements OnInit {
    * @param {CollateralsService} collateralService Collateral Service
    */
   constructor() {
-    this.route.data.subscribe((data: { clientCollateralData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientCollateralData: any }) => {
       this.collateralDetails = data.clientCollateralData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

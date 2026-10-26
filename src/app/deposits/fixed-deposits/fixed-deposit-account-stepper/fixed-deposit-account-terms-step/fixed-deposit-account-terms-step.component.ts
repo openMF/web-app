@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
@@ -16,6 +16,7 @@ import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PositiveIntegerDirective } from 'app/directives/positive-integer.directive';
 
 /**
  * Fixed Deposits Terms Step
@@ -30,8 +31,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDivider,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
-  ]
+    MatStepperNext,
+    PositiveIntegerDirective
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
@@ -47,7 +50,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Terms Form */
-  fixedDepositAccountTermsForm: UntypedFormGroup;
+  fixedDepositAccountTermsForm!: UntypedFormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */

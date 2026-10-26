@@ -1,0 +1,55 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.loading-state,
+.empty-state {
+  padding: 20px;
+  text-align: center;
+}
+
+.exchange-rates-actions {
+  align-items: center;
+}
+
+.exchange-rate-filter-card {
+  overflow: visible;
+}
+
+.exchange-rate-filter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  align-items: flex-start;
+
+  .exchange-rate-field {
+    flex: 1 1 220px;
+    max-width: 360px;
+    min-width: 220px;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--md-sys-color-on-surface-variant, #44474e);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    min-width: 900px;
+  }
+}

@@ -42,7 +42,7 @@ import { GSIMAccountsResolver } from './common-resolvers/gsim-account-resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'groups',
+      path: '',
       data: { title: 'Groups', breadcrumb: 'Groups', routeParamBreadcrumb: false },
       children: [
         {
@@ -68,7 +68,6 @@ const routes: Routes = [
               path: '',
               component: GroupsViewComponent,
               resolve: {
-                groupViewData: GroupViewResolver,
                 groupDatatables: GroupDatatablesResolver
               },
               children: [
@@ -121,8 +120,7 @@ const routes: Routes = [
               component: EditGroupComponent,
               data: { title: 'Edit Group', breadcrumb: 'Edit', routeParamBreadcrumb: false },
               resolve: {
-                groupAndTemplateData: GroupDataAndTemplateResolver,
-                groupViewData: GroupViewResolver
+                groupAndTemplateData: GroupDataAndTemplateResolver
               }
             },
             {

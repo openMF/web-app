@@ -24,7 +24,10 @@
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
       <mat-error *ngIf="savingProductTermsForm.get('nominalAnnualInterestRate').hasError('min')">
-        {{ 'labels.inputs.Nominal Annual Interest' | translate }} must be zero or greater
+        {{
+          'errors.validation.mustBeAtLeast'
+            | translate: { field: ('labels.inputs.Nominal Annual Interest' | translate), min: 0 }
+        }}
       </mat-error>
     </mat-form-field>
 

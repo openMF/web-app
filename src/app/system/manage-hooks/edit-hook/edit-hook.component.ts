@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -72,7 +72,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditHookComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -225,10 +226,14 @@ export class EditHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     if (this.eventsData.length === 1) {
-      this.snackBar.open('At least one event is required. Cannot delete the last event.', 'Close', {
-        duration: 3000,
-        panelClass: ['error-snackbar']
-      });
+      this.snackBar.open(
+        this.translateService.instant('errors.hooks.lastEvent'),
+        this.translateService.instant('labels.buttons.Close'),
+        {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        }
+      );
       return;
     }
 
@@ -264,6 +269,7 @@ export class EditHookComponent implements OnInit {
       config: {
         'Payload URL': string;
         'Content Type'?: string;
+        'Phone Number'?: string;
         'SMS Provider'?: string;
         'SMS Provider Account Id'?: string;
         'SMS Provider Token'?: string;
@@ -276,6 +282,7 @@ export class EditHookComponent implements OnInit {
       config: {
         'Payload URL': this.hookForm.get('payloadUrl').value,
         'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
+        'Phone Number': this.hookForm.get('phoneNumber').enabled ? this.hookForm.get('phoneNumber').value : undefined,
         'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
         'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
           ? this.hookForm.get('smsProviderAccountId').value

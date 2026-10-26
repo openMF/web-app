@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, SecurityContext, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, SecurityContext, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -31,7 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorDialogComponent {
   dialogRef = inject<MatDialogRef<ErrorDialogComponent>>(MatDialogRef);

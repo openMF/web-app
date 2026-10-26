@@ -69,3 +69,11 @@ src/environments/.env.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/playwright/.auth/
+src/environments/.env.ts
+
+docs/
+scripts/
+
+# Scaffold documents shared across openMF repositories: keep them as provided
+/SECURITY.md

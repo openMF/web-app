@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -64,7 +64,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateHookComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -231,6 +232,7 @@ export class CreateHookComponent implements OnInit {
       config: {
         'Payload URL': string;
         'Content Type'?: string;
+        'Phone Number'?: string;
         'SMS Provider'?: string;
         'SMS Provider Account Id'?: string;
         'SMS Provider Token'?: string;
@@ -243,6 +245,8 @@ export class CreateHookComponent implements OnInit {
       config: {
         'Payload URL': this.hookForm.get('payloadUrl').value,
         'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
+        'Phone Number':
+          this.hookForm.get('name').value === 'SMS Bridge' ? this.hookForm.get('phoneNumber').value : undefined,
         'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
         'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
           ? this.hookForm.get('smsProviderAccountId').value

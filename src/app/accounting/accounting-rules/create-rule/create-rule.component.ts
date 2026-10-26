@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRadioButton,
     MatCheckbox,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateRuleComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -171,8 +172,10 @@ export class CreateRuleComponent implements OnInit {
           });
         } else {
           this.snackBar.open(
-            err?.error?.defaultUserMessage || err?.error?.message || 'An error occurred. Please try again.',
-            'Close',
+            err?.error?.defaultUserMessage ||
+              err?.error?.message ||
+              this.translateService.instant('errors.generic.unexpected'),
+            this.translateService.instant('labels.buttons.Close'),
             {
               duration: 7000,
               verticalPosition: 'top',

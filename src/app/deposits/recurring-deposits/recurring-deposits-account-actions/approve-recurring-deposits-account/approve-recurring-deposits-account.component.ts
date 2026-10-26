@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApproveRecurringDepositsAccountComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -85,6 +86,9 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
+    if (this.approveRecurringDepositsAccountForm.invalid) {
+      return;
+    }
     const approveRecurringDepositsAccountFormData = this.approveRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;

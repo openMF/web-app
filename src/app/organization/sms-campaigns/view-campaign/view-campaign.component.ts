@@ -7,11 +7,11 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject, DestroyRef } from '@angular/core';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatTableDataSource,
   MatTable,
@@ -71,21 +71,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewCampaignComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
   private dataReloadService = inject(DataReloadService);
+  private destroyRef = inject(DestroyRef);
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
-  smsForm: UntypedFormGroup;
+  smsForm: FormGroup;
   smsCampaignData: any;
   status: any;
   displayedColumns: string[] = [
@@ -97,7 +99,6 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource();
 
   private reloadContext!: string;
-  private destroy$ = new Subject<void>();
 
   /** Message Table Reference */
   @ViewChild('messageTable') messageTableRef: MatTable<Element>;
@@ -127,14 +128,14 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { smsCampaign: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaign: any }) => {
       this.smsCampaignData = data.smsCampaign;
       this.reloadContext = `sms-campaign-${this.smsCampaignData.id}`;
 
       // Subscribe to reload events after we have the campaign ID
       this.dataReloadService
         .getReloadObservable(this.reloadContext)
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           this.refreshData();
         });
@@ -145,8 +146,6 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.reloadContext) {
       this.dataReloadService.cleanup(this.reloadContext);
     }
@@ -207,6 +206,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
         };
         this.organizationService
           .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'close')
+          .pipe(take(1))
           .subscribe(() => {
             this.reload();
           });
@@ -244,6 +244,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
         };
         this.organizationService
           .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'activate')
+          .pipe(take(1))
           .subscribe(() => {
             this.reload();
           });
@@ -281,6 +282,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
         };
         this.organizationService
           .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'reactivate')
+          .pipe(take(1))
           .subscribe(() => {
             this.reload();
           });
@@ -297,9 +299,12 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
     });
     deleteSmsCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteSmsCampaign(this.smsCampaignData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.organizationService
+          .deleteSmsCampaign(this.smsCampaignData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -317,7 +322,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   private refreshData(): void {
     this.organizationService
       .getSmsCampaign(this.smsCampaignData.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(take(1))
       .subscribe((data: any) => {
         this.smsCampaignData = data;
       });
@@ -345,9 +350,12 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
       dateFormat,
       locale
     };
-    this.organizationService.getMessagebyStatus(data).subscribe((response: any) => {
-      this.dataSource.data = response.pageItems;
-      this.messageTableRef.renderRows();
-    });
+    this.organizationService
+      .getMessagebyStatus(data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.dataSource.data = response.pageItems;
+        this.messageTableRef.renderRows();
+      });
   }
 }

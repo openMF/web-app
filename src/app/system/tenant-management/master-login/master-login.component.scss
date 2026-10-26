@@ -1,0 +1,19 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.master-login-card {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.master-login-error {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  color: var(--md-sys-color-error, #ba1a1a);
+}

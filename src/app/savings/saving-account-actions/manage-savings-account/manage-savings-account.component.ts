@@ -6,8 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
@@ -35,10 +35,11 @@ interface TransactionType {
     ...STANDALONE_SHARED_IMPORTS,
     MatCardTitle,
     InputAmountComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private savingsService = inject(SavingsService);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
@@ -52,7 +53,7 @@ export class ManageSavingsAccountComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Manage Savings Account form. */
-  manageSavingsAccountForm: UntypedFormGroup;
+  manageSavingsAccountForm: FormGroup;
   /** Savings Account Id */
   savingAccountId: string;
   transactionCommand: TransactionCommandType;

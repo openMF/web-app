@@ -1,0 +1,265 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  padding: 24px;
+}
+
+.closing-form {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.form-header {
+  margin-bottom: 24px;
+}
+
+.form-header h2 {
+  margin: 0;
+}
+
+.form-error {
+  color: var(--mat-sys-error);
+}
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 12px));
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.cashier-field {
+  width: 100%;
+}
+
+.business-date-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px;
+  padding: 8px 16px;
+  border: 1px solid var(--mat-sys-outline-variant, rgb(0 0 0 / 12%));
+  border-radius: 4px;
+}
+
+.field-label {
+  color: var(--mat-sys-on-surface-variant, rgb(0 0 0 / 60%));
+  font-size: 12px;
+}
+
+.currency-grid {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 12px));
+  gap: 24px;
+  padding-bottom: 144px;
+}
+
+.currency-block {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--mat-sys-outline-variant, rgb(0 0 0 / 12%));
+  border-radius: 8px;
+}
+
+.currency-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, rgb(0 0 0 / 12%));
+}
+
+.currency-header h3 {
+  margin: 0;
+}
+
+.denomination-section {
+  margin-top: 24px;
+}
+
+.denomination-section h4 {
+  margin: 0 0 8px;
+}
+
+.denomination-row {
+  display: grid;
+  grid-template-columns: calc((100% - 152px) / 2) 120px calc((100% - 152px) / 2);
+  gap: 16px;
+  align-items: center;
+  min-height: 64px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, rgb(0 0 0 / 12%));
+}
+
+.denomination-heading {
+  min-height: 40px;
+  color: var(--mat-sys-on-surface-variant, rgb(0 0 0 / 60%));
+  font-size: 12px;
+}
+
+.denomination-row mat-form-field {
+  width: 100%;
+}
+
+.denomination-row > :last-child {
+  text-align: end;
+}
+
+.line-amount,
+.total-row strong {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.currency-totals {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.total-cash {
+  padding-top: 8px;
+  border-top: 1px solid var(--mat-sys-outline-variant, rgb(0 0 0 / 12%));
+}
+
+.voucher-field {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  background: var(--mat-sys-surface, white);
+  box-shadow: 0 -2px 8px rgb(0 0 0 / 8%);
+}
+
+.action-summary {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.action-summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.previous-closings {
+  padding-top: 16px;
+}
+
+.refresh-action {
+  margin-top: 16px;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.closing-report {
+  display: none;
+}
+
+@media (width <= 960px) {
+  .context-grid,
+  .currency-grid {
+    grid-template-columns: 100%;
+  }
+
+  .currency-grid {
+    padding-bottom: 176px;
+  }
+}
+
+@media (width <= 600px) {
+  :host {
+    padding: 16px;
+  }
+
+  .currency-block {
+    padding: 16px;
+  }
+
+  .denomination-row {
+    grid-template-columns: calc((100% - 112px) / 2) 96px calc((100% - 112px) / 2);
+    gap: 8px;
+  }
+
+  .actions {
+    align-items: stretch;
+  }
+
+  .action-summary,
+  .action-buttons {
+    width: 100%;
+  }
+
+  .action-buttons {
+    justify-content: flex-end;
+  }
+}
+
+@media print {
+  :host {
+    padding: 0;
+  }
+
+  .closing-form {
+    display: none;
+  }
+
+  .closing-report {
+    display: block;
+    background: white;
+  }
+
+  .closing-report table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .closing-report th,
+  .closing-report td {
+    padding: 8px;
+    text-align: start;
+  }
+
+  .closing-report mat-card {
+    break-inside: avoid;
+  }
+}

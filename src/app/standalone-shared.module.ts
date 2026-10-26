@@ -22,7 +22,9 @@ import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular
 import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
+import { DatatableDisplayLabelPipe } from '@pipes/datatable-display-label.pipe';
 import { DocumentationLinkPipe } from '@pipes/documentation-link.pipe';
+import { CurrencyNamePipe } from '@pipes/currency-name.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
@@ -52,7 +54,9 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatButton,
   MatCheckbox,
   DateFormatPipe,
+  DatatableDisplayLabelPipe,
   DocumentationLinkPipe,
+  CurrencyNamePipe,
   HasPermissionDirective,
 
   // Pipes and Directives

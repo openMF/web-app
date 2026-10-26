@@ -6,13 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-about-us',
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.scss'],
-  imports: [...STANDALONE_SHARED_IMPORTS]
+  imports: [...STANDALONE_SHARED_IMPORTS],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutUsComponent {}

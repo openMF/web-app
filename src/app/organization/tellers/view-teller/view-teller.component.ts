@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -33,12 +35,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     TitleCasePipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTellerComponent {
   private organizationService = inject(OrganizationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   dialog = inject(MatDialog);
 
   /** Teller data. */
@@ -52,7 +56,7 @@ export class ViewTellerComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { teller: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { teller: any }) => {
       this.tellerData = data.teller;
     });
   }
@@ -66,9 +70,12 @@ export class ViewTellerComponent {
     });
     deleteTellerDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteTeller(this.tellerData.id).subscribe(() => {
-          this.router.navigate(['/organization/tellers']);
-        });
+        this.organizationService
+          .deleteTeller(this.tellerData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['/organization/tellers']);
+          });
       }
     });
   }

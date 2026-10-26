@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -23,6 +24,7 @@ import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PositiveIntegerDirective } from 'app/directives/positive-integer.directive';
 
 /** Custom Services */
 
@@ -40,19 +42,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDivider,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
-  ]
+    MatStepperNext,
+    PositiveIntegerDirective
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   @Input() isNew = true;
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
 
   /** Recurring Deposits Account Settings Form */
-  recurringDepositAccountSettingsForm: UntypedFormGroup;
+  recurringDepositAccountSettingsForm!: UntypedFormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -108,11 +113,14 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
           ? recurringDepositsAccount.preClosurePenalInterestOnType.id
           : '',
         minBalanceForInterestCalculation: recurringDepositsAccount.minBalanceForInterestCalculation,
-        depositPeriod: recurringDepositsAccount.minDepositTerm,
-        depositPeriodFrequencyId: recurringDepositsAccount.minDepositTermType.id,
+        // A new application starts at the product's minimum term; an existing account keeps its own term.
+        depositPeriod: this.isNew ? recurringDepositsAccount.minDepositTerm : recurringDepositsAccount.depositPeriod,
+        depositPeriodFrequencyId: this.isNew
+          ? recurringDepositsAccount.minDepositTermType?.id
+          : recurringDepositsAccount.depositPeriodFrequency?.id,
         expectedFirstDepositOnDate:
           recurringDepositsAccount.expectedFirstDepositOnDate &&
-          new Date(recurringDepositsAccount.expectedFirstDepositOnDate),
+          this.dateUtils.parseDate(recurringDepositsAccount.expectedFirstDepositOnDate),
         recurringFrequency: recurringDepositsAccount.recurringFrequency,
         recurringFrequencyType: recurringDepositsAccount.recurringFrequencyType
           ? recurringDepositsAccount.recurringFrequencyType.id
@@ -120,21 +128,21 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       });
       if (recurringDepositsAccount.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.recurringDepositAccountSettingsForm.addControl(
               'taxGroupId',
               new UntypedFormControl({ value: '', disabled: true })
             );
             this.recurringDepositAccountSettingsForm
-              .get('taxGroupId')
+              .get('taxGroupId')!
               .patchValue(recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name);
           } else {
             this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
         this.recurringDepositAccountSettingsForm
-          .get('withHoldTax')
+          .get('withHoldTax')!
           .patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
       } else {
         this.recurringDepositAccountSettingsForm.removeControl('withHoldTax');
@@ -216,7 +224,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
    */
   buildDependencies() {
     this.recurringDepositAccountSettingsForm
-      .get('isCalendarInherited')
+      .get('isCalendarInherited')!
       .valueChanges.subscribe((isCalendarInherited: any) => {
         if (isCalendarInherited) {
           this.recurringDepositAccountSettingsForm.removeControl('expectedFirstDepositOnDate');

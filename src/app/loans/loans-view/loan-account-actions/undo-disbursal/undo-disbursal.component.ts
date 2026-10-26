@@ -7,14 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '../../../loans.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Undo Disbursal component.
@@ -26,29 +26,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UndoDisbursalComponent implements OnInit {
+export class UndoDisbursalComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loansService = inject(LoansService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
 
   @Input() actionName: string;
 
-  /** Loan ID. */
-  loanId: any;
   /** Undo disbursal form. */
   note: UntypedFormControl;
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loansService Loans Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -62,12 +52,25 @@ export class UndoDisbursalComponent implements OnInit {
    * Submits the undo disbursal form.
    */
   submit() {
-    let command = 'undodisbursal';
+    let loanCommand = 'undodisbursal';
     if (this.actionName === 'Undo Last Disbursal') {
-      command = 'undolastdisbursal';
+      loanCommand = 'undolastdisbursal';
     }
-    this.loansService.loanActionButtons(this.loanId, command, { note: this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    const request$ = this.isLoanProduct
+      ? this.loanService.loanActionButtons(this.loanId, loanCommand, { note: this.note.value })
+      : this.isWorkingCapital
+        ? this.loanService.applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, { note: this.note.value })
+        : undefined;
+
+    if (!request$) {
+      return;
+    }
+
+    request$.subscribe({
+      next: () => this.gotoLoanDefaultView(),
+      error: () => {
+        this.note.setErrors({ submitFailed: true });
+      }
     });
   }
 }

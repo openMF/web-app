@@ -13,6 +13,12 @@
       {{ 'labels.buttons.Create Report' | translate }}
     </button>
   </div>
+  <div class="in-block">
+    <button mat-raised-button color="primary" (click)="uploadReportDesign()" *mifosxHasPermission="'CREATE_REPORT'">
+      <fa-icon icon="upload" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Upload Report Design' | translate }}
+    </button>
+  </div>
 </div>
 
 <div class="container">
@@ -42,7 +48,15 @@
 
       <ng-container matColumnDef="reportCategory">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Report Category' | translate }}</th>
-        <td mat-cell *matCellDef="let report">{{ report.reportCategory | translateKey: 'catalogs' }}</td>
+        <td mat-cell *matCellDef="let report">
+          {{
+            report.reportCategory &&
+            report.reportCategory.trim() &&
+            report.reportCategory.trim().toUpperCase() !== '(NULL)'
+              ? (report.reportCategory.trim() | translateKey: 'catalogs')
+              : ''
+          }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="coreReport">

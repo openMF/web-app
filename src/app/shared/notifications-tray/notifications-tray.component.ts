@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** RxJS Imports */
@@ -42,7 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatMenu,
     MatIcon,
     MatMenuItem
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
   notificationsService = inject(NotificationsService);

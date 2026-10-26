@@ -1,0 +1,140 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="acquisition-status" aria-live="polite">
+  <h2>{{ 'acquisition.title' | translate }}</h2>
+
+  @if (isLoading) {
+    <div class="state-panel">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>{{ 'acquisition.loading' | translate }}</p>
+    </div>
+  } @else if (isUnavailable) {
+    <mat-card class="state-card">
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>{{ 'acquisition.empty' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else if (error) {
+    <mat-card class="state-card error-state">
+      <mat-card-content>
+        <mat-icon color="warn">error_outline</mat-icon>
+        @if (error === 'forbidden') {
+          <p>{{ 'acquisition.errors.forbidden' | translate }}</p>
+        } @else if (error === 'not-found') {
+          <p>{{ 'acquisition.errors.notFound' | translate }}</p>
+        } @else {
+          <p>{{ 'acquisition.errors.generic' | translate }}</p>
+        }
+        <button mat-stroked-button color="primary" type="button" (click)="loadBoard()">
+          {{ 'acquisition.retry' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else if (!board?.stages?.length) {
+    <mat-card class="state-card">
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>{{ 'acquisition.empty' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="stage-flow">
+      @for (stage of stages; track stage.code; let last = $last) {
+        <article
+          class="stage"
+          [class.current-stage]="
+            board?.currentStage !== null && board?.currentStage !== undefined
+              ? board?.currentStage === stage.code
+              : stage.status === 'CURRENT'
+          "
+          [attr.aria-labelledby]="'acquisition-stage-' + stage.code"
+        >
+          <div
+            class="stage-marker"
+            [ngClass]="statusClass(stage.status)"
+            role="img"
+            [attr.aria-label]="'acquisition.statuses.' + statusTranslationKey(stage.status) | translate"
+          >
+            <mat-icon aria-hidden="true">{{ statusIcon(stage.status) }}</mat-icon>
+          </div>
+          <mat-card class="stage-card">
+            <mat-card-content>
+              <h3 [id]="'acquisition-stage-' + stage.code">
+                @switch (stage.code) {
+                  @case ('ONBOARDING') {
+                    {{ 'acquisition.stages.ONBOARDING' | translate }}
+                  }
+                  @case ('COMPLIANCE') {
+                    {{ 'acquisition.stages.COMPLIANCE' | translate }}
+                  }
+                  @case ('APPROVAL') {
+                    {{ 'acquisition.stages.APPROVAL' | translate }}
+                  }
+                  @case ('ACTIVATION') {
+                    {{ 'acquisition.stages.ACTIVATION' | translate }}
+                  }
+                  @case ('DEPOSIT') {
+                    {{ 'acquisition.stages.DEPOSIT' | translate }}
+                  }
+                  @case ('WITHDRAWAL') {
+                    {{ 'acquisition.stages.WITHDRAWAL' | translate }}
+                  }
+                }
+              </h3>
+              <mat-chip [ngClass]="statusClass(stage.status)" [attr.data-status]="statusTranslationKey(stage.status)">
+                <mat-icon aria-hidden="true">{{ statusIcon(stage.status) }}</mat-icon>
+                {{ 'acquisition.statuses.' + statusTranslationKey(stage.status) | translate }}
+              </mat-chip>
+
+              @if (
+                board?.currentStage !== null && board?.currentStage !== undefined
+                  ? board?.currentStage === stage.code
+                  : stage.status === 'CURRENT'
+              ) {
+                <p class="current-indicator">
+                  <mat-icon>play_arrow</mat-icon>
+                  {{ 'acquisition.currentStage' | translate }}
+                </p>
+              }
+
+              <dl>
+                <div>
+                  <dt>{{ 'acquisition.fields.completedOn' | translate }}</dt>
+                  <dd>{{ stage.completedOn || ('acquisition.notAvailable' | translate) }}</dd>
+                </div>
+                @if (stage.details?.actorName) {
+                  <div>
+                    <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
+                    <dd>{{ stage.details?.actorName }}</dd>
+                  </div>
+                }
+                @if (stage.details?.amount !== null && stage.details?.amount !== undefined) {
+                  <div>
+                    <dt>{{ 'acquisition.fields.amount' | translate }}</dt>
+                    <dd>{{ stage.details?.amount }} {{ stage.details?.currencyCode }}</dd>
+                  </div>
+                }
+                @if (stage.details?.reason) {
+                  <div>
+                    <dt>{{ 'acquisition.fields.reason' | translate }}</dt>
+                    <dd>{{ stage.details?.reason }}</dd>
+                  </div>
+                }
+              </dl>
+            </mat-card-content>
+          </mat-card>
+          @if (!last) {
+            <div class="connector" [class.connector-completed]="stage.status === 'COMPLETED'" aria-hidden="true"></div>
+          }
+        </article>
+      }
+    </div>
+  }
+</section>

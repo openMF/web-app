@@ -28,8 +28,20 @@
             @if (isString(datatableInput.columnDisplayType)) {
               <input matInput formControlName="{{ datatableInput.controlName }}" />
             }
-            @if (isText(datatableInput.columnDisplayType)) {
+            @if (isText(datatableInput.columnDisplayType) && !isJson(datatableInput)) {
               <textarea matInput formControlName="{{ datatableInput.controlName }}"></textarea>
+            }
+            @if (isJson(datatableInput)) {
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="6"
+                cdkAutosizeMaxRows="18"
+                formControlName="{{ datatableInput.controlName }}"
+              ></textarea>
+              @if (datatableForm.controls[datatableInput.controlName].hasError('json')) {
+                <mat-error>{{ 'labels.inputs.Invalid JSON' | translate }}</mat-error>
+              }
             }
             @if (isDate(datatableInput.columnDisplayType)) {
               <span (click)="datePicker.open()">

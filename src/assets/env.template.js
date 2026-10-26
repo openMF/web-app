@@ -43,11 +43,16 @@
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '$MIFOS_ALLOW_SERVER_SWITCH_SELECTOR';
 
-  // Display or not the BackEnd Info
+  // Display or not the BackEnd Info in the footer and the Login view.
+  // Regardless of this setting, it is always available in Admin > System > System Information
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
   // Show minimal production hero on login page
   window['env']['productionMode'] = '$MIFOS_PRODUCTION_MODE';
+  window['env']['enableGlobalDashboard'] = '$MIFOS_ENABLE_GLOBAL_DASHBOARD';
+
+  // Enable Global Dashboard feature
+  window['env']['enableGlobalDashboard'] = '$MIFOS_ENABLE_GLOBAL_DASHBOARD';
 
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '$MIFOS_DISPLAY_TENANT_SELECTOR';
@@ -104,6 +109,8 @@
   window['env']['mifosInterbankTransfersApiProvider'] = '$MIFOS_INTERBANK_TRANSFERS_API_PROVIDER';
   window['env']['mifosInterbankTransfersApiVersion'] = '$MIFOS_INTERBANK_TRANSFERS_API_VERSION';
   window['env']['mifosInterbankTransfersEnabled'] = '$MIFOS_INTERBANK_TRANSFERS_ENABLED';
+  window['env']['cbIldEnabled'] = '$CB_ILD_ENABLED';
+  window['env']['pluginBaseUrl'] = '$PLUGIN_BASE_URL';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '$MIFOS_REMITTANCE_API_CLIENT_URL';
@@ -112,6 +119,18 @@
   window['env']['mifosRemittanceEnabled'] = '$MIFOS_REMITTANCE_ENABLED';
   window['env']['mifosRemittanceApiClientHeader'] = '$MIFOS_REMITTANCE_API_CLIENT_HEADER';
   window['env']['mifosRemittanceApiClientKey'] = '$MIFOS_REMITTANCE_API_CLIENT_KEY';
+
+  // Mifos Copilot AI assistant
+  // Set MIFOS_ENABLE_COPILOT=true to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = '$MIFOS_ENABLE_COPILOT';
+  // Base URL of the Copilot gateway, which holds the LLM key server-side and runs banking
+  // tools as the logged-in officer. Leave unset to use the built-in mock responses.
+  window['env']['copilotMcpBaseUrl'] = '$MIFOS_COPILOT_MCP_BASE_URL';
+
+  // Tenant Management administration UI
+  // Set MIFOS_ENABLE_TENANT_MANAGEMENT=true where the Fineract tenant management plugin is
+  // installed (off by default; a server without it has no tenant administration API)
+  window['env']['enableTenantManagement'] = '$MIFOS_ENABLE_TENANT_MANAGEMENT';
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
@@ -124,6 +143,12 @@
   window['env']['externalNationalIdSystemApiHeader'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER';
   window['env']['externalNationalIdSystemApiKey'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY';
   window['env']['externalNationalIdRegex'] = '$EXTERNAL_NATIONAL_ID_REGEX';
+
+  // Email format validation regex (optional override; leave unset to use the built-in default)
+  window['env']['externalEmailRegex'] = '$EXTERNAL_EMAIL_REGEX';
+
+  // Client Address Location (latitude, longitude, and map)
+  window['env']['enableClientAddressLocation'] = '$MIFOS_ENABLE_CLIENT_ADDRESS_LOCATION';
 
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';

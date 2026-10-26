@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -27,9 +28,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     EntityDocumentsTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanDocumentsTabComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private loansService = inject(LoansService);
   private settingsService = inject(SettingsService);
@@ -47,13 +50,13 @@ export class LoanDocumentsTabComponent implements OnInit {
   constructor() {
     this.entityId = this.route.parent.snapshot.params['loanId'];
 
-    this.route.data.subscribe((data: { loanDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDocuments: any }) => {
       this.getLoanDocumentsData(data.loanDocuments);
     });
   }
 
   ngOnInit(): void {
-    this.route.parent.params.subscribe((params) => {
+    this.route.parent.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.entityId = params['loanId'];
     });
   }

@@ -10,6 +10,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable } from 'rxjs';
+import { LoanProductService } from './services/loan-product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,11 @@ export class LoanProductDatatablesResolver {
   private systemService = inject(SystemService);
 
   /**
-   * Returns the loan product data.
+   * Returns datatables registered for the current loan product entity.
+   * Term loan products use `m_product_loan`; working capital products use `m_wc_loan_product`.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.systemService.getEntityDatatables('m_product_loan');
+    return this.systemService.getEntityDatatables(LoanProductService.appTableFor(route.queryParams['productType']));
   }
 }

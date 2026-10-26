@@ -30,3 +30,60 @@ mat-divider {
 .margin-t {
   margin-top: 1em;
 }
+
+.mdc-list-item__primary-text {
+  width: 100%;
+}
+
+.product-option-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.product-option-name {
+  font-size: 0.85rem;
+  white-space: normal;
+  line-height: 1.3;
+  color: var(--md-sys-color-primary, #1074b9);
+}
+
+.product-option-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.meta-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+::ng-deep .loan-product-select-panel {
+  min-width: max(600px, 100%) !important;
+
+  .mat-mdc-option {
+    height: auto !important;
+    padding: 10px 16px !important;
+  }
+
+  .mdc-list-item__primary-text {
+    width: 100%;
+  }
+}

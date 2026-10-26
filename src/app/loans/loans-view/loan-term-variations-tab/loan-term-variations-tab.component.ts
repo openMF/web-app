@@ -6,9 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -34,6 +35,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-loan-term-variations-tab',
@@ -56,11 +58,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanTermVariationsTabComponent {
+export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dates = inject(Dates);
   private settingsService = inject(SettingsService);
   private loansService = inject(LoansService);
@@ -93,15 +96,15 @@ export class LoanTermVariationsTabComponent {
   clientId: string;
 
   constructor() {
-    const dates = this.dates;
+    super();
 
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
-        item.days = dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
+        item.days = this.dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
         switch (item.termType.value) {
           case 'emiAmount':
             this.emiAmountData.push(item);
@@ -224,7 +227,7 @@ export class LoanTermVariationsTabComponent {
       data: { deleteContext: `interest pause from ${variation.startDate} to ${variation.endDate}` }
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
           this.reload();
         });
@@ -259,7 +262,7 @@ export class LoanTermVariationsTabComponent {
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         if (response.data.value.startDate <= response.data.value.endDate) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;
@@ -275,13 +278,6 @@ export class LoanTermVariationsTabComponent {
         }
       }
     });
-  }
-
-  private reload() {
-    const url: string = this.router.url;
-    this.router
-      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
   }
 
   allowActions(termType: string): boolean {

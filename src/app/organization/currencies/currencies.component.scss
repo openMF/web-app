@@ -9,3 +9,13 @@
 table {
   width: 100%;
 }
+
+/* The empty-state row carries no mat-cell directive, so it gets none of the
+   table's cell padding. Dim it rather than naming a colour, so it follows
+   whichever text colour the active theme already gives the table. */
+.no-data-cell {
+  padding: 24px 16px;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.75;
+}

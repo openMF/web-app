@@ -7,7 +7,18 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -57,13 +68,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   /** Users data. */
   usersData: any;
@@ -101,7 +114,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { users: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { users: any }) => {
       this.usersData = data.users;
     });
   }

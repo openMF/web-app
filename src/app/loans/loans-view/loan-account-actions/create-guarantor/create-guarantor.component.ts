@@ -7,24 +7,53 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, AfterViewInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AbstractControl, UntypedFormGroup, UntypedFormBuilder, ValidationErrors, Validators } from '@angular/forms';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
 import { ClientsService } from 'app/clients/clients.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+
+/**
+ * Fineract guarantor type ids, as served by `GET /loans/{loanId}/guarantors/template`.
+ * `loan-guarantors-tab.component.html` already keys the edit action off `guarantorType.id === 3`,
+ * so the id - not the position in `guarantorTypeOptions` - is the stable identifier.
+ */
+const EXISTING_CLIENT_GUARANTOR_TYPE_ID = 1;
+const EXTERNAL_GUARANTOR_TYPE_ID = 3;
+
+/** Controls that only apply when the guarantor is an existing client. */
+const EXISTING_CLIENT_CONTROLS = [
+  'name',
+  'savingsId',
+  'amount'
+];
+
+/** Controls that only apply when the guarantor is an external person. */
+const EXTERNAL_GUARANTOR_CONTROLS = [
+  'firstname',
+  'lastname',
+  'dob',
+  'addressLine1',
+  'addressLine2',
+  'city',
+  'zip',
+  'mobileNumber',
+  'housePhoneNumber'
+];
+
+/**
+ * Typed text is not a guarantor: the client has to be picked from the list, since only the
+ * picked client carries the id that is sent as entityId.
+ */
+function clientPickedValidator(control: AbstractControl): ValidationErrors | null {
+  return typeof control.value === 'string' && control.value !== '' ? { clientNotPicked: true } : null;
+}
 
 /**
  * Create Guarantor Action
@@ -38,22 +67,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatAutocompleteTrigger,
     MatAutocomplete
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateGuarantorComponent implements OnInit, AfterViewInit {
+export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
   private clientsService = inject(ClientsService);
-  private settingsService = inject(SettingsService);
+  private cdr = inject(ChangeDetectorRef);
 
-  @Input() dataObject: any;
   /** New Guarantor Form */
   newGuarantorForm: UntypedFormGroup;
-  /** Loan ID */
-  loanId: string;
   /** Relation Types */
   relationTypes: any;
   /** Show Client Details Form */
@@ -67,15 +92,8 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
   /** Account Options */
   accountOptions: any = [];
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit() {
@@ -83,85 +101,129 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     this.createNewGuarantorForm();
     this.setNewGuarantorDetailsForm();
     this.buildDependencies();
+    this.subscribeToClientSearch();
+    this.subscribeToLinkedAccount();
   }
 
-  /** Create Guarantor Details Form */
+  /**
+   * Creates the guarantor details form.
+   *
+   * Both variants of the form are built once and switched with enable()/disable() rather than
+   * add/removeControl: a removed control also destroys the client-search subscription bound to
+   * it, and `FormGroup.value` already omits disabled controls so the payload stays clean.
+   */
   createNewGuarantorForm() {
     this.newGuarantorForm = this.formBuilder.group({
-      existingClient: [''],
+      existingClient: [true],
+      clientRelationshipTypeId: [''],
+      // Existing client
       name: [
+        '',
+        [
+          Validators.required,
+          clientPickedValidator
+        ]
+      ],
+      savingsId: [''],
+      amount: [''],
+      // External guarantor
+      firstname: [
         '',
         Validators.required
       ],
-      clientRelationshipTypeId: [''],
-      savingsId: [''],
-      amount: ['']
+      lastname: [
+        '',
+        Validators.required
+      ],
+      dob: [''],
+      addressLine1: [''],
+      addressLine2: [''],
+      city: [''],
+      zip: [''],
+      mobileNumber: [''],
+      housePhoneNumber: ['']
     });
   }
 
   /** Sets Guarantor Details Form */
   setNewGuarantorDetailsForm() {
     this.relationTypes = this.dataObject.allowedClientRelationshipTypes;
-    this.newGuarantorForm.patchValue({
-      existingClient: true
-    });
+    this.applyGuarantorMode(this.newGuarantorForm.value.existingClient);
+  }
+
+  /**
+   * Switches the form between the existing client and the external guarantor variant.
+   */
+  private applyGuarantorMode(isExistingClient: boolean) {
+    this.showClientDetailsForm = !isExistingClient;
+    const enabled = isExistingClient ? EXISTING_CLIENT_CONTROLS : EXTERNAL_GUARANTOR_CONTROLS;
+    const disabled = isExistingClient ? EXTERNAL_GUARANTOR_CONTROLS : EXISTING_CLIENT_CONTROLS;
+    enabled.forEach((name) => this.newGuarantorForm.get(name).enable({ emitEvent: false }));
+    disabled.forEach((name) => this.newGuarantorForm.get(name).disable({ emitEvent: false }));
   }
 
   /**
    * Add guarantor detail fields to the UI.
    */
   buildDependencies() {
-    this.newGuarantorForm.get('existingClient').valueChanges.subscribe(() => {
-      this.showClientDetailsForm = !this.showClientDetailsForm;
-      if (this.showClientDetailsForm) {
-        this.newGuarantorForm.addControl('firstname', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('lastname', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('dob', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('addressLine1', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('addressLine2', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('city', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('zip', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('mobileNumber', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('housePhoneNumber', new UntypedFormControl(''));
-        this.newGuarantorForm.removeControl('name');
-        this.newGuarantorForm.removeControl('savingsId');
-        this.newGuarantorForm.removeControl('amount');
-      } else {
-        this.newGuarantorForm.addControl('name', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('savingsId', new UntypedFormControl(''));
-        this.newGuarantorForm.addControl('amount', new UntypedFormControl(''));
-        this.newGuarantorForm.removeControl('firstname');
-        this.newGuarantorForm.removeControl('lastname');
-        this.newGuarantorForm.removeControl('dob');
-        this.newGuarantorForm.removeControl('addressLine1');
-        this.newGuarantorForm.removeControl('addressLine2');
-        this.newGuarantorForm.removeControl('city');
-        this.newGuarantorForm.removeControl('zip');
-        this.newGuarantorForm.removeControl('mobileNumber');
-        this.newGuarantorForm.removeControl('housePhoneNumber');
-      }
-    });
+    this.newGuarantorForm
+      .get('existingClient')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((isExistingClient: boolean) => {
+        this.applyGuarantorMode(isExistingClient);
+        // Drop the client selection and its linkable accounts, they belong to the other variant.
+        this.newGuarantorForm.patchValue({ name: '', savingsId: '', amount: '' }, { emitEvent: false });
+        this.clientsData = [];
+        this.accountOptions = [];
+        this.cdr.markForCheck();
+      });
   }
 
   /**
-   * Subscribes to Clients search filter:
+   * Subscribes to Clients search filter.
    */
-  ngAfterViewInit() {
-    if (this.newGuarantorForm.value.existingClient) {
-      this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
-        if (value.length >= 2) {
+  private subscribeToClientSearch() {
+    this.newGuarantorForm
+      .get('name')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: any) => {
+        // Once an option is picked the control holds the client object, not the search string.
+        if (typeof value === 'string' && value.length >= 2) {
           this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
             this.clientsData = data.pageItems;
+            this.cdr.markForCheck();
           });
         }
       });
-    }
+  }
+
+  /**
+   * An amount is only meaningful once a savings account is linked, so it is required with a
+   * linked account and cleared without one - otherwise picking a client who happens to have
+   * savings accounts would block the plain "existing client guarantor" flow.
+   */
+  private subscribeToLinkedAccount() {
+    this.newGuarantorForm
+      .get('savingsId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((savingsId: any) => {
+        const amount = this.newGuarantorForm.get('amount');
+        if (savingsId) {
+          amount.setValidators(Validators.required);
+        } else {
+          amount.clearValidators();
+          amount.setValue('', { emitEvent: false });
+        }
+        amount.updateValueAndValidity({ emitEvent: false });
+        this.cdr.markForCheck();
+      });
   }
 
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
     this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
-      this.accountOptions = response.accountLinkingOptions;
+      this.accountOptions = response.accountLinkingOptions || [];
+      this.cdr.markForCheck();
     });
   }
 
@@ -176,34 +238,38 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   /** Submits the new guarantor details form */
   submit() {
+    // Disabled controls are excluded, so this only holds the fields of the active variant.
     const newGuarantorFormData = this.newGuarantorForm.value;
-    const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
+    const isExistingClient: boolean = this.newGuarantorForm.get('existingClient').value;
 
-    const prevdob: Date = this.newGuarantorForm.value.dob;
-    const guarantorTypeId: number = this.newGuarantorForm.value.existingClient
-      ? this.dataObject.guarantorTypeOptions[0].id
-      : this.dataObject.guarantorTypeOptions[2].id;
-    const data = {
+    const data: any = {
       ...newGuarantorFormData,
-      locale,
-      dateFormat,
-      guarantorTypeId
+      locale: this.settingsService.language.code,
+      guarantorTypeId: isExistingClient ? EXISTING_CLIENT_GUARANTOR_TYPE_ID : EXTERNAL_GUARANTOR_TYPE_ID
     };
 
-    if (this.newGuarantorForm.value.existingClient) {
-      data['entityId'] = this.newGuarantorForm.controls.name.value.id;
+    if (isExistingClient) {
+      data['entityId'] = this.newGuarantorForm.get('name').value?.id;
     } else {
+      const dateFormat = this.settingsService.dateFormat;
+      data['dateFormat'] = dateFormat;
       if (newGuarantorFormData.dob instanceof Date) {
-        data['dob'] = this.dateUtils.formatDate(prevdob, dateFormat);
+        data['dob'] = this.dateUtils.formatDate(newGuarantorFormData.dob, dateFormat);
       }
     }
 
     delete data.existingClient;
     delete data.name;
 
-    this.loanService.createNewGuarantor(this.loanId, data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    // Remove empty optional fields to avoid API validation errors
+    Object.keys(data).forEach((key) => {
+      if (data[key] === '' || data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
+    this.loanService.createNewGuarantor(this.loanId, data).subscribe(() => {
+      this.gotoLoanView('guarantors');
     });
   }
 }

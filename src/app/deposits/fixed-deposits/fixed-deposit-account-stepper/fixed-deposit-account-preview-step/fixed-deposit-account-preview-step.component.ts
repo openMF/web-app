@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgSwitch, TitleCasePipe, CurrencyPipe } from '@angular/common';
@@ -67,7 +67,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountPreviewStepComponent implements OnChanges {
   /** Fixed Deposits Account Template */

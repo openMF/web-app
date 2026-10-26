@@ -1,0 +1,245 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/colours' as c;
+
+.production-personal-data {
+  --pd-border: var(--mdc-outlined-text-field-outline-color, #dfe7ee);
+  --pd-accent: var(--md-sys-color-primary, #{c.$belize-hole});
+  --pd-muted: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 60%));
+
+  padding: 1%;
+  margin: 1%;
+
+  .button-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    button {
+      min-height: 36px;
+      line-height: 36px;
+    }
+
+    mat-icon {
+      margin-right: 6px;
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      vertical-align: middle;
+    }
+  }
+
+  .validation-status-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border: 1px solid var(--pd-border);
+    border-radius: 4px;
+    font-size: 0.8125rem;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .section {
+    margin-bottom: 2%;
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .section h3 {
+    margin: 1% auto;
+    margin-bottom: 1%;
+    padding-bottom: 0.5%;
+    border-bottom: 1px solid var(--pd-border);
+    font-size: 1.17em;
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .section h4 {
+    margin: 0 0 1%;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .question-text,
+  .helper-text {
+    margin: 0 0 1%;
+    color: var(--md-sys-color-on-surface, #1f2933);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .helper-text {
+    color: var(--pd-muted);
+  }
+
+  .data-grid {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2%;
+    margin-bottom: 0;
+  }
+
+  .data-item {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 23%;
+    min-width: 0;
+    padding: 1%;
+    margin-bottom: 1%;
+    background: transparent;
+    border: 1px solid var(--pd-border);
+    border-radius: 4px;
+
+    &.wide {
+      flex: 0 0 48%;
+    }
+
+    &.full-width {
+      flex: 0 0 100%;
+    }
+
+    .label {
+      margin-bottom: 0.25rem;
+      color: var(--pd-accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .value {
+      overflow-wrap: anywhere;
+      color: var(--md-sys-color-on-surface, #1f2933);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+  }
+
+  .yes-no-indicator {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+
+    .yes-no-option {
+      min-width: 54px;
+      height: 28px;
+      padding: 0 10px;
+      border-color: var(--pd-border);
+      color: var(--pd-muted);
+      font-size: 0.8125rem;
+      line-height: 26px;
+      pointer-events: none;
+
+      &.selected {
+        border-color: var(--pd-accent);
+        background: color-mix(in srgb, var(--pd-accent) 14%, transparent);
+        color: var(--pd-accent);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .record-title {
+    margin: 0 0 0.75%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-transform: uppercase;
+    color: var(--md-sys-color-on-surface, #1f2933);
+  }
+
+  .reference-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 1%;
+  }
+
+  .empty-state {
+    margin: 0 0 1%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--pd-muted);
+    font-size: 0.8125rem;
+    font-style: italic;
+  }
+
+  .datatable-source {
+    margin: 1% 0 0.75%;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--pd-accent);
+  }
+
+  .record-panel {
+    padding: 0;
+    margin-bottom: 1%;
+    border-radius: 0;
+  }
+
+  .datatable-record {
+    margin-bottom: 1%;
+    padding-bottom: 1%;
+    border-bottom: 1px solid var(--pd-border);
+    background: transparent;
+
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+
+  .meta {
+    margin-top: 4px;
+    font-size: 0.8125rem;
+    color: var(--pd-muted);
+  }
+
+  @media (width <= 1024px) {
+    .data-item {
+      flex: 0 0 48%;
+    }
+
+    .data-item.wide,
+    .data-item.full-width {
+      flex: 0 0 100%;
+    }
+  }
+
+  @media (width <= 600px) {
+    .data-grid {
+      flex-direction: column;
+    }
+
+    .data-item,
+    .data-item.wide,
+    .data-item.full-width {
+      flex: 0 0 100%;
+    }
+  }
+}

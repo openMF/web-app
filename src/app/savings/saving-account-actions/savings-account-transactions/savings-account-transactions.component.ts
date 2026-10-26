@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject, ViewChild } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { finalize } from 'rxjs';
@@ -29,6 +24,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCardTitle } from '@angular/material/card';
 
 /**
  * Create savings account transactions component.
@@ -43,25 +39,28 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     MatSlideToggle,
     CdkTextareaAutosize,
     MatStepperModule,
-    FaIconComponent
-  ]
+    FaIconComponent,
+    MatCardTitle
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  savingAccountTransactionForm: UntypedFormGroup;
+  savingAccountTransactionForm: FormGroup;
   /** savings account transaction payment options. */
   paymentTypeOptions: {
     id: number;
@@ -84,6 +83,11 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Flag to track if transaction is being submitted */
   isSubmitting: boolean = false;
 
+  get minimumTransactionAmount(): number {
+    const decimalPlaces = Math.min(this.currency?.decimalPlaces ?? 6, 6);
+    return 1 / Math.pow(10, decimalPlaces);
+  }
+
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -94,7 +98,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
       if (data.savingsAccountActionData.currency) {
         this.currency = data.savingsAccountActionData.currency;
@@ -124,7 +128,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       ],
       transactionAmount: [
         0,
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(this.minimumTransactionAmount)
+        ]
       ],
       paymentTypeId: [
         '',
@@ -140,11 +147,11 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.savingAccountTransactionForm.addControl('accountNumber', new UntypedFormControl(''));
-      this.savingAccountTransactionForm.addControl('checkNumber', new UntypedFormControl(''));
-      this.savingAccountTransactionForm.addControl('routingCode', new UntypedFormControl(''));
-      this.savingAccountTransactionForm.addControl('receiptNumber', new UntypedFormControl(''));
-      this.savingAccountTransactionForm.addControl('bankNumber', new UntypedFormControl(''));
+      this.savingAccountTransactionForm.addControl('accountNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('checkNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('routingCode', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('receiptNumber', new FormControl(''));
+      this.savingAccountTransactionForm.addControl('bankNumber', new FormControl(''));
     } else {
       this.savingAccountTransactionForm.removeControl('accountNumber');
       this.savingAccountTransactionForm.removeControl('checkNumber');

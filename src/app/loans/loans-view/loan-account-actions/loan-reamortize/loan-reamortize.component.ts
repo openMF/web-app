@@ -6,17 +6,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { LoansService } from 'app/loans/loans.service';
 import { RepaymentSchedule } from 'app/loans/models/loan-account.model';
 import { CodeValue } from 'app/shared/models/general.model';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { SettingsService } from 'app/settings/settings.service';
 import { ReAmortizePreviewDialogComponent } from './re-amortize-preview-dialog/re-amortize-preview-dialog.component';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-loan-reamortize',
@@ -24,26 +22,20 @@ import { ReAmortizePreviewDialogComponent } from './re-amortize-preview-dialog/r
   styleUrls: ['./loan-reamortize.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanReamortizeComponent implements OnInit {
+export class LoanReamortizeComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private loanService = inject(LoansService);
-  private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** ReAmortize Loan Form */
   reamortizeLoanForm: UntypedFormGroup;
   reAmortizationReasonOptions: CodeValue[] = [];
   reAmortizationInterestHandlingOptions: OptionData[] = [];
 
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit(): void {
@@ -135,7 +127,7 @@ export class LoanReamortizeComponent implements OnInit {
   submit(): void {
     const data = this.prepareReAmortizeData();
     this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      this.gotoLoanView('transactions');
     });
   }
 

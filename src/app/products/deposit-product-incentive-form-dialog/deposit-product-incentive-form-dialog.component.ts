@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatDialogRef,
@@ -33,7 +33,8 @@ import { ConditionLabelService } from 'app/shared/common-logic/condition-label.s
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {
   private destroyRef = inject(DestroyRef);

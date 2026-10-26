@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -24,11 +25,13 @@ import { HttpResponse } from '@angular/common/http';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewRecieptComponent implements OnInit, OnDestroy {
   private sanitizer = inject(DomSanitizer);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** trusted resource url for pentaho output */
   pentahoUrl: SafeResourceUrl | null = null;
@@ -43,9 +46,11 @@ export class ViewRecieptComponent implements OnInit, OnDestroy {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsTransactionReciept: HttpResponse<Blob> }) => {
-      this.transactionRecieptData = data.savingsTransactionReciept;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsTransactionReciept: HttpResponse<Blob> }) => {
+        this.transactionRecieptData = data.savingsTransactionReciept;
+      });
   }
 
   ngOnInit() {

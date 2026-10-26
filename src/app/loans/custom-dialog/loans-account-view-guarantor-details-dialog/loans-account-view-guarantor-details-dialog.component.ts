@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -17,6 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 
 @Component({
   selector: 'mifosx-loans-account-view-guarantor-details-dialog',
@@ -28,8 +29,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose
-  ]
+    MatDialogClose,
+    FormatNumberPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<LoansAccountViewGuarantorDetailsDialogComponent>>(MatDialogRef);

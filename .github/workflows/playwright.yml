@@ -1,25 +1,43 @@
-name: Playwright E2E Tests
+name: E2E Tests (Playwright + Fineract)
 
 on:
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
   pull_request:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  playwright:
-    name: Run Playwright Tests
+  e2e:
+    name: Playwright E2E
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+
+    env:
+      CI: true
+      E2E_BASE_URL: http://localhost:4200
+      E2E_FINERACT_URL: https://localhost:8443
+      E2E_USERNAME: mifos
+      E2E_PASSWORD: password
+      E2E_TENANT_ID: default
+      NODE_TLS_REJECT_UNAUTHORIZED: '0'
+      # Written by the `json` reporter in `npm run playwright:ci`. It sits inside
+      # playwright-report/ so the existing upload keeps it on every run. That only
+      # holds while `json` is listed after `html`: reporters finish in the order
+      # listed, and the html reporter clears this folder when it finishes.
+      PLAYWRIGHT_JSON_OUTPUT_FILE: playwright-report/results.json
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Use Node.js 22x
+      - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: '24.14.0'
+          node-version: '24.16.0'
           cache: 'npm'
 
       - name: Install dependencies
@@ -28,13 +46,35 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Build application
-        run: npm run build
+      # `up -d` blocks until every `depends_on: condition: service_healthy`
+      # dependency reports healthy, so Postgres and Fineract are already up by
+      # the time this step returns. Readiness beyond that — Fineract seed data,
+      # and the web-app container, which has no compose healthcheck — is probed
+      # by `playwright/global-setup.ts` (pollFineract / pollWebApp), which runs
+      # in CI as part of the test command below.
+      - name: Start E2E infrastructure
+        run: docker compose -f docker-compose.e2e.yml up -d --build
 
       - name: Run Playwright tests
-        run: npx playwright test --reporter=html,github
-        env:
-          CI: true
+        run: npm run playwright:ci
+
+      - name: Summarize flaky tests
+        if: always()
+        # Reporting only: a problem in this step must never change the job result.
+        continue-on-error: true
+        run: node scripts/summarize-flaky-tests.js "$PLAYWRIGHT_JSON_OUTPUT_FILE"
+
+      - name: Dump Docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Fineract ==="
+          docker logs e2e-fineract --tail 100 2>&1 || true
+          echo "=== PostgreSQL ==="
+          docker logs e2e-postgres --tail 50 2>&1 || true
+          echo "=== Web-App ==="
+          docker logs e2e-web-app --tail 50 2>&1 || true
+          echo "=== Memory ==="
+          docker stats --no-stream || true
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v7
@@ -51,3 +91,8 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+
+      - name: Tear down E2E infrastructure
+        if: always()
+        run: |
+          docker compose -f docker-compose.e2e.yml down -v --remove-orphans

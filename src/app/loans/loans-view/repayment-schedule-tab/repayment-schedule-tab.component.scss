@@ -31,6 +31,20 @@ table {
   color: $status-approved;
 }
 
+.principal-mismatch {
+  color: $msg-danger;
+  font-weight: 600;
+}
+
+.installment-deleted td {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+#repaymentScheduleEdit td.mat-mdc-footer-cell {
+  font-weight: 600;
+}
+
 .additional {
   color: $status-approved;
 }

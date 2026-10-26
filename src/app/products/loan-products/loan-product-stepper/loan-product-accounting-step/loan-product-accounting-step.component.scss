@@ -6,40 +6,64 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/**
+ * Rendered both inside the new wizard and by the Classic create/edit steppers.
+ * Colours come from the inherited `--lp-*` layer when it is present, and fall
+ * back to Material's own themed tokens elsewhere, so this file stays correct in
+ * both hosts without duplicating the palette.
+ */
+
 table {
   width: 100%;
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em;
+  @include lpt.table-card;
 }
 
-h3,
-h4 {
-  font-weight: 500;
+/* Section headings: the old `font-weight: 500` alone gave no hierarchy against
+   14px body copy, and the colour was inherited from whatever sat above. */
+h3 {
+  margin: 0 0 var(--lp-space-16, 1rem);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text, var(--mat-app-text-color, inherit));
 }
 
-mat-radio-group,
 h4 {
-  margin: 1em 0;
+  margin: var(--lp-space-24, 1.5rem) 0 var(--lp-space-16, 1rem);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lp-text-muted, var(--mat-card-subtitle-text-color, inherit));
+}
+
+mat-radio-group {
+  margin: var(--lp-space-16, 1rem) 0;
 }
 
 mat-divider {
-  margin: 1em 0 2em;
+  margin: var(--lp-space-16, 1rem) 0 var(--lp-space-24, 1.5rem);
 }
 
 .margin-t {
-  margin-top: 1em;
+  margin-top: var(--lp-space-16, 1rem);
 }
 
 .radio-group-spacing {
   display: flex;
-  gap: 2rem;
-  flex-direction: row;
+  gap: var(--lp-space-24, 1.5rem);
+  flex-flow: row wrap;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .radio-group-spacing {
     flex-direction: column;
+    gap: var(--lp-space-8, 0.5rem);
   }
 }

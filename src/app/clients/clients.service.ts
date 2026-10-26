@@ -16,6 +16,17 @@ import { map, catchError } from 'rxjs/operators';
 
 import { environment } from 'environments/environment';
 
+export interface ClientIdentifierPayload {
+  documentTypeId: number | string;
+  documentKey: string;
+  description?: string;
+  dateFormat: string;
+  locale: string;
+  issuanceDate: string | null;
+  expiryDate: string | null;
+  status?: 'Active' | 'Inactive';
+}
+
 /**
  * Clients service.
  */
@@ -28,6 +39,15 @@ export class ClientsService {
 
   /** Separate HttpClient that bypasses interceptors (for external API calls) */
   private externalHttp = new HttpClient(this.httpBackend);
+
+  private isValidDocumentId(documentId: string | number | null | undefined): boolean {
+    const parsedDocumentId = Number(documentId);
+    return Number.isFinite(parsedDocumentId) && parsedDocumentId > 0;
+  }
+
+  private invalidDocumentIdError(): Observable<never> {
+    return throwError(() => new Error('Invalid client document id.'));
+  }
 
   getFilteredClients(
     orderBy: string,
@@ -68,8 +88,12 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}`);
   }
 
-  createClient(client: any) {
-    return this.http.post(`/clients`, client);
+  createClient(client: any, idempotencyKey?: string) {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/clients`, client, { headers });
   }
 
   updateClient(clientId: string, client: any) {
@@ -227,7 +251,10 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/documents`, formData);
   }
 
-  getClientSignatureImage(clientId: string, documentId: string) {
+  getClientSignatureImage(clientId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }
 
@@ -259,8 +286,12 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/identifiers/template`);
   }
 
-  addClientIdentifier(clientId: string, identifierData: any) {
+  addClientIdentifier(clientId: string, identifierData: ClientIdentifierPayload) {
     return this.http.post(`/clients/${clientId}/identifiers`, identifierData);
+  }
+
+  editClientIdentifier(clientId: string, identifierId: string, identifierData: ClientIdentifierPayload) {
+    return this.http.put(`/clients/${clientId}/identifiers/${identifierId}`, identifierData);
   }
 
   deleteClientIdentifier(clientId: string, identifierId: string) {
@@ -285,7 +316,10 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/documents`);
   }
 
-  downloadClientDocument(parentEntityId: string, documentId: string) {
+  downloadClientDocument(parentEntityId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }
 
@@ -293,7 +327,10 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/documents`, documentData);
   }
 
-  deleteClientDocument(parentEntityId: string, documentId: string) {
+  deleteClientDocument(parentEntityId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);
   }
 

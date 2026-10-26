@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -21,7 +21,7 @@ import { FormfieldBase } from './formfield/model/formfield-base';
 
 import { FormGroupService } from './form-group.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { FormfieldComponent } from './formfield/formfield.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -37,10 +37,12 @@ const layoutGap = 2;
     CdkScrollable,
     MatDialogContent,
     NgClass,
+    NgTemplateOutlet,
     FormfieldComponent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<FormDialogComponent>>(MatDialogRef);
@@ -85,5 +87,9 @@ export class FormDialogComponent implements OnInit {
     if (!this.pristine) {
       this.form.markAsDirty();
     }
+  }
+
+  getButtonTranslationKey(buttonText: string = ''): string {
+    return buttonText?.startsWith('labels.') ? buttonText : `labels.buttons.${buttonText}`;
   }
 }

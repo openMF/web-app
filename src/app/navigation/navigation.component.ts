@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { NavigationService } from './navigation.service';
@@ -36,12 +37,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CenterNavigationComponent,
     GroupNavigationComponent,
     ClientNavigationComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationComponent implements OnInit {
   private navigationService = inject(NavigationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /** Navigation Components */
   @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
@@ -62,15 +65,15 @@ export class NavigationComponent implements OnInit {
   clientData: any;
 
   /** Office selector */
-  officeSelector = new UntypedFormControl();
+  officeSelector = new FormControl();
   /** Employee selector */
-  employeeSelector = new UntypedFormControl();
+  employeeSelector = new FormControl();
   /** Center selector */
-  centerSelector = new UntypedFormControl();
+  centerSelector = new FormControl();
   /** Group selector */
-  groupSelector = new UntypedFormControl();
+  groupSelector = new FormControl();
   /** Client selector */
-  clientSelector = new UntypedFormControl();
+  clientSelector = new FormControl();
 
   /** Selected Item */
   selectedItem: any;
@@ -87,7 +90,7 @@ export class NavigationComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -107,7 +110,7 @@ export class NavigationComponent implements OnInit {
    * Sets the office selector
    */
   setOfficeSelector() {
-    this.officeSelector.valueChanges.subscribe((officeId) => {
+    this.officeSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((officeId) => {
       this.employeeSelector.reset(null, { emitEvent: false });
       this.centerSelector.reset(null, { emitEvent: false });
       this.groupSelector.reset(null, { emitEvent: false });
@@ -133,7 +136,7 @@ export class NavigationComponent implements OnInit {
    * Sets the employee selector
    */
   setEmployeeSelector() {
-    this.employeeSelector.valueChanges.subscribe((employeeId) => {
+    this.employeeSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((employeeId) => {
       if (employeeId) {
         this.centerSelector.reset(null, { emitEvent: false });
         this.groupSelector.reset(null, { emitEvent: false });
@@ -159,7 +162,7 @@ export class NavigationComponent implements OnInit {
    * Sets the center selector
    */
   setCenterSelector() {
-    this.centerSelector.valueChanges.subscribe((centerId) => {
+    this.centerSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((centerId) => {
       if (centerId) {
         this.groupSelector.reset(null, { emitEvent: false });
         this.clientSelector.reset(null, { emitEvent: false });
@@ -191,7 +194,7 @@ export class NavigationComponent implements OnInit {
    * Sets the group selector
    */
   setGroupSelector() {
-    this.groupSelector.valueChanges.subscribe((groupId) => {
+    this.groupSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((groupId) => {
       if (groupId) {
         this.clientSelector.reset(null, { emitEvent: false });
         this.clientData = null;
@@ -217,7 +220,7 @@ export class NavigationComponent implements OnInit {
    * Sets the client selector
    */
   setClientSelector() {
-    this.clientSelector.valueChanges.subscribe((clientId) => {
+    this.clientSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((clientId) => {
       if (clientId) {
         this.selectedItemAccounts = null;
         this.navigationService.getClient(clientId).subscribe((client: any) => {

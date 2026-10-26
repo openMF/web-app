@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnDestroy, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 /** Custom Services. */
@@ -23,11 +24,7 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow,
-  MatFooterCellDef,
-  MatFooterCell,
-  MatFooterRowDef,
-  MatFooterRow
+  MatRow
 } from '@angular/material/table';
 import { NgClass } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
@@ -41,10 +38,10 @@ import { CurrencyPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { Subject } from 'rxjs';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { AlertService } from 'app/core/alert/alert.service';
 import { EMPTY } from 'rxjs';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
  * General Tab component.
@@ -66,10 +63,6 @@ import { EMPTY } from 'rxjs';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatFooterCellDef,
-    MatFooterCell,
-    MatFooterRowDef,
-    MatFooterRow,
     AccountNumberComponent,
     LongTextComponent,
     MatTooltip,
@@ -78,12 +71,13 @@ import { EMPTY } from 'rxjs';
     DateFormatPipe,
     FormatNumberPipe,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
   private alertService = inject(AlertService);
   private sanitizer = inject(DomSanitizer);
+  private destroyRef = inject(DestroyRef);
   pdfUrl: SafeResourceUrl | null = null;
   rawPdfUrl: string | null = null;
   showPdf: boolean = false;
@@ -98,7 +92,6 @@ export class GeneralTabComponent implements OnDestroy {
     this.reportsService
       .getPentahoRunReportData('LoanApplicationReport', formData, tenantIdentifier, locale, dateFormat)
       .pipe(
-        takeUntil(this.destroy$),
         catchError((error): any => {
           this.showPdf = false;
           if (this.rawPdfUrl) {
@@ -111,7 +104,8 @@ export class GeneralTabComponent implements OnDestroy {
             message: 'Failed to load Loan Application PDF report.'
           });
           return EMPTY;
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((res: any) => {
         if (this.rawPdfUrl) {
@@ -137,8 +131,6 @@ export class GeneralTabComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.rawPdfUrl) {
       URL.revokeObjectURL(this.rawPdfUrl);
       this.rawPdfUrl = null;
@@ -147,6 +139,7 @@ export class GeneralTabComponent implements OnDestroy {
   }
 
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private clientService = inject(ClientsService);
   private router = inject(Router);
   private reportsService = inject(ReportsService);
@@ -155,6 +148,7 @@ export class GeneralTabComponent implements OnDestroy {
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = [
     'Account No',
+    'Product Type',
     'Loan Account',
     'Original Loan',
     'Loan Balance',
@@ -165,6 +159,7 @@ export class GeneralTabComponent implements OnDestroy {
   /** Closed Loan Accounts Columns */
   closedLoansColumns: string[] = [
     'Account No',
+    'Product Type',
     'Loan Account',
     'Original Loan',
     'Loan Balance',
@@ -226,6 +221,7 @@ export class GeneralTabComponent implements OnDestroy {
   clientAccountData: any;
   /** Loan Accounts Data */
   loanAccounts: any[] = [];
+  workingCapitalLoanAccounts: any[] = [];
   /** Savings Accounts Data */
   savingAccounts: any[] = [];
   /** Shares Accounts Data */
@@ -260,6 +256,11 @@ export class GeneralTabComponent implements OnDestroy {
   /** Show Closed Fixed Deposits Accounts */
   showClosedFixedAccounts = false;
 
+  /** Unified accounts view state */
+  currentAccountType: 'all' | 'loan' | 'savings' | 'fixed' | 'recurring' | 'shares' = 'all';
+  showClosedAccounts = false;
+  accountCounts = { loan: 0, savings: 0, fixed: 0, recurring: 0, shares: 0, total: 0 };
+
   /** Client Id */
   clientid: any;
 
@@ -269,23 +270,95 @@ export class GeneralTabComponent implements OnDestroy {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe(
-      (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
-        this.clientAccountData = data.clientAccountsData;
-        this.savingAccounts = data.clientAccountsData?.savingsAccounts ?? [];
-        this.loanAccounts = data.clientAccountsData?.loanAccounts ?? [];
-        this.shareAccounts = data.clientAccountsData?.shareAccounts ?? [];
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
+        (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
+          this.clientAccountData = data.clientAccountsData;
+          this.savingAccounts = data.clientAccountsData?.savingsAccounts ?? [];
+          this.loanAccounts = [];
+          this.processLoanAccounts(data.clientAccountsData?.loanAccounts ?? [], 'loan');
+          this.processLoanAccounts(data.clientAccountsData?.workingCapitalLoanAccounts ?? [], 'working-capital');
+          this.workingCapitalLoanAccounts = data.clientAccountsData?.workingCapitalLoanAccounts ?? [];
+          this.shareAccounts = data.clientAccountsData?.shareAccounts ?? [];
 
-        this.upcomingCharges = data.clientChargesData?.pageItems ?? [];
+          this.upcomingCharges = data.clientChargesData?.pageItems ?? [];
 
-        this.collaterals = data.clientCollateralData ?? [];
+          this.collaterals = data.clientCollateralData ?? [];
 
-        this.clientid = this.route.parent.snapshot.params['clientId'];
+          this.clientid = this.route.parent.snapshot.params['clientId'];
 
-        // Compute performance history from accounts data
-        this.computePerformanceHistory(data.clientAccountsData ?? { loanAccounts: [], savingsAccounts: [] });
-      }
-    );
+          // Compute performance history from accounts data
+          this.computePerformanceHistory(data.clientAccountsData ?? { loanAccounts: [], savingsAccounts: [] });
+          this.computeAccountCounts();
+          this.changeDetectorRef.markForCheck();
+        }
+      );
+  }
+
+  private computeAccountCounts(): void {
+    // Use the same status and category filter as the rendered lists. The toggle
+    // switches between open and closed accounts; it does not combine both sets.
+    const filter = new AccountsFilterPipe();
+    const status = this.showClosedAccounts ? 'closed' : 'open';
+    this.accountCounts.loan = filter.transform(this.loanAccounts, 'loan', status, undefined).length;
+    this.accountCounts.savings = filter.transform(this.savingAccounts, 'saving', status, 'isSavings').length;
+    this.accountCounts.fixed = filter.transform(this.savingAccounts, 'saving', status, 'isFixed').length;
+    this.accountCounts.recurring = filter.transform(this.savingAccounts, 'saving', status, 'isRecurring').length;
+    this.accountCounts.shares = filter.transform(this.shareAccounts, 'share', status, undefined).length;
+    this.accountCounts.total =
+      this.accountCounts.loan +
+      this.accountCounts.savings +
+      this.accountCounts.fixed +
+      this.accountCounts.recurring +
+      this.accountCounts.shares;
+  }
+
+  selectAccountType(type: 'all' | 'loan' | 'savings' | 'fixed' | 'recurring' | 'shares'): void {
+    this.currentAccountType = type;
+  }
+
+  toggleShowClosedAccounts(): void {
+    this.showClosedAccounts = !this.showClosedAccounts;
+    this.computeAccountCounts();
+  }
+
+  /**
+   * Resolves a UI-level severity for a loan account.
+   * Returns one of: 'active' | 'arrears' | 'pending' | 'closed' | 'overpaid'
+   */
+  loanSeverity(loan: any): string {
+    if (loan.inArrears) return 'arrears';
+    if (loan.status?.overpaid) return 'overpaid';
+    if (loan.status?.pendingApproval) return 'pending';
+    if (loan.status?.active) return 'active';
+    if (loan.status?.closed) return 'closed';
+    return 'pending';
+  }
+
+  /**
+   * Generic status resolver for non-loan accounts.
+   */
+  accountSeverity(account: any): string {
+    if (account.status?.submittedAndPendingApproval) return 'pending';
+    if (account.status?.active) return 'active';
+    if (account.status?.closed) return 'closed';
+    return 'pending';
+  }
+
+  /** Repayment progress as a 0–100 percentage for a loan account. */
+  loanProgress(loan: any): number {
+    const paid = Number(loan.amountPaid ?? 0);
+    if (loan.productType === 'loan') {
+      const original = Number(loan.originalLoan ?? 0);
+      if (original <= 0) return 0;
+      return Math.min(Math.max((paid / original) * 100, 0), 100);
+    } else if (loan.productType === 'working-capital') {
+      const original = Number(loan.loanBalance ?? 0) + paid;
+      if (original <= 0) return 0;
+      return Math.min(Math.max((paid / original) * 100, 0), 100);
+    }
+    return 0;
   }
 
   private computePerformanceHistory(accountsData: any) {
@@ -324,8 +397,11 @@ export class GeneralTabComponent implements OnDestroy {
       }
       return false;
     }).length;
-    // Total Savings: sum of balances
-    this.performanceHistory.totalSavings = allSavings.reduce((sum: number, s: any) => sum + (s.accountBalance || 0), 0);
+    // Available Savings: sum of balances net of holds; Fineract before 1.15 omits availableBalance
+    this.performanceHistory.totalSavings = allSavings.reduce(
+      (sum: number, s: any) => sum + (s.availableBalance ?? s.accountBalance ?? 0),
+      0
+    );
   }
 
   /**
@@ -416,5 +492,18 @@ export class GeneralTabComponent implements OnDestroy {
     } else {
       return 'labels.buttons.View Closed Accounts';
     }
+  }
+
+  loanProductTypeLabel(productType: string): string {
+    return LoanProductService.productTypeLabel(productType);
+  }
+
+  private processLoanAccounts(accounts: any[], productType: string): void {
+    accounts.map((account: any) => {
+      this.loanAccounts.push({
+        productType: productType,
+        ...account
+      });
+    });
   }
 }

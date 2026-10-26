@@ -1,0 +1,146 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TRANSFER_FEE'">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    {{ 'labels.heading.Edit' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteTransferFee()"
+    [disabled]="isDeleting"
+    *mifosxHasPermission="'DELETE_TRANSFER_FEE'"
+  >
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
+    {{ isDeleting ? ('labels.buttons.Deleting' | translate) : ('labels.heading.Delete' | translate) }}
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    @if (transferFeeData) {
+      <mat-card-content>
+        <div class="layout-row-wrap">
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Transfer Type' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferTypeLabelKey(transferFeeData.transferType) | translate }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Currency' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.currencyCode }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Transfer Mode' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferModeLabelKey(transferFeeData.transferMode) | translate }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Fee Type' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ feeTypeLabelKey(transferFeeData.feeType) | translate }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Fee Value' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.feeValue | formatNumber }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Fee Currency' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.feeCurrency || '-' }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Threshold Amount' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{
+              transferFeeData.thresholdAmount !== null && transferFeeData.thresholdAmount !== undefined
+                ? (transferFeeData.thresholdAmount | formatNumber)
+                : '-'
+            }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Threshold Fee' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{
+              transferFeeData.thresholdFeeValue !== null && transferFeeData.thresholdFeeValue !== undefined
+                ? (transferFeeData.thresholdFeeValue | formatNumber)
+                : '-'
+            }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Exchange Rate Required' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.exchangeRateRequired === true | yesNo }}
+          </div>
+
+          @if (transferFeeData.currentBccrRate !== null && transferFeeData.currentBccrRate !== undefined) {
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Current BCCR Rate' | translate }}
+            </div>
+
+            <div class="flex-50">
+              {{ transferFeeData.currentBccrRate | formatNumber }}
+            </div>
+          }
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Description' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.description || '-' }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.status.Active' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ transferFeeData.isActive === true | yesNo }}
+          </div>
+        </div>
+
+        <div class="layout-row layout-align-center gap-2percent column-on-mobile">
+          <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+            {{ 'labels.buttons.Back' | translate }}
+          </button>
+        </div>
+      </mat-card-content>
+    }
+  </mat-card>
+</div>

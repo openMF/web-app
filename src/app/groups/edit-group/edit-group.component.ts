@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -32,7 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./edit-group.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditGroupComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -69,7 +70,8 @@ export class EditGroupComponent implements OnInit {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate =
-        data.groupViewData.timeline.submittedOnDate && new Date(data.groupViewData.timeline.submittedOnDate);
+        data.groupViewData.timeline.submittedOnDate &&
+        this.dateUtils.parseDate(data.groupViewData.timeline.submittedOnDate);
     });
   }
 
@@ -96,7 +98,7 @@ export class EditGroupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       submittedOnDate: [
@@ -117,7 +119,7 @@ export class EditGroupComponent implements OnInit {
       this.editGroupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       this.editGroupForm
         .get('activationDate')
-        .patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
+        .patchValue(this.groupData.activationDate && this.dateUtils.parseDate(this.groupData.activationDate));
     } else {
       this.editGroupForm.removeControl('activationDate');
     }

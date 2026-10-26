@@ -37,7 +37,7 @@ import { CenterDataAndTemplateResolver } from './common-resolvers/center-data-an
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'centers',
+      path: '',
       data: { title: 'Centers', breadcrumb: 'Centers' },
       children: [
         {
@@ -66,6 +66,11 @@ const routes: Routes = [
                 centerDatatables: CenterDatatablesResolver
               },
               children: [
+                {
+                  path: '',
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
                 {
                   path: 'general',
                   component: GeneralTabComponent,
@@ -114,6 +119,10 @@ const routes: Routes = [
               resolve: {
                 centerData: CenterDataAndTemplateResolver
               }
+            },
+            {
+              path: 'savings-accounts',
+              loadChildren: () => import('../savings/savings.module').then((m) => m.SavingsModule)
             }
           ]
         }

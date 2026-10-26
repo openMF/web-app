@@ -1,0 +1,577 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container cash-management">
+  <mat-card>
+    <mat-card-content>
+      <h1>{{ 'web1232.views.' + view | translate }}</h1>
+
+      @if (errorMessage) {
+        <div class="message error" role="alert">
+          {{ errorMessage | translate }}
+          <button mat-button type="button" (click)="retry()">{{ 'web1232.actions.retry' | translate }}</button>
+        </div>
+      }
+
+      @if (isLoading) {
+        <div class="loading-state" aria-live="polite">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span>{{ 'web1232.states.loading' | translate }}</span>
+        </div>
+      }
+
+      @if (view === 'closing' || isOperation) {
+        <form [formGroup]="contextForm" class="filter-grid" (ngSubmit)="loadContext()">
+          <mat-form-field>
+            <mat-label>{{ 'web1232.fields.businessDate' | translate }}</mat-label>
+            <input matInput type="date" formControlName="businessDate" required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'web1232.fields.teller' | translate }}</mat-label>
+            <mat-select formControlName="tellerId" required (selectionChange)="tellerChanged($event.value)">
+              @for (teller of tellers; track teller.id) {
+                <mat-option [value]="teller.id">{{ teller.name || teller.id }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'web1232.fields.cashier' | translate }}</mat-label>
+            <mat-select formControlName="cashierId" required>
+              @for (cashier of cashiers; track cashier.id) {
+                <mat-option [value]="cashier.id">{{
+                  cashier.staffName || cashier.cashierName || cashier.id
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'web1232.fields.currency' | translate }}</mat-label>
+            <mat-select formControlName="currencyCode" required>
+              @for (currency of currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }} - {{ currency.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div class="form-action">
+            <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+              {{ 'web1232.actions.load' | translate }}
+            </button>
+          </div>
+        </form>
+
+        @if (closingContext) {
+          <section class="context-section">
+            <h2>{{ 'web1232.sections.authoritativeContext' | translate }}</h2>
+            <dl class="summary-grid">
+              <div>
+                <dt>{{ 'web1232.fields.businessDate' | translate }}</dt>
+                <dd>{{ closingContext.businessDate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.office' | translate }}</dt>
+                <dd>{{ closingContext.officeName }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.teller' | translate }}</dt>
+                <dd>{{ closingContext.tellerName }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.cashier' | translate }}</dt>
+                <dd>{{ closingContext.cashierName }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.currency' | translate }}</dt>
+                <dd>{{ closingContext.currencyCode }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.openingBalance' | translate }}</dt>
+                <dd>{{ closingContext.openingBalance | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.inflows' | translate }}</dt>
+                <dd>{{ closingContext.cashInflows | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.outflows' | translate }}</dt>
+                <dd>{{ closingContext.cashOutflows | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.previousSettlements' | translate }}</dt>
+                <dd>{{ closingContext.previousSettlements | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.expectedCash' | translate }}</dt>
+                <dd>{{ closingContext.expectedAmount | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.closingStatus' | translate }}</dt>
+                <dd>{{ statusKey(closingContext.status) | translate }}</dd>
+              </div>
+            </dl>
+          </section>
+
+          <form [formGroup]="assetForm" class="asset-form">
+            <section>
+              <div class="section-heading">
+                <h2>{{ 'web1232.sections.denominations' | translate }}</h2>
+                <button mat-stroked-button type="button" (click)="addDenomination()">
+                  <mat-icon>add</mat-icon>{{ 'web1232.actions.addDenomination' | translate }}
+                </button>
+              </div>
+              <p class="hint">{{ 'web1232.hints.backendDenominations' | translate }}</p>
+              <div class="denomination-header">
+                <span>{{ 'web1232.fields.denomination' | translate }}</span>
+                <span>{{ 'web1232.fields.quantity' | translate }}</span>
+                <span>{{ 'web1232.fields.total' | translate }}</span>
+                <span></span>
+              </div>
+              <div formArrayName="denominations">
+                @for (denomination of denominations.controls; track denomination; let i = $index) {
+                  <div [formGroupName]="i" class="denomination-row">
+                    <mat-form-field>
+                      <mat-label>{{ 'web1232.fields.denomination' | translate }}</mat-label>
+                      <input matInput type="number" min="0.000001" formControlName="value" required />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>{{ 'web1232.fields.quantity' | translate }}</mat-label>
+                      <input matInput type="number" min="0" step="1" formControlName="quantity" required />
+                    </mat-form-field>
+                    <strong>{{ lineTotal(denomination) | number }} {{ closingContext.currencyCode }}</strong>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      (click)="removeDenomination(i)"
+                      [attr.aria-label]="'web1232.actions.removeDenomination' | translate"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                }
+              </div>
+              @if (!denominations.length) {
+                <div class="message empty-state">{{ 'web1232.states.noDenominations' | translate }}</div>
+              }
+            </section>
+
+            <section>
+              <h2>{{ 'web1232.sections.eligibleChecks' | translate }}</h2>
+              @if (closingContext.eligibleChecks.length) {
+                <div class="check-list">
+                  @for (check of closingContext.eligibleChecks; track check.id) {
+                    <mat-checkbox
+                      [checked]="isCheckSelected(check.id)"
+                      (change)="toggleCheck(check.id, $event.checked)"
+                    >
+                      {{ check.checkNumber }} · {{ check.bank }} · {{ check.amount | number }}
+                      {{ closingContext.currencyCode }}
+                    </mat-checkbox>
+                  }
+                </div>
+              } @else {
+                <div class="message empty-state">{{ 'web1232.states.noEligibleChecks' | translate }}</div>
+              }
+            </section>
+
+            @if (isOperation) {
+              <mat-form-field class="full-width">
+                <mat-label>{{ 'web1232.fields.description' | translate }}</mat-label>
+                <textarea matInput formControlName="description" maxlength="500"></textarea>
+              </mat-form-field>
+            }
+
+            <section class="preview-section">
+              <h2>{{ 'web1232.sections.preview' | translate }}</h2>
+              <p class="hint">{{ 'web1232.hints.previewOnly' | translate }}</p>
+              <dl class="summary-grid">
+                <div>
+                  <dt>{{ 'web1232.fields.expectedBalance' | translate }}</dt>
+                  <dd>{{ closingContext.expectedAmount | number }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'web1232.fields.physicalCash' | translate }}</dt>
+                  <dd>{{ cashPreview | number }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'web1232.fields.checks' | translate }}</dt>
+                  <dd>{{ checkPreview | number }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'web1232.fields.difference' | translate }}</dt>
+                  <dd>{{ cashPreview + checkPreview - closingContext.expectedAmount | number }}</dd>
+                </div>
+              </dl>
+              @if (view === 'closing' && closingContext.status === 'COMPLETED') {
+                <div class="message warning">{{ 'web1232.states.alreadyCompleted' | translate }}</div>
+              }
+              @if (view === 'closing' && !canFinalizeClosing) {
+                <div class="message warning">{{ 'web1232.states.authorizationRequired' | translate }}</div>
+              }
+              <button
+                mat-raised-button
+                color="warn"
+                type="button"
+                (click)="reviewAndSubmit()"
+                [disabled]="
+                  isSubmitting ||
+                  closingContext.status === 'COMPLETED' ||
+                  (view === 'closing' && !canFinalizeClosing) ||
+                  (isOperation && !canCreateDeposit)
+                "
+              >
+                @if (isSubmitting) {
+                  {{ 'web1232.states.submitting' | translate }}
+                } @else {
+                  {{ (isOperation ? 'web1232.actions.confirmDeposit' : 'web1232.actions.finalizeClosing') | translate }}
+                }
+              </button>
+            </section>
+          </form>
+        }
+
+        @if (closingReceipt) {
+          <section class="receipt print-area">
+            <h2>{{ 'web1232.sections.receipt' | translate }}</h2>
+            <dl class="summary-grid">
+              <div>
+                <dt>{{ 'web1232.fields.reference' | translate }}</dt>
+                <dd>{{ closingReceipt.reference }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.status' | translate }}</dt>
+                <dd>{{ statusKey(closingReceipt.status) | translate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.authorizedBy' | translate }}</dt>
+                <dd>{{ closingReceipt.authorizedByUsername }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.authorizedOn' | translate }}</dt>
+                <dd>{{ closingReceipt.authorizedOn }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.expectedBalance' | translate }}</dt>
+                <dd>{{ closingReceipt.expectedAmount | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.physicalCash' | translate }}</dt>
+                <dd>{{ closingReceipt.cashTotal | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.checks' | translate }}</dt>
+                <dd>{{ closingReceipt.checkTotal | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.actualAmount' | translate }}</dt>
+                <dd>{{ closingReceipt.actualAmount | number }}</dd>
+              </div>
+              <div class="difference" [attr.data-type]="closingReceipt.differenceType">
+                <dt>{{ differenceKey(closingReceipt.differenceType) | translate }}</dt>
+                <dd>{{ closingReceipt.difference | number }}</dd>
+              </div>
+            </dl>
+            <div class="receipt-actions no-print">
+              <button mat-stroked-button type="button" (click)="loadReceipt()">
+                {{ 'web1232.actions.reprint' | translate }}
+              </button>
+              <button mat-raised-button color="primary" type="button" (click)="printReceipt()">
+                {{ 'web1232.actions.printReceipt' | translate }}
+              </button>
+            </div>
+          </section>
+        }
+
+        @if (operationReceipt) {
+          <section class="receipt print-area">
+            <h2>{{ 'web1232.sections.receipt' | translate }}</h2>
+            <dl class="summary-grid">
+              <div>
+                <dt>{{ 'web1232.fields.reference' | translate }}</dt>
+                <dd>{{ operationReceipt.reference }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.transactionType' | translate }}</dt>
+                <dd>{{ operationKey(operationReceipt.transactionType) | translate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.status' | translate }}</dt>
+                <dd>{{ statusKey(operationReceipt.status) | translate }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.amount' | translate }}</dt>
+                <dd>{{ operationReceipt.amount | number }} {{ operationReceipt.currencyCode }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.physicalCash' | translate }}</dt>
+                <dd>{{ operationReceipt.cashTotal | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.checks' | translate }}</dt>
+                <dd>{{ operationReceipt.checkTotal | number }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'web1232.fields.completedOn' | translate }}</dt>
+                <dd>{{ operationReceipt.createdOn }}</dd>
+              </div>
+            </dl>
+            <button mat-raised-button color="primary" class="no-print" type="button" (click)="printReceipt()">
+              {{ 'web1232.actions.printReceipt' | translate }}
+            </button>
+          </section>
+        }
+      }
+
+      @if (view === 'global') {
+        <form [formGroup]="globalForm" class="filter-grid" (ngSubmit)="loadGlobalCount()">
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.businessDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="businessDate"
+          /></mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'web1232.fields.currency' | translate }}</mat-label>
+            <mat-select formControlName="currencyCode">
+              <mat-option value="">{{ 'web1232.fields.all' | translate }}</mat-option>
+              @for (currency of currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <div class="form-action">
+            <button mat-raised-button color="primary" type="submit">{{ 'web1232.actions.search' | translate }}</button>
+          </div>
+        </form>
+        @if (globalCount) {
+          <dl class="summary-grid totals">
+            <div>
+              <dt>{{ 'web1232.fields.expectedBalance' | translate }}</dt>
+              <dd>{{ globalCount.expectedAmount | number }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'web1232.fields.physicalCash' | translate }}</dt>
+              <dd>{{ globalCount.cashTotal | number }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'web1232.fields.checks' | translate }}</dt>
+              <dd>{{ globalCount.checkTotal | number }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'web1232.fields.actualAmount' | translate }}</dt>
+              <dd>{{ globalCount.actualAmount | number }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'web1232.fields.difference' | translate }}</dt>
+              <dd>{{ globalCount.difference | number }}</dd>
+            </div>
+          </dl>
+          @if (globalCount.cashierClosings.length) {
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="globalCount.cashierClosings">
+                <ng-container matColumnDef="cashier"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.cashier' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.cashierName }}</td></ng-container
+                >
+                <ng-container matColumnDef="expected"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.expectedBalance' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.expectedAmount | number }}</td></ng-container
+                >
+                <ng-container matColumnDef="cash"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.physicalCash' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.cashTotal | number }}</td></ng-container
+                >
+                <ng-container matColumnDef="checks"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.checks' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.checkTotal | number }}</td></ng-container
+                >
+                <ng-container matColumnDef="actual"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.actualAmount' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.actualAmount | number }}</td></ng-container
+                >
+                <ng-container matColumnDef="difference"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.difference' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ row.difference | number }}</td></ng-container
+                >
+                <ng-container matColumnDef="status"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.status' | translate }}</th>
+                  <td mat-cell *matCellDef="let row">{{ statusKey(row.status) | translate }}</td></ng-container
+                >
+                <tr mat-header-row *matHeaderRowDef="closingColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: closingColumns"></tr>
+              </table>
+            </div>
+          } @else {
+            <div class="message empty-state">{{ 'web1232.states.noSettlements' | translate }}</div>
+          }
+        }
+      }
+
+      @if (view === 'history') {
+        <form [formGroup]="historyForm" class="filter-grid" (ngSubmit)="resetHistory()">
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.fromDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="fromDate"
+          /></mat-form-field>
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.toDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="toDate"
+          /></mat-form-field>
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.cashierId' | translate }}</mat-label
+            ><input matInput type="number" formControlName="cashierId"
+          /></mat-form-field>
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.currency' | translate }}</mat-label
+            ><mat-select formControlName="currencyCode"
+              ><mat-option value="">{{ 'web1232.fields.all' | translate }}</mat-option>
+              @for (currency of currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }}</mat-option>
+              }
+            </mat-select></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.status' | translate }}</mat-label
+            ><mat-select formControlName="status"
+              ><mat-option value="">{{ 'web1232.fields.all' | translate }}</mat-option
+              ><mat-option value="OPEN">{{ 'web1232.status.OPEN' | translate }}</mat-option
+              ><mat-option value="COMPLETED">{{ 'web1232.status.COMPLETED' | translate }}</mat-option></mat-select
+            ></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.transactionType' | translate }}</mat-label
+            ><mat-select formControlName="transactionType"
+              ><mat-option value="">{{ 'web1232.fields.all' | translate }}</mat-option
+              ><mat-option value="DEPOSIT_IN_TRANSIT">{{
+                'web1232.operationType.DEPOSIT_IN_TRANSIT' | translate
+              }}</mat-option
+              ><mat-option value="BANK_DEPOSIT">{{
+                'web1232.operationType.BANK_DEPOSIT' | translate
+              }}</mat-option></mat-select
+            ></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.search' | translate }}</mat-label
+            ><input matInput formControlName="q"
+          /></mat-form-field>
+          <div class="form-action">
+            <button mat-raised-button color="primary" type="submit">{{ 'web1232.actions.search' | translate }}</button>
+          </div>
+        </form>
+        @if (history.length) {
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="history">
+              <ng-container matColumnDef="reference"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.reference' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.reference }}</td></ng-container
+              >
+              <ng-container matColumnDef="businessDate"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.businessDate' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.businessDate }}</td></ng-container
+              >
+              <ng-container matColumnDef="cashier"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.cashier' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.cashierName }}</td></ng-container
+              >
+              <ng-container matColumnDef="type"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.transactionType' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ operationKey(row.transactionType) | translate }}
+                </td></ng-container
+              >
+              <ng-container matColumnDef="currency"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.currency' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td></ng-container
+              >
+              <ng-container matColumnDef="amount"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.amount' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.amount | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="status"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.status' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ statusKey(row.status) | translate }}</td></ng-container
+              >
+              <tr mat-header-row *matHeaderRowDef="historyColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: historyColumns"></tr>
+            </table>
+          </div>
+          <mat-paginator [length]="historyTotal" [pageSize]="pageSize" (page)="loadHistory($event)"></mat-paginator>
+        } @else if (hasLoaded) {
+          <div class="message empty-state">{{ 'web1232.states.noTransactions' | translate }}</div>
+        }
+      }
+
+      @if (view === 'holdings') {
+        <form [formGroup]="holdingsForm" class="filter-grid" (ngSubmit)="loadHoldings()">
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.businessDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="businessDate"
+          /></mat-form-field>
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.cashierId' | translate }}</mat-label
+            ><input matInput type="number" formControlName="cashierId"
+          /></mat-form-field>
+          <mat-form-field
+            ><mat-label>{{ 'web1232.fields.currency' | translate }}</mat-label
+            ><mat-select formControlName="currencyCode"
+              ><mat-option value="">{{ 'web1232.fields.all' | translate }}</mat-option>
+              @for (currency of currencies; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }}</mat-option>
+              }
+            </mat-select></mat-form-field
+          >
+          <div class="form-action">
+            <button mat-raised-button color="primary" type="submit">{{ 'web1232.actions.search' | translate }}</button>
+          </div>
+        </form>
+        @if (holdings.length) {
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="holdings">
+              <ng-container matColumnDef="cashier"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.cashier' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.cashierName }}</td></ng-container
+              >
+              <ng-container matColumnDef="currency"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.currency' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td></ng-container
+              >
+              <ng-container matColumnDef="opening"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.openingFunds' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.openingFunds | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="inflows"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.inflows' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.inflows | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="outflows"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.outflows' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.outflows | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="settlements"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.settlementsDeposits' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.settlementsAndDeposits | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="balance"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.currentBalance' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ row.currentBalance | number }}</td></ng-container
+              >
+              <ng-container matColumnDef="status"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'web1232.fields.status' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ statusKey(row.status) | translate }}</td></ng-container
+              >
+              <tr mat-header-row *matHeaderRowDef="holdingColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: holdingColumns"></tr>
+            </table>
+          </div>
+        } @else if (hasLoaded) {
+          <div class="message empty-state">{{ 'web1232.states.noHoldings' | translate }}</div>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

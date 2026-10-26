@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -63,7 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {
   dialog = inject(MatDialog);
@@ -171,6 +172,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         label: 'Date',
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
+        maxDate: this.settingsService.maxFutureDate,
         required: false
       })
     ];

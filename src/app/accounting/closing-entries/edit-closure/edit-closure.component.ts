@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -16,6 +16,7 @@ import { AccountingService } from '../../accounting.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Edit closure component.
  */
@@ -26,13 +27,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditClosureComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private dateUtils = inject(Dates);
 
   /** Accounting closure form. */
   accountingClosureForm: UntypedFormGroup;
@@ -85,7 +88,7 @@ export class EditClosureComponent implements OnInit {
   setAccountingClosure() {
     this.officeData = [{ id: this.glAccountClosure.officeId, name: this.glAccountClosure.officeName }];
     this.accountingClosureForm.get('officeId').setValue(this.glAccountClosure.officeId);
-    this.accountingClosureForm.get('closingDate').setValue(new Date(this.glAccountClosure.closingDate));
+    this.accountingClosureForm.get('closingDate').setValue(this.dateUtils.parseDate(this.glAccountClosure.closingDate));
     this.accountingClosureForm.get('comments').setValue(this.glAccountClosure.comments);
   }
 

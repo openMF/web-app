@@ -5,7 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -20,7 +21,7 @@ import {
   MatRowDef,
   MatTable
 } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateService } from '@ngx-translate/core';
 import { LoansService } from 'app/loans/loans.service';
@@ -28,6 +29,7 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
 import { LoanStatus } from 'app/loans/models/loan-status.model';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-loan-originators-tab',
@@ -47,11 +49,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatIconButton,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanOriginatorsTabComponent {
+export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private loansService = inject(LoansService);
   private translateService = inject(TranslateService);
   private dialog = inject(MatDialog);
@@ -73,18 +76,33 @@ export class LoanOriginatorsTabComponent {
   ];
 
   constructor() {
+    super();
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.loanId = this.route.parent?.parent?.snapshot.paramMap.get('loanId');
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.loanStatus = data.loanDetailsData.status;
-    });
-    this.route.parent.data.subscribe((data: { loanOriginatorsData: any }) => {
-      this.loanOriginatorsData = data.loanOriginatorsData.originators;
-    });
+    this.loanOriginatorsData = [];
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanDetailsData: any }) => {
+        this.loanStatus = data.loanDetailsData.status;
+        if ('originators' in data.loanDetailsData) {
+          this.loanOriginatorsData = data.loanDetailsData.originators;
+        }
+      });
+    if (this.loanProductService.isLoanProduct) {
+      this.route.parent.data
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((data: { loanOriginatorsData: any }) => {
+          this.loanOriginatorsData = data.loanOriginatorsData.originators ?? [];
+        });
+    }
   }
 
-  dettachLoanOriginator(loanOriginator: LoanOriginator): void {
-    const dettachCodeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+  detachLoanOriginator(loanOriginator: LoanOriginator): void {
+    if (!this.loanId || loanOriginator.id == null) {
+      console.error('Invalid loan ID or originator ID');
+      return;
+    }
+    const detachCodeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Loan Originators'),
         dialogContext:
@@ -95,22 +113,14 @@ export class LoanOriginatorsTabComponent {
           loanOriginator.name
       }
     });
-    dettachCodeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
-        this.loansService.dettachLoanOriginator(this.loanId, String(loanOriginator.id)).subscribe((response) => {
-          this.reload();
-        });
+    detachCodeDialogRef.afterClosed().subscribe((response?: { confirm?: boolean }) => {
+      if (response?.confirm && this.loanId) {
+        this.loansService
+          .detachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, String(loanOriginator.id))
+          .subscribe((response) => {
+            this.reload();
+          });
       }
     });
-  }
-
-  /**
-   * Refetches data fot the component
-   */
-  private reload() {
-    const url: string = this.router.url;
-    this.router
-      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
   }
 }

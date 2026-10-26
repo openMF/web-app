@@ -17,10 +17,9 @@
   </mat-form-field>
 
   <span class="flex-10 align-center">
-    <button mat-button (click)="uploadFile.click()">
+    <button mat-button (click)="uploadFile.click()" class="browse-button">
       <fa-icon icon="folder-open" size="lg"></fa-icon>
-      &nbsp;&nbsp;
-      {{ 'labels.buttons.Browse' | translate }}
+      <span>{{ 'labels.buttons.Browse' | translate }}</span>
     </button>
   </span>
 </div>

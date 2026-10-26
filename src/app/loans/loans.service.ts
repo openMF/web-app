@@ -8,17 +8,48 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+
+export type LoanAccountPath = 'loans' | 'working-capital-loans';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
+import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
+import { BreachSchedule } from './models/working-capital-loan-account.model';
+import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
+import {
+  WorkingCapitalBreachAction,
+  WorkingCapitalBreachActionRequest,
+  WorkingCapitalBreachCommandRequest,
+  WorkingCapitalMarkAsFraudRequest,
+  WorkingCapitalBreachToggleRequest,
+  WorkingCapitalNearBreachActionRequest,
+  WorkingCapitalNearBreachActions
+} from './models/working-capital/working-capital-loan-account.model';
+import { CreditOriginationBoard } from './models/credit-origination-board.model';
 
 /**
  * Loans service.
  */
+/**
+ * The Working Capital transaction template commands whose quoted amount moves with the transaction date.
+ *
+ * Only what the loan owes is scoped to the date, so these are the commands reading an outstanding figure. The rest are
+ * left out because their amount cannot vary with it: `creditBalanceRefund` quotes the overpayment and `recoveryPayment`
+ * what is still recoverable, both of which come from what has been paid rather than what is owed; `disburse` quotes the
+ * approved principal; and `discountFee` / `discountFeeAdjustment` quote no amount at all.
+ */
+const DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS: ReadonlySet<WorkingCapitalTransactionTemplateCommand> = new Set([
+  'repayment',
+  'goodwillCredit',
+  'chargeOff',
+  'prepayLoan'
+]);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,11 +59,53 @@ export class LoansService {
   private dateUtils = inject(Dates);
 
   /**
+   * Retrieves a single page of loans for the loans list screen.
+   *
+   * The Fineract `/loans` endpoint on this deployment does not honor server-side
+   * text search or the (removed) `sqlSearch` status filter, so the component loads
+   * the full set (search / status-filter / sort / paging all run on the client) —
+   * but it does so progressively, page by page, so the first rows render quickly
+   * instead of blocking on the whole dataset. See `LoansComponent`.
+   * @param {number} offset Row offset.
+   * @param {number} limit Page size.
+   * @returns {Observable<any>} A Fineract page (`{ pageItems, totalFilteredRecords }`).
+   */
+  getLoansPage(offset: number, limit: number): Observable<any> {
+    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Retrieves the backend-owned credit origination workflow for a loan application.
+   * @param creditApplicationId Fineract loan application identifier.
+   * @returns The nine-stage credit origination board.
+   */
+  getCreditOriginationBoard(creditApplicationId: number | string): Observable<CreditOriginationBoard> {
+    return this.http.get<CreditOriginationBoard>(`/v2/credit-applications/${creditApplicationId}/origination-board`);
+  }
+
+  /**
+   * Flat office list, used to populate the loans list office filter.
+   * @returns {Observable<any[]>}
+   */
+  getOffices(): Observable<any[]> {
+    return this.http.get<any[]>('/offices');
+  }
+
+  /**
+   * Loan product list (id/name), used to populate the loans list product filter.
+   * @returns {Observable<any[]>}
+   */
+  getLoanProducts(): Observable<any[]> {
+    return this.http.get<any[]>('/loanproducts');
+  }
+
+  /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
    */
-  getLoanChargeTemplateResource(loanId: string): Observable<any> {
-    return this.http.get(`/loans/${loanId}/charges/template`);
+  getLoanChargeTemplateResource(loanAccountPath: LoanAccountPath, loanId: string): Observable<any> {
+    return this.http.get(`/${loanAccountPath}/${loanId}/charges/template`);
   }
 
   getLoanActionTemplate(loanId: string, command: string): Observable<any> {
@@ -62,6 +135,18 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
+  getLoanContractTerminationTemplate(loanId: string, transactionDate: string): Observable<any> {
+    if (!transactionDate) {
+      transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+    }
+    const httpParams = new HttpParams()
+      .set('command', 'contractTermination')
+      .set('transactionDate', transactionDate)
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
   getLoanForeclosureActionTemplate(loanId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('command', 'foreclosure')
@@ -79,6 +164,10 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
+  getGuarantors(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/guarantors`);
+  }
+
   getGuarantorTemplate(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/guarantors/template`);
   }
@@ -89,6 +178,10 @@ export class LoansService {
 
   deleteGuarantor(loanId: any, guarantorId: any): Observable<any> {
     return this.http.delete(`/loans/${loanId}/guarantors/${guarantorId}`);
+  }
+
+  updateGuarantor(loanId: string, guarantorId: any, data: any): Observable<any> {
+    return this.http.put(`/loans/${loanId}/guarantors/${guarantorId}`, data);
   }
 
   deleteLoanAccount(loanId: any): Observable<any> {
@@ -114,12 +207,12 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
-  getDelinquencyActions(loanId: string) {
-    return this.http.get(`/loans/${loanId}/delinquency-actions`);
+  getDelinquencyActions(productType: string, loanId: string) {
+    return this.http.get(`/${productType}/${loanId}/delinquency-actions`);
   }
 
-  createDelinquencyActions(loanId: string, delinquencyActions: any) {
-    return this.http.post(`/loans/${loanId}/delinquency-actions`, delinquencyActions);
+  createDelinquencyActions(productType: string, loanId: string, delinquencyActions: any) {
+    return this.http.post(`/${productType}/${loanId}/delinquency-actions`, delinquencyActions);
   }
 
   getDeferredIncomeData(loanId: string) {
@@ -128,6 +221,48 @@ export class LoansService {
 
   getBuyDownFeeData(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/buydown-fees`);
+  }
+
+  getWorkingCapitalLoanDelinquencyRangeSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
+  }
+
+  getBreachActions(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
+  }
+
+  createBreachAction(loanId: string, payload: WorkingCapitalBreachCommandRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
+  /**
+   * Suspends or resumes breach evaluation for a Working Capital loan.
+   *
+   * Shares the breach-actions resource with pause and resume, but the payload
+   * carries no endDate: disable opens an open-ended window and enable closes
+   * the one currently open.
+   * @param {string} loanId Loan Id
+   * @param {WorkingCapitalBreachToggleRequest} payload Action and business date
+   * @returns {Observable<any>}
+   */
+  toggleWorkingCapitalBreachEvaluation(loanId: string, payload: WorkingCapitalBreachToggleRequest): Observable<any> {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
+  getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
+  }
+
+  getWorkingCapitalLoanBreachSchedule(loanId: string): Observable<BreachSchedule[]> {
+    return this.http.get<BreachSchedule[]>(`/working-capital-loans/${loanId}/breach-schedule`);
+  }
+
+  getWorkingCapitalLoanNearBreachActions(loanId: string): Observable<WorkingCapitalNearBreachActions[]> {
+    return this.http.get<WorkingCapitalNearBreachActions[]>(`/working-capital-loans/${loanId}/near-breach-actions`);
+  }
+
+  getWorkingCapitalLoanBreachActions(loanId: string): Observable<WorkingCapitalBreachAction[]> {
+    return this.http.get<WorkingCapitalBreachAction[]>(`/working-capital-loans/${loanId}/breach-actions`);
   }
 
   /**
@@ -146,8 +281,8 @@ export class LoansService {
    * @param {any} loanCharge to apply on a Loan Account.
    * @returns {Observable<any>}
    */
-  createLoanCharge(loanId: string, resourceType: string, loanCharge: any): Observable<any> {
-    return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
+  createLoanCharge(loanAccountPath: LoanAccountPath, loanId: string, loanCharge: any): Observable<any> {
+    return this.http.post(`/${loanAccountPath}/${loanId}/charges`, loanCharge);
   }
 
   /**
@@ -193,6 +328,15 @@ export class LoansService {
   getLoanAccountAssociationDetails(loanId: string) {
     const httpParams = new HttpParams().set('associations', 'all').set('exclude', 'guarantors,futureSchedule');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanDetails(loanId: string) {
+    const httpParams = new HttpParams().set('associations', 'all');
+    return this.http.get(`/working-capital-loans/${loanId}`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanCharges(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/charges`);
   }
 
   getApproveAssociationsDetails(loanId: any) {
@@ -292,8 +436,8 @@ export class LoansService {
   /**
    * Get Loan Datatables
    */
-  getLoanDataTables() {
-    const httpParams = new HttpParams().set('apptable', 'm_loan');
+  getLoanDataTables(appTable = 'm_loan') {
+    const httpParams = new HttpParams().set('apptable', appTable);
     return this.http.get(`/datatables`, { params: httpParams });
   }
 
@@ -305,6 +449,29 @@ export class LoansService {
   getLoanDatatable(loanId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
+  }
+
+  /**
+   * Reads one page of rows from a loan datatable via the advanced query API.
+   *
+   * The loans list uses this to show custom-table columns: one paged request per
+   * table covers every loan, instead of a `/datatables/{name}/{loanId}` call per row.
+   * Dates are requested in ISO format so parsing is independent of the UI locale.
+   * @param {string} datatableName Registered datatable name.
+   * @param {string[]} resultColumns Columns to fetch (must include the `loan_id` FK).
+   * @param {number} page Zero-based page number.
+   * @param {number} size Page size.
+   * @returns {Observable<any>} A Spring page (`{ content, last, ... }`).
+   */
+  queryLoanDatatableRows(datatableName: string, resultColumns: string[], page: number, size: number): Observable<any> {
+    return this.http.post(`/datatables/${datatableName}/query`, {
+      request: { resultColumns },
+      page,
+      size,
+      dateFormat: 'yyyy-MM-dd',
+      dateTimeFormat: 'yyyy-MM-dd HH:mm:ss',
+      locale: 'en'
+    });
   }
 
   /**
@@ -347,6 +514,38 @@ export class LoansService {
   loanActionButtons(loanId: any, command: any, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/loans/${loanId}`, data, { params: httpParams });
+  }
+
+  applyWorkingCapitalLoanAccountCommand(loanId: any, command: any, data?: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/working-capital-loans/${loanId}`, data, { params: httpParams });
+  }
+
+  /**
+   * Marks or unmarks a Working Capital loan as fraud.
+   *
+   * Uses PUT on a dedicated resource rather than the transactions command
+   * endpoint, and sends `fraud` as the only parameter: the backend rejects any
+   * extra field, including the locale and dateFormat the other actions send.
+   * @param {string} loanId Loan Id
+   * @param {boolean} fraud Target value of the fraud flag
+   * @returns {Observable<any>}
+   */
+  markWorkingCapitalLoanAsFraud(loanId: string, fraud: boolean): Observable<any> {
+    const payload: WorkingCapitalMarkAsFraudRequest = { fraud };
+    return this.http.put(`/working-capital-loans/${loanId}/mark-as-fraud`, payload);
+  }
+
+  applyWorkingCapitalLoanActionCommand(
+    loanId: string,
+    data: any,
+    command: string,
+    transactionId?: any
+  ): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return transactionId
+      ? this.http.post(`/working-capital-loans/${loanId}/transactions/${transactionId}`, data, { params: httpParams })
+      : this.http.post(`/working-capital-loans/${loanId}/transactions`, data, { params: httpParams });
   }
 
   addInterestPauseToLoan(loanId: any, data?: any): Observable<any> {
@@ -441,6 +640,12 @@ export class LoansService {
     return this.http.get('/loans/template', { params: httpParams });
   }
 
+  getWorkingCapitalLoansAccountTemplate(clientId: number, productId?: number): Observable<any> {
+    let httpParams = new HttpParams().set('clientId', clientId);
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get('/working-capital-loans/template', { params: httpParams });
+  }
+
   getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('associations', 'charges,collateral,meeting,multiDisburseDetails')
@@ -465,8 +670,12 @@ export class LoansService {
    * Creates Loans Account
    * @param {any} loanAccount Loan Account
    */
-  createLoansAccount(loanAccount: any): Observable<any> {
-    return this.http.post('/loans', loanAccount);
+  createLoansAccount(productType: string, loanAccount: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/${productType}`, loanAccount, { headers });
   }
 
   getLoanDocuments(loanId: any): Observable<any> {
@@ -512,8 +721,8 @@ export class LoansService {
     return this.http.get(`/standinginstructions`, { params: httpParams });
   }
 
-  updateLoansAccount(loanId: any, loanData: any): Observable<any> {
-    return this.http.put(`/loans/${loanId}`, loanData);
+  updateLoansAccount(productType: string, loanId: any, loanData: any): Observable<any> {
+    return this.http.put(`/${productType}/${loanId}`, loanData);
   }
 
   getTemplateData(templateId: any, loanId: any): Observable<any> {
@@ -529,6 +738,73 @@ export class LoansService {
   getLoanApprovalTemplate(loanId: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', 'approval').set('associations', 'delinquency');
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
+  }
+
+  /**
+   * Fetches the Working Capital Loan approval template.
+   *
+   * Approval is the only action still served by this endpoint; every other command, disburse included, goes through
+   * getWorkingCapitalLoanTransactionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {string} actionName 'approve'.
+   * @returns {Observable<any>} The action template.
+   */
+  getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
+    const httpParams = new HttpParams().set('templateType', actionName);
+    return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
+  }
+
+  /**
+   * Builds the Working Capital Loan write-off form data.
+   *
+   * There is no write-off template for Working Capital loans, so the write-off
+   * reasons dropdown is populated directly from the "WriteOffReasons" code values.
+   * @returns {Observable<any>} An object shaped like a write-off template ({ writeOffReasonOptions }).
+   */
+  getWorkingCapitalWriteOffTemplate(): Observable<any> {
+    return this.http.get<any[]>('/codes').pipe(
+      switchMap((codes) => {
+        const reasonsCode = codes?.find((code) => code.name === 'WriteOffReasons');
+        if (!reasonsCode) {
+          return of({ writeOffReasonOptions: [] });
+        }
+        return this.http.get<any[]>(`/codes/${reasonsCode.id}/codevalues`).pipe(
+          map((writeOffReasonOptions) => ({ writeOffReasonOptions })),
+          catchError(() => of({ writeOffReasonOptions: [] }))
+        );
+      }),
+      catchError(() => of({ writeOffReasonOptions: [] }))
+    );
+  }
+
+  /**
+   * Fetches the template for one Working Capital Loan command: disburse, repayment, goodwillCredit,
+   * creditBalanceRefund, recoveryPayment, discountFee, discountFeeAdjustment, chargeOff or prepayLoan.
+   *
+   * Despite the endpoint name this also serves disburse, which is a lifecycle action rather than a transaction.
+   * Approval is the one command it does not serve; that goes through getWorkingCapitalLoanActionTemplate.
+   * @param {string} loanId Loan Id.
+   * @param {WorkingCapitalTransactionTemplateCommand} command The command whose template to fetch.
+   * @param {string} transactionDate Date to quote the amount for, for the commands that read it; defaults to the
+   *   business date. Only what the loan owes is scoped to it - the amount stays net of every payment already made.
+   * @returns {Observable<any>} The transaction template.
+   */
+  getWorkingCapitalLoanTransactionTemplate(
+    loanId: string,
+    command: WorkingCapitalTransactionTemplateCommand,
+    transactionDate?: string
+  ): Observable<any> {
+    let httpParams = new HttpParams().set('command', command);
+    if (DATE_AWARE_WORKING_CAPITAL_TEMPLATE_COMMANDS.has(command)) {
+      const quoteDate =
+        transactionDate ??
+        this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
+      httpParams = httpParams
+        .set('transactionDate', quoteDate)
+        .set('locale', this.settingsService.language.code)
+        .set('dateFormat', this.settingsService.dateFormat);
+    }
+    return this.http.get(`/working-capital-loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
@@ -549,8 +825,8 @@ export class LoansService {
    * @param {string} chargeId loans charge Id
    * @returns {Observable<any>}
    */
-  getLoansAccountCharge(accountId: string, chargeId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/charges/${chargeId}`);
+  getLoansAccountCharge(loanAccountPath: LoanAccountPath, accountId: string, chargeId: string): Observable<any> {
+    return this.http.get(`/${loanAccountPath}/${accountId}/charges/${chargeId}`);
   }
 
   /**
@@ -560,9 +836,15 @@ export class LoansService {
    * @param {string} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  executeLoansAccountChargesCommand(accountId: string, command: string, data: any, chargeId: any): Observable<any> {
+  executeLoansAccountChargesCommand(
+    loanAccountPath: LoanAccountPath,
+    accountId: string,
+    command: string,
+    data: any,
+    chargeId: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/loans/${accountId}/charges/${chargeId}`, data, { params: httpParams });
+    return this.http.post(`/${loanAccountPath}/${accountId}/charges/${chargeId}`, data, { params: httpParams });
   }
 
   /**
@@ -571,8 +853,13 @@ export class LoansService {
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  editLoansAccountCharge(accountId: string, data: any, chargeId: any): Observable<any> {
-    return this.http.put(`/loans/${accountId}/charges/${chargeId}`, data);
+  editLoansAccountCharge(
+    loanAccountPath: LoanAccountPath,
+    accountId: string,
+    data: any,
+    chargeId: any
+  ): Observable<any> {
+    return this.http.put(`/${loanAccountPath}/${accountId}/charges/${chargeId}`, data);
   }
 
   /**
@@ -580,8 +867,8 @@ export class LoansService {
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  deleteLoansAccountCharge(accountId: string, chargeId: any): Observable<any> {
-    return this.http.delete(`/loans/${accountId}/charges/${chargeId}`);
+  deleteLoansAccountCharge(loanAccountPath: LoanAccountPath, accountId: string, chargeId: any): Observable<any> {
+    return this.http.delete(`/${loanAccountPath}/${accountId}/charges/${chargeId}`);
   }
 
   /**
@@ -594,12 +881,17 @@ export class LoansService {
   }
 
   /**
+   * @param {string} productType Loans Product Type
    * @param {string} accountId Loans Account Id
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getLoansAccountTransaction(accountId: string, transactionId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/transactions/${transactionId}`);
+  getLoansAccountTransaction(
+    productType: 'loans' | 'working-capital-loans',
+    accountId: string,
+    transactionId: string
+  ): Observable<any> {
+    return this.http.get(`/${productType}/${accountId}/transactions/${transactionId}`);
   }
 
   /**
@@ -658,14 +950,22 @@ export class LoansService {
     return this.http.post('/loans?command=calculateLoanSchedule', payload);
   }
 
-  attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  attachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.post(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
-  dettachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  detachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.delete(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
   /**
@@ -763,14 +1063,11 @@ export class LoansService {
       delete loansAccountData.disbursementData;
     }
     delete loansAccountData.isValid;
-    loansAccountData.principal = loansAccountData.principalAmount;
+    // Send the principal as a number: Fineract reads a text amount with the request locale,
+    // so "1500.75" would be saved as 150075 in es, de or pt.
+    loansAccountData.principal = Number(loansAccountData.principalAmount);
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
-
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
     return loansAccountData;
   }
 
@@ -799,5 +1096,41 @@ export class LoansService {
   getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
     const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
     return this.http.get('/entityDatatableChecks', { params: httpParams });
+  }
+
+  /**
+   * Returns the Working Capital Loan Payment Rates data
+   */
+  getWorkingCapitalPeriodPaymentRates(loanId: any): Observable<PeriodPaymentRateChange[]> {
+    return this.http.get<PeriodPaymentRateChange[]>(`/working-capital-loans/${loanId}/rate-changes`);
+  }
+
+  /**
+   * Add a Working Capital Loan Payment Rates
+   */
+  addWorkingCapitalPeriodPaymentRate(loanId: any, payload: any) {
+    return this.http.put(`/working-capital-loans/${loanId}/payment-rate`, payload);
+  }
+
+  /**
+   * Returns the Working Capital Loan Transactions data
+   */
+  getWorkingCapitalTransactions(loanId: string, page: number = 0, size: number = 100) {
+    const httpParams = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    return this.http.get(`/working-capital-loans/${loanId}/transactions`, { params: httpParams });
+  }
+
+  /**
+   * Add a Working Capital Loan Near Breach Action
+   */
+  addWorkingCapitalNearBreachAction(loanId: string, payload: WorkingCapitalNearBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/near-breach-actions`, payload);
+  }
+
+  /**
+   * Add a Working Capital Loan Breach Action
+   */
+  addWorkingCapitalBreachAction(loanId: string, payload: WorkingCapitalBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 }

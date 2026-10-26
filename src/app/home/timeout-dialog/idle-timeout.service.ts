@@ -6,19 +6,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { fromEvent, merge, Subject, timer, Observable, Subscription } from 'rxjs';
-import { switchMap, takeUntil, tap, map } from 'rxjs/operators';
+import { SessionSyncService } from '../../core/authentication/session-sync.service';
 
 /**
- *  Idle timeout service used to track idle user
+ * Idle timeout service used to track idle user across all tabs.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class IdleTimeoutService {
-  // max timeout for an idle user
+  private sessionSyncService = inject(SessionSyncService);
+
   private readonly timeoutDelay = environment.session.timeout.idleTimeout || 300000;
   private timeout$ = new Subject<void>();
   private resetTimer$ = new Subject<void>();
@@ -26,7 +27,6 @@ export class IdleTimeoutService {
   private timerSubscription?: Subscription;
   private userActionsSubscription?: Subscription;
 
-  // observable timeout
   readonly $onSessionTimeout: Observable<void>;
 
   constructor() {
@@ -35,8 +35,16 @@ export class IdleTimeoutService {
     this.resetTimer$.subscribe(() => {
       this.timerSubscription?.unsubscribe();
       this.timerSubscription = timer(this.timeoutDelay).subscribe(() => {
-        this.timeout$.next();
-        this.stop();
+        const lastActivity = this.sessionSyncService.getLastActivity();
+        const elapsed = Date.now() - lastActivity;
+
+        if (elapsed < this.timeoutDelay) {
+          // Another tab was active recently — reset instead of timing out
+          this.reset();
+        } else {
+          this.timeout$.next();
+          this.stop();
+        }
       });
     });
   }
@@ -46,7 +54,6 @@ export class IdleTimeoutService {
       this.active = true;
       this.reset();
 
-      // Subscribe to user actions only when active
       const events = [
         'mousemove',
         'keydown',
@@ -56,6 +63,7 @@ export class IdleTimeoutService {
       ];
       const userActions$ = merge(...events.map((e) => fromEvent(document, e)));
       this.userActionsSubscription = userActions$.subscribe(() => {
+        this.sessionSyncService.updateActivity();
         this.reset();
       });
     }

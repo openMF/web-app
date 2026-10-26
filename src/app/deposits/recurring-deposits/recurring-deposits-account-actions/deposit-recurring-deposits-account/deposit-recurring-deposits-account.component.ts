@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -40,7 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     InputAmountComponent,
     MatSlideToggle,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepositRecurringDepositsAccountComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -117,11 +118,12 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   createdepositRecurringDepositForm() {
     this.depositRecurringDepositForm = this.formBuilder.group({
       transactionDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
+      // A deposit starts with the amount due (instalment plus outstanding charges) that the template returns.
       transactionAmount: [
-        0.0,
+        this.transactionCommand === 'deposit' ? (this.transactionAmount ?? 0) : 0,
         Validators.required
       ],
       paymentTypeId: [

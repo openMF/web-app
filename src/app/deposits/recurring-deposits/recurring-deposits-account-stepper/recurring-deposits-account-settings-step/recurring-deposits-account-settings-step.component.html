@@ -24,7 +24,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency" />
+      <input type="number" matInput formControlName="lockinPeriodFrequency" mifosxPositiveInteger />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -54,7 +54,11 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period' | translate }}</mat-label>
-      <input type="number" matInput formControlName="depositPeriod" required />
+      <input type="number" matInput formControlName="depositPeriod" mifosxPositiveInteger required />
+      <mat-error>
+        {{ 'labels.inputs.Deposit Period' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -66,6 +70,10 @@
           </mat-option>
         }
       </mat-select>
+      <mat-error>
+        {{ 'labels.inputs.Deposit Period Type' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-checkbox labelPosition="before" formControlName="isCalendarInherited" class="margin-v flex-48">
@@ -85,11 +93,15 @@
         />
         <mat-datepicker-toggle matSuffix [for]="expectedFirstDepositOnDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #expectedFirstDepositOnDatePicker></mat-datepicker>
+        <mat-error>
+          {{ 'labels.inputs.Deposit Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
       <h4 class="mat-h4 flex-98">{{ 'labels.heading.Deposit Frequency' | translate }}</h4>
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Deposit Frequency' | translate }}</mat-label>
-        <input type="number" matInput formControlName="recurringFrequency" required />
+        <input type="number" matInput formControlName="recurringFrequency" min="0" required />
         <mat-error>
           {{ 'labels.inputs.Deposit Frequency' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

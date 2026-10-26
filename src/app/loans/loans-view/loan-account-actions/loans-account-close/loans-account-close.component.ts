@@ -7,16 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-loans-account-close',
@@ -25,36 +23,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoansAccountCloseComponent implements OnInit {
+export class LoansAccountCloseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
-  @Input() dataObject: any;
 
   /** Close form. */
   closeLoanForm: UntypedFormGroup;
-  /** Loan Id */
-  loanId: any;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} systemService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -71,7 +55,7 @@ export class LoansAccountCloseComponent implements OnInit {
   createCloseForm() {
     this.closeLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(this.dataObject.date) || new Date(),
+        this.dataObject.date ? this.dateUtils.parseDate(this.dataObject.date) : new Date(),
         Validators.required
       ],
       note: []
@@ -95,8 +79,11 @@ export class LoansAccountCloseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'close').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'close').subscribe({
+      next: (response: any) => {
+        this.gotoLoanDefaultView();
+      },
+      error: (error) => {}
     });
   }
 }

@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -38,11 +39,13 @@ import { environment } from '../../../environments/environment';
     M3ButtonComponent,
     MatProgressBar,
     MatProgressSpinner
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+  private translateService = inject(TranslateService);
   minPasswordLength = environment.minPasswordLength;
 
   /** Login form group. */
@@ -144,13 +147,17 @@ export class LoginFormComponent implements OnInit {
   getErrorMessage(controlName: string): string {
     const control = this.loginForm.get(controlName);
     if (control?.hasError('required')) {
-      return 'This field is required';
+      return this.translateService.instant('errors.validation.required');
     }
     if (control?.hasError('minlength')) {
       const requiredLength = control.errors?.['minlength']?.requiredLength;
-      return `Minimum length is ${requiredLength}`;
+      return this.translateService.instant('errors.validation.minLength', { requiredLength });
     }
 
     return '';
+  }
+
+  onEnter(event: any): void {
+    this.login();
   }
 }

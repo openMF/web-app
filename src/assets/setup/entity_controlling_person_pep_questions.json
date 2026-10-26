@@ -1,0 +1,53 @@
+{
+  "datatableName": "entity_controlling_person_pep_questions",
+  "apptableName": "m_client",
+  "entitySubType": "Entity",
+  "multiRow": false,
+  "columns": [
+    {
+      "name": "has_controlling_person",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "controlling_person_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "has_pep",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "pep_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "has_related_pep",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "related_pep_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "acts_on_behalf_of_third_party",
+      "type": "Boolean",
+      "mandatory": false
+    },
+    {
+      "name": "third_party_details",
+      "type": "Text",
+      "mandatory": false
+    },
+    {
+      "name": "pld_observations",
+      "type": "Text",
+      "mandatory": false
+    }
+  ]
+}

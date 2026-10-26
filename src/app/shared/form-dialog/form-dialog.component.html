@@ -8,6 +8,10 @@
 
 <h1 mat-dialog-title>{{ data.title }}</h1>
 
+@if (data.warning) {
+  <p class="form-dialog-warning">{{ data.warning }}</p>
+}
+
 <div
   mat-dialog-content
   [formGroup]="form"
@@ -21,16 +25,21 @@
       <mifosx-formfield [formfield]="formfield" [form]="form" class="flex-fill"></mifosx-formfield>
     </div>
   }
+  @if (data.contentTemplate) {
+    <div class="flex-100 responsive-flex-full">
+      <ng-container [ngTemplateOutlet]="data.contentTemplate" [ngTemplateOutletContext]="{ form: form }"></ng-container>
+    </div>
+  }
 </div>
 
 <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent" align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.' + layout.cancelButtonText | translate }}</button>
+  <button mat-raised-button mat-dialog-close>{{ getButtonTranslationKey(layout.cancelButtonText) | translate }}</button>
   <button
     mat-raised-button
     color="primary"
     [mat-dialog-close]="{ data: form }"
     [disabled]="!form.valid || form.pristine"
   >
-    {{ 'labels.buttons.' + layout.addButtonText | translate }}
+    {{ getButtonTranslationKey(layout.addButtonText) | translate }}
   </button>
 </mat-dialog-actions>

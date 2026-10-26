@@ -58,12 +58,18 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea matInput required formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            @if (foreclosureForm.controls.note.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Note' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button

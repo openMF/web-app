@@ -7,18 +7,16 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
 import { Dates } from 'app/core/utils/dates';
-import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Waive Interest component.
@@ -31,17 +29,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WaiveInterestComponent implements OnInit {
+export class WaiveInterestComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-
-  @Input() dataObject: any;
 
   /** Loan Interest form. */
   loanInterestForm: UntypedFormGroup;
@@ -50,6 +43,10 @@ export class WaiveInterestComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   currency: Currency;
+
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -69,7 +66,7 @@ export class WaiveInterestComponent implements OnInit {
         Validators.required
       ],
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       note: ['']
@@ -93,9 +90,8 @@ export class WaiveInterestComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.submitLoanActionButton(loanId, data, 'waiveinterest').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'waiveinterest').subscribe((response: any) => {
+      this.gotoLoanDefaultView();
     });
   }
 }

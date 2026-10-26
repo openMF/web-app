@@ -1,0 +1,32 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'eod.confirm' | translate }}</h2>
+<mat-dialog-content>
+  <mifosx-closing-summary [record]="data.preview" />
+  <p>{{ 'eod.recalculated' | translate }}</p>
+  @if (error) {
+    <p role="alert">{{ error | translate }}</p>
+  }
+  <form [formGroup]="form" autocomplete="off">
+    <mat-form-field
+      ><mat-label>{{ 'eod.primaryUsername' | translate }}</mat-label
+      ><input matInput formControlName="username" autocomplete="off" [readonly]="pending"
+    /></mat-form-field>
+    <mat-form-field
+      ><mat-label>{{ 'eod.authorizationKey' | translate }}</mat-label
+      ><input matInput type="password" formControlName="credential" autocomplete="new-password" [readonly]="pending"
+    /></mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null" [disabled]="pending">{{ 'eod.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="accept()" [disabled]="pending || form.invalid || mustPreview">
+    {{ 'eod.accept' | translate }}
+  </button>
+</mat-dialog-actions>

@@ -384,12 +384,22 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
   background: transparent;
   flex-shrink: 0; // Safari fix: prevent header from growing
   max-height: 76px; // Safari fix: constrain header height
   flex-wrap: nowrap;
   overflow: hidden;
+
+  // Keep the controls on the same column as the login card content. The box has
+  // to track .login-card exactly: the same side inset as .login-card-container,
+  // the same max-width, and the same horizontal padding as .login-card. Without
+  // this the header fills the panel while the card is capped and centred, so the
+  // two rows drift apart once the panel is wider than the card (viewports above
+  // ~1707px, where 30% of the viewport exceeds 480px + the container padding).
+  width: calc(100% - 2rem); // .login-card-container side padding
+  max-width: 480px; // .login-card max-width
+  margin-inline: auto;
+  padding: 0.75rem 1.5rem; // .login-card horizontal padding
 
   .header-control {
     opacity: 0.8;
@@ -402,6 +412,15 @@
 
   .theme-toggle {
     flex-shrink: 0; // Prevent toggle from growing
+
+    // Both selectors are capped (250px / 100px), so once the row is wider than
+    // they can fill, the leftover would sit as a gap on the right and the
+    // language selector would stop short of the card's right edge. Take up the
+    // slack here so the trailing controls stay flush with the column. The
+    // server selector is behind an @if, and renders empty when the deployment
+    // has a single server, so this must not depend on how many children the
+    // row actually has.
+    margin-inline-start: auto;
   }
 
   // Theme Toggle Button Styles
@@ -723,6 +742,18 @@
 
   .login-header {
     flex-shrink: 0;
+
+    // Card goes full-bleed here: no container padding, no cap, 2rem card padding.
+    width: 100%;
+    max-width: none;
+    padding: 0.75rem 2rem;
+
+    // The card spans the viewport here while the controls stay capped, so the
+    // row has far more slack than it does on desktop. Keep the controls grouped
+    // together rather than pushing the trailing two across the whole screen.
+    .theme-toggle {
+      margin-inline-start: 0;
+    }
   }
 
   .login-card-container {
@@ -791,7 +822,8 @@
   }
 
   .login-header {
-    padding: 0.75rem 1rem;
+    width: calc(100% - 2rem); // .login-card-container side padding
+    padding: 0.75rem 1rem; // .login-card horizontal padding
     gap: 0.25rem;
 
     ::ng-deep mifosx-language-selector {
@@ -880,7 +912,8 @@
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 480px) {
   .login-header {
-    padding: 0.5rem 0.75rem;
+    width: calc(100% - 1rem); // .login-card-container side padding
+    padding: 0.5rem 0.875rem; // .login-card horizontal padding
     gap: 0.25rem;
   }
 

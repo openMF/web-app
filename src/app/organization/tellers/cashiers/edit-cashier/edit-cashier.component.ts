@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -28,20 +30,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCashierComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Cashier Data. */
   cashierData: any = new Object();
   /** Edit cashier form. */
-  editCashierForm: UntypedFormGroup;
+  editCashierForm: FormGroup;
   /** Is Staff ID present. */
   isStaffId = true;
   /** Minimum Date allowed. */
@@ -63,13 +67,15 @@ export class EditCashierComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { cashier: any; cashierTemplate: any }) => {
-      this.cashierData.data = data.cashier;
-      this.cashierData.template = data.cashierTemplate;
-      this.isStaffId = this.cashierData.template.staffOptions.some(
-        (element: any) => element.id === this.cashierData.data.staffId
-      );
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { cashier: any; cashierTemplate: any }) => {
+        this.cashierData.data = data.cashier;
+        this.cashierData.template = data.cashierTemplate;
+        this.isStaffId = this.cashierData.template.staffOptions.some(
+          (element: any) => element.id === this.cashierData.data.staffId
+        );
+      });
   }
 
   ngOnInit() {
@@ -102,11 +108,11 @@ export class EditCashierComponent implements OnInit {
       staffId: [{ value: this.cashierData.data.staffId, disabled: true }],
       description: [this.cashierData.data.description],
       startDate: [
-        this.cashierData.data.startDate ? new Date(this.cashierData.data.startDate) : null,
+        this.cashierData.data.startDate ? this.dateUtils.parseDate(this.cashierData.data.startDate) : null,
         Validators.required
       ],
       endDate: [
-        this.cashierData.data.endDate ? new Date(this.cashierData.data.endDate) : null,
+        this.cashierData.data.endDate ? this.dateUtils.parseDate(this.cashierData.data.endDate) : null,
         Validators.required
       ],
       isFullDay: [
@@ -171,6 +177,7 @@ export class EditCashierComponent implements OnInit {
     }
     this.organizationService
       .updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data)
+      .pipe(take(1))
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

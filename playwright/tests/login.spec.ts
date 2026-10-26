@@ -8,6 +8,7 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
+test.use({ storageState: { cookies: [], origins: [] } });
 
 /**
  * Login Smoke Tests
@@ -67,8 +68,6 @@ test.describe('Login Page', () => {
     await expect(loginPage.loginButton).toBeEnabled();
   });
 
-  // Skip in CI - requires Fineract backend
-  test.skip(!!process.env.CI, 'Requires Fineract backend');
   test('should successfully login with valid credentials', async () => {
     // Perform login with valid credentials
     // This uses the login() method which follows the exact codegen sequence
@@ -82,12 +81,8 @@ test.describe('Login Page', () => {
     // Attempt login with wrong password
     await loginPage.login('mifos', 'wrongpassword');
 
-    // Wait for the login attempt to process and any error notification to appear
-    // The app shows a snackbar notification for authentication errors
-    await page.waitForTimeout(3000);
-
-    // Should remain on login page after failed attempt (URL still contains /login)
-    await expect(page).toHaveURL(/.*login.*/);
+    // Should remain on login page after failed attempt
+    await expect(page).toHaveURL(/.*login.*/, { timeout: 10000 });
 
     // Verify we're still on the login page by checking form elements are visible
     await expect(loginPage.usernameInput).toBeVisible();
@@ -98,8 +93,6 @@ test.describe('Login Page', () => {
    * Simple test that exactly mirrors the codegen script.
    * This is the baseline test generated from codegen.
    */
-  // Skip in CI - requires Fineract backend
-  test.skip(!!process.env.CI, 'Requires Fineract backend');
   test('codegen baseline: login with mifos credentials', async () => {
     // This test uses the exact codegen interaction sequence
     await loginPage.login('mifos', 'password');

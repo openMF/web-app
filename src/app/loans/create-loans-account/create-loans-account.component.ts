@@ -7,8 +7,19 @@
  */
 
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
@@ -25,6 +36,9 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBasicDetails } from '../models/loan-product.model';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create loans account
@@ -46,20 +60,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateLoansAccountComponent {
+export class CreateLoansAccountComponent extends LoanProductBaseComponent implements AfterViewInit {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private loansService = inject(LoansService);
   private settingsService = inject(SettingsService);
   private clientService = inject(ClientsService);
+  private cdr = inject(ChangeDetectorRef);
+  private dateUtils = inject(Dates);
 
   /** Imports all the step component */
-  @ViewChild(LoansAccountDetailsStepComponent, { static: true })
+  @ViewChild(LoansAccountDetailsStepComponent, { static: false })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  @ViewChild(LoansAccountTermsStepComponent, { static: false }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: false })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
   /** Get handle on dtloan tags in the template */
   @ViewChildren('dtloan') loanDatatables: QueryList<LoansAccountDatatableStepComponent>;
@@ -78,6 +95,17 @@ export class CreateLoansAccountComponent {
   /** Currency Code */
   currencyCode: string;
 
+  clientId: number | null = null;
+  productId: number | null = null;
+  productDetails: any;
+
+  loanProductsBasicDetails: LoanProductBasicDetails[] | null = null;
+  productType: string | null = null;
+  /** True while the create request is in flight. */
+  isSubmitting = false;
+  /** Idempotency key reused if the same submission is retried. */
+  submitIdempotencyKey?: string;
+
   /**
    * Sets loans account create form.
    * @param {route} ActivatedRoute Activated Route.
@@ -87,38 +115,67 @@ export class CreateLoansAccountComponent {
    * @param {ClientsService} clientService Client Service
    */
   constructor() {
-    this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
-      this.loansAccountTemplate = data.loansAccountTemplate;
-    });
+    super();
+    this.loanProductsBasicDetails = [];
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loansAccountTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
+        this.loanProductsBasicDetails = data.loanProductsBasicDetails;
+        this.loansAccountTemplate = data.loansAccountTemplate;
+      });
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   /**
    * Sets loans account product template and collateral template
    * @param {any} $event API response
    */
-  setTemplate($event: any) {
-    this.loansAccountProductTemplate = $event;
-    this.currencyCode = this.loansAccountProductTemplate.currency.code;
-    const clientId = this.loansAccountTemplate.clientId;
-    if (!!clientId) {
-      this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
-        this.collateralOptions = response;
-      });
-    } else {
-      // Fineract API doesn't have "Group Collateral Management" endpoint; from the obsolete
-      // community app it appears getCollateralTemplate(clientId) is called as well, but it's not clear how
-      // the clientId is selected from the clientIds that belong to the group.
-      console.error('No collateral data requested from Fineract, collateral might misbehave');
+  setTemplate($event: any): void {
+    const templateData: any = $event;
+    this.loansAccountProductTemplate = templateData;
+    if (templateData.loanData) {
+      this.loansAccountProductTemplate = templateData.loanData;
+      this.loansAccountProductTemplate.options = {
+        breachOptions: templateData.breachOptions,
+        nearBreachOptions: templateData.nearBreachOptions,
+        delinquencyBucketOptions: templateData.delinquencyBucketOptions,
+        fundOptions: templateData.fundOptions,
+        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
+      };
     }
-    const entityId = this.loansAccountTemplate.clientId
-      ? this.loansAccountTemplate.clientId
-      : this.loansAccountTemplate.group.id;
-    const isGroup = this.loansAccountTemplate.clientId ? false : true;
-    const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-      this.multiDisburseLoan = response.multiDisburseLoan;
-    });
-    this.setDatatables();
+    this.currencyCode = this.loansAccountProductTemplate.currency.code;
+    this.productId = this.loansAccountProductTemplate.product.id;
+    this.productDetails = this.loansAccountProductTemplate.product;
+
+    if (this.loanProductService.isLoanProduct) {
+      const clientId = this.loansAccountTemplate.clientId;
+      if (!!clientId) {
+        this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+          this.collateralOptions = response;
+        });
+      } else {
+        // Fineract API doesn't have "Group Collateral Management" endpoint; from the obsolete
+        // community app it appears getCollateralTemplate(clientId) is called as well, but it's not clear how
+        // the clientId is selected from the clientIds that belong to the group.
+        console.error('No collateral data requested from Fineract, collateral might misbehave');
+      }
+      this.multiDisburseLoan = this.loansAccountProductTemplate.multiDisburseLoan;
+      this.setDatatables();
+    }
+    this.cdr.detectChanges();
+  }
+
+  setProductType($event: any): void {
+    this.productType = $event;
+    this.loanProductService.initialize(this.productType);
+    this.loansAccountProductTemplate = null;
+    this.productId = null;
+    this.cdr.detectChanges();
   }
 
   setDatatables(): void {
@@ -133,43 +190,89 @@ export class CreateLoansAccountComponent {
 
   /** Get Loans Account Details Form Data */
   get loansAccountDetailsForm() {
-    return this.loansAccountDetailsStep.loansAccountDetailsForm;
+    return this.loansAccountDetailsStep?.loansAccountDetailsForm;
   }
 
   /** Get Loans Account Terms Form Data */
   get loansAccountTermsForm() {
-    return this.loansAccountTermsStep.loansAccountTermsForm;
+    return this.loansAccountTermsStep?.loansAccountTermsForm;
   }
 
   /** Checks wheter all the forms in different steps are valid or not */
   get loansAccountFormValid() {
-    return this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid;
+    return this.loansAccountDetailsForm?.valid && this.loansAccountTermsForm?.valid;
   }
 
   get loansSavingsAccountLinked() {
-    return this.loansAccountDetailsStep.loansAccountDetailsForm.get('linkAccountId').value;
+    if (this.loanProductService.isLoanProduct) {
+      return this.loansAccountDetailsStep?.loansAccountDetailsForm.get('linkAccountId').value;
+    }
+    return null;
   }
 
   /** Gets principal Amount */
   get loanPrincipal() {
-    return this.loansAccountTermsStep.loansAccountTermsForm.value.principal;
+    return this.loansAccountTermsStep?.loansAccountTermsForm.value.principal;
   }
 
   /** Retrieves Data of all forms except Currency to submit the data */
   get loansAccount() {
-    return {
-      ...this.loansAccountDetailsStep.loansAccountDetails,
-      ...this.loansAccountTermsStep.loansAccountTerms,
-      ...this.loansAccountChargesStep.loansAccountCharges,
-      ...this.loansAccountTermsStep.loanCollateral,
-      ...this.loansAccountTermsStep.disbursementData
-    };
+    if (this.loanProductService.isLoanProduct) {
+      return {
+        ...this.loansAccountDetailsStep.loansAccountDetails,
+        ...this.loansAccountTermsStep?.loansAccountTerms,
+        ...this.loansAccountChargesStep?.loansAccountCharges,
+        ...this.loansAccountTermsStep?.loanCollateral,
+        ...this.loansAccountTermsStep?.disbursementData
+      };
+    } else if (this.loanProductService.isWorkingCapital) {
+      return {
+        ...this.loansAccountDetailsStep.loansAccountDetails,
+        ...this.loansAccountTermsStep?.loansAccountTerms
+      };
+    }
+    console.warn('Unexpected product type in loansAccount getter');
+    return {};
+  }
+
+  submit(): void {
+    if (this.loanProductService.isLoanProduct) {
+      if (this.startSubmit()) {
+        this.submitLoanProduct();
+      }
+    } else if (this.loanProductService.isWorkingCapital) {
+      if (this.startSubmit()) {
+        this.submitWorkingCapitalProduct();
+      }
+    }
   }
 
   /**
-   * Submits Data to create loan account
+   * Marks the submission as in flight and creates its idempotency key.
+   * @returns false if a submission is already in flight.
    */
-  submit() {
+  private startSubmit(): boolean {
+    if (this.isSubmitting) {
+      return false;
+    }
+    if (!this.submitIdempotencyKey) {
+      this.submitIdempotencyKey =
+        globalThis.crypto?.randomUUID?.() ?? `create-loan-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+    this.isSubmitting = true;
+    this.cdr.markForCheck();
+    return true;
+  }
+
+  /** Allows submitting again after the request failed. */
+  private submitFailed(): void {
+    // Fineract replays the stored response for a reused key, so a corrected form needs a new key.
+    this.submitIdempotencyKey = undefined;
+    this.isSubmitting = false;
+    this.cdr.markForCheck();
+  }
+
+  submitLoanProduct() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(
@@ -188,15 +291,100 @@ export class CreateLoansAccountComponent {
       payload['datatables'] = datatables;
     }
 
-    this.loansService.createLoansAccount(payload).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId,
-          'general'
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.loansService
+      .createLoansAccount(this.loanProductService.loanAccountPath, payload, this.submitIdempotencyKey)
+      .subscribe({
+        next: (response: any) => {
+          this.submitIdempotencyKey = undefined;
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId,
+              'general'
+            ],
+            {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
+            }
+          );
+        },
+        error: () => this.submitFailed()
+      });
+  }
+
+  submitWorkingCapitalProduct() {
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const payload = {
+      ...this.loansAccount,
+      clientId: this.loansAccountProductTemplate.client.id,
+      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
+      locale,
+      dateFormat
+    };
+
+    if (this.productDetails.allowAttributeOverrides) {
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequency') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequency === false
+      ) {
+        delete payload['repaymentEvery'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequencyType') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequencyType === false
+      ) {
+        delete payload['repaymentFrequencyType'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'discountDefault') ||
+        this.productDetails.allowAttributeOverrides.discountDefault === false
+      ) {
+        delete payload['discount'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        // Locked values from getRawValue() must be absent — BE rejects presence even as null.
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+        delete payload['breachGraceDays'];
+        delete payload['breachStartType'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+        delete payload['delinquencyGraceDays'];
+        delete payload['delinquencyStartType'];
+      }
+    }
+
+    this.loansService
+      .createLoansAccount(this.loanProductService.loanAccountPath, payload, this.submitIdempotencyKey)
+      .subscribe({
+        next: (response: any) => {
+          this.submitIdempotencyKey = undefined;
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId,
+              'general'
+            ],
+            {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
+            }
+          );
+        },
+        error: () => this.submitFailed()
+      });
   }
 }

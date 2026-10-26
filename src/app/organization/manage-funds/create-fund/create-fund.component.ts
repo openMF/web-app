@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { OrganizationService } from 'app/organization/organization.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -18,16 +19,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./create-fund.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateFundComponent implements OnInit {
   private organizationService = inject(OrganizationService);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   /** Charge form. */
-  fundForm: UntypedFormGroup;
+  fundForm: FormGroup;
 
   ngOnInit() {
     this.createFundForm();
@@ -48,8 +50,11 @@ export class CreateFundComponent implements OnInit {
 
   submit() {
     const payload = this.fundForm.getRawValue();
-    this.organizationService.createFund(payload).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .createFund(payload)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

@@ -10,7 +10,7 @@
   <mat-card>
     <form [formGroup]="reportForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div class="layout-row-wrap responsive-column">
+        <div class="layout-row-wrap responsive-column gap-2percent">
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Report Name' | translate }}</mat-label>
             <input matInput required formControlName="reportName" />
@@ -22,7 +22,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field class="flex-50">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Report Type' | translate }}</mat-label>
             <mat-select required formControlName="reportType">
               @for (allowedReportType of reportData.allowedReportTypes; track allowedReportType) {
@@ -39,7 +39,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field class="flex-50">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Report Sub Type' | translate }}</mat-label>
             <mat-select formControlName="reportSubType">
               @for (allowedReportSubType of reportData.allowedReportSubTypes; track allowedReportSubType) {
@@ -50,7 +50,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="flex-50">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Report Category' | translate }}</mat-label>
             <mat-select formControlName="reportCategory">
               @for (reportCategoryType of reportCategoryTypeOptions; track reportCategoryType) {
@@ -61,8 +61,8 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-50">
-            <mat-checkbox class="user-report" labelPosition="after" formControlName="useReport">
+          <div class="flex-48">
+            <mat-checkbox labelPosition="after" formControlName="useReport">
               {{ 'labels.inputs.User Report (UI)' | translate }}
             </mat-checkbox>
           </div>

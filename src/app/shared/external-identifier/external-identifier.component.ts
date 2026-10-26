@@ -6,11 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ExternalIdentifierPipe } from '@pipes/external-identifier.pipe';
 
 @Component({
   selector: 'mifosx-external-identifier',
@@ -18,12 +20,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./external-identifier.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    ExternalIdentifierPipe,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExternalIdentifierComponent implements OnInit {
   private clipboard = inject(Clipboard);
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
 
   @Input() externalId: string;
   @Input() completed = false;
@@ -55,7 +60,10 @@ export class ExternalIdentifierComponent implements OnInit {
   copyValue(): void {
     if (!this.hideCopy) {
       this.clipboard.copy(this.externalId);
-      this.alertService.alert({ type: 'Clipboard', message: 'Copied: ' + this.externalId });
+      this.alertService.alert({
+        type: this.translateService.instant('errors.clipboard.type'),
+        message: this.translateService.instant('errors.clipboard.copied', { value: this.externalId })
+      });
     }
   }
 

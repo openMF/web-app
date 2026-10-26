@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
   MatCardHeader,
   MatCardTitleGroup,
@@ -35,7 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCardSubtitle,
     DateFormatPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StaffNavigationComponent {
   @Input() employeeData: any;

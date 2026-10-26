@@ -65,11 +65,21 @@
     <!-- Header Controls -->
     <div class="login-header">
       @if (allowServerSwitch()) {
-        <mifosx-server-selector class="header-control" appearance="outline" [showLabel]="false">
+        <mifosx-server-selector
+          class="header-control"
+          appearance="outline"
+          subscriptSizing="dynamic"
+          [showLabel]="false"
+        >
         </mifosx-server-selector>
       }
       <mifosx-theme-toggle class="header-control theme-toggle"></mifosx-theme-toggle>
-      <mifosx-language-selector class="header-control" appearance="outline" [showLabel]="false">
+      <mifosx-language-selector
+        class="header-control"
+        appearance="outline"
+        subscriptSizing="dynamic"
+        [showLabel]="false"
+      >
       </mifosx-language-selector>
     </div>
 

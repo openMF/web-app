@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { LOAN_PRODUCT_TYPE } from 'app/products/loan-products/models/loan-product.model';
 
 /**
  * Clients data resolver.
@@ -22,6 +24,7 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanDetailsResolver {
   private loansService = inject(LoansService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the Loans with Association data.
@@ -29,8 +32,16 @@ export class LoanDetailsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
+    const productType = route.queryParams['productType'];
+    const resolvedProductType =
+      productType === LOAN_PRODUCT_TYPE.WORKING_CAPITAL ? LOAN_PRODUCT_TYPE.WORKING_CAPITAL : LOAN_PRODUCT_TYPE.LOAN;
+    this.loanProductService.initialize(resolvedProductType);
     if (!isNaN(+loanId)) {
-      return this.loansService.getLoanAccountAssociationDetails(loanId);
+      if (resolvedProductType === LOAN_PRODUCT_TYPE.LOAN) {
+        return this.loansService.getLoanAccountAssociationDetails(loanId);
+      } else {
+        return this.loansService.getWorkingCapitalLoanDetails(loanId);
+      }
     }
   }
 }

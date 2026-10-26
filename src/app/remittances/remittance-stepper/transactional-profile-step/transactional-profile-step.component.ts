@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -43,7 +43,8 @@ export interface TransactionalProfileRow {
     FormsModule
   ],
   templateUrl: './transactional-profile-step.component.html',
-  styleUrls: ['./transactional-profile-step.component.scss']
+  styleUrls: ['./transactional-profile-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionalProfileStepComponent implements OnInit {
   @Input() vendor: RemittanceVendor | null = null;

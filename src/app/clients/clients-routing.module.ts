@@ -21,10 +21,16 @@ import { AddFamilyMemberComponent } from './clients-view/family-members-tab/add-
 import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edit-family-member/edit-family-member.component';
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
+import { BureauReadinessComponent } from './clients-view/bureau-readiness/bureau-readiness.component';
+import { CreditProfileComponent } from './clients-view/credit-profile/credit-profile.component';
+import { DisputeManagementComponent } from './clients-view/dispute-management/dispute-management.component';
+import { AuditTrailComponent } from './clients-view/audit-trail/audit-trail.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
+import { EnrollmentStatusComponent } from './clients-view/enrollment-status/enrollment-status.component';
+import { enrollmentStatusGuard } from './clients-view/enrollment-status/enrollment-status.guard';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
@@ -59,7 +65,7 @@ import { ClientCollateralResolver } from './common-resolvers/client-collateral.r
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'clients',
+      path: '',
       data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
       children: [
         {
@@ -103,7 +109,16 @@ const routes: Routes = [
             {
               path: 'personal-data',
               component: PersonalDataTabComponent,
-              data: { title: 'Personal Data', breadcrumb: 'Personal Data', routeParamBreadcrumb: false }
+              data: {
+                title: 'labels.inputs.Personal Data',
+                breadcrumb: 'labels.inputs.Personal Data',
+                routeParamBreadcrumb: false
+              },
+              resolve: {
+                clientIdentities: ClientIdentitiesResolver,
+                clientIdentifierTemplate: ClientIdentifierTemplateResolver,
+                clientDocuments: ClientDocumentsResolver
+              }
             },
             {
               path: 'address',
@@ -150,6 +165,7 @@ const routes: Routes = [
                 }
               ]
             },
+
             {
               path: 'identities',
               component: IdentitiesTabComponent,
@@ -176,6 +192,37 @@ const routes: Routes = [
               }
             },
             {
+              path: 'enrollment-status',
+              component: EnrollmentStatusComponent,
+              canActivate: [enrollmentStatusGuard],
+              data: {
+                title: 'labels.inputs.Enrollment Status',
+                breadcrumb: 'labels.inputs.Enrollment Status',
+                routeParamBreadcrumb: false,
+                permissions: ['READ_ENROLLMENT_STATUS']
+              }
+            },
+            {
+              path: 'bureau-readiness',
+              component: BureauReadinessComponent,
+              data: { title: 'Bureau Readiness', breadcrumb: 'Bureau Readiness', routeParamBreadcrumb: false }
+            },
+            {
+              path: 'credit-profile',
+              component: CreditProfileComponent,
+              data: { title: 'Credit Profile', breadcrumb: 'Credit Profile', routeParamBreadcrumb: false }
+            },
+            {
+              path: 'dispute-management',
+              component: DisputeManagementComponent,
+              data: { title: 'Dispute Management', breadcrumb: 'Dispute Management', routeParamBreadcrumb: false }
+            },
+            {
+              path: 'audit-trail',
+              component: AuditTrailComponent,
+              data: { title: 'Audit Trail', breadcrumb: 'Audit Trail', routeParamBreadcrumb: false }
+            },
+            {
               path: 'datatables',
               children: [
                 {
@@ -193,7 +240,7 @@ const routes: Routes = [
       ]
     },
     {
-      path: 'clients',
+      path: '',
       data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
       children: [
         {

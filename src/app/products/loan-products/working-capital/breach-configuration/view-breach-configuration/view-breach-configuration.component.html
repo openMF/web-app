@@ -1,0 +1,83 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_WORKINGCAPITALBREACH'"
+  >
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    {{ 'labels.heading.Edit' | translate }}
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      @if (breachData) {
+        <div class="layout-row-wrap">
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Id' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.id }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Name' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.name }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Frequency' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.breachFrequency | formatNumber: '' : 0 }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Frequency Type' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.breachFrequencyType.code | translateKey: 'catalogs' }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Calculation Type' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.breachAmountCalculationType.code | translateKey: 'catalogs' }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Amount' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ breachData.breachAmount | formatNumber }}
+          </div>
+        </div>
+
+        <div class="layout-row layout-align-center gap-2percent column-on-mobile">
+          <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+            {{ 'labels.buttons.Back' | translate }}
+          </button>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

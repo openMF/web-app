@@ -12,7 +12,7 @@
       <div class="flex-48">
         @if (!isBoolean(datatableInput.columnDisplayType)) {
           <mat-form-field class="flex-100">
-            <mat-label>{{ getInputName(datatableInput) }}</mat-label>
+            <mat-label>{{ getDisplayLabel(datatableInput) }}</mat-label>
             @if (isDropdown(datatableInput.columnDisplayType)) {
               <mat-select formControlName="{{ datatableInput.controlName }}">
                 @for (code of datatableInput.columnValues; track code) {
@@ -28,8 +28,20 @@
             @if (isString(datatableInput.columnDisplayType)) {
               <input matInput formControlName="{{ datatableInput.controlName }}" />
             }
-            @if (isText(datatableInput.columnDisplayType)) {
+            @if (isText(datatableInput.columnDisplayType) && !isJson(datatableInput)) {
               <textarea matInput formControlName="{{ datatableInput.controlName }}"></textarea>
+            }
+            @if (isJson(datatableInput)) {
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="6"
+                cdkAutosizeMaxRows="18"
+                formControlName="{{ datatableInput.controlName }}"
+              ></textarea>
+              @if (datatableForm.controls[datatableInput.controlName].hasError('json')) {
+                <mat-error>{{ 'labels.inputs.Invalid JSON' | translate }}</mat-error>
+              }
             }
             @if (isDate(datatableInput.columnDisplayType)) {
               <span (click)="datePicker.open()">
@@ -47,7 +59,7 @@
         }
         @if (isBoolean(datatableInput.columnDisplayType)) {
           <mat-checkbox formControlName="{{ datatableInput.controlName }}" labelPosition="before" class="margin-v">
-            {{ getInputName(datatableInput) }}
+            {{ getDisplayLabel(datatableInput) }}
           </mat-checkbox>
         }
       </div>

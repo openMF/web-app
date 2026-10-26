@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -15,6 +15,9 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Data Source */
 import { AuditTrailsDataSource } from './audit-trail.datasource';
+
+/** Custom Utils */
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
 
 /** Custom Services */
 import { SystemService } from '../system.service';
@@ -72,7 +75,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     AsyncPipe,
     DatetimeFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
@@ -231,16 +235,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * sort change and page change.
    */
   ngAfterViewInit() {
-    this.user.valueChanges
-      .pipe(
-        map((value) => (value.id ? value.id : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'makerId');
-        })
-      )
-      .subscribe();
+    this.clearFilterWhenEmptied(this.user, 'makerId');
 
     this.fromDate.valueChanges
       .pipe(
@@ -332,38 +327,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-    this.actionName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'actionName');
-        })
-      )
-      .subscribe();
-
-    this.entityName.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue, 'entityName');
-        })
-      )
-      .subscribe();
-
-    this.checker.valueChanges
-      .pipe(
-        map((value) => (value ? value : '')),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((filterValue) => {
-          this.applyFilter(filterValue.id, 'checkerId');
-        })
-      )
-      .subscribe();
+    this.clearFilterWhenEmptied(this.actionName, 'actionName');
+    this.clearFilterWhenEmptied(this.entityName, 'entityName');
+    this.clearFilterWhenEmptied(this.checker, 'checkerId');
 
     //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -404,12 +370,30 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {string} property Property to filter data by.
    */
   applyFilter(filterValue: string, property: string) {
+    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
+    if (this.filterAuditTrailsBy[findIndex].value === filterValue) {
+      return;
+    }
     if (this.paginator) {
       this.paginator.pageIndex = 0;
     }
-    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
     this.filterAuditTrailsBy[findIndex].value = filterValue;
     this.loadAuditTrailsPage();
+  }
+
+  /**
+   * Clears an autocomplete filter once its input is emptied.
+   * A selection is applied by the autocomplete's `optionSelected` output, so half-typed text never
+   * reaches the server: it is not a valid option and the request would come back with no records.
+   * @param {UntypedFormControl} control Autocomplete form control.
+   * @param {string} property Filter property the control feeds.
+   */
+  private clearFilterWhenEmptied(control: UntypedFormControl, property: string): void {
+    control.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value) => {
+      if (!value) {
+        this.applyFilter('', property);
+      }
+    });
   }
 
   /**
@@ -529,7 +513,6 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   downloadCSV() {
     const dateFormat = this.settingsService.dateFormat;
-    const replacer = (key: any, value: any) => (value === undefined ? '' : value);
     const header = [
       'ID',
       'Resource ID',
@@ -561,13 +544,23 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       .subscribe((response: any) => {
         if (response !== undefined) {
           let csv = response.pageItems.map((row: any) =>
-            headerCode.map((fieldName) =>
-              (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-              row[fieldName] != null &&
-              row[fieldName] !== ''
-                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ'))
-                : JSON.stringify(row[fieldName], replacer)
-            )
+            headerCode.map((fieldName) => {
+              // Resolve the raw string value first, THEN sanitize before JSON.stringify wraps
+              // it in double-quotes for CSV quoting. Sanitizing the JSON.stringify output would
+              // be ineffective because the leading " masks formula-trigger characters from the
+              // sanitizer, and Excel strips those outer quotes when parsing the CSV cell.
+              let rawValue: string;
+              if (
+                (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
+                row[fieldName] != null &&
+                row[fieldName] !== ''
+              ) {
+                rawValue = this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ');
+              } else {
+                rawValue = row[fieldName] == null ? '' : String(row[fieldName]);
+              }
+              return JSON.stringify(sanitizeCsvValue(rawValue));
+            })
           );
           csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
           csv = csv.join('\r\n');

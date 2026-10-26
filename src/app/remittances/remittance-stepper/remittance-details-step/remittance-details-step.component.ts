@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatIcon } from '@angular/material/icon';
 
@@ -21,7 +21,8 @@ import { RemittanceStatus, isTerminalStatus } from '../../models/remittance-stat
     MatIcon
   ],
   templateUrl: './remittance-details-step.component.html',
-  styleUrls: ['./remittance-details-step.component.scss']
+  styleUrls: ['./remittance-details-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RemittanceDetailsStepComponent {
   @Input() remittanceData: RemittanceTransaction | null = null;

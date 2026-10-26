@@ -35,6 +35,53 @@ describe('ClientsService', () => {
     jest.restoreAllMocks();
   });
 
+  describe('Client account overview', () => {
+    it('returns every account unchanged from one unpaged overview request', async () => {
+      const accounts = {
+        savingsAccounts: [
+          2,
+          3,
+          4,
+          5
+        ].map((id) => ({
+          id,
+          accountNo: String(id),
+          productId: 1362,
+          productName: 'INVERSION TOTAL',
+          depositType: { id: 200, value: 'Fixed Deposit' },
+          status: { code: 'savingsAccountStatusType.approved' },
+          currency: { code: 'USD' },
+          timeline: { submittedOnDate: [
+              2026,
+              10,
+              1
+            ] }
+        }))
+      };
+      const response = firstValueFrom(service.getClientAccountData('42'));
+      const request = httpMock.expectOne('/clients/42/accounts');
+      expect(request.request.method).toBe('GET');
+      expect(request.request.params.keys()).toEqual([]);
+      request.flush(accounts);
+      expect(await response).toEqual(accounts);
+    });
+
+    it('propagates an API failure instead of fabricating an empty or successful overview', async () => {
+      const response = firstValueFrom(service.getClientAccountData('42'));
+      const rejected = expect(response).rejects.toMatchObject({ status: 500 });
+      httpMock
+        .expectOne('/clients/42/accounts')
+        .flush({ message: 'Unavailable' }, { status: 500, statusText: 'Server Error' });
+      await rejected;
+    });
+
+    it('returns only the accounts present in the authorized response', async () => {
+      const response = firstValueFrom(service.getClientAccountData('42'));
+      httpMock.expectOne('/clients/42/accounts').flush({ savingsAccounts: [{ id: 123 }] });
+      expect(await response).toEqual({ savingsAccounts: [{ id: 123 }] });
+    });
+  });
+
   describe('Client CRUD Operations', () => {
     it('should fetch clients with correct HttpParams (GET /clients)', async () => {
       const mockResponse = { totalFilteredRecords: 1, pageItems: [{ id: 1 }] };
@@ -240,6 +287,42 @@ describe('ClientsService', () => {
 
       req.flush({ resourceId: 1 });
       await resultPromise;
+    });
+  });
+
+  describe('Client Document Requests', () => {
+    it('should download client document attachment for a valid document id', async () => {
+      const mockDocument = new Blob(['profile-image'], { type: 'image/png' });
+      const resultPromise = firstValueFrom(service.downloadClientDocument('123', '45'));
+
+      const req = httpMock.expectOne((r) => r.url === '/clients/123/documents/45/attachment' && r.method === 'GET');
+      expect(req.request.responseType).toBe('blob');
+
+      req.flush(mockDocument);
+      const result = await resultPromise;
+      expect(result).toBe(mockDocument);
+    });
+
+    it('should not request client document attachment for invalid document ids', async () => {
+      const invalidDocumentIds = [
+        '-1',
+        null,
+        undefined,
+        Number.NaN,
+        Number.POSITIVE_INFINITY,
+        'Infinity',
+        '0',
+        0,
+        '-5'
+      ];
+
+      for (const documentId of invalidDocumentIds) {
+        await expect(firstValueFrom(service.downloadClientDocument('123', documentId))).rejects.toThrow(
+          'Invalid client document id.'
+        );
+      }
+
+      httpMock.expectNone((r) => r.url.includes('/clients/123/documents/'));
     });
   });
 

@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -27,30 +29,27 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
     MatRadioButton
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordPreferencesComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   /** Password preferences form. */
-  passwordPreferencesForm: UntypedFormGroup;
+  passwordPreferencesForm: FormGroup;
   /** Password preferences data. */
   passwordPreferencesData: any;
 
-  /**
-   * Retrieves the password preferences data from `resolve`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
   constructor() {
-    this.route.data.subscribe((data: { passwordPreferencesTemplate: any }) => {
-      this.passwordPreferencesData = data.passwordPreferencesTemplate;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { passwordPreferencesTemplate: any }) => {
+        this.passwordPreferencesData = data.passwordPreferencesTemplate;
+      });
   }
 
   /**
@@ -112,8 +111,11 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   submit() {
     const passwordPreferences = this.passwordPreferencesForm.value;
-    this.organizationService.updatePasswordPreferences(passwordPreferences).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updatePasswordPreferences(passwordPreferences)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

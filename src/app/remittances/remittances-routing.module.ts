@@ -16,7 +16,7 @@ import { remittanceEnabledGuard } from './remittance-enabled.guard';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'remittances',
+      path: '',
       canActivate: [remittanceEnabledGuard],
       data: { title: 'Remittances', breadcrumb: 'Remittances' },
       children: [

@@ -7,22 +7,26 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AbstractControl,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  ValidationErrors,
-  Validators,
-  FormsModule
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
@@ -65,16 +69,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     CdkTextareaAutosize,
     MatProgressSpinner
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private accountTransfersService = inject(AccountTransfersService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private clientsService = inject(ClientsService);
+  private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Stepper reference */
   @ViewChild('transferStepper') transferStepper: MatStepper;
@@ -86,9 +94,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Beneficiary selection form (Step 1) */
-  beneficiaryForm: UntypedFormGroup;
+  beneficiaryForm: FormGroup;
   /** Transfer details form (Step 2) */
-  transferDetailsForm: UntypedFormGroup;
+  transferDetailsForm: FormGroup;
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */
@@ -121,7 +129,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Retrieves the standing instructions template from `resolve`.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
@@ -305,14 +313,22 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (!this.interbank && this.beneficiaryForm) {
-      this.beneficiaryForm.controls.toClientId.valueChanges.subscribe((value: any) => {
-        if (typeof value === 'string' && value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
-          this.changeEvent();
-        }
-      });
+      this.beneficiaryForm.controls.toClientId.valueChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((value: any) => {
+          if (typeof value === 'string' && value.length >= 2) {
+            const searchedValue = value;
+            this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+              if (this.beneficiaryForm.controls.toClientId.value !== searchedValue) {
+                return;
+              }
+              this.clientsData = data.pageItems;
+              this.cdr.markForCheck();
+            });
+          } else if (typeof value === 'number') {
+            this.changeEvent();
+          }
+        });
     }
   }
 
@@ -396,7 +412,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.transferComplete = true;
         this.transferSuccess = false;
         this.transferErrorMessage =
-          error?.error?.defaultUserMessage || error?.message || 'An unexpected error occurred.';
+          error?.error?.defaultUserMessage ||
+          error?.message ||
+          this.translateService.instant('errors.generic.unexpectedShort');
         this.transferStepper.next();
         this.isLoading = false;
       }
@@ -445,7 +463,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.transferComplete = true;
         this.transferSuccess = false;
         this.transferErrorMessage =
-          error?.error?.defaultUserMessage || 'An unexpected error occurred. Please try again.';
+          error?.error?.defaultUserMessage ||
+          error?.message ||
+          this.translateService.instant('errors.generic.unexpectedRetry');
         this.transferStepper.next();
         this.isLoading = false;
       }

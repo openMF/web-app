@@ -172,8 +172,11 @@ export interface LoanProduct {
   receivableFeeAccountId?: number;
   receivablePenaltyAccountId?: number;
   transfersInSuspenseAccountId?: number;
+  incomeFromDiscountFeeAccountId?: number;
   writeOffAccountId?: number;
   deferredIncomeLiabilityAccountId?: number;
+  chargeOffExpenseAccountId?: number;
+  chargeOffFraudExpenseAccountId?: number;
   // Advanced Accounting
   paymentChannelToFundSourceMappings?: PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?: ChargeToIncomeAccountMapping[];
@@ -186,6 +189,30 @@ export interface LoanProduct {
   buydownFeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   capitalizedIncomeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
+
+  // Working Capital attributes
+  delinquencyStartType?: StringEnumOptionData | null;
+  delinquencyStartTypeOptions?: StringEnumOptionData[];
+  breachStartType?: StringEnumOptionData | null;
+  breachStartTypeOptions?: StringEnumOptionData[];
+  breach?: Breach;
+  breachId?: number;
+  nearBreach?: NearBreach;
+  nearBreachId?: number;
+  /** TPV (default) | ANNUAL_EIR | PAYMENT_AMOUNT. Option object on GET, enum name on POST/PUT. */
+  paymentAmountCalculationStrategy?: StringEnumOptionData | string | null;
+  paymentAmountCalculationStrategyOptions?: StringEnumOptionData[];
+  periodPaymentRate?: number | null;
+  minPeriodPaymentRate?: number | null;
+  maxPeriodPaymentRate?: number | null;
+  /** Contractual annual EIR (%), up to 6 decimals. Only under ANNUAL_EIR. */
+  annualEir?: number | null;
+  minAnnualEir?: number | null;
+  maxAnnualEir?: number | null;
+  paymentAmount?: number | null;
+  minPaymentAmount?: number | null;
+  maxPaymentAmount?: number | null;
+  discount?: number | null;
 }
 
 export interface AllowAttributeOverrides {
@@ -235,5 +262,22 @@ export interface AdvancedMappingDTO {
 
 export interface AccountingMappingDTO {
   value: CodeValue;
-  glAccount: GLAccount;
+  glAccount: GLAccount | null;
+}
+
+export interface Breach {
+  id: number;
+  name: string;
+  breachFrequency: number;
+  breachFrequencyType: StringEnumOptionData;
+  breachAmountCalculationType: StringEnumOptionData;
+  breachAmount: number;
+}
+
+export interface NearBreach {
+  id: number;
+  name: string;
+  frequency: number;
+  frequencyType: StringEnumOptionData;
+  threshold: number;
 }

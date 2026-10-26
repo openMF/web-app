@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -76,7 +77,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     RouterOutlet,
     CurrencyPipe,
     StatusLookupPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -84,6 +86,7 @@ export class SavingsAccountViewComponent implements OnInit {
   private savingsService = inject(SavingsService);
   private translateService = inject(TranslateService);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account Data */
   savingsAccountData: any;
@@ -104,11 +107,13 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
-      this.savingsAccountData = data.savingsAccountData;
-      this.currency = this.savingsAccountData.currency;
-      this.savingsDatatables = data.savingsDatatables;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
+        this.savingsAccountData = data.savingsAccountData;
+        this.currency = this.savingsAccountData.currency;
+        this.savingsDatatables = data.savingsDatatables;
+      });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {
@@ -151,6 +156,12 @@ export class SavingsAccountViewComponent implements OnInit {
       this.buttonConfig.addOption({
         name: 'Unassign Staff',
         taskPermissionName: 'REMOVESAVINGSOFFICER_SAVINGSACCOUNT'
+      });
+    }
+    if (this.savingsAccountData.clientId && environment.mifosInterbankTransfersEnabled) {
+      this.buttonConfig.addOption({
+        name: 'Link to payment system',
+        taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
     }
     if (this.savingsAccountData.charges) {
@@ -212,6 +223,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Block Deposit':
       case 'Block Withdrawal':
       case 'Unassign Staff':
+      case 'Link to payment system':
       case 'Withdrawn by Client':
       case 'Apply Annual Fees':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
@@ -220,7 +232,14 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate([`actions/Withdrawal`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit'], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../',
+            this.route.snapshot.paramMap.get('savingAccountId') || this.savingsAccountData.id,
+            'edit'
+          ],
+          { relativeTo: this.route }
+        );
         break;
       case 'Delete':
         this.deleteSavingsAccount();
@@ -274,6 +293,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { deleteContext: `savings account with id: ${this.savingsAccountData.id}` }
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.delete) {
         this.savingsService.deleteSavingsAccount(this.savingsAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
@@ -288,6 +310,9 @@ export class SavingsAccountViewComponent implements OnInit {
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {})
@@ -304,6 +329,9 @@ export class SavingsAccountViewComponent implements OnInit {
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {})
@@ -322,6 +350,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { isEnable: true }
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
@@ -340,6 +371,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { isEnable: false }
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
@@ -371,6 +405,9 @@ export class SavingsAccountViewComponent implements OnInit {
       command = 'unblockDebit';
     }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {}).subscribe(() => {
           this.reload();

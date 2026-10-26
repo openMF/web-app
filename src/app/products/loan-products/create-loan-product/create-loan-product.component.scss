@@ -6,13 +6,55 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/**
+ * This is the outermost element of the whole creation flow, so the token layer
+ * is declared here exactly once. CSS custom properties inherit, so the wizard,
+ * the stepper and every reused step component below pick them up — including
+ * Angular Material's internals, which read `--mat-*` with `var()`. That is what
+ * lets this flow be re-themed without a single `::ng-deep` or `!important`.
+ */
+:host {
+  @include lpt.tokens;
+
+  display: block;
+  color: var(--lp-text);
+}
+
+:host-context(.dark-theme) {
+  @include lpt.dark-tokens;
+}
+
 .container {
+  /* Matches the selection page's `.landing-page` measure so the two pages line
+     up when navigating between them. */
   max-width: 86rem;
   width: 96%;
-  padding-bottom: 30px;
+  padding-bottom: var(--lp-space-32);
+}
+
+/**
+ * `mat.typography-hierarchy` flattens every headline level to 14px/400 and only
+ * applies inside `.mat-typography`, so an unstyled `h1` here falls back to the
+ * UA default (2em bold). Sized explicitly to match the selection page's hero.
+ */
+.container > h1 {
+  margin: 0 0 var(--lp-space-24);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--lp-text);
 }
 
 fa-icon {
   position: relative;
   left: 5%;
+}
+
+@media (width <=599px) {
+  .container > h1 {
+    font-size: 1.375rem;
+  }
 }

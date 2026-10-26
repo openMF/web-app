@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatHint
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCenterMeetingComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -85,7 +86,7 @@ export class EditCenterMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditCenterMeetingForm();
     this.buildDependencies();
   }
@@ -160,9 +161,10 @@ export class EditCenterMeetingComponent implements OnInit {
       }
     });
     this.centerEditMeetingForm.patchValue({
-      startDate: this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
+      startDate: this.calendarTemplate.startDate && this.dateUtils.parseDate(this.calendarTemplate.startDate),
       frequency: this.calendarTemplate.frequency.id,
-      interval: `${this.calendarTemplate.interval}`
+      // Fineract stores an interval of 1 without INTERVAL in the recurrence and returns it as -1.
+      interval: `${this.calendarTemplate.interval > 0 ? this.calendarTemplate.interval : 1}`
     });
   }
 

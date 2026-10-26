@@ -39,11 +39,36 @@
           >
           </mifosx-input-amount>
 
-          <!-- Display Available Disbursement Amount with Over Applied if available -->
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</mat-label>
-            <input matInput [value]="dataObject.availableDisbursementAmountWithOverApplied | formatNumber" readonly />
-          </mat-form-field>
+          @if (isLoanProduct) {
+            <!-- Display Available Disbursement Amount with Over Applied if available -->
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</mat-label>
+              <input matInput [value]="dataObject.availableDisbursementAmountWithOverApplied | formatNumber" readonly />
+            </mat-form-field>
+          }
+          @if (isWorkingCapital) {
+            <mifosx-input-amount
+              [currency]="currency"
+              [inputFormControl]="disbursementLoanForm.controls.discountAmount"
+              [inputLabel]="'Discount'"
+            >
+            </mifosx-input-amount>
+
+            @if (disbursementLoanForm.controls.discountAmount.value > 0) {
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Discount External Id' | translate }}</mat-label>
+                <input matInput formControlName="discountExternalId" />
+                @if (disbursementLoanForm.controls.discountExternalId.hasError('maxlength')) {
+                  <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
+                }
+              </mat-form-field>
+              @if (disbursementLoanForm.hasError('discountExternalIdEqualsExternalId')) {
+                <mat-error>
+                  {{ 'labels.inputs.Discount External Id must differ from External Id' | translate }}
+                </mat-error>
+              }
+            }
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
@@ -101,13 +126,13 @@
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!disbursementLoanForm.valid"
+            [disabled]="!disbursementLoanForm.valid || isSubmitting"
             *mifosxHasPermission="'DISBURSE_LOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}

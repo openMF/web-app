@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -26,7 +34,8 @@ import SignaturePad from 'signature_pad';
     MatDialogTitle,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DrawSignatureDialogComponent implements AfterViewInit, OnDestroy {
   dialogRef = inject<MatDialogRef<DrawSignatureDialogComponent>>(MatDialogRef);

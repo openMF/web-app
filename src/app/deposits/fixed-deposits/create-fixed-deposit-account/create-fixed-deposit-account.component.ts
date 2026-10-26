@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -46,7 +46,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FixedDepositAccountInterestRateChartStepComponent,
     FixedDepositAccountChargesStepComponent,
     FixedDepositAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateFixedDepositAccountComponent {
   private route = inject(ActivatedRoute);
@@ -149,6 +150,9 @@ export class CreateFixedDepositAccountComponent {
     const fixedDepositAccount = {
       ...this.fixedDepositAccount,
       clientId: this.fixedDepositsAccountTemplate.clientId,
+      ...(this.fixedDepositsAccountProductTemplate.accountChart?.id && {
+        chartId: this.fixedDepositsAccountProductTemplate.accountChart.id
+      }),
       charges: this.fixedDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
@@ -158,7 +162,6 @@ export class CreateFixedDepositAccountComponent {
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.fixedDepositAccount.submittedOnDate, dateFormat),
-      charts: [{ chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs }],
       dateFormat,
       monthDayFormat,
       locale

@@ -8,9 +8,13 @@
 
 import { inject } from '@angular/core';
 import { LoanProductService } from '../services/loan-product.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class LoanProductBaseComponent {
+  protected router = inject(Router);
   protected loanProductService = inject(LoanProductService);
+
+  static PRODUCT_TYPE_PARAM: string = 'productType';
 
   constructor() {}
 
@@ -18,5 +22,22 @@ export abstract class LoanProductBaseComponent {
     return upperCase
       ? this.loanProductService.loanProductTypeLabel.toUpperCase()
       : this.loanProductService.loanProductTypeLabel;
+  }
+
+  static resolveProductType(route: ActivatedRoute): string {
+    return route.snapshot.queryParamMap.get(this.PRODUCT_TYPE_PARAM) || null;
+  }
+
+  static resolveProductTypeDefault(route: ActivatedRoute, defaultType: string): string {
+    return route.snapshot.queryParamMap.get(this.PRODUCT_TYPE_PARAM) || defaultType;
+  }
+
+  protected reload() {
+    const url: string = this.router.url.split('?')[0];
+    this.router
+      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .then(() =>
+        this.router.navigate([url], { queryParams: { productType: this.loanProductService.productType.value } })
+      );
   }
 }

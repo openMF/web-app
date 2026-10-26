@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -63,7 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

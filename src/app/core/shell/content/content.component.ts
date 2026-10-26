@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,7 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     RouterOutlet
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentComponent {
   constructor() {}

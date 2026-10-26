@@ -1,0 +1,35 @@
+customHeaders:
+  - pattern: '**/*'
+    headers:
+      - key: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+      - key: X-Content-Type-Options
+        value: nosniff
+      - key: X-Frame-Options
+        value: SAMEORIGIN
+      - key: Referrer-Policy
+        value: strict-origin-when-cross-origin
+  - pattern: /
+    headers:
+      - key: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - key: Pragma
+        value: no-cache
+      - key: Expires
+        value: '0'
+  - pattern: '**/index.html'
+    headers:
+      - key: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - key: Pragma
+        value: no-cache
+      - key: Expires
+        value: '0'
+  - pattern: '**/assets/env.js'
+    headers:
+      - key: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - key: Pragma
+        value: no-cache
+      - key: Expires
+        value: '0'

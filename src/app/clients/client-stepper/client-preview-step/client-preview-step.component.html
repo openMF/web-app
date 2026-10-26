@@ -125,7 +125,7 @@
       </div>
     }
     <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Is staff' | translate }}?</span>
+      <span class="flex-40">{{ 'labels.inputs.Is staff' | translate }}</span>
       <span class="flex-60">{{ client.isStaff | yesNo }}</span>
     </div>
   }
@@ -138,7 +138,7 @@
       </div>
     }
     <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Incorportation Number' | translate }}</span>
+      <span class="flex-40">{{ 'labels.inputs.Incorporation Number' | translate }}</span>
       <span class="flex-60">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
     </div>
     @if (client.clientNonPersonDetails.mainBusinessLineId) {
@@ -231,13 +231,13 @@
                 <span>{{ 'labels.inputs.Street' | translate }} : {{ address.street }}<br /></span>
               }
               @if (isFieldEnabled('addressLine1')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 1 : {{ address.addressLine1 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line 1' | translate }} : {{ address.addressLine1 }}<br /></span>
               }
               @if (isFieldEnabled('addressLine2')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 2 : {{ address.addressLine2 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line 2' | translate }} : {{ address.addressLine2 }}<br /></span>
               }
               @if (isFieldEnabled('addressLine3')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 3 : {{ address.addressLine3 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line 3' | translate }} : {{ address.addressLine3 }}<br /></span>
               }
               @if (isFieldEnabled('townVillage')) {
                 <span>{{ 'labels.inputs.Town / Village' | translate }} : {{ address.townVillage }}<br /></span>
@@ -251,6 +251,9 @@
                   {{ getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name }}<br
                 /></span>
               }
+              @if (isFieldEnabled('countyDistrict')) {
+                <span>{{ 'labels.inputs.County / District' | translate }} : {{ address.countyDistrict }}<br /></span>
+              }
               @if (isFieldEnabled('countryId')) {
                 <span
                   >{{ 'labels.inputs.Country' | translate }} :
@@ -259,6 +262,20 @@
               }
               @if (isFieldEnabled('postalCode')) {
                 <span>{{ 'labels.inputs.Postal Code' | translate }} : {{ address.postalCode }}<br /></span>
+              }
+              @if (
+                clientAddressLocationEnabled &&
+                isFieldEnabled('latitude') &&
+                hasCoordinateValue(address.latitude, 'latitude')
+              ) {
+                <span>{{ 'labels.inputs.Latitude' | translate }} : {{ address.latitude }}<br /></span>
+              }
+              @if (
+                clientAddressLocationEnabled &&
+                isFieldEnabled('longitude') &&
+                hasCoordinateValue(address.longitude, 'longitude')
+              ) {
+                <span>{{ 'labels.inputs.Longitude' | translate }} : {{ address.longitude }}<br /></span>
               }
               @if (isFieldEnabled('isActive')) {
                 <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
@@ -279,7 +296,7 @@
   <button mat-raised-button [routerLink]="['../']">
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submitEvent.emit()">
+  <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitEvent.emit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

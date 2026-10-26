@@ -7,19 +7,25 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject,
+  DestroyRef,
+  ChangeDetectorRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { ActivePasswordPolicy, UsersService } from '../users.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 
 /** Custom Dialog Component */
@@ -40,10 +46,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private usersService = inject(UsersService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -51,15 +58,19 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private passwordsUtility = inject(PasswordsUtility);
+  private destroyRef = inject(DestroyRef);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** User form. */
-  userForm: UntypedFormGroup;
+  userForm: FormGroup;
   /** Offices data. */
   officesData: any;
   /** Roles data. */
   rolesData: any;
   /** Staff data. */
   staffData: any;
+  /** Description of the active password policy. */
+  passwordPolicyDescription: string | null = null;
 
   /* Reference of create user form */
   @ViewChild('userFormRef') userFormRef: ElementRef<any>;
@@ -76,7 +87,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { usersTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
     });
@@ -89,6 +100,28 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     this.createUserForm();
     this.setStaffData();
     this.setConditionalControls();
+    this.setPasswordPolicy();
+  }
+
+  /**
+   * Gets the active password policy. Fineract checks the password against it,
+   * but only sends its description, so the description is shown as the rule.
+   */
+  setPasswordPolicy() {
+    this.usersService
+      .getActivePasswordPolicy()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (policy: ActivePasswordPolicy) => {
+          this.passwordPolicyDescription = policy?.description ?? null;
+          this.changeDetectorRef.markForCheck();
+        },
+        // Without READ_PASSWORD_PREFERENCES the hint is left out; Fineract still checks the password.
+        error: () => {
+          this.passwordPolicyDescription = null;
+          this.changeDetectorRef.markForCheck();
+        }
+      });
   }
 
   /**
@@ -112,14 +145,14 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           '',
           [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')
+            Validators.pattern('(^[A-Za-z]).*')
           ]
         ],
         lastname: [
           '',
           [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')
+            Validators.pattern('(^[A-Za-z]).*')
           ]
         ],
         sendPasswordToEmail: [true],
@@ -142,39 +175,53 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
-      this.staffData = [];
-      this.usersService.getStaff(officeId).subscribe((staff: any) => {
-        this.staffData = staff;
+    this.userForm
+      .get('officeId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((officeId: string) => {
+        this.staffData = [];
+        this.usersService.getStaff(officeId).subscribe((staff: any) => {
+          this.staffData = staff;
+        });
       });
-    });
   }
 
   /**
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
-      if (sendPasswordToEmail) {
-        this.userForm.removeControl('password');
-        this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([
-          Validators.required,
-          Validators.email
-        ]);
-      } else {
-        this.userForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
-        this.userForm.addControl(
-          'repeatPassword',
-          new UntypedFormControl('', [
+    this.userForm
+      .get('sendPasswordToEmail')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((sendPasswordToEmail: boolean) => {
+        if (sendPasswordToEmail) {
+          this.userForm.removeControl('password');
+          this.userForm.removeControl('repeatPassword');
+          this.userForm.get('email').setValidators([
             Validators.required,
-            this.passwordsUtility.confirmPassword('password')
-          ])
-        );
-        this.userForm.get('email').setValidators([Validators.email]);
-      }
-      this.userForm.get('email').updateValueAndValidity();
-    });
+            Validators.email
+          ]);
+        } else {
+          // Fineract checks the password against the active password policy and
+          // returns the policy description when it does not match.
+          this.userForm.addControl(
+            'password',
+            new FormControl('', [
+              Validators.required,
+              Validators.maxLength(50)
+            ])
+          );
+          this.userForm.addControl(
+            'repeatPassword',
+            new FormControl('', [
+              Validators.required,
+              this.passwordsUtility.confirmPassword('password')
+            ])
+          );
+          this.userForm.get('email').setValidators([Validators.email]);
+        }
+        this.userForm.get('email').updateValueAndValidity();
+      });
   }
 
   /**

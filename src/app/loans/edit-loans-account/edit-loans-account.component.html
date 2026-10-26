@@ -39,7 +39,9 @@
 
       <mifosx-loans-account-details-step
         [loansAccountTemplate]="loansAccountAndTemplate"
+        [loanProductsBasicDetails]="loanProductsBasicDetails"
         (loansAccountProductTemplate)="setTemplate($event)"
+        (loansProductType)="setProductType($event)"
       >
       </mifosx-loans-account-details-step>
     </mat-step>
@@ -55,28 +57,30 @@
       </mifosx-loans-account-terms-step>
     </mat-step>
 
-    <mat-step>
-      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
+    @if (loanProductService.isLoanProduct) {
+      <mat-step>
+        <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
-      <mifosx-loans-account-charges-step
-        [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccountTemplate]="loansAccountAndTemplate"
-        [loansAccountFormValid]="loansAccountFormValidAndNotPristine"
-      >
-      </mifosx-loans-account-charges-step>
-    </mat-step>
+        <mifosx-loans-account-charges-step
+          [loansAccountProductTemplate]="loansAccountProductTemplate"
+          [loansAccountTemplate]="loansAccountAndTemplate"
+          [loansAccountFormValid]="loansAccountFormValidAndNotPristine"
+        >
+        </mifosx-loans-account-charges-step>
+      </mat-step>
 
-    <mat-step>
-      <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
+      <mat-step>
+        <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
 
-      <mifosx-loans-account-schedule-step
-        [loansAccountTemplate]="loansAccountAndTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccount]="loansAccount"
-        [currencyCode]="currencyCode"
-      >
-      </mifosx-loans-account-schedule-step>
-    </mat-step>
+        <mifosx-loans-account-schedule-step
+          [loansAccountTemplate]="loansAccountAndTemplate"
+          [loansAccountProductTemplate]="loansAccountProductTemplate"
+          [loansAccount]="loansAccount"
+          [currencyCode]="currencyCode"
+        >
+        </mifosx-loans-account-schedule-step>
+      </mat-step>
+    }
 
     @if (loansAccountFormValidAndNotPristine) {
       <mat-step state="preview" completed>
@@ -85,6 +89,7 @@
           [loansAccountTemplate]="loansAccountAndTemplate"
           [loansAccountProductTemplate]="loansAccountProductTemplate"
           [loansAccount]="loansAccount"
+          [loanProductsBasicDetails]="loanProductsBasicDetails"
           (submitEvent)="submit()"
         >
         </mifosx-loans-account-preview-step>

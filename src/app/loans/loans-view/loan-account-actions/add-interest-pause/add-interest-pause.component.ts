@@ -6,14 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-add-interest-pause',
@@ -22,19 +20,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddInterestPauseComponent implements OnInit {
+export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -50,13 +42,10 @@ export class AddInterestPauseComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -64,8 +53,8 @@ export class AddInterestPauseComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
-    this.maturityDate = new Date(this.dataObject.timeline.expectedMaturityDate);
-    this.maxDate = new Date(this.dataObject.timeline.expectedMaturityDate);
+    this.maturityDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
+    this.maxDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
     this.startDate = new Date(this.settingsService.businessDate);
     if (this.startDate > this.maxDate) {
       this.startDate = this.maxDate;
@@ -107,8 +96,11 @@ export class AddInterestPauseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.addInterestPauseToLoan(this.loanId, data).subscribe((response: any) => {
-      this.router.navigate(['../../term-variations'], { relativeTo: this.route });
+    this.loanService.addInterestPauseToLoan(this.loanId, data).subscribe({
+      next: (response: any) => {
+        this.gotoLoanView('term-variations');
+      },
+      error: (error) => {}
     });
   }
 }

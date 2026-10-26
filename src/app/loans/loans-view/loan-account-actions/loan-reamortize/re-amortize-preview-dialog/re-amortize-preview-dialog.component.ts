@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -35,7 +35,8 @@ export interface ReAmortizePreviewDialogData {
     MatDialogActions,
     MatButton,
     RepaymentScheduleTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReAmortizePreviewDialogComponent {
   // inject() replaces constructor injection

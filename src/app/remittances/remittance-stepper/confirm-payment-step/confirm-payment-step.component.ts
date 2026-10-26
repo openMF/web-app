@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
@@ -33,7 +33,8 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
     MatDivider
   ],
   templateUrl: './confirm-payment-step.component.html',
-  styleUrls: ['./confirm-payment-step.component.scss']
+  styleUrls: ['./confirm-payment-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmPaymentStepComponent {
   @Input() vendor: RemittanceVendor | null = null;

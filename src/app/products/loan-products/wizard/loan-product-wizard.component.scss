@@ -1,0 +1,450 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/**
+ * The `--lp-*` tokens are declared once on the create-loan-product host and
+ * inherit down here. They are re-included as a fallback so this component still
+ * renders correctly if it is ever mounted under a different parent.
+ */
+:host {
+  @include lpt.tokens;
+
+  display: block;
+}
+
+:host-context(.dark-theme) {
+  @include lpt.dark-tokens;
+}
+
+/* ============================== Shell ============================== */
+
+/**
+ * Was `var(--mat-sys-surface-container, #2e2e2e)` — an M3 token this M2 app
+ * never emits, so it resolved to a hardcoded near-black in *both* themes. That
+ * is the "large empty dark container" in light mode and the "almost black"
+ * panel in dark mode. Now a real themed surface, matching the selection page's
+ * cards (same surface, outline, radius and shadow tokens).
+ */
+.wizard-shell {
+  @include lpt.surface;
+
+  display: grid;
+  gap: var(--lp-space-24);
+  padding: var(--lp-space-24);
+}
+
+.wizard-shell__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--lp-space-16);
+  padding-bottom: var(--lp-space-16);
+  border-bottom: 1px solid var(--lp-outline);
+}
+
+.landing-page__eyebrow {
+  @include lpt.eyebrow;
+}
+
+.wizard-shell__header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text);
+}
+
+/* ============================== Stepper ============================== */
+
+/**
+ * Colours come from the `--mat-stepper-*` tokens in the shared partial; only
+ * geometry is set here. The stepper sits directly on the shell surface, so its
+ * own container colour is transparent (see the partial).
+ */
+.wizard-stepper {
+  background: transparent;
+  margin-inline: calc(var(--lp-space-8) * -1);
+}
+
+/**
+ * Each expanded step reads as its own recessed panel, which is what stops the
+ * form from dissolving into one flat sheet — the "section cards disappear into
+ * the page" problem.
+ */
+.step-panel {
+  @include lpt.surface-sunken;
+
+  display: grid;
+  gap: var(--lp-space-24);
+  padding: var(--lp-space-24);
+  margin: var(--lp-space-8) 0 var(--lp-space-16);
+}
+
+/* ============================== Fields ============================== */
+
+.field-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--lp-space-16);
+}
+
+.field-grid > mat-form-field {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.field-grid > mat-checkbox {
+  flex: 1 1 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-checkbox {
+  align-self: center;
+  margin-top: var(--lp-space-8);
+}
+
+/* ============================== Actions ============================== */
+
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--lp-space-16);
+  flex-wrap: wrap;
+  padding-top: var(--lp-space-16);
+  border-top: 1px solid var(--lp-outline);
+}
+
+/* Reaches (0,4,0) with encapsulation — see `primary-button` in the partial. */
+.step-actions .mat-mdc-raised-button.mat-primary {
+  @include lpt.primary-button;
+}
+
+/* ============================== Review step ============================== */
+
+/**
+ * Every surface in this block used to be `rgb(255 255 255 / N%)`, which is
+ * invisible on a light background — the review step only ever worked on a dark
+ * one. All of them are now theme-derived.
+ */
+.review-banner {
+  display: grid;
+  gap: var(--lp-space-16);
+  padding: var(--lp-space-24);
+  border-radius: var(--lp-radius);
+  border: 1px solid var(--lp-outline);
+  background: var(--lp-hero-bg);
+}
+
+.review-banner__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text);
+}
+
+.review-banner__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lp-space-8);
+  margin-top: var(--lp-space-16);
+}
+
+.review-chip {
+  border-radius: var(--lp-radius-pill);
+  padding: var(--lp-space-8) var(--lp-space-16);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  background: var(--lp-neutral-tint);
+  border: 1px solid var(--lp-outline);
+  color: var(--lp-text-muted);
+}
+
+.review-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lp-space-16);
+}
+
+.review-metrics > .review-metric {
+  flex: 1 1 9rem;
+  min-width: 9rem;
+}
+
+.review-metric {
+  display: grid;
+  gap: var(--lp-space-8);
+  padding: var(--lp-space-16);
+  border-radius: var(--lp-radius-sm);
+  border: 1px solid var(--lp-outline);
+  background: var(--lp-surface);
+}
+
+.review-metric__label,
+.review-section__title {
+  /* Was `opacity`, which is unpredictable across themes; now a real token. */
+  color: var(--lp-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.review-metric__value {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+.review-section {
+  display: grid;
+  gap: var(--lp-space-8);
+  padding: var(--lp-space-16) 0;
+  border-top: 1px solid var(--lp-outline);
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--lp-space-16);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.review-row__label {
+  color: var(--lp-text-muted);
+}
+
+.review-row__value {
+  text-align: right;
+  color: var(--lp-text);
+  font-weight: 500;
+}
+
+.review-defaults-pill {
+  border-radius: var(--lp-radius);
+  padding: var(--lp-space-16) var(--lp-space-24);
+  border: 1px solid var(--lp-outline);
+  background: var(--lp-accent-tint);
+}
+
+.review-defaults-pill__title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+.review-defaults-pill__sub {
+  margin: var(--lp-space-8) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--lp-text-muted);
+}
+
+/* ============================== Responsive ============================== */
+
+@media (width <=768px) {
+  .wizard-shell {
+    padding: var(--lp-space-16);
+  }
+
+  .wizard-shell__header,
+  .review-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .review-row__value {
+    text-align: left;
+  }
+
+  .step-panel {
+    padding: var(--lp-space-16);
+  }
+
+  .step-actions > button {
+    flex: 1 1 auto;
+  }
+}
+
+/**
+ * The reused Classic Charges step ships its own Previous/Next stepper row; the
+ * wizard shell already renders unified step actions, so the embedded
+ * component's trailing nav is hidden to avoid duplicate buttons. `::ng-deep` is
+ * unavoidable here — the target lives inside a child component's template.
+ */
+.wizard-charges ::ng-deep .layout-row.margin-t {
+  display: none;
+}
+
+// Same duplicate, same remedy, for the reused Classic Accounting step: its own trailing nav row
+// carries `layout-row` + `margin-t` too (`loan-product-accounting-step.component.html`), but the
+// Charges rule above is scoped to `.wizard-charges` and never reaches it. Renders in BOTH guided and
+// Custom/Advanced mode, since `.wizard-accounting` wraps the step regardless of profile.
+.wizard-accounting ::ng-deep .layout-row.margin-t {
+  display: none;
+}
+
+.step-actions__blocked {
+  margin: 0 0 0.75rem;
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.875rem;
+}
+
+// Guided mode's answer to a blocked "Create Loan Product" click: the steps that still hold something
+// invalid, each a button that jumps to it. Deliberately error-toned rather than the dashed neutral of
+// `.review-pending` below — that block explains a summary that is merely not ready yet, this one
+// explains a button the operator just pressed and that refused.
+.submit-blocked {
+  padding: var(--lp-space-16) var(--lp-space-24);
+  margin-bottom: var(--lp-space-16);
+  border: 1px solid var(--mat-sys-error, #b3261e);
+  border-radius: var(--lp-radius);
+
+  &__title {
+    margin: 0 0 var(--lp-space-8);
+    font-weight: 600;
+    color: var(--mat-sys-error, #b3261e);
+  }
+
+  &__steps {
+    margin: 0;
+    padding-left: var(--lp-space-24);
+    color: var(--lp-text);
+  }
+
+  // A link in a list, not a control in a toolbar: it names a step and takes you there. Underlined
+  // rather than coloured alone, so it does not rely on colour to read as actionable.
+  &__step {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__generic {
+    margin: 0;
+    color: var(--lp-text);
+  }
+}
+
+// Shown on the Review step while the hosted Classic steps are still incomplete, in place of the
+// product summary (which cannot render a partial product).
+.review-pending {
+  padding: var(--lp-space-16) var(--lp-space-24);
+  border: 1px dashed var(--lp-outline);
+  border-radius: var(--lp-radius);
+
+  &__title {
+    margin: 0 0 var(--lp-space-8);
+    font-weight: 600;
+    color: var(--lp-text);
+  }
+
+  &__steps {
+    margin: 0;
+    padding-left: var(--lp-space-24);
+    color: var(--lp-text-muted);
+  }
+}
+
+/* =================== Hosted Classic steps (Custom/Advanced) =================== */
+
+/**
+ * Custom/Advanced hosts Classic's Details / Currency / Terms / Settings components, and Classic's
+ * summary on the Review step.
+ *
+ * Deliberately TYPOGRAPHY ONLY. Classic's layout classes (`flex-48`, `layout-row-wrap`, ...) are
+ * global utilities in `src/main.scss`, so they already apply inside these components and lay them
+ * out exactly as they do in the Classic flow. An earlier attempt here re-flowed those cells to match
+ * `.field-grid`; because an attribute selector outranks an element selector, it also beat the
+ * heading rule below and left section headings sharing a row with the first field while every
+ * checkbox stretched into its own column. Restyling the type is enough to make the two flows read
+ * alike, and it cannot break a layout it does not touch.
+ */
+.wizard-classic-step,
+.wizard-classic-review {
+  display: block;
+
+  /* Classic's section headings are page-level (h2/h3/h4); inside a wizard step they read as
+     oversized field labels unless toned down to the shell's eyebrow treatment. */
+  ::ng-deep h2,
+  ::ng-deep h3,
+  ::ng-deep h4 {
+    color: var(--lp-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+.wizard-classic-step {
+  /* Classic ships a Previous/Next row per step; the wizard shell already renders unified step
+     actions, so the embedded nav would be a second, conflicting set of buttons. Same reason, and
+     same remedy, as the reused Charges step above. */
+  ::ng-deep .stepper-buttons {
+    display: none;
+  }
+}
+
+.wizard-classic-review {
+  /* Classic's summary pairs a `.flex-40` label with a `.flex-60` value; colour them like
+     `.review-row__label` / `.review-row__value` so the facts read the same as the guided Review. */
+  ::ng-deep .flex-40 {
+    color: var(--lp-text-muted);
+  }
+
+  ::ng-deep .flex-60 {
+    color: var(--lp-text);
+    font-weight: 500;
+  }
+}
+
+.review-allocations {
+  /* The reused allocation panel is written for Classic's summary, at its type scale and with the
+     same `.flex-40` / `.flex-60` label-value pair. Bring both into line with the surrounding review
+     rows so one section does not read a size larger than the rest. */
+  font-size: 0.875rem;
+
+  ::ng-deep .flex-40 {
+    color: var(--lp-text-muted);
+  }
+
+  ::ng-deep .flex-60 {
+    color: var(--lp-text);
+    font-weight: 500;
+  }
+
+  ::ng-deep table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  ::ng-deep th {
+    color: var(--lp-text-muted);
+    font-weight: 600;
+  }
+}

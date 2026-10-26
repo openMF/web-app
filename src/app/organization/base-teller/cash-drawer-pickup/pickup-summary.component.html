@@ -1,0 +1,51 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<p>{{ 'cashPickup.source' | translate }}: {{ record.sourceName }}</p>
+<p>{{ 'cashPickup.destination' | translate }}: {{ record.destinationName }}</p>
+<p>{{ 'cashPickup.businessDate' | translate }}: {{ record.businessDate }}</p>
+@if (record.reference) {
+  <p>{{ 'cashPickup.reference' | translate }}: {{ record.reference }}</p>
+}
+@if (record.completedAt) {
+  <p>{{ 'cashPickup.completedAt' | translate }}: {{ record.completedAt | date: 'medium' }}</p>
+}
+<p>
+  {{ 'cashPickup.status' | translate }}:
+  {{ (record.status === 'COMPLETED' ? 'eod.COMPLETED' : 'labels.inputs.PREVIEW') | translate }}
+</p>
+@for (currency of record.currencies; track currency.currencyCode) {
+  <section>
+    <h3>{{ 'cashPickup.currency' | translate }}: {{ currency.currencyCode }}</h3>
+    <p>{{ 'cashPickup.cash' | translate }}: {{ currency.cash }}</p>
+    <p>{{ 'cashPickup.checks' | translate }}: {{ currency.checks }}</p>
+    @if (+currency.vouchers !== 0) {
+      <p>{{ 'cashPickup.vouchers' | translate }}: {{ currency.vouchers }}</p>
+    }
+    <p>
+      <strong>{{ 'cashPickup.total' | translate }}: {{ currency.totalToCollect }}</strong>
+    </p>
+    @if (details) {
+      @for (line of currency.cashDenominations; track line.denominationId) {
+        <p>
+          {{ 'cashPickup.denomination' | translate }}: {{ line.value }} · {{ 'cashPickup.quantity' | translate }}:
+          {{ line.quantity }} · {{ 'cashPickup.amount' | translate }}: {{ line.amount }}
+        </p>
+      }
+      @for (check of currency.selectedChecks; track check.source + ':' + check.id) {
+        <p>
+          {{ 'cashPickup.checks' | translate }}: {{ check.date }} · {{ check.bank }} · {{ check.reference }} ·
+          {{ check.client }} · {{ check.currencyCode }} {{ check.amount }}
+        </p>
+      }
+    }
+  </section>
+}
+@if (record.authorizedByUsername) {
+  <p>{{ 'cashPickup.authorizedBy' | translate }}: {{ record.authorizedByUsername }}</p>
+}

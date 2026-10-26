@@ -6,8 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+form {
+  height: 170px;
+}
+
 .generate-button {
   max-height: 2%;
-  padding: 1% 0 2% 6%;
+  padding: 1% 0 2%;
   align-self: center;
 }

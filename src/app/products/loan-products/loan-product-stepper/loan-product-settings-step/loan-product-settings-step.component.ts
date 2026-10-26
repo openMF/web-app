@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
@@ -21,6 +21,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
+import { Breach, NearBreach } from '../../models/loan-product.model';
+import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import { MatSelectTrigger } from '@angular/material/select';
+import { InputPositiveIntegerComponent } from 'app/shared/input-positive-integer/input-positive-integer.component';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
@@ -34,8 +38,12 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatIconButton,
     FaIconComponent,
     MatStepperPrevious,
-    MatStepperNext
-  ]
+    MatStepperNext,
+    MatSelectTrigger,
+    BreachDisplayComponent,
+    InputPositiveIntegerComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductSettingsStepComponent extends LoanProductBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -79,6 +87,13 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
+
+  delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+  breachStartTypeOptions: StringEnumOptionData[] = [];
+  breachOptions: Breach[] = [];
+  nearBreachOptions: NearBreach[] = [];
+
+  frequencyTypesOptions: StringEnumOptionData[] = [];
 
   constructor() {
     super();
@@ -166,11 +181,26 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     }
 
     if (this.loanProductService.isWorkingCapital) {
+      this.frequencyTypesOptions = this.loanProductsTemplate.periodFrequencyTypeOptions ?? [];
+      this.breachOptions = this.loanProductsTemplate.breachOptions ?? [];
+      this.nearBreachOptions = this.loanProductsTemplate.nearBreachOptions ?? [];
+      this.delinquencyStartTypeOptions = this.loanProductsTemplate.delinquencyStartTypeOptions;
+      this.breachStartTypeOptions = this.loanProductsTemplate.breachStartTypeOptions ?? [];
       this.loanProductSettingsForm.patchValue({
         amortizationType: this.loanProductsTemplate.amortizationType
           ? this.loanProductsTemplate.amortizationType.id
           : null,
-        npvDayCount: this.loanProductsTemplate.npvDayCount
+        npvDayCount: this.loanProductsTemplate.npvDayCount,
+        delinquencyGraceDays: this.loanProductsTemplate.delinquencyGraceDays,
+        // The backend parses the enum name (code); the numeric id is rejected with invalid.delinquency.start.type.
+        delinquencyStartType: this.loanProductsTemplate.delinquencyStartType
+          ? this.loanProductsTemplate.delinquencyStartType.code
+          : null,
+        breachId: this.loanProductsTemplate.breach?.id ?? null,
+        nearBreachId: this.loanProductsTemplate.nearBreach?.id ?? null,
+        breachGraceDays: this.loanProductsTemplate.breachGraceDays ?? null,
+        // null, never '': the backend rejects a blank code with invalid.breach.start.type and defaults an omitted one to DISBURSEMENT.
+        breachStartType: this.loanProductsTemplate.breachStartType?.code ?? null
       });
     }
 
@@ -305,12 +335,12 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
             (attribute: boolean) => attribute
           ),
           allowAttributeOverrides: {
-            flatPercentageAmount: this.loanProductsTemplate.allowAttributeOverrides.flatPercentageAmount,
             delinquencyBucketClassification:
               this.loanProductsTemplate.allowAttributeOverrides.delinquencyBucketClassification,
             discountDefault: this.loanProductsTemplate.allowAttributeOverrides.discountDefault,
             periodPaymentFrequency: this.loanProductsTemplate.allowAttributeOverrides.periodPaymentFrequency,
-            periodPaymentFrequencyType: this.loanProductsTemplate.allowAttributeOverrides.periodPaymentFrequencyType
+            periodPaymentFrequencyType: this.loanProductsTemplate.allowAttributeOverrides.periodPaymentFrequencyType,
+            breach: this.loanProductsTemplate.allowAttributeOverrides.breach
           }
         });
       }
@@ -426,14 +456,25 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           ]
         ],
         allowAttributeOverrides: this.formBuilder.group({
-          flatPercentageAmount: [true],
           delinquencyBucketClassification: [true],
           discountDefault: [true],
           periodPaymentFrequency: [true],
-          periodPaymentFrequencyType: [true]
+          periodPaymentFrequencyType: [true],
+          breach: [true]
         }),
         allowAttributeConfiguration: [true],
-        delinquencyBucketId: ['']
+        delinquencyBucketId: [''],
+        delinquencyGraceDays: [
+          '',
+          [
+            Validators.min(0)
+          ]
+        ],
+        delinquencyStartType: [''],
+        breachId: [''],
+        nearBreachId: [''],
+        breachGraceDays: [''],
+        breachStartType: [null]
       });
     }
   }
@@ -499,8 +540,20 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         .get('allowVariableInstallments')
         .valueChanges.subscribe((allowVariableInstallments: any) => {
           if (allowVariableInstallments) {
-            this.loanProductSettingsForm.addControl('minimumGap', new UntypedFormControl('', Validators.required));
-            this.loanProductSettingsForm.addControl('maximumGap', new UntypedFormControl('', Validators.required));
+            this.loanProductSettingsForm.addControl(
+              'minimumGap',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.min(0)
+              ])
+            );
+            this.loanProductSettingsForm.addControl(
+              'maximumGap',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.min(0)
+              ])
+            );
           } else {
             this.loanProductSettingsForm.removeControl('minimumGap');
             this.loanProductSettingsForm.removeControl('maximumGap');
@@ -664,10 +717,19 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         if (holdGuaranteeFunds) {
           this.loanProductSettingsForm.addControl(
             'mandatoryGuarantee',
-            new UntypedFormControl('', Validators.required)
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
           );
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromOwnFunds', new UntypedFormControl(''));
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromGuarantor', new UntypedFormControl(''));
+          this.loanProductSettingsForm.addControl(
+            'minimumGuaranteeFromOwnFunds',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
+          this.loanProductSettingsForm.addControl(
+            'minimumGuaranteeFromGuarantor',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
         } else {
           this.loanProductSettingsForm.removeControl('mandatoryGuarantee');
           this.loanProductSettingsForm.removeControl('minimumGuaranteeFromOwnFunds');
@@ -677,8 +739,17 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm.get('multiDisburseLoan').valueChanges.subscribe((multiDisburseLoan) => {
         if (multiDisburseLoan) {
-          this.loanProductSettingsForm.addControl('maxTrancheCount', new UntypedFormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('outstandingLoanBalance', new UntypedFormControl(''));
+          this.loanProductSettingsForm.addControl(
+            'maxTrancheCount',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
+          );
+          this.loanProductSettingsForm.addControl(
+            'outstandingLoanBalance',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
@@ -788,19 +859,19 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         .valueChanges.subscribe((allowAttributeConfiguration: any) => {
           if (allowAttributeConfiguration) {
             allowAttributeOverrides.patchValue({
-              flatPercentageAmount: true,
               delinquencyBucketClassification: true,
               discountDefault: true,
               periodPaymentFrequency: true,
-              periodPaymentFrequencyType: true
+              periodPaymentFrequencyType: true,
+              breach: true
             });
           } else {
             allowAttributeOverrides.patchValue({
-              flatPercentageAmount: false,
               delinquencyBucketClassification: false,
               discountDefault: false,
               periodPaymentFrequency: false,
-              periodPaymentFrequencyType: false
+              periodPaymentFrequencyType: false,
+              breach: false
             });
           }
         });
@@ -862,12 +933,35 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         });
       } else {
         this.loanProductSettingsForm.patchValue({
-          delinquencyBucketId: ''
+          delinquencyBucketId: '',
+          delinquencyGraceDays: null,
+          delinquencyStartType: ''
         });
       }
+    } else if (propertyName === 'breachId') {
+      this.loanProductSettingsForm.patchValue({
+        breachId: '',
+        nearBreachId: '',
+        breachGraceDays: null,
+        breachStartType: null
+      });
+    } else if (propertyName === 'nearBreachId') {
+      this.loanProductSettingsForm.patchValue({
+        nearBreachId: ''
+      });
     }
     this.loanProductSettingsForm.markAsDirty();
     $event.stopPropagation();
+  }
+
+  get selectedBreach(): Breach | undefined {
+    const id = this.loanProductSettingsForm.get('breachId')?.value;
+    return this.breachOptions ? this.breachOptions.find((b) => b.id === id) : undefined;
+  }
+
+  get selectedNearBreach(): NearBreach | undefined {
+    const id = this.loanProductSettingsForm.get('nearBreachId')?.value;
+    return id ? (this.nearBreachOptions ? this.nearBreachOptions.find((b) => b.id === id) : undefined) : undefined;
   }
 
   get loanProductSettings() {
@@ -878,6 +972,14 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     }
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
+    }
+    if (!productSettings['delinquencyBucketId']) {
+      productSettings['delinquencyGraceDays'] = null;
+      productSettings['delinquencyStartType'] = null;
+    }
+    if (!productSettings['breachId']) {
+      productSettings['breachGraceDays'] = null;
+      productSettings['breachStartType'] = null;
     }
     return productSettings;
   }

@@ -10,6 +10,21 @@ import { DatePipe } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 
+export enum Month {
+  Jan = 'Jan',
+  Feb = 'Feb',
+  Mar = 'Mar',
+  Apr = 'Apr',
+  May = 'May',
+  Jun = 'Jun',
+  Jul = 'Jul',
+  Aug = 'Aug',
+  Sep = 'Sep',
+  Oct = 'Oct',
+  Nov = 'Nov',
+  Dec = 'Dec'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,13 +39,25 @@ export class Dates {
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {
-    const datePipe: DatePipe = new DatePipe(this.language.code);
-    return datePipe.transform(timestamp, dateFormat);
+    try {
+      const datePipe: DatePipe = new DatePipe(this.language.code);
+      return datePipe.transform(timestamp, dateFormat);
+    } catch (e) {
+      if (moment(timestamp).isValid()) {
+        return this.formatDateAsString(timestamp, dateFormat);
+      }
+      throw e;
+    }
   }
 
   public formatDateAsString(value: Date, dateFormat: string): string {
     const momentFormat = this.angularToMomentFormat(dateFormat);
-    return moment(value).format(momentFormat);
+    // Month names must be in the UI language, which is the locale sent to Fineract with the date. Moment's global
+    // locale can't be trusted for this: importing a moment locale file switches it to that locale.
+    const localized = moment(value).locale(this.getMomentLocale(this.language));
+    // Some locales (e.g. Nepali) also write digits in their own script; preparse turns them back into ASCII digits,
+    // which is what Fineract parses. It returns the text unchanged for the other locales.
+    return localized.localeData().preparse(localized.format(momentFormat));
   }
 
   public angularToMomentFormat(angularFormat: string): string {
@@ -50,6 +77,20 @@ export class Dates {
     } else {
       return moment(value).toDate();
     }
+  }
+
+  public isBefore(date1: Date, date2: Date): boolean {
+    return (
+      Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate()) <
+      Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate())
+    );
+  }
+
+  public isAfter(date1: Date, date2: Date): boolean {
+    return (
+      Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate()) >
+      Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate())
+    );
   }
 
   public parseDatetime(value: any): Date {
@@ -74,5 +115,9 @@ export class Dates {
         Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate())) /
         (1000 * 60 * 60 * 24)
     );
+  }
+
+  get monthLabels(): Month[] {
+    return Object.values(Month);
   }
 }

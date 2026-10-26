@@ -6,12 +6,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/**
+ * The primary hues are CSS custom properties so `ThemeStorageService` can swap
+ * the brand colour at runtime. Sass passes `var()` through into the generated
+ * `--mat-*` / `--mdc-*` tokens, so Material components follow it without a
+ * rebuild; the fallbacks keep the default blue when nothing is set.
+ */
+
 /* ############ Light mode palettes ################ */
 
 $primary-palette: (
-  100: #5ba2ec,
-  500: #1074b9,
-  700: #004989,
+  100: var(--brand-primary-100, #5ba2ec),
+  500: var(--brand-primary-500, #1074b9),
+  700: var(--brand-primary-700, #004989),
   contrast: (
     100: rgb(0 0 0 / 87%),
     500: white,
@@ -33,9 +40,9 @@ $accent-palette: (
 /* ############ Dark mode palettes ################ */
 
 $dark-primary-palette: (
-  100: #5ba2ec,
-  500: #1074b9,
-  700: #004989,
+  100: var(--brand-primary-100, #5ba2ec),
+  500: var(--brand-primary-500, #1074b9),
+  700: var(--brand-primary-700, #004989),
   contrast: (
     100: white,
     500: rgb(255 255 255 / 87%),

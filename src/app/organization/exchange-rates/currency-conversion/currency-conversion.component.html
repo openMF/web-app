@@ -1,0 +1,172 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="conversionForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="currency-conversion-form-grid">
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Source Currency' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <mat-select
+                required
+                formControlName="sourceCurrencyCode"
+                [attr.aria-label]="'labels.inputs.Source Currency' | translate"
+              >
+                @for (currency of currencyOptions; track currency.code) {
+                  <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
+                }
+              </mat-select>
+              @if (conversionForm.controls.sourceCurrencyCode.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Source Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Target Currency' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <mat-select
+                required
+                formControlName="targetCurrencyCode"
+                [attr.aria-label]="'labels.inputs.Target Currency' | translate"
+              >
+                @for (currency of currencyOptions; track currency.code) {
+                  <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
+                }
+              </mat-select>
+              @if (conversionForm.controls.targetCurrencyCode.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Target Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          @if (conversionForm.hasError('sameCurrencies')) {
+            <mat-error class="form-error">
+              {{ 'labels.text.Source and target currencies cannot be identical' | translate }}
+            </mat-error>
+          }
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Amount' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                type="number"
+                min="0.0000001"
+                step="any"
+                formControlName="amount"
+                [attr.aria-label]="'labels.inputs.Amount' | translate"
+              />
+              @if (conversionForm.controls.amount.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (conversionForm.controls.amount.hasError('min')) {
+                <mat-error>{{
+                  'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Amount' | translate) }
+                }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Conversion Date' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                [matDatepicker]="conversionDatePicker"
+                formControlName="conversionDate"
+                [attr.aria-label]="'labels.inputs.Conversion Date' | translate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="conversionDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #conversionDatePicker></mat-datepicker>
+              @if (conversionForm.controls.conversionDate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Conversion Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!conversionForm.valid || loading"
+          *mifosxHasPermission="'CONVERT_CURRENCY'"
+        >
+          <fa-icon icon="exchange" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Convert' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
+
+@if (loading) {
+  <div class="container">
+    <mat-card>
+      <mat-card-content class="conversion-message">{{ 'labels.text.Loading' | translate }}...</mat-card-content>
+    </mat-card>
+  </div>
+}
+
+@if (apiError) {
+  <div class="container">
+    <mat-card>
+      <mat-card-content class="conversion-error">{{ apiError }}</mat-card-content>
+    </mat-card>
+  </div>
+}
+
+@if (conversionResult) {
+  <div class="container">
+    <mat-card>
+      <mat-card-content>
+        <div class="layout-row-wrap">
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Exchange Rate Used' | translate }}</div>
+          <div class="flex-50">{{ exchangeRateUsed }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Converted Amount' | translate }}</div>
+          <div class="flex-50">{{ conversionResult.convertedAmount }}</div>
+
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Effective Date' | translate }}</div>
+          <div class="flex-50">{{ effectiveDate | dateFormat }}</div>
+
+          @if (rateSourceDisplay) {
+            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Rate Source' | translate }}</div>
+            <div class="flex-50">{{ rateSourceDisplay }}</div>
+          }
+
+          @if (conversionResult.baseCurrency) {
+            <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Base Currency' | translate }}</div>
+            <div class="flex-50">{{ conversionResult.baseCurrency }}</div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}

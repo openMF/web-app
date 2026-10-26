@@ -1,0 +1,169 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Shared pause-timeline styles (SVG year timeline with pause bars).
+// Consumed by loan tabs that chart PAUSE actions over time
+// (e.g. breach actions, delinquency tags). Uses the shared --ds-* tokens.
+
+.timeline-section {
+  padding: 22px 24px 18px;
+  background: var(--ds-surface);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-text-2);
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  font-size: 11.5px;
+  color: var(--ds-text-2);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+
+  &.legend-active {
+    background: var(--ds-paid);
+  }
+
+  &.legend-scheduled {
+    background: var(--ds-blue-700);
+  }
+
+  &.legend-expired {
+    background: var(--ds-zero);
+  }
+}
+
+.timeline {
+  width: 100%;
+  height: 180px;
+  overflow: visible;
+}
+
+.month-grid {
+  stroke: var(--ds-border);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.month-label,
+.lane-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  fill: var(--ds-text-3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lane-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.baseline {
+  stroke: var(--ds-border);
+  stroke-width: 1.5;
+}
+
+.pause-bar {
+  cursor: pointer;
+  transition:
+    transform 0.14s ease,
+    filter 0.14s ease;
+  transform-origin: center center;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+
+  &--active {
+    fill: var(--ds-paid);
+  }
+
+  &--scheduled {
+    fill: var(--ds-blue-700);
+  }
+
+  &--expired {
+    fill: var(--ds-zero);
+  }
+}
+
+.pause-bar-edge {
+  &--active {
+    fill: var(--ds-paid);
+    opacity: 0.18;
+  }
+
+  &--scheduled {
+    fill: var(--ds-blue-700);
+    opacity: 0.2;
+  }
+
+  &--expired {
+    fill: var(--ds-zero);
+    opacity: 0.18;
+  }
+}
+
+.bar-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  fill: #fff;
+}
+
+:host-context(.dark-theme) .bar-tag {
+  fill: #0d1b2a;
+}
+
+.today-line {
+  stroke: var(--ds-alert);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.today-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--ds-alert);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (width <= 599px) {
+  .timeline {
+    height: 220px;
+  }
+}

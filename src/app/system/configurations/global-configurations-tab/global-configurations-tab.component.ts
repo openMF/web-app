@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -31,6 +40,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -62,7 +72,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
@@ -71,6 +82,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private translateService = inject(TranslateService);
 
   /** Configuration data. */
   configurationData: any;
@@ -150,8 +162,15 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
-          const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
+          const msg = configuration.enabled
+            ? this.translateService.instant('labels.inputs.Enabled')
+            : this.translateService.instant('labels.inputs.Disabled');
+          // Do not change Type, It is linked to other stuffs
+          this.alertService.alert({
+            type: SettingsService.businessDateType + ' Set Config',
+            message: msg,
+            enabled: configuration.enabled
+          });
         }
       });
   }

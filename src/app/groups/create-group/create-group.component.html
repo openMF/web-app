@@ -28,6 +28,13 @@
             }
           </mat-form-field>
 
+          @if (centerId) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Center' | translate }}</mat-label>
+              <input matInput readonly [value]="centerName ?? ''" />
+            </mat-form-field>
+          }
+
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
@@ -116,13 +123,17 @@
         <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
           @for (client of clientsData; track client) {
             <mat-option [value]="client">
-              {{ client.displayName }}
+              <div class="client-option-row">
+                <span class="client-col name-col">{{ client.displayName }}</span>
+                <span class="client-col">{{ client.id }}</span>
+                <span class="client-col office-col">{{ client.officeName }}</span>
+              </div>
             </mat-option>
           }
         </mat-autocomplete>
 
         <div class="layout-row">
-          @if (clientChoice.value) {
+          @if (clientChoice.value?.id) {
             <div class="mat-table">
               <div class="mat-header-row">
                 <div class="mat-header-cell">{{ 'labels.inputs.Client Details' | translate }}</div>
@@ -146,26 +157,26 @@
           }
 
           @if (clientMembers.length) {
-            <mat-nav-list>
-              <h3 matSubheader>{{ 'labels.heading.Selected Clients' | translate }}</h3>
+            <div class="selected-clients member-list">
+              <h3 class="selected-clients-title">{{ 'labels.heading.Selected Clients' | translate }}</h3>
               @for (client of clientMembers; track client; let i = $index) {
-                <div mat-list-item>
-                  <span matLine>{{ client.displayName }}</span>
+                <div class="member-row">
+                  <span class="member-name">{{ client.displayName }}</span>
                   <button mat-icon-button color="warn" (click)="removeClient(i)">
                     <fa-icon icon="trash"></fa-icon>
                   </button>
                 </div>
               }
-            </mat-nav-list>
+            </div>
           }
         </div>
       </mat-card-content>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-        <button type="button" mat-raised-button [routerLink]="['../']">
+        <button type="button" mat-raised-button [routerLink]="cancelRoute">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!groupForm.valid" (click)="submit()">
+        <button mat-raised-button color="primary" [disabled]="!canSubmit || isSubmitting" (click)="submit()">
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

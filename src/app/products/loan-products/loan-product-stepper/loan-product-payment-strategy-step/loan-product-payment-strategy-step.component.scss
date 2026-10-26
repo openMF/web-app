@@ -6,16 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use 'assets/styles/colours' as *;
+/**
+ * This file previously carried two `::ng-deep` rules targeting `.mat-tab-body-wrapper`
+ * and `.mat-tab-label.mat-tab-disabled`. Those are Material ≤14 class names —
+ * Material 20 renders `.mat-mdc-tab-body-wrapper` / `.mat-mdc-tab-disabled`, so
+ * neither rule had matched anything for several majors. They are removed rather
+ * than ported, which also drops a hardcoded `$status-approved` (#4461e2) that
+ * ignored the theme. Tab colours now come from the `--mat-tab-*` tokens set in
+ * `assets/styles/_loan-product-tokens.scss`.
+ */
 
-::ng-deep .mat-tab-body-wrapper {
-  width: 96%;
-  margin: auto;
-}
-
-::ng-deep .mat-tab-label.mat-tab-disabled {
-  padding: 0;
-  margin: 0;
-  justify-content: left;
-  color: $status-approved;
+mat-tab-group {
+  /* Tabs sit directly on the step panel; the group's own gap utilities leave the
+     label row flush against the content without this. */
+  margin-bottom: var(--lp-space-8, 0.5rem);
 }

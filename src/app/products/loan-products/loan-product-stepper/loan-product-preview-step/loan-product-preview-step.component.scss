@@ -6,47 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@use 'assets/styles/colours';
-@use 'assets/styles/colours' as *;
-
-table {
-  width: 100%;
-}
-
-.mat-elevation-z1 {
-  margin: 1em 0 1.5em;
-}
-
-h2,
-h3,
-h4 {
-  margin: 0;
-  font-weight: 500;
-}
-
-span {
-  margin: 0.5em 0;
-}
-
-mat-divider {
-  margin: 0 0 0.5em;
-}
-
-.mat-h3 {
-  margin-top: 10px !important;
-  font-weight: 300;
-  color: $status-approved;
-}
-
-.mat-h4 {
-  margin-top: 10px !important;
-  font-weight: 200;
-  color: $status-approved;
-}
-
-.repayment-strategy {
-  color: $status-approved;
-}
+/**
+ * This component's template is only `<mifosx-loan-product-summary>` plus the
+ * Previous/Cancel/Submit row. Every other rule this file used to carry
+ * (`table`, `.mat-elevation-z1`, `h2/h3/h4`, `span`, `mat-divider`, `.mat-h3`,
+ * `.mat-h4`, `.repayment-strategy`) targeted markup that lives inside the
+ * summary child component, so view encapsulation meant none of them ever
+ * matched. They are removed here and the ones that do real work now live in
+ * `loan-product-summary.component.scss`, next to the markup they style.
+ *
+ * That also retires two hardcoded `$status-approved` (#4461e2) colours and two
+ * `!important` margin overrides from this file.
+ */
 
 .margin-t {
   height: 45px;

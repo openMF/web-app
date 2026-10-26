@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -45,7 +45,8 @@ import {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ValidateCustomerDataDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<ValidateCustomerDataDialogComponent>>(MatDialogRef);

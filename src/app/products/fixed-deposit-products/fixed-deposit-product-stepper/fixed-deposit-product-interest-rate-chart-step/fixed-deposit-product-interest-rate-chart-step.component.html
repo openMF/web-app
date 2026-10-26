@@ -94,6 +94,11 @@
               <h3 class="mat-h3">{{ 'labels.heading.It is required to add at least one Range' | translate }}</h3>
             </div>
           }
+          @if (getChartSlabsErrorKey(chart.controls.chartSlabs)) {
+            <div class="flex-100">
+              <mat-error>{{ getChartSlabsErrorKey(chart.controls.chartSlabs) | translate }}</mat-error>
+            </div>
+          }
           @if (chart.value.chartSlabs.length !== 0) {
             <table
               class="flex-98 mat-elevation-z1"

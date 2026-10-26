@@ -9,28 +9,43 @@
 @if (isRequired) {
   <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <div class="input-group">
-      <span>{{ currency.code }}</span>
-      <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
-        class="right-input"
-        [formControl]="inputFormControl"
-        (keypress)="numberOnly($event)"
-        required
-        matInput
-        (blur)="displayHint = false"
-        (focus)="displayHint = true"
-      />
-    </div>
+    @if (currency) {
+      <div class="input-group">
+        <span>{{ currency.code }}</span>
+        <input
+          mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
+          class="right-input"
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          required
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    } @else {
+      <div class="input-group">
+        <input
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          required
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    }
     @if (inputFormControl.hasError('required')) {
       <mat-error>
         {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     }
-    @if (displayHint) {
+    @if (displayHint && currency) {
       <mat-hint class="right-hint">{{
-        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>
     }
     @if (minVal && inputFormControl.hasError('min')) {
@@ -44,25 +59,45 @@
         {{ maxVal }}
       </mat-error>
     }
+    @if (inputFormControl.hasError('highAmountValue')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Invalid amount format' | translate }}
+      </mat-error>
+    }
   </mat-form-field>
 }
 @if (!isRequired) {
-  <mat-form-field appearance="fill" class="flex-100" floatLabel="always">
+  <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
-    <span class="flex-auto"></span>
-    <input
-      mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
-      class="right-input"
-      [formControl]="inputFormControl"
-      (keypress)="numberOnly($event)"
-      matInput
-      (blur)="displayHint = false"
-      (focus)="displayHint = true"
-    />
-    @if (displayHint) {
+    @if (currency) {
+      <div class="input-group">
+        <span>{{ currency.code }}</span>
+        <input
+          mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
+          class="right-input"
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    } @else {
+      <div class="input-group">
+        <input
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    }
+    @if (displayHint && currency) {
       <mat-hint class="right-hint">{{
-        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>
     }
     @if (minVal && inputFormControl.hasError('min')) {

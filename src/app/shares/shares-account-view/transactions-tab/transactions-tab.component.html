@@ -32,7 +32,7 @@
       </ng-container>
 
       <ng-container matColumnDef="purchasedOrRedeemedPrice">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Purhcased/Redeemed Price' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Purchased/Redeemed Price' | translate }}</th>
         <td mat-cell *matCellDef="let transaction">
           {{ shareAccountData.currency.displaySymbol }}&nbsp;{{ transaction.purchasedPrice }}
         </td>
@@ -47,8 +47,8 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="amountRecievedOrReturned">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount Recieved/Returned' | translate }}</th>
+      <ng-container matColumnDef="amountReceivedOrReturned">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount Received/Returned' | translate }}</th>
         <td mat-cell *matCellDef="let transaction">
           {{ shareAccountData.currency.displaySymbol }}&nbsp;{{ transaction.amount }}
         </td>

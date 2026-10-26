@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -28,16 +29,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePaymentTypeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   /** Payment Type form. */
-  paymentTypeForm: UntypedFormGroup;
+  paymentTypeForm: FormGroup;
 
   /**
    * Creates and sets the payment type form.
@@ -73,8 +75,11 @@ export class CreatePaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.createPaymentType(paymentType).subscribe((response) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .createPaymentType(paymentType)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

@@ -31,4 +31,15 @@ export class SearchService {
     const httpParams = new HttpParams().set('exactMatch', 'false').set('query', query).set('resource', resource);
     return this.http.get('/search', { params: httpParams });
   }
+
+  /**
+   * Accounting entries are not covered by the /search endpoint, so they are
+   * looked up separately by exact transaction id.
+   * @param {string} transactionId Journal entry transaction id.
+   * @returns {Observable<any>} Paginated journal entry lines.
+   */
+  getJournalEntriesByTransactionId(transactionId: string): Observable<any> {
+    const httpParams = new HttpParams().set('transactionId', transactionId);
+    return this.http.get('/journalentries', { params: httpParams });
+  }
 }

@@ -26,7 +26,7 @@ Must be one of the following:
 
 - **build**: Changes that affect the build system or external dependencies (example scopes: npm, webpack etc)
 - **chore**: Other changes that don't modify src or test files
-- **ci**: Changes to CI configuration files and scripts (example scopes: Travis etc)
+- **ci**: Changes to CI configuration files and scripts (example scopes: GitHub Actions, workflows etc)
 - **docs**: Documentation only changes
 - **feat**: A new feature
 - **fix**: A bug fix

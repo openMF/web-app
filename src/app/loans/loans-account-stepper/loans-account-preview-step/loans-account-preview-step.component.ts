@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -21,7 +29,6 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { LongTextComponent } from '../../../shared/long-text/long-text.component';
 import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
@@ -33,6 +40,18 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
+import { LongTextComponent } from 'app/shared/long-text/long-text.component';
+import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
+import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
  * Create Loans Account Preview Step
@@ -43,7 +62,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./loans-account-preview-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    LongTextComponent,
     ExternalIdentifierComponent,
     MatDivider,
     MatTable,
@@ -63,20 +81,26 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe,
-    TranslatePipe
-  ]
+    TranslatePipe,
+    LongTextComponent,
+    BreachDisplayComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoansAccountPreviewStepComponent implements OnChanges {
+export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent implements OnChanges {
   /** Loans Account Template */
-  @Input() loansAccountTemplate: any = [];
+  @Input() loansAccountTemplate: any;
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Data */
   @Input() loansAccount: any;
   /** active Client Members in case of GLIM Account */
   @Input() activeClientMembers?: any;
+  @Input() loanProductsBasicDetails: LoanProductBasicDetails[];
 
   /** Submit Loans Account */
+  /** Disables the submit button while the loans account is being created */
+  @Input() submitting = false;
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
@@ -109,9 +133,23 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
   dataSource: any;
   productEnableDownPayment = false;
 
-  constructor() {}
+  repaymentFrequencyTypeOption: OptionData | null = null;
+  delinquencyStartTypeOption: StringEnumOptionData | null = null;
+  breachStartTypeOption: StringEnumOptionData | null = null;
+  /** Working Capital: strategy inherited from the product, resolved from the template. */
+  paymentAmountCalculationStrategy: WorkingCapitalPaymentAmountCalculationStrategy =
+    WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
+  paymentAmountCalculationStrategyOption: StringEnumOptionData | null = null;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
+
+  constructor() {
+    super();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.loansAccountProductTemplate?.product) {
+      return;
+    }
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
     if (this.activeClientMembers) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
@@ -127,5 +165,98 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
         .filter((member: any) => member.selected)
         .reduce((acc: number, member: any) => acc + (member.principal ?? 0), 0);
     }
+    if (this.loanProductService.isWorkingCapital) {
+      const options = this.loansAccountProductTemplate.options ?? {};
+      const product = this.loansAccountProductTemplate.product ?? {};
+      this.paymentAmountCalculationStrategy = resolvePaymentAmountCalculationStrategy(
+        product.paymentAmountCalculationStrategy
+      );
+      this.paymentAmountCalculationStrategyOption = this.stringEnumOptionDataLookUp(
+        this.paymentAmountCalculationStrategy,
+        product.paymentAmountCalculationStrategyOptions ?? WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS
+      );
+      this.repaymentFrequencyTypeOption = this.optionDataLookUp(
+        this.loansAccount?.repaymentFrequencyType,
+        options.periodFrequencyTypeOptions ?? []
+      );
+      this.delinquencyStartTypeOption = this.stringEnumOptionDataLookUp(
+        this.loansAccount?.delinquencyStartType,
+        options.delinquencyStartTypeOptions ?? []
+      );
+      this.breachStartTypeOption = this.stringEnumOptionDataLookUp(
+        this.loansAccount?.breachStartType,
+        options.breachStartTypeOptions ?? []
+      );
+    } else {
+      this.repaymentFrequencyTypeOption = null;
+      this.delinquencyStartTypeOption = null;
+      this.breachStartTypeOption = null;
+    }
+  }
+
+  private optionDataLookUp(itemId: any, optionsData: any[]): OptionData | null {
+    const match = optionsData.find((o: any) => o.id === itemId);
+    return match ? { id: match.id, code: match.code, value: match.value || match.name } : null;
+  }
+
+  private stringEnumOptionDataLookUp(itemId: any, optionsData: any[]): StringEnumOptionData | null {
+    const match = optionsData.find((o: any) => o.id === itemId || o.code === itemId);
+    return match ? { id: match.id, code: match.code, value: match.value } : null;
+  }
+
+  originatorsLabel(originators: { externalId: string }[]): string {
+    return (originators ?? []).map((originator) => originator.externalId).join(', ');
+  }
+
+  loanProductName(id: number): string {
+    const productType: string = this.loanProductService.productType.value;
+    const product = this.loanProductsBasicDetails.find((p) => p.productType === productType && p.id === id);
+    return product?.name ?? '';
+  }
+
+  loanProductType(): string {
+    return this.loanProductService.loanProductTypeLabel;
+  }
+
+  fundName(fundId: number): string {
+    const fundOptions = this.loanProductService.isLoanProduct
+      ? this.loansAccountProductTemplate.fundOptions
+      : this.loansAccountProductTemplate.options.fundOptions;
+    const fund = fundOptions.find((fund: any) => fund.id === fundId);
+    return fund ? fund.name : '';
+  }
+
+  camalize(word: unknown): string {
+    if (typeof word !== 'string' || word.length === 0) {
+      return '';
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  getDelinquencyBucket(delinquencyBucketId: number | null | undefined): DelinquencyBucket | null {
+    if (delinquencyBucketId === null || delinquencyBucketId === undefined) {
+      return null;
+    }
+    return (
+      this.loansAccountProductTemplate.options?.delinquencyBucketOptions?.find(
+        (b: DelinquencyBucket) => b.id === delinquencyBucketId
+      ) || null
+    );
+  }
+
+  getBreach(breachId: number | null | undefined): Breach | null {
+    if (breachId === null || breachId === undefined) {
+      return null;
+    }
+    return this.loansAccountProductTemplate.options.breachOptions?.find((b: Breach) => b.id === breachId) || null;
+  }
+
+  getNearBreach(nearBreachId: number | null | undefined): NearBreach | null {
+    if (nearBreachId === null || nearBreachId === undefined) {
+      return null;
+    }
+    return (
+      this.loansAccountProductTemplate.options.nearBreachOptions?.find((b: NearBreach) => b.id === nearBreachId) || null
+    );
   }
 }

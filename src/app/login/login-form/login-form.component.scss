@@ -291,7 +291,7 @@
     font-family: 'Courier New', monospace;
     color: var(--md-sys-color-on-surface, #1a1c1e);
     white-space: pre-wrap;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 

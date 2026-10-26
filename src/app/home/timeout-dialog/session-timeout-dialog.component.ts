@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -19,6 +19,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-session-timeout-dialog',
+  standalone: true,
   templateUrl: './session-timeout-dialog.component.html',
   styleUrls: ['./session-timeout-dialog.component.scss'],
   imports: [
@@ -28,7 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SessionTimeoutDialogComponent {
   dialogRef = inject<MatDialogRef<SessionTimeoutDialogComponent>>(MatDialogRef);

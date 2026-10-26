@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
@@ -21,6 +22,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBasicDetails } from '../models/loan-product.model';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 /**
  * Edit Loans
@@ -41,11 +44,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoansAccountChargesStepComponent,
     LoansAccountScheduleStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditLoansAccountComponent {
+export class EditLoansAccountComponent extends LoanProductBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
   private loansService = inject(LoansService);
   private settingsService = inject(SettingsService);
@@ -66,19 +70,34 @@ export class EditLoansAccountComponent {
   /** Currency Code */
   currencyCode: string;
 
-  /**
-   * Sets loans account edit form.
-   * @param {route} ActivatedRoute Activated Route.
-   * @param {router} Router Router.
-   * @param {Dates} dateUtils Date Utils
-   * @param {loansService} LoansService Loans Service
-   * @param {SettingsService} settingsService Settings Service
-   */
+  productId: number | null = null;
+  productDetails: any;
+
+  loanProductsBasicDetails: LoanProductBasicDetails[] | null = null;
+  productType: string | null = null;
+
   constructor() {
-    this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
-      this.loansAccountAndTemplate = data.loansAccountAndTemplate;
-    });
+    super();
+    this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
+
     this.loanId = this.route.snapshot.params['loanId'];
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loansAccountAndTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
+        this.loansAccountAndTemplate = data.loansAccountAndTemplate;
+        if (this.loanProductService.isLoanProduct) {
+          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+        } else if (this.loanProductService.isWorkingCapital) {
+          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+          // The working capital loan details endpoint serializes the client and product
+          // as flat fields (clientId/loanProductId) instead of nested objects.
+          this.getWorkingCapitalLoanProductTemplate(
+            this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+            this.loansAccountProductTemplate.product?.id ?? this.loansAccountProductTemplate.loanProductId
+          );
+        }
+        this.loanProductsBasicDetails = data.loanProductsBasicDetails;
+      });
   }
 
   /**
@@ -86,8 +105,22 @@ export class EditLoansAccountComponent {
    * @param {any} $event API response
    */
   setTemplate($event: any) {
-    this.loansAccountProductTemplate = $event;
+    const templateData: any = $event;
+    this.loansAccountProductTemplate = templateData.loanData ? templateData.loanData : templateData;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
+    this.productDetails = this.loansAccountProductTemplate.product;
+    if (templateData.loanData) {
+      this.loansAccountProductTemplate = templateData.loanData;
+      this.loansAccountProductTemplate.options = {
+        breachOptions: templateData.breachOptions,
+        nearBreachOptions: templateData.nearBreachOptions,
+        delinquencyBucketOptions: templateData.delinquencyBucketOptions,
+        fundOptions: templateData.fundOptions,
+        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions,
+        breachStartTypeOptions: templateData.breachStartTypeOptions
+      };
+    }
     if (this.loansAccountProductTemplate.loanProductId) {
       this.loansService
         .getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId)
@@ -95,6 +128,17 @@ export class EditLoansAccountComponent {
           this.collateralOptions = response.loanCollateralOptions;
         });
     }
+  }
+
+  getWorkingCapitalLoanProductTemplate(clientId: number, productId: number) {
+    this.loansService.getWorkingCapitalLoansAccountTemplate(clientId, productId).subscribe((response: any) => {
+      this.setTemplate(response);
+    });
+  }
+
+  setProductType($event: any): void {
+    this.productType = $event;
+    this.loanProductService.initialize(this.productType);
   }
 
   /** Get Loans Account Details Form Data */
@@ -109,31 +153,56 @@ export class EditLoansAccountComponent {
 
   /** Checks wheter all the forms in different steps are valid and not pristine */
   get loansAccountFormValidAndNotPristine() {
-    return (
-      this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid &&
-      (!this.loansAccountDetailsForm.pristine ||
-        !this.loansAccountTermsForm.pristine ||
-        !this.loansAccountTermsStep.pristine ||
-        !this.loansAccountChargesStep.pristine)
-    );
+    if (this.loanProductService.isLoanProduct) {
+      return (
+        this.loansAccountDetailsForm.valid &&
+        this.loansAccountTermsForm.valid &&
+        (!this.loansAccountDetailsForm.pristine ||
+          !this.loansAccountTermsForm.pristine ||
+          !this.loansAccountTermsStep.pristine ||
+          !this.loansAccountChargesStep?.pristine)
+      );
+    } else if (this.loanProductService.isWorkingCapital) {
+      return (
+        this.loansAccountDetailsForm.valid &&
+        this.loansAccountTermsForm.valid &&
+        (!this.loansAccountDetailsForm.pristine || !this.loansAccountTermsForm.pristine)
+      );
+    }
   }
 
   /** Retrieves Data of all forms except Currency to submit the data */
   get loansAccount() {
-    return {
-      ...this.loansAccountDetailsStep.loansAccountDetails,
-      ...this.loansAccountTermsStep.loansAccountTerms,
-      ...this.loansAccountChargesStep.loansAccountCharges,
-      ...this.loansAccountTermsStep.loanCollateral,
-      ...this.loansAccountTermsStep.disbursementData
-    };
+    if (this.loanProductService.isLoanProduct) {
+      return {
+        ...this.loansAccountDetailsStep.loansAccountDetails,
+        ...this.loansAccountTermsStep.loansAccountTerms,
+        ...this.loansAccountChargesStep?.loansAccountCharges,
+        ...this.loansAccountTermsStep.loanCollateral,
+        ...this.loansAccountTermsStep.disbursementData
+      };
+    } else if (this.loanProductService.isWorkingCapital) {
+      return {
+        ...this.loansAccountDetailsStep.loansAccountDetails,
+        ...this.loansAccountTermsStep.loansAccountTerms
+      };
+    }
+    console.warn('Unexpected product type in loansAccount getter');
+    return {};
+  }
+
+  submit(): void {
+    if (this.loanProductService.isLoanProduct) {
+      this.submitLoanProduct();
+    } else if (this.loanProductService.isWorkingCapital) {
+      this.submitWorkingCapitalProduct();
+    }
   }
 
   /**
    * Submits Data to create loan account
    */
-  submit() {
+  submitLoanProduct() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
@@ -199,17 +268,84 @@ export class EditLoansAccountComponent {
     ) {
       delete loansAccountData.isFloatingInterestRate;
     }
-    loansAccountData.principal = loansAccountData.principalAmount;
+    // Send the principal as a number: Fineract reads a text amount with the request locale,
+    // so "1500.75" would be saved as 150075 in es, de or pt.
+    loansAccountData.principal = Number(loansAccountData.principalAmount);
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
 
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
+    this.loansService
+      .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        });
+      });
+  }
 
-    this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+  submitWorkingCapitalProduct(): void {
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const payload = {
+      ...this.loansAccount,
+      clientId: this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
+      locale,
+      dateFormat
+    };
+
+    if (this.productDetails.allowAttributeOverrides) {
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequency') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequency === false
+      ) {
+        delete payload['repaymentEvery'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequencyType') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequencyType === false
+      ) {
+        delete payload['repaymentFrequencyType'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'discountDefault') ||
+        this.productDetails.allowAttributeOverrides.discountDefault === false
+      ) {
+        delete payload['discount'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        // Locked values from getRawValue() must be absent — BE rejects presence even as null.
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+        delete payload['breachGraceDays'];
+        delete payload['breachStartType'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'delinquencyBucketClassification') ||
+        this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
+      ) {
+        delete payload['delinquencyBucketId'];
+        delete payload['delinquencyGraceDays'];
+        delete payload['delinquencyStartType'];
+      }
+    }
+
+    this.loansService
+      .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        });
+      });
   }
 }

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -25,7 +25,8 @@ import { RemittanceTransaction, RemittanceVendor } from '../../models/remittance
     MatIcon
   ],
   templateUrl: './search-remittance-step.component.html',
-  styleUrls: ['./search-remittance-step.component.scss']
+  styleUrls: ['./search-remittance-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchRemittanceStepComponent implements OnInit {
   @Output() remittanceFound = new EventEmitter<{

@@ -26,6 +26,9 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
+import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
+import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -46,6 +49,9 @@ import { ViewCashierComponent } from './tellers/cashiers/view-cashier/view-cashi
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
+import { AddressTabComponent } from './offices/view-office/address-tab/address-tab.component';
+import { ServicesTabComponent } from './offices/view-office/services-tab/services-tab.component';
+import { SchedulesTabComponent } from './offices/view-office/schedules-tab/schedules-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
@@ -75,7 +81,6 @@ import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
-
 /** Custom Service */
 import { OfficeItemNode } from './holidays/create-holiday/office-item.class';
 import { OfficeItemFlatNode } from './holidays/create-holiday/office-flat-item.class';
@@ -107,6 +112,9 @@ import { InvestorsComponent } from './investors/investors.component';
     ViewAdhocQueryComponent,
     TellersComponent,
     ViewTellerComponent,
+    SavingsAccountOpeningComponent,
+    SavingsAccountDepositComponent,
+    CreditPaymentComponent,
     PaymentTypesComponent,
     EditPaymentTypeComponent,
     PasswordPreferencesComponent,
@@ -127,6 +135,9 @@ import { InvestorsComponent } from './investors/investors.component';
     ViewHolidaysComponent,
     ViewOfficeComponent,
     GeneralTabComponent,
+    AddressTabComponent,
+    ServicesTabComponent,
+    SchedulesTabComponent,
     DatatableTabsComponent,
     ViewCampaignComponent,
     ManageFundsComponent,

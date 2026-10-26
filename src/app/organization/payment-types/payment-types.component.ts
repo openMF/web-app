@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -59,12 +61,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentTypesComponent implements OnInit {
   private organizationService = inject(OrganizationService);
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Payment Types data. */
   paymentTypesData: any;
@@ -93,7 +97,7 @@ export class PaymentTypesComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { paymentTypes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { paymentTypes: any }) => {
       this.paymentTypesData = data.paymentTypes;
     });
   }
@@ -132,10 +136,15 @@ export class PaymentTypesComponent implements OnInit {
     });
     deletePaymentTypeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deletePaymentType(paymentTypeId).subscribe(() => {
-          this.paymentTypesData = this.paymentTypesData.filter((paymentType: any) => paymentType.id !== paymentTypeId);
-          this.setPaymentTypes();
-        });
+        this.organizationService
+          .deletePaymentType(paymentTypeId)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.paymentTypesData = this.paymentTypesData.filter(
+              (paymentType: any) => paymentType.id !== paymentTypeId
+            );
+            this.setPaymentTypes();
+          });
       }
     });
   }

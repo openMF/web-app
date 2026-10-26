@@ -1,0 +1,75 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (isRequired) {
+  <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
+    <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
+    <input
+      [formControl]="inputFormControl"
+      required
+      matInput
+      type="number"
+      [min]="minVal"
+      [max]="maxVal"
+      step="1"
+      mifosxPositiveInteger
+    />
+    @if (inputFormControl.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
+    @if (inputFormControl.hasError('positiveInteger')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be a positive integer' | translate }}
+      </mat-error>
+    }
+    @if (minVal && inputFormControl.hasError('min')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+      </mat-error>
+    }
+    @if (maxVal && inputFormControl.hasError('max')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be less or equal to' | translate }}
+        {{ maxVal }}
+      </mat-error>
+    }
+  </mat-form-field>
+}
+@if (!isRequired) {
+  <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
+    <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
+    <input
+      [formControl]="inputFormControl"
+      matInput
+      type="number"
+      [min]="minVal"
+      [max]="maxVal"
+      step="1"
+      mifosxPositiveInteger
+    />
+    @if (inputFormControl.hasError('positiveInteger')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be a positive integer' | translate }}
+      </mat-error>
+    }
+    @if (minVal && inputFormControl.hasError('min')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+      </mat-error>
+    }
+    @if (maxVal && inputFormControl.hasError('max')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.Must be less or equal to' | translate }}
+        {{ maxVal }}
+      </mat-error>
+    }
+  </mat-form-field>
+}

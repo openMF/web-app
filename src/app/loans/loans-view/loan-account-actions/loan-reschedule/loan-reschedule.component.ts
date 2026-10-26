@@ -6,25 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
-import { LoansService } from 'app/loans/loans.service';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { PenaltyManagementService } from 'app/loans/services/penalty-management.service';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RepaymentSchedulePeriod } from 'app/loans/models/loan-account.model';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-loan-reschedule',
@@ -34,20 +27,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanRescheduleComponent implements OnInit {
+export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
   private penaltyManagementService = inject(PenaltyManagementService);
   private destroyRef = inject(DestroyRef);
 
-  @Input() dataObject: any;
-  loanId: any;
   rescheduleLoanForm: UntypedFormGroup;
 
   /** Minimum Date allowed. */
@@ -55,6 +43,9 @@ export class LoanRescheduleComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   codes: any;
+
+  /** Unpaid installments from the repayment schedule */
+  unpaidInstallments: RepaymentSchedulePeriod[] = [];
 
   changeRepaymentDate = new UntypedFormControl(false);
   introduceGracePeriods = new UntypedFormControl(false);
@@ -77,7 +68,7 @@ export class LoanRescheduleComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit() {
@@ -86,12 +77,25 @@ export class LoanRescheduleComponent implements OnInit {
     this.setRescheduleLoanForm();
     this.loadPenalties();
     this.setupWaivePenaltiesListener();
+    this.loadRepaymentSchedule();
+  }
+
+  loadRepaymentSchedule() {
+    this.loanService.getLoanAccountAssociationDetails(this.loanId).subscribe({
+      next: (loanDetails: any) => {
+        const periods: RepaymentSchedulePeriod[] = loanDetails?.repaymentSchedule?.periods || [];
+        this.unpaidInstallments = periods.filter((period) => period.period != null && !period.complete);
+      },
+      error: () => {
+        this.unpaidInstallments = [];
+      }
+    });
   }
 
   setRescheduleLoanForm() {
     this.rescheduleLoanForm = this.formBuilder.group({
       rescheduleFromDate: [
-        new Date(),
+        null,
         Validators.required
       ],
       rescheduleReasonId: [
@@ -109,6 +113,21 @@ export class LoanRescheduleComponent implements OnInit {
       extraTerms: [''],
       newInterestRate: ['']
     });
+  }
+
+  /** Convert period dueDate array to a Date object for form binding */
+  getInstallmentDueDate(period: RepaymentSchedulePeriod): Date {
+    return this.dateUtils.parseDate(period.dueDate);
+  }
+
+  /** Returns the currently selected installment matching the form control value */
+  get selectedInstallment(): RepaymentSchedulePeriod | null {
+    const selectedDate = this.rescheduleLoanForm?.get('rescheduleFromDate')?.value;
+    if (!selectedDate || !(selectedDate instanceof Date) || !this.unpaidInstallments.length) {
+      return null;
+    }
+    const selectedTime = selectedDate.getTime();
+    return this.unpaidInstallments.find((inst) => this.getInstallmentDueDate(inst).getTime() === selectedTime) ?? null;
   }
 
   submit() {
@@ -136,16 +155,18 @@ export class LoanRescheduleComponent implements OnInit {
 
     // Waive penalties first if selected, then submit reschedule
     if (this.waivePenalties.value && this.selectedPenalties.length > 0) {
-      this.penaltyManagementService.waivePenalties(this.loanId, this.selectedPenalties).subscribe({
-        next: () => {
-          this.submitReschedule(data);
-        },
-        error: (error: any) => {
-          console.error('Error waiving penalties:', error);
-          // Continue with reschedule even if waive fails
-          this.submitReschedule(data);
-        }
-      });
+      this.penaltyManagementService
+        .waivePenalties(this.loanProductService.loanAccountPath, this.loanId, this.selectedPenalties)
+        .subscribe({
+          next: () => {
+            this.submitReschedule(data);
+          },
+          error: (error: any) => {
+            console.error('Error waiving penalties:', error);
+            // Continue with reschedule even if waive fails
+            this.submitReschedule(data);
+          }
+        });
     } else {
       this.submitReschedule(data);
     }
@@ -154,10 +175,7 @@ export class LoanRescheduleComponent implements OnInit {
   /** Submit the reschedule after penalties are waived */
   private submitReschedule(data: any) {
     this.loanService.submitRescheduleData(data).subscribe((response: any) => {
-      // TODO: needs to be updated
-      // mentioned in Community App:
-      // location.path('/loans-accounts/' + scope.loanId + '/viewreschedulerequest/'+ data.resourceId);
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.gotoLoanDefaultView();
     });
   }
 

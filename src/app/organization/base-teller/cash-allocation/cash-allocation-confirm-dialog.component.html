@@ -1,0 +1,59 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'cashAllocation.dialog.confirmTitle' | translate }}</h2>
+<mat-dialog-content>
+  <dl class="dialog-details">
+    <div>
+      <dt>{{ 'cashAllocation.labels.source' | translate }}</dt>
+      <dd>{{ preview.source }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.destination' | translate }}</dt>
+      <dd>{{ preview.destination }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.currency' | translate }}</dt>
+      <dd>{{ preview.currencyCode }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.cashInflow' | translate }}</dt>
+      <dd>{{ preview.cashInflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.cashOutflow' | translate }}</dt>
+      <dd>{{ preview.cashOutflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.checksInflow' | translate }}</dt>
+      <dd>{{ preview.checksInflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.checksOutflow' | translate }}</dt>
+      <dd>{{ preview.checksOutflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.vouchersInflow' | translate }}</dt>
+      <dd>{{ preview.vouchersInflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.vouchersOutflow' | translate }}</dt>
+      <dd>{{ preview.vouchersOutflow }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'cashAllocation.labels.totalCash' | translate }}</dt>
+      <dd>{{ preview.authoritativeTotal }}</dd>
+    </div>
+  </dl>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" [mat-dialog-close]="false">{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" type="button" [mat-dialog-close]="true">
+    {{ 'cashAllocation.actions.confirmPost' | translate }}
+  </button>
+</mat-dialog-actions>

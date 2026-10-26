@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -22,6 +22,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Floating Rate Period Dialog Component.
  */
@@ -37,12 +38,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<FloatingRatePeriodDialogComponent>>(MatDialogRef);
   formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   data = inject(MAT_DIALOG_DATA);
 
   /** Floating Rate Period Form. */
@@ -54,28 +57,34 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    * Creates the floating rate period form.
    */
   ngOnInit() {
-    this.minDate = this.settingsService.businessDate;
+    // Set minDate to tomorrow based on server business date (floating rates must always be in the future)
+    const tomorrow = new Date(this.settingsService.businessDate);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    this.minDate = tomorrow;
+
     let rowDisabled = false;
-    if (this.data && new Date(this.data.fromDate) < this.minDate) {
+    if (this.data?.fromDate && this.dateUtils.parseDate(this.data.fromDate) < this.minDate) {
       rowDisabled = true;
     }
-    if (this.data.isNew) {
+    if (this.data?.isNew) {
       rowDisabled = false;
     }
     this.floatingRatePeriodForm = this.formBuilder.group({
       fromDate: [
-        { value: this.data ? new Date(this.data.fromDate) : '', disabled: rowDisabled },
+        { value: this.data?.fromDate ? this.dateUtils.parseDate(this.data.fromDate) : '', disabled: rowDisabled },
         Validators.required
       ],
       interestRate: [
-        { value: this.data ? this.data.interestRate : '', disabled: rowDisabled },
+        { value: this.data?.interestRate ?? '', disabled: rowDisabled },
         [
           Validators.required,
           Validators.min(0)
         ]
       ],
       isDifferentialToBaseLendingRate: [
-        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
+        { value: this.data?.isDifferentialToBaseLendingRate ?? false, disabled: rowDisabled }
+      ]
     });
   }
 

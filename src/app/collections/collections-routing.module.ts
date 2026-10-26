@@ -20,7 +20,7 @@ import { CollectionSheetComponent } from './collection-sheet/collection-sheet.co
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'collections',
+      path: '',
       children: [
         {
           path: 'individual-collection-sheet',
@@ -53,7 +53,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  providers: [],
+  providers: [OfficesResolver],
   exports: [RouterModule]
 })
 export class CollectionsRoutingModule {}

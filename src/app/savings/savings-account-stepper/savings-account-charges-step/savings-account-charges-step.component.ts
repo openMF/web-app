@@ -7,9 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -19,6 +19,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 import {
   MatTableDataSource,
   MatTable,
@@ -67,19 +68,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ChargesFilterPipe,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
 
   /** Savings Account Product Template */
   @Input() savingsAccountProductTemplate: any;
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: UntypedFormControl;
+  @Input() currencyCode: FormControl;
   /** active Client Members in case of GSIM Account */
   @Input() activeClientMembers?: any;
 
@@ -117,8 +120,14 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.savingsAccountTemplate) {
       if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
+        // An account charge holds the calculated amount in `amount`; the value entered for the charge
+        // (flat amount or percentage) is `amountOrPercentage`, which is what the form sends back.
         this.chargesDataSource =
-          this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+          this.savingsAccountTemplate.charges.map((charge: any) => ({
+            ...charge,
+            id: charge.chargeId,
+            amount: charge.amountOrPercentage ?? charge.amount
+          })) || [];
         this.isChargesPatched = true;
       } else {
         this.chargesDataSource = [];
@@ -129,8 +138,11 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.savingsAccountProductTemplate) {
       this.chargeData = this.savingsAccountProductTemplate.chargeOptions;
-      this.chargesDataSource =
-        this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      // When modifying an application, keep the charges loaded from the account in ngOnInit.
+      if (!this.isChargesPatched) {
+        this.chargesDataSource =
+          this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      }
     }
   }
 
@@ -165,7 +177,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
@@ -185,6 +197,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
         label: this.translateService.instant('labels.inputs.Date'),
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
+        maxDate: this.settingsService.maxFutureDate,
         required: false
       })
     ];
@@ -195,7 +208,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         let newCharge: any;
         const dateFormat = 'dd MMMM yyyy';
         const date = this.dateUtils.formatDate(response.data.value.date, dateFormat);
@@ -238,7 +251,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);

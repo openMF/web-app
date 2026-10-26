@@ -131,9 +131,14 @@
             @if (createCashierForm.hasError('invalidTimeRange')) {
               <div class="flex-48">
                 <mat-error>
-                  {{ 'labels.inputs.End Time' | translate }} {{ 'labels.commons.must' | translate }}
-                  {{ 'labels.commons.be' | translate }} {{ 'labels.commons.greater than' | translate }}
-                  {{ 'labels.inputs.Start Time' | translate }}
+                  {{
+                    'errors.validation.mustBeGreaterThan'
+                      | translate
+                        : {
+                            field: ('labels.inputs.End Time' | translate),
+                            other: ('labels.inputs.Start Time' | translate)
+                          }
+                  }}
                 </mat-error>
               </div>
             }

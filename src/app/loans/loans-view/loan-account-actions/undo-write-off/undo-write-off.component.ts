@@ -7,17 +7,19 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Undo Write-off Action
@@ -29,20 +31,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UndoWriteOffComponent implements OnInit {
+export class UndoWriteOffComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -50,15 +47,8 @@ export class UndoWriteOffComponent implements OnInit {
   /** Undo Write-off Loan Form */
   undoWriteOffLoanForm: UntypedFormGroup;
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -87,7 +77,7 @@ export class UndoWriteOffComponent implements OnInit {
     const operationDate = this.settingsService.businessDate;
     const data = {
       ...undoWriteOffLoanFormData,
-      transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+      transactionDate: this.dateUtils.formatDate(operationDate && this.dateUtils.parseDate(operationDate), dateFormat),
       transactionAmount: 0,
       dateFormat,
       locale
@@ -95,14 +85,13 @@ export class UndoWriteOffComponent implements OnInit {
 
     this.loanService.submitLoanActionButton(this.loanId, data, 'undowriteoff').subscribe({
       next: (response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
+        this.gotoLoanDefaultView();
       },
       error: (error) => {
         console.error('Undo write-off failed:', error);
         this.alertService.alert({
-          type: 'Undo Write-off Failed',
-          message:
-            'An error occurred while processing the undo write-off transaction. Please try again or contact support if the problem persists.'
+          type: this.translateService.instant('errors.loans.undoWriteOff.type'),
+          message: this.translateService.instant('errors.loans.undoWriteOff.message')
         });
       }
     });

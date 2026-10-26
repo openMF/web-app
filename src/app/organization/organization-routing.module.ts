@@ -6,6 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
+import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
+
+import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,6 +19,11 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { EndOfDayClosingComponent } from './base-teller/end-of-day-cash-closing/end-of-day-closing.component';
+import { endOfDayClosingGuard } from './base-teller/end-of-day-cash-closing/end-of-day-closing.guard';
+import { WithdrawalComponent } from './base-teller/withdrawals/withdrawal.component';
+import { withdrawalGuard } from './base-teller/withdrawals/withdrawal.guard';
+import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -26,6 +35,30 @@ import { AdhocQueryComponent } from './adhoc-query/adhoc-query.component';
 import { ViewAdhocQueryComponent } from './adhoc-query/view-adhoc-query/view-adhoc-query.component';
 import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
+import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
+import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
+import { ReturnedCheckPaymentComponent } from './base-teller/returned-check-payment/returned-check-payment.component';
+import { returnedCheckPaymentGuard } from './base-teller/returned-check-payment/returned-check-payment.guard';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
+import { creditPaymentGuard } from './base-teller/credit-payment/credit-payment.guard';
+import { ServicePaymentComponent } from './base-teller/service-payment/service-payment.component';
+import { servicePaymentGuard } from './base-teller/service-payment/service-payment.guard';
+import { CashManagementComponent } from './base-teller/cash-management/cash-management.component';
+import { cashManagementGuard } from './base-teller/cash-management/cash-management.guard';
+import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
+import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
+import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
+import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
+import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { CashDrawerPickupComponent } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.component';
+import { cashDrawerPickupGuard } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.guard';
+import { CashExchangeComponent } from './base-teller/cash-exchange/cash-exchange.component';
+import { cashExchangeGuard } from './base-teller/cash-exchange/cash-exchange.guard';
+import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
+import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
+import { TransactionReversalComponent } from './base-teller/transaction-reversal/transaction-reversal.component';
+import { transactionReversalGuard } from './base-teller/transaction-reversal/transaction-reversal.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -42,6 +75,9 @@ import { ViewCashierComponent } from './tellers/cashiers/view-cashier/view-cashi
 import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.component';
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
+import { AddressTabComponent } from './offices/view-office/address-tab/address-tab.component';
+import { ServicesTabComponent } from './offices/view-office/services-tab/services-tab.component';
+import { SchedulesTabComponent } from './offices/view-office/schedules-tab/schedules-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
@@ -118,11 +154,14 @@ import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-origin
 import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
 import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
 
+import { AccountTransfersComponent } from './base-teller/account-transfers/account-transfers.component';
+import { accountTransferGuard } from './base-teller/account-transfers/account-transfer.guard';
+
 /** Organization Routes */
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'organization',
+      path: '',
       data: { title: 'Organization', breadcrumb: 'Organization' },
       children: [
         {
@@ -192,9 +231,13 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
-              data: { title: 'View Office', breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
+              data: { title: 'View Office', routeResolveBreadcrumb: [
+                  'office',
+                  'name'
+                ], addBreadcrumbLink: false },
               component: ViewOfficeComponent,
               resolve: {
+                office: OfficeResolver,
                 officeDatatables: OfficeDatatablesResolver
               },
               children: [
@@ -210,6 +253,21 @@ const routes: Routes = [
                   resolve: {
                     office: OfficeResolver
                   }
+                },
+                {
+                  path: 'address',
+                  component: AddressTabComponent,
+                  data: { title: 'Address', breadcrumb: 'Address', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'services',
+                  component: ServicesTabComponent,
+                  data: { title: 'Services', breadcrumb: 'Services', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'schedules',
+                  component: SchedulesTabComponent,
+                  data: { title: 'Schedules', breadcrumb: 'Schedules', routeParamBreadcrumb: false }
                 },
                 {
                   path: 'datatables',
@@ -257,19 +315,22 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Employee', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Employee', routeResolveBreadcrumb: [
+                  'employee',
+                  'displayName'
+                ] },
+              resolve: {
+                employee: EmployeeResolver
+              },
               children: [
                 {
                   path: '',
-                  component: ViewEmployeeComponent,
-                  resolve: {
-                    employee: EmployeeResolver
-                  }
+                  component: ViewEmployeeComponent
                 },
                 {
                   path: 'edit',
                   component: EditEmployeeComponent,
-                  data: { title: 'Edit Employee', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Employee', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
                     employee: EditEmployeeResolver
                   }
@@ -295,6 +356,12 @@ const routes: Routes = [
               component: ManageCurrenciesComponent
             }
           ]
+        },
+        {
+          path: 'exchange-rates',
+          data: { title: 'Exchange Rates', breadcrumb: 'Exchange Rates' },
+          loadChildren: () =>
+            import('./exchange-rates/exchange-rates.module').then((module) => module.ExchangeRatesModule)
         },
         {
           path: 'sms-campaigns',
@@ -407,6 +474,208 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'foreign-currency/rates',
+          canActivate: [fxRateGuard],
+          loadComponent: () => import('./foreign-currency/fx-rates.component').then((m) => m.FxRatesComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
+        },
+        {
+          path: 'base-teller/foreign-currency',
+          canActivate: [fxTellerGuard],
+          loadComponent: () => import('./foreign-currency/fx-teller.component').then((m) => m.FxTellerComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
+        },
+        {
+          path: 'base-teller',
+          pathMatch: 'full',
+          component: BaseTellerComponent,
+          data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/withdrawals',
+          component: WithdrawalComponent,
+          canActivate: [withdrawalGuard],
+          data: { title: 'withdrawal.title', breadcrumb: 'withdrawal.title' }
+        },
+        {
+          path: 'base-teller/cash-transfers-between-tellers',
+          component: CashTransfersBetweenTellersComponent,
+          canActivate: [cashTransferGuard],
+          data: { title: 'cashTellerTransfer.title', breadcrumb: 'cashTellerTransfer.title' }
+        },
+        {
+          path: 'base-teller/account-transfers',
+          component: AccountTransfersComponent,
+          canActivate: [accountTransferGuard],
+          data: { title: 'accountTransfer.title', breadcrumb: 'accountTransfer.title' }
+        },
+        {
+          path: 'base-teller/end-of-day-cash-closing',
+          component: EndOfDayClosingComponent,
+          canActivate: [endOfDayClosingGuard],
+          data: { title: 'eod.title', breadcrumb: 'eod.title' }
+        },
+        {
+          path: 'base-teller/catalog-updates',
+          component: CatalogUpdatesComponent,
+          canActivate: [catalogUpdatesGuard],
+          data: {
+            title: 'labels.heading.Catalog Updates',
+            breadcrumb: 'labels.heading.Catalog Updates'
+          }
+        },
+        {
+          path: 'base-teller/cash-allocations',
+          component: CashAllocationComponent,
+          canActivate: [cashAllocationGuard],
+          data: {
+            title: 'cashAllocation.title',
+            breadcrumb: 'cashAllocation.title'
+          }
+        },
+        {
+          path: 'base-teller/cash-inventory',
+          component: CashInventoryComponent,
+          canActivate: [cashInventoryGuard],
+          data: {
+            title: 'cashInventory.title',
+            breadcrumb: 'cashInventory.title'
+          }
+        },
+        {
+          path: 'base-teller/savings-account-openings',
+          component: SavingsAccountOpeningComponent,
+          data: { title: 'Savings Account Opening', breadcrumb: 'Savings Account Opening' }
+        },
+        {
+          path: 'base-teller/savings-account-deposits',
+          component: SavingsAccountDepositComponent,
+          data: {
+            title: 'labels.heading.Savings Account Deposit',
+            breadcrumb: 'labels.heading.Savings Account Deposit'
+          }
+        },
+        {
+          path: 'base-teller/returned-check-payments',
+          component: ReturnedCheckPaymentComponent,
+          canActivate: [returnedCheckPaymentGuard],
+          data: {
+            title: 'labels.heading.Returned Check Payment',
+            breadcrumb: 'labels.heading.Returned Check Payment'
+          }
+        },
+        {
+          path: 'base-teller/credit-payments',
+          component: CreditPaymentComponent,
+          canActivate: [creditPaymentGuard],
+          data: {
+            title: 'creditPayment.heading.title',
+            breadcrumb: 'creditPayment.heading.title'
+          }
+        },
+        {
+          path: 'base-teller/cash-register-closing',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.closing',
+            breadcrumb: 'web1232.views.closing',
+            view: 'closing',
+            permission: 'READ_CASHIER_CLOSING'
+          }
+        },
+        {
+          path: 'base-teller/global-cash-count',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.global',
+            breadcrumb: 'web1232.views.global',
+            view: 'global',
+            permission: 'READ_GLOBAL_SETTLEMENT'
+          }
+        },
+        {
+          path: 'base-teller/deposit-in-transit',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.deposit-in-transit',
+            breadcrumb: 'web1232.views.deposit-in-transit',
+            view: 'deposit-in-transit',
+            permission: 'CREATE_CASH_DEPOSIT'
+          }
+        },
+        {
+          path: 'base-teller/bank-deposit',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.bank-deposit',
+            breadcrumb: 'web1232.views.bank-deposit',
+            view: 'bank-deposit',
+            permission: 'CREATE_CASH_DEPOSIT'
+          }
+        },
+        {
+          path: 'base-teller/cash-operation-history',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.history',
+            breadcrumb: 'web1232.views.history',
+            view: 'history',
+            permission: 'READ_CASH_OPERATION_HISTORY'
+          }
+        },
+        {
+          path: 'base-teller/cash-on-hand',
+          component: CashManagementComponent,
+          canActivate: [cashManagementGuard],
+          data: {
+            title: 'web1232.views.holdings',
+            breadcrumb: 'web1232.views.holdings',
+            view: 'holdings',
+            permission: 'READ_CASH_HOLDINGS'
+          }
+        },
+        {
+          path: 'base-teller/cash-drawer-pickup',
+          component: CashDrawerPickupComponent,
+          canActivate: [cashDrawerPickupGuard],
+          data: { title: 'cashPickup.title', breadcrumb: 'cashPickup.title' }
+        },
+        {
+          path: 'base-teller/cash-exchange',
+          component: CashExchangeComponent,
+          canActivate: [cashExchangeGuard],
+          data: { title: 'cashExchange.title', breadcrumb: 'cashExchange.title' }
+        },
+        {
+          path: 'base-teller/transaction-history',
+          component: TransactionHistoryComponent,
+          canActivate: [transactionHistoryGuard],
+          data: {
+            title: 'transactionHistory.title',
+            breadcrumb: 'transactionHistory.title'
+          }
+        },
+        {
+          path: 'base-teller/transaction-reversal',
+          component: TransactionReversalComponent,
+          canActivate: [transactionReversalGuard],
+          data: { title: 'transactionReversal.title', breadcrumb: 'transactionReversal.title' }
+        },
+        {
+          path: 'base-teller/service-payments',
+          component: ServicePaymentComponent,
+          canActivate: [servicePaymentGuard],
+          data: {
+            title: 'Bill and Service Payment',
+            breadcrumb: 'Bill and Service Payment'
+          }
+        },
+        {
           path: 'tellers',
           data: { title: 'Tellers', breadcrumb: 'Tellers' },
           children: [
@@ -427,31 +696,34 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Teller', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Teller', routeResolveBreadcrumb: [
+                  'teller',
+                  'name'
+                ] },
+              resolve: {
+                teller: TellerResolver
+              },
               children: [
                 {
                   path: '',
-                  component: ViewTellerComponent,
-                  resolve: {
-                    teller: TellerResolver
-                  }
+                  component: ViewTellerComponent
                 },
                 {
                   path: 'edit',
                   component: EditTellerComponent,
-                  data: { title: 'Edit Teller', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Teller', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
-                    teller: TellerResolver,
                     offices: OfficesResolver
                   }
                 },
                 {
                   path: 'cashiers',
-                  data: { title: 'Cashiers', breadcrumb: 'Cashiers', routeParamBreadcrumb: false },
+                  data: { title: 'Cashiers', breadcrumb: 'Cashiers', routeResolveBreadcrumb: false },
                   children: [
                     {
                       path: '',
                       component: CashiersComponent,
+                      data: { title: 'Cashiers', breadcrumb: false },
                       resolve: {
                         cashiersData: CashiersResolver
                       }
@@ -466,22 +738,24 @@ const routes: Routes = [
                     },
                     {
                       path: ':id',
-                      data: { title: 'View Cashier', routeParamBreadcrumb: 'id' },
+                      data: { title: 'View Cashier', routeResolveBreadcrumb: [
+                          'cashier',
+                          'staffName'
+                        ] },
+                      resolve: {
+                        cashier: CashierResolver
+                      },
                       children: [
                         {
                           path: '',
                           component: ViewCashierComponent,
-                          data: { title: 'View Cashier', breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
-                          resolve: {
-                            cashier: CashierResolver
-                          }
+                          data: { title: 'View Cashier', breadcrumb: false, routeResolveBreadcrumb: false }
                         },
                         {
                           path: 'edit',
                           component: EditCashierComponent,
-                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                           resolve: {
-                            cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
                           }
                         },
@@ -490,7 +764,7 @@ const routes: Routes = [
                           data: {
                             title: 'Cashier Transactions',
                             breadcrumb: 'Transactions',
-                            routeParamBreadcrumb: false
+                            routeResolveBreadcrumb: false
                           },
                           component: TransactionsComponent,
                           resolve: {
@@ -500,7 +774,7 @@ const routes: Routes = [
                         {
                           path: 'settle',
                           component: SettleCashComponent,
-                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeResolveBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -508,7 +782,7 @@ const routes: Routes = [
                         {
                           path: 'allocate',
                           component: AllocateCashComponent,
-                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeResolveBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -648,10 +922,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: ManageFundsComponent,
-              resolve: {
-                funds: ManageFundsResolver
-              }
+              component: ManageFundsComponent
             },
             {
               path: 'create',
@@ -660,25 +931,22 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Fund', breadcrumb: 'id', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Fund', routeResolveBreadcrumb: [
+                  'fundData',
+                  'name'
+                ] },
               resolve: {
                 fundData: ManageFundResolver
               },
               children: [
                 {
                   path: '',
-                  component: ViewFundComponent,
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  component: ViewFundComponent
                 },
                 {
                   path: 'edit',
                   component: EditFundComponent,
-                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                 }
               ]
             }
@@ -728,20 +996,30 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Holidays', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Holidays', routeResolveBreadcrumb: [
+                  'holidays',
+                  'name'
+                ] },
+              resolve: {
+                holidays: HolidayResolver
+              },
               children: [
                 {
                   path: '',
-                  component: ViewHolidaysComponent,
-                  resolve: {
-                    holidays: HolidayResolver
-                  }
+                  component: ViewHolidaysComponent
                 },
                 {
                   path: 'edit',
                   component: EditHolidayComponent,
-                  data: { title: 'Edit Holidays', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Holidays',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false,
+                    routeResolveBreadcrumb: null
+                  },
                   resolve: {
+                    // Not a duplicate of the parent: the parent resolves HolidayResolver under
+                    // `holidays`, and EditHolidayComponent reads `holiday`.
                     holiday: HolidayResolver,
                     holidayTemplate: HolidayTemplateResolver
                   }

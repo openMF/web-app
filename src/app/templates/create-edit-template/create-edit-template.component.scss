@@ -37,6 +37,34 @@
     color: #f44336;
   }
 
+  // Header row: Text label on the left, plain text / HTML toggle on the right
+  .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .required-label {
+      margin-bottom: 0;
+    }
+
+    .text-format-toggle {
+      display: inline-flex;
+      gap: 8px;
+    }
+  }
+
+  // Plain text editor: stored verbatim, so no rich text chrome
+  .plain-text-field {
+    width: 100%;
+
+    textarea {
+      resize: vertical;
+    }
+  }
+
   // CKEditor container spacing
   ::ng-deep {
     .ck-editor {

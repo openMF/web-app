@@ -7,9 +7,9 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { LoansService } from '../loans.service';
+import { Observable, of, from } from 'rxjs';
+import { map, concatMap, toArray } from 'rxjs/operators';
+import { LoansService, LoanAccountPath } from '../loans.service';
 import { Dates } from 'app/core/utils/dates';
 
 /**
@@ -203,22 +203,19 @@ export class PenaltyManagementService {
    * @param penaltyIds Array of penalty/charge IDs to waive
    * @returns Observable that completes when all penalties are waived
    */
-  waivePenalties(loanId: string, penaltyIds: number[]): Observable<any[]> {
+  waivePenalties(loanAccountPath: LoanAccountPath, loanId: string, penaltyIds: number[]): Observable<any[]> {
     if (!penaltyIds || penaltyIds.length === 0) {
       return of([]);
     }
 
-    // Create waive requests for each penalty
-    const waiveRequests = penaltyIds.map((chargeId: number) =>
-      this.loanService.executeLoansAccountChargesCommand(loanId, 'waive', {}, chargeId).pipe(
-        catchError((error: any) => {
-          console.error(`Error waiving penalty ${chargeId}:`, error);
-          // Return null for failed waive operations so we can continue with others
-          return of(null);
-        })
-      )
+    // Process waive requests sequentially to avoid race conditions.
+    // Each waive modifies the loan state on the backend, so the next
+    // request must wait for the previous one to complete.
+    return from(penaltyIds).pipe(
+      concatMap((chargeId: number) =>
+        this.loanService.executeLoansAccountChargesCommand(loanAccountPath, loanId, 'waive', {}, chargeId)
+      ),
+      toArray()
     );
-
-    return forkJoin(waiveRequests);
   }
 }

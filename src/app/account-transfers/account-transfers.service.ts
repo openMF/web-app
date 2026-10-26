@@ -84,6 +84,12 @@ export class AccountTransfersService {
     return this.http.post(`/accounttransfers`, data);
   }
 
+  undoAccountTransfer(transferId: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpParams = new HttpParams().set('command', 'undo');
+    return this.http.post(`/accounttransfers/${transferId}`, '{}', { params: httpParams, headers });
+  }
+
   /**
    * @param clientId Client Id
    * @param clientName Client Name

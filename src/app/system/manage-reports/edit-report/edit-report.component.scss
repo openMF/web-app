@@ -5,19 +5,3 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
-@media (width >= 992px) {
-  .user-report-wrapper {
-    position: relative;
-
-    .user-report {
-      padding: 0 0 17.5px;
-      position: absolute;
-      bottom: 0;
-    }
-  }
-}
-
-table {
-  width: 100%;
-}

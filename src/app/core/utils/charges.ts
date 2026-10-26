@@ -18,7 +18,8 @@ export class Charges {
       { id: 1, code: 'chargeAppliesTo.loan', value: 'Loan' },
       { id: 2, code: 'chargeAppliesTo.savings', value: 'Savings' },
       { id: 3, code: 'chargeAppliesTo.client', value: 'Client' },
-      { id: 4, code: 'chargeAppliesTo.shares', value: 'Shares' }
+      { id: 4, code: 'chargeAppliesTo.shares', value: 'Shares' },
+      { id: 5, code: 'chargeAppliesTo.workingCapitalLoan', value: 'Working Capital Loan' }
     ];
   }
 }

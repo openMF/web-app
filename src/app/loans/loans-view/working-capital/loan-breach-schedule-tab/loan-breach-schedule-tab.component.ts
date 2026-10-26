@@ -1,0 +1,613 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from '@angular/material/table';
+import { AlertService } from 'app/core/alert/alert.service';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
+import { LoansService } from 'app/loans/loans.service';
+import { BreachSchedule } from 'app/loans/models/working-capital-loan-account.model';
+import { LoanBreachActionResetDialogComponent } from 'app/loans/custom-dialog/loan-breach-action-reset-dialog/loan-breach-action-reset-dialog.component';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { DateFormatPipe } from 'app/pipes/date-format.pipe';
+import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  WorkingCapitalBalances,
+  WorkingCapitalBreachAction,
+  WorkingCapitalBreachCommandRequest
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { findActiveBreachDisable } from '../breach-evaluation';
+import { resolveBreachActionErrorMessage } from '../breach-action-error.helper';
+
+type Severity = 'mild' | 'moderate' | 'severe';
+
+/**
+ * State of an evaluation period, read from the API flags rather than inferred from amounts or dates.
+ * `breach` is tri-state: `true` the period expired with the minimum payment uncovered, `false` the
+ * minimum was covered, `null` the period is still open and undecided. `nearBreach` is a warning
+ * raised at an intermediate evaluation point and survives the period being covered later, so it is
+ * only shown when the period is not in breach.
+ */
+type PeriodStatus = 'in-breach' | 'near-breach' | 'open' | 'compliant';
+
+interface BreachPeriodView extends BreachSchedule {
+  status: PeriodStatus;
+  /** Only set for a period in breach; severity grades how much of the minimum payment is missing. */
+  severity: Severity | null;
+  /** Modifier class for the pill, the timeline bar and the gap bar: the severity, or the status. */
+  toneClass: string;
+  statusLabelKey: string;
+  gapPercent: number;
+  gapBarWidth: number;
+  fromDateObj: Date;
+  toDateObj: Date;
+  barX: number;
+  barY: number;
+  barWidth: number;
+  barHeight: number;
+  showLabel: boolean;
+}
+
+interface MonthMark {
+  gridX: number;
+  labelX: number;
+  label: string;
+}
+
+interface BreachKpis {
+  count: number;
+  totalDays: number;
+  peakOutstanding: number;
+  avgGapPercent: number;
+  status: 'in-breach' | 'resolved' | 'near-breach' | 'compliant';
+}
+
+interface ResetHistoryRow {
+  id: number;
+  action: 'RESET' | 'UNDO_RESET';
+  date: Date;
+  /** Only meaningful for RESET rows: true once a later UNDO_RESET popped it */
+  undone: boolean;
+  icon: string;
+  labelKey: string;
+}
+
+const SEVERITY_MILD_THRESHOLD = 25;
+const SEVERITY_MODERATE_THRESHOLD = 80;
+const HEIGHT_SCALE_MAX_PERCENT = 140;
+const MIN_BAR_HEIGHT = 18;
+const MAX_BAR_HEIGHT = 100;
+const MIN_BAR_WIDTH = 4;
+const LABEL_MIN_BAR_WIDTH = 20;
+const VIEWBOX_WIDTH = 1200;
+const VIEWBOX_HEIGHT = 200;
+const LEFT_PAD = 30;
+const RIGHT_PAD = 30;
+const BASELINE_Y = 145;
+const TOP_Y = 38;
+const TODAY_LINE_BOTTOM_Y = 155;
+const MONTH_LABEL_Y = 170;
+const TODAY_LABEL_Y = 32;
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+@Component({
+  selector: 'mifosx-loan-breach-schedule-tab',
+  templateUrl: './loan-breach-schedule-tab.component.html',
+  styleUrl: './loan-breach-schedule-tab.component.scss',
+  standalone: true,
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgClass,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatTooltip,
+    FaIconComponent,
+    DateFormatPipe,
+    FormatNumberPipe
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class LoanBreachScheduleTabComponent extends LoanProductBaseComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private loansService = inject(LoansService);
+  private translateService = inject(TranslateService);
+  private alertService = inject(AlertService);
+  private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(MatDialog);
+
+  dataSource = new MatTableDataSource<BreachPeriodView>();
+  currencyCode: string = '';
+  loanBalances: WorkingCapitalBalances | null = null;
+  loanId: string;
+
+  breachActions = signal<WorkingCapitalBreachAction[]>([]);
+  actionInFlight = signal(false);
+
+  /**
+   * Every RESET / UNDO_RESET breach action, newest first. Undo does not delete
+   * history on the backend; it appends a compensating UNDO_RESET row, so the
+   * "Active"/"Undone" state of each RESET is derived client-side with stack
+   * semantics: iterating in id order, a RESET pushes and an UNDO_RESET pops the
+   * most recent still-open reset.
+   */
+  resetHistory = computed<ResetHistoryRow[]>(() => {
+    const relevant = this.breachActions()
+      .filter((item) => item.action === 'RESET' || item.action === 'UNDO_RESET')
+      .sort((a, b) => a.id - b.id);
+    const openResets: ResetHistoryRow[] = [];
+    const rows = relevant.map((item) => {
+      const isReset = item.action === 'RESET';
+      const row: ResetHistoryRow = {
+        id: item.id,
+        action: item.action as ResetHistoryRow['action'],
+        date: this.dateUtils.parseDate(item.startDate),
+        undone: false,
+        icon: isReset ? 'calendar' : 'undo',
+        labelKey: isReset ? 'labels.inputs.Reset' : 'labels.buttons.Undo Reset'
+      };
+      if (item.action === 'RESET') {
+        openResets.push(row);
+      } else {
+        const popped = openResets.pop();
+        if (popped) {
+          popped.undone = true;
+        }
+      }
+      return row;
+    });
+    return rows.reverse();
+  });
+
+  activeResets = computed<ResetHistoryRow[]>(() =>
+    this.resetHistory().filter((row) => row.action === 'RESET' && !row.undone)
+  );
+
+  hasActiveReset = computed<boolean>(() => this.activeResets().length > 0);
+
+  /** True while a DISABLE window covers the business date; no evaluations are shown then. */
+  breachEvaluationDisabled = false;
+  breachDisabledSince: Date | null = null;
+
+  readonly displayedColumns: string[] = [
+    'periodNumber',
+    'severity',
+    'fromDate',
+    'toDate',
+    'numberOfDays',
+    'minPaymentAmount',
+    'outstandingAmount',
+    'gap'
+  ];
+
+  readonly resetHistoryColumns: string[] = [
+    'id',
+    'action',
+    'date',
+    'status'
+  ];
+
+  breachPeriods: BreachPeriodView[] = [];
+  monthMarks: MonthMark[] = [];
+  kpis: BreachKpis = {
+    count: 0,
+    totalDays: 0,
+    peakOutstanding: 0,
+    avgGapPercent: 0,
+    status: 'compliant'
+  };
+
+  readonly viewBoxWidth = VIEWBOX_WIDTH;
+  readonly viewBoxHeight = VIEWBOX_HEIGHT;
+  readonly leftPad = LEFT_PAD;
+  readonly rightPad = RIGHT_PAD;
+  readonly baselineY = BASELINE_Y;
+  readonly topY = TOP_Y;
+  readonly todayLineBottomY = TODAY_LINE_BOTTOM_Y;
+  readonly monthLabelY = MONTH_LABEL_Y;
+  readonly todayLabelY = TODAY_LABEL_Y;
+  readonly mildLabel = `<${SEVERITY_MILD_THRESHOLD}%`;
+  readonly moderateLabel = `${SEVERITY_MILD_THRESHOLD}–${SEVERITY_MODERATE_THRESHOLD}%`;
+  readonly severeLabel = `>${SEVERITY_MODERATE_THRESHOLD}%`;
+
+  todayX: number | null = null;
+  timelineYearLabel = '';
+  currentPeriod: BreachPeriodView | null = null;
+
+  ngOnInit(): void {
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
+
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { breachSchedule: BreachSchedule[]; loanBreachActions: WorkingCapitalBreachAction[] }) => {
+        const activeDisable = findActiveBreachDisable(
+          (data.loanBreachActions ?? []).map((action) => {
+            // An ENABLE closes the window through effectiveEndDate, mirroring the actions tab rows.
+            const rawEnd = action.effectiveEndDate ?? action.endDate;
+            return {
+              action: action.action,
+              startDateObj: this.toDate(action.startDate),
+              endDateObj: rawEnd ? this.toDate(rawEnd) : null
+            };
+          }),
+          this.settingsService.businessDate
+        );
+        this.breachEvaluationDisabled = activeDisable !== null;
+        this.breachDisabledSince = activeDisable?.startDateObj ?? null;
+        this.processBreachPeriods(data.breachSchedule ?? []);
+        this.dataSource.data = this.breachPeriods;
+      });
+
+    this.loansService
+      .getWorkingCapitalLoanBreachActions(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((actions: WorkingCapitalBreachAction[]) => {
+        this.breachActions.set(actions ?? []);
+      });
+
+    if (this.route.parent) {
+      this.route.parent.data
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((data: { loanDetailsData: { currency?: { code: string }; balance: WorkingCapitalBalances } }) => {
+          if (data?.loanDetailsData?.currency?.code) {
+            this.currencyCode = data.loanDetailsData.currency.code;
+          }
+          this.loanBalances = data?.loanDetailsData.balance;
+          this.refreshHeaderStatus();
+          this.cdr.markForCheck();
+        });
+    }
+  }
+
+  severityLabel(severity: Severity): string {
+    return severity.charAt(0).toUpperCase() + severity.slice(1);
+  }
+
+  /**
+   * Proactive guard for AC-2: the backend allows a single active reset per
+   * evaluation period, so the Reset button is disabled when the current period
+   * is already flagged (`reset === true`) or the client-side stack shows an
+   * active reset dated inside the current period. The 400 from the backend is
+   * still handled, since state can change server-side (COB, another user).
+   */
+  get currentPeriodAlreadyReset(): boolean {
+    const current = this.currentPeriod;
+    if (!current) {
+      return false;
+    }
+    if (current.reset) {
+      return true;
+    }
+    return this.activeResets().some((row) => row.date >= current.fromDateObj && row.date <= current.toDateObj);
+  }
+
+  get resetDisabledTooltip(): string {
+    return this.translateService.instant(
+      'errors.error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period'
+    );
+  }
+
+  get undoDisabledTooltip(): string {
+    return this.translateService.instant('errors.error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo');
+  }
+
+  openResetDialog(): void {
+    const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
+      data: { action: 'reset' }
+    });
+    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (response?.data) {
+        this.executeBreachAction({
+          action: 'reset',
+          restartPeriodFromResetDate: !!response.data.value.restartPeriodFromResetDate
+        });
+      }
+    });
+  }
+
+  openUndoResetDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Reset'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to undo the last breach reset'
+        )
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response?.confirm) {
+        this.executeBreachAction({ action: 'undo_reset' });
+      }
+    });
+  }
+
+  /**
+   * Posts a breach action command and reloads the account. The reload re-runs every resolver of
+   * the route, the loan details among them: the header badge and the Past Due Amount KPI are read
+   * from the loan balances, which a schedule-only refresh would leave on their pre-action value.
+   * The reload also runs on failure: a domain-rule 400 usually means the server-side state moved
+   * under us (COB, another user), so the screen must catch up with it.
+   */
+  private executeBreachAction(command: { action: string; restartPeriodFromResetDate?: boolean }): void {
+    const payload: WorkingCapitalBreachCommandRequest = {
+      ...command,
+      locale: this.settingsService.language.code,
+      dateFormat: this.settingsService.dateFormat
+    };
+    this.actionInFlight.set(true);
+    this.loansService
+      .createBreachAction(this.loanId, payload)
+      .pipe(
+        catchError((error: unknown) => {
+          const message = resolveBreachActionErrorMessage(error, this.translateService);
+          if (message) {
+            this.alertService.alert({
+              type: this.translateService.instant('errors.error.bad.request.type'),
+              message
+            });
+          }
+          // Swallow the command error so the screen still reloads.
+          return of(null);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      // actionInFlight is intentionally not released: reload() re-navigates and recreates the
+      // component, so releasing it earlier would re-enable the buttons against stale state.
+      .subscribe(() => this.reload());
+  }
+
+  buildTooltip(period: BreachPeriodView): string {
+    const from = this.dateUtils.formatDate(period.fromDateObj, Dates.DEFAULT_DATEFORMAT);
+    const to = this.dateUtils.formatDate(period.toDateObj, Dates.DEFAULT_DATEFORMAT);
+    return (
+      `P${period.periodNumber} · ${from} → ${to} (${period.numberOfDays}d) · ` +
+      `Min ${period.minPaymentAmount.toFixed(2)} · ` +
+      `Outstanding ${period.outstandingAmount.toFixed(2)} (${period.gapPercent.toFixed(1)}%)`
+    );
+  }
+
+  /**
+   * Reads the state of a period from the API flags. A period in breach wins over a near breach
+   * warning, and a covered period is compliant even when it tripped a near breach evaluation
+   * earlier — the warning is then what the row reports, since the breach never materialised.
+   */
+  private periodStatus(period: BreachSchedule): PeriodStatus {
+    if (period.breach === true) {
+      return 'in-breach';
+    }
+    if (period.nearBreach === true) {
+      return 'near-breach';
+    }
+    return period.breach === false ? 'compliant' : 'open';
+  }
+
+  /**
+   * Share of the minimum payment still uncovered. `outstandingAmount` is already
+   * `max(0, minPayment - paid)`, so it is the shortfall itself: 0% when the minimum is fully paid
+   * and 100% when nothing was paid. Clamped because the value crosses an API boundary.
+   */
+  private gapPercentOf(period: BreachSchedule): number {
+    if (!(period.minPaymentAmount > 0)) {
+      return 0;
+    }
+    return Math.min(Math.max((period.outstandingAmount / period.minPaymentAmount) * 100, 0), 100);
+  }
+
+  private severityOf(gapPercent: number): Severity {
+    if (gapPercent < SEVERITY_MILD_THRESHOLD) {
+      return 'mild';
+    }
+    return gapPercent <= SEVERITY_MODERATE_THRESHOLD ? 'moderate' : 'severe';
+  }
+
+  private statusLabelKey(status: PeriodStatus, severity: Severity | null): string {
+    if (severity) {
+      return `labels.text.${this.severityLabel(severity)}`;
+    }
+    const labels: Record<Exclude<PeriodStatus, 'in-breach'>, string> = {
+      'near-breach': 'labels.text.Near Breach',
+      compliant: 'labels.text.Compliant',
+      open: 'labels.text.In Progress'
+    };
+    return labels[status as Exclude<PeriodStatus, 'in-breach'>];
+  }
+
+  private processBreachPeriods(periods: BreachSchedule[]): void {
+    if (periods.length === 0) {
+      this.breachPeriods = [];
+      this.monthMarks = [];
+      this.kpis = { count: 0, totalDays: 0, peakOutstanding: 0, avgGapPercent: 0, status: 'compliant' };
+      this.todayX = null;
+      this.timelineYearLabel = '';
+      this.currentPeriod = null;
+      return;
+    }
+
+    const parsed = periods.map((p) => ({
+      ...p,
+      fromDateObj: this.toDate(p.fromDate),
+      toDateObj: this.toDate(p.toDate)
+    }));
+
+    const minFrom = new Date(Math.min(...parsed.map((p) => p.fromDateObj.getTime())));
+    const maxTo = new Date(Math.max(...parsed.map((p) => p.toDateObj.getTime())));
+    const rangeStart = new Date(minFrom.getFullYear(), minFrom.getMonth(), 1);
+    const rangeEnd = new Date(maxTo.getFullYear(), maxTo.getMonth() + 1, 1);
+    const rangeDays = this.daysBetween(rangeStart, rangeEnd);
+    const usableWidth = VIEWBOX_WIDTH - LEFT_PAD - RIGHT_PAD;
+    const pxPerDay = rangeDays > 0 ? usableWidth / rangeDays : 0;
+
+    this.timelineYearLabel =
+      rangeStart.getFullYear() === maxTo.getFullYear()
+        ? `${rangeStart.getFullYear()}`
+        : `${rangeStart.getFullYear()} – ${maxTo.getFullYear()}`;
+
+    this.monthMarks = this.buildMonthMarks(rangeStart, rangeEnd, pxPerDay);
+
+    const today = this.settingsService.businessDate || new Date();
+    let peakOutstanding = 0;
+    let gapSum = 0;
+
+    this.breachPeriods = parsed.map((p) => {
+      const gapPercent = this.gapPercentOf(p);
+      const status = this.periodStatus(p);
+      const severity = status === 'in-breach' ? this.severityOf(gapPercent) : null;
+
+      const barX = LEFT_PAD + this.daysBetween(rangeStart, p.fromDateObj) * pxPerDay;
+      const barWidth = Math.max(p.numberOfDays * pxPerDay, MIN_BAR_WIDTH);
+      const heightRatio = Math.min(Math.max(gapPercent / HEIGHT_SCALE_MAX_PERCENT, 0), 1);
+      const barHeight = MIN_BAR_HEIGHT + heightRatio * (MAX_BAR_HEIGHT - MIN_BAR_HEIGHT);
+      const barY = BASELINE_Y - barHeight;
+
+      peakOutstanding = Math.max(peakOutstanding, p.outstandingAmount);
+      gapSum += gapPercent;
+
+      return {
+        ...p,
+        status,
+        severity,
+        toneClass: severity ?? status,
+        statusLabelKey: this.statusLabelKey(status, severity),
+        gapPercent,
+        gapBarWidth: gapPercent,
+        barX,
+        barY,
+        barWidth,
+        barHeight,
+        showLabel: barWidth >= LABEL_MIN_BAR_WIDTH
+      };
+    });
+
+    this.currentPeriod = this.breachPeriods.find((p) => today >= p.fromDateObj && today <= p.toDateObj) ?? null;
+
+    // Only a period the backend flagged as breached counts towards the breach KPIs: a period that
+    // merely contains the business date, or one that is still open, is not a breach.
+    const breachedPeriods = this.breachPeriods.filter((p) => p.status === 'in-breach');
+
+    this.kpis = {
+      count: breachedPeriods.length,
+      totalDays: breachedPeriods.reduce((sum, p) => sum + p.numberOfDays, 0),
+      peakOutstanding,
+      avgGapPercent: gapSum / this.breachPeriods.length,
+      status: this.headerStatus()
+    };
+
+    this.todayX =
+      today >= rangeStart && today < rangeEnd ? LEFT_PAD + this.daysBetween(rangeStart, today) * pxPerDay : null;
+  }
+
+  /**
+   * Badge of the whole schedule, read from the debt rather than from the position of the business
+   * date on the timeline. A period is only flagged as breached once it has expired, and the same
+   * evaluation opens the next one, so the period holding the business date is almost never the
+   * breached one — keying the badge on it made "In Breach" unreachable.
+   *
+   * `breachPastDueAmount` is the minimum payment of the expired periods still uncovered, netted by
+   * the backend against the last active reset. It is the very figure the Past Due Amount KPI shows,
+   * so reading the badge from it keeps the two consistent by construction: while it is positive the
+   * loan is in breach, and a breach history with nothing left to cover is a resolved one.
+   */
+  private headerStatus(): BreachKpis['status'] {
+    const pastDueAmount = this.loanBalances?.breachPastDueAmount;
+    const hasBreachedPeriod = this.breachPeriods.some((p) => p.status === 'in-breach');
+    if (pastDueAmount == null) {
+      return hasBreachedPeriod ? 'in-breach' : this.warningStatus();
+    }
+    if (pastDueAmount > 0) {
+      return 'in-breach';
+    }
+    return hasBreachedPeriod ? 'resolved' : this.warningStatus();
+  }
+
+  /**
+   * Fallback of {@link headerStatus} when no period is in breach: a near breach warning raised on any
+   * period is still worth surfacing.
+   */
+  private warningStatus(): BreachKpis['status'] {
+    return this.breachPeriods.some((p) => p.status === 'near-breach') ? 'near-breach' : 'compliant';
+  }
+
+  /**
+   * The past due amount travels with the loan balances, on a route emission of its own. Recomputing
+   * the badge when they arrive keeps it right whatever order the two emissions come in, and after a
+   * breach action changes the balance.
+   */
+  private refreshHeaderStatus(): void {
+    this.kpis = { ...this.kpis, status: this.headerStatus() };
+  }
+
+  private buildMonthMarks(rangeStart: Date, rangeEnd: Date, pxPerDay: number): MonthMark[] {
+    const marks: MonthMark[] = [];
+    const cursor = new Date(rangeStart);
+    const locale = this.settingsService.language?.code || 'en';
+    while (cursor < rangeEnd) {
+      const nextMonth = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+      const gridX = LEFT_PAD + this.daysBetween(rangeStart, cursor) * pxPerDay;
+      const nextX = LEFT_PAD + this.daysBetween(rangeStart, nextMonth) * pxPerDay;
+      marks.push({
+        gridX,
+        labelX: (gridX + nextX) / 2,
+        label: cursor.toLocaleString(locale, { month: 'short' })
+      });
+      cursor.setMonth(cursor.getMonth() + 1);
+    }
+    return marks;
+  }
+
+  private daysBetween(start: Date, end: Date): number {
+    return (end.getTime() - start.getTime()) / MS_PER_DAY;
+  }
+
+  private toDate(value: Date | number[] | string): Date {
+    if (value instanceof Date) return value;
+    return this.dateUtils.parseDate(value);
+  }
+}

@@ -17,6 +17,22 @@
   .group-details-container {
     border: 1px solid;
     padding: 1%;
+
+    /* Distribute the summary columns across the full card width */
+    p {
+      flex: 1 1 0;
+      margin: 0;
+    }
+
+    a.entity-link {
+      color: var(--md-sys-color-primary, #1074b9);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
   }
 
   .action-button {

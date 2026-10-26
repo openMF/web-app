@@ -7,15 +7,24 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ElementRef,
+  SecurityContext,
+  inject
+} from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { environment } from '../../../../../environments/environment';
 
 /**
  * Loans Screen Reports Component.
@@ -27,27 +36,26 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanScreenReportsComponent implements OnInit {
+export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loansService = inject(LoansService);
-  private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   private renderer = inject(Renderer2);
 
-  @Input() dataObject: any;
+  /** Production Mode Flag */
+  productionMode = environment.productionMode === true;
+
   /** Loan Screen Reportform. */
-  loanScreenReportForm: UntypedFormGroup;
+  loanScreenReportForm!: UntypedFormGroup;
   /** Templates Data */
   templatesData: any;
-  /** Loan Id */
-  loanId: any;
   /** HTML Template */
   template: any;
 
   /** Screen report output reference */
-  @ViewChild('screenReport', { static: true }) screenReportRef: ElementRef;
+  @ViewChild('screenReport', { static: true }) screenReportRef!: ElementRef;
 
   /**
    * Fetches Loan Action Data from `resolve`
@@ -58,7 +66,7 @@ export class LoanScreenReportsComponent implements OnInit {
    * @param {Renderer2} renderer Renderer 2
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -83,22 +91,26 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
-    templateWindow.document.write('</head><body>');
-    templateWindow.document.write(this.template);
-    templateWindow.document.write('</body></html>');
-    templateWindow.print();
-    templateWindow.close();
+    if (templateWindow) {
+      templateWindow.document.write('<html><head>');
+      templateWindow.document.write('</head><body>');
+      templateWindow.document.write(this.template);
+      templateWindow.document.write('</body></html>');
+      templateWindow.print();
+      templateWindow.close();
+    }
   }
 
   /**
    * Submits the form and generates screen report for the loan.
    */
   generate() {
-    const templateId = this.loanScreenReportForm.get('templateId').value;
-    this.loansService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
-      this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
-      this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
-    });
+    const templateId = this.loanScreenReportForm.get('templateId')?.value;
+    if (templateId) {
+      this.loanService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
+        this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
+        this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
+      });
+    }
   }
 }

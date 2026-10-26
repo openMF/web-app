@@ -16,7 +16,7 @@
         </mat-form-field>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'APPROVALUNDO_LOAN'">

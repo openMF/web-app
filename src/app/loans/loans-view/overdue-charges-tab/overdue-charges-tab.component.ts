@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -50,9 +51,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OverdueChargesTabComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
 
   /** Stores the resolved loan data */
@@ -80,7 +83,7 @@ export class OverdueChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

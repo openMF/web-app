@@ -6,12 +6,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { SettingsService } from 'app/settings/settings.service';
-import { VersionService } from 'app/system/version.service';
-import { environment } from '../../../environments/environment';
+import { SystemInfoService, SystemInformation } from 'app/system/system-info.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'mifosx-system-information',
@@ -20,26 +19,16 @@ import { environment } from '../../../environments/environment';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCard
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemInformationComponent implements OnInit {
-  private settingsService = inject(SettingsService);
-  private versionService = inject(VersionService);
+  private systemInfoService = inject(SystemInfoService);
 
-  tenant = '';
-  mifosVersion = '';
-  fineractVersion = '';
-  server = '';
+  /** Backend and environment information. */
+  systemInformation$: Observable<SystemInformation>;
 
   ngOnInit(): void {
-    this.tenant = this.settingsService.tenantIdentifier || 'default';
-    this.mifosVersion = environment.version;
-    this.server = this.settingsService.server;
-
-    this.versionService.getBackendInfo().subscribe((data: any) => {
-      if (data.git && data.git.build && data.git.build.version) {
-        this.fineractVersion = data.git.build.version;
-      }
-    });
+    this.systemInformation$ = this.systemInfoService.getSystemInformation();
   }
 }

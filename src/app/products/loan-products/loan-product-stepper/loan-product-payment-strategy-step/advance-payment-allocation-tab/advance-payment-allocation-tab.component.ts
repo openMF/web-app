@@ -7,7 +7,16 @@
  */
 
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -56,7 +65,8 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     MatRowDef,
     MatRow,
     CdkDrag
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdvancePaymentAllocationTabComponent implements OnInit {
   private dialog = inject(MatDialog);

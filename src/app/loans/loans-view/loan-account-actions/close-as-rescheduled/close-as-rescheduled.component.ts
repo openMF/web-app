@@ -6,16 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { LoansService } from 'app/loans/loans.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-close-as-rescheduled',
@@ -24,22 +22,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CloseAsRescheduledComponent implements OnInit {
+export class CloseAsRescheduledComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
-  @Input() dataObject: any;
 
   /** Close form. */
   closeLoanForm: UntypedFormGroup;
-  /** Loan Id */
-  loanId: any;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -47,13 +38,9 @@ export class CloseAsRescheduledComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} systemService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -70,7 +57,7 @@ export class CloseAsRescheduledComponent implements OnInit {
   createCloseForm() {
     this.closeLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(this.dataObject.date) || new Date(),
+        this.dataObject.date ? this.dateUtils.parseDate(this.dataObject.date) : new Date(),
         Validators.required
       ],
       note: []
@@ -95,7 +82,7 @@ export class CloseAsRescheduledComponent implements OnInit {
       locale
     };
     this.loanService.submitLoanActionButton(this.loanId, data, 'close-rescheduled').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.gotoLoanDefaultView();
     });
   }
 }

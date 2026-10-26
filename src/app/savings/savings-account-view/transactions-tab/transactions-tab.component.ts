@@ -7,8 +7,17 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  ViewChild,
+  inject,
+  ChangeDetectorRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { CurrencyPipe, NgClass } from '@angular/common';
@@ -44,6 +53,10 @@ import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { TranslateService } from '@ngx-translate/core';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
 /**
  * Transactions Tab Component.
@@ -77,8 +90,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     DateFormatPipe,
-    CurrencyPipe
-  ]
+    CurrencyPipe,
+    PageLoaderComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -87,6 +102,10 @@ export class TransactionsTabComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
+  private accountTransfersService = inject(AccountTransfersService);
+  private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Savings Account Status */
   status: any;
@@ -95,8 +114,8 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: SavingsAccountTransaction[] = [];
   /** Form control to handle accural parameter */
-  hideAccrualsParam: UntypedFormControl;
-  hideReversedParam: UntypedFormControl;
+  hideAccrualsParam: FormControl;
+  hideReversedParam: FormControl;
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = [
     'row',
@@ -117,23 +136,26 @@ export class TransactionsTabComponent implements OnInit {
   accountWithTransactions = false;
 
   accountId: string;
+  isLoading = false;
 
   /**
    * Retrieves savings account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.transactionsData = data.savingsAccountData.transactions;
-      this.status = data.savingsAccountData.status.value;
-      this.currency = data.savingsAccountData.currency || null;
-    });
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountData: any }) => {
+        this.transactionsData = data.savingsAccountData.transactions;
+        this.status = data.savingsAccountData.status.value;
+        this.currency = data.savingsAccountData.currency || null;
+      });
     this.accountId = this.route.parent.parent.snapshot.params['savingAccountId'];
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new UntypedFormControl(false);
-    this.hideReversedParam = new UntypedFormControl(false);
+    this.hideAccrualsParam = new FormControl(false);
+    this.hideReversedParam = new FormControl(false);
     this.setTransactions();
   }
 
@@ -242,7 +264,7 @@ export class TransactionsTabComponent implements OnInit {
   undoTransaction(transactionData: SavingsAccountTransaction): void {
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
@@ -251,11 +273,31 @@ export class TransactionsTabComponent implements OnInit {
           dateFormat,
           locale
         };
+        this.isLoading = true;
+        this.cdr.markForCheck();
         this.savingsService
           .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, transactionData.id)
           .subscribe(() => {
             this.reload();
           });
+      }
+    });
+  }
+
+  undoTransfer(transactionData: SavingsAccountTransaction): void {
+    const undoAccountTransferDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.undo_account_transfer'),
+        dialogContext: this.translateService.instant('labels.dialogContext.undo_account_transfer')
+      }
+    });
+    undoAccountTransferDialogRef.afterClosed().subscribe((response: any) => {
+      if (response?.confirm) {
+        this.isLoading = true;
+        this.cdr.markForCheck();
+        this.accountTransfersService.undoAccountTransfer(transactionData.transfer.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }

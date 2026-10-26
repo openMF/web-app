@@ -7,7 +7,18 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -24,10 +35,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
-import { of } from 'rxjs';
+import { of, take } from 'rxjs';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
@@ -61,7 +72,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HolidaysComponent implements OnInit, AfterViewInit {
   private organizationService = inject(OrganizationService);
@@ -69,9 +81,10 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   /** Office selector. */
-  officeSelector = new UntypedFormControl();
+  officeSelector = new FormControl();
   /** Holidays data. */
   holidaysData: any;
   /** Offices data. */
@@ -111,7 +124,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -135,13 +148,18 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * Retrieves the holidays data on changing office and sets the holidays table.
    */
   onChangeOffice() {
-    this.officeSelector.valueChanges.subscribe((officeId = this.officeSelector.value) => {
-      this.holidaysData = [];
-      this.organizationService.getHolidays(officeId).subscribe((holidays: any) => {
-        this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
-        this.setHolidays();
+    this.officeSelector.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((officeId = this.officeSelector.value) => {
+        this.holidaysData = [];
+        this.organizationService
+          .getHolidays(officeId)
+          .pipe(take(1))
+          .subscribe((holidays: any) => {
+            this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
+            this.setHolidays();
+          });
       });
-    });
   }
 
   /**

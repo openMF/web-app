@@ -1,0 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* ── Selected members list ───────────────────────────────────────
+   Aligned rows for "selected clients/groups" lists next to a details
+   table: name on the left, remove button on the right, 48px rows.
+   Include from a component stylesheet:
+
+     @use 'member-list';
+     @include member-list.member-list;
+──────────────────────────────────────────────────────────────── */
+@mixin member-list {
+  .member-list {
+    .member-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: 0 8px;
+      border-bottom: 1px solid var(--mdc-outlined-text-field-outline-color, #e0e0e0);
+
+      .member-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

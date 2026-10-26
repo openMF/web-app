@@ -11,18 +11,13 @@
     <form [formGroup]="adjustLoanChargeForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-            <span matTextSuffix class="m-l-10">{{ loanDetailsData.currency.code }}</span>
-            <span class="flex-auto"></span>
-            <input type="number" matInput required class="right-input" formControlName="amount" />
-            @if (adjustLoanChargeForm.controls.amount.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+          <mifosx-input-amount
+            [currency]="loanDetailsData.currency"
+            [isRequired]="true"
+            [inputFormControl]="adjustLoanChargeForm.controls.amount"
+            [inputLabel]="'Amount'"
+          >
+          </mifosx-input-amount>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
@@ -80,7 +75,7 @@
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button [routerLink]="['../..']">
+          <button type="button" mat-raised-button (click)="gotoLoanChargesView()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button

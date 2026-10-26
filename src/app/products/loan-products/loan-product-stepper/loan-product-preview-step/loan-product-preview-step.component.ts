@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { LoanProducts } from '../../loan-products';
 import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
 import { MatStepperPrevious } from '@angular/material/stepper';
@@ -23,7 +32,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     LoanProductSummaryComponent,
     MatStepperPrevious,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductPreviewStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   @Input() loanProductsTemplate: any;

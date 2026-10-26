@@ -1,0 +1,181 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.credit-payment {
+  .workflow-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin: 0 0 24px;
+  }
+
+  .context-summary,
+  .receipt-denominations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .context-summary {
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+    padding-bottom: 16px;
+  }
+
+  .form-grid,
+  .summary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .form-grid mat-form-field,
+  .summary-grid div {
+    flex: 1 1 224px;
+  }
+
+  .summary-grid {
+    margin: 16px 0;
+
+    div {
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: 4px;
+      min-height: 64px;
+      padding: 16px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 8px;
+      opacity: 0.72;
+    }
+  }
+
+  .selection-list,
+  .detail-panel,
+  .transition-panel {
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+
+  .selection-list {
+    padding: 0;
+
+    span {
+      display: block;
+      opacity: 0.72;
+    }
+  }
+
+  .detail-panel h3 {
+    margin-top: 0;
+  }
+
+  .denomination-row,
+  .record-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .denomination-row {
+    div,
+    mat-form-field {
+      flex: 1 1 192px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.72;
+    }
+  }
+
+  .record-row {
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+    padding: 16px 0;
+
+    span {
+      flex: 1 1 192px;
+    }
+  }
+
+  .tab-content {
+    padding: 16px 0;
+  }
+
+  .authoritative-summary {
+    border-top: 1px solid rgb(0 0 0 / 12%);
+    padding-top: 16px;
+  }
+
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .message,
+  .lifecycle-status {
+    border-radius: 4px;
+    margin: 16px 0;
+    padding: 16px;
+  }
+
+  .error,
+  .error-message {
+    color: #b00020;
+  }
+
+  .error-message {
+    background: rgb(176 0 32 / 8%);
+  }
+
+  .warning-message,
+  .lifecycle-status.pending {
+    background: rgb(255 193 7 / 16%);
+  }
+
+  .empty-state {
+    background: rgb(0 0 0 / 4%);
+  }
+
+  .lifecycle-status {
+    background: rgb(46 125 50 / 12%);
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .full-width {
+    flex-basis: 100%;
+  }
+}
+
+@media print {
+  .credit-payment {
+    h2,
+    mat-step-header,
+    .context-summary,
+    .step-actions,
+    .transition-panel,
+    .error-message {
+      display: none !important;
+    }
+
+    .workflow-card {
+      box-shadow: none;
+    }
+  }
+}

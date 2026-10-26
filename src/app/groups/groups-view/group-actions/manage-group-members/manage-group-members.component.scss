@@ -6,6 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/member-list';
+
+@include member-list.member-list;
+
 .container {
   max-width: 70rem;
 
@@ -32,7 +36,7 @@
   .mat-header-cell {
     flex: 1;
     overflow: hidden;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     flex-direction: column;
   }
 
@@ -41,11 +45,6 @@
     margin-bottom: 0;
     font-weight: 500;
     border-bottom: 2px solid var(--border-color-light, #eee);
-  }
-
-  .p-t-10 {
-    font-weight: 500;
-    margin-left: 1rem;
   }
 
   .client-card {
@@ -70,15 +69,5 @@
     transition:
       background-color 0.3s ease,
       border-color 0.3s ease;
-  }
-
-  .flex-50 button {
-    left: 0;
-  }
-
-  .flex-fill {
-    margin-top: 0.5rem;
-    display: inline;
-    font-weight: 500;
   }
 }

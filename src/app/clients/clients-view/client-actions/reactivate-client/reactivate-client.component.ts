@@ -7,14 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -26,22 +28,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./reactivate-client.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReactivateClientComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly dateUtils = inject(Dates);
+  private readonly route = inject(ActivatedRoute);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Reactivate client form. */
-  reactivateClientForm: UntypedFormGroup;
+  reactivateClientForm: FormGroup;
   /** Client Account Id */
   clientId: any;
 
@@ -50,7 +53,6 @@ export class ReactivateClientComponent implements OnInit {
    * @param {clientsService} clientsService Clients Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
@@ -94,8 +96,9 @@ export class ReactivateClientComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.executeClientCommand(this.clientId, 'reactivate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, 'reactivate', data).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.reactivate.success', this.route),
+      error: () => this.notifier.notify('clients.actions.reactivate.failure')
     });
   }
 }

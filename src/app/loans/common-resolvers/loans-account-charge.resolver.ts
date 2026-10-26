@@ -11,16 +11,17 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { LoanBaseResolver } from './loan-base.resolver';
 
 /**
  * Loans Account Charge data resolver.
  */
 @Injectable()
-export class LoansAccountChargeResolver {
+export class LoansAccountChargeResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
 
   /**
@@ -29,8 +30,12 @@ export class LoansAccountChargeResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId');
     const chargeId = route.paramMap.get('id');
-    return this.loansService.getLoansAccountCharge(loanId, chargeId);
+    if (!isNaN(+loanId)) {
+      return this.loansService.getLoansAccountCharge(this.loanAccountPath, loanId, chargeId);
+    }
+    return of([]);
   }
 }

@@ -9,30 +9,30 @@
 <h1 mat-dialog-title>{{ 'labels.heading.Guarantor Detail' | translate }}</h1>
 
 <div mat-dialog-content class="layout-column">
-  <div class="layout-row-wrap responsive-column">
+  <div class="layout-column">
     <div class="flex-fill">
-      <span class="flex-50">{{ 'labels.inputs.First Name' | translate }}:</span>
-      <span class="flex-50">{{ data.guarantorData.firstname }}</span>
+      <span class="flex-40">{{ 'labels.inputs.First Name' | translate }}:</span>
+      <span class="flex-60">{{ data.guarantorData.firstname }}</span>
     </div>
 
     <div class="flex-fill">
-      <span class="flex-50">{{ 'labels.inputs.Last Name' | translate }}:</span>
-      <span class="flex-50">{{ data.guarantorData.lastname }}</span>
+      <span class="flex-40">{{ 'labels.inputs.Last Name' | translate }}:</span>
+      <span class="flex-60">{{ data.guarantorData.lastname }}</span>
     </div>
 
     <div class="flex-fill">
-      <span class="flex-50">{{ 'labels.inputs.Relationship' | translate }}:</span>
-      <span class="flex-50">{{ data.guarantorData.clientRelationshipType.name }}</span>
+      <span class="flex-40">{{ 'labels.inputs.Relationship' | translate }}:</span>
+      <span class="flex-60">{{ data.guarantorData.clientRelationshipType?.name }}</span>
     </div>
 
     <div class="flex-fill">
-      <span class="flex-50">{{ 'labels.inputs.Guarantor Type' | translate }}:</span>
-      <span class="flex-50">{{ data.guarantorData.guarantorType.value }}</span>
+      <span class="flex-40">{{ 'labels.inputs.Guarantor Type' | translate }}:</span>
+      <span class="flex-60">{{ data.guarantorData.guarantorType?.value }}</span>
     </div>
 
     <div class="flex-fill">
-      <span class="flex-50">{{ 'labels.inputs.Status' | translate }}:</span>
-      <span class="flex-50">
+      <span class="flex-40">{{ 'labels.inputs.Status' | translate }}:</span>
+      <span class="flex-60">
         @if (data.guarantorData.status) {
           <span>
             {{ 'labels.inputs.Active' | translate }}
@@ -47,11 +47,11 @@
     </div>
     @if (data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined) {
       <div class="flex-fill">
-        <span class="flex-50"
+        <span class="flex-40"
           >{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span
         >
-        <span class="flex-50">{{
-          data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+        <span class="flex-60">{{
+          data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied | formatNumber
         }}</span>
       </div>
     }

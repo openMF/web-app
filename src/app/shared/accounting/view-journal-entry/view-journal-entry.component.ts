@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -39,13 +39,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     DatetimeFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewJournalEntryComponent {
   dialogRef = inject<MatDialogRef<ViewJournalEntryComponent>>(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
 
   existsPaymentDetails = false;
+  isCredit = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides journal entry.
@@ -55,5 +57,16 @@ export class ViewJournalEntryComponent {
 
     this.existsPaymentDetails =
       data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null;
+    this.isCredit = data.journalEntry.entryType?.value === 'CREDIT';
+  }
+
+  glAccountTypeClass(type?: string): string {
+    if (!type) return 'asset';
+    const normalized = type.toUpperCase();
+    if (normalized.includes('LIAB')) return 'liability';
+    if (normalized.includes('EQUITY')) return 'equity';
+    if (normalized.includes('INCOME') || normalized.includes('REVENUE')) return 'income';
+    if (normalized.includes('EXPENSE')) return 'expense';
+    return 'asset';
   }
 }

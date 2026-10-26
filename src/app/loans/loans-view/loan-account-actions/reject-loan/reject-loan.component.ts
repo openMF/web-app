@@ -7,16 +7,14 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom services. */
-import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Reject Loan component.
@@ -28,18 +26,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RejectLoanComponent implements OnInit {
+export class RejectLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private loanService = inject(LoansService);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
 
-  /** Loan Id. */
-  loanId: any;
   /** Reject Loan form. */
   rejectLoanForm: UntypedFormGroup;
   /** Minimum Date allowed. */
@@ -55,7 +48,7 @@ export class RejectLoanComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit() {
@@ -92,8 +85,17 @@ export class RejectLoanComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'reject', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    const loanCommand: string = 'reject';
+    if (this.isLoanProduct) {
+      this.loanService.loanActionButtons(this.loanId, loanCommand, data).subscribe((response: any) => {
+        this.gotoLoanDefaultView();
+      });
+    } else if (this.isWorkingCapital) {
+      this.loanService
+        .applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, data)
+        .subscribe((response: any) => {
+          this.gotoLoanDefaultView();
+        });
+    }
   }
 }

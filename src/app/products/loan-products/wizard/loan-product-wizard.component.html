@@ -1,0 +1,458 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="wizard-shell">
+  <div class="wizard-shell__header">
+    <div>
+      <p class="landing-page__eyebrow">{{ profileLabel | translate }}</p>
+      <h2>{{ 'labels.heading.Multi-step form' | translate }}</h2>
+    </div>
+  </div>
+
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="wizard-stepper"
+    (selectionChange)="onStepSelectionChange($event)"
+  >
+    <!--
+      `[completed]` / `[hasError]` rather than `[stepControl]`: the guided flow holds every field in
+      one flat FormGroup, so there is no per-step control to hand the stepper. Both read the same
+      predicate the blocked-submit summary reports on, so the indicator and the summary cannot
+      disagree. The error indicator itself needs `STEPPER_GLOBAL_OPTIONS.showError`, which the app
+      provides in `shared/material.module.ts`.
+    -->
+    <mat-step
+      *ngFor="let step of visibleSteps; trackBy: trackByStepId; let i = index"
+      [completed]="stepCompleted(step)"
+      [hasError]="stepHasError(step)"
+    >
+      <ng-template matStepLabel>{{ step.title | translate }}</ng-template>
+
+      <div [formGroup]="form" class="step-panel">
+        <!--
+          Classic mode (Custom/Advanced): host Classic's own Details / Currency / Terms / Settings
+          components instead of the config-driven field grid, so the field set, its conditional
+          visibility, its validators and its payload are Classic's by construction. Every other step
+          below is already shared with Classic and needs no branch.
+        -->
+        <ng-container *ngIf="usesClassicSteps && step.classicStep && loanProductsTemplate">
+          <div class="wizard-classic-step">
+            <mifosx-loan-product-details-step
+              *ngIf="step.classicStep === 'details'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-details-step>
+
+            <mifosx-loan-product-currency-step
+              *ngIf="step.classicStep === 'currency'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-currency-step>
+
+            <mifosx-loan-product-terms-step
+              *ngIf="step.classicStep === 'terms'"
+              [loanProductsTemplate]="loanProductsTemplate"
+            ></mifosx-loan-product-terms-step>
+
+            <mifosx-loan-product-settings-step
+              *ngIf="step.classicStep === 'settings'"
+              [loanProductsTemplate]="loanProductsTemplate"
+              [isLinkedToFloatingInterestRates]="floatingRatesMirrorControl"
+              (advancePaymentStrategy)="onClassicAdvancePaymentStrategy($event)"
+            ></mifosx-loan-product-settings-step>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'payment-allocation' && loanProductsTemplate">
+          <mifosx-loan-product-payment-strategy-step
+            [advancedPaymentAllocations]="advancedPaymentAllocations"
+            [advancedCreditAllocations]="loanProductService.isLoanProduct ? advancedCreditAllocations : []"
+            [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
+            [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
+            [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
+            [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
+            (setPaymentAllocation)="setPaymentAllocation($event)"
+            (setCreditAllocation)="setCreditAllocation($event)"
+          >
+          </mifosx-loan-product-payment-strategy-step>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'charges' && loanProductsTemplate">
+          <div class="wizard-charges">
+            <mifosx-loan-product-charges-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [currencyCode]="chargesCurrencyControl"
+              [multiDisburseLoan]="chargesMultiDisburseControl"
+            ></mifosx-loan-product-charges-step>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'accounting' && loanProductsTemplate">
+          <div class="wizard-accounting">
+            <mifosx-loan-product-accounting-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [accountingRuleData]="accountingRuleData"
+              [loanProductFormValid]="usesClassicSteps ? classicFormsValid : form.valid"
+              [deferredIncomeRecognition]="deferredIncomeRecognition"
+            ></mifosx-loan-product-accounting-step>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'interest-refund' && loanProductsTemplate">
+          <mifosx-loan-product-interest-refund-step
+            [loanProductsTemplate]="loanProductsTemplate"
+            (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
+          ></mifosx-loan-product-interest-refund-step>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'deferred-income' && loanProductsTemplate">
+          <mifosx-loan-product-capitalized-income-step
+            [deferredIncomeRecognition]="deferredIncomeRecognition"
+            [capitalizedIncomeCalculationTypeOptions]="loanProductsTemplate.capitalizedIncomeCalculationTypeOptions"
+            [capitalizedIncomeStrategyOptions]="loanProductsTemplate.capitalizedIncomeStrategyOptions"
+            [capitalizedIncomeTypeOptions]="loanProductsTemplate.capitalizedIncomeTypeOptions"
+            [buyDownFeeCalculationTypeOptions]="loanProductsTemplate.buyDownFeeCalculationTypeOptions"
+            [buyDownFeeStrategyOptions]="loanProductsTemplate.buyDownFeeStrategyOptions"
+            [buyDownFeeIncomeTypeOptions]="loanProductsTemplate.buyDownFeeIncomeTypeOptions"
+            (setViewChildForm)="setDeferredIncomeRecognitionForm($event)"
+          ></mifosx-loan-product-capitalized-income-step>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'borrower-cycle' && loanProductsTemplate">
+          <mifosx-loan-product-borrower-cycle-step
+            [loanProductsTemplate]="loanProductsTemplate"
+            (setBorrowerCycleVariations)="setBorrowerCycleVariations($event)"
+          ></mifosx-loan-product-borrower-cycle-step>
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            step.kind !== 'payment-allocation' &&
+            step.kind !== 'charges' &&
+            step.kind !== 'accounting' &&
+            step.kind !== 'interest-refund' &&
+            step.kind !== 'deferred-income' &&
+            step.kind !== 'borrower-cycle' &&
+            step.kind !== 'review' &&
+            !(usesClassicSteps && step.classicStep)
+          "
+        >
+          <div class="field-grid">
+            <ng-container *ngFor="let field of visibleFields(step); trackBy: trackByFieldKey">
+              <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
+                <mat-label>{{ field.label | translate }}</mat-label>
+
+                <input
+                  *ngIf="field.type === 'text' || field.type === 'number'"
+                  matInput
+                  [type]="field.type"
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder | translate"
+                  [required]="!!field.required"
+                  [attr.maxlength]="field.maxLength || null"
+                  [attr.min]="field.min ?? null"
+                />
+                <ng-container *ngIf="field.type === 'date'">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [formControlName]="field.key"
+                    [placeholder]="field.placeholder | translate"
+                    [required]="!!field.required"
+                  />
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </ng-container>
+                <textarea
+                  *ngIf="field.type === 'textarea'"
+                  matInput
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder | translate"
+                  [required]="!!field.required"
+                  [attr.maxlength]="field.maxLength || null"
+                  rows="3"
+                ></textarea>
+                @if (field.key === 'interestRatePerPeriod') {
+                  <span matSuffix>%</span>
+                }
+
+                <mat-select *ngIf="field.type === 'select'" [formControlName]="field.key" [required]="!!field.required">
+                  <mat-option *ngFor="let option of field.options; trackBy: trackByOptionValue" [value]="option.value">
+                    {{ option.label | translateKey: 'catalogs' }}
+                  </mat-option>
+                </mat-select>
+
+                @if (fieldHint(field); as hint) {
+                  <mat-hint>{{ hint }}</mat-hint>
+                }
+                <!--
+                  One `@if` per message, each with the `<mat-error>` at its root: that is what lets the
+                  compiler infer the `mat-error` projection selector, so Material renders these in the
+                  subscript below the field and only once the control is touched, dirty or submitted.
+                  Nesting them under a shared `@if` drops them into the default slot instead.
+                -->
+                @if (fieldErrorKey(field) === 'required') {
+                  <mat-error>
+                    {{ field.label | translate }} <span>{{ 'labels.commons.is required' | translate }}</span>
+                  </mat-error>
+                }
+                @if (fieldErrorKey(field) === 'min') {
+                  <mat-error>
+                    {{ field.label | translate }} — {{ 'labels.commons.Minimum Value must be' | translate }}
+                    <strong>{{ field.min }}</strong>
+                  </mat-error>
+                }
+                <!--
+                  Format only, with no claim about sign: the floor is a separate validator with its own
+                  message above, and a field can legitimately have `decimals` with `min: 0` — the
+                  interest rate does, and accepts zero.
+                -->
+                @if (fieldErrorKey(field) === 'pattern') {
+                  <mat-error>
+                    {{ field.label | translate }} —
+                    @if (field.decimals === 0) {
+                      {{ 'errors.validation.wholeNumber' | translate }}
+                    } @else {
+                      {{ 'errors.validation.maxDecimals' | translate: { decimals: field.decimals } }}
+                    }
+                  </mat-error>
+                }
+                @if (fieldErrorKey(field) === 'maxlength') {
+                  <mat-error>
+                    {{ field.label | translate }} —
+                    {{ 'errors.validation.maxLength' | translate: { requiredLength: field.maxLength } }}
+                  </mat-error>
+                }
+              </mat-form-field>
+
+              <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.key">
+                {{ field.label | translate }}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!--
+          Classic mode reviews through Classic's own preview component, which renders the full
+          `mifosx-loan-product-summary` — charges, payment allocation and the terms tables the
+          wizard's field-driven summary cannot show. Its submit event is the wizard's submit.
+        -->
+        <!-- Shared Review header: identical banner in both modes, sourced through reviewValue(). -->
+        <ng-container *ngIf="step.kind === 'review'">
+          <div class="review-banner">
+            <div>
+              <p class="review-banner__name">{{ reviewName || '—' }}</p>
+              <div class="review-banner__chips">
+                <span *ngIf="reviewShortName" class="review-chip">{{ reviewShortName }}</span>
+                <span class="review-chip">{{ formatValue('currencyCode', reviewCurrencyCode) }}</span>
+                <span *ngIf="reviewExternalId" class="review-chip"
+                  >{{ 'labels.inputs.Id' | translate }}: {{ reviewExternalId }}</span
+                >
+              </div>
+            </div>
+
+            <div class="review-metrics">
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Principal' | translate }}</span>
+                <span class="review-metric__value">{{ formattedPrincipal }}</span>
+              </div>
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Schedule' | translate }}</span>
+                <span class="review-metric__value">{{ scheduleLabel }}</span>
+              </div>
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Interest' | translate }}</span>
+                <span class="review-metric__value">{{ interestLabel }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'review' && usesClassicSteps">
+          <!--
+            The summary itself waits for a complete product: LoanProductSummaryComponent dereferences
+            it in ngOnChanges and throws on a partial one (which is why Classic hides its whole
+            preview step until then). The STEP stays visible either way, naming what is still missing
+            rather than silently disappearing from the stepper.
+          -->
+          <div class="wizard-classic-review" *ngIf="loanProductsTemplate && classicFormsValid">
+            <mifosx-loan-product-preview-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [accountingRuleData]="accountingRuleData"
+              [loanProduct]="classicPreviewProduct"
+              [isValid]="classicFormsValid"
+              (submitEvent)="submit()"
+            ></mifosx-loan-product-preview-step>
+          </div>
+
+          <div class="review-pending" *ngIf="!classicFormsValid">
+            <p class="review-pending__title">
+              {{ 'labels.text.Complete these steps to preview the product' | translate }}
+            </p>
+            <ul class="review-pending__steps">
+              <li *ngFor="let stepTitle of incompleteClassicSteps">{{ stepTitle | translate }}</li>
+            </ul>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'review' && !usesClassicSteps">
+          <ng-container *ngFor="let group of reviewGroups; trackBy: trackBySectionTitle">
+            <div class="review-section">
+              <p class="review-section__title">{{ group.title | translate }}</p>
+              <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
+                <span class="review-row__label">{{ row.label | translate }}</span>
+                <span class="review-row__value">{{ row.display }}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <!--
+            The allocation order the operator arranged, shown through the very panel the rest of the
+            app views a product's allocations with. An order is a structure, not a label/value row,
+            and reproducing it as one would be a third rendering of the same data.
+          -->
+          <div class="review-section" *ngIf="showPaymentAllocationReview">
+            <p class="review-section__title">
+              {{ 'labels.inputs.Advanced Payment Allocation Transactions' | translate }}
+            </p>
+            <mat-accordion class="review-allocations">
+              <mifosx-view-advance-paymeny-allocation
+                *ngFor="let allocation of paymentAllocation; trackBy: trackByAllocationTransactionType"
+                [paymentAllocation]="allocation"
+                [advancePaymentAllocationData]="advancePaymentAllocationData"
+              ></mifosx-view-advance-paymeny-allocation>
+            </mat-accordion>
+          </div>
+
+          <div class="review-section" *ngIf="showCreditAllocationReview">
+            <p class="review-section__title">
+              {{ 'labels.inputs.Advanced Credit Allocation Transactions' | translate }}
+            </p>
+            <mat-accordion class="review-allocations">
+              <mifosx-view-advance-paymeny-allocation
+                *ngFor="let allocation of creditAllocation; trackBy: trackByAllocationTransactionType"
+                [creditAllocation]="allocation"
+                [advancePaymentAllocationData]="advancePaymentAllocationData"
+              ></mifosx-view-advance-paymeny-allocation>
+            </mat-accordion>
+          </div>
+
+          <!--
+            Everything the operator configured on the reused Charges, Interest Refunds, Deferred Income
+            Recognition and Loan Cycle Variations steps. Section titles are translation keys, like the
+            step labels they repeat; the row labels are NOT — they are resolved in TypeScript because
+            they mix fixed captions with names the backend gave, and a tenant's charge is not a key.
+          -->
+          <ng-container *ngFor="let group of reusedStepReviewGroups; trackBy: trackBySectionTitle">
+            <div class="review-section">
+              <p class="review-section__title">{{ group.title | translate }}</p>
+              <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
+                <span class="review-row__label">{{ row.label }}</span>
+                <span class="review-row__value">{{ row.display }}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <!--
+            Accounting summary, driven by the reused Classic accounting step and rendered with the same
+            atomic mifosx-gl-account-display component Classic uses — so the selected GL accounts appear
+            exactly as they do in the Classic preview.
+          -->
+          <div class="review-section" *ngIf="accountingReview">
+            <p class="review-section__title">{{ 'labels.heading.Accounting' | translate }}</p>
+            <div class="review-row">
+              <span class="review-row__label">{{ 'labels.inputs.Type' | translate }}</span>
+              <span class="review-row__value">{{ accountingReview.ruleLabel }}</span>
+            </div>
+            <mifosx-gl-account-display
+              *ngFor="let account of accountingReview.accounts; trackBy: trackByAccountTitle"
+              [accountTitle]="account.title"
+              [glAccount]="account.glAccount"
+              [withTitle]="'47%'"
+            ></mifosx-gl-account-display>
+          </div>
+
+          <div class="review-defaults-pill">
+            <div>
+              <p class="review-defaults-pill__title">
+                {{ 'labels.text.Template defaults are preloaded' | translate }}
+              </p>
+              <p class="review-defaults-pill__sub">
+                {{
+                  'labels.text.Hidden variables and predefined values are included in the final payload automatically.'
+                    | translate
+                }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--
+          Suppressed once the summary below is up: the loan-cycle step is one of the entries it lists,
+          and two messages stacked on the same problem read as two problems. This one stays for the
+          pre-attempt case, where it is the only warning the operator gets.
+        -->
+        <p
+          *ngIf="i === visibleSteps.length - 1 && borrowerCycleStepInvalid && !showGuidedIncompleteSummary"
+          class="step-actions__blocked"
+        >
+          {{ 'labels.text.Fix the loan cycle variations before creating the product' | translate }}
+        </p>
+
+        <!--
+          C4: the answer to a "Create Loan Product" click that cannot go through. `role="alert"` is not
+          decoration — `markAllAsTouched()` alone reveals field messages silently and only on the step
+          in view, so a screen-reader user got no signal at all. The live region announces the whole
+          list; the buttons make each named step reachable in one click, since `[linear]="false"` means
+          the offending control is usually not on the step being looked at.
+        -->
+        <div class="submit-blocked" role="alert" *ngIf="i === visibleSteps.length - 1 && showGuidedIncompleteSummary">
+          <p class="submit-blocked__title">
+            {{ 'labels.text.Complete these steps before creating the product' | translate }}
+          </p>
+          <ul class="submit-blocked__steps" *ngIf="incompleteGuidedSteps.length">
+            <!--
+              trackBy is not optional here: `incompleteGuidedSteps` is a getter that returns fresh
+              objects on every access, so identity diffing would destroy and recreate each button on
+              every change-detection pass — dropping focus out from under a keyboard user mid-list,
+              inside the very alert added to make this flow accessible.
+            -->
+            <li *ngFor="let incompleteStep of incompleteGuidedSteps; trackBy: trackByIncompleteStepTitle">
+              <!--
+                Piped through the same key as the stepper header renders, so this list keeps naming the
+                steps with the exact words the operator has to go and find.
+              -->
+              <button type="button" class="submit-blocked__step" (click)="goToStep(incompleteStep.index)">
+                {{ incompleteStep.title | translate }}
+              </button>
+            </li>
+          </ul>
+          <p class="submit-blocked__generic" *ngIf="guidedSubmitBlockedWithoutCause">
+            {{ 'labels.text.Check the highlighted fields before creating the product' | translate }}
+          </p>
+        </div>
+
+        <div class="step-actions">
+          <button mat-stroked-button matStepperPrevious *ngIf="i > 0">
+            {{ 'labels.buttons.Back' | translate }}
+          </button>
+          <button mat-raised-button color="primary" matStepperNext *ngIf="i < visibleSteps.length - 1">
+            {{ 'labels.buttons.Next' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            *ngIf="i === visibleSteps.length - 1 && !usesClassicSteps"
+            (click)="submit()"
+          >
+            {{ 'labels.buttons.Create Loan Product' | translate }}
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

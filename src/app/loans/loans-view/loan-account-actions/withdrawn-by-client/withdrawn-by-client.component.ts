@@ -7,16 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Withdrawn By Applicant Loan Form
@@ -28,19 +26,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WithdrawnByClientComponent implements OnInit {
+export class WithdrawnByClientComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -48,15 +40,8 @@ export class WithdrawnByClientComponent implements OnInit {
   /** Withdrawn By Applicant Loan Form */
   withdrawnByClientLoanForm: UntypedFormGroup;
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -96,7 +81,7 @@ export class WithdrawnByClientComponent implements OnInit {
       locale
     };
     this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.gotoLoanDefaultView();
     });
   }
 }

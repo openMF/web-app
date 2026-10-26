@@ -1,3 +1,0 @@
-click "Accounting"
-click "Chart of Accounts"
-click "Add Account"

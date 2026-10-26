@@ -1,0 +1,154 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <div class="layout-row gap-16px">
+    <mat-form-field class="flex-fill">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
+    </mat-form-field>
+  </div>
+
+  @if (selectedUser) {
+    <mat-card class="m-b-16">
+      <mat-card-content>
+        <div class="layout-row gap-16px responsive-column align-center">
+          <mat-form-field class="flex-fill">
+            <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
+            <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!clientChoice.value?.id" (click)="linkClient()">
+            {{ 'labels.buttons.Confirm' | translate }}
+          </button>
+          <button mat-raised-button (click)="selectedUser = null">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+    @for (client of clientsData; track client.id) {
+      <mat-option [value]="client"> {{ client.displayName }} ({{ client.officeName }}) </mat-option>
+    }
+  </mat-autocomplete>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Login Name' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ getName(user) || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.officeName || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clients">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+        <td mat-cell *matCellDef="let user">
+          @if (getClients(user).length) {
+            @for (client of getClients(user); track client.id) {
+              <span class="client-link">
+                {{ client.displayName || client.id }}
+                <button
+                  mat-icon-button
+                  color="warn"
+                  [matTooltip]="'labels.buttons.Delink Client' | translate"
+                  *mifosxHasPermission="'UPDATE_SELFSERVICEUSER'"
+                  (click)="delinkClient(user, client)"
+                  [disabled]="mutatingUserId === user.id"
+                >
+                  <fa-icon icon="unlink"></fa-icon>
+                </button>
+              </span>
+            }
+          } @else {
+            -
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let user">
+          <span [ngClass]="isActive(user) ? 'self-service-true' : 'self-service-false'" class="self-service-indicator">
+            <fa-icon icon="circle" size="sm"></fa-icon>
+          </span>
+          {{ isActive(user) ? ('labels.inputs.Active' | translate) : ('labels.catalogs.Inactive' | translate) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let user" class="actions">
+          @if (!isActive(user)) {
+            <button
+              mat-icon-button
+              color="primary"
+              [matTooltip]="'labels.buttons.Activate' | translate"
+              *mifosxHasPermission="'UPDATE_SELFSERVICEUSER'"
+              (click)="activate(user)"
+              [disabled]="mutatingUserId === user.id"
+            >
+              <fa-icon icon="check"></fa-icon>
+            </button>
+          }
+          @if (isActive(user)) {
+            <button
+              mat-icon-button
+              color="warn"
+              [matTooltip]="'labels.buttons.Inactivate' | translate"
+              *mifosxHasPermission="'UPDATE_SELFSERVICEUSER'"
+              (click)="inactivate(user)"
+              [disabled]="mutatingUserId === user.id"
+            >
+              <fa-icon icon="ban"></fa-icon>
+            </button>
+          }
+          <button
+            mat-icon-button
+            color="primary"
+            [matTooltip]="'labels.buttons.Link Client' | translate"
+            *mifosxHasPermission="'UPDATE_SELFSERVICEUSER'"
+            (click)="openLinkClient(user)"
+            [disabled]="mutatingUserId === user.id"
+          >
+            <fa-icon icon="link"></fa-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            [matTooltip]="'labels.buttons.Delete' | translate"
+            *mifosxHasPermission="'DELETE_SELFSERVICEUSER'"
+            (click)="delete(user)"
+            [disabled]="mutatingUserId === user.id"
+          >
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    @if (!loading && dataSource.filteredData.length === 0) {
+      <p class="empty-state">{{ 'labels.text.No data found' | translate }}</p>
+    }
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -72,7 +72,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     FindPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateTaxGroupComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -187,7 +188,7 @@ export class CreateTaxGroupComponent implements OnInit {
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        value: taxComponent.startDate ? new Date(taxComponent.startDate) : new Date(),
+        value: taxComponent.startDate ? this.dateUtils.parseDate(taxComponent.startDate) : new Date(),
         label: 'Start Date',
         minDate: this.minDate,
         maxDate: this.maxDate,

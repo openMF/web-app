@@ -1,0 +1,99 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cash-inventory {
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+
+    h2,
+    p {
+      margin-top: 0;
+    }
+  }
+
+  .as-of,
+  .empty-state {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .filter-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+
+    mat-form-field {
+      flex: 1 1 200px;
+    }
+
+    button {
+      min-width: 112px;
+    }
+  }
+
+  .loading-state,
+  .message {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .error {
+    justify-content: space-between;
+    color: var(--mat-sys-error);
+    background: var(--mat-sys-error-container);
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    min-width: 1200px;
+  }
+
+  .balance-cell {
+    strong,
+    small {
+      display: block;
+      white-space: nowrap;
+    }
+
+    small {
+      margin-top: 8px;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .cash-inventory {
+    header,
+    .filter-panel {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .filter-panel mat-form-field,
+    .filter-panel button {
+      width: 100%;
+    }
+  }
+}

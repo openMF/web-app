@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 /** Custom Services */
 import { ProductsService } from '../products.service';
 import { LoanProductService } from './services/loan-product.service';
-import { LOAN_PRODUCT_TYPE } from './models/loan-product.model';
 
 /**
  * Loan Product data resolver.
@@ -32,12 +31,7 @@ export class LoanProductResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.paramMap.get('productId');
-    const productType = route.queryParams['productType'] || '';
-    if (productType === 'loan') {
-      this.loanProductService.initialize(LOAN_PRODUCT_TYPE.LOAN);
-    } else {
-      this.loanProductService.initialize(LOAN_PRODUCT_TYPE.WORKING_CAPITAL);
-    }
+    this.loanProductService.initialize(route.queryParams['productType']);
     return this.productsService.getLoanProduct(this.loanProductService.loanProductPath, productId);
   }
 }

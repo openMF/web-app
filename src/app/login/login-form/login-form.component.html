@@ -37,6 +37,7 @@
           autocomplete="current-password"
           formControlName="password"
           [placeholder]="'labels.placeholders.Enter your password' | translate"
+          (keyup.enter)="onEnter($event)"
         />
         <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
         @if (loginForm.controls.password.value && !loading) {

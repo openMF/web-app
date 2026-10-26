@@ -7,8 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -24,7 +24,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./center-assign-staff.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CenterAssignStaffComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -65,7 +66,10 @@ export class CenterAssignStaffComponent implements OnInit {
    */
   createCenterAssignStaffForm() {
     this.centerAssignStaffForm = this.formBuilder.group({
-      staffId: ['']
+      staffId: [
+        '',
+        Validators.required
+      ]
     });
   }
 

@@ -6,12 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AccountsFilterPipe } from './accounts-filter.pipe';
 import { ChargesFilterPipe } from './charges-filter.pipe';
 import { ChargesPenaltyFilterPipe } from './charges-penalty-filter.pipe';
+import { CurrencyNamePipe } from './currency-name.pipe';
 import { DateFormatPipe } from './date-format.pipe';
+import { DatatableDisplayLabelPipe } from './datatable-display-label.pipe';
 import { DatetimeFormatPipe } from './datetime-format.pipe';
 import { ExternalIdentifierPipe } from './external-identifier.pipe';
 import { FindPipe } from './find.pipe';
@@ -30,9 +32,11 @@ import { YesnoPipe } from './yesno.pipe';
     AccountsFilterPipe,
     ChargesFilterPipe,
     ChargesPenaltyFilterPipe,
+    CurrencyNamePipe,
     FindPipe,
     UrlToStringPipe,
     DateFormatPipe,
+    DatatableDisplayLabelPipe,
     DatetimeFormatPipe,
     ExternalIdentifierPipe,
     FormatNumberPipe,
@@ -46,32 +50,38 @@ import { YesnoPipe } from './yesno.pipe';
     AccountsFilterPipe,
     ChargesFilterPipe,
     ChargesPenaltyFilterPipe,
+    CurrencyNamePipe,
     FindPipe,
     UrlToStringPipe,
     DateFormatPipe,
+    DatatableDisplayLabelPipe,
     DatetimeFormatPipe,
     ExternalIdentifierPipe,
     FormatNumberPipe,
     YesnoPipe,
     PrettyPrintPipe,
     TranslatePipe,
-    TruncateTextPipe
+    TruncateTextPipe,
+    DecimalPipe
   ],
   exports: [
     StatusLookupPipe,
     AccountsFilterPipe,
     ChargesFilterPipe,
     ChargesPenaltyFilterPipe,
+    CurrencyNamePipe,
     FindPipe,
     UrlToStringPipe,
     DateFormatPipe,
+    DatatableDisplayLabelPipe,
     DatetimeFormatPipe,
     ExternalIdentifierPipe,
     FormatNumberPipe,
     YesnoPipe,
     PrettyPrintPipe,
     TranslatePipe,
-    TruncateTextPipe
+    TruncateTextPipe,
+    DecimalPipe
   ]
 })
 export class PipesModule {}

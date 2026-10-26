@@ -1,32 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { ActivateClientComponent } from './activate-client.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { TranslateModule } from '@ngx-translate/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
-
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
+
+import { TranslateModule } from '@ngx-translate/core';
+import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 describe('ActivateClientComponent - Unit Tests', () => {
   let component: ActivateClientComponent;
   let fixture: ComponentFixture<ActivateClientComponent>;
-  let mockRouter: jest.Mocked<Router>;
   let mockClientsService: jest.Mocked<ClientsService>;
   let mockSettingsService: jest.Mocked<SettingsService>;
   let mockDates: jest.Mocked<Dates>;
+  let mockNotifier: jest.Mocked<ClientActionNotifierService>;
 
   const mockClientId = '123';
   const mockBusinessDate = new Date(2026, 0, 15);
 
   beforeEach(async () => {
-    mockRouter = {
-      navigate: jest.fn()
-    } as any;
-
     mockClientsService = {
       executeClientCommand: jest.fn(() => of({ resourceId: 123 }))
     } as unknown as jest.Mocked<ClientsService>;
@@ -41,13 +38,14 @@ describe('ActivateClientComponent - Unit Tests', () => {
       formatDate: jest.fn((date: Date, format: string) => '15 January 2026')
     } as unknown as jest.Mocked<Dates>;
 
+    mockNotifier = { notifyAndNavigate: jest.fn() } as any;
+
     await TestBed.configureTestingModule({
       imports: [
         ActivateClientComponent,
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: Router, useValue: mockRouter },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -61,6 +59,7 @@ describe('ActivateClientComponent - Unit Tests', () => {
         { provide: ClientsService, useValue: mockClientsService },
         { provide: SettingsService, useValue: mockSettingsService },
         { provide: Dates, useValue: mockDates },
+        { provide: ClientActionNotifierService, useValue: mockNotifier },
         provideNativeDateAdapter(),
         provideAnimationsAsync()
       ]
@@ -188,20 +187,26 @@ describe('ActivateClientComponent - Unit Tests', () => {
         expect.objectContaining({ activationDate: '10 January 2026' })
       );
     });
-  });
 
-  describe('Navigation', () => {
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
-
-    it('should navigate to parent route after successful activation', () => {
-      const mockActivatedRoute = TestBed.inject(ActivatedRoute);
-      component.activateClientForm.patchValue({ activationDate: new Date() });
+    it('should notify and navigate after successful submission', () => {
+      component.activateClientForm.patchValue({ activationDate: new Date(2026, 0, 10) });
 
       component.submit();
 
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['../../'], { relativeTo: mockActivatedRoute });
+      expect(mockNotifier.notifyAndNavigate).toHaveBeenCalledWith(
+        'clients.actions.activate.success',
+        TestBed.inject(ActivatedRoute)
+      );
+    });
+
+    it('should not notify and navigate if API call fails', () => {
+      const { throwError } = require('rxjs');
+      mockClientsService.executeClientCommand.mockReturnValueOnce(throwError(() => new Error('API error')));
+      component.activateClientForm.patchValue({ activationDate: new Date(2026, 0, 10) });
+
+      component.submit();
+
+      expect(mockNotifier.notifyAndNavigate).not.toHaveBeenCalled();
     });
   });
 
@@ -274,8 +279,8 @@ describe('ActivateClientComponent - Unit Tests', () => {
         })
       );
 
-      // 6. Navigation occurs
-      expect(mockRouter.navigate).toHaveBeenCalled();
+      // 6. Notification and navigation occur
+      expect(mockNotifier.notifyAndNavigate).toHaveBeenCalled();
     });
   });
 });

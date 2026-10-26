@@ -7,25 +7,17 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Recovery Repayment Action
@@ -39,19 +31,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     InputAmountComponent,
     MatSlideToggle,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecoveryRepaymentComponent implements OnInit {
+export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private loanService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -72,7 +58,7 @@ export class RecoveryRepaymentComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   /**
@@ -112,7 +98,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.recoveryRepaymentLoanForm.patchValue({
       transactionAmount: this.dataObject.amount,
-      transactionDate: new Date(this.dataObject.date)
+      transactionDate: this.dateUtils.parseDate(this.dataObject.date)
     });
   }
 
@@ -151,8 +137,11 @@ export class RecoveryRepaymentComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment').subscribe({
+      next: (response: any) => {
+        this.gotoLoanDefaultView();
+      },
+      error: (error) => {}
     });
   }
 }

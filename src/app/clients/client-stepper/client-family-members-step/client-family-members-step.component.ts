@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -48,7 +48,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperNext,
     FindPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientFamilyMembersStepComponent {
   dialog = inject(MatDialog);
@@ -71,7 +72,7 @@ export class ClientFamilyMembersStepComponent {
       width: '50rem'
     });
     addFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.member) {
+      if (response?.member) {
         this.clientFamilyMembers.push(response.member);
       }
     });
@@ -92,7 +93,7 @@ export class ClientFamilyMembersStepComponent {
       width: '50rem'
     });
     addFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.member) {
+      if (response?.member) {
         this.clientFamilyMembers.splice(index, 1, response.member);
       }
     });
@@ -106,7 +107,7 @@ export class ClientFamilyMembersStepComponent {
       data: { deleteContext: `Family member name : ${name} ${index}` }
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.clientFamilyMembers.splice(index, 1);
       }
     });

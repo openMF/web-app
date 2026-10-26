@@ -1,0 +1,77 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="selectors">
+  <p>
+    {{ 'cashTellerTransfer.source' | translate }}: <strong>{{ record.source.cashierName }}</strong> ·
+    {{ record.source.tellerName }} · {{ record.source.officeName }}
+  </p>
+  <p>
+    {{ 'cashTellerTransfer.destination' | translate }}: <strong>{{ record.destination.cashierName }}</strong> ·
+    {{ record.destination.tellerName }} · {{ record.destination.officeName }}
+  </p>
+</div>
+<p>{{ 'cashTellerTransfer.businessDate' | translate }}: {{ record.businessDate }}</p>
+@if (record.reference) {
+  <p>
+    {{ 'cashTellerTransfer.reference' | translate }}: <strong>{{ record.reference }}</strong>
+  </p>
+}
+@if (record.completedAt) {
+  <p>{{ 'cashTellerTransfer.completedAt' | translate }}: {{ record.completedAt | date: 'medium' }}</p>
+}
+<p>
+  {{ 'cashTellerTransfer.status' | translate }}:
+  {{ (record.status === 'COMPLETED' ? 'cashTellerTransfer.completed' : 'cashTellerTransfer.preview') | translate }}
+</p>
+@for (currency of record.currencies; track currency.currencyCode) {
+  <section class="currency-panel">
+    <h3>{{ 'cashTellerTransfer.currency' | translate }}: {{ currency.currencyCode }}</h3>
+    @for (outflow of record.outflowsByCurrency; track outflow.currencyCode) {
+      @if (outflow.currencyCode === currency.currencyCode) {
+        <p>
+          {{ 'cashTellerTransfer.outflows' | translate }} · {{ record.source.cashierName }}:
+          {{ format(outflow.amount, currency.decimalPlaces) }}
+        </p>
+      }
+    }
+    @for (inflow of record.inflowsByCurrency; track inflow.currencyCode) {
+      @if (inflow.currencyCode === currency.currencyCode) {
+        <p>
+          {{ 'cashTellerTransfer.inflows' | translate }} · {{ record.destination.cashierName }}:
+          {{ format(inflow.amount, currency.decimalPlaces) }}
+        </p>
+      }
+    }
+    <p>
+      {{ 'cashTellerTransfer.totalBills' | translate }}: {{ denominationTotal(currency, false) }} ·
+      {{ 'cashTellerTransfer.totalCoins' | translate }}: {{ denominationTotal(currency, true) }}
+    </p>
+    <p>
+      <strong
+        >{{ 'cashTellerTransfer.total' | translate }}: {{ format(currency.total, currency.decimalPlaces) }}</strong
+      >
+    </p>
+    <p>
+      {{ 'web1232.fields.difference' | translate }}: {{ difference(currency.currencyCode, currency.decimalPlaces) }}
+    </p>
+    @for (line of currency.denominations; track line.denominationId) {
+      <p>
+        {{ (line.denominationType === 'COIN' ? 'cashTellerTransfer.coins' : 'cashTellerTransfer.bills') | translate }} ·
+        {{ 'cashTellerTransfer.denomination' | translate }}:
+        {{ format(line.denominationValue, currency.decimalPlaces) }} · {{ 'cashTellerTransfer.quantity' | translate }}:
+        {{ line.quantity }} · {{ 'cashTellerTransfer.amount' | translate }}:
+        {{ format(line.amount, currency.decimalPlaces) }}
+      </p>
+    }
+  </section>
+}
+<p>
+  {{ 'cashTellerTransfer.balanced' | translate }}:
+  {{ (record.balanced ? 'labels.commons.Yes' : 'labels.commons.No') | translate }}
+</p>

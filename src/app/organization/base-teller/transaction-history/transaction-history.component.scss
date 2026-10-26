@@ -1,0 +1,201 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.transaction-history {
+  mat-card {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .page-heading {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h2,
+    p {
+      margin-top: 0;
+    }
+  }
+
+  section {
+    margin: 24px 0;
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, calc((100% - 32px) / 3)));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .filter-actions,
+  .detail-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 56px;
+  }
+
+  .loading-state,
+  .message {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    min-height: 72px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .error-state {
+    color: var(--mat-sys-error);
+  }
+
+  .empty-state {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    min-width: 1040px;
+  }
+
+  .amount {
+    white-space: nowrap;
+    text-align: end;
+  }
+
+  .totals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .total-card {
+    min-width: 240px;
+    flex: 1 1 240px;
+    margin: 0;
+
+    h4 {
+      margin-top: 0;
+    }
+
+    dl {
+      margin-bottom: 0;
+
+      div {
+        display: flex;
+        gap: 16px;
+        justify-content: space-between;
+        margin: 8px 0;
+      }
+
+      dd {
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .detail-panel {
+    padding: 16px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 4px;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, calc((100% - 32px) / 3)));
+    gap: 16px;
+
+    div {
+      min-width: 0;
+    }
+
+    dt {
+      margin-bottom: 4px;
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 0.875rem;
+    }
+
+    dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .denomination-table {
+    margin-bottom: 24px;
+
+    table {
+      min-width: 720px;
+    }
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media (width <= 959px) {
+  .transaction-history {
+    .filter-grid,
+    .detail-grid {
+      grid-template-columns: repeat(2, minmax(0, calc((100% - 16px) / 2)));
+    }
+  }
+}
+
+@media (width <= 599px) {
+  .transaction-history {
+    .page-heading {
+      flex-direction: column;
+    }
+
+    .filter-grid,
+    .detail-grid {
+      grid-template-columns: 100%;
+    }
+  }
+}
+
+@media print {
+  .screen-content {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+    color: #000;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border: 1px solid #000;
+      text-align: start;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  }
+}

@@ -1,0 +1,167 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cbild-audit-trail {
+  padding: 16px;
+}
+
+.cbild-header-card {
+  margin-bottom: 16px;
+}
+
+.cbild-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cbild-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cbild-total-badge {
+  font-size: 12px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  background: var(--cbild-card-bg, #f8fafc);
+  border: 1px solid var(--cbild-card-border, #e2e8f0);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.cbild-filter-card {
+  margin-bottom: 16px;
+}
+
+.cbild-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.cbild-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.cbild-empty-card {
+  margin-bottom: 16px;
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  }
+}
+
+.cbild-entries-card {
+  margin-bottom: 16px;
+}
+
+.cbild-audit-entry {
+  padding: 12px 0;
+}
+
+.cbild-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cbild-entry-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cbild-entry-id {
+  font-size: 11px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  font-weight: 500;
+}
+
+.cbild-entry-action {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.cbild-entry-entity {
+  font-size: 11px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  background: var(--cbild-card-bg, #f8fafc);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cbild-entry-divider {
+  margin: 8px 0;
+}
+
+.cbild-between-entries {
+  margin: 4px 0;
+}
+
+.cbild-entry-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cbild-detail-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.cbild-label {
+  font-size: 12px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  min-width: 120px;
+}
+
+.cbild-value {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cbild-request-id {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+}
+
+.cbild-result-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cbild-result-success {
+  background: var(--cbild-status-accepted-bg, #dcfce7);
+  color: var(--cbild-status-accepted-fg, #16a34a);
+}
+
+.cbild-result-failure {
+  background: var(--cbild-status-open-bg, #fee2e2);
+  color: var(--cbild-status-open-fg, #dc2626);
+}

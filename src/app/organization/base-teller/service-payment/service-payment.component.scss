@@ -1,0 +1,135 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.service-payment {
+  .workflow-card {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    margin: 0 0 24px;
+  }
+
+  .form-grid,
+  .summary-grid,
+  .totals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .form-grid mat-form-field,
+  .summary-grid div,
+  .totals-grid div {
+    flex: 1 1 224px;
+  }
+
+  .summary-grid,
+  .totals-grid {
+    margin: 16px 0;
+
+    div {
+      border: 1px solid rgb(0 0 0 / 12%);
+      border-radius: 4px;
+      min-height: 64px;
+      padding: 16px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 8px;
+      opacity: 0.72;
+    }
+  }
+
+  .authoritative-summary {
+    border-top: 1px solid rgb(0 0 0 / 12%);
+    padding-top: 16px;
+  }
+
+  .client-results,
+  .cash-panel {
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 4px;
+  }
+
+  .cash-panel {
+    padding: 16px;
+
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  .denomination-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+
+    div,
+    mat-form-field {
+      flex: 1 1 192px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.72;
+    }
+  }
+
+  .receipt-denominations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .message {
+    border-radius: 4px;
+    margin: 16px 0;
+    padding: 16px;
+  }
+
+  .error,
+  .error-message {
+    color: #b00020;
+  }
+
+  .error-message {
+    background: rgb(176 0 32 / 8%);
+  }
+
+  .empty-state {
+    background: rgb(0 0 0 / 4%);
+  }
+}
+
+@media print {
+  .service-payment {
+    h2,
+    mat-step-header,
+    .step-actions,
+    .error-message {
+      display: none !important;
+    }
+
+    .workflow-card {
+      box-shadow: none;
+    }
+  }
+}

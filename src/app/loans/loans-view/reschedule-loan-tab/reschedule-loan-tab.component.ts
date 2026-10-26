@@ -6,9 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
@@ -33,6 +34,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-reschedule-loan-tab',
@@ -55,11 +57,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     StatusLookupPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RescheduleLoanTabComponent {
+export class RescheduleLoanTabComponent extends LoanAccountTabBaseComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private loansServices = inject(LoansService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
@@ -79,8 +82,9 @@ export class RescheduleLoanTabComponent {
   clientId: any;
 
   constructor() {
+    super();
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.parent.data.subscribe((data: { loanRescheduleData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanRescheduleData: any }) => {
       this.loanRescheduleData = data.loanRescheduleData;
     });
   }
@@ -121,15 +125,5 @@ export class RescheduleLoanTabComponent {
           });
       }
     });
-  }
-
-  /**
-   * Refetches data fot the component
-   */
-  private reload() {
-    const url: string = this.router.url;
-    this.router
-      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
   }
 }

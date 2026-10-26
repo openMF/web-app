@@ -28,15 +28,23 @@
 
   <mat-divider></mat-divider>
 
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading datatables' | translate"></mifosx-page-loader>
+  }
+
   @if (dataObject.data.length > 0) {
-    <mat-card class="data-display-card m-t-20">
+    <mat-card [hidden]="isLoading" class="data-display-card m-t-20">
       <mat-card-content>
         <div class="table-scroll-wrapper">
           <div class="data-grid">
             @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
               <div class="data-item" [ngClass]="setAttributeClass(columnHeader.columnName)">
                 <div class="data-label mat-body-strong">
-                  {{ datatables.toDisplayLabel(columnHeader.columnName) }}
+                  @if (getSystemColumnTranslationKey(columnHeader.columnName); as translationKey) {
+                    {{ translationKey | translate }}
+                  } @else {
+                    {{ formatDisplayLabel(columnHeader.columnName) }}
+                  }
                 </div>
                 <div class="data-value">
                   @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
@@ -52,7 +60,11 @@
                     }
                     @case ('INTEGER') {
                       <span>
-                        {{ dataObject.data[0].row[i] }}
+                        @if (getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i])) {
+                          {{ getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i]) }}
+                        } @else {
+                          {{ formatValue(dataObject.data[0].row[i]) }}
+                        }
                       </span>
                     }
                     @case ('DECIMAL') {
@@ -71,18 +83,16 @@
                     }
                     @case ('TEXT') {
                       <span class="long-text">
-                        {{ dataObject.data[0].row[i] }}
+                        {{ formatValue(dataObject.data[0].row[i]) }}
+                      </span>
+                    }
+                    @case ('BOOLEAN') {
+                      <span>
+                        {{ formatValue(dataObject.data[0].row[i]) }}
                       </span>
                     }
                     @case ('JSON') {
-                      <textarea
-                        cdkTextareaAutosize="true"
-                        cdkAutosizeMaxRows="20"
-                        cdkAutosizeMinRows="1"
-                        class="json-textarea"
-                        [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-                      >
-                      </textarea>
+                      <pre class="json-value">{{ formatJsonValue(dataObject.data[0].row[i]) }}</pre>
                     }
                     @default {
                       <div class="default-value">
@@ -104,7 +114,7 @@
                           </span>
                           {{ dataObject.data[0].row[i] }}
                         } @else {
-                          {{ dataObject.data[0].row[i] }}
+                          {{ formatValue(dataObject.data[0].row[i]) }}
                         }
                       </div>
                     }

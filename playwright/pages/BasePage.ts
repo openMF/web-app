@@ -16,7 +16,10 @@ import { Page, Locator } from '@playwright/test';
  * - Reusable interaction methods
  * - Screenshot utilities
  *
- * All page objects should extend this class.
+ * Layer-2 contracts (selectors, routes, behavior flags) are consumed
+ * by concrete subclasses, not by BasePage itself. Keeping BasePage
+ * framework-agnostic is what lets the same class serve both Angular
+ * and React page objects (proposal §8).
  */
 export abstract class BasePage {
   /**
@@ -27,7 +30,7 @@ export abstract class BasePage {
 
   /**
    * The URL path for this page (relative to baseURL).
-   * Must be implemented by child classes.
+   * Subclasses set this from `ROUTES` in `playwright/config/routes.ts`.
    */
   abstract readonly url: string;
 

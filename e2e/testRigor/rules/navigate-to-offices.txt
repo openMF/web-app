@@ -1,3 +1,0 @@
-click "Admin"
-click "Organization" below "Admin"
-click "Manage Offices"

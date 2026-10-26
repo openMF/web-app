@@ -1,0 +1,43 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ 'labels.heading.Mass Reject Credit Applications' | translate }}</h1>
+
+<div mat-dialog-content>
+  <p>
+    {{ 'labels.text.Selected credit applications will be rejected' | translate }}:
+    {{ data.selectedCount }}
+  </p>
+
+  <form [formGroup]="rejectForm" class="mass-reject-dialog-form">
+    <mat-form-field (click)="rejectedDatePicker.open()">
+      <mat-label>{{ 'labels.inputs.Rejected On' | translate }}</mat-label>
+      <input matInput [max]="maxDate" [matDatepicker]="rejectedDatePicker" required formControlName="rejectedOnDate" />
+      <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #rejectedDatePicker></mat-datepicker>
+      @if (rejectForm.controls.rejectedOnDate.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Rejected Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+      <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="warn" [disabled]="rejectForm.invalid" (click)="confirm()">
+    {{ 'labels.buttons.Confirm' | translate }}
+  </button>
+</mat-dialog-actions>

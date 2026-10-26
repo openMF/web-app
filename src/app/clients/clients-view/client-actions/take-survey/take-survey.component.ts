@@ -7,14 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -29,13 +31,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRadioGroup,
     FormsModule,
     MatRadioButton
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TakeSurveyComponent {
-  private route = inject(ActivatedRoute);
-  private clientsService = inject(ClientsService);
-  private router = inject(Router);
-  private authenticationService = inject(AuthenticationService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly clientsService = inject(ClientsService);
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
 
   /** List of all Survey Data */
   allSurveyData: any;
@@ -62,11 +66,10 @@ export class TakeSurveyComponent {
    * Retrieves the survey data from `resolve`.
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientsService ClientsService
-   * @param {Router} router Router
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.snapshot.params['clientId'];
     });
@@ -112,12 +115,8 @@ export class TakeSurveyComponent {
    * Checks if there is any response or not from the user and enables the submit button accordingly
    */
   isAnyResponse(): boolean {
-    if (this.surveyData) {
-      this.surveyData.questionDatas.forEach((element: any) => {
-        if (element.answer) {
-          return false;
-        }
-      });
+    if (this.surveyData && this.surveyData.questionDatas) {
+      return !this.surveyData.questionDatas.some((element: any) => element.answer);
     }
     return true;
   }
@@ -148,8 +147,9 @@ export class TakeSurveyComponent {
       }
     });
 
-    this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.takeSurvey.success', this.route, ['../../general']),
+      error: () => this.notifier.notify('clients.actions.takeSurvey.failure')
     });
   }
 }

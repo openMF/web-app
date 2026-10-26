@@ -1,0 +1,645 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*
+ * Shared "action dashboard" shell: a card that stacks a KPI strip, an optional
+ * chart section, a filter toolbar and a data table with status-coded rows.
+ *
+ * Consumed by loan tabs that present a timeline of dated actions
+ * (e.g. delinquency tags). Pairs with 'assets/styles/pause-timeline' for the
+ * SVG chart itself. Every colour comes from the shared --ds-* tokens, which are
+ * declared globally for both themes, so no per-theme override is needed here.
+ *
+ * Usage:
+ *
+ *   @use 'assets/styles/action-dashboard';
+ *   @use 'assets/styles/pause-timeline';
+ */
+
+/* ───────────── Card shell ───────────── */
+.dashboard-card {
+  background: var(--ds-surface-alt);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow-xs);
+  color: var(--ds-text-1);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ───────────── KPI strip ───────────── */
+.kpi-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  background: var(--ds-surface-head);
+  border-bottom: 1px solid var(--ds-border);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, var(--ds-blue-50));
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.kpi {
+  padding: 16px 22px;
+  border-right: 1px solid var(--ds-border);
+  display: flex;
+  flex: 1 1 0;
+  min-width: 160px;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-text-3);
+}
+
+.kpi-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ds-text-1);
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+
+  &.accent {
+    color: var(--ds-blue-700);
+  }
+
+  .unit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ds-text-3);
+    letter-spacing: 0.04em;
+  }
+}
+
+.kpi-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 14px 22px;
+  margin-left: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--ds-blue-700);
+  background: var(--ds-blue-50);
+  color: var(--ds-blue-700);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ds-blue-700);
+    animation: ad-pulse 1.8s ease-in-out infinite;
+  }
+}
+
+// A suspended evaluation is a standing state, not activity: it borrows the
+// alert tokens and drops the pulse of the live chip.
+.status-chip--disabled {
+  border-color: var(--ds-alert);
+  background: var(--ds-alert-bg);
+  color: var(--ds-alert);
+
+  .dot {
+    background: var(--ds-alert);
+    animation: none;
+  }
+}
+
+@keyframes ad-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ───────────── Toolbar ───────────── */
+.table-section {
+  background: var(--ds-surface);
+  border-top: 1px solid var(--ds-border);
+}
+
+.table-toolbar {
+  padding: 12px 24px;
+  background: var(--ds-surface-head);
+  border-bottom: 1px solid var(--ds-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.record-count {
+  font-size: 12.5px;
+  color: var(--ds-text-2);
+
+  strong {
+    color: var(--ds-text-1);
+    font-weight: 700;
+  }
+}
+
+.filter-group {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+}
+
+.filter-chip {
+  font:
+    600 11px 'DM Sans',
+    sans-serif;
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: var(--ds-text-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all 0.12s ease;
+
+  &:hover {
+    color: var(--ds-text-1);
+  }
+
+  &.is-active {
+    background: var(--ds-blue-700);
+    color: #fff;
+  }
+}
+
+.btn {
+  font:
+    600 13px 'DM Sans',
+    sans-serif;
+  padding: 7px 14px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: var(--ds-blue-700);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: var(--ds-blue-600);
+    box-shadow: var(--ds-shadow-sm);
+  }
+}
+
+.btn-ghost {
+  background: var(--ds-surface);
+  border-color: var(--ds-border);
+  color: var(--ds-text-2);
+
+  &:hover:not(:disabled) {
+    border-color: var(--ds-border-strong);
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-1);
+  }
+}
+
+/* ───────────── Table ───────────── */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead th {
+    background: var(--ds-surface-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ds-text-2);
+    border-bottom: 2px solid var(--ds-border);
+    padding: 11px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  thead th.id-col {
+    width: 90px;
+  }
+
+  thead th.num-col,
+  tbody td.num-col {
+    text-align: right;
+  }
+
+  thead th.center-col,
+  tbody td.center-col {
+    text-align: center;
+  }
+
+  tbody td {
+    padding: 13px 16px;
+    font-size: 13.5px;
+    color: var(--ds-text-1);
+    background: var(--ds-surface);
+    border-bottom: 1px solid var(--ds-border);
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    animation: ad-fade-row 0.36s ease both;
+  }
+
+  @for $i from 1 through 12 {
+    tbody tr:nth-child(#{$i}) {
+      animation-delay: #{0.05 + ($i - 1) * 0.06}s;
+    }
+  }
+
+  tbody tr:hover td {
+    background: var(--ds-blue-20);
+  }
+
+  tbody tr td:first-child {
+    position: relative;
+  }
+
+  tbody tr.row-active td:first-child {
+    border-left: 3px solid var(--ds-paid);
+  }
+
+  tbody tr.row-scheduled td:first-child {
+    border-left: 3px solid var(--ds-blue-700);
+  }
+
+  tbody tr.row-expired td:first-child {
+    border-left: 3px solid var(--ds-zero);
+  }
+
+  tbody tr.empty-row td {
+    text-align: center;
+    color: var(--ds-text-3);
+    font-style: italic;
+    padding: 28px 16px;
+  }
+}
+
+@keyframes ad-fade-row {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .data-table tbody tr {
+    animation: none;
+  }
+
+  .status-chip .dot,
+  .status-pill--active .dot {
+    animation: none;
+  }
+}
+
+/* ───────────── Cell primitives ───────────── */
+.id-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ds-text-2);
+}
+
+.action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  background: var(--ds-blue-50);
+  color: var(--ds-blue-700);
+  border: 1px solid var(--ds-blue-100);
+
+  fa-icon {
+    font-size: 10px;
+  }
+}
+
+// Suppressing evaluation altogether reads differently from adjusting it.
+.action-badge--alert {
+  background: var(--ds-alert-bg);
+  color: var(--ds-alert);
+  border-color: var(--ds-alert);
+}
+
+// Actions that restore normal evaluation.
+.action-badge--positive {
+  background: var(--ds-paid-bg);
+  color: var(--ds-paid);
+  border-color: var(--ds-paid);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &--active {
+    background: var(--ds-paid-bg);
+    color: var(--ds-paid);
+    border-color: var(--ds-paid);
+
+    .dot {
+      background: var(--ds-paid);
+      animation: ad-pulse 2s ease-in-out infinite;
+    }
+  }
+
+  &--scheduled {
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+    border-color: var(--ds-blue-700);
+
+    .dot {
+      background: var(--ds-blue-700);
+    }
+  }
+
+  &--expired {
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+    border-color: var(--ds-border-strong);
+
+    .dot {
+      background: var(--ds-zero);
+    }
+  }
+}
+
+.date-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ds-text-1);
+  white-space: nowrap;
+
+  &.muted {
+    color: var(--ds-text-3);
+    font-style: italic;
+  }
+}
+
+.num-cell {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ds-text-1);
+
+  &.muted {
+    color: var(--ds-text-3);
+  }
+}
+
+.duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+
+  .days {
+    min-width: 38px;
+    text-align: right;
+    color: var(--ds-text-1);
+  }
+
+  .duration-unit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    color: var(--ds-text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+.duration-bar {
+  position: relative;
+  width: 72px;
+  height: 4px;
+  background: var(--ds-border);
+  border-radius: 2px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.duration-bar-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+
+  &--active {
+    background: var(--ds-paid);
+  }
+
+  &--scheduled {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--ds-blue-700),
+      var(--ds-blue-700) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  &--expired {
+    background: var(--ds-zero);
+  }
+}
+
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-border);
+  background: var(--ds-surface);
+  color: var(--ds-blue-700);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: var(--ds-blue-700);
+    background: var(--ds-blue-50);
+  }
+}
+
+/* ───────────── Empty state ───────────── */
+.empty {
+  padding: 56px 24px;
+  text-align: center;
+  background: var(--ds-surface);
+
+  .ico {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ds-text-1);
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 12.5px;
+    color: var(--ds-text-2);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+/* ───────────── Secondary list sections ───────────── */
+.list-section {
+  margin-top: 24px;
+}
+
+.list-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+
+  h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ds-text-1);
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+}
+
+.list-card {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow-xs);
+}
+
+/* ───────────── Responsive ───────────── */
+@media (width <= 880px) {
+  .kpi {
+    flex-basis: 50%;
+    min-width: 0;
+  }
+
+  .kpi:nth-of-type(2) {
+    border-right: none;
+  }
+
+  .kpi-status {
+    flex-basis: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
+    padding: 12px 22px;
+    border-top: 1px solid var(--ds-border);
+  }
+}

@@ -7,14 +7,13 @@
  */
 
 /** Angular Imports. */
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanOriginator } from 'app/loans/models/loan-account.model';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Attach Loan Originator component.
@@ -25,25 +24,19 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
   styleUrl: './attach-originator.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AttachOriginatorComponent implements OnInit {
+export class AttachOriginatorComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private loanService = inject(LoansService);
-  private router = inject(Router);
 
   /** Attach Loan Originator Loan form. */
   attachLoanOriginatorForm: UntypedFormGroup;
   /** Loan data. */
   loanOriginators: LoanOriginator[] = [];
-  @Input() dataObject: any;
-
-  /** Loan Id */
-  loanId: string | null = null;
 
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit() {
@@ -73,8 +66,10 @@ export class AttachOriginatorComponent implements OnInit {
    */
   submit() {
     const approveLoanFormData = this.attachLoanOriginatorForm.value;
-    this.loanService.attachLoanOriginator(this.loanId, approveLoanFormData.originatorId).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .attachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, approveLoanFormData.originatorId)
+      .subscribe((response: any) => {
+        this.gotoLoanView('originators');
+      });
   }
 }

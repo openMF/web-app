@@ -1,0 +1,54 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card class="master-login-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'labels.heading.Tenant Management Sign In' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'labels.text.Tenant management master context' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <form [formGroup]="masterLoginForm" (ngSubmit)="signIn()">
+      <mat-card-content>
+        <div class="layout-column">
+          <mat-form-field class="flex-100">
+            <mat-label>{{ 'labels.inputs.Master Username' | translate }}</mat-label>
+            <input matInput required formControlName="username" autocomplete="username" />
+            @if (masterLoginForm.controls.username.hasError('required')) {
+              <mat-error>
+                {{
+                  'errors.validation.requiredField'
+                    | translate: { label: ('labels.inputs.Master Username' | translate) }
+                }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mifosx-input-password
+            formControlName="password"
+            [label]="'labels.inputs.Master Password' | translate"
+            [required]="true"
+          ></mifosx-input-password>
+        </div>
+
+        @if (errorMessage()) {
+          <div class="master-login-error" role="alert">
+            <fa-icon icon="exclamation-circle" class="m-r-10"></fa-icon>
+            <span>{{ errorMessage() }}</span>
+          </div>
+        }
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="masterLoginForm.invalid || submitting()">
+          {{ 'labels.buttons.Sign In' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -6,86 +6,145 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container layout-row-wrap gap-2px responsive-column filter-container">
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Office Name' | translate }}</mat-label>
-    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete" />
-  </mat-form-field>
-
-  <mifosx-gl-account-selector
-    class="flex-31"
-    [inputFormControl]="glAccount"
-    [glAccountList]="glAccountData"
-    [required]="true"
-    [inputLabel]="'GL Account Name or Code'"
-  >
-  </mifosx-gl-account-selector>
-
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
-    <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
-      @for (filter of entryTypeFilterData; track filter) {
-        <mat-option [value]="filter.value">
-          {{ filter.option | translate }}
-        </mat-option>
+<div class="filter-panel container">
+  <div class="filter-bar">
+    <h2>
+      <fa-icon icon="filter"></fa-icon>
+      {{ 'labels.inputs.Filters' | translate }}
+      @if (hasActiveFilters) {
+        <span class="applied">{{ activeFilters.length }} {{ 'labels.inputs.active' | translate }}</span>
       }
-    </mat-select>
-  </mat-form-field>
+    </h2>
+    @if (hasActiveFilters) {
+      <button class="btn-link" type="button" (click)="resetFilters()">
+        <fa-icon icon="undo"></fa-icon>
+        {{ 'labels.buttons.Reset Filters' | translate }}
+      </button>
+    }
+  </div>
 
-  <mat-form-field class="flex-31" (click)="transactionDateFromPicker.open()">
-    <mat-label>{{ 'labels.inputs.Transaction Date From' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="minDate"
-      [max]="maxDate"
-      [matDatepicker]="transactionDateFromPicker"
-      [formControl]="transactionDateFrom"
-    />
-    <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #transactionDateFromPicker></mat-datepicker>
-  </mat-form-field>
+  <div class="filter-grid">
+    <div class="field">
+      <label class="field-label">{{ 'labels.inputs.Office Name' | translate }}</label>
+      <mat-form-field appearance="outline" class="je-field">
+        <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete" />
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="flex-31" (click)="transactionDateToPicker.open()">
-    <mat-label>{{ 'labels.inputs.Transaction Date To' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="minDate"
-      [max]="maxDate"
-      [matDatepicker]="transactionDateToPicker"
-      [formControl]="transactionDateTo"
-    />
-    <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
-    <mat-datepicker #transactionDateToPicker></mat-datepicker>
-  </mat-form-field>
+    <div class="field">
+      <label class="field-label">{{ 'labels.inputs.GL Account Name or Code' | translate }}</label>
+      <mifosx-gl-account-selector
+        [inputFormControl]="glAccount"
+        [glAccountList]="glAccountData"
+        [inputLabel]="'GL Account Name or Code'"
+      >
+      </mifosx-gl-account-selector>
+    </div>
 
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Transaction ID' | translate }}</mat-label>
-    <input matInput [formControl]="transactionId" />
-  </mat-form-field>
+    <div class="field">
+      <label class="field-label">{{ 'labels.inputs.Transaction ID' | translate }}</label>
+      <mat-form-field appearance="outline" class="je-field">
+        <input matInput [formControl]="transactionId" />
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="flex-31" (click)="submittedOnDateFromPicker.open()">
-    <mat-label>{{ 'labels.inputs.Submitted on Date From' | translate }}</mat-label>
-    <input
-      matInput
-      [max]="submittedOnDateTo.value"
-      [matDatepicker]="submittedOnDateFromPicker"
-      [formControl]="submittedOnDateFrom"
-    />
-    <mat-datepicker-toggle matSuffix [for]="submittedOnDateFromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #submittedOnDateFromPicker></mat-datepicker>
-  </mat-form-field>
+    <div class="field">
+      <label class="field-label">{{ 'labels.inputs.Filter' | translate }}</label>
+      <mat-form-field appearance="outline" class="je-field">
+        <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
+          @for (filter of entryTypeFilterData; track filter) {
+            <mat-option [value]="filter.value">
+              {{ filter.option | translate }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="flex-31" (click)="submittedOnDateToPicker.open()">
-    <mat-label>{{ 'labels.inputs.Submitted on Date To' | translate }} </mat-label>
-    <input
-      matInput
-      [min]="submittedOnDateFrom.value"
-      [matDatepicker]="submittedOnDateToPicker"
-      [formControl]="submittedOnDateTo"
-    />
-    <mat-datepicker-toggle matSuffix [for]="submittedOnDateToPicker"></mat-datepicker-toggle>
-    <mat-datepicker #submittedOnDateToPicker></mat-datepicker>
-  </mat-form-field>
+    <div class="field col-span-2">
+      <label class="field-label">{{ 'labels.inputs.Transaction Date Range' | translate }}</label>
+      <div class="date-range">
+        <mat-form-field appearance="outline" class="je-field">
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="transactionDateFromPicker"
+            [formControl]="transactionDateFrom"
+            [placeholder]="'labels.inputs.From' | translate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateFromPicker></mat-datepicker>
+        </mat-form-field>
+
+        <span class="range-arrow" aria-hidden="true">→</span>
+
+        <mat-form-field appearance="outline" class="je-field">
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="transactionDateToPicker"
+            [formControl]="transactionDateTo"
+            [placeholder]="'labels.inputs.To' | translate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #transactionDateToPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="field col-span-2">
+      <label class="field-label">{{ 'labels.inputs.Submitted Date Range' | translate }}</label>
+      <div class="date-range">
+        <mat-form-field appearance="outline" class="je-field">
+          <input
+            matInput
+            [max]="submittedOnDateTo.value"
+            [matDatepicker]="submittedOnDateFromPicker"
+            [formControl]="submittedOnDateFrom"
+            [placeholder]="'labels.inputs.From' | translate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="submittedOnDateFromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #submittedOnDateFromPicker></mat-datepicker>
+        </mat-form-field>
+
+        <span class="range-arrow" aria-hidden="true">→</span>
+
+        <mat-form-field appearance="outline" class="je-field">
+          <input
+            matInput
+            [min]="submittedOnDateFrom.value"
+            [matDatepicker]="submittedOnDateToPicker"
+            [formControl]="submittedOnDateTo"
+            [placeholder]="'labels.inputs.To' | translate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="submittedOnDateToPicker"></mat-datepicker-toggle>
+          <mat-datepicker #submittedOnDateToPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  @if (hasActiveFilters) {
+    <div class="filter-chips">
+      <span class="lbl">{{ 'labels.inputs.active' | translate | uppercase }}</span>
+      @for (chip of activeFilters; track chip.key) {
+        <span class="chip">
+          <span class="k">{{ chip.labelKey | translate }}:</span>
+          <span class="v">{{ chip.value | translate }}</span>
+          <button
+            class="x"
+            type="button"
+            (click)="chip.onClear()"
+            [attr.aria-label]="'labels.buttons.Clear' | translate"
+          >
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </span>
+      }
+    </div>
+  }
 </div>
 
 <!-- Autocomplete data -->
@@ -97,83 +156,109 @@
   }
 </mat-autocomplete>
 
-<div class="mat-elevation-z8 container table-container">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entry ID' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.id }}</td>
-    </ng-container>
-    <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.officeName }}</td>
-    </ng-container>
+<div class="results-panel container">
+  <div class="results-bar">
+    <div class="left">
+      <h2>{{ 'labels.inputs.Results' | translate }}</h2>
+      <span class="count mono"
+        >{{ dataSource?.records$ | async | number }} {{ 'labels.inputs.entries' | translate }}</span
+      >
+    </div>
+  </div>
 
-    <ng-container matColumnDef="transactionId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Transaction ID' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.transactionId }}</td>
-    </ng-container>
+  <div class="table-scroll">
+    <table mat-table [dataSource]="dataSource" matSort class="je-table">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entry ID' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-id">#{{ journalEntry.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="officeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.officeName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="transactionDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Transaction Date' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.transactionDate | dateFormat }}</td>
-    </ng-container>
+      <ng-container matColumnDef="transactionId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Transaction ID' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-tx">{{ journalEntry.transactionId }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="glAccountType">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.glAccountType.value }}</td>
-    </ng-container>
+      <ng-container matColumnDef="transactionDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Transaction Date' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-date">
+          {{ journalEntry.transactionDate | dateFormat }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="createdByUserName">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created By' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.createdByUserName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="glAccountType">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry">
+          <span class="type-pill" [ngClass]="glAccountTypeClass(journalEntry.glAccountType.value)">
+            {{ journalEntry.glAccountType.value }}
+          </span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="submittedOnDate">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Submitted on date' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.submittedOnDate | datetimeFormat }}</td>
-    </ng-container>
+      <ng-container matColumnDef="createdByUserName">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created By' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.createdByUserName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="glAccountCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account Code' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.glAccountCode }}</td>
-    </ng-container>
+      <ng-container matColumnDef="submittedOnDate">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Submitted on date' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-date">
+          {{ journalEntry.submittedOnDate | datetimeFormat }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="glAccountName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account Name' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.glAccountName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="glAccountCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account Code' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-code">{{ journalEntry.glAccountCode }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="currency">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Currency' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">{{ journalEntry.currency.code }}</td>
-    </ng-container>
+      <ng-container matColumnDef="glAccountName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account Name' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="cell-name">{{ journalEntry.glAccountName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="debit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Debit' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">
-        @if (journalEntry.entryType.value === 'DEBIT') {
-          <span> {{ journalEntry.amount | formatNumber }} </span>
-        }
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="currency">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Currency' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry">
+          <span class="ccy-chip">{{ journalEntry.currency.code }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="credit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Credit' | translate }}</th>
-      <td mat-cell *matCellDef="let journalEntry">
-        @if (journalEntry.entryType.value === 'CREDIT') {
-          <span> {{ journalEntry.amount | formatNumber }} </span>
-        }
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="debit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="num">{{ 'labels.inputs.Debit' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="num">
+          @if (journalEntry.entryType.value === 'DEBIT') {
+            <span class="amt-debit">{{ journalEntry.amount | formatNumber }}</span>
+          } @else {
+            <span class="amt-zero">—</span>
+          }
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      [routerLink]="['transactions/view', row.transactionId]"
-      class="select-row"
-    ></tr>
-  </table>
+      <ng-container matColumnDef="credit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="num">{{ 'labels.inputs.Credit' | translate }}</th>
+        <td mat-cell *matCellDef="let journalEntry" class="num">
+          @if (journalEntry.entryType.value === 'CREDIT') {
+            <span class="amt-credit">{{ journalEntry.amount | formatNumber }}</span>
+          } @else {
+            <span class="amt-zero">—</span>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="['transactions/view', row.transactionId]"
+        [ngClass]="row.entryType?.value === 'DEBIT' ? 'debit-row' : 'credit-row'"
+        class="select-row"
+      ></tr>
+    </table>
+  </div>
 
   <mat-paginator
     [length]="dataSource?.records$ | async"

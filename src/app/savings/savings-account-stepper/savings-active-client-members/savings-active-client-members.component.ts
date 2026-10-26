@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -47,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsActiveClientMembersComponent implements OnInit {
   @Input() activeClientMembers?: any;

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -32,7 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./edit-center.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCenterComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -87,7 +88,7 @@ export class EditCenterComponent implements OnInit {
         this.centerData.name,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       staffId: [this.centerData.staffId],
@@ -97,7 +98,7 @@ export class EditCenterComponent implements OnInit {
       this.editCenterForm.addControl(
         'activationDate',
         new UntypedFormControl(
-          this.centerData.activationDate ? this.centerData.activationDate : new Date(),
+          this.centerData.activationDate ? this.dateUtils.parseDate(this.centerData.activationDate) : new Date(),
           Validators.required
         )
       );
@@ -120,7 +121,6 @@ export class EditCenterComponent implements OnInit {
     }
     const data = {
       ...editCenterFormData,
-      name: this.centerData.name,
       dateFormat,
       locale
     };

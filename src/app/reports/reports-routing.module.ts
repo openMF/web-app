@@ -27,7 +27,7 @@ import { GlobalConfigurationsResolver } from 'app/system/configurations/global-c
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'reports',
+      path: '',
       data: { title: 'Reports', breadcrumb: 'Reports' },
       resolve: {
         reports: ReportsResolver

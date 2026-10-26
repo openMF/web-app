@@ -7,12 +7,23 @@
  */
 
 /** Angular Imports */
-import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, Data, RouterLink } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
-import { filter, takeUntil } from 'rxjs/operators';
-import { merge, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
@@ -21,6 +32,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
@@ -61,16 +73,19 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
-  ]
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIcon
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
+export class BreadcrumbComponent implements AfterViewInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
-  private destroy$ = new Subject<void>();
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
@@ -98,7 +113,7 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
 
     // Merge navigation events with language change events to regenerate breadcrumbs when language changes
     merge(onNavigationEnd, this.translateService.onLangChange)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.breadcrumbs = [];
         let currentRoute = this.activatedRoute.root;
@@ -146,7 +161,6 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
                 const routeData: Data = route.snapshot.data;
                 if (routeData.breadcrumb === 'Clients') {
                   breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);
-                  currentUrl += `/general`;
                 } else if (routeData.breadcrumb === 'Groups') {
                   breadcrumbLabel = routeData.groupViewData.name;
                 } else if (routeData.breadcrumb === 'Centers') {
@@ -199,6 +213,23 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
               } else {
                 url = currentUrl;
               }
+
+              // For module root breadcrumbs (e.g. "Loans", "Savings") whose URL has no entity child,
+              // extract the correct URL from the full router URL to build a navigable link.
+              if (url && typeof url === 'string') {
+                const accountPathMatch = url
+                  .replace(/\/+/g, '/')
+                  .match(/\/(loans-accounts|savings-accounts|shares-accounts)\/$/);
+                if (accountPathMatch) {
+                  const fullUrl = this.router.url.replace(/\/+/g, '/');
+                  const entityUrlMatch = fullUrl.match(new RegExp(`(.*/${accountPathMatch[1]}/\\d+)`));
+                  if (entityUrlMatch) {
+                    url = entityUrlMatch[1];
+                  } else {
+                    url = false;
+                  }
+                }
+              }
             }
             if (url !== undefined) {
               if (url.length > 8 && url.search(`/clients/`) > 0) {
@@ -214,7 +245,8 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
 
             const breadcrumb: Breadcrumb = {
               label: breadcrumbLabel,
-              url: url
+              url: url,
+              queryParams: { ...route.snapshot.queryParams }
             };
 
             if (breadcrumbLabel) {
@@ -222,10 +254,14 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
             }
           });
         }
+        this.cdr.markForCheck();
       });
   }
 
   printableValue(value: string): string {
+    if (!value) {
+      return '';
+    }
     if (value.length <= 30) {
       return value;
     }
@@ -282,9 +318,16 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
   }
 
   getTranslate(text: string): any {
+    // Route data can provide a complete translation key (for example, feature-scoped keys).
+    // Resolve it before applying the legacy labels.text / labels.menus fallbacks.
+    let translation = this.translateService.instant(text);
+    if (translation !== text) {
+      return translation;
+    }
+
     // First try labels.text.* (for static breadcrumb labels)
     let key: string = 'labels.text.' + text;
-    let translation = this.translateService.instant(key);
+    translation = this.translateService.instant(key);
     if (translation !== key) {
       return translation;
     }
@@ -298,13 +341,5 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
 
     // If no translation found, return the original text
     return text;
-  }
-
-  /**
-   * Clean up subscriptions on component destroy.
-   */
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

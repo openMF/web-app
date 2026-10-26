@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -17,6 +18,10 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
+
+/** rxjs Imports */
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -33,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./add-charge-recurring-deposits-account.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -42,6 +48,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -75,14 +82,18 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
    * Creates the Recurring Deposits Charge form.
    */
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createRecurringDepositsChargeForm();
     this.buildDependencies();
   }
 
   buildDependencies() {
-    this.recurringDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+    this.recurringDepositsChargeForm.controls.chargeId.valueChanges
+      .pipe(
+        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -115,7 +126,6 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
           chargeTimeType: data.chargeTimeType.id
         });
       });
-    });
   }
 
   /**

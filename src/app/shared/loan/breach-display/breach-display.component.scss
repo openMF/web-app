@@ -1,0 +1,76 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.breach-display-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+
+  .attribute-name {
+    font-weight: 500;
+  }
+}
+
+.breach-single-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+
+  .breach-col {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .frequency-col {
+    font-weight: 500;
+  }
+
+  .amount-col {
+    text-align: right;
+    font-weight: 500;
+  }
+}
+
+.breach-display {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  span {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .breach-frequency {
+    text-align: right;
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .breach-frequency-type {
+    font-weight: 500;
+  }
+
+  .r-amount {
+    text-align: right;
+  }
+}

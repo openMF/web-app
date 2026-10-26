@@ -1,0 +1,101 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../../../../assets/styles/colours' as *;
+
+.spreadsheet-title {
+  overflow-wrap: anywhere;
+}
+
+.spreadsheet-content {
+  // The grid owns the horizontal scroll; the dialog itself must not scroll sideways.
+  overflow-x: hidden;
+}
+
+.sheet-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.sheet-tab {
+  border: 1px solid $silver;
+  border-radius: 4px;
+  background: $white;
+  color: $dark-grey;
+  padding: 0.25rem 0.75rem;
+  font: inherit;
+  cursor: pointer;
+
+  &.active {
+    background: $clouds;
+    font-weight: 700;
+  }
+}
+
+.grid-scroll {
+  overflow: auto;
+  max-height: 60vh;
+  border: 1px solid $silver;
+  border-radius: 4px;
+}
+
+.spreadsheet-grid {
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  // Let wide content scroll rather than squeezing every column into the dialog width.
+  width: max-content;
+  min-width: 100%;
+
+  th,
+  td {
+    border: 1px solid $silver;
+    padding: 0.25rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+    // A single outsized cell must not stretch the whole grid past the point of usefulness.
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  thead th,
+  .gutter {
+    position: sticky;
+    background: $clouds;
+    color: $asbestos;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  // Keep the column letters visible while scrolling down, and the row numbers while scrolling
+  // across; the corner cell has to win both axes.
+  thead th {
+    top: 0;
+    z-index: 1;
+  }
+
+  .gutter {
+    left: 0;
+  }
+
+  thead .gutter {
+    z-index: 2;
+  }
+}
+
+.muted {
+  color: $concrete;
+}
+
+.truncation-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+}

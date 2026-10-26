@@ -7,12 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -24,16 +26,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./update-client-savings-account.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateClientSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
 
   /** Client Update Savings Account form. */
-  clientSavingsAccountForm: UntypedFormGroup;
+  clientSavingsAccountForm: FormGroup;
   /** Savings Accounts Data */
   savingsAccounts: any;
   /** Client Data */
@@ -47,7 +51,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.clientData = data.clientActionData;
     });
   }
@@ -73,7 +77,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
     this.clientsService
       .executeClientCommand(this.clientData.id, 'updateSavingsAccount', this.clientSavingsAccountForm.value)
       .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+        this.notifier.notifyAndNavigate('clients.actions.updateSavingsAccount.success', this.route);
       });
   }
 }

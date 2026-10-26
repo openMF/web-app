@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCenterMeetingScheduleComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -72,7 +73,9 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    // Fineract rejects a revised meeting date before the business date.
+    this.minDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditMeetingScheduleForm();
   }
 
@@ -100,10 +103,9 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const reschedulebasedOnMeetingDates = true;
-    const prevOldDate: Date = new Date(this.centerEditMeetingScheduleForm.value.presentMeetingDate);
-    if (centerEditMeetingScheduleFormData.startDate instanceof Date) {
-      centerEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
-    }
+    // The existing meeting dates come from Fineract as [year, month, day] arrays.
+    const presentMeetingDate: Date = this.dateUtils.parseDate(centerEditMeetingScheduleFormData.presentMeetingDate);
+    centerEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(presentMeetingDate, dateFormat);
     const prevNewDate: Date = this.centerEditMeetingScheduleForm.value.newMeetingDate;
     if (centerEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
       centerEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);

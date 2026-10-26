@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,6 +7,8 @@
  */
 import { test, expect } from '@playwright/test';
 import { LoginPage } from 'playwright/pages/login.page';
+
+test.use({ storageState: { cookies: [], origins: [] } });
 
 /**
  * Login Responsive Layout Tests
@@ -209,7 +211,7 @@ test.describe('Login Page - Responsive Layout', () => {
 
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
-      await page.goto('http://localhost:4200/login');
+      await page.goto('/#/login');
       await page.waitForLoadState('networkidle');
 
       // Check no horizontal scroll

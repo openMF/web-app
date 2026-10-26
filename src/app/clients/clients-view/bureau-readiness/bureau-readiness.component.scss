@@ -1,0 +1,209 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+.cbild-bureau-readiness {
+  padding: 1rem;
+}
+
+.cbild-role-card {
+  margin-bottom: 1rem;
+
+  mat-form-field {
+    width: 280px;
+  }
+}
+
+.cbild-result-card,
+.cbild-empty-card {
+  margin-bottom: 1rem;
+}
+
+.cbild-veto-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--mdc-theme-warning-container, #fff3e0);
+  border: 1px solid var(--mdc-theme-warning, #ffb74d);
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--mdc-theme-on-warning-container, #e65100);
+  font-size: 13px;
+
+  mat-icon {
+    color: #e65100;
+  }
+}
+
+.cbild-status-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.cbild-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.cbild-badge-ready {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cbild-badge-not-ready {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.cbild-badge-risk-low {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cbild-badge-risk-medium {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.cbild-badge-risk-high {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.cbild-badge-alert {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.cbild-divider {
+  margin: 1rem 0;
+}
+
+.cbild-score-section {
+  margin: 0.5rem 0;
+}
+
+.cbild-score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cbild-score-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cbild-score-value {
+  font-size: 20px;
+  font-weight: 500;
+  color: #009fdf;
+}
+
+.cbild-score-hint {
+  font-size: 12px;
+  color: rgb(0 0 0 / 54%);
+  margin-top: 4px;
+}
+
+.cbild-fico-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cbild-fico-label {
+  display: block;
+  font-size: 12px;
+  color: rgb(0 0 0 / 54%);
+}
+
+.cbild-fico-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 500;
+  color: #009fdf;
+}
+
+.cbild-pulled-at {
+  font-size: 12px;
+  color: rgb(0 0 0 / 54%);
+  margin-left: auto;
+}
+
+.cbild-missing-section {
+  padding: 0.5rem 0;
+}
+
+.cbild-missing-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+
+  mat-icon {
+    color: #f44336;
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.cbild-icon-veto {
+  color: #f44336 !important;
+}
+
+.cbild-icon-warn {
+  color: #ff9800 !important;
+}
+
+.cbild-missing-hint {
+  font-size: 12px;
+  color: rgb(0 0 0 / 54%);
+  margin-top: 0.5rem;
+}
+
+.cbild-complete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mdc-theme-success, #4caf50);
+  font-size: 14px;
+  padding: 0.5rem 0;
+}
+
+.cbild-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+  color: rgb(0 0 0 / 38%);
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+  }
+}

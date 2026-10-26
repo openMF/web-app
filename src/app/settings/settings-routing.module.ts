@@ -20,7 +20,7 @@ import { SettingsComponent } from './settings.component';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'settings',
+      path: '',
       component: SettingsComponent,
       data: { title: 'Settings', breadcrumb: 'Settings' }
     }

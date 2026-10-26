@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -20,6 +20,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-warning-dialog',
+  standalone: true,
   templateUrl: './warning-dialog.component.html',
   styleUrls: ['./warning-dialog.component.scss'],
   imports: [
@@ -29,7 +30,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WarningDialogComponent {
   dialogRef = inject<MatDialogRef<WarningDialogComponent>>(MatDialogRef);

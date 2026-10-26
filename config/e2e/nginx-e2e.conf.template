@@ -1,0 +1,25 @@
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # ${E2E_PROXY_TARGET} is replaced by envsubst; $host/$scheme etc. are
+    # safe because NGINX_ENVSUBST_FILTER restricts to ^(FINERACT_|MIFOS_|...).
+    location /fineract-provider/ {
+        proxy_pass ${E2E_PROXY_TARGET}/fineract-provider/;
+        proxy_ssl_verify off;
+        proxy_connect_timeout 30s;
+        proxy_read_timeout 120s;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}

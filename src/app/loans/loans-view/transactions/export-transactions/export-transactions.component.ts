@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -29,9 +30,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExportTransactionsComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private sanitizer = inject(DomSanitizer);
   private reportsService = inject(ReportsService);
   private formBuilder = inject(UntypedFormBuilder);
@@ -62,9 +65,11 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
-      this.loansAccountId = data.loanDetailsData.accountNo;
-    });
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanDetailsData: any }) => {
+        this.loansAccountId = data.loanDetailsData.accountNo;
+      });
   }
 
   ngOnInit() {

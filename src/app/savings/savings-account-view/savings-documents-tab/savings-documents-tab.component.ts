@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
@@ -22,13 +23,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     EntityDocumentsTabComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsDocumentsTabComponent {
   private route = inject(ActivatedRoute);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Stores the resolved savings documents data */
   entityDocuments: any;
@@ -41,7 +44,7 @@ export class SavingsDocumentsTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsDocuments: any }) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('savingAccountId');

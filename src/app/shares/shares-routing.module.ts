@@ -59,7 +59,7 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Shares Account General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                data: { title: 'Shares Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
                 resolve: {
                   sharesAccountData: SharesAccountViewResolver
                 }

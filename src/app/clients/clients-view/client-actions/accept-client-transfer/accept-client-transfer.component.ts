@@ -7,14 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -28,33 +30,30 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AcceptClientTransferComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly settingsService = inject(SettingsService);
+  private readonly dateUtils = inject(Dates);
+  private readonly route = inject(ActivatedRoute);
+  private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
 
   /** Accept Client Transfer form. */
-  acceptClientTransferForm: UntypedFormGroup;
+  acceptClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
   transferDate: any;
 
   /**
-   * @param {FormBuilder} formBuilder Form Builder
-   * @param {ClientsService} clientsService Clients Service
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {Dates} dateUtils Date Utils
-   * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
+   * constructor
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -72,7 +71,7 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   createAcceptClientTransferForm() {
     this.acceptClientTransferForm = this.formBuilder.group({
-      transferDate: { value: new Date(this.transferDate), disabled: true },
+      transferDate: { value: this.dateUtils.parseDate(this.transferDate), disabled: true },
       note: ['']
     });
   }
@@ -91,8 +90,9 @@ export class AcceptClientTransferComponent implements OnInit {
     const data = {
       ...acceptClientTransferFormData
     };
-    this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.acceptTransfer.success', this.route),
+      error: () => this.notifier.notify('clients.actions.acceptTransfer.failure')
     });
   }
 }

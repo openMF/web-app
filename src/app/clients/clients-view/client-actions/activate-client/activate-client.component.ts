@@ -5,16 +5,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -26,22 +27,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./activate-client.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivateClientComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly dateUtils = inject(Dates);
+  private readonly route = inject(ActivatedRoute);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Activate client form. */
-  activateClientForm: UntypedFormGroup;
+  activateClientForm: FormGroup;
   /** Client Id */
   clientId: any;
 
@@ -94,8 +96,9 @@ export class ActivateClientComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.executeClientCommand(this.clientId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, 'activate', data).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.activate.success', this.route),
+      error: () => this.notifier.notify('clients.actions.activate.failure')
     });
   }
 }

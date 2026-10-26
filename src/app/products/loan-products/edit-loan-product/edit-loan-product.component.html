@@ -151,21 +151,19 @@
       </mat-step>
     }
 
-    @if (loanProductService.isLoanProduct) {
-      <mat-step [stepControl]="loanProductAccountingForm" completed>
-        <ng-template matStepLabel
-          ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template
-        >
+    <mat-step completed>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template
+      >
 
-        <mifosx-loan-product-accounting-step
-          [loanProductsTemplate]="loanProductAndTemplate"
-          [accountingRuleData]="accountingRuleData"
-          [loanProductFormValid]="loanProductFormValidAndNotPristine"
-          [deferredIncomeRecognition]="deferredIncomeRecognition"
-        >
-        </mifosx-loan-product-accounting-step>
-      </mat-step>
-    }
+      <mifosx-loan-product-accounting-step
+        [loanProductsTemplate]="loanProductAndTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [loanProductFormValid]="loanProductFormValidAndNotPristine"
+        [deferredIncomeRecognition]="deferredIncomeRecognition"
+      >
+      </mifosx-loan-product-accounting-step>
+    </mat-step>
 
     @if (loanProductFormValidAndNotPristine) {
       <mat-step state="preview" completed>

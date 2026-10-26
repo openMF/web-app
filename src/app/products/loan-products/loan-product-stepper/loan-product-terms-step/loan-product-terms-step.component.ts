@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -40,6 +40,19 @@ import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  inactivePricingFields,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { StringEnumOptionData } from 'app/shared/models/option-data.model';
+import {
+  annualEirValidators,
+  greaterThanZeroValidator,
+  withinBoundsValidator
+} from 'app/shared/validators/working-capital-pricing.validator';
 
 @Component({
   selector: 'mifosx-loan-product-terms-step',
@@ -65,7 +78,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
@@ -75,7 +89,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
 
   @Input() loanProductsTemplate: any;
 
-  loanProductTermsForm: UntypedFormGroup;
+  loanProductTermsForm!: UntypedFormGroup;
 
   /** Zero Interest control. */
   zeroInterest = new UntypedFormControl(false);
@@ -96,6 +110,10 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     'actions'
   ];
   isAdvancedTransactionProcessingStrategy = false;
+
+  /** Working Capital: options of the payment amount calculation strategy select. */
+  paymentAmountCalculationStrategyOptions: StringEnumOptionData[] = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
 
   constructor() {
     super();
@@ -193,19 +211,112 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     }
 
     if (this.loanProductService.isWorkingCapital) {
+      this.paymentAmountCalculationStrategyOptions =
+        this.loanProductsTemplate.paymentAmountCalculationStrategyOptions?.length > 0
+          ? this.loanProductsTemplate.paymentAmountCalculationStrategyOptions
+          : WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS;
+      const strategy = resolvePaymentAmountCalculationStrategy(
+        this.loanProductsTemplate.paymentAmountCalculationStrategy
+      );
       this.loanProductTermsForm.patchValue({
         minPrincipal: this.loanProductsTemplate.minPrincipal,
         principal: this.loanProductsTemplate.principal,
         maxPrincipal: this.loanProductsTemplate.maxPrincipal,
+        paymentAmountCalculationStrategy: strategy,
         minPeriodPaymentRate: this.loanProductsTemplate.minPeriodPaymentRate,
         periodPaymentRate: this.loanProductsTemplate.periodPaymentRate,
         maxPeriodPaymentRate: this.loanProductsTemplate.maxPeriodPaymentRate,
+        minAnnualEir: this.loanProductsTemplate.minAnnualEir,
+        annualEir: this.loanProductsTemplate.annualEir,
+        maxAnnualEir: this.loanProductsTemplate.maxAnnualEir,
+        minPaymentAmount: this.loanProductsTemplate.minPaymentAmount,
+        paymentAmount: this.loanProductsTemplate.paymentAmount,
+        maxPaymentAmount: this.loanProductsTemplate.maxPaymentAmount,
         repaymentEvery: this.loanProductsTemplate.repaymentEvery,
         repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType
           ? this.loanProductsTemplate.repaymentFrequencyType.id
-          : null
+          : null,
+        discount: this.loanProductsTemplate.discount
       });
+      this.applyPaymentAmountCalculationStrategy(strategy);
     }
+  }
+
+  /** Working Capital: strategy currently selected in the form (TPV when the control is blank). */
+  get paymentAmountCalculationStrategy(): WorkingCapitalPaymentAmountCalculationStrategy {
+    return resolvePaymentAmountCalculationStrategy(
+      this.loanProductTermsForm.get('paymentAmountCalculationStrategy')?.value
+    );
+  }
+
+  /**
+   * Working Capital: the backend accepts exactly one pricing group per strategy and returns
+   * `not.allowed.for.<strategy>.strategy` for any other. Switching the select therefore clears
+   * the groups that no longer apply and moves the validators to the active one. Under ANNUAL_EIR
+   * and PAYMENT_AMOUNT the discount is mandatory and must be positive.
+   */
+  private applyPaymentAmountCalculationStrategy(strategy: WorkingCapitalPaymentAmountCalculationStrategy): void {
+    const form = this.loanProductTermsForm;
+    const bounded = (minName: string, maxName: string) =>
+      withinBoundsValidator(
+        () => form.get(minName)?.value,
+        () => form.get(maxName)?.value
+      );
+    const groups: Record<WorkingCapitalPaymentAmountCalculationStrategy, Record<string, any[]>> = {
+      TPV: {
+        minPeriodPaymentRate: [Validators.min(0)],
+        periodPaymentRate: [
+          Validators.required,
+          Validators.min(0),
+          bounded('minPeriodPaymentRate', 'maxPeriodPaymentRate')
+        ],
+        maxPeriodPaymentRate: [Validators.min(0)]
+      },
+      ANNUAL_EIR: {
+        minAnnualEir: annualEirValidators(),
+        annualEir: [
+          Validators.required,
+          ...annualEirValidators(),
+          bounded('minAnnualEir', 'maxAnnualEir')
+        ],
+        maxAnnualEir: annualEirValidators()
+      },
+      PAYMENT_AMOUNT: {
+        minPaymentAmount: [greaterThanZeroValidator()],
+        paymentAmount: [
+          Validators.required,
+          greaterThanZeroValidator(),
+          bounded('minPaymentAmount', 'maxPaymentAmount')
+        ],
+        maxPaymentAmount: [greaterThanZeroValidator()]
+      }
+    };
+    inactivePricingFields(strategy).forEach((name) => {
+      const control = form.get(name);
+      if (control) {
+        control.clearValidators();
+        control.setValue(null, { emitEvent: false });
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    });
+    Object.entries(groups[strategy]).forEach(
+      ([
+        name,
+        validators
+      ]) => {
+        const control = form.get(name)!;
+        control.setValidators(validators);
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    );
+    const discount = form.get('discount')!;
+    discount.setValidators(
+      strategy === WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV ? [Validators.min(0)] : [
+            Validators.required,
+            greaterThanZeroValidator()
+          ]
+    );
+    discount.updateValueAndValidity({ emitEvent: false });
   }
 
   createLoanProductTermsForm() {
@@ -323,22 +434,32 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         minPeriodPaymentRate: [
           '',
           [
-            Validators.min(0.01)
+            Validators.min(0)
           ]
         ],
         periodPaymentRate: [
           '',
           [
             Validators.required,
-            Validators.min(0.01)
+            Validators.min(0)
           ]
         ],
         maxPeriodPaymentRate: [
           '',
           [
-            Validators.min(0.01)
+            Validators.min(0)
           ]
         ],
+        paymentAmountCalculationStrategy: [
+          WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV,
+          Validators.required
+        ],
+        minAnnualEir: [null],
+        annualEir: [null],
+        maxAnnualEir: [null],
+        minPaymentAmount: [null],
+        paymentAmount: [null],
+        maxPaymentAmount: [null],
         repaymentEvery: [
           '',
           [
@@ -349,6 +470,12 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         repaymentFrequencyType: [
           '',
           Validators.required
+        ],
+        discount: [
+          '',
+          [
+            Validators.min(0)
+          ]
         ]
       });
     }
@@ -361,21 +488,24 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
   }
 
   setConditionalControls() {
+    if (this.loanProductService.isWorkingCapital) {
+      this.setWorkingCapitalConditionalControls();
+    }
     if (this.loanProductService.isLoanProduct) {
       this.loanProductTermsForm
-        .get('allowApprovedDisbursedAmountsOverApplied')
+        .get('allowApprovedDisbursedAmountsOverApplied')!
         .valueChanges.subscribe((allowApprovedDisbursedAmountsOverApplied) => {
           if (allowApprovedDisbursedAmountsOverApplied) {
-            this.loanProductTermsForm.get('overAppliedCalculationType').enable();
-            this.loanProductTermsForm.get('overAppliedNumber').enable();
+            this.loanProductTermsForm.get('overAppliedCalculationType')!.enable();
+            this.loanProductTermsForm.get('overAppliedNumber')!.enable();
             if (this.loanProductService.isLoanProduct) {
               this.loanProductTermsForm.addControl('disallowExpectedDisbursements', new UntypedFormControl(true));
             }
           } else {
-            this.loanProductTermsForm.get('overAppliedCalculationType').disable();
-            this.loanProductTermsForm.get('overAppliedCalculationType').patchValue(null);
-            this.loanProductTermsForm.get('overAppliedNumber').disable();
-            this.loanProductTermsForm.get('overAppliedNumber').patchValue(null);
+            this.loanProductTermsForm.get('overAppliedCalculationType')!.disable();
+            this.loanProductTermsForm.get('overAppliedCalculationType')!.patchValue(null);
+            this.loanProductTermsForm.get('overAppliedNumber')!.disable();
+            this.loanProductTermsForm.get('overAppliedNumber')!.patchValue(null);
             if (this.loanProductService.isLoanProduct) {
               this.loanProductTermsForm.removeControl('disallowExpectedDisbursements');
             }
@@ -383,7 +513,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         });
 
       this.loanProductTermsForm
-        .get('isLinkedToFloatingInterestRates')
+        .get('isLinkedToFloatingInterestRates')!
         .valueChanges.subscribe((isLinkedToFloatingInterestRates) => {
           if (isLinkedToFloatingInterestRates) {
             this.loanProductTermsForm.removeControl('minInterestRatePerPeriod');
@@ -450,7 +580,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           }
         });
 
-      this.loanProductTermsForm.get('useBorrowerCycle').valueChanges.subscribe((useBorrowerCycle) => {
+      this.loanProductTermsForm.get('useBorrowerCycle')!.valueChanges.subscribe((useBorrowerCycle) => {
         if (useBorrowerCycle) {
           this.loanProductTermsForm.addControl('principalVariationsForBorrowerCycle', this.formBuilder.array([]));
           this.loanProductTermsForm.addControl(
@@ -467,41 +597,56 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
 
       this.zeroInterest.valueChanges.subscribe((zeroInterest) => {
         if (zeroInterest) {
-          this.loanProductTermsForm.get('minInterestRatePerPeriod').patchValue(0);
-          this.loanProductTermsForm.get('minInterestRatePerPeriod').disable();
-          this.loanProductTermsForm.get('interestRatePerPeriod').patchValue(0);
-          this.loanProductTermsForm.get('interestRatePerPeriod').disable();
-          this.loanProductTermsForm.get('maxInterestRatePerPeriod').patchValue(0);
-          this.loanProductTermsForm.get('maxInterestRatePerPeriod').disable();
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(0);
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.disable();
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.patchValue(0);
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.disable();
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(0);
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.disable();
         } else {
-          this.loanProductTermsForm
-            .get('minInterestRatePerPeriod')
-            .patchValue(this.loanProductsTemplate.minInterestRatePerPeriod);
-          this.loanProductTermsForm.get('minInterestRatePerPeriod').enable();
-          this.loanProductTermsForm
-            .get('interestRatePerPeriod')
-            .patchValue(this.loanProductsTemplate.interestRatePerPeriod);
-          this.loanProductTermsForm.get('interestRatePerPeriod').enable();
-          this.loanProductTermsForm
-            .get('maxInterestRatePerPeriod')
-            .patchValue(this.loanProductsTemplate.maxInterestRatePerPeriod);
-          this.loanProductTermsForm.get('maxInterestRatePerPeriod').enable();
+          const interestRateValues = this.getInterestRateValues();
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(interestRateValues.min);
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.enable();
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.patchValue(interestRateValues.default);
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.enable();
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(interestRateValues.max);
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.enable();
         }
         this.validateAdvancedPaymentStrategyControls();
       });
     }
   }
 
+  /** Working Capital: re-shape the pricing inputs whenever the strategy or a bound changes. */
+  private setWorkingCapitalConditionalControls(): void {
+    this.loanProductTermsForm
+      .get('paymentAmountCalculationStrategy')!
+      .valueChanges.subscribe((value: string) =>
+        this.applyPaymentAmountCalculationStrategy(resolvePaymentAmountCalculationStrategy(value))
+      );
+    const revalidate = (target: string, ...bounds: string[]) =>
+      bounds.forEach((name) =>
+        this.loanProductTermsForm
+          .get(name)!
+          .valueChanges.subscribe(() =>
+            this.loanProductTermsForm.get(target)!.updateValueAndValidity({ emitEvent: false })
+          )
+      );
+    revalidate('periodPaymentRate', 'minPeriodPaymentRate', 'maxPeriodPaymentRate');
+    revalidate('annualEir', 'minAnnualEir', 'maxAnnualEir');
+    revalidate('paymentAmount', 'minPaymentAmount', 'maxPaymentAmount');
+  }
+
   get principalVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('principalVariationsForBorrowerCycle') as UntypedFormArray;
+    return this.loanProductTermsForm.get('principalVariationsForBorrowerCycle')! as UntypedFormArray;
   }
 
   get numberOfRepaymentVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('numberOfRepaymentVariationsForBorrowerCycle') as UntypedFormArray;
+    return this.loanProductTermsForm.get('numberOfRepaymentVariationsForBorrowerCycle')! as UntypedFormArray;
   }
 
   get interestRateVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('interestRateVariationsForBorrowerCycle') as UntypedFormArray;
+    return this.loanProductTermsForm.get('interestRateVariationsForBorrowerCycle')! as UntypedFormArray;
   }
 
   setLoanProductTermsFormDirty() {
@@ -565,7 +710,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         };
       case 'NominalInterestRate':
         return {
-          title: this.translateService.instant('labels.heading.Nominal Interest Rate by loan cycle'),
+          title: this.translateService.instant('labels.inputs.Annual interest rate by loan cycle'),
           formfields: this.getFormfields(values)
         };
     }
@@ -587,6 +732,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         value: values ? values.borrowerCycleNumber : undefined,
         type: 'number',
         required: true,
+        min: 0,
         order: 2
       }),
       new InputBase({
@@ -594,6 +740,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         label: this.translateService.instant('labels.inputs.Minimum'),
         value: values ? values.minValue : undefined,
         type: 'number',
+        min: 0,
         order: 3
       }),
       new InputBase({
@@ -602,6 +749,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         value: values ? values.defaultValue : undefined,
         type: 'number',
         required: true,
+        min: 0,
         order: 4
       }),
       new InputBase({
@@ -609,6 +757,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         label: this.translateService.instant('labels.inputs.Maximum'),
         value: values ? values.maxValue : undefined,
         type: 'number',
+        min: 0,
         order: 5
       })
     ];
@@ -624,6 +773,19 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
       }
       return value;
     };
+
+    if (this.loanProductService.isWorkingCapital) {
+      // Only the active strategy's inputs may travel: the backend rejects the others and, on
+      // update, clears whatever belonged to the previous strategy by itself.
+      const terms = {
+        ...formValue,
+        minAnnualEir: normalizeDecimal(formValue.minAnnualEir),
+        annualEir: normalizeDecimal(formValue.annualEir),
+        maxAnnualEir: normalizeDecimal(formValue.maxAnnualEir)
+      };
+      inactivePricingFields(this.paymentAmountCalculationStrategy).forEach((name) => delete terms[name]);
+      return terms;
+    }
 
     return {
       ...formValue,
@@ -643,9 +805,33 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
 
   private validateAdvancedPaymentStrategyControls(): void {
     if (this.allowFixedLength()) {
-      this.loanProductTermsForm.get('fixedLength').patchValue(this.loanProductsTemplate.fixedLength || null);
+      this.loanProductTermsForm.get('fixedLength')!.patchValue(this.loanProductsTemplate.fixedLength || null);
     } else {
-      this.loanProductTermsForm.get('fixedLength').patchValue(null);
+      this.loanProductTermsForm.get('fixedLength')!.patchValue(null);
     }
+  }
+
+  private getInterestRateValues(): { min: any; default: any; max: any } {
+    if (this.isZeroInterestTemplate()) {
+      return {
+        min: '',
+        default: '',
+        max: ''
+      };
+    }
+
+    return {
+      min: this.loanProductsTemplate.minInterestRatePerPeriod,
+      default: this.loanProductsTemplate.interestRatePerPeriod,
+      max: this.loanProductsTemplate.maxInterestRatePerPeriod
+    };
+  }
+
+  private isZeroInterestTemplate(): boolean {
+    return (
+      this.loanProductsTemplate.minInterestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.interestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.maxInterestRatePerPeriod === 0
+    );
   }
 }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports  */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +24,8 @@ import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -44,8 +46,11 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatListItem,
     NgClass,
     MatDivider,
-    MatCheckbox
-  ]
+    MatCheckbox,
+    MatIcon,
+    MatIconButton
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewRoleComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -59,7 +64,7 @@ export class ViewRoleComponent implements OnInit {
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
-  currentGrouping: string;
+  currentGrouping: string = '';
   /** Stores the previous grouping */
   previousGrouping = '';
   /** Stores Grouping Data */
@@ -75,9 +80,9 @@ export class ViewRoleComponent implements OnInit {
   /** Role ID */
   roleId: any;
   /** Creates permission form  */
-  formGroup: UntypedFormGroup;
+  formGroup!: UntypedFormGroup;
   /** Creates Backup form */
-  backupform: UntypedFormGroup;
+  backupform!: UntypedFormGroup;
   /** Temporarily stores Permission data */
   tempPermissionUIData: {
     [key: string]: {
@@ -88,6 +93,16 @@ export class ViewRoleComponent implements OnInit {
   permissions: {
     permissions: { code: string; id: number }[];
   } = { permissions: [] };
+  /** Search text for filtering permissions */
+  searchText = '';
+  /** Filtered permissions across all groupings */
+  filteredPermissions: { code: string; id: number; grouping: string }[] = [];
+  /** Whether search mode is active */
+  isSearchActive = false;
+  /** Match counts per grouping when searching */
+  groupingMatchCounts: { [key: string]: number } = {};
+  /** Filtered permissions for the currently selected grouping */
+  filteredGroupPermissions: { code: string; id: number }[] = [];
   /** Add role zitadel */
 
   /**
@@ -100,7 +115,7 @@ export class ViewRoleComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { roledetails: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.rolePermissionService = data.roledetails;
     });
   }
@@ -178,6 +193,7 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = this.tempPermissionUIData[grouping];
     this.selectedItem = grouping;
     this.previousGrouping = grouping;
+    this.updateFilteredGroupPermissions();
   }
 
   /**
@@ -210,18 +226,120 @@ export class ViewRoleComponent implements OnInit {
   }
 
   /**
+   * Gets the translated role description
+   * @param description Role description
+   */
+  getTranslatedRoleDescription(description: string): string {
+    const translationKey = 'labels.inputs.This role provides all application permissions';
+    const plainEnglishDescription = 'This role provides all application permissions';
+    const normalized = (description || '').trim().replace(/\.$/, '');
+
+    if (normalized === plainEnglishDescription) {
+      return translationKey;
+    }
+    return description;
+  }
+
+  /**
    * Formats the permission from permission code
    * @param name String
    */
-  permissionName(name: any) {
-    name = name || '';
-    // replace '_' with ' '
-    name = name.replace(/_/g, ' ');
-    // for reports replace read with view
+  permissionName(name: string): string {
+    name = (name || '').trim();
+
+    // Special case: reports replace READ with View
     if (this.previousGrouping === 'report') {
-      name = name.replace(/READ/g, 'View');
+      name = name.replace(/^READ_/, 'VIEW_');
     }
-    return name;
+
+    // Split into action + entity at the first underscore
+    const underscoreIndex = name.indexOf('_');
+    if (underscoreIndex === -1) {
+      const key = `labels.permissions.actions.${name}`;
+      const t = this.translateService.instant(key);
+      return t !== key ? t : this.titleCase(name);
+    }
+
+    const action = name.substring(0, underscoreIndex);
+    const entity = name.substring(underscoreIndex + 1);
+
+    const actionKey = `labels.permissions.actions.${action}`;
+    const translatedAction = this.translateService.instant(actionKey);
+    const actionResult = translatedAction !== actionKey ? translatedAction : this.titleCase(action);
+
+    const entityKey = `labels.permissions.entities.${entity}`;
+    const translatedEntity = this.translateService.instant(entityKey);
+    const entityResult = translatedEntity !== entityKey ? translatedEntity : this.titleCase(entity.replace(/_/g, ' '));
+
+    return `${actionResult} ${entityResult}`;
+  }
+
+  private titleCase(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
+  /**
+   * Filters permissions across all groupings based on search text
+   * @param searchValue Search input value
+   */
+  filterPermissions(searchValue: string) {
+    this.searchText = searchValue;
+    if (!searchValue || searchValue.trim() === '') {
+      this.isSearchActive = false;
+      this.filteredPermissions = [];
+      this.groupingMatchCounts = {};
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    this.isSearchActive = true;
+    const lowerSearch = searchValue.toLowerCase();
+    this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
+    for (const grouping of this.groupings) {
+      const group = this.tempPermissionUIData[grouping];
+      if (group) {
+        let count = 0;
+        for (const perm of group.permissions) {
+          const readableName = this.permissionName(perm.code).toLowerCase();
+          if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
+            this.filteredPermissions.push({
+              code: perm.code,
+              id: perm.id,
+              grouping
+            });
+            count++;
+          }
+        }
+        this.groupingMatchCounts[grouping] = count;
+      }
+    }
+    this.updateFilteredGroupPermissions();
+  }
+
+  /**
+   * Updates the filtered permissions for the currently selected grouping
+   */
+  updateFilteredGroupPermissions() {
+    if (!this.isSearchActive || !this.permissions) {
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    const lowerSearch = this.searchText.toLowerCase();
+    this.filteredGroupPermissions = this.permissions.permissions.filter((perm) => {
+      const readableName = this.permissionName(perm.code).toLowerCase();
+      return readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch);
+    });
+  }
+
+  /**
+   * Clears the search field and returns to grouping view
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.isSearchActive = false;
+    this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
+    this.filteredGroupPermissions = [];
   }
 
   /**
@@ -259,7 +377,7 @@ export class ViewRoleComponent implements OnInit {
    * Submits the modified permissions
    */
   submit() {
-    const value = this.formGroup.get('roster').value;
+    const value = this.formGroup.get('roster')?.value;
     const data: { [key: string]: boolean } = {};
     const permissionData = {
       permissions: {}
@@ -278,7 +396,8 @@ export class ViewRoleComponent implements OnInit {
    * Selects all the permission of a particular role
    */
   selectAll() {
-    const roster = this.formGroup.get('roster') as FormArray;
+    const roster = this.formGroup.get('roster') as FormArray | null;
+    if (!roster) return;
     for (let i = 0; i < this.permissions.permissions.length; i++) {
       roster.at(this.permissions.permissions[i].id).patchValue({
         selected: true
@@ -290,7 +409,8 @@ export class ViewRoleComponent implements OnInit {
    * Deselects all the permissions of a particular role
    */
   deselectAll() {
-    const roster = this.formGroup.get('roster') as FormArray;
+    const roster = this.formGroup.get('roster') as FormArray | null;
+    if (!roster) return;
     for (let i = 0; i < this.permissions.permissions.length; i++) {
       roster.at(this.permissions.permissions[i].id).patchValue({
         selected: false

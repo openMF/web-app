@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { startWith } from 'rxjs/operators';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +27,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatStepperNext,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -45,12 +46,22 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.fixedDepositProductsTemplate.currencyOptions;
+    // A saved product returns its decimal places and multiples inside `currency`.
+    const currency = this.fixedDepositProductsTemplate.currency;
+    const isEditing =
+      this.fixedDepositProductsTemplate.id !== undefined && this.fixedDepositProductsTemplate.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.fixedDepositProductsTemplate.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.fixedDepositProductsTemplate.inMultiplesOf ?? '');
 
     this.fixedDepositProductCurrencyForm.patchValue({
-      currencyCode: this.fixedDepositProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.fixedDepositProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.fixedDepositProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.fixedDepositProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();

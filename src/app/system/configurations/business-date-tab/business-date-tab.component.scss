@@ -6,22 +6,294 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.space {
-  padding-bottom: 40px;
+/* ─── Layout ─────────────────────────────────────────── */
+
+.bdt-wrapper {
+  padding: 28px 24px;
+  min-width: 100%;
 }
 
-.date-type {
-  font-size: 1.25rem;
-  font-weight: 400;
-  min-width: 40%;
+.bdt-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  padding: 0 !important;
+  box-shadow: 0 2px 16px rgb(0 0 0 / 9%) !important;
 }
 
-.date-value {
-  display: inline;
+/* ─── Header ─────────────────────────────────────────── */
+
+.bdt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  background: linear-gradient(120deg, #1a237e 0%, #303f9f 60%, #3949ab 100%);
+  color: #fff;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bdt-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bdt-header-icon {
   font-size: 1rem;
-  min-width: 50%;
+  opacity: 0.8;
 }
 
-.table-row {
-  vertical-align: middle;
+.bdt-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.bdt-config-badge {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2px;
+  background: rgb(255 255 255 / 13%);
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: rgb(255 255 255 / 88%);
+  white-space: nowrap;
+}
+
+.bdt-format-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.bdt-format-label {
+  font-size: 0.65rem;
+  opacity: 0.58;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.bdt-format-value {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 0.8rem;
+  background: rgb(255 255 255 / 11%);
+  padding: 2px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.6px;
+}
+
+/* ─── Disabled state ─────────────────────────────────── */
+
+.bdt-disabled-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 32px;
+  gap: 14px;
+  text-align: center;
+}
+
+.bdt-disabled-icon {
+  font-size: 2.4rem;
+  color: #bdbdbd;
+  opacity: 0.5;
+}
+
+.bdt-disabled-message {
+  margin: 0;
+  font-size: 0.93rem;
+  color: #757575;
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+.bdt-disabled-code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 4px 12px;
+  color: #757575;
+}
+
+/* ─── Date rows ──────────────────────────────────────── */
+
+.bdt-form {
+  padding: 0;
+}
+
+.bdt-row {
+  display: flex;
+  align-items: center;
+  padding: 22px 28px;
+  gap: 20px;
+  transition:
+    background 0.18s ease,
+    border-left 0.18s ease;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background: rgb(0 0 0 / 1.5%);
+  }
+
+  &--active {
+    background: rgb(26 35 126 / 3.5%);
+    border-left-color: #3949ab;
+  }
+}
+
+.bdt-row-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  flex-shrink: 0;
+}
+
+.bdt-row-icon {
+  width: 15px;
+  text-align: center;
+  font-size: 0.88rem;
+
+  &--business {
+    color: #3949ab;
+    opacity: 0.8;
+  }
+
+  &--cob {
+    color: #00897b;
+    opacity: 0.8;
+  }
+}
+
+.bdt-row-type {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #424242;
+  white-space: nowrap;
+}
+
+.bdt-row-value {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.bdt-date-chip {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #1a237e;
+  background: #eeeffa;
+  border: 1px solid #c5cae9;
+  border-radius: 6px;
+  padding: 6px 16px;
+  letter-spacing: 0.5px;
+
+  &--cob {
+    color: #00695c;
+    background: #e0f2f1;
+    border-color: #b2dfdb;
+  }
+}
+
+.bdt-datepicker {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: -1.25em;
+}
+
+/* ─── Actions ────────────────────────────────────────── */
+
+.bdt-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bdt-edit-btn {
+  color: #5c6bc0 !important;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &--cob {
+    color: #26a69a !important;
+  }
+}
+
+.bdt-btn-icon {
+  margin-right: 6px;
+}
+
+.bdt-submit-btn {
+  font-size: 0.84rem;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+}
+
+.bdt-cancel-btn {
+  font-size: 0.84rem;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 14px;
+  color: #757575 !important;
+  border-color: #e0e0e0 !important;
+}
+
+.bdt-row-divider {
+  margin: 0 28px !important;
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+
+@media (width <= 620px) {
+  .bdt-wrapper {
+    padding: 16px 12px;
+  }
+
+  .bdt-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .bdt-format-meta {
+    align-items: flex-start;
+  }
+
+  .bdt-row {
+    flex-wrap: wrap;
+    padding: 18px 20px;
+    gap: 12px;
+  }
+
+  .bdt-row-label {
+    min-width: 100%;
+  }
+
+  .bdt-row-value {
+    min-width: 100%;
+  }
+
+  .bdt-row-actions {
+    min-width: 100%;
+    justify-content: flex-start;
+  }
+
+  .bdt-datepicker {
+    max-width: 100%;
+  }
 }

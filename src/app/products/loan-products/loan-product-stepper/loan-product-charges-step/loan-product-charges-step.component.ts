@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -58,7 +58,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     ChargesFilterPipe,
     ChargesPenaltyFilterPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductChargesStepComponent extends LoanProductBaseComponent implements OnInit {
   dialog = inject(MatDialog);

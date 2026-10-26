@@ -7,16 +7,15 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
-import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Write Off component.
@@ -28,19 +27,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WriteOffPageComponent implements OnInit {
+export class WriteOffPageComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private loanService = inject(LoansService);
   private dateUtils = inject(Dates);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
 
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -50,17 +43,8 @@ export class WriteOffPageComponent implements OnInit {
   writeOffForm: UntypedFormGroup;
   writeOffReasonOptions: any[] = [];
 
-  /**
-   * Get data from `Resolver`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {LoansService} loanService Loan Service.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {Router} router Router.
-   * @param {SettingsService} settingsService Settings Service
-   */
   constructor() {
-    this.loanId = this.route.snapshot.params['loanId'];
+    super();
   }
 
   ngOnInit() {
@@ -75,7 +59,7 @@ export class WriteOffPageComponent implements OnInit {
   setWriteOffForm() {
     this.writeOffForm = this.formBuilder.group({
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       amount: [{ value: this.dataObject.amount, disabled: true }],
@@ -105,7 +89,7 @@ export class WriteOffPageComponent implements OnInit {
     };
     delete data.amount;
     this.loanService.submitLoanActionButton(this.loanId, data, 'writeoff').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.gotoLoanDefaultView();
     });
   }
 }
