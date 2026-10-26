@@ -16,6 +16,7 @@ import { FormatAmountDirective } from './format-amount.directive';
 import { ValidateOnFocusDirective } from './validate-on-focus.directive';
 import { PositiveNumberDirective } from './positive-number.directive';
 import { PositiveIntegerDirective } from './positive-integer.directive';
+import { EntityRowLinkDirective } from './entity-row-link.directive';
 
 /**
  *  Directives Module
@@ -29,14 +30,16 @@ import { PositiveIntegerDirective } from './positive-integer.directive';
     FormatAmountDirective,
     ValidateOnFocusDirective,
     PositiveNumberDirective,
-    PositiveIntegerDirective
+    PositiveIntegerDirective,
+    EntityRowLinkDirective
   ],
   exports: [
     HasPermissionDirective,
     FormatAmountDirective,
     ValidateOnFocusDirective,
     PositiveNumberDirective,
-    PositiveIntegerDirective
+    PositiveIntegerDirective,
+    EntityRowLinkDirective
   ]
 })
 export class DirectivesModule {}

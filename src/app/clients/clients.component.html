@@ -172,7 +172,7 @@
     </div>
 
     @for (row of dataSource.data; track row.id) {
-      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']">
+      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']" mifosxEntityRowLink>
         <div class="rail"></div>
         <div
           class="avatar"
