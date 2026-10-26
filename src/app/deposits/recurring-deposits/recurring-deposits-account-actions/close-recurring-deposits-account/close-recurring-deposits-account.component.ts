@@ -101,7 +101,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   createcloseRecurringDepositForm() {
     this.closeRecurringDepositForm = this.formBuilder.group({
       closedOnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       maturityAmount: [{ value: this.maturityAmount, disabled: true }],
