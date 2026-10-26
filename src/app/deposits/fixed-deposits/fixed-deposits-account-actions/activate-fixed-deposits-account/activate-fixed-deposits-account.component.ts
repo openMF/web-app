@@ -13,7 +13,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -31,7 +31,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ActivateFixedDepositsAccountComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private savingsService = inject(SavingsService);
+  private fixedDepositsService = inject(FixedDepositsService);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -47,9 +47,9 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
   accountId: any;
 
   /**
-   * Fixed deposits endpoint is not supported so using Savings endpoint.
+   * Activates through the fixed deposit endpoint, which also moves the deposit from a linked savings account.
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -96,7 +96,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'activate', data).subscribe(() => {
+    this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, 'activate', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
