@@ -490,3 +490,75 @@ describe('ClientsComponent — status filter', () => {
     expect(inFlight[0].observers.length).toBe(0);
   });
 });
+
+describe('ClientsComponent — removed Show Closed Accounts toggle', () => {
+  let component: ClientsComponent;
+  let fixture: ComponentFixture<ClientsComponent>;
+  let clientsService: jest.Mocked<ClientsService>;
+
+  const pageWith = (rows: any[]) => ({
+    content: rows,
+    totalElements: rows.length,
+    numberOfElements: rows.length
+  });
+
+  beforeEach(async () => {
+    clientsService = {
+      searchByText: jest.fn(() => of(pageWith([])))
+    } as any;
+
+    const authService = { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) } as any;
+
+    await TestBed.configureTestingModule({
+      imports: [
+        ClientsComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: ClientsService, useValue: clientsService },
+        { provide: AuthenticationService, useValue: authService },
+        provideAnimationsAsync(),
+        provideRouter([])
+      ]
+    }).compileComponents();
+
+    TestBed.inject(FaIconLibrary).addIcons(faDownload, faPlus, faStop);
+
+    fixture = TestBed.createComponent(ClientsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    // Reset call count from ngOnInit (preloadClients may trigger a call)
+    clientsService.searchByText.mockClear();
+  });
+
+  it('no longer renders the legacy Show Closed Accounts toggle', () => {
+    expect(fixture.nativeElement.querySelector('.toggle')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.toggle-input')).toBeNull();
+    expect(fixture.nativeElement.textContent).not.toContain('Show Closed Accounts');
+  });
+
+  it('keeps the status dropdown as the only status filtering control', () => {
+    expect(fixture.nativeElement.querySelector('.status-filter mat-select')).toBeTruthy();
+  });
+
+  it('renders closed clients returned by the server when no status filter is selected', () => {
+    const closedRow = {
+      id: 7,
+      displayName: 'Closed Client',
+      accountNumber: '7',
+      officeName: 'Head Office',
+      status: { code: 'clientStatusType.closed', value: 'Closed' }
+    };
+    clientsService.searchByText.mockImplementation(() => of(pageWith([closedRow])));
+
+    component.search('');
+
+    expect(component.totalRows).toBe(1);
+    expect(component.dataSource.data).toEqual([closedRow]);
+    expect(component.existsClientsToFilter).toBe(true);
+
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.list-row')).toBeTruthy();
+  });
+});
