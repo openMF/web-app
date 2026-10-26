@@ -60,13 +60,6 @@ export class ClientsListPage extends BasePage {
   }
 
   /**
-   * Returns the "Show Closed Accounts" toggle.
-   */
-  get showClosedToggle(): Locator {
-    return this.page.locator(CLIENTS_LIST_SELECTORS.showClosedToggle);
-  }
-
-  /**
    * Returns the status filter (multi-select) that narrows the list by
    * client status (Active / Pending / Closed / Rejected).
    */
@@ -224,15 +217,6 @@ export class ClientsListPage extends BasePage {
     } else {
       await this.searchInput.fill('');
     }
-  }
-
-  /**
-   * Toggles the "Show Closed Accounts" filter and waits for the
-   * list to re-render so subsequent assertions read fresh rows.
-   */
-  async toggleShowClosedAccounts(): Promise<void> {
-    await this.showClosedToggle.click();
-    await this.page.waitForLoadState('networkidle');
   }
 
   /**
