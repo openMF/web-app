@@ -115,7 +115,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   loanDisplayArrearsDelinquency = 0;
   /** Status */
   status: string;
-  entityType: string;
   /** Loan Id */
   loanId: number;
   /** Client Id */
@@ -225,14 +224,57 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
     }
     this.setConditionalButtons();
-    if (this.router.url.includes('clients')) {
-      this.entityType = 'Client';
-    } else if (this.router.url.includes('groups')) {
-      this.entityType = 'Group';
-    } else if (this.router.url.includes('centers')) {
-      this.entityType = 'Center';
-    }
     this.loanDelinquencyClassification();
+  }
+
+  /**
+   * Account holder type of the loaded loan.
+   *
+   * The loan details are authoritative rather than the current URL, because a
+   * standalone route such as `/loans/:loanId` has no client or group segment.
+   * A GLIM child loan belongs to an individual client and can also carry the
+   * group association, so the client takes precedence; a group loan carries no
+   * client association.
+   */
+  get entityType(): string | null {
+    const loan = this.loanDetailsData;
+    if (!loan) {
+      return null;
+    }
+    if (loan.clientId != null || loan.clientName) {
+      return 'Client';
+    }
+    if (loan.groupId != null || loan.group?.id != null || loan.group?.name || loan.groupName) {
+      return 'Group';
+    }
+    return null;
+  }
+
+  /** Translation key of the account holder label, with a neutral fallback for loans without an association. */
+  get accountHolderLabelKey(): string {
+    return this.entityType ? `labels.text.${this.entityType}` : 'labels.text.Account holder';
+  }
+
+  /** Display name of the account holder selected by `entityType`. */
+  get accountHolderName(): string {
+    if (this.entityType === 'Client') {
+      return this.loanDetailsData.clientName || '';
+    }
+    if (this.entityType === 'Group') {
+      return this.loanDetailsData.group?.name || this.loanDetailsData.groupName || '';
+    }
+    return '';
+  }
+
+  /** Account number of the account holder selected by `entityType`. */
+  get accountHolderAccountNo(): string {
+    if (this.entityType === 'Client') {
+      return this.loanDetailsData.clientAccountNo || '';
+    }
+    if (this.entityType === 'Group') {
+      return this.loanDetailsData.group?.accountNo || '';
+    }
+    return '';
   }
 
   /**
