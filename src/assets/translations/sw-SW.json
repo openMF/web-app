@@ -5997,7 +5997,11 @@
       "Adjust by Difference": "Rekebisha kwa Tofauti",
       "The adjustment amount cannot be zero": "Kiasi cha marekebisho hakiwezi kuwa sifuri",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Marekebisho yanafuta kiasi, kwa hivyo muamala unatenguliwa bila mbadala",
-      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza"
+      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts."
     },
     "permissions": {
       "actions": {

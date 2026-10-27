@@ -30,7 +30,23 @@ async function render(): Promise<ComponentFixture<KeyboardShortcutsDialogCompone
 
   const translateService = TestBed.inject(TranslateService);
   translateService.setTranslation('en-US', {
-    labels: { inputs: { Ctrl: 'Ctrl', Shift: 'Shift', Alt: 'Alt' } }
+    labels: {
+      heading: {
+        'Keyboard Shortcuts': 'Keyboard Shortcuts',
+        Notes: 'Notes'
+      },
+      inputs: { Ctrl: 'Ctrl', Shift: 'Shift', Alt: 'Alt' },
+      text: {
+        'Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.':
+          'Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.',
+        'In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.':
+          'In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.',
+        'On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.':
+          'On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.',
+        'Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.':
+          'Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.'
+      }
+    }
   });
   translateService.use('en-US');
 
@@ -96,14 +112,32 @@ describe('KeyboardShortcutsDialogComponent', () => {
 
     expect(badges).toEqual([
       'Ctrl',
+      'Alt',
       'n'
     ]);
   });
 
   it('separates the rows with a divider', async () => {
     const fixture = await render();
-    const dividers = fixture.nativeElement.querySelectorAll('mat-divider');
+    const dividers = fixture.nativeElement.querySelectorAll('.layout-column mat-divider');
 
     expect(dividers).toHaveLength(new KeyboardShortcutsConfiguration().buttonCombinations.length);
+  });
+
+  it('renders platform notes and conflict documentation', async () => {
+    const fixture = await render();
+    const notesContainer = fixture.nativeElement.querySelector('.shortcuts-notes');
+    expect(notesContainer).not.toBeNull();
+
+    const heading = notesContainer.querySelector('.shortcuts-notes-heading');
+    expect(heading.textContent).toBe('Notes');
+
+    const noteItems = Array.from(notesContainer.querySelectorAll('li')).map((li: Element) => li.textContent.trim());
+    expect(noteItems).toEqual([
+      'Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.',
+      'In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.',
+      'On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.',
+      'Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.'
+    ]);
   });
 });

@@ -5997,7 +5997,11 @@
       "Adjust by Difference": "Ajustar por diferença",
       "The adjustment amount cannot be zero": "O valor do ajuste não pode ser zero",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "O ajuste anula o valor, pelo que a transação é revertida sem substituição",
-      "A positive amount increases the transaction and a negative one decreases it": "Um valor positivo aumenta a transação e um negativo diminui-a"
+      "A positive amount increases the transaction and a negative one decreases it": "Um valor positivo aumenta a transação e um negativo diminui-a",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Cada atalho utiliza Ctrl+Alt (Control+Option no macOS) para evitar conflitos com ações do navegador.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Em campos de formulário e entradas editáveis, apenas Guardar/Submeter (Ctrl+Alt+S) e Cancelar (Ctrl+Alt+X) estão ativos.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "No Windows e Linux, as combinações de teclas AltGr em campos de formulário não acionam atalhos.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Executar Relatório usa P e Terminar Sessão usa O para evitar conflitos com atalhos do sistema."
     },
     "permissions": {
       "actions": {

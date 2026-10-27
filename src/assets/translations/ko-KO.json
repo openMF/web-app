@@ -5997,7 +5997,11 @@
       "Adjust by Difference": "차액으로 조정",
       "The adjustment amount cannot be zero": "조정 금액은 0일 수 없습니다",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "조정이 금액을 상쇄하므로 거래는 대체 없이 취소됩니다",
-      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다"
+      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts."
     },
     "permissions": {
       "actions": {

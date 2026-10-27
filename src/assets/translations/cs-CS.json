@@ -5998,7 +5998,11 @@
       "Adjust by Difference": "Upravit o rozdíl",
       "The adjustment amount cannot be zero": "Částka úpravy nesmí být nula",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Úprava ruší částku, takže transakce bude stornována bez náhrady",
-      "A positive amount increases the transaction and a negative one decreases it": "Kladná částka transakci zvyšuje, záporná ji snižuje"
+      "A positive amount increases the transaction and a negative one decreases it": "Kladná částka transakci zvyšuje, záporná ji snižuje",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts."
     },
     "permissions": {
       "actions": {
