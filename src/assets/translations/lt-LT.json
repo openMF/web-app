@@ -7814,5 +7814,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Valiutų apskaita ir atominis vykdymas"
     },
     "draftRefreshFailed": "Juodraštis išsaugotas, tačiau atnaujintų duomenų nepavyko įkelti. Atnaujinkite rodinį."
+  },
+  "vaultDeposit": {
+    "title": "Grynųjų pinigų įnešimas į saugyklą",
+    "specialOperations": "Specialios operacijos",
+    "branch": "Padalinys",
+    "vault": "Saugykla",
+    "vaultStatus": "Saugyklos būsena",
+    "supportedCurrencies": "Palaikomos valiutos",
+    "banknotes": "Banknotai",
+    "coins": "Monetos",
+    "noDenominations": "Nominalų nėra",
+    "statusNote": "Serveris šiuo metu nepateikia saugyklos veikimo būsenos.",
+    "catalogNote": "Palaikomi nominalai yra katalogas, o ne saugykloje laikomų pinigų kiekis.",
+    "recordedInventory": "Užregistruotos saugyklos atsargos",
+    "inventoryUnavailable": "Saugyklos atsargos nepasiekiamos. Nežinomas likutis nėra nulis.",
+    "processingUnavailable": "Indėlių apdorojimas nepasiekiamas — 1 etapas",
+    "processingExplanation": "Grynųjų pinigų įnešimas į saugyklą bus pasiekiamas įdiegus operacijų tikrinimą ir finansinį vykdymą.",
+    "status": {
+      "AVAILABLE": "Pasiekiama",
+      "UNAVAILABLE": "Nepasiekiama",
+      "UNKNOWN": "Nežinoma"
+    },
+    "errors": {
+      "unauthenticated": "Sesija baigėsi. Prisijunkite iš naujo.",
+      "forbidden": "Prieiga uždrausta: šios saugyklos peržiūrėti negalite.",
+      "notFound": "Saugykla nerasta arba neįdiegta saugyklos API.",
+      "unsupportedCurrency": "Ši valiuta nepalaikoma. Iš naujo įkelkite saugyklos kontekstą.",
+      "configuration": "Saugyklos konfigūracija nepasiekiama arba nenuosekli.",
+      "unavailable": "Nepavyko įkelti saugyklos duomenų. Patikrinkite ryšį su serveriu ir bandykite dar kartą."
+    }
   }
 }

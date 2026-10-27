@@ -7817,5 +7817,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Comptabilité et exécution atomique des changes"
     },
     "draftRefreshFailed": "Le brouillon a été enregistré, mais ses détails actualisés n’ont pas pu être chargés. Actualisez pour les récupérer."
+  },
+  "vaultDeposit": {
+    "title": "Dépôt d’espèces au coffre",
+    "specialOperations": "Opérations spéciales",
+    "branch": "Agence",
+    "vault": "Coffre",
+    "vaultStatus": "État du coffre",
+    "supportedCurrencies": "Devises prises en charge",
+    "banknotes": "Billets",
+    "coins": "Pièces",
+    "noDenominations": "Aucune coupure disponible",
+    "statusNote": "Le serveur ne fournit pas encore l’état opérationnel du coffre.",
+    "catalogNote": "Les coupures proposées constituent un catalogue, pas les quantités d’espèces du coffre.",
+    "recordedInventory": "Inventaire enregistré du coffre",
+    "inventoryUnavailable": "L’inventaire du coffre est indisponible. Un solde inconnu ne vaut pas zéro.",
+    "processingUnavailable": "Traitement des dépôts indisponible — Phase 1",
+    "processingExplanation": "Le dépôt d’espèces au coffre sera disponible après la mise en œuvre de la validation et de l’exécution financière.",
+    "status": {
+      "AVAILABLE": "Disponible",
+      "UNAVAILABLE": "Indisponible",
+      "UNKNOWN": "Inconnu"
+    },
+    "errors": {
+      "unauthenticated": "Votre session a expiré. Veuillez vous reconnecter.",
+      "forbidden": "Accès refusé : vous ne pouvez pas consulter ce coffre.",
+      "notFound": "Coffre introuvable ou API du coffre non installée.",
+      "unsupportedCurrency": "Cette devise n’est pas prise en charge. Rechargez le contexte du coffre.",
+      "configuration": "La configuration du coffre est indisponible ou incohérente.",
+      "unavailable": "Impossible de charger les données du coffre. Vérifiez la connexion au serveur et réessayez."
+    }
   }
 }

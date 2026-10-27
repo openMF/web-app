@@ -48,6 +48,7 @@ import { cashManagementGuard } from './base-teller/cash-management/cash-manageme
 import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
 import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
 import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import { vaultCashDepositGuard } from './base-teller/vault-cash-deposit/vault-cash-deposit.guard';
 import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
@@ -532,6 +533,15 @@ const routes: Routes = [
             title: 'cashAllocation.title',
             breadcrumb: 'cashAllocation.title'
           }
+        },
+        {
+          path: 'base-teller/vault-cash-deposit',
+          canActivate: [vaultCashDepositGuard],
+          loadComponent: () =>
+            import('./base-teller/vault-cash-deposit/vault-cash-deposit.component').then(
+              (m) => m.VaultCashDepositComponent
+            ),
+          data: { title: 'vaultDeposit.title', breadcrumb: 'vaultDeposit.title' }
         },
         {
           path: 'base-teller/cash-inventory',

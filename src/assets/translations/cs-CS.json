@@ -7816,5 +7816,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Devizové účtování a atomické provedení"
     },
     "draftRefreshFailed": "Koncept byl uložen, ale aktualizované podrobnosti se nepodařilo načíst. Obnovte je."
+  },
+  "vaultDeposit": {
+    "title": "Vklad hotovosti do trezoru",
+    "specialOperations": "Zvláštní operace",
+    "branch": "Pobočka",
+    "vault": "Trezor",
+    "vaultStatus": "Stav trezoru",
+    "supportedCurrencies": "Podporované měny",
+    "banknotes": "Bankovky",
+    "coins": "Mince",
+    "noDenominations": "Nejsou dostupné žádné nominální hodnoty",
+    "statusNote": "Server zatím neposkytuje provozní stav trezoru.",
+    "catalogNote": "Podporované nominální hodnoty jsou katalog, nikoli množství hotovosti v trezoru.",
+    "recordedInventory": "Evidovaný stav trezoru",
+    "inventoryUnavailable": "Stav trezoru není dostupný. Neznámý zůstatek neznamená nulu.",
+    "processingUnavailable": "Zpracování vkladů není dostupné — Fáze 1",
+    "processingExplanation": "Vklady hotovosti do trezoru budou dostupné po zavedení ověření transakcí a finančního provedení.",
+    "status": {
+      "AVAILABLE": "Dostupné",
+      "UNAVAILABLE": "Nedostupné",
+      "UNKNOWN": "Neznámý"
+    },
+    "errors": {
+      "unauthenticated": "Platnost relace vypršela. Přihlaste se znovu.",
+      "forbidden": "Přístup odepřen: tento trezor nemůžete zobrazit.",
+      "notFound": "Trezor nebyl nalezen nebo jeho API není nainstalováno.",
+      "unsupportedCurrency": "Tato měna není podporována. Načtěte znovu kontext trezoru.",
+      "configuration": "Konfigurace trezoru není dostupná nebo je nekonzistentní.",
+      "unavailable": "Data trezoru nelze načíst. Zkontrolujte připojení k serveru a zkuste to znovu."
+    }
   }
 }

@@ -7811,5 +7811,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Contabilidad y ejecución atómica de divisas"
     },
     "draftRefreshFailed": "El borrador se guardó, pero no se pudieron cargar los detalles actualizados. Actualice para obtenerlos."
+  },
+  "vaultDeposit": {
+    "title": "Depósito de efectivo en bóveda",
+    "specialOperations": "Operaciones especiales",
+    "branch": "Sucursal",
+    "vault": "Bóveda",
+    "vaultStatus": "Estado de la bóveda",
+    "supportedCurrencies": "Monedas admitidas",
+    "banknotes": "Billetes",
+    "coins": "Monedas",
+    "noDenominations": "No hay denominaciones disponibles",
+    "statusNote": "El servidor aún no proporciona el estado operativo de la bóveda.",
+    "catalogNote": "Las denominaciones admitidas son un catálogo, no cantidades de efectivo en bóveda.",
+    "recordedInventory": "Inventario registrado de la bóveda",
+    "inventoryUnavailable": "El inventario de la bóveda no está disponible. Un saldo desconocido no es cero.",
+    "processingUnavailable": "Procesamiento de depósitos no disponible — Fase 1",
+    "processingExplanation": "El procesamiento de depósitos de efectivo en bóveda estará disponible cuando se implementen la validación y la ejecución financiera.",
+    "status": {
+      "AVAILABLE": "Disponible",
+      "UNAVAILABLE": "No disponible",
+      "UNKNOWN": "Desconocido"
+    },
+    "errors": {
+      "unauthenticated": "Su sesión ha caducado. Inicie sesión de nuevo.",
+      "forbidden": "Permiso denegado: no puede consultar esta bóveda.",
+      "notFound": "No se encontró la bóveda o su API no está instalada.",
+      "unsupportedCurrency": "Esta moneda no está admitida. Recargue el contexto de la bóveda.",
+      "configuration": "La configuración de la bóveda no está disponible o es incoherente.",
+      "unavailable": "No se pudieron cargar los datos de la bóveda. Compruebe la conexión con el servidor y vuelva a intentarlo."
+    }
   }
 }

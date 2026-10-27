@@ -1,0 +1,95 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.vault-deposit {
+  min-width: 0;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  .context-grid,
+  .catalog-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .context-grid > div,
+  .catalog-grid > section {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+
+  .context-grid {
+    margin: 0;
+
+    dt {
+      color: var(--mat-sys-on-surface-variant);
+    }
+
+    dd {
+      margin: 8px 0 0;
+      font-weight: 500;
+    }
+  }
+
+  section {
+    min-width: 0;
+
+    h3 {
+      margin-bottom: 16px;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .message,
+  .phase-notice {
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--mat-sys-surface-container);
+  }
+
+  .message {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .error {
+    color: var(--mat-sys-error);
+    background: var(--mat-sys-error-container);
+  }
+}

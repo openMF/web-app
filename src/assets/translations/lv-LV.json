@@ -7814,5 +7814,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Valūtas uzskaite un atomāra izpilde"
     },
     "draftRefreshFailed": "Melnraksts ir saglabāts, taču atjauninātos datus neizdevās ielādēt. Atsvaidziniet, lai tos iegūtu."
+  },
+  "vaultDeposit": {
+    "title": "Skaidras naudas iemaksa glabātavā",
+    "specialOperations": "Īpašās operācijas",
+    "branch": "Filiāle",
+    "vault": "Glabātava",
+    "vaultStatus": "Glabātavas statuss",
+    "supportedCurrencies": "Atbalstītās valūtas",
+    "banknotes": "Banknotes",
+    "coins": "Monētas",
+    "noDenominations": "Nomināli nav pieejami",
+    "statusNote": "Serveris pašlaik nesniedz glabātavas darbības statusu.",
+    "catalogNote": "Atbalstītie nomināli ir katalogs, nevis glabātavā esošās naudas daudzums.",
+    "recordedInventory": "Reģistrētie glabātavas krājumi",
+    "inventoryUnavailable": "Glabātavas krājumi nav pieejami. Nezināms atlikums nav nulle.",
+    "processingUnavailable": "Iemaksu apstrāde nav pieejama — 1. posms",
+    "processingExplanation": "Skaidras naudas iemaksas glabātavā būs pieejamas pēc darījumu pārbaudes un finanšu izpildes ieviešanas.",
+    "status": {
+      "AVAILABLE": "Pieejams",
+      "UNAVAILABLE": "Nav pieejams",
+      "UNKNOWN": "Nezināms"
+    },
+    "errors": {
+      "unauthenticated": "Sesija ir beigusies. Lūdzu, piesakieties vēlreiz.",
+      "forbidden": "Piekļuve liegta: šo glabātavu nevarat apskatīt.",
+      "notFound": "Glabātava nav atrasta vai tās API nav instalēta.",
+      "unsupportedCurrency": "Šī valūta netiek atbalstīta. Ielādējiet glabātavas kontekstu vēlreiz.",
+      "configuration": "Glabātavas konfigurācija nav pieejama vai ir pretrunīga.",
+      "unavailable": "Neizdevās ielādēt glabātavas datus. Pārbaudiet savienojumu ar serveri un mēģiniet vēlreiz."
+    }
   }
 }

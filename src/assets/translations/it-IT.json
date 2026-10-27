@@ -7817,5 +7817,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Contabilità valutaria ed esecuzione atomica"
     },
     "draftRefreshFailed": "La bozza è stata salvata, ma non è stato possibile caricare i dettagli aggiornati. Aggiorna per recuperarli."
+  },
+  "vaultDeposit": {
+    "title": "Deposito di contanti nel caveau",
+    "specialOperations": "Operazioni speciali",
+    "branch": "Filiale",
+    "vault": "Caveau",
+    "vaultStatus": "Stato del caveau",
+    "supportedCurrencies": "Valute supportate",
+    "banknotes": "Banconote",
+    "coins": "Monete",
+    "noDenominations": "Nessun taglio disponibile",
+    "statusNote": "Il server non fornisce ancora lo stato operativo del caveau.",
+    "catalogNote": "I tagli supportati sono un catalogo, non le quantità di contanti nel caveau.",
+    "recordedInventory": "Inventario registrato del caveau",
+    "inventoryUnavailable": "L’inventario del caveau non è disponibile. Un saldo sconosciuto non equivale a zero.",
+    "processingUnavailable": "Elaborazione depositi non disponibile — Fase 1",
+    "processingExplanation": "Il deposito di contanti nel caveau sarà disponibile dopo l’implementazione della convalida delle transazioni e dell’esecuzione finanziaria.",
+    "status": {
+      "AVAILABLE": "Disponibile",
+      "UNAVAILABLE": "Non disponibile",
+      "UNKNOWN": "Sconosciuto"
+    },
+    "errors": {
+      "unauthenticated": "La sessione è scaduta. Accedi di nuovo.",
+      "forbidden": "Permesso negato: non puoi visualizzare questo caveau.",
+      "notFound": "Caveau non trovato o API del caveau non installata.",
+      "unsupportedCurrency": "Valuta non supportata. Ricarica il contesto del caveau.",
+      "configuration": "La configurazione del caveau non è disponibile o è incoerente.",
+      "unavailable": "Impossibile caricare i dati del caveau. Verifica la connessione al server e riprova."
+    }
   }
 }
