@@ -37,7 +37,7 @@ import { LogoutDialogComponent } from './shared/logout-dialog/logout-dialog.comp
 
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
+import { KeyboardShortcutsConfiguration, ButtonCombination } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
@@ -370,45 +370,117 @@ export class WebAppComponent implements OnInit, OnDestroy {
     this.documentationLinks.open('userManual');
   }
 
-  // Monitor all keyboard events and excute keyboard shortcuts
+  // Monitor all keyboard events and execute keyboard shortcuts
   @HostListener('window:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    const routeD = this.buttonConfig.buttonCombinations.find(
-      (x) =>
-        x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
-    );
-    if (!(routeD === undefined)) {
-      switch (routeD.id) {
-        case 'logout':
-          this.confirmLogout();
-          break;
-        case 'help':
-          this.help();
-          break;
-        case 'runReport':
-          document.getElementById('runReport').click();
-          break;
-        case 'cancel':
-          const cancelButtons = document.querySelectorAll('button');
-          const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
-            return el.textContent.trim() === 'Cancel';
-          });
-          if (filteredcancelButtons.length > 0) {
-            filteredcancelButtons[0].click();
-          }
-          break;
-        case 'submit':
-          const submitButton = document.querySelectorAll('button');
-          const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
-            return el.textContent.trim() === 'Submit';
-          });
-          if (filteredSubmitButton.length > 0) {
-            filteredSubmitButton[0].click();
-          }
-          break;
-        default:
-          this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
-      }
+    // Never take over keys while the user is typing or editing content.
+    if (event.isComposing || this.isEditableTarget(event.target)) {
+      return;
     }
+
+    const routeD = this.findShortcut(event);
+
+    if (!routeD) {
+      return;
+    }
+
+    // The event is an application shortcut, so its browser default must not run.
+    // This happens before dispatch so a missing optional DOM target still cannot
+    // let the browser perform an unrelated action.
+    event.preventDefault();
+
+    switch (routeD.id) {
+      case 'logout':
+        this.confirmLogout();
+        break;
+      case 'help':
+        this.help();
+        break;
+      case 'runReport':
+        // The Run Report button in run-report.component.html uses the lowercase id.
+        document.getElementById('runreport')?.click();
+        break;
+      case 'cancel':
+        const cancelButtons = document.querySelectorAll('button');
+        const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
+          return el.textContent.trim() === 'Cancel';
+        });
+        if (filteredcancelButtons.length > 0) {
+          filteredcancelButtons[0].click();
+        }
+        break;
+      case 'submit':
+        const submitButton = document.querySelectorAll('button');
+        const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
+          return el.textContent.trim() === 'Submit';
+        });
+        if (filteredSubmitButton.length > 0) {
+          filteredSubmitButton[0].click();
+        }
+        break;
+      default:
+        this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
+    }
+  }
+
+  /**
+   * Resolves the configured shortcut for a keyboard event.
+   *
+   * The character produced by the event wins, because that is what the operator
+   * sees on their own layout. The physical `code` is only a fallback for keys
+   * that do not produce a Latin letter, which is how macOS reports characters
+   * while Option is held (`⌥N` yields `˜`). Resolving in that order keeps a
+   * shortcut from firing for a different action that happens to share the same
+   * physical key on a non-QWERTY layout.
+   */
+  private findShortcut(event: KeyboardEvent): ButtonCombination | undefined {
+    if (event.metaKey) {
+      return undefined;
+    }
+
+    const candidates = this.buttonConfig.buttonCombinations.filter(
+      (x) => x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey
+    );
+
+    const key = event.key.toLowerCase();
+    const keyMatch = candidates.find((x) => x.key.toLowerCase() === key);
+    if (keyMatch) {
+      return keyMatch;
+    }
+
+    if (/^[a-z]$/.test(key)) {
+      return undefined;
+    }
+
+    return candidates.find((x) => event.code === `Key${x.key.toUpperCase()}`);
+  }
+
+  /**
+   * Returns true when a keyboard event comes from a control the user can edit.
+   * Shortcuts must not run while text is being entered, and contenteditable
+   * events may target a nested element rather than the editable container.
+   */
+  private isEditableTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
+      return false;
+    }
+
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') {
+      return true;
+    }
+
+    // Angular Material renders mat-select as a custom element with a combobox role
+    // rather than a native <select>, and ARIA text controls may wrap non-editable
+    // elements.
+    if (target.closest('mat-select, [role="combobox"], [role="textbox"], [role="searchbox"]') !== null) {
+      return true;
+    }
+
+    if (target.isContentEditable) {
+      return true;
+    }
+
+    const editableAncestor = target.closest('[contenteditable]');
+    return editableAncestor !== null && editableAncestor.getAttribute('contenteditable') !== 'false';
   }
 }

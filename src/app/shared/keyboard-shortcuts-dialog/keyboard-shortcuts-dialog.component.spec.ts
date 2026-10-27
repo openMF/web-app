@@ -96,6 +96,7 @@ describe('KeyboardShortcutsDialogComponent', () => {
 
     expect(badges).toEqual([
       'Ctrl',
+      'Alt',
       'n'
     ]);
   });
