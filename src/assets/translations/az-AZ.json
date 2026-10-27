@@ -6123,7 +6123,11 @@
       "Pre-release backend": "Server tərəfi buraxılışdan əvvəlki versiyada işləyir. İstehsal məlumatları üçün tövsiyə edilmir.",
       "Diagnostics copied": "Diaqnostika mübadilə buferinə kopyalandı",
       "Items per page:": "Səhifə başına element:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Brauzer əməliyyatları ilə münaqişələrin qarşısını almaq üçün hər bir qısayol Ctrl+Alt (macOS-da Control+Option) istifadə edir.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Forma sahələrində və redaktə edilə bilən daxiletmələrdə yalnız Yadda saxla/Təqdim et (Ctrl+Alt+S) və Ləğv et (Ctrl+Alt+X) aktivdir.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Windows və Linux-da forma sahələrindəki AltGr düymə birləşmələri qısayolları işə salmır.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Masaüstü sistem qısayolları ilə münaqişələrin qarşısını almaq üçün Hesabatı icra et P, Çıxış et isə O istifadə edir."
     },
     "permissions": {
       "actions": {

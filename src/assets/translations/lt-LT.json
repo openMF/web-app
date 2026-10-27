@@ -6173,7 +6173,11 @@
       "Pre-release backend": "Serverio dalis veikia su išankstine versija. Nerekomenduojama gamybiniams duomenims.",
       "Diagnostics copied": "Diagnostika nukopijuota į iškarpinę",
       "Items per page:": "Elementų puslapyje:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} iš {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} iš {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Kiekvienas spartusis klavišas naudoja „Ctrl+Alt“ („macOS“ sistemoje – „Control+Option“), kad būtų išvengta konfliktų su naršyklės veiksmais.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Formos laukuose ir redaguojamose įvestyse veikia tik Išsaugoti/Pateikti (Ctrl+Alt+S) ir Atšaukti (Ctrl+Alt+X).",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "„Windows“ ir „Linux“ sistemose „AltGr“ klavišų deriniai formos laukuose nesuaktyvina sparčiųjų klavišų.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Vykdyti ataskaitą naudoja P, o Atsijungti naudoja O, kad būtų išvengta konfliktų su darbalaukio sistemos sparčiaisiais klavišais."
     },
     "permissions": {
       "actions": {

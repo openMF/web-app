@@ -6173,7 +6173,11 @@
       "Pre-release backend": "Seva ya nyuma inaendesha toleo la kabla ya kutolewa. Haipendekezwi kwa data ya uzalishaji.",
       "Diagnostics copied": "Taarifa za uchunguzi zimenakiliwa kwenye ubao wa kunakili",
       "Items per page:": "Vipengee kwa kila ukurasa:",
-      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} ya {{length}}"
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} ya {{length}}",
+      "Every shortcut uses Ctrl+Alt (Control+Option on macOS) to avoid conflicts with browser actions.": "Kila mkato unatumia Ctrl+Alt (Control+Option kwenye macOS) ili kuepuka migongano na vitendo vya kivinjari.",
+      "In form fields and editable inputs, only Save/Submit (Ctrl+Alt+S) and Cancel (Ctrl+Alt+X) are active.": "Kwenye sehemu za fomu na maandishi yanayoweza kuhaririwa, Hifadhi/Wasilisha (Ctrl+Alt+S) na Ghairi (Ctrl+Alt+X) pekee ndizo zinazofanya kazi.",
+      "On Windows and Linux, AltGr key combinations in form fields do not trigger shortcuts.": "Kwenye Windows na Linux, mikusanyiko ya vitufe vya AltGr kwenye sehemu za fomu haianzishi mikato.",
+      "Run Report uses P and Logout uses O to avoid conflicts with desktop system shortcuts.": "Endesha Ripoti inatumia P na Ondoka inatumia O ili kuepuka migongano na mikato ya mfumo wa kompyuta ya mezani."
     },
     "permissions": {
       "actions": {
