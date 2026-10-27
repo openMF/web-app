@@ -24,6 +24,8 @@ import { canReadCashTransfers } from './cash-transfers-between-tellers/cash-tran
 import { canReadWithdrawals } from './withdrawals/withdrawal.guard';
 import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
+import { canReadVault } from './vault-cash-deposit/vault-cash-deposit.guard';
+
 import { hasFxPermission } from '../foreign-currency/foreign-currency.guard';
 
 /** Environment */
@@ -256,6 +258,23 @@ export const BASE_TELLER_WORKFLOWS: readonly BaseTellerWorkflow[] = [
 export class BaseTellerComponent {
   private readonly authentication = inject(AuthenticationService);
   readonly productionMode = environment.productionMode === true;
+
+  get specialOperations(): readonly BaseTellerWorkflow[] {
+    return canReadVault(this.authentication.getCredentials()?.permissions ?? [])
+      ? [
+          {
+            label: 'vaultDeposit.title',
+            materialIcon: 'account_balance',
+            permission: 'READ_BASE_TELLER_CASH_INVENTORY',
+            route: [
+              '/organization',
+              'base-teller',
+              'vault-cash-deposit'
+            ]
+          }
+        ]
+      : [];
+  }
 
   get outflows(): readonly BaseTellerWorkflow[] {
     return canReadWithdrawals(this.authentication.getCredentials()?.permissions ?? [])

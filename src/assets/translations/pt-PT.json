@@ -7817,5 +7817,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Contabilidade cambial e execução atómica"
     },
     "draftRefreshFailed": "O rascunho foi guardado, mas não foi possível carregar os detalhes atualizados. Atualize para os obter."
+  },
+  "vaultDeposit": {
+    "title": "Depósito de numerário no cofre",
+    "specialOperations": "Operações especiais",
+    "branch": "Agência",
+    "vault": "Cofre",
+    "vaultStatus": "Estado do cofre",
+    "supportedCurrencies": "Moedas suportadas",
+    "banknotes": "Notas",
+    "coins": "Moedas",
+    "noDenominations": "Sem denominações disponíveis",
+    "statusNote": "O servidor ainda não fornece o estado operacional do cofre.",
+    "catalogNote": "As denominações suportadas são um catálogo, não as quantidades de numerário no cofre.",
+    "recordedInventory": "Inventário registado do cofre",
+    "inventoryUnavailable": "O inventário do cofre está indisponível. Um saldo desconhecido não é zero.",
+    "processingUnavailable": "Processamento de depósitos indisponível — Fase 1",
+    "processingExplanation": "O processamento de depósitos de numerário no cofre estará disponível após a implementação da validação de transações e da execução financeira.",
+    "status": {
+      "AVAILABLE": "Disponível",
+      "UNAVAILABLE": "Indisponível",
+      "UNKNOWN": "Desconhecido"
+    },
+    "errors": {
+      "unauthenticated": "A sessão expirou. Inicie sessão novamente.",
+      "forbidden": "Permissão negada: não pode consultar este cofre.",
+      "notFound": "Cofre não encontrado ou API do cofre não instalada.",
+      "unsupportedCurrency": "Esta moeda não é suportada. Recarregue o contexto do cofre.",
+      "configuration": "A configuração do cofre está indisponível ou é inconsistente.",
+      "unavailable": "Não foi possível carregar os dados do cofre. Verifique a ligação ao servidor e tente novamente."
+    }
   }
 }

@@ -7819,5 +7819,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Devisenbuchhaltung und atomare Ausführung"
     },
     "draftRefreshFailed": "Der Entwurf wurde gespeichert, aber die aktualisierten Details konnten nicht geladen werden. Aktualisieren Sie die Ansicht."
+  },
+  "vaultDeposit": {
+    "title": "Bareinzahlung in den Tresor",
+    "specialOperations": "Sondervorgänge",
+    "branch": "Filiale",
+    "vault": "Tresor",
+    "vaultStatus": "Tresorstatus",
+    "supportedCurrencies": "Unterstützte Währungen",
+    "banknotes": "Banknoten",
+    "coins": "Münzen",
+    "noDenominations": "Keine Stückelungen verfügbar",
+    "statusNote": "Der Server liefert derzeit keinen Betriebsstatus des Tresors.",
+    "catalogNote": "Die unterstützten Stückelungen sind ein Katalog und keine Bargeldmengen im Tresor.",
+    "recordedInventory": "Erfasster Tresorbestand",
+    "inventoryUnavailable": "Der Tresorbestand ist nicht verfügbar. Ein unbekannter Saldo ist nicht null.",
+    "processingUnavailable": "Einzahlungsverarbeitung nicht verfügbar — Phase 1",
+    "processingExplanation": "Bareinzahlungen in den Tresor werden verfügbar, sobald Transaktionsprüfung und finanzielle Ausführung implementiert sind.",
+    "status": {
+      "AVAILABLE": "Verfügbar",
+      "UNAVAILABLE": "Nicht verfügbar",
+      "UNKNOWN": "Unbekannt"
+    },
+    "errors": {
+      "unauthenticated": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+      "forbidden": "Zugriff verweigert: Sie dürfen diesen Tresor nicht anzeigen.",
+      "notFound": "Tresor nicht gefunden oder Tresor-API nicht installiert.",
+      "unsupportedCurrency": "Diese Währung wird nicht unterstützt. Laden Sie den Tresorkontext neu.",
+      "configuration": "Die Tresorkonfiguration ist nicht verfügbar oder inkonsistent.",
+      "unavailable": "Tresordaten konnten nicht geladen werden. Prüfen Sie die Serververbindung und versuchen Sie es erneut."
+    }
   }
 }

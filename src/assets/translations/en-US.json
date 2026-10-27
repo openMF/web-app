@@ -7808,5 +7808,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "FX accounting and atomic execution verification"
     },
     "draftRefreshFailed": "The draft was saved, but its updated details could not be loaded. Refresh to retrieve them."
+  },
+  "vaultDeposit": {
+    "title": "Cash Deposit into Vault",
+    "specialOperations": "Special Operations",
+    "branch": "Branch",
+    "vault": "Vault",
+    "vaultStatus": "Vault Status",
+    "supportedCurrencies": "Supported Currencies",
+    "banknotes": "Banknotes",
+    "coins": "Coins",
+    "noDenominations": "No Denominations Available",
+    "statusNote": "Vault operational status is not currently provided by the backend.",
+    "catalogNote": "Supported denominations are a catalog, not quantities of cash held in the vault.",
+    "recordedInventory": "Recorded Vault Inventory",
+    "inventoryUnavailable": "Vault inventory is unavailable. An unknown balance is not zero.",
+    "processingUnavailable": "Deposit Processing Unavailable — Phase 1",
+    "processingExplanation": "Vault cash deposit processing will be available after transaction validation and financial execution are implemented.",
+    "status": {
+      "AVAILABLE": "Available",
+      "UNAVAILABLE": "Unavailable",
+      "UNKNOWN": "Unknown"
+    },
+    "errors": {
+      "unauthenticated": "Your session has expired. Please sign in again.",
+      "forbidden": "Permission Denied: you cannot view this vault.",
+      "notFound": "Vault not found, or the vault API is not installed.",
+      "unsupportedCurrency": "This currency is not supported. Reload the vault context.",
+      "configuration": "Vault configuration is unavailable or inconsistent.",
+      "unavailable": "Unable to load vault data. Check the backend connection and retry."
+    }
   }
 }

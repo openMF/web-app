@@ -7813,5 +7813,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Valyuta mühasibatı və atomar icra"
     },
     "draftRefreshFailed": "Qaralama saxlanıldı, lakin yenilənmiş təfərrüatlar yüklənmədi. Onları əldə etmək üçün yeniləyin."
+  },
+  "vaultDeposit": {
+    "title": "Seyfə nağd pul yatırılması",
+    "specialOperations": "Xüsusi əməliyyatlar",
+    "branch": "Filial",
+    "vault": "Seyf",
+    "vaultStatus": "Seyfin vəziyyəti",
+    "supportedCurrencies": "Dəstəklənən valyutalar",
+    "banknotes": "Əskinaslar",
+    "coins": "Sikkələr",
+    "noDenominations": "Nominal dəyərlər mövcud deyil",
+    "statusNote": "Server hazırda seyfin əməliyyat vəziyyətini təqdim etmir.",
+    "catalogNote": "Dəstəklənən nominallar kataloqdur, seyfdəki nağd pul miqdarı deyil.",
+    "recordedInventory": "Seyfin qeydə alınmış inventarı",
+    "inventoryUnavailable": "Seyfin inventarı mövcud deyil. Naməlum qalıq sıfır demək deyil.",
+    "processingUnavailable": "Depozit emalı mövcud deyil — Mərhələ 1",
+    "processingExplanation": "Seyfə nağd pul yatırılması əməliyyatların yoxlanması və maliyyə icrası tətbiq edildikdən sonra mümkün olacaq.",
+    "status": {
+      "AVAILABLE": "Mövcuddur",
+      "UNAVAILABLE": "Mövcud deyil",
+      "UNKNOWN": "Naməlum"
+    },
+    "errors": {
+      "unauthenticated": "Sessiyanız bitib. Yenidən daxil olun.",
+      "forbidden": "İcazə yoxdur: bu seyfə baxa bilməzsiniz.",
+      "notFound": "Seyf tapılmadı və ya seyf API-si quraşdırılmayıb.",
+      "unsupportedCurrency": "Bu valyuta dəstəklənmir. Seyf kontekstini yenidən yükləyin.",
+      "configuration": "Seyf konfiqurasiyası mövcud deyil və ya uyğunsuzdur.",
+      "unavailable": "Seyf məlumatları yüklənmədi. Server bağlantısını yoxlayıb yenidən cəhd edin."
+    }
   }
 }

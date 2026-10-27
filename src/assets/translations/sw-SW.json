@@ -7814,5 +7814,35 @@
       "FX_ACCOUNTING_AND_ATOMIC_EXECUTION_NOT_VERIFIED": "Uhasibu wa fedha za kigeni na utekelezaji wa pamoja"
     },
     "draftRefreshFailed": "Rasimu imehifadhiwa, lakini maelezo yaliyosasishwa hayakuweza kupakiwa. Onyesha upya ili kuyapata."
+  },
+  "vaultDeposit": {
+    "title": "Kuweka fedha taslimu kwenye ghala",
+    "specialOperations": "Shughuli maalum",
+    "branch": "Tawi",
+    "vault": "Ghala",
+    "vaultStatus": "Hali ya ghala",
+    "supportedCurrencies": "Sarafu zinazotumika",
+    "banknotes": "Noti",
+    "coins": "Sarafu za chuma",
+    "noDenominations": "Hakuna thamani za noti au sarafu zinazopatikana",
+    "statusNote": "Seva haitoi hali ya uendeshaji wa ghala kwa sasa.",
+    "catalogNote": "Thamani zinazotumika ni orodha tu, si kiasi cha fedha kilichopo kwenye ghala.",
+    "recordedInventory": "Hesabu ya ghala iliyorekodiwa",
+    "inventoryUnavailable": "Hesabu ya ghala haipatikani. Salio lisilojulikana si sifuri.",
+    "processingUnavailable": "Uchakataji wa amana haupatikani — Awamu ya 1",
+    "processingExplanation": "Uwekaji wa fedha taslimu kwenye ghala utapatikana baada ya utekelezaji wa uthibitishaji wa miamala na utekelezaji wa kifedha.",
+    "status": {
+      "AVAILABLE": "Inapatikana",
+      "UNAVAILABLE": "Haipatikani",
+      "UNKNOWN": "Haijulikani"
+    },
+    "errors": {
+      "unauthenticated": "Kipindi chako kimeisha. Tafadhali ingia tena.",
+      "forbidden": "Ruhusa imekataliwa: huwezi kuangalia ghala hili.",
+      "notFound": "Ghala halijapatikana au API ya ghala haijasakinishwa.",
+      "unsupportedCurrency": "Sarafu hii haitumiki. Pakia upya muktadha wa ghala.",
+      "configuration": "Usanidi wa ghala haupatikani au haulingani.",
+      "unavailable": "Imeshindikana kupakia data ya ghala. Angalia muunganisho wa seva na ujaribu tena."
+    }
   }
 }
