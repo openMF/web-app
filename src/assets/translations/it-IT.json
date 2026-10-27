@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Elaborazione di {{count}} elementi di controllo…",
+      "processedSummary": "{{processed}} attività elaborate: {{succeeded}} riuscite, {{failed}} non riuscite.",
+      "loading": "Caricamento della posta in arrivo del controllo…"
+    },
+    "error": {
+      "failedIds": "ID dei record non riusciti:",
+      "load": "Impossibile caricare la posta in arrivo del controllo. Riprovare la ricerca.",
+      "permission": "Non si dispone dell’autorizzazione per intervenire sugli elementi di controllo di questo elenco."
+    }
+  },
   "cashInventory": {
     "title": "Monitoraggio dell’inventario di cassa",
     "description": "Esamina l’inventario di contanti e assegni per custode, tipo di transazione e valuta.",

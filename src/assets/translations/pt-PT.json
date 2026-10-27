@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "A processar {{count}} itens de verificação…",
+      "processedSummary": "{{processed}} tarefas processadas: {{succeeded}} com êxito, {{failed}} falhadas.",
+      "loading": "A carregar a caixa de entrada do verificador…"
+    },
+    "error": {
+      "failedIds": "ID dos registos falhados:",
+      "load": "Não foi possível carregar a caixa de entrada do verificador. Tente novamente a pesquisa.",
+      "permission": "Não tem permissão para agir sobre os itens de verificação desta lista."
+    }
+  },
   "cashInventory": {
     "title": "Monitorização do inventário de caixa",
     "description": "Consulte o inventário de numerário e cheques por custodiante, tipo de transação e moeda.",

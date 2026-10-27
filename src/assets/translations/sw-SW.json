@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Inachakata {{count}} vipengee vya ukaguzi…",
+      "processedSummary": "Kazi {{processed}} zimechakatwa: {{succeeded}} zimefanikiwa, {{failed}} zimeshindwa.",
+      "loading": "Inapakia kikasha cha ukaguzi…"
+    },
+    "error": {
+      "failedIds": "ID za rekodi zilizoshindwa:",
+      "load": "Imeshindikana kupakia kikasha cha ukaguzi. Tafadhali jaribu utafutaji wako tena.",
+      "permission": "Huna ruhusa ya kuchukua hatua kwenye vipengee vya ukaguzi katika orodha hii."
+    }
+  },
   "cashInventory": {
     "title": "Ufuatiliaji wa hesabu ya fedha",
     "description": "Kagua hesabu ya fedha na hundi kwa mtunzaji, aina ya muamala na sarafu.",

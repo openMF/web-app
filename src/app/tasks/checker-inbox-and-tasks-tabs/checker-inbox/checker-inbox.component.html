@@ -128,14 +128,23 @@
     </form>
   }
   @if (processing) {
-    <div class="alert" role="status">Processing {{ processingCount }} checker item(s)…</div>
+    <div class="alert" role="status">
+      {{ 'checkerInbox.status.processing' | translate: { count: processingCount } }}
+    </div>
   }
   @if (actionResult) {
     <div class="alert" role="status">
-      {{ actionResult.succeeded + actionResult.failed.length }} tasks processed: {{ actionResult.succeeded }} succeeded,
-      {{ actionResult.failed.length }} failed.
+      {{
+        'checkerInbox.status.processedSummary'
+          | translate
+            : {
+                processed: actionResult.succeeded + actionResult.failed.length,
+                succeeded: actionResult.succeeded,
+                failed: actionResult.failed.length
+              }
+      }}
       @if (actionResult.failed.length) {
-        Failed record IDs:
+        {{ 'checkerInbox.error.failedIds' | translate }}
         @for (failure of actionResult.failed; track failure.id) {
           {{ failure.id }}{{ failure.error ? ': ' + failure.error : '' }};
         }
@@ -143,12 +152,12 @@
     </div>
   }
   @if (loading) {
-    <div class="alert" role="status">Loading checker inbox…</div>
+    <div class="alert" role="status">{{ 'checkerInbox.status.loading' | translate }}</div>
   } @else if (searchError) {
-    <div class="alert" role="alert">Unable to load checker inbox. Please try your search again.</div>
+    <div class="alert" role="alert">{{ 'checkerInbox.error.load' | translate }}</div>
   } @else if (checkerData && !noSearchedData) {
     @if (!hasActionableRows()) {
-      <div class="alert" role="status">You do not have permission to action the checker items in this list.</div>
+      <div class="alert" role="status">{{ 'checkerInbox.error.permission' | translate }}</div>
     }
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="select">

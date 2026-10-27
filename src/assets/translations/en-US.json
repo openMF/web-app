@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Processing {{count}} checker item(s)…",
+      "processedSummary": "{{processed}} tasks processed: {{succeeded}} succeeded, {{failed}} failed.",
+      "loading": "Loading checker inbox…"
+    },
+    "error": {
+      "failedIds": "Failed record IDs:",
+      "load": "Unable to load checker inbox. Please try your search again.",
+      "permission": "You do not have permission to action the checker items in this list."
+    }
+  },
   "cashInventory": {
     "title": "Cash Inventory Monitoring",
     "description": "Review cash and check inventory by custodian, transaction type and currency.",

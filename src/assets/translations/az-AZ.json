@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "{{count}} yoxlama elementi emal edilir…",
+      "processedSummary": "{{processed}} tapşırıq emal edildi: {{succeeded}} uğurlu, {{failed}} uğursuz.",
+      "loading": "Yoxlayıcının gələnlər qutusu yüklənir…"
+    },
+    "error": {
+      "failedIds": "Uğursuz qeyd ID-ləri:",
+      "load": "Yoxlayıcının gələnlər qutusunu yükləmək mümkün olmadı. Axtarışınızı yenidən cəhd edin.",
+      "permission": "Bu siyahıdakı yoxlama elementləri üzərində əməliyyat aparmaq üçün icazəniz yoxdur."
+    }
+  },
   "cashInventory": {
     "title": "Kassa inventarının monitorinqi",
     "description": "Nağd pul və çek inventarını məsul şəxs, əməliyyat növü və valyuta üzrə nəzərdən keçirin.",

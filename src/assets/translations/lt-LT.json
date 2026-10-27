@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Apdorojama {{count}} tikrinimo elementų…",
+      "processedSummary": "Apdorota {{processed}} užduočių: {{succeeded}} sėkmingai, {{failed}} nepavyko.",
+      "loading": "Įkeliami tikrintuvo gautieji…"
+    },
+    "error": {
+      "failedIds": "Nepavykusių įrašų ID:",
+      "load": "Nepavyko įkelti tikrintuvo gautųjų. Bandykite paiešką dar kartą.",
+      "permission": "Neturite leidimo atlikti veiksmus su šio sąrašo tikrinimo elementais."
+    }
+  },
   "cashInventory": {
     "title": "Kasos inventoriaus stebėjimas",
     "description": "Peržiūrėkite grynųjų ir čekių inventorių pagal saugotoją, operacijos tipą ir valiutą.",
