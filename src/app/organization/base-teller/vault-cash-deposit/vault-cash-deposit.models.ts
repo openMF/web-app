@@ -60,3 +60,57 @@ export interface VaultInventory {
   status: VaultStatus;
   balances: CashInventoryRow[];
 }
+
+/** VaultDepositPreviewRequest: quantities only; amounts and custody are server-owned. */
+export interface VaultDepositPreviewRequest {
+  officeId?: number;
+  businessDate: string;
+  currencies: {
+    currencyCode: string;
+    denominations: { denominationId: string; quantity: number }[];
+  }[];
+  correlationReference?: string;
+}
+
+export interface VaultPreviewLine {
+  denominationId: string;
+  value: CashInventoryAmount;
+  quantity: number;
+  subtotal: CashInventoryAmount;
+}
+
+export interface VaultPreviewColumn {
+  cash: CashInventoryAmount;
+  checks: { supported: boolean; amount?: CashInventoryAmount | null };
+  vouchers: { supported: boolean; amount?: CashInventoryAmount | null };
+}
+
+export interface VaultPreviewCurrency {
+  currencyCode: string;
+  decimalPlaces: number;
+  banknotes: VaultPreviewLine[];
+  coins: VaultPreviewLine[];
+  banknotesTotal: CashInventoryAmount;
+  coinsTotal: CashInventoryAmount;
+  totalCash: CashInventoryAmount;
+  generalTransaction: { perspective: string; inflows: VaultPreviewColumn; outflows: VaultPreviewColumn };
+}
+
+/** VaultDepositPreviewData. This record never represents a completed transaction. */
+export interface VaultDepositPreview {
+  operationType: 'VAULT_CASH_DEPOSIT';
+  validationStatus: 'VALID_PREVIEW';
+  movementStatus: 'PROPOSED';
+  branch: VaultContext['branch'];
+  vault: VaultContext['vault'];
+  businessDate: string;
+  correlationReference?: string | null;
+  currencies: VaultPreviewCurrency[];
+  executionReadiness: {
+    executionAllowed: boolean;
+    status: string;
+    sourcePolicy: VaultStatus;
+    accountingPolicy: VaultStatus;
+    blockers: { code: string; message: string }[];
+  };
+}

@@ -8,8 +8,16 @@
 
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { VaultContext, VaultCurrencies, VaultDenominations, VaultInventory } from './vault-cash-deposit.models';
+import { Observable, map } from 'rxjs';
+import { parseExchangeResponse } from '../cash-exchange/cash-exchange.service';
+import {
+  VaultContext,
+  VaultCurrencies,
+  VaultDenominations,
+  VaultInventory,
+  VaultDepositPreview,
+  VaultDepositPreviewRequest
+} from './vault-cash-deposit.models';
 
 @Injectable({ providedIn: 'root' })
 export class VaultCashDepositService {
@@ -26,14 +34,23 @@ export class VaultCashDepositService {
   }
 
   getDenominations(currencyCode: string): Observable<VaultDenominations> {
-    return this.http.get<VaultDenominations>(`${this.path}/denominations`, {
-      params: new HttpParams().set('currencyCode', currencyCode)
-    });
+    return this.http
+      .get(`${this.path}/denominations`, {
+        params: new HttpParams().set('currencyCode', currencyCode),
+        responseType: 'text'
+      })
+      .pipe(map(parseExchangeResponse<VaultDenominations>));
   }
 
   getVaultInventory(currencyCode: string): Observable<VaultInventory> {
     return this.http.get<VaultInventory>(`${this.path}/inventory`, {
       params: new HttpParams().set('currencyCode', currencyCode)
     });
+  }
+
+  previewVaultCashDeposit(request: VaultDepositPreviewRequest): Observable<VaultDepositPreview> {
+    return this.http
+      .post('/v2/base-teller/vault-cash-deposits/preview', request, { responseType: 'text' })
+      .pipe(map(parseExchangeResponse<VaultDepositPreview>));
   }
 }

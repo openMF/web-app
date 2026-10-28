@@ -119,7 +119,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
     // These teller workflows render safe localized errors, including text response bodies.
-    if (/\/base-teller\/(?:account-transfers|cash-transfers|withdrawals|vault)(?:[/?]|$)/.test(request.url)) {
+    if (
+      /\/base-teller\/(?:account-transfers|cash-transfers|withdrawals|vault|vault-cash-deposits)(?:[/?]|$)/.test(
+        request.url
+      )
+    ) {
       if (status === 401) {
         this.alertService.alert({
           type: this.translate.instant('errors.error.auth.sessionExpired.type'),

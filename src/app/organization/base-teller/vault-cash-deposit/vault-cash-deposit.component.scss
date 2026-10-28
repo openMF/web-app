@@ -39,7 +39,7 @@
 
   .context-grid > div,
   .catalog-grid > section {
-    flex: 1 1 240px;
+    flex: 1 1 400px;
     min-width: 0;
   }
 
@@ -72,6 +72,22 @@
   table {
     width: 100%;
     table-layout: fixed;
+  }
+
+  .quantity-field {
+    padding-top: 8px;
+  }
+
+  td,
+  th {
+    padding: 8px;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+
+    &:first-child,
+    &:last-child {
+      text-align: end;
+    }
   }
 
   .message,

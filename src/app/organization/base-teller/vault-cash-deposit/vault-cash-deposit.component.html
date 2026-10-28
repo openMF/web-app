@@ -86,12 +86,47 @@
                     <ng-container matColumnDef="value">
                       <th mat-header-cell *matHeaderCellDef>{{ 'cashAllocation.labels.denomination' | translate }}</th>
                       <td mat-cell *matCellDef="let row">
-                        {{ row.value | number: '1.' + currency.decimalPlaces + '-' + currency.decimalPlaces }}
+                        {{ row.value | withdrawalMoney: currency.decimalPlaces }}
                       </td>
                     </ng-container>
-                    <ng-container matColumnDef="currency">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'cashAllocation.labels.currency' | translate }}</th>
-                      <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.quantity' | translate }}</th>
+                      <td mat-cell *matCellDef="let row">
+                        <mat-form-field class="quantity-field">
+                          <mat-label>{{ 'vaultDeposit.preview.quantity' | translate }}</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            [formControl]="quantityControl(row)"
+                            [attr.aria-label]="
+                              ('vaultDeposit.preview.quantity' | translate) +
+                              ' ' +
+                              (row.value | withdrawalMoney: currency.decimalPlaces) +
+                              ' ' +
+                              currency.code +
+                              ' ' +
+                              (catalog.title | translate)
+                            "
+                            [attr.data-denomination]="row.denominationId"
+                          />
+                          @if (quantityControl(row).invalid) {
+                            <mat-error>{{
+                              (quantityControl(row).hasError('backend')
+                                ? 'vaultDeposit.preview.serverQuantity'
+                                : 'vaultDeposit.preview.invalidQuantity'
+                              ) | translate
+                            }}</mat-error>
+                          }
+                        </mat-form-field>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="subtotal">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.subtotal' | translate }}</th>
+                      <td mat-cell *matCellDef="let row">
+                        {{ subtotal(row) | withdrawalMoney: currency.decimalPlaces }}
+                      </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columns"></tr>
                     <tr mat-row *matRowDef="let row; columns: columns"></tr>
@@ -102,6 +137,68 @@
               </section>
             }
           </div>
+
+          @if (catalogValid()) {
+            <section aria-labelledby="vault-estimate-title">
+              <h3 id="vault-estimate-title">
+                {{ 'vaultDeposit.preview.clientEstimate' | translate }} — {{ currency.code }}
+              </h3>
+              <dl class="context-grid" aria-live="polite" aria-atomic="true">
+                <div>
+                  <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
+                  <dd data-total="banknotes">
+                    {{ estimate()?.banknotesTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
+                  </dd>
+                </div>
+                <div>
+                  <dt>{{ 'vaultDeposit.preview.coinsTotal' | translate }}</dt>
+                  <dd data-total="coins">
+                    {{ estimate()?.coinsTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
+                  </dd>
+                </div>
+                <div>
+                  <dt>{{ 'vaultDeposit.preview.totalCash' | translate }}</dt>
+                  <dd data-total="cash">
+                    {{ estimate()?.totalCash ?? null | withdrawalMoney: currency.decimalPlaces }}
+                  </dd>
+                </div>
+              </dl>
+              @if (!quantities.valid) {
+                <p role="alert">{{ 'vaultDeposit.preview.invalidInput' | translate }}</p>
+              } @else if (!estimate()?.positive) {
+                <p>{{ 'vaultDeposit.preview.noQuantity' | translate }}</p>
+              } @else if (!estimate()?.inRange) {
+                <p role="alert">{{ 'vaultDeposit.preview.amountRange' | translate }}</p>
+              }
+              @if (!ctx.capabilities.previewDeposit) {
+                <p>{{ 'vaultDeposit.preview.notPermitted' | translate }}</p>
+              }
+              <button
+                mat-raised-button
+                type="button"
+                [disabled]="!canPreview"
+                (click)="previewTransaction($event)"
+                aria-describedby="vault-processing-explanation"
+              >
+                {{ (previewLoading() ? 'vaultDeposit.preview.loading' : 'vaultDeposit.preview.action') | translate }}
+              </button>
+              @if (previewLoading()) {
+                <p role="status">{{ 'vaultDeposit.preview.loading' | translate }}</p>
+              }
+              @if (previewError()) {
+                <p class="message error" role="alert">{{ previewError() | translate }}</p>
+                @if (previewNeedsRefresh) {
+                  <button mat-button type="button" (click)="reload()">
+                    {{ 'labels.buttons.Refresh' | translate }}
+                  </button>
+                } @else {
+                  <button mat-button type="button" [disabled]="!canPreview" (click)="previewTransaction($event)">
+                    {{ 'cashInventory.retry' | translate }}
+                  </button>
+                }
+              }
+            </section>
+          }
 
           @if (ctx.capabilities.viewInventory) {
             <section aria-labelledby="vault-inventory-title">
