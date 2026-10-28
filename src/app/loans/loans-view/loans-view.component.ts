@@ -758,6 +758,9 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       if (this.isContractTermination(this.loanSubStatus)) {
         return 'loanSubStatusType.contractTermination';
       }
+      if (this.isLoanWithdrawal(this.loanSubStatus)) {
+        return 'loanSubStatusType.loanWithdrawal';
+      }
       if (this.loanDetailsData.inArrears) {
         return 'loanStatusType.activeOverdue';
       }
@@ -767,6 +770,20 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
     }
     return this.loanDetailsData.status?.code;
+  }
+
+  /** Translation key naming the early termination sub-status of the loan, if it has one. */
+  subStatusLabel(): string | null {
+    if (!this.loanProductService.isLoanProduct) {
+      return null;
+    }
+    if (this.isContractTermination(this.loanSubStatus)) {
+      return 'labels.heading.Contract Termination';
+    }
+    if (this.isLoanWithdrawal(this.loanSubStatus)) {
+      return 'labels.heading.Loan Withdrawal';
+    }
+    return null;
   }
 
   loanStatusTooltip() {
@@ -791,6 +808,9 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   loanSubStatusTooltip() {
     if (this.isContractTermination(this.loanSubStatus)) {
       return 'contractTermination';
+    }
+    if (this.isLoanWithdrawal(this.loanSubStatus)) {
+      return 'loanWithdrawal';
     }
     return '';
   }
@@ -819,6 +839,10 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       return false;
     }
     return substatus.code === 'loanSubStatus.loanSubStatusType.contractTermination';
+  }
+
+  private isLoanWithdrawal(substatus: OptionData): boolean {
+    return substatus?.code === 'loanSubStatus.loanSubStatusType.loanWithdrawal';
   }
 
   private canShowWorkingCapitalDiscountUpdate(): boolean {
