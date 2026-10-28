@@ -12,6 +12,13 @@
  */
 
 import { LoanProducts } from '../loan-products';
+import {
+  SEMI_MONTHLY_FREQUENCY_TYPE,
+  applyRepaymentDaysToPayload,
+  firstRepaymentDayOptions,
+  isSemiMonthly,
+  secondRepaymentDayOptions
+} from 'app/shared/loan/semi-monthly/semi-monthly';
 
 // HIDDEN_DEFAULTS and FORM_STEPS copied from upstream
 export const HIDDEN_DEFAULTS: Record<string, unknown> = {
@@ -116,6 +123,11 @@ export interface FormField {
    * `min` attribute. Mirrors the floors Classic declares on the same control.
    */
   min?: number;
+  /**
+   * Upper bound for a `number` field. Emitted as `Validators.max` and mirrored onto the input's
+   * `max` attribute. Used where the backend enforces a hard ceiling (the semi-monthly first day).
+   */
+  max?: number;
   /**
    * Maximum number of decimal places a `number` field accepts; `0` means whole numbers only.
    * Emitted as the same `Validators.pattern` Classic uses (`^\d+([.,]\d{1,N})?$`, `^\d+$` for 0),
@@ -345,7 +357,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
 
 export const VALUE_MAP: Record<string, Record<string, string>> = {
   interestRateFrequencyType: { '2': 'Per month', '3': 'Per year' },
-  repaymentFrequencyType: { '0': 'Days', '1': 'Weeks', '2': 'Months' },
+  repaymentFrequencyType: { '0': 'Days', '1': 'Weeks', '6': 'Semi Monthly', '2': 'Months' },
   amortizationType: { '0': 'Equal principal payments', '1': 'Equal installments' },
   interestType: { '0': 'Declining Balance', '1': 'Flat' },
   interestCalculationPeriodType: { '0': 'Daily', '1': 'Same as repayment period' },
@@ -566,8 +578,26 @@ export const FORM_STEPS: FormStep[] = [
         options: [
           { value: 0, label: 'Days' },
           { value: 1, label: 'Weeks' },
+          { value: SEMI_MONTHLY_FREQUENCY_TYPE, label: 'Semi Monthly' },
           { value: 2, label: 'Months' }
         ]
+      },
+      {
+        // Both due days are shown only for the semi-monthly frequency (see `visibleFields` in the
+        // wizard), where the backend requires them as a pair; `required` is applied conditionally by
+        // `syncConditionalValidators`.
+        label: 'labels.inputs.First repayment day of month',
+        key: 'firstRepaymentDayOfMonth',
+        type: 'select',
+        options: firstRepaymentDayOptions().map((day) => ({ value: day, label: String(day) }))
+      },
+      {
+        // Static fallback list; the wizard narrows it to the days after the selected first day and
+        // labels 31 as the last day of the month.
+        label: 'labels.inputs.Second repayment day of month',
+        key: 'secondRepaymentDayOfMonth',
+        type: 'select',
+        options: secondRepaymentDayOptions(null).map((day) => ({ value: day, label: String(day) }))
       },
       {
         label: 'labels.inputs.Linked to floating interest rates',
@@ -1117,6 +1147,8 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   interestRateFrequencyType: 2,
   repaymentEvery: 1,
   repaymentFrequencyType: 2,
+  firstRepaymentDayOfMonth: null,
+  secondRepaymentDayOfMonth: null,
   isLinkedToFloatingInterestRates: false,
   allowApprovedDisbursedAmountsOverApplied: false,
   overAppliedCalculationType: '',
@@ -2642,6 +2674,23 @@ const UNSUPPORTED_CREATE_FIELDS = [
  * normalization the Classic flow gets from its typed step forms.
  */
 function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>, profileMode: LoanWizardProfileMode): void {
+  // 0. Semi-monthly frequency (FINERACT-1322): the backend requires both due days and
+  //    `repaymentEvery: 1` for it, takes the days only as a pair, and rejects them on every other
+  //    frequency. Mirrors the Classic Terms step, which locks "repaid every" to 1 and clears the days
+  //    when the frequency changes.
+  if (isSemiMonthly(merged.repaymentFrequencyType)) {
+    merged.repaymentEvery = 1;
+  }
+  for (const key of [
+    'firstRepaymentDayOfMonth',
+    'secondRepaymentDayOfMonth'
+  ]) {
+    if (merged[key] === '') {
+      merged[key] = null;
+    }
+  }
+  applyRepaymentDaysToPayload(merged, merged.repaymentFrequencyType);
+
   // 1. Fold the UI-only charge selections into the backend `charges` array.
   if ('chargeName' in merged || 'overdueCharge' in merged) {
     merged.charges = buildChargeReferences(merged);
