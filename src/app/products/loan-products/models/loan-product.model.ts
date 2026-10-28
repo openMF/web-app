@@ -63,6 +63,10 @@ export interface LoanProduct {
   maxNumberOfRepayments?: number;
   repaymentEvery: number;
   repaymentFrequencyType: OptionData;
+  /** First due day (1–27) of a semi-monthly product. */
+  firstRepaymentDayOfMonth?: number;
+  /** Second due day (2–31, after the first) of a semi-monthly product; 31 means the last day of the month. */
+  secondRepaymentDayOfMonth?: number;
   minimumDaysBetweenDisbursalAndFirstRepayment?: number;
   interestRatePerPeriod: number;
   interestRateFrequencyType: OptionData;
