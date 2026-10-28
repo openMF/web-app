@@ -10,12 +10,14 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { MatDialog } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
 import { readFileSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { VaultCashDepositComponent } from './vault-cash-deposit.component';
-import { VaultContext, VaultCurrencies, VaultDenominations } from './vault-cash-deposit.models';
+import { VaultContext, VaultCurrencies, VaultDenominations, VaultDepositPreview } from './vault-cash-deposit.models';
 
 const root = '/v2/base-teller/vault';
 const context: VaultContext = {
@@ -117,7 +119,7 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
   it('renders translated title and read-only explanation before loading', () => {
     fixture.detectChanges();
     expect(text()).toContain('Cash Deposit into Vault');
-    expect(text()).toContain('transaction validation and financial execution');
+    expect(text()).toContain('financial execution is not enabled');
     expect(component.contextLoading()).toBe(true);
     expect(fixture.nativeElement.querySelector('[role="status"]')).toBeTruthy();
     http.expectOne(root + '/context').flush(context);
@@ -368,6 +370,500 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
     http.expectOne(root + '/currencies').flush(currencies);
     finish();
   });
+
+  const previewPath = '/v2/base-teller/vault-cash-deposits/preview';
+  function entry() {
+    start({ ...context, capabilities: { ...context.capabilities, previewDeposit: true } });
+    finish();
+    component.quantities.at(0).setValue('2');
+    component.quantities.at(1).setValue('3');
+    fixture.detectChanges();
+  }
+  function serverPreview(): VaultDepositPreview {
+    const unsupported: { supported: boolean; amount: null } = { supported: false, amount: null };
+    return {
+      operationType: 'VAULT_CASH_DEPOSIT',
+      validationStatus: 'VALID_PREVIEW',
+      movementStatus: 'PROPOSED',
+      branch: context.branch,
+      vault: context.vault,
+      businessDate: context.businessDate,
+      correlationReference: null,
+      currencies: [
+        {
+          currencyCode: 'USD',
+          decimalPlaces: 2,
+          banknotes: [{ denominationId: 'synthetic-note', value: '20.00', quantity: 2, subtotal: '40.00' }],
+          coins: [{ denominationId: 'synthetic-coin', value: '0.01', quantity: 3, subtotal: '0.03' }],
+          banknotesTotal: '40.00',
+          coinsTotal: '0.03',
+          totalCash: '40.03',
+          generalTransaction: {
+            perspective: 'VAULT',
+            inflows: { cash: '40.03', checks: unsupported, vouchers: unsupported },
+            outflows: { cash: '0.00', checks: unsupported, vouchers: unsupported }
+          }
+        }
+      ],
+      executionReadiness: {
+        executionAllowed: false,
+        status: 'BLOCKED_BY_POLICY',
+        sourcePolicy: 'UNAVAILABLE',
+        accountingPolicy: 'UNAVAILABLE',
+        blockers: [
+          'SOURCE_POLICY_UNAVAILABLE',
+          'ACCOUNTING_POLICY_UNAVAILABLE',
+          'VAULT_STATUS_UNKNOWN',
+          'EXECUTION_NOT_IMPLEMENTED'
+        ].map((code) => ({ code, message: 'server diagnostic must not be rendered' }))
+      }
+    };
+  }
+  const overlayText = () => {
+    for (const dialog of TestBed.inject(MatDialog).openDialogs) dialog.componentRef?.changeDetectorRef.detectChanges();
+    return TestBed.inject(OverlayContainer).getContainerElement().textContent ?? '';
+  };
+  const previewButton = () =>
+    fixture.nativeElement.querySelector('button[aria-describedby="vault-processing-explanation"]') as HTMLButtonElement;
+
+  it('calculates exact banknote and coin estimates from accessible quantity inputs', () => {
+    entry();
+    const inputs = fixture.nativeElement.querySelectorAll('input');
+    expect(inputs).toHaveLength(2);
+    inputs[0].value = '4';
+    inputs[0].dispatchEvent(new Event('input'));
+    inputs[1].value = '7';
+    inputs[1].dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    expect(component.estimate()).toMatchObject({ subtotals: [
+        '80.00',
+        '0.07'
+      ], banknotesTotal: '80.00', coinsTotal: '0.07', totalCash: '80.07' });
+    expect(inputs[0].getAttribute('aria-label')).toContain('Banknotes');
+    expect(inputs[1].getAttribute('aria-label')).toContain('Coins');
+    expect(previewButton().disabled).toBe(false);
+  });
+
+  it.each([
+    '-1',
+    '1.5',
+    '',
+    '1000000001',
+    'NaN',
+    'Infinity',
+    '1e3',
+    '2x',
+    ' 2'
+  ])('rejects invalid typed or pasted quantity %s', (value) => {
+    entry();
+    const input = fixture.nativeElement.querySelector('input');
+    input.value = value;
+    input.dispatchEvent(new Event('input'));
+    input.dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    expect(component.quantities.at(0).invalid).toBe(true);
+    expect(component.estimate()).toBeNull();
+    expect(previewButton().disabled).toBe(true);
+    expect(text()).toContain('Enter a whole number');
+    component.previewTransaction();
+    http.expectNone(previewPath);
+  });
+
+  it('requires a positive quantity and respects the backend preview capability', () => {
+    start();
+    finish();
+    expect(component.canPreview).toBe(false);
+    component.quantities.at(0).setValue('1');
+    component.previewTransaction();
+    http.expectNone(previewPath);
+    expect(component.canPreview).toBe(false);
+  });
+
+  it('disables preview when all quantities are zero', () => {
+    entry();
+    component.quantities.setValue([
+      '0',
+      '0'
+    ]);
+    fixture.detectChanges();
+    expect(previewButton().disabled).toBe(true);
+    expect(text()).toContain('at least one positive');
+  });
+
+  it('submits only the current business date and catalog identifiers with integer quantities', () => {
+    entry();
+    component.previewTransaction();
+    const request = http.expectOne(previewPath);
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual({
+      businessDate: context.businessDate,
+      currencies: [
+        {
+          currencyCode: 'USD',
+          denominations: [
+            { denominationId: 'synthetic-note', quantity: 2 },
+            { denominationId: 'synthetic-coin', quantity: 3 }
+          ]
+        }
+      ]
+    });
+    expect(request.request.responseType).toBe('text');
+    request.flush(serverPreview());
+    fixture.detectChanges();
+    expect(overlayText()).toContain('General Transaction');
+    expect(overlayText()).toContain('40.03');
+    expect(overlayText()).toContain('Proposed Vault Inflow');
+    expect(overlayText()).toContain('Proposed Vault Outflow');
+    expect(overlayText()).toContain('Source outflow is unavailable');
+    expect(overlayText()).toContain('blocked by policy');
+    expect(overlayText()).toContain('Missing approved deposit accounting');
+    expect(overlayText()).toContain('Unavailable');
+    expect(overlayText()).not.toContain('server diagnostic');
+    expect(overlayText()).not.toContain('vaultDeposit.');
+    const dialog = TestBed.inject(MatDialog).openDialogs[0];
+    expect(dialog._containerInstance._config.ariaLabelledBy).toBe('vault-preview-title');
+    expect(dialog._containerInstance._config.restoreFocus).toBe(true);
+    expect(TestBed.inject(OverlayContainer).getContainerElement().querySelectorAll('button')).toHaveLength(2);
+    expect(overlayText()).not.toMatch(/Confirm Deposit|Receipt|Successfully Completed/);
+    dialog.close();
+    expect(component.quantities.getRawValue()).toEqual([
+      '2',
+      '3'
+    ]);
+    http.expectNone(() => true);
+  });
+
+  it('prevents duplicate preview requests while loading', () => {
+    entry();
+    component.previewTransaction();
+    component.previewTransaction();
+    fixture.detectChanges();
+    expect(component.previewLoading()).toBe(true);
+    expect(previewButton().disabled).toBe(true);
+    expect(text()).toContain('Loading Preview');
+    const requests = http.match(previewPath);
+    expect(requests).toHaveLength(1);
+    requests[0].flush(serverPreview());
+    expect(component.previewLoading()).toBe(false);
+  });
+
+  it.each([
+    'quantity',
+    'currency',
+    'context'
+  ])('cancels stale previews on %s change', (change) => {
+    entry();
+    component.previewTransaction();
+    const stale = http.expectOne(previewPath);
+    if (change === 'quantity') component.quantities.at(0).setValue('7');
+    if (change === 'currency') {
+      component.currencyControl.setValue('JPY');
+      finish('JPY', { ...denominations, currencyCode: 'JPY', denominations: [] });
+    }
+    if (change === 'context') {
+      component.reload();
+      http.expectOne(root + '/context').flush(context);
+      http.expectOne(root + '/currencies').flush(currencies);
+      finish();
+    }
+    expect(stale.cancelled).toBe(true);
+    expect(component.previewLoading()).toBe(false);
+    expect(TestBed.inject(MatDialog).openDialogs).toHaveLength(0);
+  });
+
+  it('closes an existing dialog when the form changes and keeps the next response current', () => {
+    entry();
+    component.previewTransaction();
+    http.expectOne(previewPath).flush(serverPreview());
+    const dialog = TestBed.inject(MatDialog).openDialogs[0];
+    const close = jest.spyOn(dialog, 'close');
+    component.quantities.at(0).setValue('9');
+    expect(close).toHaveBeenCalled();
+    component.previewTransaction();
+    const stale = http.expectOne(previewPath);
+    component.quantities.at(0).setValue('2');
+    expect(stale.cancelled).toBe(true);
+    component.previewTransaction();
+    http.expectOne(previewPath).flush(serverPreview());
+    expect(TestBed.inject(MatDialog).openDialogs.at(-1)?.componentInstance.data.mismatch).toBe(false);
+  });
+
+  it('resets quantities and validation on currency switching', () => {
+    entry();
+    component.quantities.at(0).setValue('-1');
+    component.currencyControl.setValue('JPY');
+    expect(component.quantities.length).toBe(0);
+    expect(component.estimate()).toBeNull();
+    finish('JPY', { ...denominations, currencyCode: 'JPY', denominations: [] });
+    component.currencyControl.setValue('USD');
+    finish();
+    expect(component.quantities.getRawValue()).toEqual([
+      '0',
+      '0'
+    ]);
+    expect(component.quantities.valid).toBe(true);
+  });
+
+  it.each([
+    'total',
+    'quantity',
+    'line',
+    'duplicate'
+  ])('flags backend %s disagreement without replacing server amounts', (change) => {
+    entry();
+    component.previewTransaction();
+    const preview = serverPreview();
+    if (change === 'total') preview.currencies[0].totalCash = '900.01';
+    if (change === 'quantity') preview.currencies[0].banknotes[0].quantity = 3;
+    if (change === 'line') preview.currencies[0].banknotes[0].value = '10.00';
+    if (change === 'duplicate') preview.currencies[0].banknotes.push(preview.currencies[0].banknotes[0]);
+    http.expectOne(previewPath).flush(preview);
+    fixture.detectChanges();
+    expect(overlayText()).toContain('differs from the client estimate');
+    if (change === 'total') expect(overlayText()).toContain('900.01');
+    expect(overlayText()).not.toContain('Confirm Deposit');
+  });
+
+  it('keeps execution unavailable even if a future server reports readiness', () => {
+    entry();
+    component.previewTransaction();
+    const preview = serverPreview();
+    preview.executionReadiness.executionAllowed = true;
+    preview.executionReadiness.blockers = [];
+    http.expectOne(previewPath).flush(preview);
+    fixture.detectChanges();
+    expect(overlayText()).toContain('financial execution is not enabled');
+    expect(overlayText()).not.toContain('Confirm Deposit');
+    http.expectNone(() => true);
+  });
+
+  it('rejects a preview belonging to another vault', () => {
+    entry();
+    component.previewTransaction();
+    const preview = serverPreview();
+    preview.vault = { ...preview.vault, key: 'VAULT:999' };
+    http.expectOne(previewPath).flush(preview);
+    expect(component.previewError()).toBe('vaultDeposit.errors.configuration');
+    expect(TestBed.inject(MatDialog).openDialogs).toHaveLength(0);
+  });
+
+  it.each([
+    0,
+    400,
+    401,
+    403,
+    404,
+    409,
+    422,
+    500
+  ])('renders safe preview failures and supports retry (HTTP %s)', (status) => {
+    entry();
+    component.previewTransaction();
+    http.expectOne(previewPath).flush('private SQL stack token', { status, statusText: 'Failure' });
+    fixture.detectChanges();
+    expect(component.previewError()).toBeTruthy();
+    expect(component.previewLoading()).toBe(false);
+    expect(text()).not.toContain('private SQL');
+    expect(TestBed.inject(MatDialog).openDialogs).toHaveLength(0);
+    const errorAction = fixture.nativeElement.querySelector('p.message.error + button') as HTMLButtonElement;
+    expect(errorAction.textContent?.trim()).toBe(status === 409 ? 'Refresh' : 'Retry');
+    component.previewTransaction();
+    http.expectOne(previewPath).flush(serverPreview());
+    expect(component.previewError()).toBe('');
+  });
+
+  it.each([
+    [
+      0,
+      'vaultDeposit.errors.unavailable'
+    ],
+    [
+      500,
+      'vaultDeposit.errors.unavailable'
+    ],
+    [
+      503,
+      'vaultDeposit.errors.unavailable'
+    ],
+    [
+      200,
+      'vaultDeposit.preview.failed'
+    ]
+  ])('retries a transient preview failure without clearing the form (HTTP %s)', (status, key) => {
+    entry();
+    const quantities = component.quantities.getRawValue();
+    const currency = component.currencyControl.value;
+    const estimate = component.estimate();
+    component.previewTransaction();
+    const original = http.expectOne(previewPath);
+    original.flush('invalid preview response', { status: Number(status), statusText: 'Failure' });
+    fixture.detectChanges();
+    expect(component.previewError()).toBe(key);
+    const retry = fixture.nativeElement.querySelector('p.message.error + button') as HTMLButtonElement;
+    expect(retry.textContent?.trim()).toBe('Retry');
+    expect(retry.disabled).toBe(false);
+    retry.click();
+    retry.click();
+    fixture.detectChanges();
+    expect(component.previewLoading()).toBe(true);
+    expect(component.previewError()).toBe('');
+    expect(component.quantities.getRawValue()).toEqual(quantities);
+    expect(component.currencyControl.value).toBe(currency);
+    expect(component.estimate()).toBe(estimate);
+    http.expectNone((request) => request.method === 'GET');
+    const retries = http.match(previewPath);
+    expect(retries).toHaveLength(1);
+    expect(retries[0].request.body).toEqual(original.request.body);
+    retries[0].flush(serverPreview());
+    expect(overlayText()).toContain('40.03');
+  });
+
+  it.each([
+    [
+      409,
+      '',
+      'vaultDeposit.preview.conflict'
+    ],
+    [
+      400,
+      'business.date.invalid',
+      'vaultDeposit.preview.businessDateChanged'
+    ],
+    [
+      400,
+      'denomination.unsupported',
+      'vaultDeposit.preview.catalogChanged'
+    ]
+  ])('refreshes context only for a context-changing preview error %s / %s', (status, code, key) => {
+    entry();
+    component.previewTransaction();
+    http
+      .expectOne(previewPath)
+      .flush(
+        { errors: [{ userMessageGlobalisationCode: 'error.msg.base.teller.vault.preview.' + code }] },
+        { status: Number(status), statusText: 'Stale context' }
+      );
+    fixture.detectChanges();
+    expect(component.previewError()).toBe(key);
+    const refresh = fixture.nativeElement.querySelector('p.message.error + button') as HTMLButtonElement;
+    expect(refresh.textContent?.trim()).toBe('Refresh');
+    refresh.click();
+    expect(component.quantities.length).toBe(0);
+    expect(component.estimate()).toBeNull();
+    expect(component.previewError()).toBe('');
+    http.expectNone(previewPath);
+    http.expectOne(root + '/context').flush({ ...context, businessDate: '2026-10-28' });
+    http.expectOne(root + '/currencies').flush(currencies);
+    finish();
+    expect(component.context()?.businessDate).toBe('2026-10-28');
+    expect(component.quantities.getRawValue()).toEqual([
+      '0',
+      '0'
+    ]);
+  });
+
+  it('disables the retry action when backend field validation fails', () => {
+    entry();
+    component.previewTransaction();
+    http
+      .expectOne(previewPath)
+      .flush(
+        { errors: [{ parameterName: 'currencies[0].denominations[0].quantity' }] },
+        { status: 400, statusText: 'Invalid quantity' }
+      );
+    fixture.detectChanges();
+    const retry = fixture.nativeElement.querySelector('p.message.error + button') as HTMLButtonElement;
+    expect(retry.textContent?.trim()).toBe('Retry');
+    expect(retry.disabled).toBe(true);
+    retry.click();
+    http.expectNone(previewPath);
+    expect(component.quantities.getRawValue()).toEqual([
+      '2',
+      '3'
+    ]);
+  });
+
+  it('maps textual structured field errors and clears them on an edit', () => {
+    entry();
+    component.previewTransaction();
+    http.expectOne(previewPath).flush(
+      JSON.stringify({
+        errors: [
+          {
+            parameterName: 'currencies[0].denominations[1].quantity',
+            userMessageGlobalisationCode: 'error.msg.base.teller.vault.preview.field.invalid'
+          }
+        ]
+      }),
+      { status: 400, statusText: 'Invalid' }
+    );
+    fixture.detectChanges();
+    expect(component.quantities.at(1).hasError('backend')).toBe(true);
+    expect(component.canPreview).toBe(false);
+    component.quantities.at(0).setValue('3');
+    expect(component.quantities.at(1).valid).toBe(true);
+    expect(component.previewError()).toBe('');
+  });
+
+  it.each([
+    [
+      'currency.unsupported',
+      'vaultDeposit.errors.unsupportedCurrency'
+    ],
+    [
+      'business.date.invalid',
+      'vaultDeposit.preview.businessDateChanged'
+    ],
+    [
+      'denomination.unsupported',
+      'vaultDeposit.preview.catalogChanged'
+    ],
+    [
+      'amount.out.of.range',
+      'vaultDeposit.preview.amountRange'
+    ]
+  ])('maps backend validation code %s', (code, key) => {
+    entry();
+    component.previewTransaction();
+    http
+      .expectOne(previewPath)
+      .flush(
+        { errors: [{ userMessageGlobalisationCode: 'error.msg.base.teller.vault.preview.' + code }] },
+        { status: 400, statusText: 'Invalid' }
+      );
+    expect(component.previewError()).toBe(key);
+  });
+
+  it('rejects a duplicate catalog without generating duplicate payload entries', () => {
+    start();
+    finish('USD', { ...denominations, denominations: [
+        ...denominations.denominations,
+        denominations.denominations[0]
+      ] });
+    expect(component.catalogValid()).toBe(false);
+    expect(component.canPreview).toBe(false);
+    expect(component.denominationsError()).toBe('vaultDeposit.errors.configuration');
+  });
+
+  it.each(readdirSync(localeRoot).filter((file) => file.endsWith('.json')))(
+    'covers all preview labels in %s',
+    (locale) => {
+      const data = JSON.parse(readFileSync(resolve(localeRoot, locale), 'utf8'));
+      const english = JSON.parse(readFileSync(resolve(localeRoot, 'en-US.json'), 'utf8'));
+      expect(Object.keys(data.vaultDeposit.preview)).toEqual(Object.keys(english.vaultDeposit.preview));
+      for (const label of Object.values(data.vaultDeposit.preview))
+        expect(typeof label === 'string' && label.length > 0).toBe(true);
+      const translate = TestBed.inject(TranslateService);
+      translate.setTranslation(locale, data);
+      translate.use(locale);
+      entry();
+      component.previewTransaction();
+      http.expectOne(previewPath).flush(serverPreview());
+      fixture.detectChanges();
+      expect(overlayText()).toContain(data.vaultDeposit.preview.generalTransaction);
+      expect(overlayText()).not.toContain('vaultDeposit.');
+    }
+  );
 
   it.each(readdirSync(localeRoot).filter((f) => f.endsWith('.json')))(
     'has complete translations and renders translated labels in %s',

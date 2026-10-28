@@ -43,6 +43,25 @@ describe('VaultCashDepositService (mocked HTTP)', () => {
     }
   });
 
+  it('preserves exact monetary JSON tokens and uses the real non-mutating POST route', () => {
+    const body = {
+      businessDate: '2026-10-28',
+      currencies: [{ currencyCode: 'USD', denominations: [{ denominationId: 'n', quantity: 1 }] }]
+    };
+    let result: unknown;
+    service.previewVaultCashDeposit(body).subscribe((data) => (result = data));
+    const request = http.expectOne('/v2/base-teller/vault-cash-deposits/preview');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual(body);
+    request.flush(
+      '{"currencies":[{"totalCash":9999999999999.999999,"banknotesTotal":0.100000,"coinsTotal":0.200000}]}'
+    );
+    expect(result).toEqual({
+      currencies: [{ totalCash: '9999999999999.999999', banknotesTotal: '0.100000', coinsTotal: '0.200000' }]
+    });
+    http.expectNone(() => true);
+  });
+
   it('propagates backend errors without fake fallback data', () => {
     let status = 0;
     service
