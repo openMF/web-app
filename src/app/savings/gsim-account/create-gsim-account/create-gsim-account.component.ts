@@ -9,6 +9,8 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -19,6 +21,7 @@ import { SavingsActiveClientMembersComponent } from '../../savings-account-stepp
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
+import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -29,6 +32,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Create GSIM Account Component
  */
+/** How one member account relates to the other accounts of the same GSIM application. */
+interface GsimApplicationLink {
+  applicationId: number;
+  isParent: boolean;
+  isLast: boolean;
+}
+
 @Component({
   selector: 'mifosx-create-gsim-account',
   templateUrl: './create-gsim-account.component.html',
@@ -53,6 +63,7 @@ export class CreateGsimAccountComponent {
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
+  private groupsService = inject(GroupsService);
   private settingsService = inject(SettingsService);
   private destroyRef = inject(DestroyRef);
 
@@ -148,7 +159,7 @@ export class CreateGsimAccountComponent {
   }
 
   /** Set Body for each client selected */
-  setData(client: any, isParentAccount: any): any {
+  setData(client: any, gsimLink: GsimApplicationLink): any {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const monthDayFormat = 'dd MMMM';
@@ -160,7 +171,12 @@ export class CreateGsimAccountComponent {
       })),
       clientId: client.id,
       isGSIM: true,
-      isParentAccount: isParentAccount,
+      // Fineract links every member account of one application through this id. It creates the GSIM account
+      // for the member marked isParentAccount and stops adding accounts to it after the one marked lastApplication.
+      // Without them the GSIM keeps accepting members, and the group's next GSIM application fails.
+      isParentAccount: gsimLink.isParent,
+      applicationId: gsimLink.applicationId,
+      ...(gsimLink.isLast ? { lastApplication: true } : {}),
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
       dateFormat,
       monthDayFormat,
@@ -175,13 +191,22 @@ export class CreateGsimAccountComponent {
   buildRequestData(): any[] {
     const requestData = [];
     const memberSelected = this.selectedMembers.selectedMembers;
-    for (let index = 0; index < 1; index++) {
-      requestData.push(this.setData(memberSelected[index], true));
-    }
-    for (let index = 1; index < memberSelected.length; index++) {
-      requestData.push(this.setData(memberSelected[index], false));
+    const applicationId = this.newApplicationId();
+    for (let index = 0; index < memberSelected.length; index++) {
+      requestData.push(
+        this.setData(memberSelected[index], {
+          applicationId,
+          isParent: index === 0,
+          isLast: index === memberSelected.length - 1
+        })
+      );
     }
     return requestData;
+  }
+
+  /** A random positive id; any 32-bit value fits Fineract's gsim_accounts.application_id column (numeric(10,0)). */
+  newApplicationId(): number {
+    return crypto.getRandomValues(new Uint32Array(1))[0] + 1;
   }
 
   /**
@@ -192,14 +217,35 @@ export class CreateGsimAccountComponent {
     const gsimData = {
       clientArray: data
     };
-    this.savingsService.createGsimAcccount(gsimData).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    const groupId = this.savingsAccountTemplate.groupId;
+    // The response only has the savings id of the last member, but the GSIM view is opened by the GSIM account number.
+    this.savingsService
+      .createGsimAcccount(gsimData)
+      .pipe(
+        switchMap((response: any) =>
+          this.groupsService.getGSIMAccountsData(groupId).pipe(
+            map((gsimAccounts: any[]) => gsimAccounts?.find((gsim: any) => gsim.gsimId === response.gsimId)),
+            // The accounts are already created, so leave the form even when the lookup fails (no second submit)
+            catchError(() => of(undefined))
+          )
+        )
+      )
+      .subscribe((gsimAccount: any) => {
+        if (gsimAccount?.accountNumber) {
+          this.router.navigate(
+            [
+              '../',
+              gsimAccount.accountNumber
+            ],
+            { relativeTo: this.route }
+          );
+        } else {
+          this.router.navigate([
+            '/groups',
+            groupId,
+            'general'
+          ]);
+        }
+      });
   }
 }
