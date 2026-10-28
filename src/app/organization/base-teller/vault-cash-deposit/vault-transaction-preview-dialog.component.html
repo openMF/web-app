@@ -1,0 +1,128 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<h2 mat-dialog-title id="vault-preview-title">{{ 'vaultDeposit.preview.generalTransaction' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ 'vaultDeposit.preview.authoritative' | translate }}</p>
+  @if (data.mismatch) {
+    <p class="notice" role="alert">{{ 'vaultDeposit.preview.mismatch' | translate }}</p>
+  }
+  <dl class="context-grid">
+    <div>
+      <dt>{{ 'vaultDeposit.preview.operation' | translate }}</dt>
+      <dd>{{ 'vaultDeposit.title' | translate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'vaultDeposit.branch' | translate }}</dt>
+      <dd>{{ preview.branch.name }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'vaultDeposit.vault' | translate }}</dt>
+      <dd>{{ preview.vault.name }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'vaultDeposit.preview.businessDate' | translate }}</dt>
+      <dd>{{ preview.businessDate }}</dd>
+    </div>
+  </dl>
+  <p>{{ 'vaultDeposit.preview.valid' | translate }} · {{ 'vaultDeposit.preview.proposed' | translate }}</p>
+  @for (currency of preview.currencies; track currency.currencyCode) {
+    <section [attr.aria-label]="currency.currencyCode">
+      <h3>{{ currency.currencyCode }}</h3>
+      <dl class="totals">
+        <div>
+          <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
+          <dd>{{ currency.banknotesTotal | withdrawalMoney: currency.decimalPlaces }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'vaultDeposit.preview.coinsTotal' | translate }}</dt>
+          <dd>{{ currency.coinsTotal | withdrawalMoney: currency.decimalPlaces }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'vaultDeposit.preview.totalCash' | translate }}</dt>
+          <dd>{{ currency.totalCash | withdrawalMoney: currency.decimalPlaces }}</dd>
+        </div>
+      </dl>
+      @if (currency.generalTransaction.perspective === 'VAULT') {
+        <p>{{ 'vaultDeposit.preview.vaultPerspective' | translate }}</p>
+        <div class="table-scroll">
+          <table>
+            <caption>
+              {{
+                'vaultDeposit.preview.proposed' | translate
+              }}
+              —
+              {{
+                currency.currencyCode
+              }}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{{ 'vaultDeposit.preview.instrument' | translate }}</th>
+                <th scope="col">{{ 'vaultDeposit.preview.vaultInflow' | translate }}</th>
+                <th scope="col">{{ 'vaultDeposit.preview.vaultOutflow' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{{ 'vaultDeposit.preview.totalCash' | translate }}</th>
+                <td>{{ currency.generalTransaction.inflows.cash | withdrawalMoney: currency.decimalPlaces }}</td>
+                <td>{{ currency.generalTransaction.outflows.cash | withdrawalMoney: currency.decimalPlaces }}</td>
+              </tr>
+              @for (instrument of ['checks', 'vouchers']; track instrument) {
+                <tr>
+                  <th scope="row">{{ 'vaultDeposit.preview.' + instrument | translate }}</th>
+                  @for (
+                    column of [currency.generalTransaction.inflows, currency.generalTransaction.outflows];
+                    track $index
+                  ) {
+                    <td>
+                      @if (column[instrument].supported && column[instrument].amount !== null) {
+                        {{ column[instrument].amount | withdrawalMoney: currency.decimalPlaces }}
+                      } @else {
+                        {{ 'vaultDeposit.status.UNAVAILABLE' | translate }}
+                      }
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <p>{{ 'vaultDeposit.preview.sourceUnavailable' | translate }}</p>
+      } @else {
+        <p role="alert">{{ 'vaultDeposit.preview.perspectiveUnavailable' | translate }}</p>
+      }
+    </section>
+  }
+  <section class="notice" aria-labelledby="vault-policy-title">
+    <h3 id="vault-policy-title">{{ 'vaultDeposit.preview.executionUnavailable' | translate }}</h3>
+    <p>{{ 'vaultDeposit.preview.phaseNotice' | translate }}</p>
+    @if (!preview.executionReadiness.executionAllowed) {
+      <p>{{ 'vaultDeposit.preview.blocked' | translate }}</p>
+    }
+    <dl>
+      <div>
+        <dt>{{ 'vaultDeposit.preview.sourcePolicyLabel' | translate }}</dt>
+        <dd>{{ 'vaultDeposit.status.' + preview.executionReadiness.sourcePolicy | translate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.preview.accountingPolicyLabel' | translate }}</dt>
+        <dd>{{ 'vaultDeposit.status.' + preview.executionReadiness.accountingPolicy | translate }}</dd>
+      </div>
+    </dl>
+    <ul>
+      @for (blocker of preview.executionReadiness.blockers; track $index) {
+        <li>{{ blockerLabel(blocker.code) | translate }}</li>
+      }
+    </ul>
+  </section>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" mat-dialog-close>{{ 'vaultDeposit.preview.edit' | translate }}</button>
+  <button mat-button type="button" mat-dialog-close>{{ 'vaultDeposit.preview.close' | translate }}</button>
+</mat-dialog-actions>
