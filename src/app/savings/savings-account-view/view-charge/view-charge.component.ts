@@ -116,7 +116,8 @@ export class ViewChargeComponent {
           locale
         };
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
+          // Fineract pays a savings charge with command=paycharge (pay is only valid for loan charges)
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'paycharge', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
