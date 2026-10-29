@@ -128,13 +128,11 @@ export class GsimAccountComponent implements OnInit {
       this.groupId = params['groupId'];
     });
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { gsimData: any; savingAccountData: any; groupsData: any }) => {
-        this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
-        this.savingAccountData = data.savingAccountData;
-        this.groupsData = data.groupsData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
+      this.savingAccountData = data.savingAccountData;
+      this.groupsData = data.groupsData;
+    });
   }
 
   ngOnInit(): void {

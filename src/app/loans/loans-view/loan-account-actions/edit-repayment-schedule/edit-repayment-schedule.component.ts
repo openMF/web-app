@@ -116,7 +116,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
         )
       }
     });
-    cancelDialogRef.afterClosed().subscribe((responseConfirmation: { confirm?: boolean }) => {
+    cancelDialogRef.afterClosed().subscribe((responseConfirmation) => {
       if (responseConfirmation?.confirm) {
         this.gotoLoanDefaultView();
       }
@@ -165,32 +165,30 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addDialogRef
-      .afterClosed()
-      .subscribe((response: { data?: { value?: { fromPeriod: number; toPeriod: number; amount: number } } }) => {
-        if (response?.data?.value && this.repaymentScheduleDetails) {
-          const fromPeriod = response.data.value.fromPeriod;
-          const toPeriod = response.data.value.toPeriod;
-          const amount = response.data.value.amount;
-          const periodsVariation: EditablePeriod[] = [];
-          this.repaymentScheduleDetails.periods.forEach((period: EditablePeriod) => {
-            const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
-            if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
-              if (period.totalDueForPeriod !== amount) {
-                period.totalDueForPeriod = amount;
-                this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
-                this.wasChanged = true;
-                period.changed = true;
-              }
+    addDialogRef.afterClosed().subscribe((response) => {
+      if (response?.data?.value && this.repaymentScheduleDetails) {
+        const fromPeriod = response.data.value.fromPeriod;
+        const toPeriod = response.data.value.toPeriod;
+        const amount = response.data.value.amount;
+        const periodsVariation: EditablePeriod[] = [];
+        this.repaymentScheduleDetails.periods.forEach((period: EditablePeriod) => {
+          const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+          if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
+            if (period.totalDueForPeriod !== amount) {
+              period.totalDueForPeriod = amount;
+              this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
+              this.wasChanged = true;
+              period.changed = true;
             }
-            periodsVariation.push(period);
-          });
-          // New object reference so the OnPush schedule table picks up the change via ngOnChanges;
-          // dialog afterClosed runs outside this component's template events, hence the explicit mark.
-          this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods: periodsVariation };
-          this.cdr.markForCheck();
-        }
-      });
+          }
+          periodsVariation.push(period);
+        });
+        // New object reference so the OnPush schedule table picks up the change via ngOnChanges;
+        // dialog afterClosed runs outside this component's template events, hence the explicit mark.
+        this.repaymentScheduleDetails = { ...this.repaymentScheduleDetails, periods: periodsVariation };
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   reset(): void {
@@ -202,7 +200,7 @@ export class EditRepaymentScheduleComponent extends LoanAccountActionsBaseCompon
         )
       }
     });
-    recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: { confirm?: boolean }) => {
+    recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation) => {
       if (responseConfirmation?.confirm) {
         this.loanService.applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {}).subscribe({
           next: () => {

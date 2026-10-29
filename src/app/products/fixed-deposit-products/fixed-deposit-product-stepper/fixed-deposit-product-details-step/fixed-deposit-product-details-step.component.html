@@ -11,7 +11,7 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <input matInput formControlName="name" required />
-      @if (fixedDepositProductDetailsForm.controls.name.hasError('required')) {
+      @if ($any(fixedDepositProductDetailsForm.controls).name.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -22,7 +22,7 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
       <input matInput formControlName="shortName" maxlength="4" required />
-      @if (fixedDepositProductDetailsForm.controls.shortName.hasError('required')) {
+      @if ($any(fixedDepositProductDetailsForm.controls).shortName.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -33,7 +33,7 @@
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea matInput formControlName="description" required></textarea>
-      @if (fixedDepositProductDetailsForm.controls.description.hasError('required')) {
+      @if ($any(fixedDepositProductDetailsForm.controls).description.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

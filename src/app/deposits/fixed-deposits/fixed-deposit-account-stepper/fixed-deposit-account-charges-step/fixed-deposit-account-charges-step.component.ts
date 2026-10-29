@@ -151,7 +151,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
       formfields: formfields
     };
     const editChargeAmountDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeAmountDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeAmountDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
@@ -182,7 +182,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
       formfields: formfields
     };
     const editChargeDateDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDateDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDateDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         let newCharge: any;
         const dateFormat = this.settingsService.dateFormat;
@@ -223,7 +223,7 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
       formfields: formfields
     };
     const editChargeFeeIntervalDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeFeeIntervalDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeFeeIntervalDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);

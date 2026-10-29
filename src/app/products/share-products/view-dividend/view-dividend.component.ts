@@ -70,7 +70,7 @@ export class ViewDividendComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   constructor() {
-    this.route.data.subscribe((data: { dividendData: any }) => {
+    this.route.data.subscribe((data) => {
       this.dividendData = data.dividendData;
     });
     this.status = this.route.snapshot.queryParams['status'];

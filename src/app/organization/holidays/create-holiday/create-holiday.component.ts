@@ -119,16 +119,14 @@ export class CreateHolidayComponent implements OnInit {
   constructor() {
     const _database = this._database;
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { offices: any; holidayTemplate: any }) => {
-        this.officesData = data.offices;
-        this.repaymentSchedulingTypes = data.holidayTemplate;
-        // Constructs trie everytime data changes
-        this.constructOfficeHierarchy();
-        // Updates data in the CheckListDatabase
-        _database.initialize(this.officesTrie);
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.officesData = data.offices;
+      this.repaymentSchedulingTypes = data.holidayTemplate;
+      // Constructs trie everytime data changes
+      this.constructOfficeHierarchy();
+      // Updates data in the CheckListDatabase
+      _database.initialize(this.officesTrie);
+    });
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<OfficeItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -327,7 +325,7 @@ export class CreateHolidayComponent implements OnInit {
     this.holidayForm
       .get('reschedulingType')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((option: any) => {
+      .subscribe((option) => {
         if (option === 2) {
           this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl('', Validators.required));
         } else {
@@ -379,7 +377,7 @@ export class CreateHolidayComponent implements OnInit {
     this.organizationService
       .createHoliday(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../',

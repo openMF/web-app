@@ -200,7 +200,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       .open(LogoutDialogComponent)
       .afterClosed()
       .pipe(take(1))
-      .subscribe((confirmed: boolean) => {
+      .subscribe((confirmed) => {
         if (confirmed) {
           this.logout();
         }
@@ -308,7 +308,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   openDialog() {
     const configWizardRef = this.dialog.open(ConfigurationWizardComponent, {});
 
-    configWizardRef.afterClosed().subscribe((response: { show: number } | undefined) => {
+    configWizardRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }

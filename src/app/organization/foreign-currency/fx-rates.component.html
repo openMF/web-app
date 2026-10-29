@@ -91,7 +91,7 @@
                   mat-stroked-button
                   type="button"
                   (click)="load()"
-                  [disabled]="busy || !form.controls.officeId.valid || !form.controls.effectiveDate.valid"
+                  [disabled]="busy || !$any(form.controls).officeId.valid || !$any(form.controls).effectiveDate.valid"
                 >
                   {{ 'fx.loadDrafts' | translate }}
                 </button>

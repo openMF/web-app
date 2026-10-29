@@ -110,7 +110,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { permissions: any }) => {
+    this.route.data.subscribe((data) => {
       this.permissionsData = data.permissions;
     });
   }
@@ -282,7 +282,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     this.formGroup.get('roster')?.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response: any) => {});
+    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response) => {});
   }
 
   /**

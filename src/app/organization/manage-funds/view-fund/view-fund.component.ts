@@ -32,7 +32,7 @@ export class ViewFundComponent {
   fundData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { fundData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.fundData = data.fundData;
     });
   }

@@ -52,7 +52,7 @@ export class EditClosureComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccountClosure = data.glAccountClosure;
     });
   }
@@ -99,7 +99,7 @@ export class EditClosureComponent implements OnInit {
   submit() {
     this.accountingService
       .updateAccountingClosure(this.glAccountClosure.id, { comments: this.accountingClosureForm.value.comments })
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../../',

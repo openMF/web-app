@@ -119,7 +119,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProductsTemplate: any; configurations: any }) => {
+    this.route.data.subscribe((data) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
 
       if (this.loanProductService.isLoanProduct) {
@@ -365,7 +365,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
 
     this.productsService
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '/',
@@ -387,7 +387,7 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
 
     this.productsService
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         // WC and term products have independent id sequences, so the id alone is ambiguous: without
         // `productType` the view resolver defaults to the term loan product with the same id.
         this.router.navigate(

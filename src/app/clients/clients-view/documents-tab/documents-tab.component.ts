@@ -38,7 +38,7 @@ export class DocumentsTabComponent {
   entityType = 'clients';
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDocuments = data.clientDocuments;
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');

@@ -45,15 +45,13 @@ export class UndoApprovalComponent extends LoanAccountActionsBaseComponent imple
   submit() {
     const loanCommand: string = 'undoapproval';
     if (this.isLoanProduct) {
-      this.loanService
-        .loanActionButtons(this.loanId, loanCommand, { note: this.note.value })
-        .subscribe((response: any) => {
-          this.gotoLoanDefaultView();
-        });
+      this.loanService.loanActionButtons(this.loanId, loanCommand, { note: this.note.value }).subscribe((response) => {
+        this.gotoLoanDefaultView();
+      });
     } else if (this.isWorkingCapital) {
       this.loanService
         .applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, { note: this.note.value })
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.gotoLoanDefaultView();
         });
     }

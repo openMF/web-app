@@ -76,7 +76,7 @@ export class EditGroupMeetingComponent implements OnInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
@@ -115,7 +115,7 @@ export class EditGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+    this.groupEditMeetingForm.get('frequency').valueChanges.subscribe((frequency) => {
       this.groupEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
@@ -197,7 +197,7 @@ export class EditGroupMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
+    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

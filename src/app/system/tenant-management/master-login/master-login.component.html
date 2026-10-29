@@ -19,7 +19,7 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Master Username' | translate }}</mat-label>
             <input matInput required formControlName="username" autocomplete="username" />
-            @if (masterLoginForm.controls.username.hasError('required')) {
+            @if ($any(masterLoginForm.controls).username.hasError('required')) {
               <mat-error>
                 {{
                   'errors.validation.requiredField'

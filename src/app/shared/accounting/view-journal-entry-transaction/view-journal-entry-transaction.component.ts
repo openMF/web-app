@@ -101,7 +101,7 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { title: string; transaction: any; transferJournalEntryData: any }) => {
+    this.route.data.subscribe((data) => {
       this.title = data.title;
       this.isJournalEntryLoaded = false;
       if (this.isViewTransaction()) {
@@ -220,11 +220,11 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
     const revertTransactionDialogRef = this.dialog.open(RevertTransactionComponent, {
       data: { reverted: this.dataSource.data[0].reversed, transactionId: transactionId }
     });
-    revertTransactionDialogRef.afterClosed().subscribe((response: any) => {
+    revertTransactionDialogRef.afterClosed().subscribe((response) => {
       if (response.revert) {
         this.accountingService
           .revertTransaction(this.transactionId, response.comments)
-          .subscribe((reversedTransaction: any) => {
+          .subscribe((reversedTransaction) => {
             this.dataSource.data[0].reversed = true;
             this.revertTransaction(reversedTransaction.transactionId);
           });

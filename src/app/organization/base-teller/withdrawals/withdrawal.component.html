@@ -179,7 +179,7 @@
                 >
                 <mat-form-field appearance="outline" subscriptSizing="dynamic"
                   ><mat-label>{{
-                    (search.controls.field.value === 'name'
+                    ($any(search.controls).field.value === 'name'
                       ? 'accountTransfer.clientName'
                       : 'accountTransfer.clientNumber'
                     ) | translate
@@ -328,7 +328,7 @@
                       </div>
                     }
                   </div>
-                  @if (form.controls.method.value === 'CASH') {
+                  @if ($any(form.controls).method.value === 'CASH') {
                     <div class="section-heading">
                       <h3>{{ 'withdrawal.details' | translate }}</h3>
                       <span class="currency-label">{{ a.currencyCode }}</span>

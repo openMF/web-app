@@ -38,8 +38,8 @@ export class CobWorkflowComponent implements OnDestroy {
   }
 
   getCOBCatchUpStatus(): void {
-    this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
-      this.isCatchUpRunning = response.isCatchUpRunning;
+    this.systemService.getCOBCatchUpStatus().subscribe((response) => {
+      this.isCatchUpRunning = (response as any).isCatchUpRunning;
     });
     this.timer = setTimeout(() => {
       this.getCOBCatchUpStatus();
@@ -47,7 +47,7 @@ export class CobWorkflowComponent implements OnDestroy {
   }
 
   runCatchUp(): void {
-    this.systemService.runCOBCatchUp().subscribe((response: any) => {
+    this.systemService.runCOBCatchUp().subscribe((response) => {
       this.isCatchUpRunning = true;
       this.waitTime = 5000;
     });

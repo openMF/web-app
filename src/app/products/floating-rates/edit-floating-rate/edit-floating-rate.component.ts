@@ -123,7 +123,7 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { floatingRate: any }) => {
+    this.route.data.subscribe((data) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
     });
@@ -167,7 +167,7 @@ export class EditFloatingRateComponent implements OnInit {
     const floatingRatePeriodDialogRef = this.dialog.open(FloatingRatePeriodDialogComponent, {
       data: {}
     });
-    floatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
+    floatingRatePeriodDialogRef.afterClosed().subscribe((response) => {
       if (response) {
         this.floatingRatePeriodsData.push({
           fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
@@ -195,7 +195,7 @@ export class EditFloatingRateComponent implements OnInit {
         isNew: true
       }
     });
-    editFloatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
+    editFloatingRatePeriodDialogRef.afterClosed().subscribe((response) => {
       if (response) {
         this.floatingRatePeriodsData[this.floatingRatePeriodsData.indexOf(ratePeriod)] = {
           fromDate: this.dateUtils.formatDate(response.fromDate, this.dateFormat),
@@ -223,7 +223,7 @@ export class EditFloatingRateComponent implements OnInit {
           ratePeriod.fromDate
       }
     });
-    deleteFloatingRatePeriodRef.afterClosed().subscribe((response: any) => {
+    deleteFloatingRatePeriodRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.floatingRatePeriodsData.splice(this.floatingRatePeriodsData.indexOf(ratePeriod), 1);
         this.dataSource.connect().next(this.floatingRatePeriodsData);
@@ -252,7 +252,7 @@ export class EditFloatingRateComponent implements OnInit {
       this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
     this.productsService
       .updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../../',

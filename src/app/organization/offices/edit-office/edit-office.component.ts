@@ -50,7 +50,7 @@ export class EditOfficeComponent implements OnInit {
   maxDate = new Date();
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officeTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.officeTemplate;
     });
   }
@@ -99,7 +99,7 @@ export class EditOfficeComponent implements OnInit {
     this.organizationService
       .updateOffice(this.officeData.id, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

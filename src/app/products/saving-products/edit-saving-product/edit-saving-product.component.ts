@@ -78,7 +78,7 @@ export class EditSavingProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
@@ -139,16 +139,14 @@ export class EditSavingProductComponent {
       locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
-    this.productsService
-      .updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.productsService.updateSavingProduct(this.savingProductAndTemplate.id, savingProduct).subscribe((response) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

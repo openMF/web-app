@@ -52,7 +52,7 @@ export class EditCollateralComponent implements OnInit {
    * @param {CollateralsService} collateralService Collateral Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientCollateralData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.collateralDetails = data.clientCollateralData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

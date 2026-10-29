@@ -14,7 +14,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (collateralForm.controls.name.hasError('required')) {
+            @if ($any(collateralForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -24,7 +24,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Type/Quality' | translate }}</mat-label>
             <input matInput required formControlName="quality" />
-            @if (collateralForm.controls.quality.hasError('required')) {
+            @if ($any(collateralForm.controls).quality.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Type/Quality' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -34,7 +34,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Unit Type' | translate }}</mat-label>
             <input matInput required formControlName="unitType" />
-            @if (collateralForm.controls.unitType.hasError('required')) {
+            @if ($any(collateralForm.controls).unitType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Unit Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -44,7 +44,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Base Price' | translate }}</mat-label>
             <input matInput required formControlName="basePrice" />
-            @if (collateralForm.controls.basePrice.hasError('required')) {
+            @if ($any(collateralForm.controls).basePrice.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Base Price' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Percentage to Base' | translate }}</mat-label>
             <input matInput required formControlName="pctToBase" />
-            @if (collateralForm.controls.pctToBase.hasError('required')) {
+            @if ($any(collateralForm.controls).pctToBase.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Percentage to Base' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -70,7 +70,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (collateralForm.controls.currency.hasError('required')) {
+            @if ($any(collateralForm.controls).currency.hasError('required')) {
               <mat-error>
                 {{ 'labels.heading.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

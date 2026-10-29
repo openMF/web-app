@@ -78,7 +78,7 @@ export class EditSavingsAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsAccountAndTemplate = data.savingsAccountAndTemplate;
     });
   }
@@ -158,7 +158,7 @@ export class EditSavingsAccountComponent {
     }
     this.savingsService
       .updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

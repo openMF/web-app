@@ -154,7 +154,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
    */
 
   ngOnInit() {
-    this.themingService.theme.subscribe((value: string) => {
+    this.themingService.theme.subscribe((value) => {
       this.cssClass = value;
     });
     this.themingService.setInitialDarkMode();
@@ -204,7 +204,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
         this.i18nService
           .translate(translationKey)
           .pipe(take(1))
-          .subscribe((translated: any) => {
+          .subscribe((translated) => {
             // If the translation key was not found, ngx-translate returns the key itself
             const finalTitle = translated === translationKey ? rawTitle : translated;
             this.titleService.setTitle(finalTitle);
@@ -225,7 +225,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     });
 
     // Setup alerts with hover behavior
-    this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alertService.alertEvent.subscribe((alertEvent) => {
       const snackBarRef = this.snackBar.open(
         `${alertEvent.message}`,
         this.translateService.instant('labels.buttons.Close'),
@@ -359,7 +359,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
       .open(LogoutDialogComponent)
       .afterClosed()
       .pipe(take(1))
-      .subscribe((confirmed: boolean) => {
+      .subscribe((confirmed) => {
         if (confirmed) {
           this.logout();
         }

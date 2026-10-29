@@ -117,16 +117,21 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
   constructor() {
     super();
     this.loanProductsBasicDetails = [];
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
-        this.loanProductsBasicDetails = data.loanProductsBasicDetails;
-        this.loansAccountTemplate = data.loansAccountTemplate;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanProductsBasicDetails = data.loanProductsBasicDetails;
+      this.loansAccountTemplate = data.loansAccountTemplate;
+    });
   }
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
+    // Re-evaluate template validity gating when form status changes (OnPush + RxJS).
+    this.loansAccountDetailsStep.loansAccountDetailsForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdr.markForCheck());
+    this.loansAccountTermsStep.loansAccountTermsForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdr.markForCheck());
   }
 
   /**
@@ -155,7 +160,7 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     if (this.loanProductService.isLoanProduct) {
       const clientId = this.loansAccountTemplate.clientId;
       if (!!clientId) {
-        this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+        this.clientService.getCollateralTemplate(clientId).subscribe((response) => {
           this.collateralOptions = response;
         });
       } else {

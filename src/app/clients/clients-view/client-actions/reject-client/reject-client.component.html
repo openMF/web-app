@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectionDatePicker></mat-datepicker>
-            @if (rejectClientForm.controls.rejectionDate.hasError('required')) {
+            @if ($any(rejectClientForm.controls).rejectionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Rejection Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (rejectClientForm.controls.rejectionReasonId.hasError('required')) {
+            @if ($any(rejectClientForm.controls).rejectionReasonId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Rejection Reason' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

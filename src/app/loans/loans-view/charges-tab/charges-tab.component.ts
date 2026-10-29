@@ -123,18 +123,18 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
 
   constructor() {
     super();
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetails = data.loanDetailsData;
     });
     if (this.loanProductService.isWorkingCapital) {
-      this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanChargeData: any }) => {
+      this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
         this.loanDetails.charges = data.loanChargeData;
       });
     }
   }
 
   ngOnInit() {
-    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
+    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config) => {
       this.useDueDate = config.stringValue === 'due-date';
     });
     this.chargesData = this.loanDetails.charges ?? [];
@@ -227,7 +227,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
         type: 'Basic'
       }
     });
-    confirmRef.afterClosed().subscribe((response: any) => {
+    confirmRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const requests = this.selection.selected.map((charge) =>
           this.loansService
@@ -278,7 +278,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       formfields: formfields
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    payChargeDialogRef.afterClosed().subscribe((response: any) => {
+    payChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -310,7 +310,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
         type: 'Basic'
       }
     });
-    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+    waiveChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.loansService
           .executeLoansAccountChargesCommand(
@@ -341,7 +341,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
       formfields: formfields
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -361,7 +361,7 @@ export class ChargesTabComponent extends LoanAccountTabBaseComponent implements 
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge id:${chargeId}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.loansService
           .deleteLoansAccountCharge(this.loanProductService.loanAccountPath, this.loanDetails.id, chargeId)

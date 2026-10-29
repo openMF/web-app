@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (clientChargeForm.controls.chargeId.hasError('required')) {
+            @if ($any(clientChargeForm.controls).chargeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -33,7 +33,7 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                 <input type="number" required matInput formControlName="amount" />
-                @if (clientChargeForm.controls.amount.hasError('required')) {
+                @if ($any(clientChargeForm.controls).amount.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -73,7 +73,7 @@
                   />
                   <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
-                  @if (clientChargeForm.controls.dueDate.hasError('required')) {
+                  @if ($any(clientChargeForm.controls).dueDate.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Due for collection on' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -94,7 +94,7 @@
                   />
                   <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
                   <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
-                  @if (clientChargeForm.controls.feeOnMonthDay.hasError('required')) {
+                  @if ($any(clientChargeForm.controls).feeOnMonthDay.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>

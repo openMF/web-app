@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (taxComponentForm.controls.name.hasError('required')) {
+            @if ($any(taxComponentForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,15 +25,15 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
             <input type="number" matInput required formControlName="percentage" />
-            @if (taxComponentForm.controls.percentage.hasError('required')) {
+            @if ($any(taxComponentForm.controls).percentage.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Percentage' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
             @if (
-              taxComponentForm.controls.percentage.hasError('pattern') ||
-              taxComponentForm.controls.percentage.hasError('max')
+              $any(taxComponentForm.controls).percentage.hasError('pattern') ||
+              $any(taxComponentForm.controls).percentage.hasError('max')
             ) {
               <mat-error>
                 {{ 'labels.inputs.Percentage' | translate }} <strong>{{ 'labels.commons.should' | translate }}</strong>
@@ -55,7 +55,7 @@
 
           @if (debitAccountData.length > 0) {
             <mifosx-gl-account-selector
-              [inputFormControl]="taxComponentForm.controls.debitAccountId"
+              [inputFormControl]="$any(taxComponentForm.controls.debitAccountId)"
               [glAccountList]="debitAccountData"
               [required]="false"
               [inputLabel]="'Debit Account'"
@@ -76,7 +76,7 @@
 
           @if (creditAccountData.length > 0) {
             <mifosx-gl-account-selector
-              [inputFormControl]="taxComponentForm.controls.creditAccountId"
+              [inputFormControl]="$any(taxComponentForm.controls.creditAccountId)"
               [glAccountList]="creditAccountData"
               [required]="false"
               [inputLabel]="'Credit Account'"
@@ -96,7 +96,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (taxComponentForm.controls.startDate.hasError('required')) {
+            @if ($any(taxComponentForm.controls).startDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

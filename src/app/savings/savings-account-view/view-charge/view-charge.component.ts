@@ -71,10 +71,10 @@ export class ViewChargeComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountCharge: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.chargeData = data.savingsAccountCharge;
     });
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsAccountData = data.savingsAccountData;
     });
   }
@@ -105,7 +105,7 @@ export class ViewChargeComponent {
       formfields: formfields
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    payChargeDialogRef.afterClosed().subscribe((response: any) => {
+    payChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -129,7 +129,7 @@ export class ViewChargeComponent {
    */
   waiveCharge() {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
-    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+    waiveChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
@@ -147,7 +147,7 @@ export class ViewChargeComponent {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, {
       data: { id: this.chargeData.id }
     });
-    inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
+    inactivateChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
@@ -177,7 +177,7 @@ export class ViewChargeComponent {
       formfields: formfields
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -202,7 +202,7 @@ export class ViewChargeComponent {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge id:${this.chargeData.id}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id).subscribe(() => {
           this.reload();

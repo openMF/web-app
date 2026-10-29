@@ -91,7 +91,7 @@ export class ShareProductsDividendsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { dividends: any }) => {
+    this.route.data.subscribe((data) => {
       this.dividendData = data.dividends.pageItems;
     });
   }

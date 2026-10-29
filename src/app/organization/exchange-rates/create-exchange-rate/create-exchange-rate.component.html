@@ -23,7 +23,7 @@
                   <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
                 }
               </mat-select>
-              @if (exchangeRateForm.controls.sourceCurrency.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).sourceCurrency.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Source Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -44,7 +44,7 @@
                   <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
                 }
               </mat-select>
-              @if (exchangeRateForm.controls.targetCurrency.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).targetCurrency.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Target Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -68,7 +68,7 @@
                 formControlName="buyIndicatorCode"
                 [attr.aria-label]="'labels.inputs.Buy Indicator' | translate"
               />
-              @if (exchangeRateForm.controls.buyIndicatorCode.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).buyIndicatorCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Buy Indicator' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -86,7 +86,7 @@
                 formControlName="sellIndicatorCode"
                 [attr.aria-label]="'labels.inputs.Sell Indicator' | translate"
               />
-              @if (exchangeRateForm.controls.sellIndicatorCode.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).sellIndicatorCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Sell Indicator' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -107,13 +107,13 @@
                 formControlName="buyRate"
                 [attr.aria-label]="'labels.inputs.Buy Rate' | translate"
               />
-              @if (exchangeRateForm.controls.buyRate.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).buyRate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Buy Rate' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (exchangeRateForm.controls.buyRate.hasError('min')) {
+              @if ($any(exchangeRateForm.controls).buyRate.hasError('min')) {
                 <mat-error>{{
                   'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Buy Rate' | translate) }
                 }}</mat-error>
@@ -133,13 +133,13 @@
                 formControlName="sellRate"
                 [attr.aria-label]="'labels.inputs.Sell Rate' | translate"
               />
-              @if (exchangeRateForm.controls.sellRate.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).sellRate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Sell Rate' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (exchangeRateForm.controls.sellRate.hasError('min')) {
+              @if ($any(exchangeRateForm.controls).sellRate.hasError('min')) {
                 <mat-error>{{
                   'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Sell Rate' | translate) }
                 }}</mat-error>
@@ -159,13 +159,13 @@
                 formControlName="referenceRate"
                 [attr.aria-label]="'labels.inputs.Reference Rate' | translate"
               />
-              @if (exchangeRateForm.controls.referenceRate.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).referenceRate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Reference Rate' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (exchangeRateForm.controls.referenceRate.hasError('min')) {
+              @if ($any(exchangeRateForm.controls).referenceRate.hasError('min')) {
                 <mat-error>{{
                   'errors.validation.mustBePositive'
                     | translate: { field: ('labels.inputs.Reference Rate' | translate) }
@@ -186,7 +186,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="rateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #rateDatePicker></mat-datepicker>
-              @if (exchangeRateForm.controls.rateDate.hasError('required')) {
+              @if ($any(exchangeRateForm.controls).rateDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Rate Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

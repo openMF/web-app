@@ -35,7 +35,7 @@
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             <mat-hint>{{ 'labels.text.Cannot precede the discount fee date' | translate }}</mat-hint>
-            @if (discountFeeAdjustmentForm.controls.transactionDate.hasError('required')) {
+            @if ($any(discountFeeAdjustmentForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong> {{ 'labels.commons.required' | translate }} </strong>
@@ -46,7 +46,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="discountFeeAdjustmentForm.controls.transactionAmount"
+            [inputFormControl]="$any(discountFeeAdjustmentForm.controls.transactionAmount)"
             [inputLabel]="'Transaction Amount'"
             [minVal]="minAmount"
             [maxVal]="remainingDiscount"
@@ -70,9 +70,9 @@
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" [maxlength]="maxExternalIdLength" />
             <mat-hint align="end">
-              {{ discountFeeAdjustmentForm.controls.externalId.value?.length || 0 }}/{{ maxExternalIdLength }}
+              {{ $any(discountFeeAdjustmentForm.controls).externalId.value?.length || 0 }}/{{ maxExternalIdLength }}
             </mat-hint>
-            @if (discountFeeAdjustmentForm.controls.externalId.hasError('maxlength')) {
+            @if ($any(discountFeeAdjustmentForm.controls).externalId.hasError('maxlength')) {
               <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
             }
           </mat-form-field>
@@ -81,9 +81,9 @@
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" [maxlength]="maxNoteLength" rows="2"></textarea>
             <mat-hint align="end">
-              {{ discountFeeAdjustmentForm.controls.note.value?.length || 0 }}/{{ maxNoteLength }}
+              {{ $any(discountFeeAdjustmentForm.controls).note.value?.length || 0 }}/{{ maxNoteLength }}
             </mat-hint>
-            @if (discountFeeAdjustmentForm.controls.note.hasError('maxlength')) {
+            @if ($any(discountFeeAdjustmentForm.controls).note.hasError('maxlength')) {
               <mat-error>{{ 'labels.inputs.Note is too long' | translate }}</mat-error>
             }
           </mat-form-field>

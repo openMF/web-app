@@ -110,7 +110,7 @@ export class SavingAccountActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       if (data.savingsAccountActionData) {
         this.currency = data.savingsAccountActionData.currency;
       }

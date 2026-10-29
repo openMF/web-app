@@ -122,7 +122,7 @@ export class EditReportComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { report: any; reportTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.reportData = data.report;
       this.reportParametersData = data.report.reportParameters ? data.report.reportParameters : [];
       this.reportTemplateData = data.reportTemplate;
@@ -202,7 +202,7 @@ export class EditReportComponent implements OnInit {
     const addReportParameterDialogRef = this.dialog.open(ReportParameterDialogComponent, {
       data: this.dataForDialog
     });
-    addReportParameterDialogRef.afterClosed().subscribe((response: any) => {
+    addReportParameterDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.reportParametersData.push({
           id: '',
@@ -228,7 +228,7 @@ export class EditReportComponent implements OnInit {
     const editReportParameterDialogRef = this.dialog.open(ReportParameterDialogComponent, {
       data: this.dataForDialog
     });
-    editReportParameterDialogRef.afterClosed().subscribe((response: any) => {
+    editReportParameterDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.reportParametersData[this.reportParametersData.indexOf(reportParameter)] = {
           id: reportParameter.id,
@@ -252,7 +252,7 @@ export class EditReportComponent implements OnInit {
     const deleteReportDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `report parameter ${reportParameter.parameterName}` }
     });
-    deleteReportDialogRef.afterClosed().subscribe((response: any) => {
+    deleteReportDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.reportParametersData.splice(this.reportParametersData.indexOf(reportParameter), 1);
         this.dataSource.connect().next(this.reportParametersData);

@@ -73,7 +73,7 @@ export class AccountNumberPreferencesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountNumberPreferences: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountNumberPreferencesData = data.accountNumberPreferences;
     });
   }

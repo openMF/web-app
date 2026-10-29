@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (centerMeetingForm.controls.startDate.hasError('required')) {
+            @if ($any(centerMeetingForm.controls).startDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -45,7 +45,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (centerMeetingForm.controls.frequency.hasError('repeatsOnDay')) {
+              @if ($any(centerMeetingForm.controls).frequency.hasError('repeatsOnDay')) {
                 <mat-error>
                   {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -64,7 +64,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (centerMeetingForm.controls.interval.hasError('repeatsOnDay')) {
+              @if ($any(centerMeetingForm.controls).interval.hasError('repeatsOnDay')) {
                 <mat-error>
                   {{ 'labels.inputs.Repetition Interval' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -83,7 +83,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (centerMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')) {
+              @if ($any(centerMeetingForm.controls).repeatsOnDay.hasError('repeatsOnDay')) {
                 <mat-error>
                   {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
                   {{ 'labels.inputs.day must be selected' | translate }}

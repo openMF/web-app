@@ -83,7 +83,7 @@ export class CreateRecurringDepositProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.recurringDepositProductsTemplate = data.recurringDepositProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
@@ -147,7 +147,7 @@ export class CreateRecurringDepositProductComponent {
       recurringDepositProduct.description = '';
     }
     delete recurringDepositProduct.advancedAccountingRules;
-    this.productsService.createRecurringDepositProduct(recurringDepositProduct).subscribe((response: any) => {
+    this.productsService.createRecurringDepositProduct(recurringDepositProduct).subscribe((response) => {
       this.router.navigate(
         [
           '../',

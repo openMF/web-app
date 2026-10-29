@@ -51,7 +51,7 @@ export class ViewAccountTransferComponent {
    * @param {Location} location Location.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { viewAccountTransferData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });
   }
@@ -75,7 +75,7 @@ export class ViewAccountTransferComponent {
         dialogContext: this.translateService.instant('labels.dialogContext.undo_account_transfer')
       }
     });
-    undoAccountTransferDialogRef.afterClosed().subscribe((response: any) => {
+    undoAccountTransferDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.accountTransfersService.undoAccountTransfer(this.viewAccountTransferData.id).subscribe(() => {
           this.goBack();

@@ -26,7 +26,7 @@
               </mat-option>
             }
           </mat-select>
-          @if (manageSavingsAccountForm.controls.reasonForBlock.hasError('required')) {
+          @if ($any(manageSavingsAccountForm.controls).reasonForBlock.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Reason' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -47,7 +47,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (manageSavingsAccountForm.controls.transactionDate.hasError('required')) {
+            @if ($any(manageSavingsAccountForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -61,7 +61,7 @@
             class="flex-100"
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="manageSavingsAccountForm.controls.transactionAmount"
+            [inputFormControl]="$any(manageSavingsAccountForm.controls.transactionAmount)"
             [inputLabel]="'Transaction Amount'"
           >
           </mifosx-input-amount>

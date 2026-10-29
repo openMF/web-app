@@ -17,14 +17,14 @@
         <mat-form-field>
           <mat-label>{{ 'transactionReversal.date' | translate }}</mat-label>
           <input matInput type="date" formControlName="transactionDate" required />
-          @if (form.controls.transactionDate.touched && form.controls.transactionDate.invalid) {
+          @if ($any(form.controls).transactionDate.touched && $any(form.controls).transactionDate.invalid) {
             <mat-error>{{ 'transactionReversal.dateRequired' | translate }}</mat-error>
           }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ 'transactionReversal.authorization' | translate }}</mat-label>
           <input matInput type="password" formControlName="authorizationNumber" autocomplete="off" required />
-          @if (form.controls.authorizationNumber.touched && form.controls.authorizationNumber.invalid) {
+          @if ($any(form.controls).authorizationNumber.touched && $any(form.controls).authorizationNumber.invalid) {
             <mat-error>{{ 'transactionReversal.authorizationRequired' | translate }}</mat-error>
           }
         </mat-form-field>

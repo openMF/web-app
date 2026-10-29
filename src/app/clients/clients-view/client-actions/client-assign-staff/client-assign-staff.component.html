@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (clientAssignStaffForm.controls.staffId.hasError('required')) {
+            @if ($any(clientAssignStaffForm.controls).staffId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Staff' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

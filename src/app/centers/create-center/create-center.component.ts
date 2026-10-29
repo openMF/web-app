@@ -84,7 +84,7 @@ export class CreateCenterComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -129,8 +129,8 @@ export class CreateCenterComponent implements OnInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.centerForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.getGroupsByOfficeId(option).subscribe((data: any) => {
+    this.centerForm.get('officeId').valueChanges.subscribe((option) => {
+      this.groupService.getGroupsByOfficeId(option).subscribe((data) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
           this.groupChoice.disable();
@@ -138,7 +138,7 @@ export class CreateCenterComponent implements OnInit {
           this.groupChoice.enable();
         }
       });
-      this.centerService.getStaff(option).subscribe((data: any) => {
+      this.centerService.getStaff(option).subscribe((data) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
           this.centerForm.controls['staffId'].disable();
@@ -147,7 +147,7 @@ export class CreateCenterComponent implements OnInit {
         }
       });
     });
-    this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
+    this.centerForm.get('active').valueChanges.subscribe((bool) => {
       if (bool) {
         this.centerForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       } else {
@@ -195,7 +195,7 @@ export class CreateCenterComponent implements OnInit {
     };
     data.groupMembers = [];
     this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
-    this.centerService.createCenter(data).subscribe((response: any) => {
+    this.centerService.createCenter(data).subscribe((response) => {
       this.router.navigate(['../centers']);
     });
   }

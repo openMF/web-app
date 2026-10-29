@@ -93,7 +93,7 @@ export class ViewProductMixComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.subscribe((data) => {
       this.productMixData = data.productMix;
     });
   }
@@ -136,7 +136,7 @@ export class ViewProductMixComponent implements OnInit {
           this.productMixData.productId
       }
     });
-    deleteProductMixDialogRef.afterClosed().subscribe((response: any) => {
+    deleteProductMixDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.productsService.deleteProductMix(this.productMixData.productId).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });

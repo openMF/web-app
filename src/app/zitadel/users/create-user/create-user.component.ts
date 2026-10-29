@@ -94,7 +94,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { usersTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
     });
@@ -184,9 +184,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
+    this.userForm.get('officeId').valueChanges.subscribe((officeId) => {
       this.staffData = [];
-      this.usersService2.getStaff(officeId).subscribe((staff: any) => {
+      this.usersService2.getStaff(officeId).subscribe((staff) => {
         this.staffData = staff;
       });
     });
@@ -196,7 +196,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
+    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail) => {
       const passwordControl = this.userForm.get('password');
       const repeatPasswordControl = this.userForm.get('repeatPassword');
 
@@ -256,7 +256,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     delete user.firstName;
     delete user.lastName;
 
-    this.usersService.createUser(user).subscribe((response: any) => {
+    this.usersService.createUser(user).subscribe((response) => {
       const userId = response.object?.userId;
 
       if (userId) {
@@ -354,7 +354,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         stepName: 'user'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showUsersForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

@@ -83,9 +83,19 @@ export class CreateSavingsAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
     });
+  }
+
+  ngOnInit(): void {
+    // Re-evaluate template validity gating when form status changes (OnPush + RxJS).
+    this.savingsAccountDetailsStep.savingsAccountDetailsForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdr.markForCheck());
+    this.savingsAccountTermsStep.savingsAccountTermsForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdr.markForCheck());
   }
 
   /**

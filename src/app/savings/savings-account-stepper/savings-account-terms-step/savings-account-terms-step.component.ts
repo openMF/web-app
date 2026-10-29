@@ -193,7 +193,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
     this.savingsAccountTermsForm
       .get('allowOverdraft')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((allowOverdraft: any) => {
+      .subscribe((allowOverdraft) => {
         if (allowOverdraft) {
           this.savingsAccountTermsForm.addControl(
             'minOverdraftForInterestCalculation',

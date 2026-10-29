@@ -107,10 +107,10 @@ export class ManageSavingsAccountComponent implements OnInit {
       codeName = 'DebitTransactionFreezeReasons';
     }
 
-    this.systemService.getCodes().subscribe((codes: any) => {
+    this.systemService.getCodes().subscribe((codes) => {
       codes.some((code: any) => {
         if (code.name === codeName) {
-          this.systemService.getCodeValues(code.id).subscribe((codeValues: any) => {
+          this.systemService.getCodeValues(code.id).subscribe((codeValues) => {
             this.reasonOptions = codeValues;
             return true;
           });
@@ -171,7 +171,7 @@ export class ManageSavingsAccountComponent implements OnInit {
 
       this.savingsService
         .executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload)
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.router.navigate(['../../transactions'], { relativeTo: this.route });
         });
     } else {
@@ -185,11 +185,9 @@ export class ManageSavingsAccountComponent implements OnInit {
         command = 'blockDebit';
       }
 
-      this.savingsService
-        .executeSavingsAccountCommand(this.savingAccountId, command, payload)
-        .subscribe((response: any) => {
-          this.router.navigate(['../../transactions'], { relativeTo: this.route });
-        });
+      this.savingsService.executeSavingsAccountCommand(this.savingAccountId, command, payload).subscribe((response) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
     }
   }
 }

@@ -60,7 +60,7 @@
       <mifosx-shares-account-charges-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
         [sharesAccountTemplate]="sharesAccountAndTemplate"
-        [currencyCode]="sharesAccountTermsForm.get('currencyCode')"
+        [currencyCode]="$any(sharesAccountTermsForm.get('currencyCode'))"
       >
       </mifosx-shares-account-charges-step>
     </mat-step>

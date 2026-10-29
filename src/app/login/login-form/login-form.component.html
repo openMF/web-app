@@ -20,7 +20,7 @@
           [placeholder]="'labels.placeholders.Enter your username' | translate"
         />
         <mifosx-m3-icon matIconPrefix name="account_circle"></mifosx-m3-icon>
-        @if (loginForm.controls.username.hasError('required')) {
+        @if ($any(loginForm.controls).username.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Username' | translate }}
             <strong>{{ 'labels.commons.is required' | translate }}</strong>
@@ -40,7 +40,7 @@
           (keyup.enter)="onEnter($event)"
         />
         <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
-        @if (loginForm.controls.password.value && !loading) {
+        @if ($any(loginForm.controls).password.value && !loading) {
           <button
             type="button"
             matSuffix
@@ -55,20 +55,20 @@
             }
           </button>
         }
-        @if (loginForm.controls.password.hasError('required')) {
+        @if ($any(loginForm.controls).password.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Password' | translate }}
             <strong>
               {{ 'labels.commons.pass is required' | translate: { min: minPasswordLength } }}
             </strong>
           </mat-error>
-        } @else if (loginForm.controls.password.hasError('minlength')) {
+        } @else if ($any(loginForm.controls).password.hasError('minlength')) {
           <mat-error>
             {{
               'Password is required'
                 | translate
                   : {
-                      min: loginForm.controls.password.errors?.minlength?.requiredLength
+                      min: $any(loginForm.controls).password.errors?.minlength?.requiredLength
                     }
             }}
           </mat-error>

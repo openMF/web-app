@@ -96,7 +96,7 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { shareProducts: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProductsData = data.shareProducts.pageItems;
     });
   }

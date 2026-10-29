@@ -39,7 +39,7 @@ export class EditBreachConfigurationComponent implements OnInit {
   breachAmountCalculationTypeOptions: StringEnumOptionData[] = [];
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { breachData: Breach; breachTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.breachData = data.breachData;
       this.breachFrequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
       this.breachAmountCalculationTypeOptions = data.breachTemplate.breachAmountCalculationTypeOptions || [];

@@ -50,7 +50,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
   statusList: any[];
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { dataTableEntity: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.createEntityData = data.dataTableEntity;
       // hardcoded, because data.dataTableEntity.entities might change anytime its order
       this.entityTypes = [
@@ -95,7 +95,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
     this.createEntityForm
       .get('entity')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((option: any) => {
+      .subscribe((option) => {
         switch (option) {
           case 'm_client': {
             this.entityType = 'm_client';
@@ -138,7 +138,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
     this.organizationService
       .createEntityDataTableChecks(this.createEntityForm.value)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

@@ -84,7 +84,7 @@
 
       <mifosx-recurring-deposit-product-charges-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate"
-        [currencyCode]="recurringDepositProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="$any(recurringDepositProductCurrencyForm.get('currencyCode'))"
       >
       </mifosx-recurring-deposit-product-charges-step>
     </mat-step>

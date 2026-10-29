@@ -37,7 +37,7 @@ export class ViewBucketComponent extends DelinquencyBucketBaseComponent {
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBucket: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyBucketData = data.delinquencyBucket;
       if (this.isRegularBucket) {
         this.delinquencyBucketData.ranges = this.delinquencyBucketData.ranges.sort(
@@ -51,7 +51,7 @@ export class ViewBucketComponent extends DelinquencyBucketBaseComponent {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.delinquencyBucketData.name }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.productsService.deleteDelinquencyBucket(this.delinquencyBucketData.id).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });

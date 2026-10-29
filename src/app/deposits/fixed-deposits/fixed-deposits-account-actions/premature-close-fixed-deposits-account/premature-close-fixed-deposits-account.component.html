@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            @if (prematureCloseAccountForm.controls.closedOnDate.hasError('required')) {
+            @if ($any(prematureCloseAccountForm.controls).closedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Premature Close Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
             }
           </mat-form-field>
 
-          @if (prematureCloseAccountForm.controls.maturityAmount) {
+          @if ($any(prematureCloseAccountForm.controls).maturityAmount) {
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Maturity Amount' | translate }}</mat-label>
               <input type="number" matInput formControlName="maturityAmount" />
@@ -48,7 +48,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (prematureCloseAccountForm.controls.onAccountClosureId.hasError('required')) {
+              @if ($any(prematureCloseAccountForm.controls).onAccountClosureId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Account action' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -67,7 +67,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (prematureCloseAccountForm.controls.toSavingsAccountId.hasError('required')) {
+              @if ($any(prematureCloseAccountForm.controls).toSavingsAccountId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

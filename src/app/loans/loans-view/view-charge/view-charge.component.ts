@@ -77,15 +77,13 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
    */
   constructor() {
     super();
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
-        this.chargeData = data.loansAccountCharge;
-        this.allowPayCharge = this.chargeData.chargePayable && !this.chargeData.paid;
-        // Working Capital loans do not support the waive charge command.
-        this.allowWaive = !this.chargeData.chargeTimeType.waived && !this.loanProductService.isWorkingCapital;
-        this.loansAccountData = data.loanDetailsData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.chargeData = data.loansAccountCharge;
+      this.allowPayCharge = this.chargeData.chargePayable && !this.chargeData.paid;
+      // Working Capital loans do not support the waive charge command.
+      this.allowWaive = !this.chargeData.chargeTimeType.waived && !this.loanProductService.isWorkingCapital;
+      this.loansAccountData = data.loanDetailsData;
+    });
   }
 
   /**
@@ -107,7 +105,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
       formfields: formfields
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    payChargeDialogRef.afterClosed().subscribe((response: any) => {
+    payChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -145,7 +143,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
         type: 'Basic'
       }
     });
-    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+    waiveChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.loansService
           .executeLoansAccountChargesCommand(
@@ -189,7 +187,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
       formfields: formfields
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -222,7 +220,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge id:${this.chargeData.id}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.loansService
           .deleteLoansAccountCharge(

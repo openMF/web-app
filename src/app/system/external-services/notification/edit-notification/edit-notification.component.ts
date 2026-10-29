@@ -49,7 +49,7 @@ export class EditNotificationComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { notificationConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
   }
@@ -94,10 +94,8 @@ export class EditNotificationComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
-    this.systemService
-      .updateExternalConfiguration('NOTIFICATION', notificationConfiguration)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.systemService.updateExternalConfiguration('NOTIFICATION', notificationConfiguration).subscribe((response) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

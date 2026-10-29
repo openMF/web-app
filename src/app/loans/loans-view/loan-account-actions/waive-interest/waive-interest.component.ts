@@ -90,7 +90,7 @@ export class WaiveInterestComponent extends LoanAccountActionsBaseComponent impl
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'waiveinterest').subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, 'waiveinterest').subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

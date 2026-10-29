@@ -107,7 +107,7 @@ export class RescheduleLoanComponent {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rescheduleLoansData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loans = data.rescheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);
@@ -146,7 +146,7 @@ export class RescheduleLoanComponent {
           this.translateService.instant('labels.dialogContext.the Reschedule Loan')
       }
     });
-    rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    rescheduleLoanDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.bulkLoanRescheduleRequest(action.toLowerCase());
       }
@@ -175,7 +175,7 @@ export class RescheduleLoanComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response) => {
       this.reload();
     });
   }

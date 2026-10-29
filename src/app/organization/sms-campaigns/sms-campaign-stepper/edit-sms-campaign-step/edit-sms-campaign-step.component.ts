@@ -122,7 +122,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
     this.reportService
       .getReportParams(this.smsCampaign.reportName)
       .pipe(take(1))
-      .subscribe((response: ReportParameter[]) => {
+      .subscribe((response) => {
         this.paramData = response;
       });
     this.smsCampaignDetailsForm.disable();

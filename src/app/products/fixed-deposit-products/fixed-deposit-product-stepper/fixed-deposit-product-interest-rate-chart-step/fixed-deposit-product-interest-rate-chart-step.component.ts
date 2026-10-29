@@ -378,7 +378,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       'actions'
     ];
     const chart = this.charts.at(chartIndex);
-    chart.get('isPrimaryGroupingByAmount').valueChanges.subscribe((isPrimaryGroupingByAmount: boolean) => {
+    chart.get('isPrimaryGroupingByAmount').valueChanges.subscribe((isPrimaryGroupingByAmount) => {
       const currentChartIndex = this.charts.controls.indexOf(chart);
       this.chartSlabsDisplayedColumns[currentChartIndex] = isPrimaryGroupingByAmount ? [
             'amountRange',
@@ -399,7 +399,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   addChartSlab(chartSlabs: UntypedFormArray) {
     const data = { ...this.getData('Range') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         response.data.addControl('incentives', this.formBuilder.array([]));
         chartSlabs.push(response.data);
@@ -411,7 +411,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   addIncentive(incentives: UntypedFormArray) {
     const data = { ...this.getData('Incentive'), entityType: this.entityTypeData[0].id };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         incentives.push(response.data);
         this.changeDetectorRef.markForCheck();
@@ -425,7 +425,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         chartSlabs.at(chartSlabIndex).patchValue(response.data.value);
         this.changeDetectorRef.markForCheck();
@@ -439,7 +439,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         incentives.at(incentiveIndex).patchValue(response.data.value);
         this.changeDetectorRef.markForCheck();
@@ -451,7 +451,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         formArray.removeAt(index);
         this.changeDetectorRef.markForCheck();

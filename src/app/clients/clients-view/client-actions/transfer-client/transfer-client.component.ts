@@ -61,7 +61,7 @@ export class TransferClientComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

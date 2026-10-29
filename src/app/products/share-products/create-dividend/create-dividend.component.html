@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (createDividendForm.controls.dividendPeriodStartDate.hasError('required')) {
+            @if ($any(createDividendForm.controls).dividendPeriodStartDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Starting Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -43,7 +43,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
-            @if (createDividendForm.controls.dividendPeriodEndDate.hasError('required')) {
+            @if ($any(createDividendForm.controls).dividendPeriodEndDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Dividend Amount' | translate }}</mat-label>
             <input matInput required formControlName="dividendAmount" />
-            @if (createDividendForm.controls.dividendAmount.hasError('required')) {
+            @if ($any(createDividendForm.controls).dividendAmount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

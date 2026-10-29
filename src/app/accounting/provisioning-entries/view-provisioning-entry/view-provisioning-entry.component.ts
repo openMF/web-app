@@ -305,7 +305,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * and redirects to created entries.
    */
   createProvisioningJournalEntries() {
-    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId).subscribe((response: any) => {
+    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId).subscribe((response) => {
       this.router.navigate(
         [
           '../../journal-entries/view',

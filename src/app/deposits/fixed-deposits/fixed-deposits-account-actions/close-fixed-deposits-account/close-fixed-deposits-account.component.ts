@@ -70,7 +70,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingsAccountsData = data.fixedDepositsAccountActionData.savingsAccounts;
       this.onAccountClosureOptions = data.fixedDepositsAccountActionData.onAccountClosureOptions;
       this.maturityAmount = data.fixedDepositsAccountActionData.maturityAmount;
@@ -109,7 +109,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id) => {
       if (id === 200) {
         this.closeOnMaturityAccountForm.addControl(
           'toSavingsAccountId',

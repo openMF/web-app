@@ -23,18 +23,18 @@
             />
             <mat-datepicker-toggle matSuffix [for]="prepayDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #prepayDatePicker></mat-datepicker>
-            @if (prepayLoanForm.controls.transactionDate.hasError('required')) {
+            @if ($any(prepayLoanForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (prepayLoanForm.controls.transactionDate.hasError('matDatepickerMax')) {
+            @if ($any(prepayLoanForm.controls).transactionDate.hasError('matDatepickerMax')) {
               <mat-error>
                 {{ 'errors.workingCapitalPrepayment.futureDate' | translate }}
               </mat-error>
             }
-            @if (prepayLoanForm.controls.transactionDate.hasError('matDatepickerMin')) {
+            @if ($any(prepayLoanForm.controls).transactionDate.hasError('matDatepickerMin')) {
               <mat-error>
                 {{ 'errors.workingCapitalPrepayment.dateOutOfRange' | translate }}
               </mat-error>
@@ -77,13 +77,13 @@
             @if (currency) {
               <span matSuffix class="currency-suffix">{{ currency.displaySymbol || currency.code }}</span>
             }
-            @if (prepayLoanForm.controls.transactionAmount.hasError('required')) {
+            @if ($any(prepayLoanForm.controls).transactionAmount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (prepayLoanForm.controls.transactionAmount.hasError('min')) {
+            @if ($any(prepayLoanForm.controls).transactionAmount.hasError('min')) {
               <mat-error>
                 {{ 'errors.workingCapitalPrepayment.amountMustBePositive' | translate }}
               </mat-error>

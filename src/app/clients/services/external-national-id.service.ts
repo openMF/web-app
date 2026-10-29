@@ -164,7 +164,7 @@ export class ExternalNationalIdService {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response: ExternalNationalIdResponse | null) => {
+      .subscribe((response) => {
         this.isLoading = false;
         if (response) {
           this.fillFormFromResponse(form, response, genderOptions);

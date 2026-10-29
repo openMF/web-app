@@ -106,7 +106,7 @@ export class ViewTenantComponent implements OnInit {
         type: command === 'activate' ? 'primary' : 'warn'
       }
     });
-    dialogRef.afterClosed().subscribe((response: { confirm?: boolean }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.tenantManagementService.changeStatus(this.tenantId, command).subscribe(() => this.load());
       }
@@ -133,7 +133,7 @@ export class ViewTenantComponent implements OnInit {
         type: 'warn'
       }
     });
-    dialogRef.afterClosed().subscribe((response: { confirm?: boolean }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.tenantManagementService.deleteTenant(this.tenantId).subscribe(() =>
           this.router.navigate([

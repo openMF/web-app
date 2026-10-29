@@ -112,7 +112,7 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { roles: any }) => {
+    this.route.data.subscribe((data) => {
       this.roleData = data.roles;
     });
   }

@@ -48,7 +48,7 @@ export class EditSchedulerJobComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { jobSelected: any }) => {
+    this.route.data.subscribe((data) => {
       this.jobData = data.jobSelected;
     });
   }

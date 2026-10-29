@@ -72,7 +72,7 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxComponentTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
   }
@@ -164,7 +164,7 @@ export class CreateTaxComponentComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.productsService.createTaxComponent(data).subscribe((response: any) => {
+    this.productsService.createTaxComponent(data).subscribe((response) => {
       this.router.navigate(
         [
           '../',

@@ -120,18 +120,16 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanProvisioningCriteriaTemplate: any }) => {
-        this.loanProvisioningCriteriaTemplate = data.loanProvisioningCriteriaTemplate;
-        this.definitions = this.loanProvisioningCriteriaTemplate.definitions;
-        this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
-          (account: any) => account.type.value === 'LIABILITY'
-        );
-        this.expenseAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
-          (account: any) => account.type.value === 'EXPENSE'
-        );
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanProvisioningCriteriaTemplate = data.loanProvisioningCriteriaTemplate;
+      this.definitions = this.loanProvisioningCriteriaTemplate.definitions;
+      this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'LIABILITY'
+      );
+      this.expenseAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'EXPENSE'
+      );
+    });
   }
 
   ngOnInit() {
@@ -166,7 +164,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
       layout: { addButtonText: 'Confirm' }
     };
     const editDefinitionDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editDefinitionDialogRef.afterClosed().subscribe((response: any) => {
+    editDefinitionDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const definitionData = {
           ...response.data.value,
@@ -270,7 +268,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
     this.organizationService
       .createProvisioningCriteria(loanProvisioningCriteria)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../',

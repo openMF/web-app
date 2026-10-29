@@ -137,7 +137,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     const loansService = this.loansService;
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetailsData = data.loanDetailsData;
       if (!this.loanDetailsData.loanProductName) {
         this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
@@ -184,8 +184,8 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         catchError(() => of([])),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((loanDatatables: any) => {
-        this.loanDatatables = loanDatatables || [];
+      .subscribe((loanDatatables) => {
+        this.loanDatatables = loanDatatables || ([] as any);
 
         if (this.loanProductService.isLoanProduct) {
           this.filterDatatablesByProduct();
@@ -628,7 +628,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         type: 'Mild'
       }
     });
-    recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
+    recoverFromGuarantorDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -667,7 +667,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           this.translateService.instant('labels.menus.' + actionName)
       }
     });
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -802,7 +802,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     const deleteGuarantorDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `with loan id: ${this.loanId}` }
     });
-    deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
+    deleteGuarantorDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }

@@ -59,7 +59,7 @@ export class RedeemSharesComponent implements OnInit {
    */
   constructor() {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }

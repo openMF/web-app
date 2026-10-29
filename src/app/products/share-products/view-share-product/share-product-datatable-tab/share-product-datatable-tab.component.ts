@@ -31,7 +31,7 @@ export class ShareProductDatatableTabComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('productId');
 
-    this.route.data.subscribe((data: { shareProductDatatable: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityDatatable = data.shareProductDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

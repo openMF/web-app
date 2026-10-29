@@ -26,7 +26,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.savingsReferenceAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.savingsReferenceAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Saving reference'"
@@ -34,7 +34,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.overdraftPortfolioControlId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.overdraftPortfolioControlId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Overdraft portfolio'"
@@ -43,7 +43,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="savingProductAccountingForm.controls.feesReceivableAccountId"
+            [inputFormControl]="$any(savingProductAccountingForm.controls.feesReceivableAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Fees Receivable'"
@@ -53,7 +53,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="savingProductAccountingForm.controls.penaltiesReceivableAccountId"
+            [inputFormControl]="$any(savingProductAccountingForm.controls.penaltiesReceivableAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Penalties Receivable'"
@@ -63,7 +63,7 @@
         @if (isAccrualAccounting() && allowOverdraft.value) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="savingProductAccountingForm.controls.interestReceivableAccountId"
+            [inputFormControl]="$any(savingProductAccountingForm.controls.interestReceivableAccountId)"
             [glAccountList]="assetAccountData"
             [required]="false"
             [inputLabel]="'Interest Receivable'"
@@ -74,7 +74,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.savingsControlAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.savingsControlAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Saving control'"
@@ -82,7 +82,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.transfersInSuspenseAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.transfersInSuspenseAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Savings transfers in suspense'"
@@ -91,7 +91,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="savingProductAccountingForm.controls.interestPayableAccountId"
+            [inputFormControl]="$any(savingProductAccountingForm.controls.interestPayableAccountId)"
             [glAccountList]="liabilityAccountData"
             [required]="true"
             [inputLabel]="'Interest Payable'"
@@ -101,7 +101,7 @@
         @if (isDormancyTrackingActive.value) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="savingProductAccountingForm.controls.escheatLiabilityId"
+            [inputFormControl]="$any(savingProductAccountingForm.controls.escheatLiabilityId)"
             [glAccountList]="liabilityAccountData"
             [required]="true"
             [inputLabel]="'Escheat liability'"
@@ -111,7 +111,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.interestOnSavingsAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.interestOnSavingsAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="true"
           [inputLabel]="'Interest on savings'"
@@ -119,7 +119,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.writeOffAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.writeOffAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="true"
           [inputLabel]="'Write-off'"
@@ -129,7 +129,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.incomeFromFeeAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.incomeFromFeeAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from fees'"
@@ -137,7 +137,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.incomeFromPenaltyAccountId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.incomeFromPenaltyAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from penalties'"
@@ -145,7 +145,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="savingProductAccountingForm.controls.incomeFromInterestId"
+          [inputFormControl]="$any(savingProductAccountingForm.controls.incomeFromInterestId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Overdraft Interest Income'"

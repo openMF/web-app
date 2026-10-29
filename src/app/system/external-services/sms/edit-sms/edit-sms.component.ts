@@ -46,7 +46,7 @@ export class EditSMSComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { smsConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
   }
@@ -87,10 +87,8 @@ export class EditSMSComponent implements OnInit {
    * if successful redirects to view SMS configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('SMS', this.smsConfigurationForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.systemService.updateExternalConfiguration('SMS', this.smsConfigurationForm.value).subscribe((response) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

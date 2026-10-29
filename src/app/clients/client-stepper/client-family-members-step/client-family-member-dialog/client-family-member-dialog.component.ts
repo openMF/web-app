@@ -77,7 +77,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     this.familyMemberForm
       .get('dateOfBirth')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((dateOfBirth: any) => {
+      .subscribe((dateOfBirth) => {
         if (dateOfBirth) {
           const age = this.calculateAge(dateOfBirth);
           this.familyMemberForm.get('age').setValue(age);

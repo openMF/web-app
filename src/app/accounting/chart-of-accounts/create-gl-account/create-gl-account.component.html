@@ -21,8 +21,8 @@
               }
             </mat-select>
             @if (
-              glAccountForm.controls.type.hasError('required') &&
-              (glAccountForm.controls.type.touched || glAccountForm.controls.type.dirty)
+              $any(glAccountForm.controls).type.hasError('required') &&
+              ($any(glAccountForm.controls).type.touched || $any(glAccountForm.controls).type.dirty)
             ) {
               <mat-error>
                 {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
@@ -35,8 +35,8 @@
             <mat-label>{{ 'labels.inputs.Account Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             @if (
-              glAccountForm.controls.name.hasError('required') &&
-              (glAccountForm.controls.name.touched || glAccountForm.controls.name.dirty)
+              $any(glAccountForm.controls).name.hasError('required') &&
+              ($any(glAccountForm.controls).name.touched || $any(glAccountForm.controls).name.dirty)
             ) {
               <mat-error>
                 {{ 'labels.inputs.Account Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -55,8 +55,8 @@
               }
             </mat-select>
             @if (
-              glAccountForm.controls.usage.hasError('required') &&
-              (glAccountForm.controls.usage.touched || glAccountForm.controls.usage.dirty)
+              $any(glAccountForm.controls).usage.hasError('required') &&
+              ($any(glAccountForm.controls).usage.touched || $any(glAccountForm.controls).usage.dirty)
             ) {
               <mat-error>
                 {{ 'labels.inputs.Account Usage' | translate }} {{ 'labels.commons.is' | translate }}
@@ -69,8 +69,8 @@
             <mat-label>{{ 'labels.inputs.GL Code' | translate }}</mat-label>
             <input matInput required formControlName="glCode" />
             @if (
-              glAccountForm.controls.glCode.hasError('required') &&
-              (glAccountForm.controls.glCode.touched || glAccountForm.controls.glCode.dirty)
+              $any(glAccountForm.controls).glCode.hasError('required') &&
+              ($any(glAccountForm.controls).glCode.touched || $any(glAccountForm.controls).glCode.dirty)
             ) {
               <mat-error>
                 {{ 'labels.inputs.GL Code' | translate }} {{ 'labels.commons.is' | translate }}
@@ -81,7 +81,7 @@
 
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="glAccountForm.controls.parentId"
+            [inputFormControl]="$any(glAccountForm.controls.parentId)"
             [glAccountList]="parentData"
             [required]="false"
             [inputLabel]="'Parent'"

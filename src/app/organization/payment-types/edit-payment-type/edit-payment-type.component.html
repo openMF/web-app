@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <input required matInput formControlName="name" />
-            @if (paymentTypeForm.controls.name.hasError('required')) {
+            @if ($any(paymentTypeForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -35,13 +35,13 @@
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
               <input required matInput type="number" min="1" formControlName="position" />
-              @if (paymentTypeForm.controls.position.hasError('min')) {
+              @if ($any(paymentTypeForm.controls).position.hasError('min')) {
                 <mat-error>
                   {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.must be' | translate }}
                   {{ 'labels.commons.a positive number' | translate }}.
                 </mat-error>
               }
-              @if (paymentTypeForm.controls.position.hasError('required')) {
+              @if ($any(paymentTypeForm.controls).position.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

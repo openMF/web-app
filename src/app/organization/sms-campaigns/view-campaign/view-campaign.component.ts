@@ -128,7 +128,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaign: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.smsCampaignData = data.smsCampaign;
       this.reloadContext = `sms-campaign-${this.smsCampaignData.id}`;
 
@@ -195,7 +195,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
       formfields: formfields
     };
     const closeCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
-    closeCampaignDialogRef.afterClosed().subscribe((response: any) => {
+    closeCampaignDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -233,7 +233,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
       formfields: formfields
     };
     const activateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
-    activateCampaignDialogRef.afterClosed().subscribe((response: any) => {
+    activateCampaignDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -271,7 +271,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
       formfields: formfields
     };
     const reactivateCampaignDialogRef = this.dialog.open(FormDialogComponent, { data });
-    reactivateCampaignDialogRef.afterClosed().subscribe((response: any) => {
+    reactivateCampaignDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -297,7 +297,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
     const deleteSmsCampaignDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `sms campaing with id: ${this.smsCampaignData.id}` }
     });
-    deleteSmsCampaignDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSmsCampaignDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteSmsCampaign(this.smsCampaignData.id)
@@ -323,7 +323,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
     this.organizationService
       .getSmsCampaign(this.smsCampaignData.id)
       .pipe(take(1))
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.smsCampaignData = data;
       });
   }
@@ -353,7 +353,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
     this.organizationService
       .getMessagebyStatus(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.dataSource.data = response.pageItems;
         this.messageTableRef.renderRows();
       });

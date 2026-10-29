@@ -70,7 +70,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {Router} router Router.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.offices = data.offices;
     });
   }
@@ -108,7 +108,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
     this.organizationSevice
       .getOfficeTemplate(officeId)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.officeTemplate = response;
         this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
         this.bulkLoanForm.addControl('fromLoanOfficerId', new FormControl('', Validators.required));
@@ -125,7 +125,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       this.organizationSevice
         .getOfficerTemplate(officerId, this.officeTemplate.officeId)
         .pipe(take(1))
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.officerTemplate = response;
         });
     } else {
@@ -168,7 +168,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
     this.organizationSevice
       .createLoanReassignment(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

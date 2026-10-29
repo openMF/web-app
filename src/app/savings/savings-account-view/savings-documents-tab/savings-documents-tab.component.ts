@@ -44,7 +44,7 @@ export class SavingsDocumentsTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('savingAccountId');
@@ -83,6 +83,6 @@ export class SavingsDocumentsTabComponent {
   }
 
   deleteDocument(documentId: any) {
-    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
+    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res) => {});
   }
 }

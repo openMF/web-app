@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Classification' | translate }}</mat-label>
             <input matInput required formControlName="classification" />
-            @if (delinquencyRangeForm.controls.classification.hasError('required')) {
+            @if ($any(delinquencyRangeForm.controls).classification.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Classification' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,13 +25,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Days From' | translate }}</mat-label>
             <input matInput type="number" required formControlName="minimumAgeDays" min="0" />
-            @if (delinquencyRangeForm.controls.minimumAgeDays.hasError('required')) {
+            @if ($any(delinquencyRangeForm.controls).minimumAgeDays.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Days From' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (delinquencyRangeForm.controls.minimumAgeDays.hasError('pattern')) {
+            @if ($any(delinquencyRangeForm.controls).minimumAgeDays.hasError('pattern')) {
               <mat-error>{{
                 'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Days From' | translate) }
               }}</mat-error>

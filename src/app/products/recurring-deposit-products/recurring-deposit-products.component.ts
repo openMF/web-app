@@ -114,7 +114,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositProducts: any }) => {
+    this.route.data.subscribe((data) => {
       this.recurringDepositProductData = data.recurringDepositProducts;
     });
   }
@@ -211,7 +211,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
         stepPercentage: 94
       }
     });
-    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    nextStepDialogRef.afterClosed().subscribe((response) => {
       if (response.nextStep) {
         this.configurationWizardService.showRecurringDepositProductsPage = false;
         this.configurationWizardService.showRecurringDepositProductsList = false;

@@ -34,7 +34,7 @@ export class DatatableTabComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('clientId');
 
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDatatable = data.clientDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
       this.changeDetectorRef.markForCheck();

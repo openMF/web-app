@@ -57,12 +57,10 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   constructor() {
     super();
     this.chargeId = this.route.snapshot.params['id'];
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
-        this.chargeData = data.loansAccountCharge;
-        this.loanDetailsData = data.loanDetailsData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.chargeData = data.loansAccountCharge;
+      this.loanDetailsData = data.loanDetailsData;
+    });
   }
 
   /**
@@ -91,7 +89,7 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   }
 
   setRepaymentLoanDetails() {
-    this.organizationService.getPaymentTypes().subscribe((paymentTypes: any) => {
+    this.organizationService.getPaymentTypes().subscribe((paymentTypes) => {
       this.paymentTypes = paymentTypes;
     });
   }

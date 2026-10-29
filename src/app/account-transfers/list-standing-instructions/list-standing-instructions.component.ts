@@ -119,17 +119,15 @@ export class ListStandingInstructionsComponent {
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { standingIntructionsTemplate: any }) => {
-        this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
-        if (data.standingIntructionsTemplate.fromClient) {
-          this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
-          this.getStandingInstructions();
-        }
-        this.setParams();
-        this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
+      if (data.standingIntructionsTemplate.fromClient) {
+        this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
+        this.getStandingInstructions();
+      }
+      this.setParams();
+      this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
+    });
   }
 
   setParams() {
@@ -168,7 +166,7 @@ export class ListStandingInstructionsComponent {
       fromAccountId: this.fromAccountId.value,
       fromTransferType: this.transferType.value
     };
-    this.accountTransfersService.getStandingInstructions(searchData).subscribe((response: any) => {
+    this.accountTransfersService.getStandingInstructions(searchData).subscribe((response) => {
       this.instructionsData = response.pageItems;
       this.dataSource.data = this.instructionsData;
       this.instructionTableRef.renderRows();
@@ -180,7 +178,7 @@ export class ListStandingInstructionsComponent {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
     });
-    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountTransfersService
           .deleteStandingInstrucions(instructionId)

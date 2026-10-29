@@ -99,13 +99,11 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { standingIntructionsTemplate: any }) => {
-        this.standingIntructionsTemplate = data.standingIntructionsTemplate;
-        this.setParams();
-        this.setOptions();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.standingIntructionsTemplate = data.standingIntructionsTemplate;
+      this.setParams();
+      this.setOptions();
+    });
   }
 
   /** Sets the value from the URL */
@@ -248,7 +246,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     this.createStandingInstructionsForm
       .get('destination')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((destination: any) => {
+      .subscribe((destination) => {
         if (destination === 1) {
           this.allowclientedit = false;
           this.createStandingInstructionsForm.patchValue({
@@ -330,7 +328,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     const formValue = this.refineObject(this.createStandingInstructionsForm.value);
     this.accountTransfersService
       .getStandingInstructionsTemplate(this.clientId, this.officeId, this.accountTypeId, formValue)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.standingIntructionsTemplate = response;
         this.setOptions();
         this.cdr.markForCheck();
@@ -373,7 +371,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     };
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];
-    this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response: any) => {
+    this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

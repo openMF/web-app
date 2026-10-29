@@ -96,7 +96,7 @@ export class ClientAddressStepComponent {
       formfields: this.getAddressFormFields()
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    addAddressDialogRef.afterClosed().subscribe((response: any) => {
+    addAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = false;
@@ -127,7 +127,7 @@ export class ClientAddressStepComponent {
       layout: { addButtonText: 'Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    editAddressDialogRef.afterClosed().subscribe((response: any) => {
+    editAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.isActive = address.isActive;
@@ -151,7 +151,7 @@ export class ClientAddressStepComponent {
         deleteContext: `${this.translateService.instant('labels.heading.Address')} ${this.translateService.instant('labels.inputs.Type')} : ${address.addressType} ${index}`
       }
     });
-    deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.clientAddressData.splice(index, 1);
       }

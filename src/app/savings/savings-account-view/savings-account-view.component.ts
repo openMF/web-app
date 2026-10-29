@@ -107,13 +107,11 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
-        this.savingsAccountData = data.savingsAccountData;
-        this.currency = this.savingsAccountData.currency;
-        this.savingsDatatables = data.savingsDatatables;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.savingsAccountData = data.savingsAccountData;
+      this.currency = this.savingsAccountData.currency;
+      this.savingsDatatables = data.savingsDatatables;
+    });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {
@@ -292,7 +290,7 @@ export class SavingsAccountViewComponent implements OnInit {
     const deleteSavingsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `savings account with id: ${this.savingsAccountData.id}` }
     });
-    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -309,7 +307,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
-    calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    calculateInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -328,7 +326,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
-    postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    postInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -349,7 +347,7 @@ export class SavingsAccountViewComponent implements OnInit {
     const deleteSavingsAccountDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
       data: { isEnable: true }
     });
-    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -370,7 +368,7 @@ export class SavingsAccountViewComponent implements OnInit {
     const disableWithHoldTaxDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
       data: { isEnable: false }
     });
-    disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+    disableWithHoldTaxDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -404,7 +402,7 @@ export class SavingsAccountViewComponent implements OnInit {
     if (action === 'Unblock Withdrawal') {
       command = 'unblockDebit';
     }
-    unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    unblockSavingsAccountDialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }

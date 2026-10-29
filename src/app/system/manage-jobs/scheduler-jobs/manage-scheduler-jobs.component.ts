@@ -144,7 +144,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { jobsScheduler: any }) => {
+    this.route.data.subscribe((data) => {
       if (data.jobsScheduler) {
         this.jobData = data.jobsScheduler[0];
         this.schedulerData = data.jobsScheduler[1];
@@ -187,8 +187,8 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for manage scheduler jobs table.
    */
   setJobs() {
-    this.systemService.getJobs().subscribe((jobData: any[]) => {
-      const sortedData = jobData.sort((a, b) => b.active - a.active || this.sortByName(a, b));
+    this.systemService.getJobs().subscribe((jobData) => {
+      const sortedData = jobData.sort((a: any, b: any) => b.active - a.active || this.sortByName(a, b));
       this.dataSource = new MatTableDataSource(sortedData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -224,7 +224,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   }
 
   getScheduler() {
-    this.systemService.getScheduler().subscribe((schedulerData: any) => {
+    this.systemService.getScheduler().subscribe((schedulerData) => {
       this.schedulerData = schedulerData;
       this.schedulerActive = this.schedulerData.active;
     });
@@ -317,7 +317,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
         stepPercentage: 60
       }
     });
-    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    nextStepDialogRef.afterClosed().subscribe((response) => {
       if (response.nextStep) {
         this.configurationWizardService.showSchedulerJobsPage = false;
         this.configurationWizardService.showSchedulerJobsList = false;

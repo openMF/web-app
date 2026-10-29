@@ -74,7 +74,7 @@ export class RecurringDepositsAccountActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       if (data.recurringDepositsAccountActionData) {
         this.currency = data.recurringDepositsAccountActionData.currency;
       }

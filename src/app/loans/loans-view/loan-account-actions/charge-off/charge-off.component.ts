@@ -90,7 +90,7 @@ export class ChargeOffComponent extends LoanAccountActionsBaseComponent implemen
       delete data.chargeOffReasonId;
     }
     const command = 'charge-off';
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

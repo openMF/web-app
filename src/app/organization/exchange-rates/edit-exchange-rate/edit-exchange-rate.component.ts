@@ -51,12 +51,10 @@ export class EditExchangeRateComponent implements OnInit {
   submitting = false;
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { exchangeRate: ExchangeRate; currencies: any }) => {
-        this.exchangeRateData = data.exchangeRate;
-        this.currencyOptions = resolveCurrencyOptions(data.currencies);
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.exchangeRateData = data.exchangeRate;
+      this.currencyOptions = resolveCurrencyOptions(data.currencies);
+    });
   }
 
   ngOnInit() {

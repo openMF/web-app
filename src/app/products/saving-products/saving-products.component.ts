@@ -95,7 +95,7 @@ export class SavingProductsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { savingProducts: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingProductsData = data.savingProducts;
     });
   }

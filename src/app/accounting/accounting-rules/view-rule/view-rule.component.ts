@@ -49,7 +49,7 @@ export class ViewRuleComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountingRule: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountingRule = data.accountingRule;
     });
   }
@@ -61,7 +61,7 @@ export class ViewRuleComponent {
     const deleteAccountingRuleDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `accounting rule ${this.accountingRule.id}` }
     });
-    deleteAccountingRuleDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAccountingRuleDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountingService.deleteAccountingRule(this.accountingRule.id).subscribe(() => {
           this.router.navigate(['/accounting/accounting-rules']);

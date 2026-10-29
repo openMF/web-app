@@ -66,7 +66,7 @@ export class ViewCheckerInboxComponent {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { checkerInboxDetail: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
       this.jsondata = JSON.parse(this.checkerInboxDetail.commandAsJson);
       this.displayJSONData = !_.isEmpty(this.jsondata);
@@ -98,7 +98,7 @@ export class ViewCheckerInboxComponent {
           'This removes the pending checker item. Unlike approval or rejection, deletion does not retain equivalent maker-checker audit information.'
       }
     });
-    deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    deleteCheckerDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.process(() => this.tasksService.deleteMakerChecker(this.checkerInboxDetail.id), 'Checker item deleted');
       }
@@ -121,7 +121,7 @@ export class ViewCheckerInboxComponent {
         dialogContext: this.translateService.instant(`labels.dialogContext.${context}`)
       }
     });
-    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.process(
           () => this.tasksService.executeMakerCheckerAction(this.checkerInboxDetail.id, action),

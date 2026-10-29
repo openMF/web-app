@@ -43,7 +43,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="cashDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #cashDatePicker></mat-datepicker>
-            @if (allocateCashForm.controls.txnDate.hasError('required')) {
+            @if ($any(allocateCashForm.controls).txnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -60,7 +60,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (allocateCashForm.controls.currencyCode.hasError('required')) {
+            @if ($any(allocateCashForm.controls).currencyCode.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -71,7 +71,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input matInput required formControlName="txnAmount" />
-            @if (allocateCashForm.controls.txnAmount.hasError('required')) {
+            @if ($any(allocateCashForm.controls).txnAmount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -82,7 +82,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Notes/Comments' | translate }}</mat-label>
             <input matInput required formControlName="txnNote" />
-            @if (allocateCashForm.controls.txnNote.hasError('required')) {
+            @if ($any(allocateCashForm.controls).txnNote.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Notes/Comments' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

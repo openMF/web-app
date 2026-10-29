@@ -82,7 +82,7 @@ export class EditShareProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { shareProductAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProductAndTemplate = data.shareProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForShares();
@@ -149,16 +149,14 @@ export class EditShareProductComponent {
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
       locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
-    this.productsService
-      .updateShareProduct(this.shareProductAndTemplate.id, shareProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.productsService.updateShareProduct(this.shareProductAndTemplate.id, shareProduct).subscribe((response) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

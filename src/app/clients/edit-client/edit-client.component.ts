@@ -167,7 +167,7 @@ export class EditClientComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientDataAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
   }
@@ -264,7 +264,7 @@ export class EditClientComponent implements OnInit {
     this.editClientForm
       .get('legalFormId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((legalFormId: any) => {
+      .subscribe((legalFormId) => {
         if (legalFormId === LegalFormId.PERSON) {
           this.editClientForm.removeControl('fullname');
           this.editClientForm.removeControl('clientNonPersonDetails');

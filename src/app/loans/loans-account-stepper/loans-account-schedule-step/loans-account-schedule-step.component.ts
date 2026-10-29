@@ -66,7 +66,7 @@ export class LoansAccountScheduleStepComponent {
     delete payload['enableInstallmentLevelDelinquency'];
     delete payload['externalId'];
 
-    this.loansService.calculateLoanSchedule(payload).subscribe((response: RepaymentSchedule) => {
+    this.loansService.calculateLoanSchedule(payload).subscribe((response) => {
       this.repaymentScheduleDetails = response;
       this.cdr.markForCheck();
     });

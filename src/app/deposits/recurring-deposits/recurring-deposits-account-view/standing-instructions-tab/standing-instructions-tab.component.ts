@@ -91,7 +91,7 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.recurringDepositsData = data.recurringDepositsAccountData;
     });
   }
@@ -111,7 +111,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     this.recurringDepositsService
       .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;
         this.instructionTableRef.renderRows();
@@ -122,7 +122,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
     });
-    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountTransfersService
           .deleteStandingInstrucions(instructionId)

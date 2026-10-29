@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (bulkLoanForm.controls.officeId.hasError('required')) {
+            @if ($any(bulkLoanForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -43,7 +43,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
-            @if (bulkLoanForm.controls.assignmentDate.hasError('required')) {
+            @if ($any(bulkLoanForm.controls).assignmentDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -67,7 +67,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (bulkLoanForm.controls.fromLoanOfficerId.hasError('required')) {
+              @if ($any(bulkLoanForm.controls).fromLoanOfficerId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.From loan officer' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -87,7 +87,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (bulkLoanForm.controls.toLoanOfficerId.hasError('required')) {
+            @if ($any(bulkLoanForm.controls).toLoanOfficerId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

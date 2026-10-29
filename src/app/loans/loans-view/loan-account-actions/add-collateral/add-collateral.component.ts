@@ -69,7 +69,7 @@ export class AddCollateralComponent extends LoanAccountActionsBaseComponent impl
     });
     const collateralForm = this.collateralForm.value;
     collateralForm.locale = this.settingsService.language.code;
-    this.loanService.createLoanCollateral(this.loanId, collateralForm).subscribe((response: any) => {
+    this.loanService.createLoanCollateral(this.loanId, collateralForm).subscribe((response) => {
       this.gotoLoanView('loan-collateral');
     });
   }

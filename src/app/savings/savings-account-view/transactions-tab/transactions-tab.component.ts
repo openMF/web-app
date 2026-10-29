@@ -143,13 +143,11 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountData: any }) => {
-        this.transactionsData = data.savingsAccountData.transactions;
-        this.status = data.savingsAccountData.status.value;
-        this.currency = data.savingsAccountData.currency || null;
-      });
+    this.route.parent.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.transactionsData = data.savingsAccountData.transactions;
+      this.status = data.savingsAccountData.status.value;
+      this.currency = data.savingsAccountData.currency || null;
+    });
     this.accountId = this.route.parent.parent.snapshot.params['savingAccountId'];
   }
 
@@ -263,7 +261,7 @@ export class TransactionsTabComponent implements OnInit {
 
   undoTransaction(transactionData: SavingsAccountTransaction): void {
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -291,7 +289,7 @@ export class TransactionsTabComponent implements OnInit {
         dialogContext: this.translateService.instant('labels.dialogContext.undo_account_transfer')
       }
     });
-    undoAccountTransferDialogRef.afterClosed().subscribe((response: any) => {
+    undoAccountTransferDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.isLoading = true;
         this.cdr.markForCheck();

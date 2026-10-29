@@ -70,7 +70,7 @@ export class ViewCollateralComponent {
   ];
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientCollateralData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientCollateralData = data.clientCollateralData;
     });
   }
@@ -82,7 +82,7 @@ export class ViewCollateralComponent {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `collateral ${this.clientCollateralData.id}` }
     });
-    deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCollateralDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.collateralsService
           .deleteCollateral(this.clientCollateralData.clientId, this.clientCollateralData.id)

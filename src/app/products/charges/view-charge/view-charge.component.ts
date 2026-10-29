@@ -58,7 +58,7 @@ export class ViewChargeComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { charge: any }) => {
+    this.route.data.subscribe((data) => {
       this.chargeData = data.charge;
       if (this.chargeData.minCap) {
         this.minCap = true;
@@ -76,7 +76,7 @@ export class ViewChargeComponent {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.productsService.deleteCharge(this.chargeData.id).subscribe(() => {
           this.router.navigate(['/products/charges']);

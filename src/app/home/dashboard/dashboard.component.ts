@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   clientGroups: any[] = [];
 
   constructor() {
-    this.route.data.subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
+    this.route.data.subscribe((data) => {
       this.offices = data.offices || [];
       this.products = data.products || [];
       this.clientGroups = data.clientGroups || [];

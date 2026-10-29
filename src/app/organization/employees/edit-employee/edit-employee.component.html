@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (editEmployeeForm.controls.officeId.hasError('required')) {
+            @if ($any(editEmployeeForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,13 +31,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
-            @if (editEmployeeForm.controls.firstname.hasError('required')) {
+            @if ($any(editEmployeeForm.controls).firstname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (editEmployeeForm.controls.firstname.hasError('pattern')) {
+            @if ($any(editEmployeeForm.controls).firstname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -48,13 +48,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
-            @if (editEmployeeForm.controls.lastname.hasError('required')) {
+            @if ($any(editEmployeeForm.controls).lastname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (editEmployeeForm.controls.lastname.hasError('pattern')) {
+            @if ($any(editEmployeeForm.controls).lastname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -87,7 +87,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
-            @if (editEmployeeForm.controls.joiningDate.hasError('required')) {
+            @if ($any(editEmployeeForm.controls).joiningDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Joining Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

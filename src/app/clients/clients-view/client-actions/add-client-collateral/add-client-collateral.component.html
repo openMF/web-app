@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (clientCollateralForm.controls.collateralId.hasError('required')) {
+            @if ($any(clientCollateralForm.controls).collateralId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Collateral' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -53,7 +53,7 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
                 <input matInput required formControlName="quantity" />
-                @if (clientCollateralForm.controls.quantity.hasError('required')) {
+                @if ($any(clientCollateralForm.controls).quantity.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>

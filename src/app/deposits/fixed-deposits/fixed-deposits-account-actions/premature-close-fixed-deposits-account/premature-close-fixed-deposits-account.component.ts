@@ -97,7 +97,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of parent control.
    */
   buildDependencies() {
-    this.prematureCloseAccountForm.get('closedOnDate').valueChanges.subscribe((value: Date) => {
+    this.prematureCloseAccountForm.get('closedOnDate').valueChanges.subscribe((value) => {
       if (!this.isSubmitted) {
         this.calculatePrematureAmount(value);
       }
@@ -118,7 +118,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
     };
     this.fixedDepositsService
       .executeFixedDepositsAccountCommand(this.accountId, 'calculatePrematureAmount', data)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.savingsAccountsData = response.savingsAccounts;
         this.onAccountClosureOptions = response.onAccountClosureOptions;
         this.prematureCloseAccountForm.addControl(
@@ -139,7 +139,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id) => {
       if (id === 200) {
         this.prematureCloseAccountForm.addControl(
           'toSavingsAccountId',

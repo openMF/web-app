@@ -389,7 +389,7 @@ export class ManageDashboardsComponent implements OnInit, AfterViewInit, OnDestr
     this.systemService
       .getRoles()
       .pipe(catchError(() => of([])))
-      .subscribe((roles: any) => {
+      .subscribe((roles) => {
         if (Array.isArray(roles) && roles.length > 0) {
           const backendRoleNames = roles.map((r: any) => r.name).filter(Boolean);
           if (backendRoleNames.length > 0) {
@@ -412,7 +412,7 @@ export class ManageDashboardsComponent implements OnInit, AfterViewInit, OnDestr
     this.accountingService
       .getOffices()
       .pipe(catchError(() => of([])))
-      .subscribe((offices: any) => {
+      .subscribe((offices) => {
         if (Array.isArray(offices) && offices.length > 0) {
           const fetchedOffices = offices.map((o: any) => ({ id: o.id, name: o.name }));
           this.offices = [

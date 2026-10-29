@@ -166,13 +166,11 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   constructor() {
     const officeTreeService = this.officeTreeService;
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { offices: any; officeDataTables: any }) => {
-        this.officesData = data.offices;
-        officeTreeService.initialize(this.officesData);
-        this.dataTablesData = data.officeDataTables;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.officesData = data.offices;
+      officeTreeService.initialize(this.officesData);
+      this.dataTablesData = data.officeDataTables;
+    });
     this.nestedTreeControl = new NestedTreeControl<OfficeNode>(this.getChildren);
     this.nestedTreeDataSource = new MatTreeNestedDataSource<OfficeNode>();
   }
@@ -190,13 +188,11 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.setOffices();
-    this.officeTreeService.treeDataChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeTreeData: OfficeNode[]) => {
-        this.nestedTreeDataSource.data = officeTreeData;
-        this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
-        this.nestedTreeControl.dataNodes = officeTreeData;
-      });
+    this.officeTreeService.treeDataChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((officeTreeData) => {
+      this.nestedTreeDataSource.data = officeTreeData;
+      this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
+      this.nestedTreeControl.dataNodes = officeTreeData;
+    });
   }
 
   /**

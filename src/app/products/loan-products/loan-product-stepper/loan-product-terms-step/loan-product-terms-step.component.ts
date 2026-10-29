@@ -234,7 +234,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           this.loanProductsTemplate.maxInterestRatePerPeriod === 0
       );
 
-      this.processingStrategyService.advancedTransactionProcessingStrategy.subscribe((value: boolean) => {
+      this.processingStrategyService.advancedTransactionProcessingStrategy.subscribe((value) => {
         this.isAdvancedTransactionProcessingStrategy = value;
       });
       this.validateAdvancedPaymentStrategyControls();
@@ -708,7 +708,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
   addVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: UntypedFormArray) {
     const data = this.getData(formType);
     const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         variationsForBorrowerCycleFormArray.push(response.data);
         this.setLoanProductTermsFormDirty();
@@ -726,7 +726,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
       layout: { addButtonText: 'Edit' }
     };
     const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         variationsForBorrowerCycleFormArray.at(index).patchValue(response.data.value);
         this.setLoanProductTermsFormDirty();
@@ -738,7 +738,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     const deleteVariationsForBorrowerCycleDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    deleteVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
+    deleteVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         variationsForBorrowerCycleFormArray.removeAt(index);
         this.setLoanProductTermsFormDirty();

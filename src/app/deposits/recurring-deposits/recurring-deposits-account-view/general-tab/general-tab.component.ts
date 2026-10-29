@@ -39,7 +39,7 @@ export class GeneralTabComponent {
   currency: Currency;
 
   constructor() {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.currency = this.recurringDepositsAccountData.currency;
       this.isprematureAllowed = data.recurringDepositsAccountData.maturityDate != null;

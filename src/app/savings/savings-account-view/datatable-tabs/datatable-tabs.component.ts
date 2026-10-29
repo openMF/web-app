@@ -43,7 +43,7 @@ export class DatatableTabsComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('savingAccountId');
 
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDatatable = data.savingsDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

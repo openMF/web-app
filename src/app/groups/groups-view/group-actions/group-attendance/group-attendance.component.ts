@@ -108,7 +108,7 @@ export class GroupAttendanceComponent implements OnInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
     });
@@ -131,7 +131,7 @@ export class GroupAttendanceComponent implements OnInit {
   getAttendanceOptions() {
     this.groupsService
       .getMeetingsTemplate(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
   }
@@ -156,7 +156,7 @@ export class GroupAttendanceComponent implements OnInit {
       formfields: formfields
     };
     const memberAttendanceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    memberAttendanceDialogRef.afterClosed().subscribe((response: any) => {
+    memberAttendanceDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const updatedMemeber = { ...member, ...response.data.value };
         this.dataSource.splice(this.dataSource.indexOf(member), 1, updatedMemeber);

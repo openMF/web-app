@@ -383,7 +383,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     this.charts
       .at(chartIndex)
       .get('isPrimaryGroupingByAmount')
-      .valueChanges.subscribe((isPrimaryGroupingByAmount: boolean) => {
+      .valueChanges.subscribe((isPrimaryGroupingByAmount) => {
         this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? [
               'amountRange',
               'period'
@@ -403,7 +403,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   addChartSlab(chartSlabs: UntypedFormArray) {
     const data = { ...this.getData('Slab') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         response.data.addControl('incentives', this.formBuilder.array([]));
         chartSlabs.push(response.data);
@@ -414,7 +414,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   addIncentive(incentives: UntypedFormArray) {
     const data = { ...this.getData('Incentive'), entityType: this.entityTypeData[0].id };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         incentives.push(response.data);
       }
@@ -424,7 +424,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
     const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         chartSlabs.at(chartSlabIndex).patchValue(response.data.value);
       }
@@ -437,7 +437,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       layout: { addButtonText: 'Edit' }
     };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         incentives.at(incentiveIndex).patchValue(response.data.value);
       }
@@ -448,7 +448,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         formArray.removeAt(index);
       }

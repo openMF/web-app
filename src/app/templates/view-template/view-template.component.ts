@@ -71,7 +71,7 @@ export class ViewTemplateComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { template: Template }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.templateData = data.template;
       const text = this.templateData?.text;
       this.htmlPreview = isHtmlText(text) ? this.sanitizer.bypassSecurityTrustHtml(text) : null;
@@ -130,7 +130,7 @@ export class ViewTemplateComponent {
     const deleteTemplateDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `template ${this.templateData.id}` }
     });
-    deleteTemplateDialogRef.afterClosed().subscribe((response: any) => {
+    deleteTemplateDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.templatesService.deleteTemplate(String(this.templateData.id)).subscribe(() => {
           this.router.navigate(['/templates']);

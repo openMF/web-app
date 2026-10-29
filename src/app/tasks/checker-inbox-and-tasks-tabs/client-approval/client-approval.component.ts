@@ -111,7 +111,7 @@ export class ClientApprovalComponent implements AfterViewInit {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { groupedClientData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       this.groupedClientEntries = Object.entries(this.groupedClients).map(
         ([
@@ -183,7 +183,7 @@ export class ClientApprovalComponent implements AfterViewInit {
       pristine: false
     };
     const clientApprovalDialogRef = this.dialog.open(FormDialogComponent, { data });
-    clientApprovalDialogRef.afterClosed().subscribe((response: any) => {
+    clientApprovalDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.bulkClientApproval(response.data);
       }
@@ -210,7 +210,7 @@ export class ClientApprovalComponent implements AfterViewInit {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response) => {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           activatedAccounts++;

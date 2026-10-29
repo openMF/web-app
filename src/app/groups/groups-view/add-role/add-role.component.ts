@@ -49,7 +49,7 @@ export class AddRoleComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { groupAndTemplateData: any }) => {
+    this.route.data.subscribe((data) => {
       this.groupAndTemplateData = data.groupAndTemplateData;
     });
   }

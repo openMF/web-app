@@ -85,7 +85,7 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+    this.shareProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
       if (accountingRule === 2) {
         this.shareProductAccountingForm.addControl('shareReferenceId', new UntypedFormControl('', Validators.required));
         this.shareProductAccountingForm.addControl('shareSuspenseId', new UntypedFormControl('', Validators.required));

@@ -113,7 +113,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.clientId = this.route.parent.snapshot.params['clientId'];
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
@@ -221,7 +221,7 @@ export class TransactionsTabComponent implements OnInit {
         )
       }
     });
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;

@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { user: any; usersTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.userData = data.user;
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
@@ -118,7 +118,7 @@ export class EditUserComponent implements OnInit {
    */
   officeChanged(officeId: number) {
     this.staffData = [];
-    this.usersService.getStaff(officeId).subscribe((staff: any) => {
+    this.usersService.getStaff(officeId).subscribe((staff) => {
       this.staffData = staff;
     });
   }
@@ -129,7 +129,7 @@ export class EditUserComponent implements OnInit {
    */
   submit() {
     const editedUser = this.editUserForm.value;
-    this.usersService.editUser(this.userData.id, editedUser).subscribe((response: any) => {
+    this.usersService.editUser(this.userData.id, editedUser).subscribe((response) => {
       this.router.navigate(
         [
           '../../',

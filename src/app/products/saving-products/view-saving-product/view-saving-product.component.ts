@@ -31,7 +31,7 @@ export class ViewSavingProductComponent {
   savingProductDatatables: any = [];
 
   constructor() {
-    this.route.data.subscribe((data: { savingProductDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingProductDatatables = [];
       data.savingProductDatatables.forEach((datatable: any) => {
         if (datatable.entitySubType === 'Savings Product') {

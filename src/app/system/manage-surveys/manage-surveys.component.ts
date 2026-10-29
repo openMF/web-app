@@ -86,7 +86,7 @@ export class ManageSurveysComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { surveys: any }) => {
+    this.route.data.subscribe((data) => {
       this.surveysData = data.surveys;
     });
   }

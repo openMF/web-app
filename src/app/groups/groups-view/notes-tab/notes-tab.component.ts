@@ -60,7 +60,7 @@ export class NotesTabComponent implements OnInit {
   ngOnInit() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
-    this.route.data.subscribe((data: { groupNotes: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityNotes = data.groupNotes;
     });
   }
@@ -69,7 +69,7 @@ export class NotesTabComponent implements OnInit {
    * Adds a new note.
    */
   addNote(noteContent: any) {
-    this.groupsService.createGroupNote(this.entityId, noteContent).subscribe((response: any) => {
+    this.groupsService.createGroupNote(this.entityId, noteContent).subscribe((response) => {
       this.entityNotes = [
         ...this.entityNotes,
         {

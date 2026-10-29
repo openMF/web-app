@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #disbursementDatePicker></mat-datepicker>
-            @if (disbursementForm.controls.actualDisbursementDate.hasError('required')) {
+            @if ($any(disbursementForm.controls).actualDisbursementDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Disbursement Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -34,7 +34,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="disbursementForm.controls.transactionAmount"
+            [inputFormControl]="$any(disbursementForm.controls.transactionAmount)"
             [inputLabel]="'Transaction Amount'"
           >
           </mifosx-input-amount>

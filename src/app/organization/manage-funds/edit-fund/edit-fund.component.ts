@@ -36,7 +36,7 @@ export class EditFundComponent implements OnInit {
   fundForm: FormGroup;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { fundData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.fundData = data.fundData;
     });
   }
@@ -63,7 +63,7 @@ export class EditFundComponent implements OnInit {
     this.organizationService
       .editFund(this.fundData.id.toString(), payload)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

@@ -324,7 +324,7 @@
               }
               @if (transferDetailsForm.get('transferAmount')?.hasError('amountExceedsBalance')) {
                 <mat-error>
-                  <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+                  <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
                   {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
                 </mat-error>
               }

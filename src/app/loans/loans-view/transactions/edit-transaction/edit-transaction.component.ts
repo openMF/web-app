@@ -160,20 +160,16 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
     super();
     this.isDeltaMode = this.route.snapshot.data?.['adjustMode'] === DELTA_ADJUST_MODE;
     this.amountLabel = this.isDeltaMode ? 'Adjustment Amount' : 'Transaction Amount';
-    this.route.parent?.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsAssociationData?: any }) => {
-        this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
-      });
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountTransactionTemplate: any }) => {
-        this.transactionTemplateData = data.loansAccountTransactionTemplate;
-        if (data.loansAccountTransactionTemplate.currency) {
-          this.currency = data.loansAccountTransactionTemplate.currency;
-        }
-        this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
-      });
+    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
+    });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.transactionTemplateData = data.loansAccountTransactionTemplate;
+      if (data.loansAccountTransactionTemplate.currency) {
+        this.currency = data.loansAccountTransactionTemplate.currency;
+      }
+      this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
+    });
     this.loanAccountId = this.route.snapshot.params['loanId'];
   }
 

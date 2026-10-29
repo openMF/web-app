@@ -50,7 +50,7 @@ export class EditProductMixComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.subscribe((data) => {
       this.productMixData = data.productMix;
     });
   }
@@ -99,7 +99,7 @@ export class EditProductMixComponent implements OnInit {
       restrictedProducts: this.productMixForm.value.restrictedProducts
     };
     const productMixId = this.productMixData.productId;
-    this.productsService.updateProductMix(productMix, productMixId).subscribe((response: any) => {
+    this.productsService.updateProductMix(productMix, productMixId).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

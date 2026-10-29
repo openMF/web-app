@@ -70,7 +70,7 @@ export class CreateRangeComponent implements OnInit {
       ...delinquencyRangeFormData,
       locale
     };
-    this.productsService.createDelinquencyRange(data).subscribe((response: any) => {
+    this.productsService.createDelinquencyRange(data).subscribe((response) => {
       this.router.navigate(
         [
           '../',

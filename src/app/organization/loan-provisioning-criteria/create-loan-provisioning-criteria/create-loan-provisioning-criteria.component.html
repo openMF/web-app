@@ -14,7 +14,7 @@
           <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Provisioning Criteria' | translate }}</mat-label>
             <input required matInput formControlName="criteriaName" />
-            @if (provisioningCriteriaForm.controls.criteriaName.hasError('required')) {
+            @if ($any(provisioningCriteriaForm.controls).criteriaName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Provisioning Criteria' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (provisioningCriteriaForm.controls.loanProducts.hasError('required')) {
+            @if ($any(provisioningCriteriaForm.controls).loanProducts.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Selected Products' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

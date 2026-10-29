@@ -34,7 +34,7 @@
           </h4>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.fundSourceAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.fundSourceAccountId)"
             [glAccountList]="assetAndLiabilityAccountData"
             [required]="true"
             [inputLabel]="'Fund source'"
@@ -43,7 +43,7 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.loanPortfolioAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.loanPortfolioAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Loan portfolio'"
@@ -51,7 +51,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.transfersInSuspenseAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.transfersInSuspenseAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Transfer in suspense'"
@@ -63,7 +63,7 @@
             <div class="flex-100 layout-row-wrap gap-2percent responsive-column">
               <mifosx-gl-account-selector
                 class="flex-48"
-                [inputFormControl]="loanProductAccountingForm.controls.receivableInterestAccountId"
+                [inputFormControl]="$any(loanProductAccountingForm.controls.receivableInterestAccountId)"
                 [glAccountList]="assetAccountData"
                 [required]="true"
                 [inputLabel]="'Interest Receivable'"
@@ -71,7 +71,7 @@
               </mifosx-gl-account-selector>
               <mifosx-gl-account-selector
                 class="flex-48"
-                [inputFormControl]="loanProductAccountingForm.controls.receivableFeeAccountId"
+                [inputFormControl]="$any(loanProductAccountingForm.controls.receivableFeeAccountId)"
                 [glAccountList]="assetAccountData"
                 [required]="true"
                 [inputLabel]="'Fees Receivable'"
@@ -79,7 +79,7 @@
               </mifosx-gl-account-selector>
               <mifosx-gl-account-selector
                 class="flex-48"
-                [inputFormControl]="loanProductAccountingForm.controls.receivablePenaltyAccountId"
+                [inputFormControl]="$any(loanProductAccountingForm.controls.receivablePenaltyAccountId)"
                 [glAccountList]="assetAccountData"
                 [required]="true"
                 [inputLabel]="'Penalties Receivable'"
@@ -91,7 +91,7 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.interestOnLoanAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.interestOnLoanAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from Interest'"
@@ -99,7 +99,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromFeeAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromFeeAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from fees'"
@@ -107,7 +107,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromPenaltyAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromPenaltyAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from penalties'"
@@ -115,7 +115,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromRecoveryAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromRecoveryAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from Recovery Repayments'"
@@ -123,7 +123,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffInterestAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromChargeOffInterestAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from ChargeOff Interest'"
@@ -131,7 +131,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from ChargeOff Fees'"
@@ -139,7 +139,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from ChargeOff Penalty'"
@@ -147,7 +147,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditInterestAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromGoodwillCreditInterestAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from Goodwill Credit Interest'"
@@ -155,7 +155,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from Goodwill Credit Fees'"
@@ -163,7 +163,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId)"
             [glAccountList]="incomeAccountData"
             [required]="true"
             [inputLabel]="'Income from Goodwill Credit Penalty'"
@@ -172,7 +172,7 @@
           @if (deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization) {
             <mifosx-gl-account-selector
               class="flex-48"
-              [inputFormControl]="loanProductAccountingForm.controls.incomeFromCapitalizationAccountId"
+              [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromCapitalizationAccountId)"
               [glAccountList]="incomeAccountData"
               [required]="true"
               [inputLabel]="'Income capitalization'"
@@ -182,7 +182,7 @@
           @if (deferredIncomeRecognition?.buyDownFee?.enableBuyDownFee) {
             <mifosx-gl-account-selector
               class="flex-48"
-              [inputFormControl]="loanProductAccountingForm.controls.incomeFromBuyDownAccountId"
+              [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromBuyDownAccountId)"
               [glAccountList]="incomeAccountData"
               [required]="true"
               [inputLabel]="'Income from Buy down fees'"
@@ -193,7 +193,7 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.writeOffAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.writeOffAccountId)"
             [glAccountList]="expenseAccountData"
             [required]="true"
             [inputLabel]="'Losses written off'"
@@ -201,7 +201,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.goodwillCreditAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.goodwillCreditAccountId)"
             [glAccountList]="expenseAccountData"
             [required]="true"
             [inputLabel]="'Expenses from Goodwill Credit'"
@@ -209,7 +209,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.chargeOffExpenseAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.chargeOffExpenseAccountId)"
             [glAccountList]="expenseAccountData"
             [required]="true"
             [inputLabel]="'ChargeOff Expense'"
@@ -217,7 +217,7 @@
           </mifosx-gl-account-selector>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId)"
             [glAccountList]="expenseAccountData"
             [required]="true"
             [inputLabel]="'ChargeOff Fraud Expense'"
@@ -229,7 +229,7 @@
           ) {
             <mifosx-gl-account-selector
               class="flex-48"
-              [inputFormControl]="loanProductAccountingForm.controls.buyDownExpenseAccountId"
+              [inputFormControl]="$any(loanProductAccountingForm.controls.buyDownExpenseAccountId)"
               [glAccountList]="expenseAccountData"
               [required]="true"
               [inputLabel]="'Buy down fee Expense'"
@@ -240,7 +240,7 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="loanProductAccountingForm.controls.overpaymentLiabilityAccountId"
+            [inputFormControl]="$any(loanProductAccountingForm.controls.overpaymentLiabilityAccountId)"
             [glAccountList]="liabilityAccountData"
             [required]="true"
             [inputLabel]="'Over payment liability'"
@@ -252,7 +252,7 @@
           ) {
             <mifosx-gl-account-selector
               class="flex-48"
-              [inputFormControl]="loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId"
+              [inputFormControl]="$any(loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId)"
               [glAccountList]="liabilityAccountData"
               [required]="true"
               [inputLabel]="'Deferred income'"
@@ -343,7 +343,7 @@
         </h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.fundSourceAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.fundSourceAccountId)"
           [glAccountList]="assetAndLiabilityAccountData"
           [required]="true"
           [inputLabel]="'Fund source'"
@@ -353,7 +353,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.loanPortfolioAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.loanPortfolioAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Loan portfolio'"
@@ -361,7 +361,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.transfersInSuspenseAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.transfersInSuspenseAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Transfer in suspense'"
@@ -370,7 +370,7 @@
 
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.receivableFeeAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.receivableFeeAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Fees Receivable'"
@@ -378,7 +378,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.receivablePenaltyAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.receivablePenaltyAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Penalties Receivable'"
@@ -388,7 +388,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromDiscountFeeAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromDiscountFeeAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income From Discount Fee'"
@@ -396,7 +396,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromFeeAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromFeeAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from fees'"
@@ -404,7 +404,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromPenaltyAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromPenaltyAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from penalties'"
@@ -412,7 +412,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromRecoveryAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromRecoveryAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from Recovery Repayments'"
@@ -420,7 +420,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="false"
           [inputLabel]="'Income from ChargeOff Fees'"
@@ -428,7 +428,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="false"
           [inputLabel]="'Income from ChargeOff Penalty'"
@@ -436,7 +436,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="false"
           [inputLabel]="'Income from Goodwill Credit Fees'"
@@ -444,7 +444,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="false"
           [inputLabel]="'Income from Goodwill Credit Penalty'"
@@ -454,7 +454,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.writeOffAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.writeOffAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="true"
           [inputLabel]="'Losses written off'"
@@ -462,7 +462,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.goodwillCreditAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.goodwillCreditAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="false"
           [inputLabel]="'Expenses from Goodwill Credit'"
@@ -470,7 +470,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.chargeOffExpenseAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.chargeOffExpenseAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="false"
           [inputLabel]="'ChargeOff Expense'"
@@ -478,7 +478,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="false"
           [inputLabel]="'ChargeOff Fraud Expense'"
@@ -488,7 +488,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.overpaymentLiabilityAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.overpaymentLiabilityAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Over payment liability'"
@@ -496,7 +496,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId"
+          [inputFormControl]="$any(loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Deferred income'"

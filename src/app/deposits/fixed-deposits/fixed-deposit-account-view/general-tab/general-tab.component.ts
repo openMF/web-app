@@ -35,7 +35,7 @@ export class GeneralTabComponent {
   currency: Currency;
 
   constructor() {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.currency = this.fixedDepositsAccountData.currency;
     });

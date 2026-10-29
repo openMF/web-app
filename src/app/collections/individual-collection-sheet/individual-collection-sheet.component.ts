@@ -163,7 +163,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
    * @param {SettingsService} settingsService Settings Service
    */
   ngOnInit(): void {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officesData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officesData = data.officesData;
     });
 
@@ -228,7 +228,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
         takeUntilDestroyed(this.destroyRef),
         switchMap((value: any) => this.organizationService.getStaffs(value))
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.loanOfficerData = response;
         this.cdr.markForCheck();
       });
@@ -339,7 +339,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       formfields: formfields
     };
     const showPaymentDetailsDialogRef = this.dialog.open(FormDialogComponent, { data });
-    showPaymentDetailsDialogRef.afterClosed().subscribe((response: any) => {
+    showPaymentDetailsDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         if (type === 'loans') {
           const totalDue = this.getLoanTotalDueAmount(selectedData);
@@ -421,7 +421,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
     if (collectionSheet.staffId === '') {
       delete collectionSheet.staffId;
     }
-    this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response: any) => {
+    this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response) => {
       if (response.clients.length > 0) {
         this.collectionSheetData = response;
         this.organizeData(response);

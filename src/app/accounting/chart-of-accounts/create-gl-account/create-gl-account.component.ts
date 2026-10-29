@@ -101,7 +101,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.route.data.subscribe((data: { chartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.chartOfAccountsData = data.chartOfAccountsTemplate;
       this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
       this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
@@ -182,7 +182,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
     if (this.glAccountForm.invalid) {
       return;
     }
-    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
+    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response) => {
       if (this.configurationWizardService.showChartofAccounts) {
         this.configurationWizardService.showChartofAccounts = false;
         this.openDialog();
@@ -252,7 +252,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
         stepName: 'GL account'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showChartofAccountsForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

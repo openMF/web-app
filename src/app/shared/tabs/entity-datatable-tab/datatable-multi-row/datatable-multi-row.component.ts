@@ -143,7 +143,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
    */
   ngOnInit() {
     this.selection = new SelectionModel(true, []);
-    this.route.params.subscribe((routeParams: any) => {
+    this.route.params.subscribe((routeParams) => {
       this.datatableName = routeParams.datatableName;
       this.changeDetectorRef.markForCheck();
     });
@@ -244,7 +244,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    addDialogRef.afterClosed().subscribe((response: any) => {
+    addDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
           response.data.value[column] = this.dateUtils.formatDate(
@@ -257,7 +257,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         this.changeDetectorRef.markForCheck();
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
-          .subscribe((result: any) => {
+          .subscribe((result) => {
             this.getData();
           });
       }
@@ -305,7 +305,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
       pristine: false
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    editDialogRef.afterClosed().subscribe((response: any) => {
+    editDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         dateTransformColumns.forEach((column) => {
           if (
@@ -361,7 +361,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         )}`
       }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.isLoading = true;
         this.changeDetectorRef.markForCheck();
@@ -383,7 +383,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         } ${this.translateService.instant('labels.text.items selected of')} ${this.formatTabLabel(this.datatableName)}`
       }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {

@@ -30,7 +30,7 @@ export class ViewBreachConfigurationComponent {
   breachData: Breach | null = null;
 
   constructor() {
-    this.route.data.subscribe((data: { breachData: any }) => {
+    this.route.data.subscribe((data) => {
       this.breachData = data.breachData;
     });
   }

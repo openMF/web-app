@@ -53,7 +53,7 @@ export class ViewReportComponent {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { report: any }) => {
+    this.route.data.subscribe((data) => {
       this.reportData = data.report;
     });
   }
@@ -65,7 +65,7 @@ export class ViewReportComponent {
     const deleteReportDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `report ${this.reportData.id}` }
     });
-    deleteReportDialogRef.afterClosed().subscribe((response: any) => {
+    deleteReportDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.systemService.deleteReport(this.reportData.id).subscribe(() => {
           this.router.navigate(['/system/reports']);

@@ -60,7 +60,7 @@
               </div>
               <div>
                 <span>{{ 'cashAllocation.labels.vaultBalance' | translate }}</span
-                ><strong>{{ context.vaultBalance }} {{ allocationForm.controls.currencyCode.value }}</strong>
+                ><strong>{{ context.vaultBalance }} {{ $any(allocationForm.controls).currencyCode.value }}</strong>
               </div>
             </div>
 
@@ -71,7 +71,7 @@
                   @for (cashier of sourceCashiers; track cashier.cashierId) {
                     <mat-option [value]="cashier.cashierId">
                       {{ cashier.cashierName }} — {{ cashier.tellerName }} ({{ cashier.currentBalance }}
-                      {{ allocationForm.controls.currencyCode.value }})
+                      {{ $any(allocationForm.controls).currencyCode.value }})
                     </mat-option>
                   }
                 </mat-select>
@@ -111,31 +111,33 @@
                 <div formArrayName="denominations">
                   @for (
                     denomination of denominations.controls;
-                    track denomination.controls.denominationId.value;
+                    track $any(denomination.controls).denominationId.value;
                     let index = $index
                   ) {
                     <div class="denomination-row" [formGroupName]="index">
                       <span>{{
-                        'cashAllocation.denominationTypes.' + denomination.controls.type.value | translate
+                        'cashAllocation.denominationTypes.' + $any(denomination.controls).type.value | translate
                       }}</span>
                       <strong
-                        >{{ denomination.controls.value.value }}
-                        {{ allocationForm.controls.currencyCode.value }}</strong
+                        >{{ $any(denomination.controls).value.value }}
+                        {{ $any(allocationForm.controls).currencyCode.value }}</strong
                       >
                       <mat-form-field>
                         <mat-label>{{ 'cashAllocation.labels.quantity' | translate }}</mat-label>
                         <input matInput type="number" min="0" step="1" formControlName="quantity" />
-                        @if (denomination.controls.quantity.hasError('integer')) {
+                        @if ($any(denomination.controls).quantity.hasError('integer')) {
                           <mat-error>{{ 'cashAllocation.errors.integerQuantity' | translate }}</mat-error>
                         }
                       </mat-form-field>
-                      <strong>{{ lineTotal(denomination) }} {{ allocationForm.controls.currencyCode.value }}</strong>
+                      <strong
+                        >{{ lineTotal(denomination) }} {{ $any(allocationForm.controls).currencyCode.value }}</strong
+                      >
                     </div>
                   }
                 </div>
                 <div class="allocation-total">
                   <span>{{ 'cashAllocation.labels.totalCash' | translate }}</span>
-                  <strong>{{ total }} {{ allocationForm.controls.currencyCode.value }}</strong>
+                  <strong>{{ total }} {{ $any(allocationForm.controls).currencyCode.value }}</strong>
                 </div>
               }
             </section>

@@ -80,7 +80,7 @@ export class FrequentPostingsComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any; accountingRules: any; currencies: any; paymentTypes: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
       this.accountingRuleData = data.accountingRules;
       this.currencyData = data.currencies.selectedCurrencyOptions;

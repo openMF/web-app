@@ -42,13 +42,13 @@ export class NotesTabComponent {
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingAccountNotes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityNotes = data.savingAccountNotes;
     });
   }
 
   addNote(noteContent: any) {
-    this.savingsService.createSavingsNote(this.entityId, noteContent).subscribe((response: any) => {
+    this.savingsService.createSavingsNote(this.entityId, noteContent).subscribe((response) => {
       this.entityNotes = [
         ...this.entityNotes,
         {

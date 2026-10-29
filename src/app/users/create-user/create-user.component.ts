@@ -87,7 +87,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { usersTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
     });
@@ -178,9 +178,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     this.userForm
       .get('officeId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeId: string) => {
+      .subscribe((officeId) => {
         this.staffData = [];
-        this.usersService.getStaff(officeId).subscribe((staff: any) => {
+        this.usersService.getStaff(officeId).subscribe((staff) => {
           this.staffData = staff;
         });
       });
@@ -193,7 +193,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     this.userForm
       .get('sendPasswordToEmail')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((sendPasswordToEmail: boolean) => {
+      .subscribe((sendPasswordToEmail) => {
         if (sendPasswordToEmail) {
           this.userForm.removeControl('password');
           this.userForm.removeControl('repeatPassword');
@@ -233,7 +233,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
       delete user.staffId;
     }
-    this.usersService.createUser(user).subscribe((response: any) => {
+    this.usersService.createUser(user).subscribe((response) => {
       if (this.configurationWizardService.showUsersForm) {
         this.configurationWizardService.showUsersForm = false;
         this.openDialog();
@@ -303,7 +303,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         stepName: 'user'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showUsersForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

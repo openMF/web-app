@@ -40,7 +40,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (editStandingInstructionsForm.controls.priority.hasError('required')) {
+            @if ($any(editStandingInstructionsForm.controls).priority.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Priority' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -57,7 +57,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (editStandingInstructionsForm.controls.status.hasError('required')) {
+            @if ($any(editStandingInstructionsForm.controls).status.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -123,7 +123,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
-            @if (editStandingInstructionsForm.controls.validFrom.hasError('required')) {
+            @if ($any(editStandingInstructionsForm.controls).validFrom.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Valid From Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -143,7 +143,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
-            @if (editStandingInstructionsForm.controls.validTill.hasError('required')) {
+            @if ($any(editStandingInstructionsForm.controls).validTill.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Valid Till Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -160,7 +160,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (editStandingInstructionsForm.controls.recurrenceType.hasError('required')) {
+            @if ($any(editStandingInstructionsForm.controls).recurrenceType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Recurrence Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

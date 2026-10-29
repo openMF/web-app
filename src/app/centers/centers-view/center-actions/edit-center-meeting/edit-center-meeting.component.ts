@@ -76,7 +76,7 @@ export class EditCenterMeetingComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
@@ -115,7 +115,7 @@ export class EditCenterMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.centerEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+    this.centerEditMeetingForm.get('frequency').valueChanges.subscribe((frequency) => {
       this.centerEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
@@ -197,7 +197,7 @@ export class EditCenterMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
+    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

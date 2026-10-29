@@ -20,7 +20,7 @@
       <input matInput [max]="maxDate" [matDatepicker]="rejectedDatePicker" required formControlName="rejectedOnDate" />
       <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #rejectedDatePicker></mat-datepicker>
-      @if (rejectForm.controls.rejectedOnDate.hasError('required')) {
+      @if ($any(rejectForm.controls).rejectedOnDate.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Rejected Date' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -201,7 +201,7 @@ export class EndOfDayClosingComponent implements OnInit {
             })
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((selected: ClosingCheck[] | null) => {
+            .subscribe((selected) => {
               if (selected) {
                 this.selected = selected;
                 this.cdr.markForCheck();
@@ -257,7 +257,7 @@ export class EndOfDayClosingComponent implements OnInit {
             })
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((result: ClosingRecord | null) => {
+            .subscribe((result) => {
               this.confirming = false;
               this.cdr.markForCheck();
               if (result) {

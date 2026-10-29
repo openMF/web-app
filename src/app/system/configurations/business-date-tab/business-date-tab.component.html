@@ -60,7 +60,7 @@
                 />
                 <mat-datepicker-toggle matSuffix [for]="businessDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #businessDatePicker></mat-datepicker>
-                @if (businessDateForm.controls.businessDate.hasError('required')) {
+                @if ($any(businessDateForm.controls).businessDate.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Business Date' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -128,7 +128,7 @@
                 />
                 <mat-datepicker-toggle matSuffix [for]="cobDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #cobDatePicker></mat-datepicker>
-                @if (businessDateForm.controls.cobDate.hasError('required')) {
+                @if ($any(businessDateForm.controls).cobDate.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.COB Date' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>

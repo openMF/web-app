@@ -118,7 +118,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
         switchMap((date: any) => (date instanceof Date ? this.calculatePrematureAmount(date) : EMPTY)),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.savingsAccountsData = response.savingsAccounts || [];
         this.onAccountClosureOptions = response.onAccountClosureOptions || [];
         form.get('maturityAmount').setValue(response.maturityAmount);
@@ -127,7 +127,7 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
     form
       .get('onAccountClosureId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((id: any) => {
+      .subscribe((id) => {
         if (id === 200) {
           form.addControl('toSavingsAccountId', new UntypedFormControl('', Validators.required));
           form.addControl('transferDescription', new UntypedFormControl(''));

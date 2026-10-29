@@ -43,7 +43,7 @@ export class ViewRecieptComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansTransactionReciept: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.transactionRecieptData = data.loansTransactionReciept;
     });
   }

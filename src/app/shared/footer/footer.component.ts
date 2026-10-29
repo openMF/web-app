@@ -77,7 +77,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // The business date is kept up to date regardless of `displayBackEndInfo`: it is
     // displayed on its own and stored in the settings service for the whole application.
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent) => {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
         this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
@@ -112,7 +112,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     if (this.authenticationService.isAuthenticated()) {
       this.systemService
         .getConfigurationByName(SettingsService.businessDateConfigName)
-        .subscribe((configurationData: any) => {
+        .subscribe((configurationData) => {
           this.isBusinessDateEnabled = configurationData.enabled;
           this.settingsService.setBusinessDateConfig(configurationData.enabled);
           if (this.isBusinessDateEnabled) {

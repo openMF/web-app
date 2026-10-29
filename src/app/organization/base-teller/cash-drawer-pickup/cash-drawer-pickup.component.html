@@ -135,7 +135,7 @@
               mat-button
               type="button"
               (click)="selectChecks()"
-              [disabled]="busy || loading || checksLoading || !form.controls.cashierId.value"
+              [disabled]="busy || loading || checksLoading || !$any(form.controls).cashierId.value"
             >
               {{ 'cashPickup.selectChecks' | translate }} ({{ selected.length }})
             </button>

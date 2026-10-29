@@ -127,7 +127,7 @@ export class ServicesTabComponent implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((services: OfficeServiceData[]) => {
+      .subscribe((services) => {
         this.officeServices = Array.isArray(services) ? services : [];
       });
   }
@@ -146,7 +146,7 @@ export class ServicesTabComponent implements OnInit {
       layout: { addButtonText: this.translateService.instant('labels.buttons.Submit') }
     };
     const addServiceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addServiceDialogRef.afterClosed().subscribe((response: any) => {
+    addServiceDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.saveService(
           this.organizationService.createOfficeService(this.officeId, this.normalizeServiceData(response.data.value))
@@ -174,7 +174,7 @@ export class ServicesTabComponent implements OnInit {
       layout: { addButtonText: this.translateService.instant('labels.buttons.Edit') }
     };
     const editServiceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editServiceDialogRef.afterClosed().subscribe((response: any) => {
+    editServiceDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.saveService(
           this.organizationService.updateOfficeService(
@@ -200,7 +200,7 @@ export class ServicesTabComponent implements OnInit {
     const deleteServiceDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.heading.Services') }
     });
-    deleteServiceDialogRef.afterClosed().subscribe((response: any) => {
+    deleteServiceDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.saveService(this.organizationService.deleteOfficeService(this.officeId, officeServiceId));
       }

@@ -72,7 +72,7 @@ export class NotificationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { notificationConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
   }

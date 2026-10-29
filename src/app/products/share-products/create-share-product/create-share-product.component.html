@@ -73,7 +73,7 @@
 
       <mifosx-share-product-charges-step
         [shareProductsTemplate]="shareProductsTemplate"
-        [currencyCode]="shareProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="$any(shareProductCurrencyForm.get('currencyCode'))"
       >
       </mifosx-share-product-charges-step>
     </mat-step>

@@ -60,12 +60,12 @@ export class EditUserComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { user: any; usersTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       const fullUserData = data.user;
       this.userData = fullUserData.object?.result?.[0] || {};
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
-      this.UsersServiceZitadel.getExtraUserData(this.userData.id).subscribe((resp: any) => {
+      this.UsersServiceZitadel.getExtraUserData(this.userData.id).subscribe((resp) => {
         const data = resp.object;
         this.userData = {
           ...this.userData,
@@ -76,8 +76,8 @@ export class EditUserComponent implements OnInit {
         };
         this.createEditUserForm();
         this.officeChanged(this.userData.officeId);
-        this.UsersServiceZitadel.getRoles().subscribe((response: any) => {
-          const rolesZitadel = response.object?.result || [];
+        this.UsersServiceZitadel.getRoles().subscribe((response) => {
+          const rolesZitadel = (response as any).object?.result || [];
           this.rolesData = rolesZitadel.map((r: any) => ({
             id: r.key,
             name: r.displayName
@@ -175,7 +175,7 @@ export class EditUserComponent implements OnInit {
     }
 
     this.staffData = [];
-    this.UsersService.getStaff(officeId).subscribe((staff: any) => {
+    this.UsersService.getStaff(officeId).subscribe((staff) => {
       this.staffData = staff;
     });
   }
@@ -224,7 +224,7 @@ export class EditUserComponent implements OnInit {
 
     this.UsersServiceZitadel.editRoles(rolesPayload).subscribe();
 
-    this.UsersServiceZitadel.editOffice(officePayload).subscribe((response: any) => {
+    this.UsersServiceZitadel.editOffice(officePayload).subscribe((response) => {
       this.router.navigate(['/appusers']);
     });
   }

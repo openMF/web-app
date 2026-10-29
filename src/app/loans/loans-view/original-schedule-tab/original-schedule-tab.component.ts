@@ -84,7 +84,7 @@ export class OriginalScheduleTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.currency = data.loanDetailsData.currency;
       this.originalScheduleDetails = data.loanDetailsData.originalSchedule;
     });

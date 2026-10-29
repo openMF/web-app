@@ -77,7 +77,7 @@
 
       <mifosx-fixed-deposit-product-charges-step
         [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
-        [currencyCode]="fixedDepositProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="$any(fixedDepositProductCurrencyForm.get('currencyCode'))"
       >
       </mifosx-fixed-deposit-product-charges-step>
     </mat-step>

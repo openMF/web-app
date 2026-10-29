@@ -15,7 +15,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
-            @if (userForm.controls.username.hasError('required')) {
+            @if ($any(userForm.controls).username.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -27,13 +27,13 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
             <input matInput required formControlName="email" />
-            @if (userForm.controls.email.hasError('email')) {
+            @if ($any(userForm.controls).email.hasError('email')) {
               <mat-error>
                 {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.invalid' | translate }}</strong>
               </mat-error>
             }
-            @if (userForm.controls.email.hasError('required')) {
+            @if ($any(userForm.controls).email.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -102,7 +102,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (userForm.controls.officeId.hasError('required')) {
+            @if ($any(userForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -193,7 +193,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (userForm.controls.roles.hasError('required')) {
+            @if ($any(userForm.controls).roles.hasError('required')) {
               <mat-error>
                 {{ 'labels.commons.At least one role' | translate }}
                 <strong>{{ 'labels.commons.must be selected' | translate }}</strong>

@@ -14,7 +14,7 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="nearBreachName" />
-            @if (nearBreachForm.controls.nearBreachName.hasError('required')) {
+            @if ($any(nearBreachForm.controls).nearBreachName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -23,7 +23,7 @@
           </mat-form-field>
           <mifosx-input-positive-integer
             class="flex-48"
-            [inputFormControl]="nearBreachForm.controls.nearBreachFrequency"
+            [inputFormControl]="$any(nearBreachForm.controls.nearBreachFrequency)"
             [inputLabel]="'Frequency'"
             [isRequired]="true"
             [minVal]="'1'"
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (nearBreachForm.controls.nearBreachFrequencyType.hasError('required')) {
+            @if ($any(nearBreachForm.controls).nearBreachFrequencyType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -56,13 +56,13 @@
               step="0.01"
               max="100.0"
             />
-            @if (nearBreachForm.controls.nearBreachThreshold.hasError('required')) {
+            @if ($any(nearBreachForm.controls).nearBreachThreshold.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Threshold' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (nearBreachForm.controls.nearBreachThreshold.hasError('max')) {
+            @if ($any(nearBreachForm.controls).nearBreachThreshold.hasError('max')) {
               <mat-error>
                 {{ 'labels.inputs.Threshold' | translate }} {{ 'labels.commons.can not be more than' | translate }}
                 <strong>{{ maxThreshold }}</strong>

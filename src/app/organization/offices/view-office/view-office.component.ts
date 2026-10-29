@@ -38,7 +38,7 @@ export class ViewOfficeComponent {
   officeDatatables: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officeDatatables: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeDatatables = data.officeDatatables;
     });
   }

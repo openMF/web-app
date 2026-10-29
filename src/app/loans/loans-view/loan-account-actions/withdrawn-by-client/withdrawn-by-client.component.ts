@@ -80,7 +80,7 @@ export class WithdrawnByClientComponent extends LoanAccountActionsBaseComponent 
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

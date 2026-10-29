@@ -59,12 +59,10 @@ export class EditFamilyMemberComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientTemplate: any; editFamilyMember: any }) => {
-        this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
-        this.familyMemberDetails = data.editFamilyMember;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
+      this.familyMemberDetails = data.editFamilyMember;
+    });
   }
 
   ngOnInit() {
@@ -73,7 +71,7 @@ export class EditFamilyMemberComponent implements OnInit {
     this.editFamilyMemberForm
       .get('dateOfBirth')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((dateOfBirth: any) => {
+      .subscribe((dateOfBirth) => {
         if (dateOfBirth) {
           const age = this.calculateAge(dateOfBirth);
           this.editFamilyMemberForm.get('age').setValue(age);

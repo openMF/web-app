@@ -42,7 +42,7 @@ export class StaffAssignmentHistoryComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.staffAssignmentHistoryData = data.centersActionData;
     });
   }

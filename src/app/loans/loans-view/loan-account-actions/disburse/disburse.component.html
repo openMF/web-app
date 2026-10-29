@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="actualDisbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #actualDisbursementDatePicker></mat-datepicker>
-            @if (disbursementLoanForm.controls.actualDisbursementDate.hasError('required')) {
+            @if ($any(disbursementLoanForm.controls).actualDisbursementDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Disbursed On Date' | translate
                 }}<strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -34,7 +34,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="disbursementLoanForm.controls.transactionAmount"
+            [inputFormControl]="$any(disbursementLoanForm.controls.transactionAmount)"
             [inputLabel]="'Transaction Amount'"
           >
           </mifosx-input-amount>
@@ -49,16 +49,16 @@
           @if (isWorkingCapital) {
             <mifosx-input-amount
               [currency]="currency"
-              [inputFormControl]="disbursementLoanForm.controls.discountAmount"
+              [inputFormControl]="$any(disbursementLoanForm.controls.discountAmount)"
               [inputLabel]="'Discount'"
             >
             </mifosx-input-amount>
 
-            @if (disbursementLoanForm.controls.discountAmount.value > 0) {
+            @if ($any(disbursementLoanForm.controls).discountAmount.value > 0) {
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Discount External Id' | translate }}</mat-label>
                 <input matInput formControlName="discountExternalId" />
-                @if (disbursementLoanForm.controls.discountExternalId.hasError('maxlength')) {
+                @if ($any(disbursementLoanForm.controls).discountExternalId.hasError('maxlength')) {
                   <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
                 }
               </mat-form-field>

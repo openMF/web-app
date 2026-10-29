@@ -81,7 +81,7 @@ export class CloseAsRescheduledComponent extends LoanAccountActionsBaseComponent
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'close-rescheduled').subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, 'close-rescheduled').subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

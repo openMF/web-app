@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (prepayLoanForm.controls.transactionDate.hasError('required')) {
+            @if ($any(prepayLoanForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -69,7 +69,7 @@
             <mifosx-input-amount
               [currency]="currency"
               [isRequired]="true"
-              [inputFormControl]="prepayLoanForm.controls.transactionAmount"
+              [inputFormControl]="$any(prepayLoanForm.controls.transactionAmount)"
               [inputLabel]="'Transaction Amount'"
             >
             </mifosx-input-amount>

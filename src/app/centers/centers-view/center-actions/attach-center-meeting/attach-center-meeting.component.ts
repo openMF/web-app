@@ -72,7 +72,7 @@ export class AttachCenterMeetingComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
@@ -103,11 +103,11 @@ export class AttachCenterMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.centerMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
+    this.centerMeetingForm.get('repeating').valueChanges.subscribe((value) => {
       if (value) {
         this.centerMeetingForm.addControl('frequency', new UntypedFormControl());
         this.centerMeetingForm.addControl('interval', new UntypedFormControl());
-        this.centerMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+        this.centerMeetingForm.get('frequency').valueChanges.subscribe((frequency) => {
           this.centerMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily
@@ -182,7 +182,7 @@ export class AttachCenterMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.createCenterMeeting(this.centerId, data).subscribe((response: any) => {
+    this.centersService.createCenterMeeting(this.centerId, data).subscribe((response) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }

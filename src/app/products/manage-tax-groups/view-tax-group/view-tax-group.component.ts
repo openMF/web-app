@@ -38,7 +38,7 @@ export class ViewTaxGroupComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroup: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxGroupData = data.taxGroup;
     });
   }

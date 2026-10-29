@@ -76,7 +76,7 @@ export class ManageExternalEventsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { events: any }) => {
+    this.route.data.subscribe((data) => {
       this.eventsData = data.events.externalEventConfiguration;
     });
   }

@@ -51,7 +51,7 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
     if (productType) {
       this.loanProductService.initialize(productType);
     }
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetails = data.loanDetailsData;
       this.currencyCode = this.loanDetails.currency.code;
       if (this.loanDetails.transactions) {

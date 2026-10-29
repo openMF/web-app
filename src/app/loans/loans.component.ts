@@ -435,7 +435,7 @@ export class LoansComponent implements OnInit {
   constructor() {
     this.searchInput$
       .pipe(debounceTime(200), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe((text: string) => {
+      .subscribe((text) => {
         this.filterText = text;
         this.currentPage = 0;
         this.applyView();

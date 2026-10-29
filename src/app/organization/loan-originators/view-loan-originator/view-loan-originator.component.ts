@@ -35,10 +35,8 @@ export class ViewLoanOriginatorComponent {
   loanOriginatorData: LoanOriginator;
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanOriginatorData: LoanOriginator }) => {
-        this.loanOriginatorData = data.loanOriginatorData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanOriginatorData = data.loanOriginatorData;
+    });
   }
 }

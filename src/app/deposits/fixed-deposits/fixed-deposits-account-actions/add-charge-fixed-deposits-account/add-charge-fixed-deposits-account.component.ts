@@ -73,7 +73,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingsChargeOptions = data.fixedDepositsAccountActionData.chargeOptions;
     });
     this.fixedDepositAccountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
@@ -94,7 +94,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
         switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {

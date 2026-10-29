@@ -70,7 +70,7 @@ export class PentahoComponent implements OnChanges, OnDestroy {
         this.settingsService.language.code,
         this.settingsService.dateFormat
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         const contentType = res.headers.get('Content-Type');
         const outputType = this.dataObject.formData['output-type'];
         let type: string = contentType ?? 'application/octet-stream';

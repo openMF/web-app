@@ -100,7 +100,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
 
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
@@ -226,9 +226,9 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `interest pause from ${variation.startDate} to ${variation.endDate}` }
     });
-    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
-        this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
+        this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response) => {
           this.reload();
         });
       }
@@ -261,7 +261,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
       layout: { addButtonText: 'Submit' }
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    editDialogRef.afterClosed().subscribe((response: any) => {
+    editDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         if (response.data.value.startDate <= response.data.value.endDate) {
           const locale = this.settingsService.language.code;
@@ -272,7 +272,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
             locale,
             dateFormat
           };
-          this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response: any) => {
+          this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response) => {
             this.reload();
           });
         }

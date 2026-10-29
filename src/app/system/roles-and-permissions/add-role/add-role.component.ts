@@ -69,7 +69,7 @@ export class AddRoleComponent implements OnInit {
    * if successful redirects back to roles and permission.
    */
   submit() {
-    this.systemService.createRole(this.roleForm.value).subscribe((response: any) => {
+    this.systemService.createRole(this.roleForm.value).subscribe((response) => {
       if (environment.OIDC.oidcServerEnabled) {
         this.authService.createRole(response.resourceId, this.roleForm.value.name, this.roleForm.value.description);
       }

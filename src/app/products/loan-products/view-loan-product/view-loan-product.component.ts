@@ -35,7 +35,7 @@ export class ViewLoanProductComponent extends LoanProductBaseComponent {
     super();
     this.loanProductService.initialize(this.route.snapshot.queryParamMap.get('productType'));
 
-    this.route.data.subscribe((data: { loanProductDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.loanProductDatatables = data.loanProductDatatables;
     });
   }

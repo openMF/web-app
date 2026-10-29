@@ -51,7 +51,7 @@ export class EditRoleComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { role: any }) => {
+    this.route.data.subscribe((data) => {
       this.roleData = data.role;
     });
   }

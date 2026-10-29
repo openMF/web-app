@@ -23,7 +23,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (reportParameterForm.controls.parameterName.hasError('required')) {
+        @if ($any(reportParameterForm.controls).parameterName.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Report Parameters' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -40,7 +40,7 @@ export class ViewTaxComponentComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxComponent: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxComponentData = data.taxComponent;
     });
   }

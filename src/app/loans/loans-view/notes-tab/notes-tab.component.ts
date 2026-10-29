@@ -46,7 +46,7 @@ export class NotesTabComponent implements OnInit {
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanNotes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityNotes = data.loanNotes;
     });
   }
@@ -58,7 +58,7 @@ export class NotesTabComponent implements OnInit {
   }
 
   addNote(noteContent: any) {
-    this.loansService.createLoanNote(this.entityId, noteContent).subscribe((response: any) => {
+    this.loansService.createLoanNote(this.entityId, noteContent).subscribe((response) => {
       this.entityNotes = [
         ...this.entityNotes,
         {

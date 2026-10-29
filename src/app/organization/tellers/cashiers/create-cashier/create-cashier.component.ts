@@ -65,7 +65,7 @@ export class CreateCashierComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashierTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.cashierTemplate = data.cashierTemplate;
     });
   }
@@ -153,7 +153,7 @@ export class CreateCashierComponent implements OnInit {
     this.organizationService
       .createCashier(this.cashierTemplate.tellerId, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

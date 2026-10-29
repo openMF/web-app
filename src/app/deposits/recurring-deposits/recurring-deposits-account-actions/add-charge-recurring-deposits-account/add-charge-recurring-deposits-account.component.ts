@@ -72,7 +72,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingsChargeOptions = data.recurringDepositsAccountActionData.chargeOptions;
     });
     this.recurringDepositAccountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
@@ -93,7 +93,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
         switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {

@@ -20,7 +20,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (eventForm.controls.grouping.hasError('required')) {
+        @if ($any(eventForm.controls).grouping.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (eventForm.controls.entity.hasError('required')) {
+        @if ($any(eventForm.controls).entity.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (eventForm.controls.action.hasError('required')) {
+        @if ($any(eventForm.controls).action.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>

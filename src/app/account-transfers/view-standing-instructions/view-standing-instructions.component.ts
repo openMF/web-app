@@ -41,7 +41,7 @@ export class ViewStandingInstructionsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { standingInstructionsData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.standingInstructionsData = data.standingInstructionsData;
       if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
         this.allowclientedit = false;

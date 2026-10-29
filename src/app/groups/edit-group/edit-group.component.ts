@@ -66,7 +66,7 @@ export class EditGroupComponent implements OnInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupAndTemplateData: any; groupViewData: any }) => {
+    this.route.data.subscribe((data) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate =
@@ -146,7 +146,7 @@ export class EditGroupComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupService.updateGroup(data, this.groupData.id).subscribe((response: any) => {
+    this.groupService.updateGroup(data, this.groupData.id).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

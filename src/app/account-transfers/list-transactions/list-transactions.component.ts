@@ -79,7 +79,7 @@ export class ListTransactionsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { listTransactionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);
       this.dataSource.paginator = this.paginator;

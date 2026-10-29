@@ -149,7 +149,7 @@ export class GeneralTabComponent {
         this.groupSummary = data.groupSummary[0];
       }
     );
-    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.groupViewData = data.groupViewData;
       this.groupClientMembers = data.groupViewData.clientMembers;
     });
@@ -172,7 +172,7 @@ export class GeneralTabComponent {
    * Refreshes group account data from backend (for GSIM/GLIM status/balance update)
    */
   refreshAccounts(groupId: string) {
-    this.groupsService.getGroupAccountsData(groupId).subscribe((data: any) => {
+    this.groupsService.getGroupAccountsData(groupId).subscribe((data) => {
       this.groupAccountData = data;
       this.savingAccounts = data.savingsAccounts;
       this.loanAccounts = data.loanAccounts;

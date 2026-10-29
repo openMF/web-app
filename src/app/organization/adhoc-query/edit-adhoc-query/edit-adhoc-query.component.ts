@@ -46,7 +46,7 @@ export class EditAdhocQueryComponent implements OnInit {
   reportRunFrequencyData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { adhocQueryAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.adhocQueryTemplateData = data.adhocQueryAndTemplate;
     });
   }

@@ -65,11 +65,9 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.parent.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsData: any }) => {
-        this.loansAccountId = data.loanDetailsData.accountNo;
-      });
+    this.route.parent.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loansAccountId = data.loanDetailsData.accountNo;
+    });
   }
 
   ngOnInit() {
@@ -106,7 +104,7 @@ export class ExportTransactionsComponent implements OnInit {
     };
     this.reportsService
       .getPentahoRunReportData('Client Loan Account Schedule', data, 'default', 'en', dateFormat)
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], { type: contentType });
         const filecontent = URL.createObjectURL(file);

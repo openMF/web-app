@@ -65,11 +65,9 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.parent.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountData: any }) => {
-        this.savingsAccountId = data.savingsAccountData.accountNo;
-      });
+    this.route.parent.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.savingsAccountId = data.savingsAccountData.accountNo;
+    });
   }
 
   ngOnInit() {
@@ -114,7 +112,7 @@ export class ExportTransactionsComponent implements OnInit {
         this.settingsService.language.code,
         this.settingsService.dateFormat
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], { type: contentType });
         const filecontent = URL.createObjectURL(file);

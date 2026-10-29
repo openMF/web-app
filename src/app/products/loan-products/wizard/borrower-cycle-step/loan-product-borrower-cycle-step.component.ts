@@ -269,7 +269,7 @@ export class LoanProductBorrowerCycleStepComponent implements OnInit {
 
   add(section: VariationSection): void {
     const dialogRef = this.dialog.open(FormDialogComponent, { data: this.dialogData(section) });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.variations[section.key].push(response.data);
         this.emit();
@@ -283,7 +283,7 @@ export class LoanProductBorrowerCycleStepComponent implements OnInit {
       layout: { addButtonText: 'Edit' }
     };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.variations[section.key].at(index).patchValue(response.data.value);
         this.emit();
@@ -298,7 +298,7 @@ export class LoanProductBorrowerCycleStepComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Variations') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.variations[section.key].removeAt(index);
         this.emit();

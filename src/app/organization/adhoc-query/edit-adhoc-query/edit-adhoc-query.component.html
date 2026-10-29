@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (editAdhocQueryForm.controls.name.hasError('required')) {
+            @if ($any(editAdhocQueryForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,7 +25,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.SQL Query' | translate }}</mat-label>
             <textarea matInput required formControlName="query"></textarea>
-            @if (editAdhocQueryForm.controls.query.hasError('required')) {
+            @if ($any(editAdhocQueryForm.controls).query.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.SQL Query' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -36,7 +36,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Insert into table' | translate }}</mat-label>
             <input matInput required formControlName="tableName" />
-            @if (editAdhocQueryForm.controls.tableName.hasError('required')) {
+            @if ($any(editAdhocQueryForm.controls).tableName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Insert into table' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -47,7 +47,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Table Fields' | translate }}</mat-label>
             <textarea matInput required formControlName="tableFields"></textarea>
-            @if (editAdhocQueryForm.controls.tableFields.hasError('required')) {
+            @if ($any(editAdhocQueryForm.controls).tableFields.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Table Fields' | translate }} {{ 'labels.commons.are' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -58,7 +58,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
             <input matInput formControlName="email" />
-            @if (editAdhocQueryForm.controls.email.hasError('email')) {
+            @if ($any(editAdhocQueryForm.controls).email.hasError('email')) {
               <mat-error>
                 {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.invalid' | translate }}</strong>
@@ -77,17 +77,17 @@
             </mat-select>
           </mat-form-field>
 
-          @if (editAdhocQueryForm.controls.reportRunFrequency.value === 5) {
+          @if ($any(editAdhocQueryForm.controls).reportRunFrequency.value === 5) {
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Custom Report Run Frequency (Days)' | translate }}</mat-label>
               <input type="number" matInput required formControlName="reportRunEvery" />
-              @if (editAdhocQueryForm.controls.reportRunEvery.hasError('required')) {
+              @if ($any(editAdhocQueryForm.controls).reportRunEvery.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Custom Report Run Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (editAdhocQueryForm.controls.reportRunEvery.hasError('min')) {
+              @if ($any(editAdhocQueryForm.controls).reportRunEvery.hasError('min')) {
                 <mat-error>
                   {{ 'labels.inputs.Custom Report Run Frequency' | translate }}
                   <strong>{{ 'labels.commons.must be larger than 0' | translate }}</strong>

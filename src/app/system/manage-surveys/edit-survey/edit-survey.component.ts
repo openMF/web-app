@@ -73,7 +73,7 @@ export class EditSurveyComponent {
    */
   constructor() {
     this.createSurveyForm();
-    this.route.data.subscribe((data: { survey: any }) => {
+    this.route.data.subscribe((data) => {
       this.prepareSurveyForm(data.survey);
     });
   }
@@ -266,7 +266,7 @@ export class EditSurveyComponent {
    */
   cancelSurvey() {
     const cancelSurveyDialogRef = this.dialog.open(CancelDialogComponent);
-    cancelSurveyDialogRef.afterClosed().subscribe((response: any) => {
+    cancelSurveyDialogRef.afterClosed().subscribe((response) => {
       if (response.cancel) {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
@@ -299,7 +299,7 @@ export class EditSurveyComponent {
     });
     this.systemService
       .editSurvey(this.route.snapshot.paramMap.get('id'), this.surveyForm.value)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

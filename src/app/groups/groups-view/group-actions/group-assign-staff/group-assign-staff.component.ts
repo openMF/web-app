@@ -48,7 +48,7 @@ export class GroupAssignStaffComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.groupData = data.groupActionData;
     });
   }

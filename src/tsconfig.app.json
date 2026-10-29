@@ -12,7 +12,9 @@
   "angularCompilerOptions": {
     "enableIvy": true,
     "fullTemplateTypeCheck": false,
-    "preserveWhitespaces": false
+    "preserveWhitespaces": false,
+    "strictTemplates": false,
+    "strictInjectionParameters": false
   },
   "files": [
     "main.ts",

@@ -64,7 +64,7 @@ export class EditCenterComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor() {
-    this.route.data.subscribe((data: { centerData: any }) => {
+    this.route.data.subscribe((data) => {
       this.centerData = data.centerData;
       this.staffs = this.centerData.staffOptions;
     });

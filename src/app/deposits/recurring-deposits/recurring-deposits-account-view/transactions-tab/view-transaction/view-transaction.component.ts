@@ -66,7 +66,7 @@ export class ViewTransactionComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }) => {
+    this.route.data.subscribe((data) => {
       this.transactionData = data.recurringDepositsAccountTransaction;
     });
   }
@@ -84,7 +84,7 @@ export class ViewTransactionComponent {
         )
       }
     });
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;

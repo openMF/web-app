@@ -107,7 +107,7 @@ export class CreateTransferFeeComponent implements OnInit {
   }
 
   private loadCurrencyOptions(): void {
-    this.organizationService.getCurrencies().subscribe((currenciesData: any) => {
+    this.organizationService.getCurrencies().subscribe((currenciesData) => {
       this.currencyOptions = currenciesData?.selectedCurrencyOptions || [];
       this.changeDetectorRef.markForCheck();
     });

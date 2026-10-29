@@ -112,8 +112,8 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.fixedDepositsAccountTemplate.clientId;
-    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
+    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId) => {
+      this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response) => {
         this.fixedDepositsAccountProductTemplate.emit(response);
         this.isProductSelected = true;
         this.fieldOfficerData = response.fieldOfficerOptions;

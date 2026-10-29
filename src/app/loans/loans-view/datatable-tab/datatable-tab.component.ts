@@ -51,7 +51,7 @@ export class DatatableTabComponent implements OnInit {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('loanId');
     this.entityDatatable = null;
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDatatable = data.loanDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
       this.changeDetectorRef.markForCheck();

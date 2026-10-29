@@ -50,7 +50,7 @@ export class CreateProductMixComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { productsMixTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.productsMixTemplateData = data.productsMixTemplate;
     });
   }
@@ -87,7 +87,7 @@ export class CreateProductMixComponent implements OnInit {
     this.productMixForm.get('productId').valueChanges.subscribe((productId) => {
       this.productData = undefined;
       this.productMixForm.get('restrictedProducts').reset();
-      this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData: any) => {
+      this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData) => {
         const restrictedProductsData = productMixTemplateData.restrictedProducts;
         this.productData = [
           ...restrictedProductsData,
@@ -109,7 +109,7 @@ export class CreateProductMixComponent implements OnInit {
       restrictedProducts: this.productMixForm.value.restrictedProducts
     };
     const productMixId = this.productMixForm.value.productId;
-    this.productsService.createProductMix(productMix, productMixId).subscribe((response: any) => {
+    this.productsService.createProductMix(productMix, productMixId).subscribe((response) => {
       this.router.navigate(
         [
           '../',

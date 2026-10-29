@@ -101,7 +101,7 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
     const request = this.isWorkingCapital
       ? this.loanService.applyWorkingCapitalLoanActionCommand(this.loanId, data, 'creditBalanceRefund')
       : this.loanService.submitLoanActionButton(this.loanId, data, this.dataObject.type.code.split('.')[1]);
-    request.subscribe((_response: any) => {
+    request.subscribe((_response) => {
       this.gotoLoanView('transactions');
     });
   }

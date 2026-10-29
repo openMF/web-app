@@ -64,17 +64,15 @@ export class LoanDeferredIncomeTabComponent {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.capitalizedIncomeData = [];
-    this.route.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDeferredIncomeData: LoanDeferredIncomeData }) => {
-        data.loanDeferredIncomeData.capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
-          this.capitalizedIncomeData.push({
-            amount: item.amount,
-            amortizedAmount: item.amortizedAmount ?? 0,
-            unrecognizedAmount: item.unrecognizedAmount ?? 0,
-            amountAdjustment: item.amountAdjustment ?? 0
-          });
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      data.loanDeferredIncomeData.capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
+        this.capitalizedIncomeData.push({
+          amount: item.amount,
+          amortizedAmount: item.amortizedAmount ?? 0,
+          unrecognizedAmount: item.unrecognizedAmount ?? 0,
+          amountAdjustment: item.amountAdjustment ?? 0
         });
       });
+    });
   }
 }

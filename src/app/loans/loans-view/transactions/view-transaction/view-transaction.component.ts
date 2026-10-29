@@ -179,16 +179,14 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
    */
   constructor() {
     super();
-    this.route.parent?.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsAssociationData?: any }) => {
-        this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
-        this.loanScheduleType = data.loanDetailsAssociationData?.loanScheduleType ?? null;
-        this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
-        this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
-        this.refreshDiscountFeeAdjustment();
-      });
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansAccountTransaction: any }) => {
+    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
+      this.loanScheduleType = data.loanDetailsAssociationData?.loanScheduleType ?? null;
+      this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
+      this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
+      this.refreshDiscountFeeAdjustment();
+    });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.transactionData = data.loansAccountTransaction;
       if (this.loanProductService.isWorkingCapital) {
         this.transactionData.date = this.transactionData.transactionDate;
@@ -362,7 +360,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       this.openReversalDialog('labels.heading.Undo Transaction', 'labels.buttons.Undo')
         .afterClosed()
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           if (!response?.data) {
             return;
           }
@@ -391,7 +389,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
             `${this.transactionData.id}`
         }
       });
-      undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
         if (response?.confirm) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;
@@ -445,7 +443,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     this.openReversalDialog('labels.heading.Reverse Transaction', 'labels.buttons.Reverse')
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         if (!response?.data) {
           return;
         }
@@ -485,7 +483,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       })
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response: { confirm: boolean }) => {
+      .subscribe((response) => {
         if (!response?.confirm) {
           return;
         }
@@ -557,7 +555,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       formfields: formfields
     };
     const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
-    chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
+    chargebackDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         if (response.data.value.amount <= this.amountRelationsAllowed) {
           const locale = this.settingsService.language.code;

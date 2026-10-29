@@ -19,7 +19,7 @@
           placeholder="{{ 'labels.inputs.First Name' | translate }}"
           [attr.title]="'labels.inputs.First Name' | translate"
         />
-        @if (addFamilyMemberForm.controls.firstName.hasError('required')) {
+        @if ($any(addFamilyMemberForm.controls).firstName.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -48,7 +48,7 @@
           placeholder="{{ 'labels.inputs.Last Name' | translate }}"
           [attr.title]="'labels.inputs.Last Name' | translate"
         />
-        @if (addFamilyMemberForm.controls.lastName.hasError('required')) {
+        @if ($any(addFamilyMemberForm.controls).lastName.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -94,7 +94,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (addFamilyMemberForm.controls.relationshipId.hasError('required')) {
+        @if ($any(addFamilyMemberForm.controls).relationshipId.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -111,7 +111,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (addFamilyMemberForm.controls.genderId.hasError('required')) {
+        @if ($any(addFamilyMemberForm.controls).genderId.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>

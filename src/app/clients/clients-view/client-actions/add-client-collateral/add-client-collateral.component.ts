@@ -54,7 +54,7 @@ export class AddClientCollateralComponent implements OnInit {
    * @param {ProductsService} productsService Products Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientCollateralOptions = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -72,7 +72,7 @@ export class AddClientCollateralComponent implements OnInit {
     this.clientCollateralForm.controls.collateralId.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((collateralId) => {
-        this.productsService.getCollateral(collateralId).subscribe((data: any) => {
+        this.productsService.getCollateral(collateralId).subscribe((data) => {
           this.collateralDetails = data;
           this.clientCollateralForm.patchValue({
             name: data.name,
@@ -85,7 +85,7 @@ export class AddClientCollateralComponent implements OnInit {
       });
     this.clientCollateralForm.controls.quantity.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((quantity: any) => {
+      .subscribe((quantity) => {
         this.clientCollateralForm.patchValue({
           totalValue: this.collateralDetails.basePrice * quantity,
           totalCollateralValue: (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100

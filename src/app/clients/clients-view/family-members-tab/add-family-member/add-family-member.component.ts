@@ -61,7 +61,7 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });
     this.clientId = this.route.parent.parent.snapshot.params['clientId'];
@@ -73,7 +73,7 @@ export class AddFamilyMemberComponent implements OnInit {
     this.addFamilyMemberForm
       .get('dateOfBirth')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((dateOfBirth: any) => {
+      .subscribe((dateOfBirth) => {
         if (dateOfBirth) {
           const age = this.calculateAge(dateOfBirth);
           this.addFamilyMemberForm.get('age').setValue(age);

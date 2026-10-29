@@ -98,13 +98,19 @@ export class CreateClientComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.clientTemplate = data.clientTemplate;
+      this.clientAddressFieldConfig = data.clientAddressFieldConfig;
+      this.setDatatables();
+    });
+  }
+
+  ngOnInit(): void {
+    // Re-evaluate @if (areFormvalids()) in the template when form validity changes.
+    // OnPush does not automatically re-check the template on RxJS statusChanges.
+    this.clientGeneralStep.createClientForm.statusChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientTemplate: any; clientAddressFieldConfig: any }) => {
-        this.clientTemplate = data.clientTemplate;
-        this.clientAddressFieldConfig = data.clientAddressFieldConfig;
-        this.setDatatables();
-      });
+      .subscribe(() => this.cdr.markForCheck());
   }
 
   /**

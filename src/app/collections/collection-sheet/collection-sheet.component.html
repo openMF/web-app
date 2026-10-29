@@ -26,7 +26,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (collectionSheetForm.controls.officeId.hasError('required')) {
+        @if ($any(collectionSheetForm.controls).officeId.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Branch Office' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -47,7 +47,7 @@
           />
           <mat-datepicker-toggle matSuffix [for]="meetingDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #meetingDatePicker></mat-datepicker>
-          @if (collectionSheetForm.controls.meetingDate.hasError('required')) {
+          @if ($any(collectionSheetForm.controls).meetingDate.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>

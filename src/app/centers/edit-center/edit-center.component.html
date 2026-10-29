@@ -14,13 +14,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (editCenterForm.controls.name.hasError('required')) {
+            @if ($any(editCenterForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Center Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (editCenterForm.controls.name.hasError('pattern')) {
+            @if ($any(editCenterForm.controls).name.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -58,7 +58,7 @@
                 />
                 <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-                @if (editCenterForm.controls.activationDate.hasError('required')) {
+                @if ($any(editCenterForm.controls).activationDate.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>

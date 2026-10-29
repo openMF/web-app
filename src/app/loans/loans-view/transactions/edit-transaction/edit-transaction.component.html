@@ -26,7 +26,7 @@
           />
           <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #dueDatePicker></mat-datepicker>
-          @if (editTransactionForm.controls.transactionDate.hasError('required')) {
+          @if ($any(editTransactionForm.controls).transactionDate.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong> {{ 'labels.commons.required' | translate }} </strong>
@@ -48,7 +48,7 @@
         <mifosx-input-amount
           [currency]="currency"
           [isRequired]="true"
-          [inputFormControl]="editTransactionForm.controls.transactionAmount"
+          [inputFormControl]="$any(editTransactionForm.controls.transactionAmount)"
           [inputLabel]="amountLabel"
           [minVal]="minAmount"
           [allowNegative]="isDeltaMode"
@@ -56,7 +56,7 @@
         </mifosx-input-amount>
 
         @if (isDeltaMode) {
-          @if (editTransactionForm.controls.transactionAmount.hasError('zeroAmount')) {
+          @if ($any(editTransactionForm.controls).transactionAmount.hasError('zeroAmount')) {
             <p class="adjust-note adjust-error">{{ 'labels.text.The adjustment amount cannot be zero' | translate }}</p>
           } @else if (reversesWithoutReplacement) {
             <p class="adjust-note adjust-warning">
@@ -65,7 +65,7 @@
                   | translate
               }}
             </p>
-          } @else if (editTransactionForm.controls.transactionAmount.valid) {
+          } @else if ($any(editTransactionForm.controls).transactionAmount.valid) {
             <p class="adjust-note adjust-hint">
               {{ 'labels.inputs.Resulting Amount' | translate }}:
               {{ resultingAmount | currency: currency?.code : currency?.displaySymbol : '1.2-10' }}

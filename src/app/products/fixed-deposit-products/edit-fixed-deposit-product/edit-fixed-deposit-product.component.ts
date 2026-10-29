@@ -83,7 +83,7 @@ export class EditFixedDepositProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
@@ -166,7 +166,7 @@ export class EditFixedDepositProductComponent {
     delete fixedDepositProduct.advancedAccountingRules;
     this.productsService
       .updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

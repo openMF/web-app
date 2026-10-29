@@ -41,7 +41,7 @@ export class DatatableTabsComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('groupId');
 
-    this.route.data.subscribe((data: { groupDatatable: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityDatatable = data.groupDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

@@ -106,7 +106,7 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { financialActivityAccounts: any }) => {
+    this.route.data.subscribe((data) => {
       this.financialActivityAccountData = data.financialActivityAccounts;
     });
   }

@@ -112,7 +112,7 @@ export class EditTaxGroupComponent implements OnInit {
    * @param {TranslateService} translateService translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroup: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
     });
@@ -161,7 +161,7 @@ export class EditTaxGroupComponent implements OnInit {
       formfields: formfields
     };
     const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
-    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
+    taxComponentDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const val = {
           ...response.data.value,
@@ -210,7 +210,7 @@ export class EditTaxGroupComponent implements OnInit {
       formfields: formfields
     };
     const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
-    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
+    taxComponentDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const updatedTaxComponent = { ...taxComponent, ...response.data.value };
         this.taxComponentsDataSource.splice(this.taxComponentsDataSource.indexOf(taxComponent), 1, updatedTaxComponent);
@@ -242,7 +242,7 @@ export class EditTaxGroupComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.taxComponentsDataSource.splice(index, 1);
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat([]);
@@ -271,7 +271,7 @@ export class EditTaxGroupComponent implements OnInit {
       }
       delete taxComponent.isNew;
     }
-    this.productsService.updateTaxGroup(this.taxGroupData.id, taxGroup).subscribe((response: any) => {
+    this.productsService.updateTaxGroup(this.taxGroupData.id, taxGroup).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

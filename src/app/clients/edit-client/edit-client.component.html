@@ -25,7 +25,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (editClientForm.controls.officeId.hasError('required')) {
+            @if ($any(editClientForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -92,7 +92,7 @@
                 [placeholder]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
                 [title]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
               />
-              @if (editClientForm.controls.fullname.hasError('required')) {
+              @if ($any(editClientForm.controls).fullname.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -111,7 +111,7 @@
                 [placeholder]="'labels.inputs.First Name' | translate"
                 [title]="'labels.inputs.First Name' | translate"
               />
-              @if (editClientForm.controls.firstname.hasError('required')) {
+              @if ($any(editClientForm.controls).firstname.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -142,7 +142,7 @@
                 [placeholder]="'labels.inputs.Last Name' | translate"
                 [title]="'labels.inputs.Last Name' | translate"
               />
-              @if (editClientForm.controls.lastname.hasError('required')) {
+              @if ($any(editClientForm.controls).lastname.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -308,7 +308,7 @@
               [placeholder]="'labels.inputs.Email Address' | translate"
               [title]="'labels.inputs.Email Address' | translate"
             />
-            @if (editClientForm.controls.emailAddress.errors?.email) {
+            @if ($any(editClientForm.controls).emailAddress.errors?.email) {
               <mat-error>{{ 'errors.validation.emailInvalid' | translate }}</mat-error>
             }
           </mat-form-field>
@@ -653,7 +653,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            @if (editClientForm.controls.submittedOnDate.hasError('required')) {
+            @if ($any(editClientForm.controls).submittedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Submitted Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

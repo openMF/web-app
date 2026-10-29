@@ -129,7 +129,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { funds: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.fundsData = data.funds;
     });
   }
@@ -168,7 +168,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
     this.organizationservice
       .createFund(newFund)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.fundsData.push({
           id: response.resourceId,
           name: newFund.name
@@ -203,7 +203,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
       formfields: formfields
     };
     const editFundDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editFundDialogRef.afterClosed().subscribe((response: any) => {
+    editFundDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.organizationservice
           .editFund(fundId, response.data.value)
@@ -267,7 +267,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
         stepName: 'fund'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showManageFunds = false;
         this.router.navigate(['../'], { relativeTo: this.route });

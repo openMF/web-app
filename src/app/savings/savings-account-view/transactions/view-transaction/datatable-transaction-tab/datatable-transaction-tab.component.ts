@@ -34,7 +34,7 @@ export class DatatableTransactionTabComponent {
   multiRowDatatableFlag: boolean;
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('id');
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { transactionDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDatatable = data.transactionDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

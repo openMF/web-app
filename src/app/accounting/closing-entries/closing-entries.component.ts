@@ -121,7 +121,7 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any; glAccountClosures: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
       this.glAccountClosureData = data.glAccountClosures;
     });
@@ -140,7 +140,7 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * Filters data in closing entries table based on office name.
    */
   applyFilter() {
-    this.officeName.valueChanges.subscribe((filterValue: string) => {
+    this.officeName.valueChanges.subscribe((filterValue) => {
       this.dataSource.filter = filterValue.trim().toLowerCase();
     });
   }

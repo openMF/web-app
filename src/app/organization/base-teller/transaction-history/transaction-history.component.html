@@ -119,7 +119,7 @@
           <mat-form-field>
             <mat-label>{{ 'transactionHistory.fields.reference' | translate }}</mat-label>
             <input matInput formControlName="reference" maxlength="200" />
-            @if (filtersForm.controls.reference.hasError('maxlength')) {
+            @if ($any(filtersForm.controls).reference.hasError('maxlength')) {
               <mat-error>{{ 'transactionHistory.validation.referenceLength' | translate }}</mat-error>
             }
           </mat-form-field>

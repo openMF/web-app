@@ -41,7 +41,7 @@ export class CreateBreachConfigurationComponent implements OnInit {
   breachAmountCalculationTypeOptions: StringEnumOptionData[] = [];
 
   constructor() {
-    this.route.data.subscribe((data: { breachTemplate?: any }) => {
+    this.route.data.subscribe((data) => {
       const breachTemplate = data.breachTemplate ?? {};
       this.breachFrequencyTypeOptions = breachTemplate.breachFrequencyTypeOptions || [];
       this.breachAmountCalculationTypeOptions = breachTemplate.breachAmountCalculationTypeOptions || [];

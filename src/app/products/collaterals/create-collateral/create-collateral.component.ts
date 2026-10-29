@@ -51,8 +51,8 @@ export class CreateCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { collateralTemplate: any }) => {
-      this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
+    this.route.data.subscribe((data) => {
+      this.organizationService.getCurrencies().subscribe((orgCurrencies) => {
         let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)
           ? orgCurrencies.selectedCurrencyOptions
           : [];
@@ -112,7 +112,7 @@ export class CreateCollateralComponent implements OnInit {
       ...collateralFormData,
       locale
     };
-    this.productsService.createCollateral(data).subscribe((response: any) => {
+    this.productsService.createCollateral(data).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
