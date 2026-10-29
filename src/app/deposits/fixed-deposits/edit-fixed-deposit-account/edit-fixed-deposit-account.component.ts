@@ -86,7 +86,7 @@ export class EditFixedDepositAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });
   }
@@ -174,7 +174,7 @@ export class EditFixedDepositAccountComponent {
     };
     this.fixedDepositsService
       .updateFixedDepositAccount(this.fixedDepositsAccountAndTemplate.id, fixedDepositAccount)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

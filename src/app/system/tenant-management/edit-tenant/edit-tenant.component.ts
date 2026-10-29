@@ -126,7 +126,7 @@ export class EditTenantComponent implements OnInit {
   ngOnInit(): void {
     this.tenantManagementService.getTemplate().subscribe((template) => this.timezones.set(template.timezones ?? []));
 
-    this.tenantManagementService.getTenant(this.tenantId).subscribe((tenant: Tenant) => {
+    this.tenantManagementService.getTenant(this.tenantId).subscribe((tenant) => {
       this.tenant.set(tenant);
       this.tenantForm.patchValue({
         name: tenant.name,

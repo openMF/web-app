@@ -154,7 +154,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { columnCodes: any }) => {
+    this.route.data.subscribe((data) => {
       this.dataForDialog.columnCodes = data.columnCodes;
     });
   }
@@ -165,7 +165,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.createDataTableForm();
     this.setColumns();
-    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value) => {
       this.showEntitySubType = value === 'm_client';
       this.showSavingsSubType = value === 'm_savings_product';
     });
@@ -215,7 +215,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       height: '450px',
       width: '400px'
     });
-    addColumnDialogRef.afterClosed().subscribe((response: any) => {
+    addColumnDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.columnData.push({
           columnName: response.name,
@@ -250,7 +250,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       height: '450px',
       width: '400px'
     });
-    editColumnDialogRef.afterClosed().subscribe((response: any) => {
+    editColumnDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.columnData[this.columnData.findIndex((newColumn) => newColumn.columnName === column.columnName)] = {
           columnName: response.name,
@@ -275,7 +275,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Column') + ' ' + column.name }
     });
-    deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
+    deleteColumnDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.columnData.splice(this.columnData.indexOf(column), 1);
         this.dataSource.connect().next(this.columnData);
@@ -305,7 +305,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     if (this.dataTableForm.value.entitySubType == null || this.dataTableForm.value.entitySubType === '') {
       delete payload.entitySubType;
     }
-    this.systemService.createDataTable(payload).subscribe((response: any) => {
+    this.systemService.createDataTable(payload).subscribe((response) => {
       if (this.configurationWizardService.showDatatablesForm) {
         this.configurationWizardService.showDatatablesForm = false;
         this.openDialog();
@@ -375,7 +375,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
         stepName: 'data table'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showDatatablesForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

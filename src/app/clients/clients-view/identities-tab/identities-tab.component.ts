@@ -199,13 +199,11 @@ export class IdentitiesTabComponent implements OnDestroy {
    */
   constructor() {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
-        this.clientIdentities = data.clientIdentities;
-        this.clientIdentifierTemplate = data.clientIdentifierTemplate;
-        this.prefetchThumbnails();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.clientIdentities = data.clientIdentities;
+      this.clientIdentifierTemplate = data.clientIdentifierTemplate;
+      this.prefetchThumbnails();
+    });
   }
 
   ngOnDestroy(): void {
@@ -245,7 +243,7 @@ export class IdentitiesTabComponent implements OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response) {
         const identifierData = this.buildIdentifierPayload(response, true);
 
@@ -341,7 +339,7 @@ export class IdentitiesTabComponent implements OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe((response: ClientIdentifierDialogResult | undefined) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response) {
         const identifierData = this.buildIdentifierPayload(response, false);
         this.clientService.editClientIdentifier(this.clientId, identity.id, identifierData).subscribe({
@@ -402,7 +400,7 @@ export class IdentitiesTabComponent implements OnDestroy {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}` }
     });
-    deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
+    deleteIdentifierDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe((res) => {
           this.clientIdentities.splice(index, 1);

@@ -33,7 +33,7 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { loanProduct: any }) => {
+    this.route.data.subscribe((data) => {
       this.loanProduct = data.loanProduct;
       this.useDueForRepaymentsConfigurations =
         !this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent;

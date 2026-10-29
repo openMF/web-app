@@ -157,7 +157,7 @@
                 <th mat-header-cell *matHeaderCellDef>{{ 'cashInventory.columns.balance' | translate }}</th>
                 <td mat-cell *matCellDef="let row" class="balance-cell">
                   <strong>{{ row.balance | number: digitsInfo(row) }} {{ row.currencyCode }}</strong>
-                  @if (filterForm.controls.showLastCutOff.value && row.lastCutOffAt) {
+                  @if ($any(filterForm.controls).showLastCutOff.value && row.lastCutOffAt) {
                     <small>
                       {{ 'cashInventory.lastCutOff' | translate }}: {{ row.lastCutOffAt | date: 'short' }}
                       @if (row.lastCutOffAmount !== null) {

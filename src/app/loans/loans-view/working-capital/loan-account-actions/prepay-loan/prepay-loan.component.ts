@@ -171,7 +171,7 @@ export class WorkingCapitalPrepayLoanComponent extends LoanAccountActionsBaseCom
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((template: WorkingCapitalPrepaymentTemplate | null) => {
+      .subscribe((template) => {
         this.isQuoteLoading = false;
         this.isQuoteStale = !template;
         if (template) {

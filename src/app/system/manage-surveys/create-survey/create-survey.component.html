@@ -15,7 +15,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Key' | translate }}</mat-label>
               <input matInput maxlength="32" required formControlName="key" />
-              @if (surveyForm.controls.key.hasError('required')) {
+              @if ($any(surveyForm.controls).key.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Key' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -26,7 +26,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
               <input matInput maxlength="255" required formControlName="name" />
-              @if (surveyForm.controls.name.hasError('required')) {
+              @if ($any(surveyForm.controls).name.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,13 +37,13 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Country Code' | translate }}</mat-label>
               <input matInput maxlength="2" required formControlName="countryCode" />
-              @if (surveyForm.controls.countryCode.hasError('required')) {
+              @if ($any(surveyForm.controls).countryCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Country Code' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (surveyForm.controls.countryCode.hasError('pattern')) {
+              @if ($any(surveyForm.controls).countryCode.hasError('pattern')) {
                 <mat-error>
                   {{ 'labels.inputs.Country Code' | translate }}
                   <strong>{{ 'labels.commons.must consist of 2 alphabetic characters' | translate }}</strong>
@@ -93,7 +93,7 @@
                     mat-raised-button
                     color="warn"
                     (click)="removeQuestion(questionIndex)"
-                    [disabled]="questionDatas.controls.length === 1"
+                    [disabled]="$any(questionDatas.controls).length === 1"
                   >
                     <fa-icon icon="trash" class="m-r-10"></fa-icon>
                     {{ 'labels.buttons.Delete' | translate }} {{ 'labels.heading.Question' | translate }}
@@ -102,7 +102,7 @@
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Key' | translate }}</mat-label>
                   <input matInput maxlength="32" required formControlName="key" />
-                  @if (question.controls.key.hasError('required')) {
+                  @if ($any(question.controls).key.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Key' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -112,7 +112,7 @@
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Text' | translate }}</mat-label>
                   <input matInput maxlength="255" required formControlName="text" />
-                  @if (question.controls.text.hasError('required')) {
+                  @if ($any(question.controls).text.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Text' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -156,7 +156,7 @@
                         <mat-form-field class="flex-43">
                           <mat-label>{{ 'labels.inputs.Text' | translate }}</mat-label>
                           <input matInput required formControlName="text" />
-                          @if (response.controls.text.hasError('required')) {
+                          @if ($any(response.controls).text.hasError('required')) {
                             <mat-error>
                               {{ 'labels.inputs.Text' | translate }} {{ 'labels.commons.is' | translate }}
                               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -166,13 +166,13 @@
                         <mat-form-field class="flex-43">
                           <mat-label>{{ 'labels.inputs.Value' | translate }}</mat-label>
                           <input matInput required formControlName="value" />
-                          @if (response.controls.value.hasError('required')) {
+                          @if ($any(response.controls).value.hasError('required')) {
                             <mat-error>
                               {{ 'labels.inputs.Value' | translate }} {{ 'labels.commons.is' | translate }}
                               <strong>{{ 'labels.commons.required' | translate }}</strong>
                             </mat-error>
                           }
-                          @if (response.controls.value.hasError('pattern')) {
+                          @if ($any(response.controls).value.hasError('pattern')) {
                             <mat-error>
                               {{ 'labels.inputs.Value' | translate }}
                               <strong>{{

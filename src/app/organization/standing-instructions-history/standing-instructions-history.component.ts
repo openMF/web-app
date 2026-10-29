@@ -114,11 +114,9 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { standingInstructionsTemplate: any }) => {
-        this.standingInstructionsTemplate = data.standingInstructionsTemplate;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.standingInstructionsTemplate = data.standingInstructionsTemplate;
+    });
   }
 
   ngOnInit() {
@@ -187,7 +185,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
     this.organizationService
       .getStandingInstructions(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.setInstructions(response.pageItems);
       });
   }

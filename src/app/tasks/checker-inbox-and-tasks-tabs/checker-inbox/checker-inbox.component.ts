@@ -169,15 +169,13 @@ export class CheckerInboxComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { makerCheckerResource: MakerCheckerRecord[]; makerCheckerTemplate: any }) => {
-        this.searchData = data.makerCheckerResource || [];
-        this.checkerData = this.searchData.length > 0;
-        this.makerCheckerTemplate = data.makerCheckerTemplate;
-        this.dataSource = new MatTableDataSource(this.searchData);
-        this.selection = new SelectionModel(true, []);
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.searchData = data.makerCheckerResource || [];
+      this.checkerData = this.searchData.length > 0;
+      this.makerCheckerTemplate = data.makerCheckerTemplate;
+      this.dataSource = new MatTableDataSource(this.searchData);
+      this.selection = new SelectionModel(true, []);
+    });
   }
 
   ngOnInit() {
@@ -322,7 +320,7 @@ export class CheckerInboxComponent implements OnInit {
           ` (${this.selection.selected.length})`
       }
     });
-    approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    approveCheckerDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm && this.selection.hasValue()) {
         this.bulkCheckerApproveorReject('approve');
       }
@@ -338,7 +336,7 @@ export class CheckerInboxComponent implements OnInit {
           ` (${this.selection.selected.length})`
       }
     });
-    rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    rejectCheckerDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm && this.selection.hasValue()) {
         this.bulkCheckerApproveorReject('reject');
       }
@@ -353,7 +351,7 @@ export class CheckerInboxComponent implements OnInit {
           'The selected pending checker item(s) will be removed. Unlike approval or rejection, deletion does not retain equivalent maker-checker audit information.'
       }
     });
-    deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    deleteCheckerDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm && this.selection.hasValue()) {
         this.bulkDeleteChecker();
       }
@@ -392,7 +390,7 @@ export class CheckerInboxComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         })
       )
-      .subscribe((results: BulkActionOutcome[]) => {
+      .subscribe((results) => {
         const failed = results.filter(this.isFailedOutcome).map((result) => ({
           id: result.item.id,
           error: this.bulkErrorMessage(result.error)

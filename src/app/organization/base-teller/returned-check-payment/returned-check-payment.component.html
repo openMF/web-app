@@ -26,7 +26,7 @@
                   <input matInput [matDatepicker]="searchDatePicker" [max]="maxDate" formControlName="date" required />
                   <mat-datepicker-toggle matSuffix [for]="searchDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #searchDatePicker></mat-datepicker>
-                  @if (searchForm.controls.date.hasError('required')) {
+                  @if ($any(searchForm.controls).date.hasError('required')) {
                     <mat-error>{{ 'labels.inputs.Date is required' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -34,7 +34,7 @@
                 <mat-form-field>
                   <mat-label>{{ 'labels.inputs.Customer Name' | translate }}</mat-label>
                   <input matInput formControlName="customerName" required />
-                  @if (searchForm.controls.customerName.hasError('required')) {
+                  @if ($any(searchForm.controls).customerName.hasError('required')) {
                     <mat-error>{{ 'labels.inputs.Customer Name is required' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -46,7 +46,7 @@
                       <mat-option [value]="teller.id">{{ teller.name || teller.value || teller.id }}</mat-option>
                     }
                   </mat-select>
-                  @if (searchForm.controls.tellerId.hasError('required')) {
+                  @if ($any(searchForm.controls).tellerId.hasError('required')) {
                     <mat-error>{{ 'labels.inputs.Teller is required' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -60,7 +60,7 @@
                       </mat-option>
                     }
                   </mat-select>
-                  @if (searchForm.controls.currencyCode.hasError('required')) {
+                  @if ($any(searchForm.controls).currencyCode.hasError('required')) {
                     <mat-error>{{ 'labels.inputs.Currency is required' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -74,10 +74,10 @@
                   [disabled]="
                     isSearching ||
                     isLoadingOptions ||
-                    searchForm.controls.date.invalid ||
-                    searchForm.controls.customerName.invalid ||
-                    searchForm.controls.tellerId.invalid ||
-                    searchForm.controls.currencyCode.invalid
+                    $any(searchForm.controls).date.invalid ||
+                    $any(searchForm.controls).customerName.invalid ||
+                    $any(searchForm.controls).tellerId.invalid ||
+                    $any(searchForm.controls).currencyCode.invalid
                   "
                 >
                   @if (isSearching) {
@@ -148,7 +148,7 @@
                     <tr
                       mat-row
                       *matRowDef="let row; columns: displayedColumns"
-                      [class.selected-row]="searchForm.controls.selectedCheckId.value === row.id"
+                      [class.selected-row]="$any(searchForm.controls).selectedCheckId.value === row.id"
                     ></tr>
                   </table>
                 </div>
@@ -250,7 +250,7 @@
                       <mat-form-field>
                         <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
                         <input type="number" matInput formControlName="quantity" min="0" step="1" required />
-                        @if (denomination.controls.quantity.hasError('pattern')) {
+                        @if ($any(denomination.controls).quantity.hasError('pattern')) {
                           <mat-error>{{ 'labels.text.Quantity must be a whole number' | translate }}</mat-error>
                         }
                       </mat-form-field>

@@ -106,7 +106,7 @@ export class RejectSharesComponent implements OnInit {
    */
   constructor() {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }
@@ -138,7 +138,7 @@ export class RejectSharesComponent implements OnInit {
     const rejectSharesDialogRef = this.dialog.open(RejectShareDialogComponent, {
       data: { shareId: id }
     });
-    rejectSharesDialogRef.afterClosed().subscribe((response: any) => {
+    rejectSharesDialogRef.afterClosed().subscribe((response) => {
       if (response.reject) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;

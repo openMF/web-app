@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createEntityForm.controls.entity.hasError('required')) {
+            @if ($any(createEntityForm.controls).entity.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createEntityForm.controls.status.hasError('required')) {
+            @if ($any(createEntityForm.controls).status.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createEntityForm.controls.datatableName.hasError('required')) {
+            @if ($any(createEntityForm.controls).datatableName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Data Table' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -72,7 +72,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (createEntityForm.controls.productId.hasError('required')) {
+              @if ($any(createEntityForm.controls).productId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -91,7 +91,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (createEntityForm.controls.productId.hasError('required')) {
+              @if ($any(createEntityForm.controls).productId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

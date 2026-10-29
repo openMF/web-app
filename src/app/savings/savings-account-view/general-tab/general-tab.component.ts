@@ -42,7 +42,7 @@ export class GeneralTabComponent {
   currency: Currency;
 
   constructor() {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent.parent.data.subscribe((data) => {
       this.savingsAccountData = data.savingsAccountData;
       this.currency = this.savingsAccountData.currency;
       this.isLoading = false;

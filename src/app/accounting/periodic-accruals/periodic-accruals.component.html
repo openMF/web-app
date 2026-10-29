@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="tillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #tillDatePicker></mat-datepicker>
-            @if (periodicAccrualsForm.controls.tillDate.hasError('required')) {
+            @if ($any(periodicAccrualsForm.controls).tillDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Accrue Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

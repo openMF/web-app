@@ -31,7 +31,7 @@ export class FixedDepositDatatableTabComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('productId');
 
-    this.route.data.subscribe((data: { fixedDepositDatatable: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityDatatable = data.fixedDepositDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

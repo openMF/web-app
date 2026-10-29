@@ -59,7 +59,7 @@ export class EditPaymentTypeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { paymentType: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.paymentTypeData = data.paymentType;
       this.isSystemDefined = data.paymentType.isSystemDefined;
     });

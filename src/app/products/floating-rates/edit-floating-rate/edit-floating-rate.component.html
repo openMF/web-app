@@ -19,7 +19,7 @@
               matTooltip="{{ 'tooltips.Unique name for the floating rate scheme' | translate }}"
               formControlName="name"
             />
-            @if (floatingRateForm.controls.name.hasError('required')) {
+            @if ($any(floatingRateForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Floating Rate Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

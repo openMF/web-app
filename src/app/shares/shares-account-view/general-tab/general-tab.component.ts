@@ -38,7 +38,7 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountData = data.sharesAccountData;
     });
   }

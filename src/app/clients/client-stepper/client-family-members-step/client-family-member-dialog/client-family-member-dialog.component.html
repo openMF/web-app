@@ -13,7 +13,7 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
       <input formControlName="firstName" required matInput />
-      @if (familyMemberForm.controls.firstName.hasError('required')) {
+      @if ($any(familyMemberForm.controls).firstName.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -29,7 +29,7 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
       <input formControlName="lastName" required matInput />
-      @if (familyMemberForm.controls.lastName.hasError('required')) {
+      @if ($any(familyMemberForm.controls).lastName.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -60,7 +60,7 @@
           </mat-option>
         }
       </mat-select>
-      @if (familyMemberForm.controls.relationshipId.hasError('required')) {
+      @if ($any(familyMemberForm.controls).relationshipId.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -77,7 +77,7 @@
           </mat-option>
         }
       </mat-select>
-      @if (familyMemberForm.controls.genderId.hasError('required')) {
+      @if ($any(familyMemberForm.controls).genderId.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

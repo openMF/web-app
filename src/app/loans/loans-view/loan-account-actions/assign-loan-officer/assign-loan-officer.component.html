@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (assignOfficerForm.controls.toLoanOfficerId.hasError('required')) {
+            @if ($any(assignOfficerForm.controls).toLoanOfficerId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="assignOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignOnDatePicker></mat-datepicker>
-            @if (assignOfficerForm.controls.assignmentDate.hasError('required')) {
+            @if ($any(assignOfficerForm.controls).assignmentDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

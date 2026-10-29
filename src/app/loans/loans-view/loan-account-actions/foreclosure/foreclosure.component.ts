@@ -84,7 +84,7 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
       locale: this.settingsService.language.code,
       transactionDate: transactionDateFormatted
     };
-    this.loanService.getForeclosureData(this.loanId, data).subscribe((response: any) => {
+    this.loanService.getForeclosureData(this.loanId, data).subscribe((response) => {
       this.foreclosuredata = response;
 
       this.foreclosureForm.patchValue({
@@ -110,7 +110,7 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
       locale
     };
 
-    this.loanService.loanForclosureData(this.loanId, data).subscribe((response: any) => {
+    this.loanService.loanForclosureData(this.loanId, data).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

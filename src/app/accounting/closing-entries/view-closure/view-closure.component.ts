@@ -49,7 +49,7 @@ export class ViewClosureComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { glAccountClosure: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccountClosure = data.glAccountClosure;
     });
   }
@@ -61,7 +61,7 @@ export class ViewClosureComponent {
     const deleteAccountingClosureDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `accounting closure ${this.glAccountClosure.id}` }
     });
-    deleteAccountingClosureDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAccountingClosureDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountingService.deleteAccountingClosure(this.glAccountClosure.id).subscribe(() => {
           this.router.navigate(['/accounting/closing-entries']);

@@ -126,7 +126,7 @@ export class LoanReamortizeComponent extends LoanAccountActionsBaseComponent imp
 
   submit(): void {
     const data = this.prepareReAmortizeData();
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response) => {
       this.gotoLoanView('transactions');
     });
   }

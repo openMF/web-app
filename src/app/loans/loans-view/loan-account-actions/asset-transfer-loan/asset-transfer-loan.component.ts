@@ -103,7 +103,7 @@ export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent 
     };
     this.externalAssetOwnerService
       .executeExternalAssetOwnerLoanCommand(this.loanId, data, this.command)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.gotoLoanView('external-asset-owner');
       });
   }

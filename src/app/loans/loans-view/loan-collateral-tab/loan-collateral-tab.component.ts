@@ -65,7 +65,7 @@ export class LoanCollateralTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanCollaterals: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanCollaterals = data.loanCollaterals;
     });
   }

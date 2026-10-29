@@ -72,7 +72,7 @@ export class EmailComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { emailConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
   }

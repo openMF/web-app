@@ -111,11 +111,9 @@ export class LoanOriginatorsComponent implements OnInit {
   @ViewChild('templateTableLoanOriginators') templateTableLoanOriginators: TemplateRef<any>;
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanOriginatorsData: LoanOriginator[] }) => {
-        this.loanOriginatorsData = data.loanOriginatorsData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanOriginatorsData = data.loanOriginatorsData;
+    });
   }
 
   /**
@@ -148,7 +146,7 @@ export class LoanOriginatorsComponent implements OnInit {
         deleteContext: this.translateService.instant('labels.inputs.Loan Originator') + ' ' + loanOriginator.name
       }
     });
-    deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCodeDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteLoanOriginator(loanOriginator.id)

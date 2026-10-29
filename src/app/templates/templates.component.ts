@@ -79,7 +79,7 @@ export class TemplatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { templates: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.templatesData = data.templates;
     });
   }

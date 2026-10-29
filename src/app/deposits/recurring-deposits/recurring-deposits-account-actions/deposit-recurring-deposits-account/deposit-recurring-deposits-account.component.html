@@ -29,7 +29,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (depositRecurringDepositForm.controls.transactionDate.hasError('required')) {
+            @if ($any(depositRecurringDepositForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="depositRecurringDepositForm.controls.transactionAmount"
+            [inputFormControl]="$any(depositRecurringDepositForm.controls.transactionAmount)"
             [inputLabel]="'Transaction Amount'"
           >
           </mifosx-input-amount>
@@ -54,7 +54,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (depositRecurringDepositForm.controls.paymentTypeId.hasError('required')) {
+            @if ($any(depositRecurringDepositForm.controls).paymentTypeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

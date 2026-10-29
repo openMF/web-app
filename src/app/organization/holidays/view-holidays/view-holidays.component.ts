@@ -54,7 +54,7 @@ export class ViewHolidaysComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { holidays: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.holidayData = data.holidays;
     });
   }
@@ -66,7 +66,7 @@ export class ViewHolidaysComponent {
     const deleteHolidayDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `holiday ${this.holidayData.id}` }
     });
-    deleteHolidayDialogRef.afterClosed().subscribe((response: any) => {
+    deleteHolidayDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.organizationService
           .deleteHoliday(this.holidayData.id)
@@ -91,7 +91,7 @@ export class ViewHolidaysComponent {
           this.translateService.instant('labels.dialogContext.holiday')
       }
     });
-    unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    unAssignStaffDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.organizationService
           .activateHoliday(this.holidayData.id)

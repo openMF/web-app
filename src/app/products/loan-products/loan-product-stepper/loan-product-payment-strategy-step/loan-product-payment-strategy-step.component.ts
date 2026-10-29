@@ -133,7 +133,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
       formfields: formfields
     };
     const transactionTypeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    transactionTypeDialogRef.afterClosed().subscribe((response: any) => {
+    transactionTypeDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const defaultPaymentAllocation: AdvancedPaymentAllocation = this.advancedPaymentAllocations[0];
         transactionTypesOptions.forEach((transactionType: PaymentAllocationTransactionType) => {

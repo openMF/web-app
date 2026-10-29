@@ -174,7 +174,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
       .open(LogoutDialogComponent)
       .afterClosed()
       .pipe(take(1))
-      .subscribe((confirmed: boolean) => {
+      .subscribe((confirmed) => {
         if (confirmed) {
           this.logout();
         }
@@ -193,7 +193,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    */
   showKeyboardShortcuts() {
     const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
-    dialogRef.afterClosed().subscribe((response: any) => {});
+    dialogRef.afterClosed().subscribe((response) => {});
   }
 
   /**

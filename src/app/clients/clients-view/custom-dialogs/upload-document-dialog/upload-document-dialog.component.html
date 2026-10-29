@@ -30,7 +30,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (uploadDocumentForm.controls.documentTypeId?.hasError('required')) {
+        @if ($any(uploadDocumentForm.controls).documentTypeId?.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Document Type' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -47,7 +47,7 @@
               </mat-option>
             }
           </mat-select>
-          @if (uploadDocumentForm.controls.status?.hasError('required')) {
+          @if ($any(uploadDocumentForm.controls).status?.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -58,7 +58,7 @@
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Document Key' | translate }}</mat-label>
         <input formControlName="documentKey" required matInput />
-        @if (uploadDocumentForm.controls.documentKey?.hasError('required')) {
+        @if ($any(uploadDocumentForm.controls).documentKey?.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Document Key' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -86,7 +86,7 @@
     <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
       <input formControlName="fileName" [required]="fileNameRequired" matInput />
-      @if (uploadDocumentForm.controls.fileName.hasError('required')) {
+      @if ($any(uploadDocumentForm.controls).fileName.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

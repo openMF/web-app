@@ -103,11 +103,9 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
       resolvePaymentAmountCalculationStrategy(loanDetails?.paymentAmountCalculationStrategy) ===
       WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanPaymentRatesData: PeriodPaymentRateChange[] }) => {
-        this.loanPaymentRatesData = data.loanPaymentRatesData;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanPaymentRatesData = data.loanPaymentRatesData;
+    });
   }
 
   addPaymentRate(): void {
@@ -148,7 +146,7 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
       formfields: formfields
     };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const { periodPaymentRate, effectiveDate, note } = response.data.value;
         const payload = {
@@ -158,8 +156,8 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
           dateFormat: this.settingsService.dateFormat,
           locale: this.settingsService.language.code
         };
-        this.loanService.addWorkingCapitalPeriodPaymentRate(this.loanId, payload).subscribe((response: any) => {
-          this.loanService.getWorkingCapitalPeriodPaymentRates(this.loanId).subscribe((data: any) => {
+        this.loanService.addWorkingCapitalPeriodPaymentRate(this.loanId, payload).subscribe((response) => {
+          this.loanService.getWorkingCapitalPeriodPaymentRates(this.loanId).subscribe((data) => {
             this.loanPaymentRatesData = data;
           });
         });

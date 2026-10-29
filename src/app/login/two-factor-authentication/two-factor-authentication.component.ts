@@ -70,7 +70,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    */
   ngOnInit() {
     this.createTwoFactorAuthenticationDeliveryMethodForm();
-    this.authenticationService.getDeliveryMethods().subscribe((deliveryMethods: any) => {
+    this.authenticationService.getDeliveryMethods().subscribe((deliveryMethods) => {
       this.twoFactorAuthenticationDeliveryMethods = deliveryMethods;
       // OnPush: the delivery methods arrive asynchronously, so notify the view to render the options.
       this.changeDetectorRef.markForCheck();
@@ -98,10 +98,10 @@ export class TwoFactorAuthenticationComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         })
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.createTwoFactorAuthenticationForm();
         this.otpRequested = true;
-        this.tokenValidityTime = response.tokenLiveTimeInSec;
+        this.tokenValidityTime = (response as any).tokenLiveTimeInSec;
         // OnPush: reveal the OTP entry field once the OTP has been requested.
         this.changeDetectorRef.markForCheck();
       });

@@ -64,7 +64,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
-            @if (editCashierForm.controls.startDate.hasError('required')) {
+            @if ($any(editCashierForm.controls).startDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -84,7 +84,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
-            @if (editCashierForm.controls.endDate.hasError('required')) {
+            @if ($any(editCashierForm.controls).endDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

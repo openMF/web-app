@@ -24,7 +24,7 @@
               <mat-option [value]="currency"> ({{ currency.code }}) {{ currency.name }} </mat-option>
             }
           </mat-select>
-          @if (currencyForm.controls.currency.hasError('required')) {
+          @if ($any(currencyForm.controls).currency.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -103,7 +103,7 @@ export class CodesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { codes: any }) => {
+    this.route.data.subscribe((data) => {
       this.codesData = data.codes;
     });
   }

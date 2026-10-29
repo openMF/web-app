@@ -92,7 +92,7 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.savingsData = data.savingsAccountData;
     });
   }
@@ -112,7 +112,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     this.savingsService
       .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;
         this.instructionTableRef.renderRows();
@@ -123,7 +123,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
     });
-    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.accountTransfersService
           .deleteStandingInstrucions(instructionId)

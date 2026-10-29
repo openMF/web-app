@@ -71,7 +71,7 @@ export class TenantsDataSource implements DataSource<Tenant> {
         catchError(() => of({ pageItems: [], totalFilteredRecords: 0 } as TenantsPage)),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe((tenants: TenantsPage) => {
+      .subscribe((tenants) => {
         this.recordsSubject.next(tenants.totalFilteredRecords);
         this.tenantsSubject.next(tenants.pageItems);
       });

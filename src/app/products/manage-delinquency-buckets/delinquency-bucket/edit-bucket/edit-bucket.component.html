@@ -14,7 +14,7 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (bucketForm.controls.name.hasError('required')) {
+            @if ($any(bucketForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -26,13 +26,13 @@
             <mat-form-field class="flex-100">
               <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
               <input matInput type="number" required formControlName="frequency" min="1" step="1" />
-              @if (bucketForm.controls.frequency.hasError('required')) {
+              @if ($any(bucketForm.controls).frequency.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (bucketForm.controls.frequency.hasError('pattern')) {
+              @if ($any(bucketForm.controls).frequency.hasError('pattern')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.must be' | translate }}
                   {{ 'labels.commons.a positive number' | translate }}
@@ -49,7 +49,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (bucketForm.controls.frequencyType.hasError('required')) {
+              @if ($any(bucketForm.controls).frequencyType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -60,13 +60,13 @@
             <mat-form-field class="flex-100">
               <mat-label>{{ 'labels.inputs.Minimum Payment' | translate }}</mat-label>
               <input matInput type="number" required formControlName="minimumPayment" min="0.01" />
-              @if (bucketForm.controls.minimumPayment.hasError('required')) {
+              @if ($any(bucketForm.controls).minimumPayment.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Minimum Payment' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (bucketForm.controls.minimumPayment.hasError('pattern')) {
+              @if ($any(bucketForm.controls).minimumPayment.hasError('pattern')) {
                 <mat-error>
                   {{ 'labels.inputs.Minimum Payment' | translate }} {{ 'labels.commons.must be' | translate }}
                   {{ 'labels.commons.a positive number' | translate }}
@@ -83,7 +83,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (bucketForm.controls.minimumPaymentType.hasError('required')) {
+              @if ($any(bucketForm.controls).minimumPaymentType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Minimum Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

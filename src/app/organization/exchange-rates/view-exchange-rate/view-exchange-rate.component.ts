@@ -41,7 +41,7 @@ export class ViewExchangeRateComponent {
   exchangeRateData: ExchangeRate;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { exchangeRate: ExchangeRate }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.exchangeRateData = data.exchangeRate;
     });
   }

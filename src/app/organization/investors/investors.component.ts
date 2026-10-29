@@ -192,7 +192,7 @@ export class InvestorsComponent implements OnInit {
     this.externalAssetOwnerService
       .searchExternalAssetOwnerTransfer(payload)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.totalRows = response.totalElements;
         this.existsDataToFilter = response.totalElements > 0;
         this.dataSource.data = response.content;
@@ -215,7 +215,7 @@ export class InvestorsComponent implements OnInit {
     const deleteDataTableDialogRef = this.dialog.open(CancelDialogComponent, {
       data: { cancelContext: `the Asset Transfer with the Owner External Id ${transfer.owner.externalId} ` }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response.cancel) {
         const payload: any = {
           transferExternalId: transfer.transferExternalId
@@ -223,7 +223,7 @@ export class InvestorsComponent implements OnInit {
         this.externalAssetOwnerService
           .executeExternalAssetOwnerTransferCommand(transfer.transferId, payload, 'cancel')
           .pipe(take(1))
-          .subscribe((result: any) => {
+          .subscribe((result) => {
             this.reload();
           });
       }

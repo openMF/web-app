@@ -51,7 +51,7 @@ export class ViewCollateralComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { collateral: any }) => {
+    this.route.data.subscribe((data) => {
       this.collateralData = data.collateral;
     });
   }
@@ -63,7 +63,7 @@ export class ViewCollateralComponent {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id }
     });
-    deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCollateralDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.productsService.deleteCollateral(this.collateralData.id).subscribe(() => {
           this.router.navigate(['/products/collaterals']);

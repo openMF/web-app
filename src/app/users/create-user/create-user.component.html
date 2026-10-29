@@ -14,7 +14,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
-            @if (userForm.controls.username.hasError('required')) {
+            @if ($any(userForm.controls).username.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -24,14 +24,14 @@
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
-            <input matInput [required]="userForm.controls.sendPasswordToEmail.value" formControlName="email" />
-            @if (userForm.controls.email.hasError('email')) {
+            <input matInput [required]="$any(userForm.controls).sendPasswordToEmail.value" formControlName="email" />
+            @if ($any(userForm.controls).email.hasError('email')) {
               <mat-error>
                 {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.invalid' | translate }}</strong>
               </mat-error>
             }
-            @if (userForm.controls.email.hasError('required')) {
+            @if ($any(userForm.controls).email.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -42,13 +42,13 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
-            @if (userForm.controls.firstname.hasError('pattern')) {
+            @if ($any(userForm.controls).firstname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }}
                 <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
               </mat-error>
             }
-            @if (userForm.controls.firstname.hasError('required')) {
+            @if ($any(userForm.controls).firstname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -59,13 +59,13 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
-            @if (userForm.controls.lastname.hasError('pattern')) {
+            @if ($any(userForm.controls).lastname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }}
                 <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
               </mat-error>
             }
-            @if (userForm.controls.lastname.hasError('required')) {
+            @if ($any(userForm.controls).lastname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -85,17 +85,17 @@
             </mat-checkbox>
           </div>
 
-          @if (!userForm.controls.sendPasswordToEmail.value) {
+          @if (!$any(userForm.controls).sendPasswordToEmail.value) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
               <input matInput required type="password" formControlName="password" />
-              @if (userForm.controls.password.hasError('required')) {
+              @if ($any(userForm.controls).password.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (userForm.controls.password.hasError('maxlength')) {
+              @if ($any(userForm.controls).password.hasError('maxlength')) {
                 <mat-error>
                   {{ 'labels.commons.Password should not be more than' | translate }}
                   <strong>{{ 'labels.commons.50 characters long' | translate }}</strong>
@@ -104,11 +104,11 @@
             </mat-form-field>
           }
 
-          @if (!userForm.controls.sendPasswordToEmail.value) {
+          @if (!$any(userForm.controls).sendPasswordToEmail.value) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Repeat Password' | translate }}</mat-label>
               <input matInput required type="password" formControlName="repeatPassword" />
-              @if (userForm.controls.repeatPassword.hasError('required')) {
+              @if ($any(userForm.controls).repeatPassword.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -117,7 +117,7 @@
             </mat-form-field>
           }
 
-          @if (!userForm.controls.sendPasswordToEmail.value && passwordPolicyDescription) {
+          @if (!$any(userForm.controls).sendPasswordToEmail.value && passwordPolicyDescription) {
             <p class="flex-98 password-policy-hint">
               {{ passwordPolicyDescription | translateKey: 'passwordPreferences' }}
             </p>
@@ -125,8 +125,8 @@
 
           @if (
             userForm.errors?.passwordsDoNotMatch &&
-            !userForm.controls.password.hasError('required') &&
-            !userForm.controls.repeatPassword.hasError('required')
+            !$any(userForm.controls).password.hasError('required') &&
+            !$any(userForm.controls).repeatPassword.hasError('required')
           ) {
             <p class="flex-98 reset-password-error">
               {{ 'labels.inputs.Passwords' | translate }}
@@ -143,7 +143,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (userForm.controls.officeId.hasError('required')) {
+            @if ($any(userForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -171,7 +171,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (userForm.controls.roles.hasError('required')) {
+            @if ($any(userForm.controls).roles.hasError('required')) {
               <mat-error>
                 {{ 'labels.commons.At least one role' | translate }}
                 <strong>{{ 'labels.commons.must be selected' | translate }}</strong>

@@ -19,12 +19,12 @@
             <mat-form-field class="flex-30">
               <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
               <input matInput formControlName="name" [matAutocomplete]="clientsAutocomplete" />
-              @if (newGuarantorForm.controls.name.hasError('required')) {
+              @if ($any(newGuarantorForm.controls).name.hasError('required')) {
                 <mat-error>
                   {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.name' | translate) } }}
                 </mat-error>
               }
-              @if (newGuarantorForm.controls.name.hasError('clientNotPicked')) {
+              @if ($any(newGuarantorForm.controls).name.hasError('clientNotPicked')) {
                 <mat-error>{{ 'labels.text.Select a client from the list' | translate }}</mat-error>
               }
             </mat-form-field>
@@ -64,7 +64,7 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                 <input type="number" matInput formControlName="amount" />
-                @if (newGuarantorForm.controls.amount.hasError('required')) {
+                @if ($any(newGuarantorForm.controls).amount.hasError('required')) {
                   <mat-error>
                     {{ 'errors.validation.requiredField' | translate: { label: ('labels.inputs.Amount' | translate) } }}
                   </mat-error>
@@ -87,7 +87,7 @@
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
               <input matInput required formControlName="firstname" />
-              @if (newGuarantorForm.controls.firstname.hasError('required')) {
+              @if ($any(newGuarantorForm.controls).firstname.hasError('required')) {
                 <mat-error>
                   {{
                     'errors.validation.requiredField' | translate: { label: ('labels.inputs.First Name' | translate) }
@@ -98,7 +98,7 @@
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
               <input matInput required formControlName="lastname" />
-              @if (newGuarantorForm.controls.lastname.hasError('required')) {
+              @if ($any(newGuarantorForm.controls).lastname.hasError('required')) {
                 <mat-error>
                   {{
                     'errors.validation.requiredField' | translate: { label: ('labels.inputs.Last Name' | translate) }
@@ -162,15 +162,15 @@
         </div>
         <div class="mat-row">
           <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
-          <div class="mat-cell">{{ newGuarantorForm.controls.name.value.displayName }}</div>
+          <div class="mat-cell">{{ $any(newGuarantorForm.controls).name.value.displayName }}</div>
         </div>
         <div class="mat-row">
           <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
-          <div class="mat-cell">{{ newGuarantorForm.controls.name.value.id }}</div>
+          <div class="mat-cell">{{ $any(newGuarantorForm.controls).name.value.id }}</div>
         </div>
         <div class="mat-row">
           <div class="mat-cell">{{ 'labels.inputs.Office' | translate }}</div>
-          <div class="mat-cell">{{ newGuarantorForm.controls.name.value.officeName }}</div>
+          <div class="mat-cell">{{ $any(newGuarantorForm.controls).name.value.officeName }}</div>
         </div>
       </div>
     }

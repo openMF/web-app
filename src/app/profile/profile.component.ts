@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
       width: '400px',
       height: '300px'
     });
-    changeUserPasswordDialogRef.afterClosed().subscribe((response: any) => {
+    changeUserPasswordDialogRef.afterClosed().subscribe((response) => {
       if (response.password && response.repeatPassword) {
         const password = response.password;
         const repeatPassword = response.repeatPassword;

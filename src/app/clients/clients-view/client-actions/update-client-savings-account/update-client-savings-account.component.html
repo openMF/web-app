@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (clientSavingsAccountForm.controls.savingsAccountId.hasError('required')) {
+            @if ($any(clientSavingsAccountForm.controls).savingsAccountId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

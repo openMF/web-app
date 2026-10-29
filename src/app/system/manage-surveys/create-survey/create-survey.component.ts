@@ -213,7 +213,7 @@ export class CreateSurveyComponent implements OnInit {
    */
   cancelSurvey() {
     const cancelSurveyDialogRef = this.dialog.open(CancelDialogComponent);
-    cancelSurveyDialogRef.afterClosed().subscribe((response: any) => {
+    cancelSurveyDialogRef.afterClosed().subscribe((response) => {
       if (response.cancel) {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
@@ -244,7 +244,7 @@ export class CreateSurveyComponent implements OnInit {
     this.surveyForm.patchValue({
       countryCode: this.surveyForm.value.countryCode.toUpperCase()
     });
-    this.systemService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
+    this.systemService.createSurvey(this.surveyForm.value).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

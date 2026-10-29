@@ -101,7 +101,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((routeParams: any) => {
+    this.route.params.subscribe((routeParams) => {
       this.datatableName = routeParams.datatableName;
       this.changeDetectorRef.markForCheck();
     });
@@ -176,7 +176,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    addDialogRef.afterClosed().subscribe((response: any) => {
+    addDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
           response.data.value[column] = this.dateUtils.formatDate(
@@ -190,8 +190,8 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
           .subscribe(() => {
             this.isLoading = true;
             this.changeDetectorRef.markForCheck();
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
+            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject) => {
+              this.dataObject = dataObject as any;
               this.resolveUserNames();
               this.isLoading = false;
               this.changeDetectorRef.markForCheck();
@@ -254,7 +254,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       pristine: false
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    editDialogRef.afterClosed().subscribe((response: any) => {
+    editDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
           response.data.value[column] = this.dateUtils.formatDate(
@@ -268,8 +268,8 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
           .subscribe(() => {
             this.isLoading = true;
             this.changeDetectorRef.markForCheck();
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
+            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject) => {
+              this.dataObject = dataObject as any;
               this.resolveUserNames();
               this.isLoading = false;
               this.changeDetectorRef.markForCheck();
@@ -287,13 +287,13 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
         )}`
       }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.isLoading = true;
         this.changeDetectorRef.markForCheck();
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-            this.dataObject = dataObject;
+          this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject) => {
+            this.dataObject = dataObject as any;
             this.isLoading = false;
             this.changeDetectorRef.markForCheck();
           });

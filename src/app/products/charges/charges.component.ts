@@ -122,7 +122,7 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { charges: any }) => {
+    this.route.data.subscribe((data) => {
       this.chargeData = data.charges;
     });
     this.chargeAppliesToOptions = this.charges.getChargeAppliesToOptions();

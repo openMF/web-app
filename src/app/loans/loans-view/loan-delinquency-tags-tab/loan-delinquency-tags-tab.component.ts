@@ -339,12 +339,10 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     this.locale = this.settingsService.language.code;
     this.dateFormat = this.settingsService.dateFormat;
     if (this.loanProductService.isWorkingCapital) {
-      this.productsServices
-        .getLoanProductsTemplate(this.loanProductService.loanProductPath)
-        .subscribe((response: any) => {
-          this.frequencyTypeOptions = response.periodFrequencyTypeOptions;
-          this.minimumPaymentTypeOptions = response.delinquencyMinimumPaymentTypeOptions;
-        });
+      this.productsServices.getLoanProductsTemplate(this.loanProductService.loanProductPath).subscribe((response) => {
+        this.frequencyTypeOptions = response.periodFrequencyTypeOptions;
+        this.minimumPaymentTypeOptions = response.delinquencyMinimumPaymentTypeOptions;
+      });
     }
   }
 
@@ -375,7 +373,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         action: action
       }
     });
-    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response) => {
       if (!response?.data) {
         return;
       }
@@ -395,7 +393,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         minimumPaymentTypeOptions: this.minimumPaymentTypeOptions
       }
     });
-    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response) => {
       if (!response?.data) {
         return;
       }
@@ -425,7 +423,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         startNewPeriod: false
       }
     });
-    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const startNewPeriod: boolean = response.data.value.startNewPeriod;
 
@@ -444,7 +442,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         )
       }
     });
-    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.sendDelinquencyAction(action, null, null, null, null, null, null, null);
       }
@@ -470,7 +468,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         businessDate: this.businessDate()
       }
     });
-    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.sendDelinquencyAction(
           action,
@@ -497,7 +495,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         type: 'Mild'
       }
     });
-    removePauseDialogRef.afterClosed().subscribe((response: any) => {
+    removePauseDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         if (this.loanProductService.isLoanProduct) {
           this.sendDelinquencyAction('resume', null, null, null, null, null, null, null);
@@ -571,11 +569,11 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
 
     this.loansServices
       .createDelinquencyActions(this.loanProductService.loanAccountPath, this.loanId, payload)
-      .subscribe((result: any) => {
+      .subscribe((result) => {
         this.loansServices
           .getDelinquencyActions(this.loanProductService.loanAccountPath, this.loanId)
-          .subscribe((loanDelinquencyActions: LoanDelinquencyAction[]) => {
-            this.setLoanDelinquencyAction(loanDelinquencyActions);
+          .subscribe((loanDelinquencyActions) => {
+            this.setLoanDelinquencyAction(loanDelinquencyActions as any);
           });
         this.refreshDelinquencyRangeSchedule();
       });
@@ -592,12 +590,10 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     if (!this.loanProductService.isWorkingCapital) {
       return;
     }
-    this.loansServices
-      .getWorkingCapitalLoanDelinquencyRangeSchedule(this.loanId)
-      .subscribe((rangeSchedule: DelinquencyRangeSchedule[]) => {
-        this.wcLoanDelinquencyRangeSchedule = rangeSchedule || [];
-        this.cdr.markForCheck();
-      });
+    this.loansServices.getWorkingCapitalLoanDelinquencyRangeSchedule(this.loanId).subscribe((rangeSchedule) => {
+      this.wcLoanDelinquencyRangeSchedule = rangeSchedule || ([] as any);
+      this.cdr.markForCheck();
+    });
   }
 
   setLoanDelinquencyAction(loanDelinquencyActions: LoanDelinquencyAction[]): void {

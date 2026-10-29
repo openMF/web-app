@@ -348,7 +348,7 @@ export class CashAllocationComponent implements OnInit {
         width: '560px'
       })
       .afterClosed()
-      .subscribe((confirmed: boolean) => {
+      .subscribe((confirmed) => {
         if (confirmed) {
           this.post(request);
         }

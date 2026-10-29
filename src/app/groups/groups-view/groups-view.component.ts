@@ -84,7 +84,7 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { groupViewData: any; groupDatatables: any }) => {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
       this.reloadContext = `group-${this.groupViewData.id}`;
@@ -182,7 +182,7 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
     this.groupsService
       .getGroupData(this.groupViewData.id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.groupViewData = data;
       });
   }
@@ -192,7 +192,7 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
    */
   private unassignStaff(): void {
     const dialogRef = this.dialog.open(UnassignStaffDialogComponent);
-    dialogRef.afterClosed().subscribe((response: { confirm: boolean }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.groupsService
           .executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
@@ -218,7 +218,7 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.groupsService.deleteGroup(this.groupViewData.id).subscribe(() => {
           this.router.navigate(['/groups']);

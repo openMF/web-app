@@ -72,7 +72,7 @@ export class EditRecurringDepositAccountComponent {
   recurringDepositsAccountProductTemplate: any;
 
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.recurringDepositsAccountAndTemplate = data.recurringDepositsAccountAndTemplate;
     });
   }
@@ -165,7 +165,7 @@ export class EditRecurringDepositAccountComponent {
 
     this.recurringDepositsService
       .updateRecurringDepositAccount(this.recurringDepositsAccountAndTemplate.id, recurringDepositAccount)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

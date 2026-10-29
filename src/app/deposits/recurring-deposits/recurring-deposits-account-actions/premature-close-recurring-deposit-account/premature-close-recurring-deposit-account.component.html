@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            @if (prematureCloseRecurringDepositsAccountForm.controls.closedOnDate.hasError('required')) {
+            @if ($any(prematureCloseRecurringDepositsAccountForm.controls).closedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closed On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -48,7 +48,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (prematureCloseRecurringDepositsAccountForm.controls.onAccountClosureId.hasError('required')) {
+              @if ($any(prematureCloseRecurringDepositsAccountForm.controls).onAccountClosureId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Account action' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -67,7 +67,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (prematureCloseRecurringDepositsAccountForm.controls.toSavingsAccountId.hasError('required')) {
+              @if ($any(prematureCloseRecurringDepositsAccountForm.controls).toSavingsAccountId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

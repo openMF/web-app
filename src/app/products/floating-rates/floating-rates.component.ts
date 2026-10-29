@@ -80,7 +80,7 @@ export class FloatingRatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { floatingrates: any }) => {
+    this.route.data.subscribe((data) => {
       this.floatingRatesData = data.floatingrates;
     });
   }

@@ -105,14 +105,12 @@ export class AddressTabComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any }) => {
-        this.clientAddressData = data.clientAddressData;
-        this.clientAddressFieldConfig = data.clientAddressFieldConfig;
-        this.clientAddressTemplate = data.clientAddressTemplateData;
-        this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.clientAddressData = data.clientAddressData;
+      this.clientAddressFieldConfig = data.clientAddressFieldConfig;
+      this.clientAddressTemplate = data.clientAddressTemplateData;
+      this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
+    });
   }
 
   /**
@@ -131,13 +129,13 @@ export class AddressTabComponent {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(addAddressDialogRef);
-    addAddressDialogRef.afterClosed().subscribe((response: any) => {
+    addAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         this.clientService
           .createClientAddress(this.clientId, normalizedAddressData.addressType, normalizedAddressData)
-          .subscribe((res: any) => {
-            normalizedAddressData.addressId = res.resourceId;
+          .subscribe((res) => {
+            normalizedAddressData.addressId = (res as any).resourceId;
             normalizedAddressData.addressType = this.getSelectedValue(
               'addressTypeIdOptions',
               normalizedAddressData.addressType
@@ -168,14 +166,14 @@ export class AddressTabComponent {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(editAddressDialogRef);
-    editAddressDialogRef.afterClosed().subscribe((response: any) => {
+    editAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const normalizedAddressData = this.normalizeAddressData(response.data.value);
         normalizedAddressData.addressId = address.addressId;
         normalizedAddressData.isActive = address.isActive;
         this.clientService
           .editClientAddress(this.clientId, address.addressTypeId, normalizedAddressData)
-          .subscribe((res: any) => {
+          .subscribe((res) => {
             normalizedAddressData.addressTypeId = address.addressTypeId;
             normalizedAddressData.addressType = address.addressType;
             this.clientAddressData[index] = normalizedAddressData;

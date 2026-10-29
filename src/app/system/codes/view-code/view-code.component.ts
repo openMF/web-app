@@ -75,7 +75,7 @@ export class ViewCodeComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { code: any; codeValues: any }) => {
+    this.route.data.subscribe((data) => {
       this.codeData = data.code;
       this.codeValuesData = data.codeValues;
     });
@@ -153,7 +153,7 @@ export class ViewCodeComponent implements OnInit {
    */
   deleteCodeValue(index: number) {
     const codeValueId = this.codeValuesData[index].id;
-    this.systemService.deleteCodeValue(this.codeData.id, codeValueId).subscribe((response: any) => {
+    this.systemService.deleteCodeValue(this.codeData.id, codeValueId).subscribe((response) => {
       this.codeValuesData.splice(index, 1);
       this.codeValues.removeAt(index);
       this.codeValueRowStatus.splice(index, 1);
@@ -178,7 +178,7 @@ export class ViewCodeComponent implements OnInit {
       this.codeValues.at(index).value;
     this.systemService
       .updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.codeValues.at(index).disable();
         this.codeValueRowStatus[index] = 'disabled';
         this.codeValues.at(index).markAsPristine();
@@ -192,7 +192,7 @@ export class ViewCodeComponent implements OnInit {
     const deleteCodeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name }
     });
-    deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCodeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.systemService.deleteCode(this.codeData.id).subscribe(() => {
           this.router.navigate(['/system/codes']);
@@ -222,7 +222,7 @@ export class ViewCodeComponent implements OnInit {
   addCodeValue(index: number) {
     const newCodeValue: { name: string; description: string; position: string; isActive: boolean } =
       this.codeValues.at(index).value;
-    this.systemService.createCodeValue(this.codeData.id, newCodeValue).subscribe((response: any) => {
+    this.systemService.createCodeValue(this.codeData.id, newCodeValue).subscribe((response) => {
       this.codeValues.at(index).disable();
       this.codeValueRowStatus[index] = 'disabled';
       this.codeValuesData.push({

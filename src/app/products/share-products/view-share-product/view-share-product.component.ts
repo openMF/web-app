@@ -31,7 +31,7 @@ export class ViewShareProductComponent {
   shareProductDatatables: any = [];
 
   constructor() {
-    this.route.data.subscribe((data: { shareProductDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProductDatatables = [];
       data.shareProductDatatables.forEach((datatable: any) => {
         this.shareProductDatatables.push(datatable);

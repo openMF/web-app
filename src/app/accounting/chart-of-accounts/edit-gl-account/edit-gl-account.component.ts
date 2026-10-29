@@ -60,7 +60,7 @@ export class EditGlAccountComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }
@@ -143,7 +143,7 @@ export class EditGlAccountComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.accountingService.updateGlAccount(this.glAccount.id, this.glAccountForm.value).subscribe((response: any) => {
+    this.accountingService.updateGlAccount(this.glAccount.id, this.glAccountForm.value).subscribe((response) => {
       this.router.navigate(
         [
           '../../',

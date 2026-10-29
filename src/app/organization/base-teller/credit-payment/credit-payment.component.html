@@ -254,7 +254,7 @@
                 <mat-form-field>
                   <mat-label>{{ 'creditPayment.fields.amount' | translate }}</mat-label>
                   <input matInput formControlName="amount" inputmode="decimal" required />
-                  @if (paymentForm.controls.amount.invalid && paymentForm.controls.amount.touched) {
+                  @if ($any(paymentForm.controls).amount.invalid && $any(paymentForm.controls).amount.touched) {
                     <mat-error>{{ 'creditPayment.validation.amount' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -286,18 +286,20 @@
                     <div formArrayName="denominations" class="layout-column gap-20px">
                       @for (
                         denomination of denominations.controls;
-                        track denomination.controls.denominationId.value;
+                        track $any(denomination.controls).denominationId.value;
                         let i = $index
                       ) {
                         <div [formGroupName]="i" class="denomination-row">
                           <div>
                             <span>{{ 'creditPayment.fields.denomination' | translate }}</span
-                            ><strong>{{ denomination.controls.value.value }} {{ selectedLoan?.currencyCode }}</strong>
+                            ><strong
+                              >{{ $any(denomination.controls).value.value }} {{ selectedLoan?.currencyCode }}</strong
+                            >
                           </div>
                           <mat-form-field>
                             <mat-label>{{ 'creditPayment.fields.quantity' | translate }}</mat-label>
                             <input matInput type="number" min="0" step="1" formControlName="quantity" required />
-                            @if (denomination.controls.quantity.invalid) {
+                            @if ($any(denomination.controls).quantity.invalid) {
                               <mat-error>{{ 'creditPayment.validation.quantity' | translate }}</mat-error>
                             }
                           </mat-form-field>
@@ -312,7 +314,7 @@
                   <section class="summary-grid">
                     <div>
                       <span>{{ 'creditPayment.fields.paymentAmount' | translate }}</span
-                      ><strong>{{ paymentForm.controls.amount.value }} {{ selectedLoan?.currencyCode }}</strong>
+                      ><strong>{{ $any(paymentForm.controls).amount.value }} {{ selectedLoan?.currencyCode }}</strong>
                     </div>
                     <div>
                       <span>{{ 'creditPayment.fields.tendered' | translate }}</span
@@ -370,7 +372,7 @@
                     }}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                @if (checkForm.controls.classification.value === 'SUBJECT_TO_COLLECTION') {
+                @if ($any(checkForm.controls).classification.value === 'SUBJECT_TO_COLLECTION') {
                   <div class="message warning-message full-width" role="note">
                     {{ 'creditPayment.messages.pendingExplanation' | translate }}
                   </div>
@@ -456,7 +458,7 @@
                   </div>
                   <div>
                     <span>{{ 'creditPayment.fields.checkNumber' | translate }}</span
-                    ><strong>{{ checkForm.controls.checkNumber.value }}</strong>
+                    ><strong>{{ $any(checkForm.controls).checkNumber.value }}</strong>
                   </div>
                   <div>
                     <span>{{ 'creditPayment.fields.classification' | translate }}</span

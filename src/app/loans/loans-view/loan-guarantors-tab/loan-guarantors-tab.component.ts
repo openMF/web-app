@@ -91,17 +91,17 @@ export class LoanGuarantorsTabComponent implements OnInit {
 
   constructor() {
     this.loanId = this.route.snapshot.paramMap.get('loanId') || this.route.parent.snapshot.paramMap.get('loanId');
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanGuarantors: any[] }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.guarantors = data.loanGuarantors || [];
     });
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetails = data.loanDetailsData || {};
     });
   }
 
   ngOnInit() {
     // Available disbursement amount with over applied, shown in the guarantor details dialog.
-    this.loansService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+    this.loansService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData) => {
       // Fineract nests the amount in `delinquent`; older versions return it at the root.
       this.delinquent =
         delinquencyData.availableDisbursementAmountWithOverApplied === undefined
@@ -148,14 +148,14 @@ export class LoanGuarantorsTabComponent implements OnInit {
   }
 
   editGuarantor(guarantorData: any) {
-    this.loansService.getGuarantorTemplate(this.loanId).subscribe((templateData: any) => {
+    this.loansService.getGuarantorTemplate(this.loanId).subscribe((templateData) => {
       const editDialogRef = this.dialog.open(EditGuarantorDialogComponent, {
         data: {
           guarantorData: guarantorData,
           relationTypes: templateData.allowedClientRelationshipTypes
         }
       });
-      editDialogRef.afterClosed().subscribe((result: any) => {
+      editDialogRef.afterClosed().subscribe((result) => {
         if (result) {
           const payload = {
             ...result,
@@ -178,7 +178,7 @@ export class LoanGuarantorsTabComponent implements OnInit {
    * Re-fetches guarantor data in place without navigating away.
    */
   private refreshGuarantors() {
-    this.loansService.getGuarantors(this.loanId).subscribe((data: any) => {
+    this.loansService.getGuarantors(this.loanId).subscribe((data) => {
       this.guarantors = data || [];
       this.cdr.markForCheck();
     });

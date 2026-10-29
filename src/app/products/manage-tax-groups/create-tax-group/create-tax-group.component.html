@@ -14,7 +14,7 @@
           <mat-form-field class="flex-fill flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (taxGroupForm.controls.name.hasError('required')) {
+            @if ($any(taxGroupForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

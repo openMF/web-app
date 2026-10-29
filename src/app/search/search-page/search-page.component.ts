@@ -169,21 +169,19 @@ export class SearchPageComponent {
   private rows: SearchRow[] = [];
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { searchResults: SearchResultsBundle }) => {
-        this.queryText = this.route.snapshot.queryParams['query'] || '';
-        this.query.patchValue(this.queryText);
-        this.rows = this.buildRows(data.searchResults);
-        this.totalCount = this.rows.length;
-        this.hasResults = this.rows.length > 0;
-        this.limitReached = (data.searchResults?.entities || []).length >= SEARCH_RESULT_LIMIT;
-        this.domainCounts = this.countByDomain(this.rows);
-        this.selectedDomain = 'all';
-        this.selectedSub = 'any';
-        this.refresh();
-        this.cdr.markForCheck();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.queryText = this.route.snapshot.queryParams['query'] || '';
+      this.query.patchValue(this.queryText);
+      this.rows = this.buildRows(data.searchResults);
+      this.totalCount = this.rows.length;
+      this.hasResults = this.rows.length > 0;
+      this.limitReached = (data.searchResults?.entities || []).length >= SEARCH_RESULT_LIMIT;
+      this.domainCounts = this.countByDomain(this.rows);
+      this.selectedDomain = 'all';
+      this.selectedSub = 'any';
+      this.refresh();
+      this.cdr.markForCheck();
+    });
   }
 
   get subFilters(): SubFilterDef[] {

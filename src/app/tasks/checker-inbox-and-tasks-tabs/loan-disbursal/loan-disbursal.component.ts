@@ -99,7 +99,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return account.status.waitingForDisbursal === true;
@@ -139,7 +139,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
         dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Disburse Loan')
       }
     });
-    disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    disburseLoanDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.bulkLoanDisbursal();
       }
@@ -166,7 +166,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response) => {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           approvedAccounts++;
@@ -180,7 +180,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
   }
 
   loanResource() {
-    this.tasksService.getAllLoansToBeDisbursed().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeDisbursed().subscribe((response) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return account.status.waitingForDisbursal;

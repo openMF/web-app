@@ -107,7 +107,7 @@ export class FixedDepositGeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProduct: any; fixedDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositProductData = data.fixedDepositProduct;
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });

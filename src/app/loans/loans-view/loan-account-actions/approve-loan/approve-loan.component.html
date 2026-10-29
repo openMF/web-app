@@ -22,7 +22,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedDatePicker></mat-datepicker>
-            @if (approveLoanForm.controls.approvedOnDate.hasError('required')) {
+            @if ($any(approveLoanForm.controls).approvedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Approved Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -47,7 +47,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="approveLoanForm.controls.approvedLoanAmount"
+            [inputFormControl]="$any(approveLoanForm.controls.approvedLoanAmount)"
             [inputLabel]="'Approved Amount'"
           >
           </mifosx-input-amount>
@@ -62,7 +62,7 @@
           @if (isWorkingCapital) {
             <mifosx-input-amount
               [currency]="currency"
-              [inputFormControl]="approveLoanForm.controls.discountAmount"
+              [inputFormControl]="$any(approveLoanForm.controls.discountAmount)"
               [inputLabel]="'Discount'"
             >
             </mifosx-input-amount>

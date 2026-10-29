@@ -67,15 +67,13 @@ export class EditCashierComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { cashier: any; cashierTemplate: any }) => {
-        this.cashierData.data = data.cashier;
-        this.cashierData.template = data.cashierTemplate;
-        this.isStaffId = this.cashierData.template.staffOptions.some(
-          (element: any) => element.id === this.cashierData.data.staffId
-        );
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.cashierData.data = data.cashier;
+      this.cashierData.template = data.cashierTemplate;
+      this.isStaffId = this.cashierData.template.staffOptions.some(
+        (element: any) => element.id === this.cashierData.data.staffId
+      );
+    });
   }
 
   ngOnInit() {
@@ -178,7 +176,7 @@ export class EditCashierComponent implements OnInit {
     this.organizationService
       .updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

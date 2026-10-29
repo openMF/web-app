@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit {
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
     // Subscribe to alerts
-    this.alertService.alertEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((alertEvent: Alert) => {
+    this.alertService.alertEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((alertEvent) => {
       const alertType = alertEvent.type;
       if (alertType === this.translateService.instant('errors.auth.passwordExpired.type')) {
         this.twoFactorAuthenticationRequired = false;

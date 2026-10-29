@@ -83,7 +83,7 @@ export class CreateFixedDepositAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositsAccountTemplate = data.fixedDepositsAccountTemplate;
     });
   }
@@ -166,7 +166,7 @@ export class CreateFixedDepositAccountComponent {
       monthDayFormat,
       locale
     };
-    this.fixedDepositsService.createFixedDepositAccount(fixedDepositAccount).subscribe((response: any) => {
+    this.fixedDepositsService.createFixedDepositAccount(fixedDepositAccount).subscribe((response) => {
       this.router.navigate(
         [
           '../',

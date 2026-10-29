@@ -77,7 +77,7 @@ export class ViewAuditComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { auditTrail: any }) => {
+    this.route.data.subscribe((data) => {
       this.auditTrailData = data.auditTrail;
     });
   }

@@ -90,7 +90,7 @@ export class EntityNotesTabComponent implements OnInit {
         title: this.translateService.instant('labels.heading.Edit Note')
       }
     });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
+    editNoteDialogRef.afterClosed().subscribe((response) => {
       if (response.data && response.data.value.note !== noteContent) {
         this.callbackEdit(noteId, response.data.value, index);
       }
@@ -102,7 +102,7 @@ export class EntityNotesTabComponent implements OnInit {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `${noteLabel}: ${this.entityNotes[index].note}` }
     });
-    deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
+    deleteNoteDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.callbackDelete(noteId, index);
       }

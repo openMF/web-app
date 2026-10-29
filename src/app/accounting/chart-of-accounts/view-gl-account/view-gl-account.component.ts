@@ -55,7 +55,7 @@ export class ViewGlAccountComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }
@@ -67,7 +67,7 @@ export class ViewGlAccountComponent {
     const deleteGlAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `gl account ${this.glAccount.id}` }
     });
-    deleteGlAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteGlAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountingService.deleteGlAccount(this.glAccount.id).subscribe(() => {
           this.router.navigate(['/accounting/chart-of-accounts']);
@@ -82,7 +82,7 @@ export class ViewGlAccountComponent {
   changeGlAccountState() {
     this.accountingService
       .updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.glAccount.disabled = response.changes.disabled;
       });
   }

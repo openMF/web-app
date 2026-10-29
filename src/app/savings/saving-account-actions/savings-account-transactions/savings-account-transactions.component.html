@@ -39,7 +39,7 @@
                 />
                 <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #dueDatePicker></mat-datepicker>
-                @if (savingAccountTransactionForm.controls.transactionDate.hasError('required')) {
+                @if ($any(savingAccountTransactionForm.controls).transactionDate.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -50,7 +50,7 @@
               <mifosx-input-amount
                 [currency]="currency"
                 [isRequired]="true"
-                [inputFormControl]="savingAccountTransactionForm.controls.transactionAmount"
+                [inputFormControl]="$any(savingAccountTransactionForm.controls.transactionAmount)"
                 [inputLabel]="'Transaction Amount'"
                 [minVal]="minimumTransactionAmount"
               >
@@ -65,7 +65,7 @@
                     </mat-option>
                   }
                 </mat-select>
-                @if (savingAccountTransactionForm.controls.paymentTypeId.hasError('required')) {
+                @if ($any(savingAccountTransactionForm.controls).paymentTypeId.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -31,7 +31,7 @@ export class ViewRecurringDepositProductComponent {
   recurringDepositDatatables: any = [];
 
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.recurringDepositDatatables = [];
       data.recurringDepositDatatables.forEach((datatable: any) => {
         if (datatable.entitySubType === 'Recurring Deposit') {

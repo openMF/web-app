@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="requestedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedDatePicker></mat-datepicker>
-            @if (applySharesForm.controls.requestedDate.hasError('required')) {
+            @if ($any(applySharesForm.controls).requestedDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Request Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -34,7 +34,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Total No. of Shares' | translate }}</mat-label>
             <input matInput required formControlName="requestedShares" />
-            @if (applySharesForm.controls.requestedShares.hasError('required')) {
+            @if ($any(applySharesForm.controls).requestedShares.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Requested Shares' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

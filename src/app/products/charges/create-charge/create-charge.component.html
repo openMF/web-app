@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (chargeForm.controls.chargeAppliesTo.hasError('required')) {
+            @if ($any(chargeForm.controls).chargeAppliesTo.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Charge Applies To' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -30,12 +30,12 @@
 
           <mat-divider [inset]="true"></mat-divider>
 
-          @if (chargeForm.controls.chargeAppliesTo.value) {
+          @if ($any(chargeForm.controls).chargeAppliesTo.value) {
             <div class="layout-row-wrap gap-2percent layout-lt-md-column form-section">
               <mat-form-field class="flex-48">
                 <mat-label>{{ 'labels.inputs.Charge Name' | translate }}</mat-label>
                 <input matInput required formControlName="name" />
-                @if (chargeForm.controls.name.hasError('required')) {
+                @if ($any(chargeForm.controls).name.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Charge Name' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -51,7 +51,7 @@
                     </mat-option>
                   }
                 </mat-select>
-                @if (chargeForm.controls.currencyCode.hasError('required')) {
+                @if ($any(chargeForm.controls).currencyCode.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -67,7 +67,7 @@
                     </mat-option>
                   }
                 </mat-select>
-                @if (chargeForm.controls.chargeTimeType.hasError('required')) {
+                @if ($any(chargeForm.controls).chargeTimeType.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Charge Time Type' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -83,14 +83,17 @@
                     </mat-option>
                   }
                 </mat-select>
-                @if (chargeForm.controls.chargeCalculationType.hasError('required')) {
+                @if ($any(chargeForm.controls).chargeCalculationType.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Charge Calculation Type' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
                   </mat-error>
                 }
               </mat-form-field>
-              @if (chargeForm.controls.chargeAppliesTo.value === 1 || chargeForm.controls.chargeAppliesTo.value === 5) {
+              @if (
+                $any(chargeForm.controls).chargeAppliesTo.value === 1 ||
+                $any(chargeForm.controls).chargeAppliesTo.value === 5
+              ) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Charge Payment Mode' | translate }}</mat-label>
                   <mat-select required formControlName="chargePaymentMode">
@@ -100,7 +103,7 @@
                       </mat-option>
                     }
                   </mat-select>
-                  @if (chargeForm.controls.chargePaymentMode.hasError('required')) {
+                  @if ($any(chargeForm.controls).chargePaymentMode.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Charge Payment Mode' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -108,24 +111,26 @@
                   }
                 </mat-form-field>
               }
-              @if (chargeForm.controls.chargeTimeType.value === 9) {
+              @if ($any(chargeForm.controls).chargeTimeType.value === 9) {
                 <div class="flex-48 add-fee-frequency-wrapper">
                   <mat-checkbox labelPosition="before" formControlName="addFeeFrequency">
                     {{ 'labels.inputs.Add Fee Frequency' | translate }}
                   </mat-checkbox>
                 </div>
               }
-              @if (chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value) {
+              @if (
+                $any(chargeForm.controls).chargeTimeType.value === 9 && $any(chargeForm.controls).addFeeFrequency.value
+              ) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Frequency Interval' | translate }}</mat-label>
                   <input matInput required formControlName="feeInterval" />
-                  @if (chargeForm.controls.feeInterval.hasError('required')) {
+                  @if ($any(chargeForm.controls).feeInterval.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Frequency Interval' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
                     </mat-error>
                   }
-                  @if (chargeForm.controls.feeInterval.hasError('pattern')) {
+                  @if ($any(chargeForm.controls).feeInterval.hasError('pattern')) {
                     <mat-error>
                       {{ 'labels.inputs.Frequency Interval' | translate }}
                       <strong>{{ 'labels.commons.must be a positive integer' | translate }}</strong>
@@ -133,7 +138,9 @@
                   }
                 </mat-form-field>
               }
-              @if (chargeForm.controls.chargeTimeType.value === 9 && chargeForm.controls.addFeeFrequency.value) {
+              @if (
+                $any(chargeForm.controls).chargeTimeType.value === 9 && $any(chargeForm.controls).addFeeFrequency.value
+              ) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Charge Frequency' | translate }}</mat-label>
                   <mat-select required formControlName="feeFrequency">
@@ -143,7 +150,7 @@
                       </mat-option>
                     }
                   </mat-select>
-                  @if (chargeForm.controls.feeFrequency.hasError('required')) {
+                  @if ($any(chargeForm.controls).feeFrequency.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Charge Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -151,7 +158,10 @@
                   }
                 </mat-form-field>
               }
-              @if (chargeForm.controls.chargeTimeType.value === 6 || chargeForm.controls.chargeTimeType.value === 7) {
+              @if (
+                $any(chargeForm.controls).chargeTimeType.value === 6 ||
+                $any(chargeForm.controls).chargeTimeType.value === 7
+              ) {
                 <mat-form-field (click)="dueDatePicker.open()" class="flex-48">
                   <mat-label>{{ 'labels.inputs.Due Date' | translate }}</mat-label>
                   <input
@@ -164,7 +174,7 @@
                   />
                   <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
-                  @if (chargeForm.controls.feeOnMonthDay.hasError('required')) {
+                  @if ($any(chargeForm.controls).feeOnMonthDay.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -172,27 +182,30 @@
                   }
                 </mat-form-field>
               }
-              @if (chargeForm.controls.chargeTimeType.value === 7 || chargeForm.controls.chargeTimeType.value === 11) {
+              @if (
+                $any(chargeForm.controls).chargeTimeType.value === 7 ||
+                $any(chargeForm.controls).chargeTimeType.value === 11
+              ) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Repeat Every' | translate }} ({{ repeatEveryLabel }})</mat-label>
                   <input matInput required formControlName="feeInterval" />
-                  @if (chargeForm.controls.feeInterval.hasError('required')) {
+                  @if ($any(chargeForm.controls).feeInterval.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Repeat Every' | translate }} ({{ repeatEveryLabel }})
                       {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
                     </mat-error>
                   }
                   @if (
-                    (chargeForm.controls.feeInterval.hasError('min') ||
-                      chargeForm.controls.feeInterval.hasError('max')) &&
-                    !chargeForm.controls.feeInterval.hasError('pattern')
+                    ($any(chargeForm.controls).feeInterval.hasError('min') ||
+                      $any(chargeForm.controls).feeInterval.hasError('max')) &&
+                    !$any(chargeForm.controls).feeInterval.hasError('pattern')
                   ) {
                     <mat-error>
                       {{ 'labels.inputs.Repeat Every' | translate }} ({{ repeatEveryLabel }})
                       <strong>{{ 'labels.commons.must be between 1 and 12' | translate }}</strong>
                     </mat-error>
                   }
-                  @if (chargeForm.controls.feeInterval.hasError('pattern')) {
+                  @if ($any(chargeForm.controls).feeInterval.hasError('pattern')) {
                     <mat-error>
                       {{ 'labels.inputs.Repeat Every' | translate }} ({{ repeatEveryLabel }})
                       <strong>{{ 'labels.commons.must be a positive integer' | translate }}</strong>
@@ -203,7 +216,7 @@
               <mat-form-field class="flex-48">
                 <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                 <input matInput required formControlName="amount" />
-                @if (chargeForm.controls.amount.hasError('required')) {
+                @if ($any(chargeForm.controls).amount.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -220,10 +233,10 @@
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
                   <input matInput autofocus formControlName="minCap" mifosxValidateOnFocus />
-                  @if (chargeForm.controls.minCap.hasError('maxValue')) {
+                  @if ($any(chargeForm.controls).minCap.hasError('maxValue')) {
                     <mat-error>
                       {{ 'errors.validation.msg.loanproduct.minimumGap.not.greater.than.specified.number' | translate }}
-                      ({{ chargeForm.controls.maxCap.value }})
+                      ({{ $any(chargeForm.controls).maxCap.value }})
                     </mat-error>
                   }
                 </mat-form-field>
@@ -232,24 +245,24 @@
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
                   <input matInput autofocus formControlName="maxCap" mifosxValidateOnFocus />
-                  @if (chargeForm.controls.maxCap.hasError('minValue')) {
+                  @if ($any(chargeForm.controls).maxCap.hasError('minValue')) {
                     <mat-error>
                       {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }}
-                      ({{ chargeForm.controls.minCap.value }})
+                      ({{ $any(chargeForm.controls).minCap.value }})
                     </mat-error>
                   }
                 </mat-form-field>
               }
-              @if (chargeForm.controls.chargeAppliesTo.value === 3) {
+              @if ($any(chargeForm.controls).chargeAppliesTo.value === 3) {
                 <mifosx-gl-account-selector
                   class="flex-48"
-                  [inputFormControl]="chargeForm.controls.incomeAccountId"
+                  [inputFormControl]="$any(chargeForm.controls.incomeAccountId)"
                   [glAccountList]="incomeAndLiabilityAccountData"
                   [inputLabel]="'Income from Charge'"
                 >
                 </mifosx-gl-account-selector>
               }
-              @if (chargeForm.controls.chargeAppliesTo.value !== 5) {
+              @if ($any(chargeForm.controls).chargeAppliesTo.value !== 5) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
                   <mat-select formControlName="taxGroupId">

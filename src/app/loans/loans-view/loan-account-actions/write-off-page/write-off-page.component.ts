@@ -88,7 +88,7 @@ export class WriteOffPageComponent extends LoanAccountActionsBaseComponent imple
       locale
     };
     delete data.amount;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'writeoff').subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, 'writeoff').subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

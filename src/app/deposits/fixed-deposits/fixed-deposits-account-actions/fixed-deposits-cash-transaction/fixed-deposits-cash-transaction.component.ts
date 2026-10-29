@@ -74,7 +74,7 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.currency = data.fixedDepositsAccountActionData.currency;
       this.paymentTypeOptions = data.fixedDepositsAccountActionData.paymentTypeOptions;
     });

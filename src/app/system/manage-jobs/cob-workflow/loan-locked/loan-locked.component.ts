@@ -123,7 +123,7 @@ export class LoanLockedComponent implements OnInit {
   }
 
   getLoansLocked(page: number) {
-    this.tasksService.getAllLoansLocked(page, this.itemsToRead).subscribe((data: any) => {
+    this.tasksService.getAllLoansLocked(page, this.itemsToRead).subscribe((data) => {
       this.loans = data.content;
       this.dataSource = new MatTableDataSource(this.loans);
       this.dataSource.paginator = this.paginator;
@@ -170,7 +170,7 @@ export class LoanLockedComponent implements OnInit {
 
   viewLoanAccount(loan: any) {
     const loanId = loan.loanId;
-    this.loansService.getLoanAccountDetails(loanId).subscribe((loanData: any) => {
+    this.loansService.getLoanAccountDetails(loanId).subscribe((loanData) => {
       const clientId = loanData.clientId;
       this.router.navigateByUrl(`/clients/${clientId}/loans-accounts/${loanId}/general`);
     });
@@ -185,7 +185,7 @@ export class LoanLockedComponent implements OnInit {
       const payload = {
         loanIds: loanIds
       };
-      this.systemService.runInlineCOB(this.jobName, payload).subscribe((data: any) => {
+      this.systemService.runInlineCOB(this.jobName, payload).subscribe((data) => {
         this.getLoansLocked(0);
       });
     }

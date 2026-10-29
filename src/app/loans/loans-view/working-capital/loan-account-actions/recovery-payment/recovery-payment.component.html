@@ -27,18 +27,18 @@
             />
             <mat-datepicker-toggle matSuffix [for]="recoveryDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #recoveryDatePicker></mat-datepicker>
-            @if (recoveryPaymentForm.controls.transactionDate.hasError('required')) {
+            @if ($any(recoveryPaymentForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (recoveryPaymentForm.controls.transactionDate.hasError('matDatepickerMax')) {
+            @if ($any(recoveryPaymentForm.controls).transactionDate.hasError('matDatepickerMax')) {
               <mat-error>
                 {{ 'errors.recoveryPayment.futureDate' | translate }}
               </mat-error>
             }
-            @if (recoveryPaymentForm.controls.transactionDate.hasError('matDatepickerMin')) {
+            @if ($any(recoveryPaymentForm.controls).transactionDate.hasError('matDatepickerMin')) {
               <mat-error>
                 {{ 'errors.recoveryPayment.dateOutOfRange' | translate }}
               </mat-error>
@@ -56,18 +56,18 @@
                 {{ 'labels.inputs.Pending Recovery' | translate }}: {{ maxRecoverableAmount | formatNumber }}
               </mat-hint>
             }
-            @if (recoveryPaymentForm.controls.transactionAmount.hasError('required')) {
+            @if ($any(recoveryPaymentForm.controls).transactionAmount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (recoveryPaymentForm.controls.transactionAmount.hasError('max')) {
+            @if ($any(recoveryPaymentForm.controls).transactionAmount.hasError('max')) {
               <mat-error>
                 {{ 'errors.recoveryPayment.greaterThanRemaining' | translate }}
               </mat-error>
             }
-            @if (recoveryPaymentForm.controls.transactionAmount.hasError('min')) {
+            @if ($any(recoveryPaymentForm.controls).transactionAmount.hasError('min')) {
               <mat-error>
                 {{ 'errors.recoveryPayment.amountMustBePositive' | translate }}
               </mat-error>

@@ -115,7 +115,7 @@ export class EntityDataTableChecksComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { entityDataTableChecks: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });
   }
@@ -175,7 +175,7 @@ export class EntityDataTableChecksComponent implements OnInit {
     const deleteEntityDataTableCheckDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `entity data table check ${entityDataTableCheckId}` }
     });
-    deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
+    deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteEntityDataTableCheck(entityDataTableCheckId)

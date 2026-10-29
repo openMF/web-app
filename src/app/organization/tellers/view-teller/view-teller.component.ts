@@ -56,7 +56,7 @@ export class ViewTellerComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { teller: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.tellerData = data.teller;
     });
   }
@@ -68,7 +68,7 @@ export class ViewTellerComponent {
     const deleteTellerDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `teller ${this.tellerData.id}` }
     });
-    deleteTellerDialogRef.afterClosed().subscribe((response: any) => {
+    deleteTellerDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteTeller(this.tellerData.id)

@@ -64,7 +64,7 @@ export class EditRuleComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountingRulesTemplate: any; accountingRule: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.accountingRulesTemplate.allowedOffices;
       this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
       this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
@@ -177,7 +177,7 @@ export class EditRuleComponent implements OnInit {
     }
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
-    this.accountingService.updateAccountingRule(this.accountingRule.id, accountingRule).subscribe((response: any) => {
+    this.accountingService.updateAccountingRule(this.accountingRule.id, accountingRule).subscribe((response) => {
       this.router.navigate(
         [
           '../../',

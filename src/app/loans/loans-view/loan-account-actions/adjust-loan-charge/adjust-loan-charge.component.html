@@ -14,7 +14,7 @@
           <mifosx-input-amount
             [currency]="loanDetailsData.currency"
             [isRequired]="true"
-            [inputFormControl]="adjustLoanChargeForm.controls.amount"
+            [inputFormControl]="$any(adjustLoanChargeForm.controls.amount)"
             [inputLabel]="'Amount'"
           >
           </mifosx-input-amount>

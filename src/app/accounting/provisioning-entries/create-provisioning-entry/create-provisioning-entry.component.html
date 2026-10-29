@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
-            @if (provisioningEntryForm.controls.date.hasError('required')) {
+            @if ($any(provisioningEntryForm.controls).date.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

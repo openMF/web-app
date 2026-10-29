@@ -69,7 +69,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
     });
@@ -107,7 +107,7 @@ export class CloseSavingsAccountComponent implements OnInit {
     this.closeSavingsAccountForm
       .get('withdrawBalance')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: boolean) => {
+      .subscribe((value) => {
         if (value) {
           this.closeSavingsAccountForm.addControl(
             'amount',

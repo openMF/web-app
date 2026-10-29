@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Job Name' | translate }}</mat-label>
             <input matInput required formControlName="displayName" />
-            @if (jobForm.controls.displayName.hasError('required')) {
+            @if ($any(jobForm.controls).displayName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Job Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,7 +25,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Cron Expression' | translate }}</mat-label>
             <input matInput required formControlName="cronExpression" />
-            @if (jobForm.controls.cronExpression.hasError('required')) {
+            @if ($any(jobForm.controls).cronExpression.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Cron Expression' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

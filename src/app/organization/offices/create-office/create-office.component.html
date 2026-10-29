@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <input required matInput formControlName="name" />
-            @if (officeForm.controls.name.hasError('required')) {
+            @if ($any(officeForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (officeForm.controls.parentId.hasError('required')) {
+            @if ($any(officeForm.controls).parentId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Parent Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -51,7 +51,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openedOnDatePicker></mat-datepicker>
-            @if (officeForm.controls.openingDate.hasError('required')) {
+            @if ($any(officeForm.controls).openingDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Opening Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

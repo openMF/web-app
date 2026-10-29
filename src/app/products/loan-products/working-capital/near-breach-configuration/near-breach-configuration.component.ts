@@ -77,7 +77,7 @@ export class NearBreachConfigurationComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { nearBreaches: NearBreach[] }) => {
+    this.route.data.subscribe((data) => {
       this.nearBreachesData = data.nearBreaches ?? [];
     });
   }
@@ -108,10 +108,10 @@ export class NearBreachConfigurationComponent implements OnInit {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: ` the item of ${item.id}` }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.productsService.deleteWrokingCapitalNearBreach(item.id).subscribe(() => {
-          this.productsService.getWorkingCapitalNearBreaches().subscribe((nearBreachesData: NearBreach[]) => {
+          this.productsService.getWorkingCapitalNearBreaches().subscribe((nearBreachesData) => {
             this.nearBreachesData = nearBreachesData;
             this.dataSource = new MatTableDataSource(this.nearBreachesData);
           });

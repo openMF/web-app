@@ -75,7 +75,7 @@ export class CreateSharesAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountTemplate = data.sharesAccountTemplate;
     });
   }
@@ -137,7 +137,7 @@ export class CreateSharesAccountComponent {
       dateFormat,
       locale
     };
-    this.sharesService.createSharesAccount(sharesAccount).subscribe((response: any) => {
+    this.sharesService.createSharesAccount(sharesAccount).subscribe((response) => {
       this.router.navigate(
         [
           '../',

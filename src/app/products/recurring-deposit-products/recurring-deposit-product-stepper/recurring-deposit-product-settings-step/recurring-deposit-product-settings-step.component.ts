@@ -140,7 +140,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax) => {
       if (withHoldTax) {
         this.recurringDepositProductSettingsForm.addControl(
           'taxGroupId',

@@ -56,3 +56,6 @@ interface Window {
 }
 
 declare module 'chart.js';
+
+// Moment.js locale side-effect imports (TypeScript 6 bundler resolution)
+declare module 'moment/locale/*';

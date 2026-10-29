@@ -74,7 +74,7 @@ export class SavingProductGeneralTabComponent {
   ];
 
   constructor() {
-    this.route.data.subscribe((data: { savingProduct: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingProduct = data.savingProduct;
     });
   }

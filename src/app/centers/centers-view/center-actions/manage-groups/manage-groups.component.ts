@@ -62,7 +62,7 @@ export class ManageGroupsComponent implements AfterViewInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.centerData = data.centersActionData;
       this.groupMembers = data.centersActionData.groupMembers;
     });
@@ -72,11 +72,11 @@ export class ManageGroupsComponent implements AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.groupChoice.valueChanges.subscribe((value: string) => {
+    this.groupChoice.valueChanges.subscribe((value) => {
       if (value.length >= 2) {
         this.groupsService
           .getFilteredGroups('name', 'ASC', value, this.centerData.officeId, 'true')
-          .subscribe((data: any) => {
+          .subscribe((data) => {
             this.groupsData = data;
             // Results arrive outside any template event: notify OnPush change detection.
             this.changeDetectorRef.markForCheck();
@@ -123,7 +123,7 @@ export class ManageGroupsComponent implements AfterViewInit {
     const removeMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `group member: ${group.name}` }
     });
-    removeMemberDialogRef.afterClosed().subscribe((response: any) => {
+    removeMemberDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.centersService
           .executeCenterActionCommand(this.centerData.id, 'disassociateGroups', { groupMembers: [group.id] })

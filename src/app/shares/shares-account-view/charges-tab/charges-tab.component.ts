@@ -77,7 +77,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;
     });

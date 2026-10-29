@@ -26,7 +26,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsReferenceAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.savingsReferenceAccountId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Saving reference'"
@@ -35,7 +35,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="recurringDepositProductAccountingForm.controls.feesReceivableAccountId"
+            [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.feesReceivableAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Fees Receivable'"
@@ -45,7 +45,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="recurringDepositProductAccountingForm.controls.penaltiesReceivableAccountId"
+            [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.penaltiesReceivableAccountId)"
             [glAccountList]="assetAccountData"
             [required]="true"
             [inputLabel]="'Penalties Receivable'"
@@ -56,7 +56,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsControlAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.savingsControlAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Saving control'"
@@ -64,7 +64,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.transfersInSuspenseAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.transfersInSuspenseAccountId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Savings transfers in suspense'"
@@ -73,7 +73,7 @@
         @if (isAccrualAccounting()) {
           <mifosx-gl-account-selector
             class="flex-48"
-            [inputFormControl]="recurringDepositProductAccountingForm.controls.interestPayableAccountId"
+            [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.interestPayableAccountId)"
             [glAccountList]="liabilityAccountData"
             [required]="true"
             [inputLabel]="'Interest Payable'"
@@ -84,7 +84,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.interestOnSavingsAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.interestOnSavingsAccountId)"
           [glAccountList]="expenseAccountData"
           [required]="true"
           [inputLabel]="'Interest on savings'"
@@ -94,7 +94,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromFeeAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.incomeFromFeeAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from fees'"
@@ -102,7 +102,7 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromPenaltyAccountId"
+          [inputFormControl]="$any(recurringDepositProductAccountingForm.controls.incomeFromPenaltyAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from penalties'"

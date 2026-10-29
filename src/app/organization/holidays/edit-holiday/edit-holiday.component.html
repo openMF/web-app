@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required autofocus formControlName="name" />
-            @if (holidayForm.controls.name.hasError('required')) {
+            @if ($any(holidayForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -35,7 +35,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #fromDatePicker></mat-datepicker>
-              @if (holidayForm.controls.fromDate.hasError('required')) {
+              @if ($any(holidayForm.controls).fromDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -57,7 +57,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #toDatePicker></mat-datepicker>
-              @if (holidayForm.controls.toDate.hasError('required')) {
+              @if ($any(holidayForm.controls).toDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -76,7 +76,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (holidayForm.controls.reschedulingType.hasError('required')) {
+              @if ($any(holidayForm.controls).reschedulingType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Repayment Scheduling Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -98,7 +98,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #repaymentDatePicker></mat-datepicker>
-              @if (holidayForm.controls.repaymentsRescheduledTo.hasError('required')) {
+              @if ($any(holidayForm.controls).repaymentsRescheduledTo.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Repayment scheduled to' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

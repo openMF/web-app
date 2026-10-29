@@ -49,7 +49,7 @@
               <mat-option value="createdDate">{{ 'labels.inputs.Creation Date' | translate }}</mat-option>
               <mat-option value="disbursalDate">{{ 'labels.inputs.Disbursement Date' | translate }}</mat-option>
             </mat-select>
-            @if (fundMappingForm.controls.loanDateOption.hasError('required')) {
+            @if ($any(fundMappingForm.controls).loanDateOption.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Date Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -69,7 +69,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
-            @if (fundMappingForm.controls.loanFromDate.hasError('required')) {
+            @if ($any(fundMappingForm.controls).loanFromDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -89,7 +89,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
-            @if (fundMappingForm.controls.loanToDate.hasError('required')) {
+            @if ($any(fundMappingForm.controls).loanToDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -116,7 +116,7 @@
                     <mat-option value=">">&gt;</mat-option>
                     <mat-option value="=">=</mat-option>
                   </mat-select>
-                  @if (fundMappingForm.controls.outStandingAmountPercentageCondition.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).outStandingAmountPercentageCondition.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Comparison Condition' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -136,7 +136,7 @@
                     formControlName="minOutStandingAmountPercentage"
                     placeholder="{{ 'labels.inputs.Minimum Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.minOutStandingAmountPercentage.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).minOutStandingAmountPercentage.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Minimum Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -155,7 +155,7 @@
                     formControlName="outStandingAmountPercentage"
                     placeholder="{{ 'labels.inputs.Comparison Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.outStandingAmountPercentage.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).outStandingAmountPercentage.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Comparison Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -174,7 +174,7 @@
                     formControlName="maxOutStandingAmountPercentage"
                     placeholder="{{ 'labels.inputs.Maximum Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.maxOutStandingAmountPercentage.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).maxOutStandingAmountPercentage.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Maximum Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -200,7 +200,7 @@
                     <mat-option value=">">&gt;</mat-option>
                     <mat-option value="=">=</mat-option>
                   </mat-select>
-                  @if (fundMappingForm.controls.outstandingAmountCondition.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).outstandingAmountCondition.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Comparison Condition' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -220,7 +220,7 @@
                     formControlName="minOutstandingAmount"
                     placeholder="{{ 'labels.inputs.Minimum Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.minOutstandingAmount.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).minOutstandingAmount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Minimum Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -239,7 +239,7 @@
                     formControlName="outstandingAmount"
                     placeholder="{{ 'labels.inputs.Comparison Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.outstandingAmount.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).outstandingAmount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Comparison Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -258,7 +258,7 @@
                     formControlName="maxOutstandingAmount"
                     placeholder="{{ 'labels.inputs.Maximum Value' | translate }}"
                   />
-                  @if (fundMappingForm.controls.maxOutstandingAmount.hasError('required')) {
+                  @if ($any(fundMappingForm.controls).maxOutstandingAmount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Maximum Value' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -72,13 +72,11 @@ export class EditCampaignComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
-        this.smsCampaignTemplate = data.smsCampaignTemplate;
-        this.smsCampaign = data.smsCampaign;
-        this.smsCampaign.editFlag = true;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.smsCampaignTemplate = data.smsCampaignTemplate;
+      this.smsCampaign = data.smsCampaign;
+      this.smsCampaign.editFlag = true;
+    });
   }
 
   /**
@@ -126,7 +124,7 @@ export class EditCampaignComponent {
     this.organizationService
       .updateSmsCampaign(smsCampaign, this.smsCampaign.id)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

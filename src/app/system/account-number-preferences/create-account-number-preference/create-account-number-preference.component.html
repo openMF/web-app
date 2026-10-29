@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (accountNumberPreferenceForm.controls.accountType.hasError('required')) {
+            @if ($any(accountNumberPreferenceForm.controls).accountType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

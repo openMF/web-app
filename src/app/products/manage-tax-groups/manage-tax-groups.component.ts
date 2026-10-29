@@ -76,7 +76,7 @@ export class ManageTaxGroupsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroups: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxGroupsData = data.taxGroups;
     });
   }

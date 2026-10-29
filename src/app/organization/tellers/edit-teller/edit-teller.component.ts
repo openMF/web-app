@@ -64,7 +64,7 @@ export class EditTellerComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { teller: any; offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.tellerData = data.teller;
       this.officeData = data.offices;
     });
@@ -141,7 +141,7 @@ export class EditTellerComponent implements OnInit {
     this.organizationService
       .updateTeller(this.tellerData.id, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../../',

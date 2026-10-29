@@ -87,7 +87,7 @@ export class LinkPaymentSystemComponent implements OnInit {
   statusDetail: string | null = null;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }

@@ -15,7 +15,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
               <input matInput required formControlName="username" readonline />
-              @if (editUserForm.controls.username.hasError('required')) {
+              @if ($any(editUserForm.controls).username.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,13 +25,13 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
               <input matInput required formControlName="email" />
-              @if (editUserForm.controls.email.hasError('email')) {
+              @if ($any(editUserForm.controls).email.hasError('email')) {
                 <mat-error>
                   {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.invalid' | translate }}</strong>
                 </mat-error>
               }
-              @if (editUserForm.controls.email.hasError('required')) {
+              @if ($any(editUserForm.controls).email.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -41,13 +41,13 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
               <input matInput required formControlName="firstname" />
-              @if (editUserForm.controls.firstname.hasError('pattern')) {
+              @if ($any(editUserForm.controls).firstname.hasError('pattern')) {
                 <mat-error>
                   {{ 'labels.inputs.First Name' | translate }}
                   <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
                 </mat-error>
               }
-              @if (editUserForm.controls.firstname.hasError('required')) {
+              @if ($any(editUserForm.controls).firstname.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -57,13 +57,13 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
               <input matInput required formControlName="lastname" />
-              @if (editUserForm.controls.lastname.hasError('pattern')) {
+              @if ($any(editUserForm.controls).lastname.hasError('pattern')) {
                 <mat-error>
                   {{ 'labels.inputs.Last Name' | translate }}
                   <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
                 </mat-error>
               }
-              @if (editUserForm.controls.lastname.hasError('required')) {
+              @if ($any(editUserForm.controls).lastname.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

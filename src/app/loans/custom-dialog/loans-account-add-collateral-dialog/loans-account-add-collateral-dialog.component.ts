@@ -85,14 +85,14 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
   buildDependencies() {
     this.addCollateralForm.controls.collateral.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((collateral: any) => {
+      .subscribe((collateral) => {
         this.collateralData = collateral;
         this.maxQuantity = collateral.quantity;
       });
 
     this.addCollateralForm.controls.quantity.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((quantity: any) => {
+      .subscribe((quantity) => {
         if (!this.collateralData || quantity === null || quantity === '') {
           this.addCollateralForm.patchValue({ totalValue: '', totalCollateralValue: '' }, { emitEvent: false });
           return;

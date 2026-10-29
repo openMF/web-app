@@ -22,7 +22,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (openingBalancesForm.controls.officeId.hasError('required')) {
+              @if ($any(openingBalancesForm.controls).officeId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -56,7 +56,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (openingBalancesForm.controls.currencyCode.hasError('required')) {
+              @if ($any(openingBalancesForm.controls).currencyCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -75,7 +75,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
-              @if (openingBalancesForm.controls.transactionDate.hasError('required')) {
+              @if ($any(openingBalancesForm.controls).transactionDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Opening Balances Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -122,7 +122,7 @@ export class EditHookComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
+    this.route.data.subscribe((data) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
       this.eventsData = data.hook.events ? data.hook.events : [];
@@ -208,7 +208,7 @@ export class EditHookComponent implements OnInit {
     const addEventDialogRef = this.dialog.open(AddEventDialogComponent, {
       data: this.hooksTemplateData
     });
-    addEventDialogRef.afterClosed().subscribe((response: any) => {
+    addEventDialogRef.afterClosed().subscribe((response) => {
       if (response) {
         this.eventsData.push({
           entityName: response.entity,
@@ -246,7 +246,7 @@ export class EditHookComponent implements OnInit {
       }
     });
 
-    deleteEventDialogRef.afterClosed().subscribe((response: any) => {
+    deleteEventDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.eventsData.splice(index, 1);
         this.dataSource.connect().next(this.eventsData);
@@ -292,7 +292,7 @@ export class EditHookComponent implements OnInit {
           : undefined
       }
     };
-    this.systemService.updateHook(this.hookData.id, hook).subscribe((response: any) => {
+    this.systemService.updateHook(this.hookData.id, hook).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

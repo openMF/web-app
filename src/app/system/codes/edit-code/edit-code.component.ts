@@ -46,7 +46,7 @@ export class EditCodeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { code: any }) => {
+    this.route.data.subscribe((data) => {
       this.codeData = data.code;
     });
   }
@@ -75,7 +75,7 @@ export class EditCodeComponent implements OnInit {
    * if successful redirects to view updated code.
    */
   submit() {
-    this.systemService.updateCode(this.codeForm.value, this.codeData.id).subscribe((response: any) => {
+    this.systemService.updateCode(this.codeForm.value, this.codeData.id).subscribe((response) => {
       this.router.navigate(
         [
           '../../',

@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (clientScreenReportForm.controls.templateId.hasError('required')) {
+            @if ($any(clientScreenReportForm.controls).templateId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Screen Report' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

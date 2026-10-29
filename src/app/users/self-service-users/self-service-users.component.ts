@@ -135,7 +135,7 @@ export class SelfServiceUsersComponent implements OnInit {
         switchMap((value: string | any) => this.searchClients(value)),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.clientsData = data.pageItems || [];
         this.changeDetectorRef.markForCheck();
       });
@@ -156,7 +156,7 @@ export class SelfServiceUsersComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         })
       )
-      .subscribe((users: any[]) => {
+      .subscribe((users) => {
         this.dataSource.data = users || [];
         this.changeDetectorRef.markForCheck();
       });
@@ -272,7 +272,7 @@ export class SelfServiceUsersComponent implements OnInit {
         type
       }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         confirmed();
       }

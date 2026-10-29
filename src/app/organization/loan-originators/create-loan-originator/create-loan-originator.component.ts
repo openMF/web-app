@@ -60,14 +60,12 @@ export class CreateLoanOriginatorComponent implements OnInit {
   @ViewChild('templateCreateLoanOriginatorForm') templateCreateLoanOriginatorForm: TemplateRef<any>;
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanOriginatorsTemplateData: any }) => {
-        this.loanOriginatorsTemplateData = data.loanOriginatorsTemplateData;
-        this.statusOptions = data.loanOriginatorsTemplateData.statusOptions;
-        this.originatorTypeOptions = data.loanOriginatorsTemplateData.originatorTypeOptions;
-        this.channelTypeOptions = data.loanOriginatorsTemplateData.channelTypeOptions;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanOriginatorsTemplateData = data.loanOriginatorsTemplateData;
+      this.statusOptions = data.loanOriginatorsTemplateData.statusOptions;
+      this.originatorTypeOptions = data.loanOriginatorsTemplateData.originatorTypeOptions;
+      this.channelTypeOptions = data.loanOriginatorsTemplateData.channelTypeOptions;
+    });
   }
 
   /**
@@ -118,7 +116,7 @@ export class CreateLoanOriginatorComponent implements OnInit {
     this.organizationService
       .createLoanOriginator(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

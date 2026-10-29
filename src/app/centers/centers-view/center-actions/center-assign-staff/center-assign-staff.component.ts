@@ -48,7 +48,7 @@ export class CenterAssignStaffComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.centerData = data.centersActionData;
     });
   }

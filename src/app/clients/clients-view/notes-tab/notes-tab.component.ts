@@ -61,7 +61,7 @@ export class NotesTabComponent implements OnInit {
   ngOnInit(): void {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientNotes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.entityNotes = data.clientNotes;
     });
   }
@@ -106,11 +106,11 @@ export class NotesTabComponent implements OnInit {
     this.clientsService
       .createClientNote(this.entityId, noteContent)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.entityNotes = [
           ...this.entityNotes,
           {
-            id: response.resourceId,
+            id: (response as any).resourceId,
             createdByUsername: this.username,
             createdOn: new Date(),
             note: noteContent.note

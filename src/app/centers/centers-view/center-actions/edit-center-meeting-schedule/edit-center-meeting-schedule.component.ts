@@ -64,7 +64,7 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.calendarTemplate = data.centersActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;
     });
@@ -116,7 +116,7 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
+    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

@@ -111,7 +111,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductSettingsForm.get('enableLockinPeriod').valueChanges.subscribe((enableLockinPeriod: any) => {
+    this.savingProductSettingsForm.get('enableLockinPeriod').valueChanges.subscribe((enableLockinPeriod) => {
       if (enableLockinPeriod) {
         this.savingProductSettingsForm.addControl(
           'lockinPeriodFrequency',
@@ -131,7 +131,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
       }
     });
 
-    this.savingProductSettingsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
+    this.savingProductSettingsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft) => {
       if (allowOverdraft) {
         this.savingProductSettingsForm.addControl(
           'minOverdraftForInterestCalculation',
@@ -149,7 +149,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
       }
     });
 
-    this.savingProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+    this.savingProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax) => {
       if (withHoldTax) {
         this.savingProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
       } else {
@@ -159,7 +159,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
 
     this.savingProductSettingsForm
       .get('isDormancyTrackingActive')
-      .valueChanges.subscribe((isDormancyTrackingActive: any) => {
+      .valueChanges.subscribe((isDormancyTrackingActive) => {
         if (isDormancyTrackingActive) {
           this.savingProductSettingsForm.addControl(
             'daysToInactive',

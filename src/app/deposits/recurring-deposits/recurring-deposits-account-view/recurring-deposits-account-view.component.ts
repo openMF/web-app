@@ -103,7 +103,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * @param {RecurringDepositsService} recurringDepositsService RecurringDeposits Service
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountData: any; savingsDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
       this.savingsDatatables = data.savingsDatatables;
@@ -250,7 +250,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     const deleteRecurringDepositsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Recurring deposit account with id: ${this.recurringDepositsAccountData.id}` }
     });
-    deleteRecurringDepositsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteRecurringDepositsAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.recurringDepositsService
           .deleteRecurringDepositsAccount(this.recurringDepositsAccountData.id)
@@ -273,7 +273,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
         )
       }
     });
-    calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    calculateInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.recurringDepositsService
           .executeRecurringDepositsAccountCommand(this.recurringDepositsAccountData.id, 'calculateInterest', {})
@@ -294,7 +294,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
         dialogContext: this.translateService.instant('labels.text.Are you sure you want to post interest') + ' ?'
       }
     });
-    postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    postInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.recurringDepositsService
           .executeRecurringDepositsAccountCommand(this.recurringDepositsAccountData.id, 'postInterest', {})
@@ -316,7 +316,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
         dialogContext: this.translateService.instant('labels.dialogContext.Enable withhold tax for this account ?')
       }
     });
-    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
@@ -340,7 +340,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
         dialogContext: this.translateService.instant('labels.dialogContext.Disable withhold tax for this account ?')
       }
     });
-    disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+    disableWithHoldTaxDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {

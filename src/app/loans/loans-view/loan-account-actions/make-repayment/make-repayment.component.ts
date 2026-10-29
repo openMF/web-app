@@ -157,7 +157,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((template: any) => {
+      .subscribe((template) => {
         this.isQuoteLoading = false;
         this.isQuoteStale = !template;
         if (template) {

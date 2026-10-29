@@ -140,7 +140,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
+    editNoteDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
@@ -158,7 +158,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge ${charge.name}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);

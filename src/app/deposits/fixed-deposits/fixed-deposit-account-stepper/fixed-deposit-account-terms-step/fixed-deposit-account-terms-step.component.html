@@ -13,7 +13,7 @@
         [currency]="currency"
         [isRequired]="true"
         class="flex-48"
-        [inputFormControl]="fixedDepositAccountTermsForm.controls.depositAmount"
+        [inputFormControl]="$any(fixedDepositAccountTermsForm.controls.depositAmount)"
         [inputLabel]="'Deposit Amount'"
       >
       </mifosx-input-amount>

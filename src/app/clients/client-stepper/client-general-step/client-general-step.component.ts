@@ -176,7 +176,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm
       .get('legalFormId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((legalFormId: number) => {
+      .subscribe((legalFormId) => {
         this.legalFormChangeEvent.emit({ legalForm: legalFormId });
         if (legalFormId === LegalFormId.PERSON) {
           this.createClientForm.removeControl('fullname');
@@ -226,7 +226,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm
       .get('active')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((active: boolean) => {
+      .subscribe((active) => {
         if (active) {
           this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
         } else {
@@ -236,7 +236,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm
       .get('addSavings')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((active: boolean) => {
+      .subscribe((active) => {
         if (active) {
           this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
         } else {
@@ -250,7 +250,7 @@ export class ClientGeneralStepComponent implements OnInit {
         switchMap((officeId: number) => this.clientService.getClientWithOfficeTemplate(officeId)),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((clientTemplate: any) => {
+      .subscribe((clientTemplate) => {
         this.staffOptions = clientTemplate.staffOptions;
       });
   }

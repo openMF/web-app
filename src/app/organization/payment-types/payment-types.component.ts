@@ -97,7 +97,7 @@ export class PaymentTypesComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { paymentTypes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.paymentTypesData = data.paymentTypes;
     });
   }
@@ -134,7 +134,7 @@ export class PaymentTypesComponent implements OnInit {
     const deletePaymentTypeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `payment type ${paymentTypeId}` }
     });
-    deletePaymentTypeDialogRef.afterClosed().subscribe((response: any) => {
+    deletePaymentTypeDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deletePaymentType(paymentTypeId)

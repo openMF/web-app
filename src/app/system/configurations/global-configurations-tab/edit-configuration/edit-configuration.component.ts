@@ -58,7 +58,7 @@ export class EditConfigurationComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { configuration: any }) => {
+    this.route.data.subscribe((data) => {
       this.configuration = data.configuration;
     });
   }

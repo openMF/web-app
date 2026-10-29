@@ -257,7 +257,7 @@ export class SavingsAccountOpeningComponent implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.customersData = this.extractArray(response, [
           'customers',
           'clients',
@@ -269,7 +269,7 @@ export class SavingsAccountOpeningComponent implements OnInit {
     this.productForm
       .get('product')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((product: any) => {
+      .subscribe((product) => {
         if (product && typeof product === 'object') {
           this.productForm.get('currencyCode')?.setValue(product.currency?.code || product.currencyCode || '');
           this.applyProductDefaults(product);
@@ -279,7 +279,7 @@ export class SavingsAccountOpeningComponent implements OnInit {
     this.fundingForm
       .get('fundingType')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((fundingType: FundingType) => {
+      .subscribe((fundingType) => {
         this.applyFundingValidators(fundingType);
         this.syncSelectedPaymentType();
       });

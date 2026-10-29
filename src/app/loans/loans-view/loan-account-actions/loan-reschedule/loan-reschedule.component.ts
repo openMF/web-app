@@ -174,7 +174,7 @@ export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent imp
 
   /** Submit the reschedule after penalties are waived */
   private submitReschedule(data: any) {
-    this.loanService.submitRescheduleData(data).subscribe((response: any) => {
+    this.loanService.submitRescheduleData(data).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }
@@ -201,7 +201,7 @@ export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent imp
    * Following the pattern of using valueChanges.subscribe()
    */
   setupWaivePenaltiesListener() {
-    this.waivePenalties.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: boolean) => {
+    this.waivePenalties.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
       if (!value) {
         // Reset selections when toggling off
         this.selectedPenalties = [];

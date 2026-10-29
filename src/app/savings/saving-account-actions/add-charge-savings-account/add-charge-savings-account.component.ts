@@ -66,7 +66,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];

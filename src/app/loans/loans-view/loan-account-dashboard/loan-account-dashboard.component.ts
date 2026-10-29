@@ -84,7 +84,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
   ngOnInit(): void {
     this.loanId = this.route.parent?.snapshot.paramMap.get('loanId') || '';
 
-    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       if (data.loanDetailsData) {
         this.loanData = data.loanDetailsData;
         this.calculateMetrics();

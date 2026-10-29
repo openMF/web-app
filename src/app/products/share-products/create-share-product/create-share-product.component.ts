@@ -82,7 +82,7 @@ export class CreateShareProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { shareProductsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProductsTemplate = data.shareProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForShares();
@@ -142,7 +142,7 @@ export class CreateShareProductComponent {
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
       locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
-    this.productsService.createShareProduct(shareProduct).subscribe((response: any) => {
+    this.productsService.createShareProduct(shareProduct).subscribe((response) => {
       this.router.navigate(
         [
           '../',

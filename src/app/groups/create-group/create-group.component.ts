@@ -109,7 +109,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data) => {
       this.offices = data.offices;
       this.officeData = data.offices;
     });
@@ -196,12 +196,12 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.clientChoice.valueChanges.subscribe((value: string) => {
+    this.clientChoice.valueChanges.subscribe((value) => {
       if (value.length >= 2) {
         this.clientSearch?.unsubscribe();
         this.clientSearch = this.clientsService
           .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
-          .subscribe((data: any) => {
+          .subscribe((data) => {
             this.clientsData = data.pageItems;
             // Results arrive outside any template event: notify OnPush change detection.
             this.changeDetectorRef.markForCheck();
@@ -248,7 +248,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   buildDependencies() {
     // In center mode the office is fixed and staff options come from the center's template.
     if (!this.centerId) {
-      this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
+      this.groupForm.get('officeId').valueChanges.subscribe((option) => {
         this.groupService.getStaff(option).subscribe((data) => {
           this.staffData = data['staffOptions'];
           if (this.staffData === undefined) {
@@ -259,7 +259,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         });
       });
     }
-    this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
+    this.groupForm.get('active').valueChanges.subscribe((bool) => {
       if (bool) {
         this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
       } else {

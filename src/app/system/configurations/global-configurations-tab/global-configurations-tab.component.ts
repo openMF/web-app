@@ -121,7 +121,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { configurations: any }) => {
+    this.route.data.subscribe((data) => {
       this.configurationData = data.configurations;
     });
   }
@@ -137,7 +137,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for configurations table.
    */
   setConfigurationData(): void {
-    this.systemService.getConfigurations().subscribe((configurationData: any) => {
+    this.systemService.getConfigurations().subscribe((configurationData) => {
       this.configurationData = configurationData.globalConfiguration;
       this.dataSource = new MatTableDataSource(this.configurationData);
       this.dataSource.paginator = this.paginator;
@@ -159,7 +159,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   toggleStatus(configuration: any) {
     this.systemService
       .updateConfiguration(configuration.id, { enabled: configuration.enabled })
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
           const msg = configuration.enabled

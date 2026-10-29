@@ -78,7 +78,7 @@ export class CreateProvisioningEntryComponent implements OnInit {
     if (provisioningEntry.date instanceof Date) {
       provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
     }
-    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response: any) => {
+    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response) => {
       this.router.navigate(
         [
           '../view',

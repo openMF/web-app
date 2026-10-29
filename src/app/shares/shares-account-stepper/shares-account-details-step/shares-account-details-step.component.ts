@@ -103,8 +103,8 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
-    this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
+    this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId) => {
+      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response) => {
         this.sharesAccountProductTemplate.emit(response);
       });
     });

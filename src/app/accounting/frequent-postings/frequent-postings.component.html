@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (frequentPostingsForm.controls.officeId.hasError('required')) {
+            @if ($any(frequentPostingsForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (frequentPostingsForm.controls.accountingRule.hasError('required')) {
+            @if ($any(frequentPostingsForm.controls).accountingRule.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Accounting Rule' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (frequentPostingsForm.controls.currencyCode.hasError('required')) {
+            @if ($any(frequentPostingsForm.controls).currencyCode.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -76,7 +76,7 @@
                       </mat-option>
                     }
                   </mat-select>
-                  @if (debits.at(i).controls.glAccountId.hasError('required')) {
+                  @if ($any(debits.at(glAccountId)).controls.glAccountId.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Affected GL Entry (Debit)' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -86,7 +86,7 @@
                 <mat-form-field class="flex-43">
                   <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
                   <input type="number" matInput required formControlName="amount" />
-                  @if (debits.at(i).controls.amount.hasError('required')) {
+                  @if ($any(debits.at(amount)).controls.amount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Debit Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -121,7 +121,7 @@
                       </mat-option>
                     }
                   </mat-select>
-                  @if (credits.at(i).controls.glAccountId.hasError('required')) {
+                  @if ($any(credits.at(glAccountId)).controls.glAccountId.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Affected GL Entry (Credit)' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -131,7 +131,7 @@
                 <mat-form-field class="flex-43">
                   <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
                   <input type="number" matInput required formControlName="amount" />
-                  @if (credits.at(i).controls.amount.hasError('required')) {
+                  @if ($any(credits.at(amount)).controls.amount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Credit Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -171,7 +171,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (frequentPostingsForm.controls.transactionDate.hasError('required')) {
+            @if ($any(frequentPostingsForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

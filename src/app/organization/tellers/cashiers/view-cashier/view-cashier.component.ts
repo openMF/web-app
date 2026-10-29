@@ -54,7 +54,7 @@ export class ViewCashierComponent {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashier: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.cashierData = data.cashier;
     });
   }
@@ -66,7 +66,7 @@ export class ViewCashierComponent {
     const deleteCashierDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Cashier id: ${this.cashierData.id}` }
     });
-    deleteCashierDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCashierDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteCashier(this.cashierData.tellerId, this.cashierData.id)

@@ -14,7 +14,7 @@
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
             <input matInput required formControlName="datatableName" />
-            @if (dataTableForm.controls.datatableName.hasError('required')) {
+            @if ($any(dataTableForm.controls).datatableName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Data Table Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (dataTableForm.controls.apptableName.hasError('required')) {
+            @if ($any(dataTableForm.controls).apptableName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Application Table Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

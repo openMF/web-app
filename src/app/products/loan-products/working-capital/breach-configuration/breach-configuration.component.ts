@@ -79,7 +79,7 @@ export class BreachConfigurationComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { breaches: Breach[] }) => {
+    this.route.data.subscribe((data) => {
       this.breachesData = data.breaches ?? [];
     });
   }
@@ -115,10 +115,10 @@ export class BreachConfigurationComponent implements OnInit {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: ` the item of ${item.id}` }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.productsService.deleteWrokingCapitalBreach(item.id).subscribe(() => {
-          this.productsService.getWorkingCapitalBreaches().subscribe((breachesData: Breach[]) => {
+          this.productsService.getWorkingCapitalBreaches().subscribe((breachesData) => {
             this.breachesData = breachesData;
             this.dataSource = new MatTableDataSource(this.breachesData);
           });

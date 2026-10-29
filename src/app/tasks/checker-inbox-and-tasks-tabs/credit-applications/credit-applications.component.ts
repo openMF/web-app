@@ -321,7 +321,7 @@ export class CreditApplicationsComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((dialogResult: any) => {
+      .subscribe((dialogResult) => {
         this.confirmingRejection = false;
         if (!dialogResult?.confirm) {
           this.changeDetectorRef.markForCheck();
@@ -362,7 +362,7 @@ export class CreditApplicationsComponent implements OnInit {
       })
     )
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((results: any[]) => {
+      .subscribe((results) => {
         const failed = results.filter((result) => result?.error).length;
         const succeeded = results.length - failed;
         this.failedApplications = results
@@ -469,10 +469,10 @@ export class CreditApplicationsComponent implements OnInit {
       addressTemplate: this.clientsService.getClientAddressTemplate().pipe(catchError(() => of({})))
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.loanProductOptions = data.loanProducts || [];
         this.clientTypeOptions = data.clientTemplate?.clientTypeOptions || [];
-        this.stateOptions = data.addressTemplate?.stateProvinceIdOptions || [];
+        this.stateOptions = (data as any).addressTemplate?.stateProvinceIdOptions || [];
         this.changeDetectorRef.markForCheck();
       });
   }

@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedDatePicker></mat-datepicker>
-            @if (approveSharesAccountForm.controls.approvedDate.hasError('required')) {
+            @if ($any(approveSharesAccountForm.controls).approvedDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Approved On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

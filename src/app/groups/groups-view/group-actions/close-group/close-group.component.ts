@@ -57,7 +57,7 @@ export class CloseGroupComponent implements OnInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.closureData = data.groupActionData.closureReasons;
     });
     this.groupId = this.route.parent.snapshot.params['groupId'];

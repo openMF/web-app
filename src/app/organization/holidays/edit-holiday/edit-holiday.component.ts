@@ -65,18 +65,16 @@ export class EditHolidayComponent implements OnInit {
    * @param {Router} router Router.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { holiday: any; holidayTemplate: any }) => {
-        this.holidayData = data.holiday;
-        this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
-        this.reSchedulingType = this.holidayData.reschedulingType;
-        if (this.holidayData.status.value === 'Active') {
-          this.isActiveHoliday = true;
-        } else {
-          this.isActiveHoliday = false;
-        }
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.holidayData = data.holiday;
+      this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
+      this.reSchedulingType = this.holidayData.reschedulingType;
+      if (this.holidayData.status.value === 'Active') {
+        this.isActiveHoliday = true;
+      } else {
+        this.isActiveHoliday = false;
+      }
+    });
   }
 
   ngOnInit() {
@@ -137,7 +135,7 @@ export class EditHolidayComponent implements OnInit {
     this.holidayForm
       .get('reschedulingType')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((option: any) => {
+      .subscribe((option) => {
         this.reSchedulingType = option;
         if (option === 2) {
           this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl(new Date(), Validators.required));

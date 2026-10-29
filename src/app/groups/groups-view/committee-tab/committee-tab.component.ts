@@ -83,7 +83,7 @@ export class CommitteeTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.groupViewData = data.groupViewData;
       this.groupRolesData = this.groupViewData.groupRoles;
       this.groupStatus = this.groupViewData.status.value;
@@ -98,7 +98,7 @@ export class CommitteeTabComponent {
     const unAssignRoleDialogRef = this.dialog.open(UnassignRoleDialogComponent, {
       data: { id: clientId }
     });
-    unAssignRoleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    unAssignRoleDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         const clientIndex = this.groupRolesData.findIndex((client: any) => client.clientId === clientId);
         this.groupRolesData.splice(clientIndex, 1);

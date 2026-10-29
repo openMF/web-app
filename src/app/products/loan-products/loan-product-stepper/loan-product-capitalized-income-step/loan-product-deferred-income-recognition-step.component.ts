@@ -119,67 +119,61 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
   }
 
   setConditionalControls() {
-    this.loanDeferredIncomeRecognitionForm
-      .get('enableIncomeCapitalization')
-      .valueChanges.subscribe((enabled: boolean) => {
-        this.enableIncomeCapitalization = enabled;
-        if (this.enableIncomeCapitalization) {
-          const capitalizedIncomeCalculationType =
-            !(
-              this.deferredIncomeRecognition.capitalizedIncome &&
-              this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType
-            ) || this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType == ''
-              ? this.capitalizedIncomeCalculationTypeOptions[0].id
-              : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType;
-          this.loanDeferredIncomeRecognitionForm.addControl(
-            'capitalizedIncomeCalculationType',
-            new UntypedFormControl(capitalizedIncomeCalculationType, Validators.required)
-          );
-          const capitalizedIncomeStrategy =
-            !this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy ||
-            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy == ''
-              ? this.capitalizedIncomeStrategyOptions[0].id
-              : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy;
-          this.loanDeferredIncomeRecognitionForm.addControl(
-            'capitalizedIncomeStrategy',
-            new UntypedFormControl(capitalizedIncomeStrategy, Validators.required)
-          );
-          const capitalizedIncomeType =
-            !this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType ||
-            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType == ''
-              ? this.capitalizedIncomeTypeOptions[0].id
-              : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
-          this.loanDeferredIncomeRecognitionForm.addControl(
-            'capitalizedIncomeType',
-            new UntypedFormControl(capitalizedIncomeType, Validators.required)
-          );
+    this.loanDeferredIncomeRecognitionForm.get('enableIncomeCapitalization').valueChanges.subscribe((enabled) => {
+      this.enableIncomeCapitalization = enabled;
+      if (this.enableIncomeCapitalization) {
+        const capitalizedIncomeCalculationType =
+          !(
+            this.deferredIncomeRecognition.capitalizedIncome &&
+            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType
+          ) || this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType == ''
+            ? this.capitalizedIncomeCalculationTypeOptions[0].id
+            : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType;
+        this.loanDeferredIncomeRecognitionForm.addControl(
+          'capitalizedIncomeCalculationType',
+          new UntypedFormControl(capitalizedIncomeCalculationType, Validators.required)
+        );
+        const capitalizedIncomeStrategy =
+          !this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy ||
+          this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy == ''
+            ? this.capitalizedIncomeStrategyOptions[0].id
+            : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy;
+        this.loanDeferredIncomeRecognitionForm.addControl(
+          'capitalizedIncomeStrategy',
+          new UntypedFormControl(capitalizedIncomeStrategy, Validators.required)
+        );
+        const capitalizedIncomeType =
+          !this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType ||
+          this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType == ''
+            ? this.capitalizedIncomeTypeOptions[0].id
+            : this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
+        this.loanDeferredIncomeRecognitionForm.addControl(
+          'capitalizedIncomeType',
+          new UntypedFormControl(capitalizedIncomeType, Validators.required)
+        );
 
-          this.loanDeferredIncomeRecognitionForm
-            .get('capitalizedIncomeCalculationType')
-            .valueChanges.subscribe((newValue: string) => {
-              this.emitValuesChange();
-            });
-          this.loanDeferredIncomeRecognitionForm
-            .get('capitalizedIncomeStrategy')
-            .valueChanges.subscribe((newValue: string) => {
-              this.emitValuesChange();
-            });
-          this.loanDeferredIncomeRecognitionForm
-            .get('capitalizedIncomeType')
-            .valueChanges.subscribe((newValue: string) => {
-              this.emitValuesChange();
-            });
-        } else {
-          this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeCalculationType');
-          this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeStrategy');
-          this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeType');
-        }
+        this.loanDeferredIncomeRecognitionForm
+          .get('capitalizedIncomeCalculationType')
+          .valueChanges.subscribe((newValue) => {
+            this.emitValuesChange();
+          });
+        this.loanDeferredIncomeRecognitionForm.get('capitalizedIncomeStrategy').valueChanges.subscribe((newValue) => {
+          this.emitValuesChange();
+        });
+        this.loanDeferredIncomeRecognitionForm.get('capitalizedIncomeType').valueChanges.subscribe((newValue) => {
+          this.emitValuesChange();
+        });
+      } else {
+        this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeCalculationType');
+        this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeStrategy');
+        this.loanDeferredIncomeRecognitionForm.removeControl('capitalizedIncomeType');
+      }
 
-        this.emitValuesChange();
-        this.setViewChildForm.emit(this.loanDeferredIncomeRecognitionForm);
-      });
+      this.emitValuesChange();
+      this.setViewChildForm.emit(this.loanDeferredIncomeRecognitionForm);
+    });
 
-    this.loanDeferredIncomeRecognitionForm.get('enableBuyDownFee').valueChanges.subscribe((enabled: boolean) => {
+    this.loanDeferredIncomeRecognitionForm.get('enableBuyDownFee').valueChanges.subscribe((enabled) => {
       this.enableBuyDownFee = enabled;
       if (this.enableBuyDownFee) {
         const buyDownFeeCalculationType =
@@ -214,20 +208,16 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
           new UntypedFormControl(this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee)
         );
 
-        this.loanDeferredIncomeRecognitionForm
-          .get('buyDownFeeCalculationType')
-          .valueChanges.subscribe((newValue: string) => {
-            this.emitValuesChange();
-          });
-        this.loanDeferredIncomeRecognitionForm.get('buyDownFeeStrategy').valueChanges.subscribe((newValue: string) => {
+        this.loanDeferredIncomeRecognitionForm.get('buyDownFeeCalculationType').valueChanges.subscribe((newValue) => {
           this.emitValuesChange();
         });
-        this.loanDeferredIncomeRecognitionForm
-          .get('buyDownFeeIncomeType')
-          .valueChanges.subscribe((newValue: string) => {
-            this.emitValuesChange();
-          });
-        this.loanDeferredIncomeRecognitionForm.get('merchantBuyDownFee').valueChanges.subscribe((newValue: boolean) => {
+        this.loanDeferredIncomeRecognitionForm.get('buyDownFeeStrategy').valueChanges.subscribe((newValue) => {
+          this.emitValuesChange();
+        });
+        this.loanDeferredIncomeRecognitionForm.get('buyDownFeeIncomeType').valueChanges.subscribe((newValue) => {
+          this.emitValuesChange();
+        });
+        this.loanDeferredIncomeRecognitionForm.get('merchantBuyDownFee').valueChanges.subscribe((newValue) => {
           this.emitValuesChange();
         });
       } else {

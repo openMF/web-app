@@ -116,7 +116,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
     });
@@ -167,7 +167,7 @@ export class CreateTaxGroupComponent implements OnInit {
       formfields: formfields
     };
     const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
-    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
+    taxComponentDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat(response.data.value);
       }
@@ -201,7 +201,7 @@ export class CreateTaxGroupComponent implements OnInit {
       formfields: formfields
     };
     const taxComponentDialogRef = this.dialog.open(FormDialogComponent, { data });
-    taxComponentDialogRef.afterClosed().subscribe((response: any) => {
+    taxComponentDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const updatedMemeber = { ...taxComponent, ...response.data.value };
         this.taxComponentsDataSource.splice(this.taxComponentsDataSource.indexOf(taxComponent), 1, updatedMemeber);
@@ -217,7 +217,7 @@ export class CreateTaxGroupComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.taxComponentsDataSource.splice(index, 1);
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat([]);
@@ -241,7 +241,7 @@ export class CreateTaxGroupComponent implements OnInit {
     for (const taxComponent of taxGroup.taxComponents) {
       taxComponent.startDate = this.dateUtils.formatDate(taxComponent.startDate, dateFormat) || '';
     }
-    this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
+    this.productsService.createTaxGroup(taxGroup).subscribe((response) => {
       this.router.navigate(
         [
           '../',

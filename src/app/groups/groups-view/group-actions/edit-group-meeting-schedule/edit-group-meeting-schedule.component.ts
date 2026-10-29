@@ -64,7 +64,7 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.calendarTemplate = data.groupActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;
     });
@@ -116,7 +116,7 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
+    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

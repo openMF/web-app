@@ -103,7 +103,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
    */
   constructor() {
     super();
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanId = data.loanDetailsData.id;
       this.loanDetails = data.loanDetailsData;
       this.disallowExpectedDisbursements = this.loanDetails.disallowExpectedDisbursements || false;
@@ -207,7 +207,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
       formfields: this.buildForm(new Date(), this.currentPrincipalAmount - this.totalMultiDisbursed)
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
-    disbursementDialogRef.afterClosed().subscribe((response: any) => {
+    disbursementDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= this.currentPrincipalAmount) {
@@ -234,7 +234,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
       formfields: this.buildForm(expectedDisbursementDate, principal)
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
-    disbursementDialogRef.afterClosed().subscribe((response: any) => {
+    disbursementDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const newPrincipal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed - principal + newPrincipal <= this.currentPrincipalAmount) {
@@ -250,7 +250,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         const principal = this.disbursementDataSource[index]['principal'] * 1;
         this.disbursementDataSource.splice(index, 1);

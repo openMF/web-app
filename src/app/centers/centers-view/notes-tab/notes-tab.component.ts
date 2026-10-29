@@ -44,13 +44,13 @@ export class NotesTabComponent implements OnInit {
   ngOnInit() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
-    this.route.data.subscribe((data: { centerNotes: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityNotes = data.centerNotes;
     });
   }
 
   addNote(noteContent: any) {
-    this.centersService.createCenterNote(this.entityId, noteContent).subscribe((response: any) => {
+    this.centersService.createCenterNote(this.entityId, noteContent).subscribe((response) => {
       this.entityNotes = [
         ...this.entityNotes,
         {

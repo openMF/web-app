@@ -17,7 +17,7 @@
           </mat-option>
         }
       </mat-select>
-      @if (createClientForm.controls.officeId.hasError('required')) {
+      @if ($any(createClientForm.controls).officeId.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -60,13 +60,13 @@
           {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
         </mat-label>
         <input matInput required formControlName="fullname" />
-        @if (createClientForm.controls.fullname.hasError('required')) {
+        @if ($any(createClientForm.controls).fullname.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         }
-        @if (createClientForm.controls.fullname.hasError('pattern')) {
+        @if ($any(createClientForm.controls).fullname.hasError('pattern')) {
           <mat-error>
             {{ 'labels.inputs.Client name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
             {{ 'labels.commons.begin with a special character or number' | translate }}
@@ -81,13 +81,13 @@
           <mat-form-field class="name-field first-name">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
-            @if (createClientForm.controls.firstname.hasError('required')) {
+            @if ($any(createClientForm.controls).firstname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (createClientForm.controls.firstname.hasError('pattern')) {
+            @if ($any(createClientForm.controls).firstname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Client first name' | translate }}
                 <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
@@ -100,7 +100,7 @@
           <mat-form-field class="name-field middle-name">
             <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
             <input matInput formControlName="middlename" />
-            @if (createClientForm.controls.middlename.hasError('pattern')) {
+            @if ($any(createClientForm.controls).middlename.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Client middle name' | translate }}
                 <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
@@ -113,13 +113,13 @@
           <mat-form-field class="name-field last-name">
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
-            @if (createClientForm.controls.lastname.hasError('required')) {
+            @if ($any(createClientForm.controls).lastname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (createClientForm.controls.lastname.hasError('pattern')) {
+            @if ($any(createClientForm.controls).lastname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Client last name' | translate }}
                 <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
@@ -244,7 +244,7 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Email Address' | translate }}</mat-label>
       <input matInput formControlName="emailAddress" />
-      @if (createClientForm.controls.emailAddress.errors?.pattern) {
+      @if ($any(createClientForm.controls).emailAddress.errors?.pattern) {
         <mat-error>
           {{ 'errors.validation.emailInvalid' | translate }}
         </mat-error>
@@ -306,7 +306,7 @@
         />
         <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-        @if (createClientForm.controls.activationDate.hasError('required')) {
+        @if ($any(createClientForm.controls).activationDate.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -329,7 +329,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (createClientForm.controls.savingsProductId.hasError('required')) {
+        @if ($any(createClientForm.controls).savingsProductId.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Savings Product' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>

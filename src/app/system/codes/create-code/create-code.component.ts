@@ -76,7 +76,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created code.
    */
   submit() {
-    this.systemService.createCode(this.codeForm.value).subscribe((response: any) => {
+    this.systemService.createCode(this.codeForm.value).subscribe((response) => {
       if (this.configurationWizardService.showSystemCodesForm) {
         this.configurationWizardService.showSystemCodesForm = false;
         this.configurationWizardService.showRolesandPermission = true;

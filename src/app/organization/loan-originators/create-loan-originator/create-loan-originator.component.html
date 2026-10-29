@@ -14,13 +14,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (loanOriginatorForm.controls.name.hasError('required')) {
+            @if ($any(loanOriginatorForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (loanOriginatorForm.controls.name.hasError('pattern')) {
+            @if ($any(loanOriginatorForm.controls).name.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -31,13 +31,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput required formControlName="externalId" />
-            @if (loanOriginatorForm.controls.externalId.hasError('required')) {
+            @if ($any(loanOriginatorForm.controls).externalId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.External Id' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (loanOriginatorForm.controls.externalId.hasError('pattern')) {
+            @if ($any(loanOriginatorForm.controls).externalId.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.External Id' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -54,7 +54,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (loanOriginatorForm.controls.status.hasError('required')) {
+            @if ($any(loanOriginatorForm.controls).status.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -71,7 +71,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (loanOriginatorForm.controls.originatorTypeId.hasError('required')) {
+            @if ($any(loanOriginatorForm.controls).originatorTypeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Originator Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -88,7 +88,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (loanOriginatorForm.controls.channelTypeId.hasError('required')) {
+            @if ($any(loanOriginatorForm.controls).channelTypeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Channel Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

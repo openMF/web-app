@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawalDatePicker></mat-datepicker>
-            @if (withdrawClientForm.controls.withdrawalDate.hasError('required')) {
+            @if ($any(withdrawClientForm.controls).withdrawalDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Withdrawal Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (withdrawClientForm.controls.withdrawalReasonId.hasError('required')) {
+            @if ($any(withdrawClientForm.controls).withdrawalReasonId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Withdrawal Reason' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

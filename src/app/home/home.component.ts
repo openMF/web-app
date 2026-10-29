@@ -233,7 +233,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         stepPercentage: 10
       }
     });
-    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    nextStepDialogRef.afterClosed().subscribe((response) => {
       if (response.nextStep) {
         this.configurationWizardService.showHome = false;
         this.configurationWizardService.showHomeSearchActivity = false;

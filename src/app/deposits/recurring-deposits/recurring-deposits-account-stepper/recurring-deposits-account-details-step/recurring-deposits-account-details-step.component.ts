@@ -112,22 +112,20 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.recurringDepositsAccountTemplate.clientId;
-    this.recurringDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.recurringDepositsService
-        .getRecurringDepositsAccountTemplate(clientId, productId)
-        .subscribe((response: any) => {
-          this.recurringDepositsAccountProductTemplate.emit(response);
-          this.fieldOfficerData = response.fieldOfficerOptions;
-          this.isProductSelected = true;
-          if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
-            this.recurringDepositAccountDetailsForm
-              .get('fieldOfficerId')
-              .patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
-            this.isFieldOfficerPatched = true;
-          } else {
-            this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
-          }
-        });
+    this.recurringDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId) => {
+      this.recurringDepositsService.getRecurringDepositsAccountTemplate(clientId, productId).subscribe((response) => {
+        this.recurringDepositsAccountProductTemplate.emit(response);
+        this.fieldOfficerData = response.fieldOfficerOptions;
+        this.isProductSelected = true;
+        if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
+          this.recurringDepositAccountDetailsForm
+            .get('fieldOfficerId')
+            .patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
+          this.isFieldOfficerPatched = true;
+        } else {
+          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+        }
+      });
     });
   }
 

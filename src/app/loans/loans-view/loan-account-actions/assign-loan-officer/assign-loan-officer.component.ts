@@ -81,7 +81,7 @@ export class AssignLoanOfficerComponent extends LoanAccountActionsBaseComponent 
       locale
     };
     data.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
-    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

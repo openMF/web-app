@@ -14,13 +14,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (centerForm.controls.name.hasError('required')) {
+            @if ($any(centerForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Center Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (centerForm.controls.name.hasError('pattern')) {
+            @if ($any(centerForm.controls).name.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (centerForm.controls.officeId.hasError('required')) {
+            @if ($any(centerForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -60,7 +60,7 @@
             {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
 
-          @if (this.centerForm.controls.active.value) {
+          @if ($any(this.centerForm.controls).active.value) {
             <mat-form-field (click)="activationDatePicker.open()">
               <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
               <input
@@ -73,7 +73,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activationDatePicker></mat-datepicker>
-              @if (centerForm.controls.activationDate.hasError('required')) {
+              @if ($any(centerForm.controls).activationDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -99,7 +99,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            @if (centerForm.controls.submittedOnDate.hasError('required')) {
+            @if ($any(centerForm.controls).submittedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

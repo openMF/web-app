@@ -121,37 +121,33 @@ export class RunReportComponent implements OnInit {
    */
   constructor() {
     this.report.name = this.route.snapshot.params['name'];
-    this.route.queryParams
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((queryParams: { type: any; id: any }) => {
-        this.report.type = queryParams.type;
-        this.report.id = queryParams.id;
-      });
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
-        this.paramData = data.reportParameters;
-        this.createRunReportForm();
-        if (this.isTableReport()) {
-          const amazonS3Config = data.configurations.globalConfiguration.find(
-            (config: GlobalConfiguration) => config.name === 'amazon-s3'
-          );
-          const reportExportS3Config = data.configurations.globalConfiguration.find(
-            (config: GlobalConfiguration) => config.name === 'report-export-s3-folder-name'
-          );
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((queryParams) => {
+      this.report.type = queryParams.type;
+      this.report.id = queryParams.id;
+    });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.paramData = data.reportParameters;
+      this.createRunReportForm();
+      if (this.isTableReport()) {
+        const amazonS3Config = data.configurations.globalConfiguration.find(
+          (config: GlobalConfiguration) => config.name === 'amazon-s3'
+        );
+        const reportExportS3Config = data.configurations.globalConfiguration.find(
+          (config: GlobalConfiguration) => config.name === 'report-export-s3-folder-name'
+        );
 
-          if (
-            amazonS3Config &&
-            amazonS3Config.enabled &&
-            reportExportS3Config &&
-            reportExportS3Config.enabled &&
-            reportExportS3Config.stringValue
-          ) {
-            this.exportToS3Allowed = true;
-            this.exportToS3Repository = reportExportS3Config.stringValue;
-          }
+        if (
+          amazonS3Config &&
+          amazonS3Config.enabled &&
+          reportExportS3Config &&
+          reportExportS3Config.enabled &&
+          reportExportS3Config.stringValue
+        ) {
+          this.exportToS3Allowed = true;
+          this.exportToS3Repository = reportExportS3Config.stringValue;
         }
-      });
+      }
+    });
   }
 
   isTableReport(): boolean {
@@ -264,7 +260,7 @@ export class RunReportComponent implements OnInit {
    * Maps pentaho specific names to form-control names.
    */
   mapPentahoParams() {
-    this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
+    this.reportsService.getPentahoParams(this.report.id).subscribe((data) => {
       data.forEach((entry: any) => {
         const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
         if (param && entry.reportParameterName) {
@@ -280,7 +276,7 @@ export class RunReportComponent implements OnInit {
    * Maps BIRT specific names to form-control names.
    */
   mapBirtParams() {
-    this.reportsService.getBirtParams(this.report.id).subscribe((data: any) => {
+    this.reportsService.getBirtParams(this.report.id).subscribe((data) => {
       data.forEach((entry: any) => {
         const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
         if (param && entry.reportParameterName) {
@@ -365,7 +361,7 @@ export class RunReportComponent implements OnInit {
       if (!parentControl) {
         return;
       }
-      parentControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((option: any) => {
+      parentControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((option) => {
         param.childParameters.forEach((child: ReportParameter) => {
           const newControl =
             child.displayType === 'none' ? new FormControl(child.defaultVal) : new FormControl('', Validators.required);
@@ -395,7 +391,7 @@ export class RunReportComponent implements OnInit {
    * @param {string} inputstring url substring for API call.
    */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
-    this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
+    this.reportsService.getSelectOptions(inputstring).subscribe((options) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
         param.selectOptions.push({ id: '-1', name: 'All' });
@@ -512,7 +508,7 @@ export class RunReportComponent implements OnInit {
       decimalChoice: this.decimalChoice.value
       // exportCSV: true
     };
-    this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
+    this.reportsService.getRunReportData(reportName, payload).subscribe((res) => {
       if (res.data.length > 0) {
         this.alertService.alert({
           type: this.translateService.instant('errors.report.type'),

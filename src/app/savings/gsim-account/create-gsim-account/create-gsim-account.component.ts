@@ -87,12 +87,10 @@ export class CreateGsimAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountTemplate: any; groupsData: any }) => {
-        this.savingsAccountTemplate = data.savingsAccountTemplate;
-        this.dataSource = data.groupsData.activeClientMembers;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.savingsAccountTemplate = data.savingsAccountTemplate;
+      this.dataSource = data.groupsData.activeClientMembers;
+    });
   }
 
   /**
@@ -192,7 +190,7 @@ export class CreateGsimAccountComponent {
     const gsimData = {
       clientArray: data
     };
-    this.savingsService.createGsimAcccount(gsimData).subscribe((response: any) => {
+    this.savingsService.createGsimAcccount(gsimData).subscribe((response) => {
       this.router.navigate(
         [
           '../',

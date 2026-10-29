@@ -14,13 +14,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (tellerForm.controls.name.hasError('required')) {
+            @if ($any(tellerForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Teller Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (tellerForm.controls.name.hasError('pattern')) {
+            @if ($any(tellerForm.controls).name.hasError('pattern')) {
               <mat-error>
                 {{
                   'errors.validation.cannotBeginWithSpecialCharacterOrNumber'
@@ -58,7 +58,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (tellerForm.controls.startDate.hasError('required')) {
+            @if ($any(tellerForm.controls).startDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -88,7 +88,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (tellerForm.controls.status.hasError('required')) {
+            @if ($any(tellerForm.controls).status.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

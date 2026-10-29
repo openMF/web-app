@@ -73,7 +73,7 @@ export class EditTransferFeeComponent implements OnInit {
    * Retrieves the transfer fee data from `resolve`.
    */
   ngOnInit(): void {
-    this.route.data.subscribe((data: { transferFee: TransferFee }) => {
+    this.route.data.subscribe((data) => {
       this.transferFeeData = data.transferFee;
       this.createTransferFeeForm();
       this.loadCurrencyOptions();
@@ -120,7 +120,7 @@ export class EditTransferFeeComponent implements OnInit {
   }
 
   private loadCurrencyOptions(): void {
-    this.organizationService.getCurrencies().subscribe((currenciesData: any) => {
+    this.organizationService.getCurrencies().subscribe((currenciesData) => {
       this.currencyOptions = currenciesData?.selectedCurrencyOptions || [];
       this.changeDetectorRef.markForCheck();
     });

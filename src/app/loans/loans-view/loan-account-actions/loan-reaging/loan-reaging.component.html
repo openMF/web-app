@@ -13,12 +13,12 @@
         <mat-card-content>
           <div class="layout-column">
             <mifosx-input-positive-integer
-              [inputFormControl]="reagingLoanForm.controls.numberOfInstallments"
+              [inputFormControl]="$any(reagingLoanForm.controls.numberOfInstallments)"
               [inputLabel]="'Number of Installments'"
               [isRequired]="true"
             ></mifosx-input-positive-integer>
             <mifosx-input-positive-integer
-              [inputFormControl]="reagingLoanForm.controls.frequencyNumber"
+              [inputFormControl]="$any(reagingLoanForm.controls.frequencyNumber)"
               [inputLabel]="'Frequency Number'"
               [isRequired]="true"
             ></mifosx-input-positive-integer>
@@ -31,7 +31,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (reagingLoanForm.controls.frequencyType.hasError('required')) {
+              @if ($any(reagingLoanForm.controls).frequencyType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -50,7 +50,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatePicker></mat-datepicker>
-              @if (reagingLoanForm.controls.startDate.hasError('required')) {
+              @if ($any(reagingLoanForm.controls).startDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -98,7 +98,7 @@
               <mifosx-input-amount
                 [currency]="loanTransactionData.currency"
                 [isRequired]="false"
-                [inputFormControl]="reagingLoanForm.controls.transactionAmount"
+                [inputFormControl]="$any(reagingLoanForm.controls.transactionAmount)"
                 [inputLabel]="'Transaction Amount'"
                 [minVal]="0"
               >

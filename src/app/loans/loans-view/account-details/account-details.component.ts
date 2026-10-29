@@ -58,15 +58,13 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
   constructor() {
     super();
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetails = data.loanDetailsData;
       this.timelineSteps = this.buildTimelineSteps();
     });
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanNearBreachActions: WorkingCapitalNearBreachActions[] }) => {
-        this.loanNearBreachActions = data.loanNearBreachActions || [];
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanNearBreachActions = data.loanNearBreachActions || [];
+    });
   }
 
   camalize(word: string) {

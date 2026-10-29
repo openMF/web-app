@@ -217,7 +217,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+    this.savingProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
       if (accountingRule === 2 || accountingRule === 3) {
         this.savingProductAccountingForm.addControl(
           'savingsReferenceAccountId',
@@ -269,7 +269,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
           if (this.allowOverdraft.value) {
             this.savingProductAccountingForm.addControl('interestReceivableAccountId', new UntypedFormControl(''));
           }
-          this.allowOverdraft.valueChanges.subscribe((allowOverdraft: boolean) => {
+          this.allowOverdraft.valueChanges.subscribe((allowOverdraft) => {
             if (allowOverdraft) {
               this.savingProductAccountingForm.addControl('interestReceivableAccountId', new UntypedFormControl(''));
             } else {
@@ -294,7 +294,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
           );
         }
 
-        this.isDormancyTrackingActive.valueChanges.subscribe((isDormancyTrackingActive: boolean) => {
+        this.isDormancyTrackingActive.valueChanges.subscribe((isDormancyTrackingActive) => {
           if (isDormancyTrackingActive) {
             this.savingProductAccountingForm.addControl(
               'escheatLiabilityId',
@@ -307,7 +307,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
         this.savingProductAccountingForm
           .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+          .valueChanges.subscribe((advancedAccountingRules) => {
             if (advancedAccountingRules) {
               this.savingProductAccountingForm.addControl(
                 'paymentChannelToFundSourceMappings',
@@ -366,7 +366,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data, width: '20rem' });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.push(response.data);
         this.setSavingProductAccountingFormDirty();
@@ -377,7 +377,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
         this.setSavingProductAccountingFormDirty();
@@ -389,7 +389,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         formArray.removeAt(index);
         this.setSavingProductAccountingFormDirty();

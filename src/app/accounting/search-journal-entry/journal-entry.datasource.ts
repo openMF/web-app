@@ -50,7 +50,7 @@ export class JournalEntriesDataSource implements DataSource<any> {
     orderBy = orderBy === 'debit' || orderBy === 'credit' ? 'amount' : orderBy;
     this.accountingService
       .getJournalEntries(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
-      .subscribe((journalEntries: any) => {
+      .subscribe((journalEntries) => {
         this.recordsSubject.next(journalEntries.totalFilteredRecords);
         this.journalEntriesSubject.next(journalEntries.pageItems);
       });

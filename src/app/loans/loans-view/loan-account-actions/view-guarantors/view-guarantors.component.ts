@@ -88,7 +88,7 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
       this.loanData = navData;
     } else {
       // Fallback: fetch from API (e.g. on page refresh)
-      this.loanService.getLoanAccountAssociationDetails(this.loanId).subscribe((data: any) => {
+      this.loanService.getLoanAccountAssociationDetails(this.loanId).subscribe((data) => {
         this.loanData = data || {};
         this.cdr.markForCheck();
       });
@@ -100,7 +100,7 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
     this.guarantorDetails = this.dataObject;
 
     // Available disbursement amount with over applied, shown in the guarantor details dialog.
-    this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+    this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData) => {
       // Fineract nests the amount in `delinquent`; older versions return it at the root.
       this.delinquent =
         delinquencyData.availableDisbursementAmountWithOverApplied === undefined
@@ -139,14 +139,14 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
   }
 
   editGuarantor(guarantorData: any) {
-    this.loanService.getGuarantorTemplate(this.loanId).subscribe((templateData: any) => {
+    this.loanService.getGuarantorTemplate(this.loanId).subscribe((templateData) => {
       const editDialogRef = this.dialog.open(EditGuarantorDialogComponent, {
         data: {
           guarantorData: guarantorData,
           relationTypes: templateData.allowedClientRelationshipTypes
         }
       });
-      editDialogRef.afterClosed().subscribe((result: any) => {
+      editDialogRef.afterClosed().subscribe((result) => {
         if (result) {
           const payload = {
             ...result,
@@ -169,7 +169,7 @@ export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent imp
    * Re-fetches guarantor data in place without navigating away.
    */
   private refreshGuarantors() {
-    this.loanService.getGuarantors(this.loanId).subscribe((data: any) => {
+    this.loanService.getGuarantors(this.loanId).subscribe((data) => {
       this.guarantorDetails = data;
       this.cdr.markForCheck();
     });

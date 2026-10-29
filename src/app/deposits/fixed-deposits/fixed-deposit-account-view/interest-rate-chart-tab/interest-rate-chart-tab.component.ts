@@ -94,7 +94,7 @@ export class InterestRateChartTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.interestRateChartData = data.fixedDepositsAccountData.accountChart.chartSlabs;
     });
   }

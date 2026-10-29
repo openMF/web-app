@@ -56,7 +56,7 @@ export class CreateDividendComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProductData = data.shareProduct;
     });
   }
@@ -106,7 +106,7 @@ export class CreateDividendComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.productService.createDividend(this.shareProductData.id, data).subscribe((response: any) => {
+    this.productService.createDividend(this.shareProductData.id, data).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

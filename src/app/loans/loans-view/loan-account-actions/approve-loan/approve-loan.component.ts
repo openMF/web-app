@@ -56,7 +56,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
   constructor() {
     super();
     this.maxDate = this.settingsService.maxFutureDate;
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;
     });
@@ -68,7 +68,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
 
     // Get delinquency data for available disbursement amount with over applied
     if (this.isLoanProduct) {
-      this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+      this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData) => {
         // Check if the field is at root level
         if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
           this.loanData.availableDisbursementAmountWithOverApplied =

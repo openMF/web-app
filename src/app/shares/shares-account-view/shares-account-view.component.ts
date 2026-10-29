@@ -94,7 +94,7 @@ export class SharesAccountViewComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountData = data.sharesAccountData;
     });
   }
@@ -178,7 +178,7 @@ export class SharesAccountViewComponent implements OnInit {
     const deleteSharesAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `shares account with id: ${this.sharesAccountData.id}` }
     });
-    deleteSharesAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSharesAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.sharesService.deleteSharesAccount(this.sharesAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });

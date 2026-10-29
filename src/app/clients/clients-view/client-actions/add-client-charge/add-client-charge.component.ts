@@ -62,7 +62,7 @@ export class AddClientChargeComponent implements OnInit {
    * Retrieves charge template data from `resolve`
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

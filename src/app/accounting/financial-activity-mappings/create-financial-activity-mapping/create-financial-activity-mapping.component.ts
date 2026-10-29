@@ -53,7 +53,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
     });
@@ -113,7 +113,7 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   submit() {
     this.accountingService
       .createFinancialActivityAccount(this.financialActivityMappingForm.value)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../view',

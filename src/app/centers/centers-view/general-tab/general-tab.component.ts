@@ -86,7 +86,7 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { centerSummaryData: any; centerViewData: any; savingsAccountData: any }) => {
+    this.route.data.subscribe((data) => {
       this.centerSummaryData = data.centerSummaryData[0];
       this.centerViewData = data.centerViewData;
       this.savingsAccountData = data.savingsAccountData.savingsAccounts;

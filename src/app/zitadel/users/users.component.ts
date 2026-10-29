@@ -82,7 +82,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // Get data from resolver
-    this.route.data.subscribe((data: { users: any; usersZitadel: any }) => {
+    this.route.data.subscribe((data) => {
       this.usersData = data.users || [];
       this.usersZitadelData = data.usersZitadel || [];
 

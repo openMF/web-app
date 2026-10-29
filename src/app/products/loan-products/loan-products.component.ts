@@ -126,7 +126,7 @@ export class LoanProductsComponent extends LoanProductBaseComponent implements O
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProducts: any }) => {
+    this.route.data.subscribe((data) => {
       this.loanProductsData = data.loanProducts;
     });
   }

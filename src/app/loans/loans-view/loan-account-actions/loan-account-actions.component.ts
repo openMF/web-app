@@ -212,7 +212,7 @@ export class LoanAccountActionsComponent {
    * @param route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.actionButtonData = data.actionButtonData ? data.actionButtonData : {};
     });
 

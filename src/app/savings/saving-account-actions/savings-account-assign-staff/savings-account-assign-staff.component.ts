@@ -62,7 +62,7 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    */
   constructor() {
     this.accountId = this.route.snapshot.params['savingAccountId'];
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }

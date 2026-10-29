@@ -14,7 +14,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (createStandingInstructionsForm.controls.name.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -36,7 +36,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.transferType.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).transferType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transfer Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -53,7 +53,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.priority.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).priority.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Priority' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -70,7 +70,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.status.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).status.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -87,7 +87,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.fromAccountType.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).fromAccountType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Account Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -104,7 +104,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.fromAccountId.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).fromAccountId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Account' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -121,7 +121,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.destination.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).destination.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Destination' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -138,7 +138,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.toOfficeId.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).toOfficeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -155,7 +155,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.toClientId.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).toClientId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Beneficiary' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -172,7 +172,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.toAccountType.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).toAccountType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Account Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -189,7 +189,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.toAccountId.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).toAccountId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Account' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -206,7 +206,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.instructionType.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).instructionType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Standing Instruction Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -214,11 +214,11 @@
             }
           </mat-form-field>
 
-          @if (createStandingInstructionsForm.controls.instructionType.value === 1) {
+          @if ($any(createStandingInstructionsForm.controls).instructionType.value === 1) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
               <input type="number" matInput formControlName="amount" />
-              @if (createStandingInstructionsForm.controls.amount.hasError('required')) {
+              @if ($any(createStandingInstructionsForm.controls).amount.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -239,7 +239,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
-            @if (createStandingInstructionsForm.controls.validFrom.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).validFrom.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Valid From Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -259,7 +259,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
-            @if (createStandingInstructionsForm.controls.validTill.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).validTill.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Valid Till Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -276,7 +276,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (createStandingInstructionsForm.controls.recurrenceType.hasError('required')) {
+            @if ($any(createStandingInstructionsForm.controls).recurrenceType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Recurrence Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -284,11 +284,11 @@
             }
           </mat-form-field>
 
-          @if (createStandingInstructionsForm.controls.recurrenceType.value === 1) {
+          @if ($any(createStandingInstructionsForm.controls).recurrenceType.value === 1) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Interval' | translate }}</mat-label>
               <input type="number" matInput formControlName="recurrenceInterval" />
-              @if (createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')) {
+              @if ($any(createStandingInstructionsForm.controls).recurrenceInterval.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Recurrence Interval' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -297,7 +297,7 @@
             </mat-form-field>
           }
 
-          @if (createStandingInstructionsForm.controls.recurrenceType.value === 1) {
+          @if ($any(createStandingInstructionsForm.controls).recurrenceType.value === 1) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Recurrence Frequency' | translate }}</mat-label>
               <mat-select formControlName="recurrenceFrequency">
@@ -307,7 +307,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')) {
+              @if ($any(createStandingInstructionsForm.controls).recurrenceFrequency.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Recurrence Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -317,9 +317,9 @@
           }
 
           @if (
-            createStandingInstructionsForm.controls.recurrenceType.value === 1 &&
-            (createStandingInstructionsForm.controls.recurrenceFrequency.value === 2 ||
-              createStandingInstructionsForm.controls.recurrenceFrequency.value === 3)
+            $any(createStandingInstructionsForm.controls).recurrenceType.value === 1 &&
+            ($any(createStandingInstructionsForm.controls).recurrenceFrequency.value === 2 ||
+              $any(createStandingInstructionsForm.controls).recurrenceFrequency.value === 3)
           ) {
             <mat-form-field class="flex-48" (click)="recurrenceOnMonthDayDatePicker.open()">
               <mat-label>{{ 'labels.inputs.On Month Day' | translate }}</mat-label>
@@ -332,7 +332,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
-              @if (createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')) {
+              @if ($any(createStandingInstructionsForm.controls).recurrenceOnMonthDay.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.On Month Day' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

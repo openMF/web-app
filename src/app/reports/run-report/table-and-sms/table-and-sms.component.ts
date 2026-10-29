@@ -184,7 +184,7 @@ export class TableAndSmsComponent implements OnChanges {
       formfields: formfields
     };
     const exportDialogRef = this.dialog.open(FormDialogComponent, { data });
-    exportDialogRef.afterClosed().subscribe((response: { data: any }) => {
+    exportDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.downloadCSV(response.data.value.fileName, response.data.value.delimiter);
       }

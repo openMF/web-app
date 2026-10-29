@@ -73,7 +73,12 @@
             </mat-checkbox>
           </div>
           <div class="center flex-100 layout-row align-center m-b-10">
-            <button type="button" mat-raised-button color="primary" (click)="addChartSlab(chart.controls.chartSlabs)">
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              (click)="addChartSlab($any(chart.controls).chartSlabs)"
+            >
               <fa-icon icon="plus" class="m-r-10"></fa-icon>
               {{ 'labels.buttons.Submit' | translate }}
             </button>
@@ -94,9 +99,9 @@
               <h3 class="mat-h3">{{ 'labels.heading.It is required to add at least one Range' | translate }}</h3>
             </div>
           }
-          @if (getChartSlabsErrorKey(chart.controls.chartSlabs)) {
+          @if (getChartSlabsErrorKey($any(chart.controls).chartSlabs)) {
             <div class="flex-100">
-              <mat-error>{{ getChartSlabsErrorKey(chart.controls.chartSlabs) | translate }}</mat-error>
+              <mat-error>{{ getChartSlabsErrorKey($any(chart.controls).chartSlabs) | translate }}</mat-error>
             </div>
           }
           @if (chart.value.chartSlabs.length !== 0) {
@@ -140,11 +145,15 @@
                   <button
                     mat-icon-button
                     color="primary"
-                    (click)="editChartSlab(chart.controls.chartSlabs, chartSlabIndex)"
+                    (click)="editChartSlab($any(chart.controls).chartSlabs, chartSlabIndex)"
                   >
                     <fa-icon icon="edit"></fa-icon>
                   </button>
-                  <button mat-icon-button color="warn" (click)="delete(chart.controls.chartSlabs, chartSlabIndex)">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="delete($any(chart.controls).chartSlabs, chartSlabIndex)"
+                  >
                     <fa-icon icon="trash"></fa-icon>
                   </button>
                   <button
@@ -188,7 +197,7 @@
                         <button
                           mat-raised-button
                           color="primary"
-                          (click)="addIncentive(getIncentives(chart.controls.chartSlabs, chartSlabIndex))"
+                          (click)="addIncentive(getIncentives($any(chart.controls).chartSlabs, chartSlabIndex))"
                         >
                           <fa-icon icon="plus" class="m-r-10"></fa-icon>
                           {{ 'labels.buttons.Add' | translate }}
@@ -255,7 +264,7 @@
                                 color="primary"
                                 (click)="
                                   editIncentive(
-                                    getIncentives(chart.controls.chartSlabs, chartSlabIndex),
+                                    getIncentives($any(chart.controls).chartSlabs, chartSlabIndex),
                                     incentiveIndex
                                   )
                                 "
@@ -266,7 +275,7 @@
                                 mat-icon-button
                                 color="warn"
                                 (click)="
-                                  delete(getIncentives(chart.controls.chartSlabs, chartSlabIndex), incentiveIndex)
+                                  delete(getIncentives($any(chart.controls).chartSlabs, chartSlabIndex), incentiveIndex)
                                 "
                               >
                                 <fa-icon icon="trash"></fa-icon>

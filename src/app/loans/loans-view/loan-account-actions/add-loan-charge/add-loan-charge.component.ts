@@ -64,7 +64,7 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
    */
   constructor() {
     super();
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { actionButtonData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
     this.loanId = this.route.snapshot.params['loanId'];

@@ -77,7 +77,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -119,7 +119,7 @@ export class ClientTrendsBarComponent implements OnInit {
             forkJoin([
               clientsByDay,
               loansByDay
-            ]).subscribe((data: any[]) => {
+            ]).subscribe((data) => {
               const dayLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], dayLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], dayLabels, timescale, 'loan');
@@ -133,7 +133,7 @@ export class ClientTrendsBarComponent implements OnInit {
             forkJoin([
               clientsByWeek,
               loansByWeek
-            ]).subscribe((data: any[]) => {
+            ]).subscribe((data) => {
               const weekLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], weekLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], weekLabels, timescale, 'loan');
@@ -147,7 +147,7 @@ export class ClientTrendsBarComponent implements OnInit {
             forkJoin([
               clientsByMonth,
               loansByMonth
-            ]).subscribe((data: any[]) => {
+            ]).subscribe((data) => {
               const monthLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], monthLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], monthLabels, timescale, 'loan');

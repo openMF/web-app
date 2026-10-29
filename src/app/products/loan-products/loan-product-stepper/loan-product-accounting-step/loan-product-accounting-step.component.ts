@@ -408,7 +408,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
 
   setConditionalControls() {
     if (this.loanProductService.isLoanProduct) {
-      this.loanProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+      this.loanProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
         if (accountingRule >= 2 && accountingRule <= 4) {
           this.loanProductAccountingForm.addControl(
             'fundSourceAccountId',
@@ -486,7 +486,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
 
           this.loanProductAccountingForm
             .get('advancedAccountingRules')
-            .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+            .valueChanges.subscribe((advancedAccountingRules) => {
               if (advancedAccountingRules) {
                 this.loanProductAccountingForm.addControl(
                   'paymentChannelToFundSourceMappings',
@@ -579,7 +579,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
         }
       });
     } else if (this.loanProductService.isWorkingCapital) {
-      this.loanProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+      this.loanProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
         if (accountingRule === 'NONE') {
           this.loanProductAccountingForm.removeControl('fundSourceAccountId');
           this.loanProductAccountingForm.removeControl('loanPortfolioAccountId');
@@ -674,7 +674,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
 
           this.loanProductAccountingForm
             .get('advancedAccountingRules')
-            .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+            .valueChanges.subscribe((advancedAccountingRules) => {
               if (advancedAccountingRules) {
               } else {
               }
@@ -732,7 +732,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
     }
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.push(response.data);
         if (formType == 'ChargeOffReasonExpense') {
@@ -747,7 +747,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
   edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
         this.setLoanProductAccountingFormDirty();
@@ -759,7 +759,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         formArray.removeAt(index);
         if (formType == 'ChargeOffReasonExpense') {

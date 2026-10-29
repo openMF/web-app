@@ -141,7 +141,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { entityMappings: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityMappings = data.entityMappings;
     });
   }
@@ -191,51 +191,51 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.createFilterPreferenceForm();
     switch (this.retrieveById) {
       case 1:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.systemService.getOffices().subscribe((response) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getLoanProducts().subscribe((response: any) => {
+        this.systemService.getLoanProducts().subscribe((response) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Loan Products';
         });
         break;
       case 2:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.systemService.getOffices().subscribe((response) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getSavingProducts().subscribe((response: any) => {
+        this.systemService.getSavingProducts().subscribe((response) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Saving Products';
         });
         break;
       case 3:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.systemService.getOffices().subscribe((response) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getCharges().subscribe((response: any) => {
+        this.systemService.getCharges().subscribe((response) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Charges';
         });
         break;
       case 4:
-        this.systemService.getRoles().subscribe((response: any) => {
+        this.systemService.getRoles().subscribe((response) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Role';
         });
-        this.systemService.getLoanProducts().subscribe((response: any) => {
+        this.systemService.getLoanProducts().subscribe((response) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Loan Products';
         });
         break;
       case 5:
-        this.systemService.getRoles().subscribe((response: any) => {
+        this.systemService.getRoles().subscribe((response) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Role';
         });
-        this.systemService.getSavingProducts().subscribe((response: any) => {
+        this.systemService.getSavingProducts().subscribe((response) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Saving Products';
         });
@@ -260,7 +260,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.selectedToId = this.filterPreference.mappingSecondParamId;
     this.systemService
       .getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.entityMappingsListData = new MatTableDataSource(response);
         this.entityMappingsListData.paginator = this.paginator;
         this.entityMappingsListData.sort = this.sort;
@@ -309,7 +309,7 @@ export class EntityToEntityMappingComponent implements OnInit {
       formfields: formfields
     };
     const addEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
+    addEntitytoEntityMappingDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.submitNew(response.data);
       }
@@ -325,7 +325,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.relId = selectedType;
     this.mapIdToEdit = selectedMap;
     this.fetchRelatedData(this.relId);
-    this.systemService.getMapIdData(selectedMap).subscribe((response: any) => {
+    this.systemService.getMapIdData(selectedMap).subscribe((response) => {
       this.entityMap = response;
     });
     const formfields: FormfieldBase[] = [
@@ -363,7 +363,7 @@ export class EntityToEntityMappingComponent implements OnInit {
       formfields: formfields
     };
     const editEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
+    editEntitytoEntityMappingDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.submitEdit(response.data);
       }
@@ -392,7 +392,7 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = this.settingsService.language.code;
-    this.systemService.createMapping(this.relId, newMappingData).subscribe((response: any) => {
+    this.systemService.createMapping(this.relId, newMappingData).subscribe((response) => {
       this.showFilteredData();
     });
   }
@@ -413,7 +413,7 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = this.settingsService.language.code;
-    this.systemService.editMapping(this.mapIdToEdit, newMappingData).subscribe((response: any) => {
+    this.systemService.editMapping(this.mapIdToEdit, newMappingData).subscribe((response) => {
       this.showFilteredData();
     });
   }
@@ -426,7 +426,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Mapping id') + ' ' + id }
     });
-    deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
+    deleteNoteDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.systemService.deleteMapping(id).subscribe(() => {
           this.showFilteredData();

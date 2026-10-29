@@ -50,7 +50,7 @@ export class LoanDocumentsTabComponent implements OnInit {
   constructor() {
     this.entityId = this.route.parent.snapshot.params['loanId'];
 
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.getLoanDocumentsData(data.loanDocuments);
     });
   }
@@ -94,6 +94,6 @@ export class LoanDocumentsTabComponent implements OnInit {
   }
 
   deleteDocument(documentId: any) {
-    this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
+    this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res) => {});
   }
 }

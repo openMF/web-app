@@ -59,7 +59,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
       this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
@@ -124,7 +124,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   submit() {
     this.accountingService
       .updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../../',

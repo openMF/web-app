@@ -88,7 +88,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
    * @param {MatDialog} dialog MatDialog.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -158,7 +158,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
     this.organizationService
       .createEmployee(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         if (this.configurationWizardService.showEmployeeForm) {
           this.configurationWizardService.showEmployeeForm = false;
           this.openDialog();
@@ -222,7 +222,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
         stepName: 'employee'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showEmployeeForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

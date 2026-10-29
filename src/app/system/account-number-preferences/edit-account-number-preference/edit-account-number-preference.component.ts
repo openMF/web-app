@@ -50,7 +50,7 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountNumberPreference: any; accountNumberPreferencesTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });
@@ -90,7 +90,7 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
     }
     this.systemService
       .updateAccountNumberPreference(this.accountNumberPreferenceData.id, accountNumberPreferenceValue)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

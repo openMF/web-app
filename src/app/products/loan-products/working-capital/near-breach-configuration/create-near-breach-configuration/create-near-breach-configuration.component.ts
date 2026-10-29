@@ -40,7 +40,7 @@ export class CreateNearBreachConfigurationComponent implements OnInit {
   maxThreshold: number = 100.0;
 
   constructor() {
-    this.route.data.subscribe((data: { breachTemplate?: any }) => {
+    this.route.data.subscribe((data) => {
       const breachTemplate = data.breachTemplate ?? {};
       this.frequencyTypeOptions = breachTemplate.breachFrequencyTypeOptions || [];
     });

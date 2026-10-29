@@ -101,7 +101,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
         this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
-        this.fixedDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
+        this.fixedDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value) => {
           if (value) {
             this.fixedDepositAccountSettingsForm.addControl(
               'taxGroupId',
@@ -165,7 +165,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')!.valueChanges.subscribe((value: boolean) => {
+    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')!.valueChanges.subscribe((value) => {
       if (value) {
         this.fixedDepositAccountSettingsForm.addControl(
           'linkAccountId',
@@ -180,7 +180,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }
     });
-    this.fixedDepositAccountSettingsForm.get('maturityInstructionId')!.valueChanges.subscribe((value: number) => {
+    this.fixedDepositAccountSettingsForm.get('maturityInstructionId')!.valueChanges.subscribe((value) => {
       if (value > 100) {
         this.fixedDepositAccountSettingsForm.addControl(
           'transferToSavingsId',

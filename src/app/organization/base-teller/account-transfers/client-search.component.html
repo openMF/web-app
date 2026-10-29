@@ -18,7 +18,7 @@
   }
   <mat-form-field
     ><mat-label>{{
-      (method === 'name' || (!method && form.controls.method.value === 'name')
+      (method === 'name' || (!method && $any(form.controls).method.value === 'name')
         ? 'accountTransfer.clientName'
         : 'accountTransfer.clientNumber'
       ) | translate
@@ -35,7 +35,7 @@
     mat-raised-button
     type="button"
     (click)="search()"
-    [disabled]="loading || form.invalid || !form.controls.query.value.trim()"
+    [disabled]="loading || form.invalid || !$any(form.controls).query.value.trim()"
   >
     {{ 'accountTransfer.search' | translate }}
   </button>

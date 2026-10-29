@@ -14,7 +14,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Accounting Rule Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (accountingRuleForm.controls.name.hasError('required')) {
+            @if ($any(accountingRuleForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Accounting Rule Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (accountingRuleForm.controls.officeId.hasError('required')) {
+            @if ($any(accountingRuleForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -54,7 +54,7 @@
             </mat-radio-group>
           </div>
 
-          @if (accountingRuleForm.controls.debitRuleType.value === 'fixedAccount') {
+          @if ($any(accountingRuleForm.controls).debitRuleType.value === 'fixedAccount') {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Account to Debit' | translate }}</mat-label>
               <mat-select formControlName="accountToDebit">
@@ -67,7 +67,7 @@
             </mat-form-field>
           }
 
-          @if (accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts') {
+          @if ($any(accountingRuleForm.controls).debitRuleType.value === 'listOfAccounts') {
             <div class="flex-48 layout-row gap-2percent responsive-column">
               <mat-form-field class="flex-50">
                 <mat-label>{{ 'labels.inputs.Debit Tags' | translate }}</mat-label>
@@ -102,7 +102,7 @@
             </mat-radio-group>
           </div>
 
-          @if (accountingRuleForm.controls.creditRuleType.value === 'fixedAccount') {
+          @if ($any(accountingRuleForm.controls).creditRuleType.value === 'fixedAccount') {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Account to Credit' | translate }}</mat-label>
               <mat-select formControlName="accountToCredit">
@@ -115,7 +115,7 @@
             </mat-form-field>
           }
 
-          @if (accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts') {
+          @if ($any(accountingRuleForm.controls).creditRuleType.value === 'listOfAccounts') {
             <div class="flex-48 layout-row gap-2percent responsive-column">
               <mat-form-field class="flex-50">
                 <mat-label>{{ 'labels.inputs.Credit Tags' | translate }}</mat-label>

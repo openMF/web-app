@@ -128,10 +128,10 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
     this.savingsAccountDetailsForm
       .get('productId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((productId: string) => {
+      .subscribe((productId) => {
         this.savingsService
           .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
-          .subscribe((response: any) => {
+          .subscribe((response) => {
             this.savingsAccountProductTemplate.emit(response);
             this.fieldOfficerData = response.fieldOfficerOptions;
             this.savingsProductSelected = true;
