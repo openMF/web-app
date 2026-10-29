@@ -105,7 +105,7 @@ export class WorkflowJobsComponent implements OnInit {
    * @param {string} jobName Value to Workflow Job name.
    */
   getWorkflowJobSteps(jobName: string) {
-    this.systemService.getWorkflowJobSteps(jobName).subscribe((data: any) => {
+    this.systemService.getWorkflowJobSteps(jobName).subscribe((data) => {
       this.jobStepName = jobName;
       this.jobStepsData = data.businessSteps.sort(function (a: JobStep, b: JobStep) {
         return a.order - b.order;
@@ -129,7 +129,7 @@ export class WorkflowJobsComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.jobStepsData.splice(index, 1);
         this.jobStepsData = this.jobStepsData.concat([]);
@@ -185,7 +185,7 @@ export class WorkflowJobsComponent implements OnInit {
               formfields: frmFields
             };
             const stepDialogRef = this.dialog.open(FormDialogComponent, { data });
-            stepDialogRef.afterClosed().subscribe((response: any) => {
+            stepDialogRef.afterClosed().subscribe((response) => {
               if (response.data) {
                 this.jobStepsData = this.jobStepsData.concat(response.data.value);
                 this.stepOrderHasChanged = true;

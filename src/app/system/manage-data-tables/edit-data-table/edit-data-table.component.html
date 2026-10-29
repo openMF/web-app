@@ -25,7 +25,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (dataTableForm.controls.apptableName.hasError('required')) {
+            @if ($any(dataTableForm.controls).apptableName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Application Table Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

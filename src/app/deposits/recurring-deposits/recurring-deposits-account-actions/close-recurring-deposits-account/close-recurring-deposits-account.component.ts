@@ -75,7 +75,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.savingsAccountsData = data.recurringDepositsAccountActionData.savingsAccounts;
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;
       this.onAccountClosureOptions = data.recurringDepositsAccountActionData.onAccountClosureOptions;
@@ -129,7 +129,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     this.showPaymentDetails = !this.showPaymentDetails;
   }
   addTransferDetails() {
-    this.closeRecurringDepositForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.closeRecurringDepositForm.get('onAccountClosureId').valueChanges.subscribe((id) => {
       if (id === 200) {
         this.closeRecurringDepositForm.addControl(
           'toSavingsAccountId',

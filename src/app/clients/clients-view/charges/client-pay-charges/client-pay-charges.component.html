@@ -13,7 +13,7 @@
         <mat-form-field>
           <mat-label> {{ 'labels.inputs.Amount' | translate }} </mat-label>
           <input matInput required autofocus formControlName="amount" />
-          @if (transactionForm.controls.amount.hasError('required')) {
+          @if ($any(transactionForm.controls).amount.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -32,7 +32,7 @@
           />
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
-          @if (transactionForm.controls.transactionDate.hasError('required')) {
+          @if ($any(transactionForm.controls).transactionDate.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Transaction date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>

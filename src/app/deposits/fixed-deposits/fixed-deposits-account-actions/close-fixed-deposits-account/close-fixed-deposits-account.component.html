@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            @if (closeOnMaturityAccountForm.controls.closedOnDate.hasError('required')) {
+            @if ($any(closeOnMaturityAccountForm.controls).closedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closed On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -45,7 +45,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (closeOnMaturityAccountForm.controls.onAccountClosureId.hasError('required')) {
+            @if ($any(closeOnMaturityAccountForm.controls).onAccountClosureId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Account action' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -63,7 +63,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (closeOnMaturityAccountForm.controls.toSavingsAccountId.hasError('required')) {
+              @if ($any(closeOnMaturityAccountForm.controls).toSavingsAccountId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

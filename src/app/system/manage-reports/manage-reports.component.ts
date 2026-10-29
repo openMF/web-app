@@ -120,7 +120,7 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * @param {Matdialog} matdialog Matdialog.
    */
   constructor() {
-    this.route.data.subscribe((data: { reports: any }) => {
+    this.route.data.subscribe((data) => {
       this.reportsData = data.reports;
     });
   }
@@ -158,11 +158,11 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    */
   uploadReportDesign(): void {
     const dialogRef = this.dialog.open(UploadReportFileDialogComponent, { width: '33rem' });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (!response?.file) {
         return;
       }
-      this.systemService.uploadBirtReportFile(response.file).subscribe((result: any) => {
+      this.systemService.uploadBirtReportFile(response.file).subscribe((result) => {
         this.alertService.alert({
           type: 'Report Design Uploaded',
           message: this.translateService.instant(

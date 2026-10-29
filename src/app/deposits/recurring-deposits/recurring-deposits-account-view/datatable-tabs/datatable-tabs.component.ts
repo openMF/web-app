@@ -41,7 +41,7 @@ export class DatatableTabsComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('recurringDepositAccountId');
 
-    this.route.data.subscribe((data: { savingsDatatable: any }) => {
+    this.route.data.subscribe((data) => {
       this.entityDatatable = data.savingsDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

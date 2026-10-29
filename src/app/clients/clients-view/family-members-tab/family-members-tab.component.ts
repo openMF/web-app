@@ -67,7 +67,7 @@ export class FamilyMembersTabComponent {
    * @param {MatDialog }dialog Mat Dialog
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientFamilyMembers: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
   }
@@ -79,7 +79,7 @@ export class FamilyMembersTabComponent {
     const deleteFamilyMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Family member id:${id} name : ${name} ${index}` }
     });
-    deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
+    deleteFamilyMemberDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.clientsService.deleteFamilyMember(clientId, id).subscribe(() => {
           this.clientFamilyMembers.splice(index, 1);

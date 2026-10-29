@@ -67,7 +67,7 @@
                   }
                 </mat-select>
               </mat-form-field>
-              @if (form.controls.operation.value) {
+              @if ($any(form.controls).operation.value) {
                 <h3>{{ 'accountTransfer.step3' | translate }}</h3>
                 @if (!sources.length && !busy) {
                   <p role="status">{{ 'accountTransfer.noSources' | translate }}</p>
@@ -92,7 +92,7 @@
                     </section>
                     <section>
                       <h3>{{ 'accountTransfer.step4' | translate }}</h3>
-                      @if (form.controls.operation.value === 'TO_THIRD_PARTY') {
+                      @if ($any(form.controls).operation.value === 'TO_THIRD_PARTY') {
                         <mat-form-field
                           ><mat-label>{{ 'accountTransfer.searchBy' | translate }}</mat-label>
                           <mat-select formControlName="method" (selectionChange)="changeMethod()" [disabled]="!!busy">
@@ -105,7 +105,7 @@
                             <mat-option value="name">{{ 'accountTransfer.thirdName' | translate }}</mat-option>
                           </mat-select>
                         </mat-form-field>
-                        @if (form.controls.method.value === 'accountNumber') {
+                        @if ($any(form.controls).method.value === 'accountNumber') {
                           <mat-form-field
                             ><mat-label>{{ 'accountTransfer.accountNumber' | translate }}</mat-label
                             ><input matInput [formControl]="lookup" (input)="lookupEdited()" maxlength="100"
@@ -121,23 +121,23 @@
                         }
                       }
                       @if (
-                        form.controls.operation.value === 'TO_THIRD_PARTY' &&
-                        form.controls.method.value !== 'accountNumber'
+                        $any(form.controls).operation.value === 'TO_THIRD_PARTY' &&
+                        $any(form.controls).method.value !== 'accountNumber'
                       ) {
                         <section class="beneficiary-search">
                           <h4>{{ 'accountTransfer.searchBeneficiary' | translate }}</h4>
-                          @if (form.controls.method.value === 'clientNumber') {
+                          @if ($any(form.controls).method.value === 'clientNumber') {
                             <mifosx-transfer-client-search
                               method="clientNumber"
                               (selected)="selectBeneficiary($event)"
                             />
                           }
-                          @if (form.controls.method.value === 'name') {
+                          @if ($any(form.controls).method.value === 'name') {
                             <mifosx-transfer-client-search method="name" (selected)="selectBeneficiary($event)" />
                           }
                         </section>
                       }
-                      @if (form.controls.operation.value === 'BETWEEN_MY_ACCOUNTS' || beneficiary) {
+                      @if ($any(form.controls).operation.value === 'BETWEEN_MY_ACCOUNTS' || beneficiary) {
                         @if (beneficiary) {
                           <p>{{ beneficiary.clientNumber }} · {{ beneficiary.displayName }}</p>
                         }
@@ -178,7 +178,7 @@
                   <mat-hint id="amount-help">{{
                     'accountTransfer.precision' | translate: { digits: source?.decimalPlaces }
                   }}</mat-hint>
-                  @if (form.controls.amount.invalid) {
+                  @if ($any(form.controls).amount.invalid) {
                     <mat-error>{{ 'accountTransfer.invalidAmount' | translate }}</mat-error>
                   }
                 </mat-form-field>

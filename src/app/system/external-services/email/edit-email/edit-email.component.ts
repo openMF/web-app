@@ -57,7 +57,7 @@ export class EditEmailComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { emailConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
   }
@@ -119,7 +119,7 @@ export class EditEmailComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
-    this.systemService.updateExternalConfiguration('SMTP', emailConfiguration).subscribe((response: any) => {
+    this.systemService.updateExternalConfiguration('SMTP', emailConfiguration).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

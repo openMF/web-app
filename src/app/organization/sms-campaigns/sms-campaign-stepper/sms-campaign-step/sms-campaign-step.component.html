@@ -17,7 +17,7 @@
       </mat-error>
     </mat-form-field>
 
-    @if (!smsCampaignDetailsForm.controls.isNotification.value) {
+    @if (!$any(smsCampaignDetailsForm.controls).isNotification.value) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
         <mat-select formControlName="providerId">
@@ -137,7 +137,7 @@
     </mat-form-field>
   </div>
 
-  @if (!smsCampaignDetailsForm.controls.runReportId.value) {
+  @if (!$any(smsCampaignDetailsForm.controls).runReportId.value) {
     <div class="layout-row layout-xs-column layout-align-center margin-t gap-2percent">
       <button mat-raised-button matStepperPrevious disabled>
         <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
@@ -150,7 +150,7 @@
     </div>
   }
 
-  @if (smsCampaignDetailsForm.controls.runReportId.value) {
+  @if ($any(smsCampaignDetailsForm.controls).runReportId.value) {
     <mifosx-business-rule-parameters [paramData]="paramData" (templateParameters)="passParameters($event)">
     </mifosx-business-rule-parameters>
   }

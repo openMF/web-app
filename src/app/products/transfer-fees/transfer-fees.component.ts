@@ -92,7 +92,7 @@ export class TransferFeesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { transferFees: TransferFee[] }) => {
+    this.route.data.subscribe((data) => {
       this.transferFeesData = data.transferFees || [];
     });
   }

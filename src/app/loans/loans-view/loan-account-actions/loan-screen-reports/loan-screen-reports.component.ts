@@ -107,7 +107,7 @@ export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent 
   generate() {
     const templateId = this.loanScreenReportForm.get('templateId')?.value;
     if (templateId) {
-      this.loanService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
+      this.loanService.getTemplateData(templateId, this.loanId).subscribe((response) => {
         this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
         this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
       });

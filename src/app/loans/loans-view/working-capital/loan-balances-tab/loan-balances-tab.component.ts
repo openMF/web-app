@@ -35,7 +35,7 @@ export class LoanBalancesTabComponent extends LoanProductBaseComponent implement
 
   ngOnInit(): void {
     if (this.route.parent) {
-      this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+      this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
         this.currencyCode = data.loanDetailsData.currency.code;
         this.loanBalances = data.loanDetailsData.balance;
       });

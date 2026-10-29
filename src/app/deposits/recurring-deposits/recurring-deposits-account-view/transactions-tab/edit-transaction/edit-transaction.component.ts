@@ -80,7 +80,7 @@ export class EditTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.transactionTemplateData = data.recurringDepositsAccountTransactionTemplate;
       if (this.transactionTemplateData.currency) {
         this.currency = this.transactionTemplateData.currency;

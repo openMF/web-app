@@ -129,7 +129,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Retrieves the standing instructions template from `resolve`.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { accountTransferTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
@@ -284,7 +284,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const formValue = this.refineObject({ ...this.beneficiaryForm.value });
     this.accountTransfersService
       .newAccountTranferResource(this.id, this.accountTypeId, formValue)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.accountTransferTemplateData = response;
         this.toClientTypeData = response.toClientOptions;
         this.setOptions();
@@ -315,10 +315,10 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     if (!this.interbank && this.beneficiaryForm) {
       this.beneficiaryForm.controls.toClientId.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((value: any) => {
+        .subscribe((value) => {
           if (typeof value === 'string' && value.length >= 2) {
             const searchedValue = value;
-            this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+            this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data) => {
               if (this.beneficiaryForm.controls.toClientId.value !== searchedValue) {
                 return;
               }

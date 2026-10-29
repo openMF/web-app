@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (transferClientsForm.controls.clients.hasError('required')) {
+            @if ($any(transferClientsForm.controls).clients.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Select Client Members for Transfer' | translate }}
                 {{ 'labels.commons.is' | translate }}
@@ -40,7 +40,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Destination Group' | translate }}</mat-label>
             <input matInput formControlName="destinationGroupId" [matAutocomplete]="groupsAutocomplete" />
-            @if (transferClientsForm.controls.destinationGroupId.hasError('required')) {
+            @if ($any(transferClientsForm.controls).destinationGroupId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Destination Group' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

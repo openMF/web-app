@@ -155,7 +155,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   constructor() {
     const glAccountTreeService = this.glAccountTreeService;
 
-    this.route.data.subscribe((data: { chartOfAccounts: any }) => {
+    this.route.data.subscribe((data) => {
       this.glAccountData = data.chartOfAccounts;
       glAccountTreeService.initialize(this.glAccountData);
     });
@@ -168,7 +168,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    */
   ngOnInit() {
     this.tableDataSource = new MatTableDataSource(this.glAccountData);
-    this.glAccountTreeService.treeDataChange.subscribe((glAccountTreeData: GLAccountNode[]) => {
+    this.glAccountTreeService.treeDataChange.subscribe((glAccountTreeData) => {
       this.nestedTreeDataSource.data = glAccountTreeData;
       this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
       this.nestedTreeControl.dataNodes = glAccountTreeData;

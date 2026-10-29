@@ -90,7 +90,7 @@ export class SavingsAccountDashboardComponent implements OnInit, AfterViewInit, 
   balanceValues: number[] = [];
 
   ngOnInit(): void {
-    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       if (data.savingsAccountData) {
         this.savingsAccountData = data.savingsAccountData;
         this.calculateMetrics();

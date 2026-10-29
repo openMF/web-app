@@ -71,7 +71,7 @@ export class ClientFamilyMembersStepComponent {
       },
       width: '50rem'
     });
-    addFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
+    addFamilyMemberDialogRef.afterClosed().subscribe((response) => {
       if (response?.member) {
         this.clientFamilyMembers.push(response.member);
       }
@@ -92,7 +92,7 @@ export class ClientFamilyMembersStepComponent {
       },
       width: '50rem'
     });
-    addFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
+    addFamilyMemberDialogRef.afterClosed().subscribe((response) => {
       if (response?.member) {
         this.clientFamilyMembers.splice(index, 1, response.member);
       }
@@ -106,7 +106,7 @@ export class ClientFamilyMembersStepComponent {
     const deleteFamilyMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Family member name : ${name} ${index}` }
     });
-    deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
+    deleteFamilyMemberDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.clientFamilyMembers.splice(index, 1);
       }

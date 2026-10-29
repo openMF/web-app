@@ -158,7 +158,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
     this.systemService
       .getConfigurationByName(LoansAccountDetailsStepComponent.ORIGINATOR_CREATION_CONFIG)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((config: GlobalConfiguration) => {
+      .subscribe((config) => {
         this.originatorCreationEnabled = config?.enabled ?? false;
         this.cdr.markForCheck();
       });
@@ -383,7 +383,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         const isGroup: boolean = this.loansAccountTemplate.clientId ? false : true;
         this.loansService
           .getLoansAccountTemplateResource(entityId, isGroup, this.productSelected.id)
-          .subscribe((response: any) => {
+          .subscribe((response) => {
             this.loansAccountProductTemplate.emit(response);
             this.loanOfficerOptions = response.loanOfficerOptions;
             this.loanPurposeOptions = response.loanPurposeOptions;
@@ -403,7 +403,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
           : this.route.parent.snapshot.params['clientId'];
         this.loansService
           .getWorkingCapitalLoansAccountTemplate(entityId, this.productSelected.id)
-          .subscribe((response: any) => {
+          .subscribe((response) => {
             this.loansAccountProductTemplate.emit(response);
             this.fundOptions = response.fundOptions;
             if (emitEvent) {

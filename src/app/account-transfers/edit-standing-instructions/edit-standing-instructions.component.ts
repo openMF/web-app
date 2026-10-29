@@ -72,16 +72,14 @@ export class EditStandingInstructionsComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
-        this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
-        this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
-        if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
-          this.allowclientedit = false;
-        }
-        this.setOptions();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
+      this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
+      if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
+        this.allowclientedit = false;
+      }
+      this.setOptions();
+    });
   }
 
   /**
@@ -206,7 +204,7 @@ export class EditStandingInstructionsComponent implements OnInit {
     }
     this.accountTransfersService
       .updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../view'], { relativeTo: this.route });
       });
   }

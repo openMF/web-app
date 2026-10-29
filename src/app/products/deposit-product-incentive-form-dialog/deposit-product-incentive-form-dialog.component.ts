@@ -96,7 +96,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
     this.depositProductIncentiveForm
       .get('attributeName')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((attributeName: any) => {
+      .subscribe((attributeName) => {
         this.depositProductIncentiveForm.patchValue({ attributeValue: '' });
 
         const option = this.attributeNameData?.find((o: any) => o.id === attributeName);

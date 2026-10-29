@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
-            @if (activateClientForm.controls.activationDate.hasError('required')) {
+            @if ($any(activateClientForm.controls).activationDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

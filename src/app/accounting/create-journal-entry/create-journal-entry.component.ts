@@ -334,7 +334,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
         stepPercentage: 74
       }
     });
-    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    nextStepDialogRef.afterClosed().subscribe((response) => {
       if (response.nextStep) {
         this.configurationWizardService.showCreateJournalEntries = false;
         this.configurationWizardService.showCharges = true;

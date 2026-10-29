@@ -14,7 +14,7 @@
           <div class="layout-column">
             <mifosx-input-positive-integer
               class="flex-48"
-              [inputFormControl]="breachConfigForm.controls.frequency"
+              [inputFormControl]="$any(breachConfigForm.controls.frequency)"
               [inputLabel]="'Frequency'"
               [isRequired]="true"
               [minVal]="'1'"
@@ -29,7 +29,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (breachConfigForm.controls.frequencyType.hasError('required')) {
+              @if ($any(breachConfigForm.controls).frequencyType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -39,7 +39,7 @@
 
             <mifosx-input-amount
               class="flex-48"
-              [inputFormControl]="breachConfigForm.controls.minimumPayment"
+              [inputFormControl]="$any(breachConfigForm.controls.minimumPayment)"
               [inputLabel]="'Minimum Payment'"
               [isRequired]="true"
               [minVal]="'0.01'"
@@ -54,7 +54,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (breachConfigForm.controls.minimumPaymentType.hasError('required')) {
+              @if ($any(breachConfigForm.controls).minimumPaymentType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Minimum Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

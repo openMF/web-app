@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (transferClientForm.controls.destinationOfficeId.hasError('required')) {
+            @if ($any(transferClientForm.controls).destinationOfficeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
-            @if (transferClientForm.controls.transferDate.hasError('required')) {
+            @if ($any(transferClientForm.controls).transferDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transfer Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

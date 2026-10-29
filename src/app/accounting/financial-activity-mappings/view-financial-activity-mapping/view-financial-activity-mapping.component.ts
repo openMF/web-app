@@ -55,7 +55,7 @@ export class ViewFinancialActivityMappingComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { financialActivityAccount: any }) => {
+    this.route.data.subscribe((data) => {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
     });
@@ -68,7 +68,7 @@ export class ViewFinancialActivityMappingComponent {
     const deleteFinancialActivityAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `financial activity mapping ${this.financialActivityAccountId}` }
     });
-    deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId).subscribe(() => {
           this.router.navigate(['/accounting/financial-activity-mappings']);

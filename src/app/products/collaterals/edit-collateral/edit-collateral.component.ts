@@ -48,7 +48,7 @@ export class EditCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { collateral: any; collateralTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.collateralData = data.collateral;
       this.collateralTemplateData = data.collateralTemplate;
     });
@@ -96,7 +96,7 @@ export class EditCollateralComponent implements OnInit {
   submit() {
     const collateral = this.collateralForm.value;
     collateral.locale = this.settingsService.language.code;
-    this.productsService.updateCollateral(this.collateralData.id.toString(), collateral).subscribe((response: any) => {
+    this.productsService.updateCollateral(this.collateralData.id.toString(), collateral).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

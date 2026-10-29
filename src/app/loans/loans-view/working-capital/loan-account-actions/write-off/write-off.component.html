@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="writeOffDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #writeOffDatePicker></mat-datepicker>
-            @if (writeOffForm.controls.transactionDate.hasError('required')) {
+            @if ($any(writeOffForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Write Off Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

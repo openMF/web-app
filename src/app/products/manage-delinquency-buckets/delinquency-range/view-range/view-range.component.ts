@@ -34,7 +34,7 @@ export class ViewRangeComponent {
   delinquencyRangeData: any;
 
   constructor() {
-    this.route.data.subscribe((data: { delinquencyRange: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
   }
@@ -43,7 +43,7 @@ export class ViewRangeComponent {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.delinquencyRangeData.classification }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.productsService.deleteDelinquencyRange(this.delinquencyRangeData.id).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });

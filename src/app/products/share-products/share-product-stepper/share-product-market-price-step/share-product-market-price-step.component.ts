@@ -122,7 +122,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   addMarketPricePeriod() {
     const data = this.getData();
     const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
+    addMarketPricePeriodDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.marketPricePeriods.push(response.data);
         this.setShareProductMarketPriceFormDirty();
@@ -133,7 +133,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   editMarketPricePeriod(index: number) {
     const data = { ...this.getData(this.marketPricePeriods.at(index).value), layout: { addButtonText: 'Edit' } };
     const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
+    addMarketPricePeriodDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.marketPricePeriods.at(index).patchValue(response.data.value);
         this.setShareProductMarketPriceFormDirty();
@@ -145,7 +145,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     const deleteMarketPricePeriodDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    deleteMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
+    deleteMarketPricePeriodDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.marketPricePeriods.removeAt(index);
         this.setShareProductMarketPriceFormDirty();

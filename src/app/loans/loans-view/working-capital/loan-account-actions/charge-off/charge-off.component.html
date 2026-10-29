@@ -33,7 +33,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="chargeOffDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #chargeOffDatePicker></mat-datepicker>
-            @if (chargeOffForm.controls.transactionDate.hasError('required')) {
+            @if ($any(chargeOffForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Charge-Off Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

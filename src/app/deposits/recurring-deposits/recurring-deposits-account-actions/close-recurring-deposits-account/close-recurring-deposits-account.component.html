@@ -25,7 +25,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            @if (closeRecurringDepositForm.controls.closedOnDate.hasError('required')) {
+            @if ($any(closeRecurringDepositForm.controls).closedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closed On' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -36,7 +36,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Maturity Amount' | translate }}</mat-label>
             <input matInput required formControlName="maturityAmount" />
-            @if (closeRecurringDepositForm.controls.maturityAmount.hasError('required')) {
+            @if ($any(closeRecurringDepositForm.controls).maturityAmount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Maturity Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -53,7 +53,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')) {
+            @if ($any(closeRecurringDepositForm.controls).onAccountClosureId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -71,7 +71,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')) {
+              @if ($any(closeRecurringDepositForm.controls).toSavingsAccountId.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -96,7 +96,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (closeRecurringDepositForm.controls.paymentTypeId.hasError('required')) {
+            @if ($any(closeRecurringDepositForm.controls).paymentTypeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

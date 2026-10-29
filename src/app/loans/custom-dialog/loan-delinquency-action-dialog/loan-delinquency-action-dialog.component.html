@@ -22,7 +22,7 @@
       />
       <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #validFromDatePicker></mat-datepicker>
-      @if (delinquencyActionForm.controls.startDate.hasError('required')) {
+      @if ($any(delinquencyActionForm.controls).startDate.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -42,7 +42,7 @@
       />
       <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #validTillDatePicker></mat-datepicker>
-      @if (delinquencyActionForm.controls.endDate.hasError('required')) {
+      @if ($any(delinquencyActionForm.controls).endDate.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>

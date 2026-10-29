@@ -62,7 +62,7 @@ export class ChartComponent implements OnChanges {
   getRunReportData() {
     this.reportsService
       .getChartRunReportData(this.dataObject.report.name, this.dataObject.formData)
-      .subscribe((response: ChartData) => {
+      .subscribe((response) => {
         this.inputData = response;
         this.setPieChart(this.inputData);
         this.hideOutput = false;

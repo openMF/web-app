@@ -53,7 +53,7 @@ export class AcceptClientTransferComponent implements OnInit {
    * constructor
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.transferDate = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

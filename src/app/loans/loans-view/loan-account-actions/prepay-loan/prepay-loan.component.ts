@@ -135,10 +135,10 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     this.prepayLoanForm
       .get('transactionDate')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((transactionDate: string) => {
+      .subscribe((transactionDate) => {
         const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
 
-        this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
+        this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response) => {
           this.prepayData = response;
           this.prepayLoanForm.patchValue({
             transactionAmount: this.prepayData.amount
@@ -154,7 +154,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     this.minDate = this.settingsService.businessDate;
     this.maxDate = this.settingsService.maxFutureDate;
 
-    this.loanService.getLoanAccountDetails(this.loanId).subscribe((loanDetails: any) => {
+    this.loanService.getLoanAccountDetails(this.loanId).subscribe((loanDetails) => {
       const actualMaturityDate = loanDetails?.timeline?.actualMaturityDate;
       if (actualMaturityDate) {
         this.maturityDate = this.dateUtils.parseDate(actualMaturityDate);
@@ -182,7 +182,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.prepayData = response;
         this.cdr.markForCheck();
       });
@@ -225,7 +225,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment').subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment').subscribe((response) => {
       this.router.navigate(['../../general'], {
         queryParams: {
           productType: this.loanProductService.productType.value
@@ -248,7 +248,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response) => {
       this.gotoLoanDefaultView();
     });
   }

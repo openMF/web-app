@@ -36,7 +36,7 @@ export class GeneralTabComponent {
   officeData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { office: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.office;
     });
   }

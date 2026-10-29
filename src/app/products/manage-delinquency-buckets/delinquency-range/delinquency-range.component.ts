@@ -68,7 +68,7 @@ export class DelinquencyRangeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { delinquencyRanges: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyRangeData = data.delinquencyRanges;
     });
   }

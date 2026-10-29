@@ -161,7 +161,7 @@ export class EditDataTableComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { dataTable: any; columnCodes: any }) => {
+    this.route.data.subscribe((data) => {
       this.dataTableData = data.dataTable;
 
       // Get the relationship column name based on application table
@@ -212,7 +212,7 @@ export class EditDataTableComponent implements OnInit {
     this.initData();
     this.createDataTableForm();
     this.setColumns();
-    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value) => {
       this.showEntitySubType = value === 'm_client';
     });
   }
@@ -283,7 +283,7 @@ export class EditDataTableComponent implements OnInit {
       height: '450px',
       width: '400px'
     });
-    addColumnDialogRef.afterClosed().subscribe((response: any) => {
+    addColumnDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.isFormEdited = true;
         const newColumn: DatatableColumn = {
@@ -344,7 +344,7 @@ export class EditDataTableComponent implements OnInit {
       height: '450px',
       width: '400px'
     });
-    editColumnDialogRef.afterClosed().subscribe((response: any) => {
+    editColumnDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.isFormEdited = true;
         if (column.type === 'new') {
@@ -420,7 +420,7 @@ export class EditDataTableComponent implements OnInit {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.Column') + ' ' + column.columnName }
     });
-    deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
+    deleteColumnDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.isFormEdited = true;
         this.columnData.splice(this.columnData.indexOf(column), 1);
@@ -490,7 +490,7 @@ export class EditDataTableComponent implements OnInit {
     }
     this.systemService
       .updateDataTable(this.dataTableChangesData, this.dataTableData.registeredTableName)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

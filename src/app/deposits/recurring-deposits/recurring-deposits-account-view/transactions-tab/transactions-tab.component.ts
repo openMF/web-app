@@ -100,7 +100,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.transactionsData = data.recurringDepositsAccountData.transactions;
       this.status = data.recurringDepositsAccountData.status.value;
     });

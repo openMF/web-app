@@ -45,11 +45,9 @@ export class PasswordPreferencesComponent implements OnInit {
   passwordPreferencesData: any;
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { passwordPreferencesTemplate: any }) => {
-        this.passwordPreferencesData = data.passwordPreferencesTemplate;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.passwordPreferencesData = data.passwordPreferencesTemplate;
+    });
   }
 
   /**
@@ -114,7 +112,7 @@ export class PasswordPreferencesComponent implements OnInit {
     this.organizationService
       .updatePasswordPreferences(passwordPreferences)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

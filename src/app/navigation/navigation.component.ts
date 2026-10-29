@@ -90,7 +90,7 @@ export class NavigationComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -121,7 +121,7 @@ export class NavigationComponent implements OnInit {
       this.clientData = null;
       this.selectedItem = this.officeData.find((office: any) => office.id === officeId);
       this.selectedItem.itemType = 'office';
-      this.navigationService.getEmployees(officeId).subscribe((employees: any) => {
+      this.navigationService.getEmployees(officeId).subscribe((employees) => {
         this.employeeData = employees;
         if (this.employeeData.length) {
           this.employeeSelector.enable();
@@ -146,7 +146,7 @@ export class NavigationComponent implements OnInit {
         this.clientData = null;
         this.selectedItem = this.employeeData.find((employee: any) => employee.id === employeeId);
         this.selectedItem.itemType = 'employee';
-        this.navigationService.getCentersFromStaffId(employeeId).subscribe((centers: any) => {
+        this.navigationService.getCentersFromStaffId(employeeId).subscribe((centers) => {
           this.centerData = centers;
           if (this.centerData.length) {
             this.centerSelector.enable();
@@ -168,7 +168,7 @@ export class NavigationComponent implements OnInit {
         this.clientSelector.reset(null, { emitEvent: false });
         this.groupData = null;
         this.clientData = null;
-        this.navigationService.getCenter(centerId).subscribe((center: any) => {
+        this.navigationService.getCenter(centerId).subscribe((center) => {
           this.selectedItem = center;
           this.selectedItem.itemType = 'center';
           this.groupData = center.groupMembers ? center.groupMembers : [];
@@ -179,11 +179,11 @@ export class NavigationComponent implements OnInit {
           }
         });
         this.selectedItemAccounts = null;
-        this.navigationService.getCenterAccounts(centerId).subscribe((centerAccounts: any) => {
+        this.navigationService.getCenterAccounts(centerId).subscribe((centerAccounts) => {
           this.selectedItemAccounts = centerAccounts;
         });
         this.selectedItemSummary = null;
-        this.navigationService.getCenterSummary(centerId).subscribe((centerSummary: any) => {
+        this.navigationService.getCenterSummary(centerId).subscribe((centerSummary) => {
           this.selectedItemSummary = centerSummary[0];
         });
       }
@@ -198,7 +198,7 @@ export class NavigationComponent implements OnInit {
       if (groupId) {
         this.clientSelector.reset(null, { emitEvent: false });
         this.clientData = null;
-        this.navigationService.getGroup(groupId).subscribe((group: any) => {
+        this.navigationService.getGroup(groupId).subscribe((group) => {
           this.selectedItem = group;
           this.selectedItem.itemType = 'group';
           this.clientData = group.clientMembers ? group.clientMembers : [];
@@ -209,7 +209,7 @@ export class NavigationComponent implements OnInit {
           }
         });
         this.selectedItemAccounts = null;
-        this.navigationService.getGroupAccounts(groupId).subscribe((groupAccounts: any) => {
+        this.navigationService.getGroupAccounts(groupId).subscribe((groupAccounts) => {
           this.selectedItemAccounts = groupAccounts;
         });
       }
@@ -223,11 +223,11 @@ export class NavigationComponent implements OnInit {
     this.clientSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((clientId) => {
       if (clientId) {
         this.selectedItemAccounts = null;
-        this.navigationService.getClient(clientId).subscribe((client: any) => {
+        this.navigationService.getClient(clientId).subscribe((client) => {
           this.selectedItem = client;
           this.selectedItem.itemType = 'client';
         });
-        this.navigationService.getClientAccounts(clientId).subscribe((clientAccounts: any) => {
+        this.navigationService.getClientAccounts(clientId).subscribe((clientAccounts) => {
           this.selectedItemAccounts = clientAccounts;
         });
       }

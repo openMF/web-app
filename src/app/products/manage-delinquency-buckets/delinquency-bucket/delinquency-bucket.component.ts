@@ -70,7 +70,7 @@ export class DelinquencyBucketComponent extends DelinquencyBucketBaseComponent i
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBuckets: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyBucketData = data.delinquencyBuckets;
     });
   }

@@ -321,7 +321,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
     this.loanId = this.route.parent.snapshot.params['loanId'];
 
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetails = data.loanDetailsData;
     });
 
@@ -384,7 +384,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     const dialogRef = this.dialog.open(LoanDelinquencyActionDialogComponent, {
       data: { action }
     });
-    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -398,7 +398,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
       data: { action: 'reset' }
     });
-    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.sendBreachResetAction(!!response.data.value.restartPeriodFromResetDate);
       }
@@ -414,7 +414,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
         )
       }
     });
-    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (!response) {
         return;
       }
@@ -432,8 +432,8 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     };
 
     this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
-      this.loansService.getBreachActions(this.loanId).subscribe((breachActions: LoanDelinquencyAction[]) => {
-        this.setBreachActions(breachActions);
+      this.loansService.getBreachActions(this.loanId).subscribe((breachActions) => {
+        this.setBreachActions(breachActions as any);
       });
     });
   }
@@ -448,8 +448,8 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     };
 
     this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
-      this.loansService.getBreachActions(this.loanId).subscribe((breachActions: LoanDelinquencyAction[]) => {
-        this.setBreachActions(breachActions);
+      this.loansService.getBreachActions(this.loanId).subscribe((breachActions) => {
+        this.setBreachActions(breachActions as any);
       });
     });
   }
@@ -539,16 +539,16 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     this.loansService
       .getBreachActions(this.loanId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((breachActions: LoanDelinquencyAction[]) => {
+      .subscribe((breachActions) => {
         this.breachActionsList = (breachActions as WorkingCapitalBreachAction[]) || [];
-        this.setBreachActions(breachActions);
+        this.setBreachActions(breachActions as any);
         // breachActionsList is a plain field, so OnPush needs to be told it changed.
         this.changeDetectorRef.markForCheck();
       });
     this.loansService
       .getWorkingCapitalLoanNearBreachActions(this.loanId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((nearBreachActions: WorkingCapitalNearBreachActions[]) => {
+      .subscribe((nearBreachActions) => {
         this.nearBreachActions = nearBreachActions || [];
         this.changeDetectorRef.markForCheck();
       });

@@ -53,7 +53,7 @@ export class ViewTransactionComponent {
   /**
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
       this.transactionData = data.fixedDepositsAccountTransaction;
     });
@@ -72,7 +72,7 @@ export class ViewTransactionComponent {
 
   undoTransaction(): void {
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;

@@ -75,7 +75,7 @@ export class EditSharesAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.sharesAccountAndTemplate = data.sharesAccountAndTemplate;
     });
   }
@@ -143,10 +143,8 @@ export class EditSharesAccountComponent {
       dateFormat,
       locale
     };
-    this.sharesService
-      .updateSharesAccount(this.sharesAccountAndTemplate.id, sharesAccount)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.sharesService.updateSharesAccount(this.sharesAccountAndTemplate.id, sharesAccount).subscribe((response) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

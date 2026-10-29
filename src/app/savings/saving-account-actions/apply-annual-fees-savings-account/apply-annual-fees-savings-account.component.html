@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
-            @if (applyAnnualFeesForm.controls.dueDate.hasError('required')) {
+            @if ($any(applyAnnualFeesForm.controls).dueDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -34,7 +34,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" formControlName="amount" required matInput />
-            @if (applyAnnualFeesForm.controls.amount.hasError('required')) {
+            @if ($any(applyAnnualFeesForm.controls).amount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

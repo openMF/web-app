@@ -145,26 +145,24 @@ export class PersonalDataTabComponent implements OnDestroy {
           return EMPTY;
         })
       )
-      .subscribe((configs: any) => {
+      .subscribe((configs) => {
         const kycConfig = configs?.globalConfiguration?.find((c: any) => c.name === KYC_VALIDATION_CONFIG_NAME);
         this.isKycEnabled = kycConfig?.enabled ?? false;
         this.configLoaded = true;
         this.loadValidationData();
       });
 
-    this.route.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { clientViewData: ClientViewData; clientDatatables?: any[] }) => {
-        this.clientViewData = data.clientViewData;
-        this.validationData = null;
-        this.hasDatatableEntry = false;
-        this.loadProductionViewModel(data.clientDatatables || []);
-        if (this.configLoaded) {
-          this.loadValidationData();
-        }
-      });
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.clientViewData = data.clientViewData;
+      this.validationData = null;
+      this.hasDatatableEntry = false;
+      this.loadProductionViewModel(data.clientDatatables || []);
+      if (this.configLoaded) {
+        this.loadValidationData();
+      }
+    });
 
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientIdentities: any[] }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientIdentities = data.clientIdentities || [];
     });
   }
@@ -200,8 +198,8 @@ export class PersonalDataTabComponent implements OnDestroy {
           return EMPTY;
         })
       )
-      .subscribe((res: any) => {
-        const rows = res?.data;
+      .subscribe((res) => {
+        const rows = (res as any)?.data;
         if (rows && rows.length > 0) {
           try {
             const raw = rows[0].row;
@@ -267,7 +265,7 @@ export class PersonalDataTabComponent implements OnDestroy {
       disableClose: false,
       panelClass: 'kyc-validation-dialog'
     });
-    dialogRef.afterClosed().subscribe((result: CustomerDataValidation | undefined) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (!result) {
         return;
       }
@@ -396,7 +394,7 @@ export class PersonalDataTabComponent implements OnDestroy {
           return EMPTY;
         })
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         if (this.rawPdfUrl) {
           URL.revokeObjectURL(this.rawPdfUrl);
           this.rawPdfUrl = null;
@@ -518,7 +516,7 @@ export class PersonalDataTabComponent implements OnDestroy {
     }
 
     if (updates.length > 0) {
-      forkJoin(updates).subscribe((results: any[]) => {
+      forkJoin(updates).subscribe((results) => {
         let allSuccess = true;
 
         // Synchronize local state only for the requests that actually succeeded

@@ -70,7 +70,7 @@ export class BusinessDateTabComponent implements OnInit {
   configurationName = SettingsService.businessDateConfigName;
 
   ngOnInit(): void {
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent) => {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
         this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
@@ -90,19 +90,17 @@ export class BusinessDateTabComponent implements OnInit {
    * Get the Configuration and the Business Date data
    */
   getConfigurations(): void {
-    this.systemService
-      .getConfigurationByName(SettingsService.businessDateConfigName)
-      .subscribe((configurationData: any) => {
-        this.isBusinessDateEnabled = configurationData.enabled;
-        if (this.isBusinessDateEnabled) {
-          this.setBusinessDates();
-        }
-        this.cdr.markForCheck();
-      });
+    this.systemService.getConfigurationByName(SettingsService.businessDateConfigName).subscribe((configurationData) => {
+      this.isBusinessDateEnabled = configurationData.enabled;
+      if (this.isBusinessDateEnabled) {
+        this.setBusinessDates();
+      }
+      this.cdr.markForCheck();
+    });
   }
 
   setBusinessDates(): void {
-    this.systemService.getBusinessDates().subscribe((businessDateData: any) => {
+    this.systemService.getBusinessDates().subscribe((businessDateData) => {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
           this.businessDate = this.dateUtils.parseDate(data.date);
@@ -156,7 +154,7 @@ export class BusinessDateTabComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.systemService.updateBusinessDate(data).subscribe((response: any) => {
+    this.systemService.updateBusinessDate(data).subscribe((response) => {
       this.getConfigurations();
       this.editInProgressToggle(this.dateIndex);
     });

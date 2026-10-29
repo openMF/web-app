@@ -94,7 +94,7 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanDetailsData = data.loanDetailsData;
     });
   }
@@ -114,7 +114,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     this.loansService
       .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;
         this.instructionTableRef.renderRows();
@@ -125,7 +125,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     const deleteStandingInstructionDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `standing instruction id: ${instructionId}` }
     });
-    deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
+    deleteStandingInstructionDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.accountTransfersService
           .deleteStandingInstrucions(instructionId)

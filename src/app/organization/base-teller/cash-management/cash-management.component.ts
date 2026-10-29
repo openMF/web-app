@@ -324,7 +324,7 @@ export class CashManagementComponent implements OnInit {
         type: 'warn'
       }
     });
-    dialogRef.afterClosed().subscribe((result: { confirm?: boolean } | undefined) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirm) {
         this.isOperation ? this.submitOperation() : this.submitClosing();
       }

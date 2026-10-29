@@ -104,7 +104,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
   ngOnInit() {
     this.defaultConfigValues = this.loanProductsTemplate['itemsByDefault'];
     if (this.loanProductService.isLoanProduct) {
-      this.isLinkedToFloatingInterestRates?.valueChanges.subscribe((isLinkedToFloatingInterestRates: any) => {
+      this.isLinkedToFloatingInterestRates?.valueChanges.subscribe((isLinkedToFloatingInterestRates) => {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
           this.loanProductSettingsForm.get('allowPartialPeriodInterestCalculation').setValue(true);
@@ -485,7 +485,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('allowAttributeConfiguration')
-        .valueChanges.subscribe((allowAttributeConfiguration: any) => {
+        .valueChanges.subscribe((allowAttributeConfiguration) => {
           if (allowAttributeConfiguration) {
             allowAttributeOverrides.patchValue({
               amortizationType: true,
@@ -511,7 +511,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           }
         });
 
-      this.loanProductSettingsForm.get('daysInYearType').valueChanges.subscribe((daysInYearType: any) => {
+      this.loanProductSettingsForm.get('daysInYearType').valueChanges.subscribe((daysInYearType) => {
         if (this.isAdvancedTransactionProcessingStrategy) {
           this.useDaysInYearCustomStrategy = daysInYearType == 1;
           if (this.useDaysInYearCustomStrategy) {
@@ -530,7 +530,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('interestCalculationPeriodType')
-        .valueChanges.subscribe((interestCalculationPeriodType: any) => {
+        .valueChanges.subscribe((interestCalculationPeriodType) => {
           if (interestCalculationPeriodType === 0) {
             this.loanProductSettingsForm.patchValue({ allowPartialPeriodInterestCalculation: false });
           }
@@ -538,7 +538,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('allowVariableInstallments')
-        .valueChanges.subscribe((allowVariableInstallments: any) => {
+        .valueChanges.subscribe((allowVariableInstallments) => {
           if (allowVariableInstallments) {
             this.loanProductSettingsForm.addControl(
               'minimumGap',
@@ -561,7 +561,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         });
       this.loanProductSettingsForm
         .get('isInterestRecalculationEnabled')
-        .valueChanges.subscribe((isInterestRecalculationEnabled: any) => {
+        .valueChanges.subscribe((isInterestRecalculationEnabled) => {
           if (isInterestRecalculationEnabled) {
             this.loanProductSettingsForm.addControl(
               'preClosureInterestCalculationStrategy',
@@ -585,7 +585,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
             }
             this.loanProductSettingsForm
               .get('interestRecalculationCompoundingMethod')
-              .valueChanges.subscribe((interestRecalculationCompoundingMethod: any) => {
+              .valueChanges.subscribe((interestRecalculationCompoundingMethod) => {
                 if (interestRecalculationCompoundingMethod !== 0) {
                   this.loanProductSettingsForm.addControl(
                     'recalculationCompoundingFrequencyType',
@@ -594,7 +594,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
                   this.loanProductSettingsForm
                     .get('recalculationCompoundingFrequencyType')
-                    .valueChanges.subscribe((recalculationCompoundingFrequencyType: any) => {
+                    .valueChanges.subscribe((recalculationCompoundingFrequencyType) => {
                       if (recalculationCompoundingFrequencyType !== 1) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationCompoundingFrequencyInterval',
@@ -623,7 +623,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
                         this.loanProductSettingsForm
                           .get('recalculationCompoundingFrequencyNthDayType')
-                          .valueChanges.subscribe((recalculationCompoundingFrequencyNthDayType: any) => {
+                          .valueChanges.subscribe((recalculationCompoundingFrequencyNthDayType) => {
                             if (recalculationCompoundingFrequencyNthDayType === -2) {
                               this.loanProductSettingsForm.addControl(
                                 'recalculationCompoundingFrequencyOnDayType',
@@ -653,7 +653,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
             this.loanProductSettingsForm
               .get('recalculationRestFrequencyType')
-              .valueChanges.subscribe((recalculationRestFrequencyType: any) => {
+              .valueChanges.subscribe((recalculationRestFrequencyType) => {
                 if (recalculationRestFrequencyType !== 1) {
                   this.loanProductSettingsForm.addControl(
                     'recalculationRestFrequencyInterval',
@@ -682,7 +682,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
                   this.loanProductSettingsForm
                     .get('recalculationRestFrequencyNthDayType')
-                    .valueChanges.subscribe((recalculationRestFrequencyNthDayType: any) => {
+                    .valueChanges.subscribe((recalculationRestFrequencyNthDayType) => {
                       if (recalculationRestFrequencyNthDayType === -2) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationRestFrequencyOnDayType',
@@ -781,7 +781,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('transactionProcessingStrategyCode')
-        .valueChanges.subscribe((transactionProcessingStrategyCode: string) => {
+        .valueChanges.subscribe((transactionProcessingStrategyCode) => {
           this.advancePaymentStrategy.emit(transactionProcessingStrategyCode);
           this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(
             transactionProcessingStrategyCode
@@ -792,7 +792,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('useDueForRepaymentsConfigurations')
-        .valueChanges.subscribe((useDueForRepaymentsConfigurations: boolean) => {
+        .valueChanges.subscribe((useDueForRepaymentsConfigurations) => {
           if (useDueForRepaymentsConfigurations) {
             this.loanProductSettingsForm.patchValue({
               dueDaysForRepaymentEvent: null,
@@ -806,7 +806,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           }
         });
 
-      this.loanProductSettingsForm.get('loanScheduleType').valueChanges.subscribe((loanScheduleType: string) => {
+      this.loanProductSettingsForm.get('loanScheduleType').valueChanges.subscribe((loanScheduleType) => {
         this.transactionProcessingStrategyData = [];
         if (loanScheduleType === LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE) {
           // Filter Advanced Payment Allocation Strategy
@@ -856,7 +856,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm
         .get('allowAttributeConfiguration')
-        .valueChanges.subscribe((allowAttributeConfiguration: any) => {
+        .valueChanges.subscribe((allowAttributeConfiguration) => {
           if (allowAttributeConfiguration) {
             allowAttributeOverrides.patchValue({
               delinquencyBucketClassification: true,

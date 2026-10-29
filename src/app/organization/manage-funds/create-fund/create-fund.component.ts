@@ -53,7 +53,7 @@ export class CreateFundComponent implements OnInit {
     this.organizationService
       .createFund(payload)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

@@ -114,7 +114,7 @@ export class CenterAttendanceComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.centerData = data.centersActionData;
       this.membersData = data.centersActionData.clients;
     });
@@ -140,7 +140,7 @@ export class CenterAttendanceComponent implements OnInit {
   getAttendanceOptions() {
     this.centersService
       .getMeetingsTemplate(this.centerData.id, this.centerData.collectionMeetingCalendar.id)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
   }
@@ -168,7 +168,7 @@ export class CenterAttendanceComponent implements OnInit {
       formfields: formfields
     };
     const memberAttendanceDialogRef = this.dialog.open(FormDialogComponent, { data });
-    memberAttendanceDialogRef.afterClosed().subscribe((response: any) => {
+    memberAttendanceDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const updatedMemeber = { ...member, ...response.data.value };
         this.dataSource.splice(this.dataSource.indexOf(member), 1, updatedMemeber);

@@ -121,7 +121,7 @@
 
         <mifosx-loan-product-charges-step
           [loanProductsTemplate]="loanProductAndTemplate"
-          [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+          [currencyCode]="$any(loanProductCurrencyForm.get('currencyCode'))"
           [multiDisburseLoan]="
             loanProductService.isLoanProduct ? loanProductSettingsForm.get('multiDisburseLoan') : null
           "

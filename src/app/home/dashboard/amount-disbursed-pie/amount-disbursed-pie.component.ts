@@ -67,7 +67,7 @@ export class AmountDisbursedPieComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -92,8 +92,8 @@ export class AmountDisbursedPieComponent implements OnInit {
    * Subscribes to value changes of office Id fetches chart data accordingly.
    */
   getChartData() {
-    this.officeId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: number) => {
-      this.homeService.getDisbursedAmount(value).subscribe((response: any) => {
+    this.officeId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.homeService.getDisbursedAmount(value).subscribe((response) => {
         const data = Object.entries(response[0]).map((entry) => entry[1]);
         if (!(data[0] === 0 && data[1] === 0)) {
           this.setChart(data);

@@ -211,7 +211,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
   }
@@ -541,7 +541,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     ];
     this.systemService
       .getAuditTrails(this.filterAuditTrailsBy, this.sort?.active ?? '', this.sort?.direction ?? '', 0, -1)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         if (response !== undefined) {
           let csv = response.pageItems.map((row: any) =>
             headerCode.map((fieldName) => {

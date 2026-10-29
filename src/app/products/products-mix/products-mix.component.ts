@@ -75,7 +75,7 @@ export class ProductsMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { products: any }) => {
+    this.route.data.subscribe((data) => {
       this.productMixData = data.products;
     });
   }

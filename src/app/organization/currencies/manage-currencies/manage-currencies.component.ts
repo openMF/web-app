@@ -104,7 +104,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { currencies: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
       this.currencyList = data.currencies.currencyOptions;
     });
@@ -171,7 +171,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
     this.organizationservice
       .updateCurrencies(selectedCurrencyCodes)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.selectedCurrencies.push(newCurrency);
         this.formRef.resetForm();
         if (this.configurationWizardService.showCurrencyForm) {
@@ -192,7 +192,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
     const deleteCurrencyDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `currency: ${currencyCode}` }
     });
-    deleteCurrencyDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCurrencyDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationservice
           .updateCurrencies(selectedCurrencyCodes)
@@ -240,7 +240,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChang
         stepName: 'currency'
       }
     });
-    continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
+    continueSetupDialogRef.afterClosed().subscribe((response) => {
       if (response.step === 1) {
         this.configurationWizardService.showCurrencyForm = false;
         this.router.navigate(['../'], { relativeTo: this.route });

@@ -107,7 +107,7 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProducts: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositProductData = data.fixedDepositProducts;
     });
   }

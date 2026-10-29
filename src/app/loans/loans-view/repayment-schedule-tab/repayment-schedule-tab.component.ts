@@ -342,39 +342,37 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    editDialogRef
-      .afterClosed()
-      .subscribe((response: { data?: { value?: { dueDate?: Date; installmentAmount?: number } } }) => {
-        const value = response?.data?.value;
-        if (!value) {
-          return;
-        }
-        const amount = Number(value.installmentAmount);
-        if (Number.isFinite(amount) && amount > 0) {
-          period.totalDueForPeriod = amount;
-        }
-        if (value.dueDate instanceof Date) {
-          period.dueDate = [
-            value.dueDate.getFullYear(),
-            value.dueDate.getMonth() + 1,
-            value.dueDate.getDate()
-          ];
-        }
+    editDialogRef.afterClosed().subscribe((response) => {
+      const value = response?.data?.value;
+      if (!value) {
+        return;
+      }
+      const amount = Number(value.installmentAmount);
+      if (Number.isFinite(amount) && amount > 0) {
+        period.totalDueForPeriod = amount;
+      }
+      if (value.dueDate instanceof Date) {
+        period.dueDate = [
+          value.dueDate.getFullYear(),
+          value.dueDate.getMonth() + 1,
+          value.dueDate.getDate()
+        ];
+      }
 
-        const displayDueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
-        const change: ScheduleChangeRecord = { dueDate: editable.originalDueDate };
-        if (period.totalDueForPeriod !== editable.originalTotalDueForPeriod) {
-          change.installmentAmount = period.totalDueForPeriod;
-        }
-        if (displayDueDate !== editable.originalDueDate) {
-          change.modifiedDueDate = displayDueDate;
-        }
-        editable.changed = change.installmentAmount !== undefined;
-        editable.dueDateChanged = change.modifiedDueDate !== undefined;
-        this.editPeriod.emit(change);
-        // Dialog close happens outside this component's template events, so OnPush needs an explicit mark.
-        this.cdr.markForCheck();
-      });
+      const displayDueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+      const change: ScheduleChangeRecord = { dueDate: editable.originalDueDate };
+      if (period.totalDueForPeriod !== editable.originalTotalDueForPeriod) {
+        change.installmentAmount = period.totalDueForPeriod;
+      }
+      if (displayDueDate !== editable.originalDueDate) {
+        change.modifiedDueDate = displayDueDate;
+      }
+      editable.changed = change.installmentAmount !== undefined;
+      editable.dueDateChanged = change.modifiedDueDate !== undefined;
+      this.editPeriod.emit(change);
+      // Dialog close happens outside this component's template events, so OnPush needs an explicit mark.
+      this.cdr.markForCheck();
+    });
   }
 
   private shiftDays(date: Date, days: number): Date {

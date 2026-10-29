@@ -14,13 +14,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (groupForm.controls.name.hasError('required')) {
+            @if ($any(groupForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Group Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (groupForm.controls.name.hasError('pattern')) {
+            @if ($any(groupForm.controls).name.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Group Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.commons.begin with a special character or number' | translate }}
@@ -44,7 +44,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (groupForm.controls.officeId.hasError('required')) {
+            @if ($any(groupForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -75,7 +75,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            @if (groupForm.controls.submittedOnDate.hasError('required')) {
+            @if ($any(groupForm.controls).submittedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -87,7 +87,7 @@
             {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
 
-          @if (groupForm.controls.active.value) {
+          @if ($any(groupForm.controls).active.value) {
             <mat-form-field (click)="activationDatePicker.open()">
               <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
               <input
@@ -100,7 +100,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activationDatePicker></mat-datepicker>
-              @if (groupForm.controls.activationDate.hasError('required')) {
+              @if ($any(groupForm.controls).activationDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -72,7 +72,7 @@ export class DividendsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.shareAccountData = data.sharesAccountData;
       this.dividendsData = this.shareAccountData.dividends;
     });

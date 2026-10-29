@@ -79,7 +79,7 @@ export class ManageHooksComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { hooks: any }) => {
+    this.route.data.subscribe((data) => {
       this.hookData = data.hooks;
     });
   }

@@ -48,7 +48,7 @@
                   </mat-button-toggle>
                 </mat-button-toggle-group>
 
-                @if (detailsForm.controls.payerType.value === 'CLIENT') {
+                @if ($any(detailsForm.controls).payerType.value === 'CLIENT') {
                   <div class="layout-row gap-2percent responsive-column align-start">
                     <mat-form-field class="flex-80">
                       <mat-label>{{ 'servicePayment.inputs.clientSearch' | translate }}</mat-label>
@@ -59,7 +59,7 @@
                       mat-raised-button
                       color="primary"
                       (click)="searchClients()"
-                      [disabled]="!detailsForm.controls.clientSearch.value.trim() || isSearchingClients"
+                      [disabled]="!$any(detailsForm.controls).clientSearch.value.trim() || isSearchingClients"
                     >
                       @if (isSearchingClients) {
                         <mat-spinner diameter="20"></mat-spinner>
@@ -103,7 +103,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'servicePayment.inputs.payerName' | translate }}</mat-label>
                     <input matInput formControlName="payerName" maxlength="250" required />
-                    @if (detailsForm.controls.payerName.hasError('required')) {
+                    @if ($any(detailsForm.controls).payerName.hasError('required')) {
                       <mat-error>{{ 'servicePayment.inputs.payerNameRequired' | translate }}</mat-error>
                     }
                   </mat-form-field>
@@ -126,7 +126,7 @@
                     <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                     <input matInput inputmode="decimal" formControlName="baseAmount" required />
                     <span matTextSuffix>{{ selectedService?.currencyCode }}</span>
-                    @if (detailsForm.controls.baseAmount.hasError('pattern')) {
+                    @if ($any(detailsForm.controls).baseAmount.hasError('pattern')) {
                       <mat-error>{{ 'servicePayment.text.validAmount' | translate }}</mat-error>
                     }
                   </mat-form-field>
@@ -203,18 +203,18 @@
                     <div formArrayName="denominations" class="layout-column gap-20px">
                       @for (
                         denomination of denominations.controls;
-                        track denomination.controls.denominationId.value;
+                        track $any(denomination.controls).denominationId.value;
                         let i = $index
                       ) {
                         <div [formGroupName]="i" class="denomination-row">
                           <div>
                             <span>{{ 'labels.inputs.Denomination' | translate }}</span>
-                            <strong>{{ denomination.controls.value.value }} {{ quote?.currencyCode }}</strong>
+                            <strong>{{ $any(denomination.controls).value.value }} {{ quote?.currencyCode }}</strong>
                           </div>
                           <mat-form-field>
                             <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
                             <input type="number" matInput formControlName="quantity" min="0" step="1" required />
-                            @if (denomination.controls.quantity.hasError('pattern')) {
+                            @if ($any(denomination.controls).quantity.hasError('pattern')) {
                               <mat-error>{{ 'labels.text.Quantity must be a whole number' | translate }}</mat-error>
                             }
                           </mat-form-field>
@@ -311,11 +311,15 @@
                 </section>
                 <h4>{{ 'labels.inputs.Denominations' | translate }}</h4>
                 <div class="receipt-denominations">
-                  @for (denomination of denominations.controls; track denomination.controls.denominationId.value) {
-                    @if ((denomination.controls.quantity.value ?? 0) > 0) {
+                  @for (
+                    denomination of denominations.controls;
+                    track $any(denomination.controls).denominationId.value
+                  ) {
+                    @if (($any(denomination.controls).quantity.value ?? 0) > 0) {
                       <span>
-                        {{ denomination.controls.value.value }} × {{ denomination.controls.quantity.value }} =
-                        {{ lineTotal(denomination) }} {{ quote.currencyCode }}
+                        {{ $any(denomination.controls).value.value }} ×
+                        {{ $any(denomination.controls).quantity.value }} = {{ lineTotal(denomination) }}
+                        {{ quote.currencyCode }}
                       </span>
                     }
                   }

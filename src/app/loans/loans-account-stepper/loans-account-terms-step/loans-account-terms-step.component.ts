@@ -1127,7 +1127,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       formfields: formfields
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
-    disbursementDialogRef.afterClosed().subscribe((response: any) => {
+    disbursementDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= currentPrincipalAmount) {
@@ -1149,7 +1149,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         const principal = this.disbursementDataSource[index]['principal'] * 1;
         this.disbursementDataSource.splice(index, 1);
@@ -1167,7 +1167,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     const addCollateralDialogRef = this.dialog.open(LoansAccountAddCollateralDialogComponent, {
       data: { collateralOptions: this.collateralOptions }
     });
-    addCollateralDialogRef.afterClosed().subscribe((response: any) => {
+    addCollateralDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const collateralData = {
           type: response.data.value.collateral,
@@ -1195,7 +1195,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `collateral` }
     });
-    deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCollateralDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         const removed: any = this.collateralDataSource.splice(id, 1);
         this.collateralOptions = this.collateralOptions.concat(removed[0].type);

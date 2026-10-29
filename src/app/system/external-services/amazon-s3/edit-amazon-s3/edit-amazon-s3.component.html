@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.S3 Bucket Name' | translate }}</mat-label>
             <input matInput required formControlName="s3_bucket_name" />
-            @if (amazonS3ConfigurationForm.controls.s3_bucket_name.hasError('required')) {
+            @if ($any(amazonS3ConfigurationForm.controls).s3_bucket_name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.S3 Bucket Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,7 +25,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.S3 Access Key' | translate }}</mat-label>
             <input matInput required type="{{ accessKeyInputType }}" formControlName="s3_access_key" />
-            @if (amazonS3ConfigurationForm.controls.s3_access_key.value) {
+            @if ($any(amazonS3ConfigurationForm.controls).s3_access_key.value) {
               <button
                 mat-button
                 matSuffix
@@ -41,7 +41,7 @@
                 }
               </button>
             }
-            @if (amazonS3ConfigurationForm.controls.s3_access_key.hasError('required')) {
+            @if ($any(amazonS3ConfigurationForm.controls).s3_access_key.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.S3 Access Key' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -52,7 +52,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.S3 Secret Key' | translate }}</mat-label>
             <input matInput required type="{{ secretKeyInputType }}" formControlName="s3_secret_key" />
-            @if (amazonS3ConfigurationForm.controls.s3_secret_key.value) {
+            @if ($any(amazonS3ConfigurationForm.controls).s3_secret_key.value) {
               <button
                 mat-button
                 matSuffix
@@ -68,7 +68,7 @@
                 }
               </button>
             }
-            @if (amazonS3ConfigurationForm.controls.s3_secret_key.hasError('required')) {
+            @if ($any(amazonS3ConfigurationForm.controls).s3_secret_key.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.S3 Secret Key' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

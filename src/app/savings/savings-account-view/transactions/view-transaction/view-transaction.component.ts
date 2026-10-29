@@ -82,18 +82,16 @@ export class ViewTransactionComponent {
   entityDatatables: TransactionDatatable[] = [];
 
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountData: any; transactionDatatables: TransactionDatatable[] }) => {
-        this.savingsAccountData = data.savingsAccountData;
-        this.currency = this.savingsAccountData?.currency;
-        if (this.savingsAccountData) {
-          this.setConditionalButtons();
-        }
-        this.accountId = this.getRouteParam('savingAccountId') || '';
-        this.entityDatatables = data.transactionDatatables;
-        this.changeDetectorRef.markForCheck();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.savingsAccountData = data.savingsAccountData;
+      this.currency = this.savingsAccountData?.currency;
+      if (this.savingsAccountData) {
+        this.setConditionalButtons();
+      }
+      this.accountId = this.getRouteParam('savingAccountId') || '';
+      this.entityDatatables = data.transactionDatatables;
+      this.changeDetectorRef.markForCheck();
+    });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {

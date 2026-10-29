@@ -14,7 +14,7 @@
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
-            [inputFormControl]="updateDiscountForm.controls.transactionAmount"
+            [inputFormControl]="$any(updateDiscountForm.controls.transactionAmount)"
             [inputLabel]="'Discount'"
           >
           </mifosx-input-amount>
@@ -28,9 +28,9 @@
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
             <mat-hint align="end">
-              {{ updateDiscountForm.controls.externalId.value?.length || 0 }}/{{ maxExternalIdLength }}
+              {{ $any(updateDiscountForm.controls).externalId.value?.length || 0 }}/{{ maxExternalIdLength }}
             </mat-hint>
-            @if (updateDiscountForm.controls.externalId.hasError('maxlength')) {
+            @if ($any(updateDiscountForm.controls).externalId.hasError('maxlength')) {
               <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
             }
           </mat-form-field>
@@ -39,9 +39,9 @@
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
             <mat-hint align="end">
-              {{ updateDiscountForm.controls.note.value?.length || 0 }}/{{ maxNoteLength }}
+              {{ $any(updateDiscountForm.controls).note.value?.length || 0 }}/{{ maxNoteLength }}
             </mat-hint>
-            @if (updateDiscountForm.controls.note.hasError('maxlength')) {
+            @if ($any(updateDiscountForm.controls).note.hasError('maxlength')) {
               <mat-error>{{ 'labels.inputs.Note is too long' | translate }}</mat-error>
             }
           </mat-form-field>

@@ -102,7 +102,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositsAccountData: any; savingsDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
       this.currency = this.fixedDepositsAccountData.currency;
@@ -198,7 +198,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
     const deleteFixedDepositsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `fixed deposit account with id: ${this.fixedDepositsAccountData.id}` }
     });
-    deleteFixedDepositsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteFixedDepositsAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.fixedDepositsService.deleteFixedDepositsAccount(this.fixedDepositsAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
@@ -212,7 +212,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
    */
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
-    calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    calculateInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.fixedDepositsService
           .executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'calculateInterest', {})
@@ -228,7 +228,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
    */
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
-    postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+    postInterestAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.fixedDepositsService
           .executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'postInterest', {})
@@ -247,7 +247,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
     const deleteSavingsAccountDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
       data: { isEnable: true }
     });
-    deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+    deleteSavingsAccountDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
@@ -268,7 +268,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
     const disableWithHoldTaxDialogRef = this.dialog.open(ToggleWithholdTaxDialogComponent, {
       data: { isEnable: false }
     });
-    disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+    disableWithHoldTaxDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {

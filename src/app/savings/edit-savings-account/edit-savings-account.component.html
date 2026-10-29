@@ -59,7 +59,7 @@
       <mifosx-savings-account-charges-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
         [savingsAccountTemplate]="savingsAccountAndTemplate"
-        [currencyCode]="savingsAccountTermsForm.get('currencyCode')"
+        [currencyCode]="$any(savingsAccountTermsForm.get('currencyCode'))"
       >
       </mifosx-savings-account-charges-step>
     </mat-step>

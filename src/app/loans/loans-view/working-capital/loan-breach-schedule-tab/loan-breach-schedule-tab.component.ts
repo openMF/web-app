@@ -265,45 +265,41 @@ export class LoanBreachScheduleTabComponent extends LoanProductBaseComponent imp
   ngOnInit(): void {
     this.loanId = this.route.parent?.snapshot.params['loanId'];
 
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { breachSchedule: BreachSchedule[]; loanBreachActions: WorkingCapitalBreachAction[] }) => {
-        const activeDisable = findActiveBreachDisable(
-          (data.loanBreachActions ?? []).map((action) => {
-            // An ENABLE closes the window through effectiveEndDate, mirroring the actions tab rows.
-            const rawEnd = action.effectiveEndDate ?? action.endDate;
-            return {
-              action: action.action,
-              startDateObj: this.toDate(action.startDate),
-              endDateObj: rawEnd ? this.toDate(rawEnd) : null
-            };
-          }),
-          this.settingsService.businessDate
-        );
-        this.breachEvaluationDisabled = activeDisable !== null;
-        this.breachDisabledSince = activeDisable?.startDateObj ?? null;
-        this.processBreachPeriods(data.breachSchedule ?? []);
-        this.dataSource.data = this.breachPeriods;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      const activeDisable = findActiveBreachDisable(
+        (data.loanBreachActions ?? []).map((action: any) => {
+          // An ENABLE closes the window through effectiveEndDate, mirroring the actions tab rows.
+          const rawEnd = action.effectiveEndDate ?? action.endDate;
+          return {
+            action: action.action,
+            startDateObj: this.toDate(action.startDate),
+            endDateObj: rawEnd ? this.toDate(rawEnd) : null
+          };
+        }),
+        this.settingsService.businessDate
+      );
+      this.breachEvaluationDisabled = activeDisable !== null;
+      this.breachDisabledSince = activeDisable?.startDateObj ?? null;
+      this.processBreachPeriods(data.breachSchedule ?? []);
+      this.dataSource.data = this.breachPeriods;
+    });
 
     this.loansService
       .getWorkingCapitalLoanBreachActions(this.loanId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((actions: WorkingCapitalBreachAction[]) => {
+      .subscribe((actions) => {
         this.breachActions.set(actions ?? []);
       });
 
     if (this.route.parent) {
-      this.route.parent.data
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data: { loanDetailsData: { currency?: { code: string }; balance: WorkingCapitalBalances } }) => {
-          if (data?.loanDetailsData?.currency?.code) {
-            this.currencyCode = data.loanDetailsData.currency.code;
-          }
-          this.loanBalances = data?.loanDetailsData.balance;
-          this.refreshHeaderStatus();
-          this.cdr.markForCheck();
-        });
+      this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+        if (data?.loanDetailsData?.currency?.code) {
+          this.currencyCode = data.loanDetailsData.currency.code;
+        }
+        this.loanBalances = data?.loanDetailsData.balance;
+        this.refreshHeaderStatus();
+        this.cdr.markForCheck();
+      });
     }
   }
 
@@ -343,7 +339,7 @@ export class LoanBreachScheduleTabComponent extends LoanProductBaseComponent imp
     const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
       data: { action: 'reset' }
     });
-    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.executeBreachAction({
           action: 'reset',
@@ -362,7 +358,7 @@ export class LoanBreachScheduleTabComponent extends LoanProductBaseComponent imp
         )
       }
     });
-    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.executeBreachAction({ action: 'undo_reset' });
       }

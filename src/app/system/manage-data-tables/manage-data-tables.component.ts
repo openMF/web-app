@@ -108,7 +108,7 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { dataTables: any }) => {
+    this.route.data.subscribe((data) => {
       this.dataTableData = data.dataTables;
     });
   }

@@ -32,7 +32,7 @@ export class ViewNearBreachConfigurationComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { nearBreachData: any }) => {
+    this.route.data.subscribe((data) => {
       this.nearBreachData = data.nearBreachData;
     });
   }

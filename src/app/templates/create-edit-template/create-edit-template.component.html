@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (templateForm.controls.entity.hasError('required')) {
+            @if ($any(templateForm.controls).entity.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (templateForm.controls.type.hasError('required')) {
+            @if ($any(templateForm.controls).type.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -48,7 +48,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (templateForm.controls.name.hasError('required')) {
+            @if ($any(templateForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -130,7 +130,7 @@
               #tinymceEditor
               [init]="tinymceConfig"
               licenseKey="gpl"
-              [formControl]="templateForm.controls.text"
+              [formControl]="$any(templateForm.controls.text)"
             ></editor>
           }
         } @else {
@@ -141,9 +141,9 @@
               #plainTextEditor
               rows="10"
               required
-              [formControl]="templateForm.controls.text"
+              [formControl]="$any(templateForm.controls.text)"
             ></textarea>
-            @if (templateForm.controls.text.hasError('required')) {
+            @if ($any(templateForm.controls).text.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Text' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -157,7 +157,7 @@
     <mat-card-content>
       <div role="template-parameters">
         <mat-accordion>
-          @if (templateForm.controls.entity.value === 0) {
+          @if ($any(templateForm.controls).entity.value === 0) {
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -174,7 +174,7 @@
             </mat-expansion-panel>
           }
 
-          @if (templateForm.controls.entity.value === 1) {
+          @if ($any(templateForm.controls).entity.value === 1) {
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -191,7 +191,7 @@
             </mat-expansion-panel>
           }
 
-          @if (templateForm.controls.entity.value === 1) {
+          @if ($any(templateForm.controls).entity.value === 1) {
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>

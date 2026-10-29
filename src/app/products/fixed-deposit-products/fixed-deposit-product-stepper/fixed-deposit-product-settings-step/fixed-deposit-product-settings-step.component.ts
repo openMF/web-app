@@ -135,7 +135,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax) => {
       if (withHoldTax) {
         this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
       } else {

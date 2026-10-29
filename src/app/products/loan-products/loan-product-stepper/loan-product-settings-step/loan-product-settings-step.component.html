@@ -50,9 +50,9 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
+        @if ($any(loanProductSettingsForm.controls).delinquencyBucketId) {
           <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>
@@ -89,9 +89,9 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.breachId) {
+        @if ($any(loanProductSettingsForm.controls).breachId) {
           <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'breachId')">
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>
@@ -111,9 +111,9 @@
               </mat-option>
             }
           </mat-select>
-          @if (loanProductSettingsForm.controls.nearBreachId) {
+          @if ($any(loanProductSettingsForm.controls).nearBreachId) {
             <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'nearBreachId')">
-              <fa-icon icon="close" size="md"></fa-icon>
+              <fa-icon icon="close" size="lg"></fa-icon>
             </button>
           }
         </mat-form-field>
@@ -148,7 +148,7 @@
             max="100.00"
             step="0.01"
           />
-          @if (loanProductSettingsForm.controls.nearBreachThreshold.hasError('required')) {
+          @if ($any(loanProductSettingsForm.controls).nearBreachThreshold.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Near Breach Threshold' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -158,7 +158,7 @@
 
         <mifosx-input-positive-integer
           class="flex-23"
-          [inputFormControl]="loanProductSettingsForm.controls.nearBreachEvalFrequency"
+          [inputFormControl]="$any(loanProductSettingsForm.controls.nearBreachEvalFrequency)"
           [inputLabel]="'Near Breach Evaluation Frequency'"
           [isRequired]="true"
           [minVal]="'1'"
@@ -324,7 +324,7 @@
               required
               min="0"
             />
-            @if (loanProductSettingsForm.controls.maxTrancheCount.hasError('required')) {
+            @if ($any(loanProductSettingsForm.controls).maxTrancheCount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Maximum Tranche count' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -381,13 +381,13 @@
               [min]="0"
               [max]="100"
             />
-            @if (loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError('required')) {
+            @if ($any(loanProductSettingsForm.controls).disbursedAmountPercentageForDownPayment.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }}
                 {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.errors?.range) {
+            @if ($any(loanProductSettingsForm.controls).disbursedAmountPercentageForDownPayment.errors?.range) {
               <mat-error>
                 {{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }}
                 {{ 'labels.commons.is' | translate }} {{ 'labels.text.out' | translate }}
@@ -454,9 +454,9 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
+        @if ($any(loanProductSettingsForm.controls).delinquencyBucketId) {
           <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>

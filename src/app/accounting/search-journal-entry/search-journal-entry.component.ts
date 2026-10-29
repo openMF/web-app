@@ -202,7 +202,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any; glAccounts: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
       this.glAccountData = data.glAccounts;
     });

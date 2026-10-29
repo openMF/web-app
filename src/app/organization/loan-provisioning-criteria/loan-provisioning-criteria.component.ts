@@ -75,7 +75,7 @@ export class LoanProvisioningCriteriaComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProvisioningCriterias: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanProvisioningCriteriaData = data.loanProvisioningCriterias;
     });
   }

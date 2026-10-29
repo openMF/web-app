@@ -84,7 +84,7 @@ export class RescheduleLoanTabComponent extends LoanAccountTabBaseComponent {
   constructor() {
     super();
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanRescheduleData: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.loanRescheduleData = data.loanRescheduleData;
     });
   }
@@ -100,7 +100,7 @@ export class RescheduleLoanTabComponent extends LoanAccountTabBaseComponent {
           `${request.id}`
       }
     });
-    approveLoanRescheduleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    approveLoanRescheduleDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -120,7 +120,7 @@ export class RescheduleLoanTabComponent extends LoanAccountTabBaseComponent {
         }
         this.loansServices
           .applyCommandLoanRescheduleRequests(request.id, command.toLowerCase(), payload)
-          .subscribe((result: any) => {
+          .subscribe((result) => {
             this.reload();
           });
       }

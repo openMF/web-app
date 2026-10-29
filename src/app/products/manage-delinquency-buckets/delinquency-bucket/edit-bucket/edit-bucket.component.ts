@@ -96,7 +96,7 @@ export class EditBucketComponent extends DelinquencyBucketBaseComponent implemen
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyBucketsTemplateData: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyRangesData = data.delinquencyBucketsTemplateData;
       this.delinquencyBucketData = data.delinquencyBucket;
       this.delinquencyBucketId = data.delinquencyBucket.id;
@@ -197,7 +197,7 @@ export class EditBucketComponent extends DelinquencyBucketBaseComponent implemen
       formfields: formfields
     };
     const rangeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    rangeDialogRef.afterClosed().subscribe((response: any) => {
+    rangeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const itemSelected = response.data.value;
         const item = this.delinquencyRangesData.filter((range: any) => {
@@ -219,7 +219,7 @@ export class EditBucketComponent extends DelinquencyBucketBaseComponent implemen
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.delinquencyRangesIds.splice(index, 1);
         this.rangesDataSource.splice(index, 1);

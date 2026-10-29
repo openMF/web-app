@@ -35,7 +35,7 @@ export class ViewFixedDepositProductComponent {
   fixedDepositDatatables: any = [];
 
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositDatatables: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositDatatables = [];
       data.fixedDepositDatatables.forEach((datatable: any) => {
         if (datatable.entitySubType === 'Fixed Deposit') {

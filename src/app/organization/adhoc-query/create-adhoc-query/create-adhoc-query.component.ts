@@ -46,7 +46,7 @@ export class CreateAdhocQueryComponent implements OnInit {
   reportRunFrequencyData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { adhocQueryTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
   }
@@ -120,7 +120,7 @@ export class CreateAdhocQueryComponent implements OnInit {
     this.organizationService
       .createAdhocQuery(this.adhocQueryForm.value)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../',

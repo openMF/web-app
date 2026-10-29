@@ -72,7 +72,7 @@ export class ShareProductGeneralTabComponent {
   ];
 
   constructor() {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
+    this.route.data.subscribe((data) => {
       this.shareProduct = data.shareProduct;
     });
   }

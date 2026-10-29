@@ -21,7 +21,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (transferFeeForm.controls.transferType.hasError('required')) {
+              @if ($any(transferFeeForm.controls).transferType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Transfer Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -38,7 +38,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (transferFeeForm.controls.currencyCode.hasError('required')) {
+              @if ($any(transferFeeForm.controls).currencyCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -67,7 +67,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (transferFeeForm.controls.feeType.hasError('required')) {
+              @if ($any(transferFeeForm.controls).feeType.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Fee Type' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -78,13 +78,13 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Fee Value' | translate }}</mat-label>
               <input matInput required formControlName="feeValue" />
-              @if (transferFeeForm.controls.feeValue.hasError('required')) {
+              @if ($any(transferFeeForm.controls).feeValue.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Fee Value' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (transferFeeForm.controls.feeValue.hasError('highAmountValue')) {
+              @if ($any(transferFeeForm.controls).feeValue.hasError('highAmountValue')) {
                 <mat-error>{{ 'labels.commons.Invalid amount format' | translate }}</mat-error>
               }
             </mat-form-field>
@@ -104,7 +104,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Threshold Amount' | translate }}</mat-label>
               <input matInput formControlName="thresholdAmount" />
-              @if (transferFeeForm.controls.thresholdAmount.hasError('highAmountValue')) {
+              @if ($any(transferFeeForm.controls).thresholdAmount.hasError('highAmountValue')) {
                 <mat-error>{{ 'labels.commons.Invalid amount format' | translate }}</mat-error>
               }
             </mat-form-field>
@@ -112,7 +112,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Threshold Fee' | translate }}</mat-label>
               <input matInput formControlName="thresholdFeeValue" />
-              @if (transferFeeForm.controls.thresholdFeeValue.hasError('highAmountValue')) {
+              @if ($any(transferFeeForm.controls).thresholdFeeValue.hasError('highAmountValue')) {
                 <mat-error>{{ 'labels.commons.Invalid amount format' | translate }}</mat-error>
               }
             </mat-form-field>

@@ -22,7 +22,7 @@
       </mat-menu>
       <mat-form-field class="office-field" appearance="outline">
         <mat-label>Branch</mat-label>
-        <mat-select [formControl]="filtersForm.controls.officeId">
+        <mat-select [formControl]="$any(filtersForm.controls.officeId)">
           @for (office of offices; track office.id) {
             <mat-option [value]="office.id">
               {{ office.name }}
@@ -33,7 +33,7 @@
 
       <mat-form-field class="product-field" appearance="outline">
         <mat-label>Product</mat-label>
-        <mat-select [formControl]="filtersForm.controls.productId">
+        <mat-select [formControl]="$any(filtersForm.controls.productId)">
           <mat-option value="">All</mat-option>
           @for (product of products; track product.id) {
             <mat-option [value]="product.id">
@@ -46,7 +46,7 @@
       @if (clientGroups.length) {
         <mat-form-field class="client-group-field" appearance="outline">
           <mat-label>Client Group</mat-label>
-          <mat-select [formControl]="filtersForm.controls.clientGroupId">
+          <mat-select [formControl]="$any(filtersForm.controls.clientGroupId)">
             <mat-option value="">All</mat-option>
             @for (group of clientGroups; track group.id) {
               <mat-option [value]="group.id">
@@ -59,7 +59,7 @@
 
       <mat-form-field class="timescale-field" appearance="outline">
         <mat-label>Date Range</mat-label>
-        <mat-select [formControl]="filtersForm.controls.timescale">
+        <mat-select [formControl]="$any(filtersForm.controls.timescale)">
           <mat-option value="Day">{{ 'labels.buttons.Day' | translate }}</mat-option>
           <mat-option value="Week">{{ 'labels.buttons.Week' | translate }}</mat-option>
           <mat-option value="Month">{{ 'labels.buttons.Month' | translate }}</mat-option>
@@ -96,7 +96,7 @@
               [widget]="widget"
               [state]="widgetStateMap[widget.id]"
               [offices]="offices"
-              [selectedOfficeId]="filtersForm.controls.officeId.value"
+              [selectedOfficeId]="$any(filtersForm.controls).officeId.value"
               (officeSelected)="onOfficeSelected($event)"
             ></mifosx-dashboard-widget>
           </div>

@@ -29,13 +29,13 @@
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
         <input type="number" [max]="maxQuantity" [min]="0" matInput formControlName="quantity" required />
-        @if (addCollateralForm.controls.quantity.hasError('required')) {
+        @if ($any(addCollateralForm.controls).quantity.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         }
-        @if (addCollateralForm.controls.quantity.hasError('max')) {
+        @if ($any(addCollateralForm.controls).quantity.hasError('max')) {
           <mat-error>
             {{ 'labels.inputs.Quantity can not be more than' | translate }} <strong>{{ maxQuantity }}</strong>
           </mat-error>

@@ -54,7 +54,7 @@ export class ViewHookComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { hook: any }) => {
+    this.route.data.subscribe((data) => {
       this.hookData = data.hook;
     });
   }
@@ -66,7 +66,7 @@ export class ViewHookComponent {
     const deleteHookDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.inputs.hook') + ' ' + this.hookData.id }
     });
-    deleteHookDialogRef.afterClosed().subscribe((response: any) => {
+    deleteHookDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.systemService.deleteHook(this.hookData.id).subscribe(() => {
           this.router.navigate(['/system/hooks']);

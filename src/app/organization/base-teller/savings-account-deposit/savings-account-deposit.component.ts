@@ -253,14 +253,14 @@ export class SavingsAccountDepositComponent implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response: DepositSearchResponse) => {
+      .subscribe((response) => {
         this.searchResults = Array.isArray(response) ? response : response?.pageItems || [];
       });
 
     this.lookupForm
       .get('savingsAccount')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((account: DepositSavingsAccount | '' | null) => {
+      .subscribe((account) => {
         if (account && typeof account === 'object') {
           this.selectedSavingsAccount = account;
           const savingsId = this.savingsAccountId(account);
@@ -275,7 +275,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.depositForm
       .get('depositType')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((depositType: DepositType | null) => {
+      .subscribe((depositType) => {
         this.applyCheckValidators(depositType || 'CASH');
         this.syncSelectedPaymentType();
       });

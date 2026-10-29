@@ -7,7 +7,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 **Technologies Used:**
 
 - HTML5, SCSS, and TypeScript
-- Angular 20 framework
+- Angular 22 framework
 - Angular Material components
 
 ## 📋 Table of Contents
@@ -104,9 +104,9 @@ Choose ONE of the following methods to install the web app:
    - On Linux, official Node 26 binaries are linked against `libatomic` — install it if your distribution does not provide it (e.g. `sudo apt-get install libatomic1`).
 2. Install Angular CLI:
    ```bash
-   npm install -g @angular/cli@20.3.27
+   npm install -g @angular/cli@22.2.5
    ```
-   Angular 20.3 officially supports Node.js ^20.19.0 || ^22.12.0 || ^24.0.0 — Node.js 26 support lands in Angular 22+. The project runs on Node 26.13.0 in practice (build, lint, tests, and E2E all verified green) but stays on Angular 20 for this release and will revisit the Angular upgrade separately.
+   Angular 22.2 officially supports Node.js ^22.22.0 || ^24.15.0 || ^26.0.0. The project runs on Node.js 26.16.0 (build, lint, tests verified green).
 3. Clone the repository:
    ```
    git clone https://github.com/openMF/web-app.git

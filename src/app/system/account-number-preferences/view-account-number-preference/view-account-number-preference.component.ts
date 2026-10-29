@@ -52,7 +52,7 @@ export class ViewAccountNumberPreferenceComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountNumberPreference: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
     });
   }
@@ -69,7 +69,7 @@ export class ViewAccountNumberPreferenceComponent {
           this.accountNumberPreferenceData.id
       }
     });
-    deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id).subscribe(() => {
           this.router.navigate(['/system/account-number-preferences']);

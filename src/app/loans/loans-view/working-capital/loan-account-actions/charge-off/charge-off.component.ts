@@ -122,7 +122,7 @@ export class WorkingCapitalChargeOffComponent extends LoanAccountActionsBaseComp
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((template: WorkingCapitalChargeOffTemplate | null) => {
+      .subscribe((template) => {
         this.isQuoteLoading = false;
         this.isQuoteStale = !template;
         if (template) {

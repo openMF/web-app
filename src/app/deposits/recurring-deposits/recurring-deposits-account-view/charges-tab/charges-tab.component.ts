@@ -107,7 +107,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;
     });
@@ -145,7 +145,7 @@ export class ChargesTabComponent implements OnInit {
       formfields: formfields
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    payChargeDialogRef.afterClosed().subscribe((response: any) => {
+    payChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -177,7 +177,7 @@ export class ChargesTabComponent implements OnInit {
           `${chargeId} ?`
       }
     });
-    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+    waiveChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)
@@ -208,7 +208,7 @@ export class ChargesTabComponent implements OnInit {
       formfields: formfields
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const locale = 'en';
         const dateFormat = 'dd MMMM yyyy';
@@ -234,7 +234,7 @@ export class ChargesTabComponent implements OnInit {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge id:${chargeId}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.savingsService.deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId).subscribe(() => {
           this.reload();

@@ -136,25 +136,21 @@ export class LoanAmortizationScheduleTabComponent implements OnInit {
   currentBusinessDate: Date = this.settingsService.businessDate || new Date();
 
   ngOnInit(): void {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { amortizationSchedule: ProjectedAmortizationSchedule }) => {
-        this.amortizationSchedule = data.amortizationSchedule;
-        this.allPayments = data.amortizationSchedule?.payments ?? [];
-        this.computeStatuses();
-        this.computeProgress();
-        this.buildDisplayedColumns();
-        this.applyFilter();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.amortizationSchedule = data.amortizationSchedule;
+      this.allPayments = data.amortizationSchedule?.payments ?? [];
+      this.computeStatuses();
+      this.computeProgress();
+      this.buildDisplayedColumns();
+      this.applyFilter();
+    });
 
     if (this.route.parent) {
-      this.route.parent.data
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data: { loanDetailsData: { currency?: { code: string } } }) => {
-          if (data?.loanDetailsData?.currency?.code) {
-            this.currencyCode = data.loanDetailsData.currency.code;
-          }
-        });
+      this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+        if (data?.loanDetailsData?.currency?.code) {
+          this.currencyCode = data.loanDetailsData.currency.code;
+        }
+      });
     }
   }
 

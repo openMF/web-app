@@ -45,7 +45,7 @@ export class ViewAdhocQueryComponent {
   adhocQueryData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { adhocQuery: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.adhocQueryData = data.adhocQuery;
     });
   }
@@ -69,7 +69,7 @@ export class ViewAdhocQueryComponent {
     const deleteAdhocQueryDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `adhoc query ${this.adhocQueryData.id}` }
     });
-    deleteAdhocQueryDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAdhocQueryDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteAdhocQuery(this.adhocQueryData.id)

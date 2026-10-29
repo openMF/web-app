@@ -92,7 +92,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProvisioningCriteria: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.provisioningData = data.loanProvisioningCriteria;
     });
   }
@@ -125,7 +125,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     const deleteCriteriaDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Loan Provisioning Criteria id: ${this.provisioningData.criteriaId}` }
     });
-    deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
+    deleteCriteriaDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.organizationService
           .deleteProvisioningCriteria(this.provisioningData.criteriaId)

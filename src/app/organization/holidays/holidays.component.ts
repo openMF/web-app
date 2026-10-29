@@ -124,7 +124,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -155,7 +155,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
         this.organizationService
           .getHolidays(officeId)
           .pipe(take(1))
-          .subscribe((holidays: any) => {
+          .subscribe((holidays) => {
             this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
             this.setHolidays();
           });

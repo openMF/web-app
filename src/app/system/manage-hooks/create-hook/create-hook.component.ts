@@ -102,7 +102,7 @@ export class CreateHookComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { hooksTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.hooksTemplateData = data.hooksTemplate;
     });
   }
@@ -187,7 +187,7 @@ export class CreateHookComponent implements OnInit {
       data: this.hooksTemplateData
     });
 
-    addEventDialogRef.afterClosed().subscribe((response: any) => {
+    addEventDialogRef.afterClosed().subscribe((response) => {
       if (response) {
         this.eventsData.push({
           entityName: response.entity,
@@ -211,7 +211,7 @@ export class CreateHookComponent implements OnInit {
           this.eventsData[index].entityName
       }
     });
-    deleteEventDialogRef.afterClosed().subscribe((response: any) => {
+    deleteEventDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.eventsData.splice(index, 1);
         this.dataSource.connect().next(this.eventsData);
@@ -256,7 +256,7 @@ export class CreateHookComponent implements OnInit {
           : undefined
       }
     };
-    this.systemService.createHook(hook).subscribe((response: any) => {
+    this.systemService.createHook(hook).subscribe((response) => {
       this.router.navigate(
         [
           '../',

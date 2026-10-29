@@ -125,7 +125,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any; mode?: string }) => {
+    this.route.data.subscribe((data) => {
       this.isCloneMode = data.mode === 'clone';
       // A clone starts with the unique fields blank so the user must provide new ones.
       this.loanProductAndTemplate = this.isCloneMode
@@ -437,7 +437,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
           loanProduct
         );
 
-    request$.subscribe((response: any) => {
+    request$.subscribe((response) => {
       this.router.navigate(
         [
           '../../',

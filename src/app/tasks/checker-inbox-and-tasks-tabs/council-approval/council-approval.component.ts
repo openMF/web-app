@@ -132,7 +132,7 @@ export class CouncilApprovalComponent {
   ];
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: ResolverData) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
       this.setOfficeData();
@@ -208,7 +208,7 @@ export class CouncilApprovalComponent {
         dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan')
       }
     });
-    approveLoanDialogRef.afterClosed().subscribe((response: { confirm: boolean } | undefined) => {
+    approveLoanDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.bulkLoanApproval();
       }
@@ -237,7 +237,7 @@ export class CouncilApprovalComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response) => {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           approvedAccounts++;
@@ -259,7 +259,7 @@ export class CouncilApprovalComponent {
   }
 
   loanResource() {
-    this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeApproved().subscribe((response) => {
       this.loans = response.pageItems;
       this.setOfficeData();
     });

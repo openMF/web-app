@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (accountingClosureForm.controls.officeId.hasError('required')) {
+            @if ($any(accountingClosureForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
-            @if (accountingClosureForm.controls.closingDate.hasError('required')) {
+            @if ($any(accountingClosureForm.controls).closingDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closing Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

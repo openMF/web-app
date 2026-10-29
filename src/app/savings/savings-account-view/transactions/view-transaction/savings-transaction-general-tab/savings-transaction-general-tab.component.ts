@@ -49,7 +49,7 @@ export class SavingsTransactionGeneralTabComponent {
   transactionData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountTransaction: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.accountId = this.route.parent.snapshot.params['savingAccountId'];
       this.transactionData = data.savingsAccountTransaction;
     });
@@ -64,7 +64,7 @@ export class SavingsTransactionGeneralTabComponent {
 
   releaseAmount(): void {
     const releaseAmountDialogRef = this.dialog.open(ReleaseAmountDialogComponent);
-    releaseAmountDialogRef.afterClosed().subscribe((response: any) => {
+    releaseAmountDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const data = {};
         this.savingsService
@@ -78,7 +78,7 @@ export class SavingsTransactionGeneralTabComponent {
 
   undoTransaction(): void {
     const undoTransactionAccountDialogRef = this.dialog.open(UndoTransactionDialogComponent);
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;

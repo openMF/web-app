@@ -89,7 +89,7 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { provisioningEntries: any }) => {
+    this.route.data.subscribe((data) => {
       this.provisioningEntryData = data.provisioningEntries.pageItems;
     });
   }
@@ -124,7 +124,7 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {string} provisioningEntryId Provisioning entry id.
    */
   recreateProvisioning($event: Event, provisioningEntryId: string) {
-    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response: any) => {
+    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response) => {
       this.router.navigate(
         [
           'view',

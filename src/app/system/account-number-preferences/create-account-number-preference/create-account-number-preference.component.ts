@@ -48,7 +48,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { accountNumberPreferencesTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });
   }
@@ -96,7 +96,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
     if (accountNumberPreference.prefixType === '') {
       accountNumberPreference.prefixType = undefined;
     }
-    this.systemService.createAccountNumberPreference(accountNumberPreference).subscribe((response: any) => {
+    this.systemService.createAccountNumberPreference(accountNumberPreference).subscribe((response) => {
       this.router.navigate(
         [
           '../',

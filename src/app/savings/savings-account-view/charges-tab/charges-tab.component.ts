@@ -115,7 +115,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent.data.subscribe((data) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
     });
@@ -168,7 +168,7 @@ export class ChargesTabComponent implements OnInit {
       formfields: formfields
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    payChargeDialogRef.afterClosed().subscribe((response: any) => {
+    payChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -193,7 +193,7 @@ export class ChargesTabComponent implements OnInit {
    */
   waiveCharge(chargeId: any) {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
-    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+    waiveChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
@@ -210,7 +210,7 @@ export class ChargesTabComponent implements OnInit {
    */
   inactivateCharge(chargeId: any) {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
-    inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
+    inactivateChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.savingsService
           .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
@@ -241,7 +241,7 @@ export class ChargesTabComponent implements OnInit {
       formfields: formfields
     };
     const editChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editChargeDialogRef.afterClosed().subscribe((response: any) => {
+    editChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
@@ -267,7 +267,7 @@ export class ChargesTabComponent implements OnInit {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `charge id:${chargeId}` }
     });
-    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+    deleteChargeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
           this.reload();

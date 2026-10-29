@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (chargeoffLoanForm.controls.transactionDate.hasError('required')) {
+            @if ($any(chargeoffLoanForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (chargeoffLoanForm.controls.chargeOffReasonId.hasError('required')) {
+            @if ($any(chargeoffLoanForm.controls).chargeOffReasonId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Reason for Charge-Off' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

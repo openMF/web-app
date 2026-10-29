@@ -89,7 +89,7 @@ export class CentersViewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { centerViewData: any; centerDatatables: any }) => {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.centerViewData = data.centerViewData;
       this.centerDatatables = data.centerDatatables;
       this.meetingData = !!this.centerViewData?.collectionMeetingCalendar;
@@ -179,7 +179,7 @@ export class CentersViewComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe((response: { confirm: boolean }) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         this.centersService
           .executeGroupActionCommand(this.centerViewData.id, 'unassignStaff', { staffId: this.centerViewData.staffId })
@@ -198,7 +198,7 @@ export class CentersViewComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.centersService.deleteCenter(this.centerViewData.id).subscribe(() => {
           this.router.navigate(['/centers']);
@@ -225,7 +225,7 @@ export class CentersViewComponent implements OnInit, OnDestroy {
     this.centersService
       .getCenterData(this.centerViewData.id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.centerViewData = data;
         this.meetingData = !!data?.collectionMeetingCalendar;
       });

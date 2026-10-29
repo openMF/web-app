@@ -21,7 +21,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (financialActivityMappingForm.controls.financialActivityId.hasError('required')) {
+            @if ($any(financialActivityMappingForm.controls).financialActivityId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Financial Activity' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -30,7 +30,7 @@
           </mat-form-field>
 
           <mifosx-gl-account-selector
-            [inputFormControl]="financialActivityMappingForm.controls.glAccountId"
+            [inputFormControl]="$any(financialActivityMappingForm.controls.glAccountId)"
             [glAccountList]="glAccountData"
             [required]="true"
             [inputLabel]="'Account'"

@@ -127,24 +127,20 @@ export class DiscountFeeAdjustmentComponent extends LoanAccountActionsBaseCompon
 
   constructor() {
     super();
-    this.route.parent?.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsAssociationData?: any }) => {
-        this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
-        // The live discount pool, which the backend decrements on every
-        // adjustment and restores when one is undone, so it already accounts
-        // for the adjustments booked before this one.
-        this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
-      });
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { discountFeeAdjustmentTemplate: any }) => {
-        const template = data.discountFeeAdjustmentTemplate;
-        this.discountFeeTransaction = template?.transaction;
-        this.currency = template?.currency ?? null;
-        this.classificationOptions = template?.classificationOptions ?? [];
-        this.paymentTypeOptions = template?.paymentTypeOptions ?? [];
-      });
+    this.route.parent?.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
+      // The live discount pool, which the backend decrements on every
+      // adjustment and restores when one is undone, so it already accounts
+      // for the adjustments booked before this one.
+      this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
+    });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      const template = data.discountFeeAdjustmentTemplate;
+      this.discountFeeTransaction = template?.transaction;
+      this.currency = template?.currency ?? null;
+      this.classificationOptions = template?.classificationOptions ?? [];
+      this.paymentTypeOptions = template?.paymentTypeOptions ?? [];
+    });
     this.transactionId = this.route.snapshot.params['id'] ?? this.route.parent?.snapshot.params['id'];
   }
 

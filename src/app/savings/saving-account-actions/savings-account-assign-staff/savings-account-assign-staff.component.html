@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (savingsAssignStaffForm.controls.toSavingsOfficerId.hasError('required')) {
+            @if ($any(savingsAssignStaffForm.controls).toSavingsOfficerId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.To Savings Officer' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
-            @if (savingsAssignStaffForm.controls.assignmentDate.hasError('required')) {
+            @if ($any(savingsAssignStaffForm.controls).assignmentDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

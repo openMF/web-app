@@ -107,7 +107,7 @@ export class FundMappingComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { advanceSearchTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.advanceSearchTemplate = data.advanceSearchTemplate;
     });
   }
@@ -150,7 +150,7 @@ export class FundMappingComponent implements OnInit {
     this.fundMappingForm
       .get('includeOutStandingAmountPercentage')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: boolean) => {
+      .subscribe((value) => {
         if (value) {
           this.fundMappingForm.addControl(
             'outStandingAmountPercentageCondition',
@@ -159,7 +159,7 @@ export class FundMappingComponent implements OnInit {
           this.fundMappingForm
             .get('outStandingAmountPercentageCondition')
             .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((_value: string) => {
+            .subscribe((_value) => {
               if (_value === 'between') {
                 this.fundMappingForm.addControl(
                   'minOutStandingAmountPercentage',
@@ -200,13 +200,13 @@ export class FundMappingComponent implements OnInit {
     this.fundMappingForm
       .get('includeOutstandingAmount')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: boolean) => {
+      .subscribe((value) => {
         if (value) {
           this.fundMappingForm.addControl('outstandingAmountCondition', new FormControl('', Validators.required));
           this.fundMappingForm
             .get('outstandingAmountCondition')
             .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((_value: string) => {
+            .subscribe((_value) => {
               if (_value === 'between') {
                 this.fundMappingForm.addControl(
                   'minOutstandingAmount',
@@ -286,7 +286,7 @@ export class FundMappingComponent implements OnInit {
     this.organizationService
       .retrieveAdvanceSearchResults(data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.setLoans(response);
       });
   }

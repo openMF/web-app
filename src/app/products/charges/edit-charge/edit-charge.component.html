@@ -27,7 +27,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required autofocus formControlName="name" />
-            @if (chargeForm.controls.name.hasError('required')) {
+            @if ($any(chargeForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -44,7 +44,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (chargeForm.controls.currencyCode.hasError('required')) {
+            @if ($any(chargeForm.controls).currencyCode.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Currency' | translate }} {{ 'labels.inputs.Type' | translate }}
                 {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -61,7 +61,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (chargeForm.controls.chargeTimeType.hasError('required')) {
+            @if ($any(chargeForm.controls).chargeTimeType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Charge Time Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -78,7 +78,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (chargeForm.controls.chargeCalculationType.hasError('required')) {
+            @if ($any(chargeForm.controls).chargeCalculationType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Charge Calculation Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -96,7 +96,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (chargeForm.controls.chargePaymentMode.hasError('required')) {
+              @if ($any(chargeForm.controls).chargePaymentMode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Charge Payment Mode' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -108,7 +108,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input matInput required autofocus type="text" formControlName="amount" />
-            @if (chargeForm.controls.amount.hasError('required')) {
+            @if ($any(chargeForm.controls).amount.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -122,50 +122,54 @@
           * In shares case: Only for charge time type: SHARE_PURCHASE and SHARE_REDEEM and with charge calculation type as % amount only
           -->
           @if (
-            (chargeForm.controls.chargeAppliesTo.value === 1 &&
-              (chargeForm.controls.chargeCalculationType.value === 2 ||
-                chargeForm.controls.chargeCalculationType.value === 3 ||
-                chargeForm.controls.chargeCalculationType.value === 4 ||
-                chargeForm.controls.chargeCalculationType.value === 5)) ||
-            (chargeForm.controls.chargeAppliesTo.value === 2 &&
-              (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
-              chargeForm.controls.chargeCalculationType.value === 2) ||
-            (chargeForm.controls.chargeAppliesTo.value === 4 &&
-              (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
-              chargeForm.controls.chargeCalculationType.value === 2)
+            ($any(chargeForm.controls).chargeAppliesTo.value === 1 &&
+              ($any(chargeForm.controls).chargeCalculationType.value === 2 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 3 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 4 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 5)) ||
+            ($any(chargeForm.controls).chargeAppliesTo.value === 2 &&
+              ($any(chargeForm.controls).chargeTimeType.value === 16 ||
+                $any(chargeForm.controls).chargeTimeType.value === 5) &&
+              $any(chargeForm.controls).chargeCalculationType.value === 2) ||
+            ($any(chargeForm.controls).chargeAppliesTo.value === 4 &&
+              ($any(chargeForm.controls).chargeTimeType.value === 14 ||
+                $any(chargeForm.controls).chargeTimeType.value === 15) &&
+              $any(chargeForm.controls).chargeCalculationType.value === 2)
           ) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
               <input matInput autofocus formControlName="minCap" mifosxValidateOnFocus />
-              @if (chargeForm.controls.minCap.hasError('maxValue')) {
+              @if ($any(chargeForm.controls).minCap.hasError('maxValue')) {
                 <mat-error>
                   {{ 'errors.validation.msg.loanproduct.minimumGap.not.greater.than.specified.number' | translate }} ({{
-                    chargeForm.controls.maxCap.value
+                    $any(chargeForm.controls).maxCap.value
                   }})
                 </mat-error>
               }
             </mat-form-field>
           }
           @if (
-            (chargeForm.controls.chargeAppliesTo.value === 1 &&
-              (chargeForm.controls.chargeCalculationType.value === 2 ||
-                chargeForm.controls.chargeCalculationType.value === 3 ||
-                chargeForm.controls.chargeCalculationType.value === 4 ||
-                chargeForm.controls.chargeCalculationType.value === 5)) ||
-            (chargeForm.controls.chargeAppliesTo.value === 2 &&
-              (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
-              chargeForm.controls.chargeCalculationType.value === 2) ||
-            (chargeForm.controls.chargeAppliesTo.value === 4 &&
-              (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
-              chargeForm.controls.chargeCalculationType.value === 2)
+            ($any(chargeForm.controls).chargeAppliesTo.value === 1 &&
+              ($any(chargeForm.controls).chargeCalculationType.value === 2 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 3 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 4 ||
+                $any(chargeForm.controls).chargeCalculationType.value === 5)) ||
+            ($any(chargeForm.controls).chargeAppliesTo.value === 2 &&
+              ($any(chargeForm.controls).chargeTimeType.value === 16 ||
+                $any(chargeForm.controls).chargeTimeType.value === 5) &&
+              $any(chargeForm.controls).chargeCalculationType.value === 2) ||
+            ($any(chargeForm.controls).chargeAppliesTo.value === 4 &&
+              ($any(chargeForm.controls).chargeTimeType.value === 14 ||
+                $any(chargeForm.controls).chargeTimeType.value === 15) &&
+              $any(chargeForm.controls).chargeCalculationType.value === 2)
           ) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
               <input matInput autofocus formControlName="maxCap" mifosxValidateOnFocus />
-              @if (chargeForm.controls.maxCap.hasError('minValue')) {
+              @if ($any(chargeForm.controls).maxCap.hasError('minValue')) {
                 <mat-error>
                   {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
-                    chargeForm.controls.minCap.value
+                    $any(chargeForm.controls).minCap.value
                   }})
                 </mat-error>
               }
@@ -175,7 +179,7 @@
           @if (showGLAccount) {
             <mifosx-gl-account-selector
               class="flex-48"
-              [inputFormControl]="chargeForm.controls.incomeAccountId"
+              [inputFormControl]="$any(chargeForm.controls.incomeAccountId)"
               [glAccountList]="chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions"
               [required]="true"
               [inputLabel]="'Income from Charge'"
@@ -183,7 +187,7 @@
             </mifosx-gl-account-selector>
           }
 
-          @if (chargeForm.controls.chargeAppliesTo.value !== 5) {
+          @if ($any(chargeForm.controls).chargeAppliesTo.value !== 5) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
               @if (chargeData.taxGroup) {
@@ -224,7 +228,7 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Frequency Interval' | translate }}</mat-label>
               <input matInput required autofocus type="text" formControlName="feeInterval" />
-              @if (chargeForm.controls.feeInterval.hasError('required')) {
+              @if ($any(chargeForm.controls).feeInterval.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Frequency Interval' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -243,7 +247,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (chargeForm.controls.feeFrequency.hasError('required')) {
+              @if ($any(chargeForm.controls).feeFrequency.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Add Fee Frequency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

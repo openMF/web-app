@@ -232,7 +232,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+    this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
       if (accountingRule === 2 || accountingRule === 3) {
         this.recurringDepositProductAccountingForm.addControl(
           'savingsReferenceAccountId',
@@ -277,7 +277,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
 
         this.recurringDepositProductAccountingForm
           .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+          .valueChanges.subscribe((advancedAccountingRules) => {
             if (advancedAccountingRules) {
               this.recurringDepositProductAccountingForm.addControl(
                 'paymentChannelToFundSourceMappings',
@@ -331,7 +331,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.push(response.data);
       }
@@ -341,7 +341,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
       }
@@ -352,7 +352,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         formArray.removeAt(index);
       }

@@ -89,7 +89,7 @@ export class SmsCampaignsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaigns: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.smsCampaignsData = data.smsCampaigns.pageItems;
     });
   }

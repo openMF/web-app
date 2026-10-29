@@ -106,7 +106,7 @@ export class ReportsComponent implements OnInit {
 
   constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { reports: Report[] }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.reportsData = data.reports ?? [];
     });
     this.routeCategory = this.route.snapshot.params['filter'];

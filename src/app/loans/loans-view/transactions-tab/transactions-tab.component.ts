@@ -148,15 +148,13 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   constructor() {
     super();
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
-    this.route.parent.parent.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanDetailsData: any }) => {
-        this.loanDetailsData = data.loanDetailsData;
-        this.status = data.loanDetailsData.status.value;
-      });
+    this.route.parent.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanDetailsData = data.loanDetailsData;
+      this.status = data.loanDetailsData.status.value;
+    });
     if (this.loanProductService.isWorkingCapital) {
       this.loanDetailsData.transactions = [];
-      this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanTransactionData: any }) => {
+      this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
         this.loanDetailsData.transactions = data.loanTransactionData.content ?? [];
         this.totalTransactions = data.loanTransactionData.totalElements ?? 0;
         this.totalPages = data.loanTransactionData.totalPages ?? 0;
@@ -653,7 +651,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           `${transaction.id}`
       }
     });
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         let transactionId = transaction.id;
         if (command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
@@ -662,7 +660,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         if (this.loanProductService.isLoanProduct) {
           this.loansService
             .executeLoansAccountTransactionsCommand(loanId, command, payload, transactionId)
-            .subscribe((responseCmd: any) => {
+            .subscribe((responseCmd) => {
               transaction.manuallyReversed = true;
               this.reload();
             });
@@ -700,7 +698,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       )
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         if (!response?.data) {
           return;
         }
@@ -788,7 +786,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           this.translateService.instant('labels.menus.' + actionName)
       }
     });
-    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response) => {
       if (response?.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
         this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
@@ -867,7 +865,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const loanId = this.loanId;
     this.loansService
       .getLoanTransactionActionTemplate(String(loanId), 'interest-refund', String(transaction.id))
-      .subscribe((template: any) => {
+      .subscribe((template) => {
         const paymentTypeField = new FormfieldBase({
           controlType: 'select',
           controlName: 'paymentTypeId',
@@ -915,7 +913,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           formfields: formfields
         };
         const dialogRef = this.dialog.open(FormDialogComponent, { data });
-        dialogRef.afterClosed().subscribe((response: { data: any }) => {
+        dialogRef.afterClosed().subscribe((response) => {
           if (response?.data) {
             const { amount, transactionDate, ...rest } = response.data.value;
             const payload = {
@@ -965,7 +963,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const accountId = `${this.loanId}`;
     this.loansService
       .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
           this.displayAlertMessage(this.translateService.instant('errors.loans.alreadyAdjusted'), transaction.amount);
@@ -1005,7 +1003,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             pristine: false
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
-          chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
+          chargebackDialogRef.afterClosed().subscribe((response) => {
             if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
@@ -1043,7 +1041,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const accountId = `${this.loanId}`;
     this.loansService
       .getLoanTransactionActionTemplate(accountId, 'buyDownFeeAdjustment', `${transaction.id}`)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
           this.displayAlertMessage(
@@ -1086,7 +1084,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             pristine: false
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
-          chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
+          chargebackDialogRef.afterClosed().subscribe((response) => {
             if (response?.data) {
               const dateFormat = this.settingsService.dateFormat;
 
@@ -1119,10 +1117,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     this.loansService
       .getWorkingCapitalTransactions(String(this.loanId), page, size)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response: any) => {
-        this.transactionsData = response.content ?? [];
-        this.totalTransactions = response.totalElements ?? 0;
-        this.totalPages = response.totalPages ?? 0;
+      .subscribe((response) => {
+        this.transactionsData = (response as any).content ?? [];
+        this.totalTransactions = (response as any).totalElements ?? 0;
+        this.totalPages = (response as any).totalPages ?? 0;
         this.paginator.length = this.totalTransactions;
         this.setLoanTransactions();
         this.cdr.markForCheck();

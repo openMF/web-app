@@ -48,7 +48,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (rescheduleLoanForm.controls.rescheduleFromDate.hasError('required')) {
+            @if ($any(rescheduleLoanForm.controls).rescheduleFromDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Reschedule Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -65,7 +65,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (rescheduleLoanForm.controls.rescheduleReasonId.hasError('required')) {
+            @if ($any(rescheduleLoanForm.controls).rescheduleReasonId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Reason for Rescheduling' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -84,7 +84,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedDatePicker></mat-datepicker>
-            @if (rescheduleLoanForm.controls.submittedOnDate.hasError('required')) {
+            @if ($any(rescheduleLoanForm.controls).submittedOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Submitted On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

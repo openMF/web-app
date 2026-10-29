@@ -36,7 +36,7 @@
                 @if (isSearchingCustomers) {
                   <mat-spinner matSuffix diameter="20"></mat-spinner>
                 }
-                @if (customerForm.controls.customer.hasError('required')) {
+                @if ($any(customerForm.controls).customer.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Client' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -121,7 +121,7 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
                 <input matInput formControlName="product" [matAutocomplete]="productAutocomplete" required />
-                @if (productForm.controls.product.hasError('required')) {
+                @if ($any(productForm.controls).product.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Product' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -249,7 +249,7 @@
                     <mat-option value="CASH">{{ 'labels.inputs.Cash' | translate }}</mat-option>
                     <mat-option value="CHECK">{{ 'labels.inputs.Check' | translate }}</mat-option>
                   </mat-select>
-                  @if (fundingForm.controls.fundingType.hasError('required')) {
+                  @if ($any(fundingForm.controls).fundingType.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Funding Type' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -260,13 +260,13 @@
                 <mat-form-field>
                   <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                   <input type="number" matInput formControlName="amount" required />
-                  @if (fundingForm.controls.amount.hasError('required')) {
+                  @if ($any(fundingForm.controls).amount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
                     </mat-error>
                   }
-                  @if (fundingForm.controls.amount.hasError('min')) {
+                  @if ($any(fundingForm.controls).amount.hasError('min')) {
                     <mat-error>{{ 'labels.text.Amount must be greater than zero' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -288,7 +288,7 @@
                       'labels.text.Configure a cash payment type before saving cash funding' | translate
                     }}</mat-hint>
                   }
-                  @if (fundingForm.controls.paymentTypeId.hasError('required')) {
+                  @if ($any(fundingForm.controls).paymentTypeId.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -379,7 +379,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
                     <input matInput formControlName="accountNumber" required />
-                    @if (fundingForm.controls.accountNumber.hasError('required')) {
+                    @if ($any(fundingForm.controls).accountNumber.hasError('required')) {
                       <mat-error>
                         {{ 'labels.inputs.Account Number' | translate }} {{ 'labels.commons.is' | translate }}
                         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -389,7 +389,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'labels.inputs.Check Type' | translate }}</mat-label>
                     <input matInput formControlName="checkType" required />
-                    @if (fundingForm.controls.checkType.hasError('required')) {
+                    @if ($any(fundingForm.controls).checkType.hasError('required')) {
                       <mat-error>
                         {{ 'labels.inputs.Check Type' | translate }} {{ 'labels.commons.is' | translate }}
                         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -399,7 +399,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
                     <input matInput formControlName="checkNumber" required />
-                    @if (fundingForm.controls.checkNumber.hasError('required')) {
+                    @if ($any(fundingForm.controls).checkNumber.hasError('required')) {
                       <mat-error>
                         {{ 'labels.inputs.Cheque' | translate }} {{ 'labels.commons.is' | translate }}
                         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -409,7 +409,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
                     <input matInput formControlName="routingCode" required />
-                    @if (fundingForm.controls.routingCode.hasError('required')) {
+                    @if ($any(fundingForm.controls).routingCode.hasError('required')) {
                       <mat-error>
                         {{ 'labels.inputs.Routing Code' | translate }} {{ 'labels.commons.is' | translate }}
                         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -419,7 +419,7 @@
                   <mat-form-field>
                     <mat-label>{{ 'labels.inputs.Bank Number' | translate }}</mat-label>
                     <input matInput formControlName="bankNumber" required />
-                    @if (fundingForm.controls.bankNumber.hasError('required')) {
+                    @if ($any(fundingForm.controls).bankNumber.hasError('required')) {
                       <mat-error>
                         {{ 'labels.inputs.Bank Number' | translate }} {{ 'labels.commons.is' | translate }}
                         <strong>{{ 'labels.commons.required' | translate }}</strong>

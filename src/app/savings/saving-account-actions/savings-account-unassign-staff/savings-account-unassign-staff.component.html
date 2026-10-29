@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #unassignedDatePicker></mat-datepicker>
-            @if (savingsUnassignStaffForm.controls.unassignedDate.hasError('required')) {
+            @if ($any(savingsUnassignStaffForm.controls).unassignedDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

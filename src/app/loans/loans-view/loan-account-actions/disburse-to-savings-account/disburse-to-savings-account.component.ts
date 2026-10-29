@@ -55,7 +55,7 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
     }
 
     // Get delinquency data for available disbursement amount with over applied
-    this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+    this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData) => {
       // Check if the field is at root level
       if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
         this.dataObject.availableDisbursementAmountWithOverApplied =

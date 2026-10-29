@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (employeeForm.controls.officeId.hasError('required')) {
+            @if ($any(employeeForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,13 +31,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
-            @if (employeeForm.controls.firstname.hasError('required')) {
+            @if ($any(employeeForm.controls).firstname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (employeeForm.controls.firstname.hasError('pattern')) {
+            @if ($any(employeeForm.controls).firstname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.First Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -48,13 +48,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
-            @if (employeeForm.controls.lastname.hasError('required')) {
+            @if ($any(employeeForm.controls).lastname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
-            @if (employeeForm.controls.lastname.hasError('pattern')) {
+            @if ($any(employeeForm.controls).lastname.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Last Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.inputs.begin with a special character or number' | translate }}
@@ -70,8 +70,8 @@
             <mat-label>{{ 'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
             <input matInput formControlName="mobileNo" />
             @if (
-              employeeForm.controls.mobileNo.hasError('pattern') &&
-              (employeeForm.controls.mobileNo.dirty || employeeForm.controls.mobileNo.touched)
+              $any(employeeForm.controls).mobileNo.hasError('pattern') &&
+              ($any(employeeForm.controls).mobileNo.dirty || $any(employeeForm.controls).mobileNo.touched)
             ) {
               <mat-error>
                 {{ 'labels.inputs.Mobile Number for SMS' | translate }} {{ 'labels.commons.is' | translate }}
@@ -92,7 +92,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
-            @if (employeeForm.controls.joiningDate.hasError('required')) {
+            @if ($any(employeeForm.controls).joiningDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Joining Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -176,7 +176,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
+    editNoteDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
@@ -207,7 +207,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
+    editNoteDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         let newCharge: any;
         const dateFormat = 'dd MMMM yyyy';
@@ -250,7 +250,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
+    editNoteDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);

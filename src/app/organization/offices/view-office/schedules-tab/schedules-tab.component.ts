@@ -117,7 +117,7 @@ export class SchedulesTabComponent implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((schedule: any) => {
+      .subscribe((schedule) => {
         this.setScheduleDays(this.normalizeScheduleResponse(schedule));
       });
   }

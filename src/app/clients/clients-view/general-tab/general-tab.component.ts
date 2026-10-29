@@ -107,7 +107,7 @@ export class GeneralTabComponent implements OnDestroy {
         }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         if (this.rawPdfUrl) {
           URL.revokeObjectURL(this.rawPdfUrl);
           this.rawPdfUrl = null;
@@ -456,8 +456,8 @@ export class GeneralTabComponent implements OnDestroy {
    * @param clientId Selected Client Id.
    */
   getChargeData(clientId: string) {
-    this.clientService.getClientChargesData(clientId).subscribe((data: any) => {
-      this.upcomingCharges = data.pageItems;
+    this.clientService.getClientChargesData(clientId).subscribe((data) => {
+      this.upcomingCharges = (data as any).pageItems;
     });
   }
 

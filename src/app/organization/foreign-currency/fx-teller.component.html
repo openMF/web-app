@@ -215,7 +215,7 @@
                       <section class="fx-cash-panel">
                         <h3>
                           {{ 'fx.denominations' | translate }} ·
-                          {{ leg === 'usd' ? 'USD' : form.controls.quoteCurrency.value }} ·
+                          {{ leg === 'usd' ? 'USD' : $any(form.controls).quoteCurrency.value }} ·
                           {{
                             ((operation === 'PURCHASE') === (leg === 'usd') ? 'fx.inflow' : 'fx.outflow') | translate
                           }}
@@ -229,7 +229,7 @@
                           [attr.aria-label]="
                             ('fx.denominations' | translate) +
                             ' ' +
-                            (leg === 'usd' ? 'USD' : form.controls.quoteCurrency.value)
+                            (leg === 'usd' ? 'USD' : $any(form.controls).quoteCurrency.value)
                           "
                           tabindex="0"
                         >
@@ -273,8 +273,8 @@
                                     step="1"
                                     [formControl]="
                                       (leg === 'usd'
-                                        ? form.controls.usdDenominations
-                                        : form.controls.quoteDenominations
+                                        ? $any(form.controls).usdDenominations
+                                        : $any(form.controls).quoteDenominations
                                       ).at(i)
                                     "
                                   /><mat-error>{{ 'fx.invalidCash' | translate }}</mat-error></mat-form-field

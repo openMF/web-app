@@ -46,11 +46,9 @@ export class ViewRecieptComponent implements OnInit, OnDestroy {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsTransactionReciept: HttpResponse<Blob> }) => {
-        this.transactionRecieptData = data.savingsTransactionReciept;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.transactionRecieptData = data.savingsTransactionReciept;
+    });
   }
 
   ngOnInit() {

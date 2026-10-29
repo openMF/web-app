@@ -140,7 +140,7 @@ export class CollectionSheetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officesData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officesData = data.officesData;
     });
   }
@@ -181,15 +181,15 @@ export class CollectionSheetComponent implements OnInit {
     this.collectionSheetForm
       .get('officeId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeId: any) => {
+      .subscribe((officeId) => {
         this.officeId = officeId;
-        this.organizationService.getStaffs(officeId).subscribe((response: any) => {
+        this.organizationService.getStaffs(officeId).subscribe((response) => {
           this.loanOfficerData = response;
         });
-        this.organizationService.getCenters(officeId).subscribe((response: any) => {
+        this.organizationService.getCenters(officeId).subscribe((response) => {
           this.centersData = response;
         });
-        this.organizationService.getGroups(officeId).subscribe((response: any) => {
+        this.organizationService.getGroups(officeId).subscribe((response) => {
           this.groupsData = response;
         });
       });
@@ -219,7 +219,7 @@ export class CollectionSheetComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         })
       )
-      .subscribe((response: CollectionSheetData[]) => {
+      .subscribe((response) => {
         let centers = response?.[0]?.meetingFallCenters ?? [];
         if (centerId) {
           centers = centers.filter((center: MeetingFallCenter) => center.id === centerId);
@@ -258,7 +258,7 @@ export class CollectionSheetComponent implements OnInit {
           this.changeDetectorRef.markForCheck();
         })
       )
-      .subscribe((jlgGroupData: JLGGroupData) => {
+      .subscribe((jlgGroupData) => {
         this.collectionSheetGroups = this.buildCollectionSheetGroups(jlgGroupData);
       });
   }

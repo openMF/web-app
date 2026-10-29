@@ -22,7 +22,7 @@
           />
           <mat-datepicker-toggle matSuffix [for]="reopenedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #reopenedDatePicker></mat-datepicker>
-          @if (undoClientRejectionForm.controls.reopenedDate.hasError('required')) {
+          @if ($any(undoClientRejectionForm.controls).reopenedDate.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Reopened On Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>

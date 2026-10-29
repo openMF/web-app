@@ -84,7 +84,7 @@ export class CreateChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { chargesTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.chargesTemplateData = data.chargesTemplate;
       this.chargePaymentModeData = this.chargesTemplateData.chargePaymetModeOptions;
       const incomeOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions || [];
@@ -363,7 +363,7 @@ export class CreateChargeComponent implements OnInit {
     if (!data.maxCap) {
       delete data.maxCap;
     }
-    this.productsService.createCharge(data).subscribe((response: any) => {
+    this.productsService.createCharge(data).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

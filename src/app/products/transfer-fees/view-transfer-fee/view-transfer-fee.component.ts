@@ -69,7 +69,7 @@ export class ViewTransferFeeComponent {
    * Retrieves the transfer fee data from `resolve`.
    */
   constructor() {
-    this.route.data.subscribe((data: { transferFee: TransferFee }) => {
+    this.route.data.subscribe((data) => {
       this.transferFeeData = data.transferFee;
     });
   }
@@ -85,7 +85,7 @@ export class ViewTransferFeeComponent {
     const deleteTransferFeeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `${this.transferFeeData.id}` }
     });
-    deleteTransferFeeDialogRef.afterClosed().subscribe((response: DeleteDialogResult | undefined) => {
+    deleteTransferFeeDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.isDeleting = true;
         this.transferFeesService

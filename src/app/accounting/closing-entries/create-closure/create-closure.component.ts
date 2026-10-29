@@ -56,7 +56,7 @@ export class CreateClosureComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
     });
   }
@@ -101,7 +101,7 @@ export class CreateClosureComponent implements OnInit {
         this.settingsService.dateFormat
       );
     }
-    this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
+    this.accountingService.createAccountingClosure(accountingClosure).subscribe((response) => {
       this.router.navigate(
         [
           '../view',

@@ -96,7 +96,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { workingDays: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.workingDaysData = data.workingDays;
     });
   }
@@ -227,7 +227,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
         stepPercentage: 30
       }
     });
-    nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
+    nextStepDialogRef.afterClosed().subscribe((response) => {
       if (response.nextStep) {
         this.configurationWizardService.showDefineWorkingDays = false;
         this.configurationWizardService.showDatatables = true;

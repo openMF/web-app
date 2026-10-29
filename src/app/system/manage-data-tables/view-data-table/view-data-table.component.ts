@@ -103,7 +103,7 @@ export class ViewDataTableComponent implements OnInit {
    *  @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { dataTable: any }) => {
+    this.route.data.subscribe((data) => {
       this.dataTableData = data.dataTable;
       this.columnsData = this.dataTableData.columnHeaderData;
     });
@@ -144,7 +144,7 @@ export class ViewDataTableComponent implements OnInit {
           this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName
       }
     });
-    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDataTableDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.systemService.deleteDataTable(this.dataTableData.registeredTableName).subscribe(() => {
           this.router.navigate(['/system/data-tables'], { relativeTo: this.route });

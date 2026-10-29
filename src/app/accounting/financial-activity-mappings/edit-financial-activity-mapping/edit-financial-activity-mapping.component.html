@@ -24,7 +24,7 @@
           </mat-form-field>
 
           <mifosx-gl-account-selector
-            [inputFormControl]="financialActivityMappingForm.controls.glAccountId"
+            [inputFormControl]="$any(financialActivityMappingForm.controls.glAccountId)"
             [glAccountList]="glAccountData"
             [required]="true"
             [inputLabel]="'Account'"

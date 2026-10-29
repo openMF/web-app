@@ -64,7 +64,7 @@ export class CreateCampaignComponent {
   @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaignTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
   }
@@ -117,7 +117,7 @@ export class CreateCampaignComponent {
     this.organizationService
       .createSmsCampaign(smsCampaign)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../',

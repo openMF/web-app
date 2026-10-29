@@ -13,7 +13,7 @@
         class="flex-48"
         [currency]="currency"
         [isRequired]="true"
-        [inputFormControl]="loansAccountTermsForm.controls.principalAmount"
+        [inputFormControl]="$any(loansAccountTermsForm.controls.principalAmount)"
         [inputLabel]="'Principal'"
       >
       </mifosx-input-amount>
@@ -39,7 +39,7 @@
             formControlName="totalPaymentVolume"
             step="any"
           />
-          @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+          @if ($any(loansAccountTermsForm.controls).totalPaymentVolume.hasError('highAmountValue')) {
             <mat-error>
               {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
@@ -62,21 +62,21 @@
               }
             </mat-hint>
           }
-          @if (loansAccountTermsForm.controls.annualEir.hasError('required')) {
+          @if ($any(loansAccountTermsForm.controls).annualEir.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           }
-          @if (loansAccountTermsForm.controls.annualEir.hasError('greaterThanZero')) {
+          @if ($any(loansAccountTermsForm.controls).annualEir.hasError('greaterThanZero')) {
             <mat-error>
               {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
             </mat-error>
           }
-          @if (loansAccountTermsForm.controls.annualEir.hasError('pattern')) {
+          @if ($any(loansAccountTermsForm.controls).annualEir.hasError('pattern')) {
             <mat-error>{{ 'labels.commons.Only up to 6 decimal places allowed' | translate }}</mat-error>
           }
-          @if (loansAccountTermsForm.controls.annualEir.hasError('outOfBounds')) {
+          @if ($any(loansAccountTermsForm.controls).annualEir.hasError('outOfBounds')) {
             <mat-error>
               {{ 'labels.inputs.Annual EIR' | translate }}
               {{ 'labels.commons.is out of the allowed range' | translate }}
@@ -89,13 +89,13 @@
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Payment Amount' | translate }}</mat-label>
           <input type="number" matInput min="0" required formControlName="paymentAmount" step="any" />
-          @if (loansAccountTermsForm.controls.paymentAmount.hasError('required')) {
+          @if ($any(loansAccountTermsForm.controls).paymentAmount.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Payment Amount' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           }
-          @if (loansAccountTermsForm.controls.paymentAmount.hasError('greaterThanZero')) {
+          @if ($any(loansAccountTermsForm.controls).paymentAmount.hasError('greaterThanZero')) {
             <mat-error>
               {{ 'labels.inputs.Payment Amount' | translate }}
               {{ 'labels.commons.must be greater than zero' | translate }}
@@ -115,13 +115,13 @@
           formControlName="discount"
           step="any"
         />
-        @if (loansAccountTermsForm.controls.discount.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).discount.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         }
-        @if (loansAccountTermsForm.controls.discount.hasError('greaterThanZero')) {
+        @if ($any(loansAccountTermsForm.controls).discount.hasError('greaterThanZero')) {
           <mat-error>
             {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
           </mat-error>
@@ -147,7 +147,7 @@
           step="1"
           matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
         />
-        @if (loansAccountTermsForm.controls.repaymentEvery.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).repaymentEvery.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Period Payment Frequency' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -175,14 +175,14 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
+        @if ($any(loansAccountTermsForm.controls).delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
           <button
             matSuffix
             mat-icon-button
             aria-label="{{ 'labels.buttons.Clear' | translate }}"
             (click)="clearProperty($event, 'delinquencyBucketId')"
           >
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>
@@ -191,7 +191,7 @@
         <mat-form-field class="flex-23">
           <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
           <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
-          @if (loansAccountTermsForm.controls.delinquencyGraceDays.hasError('positiveInteger')) {
+          @if ($any(loansAccountTermsForm.controls).delinquencyGraceDays.hasError('positiveInteger')) {
             <mat-error>
               {{ 'labels.inputs.Delinquency Grace Days' | translate }}
               {{ 'labels.commons.Must be a positive integer' | translate }}
@@ -231,9 +231,9 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.breachId && allowAttributeOverridesBreach) {
+        @if ($any(loansAccountTermsForm.controls).breachId && allowAttributeOverridesBreach) {
           <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'breachId')">
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>
@@ -253,9 +253,9 @@
               </mat-option>
             }
           </mat-select>
-          @if (loansAccountTermsForm.controls.nearBreachId && allowAttributeOverridesBreach) {
+          @if ($any(loansAccountTermsForm.controls).nearBreachId && allowAttributeOverridesBreach) {
             <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'nearBreachId')">
-              <fa-icon icon="close" size="md"></fa-icon>
+              <fa-icon icon="close" size="lg"></fa-icon>
             </button>
           }
         </mat-form-field>
@@ -263,7 +263,7 @@
         <mat-form-field class="flex-23">
           <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
           <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
-          @if (loansAccountTermsForm.controls.breachGraceDays.hasError('positiveInteger')) {
+          @if ($any(loansAccountTermsForm.controls).breachGraceDays.hasError('positiveInteger')) {
             <mat-error>
               {{ 'labels.inputs.Breach Grace Days' | translate }}
               {{ 'labels.commons.Must be a positive integer' | translate }}
@@ -294,7 +294,7 @@
       <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Loan Term' | translate }}</mat-label>
         <input type="number" matInput required formControlName="loanTermFrequency" min="0" step="1" />
-        @if (loansAccountTermsForm.controls.loanTermFrequency.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).loanTermFrequency.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Loan Term' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -311,7 +311,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.loanTermFrequencyType.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).loanTermFrequencyType.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -344,7 +344,7 @@
           step="1"
           matTooltip="{{ 'tooltips.Enter the total count of repayments' | translate }}"
         />
-        @if (loansAccountTermsForm.controls.numberOfRepayments.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).numberOfRepayments.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Number of repayments' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -371,7 +371,7 @@
         />
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
-        @if (loansAccountTermsForm.controls.repaymentsStartingFromDate.hasError('semiMonthlyDueDay')) {
+        @if ($any(loansAccountTermsForm.controls).repaymentsStartingFromDate.hasError('semiMonthlyDueDay')) {
           <mat-error>{{
             'labels.text.First repayment date must fall on a semi-monthly due day' | translate
           }}</mat-error>
@@ -411,7 +411,7 @@
           step="1"
           matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
         />
-        @if (loansAccountTermsForm.controls.repaymentEvery.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).repaymentEvery.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Repaid every' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -438,7 +438,7 @@
               <mat-option [value]="day">{{ day }}</mat-option>
             }
           </mat-select>
-          @if (loansAccountTermsForm.controls.firstRepaymentDayOfMonth.hasError('required')) {
+          @if ($any(loansAccountTermsForm.controls).firstRepaymentDayOfMonth.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.First repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -456,10 +456,10 @@
             }
           </mat-select>
           <mat-hint>{{
-            loansAccountTermsForm.controls.firstRepaymentDayOfMonth.value
-              | semiMonthlyDueDays: loansAccountTermsForm.controls.secondRepaymentDayOfMonth.value
+            $any(loansAccountTermsForm.controls).firstRepaymentDayOfMonth.value
+              | semiMonthlyDueDays: $any(loansAccountTermsForm.controls).secondRepaymentDayOfMonth.value
           }}</mat-hint>
-          @if (loansAccountTermsForm.controls.secondRepaymentDayOfMonth.hasError('required')) {
+          @if ($any(loansAccountTermsForm.controls).secondRepaymentDayOfMonth.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Second repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -468,7 +468,7 @@
         </mat-form-field>
       }
 
-      @if (loansAccountTermsForm.controls.repaymentFrequencyType.value === 2) {
+      @if ($any(loansAccountTermsForm.controls).repaymentFrequencyType.value === 2) {
         <mat-form-field class="flex-fill flex-14">
           <mat-label>{{ 'labels.inputs.Select On' | translate }}</mat-label>
           <mat-select formControlName="repaymentFrequencyNthDayType">
@@ -484,7 +484,7 @@
         </mat-form-field>
       }
 
-      @if (loansAccountTermsForm.controls.repaymentFrequencyType.value === 2) {
+      @if ($any(loansAccountTermsForm.controls).repaymentFrequencyType.value === 2) {
         <mat-form-field class="flex-fill flex-14">
           <mat-label>{{ 'labels.inputs.Select Day' | translate }}</mat-label>
           <mat-select formControlName="repaymentFrequencyDayOfWeekType">
@@ -580,7 +580,7 @@
               </mat-option>
             }
           </mat-select>
-          @if (loansAccountTermsForm.controls.amortizationType.hasError('required')) {
+          @if ($any(loansAccountTermsForm.controls).amortizationType.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Amortization Type' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -627,7 +627,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (loansAccountTermsForm.controls.amortizationType.hasError('required')) {
+            @if ($any(loansAccountTermsForm.controls).amortizationType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Amortization Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -670,7 +670,7 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.transactionProcessingStrategyCode.hasError('required')) {
+        @if ($any(loansAccountTermsForm.controls).transactionProcessingStrategyCode.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Repayment Strategy' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -779,7 +779,7 @@
           <mat-checkbox class="flex-20" formControlName="isTopup">
             <p>{{ 'labels.inputs.Is Topup Loan' | translate }}?</p>
           </mat-checkbox>
-          @if (loansAccountTermsForm.controls.isTopup.value) {
+          @if ($any(loansAccountTermsForm.controls).isTopup.value) {
             <mat-form-field class="flex-fill flex-24">
               <mat-label>{{ 'labels.inputs.Loan closed with Topup' | translate }}</mat-label>
               <mat-select formControlName="loanIdToClose">
@@ -912,7 +912,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}</mat-label>
             <input matInput type="number" formControlName="maxOutstandingLoanBalance" min="0" step="any" />
-            @if (loansAccountTermsForm.controls.maxOutstandingLoanBalance.hasError('required')) {
+            @if ($any(loansAccountTermsForm.controls).maxOutstandingLoanBalance.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}
                 {{ 'labels.commons.is' | translate }}

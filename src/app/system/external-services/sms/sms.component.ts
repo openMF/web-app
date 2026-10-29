@@ -72,7 +72,7 @@ export class SMSComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { smsConfiguration: any }) => {
+    this.route.data.subscribe((data) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
   }

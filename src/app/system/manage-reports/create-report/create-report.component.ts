@@ -120,7 +120,7 @@ export class CreateReportComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { reportTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.reportTemplateData = data.reportTemplate;
       this.dataForDialog.allowedParameters = this.reportTemplateData.allowedParameters;
     });
@@ -178,7 +178,7 @@ export class CreateReportComponent implements OnInit {
       data: { ...this.dataForDialog, layout: { addButtonText: 'Add' } },
       width: '25rem'
     });
-    addReportParameterDialogRef.afterClosed().subscribe((response: any) => {
+    addReportParameterDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.reportParametersData.push({
           id: '',
@@ -203,7 +203,7 @@ export class CreateReportComponent implements OnInit {
     const editReportParameterDialogRef = this.dialog.open(ReportParameterDialogComponent, {
       data: this.dataForDialog
     });
-    editReportParameterDialogRef.afterClosed().subscribe((response: any) => {
+    editReportParameterDialogRef.afterClosed().subscribe((response) => {
       if (response !== '') {
         this.reportParametersData[this.reportParametersData.indexOf(reportParameter)] = {
           id: '',
@@ -229,7 +229,7 @@ export class CreateReportComponent implements OnInit {
           this.translateServices.instant('labels.heading.Report Parameter') + ' ' + reportParameter.parameterName
       }
     });
-    deleteReportDialogRef.afterClosed().subscribe((response: any) => {
+    deleteReportDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.reportParametersData.splice(this.reportParametersData.indexOf(reportParameter), 1);
         this.dataSource.connect().next(this.reportParametersData);
@@ -268,7 +268,7 @@ export class CreateReportComponent implements OnInit {
       reportParameter.parameterName = undefined;
       return reportParameter;
     });
-    this.systemService.createReport(this.reportForm.value).subscribe((response: any) => {
+    this.systemService.createReport(this.reportForm.value).subscribe((response) => {
       // TODO: Implement Maker Checker Component.
       this.router.navigate(
         [

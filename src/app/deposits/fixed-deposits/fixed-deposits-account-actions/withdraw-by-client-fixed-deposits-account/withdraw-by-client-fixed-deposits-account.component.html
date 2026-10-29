@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawnOnDatePicker></mat-datepicker>
-            @if (withdrawFixedDepositsAccountForm.controls.withdrawnOnDate.hasError('required')) {
+            @if ($any(withdrawFixedDepositsAccountForm.controls).withdrawnOnDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Withdrawn On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

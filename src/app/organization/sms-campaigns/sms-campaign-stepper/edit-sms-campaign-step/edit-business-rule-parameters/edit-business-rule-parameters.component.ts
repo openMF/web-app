@@ -150,7 +150,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
     this.parentParameters.forEach((param: ReportParameter) => {
       this.ReportForm.get(param.name)
         .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((option: any) => {
+        .subscribe((option) => {
           param.childParameters.forEach((child: ReportParameter) => {
             if (child.displayType === 'none') {
               this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -175,7 +175,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
     this.reportsService
       .getSelectOptions(inputstring)
       .pipe(take(1))
-      .subscribe((options: SelectOption[]) => {
+      .subscribe((options) => {
         param.selectOptions = options;
         if (param.selectAll === 'Y') {
           param.selectOptions.push({ id: '-1', name: 'All' });
@@ -202,7 +202,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   disableFormWhenValid() {
     this.ReportForm.statusChanges
       .pipe(distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe((status: string) => {
+      .subscribe((status) => {
         if (status === 'VALID') {
           this.ReportForm.disable();
         }

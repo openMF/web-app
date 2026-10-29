@@ -181,7 +181,7 @@ export class AddressTabComponent implements OnInit {
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(addAddressDialogRef);
-    addAddressDialogRef.afterClosed().subscribe((response: any) => {
+    addAddressDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.saveAddress(
           this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value))
@@ -212,7 +212,7 @@ export class AddressTabComponent implements OnInit {
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(editAddressDialogRef);
-    editAddressDialogRef.afterClosed().subscribe((response: any) => {
+    editAddressDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         this.saveAddress(
           this.organizationService.updateOfficeAddress(
@@ -238,7 +238,7 @@ export class AddressTabComponent implements OnInit {
     const deleteAddressDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.heading.Address') }
     });
-    deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
+    deleteAddressDialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.saveAddress(this.organizationService.deleteOfficeAddress(this.officeId, officeAddressId));
       }

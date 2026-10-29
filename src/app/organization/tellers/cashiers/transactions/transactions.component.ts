@@ -101,7 +101,7 @@ export class TransactionsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { currencies: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
     this.tellerId = this.route.parent.parent.parent.snapshot.params['id'];
@@ -127,11 +127,11 @@ export class TransactionsComponent implements OnInit {
    * Retrieves the transactions data on changing currency and sets the transactions table.
    */
   onChangeCurrency() {
-    this.currencySelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((currencyCode: any) => {
+    this.currencySelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((currencyCode) => {
       this.organizationService
         .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
         .pipe(take(1))
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.cashierData = response;
           this.setTransactions();
         });

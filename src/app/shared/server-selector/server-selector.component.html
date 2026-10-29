@@ -30,7 +30,7 @@
               <span matPrefix><mat-icon>language</mat-icon></span>
               <mat-label>{{ 'labels.placeholders.Add new server' | translate }}</mat-label>
               <input matInput type="text" autocomplete="off" formControlName="url" />
-              @if (form.controls.url.hasError('required')) {
+              @if ($any(form.controls).url.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Url' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
                 </mat-error>

@@ -44,7 +44,7 @@
         [currency]="currency"
         [isRequired]="true"
         class="flex-48"
-        [inputFormControl]="recurringDepositAccountSettingsForm.controls.mandatoryRecommendedDepositAmount"
+        [inputFormControl]="$any(recurringDepositAccountSettingsForm.controls.mandatoryRecommendedDepositAmount)"
         [inputLabel]="'Recurring Deposit Amount'"
       >
       </mifosx-input-amount>
@@ -223,7 +223,7 @@
       <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-v flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
-      @if (recurringDepositAccountSettingsForm.controls.taxGroupId) {
+      @if ($any(recurringDepositAccountSettingsForm.controls).taxGroupId) {
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
           <input type="text" matInput formControlName="taxGroupId" />

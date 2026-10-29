@@ -59,7 +59,7 @@ export class ViewSurveyComponent {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { survey: any }) => {
+    this.route.data.subscribe((data) => {
       this.surveyData = data.survey;
     });
   }

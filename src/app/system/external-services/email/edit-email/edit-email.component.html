@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
-            @if (emailConfigurationForm.controls.username.hasError('required')) {
+            @if ($any(emailConfigurationForm.controls).username.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,7 +25,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
             <input matInput type="{{ passwordInputType }}" formControlName="password" autocomplete="new-password" />
-            @if (emailConfigurationForm.controls.password.value) {
+            @if ($any(emailConfigurationForm.controls).password.value) {
               <button
                 mat-button
                 matSuffix
@@ -46,7 +46,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Host' | translate }}</mat-label>
             <input matInput required formControlName="host" />
-            @if (emailConfigurationForm.controls.host.hasError('required')) {
+            @if ($any(emailConfigurationForm.controls).host.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Host' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -57,7 +57,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Port' | translate }}</mat-label>
             <input matInput type="number" required formControlName="port" />
-            @if (emailConfigurationForm.controls.port.hasError('required')) {
+            @if ($any(emailConfigurationForm.controls).port.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Port' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -72,7 +72,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.From Email' | translate }}</mat-label>
             <input matInput type="email" required formControlName="fromEmail" />
-            @if (emailConfigurationForm.controls.fromEmail.hasError('required')) {
+            @if ($any(emailConfigurationForm.controls).fromEmail.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Email' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -83,7 +83,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.From Name' | translate }}</mat-label>
             <input matInput required formControlName="fromName" />
-            @if (emailConfigurationForm.controls.fromName.hasError('required')) {
+            @if ($any(emailConfigurationForm.controls).fromName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.From Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

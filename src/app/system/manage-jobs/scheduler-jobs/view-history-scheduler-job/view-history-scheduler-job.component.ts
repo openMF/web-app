@@ -87,7 +87,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { jobsSchedulerHistory: any }) => {
+    this.route.data.subscribe((data) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
     });
   }
@@ -141,7 +141,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
       width: '400px',
       data: this.jobHistoryData.pageItems.filter((data: any) => data.version === version)[0].jobRunErrorLog
     });
-    openErrorLogDialog.afterClosed().subscribe((response: any) => {
+    openErrorLogDialog.afterClosed().subscribe((response) => {
       this.router.navigate(['']);
     });
   }

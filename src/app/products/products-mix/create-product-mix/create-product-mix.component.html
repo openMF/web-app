@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (productMixForm.controls.productId.hasError('required')) {
+            @if ($any(productMixForm.controls).productId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Product' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -38,7 +38,7 @@
                   </mat-option>
                 }
               </mat-select>
-              @if (productMixForm.controls.restrictedProducts.hasError('required')) {
+              @if ($any(productMixForm.controls).restrictedProducts.hasError('required')) {
                 <mat-error>
                   {{ 'labels.commons.At least one restricted product' | translate }}
                   <strong>{{ 'labels.commons.must be selected' | translate }}</strong>

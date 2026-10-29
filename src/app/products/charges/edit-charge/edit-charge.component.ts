@@ -79,7 +79,7 @@ export class EditChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { chargesTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.chargeData = data.chargesTemplate;
     });
   }
@@ -233,7 +233,7 @@ export class EditChargeComponent implements OnInit {
     if (!charges.maxCap) {
       delete charges.maxCap;
     }
-    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response: any) => {
+    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

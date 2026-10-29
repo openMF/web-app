@@ -26,7 +26,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="shareProductAccountingForm.controls.shareReferenceId"
+          [inputFormControl]="$any(shareProductAccountingForm.controls.shareReferenceId)"
           [glAccountList]="assetAccountData"
           [required]="true"
           [inputLabel]="'Share reference'"
@@ -36,7 +36,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="shareProductAccountingForm.controls.shareSuspenseId"
+          [inputFormControl]="$any(shareProductAccountingForm.controls.shareSuspenseId)"
           [glAccountList]="liabilityAccountData"
           [required]="true"
           [inputLabel]="'Share suspense control'"
@@ -46,7 +46,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Share Equity' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="shareProductAccountingForm.controls.shareEquityId"
+          [inputFormControl]="$any(shareProductAccountingForm.controls.shareEquityId)"
           [glAccountList]="equityAccountData"
           [required]="true"
           [inputLabel]="'Equity'"
@@ -56,7 +56,7 @@
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="shareProductAccountingForm.controls.incomeFromFeeAccountId"
+          [inputFormControl]="$any(shareProductAccountingForm.controls.incomeFromFeeAccountId)"
           [glAccountList]="incomeAccountData"
           [required]="true"
           [inputLabel]="'Income from fees'"

@@ -64,7 +64,7 @@
         />
         <mat-datepicker-toggle matSuffix [for]="submitPicker"></mat-datepicker-toggle>
         <mat-datepicker #submitPicker></mat-datepicker>
-        @if (loansAccountDetailsForm.controls.submittedOnDate?.hasError('required')) {
+        @if ($any(loansAccountDetailsForm.controls).submittedOnDate?.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Submitted on' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -84,7 +84,7 @@
         />
         <mat-datepicker-toggle matSuffix [for]="disbursementPicker"></mat-datepicker-toggle>
         <mat-datepicker #disbursementPicker></mat-datepicker>
-        @if (loansAccountDetailsForm.controls.expectedDisbursementDate?.hasError('required')) {
+        @if ($any(loansAccountDetailsForm.controls).expectedDisbursementDate?.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Disbursement on' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -137,7 +137,7 @@
             [attr.aria-label]="'labels.buttons.Clear' | translate"
             (click)="clearOriginator($event)"
           >
-            <fa-icon icon="close" size="md"></fa-icon>
+            <fa-icon icon="close" size="lg"></fa-icon>
           </button>
         }
       </mat-form-field>

@@ -113,7 +113,7 @@ export class BirtComponent implements OnChanges, OnDestroy {
           return of(null);
         })
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         if (res) {
           this.present(res);
         }

@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (taxComponentForm.controls.name.hasError('required')) {
+            @if ($any(taxComponentForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -25,7 +25,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
             <input matInput required formControlName="percentage" />
-            @if (taxComponentForm.controls.name.hasError('required')) {
+            @if ($any(taxComponentForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Percentage' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -59,7 +59,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (taxComponentForm.controls.startDate.hasError('required')) {
+            @if ($any(taxComponentForm.controls).startDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

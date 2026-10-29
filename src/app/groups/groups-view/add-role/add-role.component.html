@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (groupsAddRoleForm.controls.clientId.hasError('required')) {
+            @if ($any(groupsAddRoleForm.controls).clientId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Client Member' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (groupsAddRoleForm.controls.role.hasError('required')) {
+            @if ($any(groupsAddRoleForm.controls).role.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Role' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -38,7 +38,7 @@ export class ViewEmployeeComponent {
   employeeData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { employee: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.employeeData = data.employee;
     });
   }

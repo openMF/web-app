@@ -230,7 +230,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+    this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
       if (accountingRule === 2 || accountingRule === 3) {
         this.fixedDepositProductAccountingForm.addControl(
           'savingsReferenceAccountId',
@@ -275,7 +275,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
 
         this.fixedDepositProductAccountingForm
           .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+          .valueChanges.subscribe((advancedAccountingRules) => {
             if (advancedAccountingRules) {
               this.fixedDepositProductAccountingForm.addControl(
                 'paymentChannelToFundSourceMappings',
@@ -329,7 +329,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   add(formType: string, formArray: UntypedFormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.push(response.data);
       }
@@ -339,7 +339,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   edit(formType: string, formArray: UntypedFormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         formArray.at(index).patchValue(response.data.value);
       }
@@ -350,7 +350,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         formArray.removeAt(index);
       }

@@ -89,7 +89,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
    * Subscribes to progress bar to update its mode.
    */
   ngOnInit() {
-    this.progressBarService.updateProgressBar.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((mode: string) => {
+    this.progressBarService.updateProgressBar.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((mode) => {
       this.progressBarMode = mode;
       this.cdr.detectChanges();
     });

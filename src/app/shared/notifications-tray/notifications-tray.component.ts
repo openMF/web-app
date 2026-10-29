@@ -83,7 +83,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
     forkJoin([
       this.notificationsService.getNotifications(true, 9),
       this.notificationsService.getNotifications(false, 9)
-    ]).subscribe((response: any[]) => {
+    ]).subscribe((response) => {
       this.readNotifications = response[0].pageItems;
       this.unreadNotifications = response[1].pageItems;
       this.setNotifications();
@@ -117,7 +117,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
       this.timer = null;
     }
 
-    this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
+    this.notificationsService.getNotifications(false, 9).subscribe((response) => {
       this.unreadNotifications = response.pageItems; // Avoid concat duplication
       this.setNotifications();
     });
@@ -155,7 +155,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Function to test notifications in case of faulty backend.
    */
   mockNotifications() {
-    this.notificationsService.getMockUnreadNotification().subscribe((response: any) => {
+    this.notificationsService.getMockUnreadNotification().subscribe((response) => {
       this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
       this.setNotifications();
     });

@@ -69,7 +69,7 @@
 
       <mifosx-saving-product-charges-step
         [savingProductsTemplate]="savingProductsTemplate"
-        [currencyCode]="savingProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="$any(savingProductCurrencyForm.get('currencyCode'))"
       >
       </mifosx-saving-product-charges-step>
     </mat-step>

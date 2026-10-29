@@ -172,7 +172,7 @@ export class SmsCampaignStepComponent implements OnInit {
     this.smsCampaignDetailsForm
       .get('isNotification')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: boolean) => {
+      .subscribe((value) => {
         if (!value) {
           this.smsCampaignDetailsForm.addControl('providerId', new FormControl(null));
         } else {
@@ -182,13 +182,13 @@ export class SmsCampaignStepComponent implements OnInit {
     this.smsCampaignDetailsForm
       .get('runReportId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: number) => {
+      .subscribe((value) => {
         if (value) {
           const report = this.businessRules.find((rule: any) => rule.reportId === value);
           this.reportService
             .getReportParams(report.reportName)
             .pipe(take(1))
-            .subscribe((response: ReportParameter[]) => {
+            .subscribe((response) => {
               this.paramData = { response, reportName: report.reportName };
             });
         }
@@ -196,7 +196,7 @@ export class SmsCampaignStepComponent implements OnInit {
     this.smsCampaignDetailsForm
       .get('triggerType')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: number) => {
+      .subscribe((value) => {
         this.templateParameters.emit(null);
         this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
         if (this.smsCampaignDetailsForm.controls.runReportId.value) {
@@ -214,7 +214,7 @@ export class SmsCampaignStepComponent implements OnInit {
           this.smsCampaignDetailsForm
             .get('frequency')
             .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((frequency: number) => {
+            .subscribe((frequency) => {
               this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
               switch (frequency) {
                 case 1: // Daily

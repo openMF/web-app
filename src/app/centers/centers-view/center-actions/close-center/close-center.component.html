@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closureDatePicker></mat-datepicker>
-            @if (closeCenterForm.controls.closureDate.hasError('required')) {
+            @if ($any(closeCenterForm.controls).closureDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closed On Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (closeCenterForm.controls.closureReasonId.hasError('required')) {
+            @if ($any(closeCenterForm.controls).closureReasonId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Closure Reason' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

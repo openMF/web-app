@@ -56,7 +56,7 @@ export class SettleCashComponent implements OnInit {
    * @param {Router} router Router.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashierTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.cashierData = data.cashierTemplate;
     });
   }
@@ -121,7 +121,7 @@ export class SettleCashComponent implements OnInit {
     this.organizationService
       .settleCash(this.cashierData.tellerId, this.cashierData.cashierId, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

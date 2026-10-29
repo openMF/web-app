@@ -114,12 +114,10 @@ export class CreateGlimAccountComponent {
    * @param {ClientsService} clientService Client Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
-        this.loansAccountTemplate = data.loansAccountTemplate;
-        this.dataSource = data.groupsData.activeClientMembers;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loansAccountTemplate = data.loansAccountTemplate;
+      this.dataSource = data.groupsData.activeClientMembers;
+    });
   }
 
   /**
@@ -131,7 +129,7 @@ export class CreateGlimAccountComponent {
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     const clientId = this.loansAccountTemplate.clientId;
     if (!!clientId) {
-      this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+      this.clientService.getCollateralTemplate(clientId).subscribe((response) => {
         this.collateralOptions = response;
       });
     } else {
@@ -145,7 +143,7 @@ export class CreateGlimAccountComponent {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
+    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response) => {
       this.multiDisburseLoan = response.multiDisburseLoan;
     });
     this.setDatatables();
@@ -313,14 +311,14 @@ export class CreateGlimAccountComponent {
       // Validate savings account ownership
       const ownerId = Number(member.linkAccountOwnerId);
       if (member.linkAccountId && member.linkAccountOwnerId && ownerId !== memberId) {
-        this.i18nService.translate('errors.linkedSavingsAccountOwnership').subscribe((msg: string) => {
+        this.i18nService.translate('errors.linkedSavingsAccountOwnership').subscribe((msg) => {
           this.notify({ defaultUserMessage: msg, errors: [] }, { memberId });
         });
         return;
       }
       // Validate GSIM membership
       if (!gsimMemberIds.has(memberId)) {
-        this.i18nService.translate('errors.clientNotInGSIM', { id: memberId }).subscribe((msg: string) => {
+        this.i18nService.translate('errors.clientNotInGSIM', { id: memberId }).subscribe((msg) => {
           this.notify({ defaultUserMessage: msg, errors: [] }, { memberId });
         });
         return;
@@ -329,7 +327,7 @@ export class CreateGlimAccountComponent {
 
     // Use date format from settingsService for interestChargedFromDate
     const data = this.buildRequestData();
-    this.loansService.createGlimAccount(data).subscribe((response: any) => {
+    this.loansService.createGlimAccount(data).subscribe((response) => {
       const body = JSON.parse(response[0].body);
       if (body.glimId) {
         this.router.navigate(

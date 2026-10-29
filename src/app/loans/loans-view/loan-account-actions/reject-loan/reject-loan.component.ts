@@ -87,15 +87,13 @@ export class RejectLoanComponent extends LoanAccountActionsBaseComponent impleme
     };
     const loanCommand: string = 'reject';
     if (this.isLoanProduct) {
-      this.loanService.loanActionButtons(this.loanId, loanCommand, data).subscribe((response: any) => {
+      this.loanService.loanActionButtons(this.loanId, loanCommand, data).subscribe((response) => {
         this.gotoLoanDefaultView();
       });
     } else if (this.isWorkingCapital) {
-      this.loanService
-        .applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, data)
-        .subscribe((response: any) => {
-          this.gotoLoanDefaultView();
-        });
+      this.loanService.applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, data).subscribe((response) => {
+        this.gotoLoanDefaultView();
+      });
     }
   }
 }

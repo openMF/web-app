@@ -90,7 +90,7 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBucketsTemplateData: any }) => {
+    this.route.data.subscribe((data) => {
       if (this.isRegularBucket) {
         this.delinquencyRangesData = data.delinquencyBucketsTemplateData;
         this.delinquencyRangesData = this.delinquencyRangesData.sort(
@@ -183,7 +183,7 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
       formfields: formfields
     };
     const rangeDialogRef = this.dialog.open(FormDialogComponent, { data });
-    rangeDialogRef.afterClosed().subscribe((response: any) => {
+    rangeDialogRef.afterClosed().subscribe((response) => {
       if (response?.data) {
         this.rangesDataSource = this.rangesDataSource.concat(response.data.value);
         this.delinquencyRangesIds.push(response.data.value.rangeId);
@@ -200,7 +200,7 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response?.delete) {
         this.delinquencyRangesIds.splice(index, 1);
         this.rangesDataSource.splice(index, 1);
@@ -240,7 +240,7 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
    * if successful redirects to Delinquency Buckets.
    */
   submit() {
-    this.productsService.createDelinquencyBucket(this.payloadData).subscribe((response: any) => {
+    this.productsService.createDelinquencyBucket(this.payloadData).subscribe((response) => {
       this.router.navigate(
         [
           '../',

@@ -35,7 +35,7 @@ export class EditRangeComponent implements OnInit {
   delinquencyRangeForm: UntypedFormGroup;
 
   constructor() {
-    this.route.data.subscribe((data: { delinquencyRange: any }) => {
+    this.route.data.subscribe((data) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
   }
@@ -78,7 +78,7 @@ export class EditRangeComponent implements OnInit {
       ...delinquencyRangeFormData,
       locale
     };
-    this.productsService.updateDelinquencyRange(this.delinquencyRangeData.id, data).subscribe((response: any) => {
+    this.productsService.updateDelinquencyRange(this.delinquencyRangeData.id, data).subscribe((response) => {
       this.router.navigate(
         [
           '../../',

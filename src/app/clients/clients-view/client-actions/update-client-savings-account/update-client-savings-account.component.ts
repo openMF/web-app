@@ -51,7 +51,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.clientData = data.clientActionData;
     });
   }

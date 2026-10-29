@@ -120,7 +120,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       data: { documentIdentifier: false, entityType: '' },
       width: '33rem'
     });
-    uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
+    uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse) => {
       if (dialogResponse) {
         const formData: FormData = new FormData();
         formData.append('name', dialogResponse.fileName);
@@ -130,7 +130,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
         formData.append('locale', this.settingsService.language.code);
         this.appendOptionalDate(formData, 'issuanceDate', dialogResponse.issuanceDate);
         this.appendOptionalDate(formData, 'expiryDate', dialogResponse.expiryDate);
-        this.callbackUpload(formData).subscribe((res: any) => {
+        this.callbackUpload(formData).subscribe((res) => {
           const newDocument = {
             id: res.resourceId,
             parentEntityType: this.entityType,
@@ -156,7 +156,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Document: ${name}` }
     });
-    deleteDocumentDialogRef.afterClosed().subscribe((response: any) => {
+    deleteDocumentDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.callbackDelete(documentId);
         const index = this.entityDocuments.findIndex((doc: any) => doc.id === documentId);

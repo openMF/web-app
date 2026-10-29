@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('required')) {
+            @if ($any(groupEditMeetingScheduleForm.controls).presentMeetingDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Existing Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +40,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #newMeetingDatePicker></mat-datepicker>
-            @if (groupEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')) {
+            @if ($any(groupEditMeetingScheduleForm.controls).newMeetingDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Revised Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

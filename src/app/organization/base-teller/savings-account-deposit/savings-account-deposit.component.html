@@ -35,7 +35,7 @@
                 @if (isSearching) {
                   <mat-spinner matSuffix diameter="20"></mat-spinner>
                 }
-                @if (lookupForm.controls.search.hasError('required')) {
+                @if ($any(lookupForm.controls).search.hasError('required')) {
                   <mat-error>
                     {{ 'labels.buttons.Search' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -98,7 +98,7 @@
                     </mat-option>
                   }
                 </mat-select>
-                @if (lookupForm.controls.savingsAccount.hasError('required')) {
+                @if ($any(lookupForm.controls).savingsAccount.hasError('required')) {
                   <mat-error>
                     {{ 'labels.heading.Savings Account' | translate }} {{ 'labels.commons.is' | translate }}
                     <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -178,13 +178,13 @@
                 <mat-form-field>
                   <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
                   <input type="number" matInput formControlName="transactionAmount" required />
-                  @if (depositForm.controls.transactionAmount.hasError('required')) {
+                  @if ($any(depositForm.controls).transactionAmount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
                     </mat-error>
                   }
-                  @if (depositForm.controls.transactionAmount.hasError('min')) {
+                  @if ($any(depositForm.controls).transactionAmount.hasError('min')) {
                     <mat-error>{{ 'labels.text.Amount must be greater than zero' | translate }}</mat-error>
                   }
                 </mat-form-field>
@@ -201,7 +201,7 @@
                       <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
                     }
                   </mat-select>
-                  @if (depositForm.controls.paymentTypeId.hasError('required')) {
+                  @if ($any(depositForm.controls).paymentTypeId.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>

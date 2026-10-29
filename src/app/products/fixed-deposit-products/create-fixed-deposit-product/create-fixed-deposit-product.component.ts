@@ -83,7 +83,7 @@ export class CreateFixedDepositProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
@@ -144,7 +144,7 @@ export class CreateFixedDepositProductComponent {
       locale: this.settingsService.language.code // locale required for depositAmount
     };
     delete fixedDepositProduct.advancedAccountingRules;
-    this.productsService.createFixedDepositProduct(fixedDepositProduct).subscribe((response: any) => {
+    this.productsService.createFixedDepositProduct(fixedDepositProduct).subscribe((response) => {
       this.router.navigate(
         [
           '../',

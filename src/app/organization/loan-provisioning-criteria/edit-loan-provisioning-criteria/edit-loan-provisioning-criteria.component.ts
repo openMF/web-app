@@ -120,21 +120,19 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
-        this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
-        this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;
-        this.loanProducts = this.loanProvisioningCriteriaAndTemplate.loanProducts.concat(
-          this.loanProvisioningCriteriaAndTemplate.selectedLoanProducts
-        );
-        this.liabilityAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
-          (account: any) => account.type.value === 'LIABILITY'
-        );
-        this.expenseAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
-          (account: any) => account.type.value === 'EXPENSE'
-        );
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
+      this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;
+      this.loanProducts = this.loanProvisioningCriteriaAndTemplate.loanProducts.concat(
+        this.loanProvisioningCriteriaAndTemplate.selectedLoanProducts
+      );
+      this.liabilityAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'LIABILITY'
+      );
+      this.expenseAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'EXPENSE'
+      );
+    });
   }
 
   ngOnInit() {
@@ -176,7 +174,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
       layout: { addButtonText: 'Confirm' }
     };
     const editDefinitionDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editDefinitionDialogRef.afterClosed().subscribe((response: any) => {
+    editDefinitionDialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         const definitionData = {
           ...definition,
@@ -275,7 +273,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
     this.organizationService
       .updateProvisioningCriteria(this.loanProvisioningCriteriaAndTemplate.criteriaId, loanProvisioningCriteria)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }

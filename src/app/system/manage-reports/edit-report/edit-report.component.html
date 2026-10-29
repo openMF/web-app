@@ -14,7 +14,7 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Report Name' | translate }}</mat-label>
             <input matInput required formControlName="reportName" />
-            @if (reportForm.controls.reportName.hasError('required')) {
+            @if ($any(reportForm.controls).reportName.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Report Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -31,7 +31,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (reportForm.controls.reportType.hasError('required')) {
+            @if ($any(reportForm.controls).reportType.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Report Type' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -81,7 +81,7 @@
               cdkTextareaAutosize
               cdkAutosizeMinRows="6"
             ></textarea>
-            @if (reportForm.controls.reportSql.hasError('required')) {
+            @if ($any(reportForm.controls).reportSql.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.SQL' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

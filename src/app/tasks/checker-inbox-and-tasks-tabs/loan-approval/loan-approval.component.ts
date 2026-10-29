@@ -125,13 +125,11 @@ export class LoanApprovalComponent implements AfterViewInit {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { officesData: any; loansData: any }) => {
-        this.offices = data.officesData;
-        this.loans = data.loansData.pageItems;
-        this.setOfficeData();
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.offices = data.officesData;
+      this.loans = data.loansData.pageItems;
+      this.setOfficeData();
+    });
   }
 
   ngAfterViewInit() {
@@ -206,7 +204,7 @@ export class LoanApprovalComponent implements AfterViewInit {
         dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan')
       }
     });
-    approveLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+    approveLoanDialogRef.afterClosed().subscribe((response) => {
       if (response.confirm) {
         this.bulkLoanApproval();
       }
@@ -233,7 +231,7 @@ export class LoanApprovalComponent implements AfterViewInit {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response) => {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           approvedAccounts++;
@@ -256,7 +254,7 @@ export class LoanApprovalComponent implements AfterViewInit {
   }
 
   loanResource() {
-    this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeApproved().subscribe((response) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return account.status.waitingForDisbursal;

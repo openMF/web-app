@@ -54,7 +54,7 @@ export class EditEmployeeComponent implements OnInit {
   officeData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { employee: any; offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
     });
@@ -121,7 +121,7 @@ export class EditEmployeeComponent implements OnInit {
     this.organizationService
       .updateEmployee(this.employeeData.id, data)
       .pipe(take(1))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(
           [
             '../../',

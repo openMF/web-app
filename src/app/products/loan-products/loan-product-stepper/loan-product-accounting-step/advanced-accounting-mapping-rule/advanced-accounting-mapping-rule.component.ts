@@ -106,7 +106,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
 
     const data = { ...this.getData('add', this.formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         if ([
             'ChargeOffReasonExpense',
@@ -179,7 +179,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.tableData = this.tableData.filter((_, i) => i !== index);
         this.sendParentData();
@@ -192,7 +192,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     const data = { ...this.getData('edit', this.formType, record), pristine: false, layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
 
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.data) {
         let updateData: AccountingMappingDTO | null = null;
         if ([

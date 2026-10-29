@@ -107,7 +107,7 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
           this.advancedPaymentAllocation.futureInstallmentAllocationRule.code
         );
       }
-      this.futureInstallmentAllocationRule.valueChanges.subscribe((value: any) => {
+      this.futureInstallmentAllocationRule.valueChanges.subscribe((value) => {
         this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach(
           (item: FutureInstallmentAllocationRule) => {
             if (value === item.code) {
@@ -159,7 +159,7 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
           this.translateService.instant('labels.dialogContext.the Transaction Type') + ' ' + transaction.value
       }
     });
-    dialogRef.afterClosed().subscribe((response: any) => {
+    dialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.transactionTypeRemoved.emit(transaction);
       }

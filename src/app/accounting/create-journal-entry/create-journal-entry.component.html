@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (journalEntryForm.controls.officeId.hasError('required')) {
+            @if ($any(journalEntryForm.controls).officeId.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -37,7 +37,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (journalEntryForm.controls.currencyCode.hasError('required')) {
+            @if ($any(journalEntryForm.controls).currencyCode.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -57,7 +57,7 @@
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"
-                  [inputFormControl]="debits.at(i).controls.glAccountId"
+                  [inputFormControl]="$any($any(debits.at(glAccountId)).controls.glAccountId)"
                   [glAccountList]="glAccountData"
                   [required]="true"
                   [inputLabel]="'Affected GL Entry (Debit)'"
@@ -73,7 +73,7 @@
                     min="1"
                     (input)="onAmountInput($event)"
                   />
-                  @if (debits.at(i).controls.amount.hasError('required')) {
+                  @if ($any(debits.at(amount)).controls.amount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Debit Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -101,7 +101,7 @@
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"
-                  [inputFormControl]="credits.at(i).controls.glAccountId"
+                  [inputFormControl]="$any($any(credits.at(glAccountId)).controls.glAccountId)"
                   [glAccountList]="glAccountData"
                   [required]="true"
                   [inputLabel]="'Affected GL Entry (Credit)'"
@@ -117,7 +117,7 @@
                     min="1"
                     (input)="onAmountInput($event)"
                   />
-                  @if (credits.at(i).controls.amount.hasError('required')) {
+                  @if ($any(credits.at(amount)).controls.amount.hasError('required')) {
                     <mat-error>
                       {{ 'labels.inputs.Credit Amount' | translate }} {{ 'labels.commons.is' | translate }}
                       <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -157,7 +157,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            @if (journalEntryForm.controls.transactionDate.hasError('required')) {
+            @if ($any(journalEntryForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

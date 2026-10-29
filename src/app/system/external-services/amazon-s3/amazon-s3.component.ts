@@ -72,7 +72,7 @@ export class AmazonS3Component implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
+    this.route.data.subscribe((data) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }

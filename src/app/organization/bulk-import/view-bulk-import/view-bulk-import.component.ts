@@ -117,7 +117,7 @@ export class ViewBulkImportComponent implements OnInit {
    */
   constructor() {
     this.bulkImport.name = this.route.snapshot.params['import-name'];
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: any) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.officeData = data.offices;
       this.importsData = data.imports;
     });
@@ -151,12 +151,12 @@ export class ViewBulkImportComponent implements OnInit {
     this.bulkImportForm
       .get('officeId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: any) => {
+      .subscribe((value) => {
         if (this.bulkImport.formFields >= 2) {
           this.organizationService
             .getStaff(value)
             .pipe(take(1))
-            .subscribe((data: any) => {
+            .subscribe((data) => {
               this.staffData = data;
             });
         }
@@ -191,7 +191,7 @@ export class ViewBulkImportComponent implements OnInit {
     this.organizationService
       .getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType)
       .pipe(take(1))
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         const contentType = res.headers.get('Content-Type');
         const blob = new Blob([res.body], { type: contentType });
         const fileOfBlob = new File([blob], 'template.xls', { type: contentType });
@@ -235,7 +235,7 @@ export class ViewBulkImportComponent implements OnInit {
     this.organizationService
       .getImports(this.bulkImport.entityType)
       .pipe(take(1))
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         this.dataSource = new MatTableDataSource(data);
         this.importsTableRef.renderRows();
       });
@@ -250,7 +250,7 @@ export class ViewBulkImportComponent implements OnInit {
     this.organizationService
       .getImportDocument(id)
       .pipe(take(1))
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         const contentType = res.headers.get('Content-Type');
         const blob = new Blob([res.body], { type: contentType });
         const fileOfBlob = new File([blob], name, { type: contentType });

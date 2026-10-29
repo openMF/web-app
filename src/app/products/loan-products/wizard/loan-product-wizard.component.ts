@@ -2793,21 +2793,19 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   /** The create call and success navigation, shared by both rendering modes. */
   private postLoanProduct(payload: any): void {
-    this.productsService
-      .createLoanProduct(this.loanProductService.loanProductPath, payload)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '/',
-            'products',
-            'loan-products',
-            response.resourceId
-          ],
-          {
-            queryParams: { productType: this.loanProductService.productType.value }
-          }
-        );
-      });
+    this.productsService.createLoanProduct(this.loanProductService.loanProductPath, payload).subscribe((response) => {
+      this.router.navigate(
+        [
+          '/',
+          'products',
+          'loan-products',
+          response.resourceId
+        ],
+        {
+          queryParams: { productType: this.loanProductService.productType.value }
+        }
+      );
+    });
   }
 
   private initializeForm(): void {

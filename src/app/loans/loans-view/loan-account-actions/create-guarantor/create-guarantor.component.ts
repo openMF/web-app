@@ -169,7 +169,7 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
     this.newGuarantorForm
       .get('existingClient')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((isExistingClient: boolean) => {
+      .subscribe((isExistingClient) => {
         this.applyGuarantorMode(isExistingClient);
         // Drop the client selection and its linkable accounts, they belong to the other variant.
         this.newGuarantorForm.patchValue({ name: '', savingsId: '', amount: '' }, { emitEvent: false });
@@ -186,10 +186,10 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
     this.newGuarantorForm
       .get('name')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: any) => {
+      .subscribe((value) => {
         // Once an option is picked the control holds the client object, not the search string.
         if (typeof value === 'string' && value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data) => {
             this.clientsData = data.pageItems;
             this.cdr.markForCheck();
           });
@@ -206,7 +206,7 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
     this.newGuarantorForm
       .get('savingsId')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((savingsId: any) => {
+      .subscribe((savingsId) => {
         const amount = this.newGuarantorForm.get('amount');
         if (savingsId) {
           amount.setValidators(Validators.required);
@@ -221,7 +221,7 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
 
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
-    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
+    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response) => {
       this.accountOptions = response.accountLinkingOptions || [];
       this.cdr.markForCheck();
     });

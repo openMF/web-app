@@ -54,7 +54,7 @@ export class EditAmazonS3Component implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
+    this.route.data.subscribe((data) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }
@@ -93,10 +93,8 @@ export class EditAmazonS3Component implements OnInit {
    * if successful redirects to view Amazon S3 configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('S3', this.amazonS3ConfigurationForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.systemService.updateExternalConfiguration('S3', this.amazonS3ConfigurationForm.value).subscribe((response) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

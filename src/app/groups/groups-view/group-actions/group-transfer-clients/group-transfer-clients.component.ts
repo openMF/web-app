@@ -63,7 +63,7 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService SettingsService
    */
   constructor() {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data) => {
       this.groupData = data.groupActionData;
       this.clientMembers = this.groupData.clientMembers;
     });
@@ -77,9 +77,9 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe((value: string) => {
+    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe((value) => {
       if (value.length >= 2) {
-        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
+        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data) => {
           this.groupsData = data;
           // Results arrive outside any template event: notify OnPush change detection.
           this.changeDetectorRef.markForCheck();

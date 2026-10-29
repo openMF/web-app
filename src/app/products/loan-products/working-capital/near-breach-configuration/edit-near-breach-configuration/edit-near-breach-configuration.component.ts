@@ -39,7 +39,7 @@ export class EditNearBreachConfigurationComponent implements OnInit {
   maxThreshold: number = 100.0;
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { nearBreachData: NearBreach; breachTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.nearBreachData = data.nearBreachData;
       this.frequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
       this.initForm();

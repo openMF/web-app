@@ -144,20 +144,18 @@ export class CreateEditComponent implements OnInit {
    * @param {TemplateService} templateService Templates Service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
-        this.templateData = data.templateData;
-        this.mode = data.mode;
-        if (this.mode === 'edit') {
-          this.mappers = this.templateData.template.mappers.map((mapper: any) => ({
-            mappersorder: mapper.mapperorder,
-            mapperskey: new FormControl(mapper.mapperkey),
-            mappersvalue: new FormControl(mapper.mappervalue)
-          }));
-          this.textFormat = isHtmlText(this.templateData.template.text) ? 'html' : 'plain';
-        }
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.templateData = data.templateData;
+      this.mode = data.mode;
+      if (this.mode === 'edit') {
+        this.mappers = this.templateData.template.mappers.map((mapper: any) => ({
+          mappersorder: mapper.mapperorder,
+          mapperskey: new FormControl(mapper.mapperkey),
+          mappersvalue: new FormControl(mapper.mappervalue)
+        }));
+        this.textFormat = isHtmlText(this.templateData.template.text) ? 'html' : 'plain';
+      }
+    });
 
     this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
       const themeChanged = this.themeInitialized && theme !== this.themeKey;
@@ -236,7 +234,7 @@ export class CreateEditComponent implements OnInit {
     this.templateForm
       .get('entity')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: any) => {
+      .subscribe((value) => {
         if (value === 0) {
           // client
           this.mappers.splice(0, 1, {
@@ -257,7 +255,7 @@ export class CreateEditComponent implements OnInit {
     this.templateForm
       .get('type')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((typeId: number | null) => {
+      .subscribe((typeId) => {
         if (!this.templateForm.get('text').value) {
           this.textFormat = this.isSmsType(typeId) ? 'plain' : 'html';
         }
@@ -360,7 +358,7 @@ export class CreateEditComponent implements OnInit {
       text: this.getEditorContent()
     };
     if (this.mode === 'create') {
-      this.templateService.createTemplate(template).subscribe((response: any) => {
+      this.templateService.createTemplate(template).subscribe((response) => {
         this.router.navigate(
           [
             '../',

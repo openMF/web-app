@@ -23,7 +23,7 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionsDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionsDatePicker></mat-datepicker>
-            @if (foreclosureForm.controls.transactionDate.hasError('required')) {
+            @if ($any(foreclosureForm.controls).transactionDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -59,7 +59,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput required formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-            @if (foreclosureForm.controls.note.hasError('required')) {
+            @if ($any(foreclosureForm.controls).note.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Note' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

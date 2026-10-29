@@ -55,7 +55,7 @@ export class ViewUserComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { user: any }) => {
+    this.route.data.subscribe((data) => {
       const u = data.user.object?.result?.[0];
 
       const user = {
@@ -82,7 +82,7 @@ export class ViewUserComponent {
       data: { deleteContext: `user ${this.userData.id}` }
     });
 
-    deleteUserDialogRef.afterClosed().subscribe((response: any) => {
+    deleteUserDialogRef.afterClosed().subscribe((response) => {
       if (response.delete) {
         this.authService.deletUser(this.userData.id);
       }
@@ -97,7 +97,7 @@ export class ViewUserComponent {
       width: '440px',
       data: { id: userId }
     });
-    changeUserPasswordDialogRef.afterClosed().subscribe((response: any) => {
+    changeUserPasswordDialogRef.afterClosed().subscribe((response) => {
       if (response.password && response.repeatPassword) {
         const password = response.password;
         const repeatPassword = response.repeatPassword;

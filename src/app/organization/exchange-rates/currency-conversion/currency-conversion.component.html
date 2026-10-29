@@ -23,7 +23,7 @@
                   <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
                 }
               </mat-select>
-              @if (conversionForm.controls.sourceCurrencyCode.hasError('required')) {
+              @if ($any(conversionForm.controls).sourceCurrencyCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Source Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -44,7 +44,7 @@
                   <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
                 }
               </mat-select>
-              @if (conversionForm.controls.targetCurrencyCode.hasError('required')) {
+              @if ($any(conversionForm.controls).targetCurrencyCode.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Target Currency' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -71,13 +71,13 @@
                 formControlName="amount"
                 [attr.aria-label]="'labels.inputs.Amount' | translate"
               />
-              @if (conversionForm.controls.amount.hasError('required')) {
+              @if ($any(conversionForm.controls).amount.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               }
-              @if (conversionForm.controls.amount.hasError('min')) {
+              @if ($any(conversionForm.controls).amount.hasError('min')) {
                 <mat-error>{{
                   'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Amount' | translate) }
                 }}</mat-error>
@@ -97,7 +97,7 @@
               />
               <mat-datepicker-toggle matSuffix [for]="conversionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #conversionDatePicker></mat-datepicker>
-              @if (conversionForm.controls.conversionDate.hasError('required')) {
+              @if ($any(conversionForm.controls).conversionDate.hasError('required')) {
                 <mat-error>
                   {{ 'labels.inputs.Conversion Date' | translate }} {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>

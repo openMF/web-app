@@ -59,7 +59,7 @@ export class CreateRuleComponent implements OnInit {
   creditTagData: any;
 
   constructor() {
-    this.route.data.subscribe((data: { accountingRulesTemplate: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.accountingRulesTemplate.allowedOffices;
       this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
       this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
@@ -107,7 +107,7 @@ export class CreateRuleComponent implements OnInit {
    * Sets accounting rule form for selected accounting rule type.
    */
   setAccountingRulesForm() {
-    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe((debitRuleType: string) => {
+    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe((debitRuleType) => {
       if (debitRuleType === 'fixedAccount') {
         this.accountingRuleForm.get('debitTags').reset();
         this.accountingRuleForm.get('allowMultipleDebitEntries').reset();
@@ -116,7 +116,7 @@ export class CreateRuleComponent implements OnInit {
         this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
       }
     });
-    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType: string) => {
+    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType) => {
       if (creditRuleType === 'fixedAccount') {
         this.accountingRuleForm.get('creditTags').reset();
         this.accountingRuleForm.get('allowMultipleCreditEntries').reset();

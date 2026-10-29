@@ -14,7 +14,7 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Code Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            @if (codeForm.controls.name.hasError('required')) {
+            @if ($any(codeForm.controls).name.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Code Name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -82,23 +82,21 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
     this.loanId = this.route.snapshot.params['loanId'];
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { loansAccountAndTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
-        this.loansAccountAndTemplate = data.loansAccountAndTemplate;
-        if (this.loanProductService.isLoanProduct) {
-          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
-        } else if (this.loanProductService.isWorkingCapital) {
-          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
-          // The working capital loan details endpoint serializes the client and product
-          // as flat fields (clientId/loanProductId) instead of nested objects.
-          this.getWorkingCapitalLoanProductTemplate(
-            this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
-            this.loansAccountProductTemplate.product?.id ?? this.loansAccountProductTemplate.loanProductId
-          );
-        }
-        this.loanProductsBasicDetails = data.loanProductsBasicDetails;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.loansAccountAndTemplate = data.loansAccountAndTemplate;
+      if (this.loanProductService.isLoanProduct) {
+        this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+      } else if (this.loanProductService.isWorkingCapital) {
+        this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+        // The working capital loan details endpoint serializes the client and product
+        // as flat fields (clientId/loanProductId) instead of nested objects.
+        this.getWorkingCapitalLoanProductTemplate(
+          this.loansAccountProductTemplate.client?.id ?? this.loansAccountProductTemplate.clientId,
+          this.loansAccountProductTemplate.product?.id ?? this.loansAccountProductTemplate.loanProductId
+        );
+      }
+      this.loanProductsBasicDetails = data.loanProductsBasicDetails;
+    });
   }
 
   /**
@@ -125,14 +123,14 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     if (this.loansAccountProductTemplate.loanProductId) {
       this.loansService
         .getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId)
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.collateralOptions = response.loanCollateralOptions;
         });
     }
   }
 
   getWorkingCapitalLoanProductTemplate(clientId: number, productId: number) {
-    this.loansService.getWorkingCapitalLoansAccountTemplate(clientId, productId).subscribe((response: any) => {
+    this.loansService.getWorkingCapitalLoansAccountTemplate(clientId, productId).subscribe((response) => {
       this.setTemplate(response);
     });
   }
@@ -278,7 +276,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
 
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], {
           queryParams: {
             productType: this.loanProductService.productType.value
@@ -341,7 +339,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
 
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.router.navigate(['../'], {
           queryParams: {
             productType: this.loanProductService.productType.value

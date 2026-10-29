@@ -85,7 +85,7 @@ export class ViewChargeComponent {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientChargeData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.chargeData = data.clientChargeData;
     });
   }
@@ -114,7 +114,7 @@ export class ViewChargeComponent {
    * Get Charge Data.
    */
   getChargeData() {
-    this.clientService.getSelectedChargeData(this.chargeData.clientId, this.chargeData.id).subscribe((data: any) => {
+    this.clientService.getSelectedChargeData(this.chargeData.clientId, this.chargeData.id).subscribe((data) => {
       this.chargeData = data;
     });
   }

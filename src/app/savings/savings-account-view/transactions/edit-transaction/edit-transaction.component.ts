@@ -76,15 +76,13 @@ export class EditTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { savingsAccountTransactionTemplate: any }) => {
-        this.transactionTemplateData = data.savingsAccountTransactionTemplate;
-        if (data.savingsAccountTransactionTemplate.currency) {
-          this.currency = data.savingsAccountTransactionTemplate.currency;
-        }
-        this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
-      });
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
+      this.transactionTemplateData = data.savingsAccountTransactionTemplate;
+      if (data.savingsAccountTransactionTemplate.currency) {
+        this.currency = data.savingsAccountTransactionTemplate.currency;
+      }
+      this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
+    });
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 

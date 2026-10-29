@@ -329,7 +329,7 @@ export class TransactionReversalComponent implements OnInit {
             })
             .afterClosed()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((confirmed: boolean) => {
+            .subscribe((confirmed) => {
               if (confirmed) this.confirm();
             });
         },

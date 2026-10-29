@@ -99,7 +99,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any; currencies: any }) => {
+    this.route.data.subscribe((data) => {
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
@@ -133,7 +133,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
       glAccountEntries: this.formBuilder.array([])
     });
 
-    this.openingBalancesForm.controls.currencyCode.valueChanges.subscribe((value: string) => {
+    this.openingBalancesForm.controls.currencyCode.valueChanges.subscribe((value) => {
       this.currencyCode = value;
     });
   }
@@ -168,7 +168,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
   retrieveOpeningBalances() {
     this.accountingService
       .retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
-      .subscribe((openingBalancesData: any) => {
+      .subscribe((openingBalancesData) => {
         const entry = this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
 
         openingBalancesData.glAccounts = openingBalancesData.assetAccountOpeningBalances.concat(
@@ -221,7 +221,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
         }
       });
       delete openingBalances.glAccountEntries;
-      this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
+      this.accountingService.defineOpeningBalances(openingBalances).subscribe((response) => {
         this.router.navigate([
           '/accounting/journal-entries/transactions/view',
           response.transactionId
