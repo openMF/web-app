@@ -8,7 +8,7 @@ If you are new to the project, this section takes you from a fresh clone to a fi
 
 ### What you need
 
-1. Node.js 20.19 or newer. CI uses Node.js 24, so that is the safest choice.
+1. Node.js **26.13.0 LTS** or newer (CI uses Node.js 26.13.0, so that is the safest choice). On Linux you may need `libatomic` installed, as official Node 26 Linux binaries link against it.
 2. Docker with Compose v2, so that the `docker compose` command works.
 3. On macOS, GNU `timeout`, which the Docker runner script needs. Install it with `brew install coreutils`.
 

@@ -50,10 +50,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Use Node.js 24
+      - name: Use Node.js 26
         uses: actions/setup-node@v6
         with:
-          node-version: '24.16.0'
+          node-version: '26.13.0'
           cache: 'npm'
 
       - name: Install dependencies
