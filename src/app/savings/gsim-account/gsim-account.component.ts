@@ -164,8 +164,11 @@ export class GsimAccountComponent implements OnInit {
    */
   onRowClick(row: ChildGsimAccount) {
     if (row.status?.active) {
+      // Savings accounts only have routes under a client, group or center
       this.router.navigate([
-        '/savings-accounts',
+        '/groups',
+        this.groupId,
+        'savings-accounts',
         row.id,
         'transactions'
       ]);
