@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Notiek {{count}} pārbaudes elementu apstrāde…",
+      "processedSummary": "Apstrādāti {{processed}} uzdevumi: {{succeeded}} veiksmīgi, {{failed}} neizdevās.",
+      "loading": "Notiek pārbaudītāja iesūtnes ielāde…"
+    },
+    "error": {
+      "failedIds": "Neizdevušos ierakstu ID:",
+      "load": "Neizdevās ielādēt pārbaudītāja iesūtni. Mēģiniet meklēt vēlreiz.",
+      "permission": "Jums nav atļaujas veikt darbības ar šī saraksta pārbaudes elementiem."
+    }
+  },
   "cashInventory": {
     "title": "Kases inventāra uzraudzība",
     "description": "Pārskatiet skaidras naudas un čeku inventāru pēc glabātāja, darījuma veida un valūtas.",

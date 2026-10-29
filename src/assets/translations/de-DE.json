@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Verarbeitung von {{count}} Checker-Element(en)…",
+      "processedSummary": "{{processed}} Aufgaben verarbeitet: {{succeeded}} erfolgreich, {{failed}} fehlgeschlagen.",
+      "loading": "Checker-Posteingang wird geladen…"
+    },
+    "error": {
+      "failedIds": "IDs der fehlgeschlagenen Datensätze:",
+      "load": "Der Checker-Posteingang konnte nicht geladen werden. Bitte versuchen Sie Ihre Suche erneut.",
+      "permission": "Sie haben keine Berechtigung, die Checker-Elemente in dieser Liste zu bearbeiten."
+    }
+  },
   "cashInventory": {
     "title": "Überwachung des Bargeldbestands",
     "description": "Prüfen Sie Bargeld- und Scheckbestände nach Verwahrer, Transaktionstyp und Währung.",

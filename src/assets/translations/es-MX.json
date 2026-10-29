@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Procesando {{count}} elemento(s) de revisión…",
+      "processedSummary": "{{processed}} tareas procesadas: {{succeeded}} correctas, {{failed}} fallidas.",
+      "loading": "Cargando la bandeja de entrada del revisor…"
+    },
+    "error": {
+      "failedIds": "ID de los registros fallidos:",
+      "load": "No se pudo cargar la bandeja de entrada del revisor. Vuelva a intentar la búsqueda.",
+      "permission": "No tiene permiso para actuar sobre los elementos de revisión de esta lista."
+    }
+  },
   "cashInventory": {
     "title": "Monitoreo de inventario de efectivo",
     "description": "Revise el inventario de efectivo y cheques por custodio, tipo de transacción y moneda.",

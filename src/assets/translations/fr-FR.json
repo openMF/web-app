@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Traitement de {{count}} élément(s) de vérification…",
+      "processedSummary": "{{processed}} tâches traitées : {{succeeded}} réussies, {{failed}} échouées.",
+      "loading": "Chargement de la boîte de réception du vérificateur…"
+    },
+    "error": {
+      "failedIds": "ID des enregistrements en échec :",
+      "load": "Impossible de charger la boîte de réception du vérificateur. Veuillez relancer votre recherche.",
+      "permission": "Vous n’avez pas l’autorisation d’agir sur les éléments de vérification de cette liste."
+    }
+  },
   "cashInventory": {
     "title": "Suivi de l’inventaire de caisse",
     "description": "Consultez l’inventaire des espèces et des chèques par dépositaire, type de transaction et devise.",

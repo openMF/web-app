@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Zpracovává se {{count}} položek ke kontrole…",
+      "processedSummary": "{{processed}} úkolů zpracováno: {{succeeded}} úspěšně, {{failed}} neúspěšně.",
+      "loading": "Načítání kontroly doručené pošty…"
+    },
+    "error": {
+      "failedIds": "ID neúspěšných záznamů:",
+      "load": "Kontrolu doručené pošty se nepodařilo načíst. Zkuste vyhledávání znovu.",
+      "permission": "Nemáte oprávnění provádět akce s položkami kontroly v tomto seznamu."
+    }
+  },
   "cashInventory": {
     "title": "Sledování pokladní zásoby",
     "description": "Kontrolujte zásobu hotovosti a šeků podle správce, typu transakce a měny.",
