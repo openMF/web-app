@@ -7,9 +7,30 @@
 -->
 
 <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column m-b-10">
-  <h4 class="m-b-15 right flex-90">
-    {{ 'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate }}
-  </h4>
+  @if (hasCreditAllocationStrategyOptions()) {
+    <mat-form-field class="m-t-16 flex-90">
+      <mat-label>{{ 'labels.inputs.Credit Allocation Strategy' | translate }}</mat-label>
+      <mat-select
+        [formControl]="creditAllocationStrategy"
+        (selectionChange)="creditAllocationStrategyChanged($event.value)"
+      >
+        @for (
+          creditAllocationStrategyOption of advancedCreditAllocation.creditAllocationStrategyOptions;
+          track creditAllocationStrategyOption.code
+        ) {
+          <mat-option [value]="creditAllocationStrategyOption.code">
+            {{ creditAllocationStrategyOption.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+
+  @if (!isPrincipalOnly()) {
+    <h4 class="m-b-15 right flex-90">
+      {{ 'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate }}
+    </h4>
+  }
 
   @if (!isDefault()) {
     <div class="right flex-4">
@@ -49,7 +70,7 @@
     </div>
   }
 
-  @if (creditAllocationsData) {
+  @if (creditAllocationsData && !isPrincipalOnly()) {
     <div class="mat-elevation-z8 container m-t-15 m-b-15">
       <table
         mat-table

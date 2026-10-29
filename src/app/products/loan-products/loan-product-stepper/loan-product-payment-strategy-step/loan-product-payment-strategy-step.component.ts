@@ -22,6 +22,7 @@ import {
   AdvancedPaymentStrategy,
   CreditAllocation,
   CreditAllocationOrder,
+  CreditAllocationStrategyOption,
   PaymentAllocation,
   PaymentAllocationOrder,
   PaymentAllocationTransactionType
@@ -66,6 +67,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[] = [];
   @Input() advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
   @Input() creditAllocationOrderDefault: CreditAllocationOrder[] = [];
+  @Input() creditAllocationStrategyOptions: CreditAllocationStrategyOption[] = [];
 
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
   @Output() setPaymentAllocation = new EventEmitter<PaymentAllocation[]>();
@@ -151,7 +153,8 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
               this.advancedCreditAllocations.push(
                 this.advancedPaymentStrategy.buildAdvancedCreditAllocation(
                   transactionType,
-                  this.creditAllocationOrderDefault
+                  this.creditAllocationOrderDefault,
+                  this.creditAllocationStrategyOptions
                 )
               );
             }

@@ -125,6 +125,7 @@ export interface LoanProduct {
   advancedPaymentAllocationTypes: OptionData[];
   creditAllocationTransactionTypes: OptionData[];
   creditAllocationAllocationTypes: OptionData[];
+  creditAllocationStrategyOptions?: OptionData[];
   multiDisburseLoan: boolean;
   maxTrancheCount: number;
   allowFullTermForTranche: boolean;

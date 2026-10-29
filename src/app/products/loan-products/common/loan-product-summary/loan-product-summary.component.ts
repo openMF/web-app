@@ -533,7 +533,9 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
           this.advancePaymentAllocationData = {
             transactionTypes: advancedAllocationTransactionTypes,
             allocationTypes: advancedPaymentAllocationTypes,
-            futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
+            futureInstallmentAllocationRules:
+              this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules,
+            creditAllocationStrategies: this.loanProduct.creditAllocationStrategyOptions
           };
         } else {
           const advancedAllocationTransactionTypes: OptionData[] =
@@ -548,7 +550,8 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
             transactionTypes: advancedAllocationTransactionTypes,
             allocationTypes: advancedPaymentAllocationTypes,
             futureInstallmentAllocationRules:
-              this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
+              this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules,
+            creditAllocationStrategies: this.loanProductsTemplate.creditAllocationStrategyOptions
           };
         }
       }
