@@ -165,9 +165,16 @@ export class CreateGsimAccountComponent {
     const monthDayFormat = 'dd MMMM';
     const data = {
       ...this.savingsAccount,
+      // Same charge fields as a single savings application: without dueDate Fineract rejects a specified due date
+      // charge, and without feeOnMonthDay / feeInterval it falls back to the charge defaults.
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
-        amount: charge.amount
+        amount: charge.amount,
+        dueDate: charge.dueDate ? this.dateUtils.formatDate(charge.dueDate, dateFormat) : charge.dueDate,
+        feeOnMonthDay: charge.feeOnMonthDay
+          ? this.dateUtils.formatDate(charge.feeOnMonthDay, monthDayFormat)
+          : charge.feeOnMonthDay,
+        feeInterval: charge.feeInterval
       })),
       clientId: client.id,
       isGSIM: true,
