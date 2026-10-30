@@ -817,7 +817,14 @@
       "type": "Report generation",
       "generated": "Report: {{reportName}} data generated",
       "generatedNoData": "Report: {{reportName}} without data generated",
+      "loanApplicationLoadFailed": "Failed to load Loan Application PDF report.",
       "loadFailed": "Failed to load report data. Please try again."
+    },
+    "documents": {
+      "uploadFailed": "Failed to upload document"
+    },
+    "exchangeRates": {
+      "idMissing": "Exchange rate id is missing."
     },
     "clipboard": {
       "type": "Clipboard",
@@ -841,6 +848,7 @@
       "capitalizedIncomeLimit": "Capitalized Income Adjustment amount must be lower or equal to",
       "buyDownFeeAdjusted": "Buy Down Fee amount already adjusted",
       "buyDownFeeLimit": "Buy Down Fee Adjustment amount must be lower or equal to",
+      "chargebackLimit": "Chargeback amount must be lower or equal to",
       "businessRule": "Business Rule",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2231,6 +2239,7 @@
       "Unassign Staff": "Unassign Staff",
       "Undo": "Undo",
       "Undo Transaction": "Undo Transaction",
+      "Chargeback Transaction": "Chargeback {{type}} Transaction",
       "Undo Reset": "Undo Reset",
       "Unmark as Fraud": "Unmark as Fraud",
       "Upcoming Charges": "Upcoming Charges",
@@ -4642,6 +4651,8 @@
       "Example loan product name": "e.g. Personal Loan – Standard",
       "Example short name": "e.g. PLS",
       "Search Activity": "Search Activity",
+      "Search widgets": "Search widgets...",
+      "Select roles": "Select roles",
       "Select close date": "Select close date",
       "Select start date": "Select start date",
       "Sender name": "Sender name",

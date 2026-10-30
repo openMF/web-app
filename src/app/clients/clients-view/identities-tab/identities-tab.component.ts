@@ -376,7 +376,7 @@ export class IdentitiesTabComponent implements OnDestroy {
                   console.error('Failed to upload document', err);
                   this.alertService.alert({
                     type: 'error',
-                    message: 'Failed to upload document'
+                    message: this.translateService.instant('errors.documents.uploadFailed')
                   });
                 }
               });

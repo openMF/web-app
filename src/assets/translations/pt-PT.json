@@ -819,7 +819,14 @@
       "type": "Geração de relatório",
       "generated": "Relatório: dados de {{reportName}} gerados",
       "generatedNoData": "Relatório: {{reportName}} gerado sem dados",
+      "loanApplicationLoadFailed": "Não foi possível carregar o relatório PDF do pedido de empréstimo.",
       "loadFailed": "Falha ao carregar os dados do relatório. Por favor, tente novamente."
+    },
+    "documents": {
+      "uploadFailed": "Falha ao carregar o documento"
+    },
+    "exchangeRates": {
+      "idMissing": "O ID da taxa de câmbio está em falta."
     },
     "clipboard": {
       "type": "Área de transferência",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "O montante de ajuste de rendimento capitalizado deve ser inferior ou igual a",
       "buyDownFeeAdjusted": "Montante da taxa Buy Down já ajustado",
       "buyDownFeeLimit": "O montante de ajuste da taxa Buy Down deve ser inferior ou igual a",
+      "chargebackLimit": "O valor do estorno deve ser menor ou igual a",
       "businessRule": "Regra de negócio",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2211,6 +2219,7 @@
       "Undo": "Desfazer",
       "Undo Reset": "Desfazer redefinição",
       "Undo Transaction": "Desfazer transação",
+      "Chargeback Transaction": "Estorno da transação {{type}}",
       "Unmark as Fraud": "Desmarcar como Fraude",
       "Upcoming Charges": "Próximas cobranças",
       "Upload": "Carregar",
@@ -4642,6 +4651,8 @@
       "Example loan product name": "ex. Empréstimo pessoal – Padrão",
       "Example short name": "ex. PLS",
       "Search Activity": "Atividade de pesquisa",
+      "Search widgets": "Pesquisar widgets...",
+      "Select roles": "Selecionar funções",
       "Enter your username": "Digite seu nome de usuário",
       "Enter your password": "Introduza a sua palavra-passe",
       "# Remittance": "# Remessa",

@@ -779,7 +779,14 @@
       "type": "Hesabatın yaradılması",
       "generated": "{{reportName}} hesabatının məlumatları yaradıldı",
       "generatedNoData": "Hesabat: {{reportName}} məlumat olmadan yaradıldı",
+      "loanApplicationLoadFailed": "Kredit ərizəsi PDF hesabatını yükləmək alınmadı.",
       "loadFailed": "Hesabat məlumatlarını yükləmək mümkün olmadı. Yenidən cəhd edin."
+    },
+    "documents": {
+      "uploadFailed": "Sənədi yükləmək alınmadı"
+    },
+    "exchangeRates": {
+      "idMissing": "Məzənnə identifikatoru yoxdur."
     },
     "clipboard": {
       "type": "Mübadilə buferi",
@@ -803,6 +810,7 @@
       "capitalizedIncomeLimit": "Kapitallaşdırılmış gəlirə düzəliş məbləği aşağıdakı məbləğdən az və ya ona bərabər olmalıdır",
       "buyDownFeeAdjusted": "Faiz dərəcəsinin azaldılması haqqının məbləğinə artıq düzəliş edilib",
       "buyDownFeeLimit": "Faiz dərəcəsinin azaldılması haqqına düzəliş məbləği aşağıdakı məbləğdən az və ya ona bərabər olmalıdır",
+      "chargebackLimit": "Ödənişin geri tələbi məbləği bundan az və ya bərabər olmalıdır",
       "businessRule": "Biznes qaydası",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2195,6 +2203,7 @@
       "Unassign Staff": "Əməkdaş təyinatının ləğvi",
       "Undo": "Geri qaytarma",
       "Undo Transaction": "Əməliyyatın geri qaytarılması",
+      "Chargeback Transaction": "{{type}} əməliyyatı üçün ödənişi geri tələb et",
       "Undo Reset": "Sıfırlamanın geri qaytarılması",
       "Unmark as Fraud": "Dələduzluq işarəsinin götürülməsi",
       "Upcoming Charges": "Qarşıdakı haqlar",
@@ -4604,6 +4613,8 @@
       "Example loan product name": "Məsələn, fərdi kredit – standart",
       "Example short name": "Məsələn, FKS",
       "Search Activity": "Fəaliyyəti axtar",
+      "Search widgets": "Vidjetləri axtar...",
+      "Select roles": "Rolları seçin",
       "Select close date": "Bağlanma tarixini seç",
       "Select start date": "Başlama tarixini seç",
       "Sender name": "Göndərənin adı",

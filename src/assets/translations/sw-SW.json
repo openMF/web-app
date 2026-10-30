@@ -816,7 +816,14 @@
       "type": "Uzalishaji wa ripoti",
       "generated": "Ripoti: data ya {{reportName}} imezalishwa",
       "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data",
+      "loanApplicationLoadFailed": "Imeshindwa kupakia ripoti ya PDF ya ombi la mkopo.",
       "loadFailed": "Imeshindwa kupakia data ya ripoti. Tafadhali jaribu tena."
+    },
+    "documents": {
+      "uploadFailed": "Imeshindwa kupakia hati"
+    },
+    "exchangeRates": {
+      "idMissing": "Kitambulisho cha kiwango cha ubadilishaji hakipo."
     },
     "clipboard": {
       "type": "Ubao wa kunakili",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "Kiasi cha marekebisho ya mapato yaliyohifadhiwa lazima kiwe kidogo au sawa na",
       "buyDownFeeAdjusted": "Kiasi cha ada ya Buy Down tayari kimerekebishwa",
       "buyDownFeeLimit": "Kiasi cha marekebisho ya ada ya Buy Down lazima kiwe kidogo au sawa na",
+      "chargebackLimit": "Kiasi cha urejeshaji malipo lazima kiwe chini au sawa na",
       "businessRule": "Kanuni ya biashara",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2208,6 +2216,7 @@
       "Undo": "Tendua",
       "Undo Reset": "Tengua uwekaji upya",
       "Undo Transaction": "Tendua Muamala",
+      "Chargeback Transaction": "Urejeshaji malipo wa muamala wa {{type}}",
       "Unmark as Fraud": "Ondoa Alama ya Ulaghai",
       "Upcoming Charges": "Malipo Yanayokuja",
       "Upload": "Pakia",
@@ -4639,6 +4648,8 @@
       "Example loan product name": "mf. Mkopo wa Binafsi – Kawaida",
       "Example short name": "mf. PLS",
       "Search Activity": "Shughuli ya Utafutaji",
+      "Search widgets": "Tafuta wijeti...",
+      "Select roles": "Chagua majukumu",
       "Enter your username": "Ingiza jina lako la mtumiaji",
       "Enter your password": "Ingiza nenosiri lako",
       "# Remittance": "# Uhawilishaji",

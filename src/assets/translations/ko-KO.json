@@ -816,7 +816,14 @@
       "type": "보고서 생성",
       "generated": "보고서: {{reportName}} 데이터 생성됨",
       "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨",
+      "loanApplicationLoadFailed": "대출 신청서 PDF 보고서를 불러오지 못했습니다.",
       "loadFailed": "보고서 데이터를 불러오지 못했습니다. 다시 시도해 주세요."
+    },
+    "documents": {
+      "uploadFailed": "문서를 업로드하지 못했습니다"
+    },
+    "exchangeRates": {
+      "idMissing": "환율 ID가 없습니다."
     },
     "clipboard": {
       "type": "클립보드",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "자본화 수입 조정 금액은 다음 이하여야 합니다",
       "buyDownFeeAdjusted": "Buy Down 수수료 금액이 이미 조정되었습니다",
       "buyDownFeeLimit": "Buy Down 수수료 조정 금액은 다음 이하여야 합니다",
+      "chargebackLimit": "지불 거절 금액은 다음 금액 이하여야 합니다",
       "businessRule": "비즈니스 규칙",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2209,6 +2217,7 @@
       "Undo": "실행 취소",
       "Undo Reset": "재설정 실행 취소",
       "Undo Transaction": "거래 취소",
+      "Chargeback Transaction": "{{type}} 거래 지불 거절",
       "Unmark as Fraud": "사기 표시 해제",
       "Upcoming Charges": "다가오는 요금",
       "Upload": "업로드",
@@ -4639,6 +4648,8 @@
       "Example loan product name": "예: 개인 대출 – 표준",
       "Example short name": "예: PLS",
       "Search Activity": "검색 활동",
+      "Search widgets": "위젯 검색...",
+      "Select roles": "역할 선택",
       "Enter your username": "사용자 이름을 입력하세요",
       "Enter your password": "비밀번호를 입력하세요",
       "# Remittance": "# 송금",

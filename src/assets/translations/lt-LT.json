@@ -816,7 +816,14 @@
       "type": "Ataskaitos generavimas",
       "generated": "Ataskaita: {{reportName}} duomenys sugeneruoti",
       "generatedNoData": "Ataskaita: {{reportName}} sugeneruota be duomenų",
+      "loanApplicationLoadFailed": "Nepavyko įkelti paskolos paraiškos PDF ataskaitos.",
       "loadFailed": "Nepavyko įkelti ataskaitos duomenų. Bandykite dar kartą."
+    },
+    "documents": {
+      "uploadFailed": "Nepavyko įkelti dokumento"
+    },
+    "exchangeRates": {
+      "idMissing": "Trūksta valiutos kurso ID."
     },
     "clipboard": {
       "type": "Iškarpinė",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "Kapitalizuotų pajamų koregavimo suma turi būti mažesnė arba lygi",
       "buyDownFeeAdjusted": "Buy Down mokesčio suma jau pakoreguota",
       "buyDownFeeLimit": "Buy Down mokesčio koregavimo suma turi būti mažesnė arba lygi",
+      "chargebackLimit": "Mokėjimo grąžinimo suma turi būti mažesnė arba lygi",
       "businessRule": "Verslo taisyklė",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2209,6 +2217,7 @@
       "Undo": "Anuliuoti",
       "Undo Reset": "Atšaukti nustatymų atkūrimą",
       "Undo Transaction": "Anuliuoti operaciją",
+      "Chargeback Transaction": "{{type}} operacijos mokėjimo grąžinimas",
       "Unmark as Fraud": "Panaikinti sukčiavimo žymę",
       "Upcoming Charges": "Būsimi mokesčiai",
       "Upload": "Įkelti",
@@ -4639,6 +4648,8 @@
       "Example loan product name": "pvz. Vartojimo paskola – Standartinis",
       "Example short name": "pvz. PLS",
       "Search Activity": "Paieškos veikla",
+      "Search widgets": "Ieškoti valdiklių...",
+      "Select roles": "Pasirinkite roles",
       "Enter your username": "Įveskite savo vartotojo vardą",
       "Enter your password": "Įveskite slaptažodį",
       "# Remittance": "# Pervedimas",

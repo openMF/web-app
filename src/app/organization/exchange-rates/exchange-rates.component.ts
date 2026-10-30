@@ -31,6 +31,7 @@ import { Dates } from 'app/core/utils/dates';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ExchangeRate, ExchangeRateFilters } from './exchange-rate.model';
 import {
@@ -62,6 +63,7 @@ export class ExchangeRatesComponent implements OnInit {
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
@@ -164,7 +166,10 @@ export class ExchangeRatesComponent implements OnInit {
   deleteExchangeRate(exchangeRate: ExchangeRate) {
     const exchangeRateId = exchangeRate.id;
     if (!exchangeRateId) {
-      this.alertService.alert({ type: 'Error', message: 'Exchange rate id is missing.' });
+      this.alertService.alert({
+        type: 'Error',
+        message: this.translateService.instant('errors.exchangeRates.idMissing')
+      });
       return;
     }
 
