@@ -1715,6 +1715,7 @@
       "NotEqual": "बराबर छैन"
     },
     "heading": {
+      "Address & Location": "ठेगाना र स्थान",
       "Cash Payment": "नगद भुक्तानी",
       "Catalog Updates": "क्याटलग अद्यावधिकहरू",
       "Confirmation": "पुष्टि",
@@ -4736,6 +4737,7 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "Clone": "क्लोन गर्नुहोस्",
       "Clone Loan Product": "ऋण उत्पादन क्लोन गर्नुहोस्",
       "Near Breach": "उल्लङ्घनको नजिक",
@@ -7942,6 +7944,69 @@
       "businessDateChanged": "कारोबार मिति परिवर्तन भएको छ। सन्दर्भ अद्यावधिक गर्नुहोस्।",
       "catalogChanged": "एउटा दर अब उपलब्ध छैन। सूची अद्यावधिक गरेर परिमाण फेरि लेख्नुहोस्।",
       "invalidInput": "पूर्वावलोकन अनुरोधअघि परिमाण जाँच्नुहोस्।"
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "नगद जम्मा तयार गर्नुहोस्",
+      "statusHelp": "भल्टको सञ्चालन स्थिति पुष्टि भएको छैन।",
+      "countCash": "नगद गन्नुहोस्",
+      "entryHint": "प्रत्येक नोट र सिक्काको सङ्ख्या प्रविष्ट गर्नुहोस्।",
+      "summary": "जम्माको सारांश",
+      "previewHelp": "पूर्वावलोकनले रकम स्थानान्तरण नगरी नगदको विवरण जाँच गर्छ।"
     }
   }
 }

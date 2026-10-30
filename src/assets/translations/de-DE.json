@@ -1717,6 +1717,7 @@
       "NotEqual": "Ungleich"
     },
     "heading": {
+      "Address & Location": "Adresse und Standort",
       "Cash Payment": "Barzahlung",
       "Catalog Updates": "Katalogaktualisierungen",
       "Confirmation": "Bestätigung",
@@ -4738,6 +4739,7 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "No valid saved coordinates": "Die Karte ist nicht verfügbar, da die gespeicherten Koordinaten fehlen oder ungültig sind.",
       "Clone": "Klonen",
       "Clone Loan Product": "Darlehensprodukt klonen",
       "Near Breach": "Nahe Verletzung",
@@ -7944,6 +7946,69 @@
       "businessDateChanged": "Das Geschäftsdatum hat sich geändert. Aktualisieren Sie den Kontext.",
       "catalogChanged": "Eine Stückelung ist nicht mehr verfügbar. Aktualisieren Sie den Katalog und die Anzahlen.",
       "invalidInput": "Prüfen Sie die Anzahlen vor der Vorschau."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Bareinzahlung vorbereiten",
+      "statusHelp": "Der Betriebsstatus des Tresors wurde nicht bestätigt.",
+      "countCash": "Bargeld zählen",
+      "entryHint": "Geben Sie die Anzahl der einzelnen Banknoten und Münzen ein.",
+      "summary": "Einzahlungsübersicht",
+      "previewHelp": "Die Vorschau prüft die Bargeldaufteilung, ohne Geld zu bewegen."
     }
   }
 }

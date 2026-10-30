@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -73,10 +81,12 @@ import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.uti
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressTabComponent implements OnInit {
+  @Input() readOnly = false;
+
   readonly hasValidCoordinatePair = hasValidCoordinatePair;
 
   get clientAddressLocationEnabled(): boolean {
-    return environment.enableClientAddressLocation;
+    return this.readOnly || environment.enableClientAddressLocation;
   }
 
   private route = inject(ActivatedRoute);
@@ -109,6 +119,7 @@ export class AddressTabComponent implements OnInit {
 
   get canAddAddress(): boolean {
     return (
+      !this.readOnly &&
       !this.hasOfficeAddress &&
       !this.isLoading &&
       !this.isSaving &&
@@ -155,7 +166,9 @@ export class AddressTabComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ addresses, template }: { addresses: any; template: any }) => {
-        this.officeAddresses = Array.isArray(addresses) ? addresses : [];
+        this.officeAddresses = Array.isArray(addresses)
+          ? addresses.filter((address: any) => address && typeof address === 'object')
+          : [];
         this.addressTemplate = {
           ...this.addressTemplate,
           ...template
@@ -182,7 +195,7 @@ export class AddressTabComponent implements OnInit {
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(addAddressDialogRef);
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         this.saveAddress(
           this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value))
         );
@@ -191,7 +204,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   editAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 
@@ -213,7 +226,7 @@ export class AddressTabComponent implements OnInit {
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(editAddressDialogRef);
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         this.saveAddress(
           this.organizationService.updateOfficeAddress(
             this.officeId,
@@ -226,7 +239,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   deleteAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 
@@ -246,7 +259,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   toggleAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 
@@ -333,6 +346,8 @@ export class AddressTabComponent implements OnInit {
     };
 
     if (this.clientAddressLocationEnabled) {
+      // HTML number inputs serialize decimal coordinates with a dot. Fineract requires a matching locale.
+      normalizedAddressData.locale = 'en';
       normalizedAddressData.latitude = this.hasValue(addressData.latitude) ? addressData.latitude : null;
       normalizedAddressData.longitude = this.hasValue(addressData.longitude) ? addressData.longitude : null;
     }

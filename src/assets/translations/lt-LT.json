@@ -1712,6 +1712,7 @@
       "NotEqual": "Nelygu"
     },
     "heading": {
+      "Address & Location": "Adresas ir vieta",
       "Cash Payment": "Mokėjimas grynaisiais",
       "Catalog Updates": "Katalogų atnaujinimai",
       "Confirmation": "Patvirtinimas",
@@ -4733,6 +4734,7 @@
       "Remove tenant": "Pašalinti {{identifier}} registro įrašą — jo duomenų bazė lieka nepaliesta ir jokie nuomininko duomenys nėra ištrinami"
     },
     "text": {
+      "No valid saved coordinates": "Žemėlapis nepasiekiamas, nes trūksta išsaugotų koordinačių arba jos netinkamos.",
       "Clone": "Klonuoti",
       "Clone Loan Product": "Klonuoti paskolos produktą",
       "Near Breach": "Artėja pažeidimas",
@@ -7939,6 +7941,69 @@
       "businessDateChanged": "Darbo data pasikeitė. Atnaujinkite kontekstą.",
       "catalogChanged": "Nominalas nebeprieinamas. Atnaujinkite katalogą ir vėl įveskite kiekius.",
       "invalidInput": "Prieš peržiūrą patikrinkite kiekius."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Paruošti grynųjų pinigų įmoką",
+      "statusHelp": "Saugyklos veikimo būsena nepatvirtinta.",
+      "countCash": "Suskaičiuokite grynuosius",
+      "entryHint": "Įveskite kiekvieno banknoto ir monetos kiekį.",
+      "summary": "Įmokos suvestinė",
+      "previewHelp": "Peržiūra patikrina grynųjų pinigų išklotinę neperkeldama lėšų."
     }
   }
 }

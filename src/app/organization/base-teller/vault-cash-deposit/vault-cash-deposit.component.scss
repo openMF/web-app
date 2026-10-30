@@ -6,106 +6,547 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.vault-deposit {
+:host {
+  display: block;
   min-width: 0;
+}
+
+.vault-deposit {
+  width: 100%;
+  max-width: 1280px;
+  min-width: 0;
+  margin: 0 auto;
+  color: var(--ds-text-1);
+
+  .deposit-card {
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    box-shadow: var(--ds-shadow-xs);
+    background: var(--ds-surface);
+  }
 
   mat-card-content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
+    padding: 24px;
     overflow-wrap: anywhere;
-  }
-
-  header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
   }
 
   h2,
   h3,
-  p {
+  h4,
+  p,
+  dl,
+  dd {
     margin: 0;
   }
 
-  .context-grid,
-  .catalog-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
+  h2 {
+    font-size: 1.375rem;
+    line-height: 1.4;
+    font-weight: 600;
   }
 
-  .context-grid > div,
-  .catalog-grid > section {
-    flex: 1 1 400px;
-    min-width: 0;
+  h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .workspace-header,
+  .header-actions,
+  .heading-group,
+  .entry-toolbar,
+  .panel-heading,
+  .summary-heading,
+  .message,
+  .phase-notice,
+  .context-grid dt,
+  .status-badge,
+  .catalog-note,
+  mat-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .workspace-header,
+  .entry-toolbar,
+  .summary-heading {
+    justify-content: space-between;
+  }
+
+  .workspace-header,
+  .header-actions,
+  .entry-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .workspace-header,
+  .heading-group {
+    gap: 16px;
+  }
+
+  .header-actions {
+    margin-left: auto;
+  }
+
+  .header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--ds-radius);
+    color: var(--ds-blue-700);
+    background: var(--ds-blue-50);
+  }
+
+  .eyebrow,
+  .estimate-label {
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .vault-context {
+    padding: 16px 24px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
   }
 
   .context-grid {
-    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+
+    > div {
+      flex: 1 1 160px;
+      min-width: 0;
+    }
 
     dt {
-      color: var(--mat-sys-on-surface-variant);
+      color: var(--ds-text-2);
+      font-size: 0.8125rem;
+    }
+
+    dt mat-icon {
+      font-size: 1rem;
+      width: 16px;
+      height: 16px;
     }
 
     dd {
-      margin: 8px 0 0;
-      font-weight: 500;
+      margin-top: 8px;
+      font-weight: 600;
+      line-height: 1.5;
     }
   }
 
-  section {
+  .status-badge {
+    display: inline-flex;
+    gap: 8px;
+    padding: 0 8px;
+    border: 1px solid var(--ds-border-strong);
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-text-2);
+    background: var(--ds-surface);
+    font-size: 0.8125rem;
+    line-height: 1.75rem;
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 1rem;
+    }
+  }
+
+  .status-note {
+    margin-top: 8px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .deposit-workspace {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .cash-entry {
+    flex: 1 1 496px;
     min-width: 0;
+  }
 
-    h3 {
-      margin-bottom: 16px;
+  .entry-toolbar {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .entry-toolbar .supporting-text {
+    margin-top: 8px;
+  }
+
+  .supporting-text {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .currency-field {
+    width: 240px;
+    max-width: 100%;
+  }
+
+  .catalog-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .denomination-panel {
+    flex: 1 1 264px;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface);
+  }
+
+  .panel-heading {
+    padding: 16px;
+    border-bottom: 1px solid var(--ds-border);
+
+    mat-icon {
+      color: var(--ds-text-2);
+      font-size: 1.25rem;
+      width: 24px;
+      height: 24px;
     }
   }
 
-  mat-form-field {
-    width: 100%;
-    max-width: 400px;
+  .panel-currency {
+    margin-left: auto;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-sm);
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+    line-height: 1.5rem;
   }
 
   table {
     width: 100%;
     table-layout: fixed;
+    background: transparent;
   }
 
-  .quantity-field {
-    padding-top: 8px;
-  }
-
-  td,
-  th {
+  th,
+  td {
     padding: 8px;
     overflow-wrap: anywhere;
     font-variant-numeric: tabular-nums;
+    border-color: var(--ds-border);
+  }
 
-    &:first-child,
-    &:last-child {
-      text-align: end;
+  th {
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--ds-surface-alt);
+  }
+
+  td {
+    color: var(--ds-text-1);
+    font-size: 0.875rem;
+  }
+
+  .mat-column-value {
+    width: 36%;
+  }
+
+  .mat-column-quantity {
+    width: 32%;
+    text-align: center;
+  }
+
+  .mat-column-subtotal {
+    width: 32%;
+    text-align: end;
+    font-weight: 500;
+  }
+
+  tr.mat-mdc-header-row {
+    height: 40px;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .quantity-field {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .quantity-field input {
+    text-align: center;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .empty-catalog {
+    padding: 24px 16px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .catalog-note {
+    align-items: flex-start;
+    margin: 16px 0;
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+    line-height: 1.5;
+
+    mat-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      font-size: 1rem;
     }
   }
 
-  .message,
-  .phase-notice {
+  .inventory-panel {
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    box-shadow: none;
+    color: var(--ds-text-2);
+    background: var(--ds-surface);
+
+    mat-panel-title {
+      color: var(--ds-text-2);
+      font-size: 0.8125rem;
+    }
+
+    mat-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+
+    .supporting-text {
+      margin-top: 8px;
+    }
+  }
+
+  .deposit-summary {
+    position: sticky;
+    top: 24px;
+    flex: 0 0 280px;
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid var(--ds-border-strong);
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface);
+  }
+
+  .currency-badge {
+    padding: 0 8px;
+    border-radius: var(--ds-radius-sm);
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+  }
+
+  .estimate-label {
+    margin-top: 8px;
+  }
+
+  .estimate-lines {
+    margin: 24px 0;
+  }
+
+  .estimate-lines > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .estimate-lines dt {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .estimate-lines dd {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .estimate-lines .cash-total {
+    display: block;
+    margin-top: 24px;
     padding: 16px;
-    border-radius: 8px;
-    background: var(--mat-sys-surface-container);
+    border-radius: var(--ds-radius);
+    background: var(--ds-blue-50);
+
+    dt {
+      color: var(--ds-text-1);
+      font-weight: 500;
+    }
+
+    dd {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      color: var(--ds-blue-700);
+      font-size: 2rem;
+      text-align: start;
+      line-height: 1.25;
+    }
+  }
+
+  .total-currency {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .preview-action {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 16px;
+    border-radius: var(--ds-radius-sm);
+  }
+
+  .preview-help {
+    margin-top: 16px;
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .validation-message {
+    color: var(--ds-alert);
+    font-size: 0.8125rem;
   }
 
   .message {
-    display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
+    margin: 16px 0;
+    padding: 16px;
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
   }
 
   .error {
-    color: var(--mat-sys-error);
-    background: var(--mat-sys-error-container);
+    color: var(--ds-alert);
+    background: var(--ds-alert-bg);
+  }
+
+  .phase-notice {
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
+
+    mat-icon {
+      flex-shrink: 0;
+      color: var(--ds-partial);
+    }
+
+    h3 {
+      font-size: 0.875rem;
+    }
+
+    p {
+      margin-top: 8px;
+      color: var(--ds-text-2);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+@media (width <= 880px) {
+  .vault-deposit .deposit-summary {
+    position: static;
+    flex: 1 1 100%;
+  }
+}
+
+@media (width <= 600px) {
+  .vault-deposit {
+    mat-card-content {
+      padding: 16px;
+      gap: 24px;
+    }
+
+    .header-actions {
+      margin-left: 0;
+    }
+
+    .header-actions a {
+      max-width: 100%;
+      white-space: normal;
+      text-align: start;
+      height: auto;
+      min-height: 40px;
+    }
+
+    .vault-context {
+      padding: 16px;
+    }
+
+    .context-grid {
+      gap: 16px;
+    }
+
+    .context-grid > div {
+      flex-basis: 100%;
+    }
+
+    .currency-field {
+      width: 100%;
+    }
+
+    .deposit-summary {
+      padding: 16px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+    }
   }
 }
