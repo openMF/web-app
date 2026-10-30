@@ -819,7 +819,14 @@
       "type": "प्रतिवेदन उत्पादन",
       "generated": "प्रतिवेदन: {{reportName}} डाटा उत्पन्न भयो",
       "generatedNoData": "प्रतिवेदन: {{reportName}} डाटा बिना उत्पन्न भयो",
+      "loanApplicationLoadFailed": "ऋण आवेदन PDF रिपोर्ट लोड गर्न सकिएन।",
       "loadFailed": "रिपोर्ट डाटा लोड गर्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।"
+    },
+    "documents": {
+      "uploadFailed": "कागजात अपलोड गर्न सकिएन"
+    },
+    "exchangeRates": {
+      "idMissing": "विनिमय दर आईडी छैन।"
     },
     "clipboard": {
       "type": "क्लिपबोर्ड",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "पुँजीकृत आय समायोजन रकम बराबर वा कम हुनुपर्छ",
       "buyDownFeeAdjusted": "Buy Down शुल्क रकम पहिले नै समायोजित भइसकेको छ",
       "buyDownFeeLimit": "Buy Down शुल्क समायोजन रकम बराबर वा कम हुनुपर्छ",
+      "chargebackLimit": "चार्जब्याक रकम यो भन्दा कम वा बराबर हुनुपर्छ",
       "businessRule": "व्यापार नियम",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2211,6 +2219,7 @@
       "Undo": "पूर्ववत गर्नुहोस्",
       "Undo Reset": "रिसेट पूर्ववत गर्नुहोस्",
       "Undo Transaction": "लेनदेन पूर्ववत गर्नुहोस्",
+      "Chargeback Transaction": "{{type}} लेनदेन चार्जब्याक",
       "Unmark as Fraud": "ठगी चिन्ह हटाउनुहोस्",
       "Upcoming Charges": "आगामी शुल्कहरू",
       "Upload": "अपलोड गर्नुहोस्",
@@ -4641,6 +4650,8 @@
       "Example loan product name": "जस्तै व्यक्तिगत ऋण – मानक",
       "Example short name": "जस्तै PLS",
       "Search Activity": "खोज गतिविधि",
+      "Search widgets": "विजेटहरू खोज्नुहोस्...",
+      "Select roles": "भूमिकाहरू छान्नुहोस्",
       "Enter your username": "आफ्नो प्रयोगकर्ता नाम प्रविष्ट गर्नुहोस्",
       "Enter your password": "आफ्नो पासवर्ड प्रविष्ट गर्नुहोस्",
       "# Remittance": "# रेमिट्यान्स",

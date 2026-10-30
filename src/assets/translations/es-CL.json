@@ -819,7 +819,14 @@
       "type": "Generación de reporte",
       "generated": "Reporte: datos de {{reportName}} generados",
       "generatedNoData": "Reporte: {{reportName}} generado sin datos",
+      "loanApplicationLoadFailed": "No se pudo cargar el reporte PDF de la solicitud de préstamo.",
       "loadFailed": "Error al cargar los datos del reporte. Por favor, inténtelo de nuevo."
+    },
+    "documents": {
+      "uploadFailed": "No se pudo subir el documento"
+    },
+    "exchangeRates": {
+      "idMissing": "Falta el ID del tipo de cambio."
     },
     "clipboard": {
       "type": "Portapapeles",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "El monto de ajuste de ingreso capitalizado debe ser menor o igual a",
       "buyDownFeeAdjusted": "Monto de tarifa Buy Down ya ajustado",
       "buyDownFeeLimit": "El monto de ajuste de tarifa Buy Down debe ser menor o igual a",
+      "chargebackLimit": "El monto del contracargo debe ser menor o igual a",
       "businessRule": "Regla de negocio",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2211,6 +2219,7 @@
       "Undo": "Deshacer",
       "Undo Reset": "Deshacer reinicio",
       "Undo Transaction": "Deshacer transacción",
+      "Chargeback Transaction": "Contracargo de la transacción {{type}}",
       "Unmark as Fraud": "Desmarcar como Fraude",
       "Upcoming Charges": "Próximos cargos",
       "Upload": "Subir",
@@ -4641,6 +4650,8 @@
       "Example loan product name": "p. ej. Crédito Personal – Estándar",
       "Example short name": "p. ej. PLS",
       "Search Activity": "Actividad de búsqueda",
+      "Search widgets": "Buscar widgets...",
+      "Select roles": "Seleccionar roles",
       "Enter your username": "Ingrese su nombre de usuario",
       "Enter your password": "Ingrese su contraseña",
       "# Remittance": "# Remesa",

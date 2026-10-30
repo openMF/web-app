@@ -819,7 +819,14 @@
       "type": "Generazione report",
       "generated": "Report: dati di {{reportName}} generati",
       "generatedNoData": "Report: {{reportName}} generato senza dati",
+      "loanApplicationLoadFailed": "Impossibile caricare il report PDF della richiesta di prestito.",
       "loadFailed": "Impossibile caricare i dati del report. Si prega di riprovare."
+    },
+    "documents": {
+      "uploadFailed": "Caricamento del documento non riuscito"
+    },
+    "exchangeRates": {
+      "idMissing": "L'ID del tasso di cambio è mancante."
     },
     "clipboard": {
       "type": "Appunti",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "L'importo della rettifica del reddito capitalizzato deve essere inferiore o uguale a",
       "buyDownFeeAdjusted": "Importo della commissione Buy Down già rettificato",
       "buyDownFeeLimit": "L'importo della rettifica della commissione Buy Down deve essere inferiore o uguale a",
+      "chargebackLimit": "L'importo del riaddebito deve essere inferiore o uguale a",
       "businessRule": "Regola aziendale",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2211,6 +2219,7 @@
       "Undo": "Disfare",
       "Undo Reset": "Annulla ripristino",
       "Undo Transaction": "Annulla transazione",
+      "Chargeback Transaction": "Riaddebito della transazione {{type}}",
       "Unmark as Fraud": "Rimuovi contrassegno di frode",
       "Upcoming Charges": "Prossimi addebiti",
       "Upload": "Caricamento",
@@ -4641,6 +4650,8 @@
       "Example loan product name": "es. Prestito personale – Standard",
       "Example short name": "es. PLS",
       "Search Activity": "Attività di ricerca",
+      "Search widgets": "Cerca widget...",
+      "Select roles": "Seleziona ruoli",
       "Enter your username": "Inserisci il tuo nome utente",
       "Enter your password": "Inserisci la tua password",
       "# Remittance": "# Rimessa",

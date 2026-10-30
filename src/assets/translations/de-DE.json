@@ -819,7 +819,14 @@
       "type": "Berichterstellung",
       "generated": "Bericht: {{reportName}} Daten generiert",
       "generatedNoData": "Bericht: {{reportName}} ohne Daten generiert",
+      "loanApplicationLoadFailed": "Der PDF-Bericht zum Kreditantrag konnte nicht geladen werden.",
       "loadFailed": "Fehler beim Laden der Berichtsdaten. Bitte versuchen Sie es erneut."
+    },
+    "documents": {
+      "uploadFailed": "Dokument konnte nicht hochgeladen werden"
+    },
+    "exchangeRates": {
+      "idMissing": "Die Wechselkurs-ID fehlt."
     },
     "clipboard": {
       "type": "Zwischenablage",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "Anpassungsbetrag des kapitalisierten Ertrags muss kleiner oder gleich sein",
       "buyDownFeeAdjusted": "Buy-Down-Gebühr bereits angepasst",
       "buyDownFeeLimit": "Anpassungsbetrag der Buy-Down-Gebühr muss kleiner oder gleich sein",
+      "chargebackLimit": "Der Rückbuchungsbetrag muss kleiner oder gleich sein als",
       "businessRule": "Geschäftsregel",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2213,6 +2221,7 @@
       "Undo": "Rückgängig machen",
       "Undo Reset": "Zurücksetzen rückgängig machen",
       "Undo Transaction": "Transaktion rückgängig machen",
+      "Chargeback Transaction": "Rückbuchung der Transaktion {{type}}",
       "Unmark as Fraud": "Betrugsmarkierung aufheben",
       "Upcoming Charges": "Kommende Anklagen",
       "Upload": "Hochladen",
@@ -4643,6 +4652,8 @@
       "Example loan product name": "z. B. Privatkredit – Standard",
       "Example short name": "z. B. PLS",
       "Search Activity": "Suchaktivität",
+      "Search widgets": "Widgets suchen...",
+      "Select roles": "Rollen auswählen",
       "Enter your username": "Geben Sie Ihren Benutzernamen ein",
       "Enter your password": "Geben Sie Ihr Passwort ein",
       "# Remittance": "# Überweisung",

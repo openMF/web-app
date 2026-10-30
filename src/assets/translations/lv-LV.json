@@ -816,7 +816,14 @@
       "type": "Atskaites ģenerēšana",
       "generated": "Atskaite: {{reportName}} dati ģenerēti",
       "generatedNoData": "Atskaite: {{reportName}} ģenerēta bez datiem",
+      "loanApplicationLoadFailed": "Neizdevās ielādēt aizdevuma pieteikuma PDF pārskatu.",
       "loadFailed": "Neizdevās ielādēt atskaites datus. Lūdzu, mēģiniet vēlreiz."
+    },
+    "documents": {
+      "uploadFailed": "Neizdevās augšupielādēt dokumentu"
+    },
+    "exchangeRates": {
+      "idMissing": "Trūkst valūtas kursa ID."
     },
     "clipboard": {
       "type": "Starpliktuve",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "Kapitalizēto ienākumu korekcijas summai jābūt mazākai vai vienādai ar",
       "buyDownFeeAdjusted": "Buy Down maksas summa jau koriģēta",
       "buyDownFeeLimit": "Buy Down maksas korekcijas summai jābūt mazākai vai vienādai ar",
+      "chargebackLimit": "Atmaksas summai jābūt mazākai vai vienādai ar",
       "businessRule": "Biznesa noteikums",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -2208,6 +2216,7 @@
       "Undo": "Atsaukt",
       "Undo Reset": "Atsaukt atiestatīšanu",
       "Undo Transaction": "Atsaukt darījumu",
+      "Chargeback Transaction": "Darījuma {{type}} atmaksa",
       "Unmark as Fraud": "Noņemt krāpšanas atzīmi",
       "Upcoming Charges": "Gaidāmās maksas",
       "Upload": "Augšupielādēt",
@@ -4638,6 +4647,8 @@
       "Example loan product name": "piem. Patēriņa aizdevums – Standarta",
       "Example short name": "piem. PLS",
       "Search Activity": "Meklēšanas darbība",
+      "Search widgets": "Meklēt logrīkus...",
+      "Select roles": "Izvēlieties lomas",
       "Enter your username": "Ievadiet savu lietotājvārdu",
       "Enter your password": "Ievadiet savu paroli",
       "# Remittance": "# Pārvedums",
