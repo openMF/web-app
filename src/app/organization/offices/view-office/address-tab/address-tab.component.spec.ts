@@ -161,6 +161,39 @@ describe('Office AddressTabComponent', () => {
     translateService.use('en');
   });
 
+  it('shows saved locations in the read-only summary even when client location entry is disabled', () => {
+    environment.enableClientAddressLocation = false;
+    component.readOnly = true;
+    organizationService.getOfficeAddresses.mockReturnValue(
+      of([
+        { ...officeAddress, latitude: 0, longitude: 0 },
+        { ...officeAddress, officeAddressId: 8, street: 'Second branch address', latitude: 91, longitude: 10 },
+        null
+      ])
+    );
+    fixture.detectChanges();
+    expect(component.officeAddresses).toHaveLength(2);
+    expect(fixture.nativeElement.querySelectorAll('mat-expansion-panel')).toHaveLength(2);
+    expect(fixture.nativeElement.querySelectorAll('mifosx-address-location-map')).toHaveLength(1);
+    expect(fixture.nativeElement.querySelectorAll('button')).toHaveLength(0);
+    expect(fixture.nativeElement.textContent).toContain('Karnataka');
+    expect(fixture.nativeElement.textContent).toContain('India');
+    component.addAddress();
+    component.editAddress(officeAddress);
+    component.deleteAddress(officeAddress);
+    component.toggleAddress(officeAddress);
+    expect(dialog.open).not.toHaveBeenCalled();
+  });
+
+  it('keeps saved address details visible when address catalog loading is forbidden', () => {
+    component.readOnly = true;
+    clientsService.getClientAddressTemplate.mockReturnValue(throwError(() => ({ status: 403 })));
+    fixture.detectChanges();
+    expect(component.officeAddresses).toHaveLength(1);
+    expect(fixture.nativeElement.textContent).toContain('MG Road');
+    expect(component.optionsLoadFailed).toBe(true);
+  });
+
   it('loads office addresses and address template options', () => {
     fixture.detectChanges();
 
@@ -423,6 +456,7 @@ describe('Office AddressTabComponent', () => {
     component.addAddress();
 
     const payload = organizationService.createOfficeAddress.mock.calls[0][1];
+    expect(payload.locale).toBe('en');
     expect(payload.latitude).toBe('12.9716');
     expect(payload.longitude).toBe('77.5946');
   });
@@ -437,6 +471,7 @@ describe('Office AddressTabComponent', () => {
     dialog.open.mockReturnValue(
       dialogRefWithValue({
         ...officeAddressWithCoordinates,
+        locale: 'en',
         latitude: '13',
         longitude: '78'
       })
@@ -448,6 +483,7 @@ describe('Office AddressTabComponent', () => {
       '1',
       '7',
       expect.objectContaining({
+        locale: 'en',
         latitude: '13',
         longitude: '78'
       })

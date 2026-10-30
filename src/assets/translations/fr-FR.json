@@ -1707,6 +1707,7 @@
       "NotEqual": "Différent de"
     },
     "heading": {
+      "Address & Location": "Adresse et localisation",
       "Cash Payment": "Paiement en espèces",
       "Catalog Updates": "Mises à jour des catalogues",
       "Confirmation": "Confirmation",
@@ -4725,6 +4726,7 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "No valid saved coordinates": "La carte est indisponible, car les coordonnées enregistrées sont manquantes ou non valides.",
       "Clone": "Cloner",
       "Clone Loan Product": "Cloner le produit de prêt",
       "Near Breach": "Proche du manquement",

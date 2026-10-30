@@ -1705,6 +1705,7 @@
       "NotEqual": "Nerovná se"
     },
     "heading": {
+      "Address & Location": "Adresa a poloha",
       "Cash Payment": "Hotovostní platba",
       "Catalog Updates": "Aktualizace katalogů",
       "Confirmation": "Potvrzení",
@@ -4723,6 +4724,7 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "No valid saved coordinates": "Mapa není k dispozici, protože uložené souřadnice chybí nebo jsou neplatné.",
       "Clone": "Klonovat",
       "Clone Loan Product": "Klonovat produkt půjčky",
       "Near Breach": "Blízko porušení",
