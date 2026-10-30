@@ -1,0 +1,311 @@
+{
+  "ticket": "WEB-1374",
+  "pullRequest": "https://github.com/openMF/web-app/pull/4193",
+  "capturedAt": "2026-10-26T16:45:08.175Z",
+  "environment": {
+    "browser": "Google Chrome 156.0.8078.47 (Playwright channel=chrome, headless)",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "backend": "https://demo.mifos.community via proxy.conf.js",
+    "account": "mifos (demo)",
+    "operatingSystem": "macOS 25.5.0 (arm64)"
+  },
+  "builds": {
+    "before": {
+      "port": 4600,
+      "source": "origin/dev worktree at /tmp/web-app-base",
+      "commit": "2b46af23e",
+      "url": "http://localhost:4600"
+    },
+    "after": {
+      "port": 4500,
+      "source": "branch a11y-entity-row-keyboard-activation",
+      "commit": "c99f646d7",
+      "url": "http://localhost:4500"
+    }
+  },
+  "notes": [
+    "Same script, same search term (\"Hanna\"), same viewport and backend for both builds.",
+    "Rows are reached with Tab (never clicked) before Enter or Space is pressed.",
+    "Screenshots are raw Playwright viewport captures; the only difference between before/after is the build being served.",
+    "The fix is behavioural: the list renders identically, so the visible proof is the destination page after the key press.",
+    "Only end states that differ are committed as images: baseline focused row (row focused, route unchanged) and the destination reached on the fixed build. A no-op leaves the page pixel-identical, so Enter/Space no-navigation results are recorded as URLs, elapsed time and defaultPrevented in this file instead of duplicate images."
+  ],
+  "screenshots": [
+    {
+      "file": "before-01-clients-row-focused.png",
+      "phase": "before",
+      "step": "clients list, first row focused with Tab",
+      "url": "http://localhost:4600/#/clients",
+      "capturedAt": "2026-10-26T16:45:24.413Z",
+      "sha256": "b70dcde3329a1565a282c7c86895ba77d4b519019e69385fb1708663a0a0e612",
+      "bytes": 49445,
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "file": "after-01-clients-enter-detail.png",
+      "phase": "after",
+      "step": "clients: Enter pressed on the focused row",
+      "url": "http://localhost:4500/#/clients/99/general",
+      "capturedAt": "2026-10-26T16:47:05.458Z",
+      "sha256": "90173952cdd2253425a7a77fd63e0648aeaea8b3b13ee6772e7a1ade83fcb0d9",
+      "bytes": 110294,
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "file": "after-02-groups-enter-detail.png",
+      "phase": "after",
+      "step": "groups: Enter pressed on the focused row",
+      "url": "http://localhost:4500/#/groups/1/general",
+      "capturedAt": "2026-10-26T16:47:48.994Z",
+      "sha256": "1043a4396fc9ee52ef925b6839619700b4e1fb707e58fe625b93db8351bf706a",
+      "bytes": 90673,
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "file": "after-03-centers-enter-detail.png",
+      "phase": "after",
+      "step": "centers: Enter pressed on the focused row",
+      "url": "http://localhost:4500/#/centers/3/general",
+      "capturedAt": "2026-10-26T16:48:01.324Z",
+      "sha256": "c14780a6bb66759f196fb77ea614e88f4f15e500a7b0ac590beb77031f42fb5b",
+      "bytes": 83759,
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "file": "after-04-loans-enter-detail.png",
+      "phase": "after",
+      "step": "loans: Enter pressed on the focused row",
+      "url": "http://localhost:4500/#/loans/73/general",
+      "capturedAt": "2026-10-26T16:48:12.397Z",
+      "sha256": "222bb7b2cda434bd74ce8f481a18e0d81aced23f43b6d2fb5ea46fc37cb33a0c",
+      "bytes": 105683,
+      "width": 1280,
+      "height": 900
+    }
+  ],
+  "before": {
+    "base": "http://localhost:4600",
+    "commit": "2b46af23e",
+    "source": "origin/dev worktree at /tmp/web-app-base",
+    "lists": {
+      "clients": {
+        "rows": 1,
+        "row": {
+          "tag": "DIV",
+          "role": null,
+          "tabindex": "0",
+          "text": "HB Hanna Bekele Person · Activated 20 August 2026 ACTIVE 93671 9be9079ae1f8 Head"
+        },
+        "ariaSnapshot": "- text: HB Hanna Bekele Person · Activated 20 August 2026 Active 93671 9be9079ae1f8 Head Office",
+        "tabReach": {
+          "reached": true,
+          "tabs": 9,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4600/#/clients",
+          "to": "http://localhost:4600/#/clients",
+          "navigated": false,
+          "ms": 10212
+        },
+        "space": {
+          "key": " ",
+          "from": "http://localhost:4600/#/clients",
+          "to": "http://localhost:4600/#/clients",
+          "navigated": false,
+          "ms": 10215,
+          "defaultPrevented": false,
+          "scrollEvents": [],
+          "scrollY": 0
+        },
+        "mouse": {
+          "from": "http://localhost:4600/#/clients",
+          "to": "http://localhost:4600/#/clients/99/general",
+          "navigated": true,
+          "ms": 5907
+        }
+      },
+      "groups": {
+        "row": {
+          "tag": "DIV",
+          "role": null,
+          "tabindex": "0",
+          "text": "GT group root test ACTIVE 000000001 1123 Head Office"
+        },
+        "ariaSnapshot": "- text: GT group root test Active 000000001 1123 Head Office",
+        "tabReach": {
+          "reached": true,
+          "tabs": 33,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4600/#/groups",
+          "to": "http://localhost:4600/#/groups",
+          "navigated": false,
+          "ms": 10209
+        }
+      },
+      "centers": {
+        "row": {
+          "tag": "DIV",
+          "role": null,
+          "tabindex": "0",
+          "text": "TE test ACTIVE 000000003 — Head Office"
+        },
+        "ariaSnapshot": "- text: TE test Active 000000003 — Head Office",
+        "tabReach": {
+          "reached": true,
+          "tabs": 35,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4600/#/centers",
+          "to": "http://localhost:4600/#/centers",
+          "navigated": false,
+          "ms": 10210
+        }
+      },
+      "loans": {
+        "row": {
+          "tag": "DIV",
+          "role": null,
+          "tabindex": "0",
+          "text": "HB Hanna Bekele Individual ACTIVE 27078 ₹10,000.00 Custom Schedule LP"
+        },
+        "ariaSnapshot": "- text: HB\n- link \"Hanna Bekele\":\n  - /url: \"#/clients/99/general\"\n- text: Individual Active 27078 ₹10,000.00 Custom Schedule LP",
+        "tabReach": {
+          "reached": true,
+          "tabs": 38,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4600/#/loans",
+          "to": "http://localhost:4600/#/loans",
+          "navigated": false,
+          "ms": 10207
+        }
+      }
+    },
+    "finishedAt": "2026-10-26T16:46:35.249Z"
+  },
+  "after": {
+    "base": "http://localhost:4500",
+    "commit": "c99f646d7",
+    "source": "branch a11y-entity-row-keyboard-activation",
+    "lists": {
+      "clients": {
+        "rows": 1,
+        "row": {
+          "tag": "DIV",
+          "role": "link",
+          "tabindex": "0",
+          "text": "HB Hanna Bekele Person · Activated 20 August 2026 ACTIVE 93671 9be9079ae1f8 Head"
+        },
+        "ariaSnapshot": "- link \"HB Hanna Bekele Person · Activated 20 August 2026 Active 93671 9be9079ae1f8 Head Office\"",
+        "tabReach": {
+          "reached": true,
+          "tabs": 9,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4500/#/clients",
+          "to": "http://localhost:4500/#/clients/99/general",
+          "navigated": true,
+          "ms": 8867
+        },
+        "space": {
+          "key": " ",
+          "from": "http://localhost:4500/#/clients",
+          "to": "http://localhost:4500/#/clients/99/general",
+          "navigated": true,
+          "ms": 7868,
+          "defaultPrevented": true,
+          "scrollEvents": [],
+          "scrollY": 0
+        },
+        "mouse": {
+          "from": "http://localhost:4500/#/clients",
+          "to": "http://localhost:4500/#/clients/99/general",
+          "navigated": true,
+          "ms": 6646
+        }
+      },
+      "groups": {
+        "row": {
+          "tag": "DIV",
+          "role": "link",
+          "tabindex": "0",
+          "text": "GT group root test ACTIVE 000000001 1123 Head Office"
+        },
+        "ariaSnapshot": "- link \"GT group root test Active 000000001 1123 Head Office\"",
+        "tabReach": {
+          "reached": true,
+          "tabs": 33,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4500/#/groups",
+          "to": "http://localhost:4500/#/groups/1/general",
+          "navigated": true,
+          "ms": 11141
+        }
+      },
+      "centers": {
+        "row": {
+          "tag": "DIV",
+          "role": "link",
+          "tabindex": "0",
+          "text": "TE test ACTIVE 000000003 — Head Office"
+        },
+        "ariaSnapshot": "- link \"TE test Active 000000003 — Head Office\"",
+        "tabReach": {
+          "reached": true,
+          "tabs": 35,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4500/#/centers",
+          "to": "http://localhost:4500/#/centers/3/general",
+          "navigated": true,
+          "ms": 8800
+        }
+      },
+      "loans": {
+        "row": {
+          "tag": "DIV",
+          "role": "link",
+          "tabindex": "0",
+          "text": "HB Hanna Bekele Individual ACTIVE 27078 ₹10,000.00 Custom Schedule LP"
+        },
+        "ariaSnapshot": "- link \"HB Hanna Bekele Individual Active 27078 ₹10,000.00 Custom Schedule LP\":\n  - text: HB\n  - link \"Hanna Bekele\":\n    - /url: \"#/clients/99/general\"\n  - text: Individual Active 27078 ₹10,000.00 Custom Schedule LP",
+        "tabReach": {
+          "reached": true,
+          "tabs": 37,
+          "via": "keyboard Tab"
+        },
+        "enter": {
+          "key": "Enter",
+          "from": "http://localhost:4500/#/loans",
+          "to": "http://localhost:4500/#/loans/73/general",
+          "navigated": true,
+          "ms": 6461
+        }
+      }
+    },
+    "finishedAt": "2026-10-26T16:48:12.398Z"
+  }
+}
