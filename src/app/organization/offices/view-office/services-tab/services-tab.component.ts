@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
@@ -80,6 +88,8 @@ interface OfficeServiceData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServicesTabComponent implements OnInit {
+  @Input() readOnly = false;
+
   private route = inject(ActivatedRoute);
   private organizationService = inject(OrganizationService);
   private dialog = inject(MatDialog);
@@ -89,7 +99,14 @@ export class ServicesTabComponent implements OnInit {
 
   officeId: string;
   officeServices: OfficeServiceData[] = [];
-  displayedColumns: string[] = [
+  get displayedColumns(): string[] {
+    return this.readOnly ? [
+          'serviceName',
+          'workingHours'
+        ] : this.columns;
+  }
+
+  private readonly columns: string[] = [
     'serviceName',
     'serviceExternalId',
     'workingHours',
@@ -133,7 +150,7 @@ export class ServicesTabComponent implements OnInit {
   }
 
   addService() {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 
@@ -156,7 +173,7 @@ export class ServicesTabComponent implements OnInit {
   }
 
   editService(service: OfficeServiceData) {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 
@@ -188,7 +205,7 @@ export class ServicesTabComponent implements OnInit {
   }
 
   deleteService(service: OfficeServiceData) {
-    if (this.isPluginUnavailable) {
+    if (this.readOnly || this.isPluginUnavailable) {
       return;
     }
 

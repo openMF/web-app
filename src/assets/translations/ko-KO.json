@@ -1704,6 +1704,7 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Address & Location": "주소 및 위치",
       "Cash Payment": "현금 결제",
       "Catalog Updates": "카탈로그 업데이트",
       "Confirmation": "확인",
@@ -4722,6 +4723,7 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "No valid saved coordinates": "저장된 좌표가 없거나 유효하지 않아 지도를 표시할 수 없습니다.",
       "Clone": "복제",
       "Clone Loan Product": "대출상품 복제",
       "Near Breach": "위반 임박",

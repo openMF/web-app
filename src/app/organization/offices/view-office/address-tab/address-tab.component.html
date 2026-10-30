@@ -9,9 +9,15 @@
 <div class="tab-container mat-typography">
   <div class="layout-row align-start">
     <div class="m-b-10">
-      <h3>{{ 'labels.heading.Address' | translate }}</h3>
+      <h3>
+        @if (readOnly) {
+          {{ 'labels.heading.Address & Location' | translate }}
+        } @else {
+          {{ 'labels.heading.Address' | translate }}
+        }
+      </h3>
     </div>
-    @if (!hasOfficeAddress) {
+    @if (!readOnly && !hasOfficeAddress) {
       <div class="action-button m-b-10 gap-25px">
         <button
           mat-raised-button
@@ -57,22 +63,24 @@
   @if (!isLoading && !hasError && !isPluginUnavailable && !officeAddresses.length) {
     <div class="address-state empty-state">
       <span>{{ 'labels.text.No data found' | translate }}</span>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addAddress()"
-        [disabled]="!canAddAddress"
-        *mifosxHasPermission="'CREATE_OFFICE'"
-      >
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
+      @if (!readOnly) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAddress()"
+          [disabled]="!canAddAddress"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      }
     </div>
   }
 
   @if (!isLoading && !hasError && !isPluginUnavailable && officeAddresses.length) {
-    <mat-accordion>
+    <mat-accordion [multi]="readOnly">
       @for (address of officeAddresses; track getOfficeAddressId(address, $index)) {
-        <mat-expansion-panel class="address">
+        <mat-expansion-panel class="address" [expanded]="readOnly">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{ getAddressType(address) || ('labels.heading.Address' | translate) }}
@@ -82,42 +90,45 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-divider [inset]="true"></mat-divider>
-          <div class="address-actions layout-row align-end align-items-center">
-            <button
-              mat-button
-              color="primary"
-              (click)="editAddress(address)"
-              [disabled]="isSaving || optionsLoadFailed || isPluginUnavailable"
-              *mifosxHasPermission="'UPDATE_OFFICE'"
-            >
-              <fa-icon icon="edit"></fa-icon>
-            </button>
-            <button
-              mat-button
-              color="warn"
-              (click)="deleteAddress(address)"
-              [disabled]="isSaving || isPluginUnavailable"
-              *mifosxHasPermission="'DELETE_OFFICE'"
-            >
-              <fa-icon icon="trash"></fa-icon>
-            </button>
-            <mat-slide-toggle
-              [checked]="address.isActive"
-              (change)="toggleAddress(address)"
-              [disabled]="isSaving || isPluginUnavailable"
-              *mifosxHasPermission="'UPDATE_OFFICE'"
-            ></mat-slide-toggle>
-          </div>
-
+          @if (!readOnly) {
+            <div class="address-actions layout-row align-end align-items-center">
+              <button
+                mat-button
+                color="primary"
+                (click)="editAddress(address)"
+                [disabled]="isSaving || optionsLoadFailed || isPluginUnavailable"
+                *mifosxHasPermission="'UPDATE_OFFICE'"
+              >
+                <fa-icon icon="edit"></fa-icon>
+              </button>
+              <button
+                mat-button
+                color="warn"
+                (click)="deleteAddress(address)"
+                [disabled]="isSaving || isPluginUnavailable"
+                *mifosxHasPermission="'DELETE_OFFICE'"
+              >
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+              <mat-slide-toggle
+                [checked]="address.isActive"
+                (change)="toggleAddress(address)"
+                [disabled]="isSaving || isPluginUnavailable"
+                *mifosxHasPermission="'UPDATE_OFFICE'"
+              ></mat-slide-toggle>
+            </div>
+          }
           <div class="address-details">
             <div class="address-row">
               <span class="label">{{ 'labels.inputs.Address Type' | translate }}</span>
               <span>{{ getAddressType(address) || ('labels.inputs.Not Provided' | translate) }}</span>
             </div>
-            @if (hasValue(address.street)) {
+            @if (readOnly || hasValue(address.street)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Street' | translate }}</span>
-                <span>{{ address.street }}</span>
+                <span>{{
+                  hasValue(address.street) ? address.street : ('labels.inputs.Not Provided' | translate)
+                }}</span>
               </div>
             }
             @if (hasValue(address.addressLine1)) {
@@ -144,10 +155,10 @@
                 <span>{{ address.townVillage }}</span>
               </div>
             }
-            @if (hasValue(address.city)) {
+            @if (readOnly || hasValue(address.city)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.City' | translate }}</span>
-                <span>{{ address.city }}</span>
+                <span>{{ hasValue(address.city) ? address.city : ('labels.inputs.Not Provided' | translate) }}</span>
               </div>
             }
             @if (hasValue(address.countyDistrict)) {
@@ -156,36 +167,48 @@
                 <span>{{ address.countyDistrict }}</span>
               </div>
             }
-            @if (hasValue(address.stateProvinceId)) {
+            @if (readOnly || hasValue(address.stateProvinceId)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.State / Province' | translate }}</span>
                 <span>{{
-                  getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name || address.stateProvinceId
+                  getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name ||
+                    address.stateProvinceId ||
+                    ('labels.inputs.Not Provided' | translate)
                 }}</span>
               </div>
             }
-            @if (hasValue(address.countryId)) {
+            @if (readOnly || hasValue(address.countryId)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Country' | translate }}</span>
-                <span>{{ getSelectedValue('countryIdOptions', address.countryId)?.name || address.countryId }}</span>
+                <span>{{
+                  getSelectedValue('countryIdOptions', address.countryId)?.name ||
+                    address.countryId ||
+                    ('labels.inputs.Not Provided' | translate)
+                }}</span>
               </div>
             }
-            @if (hasValue(address.postalCode)) {
+            @if (readOnly || hasValue(address.postalCode)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Postal Code' | translate }}</span>
-                <span>{{ address.postalCode }}</span>
+                <span>{{
+                  hasValue(address.postalCode) ? address.postalCode : ('labels.inputs.Not Provided' | translate)
+                }}</span>
               </div>
             }
-            @if (clientAddressLocationEnabled && hasValue(address.latitude)) {
+            @if (clientAddressLocationEnabled && (readOnly || hasValue(address.latitude))) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
-                <span>{{ address.latitude }}</span>
+                <span>{{
+                  hasValue(address.latitude) ? address.latitude : ('labels.inputs.Not Provided' | translate)
+                }}</span>
               </div>
             }
-            @if (clientAddressLocationEnabled && hasValue(address.longitude)) {
+            @if (clientAddressLocationEnabled && (readOnly || hasValue(address.longitude))) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
-                <span>{{ address.longitude }}</span>
+                <span>{{
+                  hasValue(address.longitude) ? address.longitude : ('labels.inputs.Not Provided' | translate)
+                }}</span>
               </div>
             }
             <div class="address-row">
@@ -193,6 +216,9 @@
               <span>{{ getActiveStatusLabel(address.isActive) | translate }}</span>
             </div>
           </div>
+          @if (readOnly && !hasValidCoordinatePair(address.latitude, address.longitude)) {
+            <p>{{ 'labels.text.No valid saved coordinates' | translate }}</p>
+          }
           @if (clientAddressLocationEnabled && hasValidCoordinatePair(address.latitude, address.longitude)) {
             <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
           }

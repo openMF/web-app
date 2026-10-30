@@ -1670,6 +1670,7 @@
       "NotEqual": "Bərabər deyil"
     },
     "heading": {
+      "Address & Location": "Ünvan və məkan",
       "Cash Payment": "Nağd ödəniş",
       "Catalog Updates": "Kataloq yeniləmələri",
       "Confirmation": "Təsdiq",
@@ -4682,6 +4683,7 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "Clone": "Klonla",
       "Clone Loan Product": "Kredit məhsulunu klonla",
       "Select a client from the list": "Siyahıdan müştəri seç",
