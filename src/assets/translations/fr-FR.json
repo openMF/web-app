@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Traitement de {{count}} élément(s) de vérification…",
+      "processedSummary": "{{processed}} tâches traitées : {{succeeded}} réussies, {{failed}} échouées.",
+      "loading": "Chargement de la boîte de réception du vérificateur…"
+    },
+    "error": {
+      "failedIds": "ID des enregistrements en échec :",
+      "load": "Impossible de charger la boîte de réception du vérificateur. Veuillez relancer votre recherche.",
+      "permission": "Vous n’avez pas l’autorisation d’agir sur les éléments de vérification de cette liste."
+    }
+  },
   "cashInventory": {
     "title": "Suivi de l’inventaire de caisse",
     "description": "Consultez l’inventaire des espèces et des chèques par dépositaire, type de transaction et devise.",
@@ -807,7 +819,14 @@
       "type": "Génération de rapport",
       "generated": "Rapport : données de {{reportName}} générées",
       "generatedNoData": "Rapport : {{reportName}} généré sans données",
+      "loanApplicationLoadFailed": "Impossible de charger le rapport PDF de la demande de prêt.",
       "loadFailed": "Échec du chargement des données du rapport. Veuillez réessayer."
+    },
+    "documents": {
+      "uploadFailed": "Échec du téléversement du document"
+    },
+    "exchangeRates": {
+      "idMissing": "L'identifiant du taux de change est manquant."
     },
     "clipboard": {
       "type": "Presse-papiers",
@@ -831,6 +850,7 @@
       "capitalizedIncomeLimit": "Le montant d'ajustement du revenu capitalisé doit être inférieur ou égal à",
       "buyDownFeeAdjusted": "Montant des frais Buy Down déjà ajusté",
       "buyDownFeeLimit": "Le montant d'ajustement des frais Buy Down doit être inférieur ou égal à",
+      "chargebackLimit": "Le montant de la rétrofacturation doit être inférieur ou égal à",
       "businessRule": "Règle métier",
       "alertWithAmount": "{{label}} : {{amount}}",
       "bulkWaiveCharge": {
@@ -1697,6 +1717,7 @@
       "NotEqual": "Différent de"
     },
     "heading": {
+      "Address & Location": "Adresse et localisation",
       "Cash Payment": "Paiement en espèces",
       "Catalog Updates": "Mises à jour des catalogues",
       "Confirmation": "Confirmation",
@@ -2201,6 +2222,7 @@
       "Undo": "annuler",
       "Undo Reset": "Annuler la réinitialisation",
       "Undo Transaction": "Annuler la transaction",
+      "Chargeback Transaction": "Rétrofacturation de la transaction {{type}}",
       "Unmark as Fraud": "Retirer la marque de fraude",
       "Upcoming Charges": "Frais à venir",
       "Upload": "Télécharger",
@@ -4632,6 +4654,8 @@
       "Example loan product name": "p. ex. Prêt personnel – Standard",
       "Example short name": "p. ex. PLS",
       "Search Activity": "Activité de recherche",
+      "Search widgets": "Rechercher des widgets...",
+      "Select roles": "Sélectionner des rôles",
       "Enter your username": "Saisissez votre nom d'utilisateur",
       "Enter your password": "Saisissez votre mot de passe",
       "# Remittance": "# Transfert",
@@ -4716,6 +4740,7 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "No valid saved coordinates": "La carte est indisponible, car les coordonnées enregistrées sont manquantes ou non valides.",
       "Clone": "Cloner",
       "Clone Loan Product": "Cloner le produit de prêt",
       "Near Breach": "Proche du manquement",
@@ -7922,6 +7947,69 @@
       "businessDateChanged": "La date comptable a changé. Actualisez le contexte.",
       "catalogChanged": "Une coupure n’est plus disponible. Actualisez le catalogue et ressaisissez les quantités.",
       "invalidInput": "Vérifiez les quantités avant de demander un aperçu."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Préparer le dépôt en espèces",
+      "statusHelp": "Le statut opérationnel du coffre n’a pas été confirmé.",
+      "countCash": "Comptez les espèces",
+      "entryHint": "Saisissez la quantité de chaque billet et pièce.",
+      "summary": "Récapitulatif du dépôt",
+      "previewHelp": "L’aperçu vérifie la ventilation des espèces sans déplacer de fonds."
     }
   }
 }

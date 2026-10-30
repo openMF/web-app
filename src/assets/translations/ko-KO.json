@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "검사 항목 {{count}}개 처리 중…",
+      "processedSummary": "작업 {{processed}}개 처리됨: {{succeeded}}개 성공, {{failed}}개 실패.",
+      "loading": "체커 받은 편지함을 불러오는 중…"
+    },
+    "error": {
+      "failedIds": "실패한 레코드 ID:",
+      "load": "체커 받은 편지함을 불러올 수 없습니다. 검색을 다시 시도해 주세요.",
+      "permission": "이 목록의 검사 항목에 대해 작업할 권한이 없습니다."
+    }
+  },
   "cashInventory": {
     "title": "현금 재고 모니터링",
     "description": "보관 담당자, 거래 유형 및 통화별 현금과 수표 재고를 검토합니다.",
@@ -804,7 +816,14 @@
       "type": "보고서 생성",
       "generated": "보고서: {{reportName}} 데이터 생성됨",
       "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨",
+      "loanApplicationLoadFailed": "대출 신청서 PDF 보고서를 불러오지 못했습니다.",
       "loadFailed": "보고서 데이터를 불러오지 못했습니다. 다시 시도해 주세요."
+    },
+    "documents": {
+      "uploadFailed": "문서를 업로드하지 못했습니다"
+    },
+    "exchangeRates": {
+      "idMissing": "환율 ID가 없습니다."
     },
     "clipboard": {
       "type": "클립보드",
@@ -828,6 +847,7 @@
       "capitalizedIncomeLimit": "자본화 수입 조정 금액은 다음 이하여야 합니다",
       "buyDownFeeAdjusted": "Buy Down 수수료 금액이 이미 조정되었습니다",
       "buyDownFeeLimit": "Buy Down 수수료 조정 금액은 다음 이하여야 합니다",
+      "chargebackLimit": "지불 거절 금액은 다음 금액 이하여야 합니다",
       "businessRule": "비즈니스 규칙",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -1694,6 +1714,7 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Address & Location": "주소 및 위치",
       "Cash Payment": "현금 결제",
       "Catalog Updates": "카탈로그 업데이트",
       "Confirmation": "확인",
@@ -2198,6 +2219,7 @@
       "Undo": "실행 취소",
       "Undo Reset": "재설정 실행 취소",
       "Undo Transaction": "거래 취소",
+      "Chargeback Transaction": "{{type}} 거래 지불 거절",
       "Unmark as Fraud": "사기 표시 해제",
       "Upcoming Charges": "다가오는 요금",
       "Upload": "업로드",
@@ -4629,6 +4651,8 @@
       "Example loan product name": "예: 개인 대출 – 표준",
       "Example short name": "예: PLS",
       "Search Activity": "검색 활동",
+      "Search widgets": "위젯 검색...",
+      "Select roles": "역할 선택",
       "Enter your username": "사용자 이름을 입력하세요",
       "Enter your password": "비밀번호를 입력하세요",
       "# Remittance": "# 송금",
@@ -4713,6 +4737,7 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "No valid saved coordinates": "저장된 좌표가 없거나 유효하지 않아 지도를 표시할 수 없습니다.",
       "Clone": "복제",
       "Clone Loan Product": "대출상품 복제",
       "Near Breach": "위반 임박",
@@ -7919,6 +7944,69 @@
       "businessDateChanged": "영업일이 변경되었습니다. 정보를 새로 고치세요.",
       "catalogChanged": "권종을 더 이상 사용할 수 없습니다. 목록을 새로 고치고 수량을 다시 입력하세요.",
       "invalidInput": "미리보기 요청 전에 수량을 확인하세요."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "현금 입금 준비",
+      "statusHelp": "금고의 운영 상태가 확인되지 않았습니다.",
+      "countCash": "현금 수량 입력",
+      "entryHint": "각 지폐와 동전의 수량을 입력하세요.",
+      "summary": "입금 요약",
+      "previewHelp": "미리보기는 자금 이동 없이 현금 내역을 확인합니다."
     }
   }
 }

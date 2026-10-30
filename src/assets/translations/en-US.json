@@ -1,4 +1,16 @@
 {
+  "checkerInbox": {
+    "status": {
+      "processing": "Processing {{count}} checker item(s)…",
+      "processedSummary": "{{processed}} tasks processed: {{succeeded}} succeeded, {{failed}} failed.",
+      "loading": "Loading checker inbox…"
+    },
+    "error": {
+      "failedIds": "Failed record IDs:",
+      "load": "Unable to load checker inbox. Please try your search again.",
+      "permission": "You do not have permission to action the checker items in this list."
+    }
+  },
   "cashInventory": {
     "title": "Cash Inventory Monitoring",
     "description": "Review cash and check inventory by custodian, transaction type and currency.",
@@ -805,7 +817,14 @@
       "type": "Report generation",
       "generated": "Report: {{reportName}} data generated",
       "generatedNoData": "Report: {{reportName}} without data generated",
+      "loanApplicationLoadFailed": "Failed to load Loan Application PDF report.",
       "loadFailed": "Failed to load report data. Please try again."
+    },
+    "documents": {
+      "uploadFailed": "Failed to upload document"
+    },
+    "exchangeRates": {
+      "idMissing": "Exchange rate id is missing."
     },
     "clipboard": {
       "type": "Clipboard",
@@ -829,6 +848,7 @@
       "capitalizedIncomeLimit": "Capitalized Income Adjustment amount must be lower or equal to",
       "buyDownFeeAdjusted": "Buy Down Fee amount already adjusted",
       "buyDownFeeLimit": "Buy Down Fee Adjustment amount must be lower or equal to",
+      "chargebackLimit": "Chargeback amount must be lower or equal to",
       "businessRule": "Business Rule",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -1696,6 +1716,7 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Address & Location": "Address & Location",
       "Cash Payment": "Cash Payment",
       "Catalog Updates": "Catalog Updates",
       "Confirmation": "Confirmation",
@@ -2220,6 +2241,7 @@
       "Unassign Staff": "Unassign Staff",
       "Undo": "Undo",
       "Undo Transaction": "Undo Transaction",
+      "Chargeback Transaction": "Chargeback {{type}} Transaction",
       "Undo Reset": "Undo Reset",
       "Unmark as Fraud": "Unmark as Fraud",
       "Upcoming Charges": "Upcoming Charges",
@@ -4632,6 +4654,8 @@
       "Example loan product name": "e.g. Personal Loan – Standard",
       "Example short name": "e.g. PLS",
       "Search Activity": "Search Activity",
+      "Search widgets": "Search widgets...",
+      "Select roles": "Select roles",
       "Select close date": "Select close date",
       "Select start date": "Select start date",
       "Sender name": "Sender name",
@@ -4711,6 +4735,7 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "Clone": "Clone",
       "Clone Loan Product": "Clone Loan Product",
       "Near Breach": "Near Breach",
@@ -7854,7 +7879,7 @@
     "recordedInventory": "Recorded Vault Inventory",
     "inventoryUnavailable": "Vault inventory is unavailable. An unknown balance is not zero.",
     "processingUnavailable": "Execution Unavailable",
-    "processingExplanation": "Transaction preview is available, but financial execution is not enabled for this phase.",
+    "processingExplanation": "Preview and historical evidence depend on the relevant permissions and vault capabilities. Financial execution requires approved source, accounting, vault eligibility and approval policies.",
     "status": {
       "AVAILABLE": "Available",
       "UNAVAILABLE": "Unavailable",
@@ -7913,6 +7938,69 @@
       "businessDateChanged": "The business date has changed. Refresh the context before previewing again.",
       "catalogChanged": "A denomination is no longer available. Refresh the catalog and enter quantities again.",
       "invalidInput": "Check the denomination quantities before requesting a preview."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Prepare cash deposit",
+      "statusHelp": "Vault operational status has not been confirmed.",
+      "countCash": "Count your cash",
+      "entryHint": "Enter the quantity of each banknote and coin.",
+      "summary": "Deposit summary",
+      "previewHelp": "Preview checks your cash breakdown without moving funds."
     }
   }
 }

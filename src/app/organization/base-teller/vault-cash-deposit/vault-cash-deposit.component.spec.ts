@@ -118,8 +118,8 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
 
   it('renders translated title and read-only explanation before loading', () => {
     fixture.detectChanges();
-    expect(text()).toContain('Cash Deposit into Vault');
-    expect(text()).toContain('financial execution is not enabled');
+    expect(text()).toContain('Prepare cash deposit');
+    expect(text()).toContain('Financial execution requires approved');
     expect(component.contextLoading()).toBe(true);
     expect(fixture.nativeElement.querySelector('[role="status"]')).toBeTruthy();
     http.expectOne(root + '/context').flush(context);
@@ -424,7 +424,9 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
     return TestBed.inject(OverlayContainer).getContainerElement().textContent ?? '';
   };
   const previewButton = () =>
-    fixture.nativeElement.querySelector('button[aria-describedby="vault-processing-explanation"]') as HTMLButtonElement;
+    fixture.nativeElement.querySelector(
+      'button[aria-describedby~="vault-processing-explanation"]'
+    ) as HTMLButtonElement;
 
   it('calculates exact banknote and coin estimates from accessible quantity inputs', () => {
     entry();
@@ -523,8 +525,13 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
     const dialog = TestBed.inject(MatDialog).openDialogs[0];
     expect(dialog._containerInstance._config.ariaLabelledBy).toBe('vault-preview-title');
     expect(dialog._containerInstance._config.restoreFocus).toBe(true);
-    expect(TestBed.inject(OverlayContainer).getContainerElement().querySelectorAll('button')).toHaveLength(2);
-    expect(overlayText()).not.toMatch(/Confirm Deposit|Receipt|Successfully Completed/);
+    expect(TestBed.inject(OverlayContainer).getContainerElement().querySelectorAll('button')).toHaveLength(3);
+    expect(
+      TestBed.inject(OverlayContainer)
+        .getContainerElement()
+        .querySelector<HTMLButtonElement>('[data-testid=confirm-vault-deposit]')!.disabled
+    ).toBe(true);
+    expect(overlayText()).not.toMatch(/Successfully Completed/);
     dialog.close();
     expect(component.quantities.getRawValue()).toEqual([
       '2',
@@ -621,7 +628,11 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
     fixture.detectChanges();
     expect(overlayText()).toContain('differs from the client estimate');
     if (change === 'total') expect(overlayText()).toContain('900.01');
-    expect(overlayText()).not.toContain('Confirm Deposit');
+    expect(
+      TestBed.inject(OverlayContainer)
+        .getContainerElement()
+        .querySelector<HTMLButtonElement>('[data-testid=confirm-vault-deposit]')!.disabled
+    ).toBe(true);
   });
 
   it('keeps execution unavailable even if a future server reports readiness', () => {
@@ -632,8 +643,12 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
     preview.executionReadiness.blockers = [];
     http.expectOne(previewPath).flush(preview);
     fixture.detectChanges();
-    expect(overlayText()).toContain('financial execution is not enabled');
-    expect(overlayText()).not.toContain('Confirm Deposit');
+    expect(overlayText()).toContain('it cannot post a vault deposit');
+    expect(
+      TestBed.inject(OverlayContainer)
+        .getContainerElement()
+        .querySelector<HTMLButtonElement>('[data-testid=confirm-vault-deposit]')!.disabled
+    ).toBe(true);
     http.expectNone(() => true);
   });
 
@@ -874,7 +889,7 @@ describe('VaultCashDepositComponent (mocked HTTP)', () => {
       translation.use(locale);
       start();
       finish();
-      expect(text()).toContain(data.vaultDeposit.title);
+      expect(text()).toContain(data.vaultDeposit.ui.prepare);
       expect(text()).toContain(data.vaultDeposit.processingExplanation);
       expect(text()).toContain(data.vaultDeposit.banknotes);
       expect(text()).toContain(data.vaultDeposit.coins);

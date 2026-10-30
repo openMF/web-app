@@ -1,0 +1,157 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title id="vault-detail-title">{{ 'vaultDeposit.history.details' | translate }}</h2>
+<mat-dialog-content>
+  @if (loading()) {
+    <mat-spinner diameter="24" [attr.aria-label]="'cashExchange.loading' | translate"></mat-spinner>
+  }
+  @if (error()) {
+    <div class="notice" role="alert">
+      {{ error() | translate }}
+      <button mat-button type="button" (click)="refresh()">{{ 'cashInventory.retry' | translate }}</button>
+    </div>
+  }
+  @if (detail(); as record) {
+    <p class="notice">{{ 'vaultDeposit.history.attemptsNotice' | translate }}</p>
+    <dl class="context-grid">
+      <div>
+        <dt>{{ 'vaultDeposit.history.reference' | translate }}</dt>
+        <dd>{{ record.attempt.attemptReference }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.preview.operation' | translate }}</dt>
+        <dd>{{ 'vaultDeposit.title' | translate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.branch' | translate }}</dt>
+        <dd>{{ record.attempt.branch.name }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.vault' | translate }}</dt>
+        <dd>{{ record.attempt.vault.name }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.preview.businessDate' | translate }}</dt>
+        <dd>{{ record.attempt.businessDate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.history.createdAt' | translate }}</dt>
+        <dd>{{ record.attempt.createdAt | date: 'medium' }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.history.initiatedBy' | translate }}</dt>
+        <dd>{{ record.attempt.initiatedBy }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.history.status' | translate }}</dt>
+        <dd>{{ statusLabel(record.attempt.status) | translate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'vaultDeposit.history.accountingStatus' | translate }}</dt>
+        <dd>{{ 'vaultDeposit.history.notPosted' | translate }}</dd>
+      </div>
+      @if (record.attempt.correlationReference) {
+        <div>
+          <dt>{{ 'vaultDeposit.history.correlationReference' | translate }}</dt>
+          <dd>{{ record.attempt.correlationReference }}</dd>
+        </div>
+      }
+      @if (record.attempt.proposedSource; as source) {
+        <div>
+          <dt>{{ 'vaultDeposit.history.proposedSource' | translate }}</dt>
+          <dd>{{ source.type }} · {{ source.reference }}</dd>
+        </div>
+      }
+    </dl>
+    <p>{{ 'vaultDeposit.history.snapshotNotice' | translate }}</p>
+    @for (currency of record.attempt.currencies; track currency.currencyCode) {
+      <section>
+        <h3>{{ currency.currencyCode }}</h3>
+        <mifosx-vault-deposit-breakdown [currency]="currency"></mifosx-vault-deposit-breakdown>
+        <dl class="context-grid">
+          <div>
+            <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
+            <dd>{{ currency.banknotesTotal | withdrawalMoney: currency.decimalPlaces }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'vaultDeposit.preview.coinsTotal' | translate }}</dt>
+            <dd>{{ currency.coinsTotal | withdrawalMoney: currency.decimalPlaces }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'vaultDeposit.history.proposedCash' | translate }}</dt>
+            <dd>{{ currency.totalCash | withdrawalMoney: currency.decimalPlaces }}</dd>
+          </div>
+        </dl>
+      </section>
+    }
+    <section class="notice">
+      <h3>{{ 'vaultDeposit.preview.executionUnavailable' | translate }}</h3>
+      <ul>
+        @for (blocker of record.attempt.blockers; track $index) {
+          <li>{{ blockerLabel(blocker.code) | translate }}</li>
+        }
+      </ul>
+    </section>
+    <section aria-labelledby="vault-audit-title">
+      <h3 id="vault-audit-title">{{ 'vaultDeposit.history.audit' | translate }}</h3>
+      <p>{{ 'vaultDeposit.history.auditNotice' | translate }}</p>
+      @if (auditLoading()) {
+        <mat-spinner diameter="24" [attr.aria-label]="'cashExchange.loading' | translate"></mat-spinner>
+      }
+      @if (auditError()) {
+        <p role="alert">
+          {{ auditError() | translate }}
+          <button mat-button type="button" (click)="loadAudit()">{{ 'cashInventory.retry' | translate }}</button>
+        </p>
+      }
+      @if (!record.permittedActions.includes('VIEW_AUDIT')) {
+        <p>{{ 'vaultDeposit.errors.forbidden' | translate }}</p>
+      }
+      @if (audit(); as evidence) {
+        <ol class="timeline">
+          @for (event of evidence.events; track event.eventId) {
+            <li>
+              <strong>{{
+                (event.eventType === 'BLOCKED_ATTEMPT_RECORDED'
+                  ? 'vaultDeposit.history.blockedEvent'
+                  : 'vaultDeposit.history.unknownEvent'
+                ) | translate
+              }}</strong>
+              <p>{{ event.timestamp | date: 'medium' }} · {{ statusLabel(event.newState) | translate }}</p>
+              @if (event.actorId !== null && event.actorId !== undefined) {
+                <p>{{ 'vaultDeposit.history.actorId' | translate }}: {{ event.actorId }}</p>
+              }
+            </li>
+          } @empty {
+            <li>{{ 'vaultDeposit.history.auditEmpty' | translate }}</li>
+          }
+        </ol>
+      }
+    </section>
+    <section class="notice" aria-labelledby="vault-receipt-title">
+      <h3 id="vault-receipt-title">{{ 'vaultDeposit.history.receipt' | translate }}</h3>
+      <p>{{ 'vaultDeposit.history.receiptNotPosted' | translate }}</p>
+      <button mat-button type="button" disabled>{{ 'vaultDeposit.history.viewReceipt' | translate }}</button>
+      <button mat-button type="button" (click)="checkReceipt()" [disabled]="receiptLoading()">
+        {{ 'vaultDeposit.history.checkReceipt' | translate }}
+      </button>
+      @if (receiptLoading()) {
+        <mat-spinner diameter="24" [attr.aria-label]="'cashExchange.loading' | translate"></mat-spinner>
+      }
+      @if (receiptMessage()) {
+        <p role="status">{{ receiptMessage() | translate }}</p>
+      }
+    </section>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end"
+  ><button mat-button type="button" mat-dialog-close>
+    {{ 'vaultDeposit.preview.close' | translate }}
+  </button></mat-dialog-actions
+>

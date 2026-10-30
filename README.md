@@ -99,11 +99,14 @@ Choose ONE of the following methods to install the web app:
 
 #### Method 1: Manual Installation
 
-1. Install Node.js: [Download here](https://nodejs.org/en/download/)
+1. Install Node.js **26.13.0 LTS** (codename "Lithium", supported until April 2029): [Download here](https://nodejs.org/en/download/)
+   - The `engines` field in `package.json` requires `node >= 26.13.0` and `npm >= 10.0.0`.
+   - On Linux, official Node 26 binaries are linked against `libatomic` — install it if your distribution does not provide it (e.g. `sudo apt-get install libatomic1`).
 2. Install Angular CLI:
-   ```
+   ```bash
    npm install -g @angular/cli@20.3.27
    ```
+   Angular 20.3 officially supports Node.js ^20.19.0 || ^22.12.0 || ^24.0.0 — Node.js 26 support lands in Angular 22+. The project runs on Node 26.13.0 in practice (build, lint, tests, and E2E all verified green) but stays on Angular 20 for this release and will revisit the Angular upgrade separately.
 3. Clone the repository:
    ```
    git clone https://github.com/openMF/web-app.git
