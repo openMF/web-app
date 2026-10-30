@@ -47,3 +47,8 @@
     </div>
   </div>
 </div>
+
+<ng-container *mifosxHasPermission="'READ_OFFICE'">
+  <mifosx-office-address-tab [readOnly]="true" />
+  <mifosx-office-services-tab [readOnly]="true" />
+</ng-container>

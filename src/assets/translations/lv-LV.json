@@ -1704,6 +1704,7 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Address & Location": "Adrese un atrašanās vieta",
       "Cash Payment": "Skaidras naudas maksājums",
       "Catalog Updates": "Katalogu atjauninājumi",
       "Confirmation": "Apstiprinājums",
@@ -4722,6 +4723,7 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "Clone": "Klonēt",
       "Clone Loan Product": "Klonēt aizdevuma produktu",
       "Near Breach": "Tuvu pārkāpumam",

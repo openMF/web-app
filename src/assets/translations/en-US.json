@@ -1706,6 +1706,7 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Address & Location": "Address & Location",
       "Cash Payment": "Cash Payment",
       "Catalog Updates": "Catalog Updates",
       "Confirmation": "Confirmation",
@@ -4720,6 +4721,7 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "Clone": "Clone",
       "Clone Loan Product": "Clone Loan Product",
       "Near Breach": "Near Breach",

@@ -100,6 +100,18 @@ describe('Office ServicesTabComponent', () => {
     component = fixture.componentInstance;
   });
 
+  it('shows actual service working hours without management controls in the summary', () => {
+    component.readOnly = true;
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Cash Deposit');
+    expect(fixture.nativeElement.textContent).toContain('09:00-17:00');
+    expect(fixture.nativeElement.querySelectorAll('button')).toHaveLength(0);
+    component.addService();
+    component.editService(officeService);
+    component.deleteService(officeService);
+    expect(dialog.open).not.toHaveBeenCalled();
+  });
+
   it('loads and renders office services', () => {
     fixture.detectChanges();
 

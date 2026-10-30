@@ -1707,6 +1707,7 @@
       "NotEqual": "Diferente de"
     },
     "heading": {
+      "Address & Location": "Endereço e localização",
       "Cash Payment": "Pagamento em numerário",
       "Catalog Updates": "Atualizações de catálogos",
       "Confirmation": "Confirmação",
@@ -4725,6 +4726,7 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "No valid saved coordinates": "O mapa não está disponível porque as coordenadas guardadas estão em falta ou são inválidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar produto de empréstimo",
       "Near Breach": "Perto do incumprimento",

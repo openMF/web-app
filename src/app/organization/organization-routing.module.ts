@@ -11,6 +11,8 @@ import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/
 
 import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
+import { officeAccessGuard } from './offices/office-access.guard';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -235,6 +237,7 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
+              canActivate: [officeAccessGuard],
               data: { title: 'View Office', routeResolveBreadcrumb: [
                   'office',
                   'name'

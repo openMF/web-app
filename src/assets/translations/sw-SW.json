@@ -1704,6 +1704,7 @@
       "NotEqual": "Sio sawa"
     },
     "heading": {
+      "Address & Location": "Anwani na eneo",
       "Cash Payment": "Malipo ya pesa taslimu",
       "Catalog Updates": "Masasisho ya katalogi",
       "Confirmation": "Uthibitisho",
@@ -4722,6 +4723,7 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",
       "Near Breach": "Karibu na ukiukaji",
