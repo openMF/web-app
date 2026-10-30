@@ -7874,7 +7874,7 @@
     "recordedInventory": "Inventario registrado de la bóveda",
     "inventoryUnavailable": "El inventario de la bóveda no está disponible. Un saldo desconocido no es cero.",
     "processingUnavailable": "Ejecución no disponible",
-    "processingExplanation": "La vista previa está disponible, pero la ejecución financiera no está habilitada en esta fase.",
+    "processingExplanation": "La vista previa y la evidencia histórica dependen de los permisos correspondientes y de las capacidades de la bóveda. La ejecución financiera requiere políticas aprobadas de origen, contabilidad, elegibilidad de la bóveda y aprobación.",
     "status": {
       "AVAILABLE": "Disponible",
       "UNAVAILABLE": "No disponible",
@@ -7933,6 +7933,69 @@
       "businessDateChanged": "La fecha operativa ha cambiado. Actualice el contexto.",
       "catalogChanged": "Una denominación ya no está disponible. Actualice el catálogo e introduzca las cantidades de nuevo.",
       "invalidInput": "Revise las cantidades antes de solicitar la vista previa."
+    },
+    "confirmation": {
+      "confirm": "Confirmar depósito",
+      "unavailable": "Confirmar depósito no está disponible. El servidor solo registra intentos bloqueados; no puede contabilizar un depósito en bóveda. No se enviará ninguna solicitud de ejecución.",
+      "approvalPolicy": "La política de autorización del depósito y de aprobación por un segundo responsable no está aprobada.",
+      "postingModel": "No hay un modelo aprobado de origen de fondos, inventario de bóveda y contabilización."
+    },
+    "history": {
+      "title": "Historial de depósitos en bóveda",
+      "attemptsNotice": "Estos son intentos de depósito guardados, no transacciones financieras completadas. Los importes son efectivo propuesto; no se contabilizó efectivo.",
+      "fromDate": "Desde fecha de negocio",
+      "toDate": "Hasta fecha de negocio",
+      "officeId": "ID de sucursal",
+      "vaultKey": "Clave de bóveda",
+      "status": "Estado",
+      "all": "Todos",
+      "reference": "Referencia del intento de depósito",
+      "exactReference": "Solo referencia VDA exacta.",
+      "dateRange": "La fecha inicial debe ser anterior o igual a la fecha final.",
+      "vaultMismatch": "El ID de sucursal y la clave de bóveda deben identificar la misma sucursal.",
+      "search": "Buscar",
+      "reset": "Restablecer filtros",
+      "sortOrder": "Primero los intentos más recientes. El servidor determina el orden.",
+      "empty": "No hay intentos de depósito que coincidan con estos filtros.",
+      "proposedCash": "Efectivo propuesto",
+      "actions": "Acciones",
+      "details": "Detalles del intento",
+      "receipt": "Recibo",
+      "receiptNotPosted": "Recibo no disponible: este intento no se contabilizó.",
+      "pagination": "Páginas del historial de depósitos en bóveda",
+      "createdAt": "Fecha de registro",
+      "initiatedBy": "ID del empleado iniciador",
+      "actorId": "ID del empleado",
+      "accountingStatus": "Estado contable",
+      "notPosted": "No contabilizado",
+      "correlationReference": "Referencia de correlación",
+      "proposedSource": "Origen propuesto (sin verificar)",
+      "snapshotNotice": "Se muestran los valores de denominación y la precisión de moneda originales guardados. No se aplica el catálogo actual.",
+      "audit": "Evidencia de auditoría",
+      "auditNotice": "El servidor solo expone el intento bloqueado registrado. No existen eventos de aprobación ni contabilización.",
+      "blockedEvent": "Intento bloqueado registrado",
+      "unknownEvent": "Evento de auditoría del servidor",
+      "auditEmpty": "No hay evidencia de auditoría disponible.",
+      "viewReceipt": "Ver recibo",
+      "checkReceipt": "Consultar disponibilidad del recibo",
+      "receiptUnsupported": "El servidor devolvió un formato de recibo no compatible. No se puede mostrar ni imprimir un recibo completado.",
+      "blocked": "Bloqueado — No contabilizado",
+      "unknownStatus": "Estado sin resolver",
+      "noDenominations": "No hay denominaciones registradas.",
+      "errors": {
+        "unavailable": "No se pudo cargar la información del depósito. Compruebe la conexión con el servidor y reintente.",
+        "notFound": "El registro no está disponible o está fuera de su ámbito de bóveda autorizado.",
+        "filters": "Revise las fechas, la sucursal, la bóveda, la moneda y la referencia exacta del intento."
+      }
+    },
+    "refresh": "Actualizar",
+    "ui": {
+      "prepare": "Preparar depósito en bóveda",
+      "statusHelp": "El estado operativo de la bóveda no está confirmado.",
+      "countCash": "Cuente su efectivo",
+      "entryHint": "Ingrese la cantidad de cada billete y moneda.",
+      "summary": "Resumen del depósito",
+      "previewHelp": "La vista previa valida el desglose de efectivo sin mover fondos."
     }
   }
 }
