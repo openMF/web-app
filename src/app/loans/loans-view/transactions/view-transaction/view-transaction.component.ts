@@ -535,7 +535,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
-        label: 'Payment Type',
+        label: this.translateService.instant('labels.inputs.Payment Type'),
         value: '',
         options: { label: 'name', value: 'id', data: this.paymentTypeOptions },
         required: true,
@@ -543,7 +543,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       }),
       new InputBase({
         controlName: 'amount',
-        label: 'Amount',
+        label: this.translateService.instant('labels.inputs.Amount'),
         value: this.amountRelationsAllowed,
         type: 'number',
         required: true,
@@ -552,7 +552,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       })
     ];
     const data = {
-      title: `Chargeback ${this.transactionType.value} Transaction`,
+      title: this.translateService.instant('labels.heading.Chargeback Transaction', {
+        type: this.translateService.instant('labels.catalogs.' + this.transactionType.value)
+      }),
       layout: { addButtonText: 'Chargeback' },
       formfields: formfields
     };
@@ -579,7 +581,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         } else {
           this.alertService.alert({
             type: 'BusinessRule',
-            message: 'Chargeback amount must be lower or equal to: ' + this.amountRelationsAllowed
+            message: this.translateService.instant('errors.loans.alertWithAmount', {
+              label: this.translateService.instant('errors.loans.chargebackLimit'),
+              amount: this.amountRelationsAllowed
+            })
           });
         }
       }

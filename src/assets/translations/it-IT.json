@@ -819,7 +819,14 @@
       "type": "Generazione report",
       "generated": "Report: dati di {{reportName}} generati",
       "generatedNoData": "Report: {{reportName}} generato senza dati",
+      "loanApplicationLoadFailed": "Impossibile caricare il report PDF della richiesta di prestito.",
       "loadFailed": "Impossibile caricare i dati del report. Si prega di riprovare."
+    },
+    "documents": {
+      "uploadFailed": "Caricamento del documento non riuscito"
+    },
+    "exchangeRates": {
+      "idMissing": "L'ID del tasso di cambio è mancante."
     },
     "clipboard": {
       "type": "Appunti",
@@ -843,6 +850,7 @@
       "capitalizedIncomeLimit": "L'importo della rettifica del reddito capitalizzato deve essere inferiore o uguale a",
       "buyDownFeeAdjusted": "Importo della commissione Buy Down già rettificato",
       "buyDownFeeLimit": "L'importo della rettifica della commissione Buy Down deve essere inferiore o uguale a",
+      "chargebackLimit": "L'importo del riaddebito deve essere inferiore o uguale a",
       "businessRule": "Regola aziendale",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -1707,6 +1715,7 @@
       "NotEqual": "Diverso da"
     },
     "heading": {
+      "Address & Location": "Indirizzo e posizione",
       "Cash Payment": "Pagamento in contanti",
       "Catalog Updates": "Aggiornamenti dei cataloghi",
       "Confirmation": "Conferma",
@@ -2211,6 +2220,7 @@
       "Undo": "Disfare",
       "Undo Reset": "Annulla ripristino",
       "Undo Transaction": "Annulla transazione",
+      "Chargeback Transaction": "Riaddebito della transazione {{type}}",
       "Unmark as Fraud": "Rimuovi contrassegno di frode",
       "Upcoming Charges": "Prossimi addebiti",
       "Upload": "Caricamento",
@@ -4641,6 +4651,8 @@
       "Example loan product name": "es. Prestito personale – Standard",
       "Example short name": "es. PLS",
       "Search Activity": "Attività di ricerca",
+      "Search widgets": "Cerca widget...",
+      "Select roles": "Seleziona ruoli",
       "Enter your username": "Inserisci il tuo nome utente",
       "Enter your password": "Inserisci la tua password",
       "# Remittance": "# Rimessa",
@@ -4725,6 +4737,7 @@
       "Remove tenant": "Rimuovere la voce di registro di {{identifier}} — il suo database resta intatto e nessun dato del tenant viene eliminato"
     },
     "text": {
+      "No valid saved coordinates": "La mappa non è disponibile perché le coordinate salvate sono mancanti o non valide.",
       "Clone": "Clona",
       "Clone Loan Product": "Clona prodotto di prestito",
       "Near Breach": "Vicino alla violazione",
@@ -7931,6 +7944,69 @@
       "businessDateChanged": "La data operativa è cambiata. Aggiornare il contesto.",
       "catalogChanged": "Un taglio non è più disponibile. Aggiornare il catalogo e reinserire le quantità.",
       "invalidInput": "Verificare le quantità prima di richiedere l’anteprima."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Prepara il deposito in contanti",
+      "statusHelp": "Lo stato operativo del caveau non è stato confermato.",
+      "countCash": "Conta i contanti",
+      "entryHint": "Inserisci la quantità di ogni banconota e moneta.",
+      "summary": "Riepilogo del deposito",
+      "previewHelp": "L’anteprima verifica il dettaglio dei contanti senza movimentare fondi."
     }
   }
 }

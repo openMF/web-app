@@ -257,7 +257,7 @@ describe('BaseTellerComponent', () => {
     'ALL_FUNCTIONS'
   ])('shows one vault Special Operations link for %s', (permission) => {
     const instance = component([permission]);
-    expect(instance.specialOperations).toHaveLength(1);
+    expect(instance.specialOperations).toHaveLength(permission === 'READ_BASE_TELLER_CASH_INVENTORY' ? 1 : 2);
     expect(instance.specialOperations[0].route).toEqual([
       '/organization',
       'base-teller',
