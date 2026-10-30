@@ -19,3 +19,16 @@
   height: 200px;
   display: block;
 }
+
+.signature-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+
+  .mat-mdc-button-toggle .fa-icon {
+    margin-right: 8px;
+  }
+}
