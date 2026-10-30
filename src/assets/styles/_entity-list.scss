@@ -80,8 +80,9 @@
 
 @mixin list {
   .entity-list-container {
+    width: calc(100% - 32px);
+    max-width: 84rem;
     margin: 16px auto;
-    max-width: 70%;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--loan-border);
@@ -110,6 +111,10 @@
     width: 100%;
     height: 36px;
     padding: 0 12px 0 36px;
+
+    /* Inputs are content-box by default here, which made this 100%-wide field
+       overflow its flex item and get clipped by the list container. */
+    box-sizing: border-box;
     border: 1px solid var(--loan-border);
     border-radius: 6px;
     background: var(--loan-surface);
@@ -301,6 +306,7 @@
   /* ── List ─────────────────────────────────────────────────── */
   .list {
     background: var(--loan-surface);
+    overflow-x: auto;
   }
 
   .list-header,
@@ -309,10 +315,14 @@
 
     /* Name takes every pixel the other columns don't need, so long names stay readable. */
     /* stylelint-disable-next-line unit-allowed-list */
-    grid-template-columns: 4px 36px minmax(220px, 1fr) 148px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%);
+    grid-template-columns: 4px 36px minmax(220px, 1fr) 152px minmax(120px, 14%) minmax(120px, 14%) minmax(150px, 16%);
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     padding: 8px 16px;
+
+    /* Keep the tracks from being squeezed past their minimum widths; the
+       scroll wrapper above takes over when the container is narrower. */
+    min-width: min-content;
   }
 
   .list-header {
@@ -402,6 +412,19 @@
   .list-row.closed,
   .list-row.rejected {
     opacity: 0.75;
+  }
+
+  /* At narrower widths the fixed tracks above need more room than the viewport
+     has. Tighten them to 8px-grid values so all seven columns stay visible
+     instead of dropping fields or clipping the right-hand side. */
+  @media (width <= 1100px) {
+    .list-header,
+    .list-row {
+      /* stylelint-disable-next-line unit-allowed-list */
+      grid-template-columns: 4px 32px minmax(128px, 1fr) 136px 144px 96px 104px;
+      gap: 8px;
+      padding: 8px 16px;
+    }
   }
 
   .rail {
@@ -621,6 +644,10 @@
     font-size: 12px;
     color: var(--loan-text-2);
     flex-wrap: wrap;
+
+    /* Stay in view when the rows scroll horizontally on very narrow screens. */
+    position: sticky;
+    left: 0;
   }
 
   .list-footer strong {

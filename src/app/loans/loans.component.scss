@@ -79,6 +79,9 @@
 @media (width <= 1100px) {
   .loans-layout {
     flex-direction: column;
+
+    /* Stretch so .loans-container fills the column instead of sizing to its 848px content. */
+    align-items: stretch;
     max-width: 96%;
   }
 
