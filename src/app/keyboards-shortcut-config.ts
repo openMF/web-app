@@ -6,17 +6,35 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/** Keyboard Shortcuts Button Configuration */
+/**
+ * Keyboard Shortcuts Button Configuration
+ *
+ * Every shortcut uses Ctrl+Alt:
+ *
+ * - Bare Ctrl+letter combinations are reserved by browsers for opening windows and
+ *   tabs, finding text, reloading, opening downloads/dev tools, and focusing the
+ *   address bar. `preventDefault()` cannot reliably override those browser actions.
+ * - Bare Alt+letter combinations do not work reliably on macOS because Option
+ *   changes `event.key` to a different character. Matching also checks `event.code`
+ *   so the Ctrl+Alt shortcuts keep working there.
+ * - Ctrl+Alt was the application's original navigation chord, so this keeps one
+ *   consistent chord instead of introducing another modifier scheme.
+ *
+ * Run Report uses P and Logout uses O because Ctrl+Alt+T opens a terminal and
+ * Ctrl+Alt+L locks the screen on common Linux desktops.
+ */
+export type ButtonCombination = {
+  title: string;
+  ctrlKey: boolean;
+  shiftKey: boolean;
+  altKey: boolean;
+  key: string;
+  route: string;
+  id?: string;
+};
+
 export class KeyboardShortcutsConfiguration {
-  buttonsArray: {
-    title: string;
-    ctrlKey: boolean;
-    shiftKey: boolean;
-    altKey: boolean;
-    key: string;
-    route: string;
-    id?: string;
-  }[];
+  buttonsArray: ButtonCombination[];
 
   constructor() {
     this.makeCombination();
@@ -24,170 +42,170 @@ export class KeyboardShortcutsConfiguration {
 
   makeCombination() {
     this.buttonsArray = [
-      // Navigation Page - ctrl + n
+      // Navigation Page - ctrl + alt + n
       {
         title: 'Navigation Page',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'n',
         route: 'navigation'
       },
-      // Run Report - ctrl + t
+      // Run Report - ctrl + alt + p
       {
         title: 'Run Report',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
-        key: 't',
+        altKey: true,
+        key: 'p',
         route: '',
         id: 'runReport'
       },
-      // Checker Inbox & Pending Tasks - ctrl + i
+      // Checker Inbox & Pending Tasks - ctrl + alt + i
       {
         title: 'Checker Inbox & Pending Tasks',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'i',
         route: 'checker-inbox-and-tasks/checker-inbox'
       },
-      // Collection Sheet- ctrl + alt + o
+      // Collection Sheet - ctrl + alt + o
       // {
-      // title: 'Collection Sheet',
-      // ctrlKey: true,
-      // shiftKey: false,
-      // altKey: true,
-      // key: 'o',
-      // route: ''
+      //   title: 'Collection Sheet',
+      //   ctrlKey: true,
+      //   shiftKey: false,
+      //   altKey: true,
+      //   key: 'o',
+      //   route: ''
       // },
-      // Create Client - alt + c
+      // Create Client - ctrl + alt + c
       {
         title: 'Create Client',
-        ctrlKey: false,
+        ctrlKey: true,
         shiftKey: false,
         altKey: true,
         key: 'c',
         route: 'clients/create'
       },
-      // Create Group - ctrl + g
+      // Create Group - ctrl + alt + g
       {
         title: 'Create Group',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'g',
         route: 'groups/create'
       },
-      // Create Center - ctrl + q
+      // Create Center - ctrl + alt + q
       {
         title: 'Create Center',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'q',
         route: 'centers/create'
       },
-      // Frequent Posting - ctrl + f
+      // Frequent Posting - ctrl + alt + f
       {
         title: 'Frequent Posting',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'f',
         route: 'accounting/journal-entries/frequent-postings'
       },
-      // Closure Entries - ctrl + e
+      // Closure Entries - ctrl + alt + e
       {
         title: 'Closure Entries',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'e',
         route: 'accounting/closing-entries'
       },
-      // Journal Entry - ctrl + j
+      // Journal Entry - ctrl + alt + j
       {
         title: 'Journal Entry',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'j',
         route: 'accounting/journal-entries/create'
       },
-      // Reports - ctrl + r
+      // Reports - ctrl + alt + r
       {
         title: 'Reports',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
+        altKey: true,
         key: 'r',
         route: 'reports'
       },
-      // Accounting - alt + a
+      // Accounting - ctrl + alt + a
       {
         title: 'Accounting',
-        ctrlKey: false,
+        ctrlKey: true,
         shiftKey: false,
         altKey: true,
         key: 'a',
         route: 'accounting'
       },
-      // Save/Submit Forms - alt + s
+      // Save/Submit Forms - ctrl + alt + s
       {
         title: 'Save/Submit Forms',
-        ctrlKey: false,
+        ctrlKey: true,
         shiftKey: false,
         altKey: true,
         key: 's',
         route: '',
         id: 'submit'
       },
-      // Cancel - alt + x
+      // Cancel - ctrl + alt + x
       {
         title: 'Cancel',
-        ctrlKey: false,
+        ctrlKey: true,
         shiftKey: false,
         altKey: true,
         key: 'x',
         route: '',
         id: 'cancel'
       },
-      // Help - alt + h
+      // Help - ctrl + alt + h
       {
         title: 'Help',
-        ctrlKey: false,
+        ctrlKey: true,
         shiftKey: false,
         altKey: true,
         key: 'h',
         route: '',
         id: 'help'
       },
-      // Pagination: Next - ctrl + n
+      // Pagination: Next - ctrl + alt + n
       // {
-      //     title: 'Pagination: Next'
-      //     ctrlKey: true,
-      //     shiftKey: false,
-      //     altKey: true,
-      //     key: 'n,
-      //     route: ''
+      //   title: 'Pagination: Next',
+      //   ctrlKey: true,
+      //   shiftKey: false,
+      //   altKey: true,
+      //   key: 'n',
+      //   route: ''
       // },
-      // Pagination: Previous - ctrl + p
+      // Pagination: Previous - ctrl + alt + p
       // {
-      //     title: 'Pagination: Previous'
-      //     ctrlKey: true,
-      //     shiftKey: false,
-      //     altKey: true,
-      //     key: 'p,
-      //     route: ''
+      //   title: 'Pagination: Previous',
+      //   ctrlKey: true,
+      //   shiftKey: false,
+      //   altKey: true,
+      //   key: 'p',
+      //   route: ''
       // },
-      // Logout - ctrl + l
+      // Logout - ctrl + alt + o
       {
         title: 'Logout',
         ctrlKey: true,
         shiftKey: false,
-        altKey: false,
-        key: 'l',
+        altKey: true,
+        key: 'o',
         route: '',
         id: 'logout'
       }

@@ -103,7 +103,14 @@ const testingModuleMetadata = {
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 };
 
-describe('WebAppComponent — logout confirmation gate', () => {
+/** Dispatch a real keydown event on a detached target without reaching the window listener. */
+function keydown(target: EventTarget, init: KeyboardEventInit): KeyboardEvent {
+  const event = new KeyboardEvent('keydown', { bubbles: true, cancelable: true, ...init });
+  target.dispatchEvent(event);
+  return event;
+}
+
+describe('WebAppComponent', () => {
   let fixture: ComponentFixture<WebAppComponent>;
   let component: WebAppComponent;
 
@@ -147,7 +154,7 @@ describe('WebAppComponent — logout confirmation gate', () => {
     expect(component.logout).not.toHaveBeenCalled();
   });
 
-  it('routes the Ctrl+L keyboard shortcut through confirmLogout', () => {
+  it('routes a configured logout shortcut through confirmLogout', () => {
     component.buttonConfig = {
       buttonCombinations: [
         {
@@ -162,10 +169,12 @@ describe('WebAppComponent — logout confirmation gate', () => {
       ]
     } as any;
 
-    component.onKeydownHandler({ ctrlKey: true, shiftKey: false, altKey: false, key: 'l' } as KeyboardEvent);
+    const event = keydown(document.createElement('div'), { ctrlKey: true, key: 'l', code: 'KeyL' });
+    component.onKeydownHandler(event);
 
     expect(mockDialogOpen).toHaveBeenCalledWith(LogoutDialogComponent);
     expect(component.logout).toHaveBeenCalledTimes(1);
+    expect(event.defaultPrevented).toBe(true);
   });
 
   it('keeps the automatic session-expiry logout free of the confirmation dialog', () => {
@@ -180,5 +189,253 @@ describe('WebAppComponent — logout confirmation gate', () => {
     expect(component.logout).toHaveBeenCalledTimes(1);
 
     jest.useRealTimers();
+  });
+
+  describe('global keyboard shortcuts', () => {
+    it('runs a configured shortcut from a non-editable target and suppresses its default', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        altKey: true,
+        key: 'n',
+        code: 'KeyN'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['navigation'], { relativeTo: mockActivatedRoute });
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it.each([
+      'input',
+      'textarea',
+      'select',
+      'mat-select'
+    ])('ignores shortcuts from a %s', (tagName) => {
+      const event = keydown(document.createElement(tagName), {
+        ctrlKey: true,
+        altKey: true,
+        key: 'n',
+        code: 'KeyN'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('ignores shortcuts from an ARIA textbox', () => {
+      const target = document.createElement('div');
+      target.setAttribute('role', 'textbox');
+
+      const event = keydown(target, { ctrlKey: true, altKey: true, key: 'n', code: 'KeyN' });
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('ignores shortcuts from contenteditable elements and their descendants', () => {
+      const editable = document.createElement('div');
+      editable.setAttribute('contenteditable', 'true');
+      const child = document.createElement('span');
+      editable.appendChild(child);
+
+      const editableEvent = keydown(editable, { ctrlKey: true, altKey: true, key: 'n', code: 'KeyN' });
+      component.onKeydownHandler(editableEvent);
+
+      const childEvent = keydown(child, { ctrlKey: true, altKey: true, key: 'n', code: 'KeyN' });
+      component.onKeydownHandler(childEvent);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(editableEvent.defaultPrevented).toBe(false);
+      expect(childEvent.defaultPrevented).toBe(false);
+    });
+
+    it('does not treat contenteditable=false content as editable', () => {
+      const target = document.createElement('div');
+      target.setAttribute('contenteditable', 'false');
+
+      const event = keydown(target, { ctrlKey: true, altKey: true, key: 'n', code: 'KeyN' });
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['navigation'], { relativeTo: mockActivatedRoute });
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('matches a macOS Option-modified key by its physical code', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        altKey: true,
+        key: 'ç',
+        code: 'KeyC'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['clients/create'], { relativeTo: mockActivatedRoute });
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('does not suppress unrelated keydown events', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        altKey: true,
+        key: 'z',
+        code: 'KeyZ'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('does not handle the browser-reserved bare Ctrl combination', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        key: 'n',
+        code: 'KeyN'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('does not match a shortcut when Meta is also pressed', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        altKey: true,
+        metaKey: true,
+        key: 'n',
+        code: 'KeyN'
+      });
+
+      component.onKeydownHandler(event);
+
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('handles a missing Run Report target without throwing', () => {
+      const event = keydown(document.createElement('div'), {
+        ctrlKey: true,
+        altKey: true,
+        key: 'p',
+        code: 'KeyP'
+      });
+
+      expect(document.getElementById('runreport')).toBeNull();
+      expect(() => component.onKeydownHandler(event)).not.toThrow();
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('clicks the Run Report target when it is present', () => {
+      const runReportButton = document.createElement('button');
+      runReportButton.id = 'runreport';
+      document.body.appendChild(runReportButton);
+      const click = jest.spyOn(runReportButton, 'click').mockImplementation(() => {});
+
+      try {
+        const event = keydown(document.createElement('div'), {
+          ctrlKey: true,
+          altKey: true,
+          key: 'p',
+          code: 'KeyP'
+        });
+
+        component.onKeydownHandler(event);
+
+        expect(click).toHaveBeenCalledTimes(1);
+        expect(event.defaultPrevented).toBe(true);
+      } finally {
+        runReportButton.remove();
+      }
+    });
+
+    /* The character the operator sees must win over the physical key, otherwise a
+       layout whose KeyS produces "o" would run the earlier "s" entry (submit). */
+    it('prefers the typed key over a code match belonging to another action', () => {
+      component.buttonConfig = {
+        buttonCombinations: [
+          {
+            title: 'Save/Submit Forms',
+            ctrlKey: true,
+            shiftKey: false,
+            altKey: true,
+            key: 's',
+            route: '',
+            id: 'submit'
+          },
+          { title: 'Logout', ctrlKey: true, shiftKey: false, altKey: true, key: 'o', route: '', id: 'logout' }
+        ]
+      } as any;
+
+      const submitButton = document.createElement('button');
+      submitButton.textContent = 'Submit';
+      document.body.appendChild(submitButton);
+      const submitClick = jest.spyOn(submitButton, 'click').mockImplementation(() => {});
+
+      try {
+        const event = keydown(document.createElement('div'), {
+          ctrlKey: true,
+          altKey: true,
+          key: 'o',
+          code: 'KeyS'
+        });
+
+        component.onKeydownHandler(event);
+
+        expect(mockDialogOpen).toHaveBeenCalledWith(LogoutDialogComponent);
+        expect(submitClick).not.toHaveBeenCalled();
+        expect(event.defaultPrevented).toBe(true);
+      } finally {
+        submitButton.remove();
+      }
+    });
+
+    it('falls back to the physical code only when the key is not a Latin letter', () => {
+      component.buttonConfig = {
+        buttonCombinations: [
+          {
+            title: 'Save/Submit Forms',
+            ctrlKey: true,
+            shiftKey: false,
+            altKey: true,
+            key: 's',
+            route: '',
+            id: 'submit'
+          },
+          { title: 'Logout', ctrlKey: true, shiftKey: false, altKey: true, key: 'o', route: '', id: 'logout' }
+        ]
+      } as any;
+
+      const submitButton = document.createElement('button');
+      submitButton.textContent = 'Submit';
+      document.body.appendChild(submitButton);
+      const submitClick = jest.spyOn(submitButton, 'click').mockImplementation(() => {});
+
+      try {
+        // Option+O on macOS reports a non-Latin character, so the code decides.
+        const event = keydown(document.createElement('div'), {
+          ctrlKey: true,
+          altKey: true,
+          key: 'ø',
+          code: 'KeyO'
+        });
+
+        component.onKeydownHandler(event);
+
+        expect(mockDialogOpen).toHaveBeenCalledWith(LogoutDialogComponent);
+        expect(submitClick).not.toHaveBeenCalled();
+        expect(event.defaultPrevented).toBe(true);
+      } finally {
+        submitButton.remove();
+      }
+    });
   });
 });
