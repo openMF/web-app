@@ -96,9 +96,9 @@ export class Accounting {
     } else if (accountingRuleId === 2) {
       return { code: 'CASH', id: accountingRuleId, value: 'Cash' };
     } else if (accountingRuleId === 3) {
-      return { code: 'ACCRUAL_PERIODIC', id: accountingRuleId, value: 'Accural (periodic)' };
+      return { code: 'ACCRUAL_PERIODIC', id: accountingRuleId, value: 'Accrual (periodic)' };
     } else if (accountingRuleId === 4) {
-      return { code: 'ACCRUAL_UPFRONT', id: accountingRuleId, value: 'Accural (upfront)' };
+      return { code: 'ACCRUAL_UPFRONT', id: accountingRuleId, value: 'Accrual (upfront)' };
     }
     return { code: 'INVALID', id: accountingRuleId, value: 'Invalid' };
   }

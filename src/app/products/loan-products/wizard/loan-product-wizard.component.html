@@ -75,6 +75,7 @@
             [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
             [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
             [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
+            [creditAllocationStrategyOptions]="loanProductsTemplate.creditAllocationStrategyOptions"
             (setPaymentAllocation)="setPaymentAllocation($event)"
             (setCreditAllocation)="setCreditAllocation($event)"
           >
@@ -155,6 +156,7 @@
                   [required]="!!field.required"
                   [attr.maxlength]="field.maxLength || null"
                   [attr.min]="field.min ?? null"
+                  [attr.max]="field.max ?? null"
                 />
                 <ng-container *ngIf="field.type === 'date'">
                   <input
@@ -204,6 +206,12 @@
                   <mat-error>
                     {{ field.label | translate }} — {{ 'labels.commons.Minimum Value must be' | translate }}
                     <strong>{{ field.min }}</strong>
+                  </mat-error>
+                }
+                @if (fieldErrorKey(field) === 'max') {
+                  <mat-error>
+                    {{ field.label | translate }} — {{ 'labels.commons.Maximum Value must be' | translate }}
+                    <strong>{{ field.max }}</strong>
                   </mat-error>
                 }
                 <!--

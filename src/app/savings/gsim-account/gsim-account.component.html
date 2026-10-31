@@ -106,7 +106,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['/savings-accounts', element.id, 'actions', 'Approve']"
+              [routerLink]="['/groups', groupId, 'savings-accounts', element.id, 'actions', 'Approve']"
             >
               <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
             </button>
@@ -117,7 +117,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['/savings-accounts', element.id, 'actions', 'Activate']"
+              [routerLink]="['/groups', groupId, 'savings-accounts', element.id, 'actions', 'Activate']"
             >
               <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
             </button>
@@ -128,7 +128,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['/savings-accounts', element.id, 'actions', 'Undo Approval']"
+              [routerLink]="['/groups', groupId, 'savings-accounts', element.id, 'actions', 'Undo Approval']"
             >
               <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
             </button>

@@ -21,6 +21,7 @@ import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
 import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
@@ -1041,10 +1042,11 @@ export class LoansService {
       loansAccountData.loanType = 'group';
     }
 
-    if (loansAccountData.syncRepaymentsWithMeeting) {
+    // Semi-monthly loans cannot be linked to a meeting calendar (the backend rejects `calendarId`).
+    if (loansAccountData.syncRepaymentsWithMeeting && !isSemiMonthly(loansAccountData.repaymentFrequencyType)) {
       loansAccountData.calendarId = calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
     }
+    delete loansAccountData.syncRepaymentsWithMeeting;
 
     if (loansAccountData.recalculationRestFrequencyDate) {
       loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(

@@ -56,6 +56,49 @@ describe('ErrorHandlerInterceptor', () => {
   it.each([
     0,
     400,
+    401,
+    403,
+    404,
+    500
+  ])('keeps vault failures local and safe (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/fineract-provider/api/v2/base-teller/vault/context', status, 'GET', 'sensitive SQL')).toBe(
+      'errored'
+    );
+    expect(log).not.toHaveBeenCalled();
+    if (status !== 401) expect(alert).not.toHaveBeenCalled();
+    else
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.auth.sessionExpired.type',
+        message: 'errors.error.auth.sessionExpired.message'
+      });
+    log.mockRestore();
+  });
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    422,
+    500
+  ])('keeps vault preview diagnostics out of logs and global alerts (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v2/base-teller/vault-cash-deposits/preview',
+        status,
+        'POST',
+        'private SQL token'
+      )
+    ).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    0,
+    400,
     403,
     409,
     500

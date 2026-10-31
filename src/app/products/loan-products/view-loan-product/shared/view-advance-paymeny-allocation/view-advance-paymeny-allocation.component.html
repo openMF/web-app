@@ -64,31 +64,41 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="flex-fill">
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
-        <span class="flex-60">
-          <table>
-            <thead>
-              <tr>
-                <th>{{ 'labels.inputs.Order' | translate }}</th>
-                <th>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (
-                creditAllocation of creditAllocation.creditAllocationOrder;
-                track creditAllocation;
-                let idx = $index
-              ) {
+      @if (advancePaymentAllocationData?.creditAllocationStrategies?.length > 0) {
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Credit Allocation Strategy' | translate }}:</span>
+          <span class="flex-60">{{
+            creditAllocationStrategyValue(creditAllocation.creditAllocationStrategy) | translateKey: 'catalogs'
+          }}</span>
+        </div>
+      }
+      @if (!isPrincipalOnly(creditAllocation)) {
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
+          <span class="flex-60">
+            <table>
+              <thead>
                 <tr>
-                  <td>{{ idx + 1 }}</td>
-                  <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>
+                  <th>{{ 'labels.inputs.Order' | translate }}</th>
+                  <th>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
                 </tr>
-              }
-            </tbody>
-          </table>
-        </span>
-      </div>
+              </thead>
+              <tbody>
+                @for (
+                  creditAllocation of creditAllocation.creditAllocationOrder;
+                  track creditAllocation;
+                  let idx = $index
+                ) {
+                  <tr>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </span>
+        </div>
+      }
     </div>
   </mat-expansion-panel>
 }

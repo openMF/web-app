@@ -345,7 +345,7 @@ describe('IdentitiesTabComponent', () => {
     });
     expect(alertService.alert).toHaveBeenCalledWith({
       type: 'error',
-      message: 'Failed to upload document'
+      message: 'errors.documents.uploadFailed'
     });
   });
 });

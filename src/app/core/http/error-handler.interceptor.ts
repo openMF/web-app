@@ -118,8 +118,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
-    // Account transfers render safe localized errors, including text response bodies.
-    if (/\/base-teller\/(?:account-transfers|cash-transfers|withdrawals)(?:[/?]|$)/.test(request.url)) {
+    // These teller workflows render safe localized errors, including text response bodies.
+    if (
+      /\/base-teller\/(?:account-transfers|cash-transfers|withdrawals|vault|vault-cash-deposits)(?:[/?]|$)/.test(
+        request.url
+      )
+    ) {
       if (status === 401) {
         this.alertService.alert({
           type: this.translate.instant('errors.error.auth.sessionExpired.type'),
@@ -152,6 +156,14 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     // Match the endpoint regardless of the API prefix used by a gateway.
     // A 401 still needs the shared session-expired alert.
     if (status !== 401 && /\/base-teller\/cash-exchanges(?:[/?]|$)/.test(request.url)) {
+      return throwError(() => response);
+    }
+
+    // FX renders allowlisted translated domain errors; never surface SQL or server messages.
+    if (
+      status !== 401 &&
+      /\/v2\/(?:foreign-currency\/rates|base-teller\/foreign-currency)(?:[/?]|$)/.test(request.url)
+    ) {
       return throwError(() => response);
     }
 

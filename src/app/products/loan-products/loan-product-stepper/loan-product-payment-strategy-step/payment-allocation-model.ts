@@ -45,9 +45,17 @@ export interface CreditAllocationOrder {
   order: number;
 }
 
+export interface CreditAllocationStrategyOption {
+  id: number;
+  value: string;
+  code: string;
+}
+
 export interface CreditAllocation {
   transactionType: string;
-  creditAllocationOrder: CreditAllocationOrder[];
+  /** RULE_BASED (default when absent) requires creditAllocationOrder, PRINCIPAL_ONLY must not send it. */
+  creditAllocationStrategy?: string;
+  creditAllocationOrder?: CreditAllocationOrder[];
 }
 
 export interface CapitalizedIncome {
@@ -74,6 +82,11 @@ export class PaymentAllocationTransactionTypes {
   public static DEFAULT_TRANSACTION: PaymentAllocationTransactionType = { id: 1, value: 'Default', code: 'DEFAULT' };
 }
 
+export class CreditAllocationStrategies {
+  public static RULE_BASED = 'RULE_BASED';
+  public static PRINCIPAL_ONLY = 'PRINCIPAL_ONLY';
+}
+
 export class AdvancedPaymentAllocation {
   transaction: PaymentAllocationTransactionType;
   paymentAllocationOrder: PaymentAllocationOrder[];
@@ -84,12 +97,15 @@ export class AdvancedPaymentAllocation {
 export class AdvancedCreditAllocation {
   transaction: PaymentAllocationTransactionType;
   creditAllocationOrder?: CreditAllocationOrder[];
+  creditAllocationStrategy?: string;
+  creditAllocationStrategyOptions?: CreditAllocationStrategyOption[];
 }
 
 export class AdvancePaymentAllocationData {
   transactionTypes: PaymentAllocationTransactionType[];
   allocationTypes: PaymentAllocationType[];
   futureInstallmentAllocationRules: FutureInstallmentAllocationRule[];
+  creditAllocationStrategies?: CreditAllocationStrategyOption[];
 }
 
 @Injectable({
@@ -101,14 +117,21 @@ export class AdvancedPaymentStrategy {
     const advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] =
       loanProduct.creditAllocationTransactionTypes;
     const advancedPaymentAllocationTypes: CreditAllocationOrder[] = loanProduct.creditAllocationAllocationTypes;
+    const creditAllocationStrategyOptions: CreditAllocationStrategyOption[] =
+      loanProduct.creditAllocationStrategyOptions || [];
     if (loanProduct.creditAllocation) {
       loanProduct.creditAllocation.forEach((item: CreditAllocation) => {
+        // A PRINCIPAL_ONLY rule comes back without an order; seed the default one so switching back to
+        // RULE_BASED shows the full rule list.
+        const creditAllocationOrder =
+          item.creditAllocationOrder?.length > 0
+            ? this.buildCurrentCreditAllocationOrder(item.creditAllocationOrder, advancedPaymentAllocationTypes)
+            : advancedPaymentAllocationTypes;
         advancedCreditAllocation.push({
           transaction: this.getItemByCode(item.transactionType, advancedCreditAllocationTransactionTypes),
-          creditAllocationOrder: this.buildCurrentCreditAllocationOrder(
-            item.creditAllocationOrder,
-            advancedPaymentAllocationTypes
-          )
+          creditAllocationOrder: creditAllocationOrder,
+          creditAllocationStrategy: item.creditAllocationStrategy || CreditAllocationStrategies.RULE_BASED,
+          creditAllocationStrategyOptions: creditAllocationStrategyOptions
         });
       });
     }
@@ -176,11 +199,14 @@ export class AdvancedPaymentStrategy {
 
   public buildAdvancedCreditAllocation(
     transaction: PaymentAllocationTransactionType,
-    currentItems: CreditAllocationOrder[]
+    currentItems: CreditAllocationOrder[],
+    creditAllocationStrategyOptions: CreditAllocationStrategyOption[] = []
   ): AdvancedCreditAllocation {
     return {
       transaction: transaction,
-      creditAllocationOrder: this.buildCreditAllocationTransactionOrder(true, currentItems, currentItems)
+      creditAllocationOrder: this.buildCreditAllocationTransactionOrder(true, currentItems, currentItems),
+      creditAllocationStrategy: CreditAllocationStrategies.RULE_BASED,
+      creditAllocationStrategyOptions: creditAllocationStrategyOptions
     };
   }
 
@@ -242,10 +268,18 @@ export class AdvancedPaymentStrategy {
   public buildCreditAllocations(advancedCreditAllocations: AdvancedCreditAllocation[]): CreditAllocation[] {
     const creditAllocations: CreditAllocation[] = [];
     advancedCreditAllocations.forEach((creditAllocation: AdvancedCreditAllocation) => {
-      creditAllocations.push({
-        transactionType: creditAllocation.transaction.code,
-        creditAllocationOrder: this.buildCreditAllocationOrder(creditAllocation.creditAllocationOrder)
-      });
+      if (this.isPrincipalOnly(creditAllocation)) {
+        creditAllocations.push({
+          transactionType: creditAllocation.transaction.code,
+          creditAllocationStrategy: CreditAllocationStrategies.PRINCIPAL_ONLY
+        });
+      } else {
+        creditAllocations.push({
+          transactionType: creditAllocation.transaction.code,
+          creditAllocationStrategy: CreditAllocationStrategies.RULE_BASED,
+          creditAllocationOrder: this.buildCreditAllocationOrder(creditAllocation.creditAllocationOrder)
+        });
+      }
     });
 
     return creditAllocations;
@@ -309,5 +343,9 @@ export class AdvancedPaymentStrategy {
 
   public isDefault(transaction: PaymentAllocationTransactionType): boolean {
     return transaction.code === PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION.code;
+  }
+
+  public isPrincipalOnly(creditAllocation: { creditAllocationStrategy?: string }): boolean {
+    return creditAllocation?.creditAllocationStrategy === CreditAllocationStrategies.PRINCIPAL_ONLY;
   }
 }

@@ -71,10 +71,10 @@
                       ({{ loanDetailsData.clientAccountNo || loanDetailsData.group?.accountNo }})
                     </td>
                   </tr>
-                  @if (loanDetailsData.officeName) {
+                  @if (loanDetailsData.clientOfficeName || loanDetailsData.officeName) {
                     <tr>
                       <td>{{ 'labels.inputs.Office' | translate }}:</td>
-                      <td>{{ loanDetailsData.officeName }}</td>
+                      <td>{{ loanDetailsData.clientOfficeName || loanDetailsData.officeName }}</td>
                     </tr>
                   }
                   @if (loanDetailsData.externalId) {

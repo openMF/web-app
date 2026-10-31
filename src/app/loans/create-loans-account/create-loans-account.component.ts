@@ -349,10 +349,9 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
         this.productDetails.allowAttributeOverrides.breach === false
       ) {
+        // Locked values from getRawValue() must be absent — BE rejects presence even as null.
         delete payload['breachId'];
         delete payload['nearBreachId'];
-        // Locked breach settings are inherited from the product; getRawValue() would still carry the disabled value.
-        // The backend rejects these keys by presence (even null), so they must be absent, not emptied.
         delete payload['breachGraceDays'];
         delete payload['breachStartType'];
       }
@@ -361,23 +360,10 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
         this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
       ) {
         delete payload['delinquencyBucketId'];
-        // Grace days and start type follow the bucket override switch (FINERACT-2684).
         delete payload['delinquencyGraceDays'];
         delete payload['delinquencyStartType'];
       }
     }
-
-    // No Empty values to be sent
-    [
-      'delinquencyGraceDays',
-      'delinquencyStartType',
-      'breachStartType',
-      'delinquencyBucketId'
-    ].forEach((attr: string) => {
-      if (payload[attr] === null || payload[attr] === '') {
-        delete payload[attr];
-      }
-    });
 
     this.loansService
       .createLoansAccount(this.loanProductService.loanAccountPath, payload, this.submitIdempotencyKey)

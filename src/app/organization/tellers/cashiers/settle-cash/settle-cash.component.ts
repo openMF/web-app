@@ -62,7 +62,7 @@ export class SettleCashComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.maxFutureDate;
+    this.maxDate = this.settingsService.businessDate;
     this.setCashierForm();
   }
 
@@ -84,7 +84,7 @@ export class SettleCashComponent implements OnInit {
         }
       ],
       txnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       currencyCode: [

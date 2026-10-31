@@ -28,6 +28,11 @@ describe('BaseTellerComponent', () => {
 
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
+      { materialIcon: 'currency_exchange', permission: 'READ_BASE_TELLER_FX', route: [
+          '/organization',
+          'base-teller',
+          'foreign-currency'
+        ] },
       { materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
           '/organization',
           'base-teller',
@@ -245,5 +250,22 @@ describe('BaseTellerComponent', () => {
     const instance = component();
 
     expect(instance.workflows).toHaveLength(19);
+  });
+  it.each([
+    'READ_BASE_TELLER_CASH_INVENTORY',
+    'ALL_FUNCTIONS_READ',
+    'ALL_FUNCTIONS'
+  ])('shows one vault Special Operations link for %s', (permission) => {
+    const instance = component([permission]);
+    expect(instance.specialOperations).toHaveLength(permission === 'READ_BASE_TELLER_CASH_INVENTORY' ? 1 : 2);
+    expect(instance.specialOperations[0].route).toEqual([
+      '/organization',
+      'base-teller',
+      'vault-cash-deposit'
+    ]);
+    expect(instance.workflows.some((w) => w.route.includes('vault-cash-deposit'))).toBe(false);
+  });
+  it('hides vault navigation without the backend read permission', () => {
+    expect(component(['READ_TELLER']).specialOperations).toEqual([]);
   });
 });

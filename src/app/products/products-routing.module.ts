@@ -362,6 +362,21 @@ const routes: Routes = [
                     loanProductAndTemplate: LoanProductAndTemplateResolver,
                     configurations: GlobalConfigurationsResolver
                   }
+                },
+                {
+                  path: 'clone',
+                  component: EditLoanProductComponent,
+                  data: {
+                    title: 'Clone Loan Product',
+                    breadcrumb: 'Clone',
+                    routeParamBreadcrumb: false,
+                    mode: 'clone'
+                  },
+                  runGuardsAndResolvers: 'pathParamsOrQueryParamsChange',
+                  resolve: {
+                    loanProductAndTemplate: LoanProductAndTemplateResolver,
+                    configurations: GlobalConfigurationsResolver
+                  }
                 }
               ]
             }

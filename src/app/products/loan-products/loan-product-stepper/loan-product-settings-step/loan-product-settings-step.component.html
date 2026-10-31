@@ -42,22 +42,6 @@
       </mat-form-field>
 
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
-        <mat-select formControlName="delinquencyStartType">
-          @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
-            <mat-option [value]="delinquencyStartType.code">
-              {{ delinquencyStartType.value | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
         <mat-select formControlName="delinquencyBucketId">
           @for (delinquencyBucket of delinquencyBucketData; track delinquencyBucket) {
@@ -72,6 +56,24 @@
           </button>
         }
       </mat-form-field>
+
+      @if (loanProductSettingsForm.value.delinquencyBucketId) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+        </mat-form-field>
+
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
+          <mat-select formControlName="delinquencyStartType">
+            @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
+              <mat-option [value]="delinquencyStartType.code">
+                {{ delinquencyStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>

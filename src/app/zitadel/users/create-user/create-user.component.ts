@@ -362,7 +362,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         this.configurationWizardService.showUsersForm = true;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['/organization/users/create']);
+        this.router.navigate(['/appusers/create']);
       } else if (response.step === 3) {
         this.configurationWizardService.showUsersForm = false;
         this.configurationWizardService.showMakerCheckerTable = true;
