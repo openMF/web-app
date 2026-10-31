@@ -162,7 +162,7 @@ export class CollectionSheetComponent implements OnInit {
         Validators.required
       ],
       meetingDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       staffId: [
