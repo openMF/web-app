@@ -816,7 +816,14 @@
       "type": "Uzalishaji wa ripoti",
       "generated": "Ripoti: data ya {{reportName}} imezalishwa",
       "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data",
+      "loanApplicationLoadFailed": "Imeshindwa kupakia ripoti ya PDF ya ombi la mkopo.",
       "loadFailed": "Imeshindwa kupakia data ya ripoti. Tafadhali jaribu tena."
+    },
+    "documents": {
+      "uploadFailed": "Imeshindwa kupakia hati"
+    },
+    "exchangeRates": {
+      "idMissing": "Kitambulisho cha kiwango cha ubadilishaji hakipo."
     },
     "clipboard": {
       "type": "Ubao wa kunakili",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "Kiasi cha marekebisho ya mapato yaliyohifadhiwa lazima kiwe kidogo au sawa na",
       "buyDownFeeAdjusted": "Kiasi cha ada ya Buy Down tayari kimerekebishwa",
       "buyDownFeeLimit": "Kiasi cha marekebisho ya ada ya Buy Down lazima kiwe kidogo au sawa na",
+      "chargebackLimit": "Kiasi cha urejeshaji malipo lazima kiwe chini au sawa na",
       "businessRule": "Kanuni ya biashara",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -1496,6 +1504,8 @@
       "Percentage": "Asilimia",
       "Portfolio": "Portfolio",
       "Principal": "Mkuu wa shule",
+      "Principal only": "Mtaji pekee",
+      "Rule based": "Kwa kuzingatia sheria",
       "Principal, Interest, Penalties, Fees Order": "Mkuu, Riba, Adhabu, Agizo la Ada",
       "Progressive": "Maendeleo",
       "Quarterly": "Kila robo",
@@ -1704,6 +1714,7 @@
       "NotEqual": "Sio sawa"
     },
     "heading": {
+      "Address & Location": "Anwani na eneo",
       "Cash Payment": "Malipo ya pesa taslimu",
       "Catalog Updates": "Masasisho ya katalogi",
       "Confirmation": "Uthibitisho",
@@ -2207,6 +2218,7 @@
       "Undo": "Tendua",
       "Undo Reset": "Tengua uwekaji upya",
       "Undo Transaction": "Tendua Muamala",
+      "Chargeback Transaction": "Urejeshaji malipo wa muamala wa {{type}}",
       "Unmark as Fraud": "Ondoa Alama ya Ulaghai",
       "Upcoming Charges": "Malipo Yanayokuja",
       "Upload": "Pakia",
@@ -2726,6 +2738,7 @@
       "Credit Adjustments": "Marekebisho ya Mikopo",
       "Credit Allocation Order": "Agizo la mgao wa mkopo",
       "Credit Allocation Rule": "Sheria ya Ugawaji wa Mikopo",
+      "Credit Allocation Strategy": "Mkakati wa Ugawaji wa Mkopo",
       "Credit Amount": "Kiasi cha Mkopo",
       "Credit Tags": "Lebo za Mikopo",
       "Cron Expression": "Usemi wa Cron",
@@ -4638,6 +4651,8 @@
       "Example loan product name": "mf. Mkopo wa Binafsi – Kawaida",
       "Example short name": "mf. PLS",
       "Search Activity": "Shughuli ya Utafutaji",
+      "Search widgets": "Tafuta wijeti...",
+      "Select roles": "Chagua majukumu",
       "Enter your username": "Ingiza jina lako la mtumiaji",
       "Enter your password": "Ingiza nenosiri lako",
       "# Remittance": "# Uhawilishaji",
@@ -4722,6 +4737,7 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",
       "Near Breach": "Karibu na ukiukaji",
@@ -7929,6 +7945,69 @@
       "businessDateChanged": "Tarehe ya biashara imebadilika. Sasisha muktadha.",
       "catalogChanged": "Thamani ya noti au sarafu haipatikani tena. Sasisha katalogi na uweke idadi upya.",
       "invalidInput": "Kagua idadi kabla ya kuomba hakikisho."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Andaa amana ya fedha taslimu",
+      "statusHelp": "Hali ya uendeshaji wa hazina haijathibitishwa.",
+      "countCash": "Hesabu fedha taslimu",
+      "entryHint": "Weka idadi ya kila noti na sarafu.",
+      "summary": "Muhtasari wa amana",
+      "previewHelp": "Onyesho la kukagua linathibitisha mchanganuo wa fedha taslimu bila kuhamisha fedha."
     }
   }
 }

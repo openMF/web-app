@@ -816,7 +816,14 @@
       "type": "Atskaites ģenerēšana",
       "generated": "Atskaite: {{reportName}} dati ģenerēti",
       "generatedNoData": "Atskaite: {{reportName}} ģenerēta bez datiem",
+      "loanApplicationLoadFailed": "Neizdevās ielādēt aizdevuma pieteikuma PDF pārskatu.",
       "loadFailed": "Neizdevās ielādēt atskaites datus. Lūdzu, mēģiniet vēlreiz."
+    },
+    "documents": {
+      "uploadFailed": "Neizdevās augšupielādēt dokumentu"
+    },
+    "exchangeRates": {
+      "idMissing": "Trūkst valūtas kursa ID."
     },
     "clipboard": {
       "type": "Starpliktuve",
@@ -840,6 +847,7 @@
       "capitalizedIncomeLimit": "Kapitalizēto ienākumu korekcijas summai jābūt mazākai vai vienādai ar",
       "buyDownFeeAdjusted": "Buy Down maksas summa jau koriģēta",
       "buyDownFeeLimit": "Buy Down maksas korekcijas summai jābūt mazākai vai vienādai ar",
+      "chargebackLimit": "Atmaksas summai jābūt mazākai vai vienādai ar",
       "businessRule": "Biznesa noteikums",
       "alertWithAmount": "{{label}}: {{amount}}",
       "bulkWaiveCharge": {
@@ -1496,6 +1504,8 @@
       "Percentage": "Procenti",
       "Portfolio": "Portfelis",
       "Principal": "Direktors",
+      "Principal only": "Tikai pamatsumma",
+      "Rule based": "Balstīta uz noteikumiem",
       "Principal, Interest, Penalties, Fees Order": "Pamatsumma, procenti, līgumsodi, maksas rīkojums",
       "Progressive": "Progresīvs",
       "Quarterly": "Ceturkšņa",
@@ -1704,6 +1714,7 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Address & Location": "Adrese un atrašanās vieta",
       "Cash Payment": "Skaidras naudas maksājums",
       "Catalog Updates": "Katalogu atjauninājumi",
       "Confirmation": "Apstiprinājums",
@@ -2208,6 +2219,7 @@
       "Undo": "Atsaukt",
       "Undo Reset": "Atsaukt atiestatīšanu",
       "Undo Transaction": "Atsaukt darījumu",
+      "Chargeback Transaction": "Darījuma {{type}} atmaksa",
       "Unmark as Fraud": "Noņemt krāpšanas atzīmi",
       "Upcoming Charges": "Gaidāmās maksas",
       "Upload": "Augšupielādēt",
@@ -2726,6 +2738,7 @@
       "Credit Adjustments": "Kredīta korekcijas",
       "Credit Allocation Order": "Kredīta sadales pasūtījums",
       "Credit Allocation Rule": "Kredīta piešķiršanas noteikums",
+      "Credit Allocation Strategy": "Kredīta sadales stratēģija",
       "Credit Amount": "Kredīta summa",
       "Credit Tags": "Kredītbirkas",
       "Cron Expression": "Krona izteiksme",
@@ -4638,6 +4651,8 @@
       "Example loan product name": "piem. Patēriņa aizdevums – Standarta",
       "Example short name": "piem. PLS",
       "Search Activity": "Meklēšanas darbība",
+      "Search widgets": "Meklēt logrīkus...",
+      "Select roles": "Izvēlieties lomas",
       "Enter your username": "Ievadiet savu lietotājvārdu",
       "Enter your password": "Ievadiet savu paroli",
       "# Remittance": "# Pārvedums",
@@ -4722,6 +4737,7 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "Clone": "Klonēt",
       "Clone Loan Product": "Klonēt aizdevuma produktu",
       "Near Breach": "Tuvu pārkāpumam",
@@ -7929,6 +7945,69 @@
       "businessDateChanged": "Darba datums ir mainījies. Atjaunojiet kontekstu.",
       "catalogChanged": "Nomināls vairs nav pieejams. Atjaunojiet katalogu un ievadiet daudzumus vēlreiz.",
       "invalidInput": "Pirms priekšskatījuma pārbaudiet daudzumus."
+    },
+    "confirmation": {
+      "confirm": "Confirm Deposit",
+      "unavailable": "Confirm Deposit is unavailable. The backend only supports blocked attempt recording; it cannot post a vault deposit. No execution request will be sent.",
+      "approvalPolicy": "Deposit authorization and maker-checker approval policy have not been approved.",
+      "postingModel": "An approved source, vault inventory and accounting posting model is unavailable."
+    },
+    "history": {
+      "title": "Vault Cash Deposit History",
+      "attemptsNotice": "These are persisted deposit attempts, not completed financial transactions. Amounts are proposed cash; no cash was posted.",
+      "fromDate": "From Business Date",
+      "toDate": "To Business Date",
+      "officeId": "Branch ID",
+      "vaultKey": "Vault Key",
+      "status": "Status",
+      "all": "All",
+      "reference": "Deposit Attempt Reference",
+      "exactReference": "Exact VDA reference only.",
+      "dateRange": "From date must be on or before to date.",
+      "vaultMismatch": "Branch ID and vault key must identify the same branch.",
+      "search": "Search",
+      "reset": "Reset Filters",
+      "sortOrder": "Newest recorded attempts first. Ordering is fixed by the backend.",
+      "empty": "No vault deposit attempts match these filters.",
+      "proposedCash": "Proposed Cash",
+      "actions": "Actions",
+      "details": "Attempt Details",
+      "receipt": "Receipt",
+      "receiptNotPosted": "Receipt unavailable: this attempt was not posted.",
+      "pagination": "Vault deposit history pages",
+      "createdAt": "Recorded At",
+      "initiatedBy": "Initiating Staff ID",
+      "actorId": "Staff ID",
+      "accountingStatus": "Accounting Status",
+      "notPosted": "Not Posted",
+      "correlationReference": "Correlation Reference",
+      "proposedSource": "Proposed Source (unverified)",
+      "snapshotNotice": "Original persisted denomination values and currency precision are shown. Current catalog settings are not applied.",
+      "audit": "Audit Evidence",
+      "auditNotice": "The backend exposes the recorded blocked attempt only. No approval or posting events exist.",
+      "blockedEvent": "Blocked attempt recorded",
+      "unknownEvent": "Backend audit event",
+      "auditEmpty": "No audit evidence is available.",
+      "viewReceipt": "View Receipt",
+      "checkReceipt": "Check Receipt Availability",
+      "receiptUnsupported": "The backend returned an unsupported receipt representation. No completed receipt can be displayed or printed.",
+      "blocked": "Blocked — Not Posted",
+      "unknownStatus": "Unresolved Status",
+      "noDenominations": "No recorded denominations.",
+      "errors": {
+        "unavailable": "Unable to load this vault deposit information. Check the backend connection and retry.",
+        "notFound": "This record is unavailable or outside your authorized vault scope.",
+        "filters": "Check dates, branch, vault, currency and exact attempt reference."
+      }
+    },
+    "refresh": "Refresh",
+    "ui": {
+      "prepare": "Sagatavot skaidras naudas iemaksu",
+      "statusHelp": "Seifa darbības statuss nav apstiprināts.",
+      "countCash": "Saskaitiet skaidro naudu",
+      "entryHint": "Ievadiet katras banknotes un monētas skaitu.",
+      "summary": "Iemaksas kopsavilkums",
+      "previewHelp": "Priekšskatījums pārbauda skaidras naudas sadalījumu, nepārvietojot līdzekļus."
     }
   }
 }

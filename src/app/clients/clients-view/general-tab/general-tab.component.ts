@@ -41,6 +41,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { catchError } from 'rxjs/operators';
 import { AlertService } from 'app/core/alert/alert.service';
 import { EMPTY } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
@@ -76,6 +77,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 })
 export class GeneralTabComponent implements OnDestroy {
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   pdfUrl: SafeResourceUrl | null = null;
@@ -101,7 +103,7 @@ export class GeneralTabComponent implements OnDestroy {
           this.pdfUrl = null;
           this.alertService.alert({
             type: 'error',
-            message: 'Failed to load Loan Application PDF report.'
+            message: this.translateService.instant('errors.report.loanApplicationLoadFailed')
           });
           return EMPTY;
         }),
