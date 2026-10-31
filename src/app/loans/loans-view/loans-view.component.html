@@ -65,10 +65,20 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:</td>
                     <td>
-                      {{ loanDetailsData.clientName || loanDetailsData.group?.name }}
-                      ({{ loanDetailsData.clientAccountNo || loanDetailsData.group?.accountNo }})
+                      @if (entityType) {
+                        {{ accountHolderLabelKey | translate }} {{ 'labels.inputs.name' | translate }}:
+                      } @else {
+                        {{ accountHolderLabelKey | translate }}:
+                      }
+                    </td>
+                    <td>
+                      @if (accountHolderName) {
+                        {{ accountHolderName }}
+                      }
+                      @if (accountHolderAccountNo) {
+                        ({{ accountHolderAccountNo }})
+                      }
                     </td>
                   </tr>
                   @if (loanDetailsData.clientOfficeName || loanDetailsData.officeName) {
