@@ -65,6 +65,9 @@ export class CreateFixedDepositAccountComponent {
   /** Fixed Deposits Account Settings Step */
   @ViewChild(FixedDepositAccountSettingsStepComponent, { static: true })
   fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
+  /** Fixed Deposits Account Interest Rate Chart Step */
+  @ViewChild(FixedDepositAccountInterestRateChartStepComponent, { static: true })
+  fixedDepositAccountInterestRateChartStep: FixedDepositAccountInterestRateChartStepComponent;
   /** Fixed Deposits Account Charges Step */
   @ViewChild(FixedDepositAccountChargesStepComponent, { static: true })
   fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
@@ -118,13 +121,21 @@ export class CreateFixedDepositAccountComponent {
   }
 
   /**
+   * Retrieves Fixed Deposit Account Interest Rate Chart Form Data
+   */
+  get fixedDepositAccountInterestRateChartForm() {
+    return this.fixedDepositAccountInterestRateChartStep?.interestRateChartForm;
+  }
+
+  /**
    * Checks stepper validity.
    */
   get fixedDepositAccountFormValid() {
     return (
       this.fixedDepositAccountDetailsForm.valid &&
       this.fixedDepositAccountTermsForm.valid &&
-      this.fixedDepositAccountSettingsForm.valid
+      this.fixedDepositAccountSettingsForm.valid &&
+      (!this.fixedDepositAccountInterestRateChartForm || this.fixedDepositAccountInterestRateChartForm.valid)
     );
   }
 
@@ -136,6 +147,7 @@ export class CreateFixedDepositAccountComponent {
       ...this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetails,
       ...this.fixedDepositAccountTermsStep.fixedDepositAccountTerms,
       ...this.fixedDepositAccountSettingsStep.fixedDepositAccountSettings,
+      ...this.fixedDepositAccountInterestRateChartStep?.interestRateChart,
       ...this.fixedDepositAccountChargesStep.fixedDepositAccountCharges
     };
   }

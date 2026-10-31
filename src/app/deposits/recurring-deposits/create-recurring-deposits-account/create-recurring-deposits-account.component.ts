@@ -63,6 +63,8 @@ export class CreateRecurringDepositsAccountComponent {
   recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
   @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true })
   recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
+  @ViewChild(RecurringDepositsAccountInterestRateChartStepComponent, { static: true })
+  recurringDepositsAccountInterestRateChartStep: RecurringDepositsAccountInterestRateChartStepComponent;
   @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true })
   recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
 
@@ -100,12 +102,18 @@ export class CreateRecurringDepositsAccountComponent {
     return this.recurringDepositAccountSettingsStep.recurringDepositAccountSettingsForm;
   }
 
+  /** Get Recurring Deposit Account Interest Rate Chart Form Data */
+  get recurringDepositAccountInterestRateChartForm() {
+    return this.recurringDepositsAccountInterestRateChartStep?.interestRateChartForm;
+  }
+
   /** Checks wheter all the forms in different steps are valid or not */
   get recurringDepositAccountFormValid() {
     return (
       this.recurringDepositAccountDetailsForm.valid &&
       this.recurringDepositAccountTermsForm.valid &&
-      this.recurringDepositAccountSettingsForm.valid
+      this.recurringDepositAccountSettingsForm.valid &&
+      (!this.recurringDepositAccountInterestRateChartForm || this.recurringDepositAccountInterestRateChartForm.valid)
     );
   }
 
@@ -115,6 +123,7 @@ export class CreateRecurringDepositsAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
+      ...this.recurringDepositsAccountInterestRateChartStep?.interestRateChart,
       ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }
@@ -125,6 +134,7 @@ export class CreateRecurringDepositsAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
+      ...this.recurringDepositsAccountInterestRateChartStep?.interestRateChart,
       ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }

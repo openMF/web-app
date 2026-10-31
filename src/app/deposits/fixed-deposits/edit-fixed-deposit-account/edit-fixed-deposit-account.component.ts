@@ -66,6 +66,9 @@ export class EditFixedDepositAccountComponent {
   /** Fixed Deposits Account Settings Step */
   @ViewChild(FixedDepositAccountSettingsStepComponent, { static: true })
   fixedDepositAccountSettingsStep: FixedDepositAccountSettingsStepComponent;
+  /** Fixed Deposits Account Interest Rate Chart Step */
+  @ViewChild(FixedDepositAccountInterestRateChartStepComponent, { static: true })
+  fixedDepositAccountInterestRateChartStep: FixedDepositAccountInterestRateChartStepComponent;
   /** Fixed Deposits Account Charges Step */
   @ViewChild(FixedDepositAccountChargesStepComponent, { static: true })
   fixedDepositAccountChargesStep: FixedDepositAccountChargesStepComponent;
@@ -122,6 +125,13 @@ export class EditFixedDepositAccountComponent {
   }
 
   /**
+   * Retrieves Fixed Deposit Account Interest Rate Chart Form Data
+   */
+  get fixedDepositAccountInterestRateChartForm() {
+    return this.fixedDepositAccountInterestRateChartStep?.interestRateChartForm;
+  }
+
+  /**
    * Checks if stepper is valid and not pristine.
    */
   get fixedDepositAccountFormValidAndNotPristine() {
@@ -129,9 +139,11 @@ export class EditFixedDepositAccountComponent {
       this.fixedDepositAccountDetailsForm.valid &&
       this.fixedDepositAccountTermsForm.valid &&
       this.fixedDepositAccountSettingsForm.valid &&
+      (!this.fixedDepositAccountInterestRateChartForm || this.fixedDepositAccountInterestRateChartForm.valid) &&
       (!this.fixedDepositAccountDetailsForm.pristine ||
         !this.fixedDepositAccountTermsForm.pristine ||
         !this.fixedDepositAccountSettingsForm.pristine ||
+        (this.fixedDepositAccountInterestRateChartForm && !this.fixedDepositAccountInterestRateChartForm.pristine) ||
         !this.fixedDepositAccountChargesStep.pristine)
     );
   }
@@ -144,6 +156,7 @@ export class EditFixedDepositAccountComponent {
       ...this.fixedDepositsAccountDetailsStep.fixedDepositAccountDetails,
       ...this.fixedDepositAccountTermsStep.fixedDepositAccountTerms,
       ...this.fixedDepositAccountSettingsStep.fixedDepositAccountSettings,
+      ...this.fixedDepositAccountInterestRateChartStep?.interestRateChart,
       ...this.fixedDepositAccountChargesStep?.fixedDepositAccountCharges
     };
   }

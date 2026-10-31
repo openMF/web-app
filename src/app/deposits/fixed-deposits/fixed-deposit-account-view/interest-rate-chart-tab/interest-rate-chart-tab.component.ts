@@ -65,6 +65,8 @@ export class InterestRateChartTabComponent {
 
   /** Fixed Deposits Account Status */
   status: any;
+  /** Fixed Deposits Account Data */
+  fixedDepositsAccountData: any;
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
@@ -95,7 +97,8 @@ export class InterestRateChartTabComponent {
    */
   constructor() {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
-      this.interestRateChartData = data.fixedDepositsAccountData.accountChart.chartSlabs;
+      this.fixedDepositsAccountData = data.fixedDepositsAccountData;
+      this.interestRateChartData = data.fixedDepositsAccountData?.accountChart?.chartSlabs || [];
     });
   }
 }
