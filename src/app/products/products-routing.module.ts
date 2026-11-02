@@ -71,7 +71,6 @@ import { LoanProductsResolver } from './loan-products/loan-products.resolver';
 import { LoanProductsTemplateResolver } from './loan-products/loan-products-template.resolver';
 import { LoanProductResolver } from './loan-products/loan-product.resolver';
 import { LoanProductAndTemplateResolver } from './loan-products/edit-loan-product/loan-product-and-template.resolver';
-import { SavingProductsResolver } from './saving-products/saving-products.resolver';
 import { SavingProductsTemplateResolver } from './saving-products/saving-products-template.resolver';
 import { SavingProductResolver } from './saving-products/saving-product.resolver';
 import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-product/saving-product-and-template.resolver';
@@ -388,10 +387,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: SavingProductsComponent,
-              resolve: {
-                savingProducts: SavingProductsResolver
-              }
+              component: SavingProductsComponent
             },
             {
               path: 'create',
@@ -1167,7 +1163,6 @@ const routes: Routes = [
     LoanProductsTemplateResolver,
     LoanProductResolver,
     LoanProductAndTemplateResolver,
-    SavingProductsResolver,
     SavingProductsTemplateResolver,
     SavingProductResolver,
     SavingProductAndTemplateResolver,
