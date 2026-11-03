@@ -4739,6 +4739,7 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Skip to main content": "Ruka hadi maudhui makuu",
       "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",
