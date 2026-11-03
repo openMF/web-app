@@ -4900,6 +4900,7 @@
       "No configured hours": "Darba laiks nav iestatīts",
       "Enabled days need valid opening and closing times": "Iespējotajām dienām nepieciešams derīgs atvēršanas un slēgšanas laiks.",
       "Saving changes": "Saglabā izmaiņas…",
+      "Skip to main content": "Pāriet uz galveno saturu",
       "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "The transaction receipt could not be loaded. This may be due to:": "Darījuma čeku nevarēja ielādēt. Tas var būt saistīts ar:",
       "Missing or incomplete report configuration": "Trūkst vai ir nepilnīga pārskata konfigurācija",

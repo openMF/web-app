@@ -4900,6 +4900,7 @@
       "No configured hours": "설정된 영업시간이 없습니다",
       "Enabled days need valid opening and closing times": "활성화된 요일에는 올바른 개점 및 폐점 시간이 필요합니다.",
       "Saving changes": "변경 사항 저장 중…",
+      "Skip to main content": "본문으로 건너뛰기",
       "No valid saved coordinates": "저장된 좌표가 없거나 유효하지 않아 지도를 표시할 수 없습니다.",
       "The transaction receipt could not be loaded. This may be due to:": "거래 영수증을 로드할 수 없습니다. 원인은 다음과 같을 수 있습니다:",
       "Missing or incomplete report configuration": "보고서 구성이 누락되었거나 불완전함",

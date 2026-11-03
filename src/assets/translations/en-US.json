@@ -4901,6 +4901,7 @@
       "No configured hours": "No configured hours",
       "Enabled days need valid opening and closing times": "Enabled days need valid opening and closing times.",
       "Saving changes": "Saving changes…",
+      "Skip to main content": "Skip to main content",
       "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "The transaction receipt could not be loaded. This may be due to:": "The transaction receipt could not be loaded. This may be due to:",
       "Missing or incomplete report configuration": "Missing or incomplete report configuration",

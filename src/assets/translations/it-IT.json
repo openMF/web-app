@@ -4900,6 +4900,7 @@
       "No configured hours": "Nessun orario configurato",
       "Enabled days need valid opening and closing times": "I giorni abilitati richiedono orari di apertura e chiusura validi.",
       "Saving changes": "Salvataggio delle modifiche…",
+      "Skip to main content": "Vai al contenuto principale",
       "No valid saved coordinates": "La mappa non è disponibile perché le coordinate salvate sono mancanti o non valide.",
       "The transaction receipt could not be loaded. This may be due to:": "Impossibile caricare la ricevuta della transazione. Ciò potrebbe essere dovuto a:",
       "Missing or incomplete report configuration": "Configurazione del report mancante o incompleta",

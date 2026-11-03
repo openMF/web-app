@@ -1,0 +1,36 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.skip-link {
+  position: fixed;
+  top: -9999px;
+  left: 1rem;
+  z-index: 10000;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+  max-width: calc(100vw - 2rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--ds-radius, 8px);
+  background-color: var(--brand-primary-500, #1074b9);
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
+  transition: transform 0.15s ease-in-out;
+
+  &:focus,
+  &:focus-visible {
+    top: 1rem;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}

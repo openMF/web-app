@@ -4900,6 +4900,7 @@
       "No configured hours": "Darbo laikas nenustatytas",
       "Enabled days need valid opening and closing times": "Įjungtoms dienoms reikia tinkamo atidarymo ir uždarymo laiko.",
       "Saving changes": "Išsaugomi pakeitimai…",
+      "Skip to main content": "Pereiti į pagrindinį turinį",
       "No valid saved coordinates": "Žemėlapis nepasiekiamas, nes trūksta išsaugotų koordinačių arba jos netinkamos.",
       "The transaction receipt could not be loaded. This may be due to:": "Nepavyko įkelti operacijos kvito. Taip gali būti dėl:",
       "Missing or incomplete report configuration": "Trūksta ataskaitos konfigūracijos arba ji neišsami",
