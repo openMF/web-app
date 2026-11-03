@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "Copiar el hash completo del commit",
       "Checked seconds ago": "Verificado hace {{seconds}} s",
       "Pre-release backend": "El backend ejecuta una versión preliminar. No se recomienda para datos de producción.",
-      "Diagnostics copied": "Diagnóstico copiado al portapapeles"
+      "Diagnostics copied": "Diagnóstico copiado al portapapeles",
+      "Items per page:": "Elementos por página:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} de {{length}}"
     },
     "permissions": {
       "actions": {

@@ -6022,7 +6022,9 @@
       "Copy full commit hash": "Tam commit heşini kopyala",
       "Checked seconds ago": "{{seconds}} s əvvəl yoxlanılıb",
       "Pre-release backend": "Server tərəfi buraxılışdan əvvəlki versiyada işləyir. İstehsal məlumatları üçün tövsiyə edilmir.",
-      "Diagnostics copied": "Diaqnostika mübadilə buferinə kopyalandı"
+      "Diagnostics copied": "Diaqnostika mübadilə buferinə kopyalandı",
+      "Items per page:": "Səhifə başına element:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
     },
     "permissions": {
       "actions": {

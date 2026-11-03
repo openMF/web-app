@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "पूरा कमिट ह्यास प्रतिलिपि गर्नुहोस्",
       "Checked seconds ago": "{{seconds}} सेकेन्ड अघि जाँच गरियो",
       "Pre-release backend": "ब्याकइन्ड पूर्व-रिलिज संस्करणमा चलिरहेको छ। उत्पादन डाटाका लागि सिफारिस गरिँदैन।",
-      "Diagnostics copied": "निदान क्लिपबोर्डमा प्रतिलिपि गरियो"
+      "Diagnostics copied": "निदान क्लिपबोर्डमा प्रतिलिपि गरियो",
+      "Items per page:": "प्रति पृष्ठ वस्तुहरू:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
     },
     "permissions": {
       "actions": {

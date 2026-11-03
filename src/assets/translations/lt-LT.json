@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "Kopijuoti visą commit maišos kodą",
       "Checked seconds ago": "Patikrinta prieš {{seconds}} s",
       "Pre-release backend": "Serverio dalis veikia su išankstine versija. Nerekomenduojama gamybiniams duomenims.",
-      "Diagnostics copied": "Diagnostika nukopijuota į iškarpinę"
+      "Diagnostics copied": "Diagnostika nukopijuota į iškarpinę",
+      "Items per page:": "Elementų puslapyje:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} iš {{length}}"
     },
     "permissions": {
       "actions": {

@@ -6073,7 +6073,9 @@
       "Copy full commit hash": "Kopírovat celý hash commitu",
       "Checked seconds ago": "Ověřeno před {{seconds}} s",
       "Pre-release backend": "Backend běží na předběžné verzi. Nedoporučuje se pro produkční data.",
-      "Diagnostics copied": "Diagnostika zkopírována do schránky"
+      "Diagnostics copied": "Diagnostika zkopírována do schránky",
+      "Items per page:": "Položek na stránku:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} z {{length}}"
     },
     "permissions": {
       "actions": {
