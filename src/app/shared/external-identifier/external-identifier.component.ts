@@ -59,11 +59,23 @@ export class ExternalIdentifierComponent implements OnInit {
 
   copyValue(): void {
     if (!this.hideCopy) {
-      this.clipboard.copy(this.externalId);
-      this.alertService.alert({
-        type: this.translateService.instant('errors.clipboard.type'),
-        message: this.translateService.instant('errors.clipboard.copied', { value: this.externalId })
-      });
+      let copied = false;
+      try {
+        copied = this.clipboard.copy(this.externalId);
+      } catch {
+        copied = false;
+      }
+      if (copied) {
+        this.alertService.alert({
+          type: this.translateService.instant('errors.clipboard.type'),
+          message: this.translateService.instant('errors.clipboard.copied', { value: this.externalId })
+        });
+      } else {
+        this.alertService.alert({
+          type: this.translateService.instant('errors.clipboard.type'),
+          message: this.translateService.instant('errors.clipboard.failed')
+        });
+      }
     }
   }
 

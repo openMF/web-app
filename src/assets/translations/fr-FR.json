@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Presse-papiers",
-      "copied": "Copié : {{value}}"
+      "copied": "Copié : {{value}}",
+      "failed": "Échec de la copie dans le presse-papiers"
     },
     "tenant": {
       "changed": {

@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "클립보드",
-      "copied": "복사됨: {{value}}"
+      "copied": "복사됨: {{value}}",
+      "failed": "클립보드에 복사하지 못했습니다"
     },
     "tenant": {
       "changed": {
