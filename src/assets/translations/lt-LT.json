@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Iškarpinė",
       "copied": "Nukopijuota: {{value}}",
-      "copyFailed": "Nepavyko nukopijuoti koordinačių."
+      "copyFailed": "Nepavyko nukopijuoti koordinačių.",
+      "failed": "Nepavyko nukopijuoti į iškarpinę"
     },
     "tenant": {
       "changed": {

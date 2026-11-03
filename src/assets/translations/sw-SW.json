@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Ubao wa kunakili",
       "copied": "Imenakiliwa: {{value}}",
-      "copyFailed": "Imeshindikana kunakili viwianishi."
+      "copyFailed": "Imeshindikana kunakili viwianishi.",
+      "failed": "Imeshindwa kunakili kwenye ubao wa kunakili"
     },
     "tenant": {
       "changed": {

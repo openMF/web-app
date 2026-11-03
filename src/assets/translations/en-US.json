@@ -839,7 +839,8 @@
     "clipboard": {
       "type": "Clipboard",
       "copied": "Copied: {{value}}",
-      "copyFailed": "Unable to copy coordinates."
+      "copyFailed": "Unable to copy coordinates.",
+      "failed": "Failed to copy to clipboard"
     },
     "tenant": {
       "changed": {

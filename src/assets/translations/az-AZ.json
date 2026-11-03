@@ -791,7 +791,8 @@
     "clipboard": {
       "type": "Mübadilə buferi",
       "copied": "Kopyalandı: {{value}}",
-      "copyFailed": "Koordinatları kopyalamaq mümkün olmadı."
+      "copyFailed": "Koordinatları kopyalamaq mümkün olmadı.",
+      "failed": "Mübadilə buferinə kopyalanmadı"
     },
     "tenant": {
       "changed": {

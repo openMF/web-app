@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Presse-papiers",
       "copied": "Copié : {{value}}",
-      "copyFailed": "Impossible de copier les coordonnées."
+      "copyFailed": "Impossible de copier les coordonnées.",
+      "failed": "Échec de la copie dans le presse-papiers"
     },
     "tenant": {
       "changed": {

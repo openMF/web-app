@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "클립보드",
       "copied": "복사됨: {{value}}",
-      "copyFailed": "좌표를 복사할 수 없습니다."
+      "copyFailed": "좌표를 복사할 수 없습니다.",
+      "failed": "클립보드에 복사하지 못했습니다"
     },
     "tenant": {
       "changed": {

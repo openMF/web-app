@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Área de transferência",
       "copied": "Copiado: {{value}}",
-      "copyFailed": "Não foi possível copiar as coordenadas."
+      "copyFailed": "Não foi possível copiar as coordenadas.",
+      "failed": "Falha ao copiar para a área de transferência"
     },
     "tenant": {
       "changed": {
