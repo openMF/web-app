@@ -4739,6 +4739,7 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Skip to main content": "Pāriet uz galveno saturu",
       "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "Clone": "Klonēt",
       "Clone Loan Product": "Klonēt aizdevuma produktu",
