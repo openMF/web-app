@@ -4777,6 +4777,7 @@
       "No configured hours": "Provozní doba není nastavena",
       "Enabled days need valid opening and closing times": "Povolené dny vyžadují platný čas otevření a zavření.",
       "Saving changes": "Ukládání změn…",
+      "Skip to main content": "Přejít k hlavnímu obsahu",
       "No valid saved coordinates": "Mapa není k dispozici, protože uložené souřadnice chybí nebo jsou neplatné.",
       "The transaction receipt could not be loaded. This may be due to:": "Účtenku transakce se nepodařilo načíst. Důvodem může být:",
       "Missing or incomplete report configuration": "Chybějící nebo neúplná konfigurace sestavy",
