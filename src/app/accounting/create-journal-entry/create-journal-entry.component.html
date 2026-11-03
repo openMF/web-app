@@ -82,12 +82,25 @@
                 </mat-form-field>
                 <span class="flex-fill">
                   @if (i !== 0) {
-                    <button type="button" mat-icon-button (click)="removeAffectedGLEntry(debits, i)">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      [attr.aria-label]="'labels.buttons.Remove Debit' | translate"
+                      [matTooltip]="'labels.buttons.Remove Debit' | translate"
+                      (click)="removeAffectedGLEntry(debits, i)"
+                    >
                       <fa-icon icon="minus-circle" size="lg"></fa-icon>
                     </button>
                   }
                   @if (i === 0) {
-                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(debits)">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      color="primary"
+                      [attr.aria-label]="'labels.buttons.Add Debit' | translate"
+                      [matTooltip]="'labels.buttons.Add Debit' | translate"
+                      (click)="addAffectedGLEntry(debits)"
+                    >
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
@@ -126,12 +139,25 @@
                 </mat-form-field>
                 <span class="flex-fill">
                   @if (i !== 0) {
-                    <button type="button" mat-icon-button (click)="removeAffectedGLEntry(credits, i)">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      [attr.aria-label]="'labels.buttons.Remove Credit' | translate"
+                      [matTooltip]="'labels.buttons.Remove Credit' | translate"
+                      (click)="removeAffectedGLEntry(credits, i)"
+                    >
                       <fa-icon icon="minus-circle" size="lg"></fa-icon>
                     </button>
                   }
                   @if (i === 0) {
-                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(credits)">
+                    <button
+                      type="button"
+                      mat-icon-button
+                      color="primary"
+                      [attr.aria-label]="'labels.buttons.Add Credit' | translate"
+                      [matTooltip]="'labels.buttons.Add Credit' | translate"
+                      (click)="addAffectedGLEntry(credits)"
+                    >
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
