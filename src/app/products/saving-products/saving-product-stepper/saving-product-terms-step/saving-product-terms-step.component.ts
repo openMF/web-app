@@ -29,6 +29,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SavingProductTermsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
 
+  @Input() embedded = false;
   @Input() savingProductsTemplate: any;
 
   savingProductTermsForm: UntypedFormGroup;

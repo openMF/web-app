@@ -118,7 +118,12 @@
             <a
               mat-button
               [routerLink]="[product.id, 'edit']"
-              *mifosxHasPermission="'UPDATE_SAVINGSPRODUCT'"
+              *mifosxHasPermission="[
+                'UPDATE_SAVINGSPRODUCT',
+                'UPDATE_SAVINGS_PRODUCT_POLICY',
+                'SUBMIT_SAVINGS_PRODUCT_POLICY',
+                'CHECK_SAVINGS_PRODUCT_POLICY'
+              ]"
               [attr.aria-label]="('SavingsProducts.EditProduct' | translate) + ': ' + product.name"
               >{{ 'labels.buttons.Edit' | translate }}</a
             >

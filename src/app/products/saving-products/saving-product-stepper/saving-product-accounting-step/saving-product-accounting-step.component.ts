@@ -79,6 +79,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
 
+  @Input() embedded = false;
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() isDormancyTrackingActive: UntypedFormControl;

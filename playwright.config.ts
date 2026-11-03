@@ -184,7 +184,8 @@ export default defineConfig({
       // and classified fixtures absent from Docker; run it via playwright.be01.config.ts.
       testIgnore: [
         /tests\/(admin|restricted)\//,
-        /savings-products-list\.spec\.ts$/
+        /savings-products-list\.spec\.ts$/,
+        /savings-product-editor\.spec\.ts$/
       ],
       use: {
         ...devices['Desktop Chrome'],
