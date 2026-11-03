@@ -35,7 +35,7 @@
 
 <mat-card-content>
   <mat-tab-group>
-    <mat-tab label="Details">
+    <mat-tab label="{{ 'labels.heading.Details' | translate }}">
       <div class="layout-row-wrap">
         @if (clientData.firstName) {
           <div class="flex-50 mat-body-strong">
@@ -132,13 +132,13 @@
     </mat-tab>
 
     @if (clientAccountsData && clientAccountsData.loanAccounts) {
-      <mat-tab label="Loan Accounts">
+      <mat-tab label="{{ 'labels.heading.Loan Accounts' | translate }}">
         <mifosx-loan-account-table [loanAccountData]="clientAccountsData.loanAccounts"></mifosx-loan-account-table>
       </mat-tab>
     }
 
     @if (clientAccountsData && clientAccountsData.savingsAccounts) {
-      <mat-tab label="Savings Accounts">
+      <mat-tab label="{{ 'labels.heading.Savings Accounts' | translate }}">
         <mifosx-savings-account-table
           [savingsAccountData]="clientAccountsData.savingsAccounts"
         ></mifosx-savings-account-table>
@@ -146,13 +146,13 @@
     }
 
     @if (clientAccountsData && clientAccountsData.shareAccounts) {
-      <mat-tab label="Share Accounts">
+      <mat-tab label="{{ 'labels.heading.Share Accounts' | translate }}">
         <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
       </mat-tab>
     }
 
     @if (clientData.groups && clientData.groups.length !== 0) {
-      <mat-tab label="Group Members">
+      <mat-tab label="{{ 'labels.heading.Group Members' | translate }}">
         <mifosx-member-groups [memberGroupData]="clientData.groups"></mifosx-member-groups>
       </mat-tab>
     }
