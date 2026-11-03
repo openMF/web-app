@@ -4742,6 +4742,15 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "प्रति पृष्ठ वस्तुहरू:",
+        "nextPage": "अर्को पृष्ठ",
+        "previousPage": "अघिल्लो पृष्ठ",
+        "firstPage": "पहिलो पृष्ठ",
+        "lastPage": "अन्तिम पृष्ठ",
+        "rangeLabel": "{{start}} – {{end}} / {{length}}",
+        "emptyRangeLabel": "0 / {{length}}"
+      },
       "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "Clone": "क्लोन गर्नुहोस्",
       "Clone Loan Product": "ऋण उत्पादन क्लोन गर्नुहोस्",

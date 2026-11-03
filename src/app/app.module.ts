@@ -32,6 +32,9 @@ import { DatePipe, LocationStrategy } from '@angular/common';
 import { TranslateLoader, TranslateModule, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MifosxPaginatorIntl } from './core/i18n/mifosx-paginator-intl';
+
 import { AuthenticationInterceptor as TokenInterceptor } from './core/authentication/authentication.interceptor';
 import { TokenInterceptor as ZitadelTokenInterceptor } from './zitadel/token.interceptor';
 import { AuthService } from './zitadel/auth.service';
@@ -84,7 +87,11 @@ import { CustomMissingTranslationHandler } from './core/translation/missing-tran
     },
     provideLottieOptions({
       player: () => import('lottie-web')
-    })
+    }),
+    {
+      provide: MatPaginatorIntl,
+      useClass: MifosxPaginatorIntl
+    }
   ]
 })
 export class AppModule {}

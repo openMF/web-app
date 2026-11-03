@@ -4742,6 +4742,15 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Itens por página:",
+        "nextPage": "Página seguinte",
+        "previousPage": "Página anterior",
+        "firstPage": "Primeira página",
+        "lastPage": "Última página",
+        "rangeLabel": "{{start}} – {{end}} de {{length}}",
+        "emptyRangeLabel": "0 de {{length}}"
+      },
       "No valid saved coordinates": "O mapa não está disponível porque as coordenadas guardadas estão em falta ou são inválidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar produto de empréstimo",

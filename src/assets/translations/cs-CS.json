@@ -4740,6 +4740,15 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Položek na stránku:",
+        "nextPage": "Další stránka",
+        "previousPage": "Předchozí stránka",
+        "firstPage": "První stránka",
+        "lastPage": "Poslední stránka",
+        "rangeLabel": "{{start}} – {{end}} z {{length}}",
+        "emptyRangeLabel": "0 z {{length}}"
+      },
       "No valid saved coordinates": "Mapa není k dispozici, protože uložené souřadnice chybí nebo jsou neplatné.",
       "Clone": "Klonovat",
       "Clone Loan Product": "Klonovat produkt půjčky",
