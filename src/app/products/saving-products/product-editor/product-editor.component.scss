@@ -1,0 +1,94 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.product-editor {
+  max-width: 80rem;
+}
+
+section {
+  padding-block: 1rem;
+}
+
+.policy-grid,
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, calc(50% - 0.5rem)));
+  gap: 1rem;
+}
+
+.policy-grid {
+  margin-block: 1rem;
+}
+
+.policy-grid mat-form-field,
+.full-width {
+  width: 100%;
+}
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+.history-entry {
+  padding-block: 0.5rem;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 24rem;
+  overflow: auto;
+}
+
+p {
+  overflow-wrap: anywhere;
+}
+
+mat-card-content {
+  min-width: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (width <= 48rem) {
+  .policy-grid,
+  .review-grid {
+    grid-template-columns: minmax(0, 100%);
+  }
+
+  .editor-actions > button,
+  .editor-actions > a,
+  .editor-actions > mat-form-field {
+    max-width: 100%;
+  }
+}
+
+.editor-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 3rem;
+  height: auto;
+  padding: 0.5rem;
+}
+
+.tab-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1rem;
+}
