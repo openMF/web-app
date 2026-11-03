@@ -828,7 +828,8 @@
     },
     "clipboard": {
       "type": "Clipboard",
-      "copied": "Copied: {{value}}"
+      "copied": "Copied: {{value}}",
+      "failed": "Failed to copy to clipboard"
     },
     "tenant": {
       "changed": {

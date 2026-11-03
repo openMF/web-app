@@ -831,7 +831,8 @@
     },
     "clipboard": {
       "type": "Portapapeles",
-      "copied": "Copiado: {{value}}"
+      "copied": "Copiado: {{value}}",
+      "failed": "Error al copiar al portapapeles"
     },
     "tenant": {
       "changed": {

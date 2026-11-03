@@ -790,7 +790,8 @@
     },
     "clipboard": {
       "type": "Mübadilə buferi",
-      "copied": "Kopyalandı: {{value}}"
+      "copied": "Kopyalandı: {{value}}",
+      "failed": "Mübadilə buferinə kopyalanmadı"
     },
     "tenant": {
       "changed": {
