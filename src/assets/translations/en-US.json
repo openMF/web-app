@@ -4751,6 +4751,15 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Items per page:",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "firstPage": "First page",
+        "lastPage": "Last page",
+        "rangeLabel": "{{start}} – {{end}} of {{length}}",
+        "emptyRangeLabel": "0 of {{length}}"
+      },
       "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "Clone": "Clone",
       "Clone Loan Product": "Clone Loan Product",
