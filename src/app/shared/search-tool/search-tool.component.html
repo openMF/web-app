@@ -8,24 +8,40 @@
 
 <!-- Toolbar icon — always visible -->
 <button
+  #searchTrigger
   mat-icon-button
   class="search-toggle hide-lt-sm"
   (click)="toggleSearchVisibility()"
   [matTooltip]="'labels.text.Search' | translate"
+  [attr.aria-label]="'labels.text.Search' | translate"
 >
   <fa-icon icon="search" size="lg"></fa-icon>
 </button>
 
 <!-- Spotlight modal -->
 @if (searchVisible) {
-  <div class="search-backdrop" [@backdropFade] (click)="closeModal()" role="dialog" aria-modal="true">
-    <div class="spotlight-wrap" [@modalSlide] (click)="$event.stopPropagation()">
+  <div class="search-backdrop" [@backdropFade] (click)="closeModal()">
+    <div
+      class="spotlight-wrap"
+      [@modalSlide]
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="global-search-title"
+      cdkTrapFocus
+      [cdkTrapFocusAutoCapture]="true"
+    >
+      <h2 id="global-search-title" class="cdk-visually-hidden">
+        {{ 'labels.text.Search' | translate }}
+      </h2>
+
       <!-- Input row -->
       <div class="spotlight-row">
         <fa-icon icon="search" class="spotlight-icon"></fa-icon>
 
         <input
           #queryInput
+          cdkFocusInitial
           class="spotlight-input"
           type="text"
           [formControl]="query"
