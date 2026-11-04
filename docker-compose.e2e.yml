@@ -68,8 +68,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        PUPPETEER_SKIP_DOWNLOAD_ARG: 'true'
     container_name: e2e-web-app
     depends_on:
       fineract:
