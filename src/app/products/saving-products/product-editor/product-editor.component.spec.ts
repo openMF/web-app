@@ -93,6 +93,32 @@ describe('Savings product editor orchestration', () => {
     editor.policy.markAsDirty();
     editor.workflow = { loaded: true, pending: false } as any;
   });
+  it('requires confirmation before clearing an incompatible saved matrix on a mode change', () => {
+    editor.policy.controls.interestMode.setValue('TIERED');
+    editor.changeInterestMode('TIERED');
+    const matrix = {
+      calculationMethod: 'UNAPPROVED',
+      brackets: [{ lowerBalance: '0', upperBalance: null as string | null, annualRatePercent: '1' }]
+    } as const;
+    editor.policy.controls.interestMatrix.setValue(matrix as any);
+    jest.spyOn(window, 'confirm').mockReturnValueOnce(false);
+    editor.policy.controls.interestMode.setValue('FIXED');
+    editor.changeInterestMode('FIXED');
+    expect(editor.policy.controls.interestMode.value).toBe('TIERED');
+    expect(editor.policy.controls.interestMatrix.value).toEqual(matrix);
+    jest.spyOn(window, 'confirm').mockReturnValueOnce(true);
+    editor.policy.controls.interestMode.setValue('FIXED');
+    editor.changeInterestMode('FIXED');
+    expect(editor.policy.controls.interestMatrix.value).toBeNull();
+    expect(editor.policy.controls.accountDesignation.value).toBe(policy.accountDesignation);
+  });
+  it('blocks old parent saves and policy submission while an advanced editor has unsaved input', () => {
+    editor.interest = { dirty: true, saving: false } as any;
+    expect(editor.saveDisabled).toBe(true);
+    expect(editor.dirty).toBe(true);
+    editor.save();
+    expect(api.save).not.toHaveBeenCalled();
+  });
   it('creates the core product, obtains initial revision from the server and saves the exact returned ID', () => {
     editor.save();
     expect(products.createSavingProduct).toHaveBeenCalledTimes(1);
