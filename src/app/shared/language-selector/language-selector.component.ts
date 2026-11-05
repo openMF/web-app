@@ -50,6 +50,12 @@ export class LanguageSelectorComponent {
    */
   @Input() subscriptSizing: SubscriptSizing = 'fixed';
 
+  /** Class applied to the dropdown panel, for hosts that have to adapt it to where it opens. */
+  @Input() panelClass = '';
+
+  /** Width of the dropdown panel. Matches the control by default, and fits the longest name when null. */
+  @Input() panelWidth: string | number | null = 'auto';
+
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
 
