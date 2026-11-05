@@ -15,24 +15,60 @@
 
   .tab-nav-bar {
     display: flex;
-    align-items: center;
-    padding: 0 1rem;
+    align-self: stretch;
+    padding: 0 8px;
+
+    // The links after Institution sit in a wrapper that has to pass the full height on to them
+    > span {
+      display: flex;
+    }
   }
 
+  // Each link is a tab resting on the bottom edge of the toolbar, so that a dropdown
+  // opens exactly where the tab ends and the two read as one shape.
   .tab-link {
+    display: flex;
+    align-items: center;
     min-width: auto;
-    padding: 15px 1rem;
+    margin-top: 8px;
+    padding: 0 12px 8px;
+    border-radius: 8px 8px 0 0;
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
     color: rgb(255 255 255 / 70%);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
 
     &:hover {
+      background-color: rgb(255 255 255 / 8%);
       color: #fff;
+    }
+
+    &[aria-expanded='true'] {
+      background-color: var(--mat-menu-container-color);
+      color: var(--mat-menu-item-label-text-color);
+
+      .tab-link-caret {
+        transform: rotate(180deg);
+      }
     }
 
     cursor: pointer;
   }
+
+  .tab-link-caret {
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+
+  // Icon buttons open their menus too, and stay highlighted for as long as the menu is open
+  /* stylelint-disable selector-class-pattern */
+  ::ng-deep .mat-mdc-icon-button.mat-mdc-menu-trigger[aria-expanded='true'] {
+    background-color: rgb(255 255 255 / 16%);
+  }
+  /* stylelint-enable selector-class-pattern */
 
   .search-bar {
     .search {
@@ -47,6 +83,9 @@
   }
 
   .img-button {
+    // As a block the button loses the baseline gap that pushed it 1px off the toolbar's centre
+    display: block;
+
     img {
       width: 32px;
       height: 32px;

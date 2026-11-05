@@ -118,6 +118,47 @@
   }
 }
 
+// ===== Toolbar Dropdown Menus =====
+// These panels hang from the bottom edge of the toolbar: they have no top corners, and their
+// shadow only falls downwards so that it doesn't draw a line under the open toolbar tab.
+.mat-mdc-menu-panel.mifosx-toolbar-menu {
+  --mat-menu-container-shape: 0 0 8px 8px;
+  --mat-menu-container-elevation-shadow: 0 8px 16px -8px #0000003d, 0 4px 8px -4px #00000029;
+  --mat-menu-item-hover-state-layer-color: #1074b914;
+  --mat-menu-item-focus-state-layer-color: #1074b91f;
+
+  // Keeps Font Awesome icons centred in the Material icon box, which clips them otherwise
+  .mat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    fa-icon {
+      display: flex;
+    }
+  }
+}
+
+.dark-theme .mat-mdc-menu-panel.mifosx-toolbar-menu {
+  --mat-menu-item-hover-state-layer-color: #5ba2ec14;
+  --mat-menu-item-focus-state-layer-color: #5ba2ec1f;
+}
+
+// Icon buttons are shorter than the toolbar, so these panels have to clear the space below them
+.mat-mdc-menu-panel.mifosx-toolbar-icon-menu {
+  margin-top: 8px;
+
+  @media (width <= 599px) {
+    margin-top: 4px;
+  }
+}
+
+// The language selector stops 4px short of the bottom of the toolbar
+.mat-mdc-select-panel.mifosx-toolbar-select-panel {
+  margin-top: 4px;
+  border-radius: 0 0 8px 8px;
+}
+
 .scrollbar-styling {
   scrollbar-width: thin;
   scrollbar-color: #889 #f1f1f1;
