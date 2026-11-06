@@ -13,9 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { of, throwError } from 'rxjs';
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { EMPTY, Subject, of, throwError } from 'rxjs';
+import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import * as L from 'leaflet';
+import { FormGroupService } from 'app/shared/form-dialog/form-group.service';
 
 import { AddressTabComponent } from './address-tab.component';
 import { ClientsService } from 'app/clients/clients.service';
@@ -50,6 +51,7 @@ jest.mock('leaflet', () => ({
 }));
 
 describe('Office AddressTabComponent', () => {
+  const originalRbacSetting = environment.productionModeEnableRBAC;
   let component: AddressTabComponent;
   let fixture: ComponentFixture<AddressTabComponent>;
   let organizationService: jest.Mocked<OrganizationService>;
@@ -78,6 +80,7 @@ describe('Office AddressTabComponent', () => {
 
   function dialogRefWithValue(value: any) {
     return {
+      afterOpened: () => EMPTY,
       afterClosed: () => of({ data: { value } })
     } as any;
   }
@@ -101,6 +104,7 @@ describe('Office AddressTabComponent', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
     environment.enableClientAddressLocation = true;
+    environment.productionModeEnableRBAC = true;
 
     organizationService = {
       getOfficeAddresses: jest.fn(() => of([officeAddress])),
@@ -139,7 +143,10 @@ describe('Office AddressTabComponent', () => {
         { provide: ClientsService, useValue: clientsService },
         { provide: MatDialog, useValue: dialog },
         { provide: PostalCodeLookupService, useValue: { enabled: false } },
-        { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions: [] as string[] }) } },
+        {
+          provide: AuthenticationService,
+          useValue: { getCredentials: () => ({ permissions: ['ALL_FUNCTIONS'] as string[] }) }
+        },
         provideNoopAnimations()
       ]
     }).compileComponents();
@@ -159,6 +166,10 @@ describe('Office AddressTabComponent', () => {
       }
     });
     translateService.use('en');
+  });
+
+  afterEach(() => {
+    environment.productionModeEnableRBAC = originalRbacSetting;
   });
 
   it('shows saved locations in the read-only summary even when client location entry is disabled', () => {
@@ -409,17 +420,17 @@ describe('Office AddressTabComponent', () => {
     expect(formFields.some((field: any) => field.controlName === 'longitude')).toBe(true);
   });
 
-  it('hides plugin geolocation fields when the location feature is disabled', () => {
+  it('exposes office coordinate fields when client location entry is disabled', () => {
     environment.enableClientAddressLocation = false;
     component.addressTemplate = addressTemplate;
 
     const formFields = (component as any).getAddressFormFields();
 
-    expect(formFields.some((field: any) => field.controlName === 'latitude')).toBe(false);
-    expect(formFields.some((field: any) => field.controlName === 'longitude')).toBe(false);
+    expect(formFields.some((field: any) => field.controlName === 'latitude')).toBe(true);
+    expect(formFields.some((field: any) => field.controlName === 'longitude')).toBe(true);
   });
 
-  it('omits plugin geolocation values from save payloads when the location feature is disabled', () => {
+  it('saves office coordinates independently of the client location flag', () => {
     environment.enableClientAddressLocation = false;
     organizationService.getOfficeAddresses.mockReturnValue(of([]));
     fixture.detectChanges();
@@ -436,8 +447,8 @@ describe('Office AddressTabComponent', () => {
     component.addAddress();
 
     const payload = organizationService.createOfficeAddress.mock.calls[0][1];
-    expect(payload.latitude).toBeUndefined();
-    expect(payload.longitude).toBeUndefined();
+    expect(payload.latitude).toBe('12.9716');
+    expect(payload.longitude).toBe('77.5946');
   });
 
   it('preserves latitude and longitude in create payloads when the location feature is enabled', () => {
@@ -550,7 +561,7 @@ describe('Office AddressTabComponent', () => {
     expect(L.map).not.toHaveBeenCalled();
   });
 
-  it('hides plugin geolocation values and map for returned coordinates when the location feature is disabled', () => {
+  it('shows office coordinates and map when client location entry is disabled', () => {
     environment.enableClientAddressLocation = false;
     organizationService.getOfficeAddresses.mockReturnValue(
       of([
@@ -564,10 +575,10 @@ describe('Office AddressTabComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).not.toContain('12.9716');
-    expect(fixture.nativeElement.textContent).not.toContain('77.5946');
-    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).toBeNull();
-    expect(L.map).not.toHaveBeenCalled();
+    expect(fixture.nativeElement.textContent).toContain('12.9716');
+    expect(fixture.nativeElement.textContent).toContain('77.5946');
+    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
+    expect(L.map).toHaveBeenCalledTimes(1);
   });
 
   it('shows an error state when office address loading fails for non-404 errors', () => {
@@ -585,5 +596,371 @@ describe('Office AddressTabComponent', () => {
 
     expect(dialog.open).not.toHaveBeenCalled();
     expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
+  });
+  it.each([
+    [
+      -90,
+      -180
+    ],
+    [
+      90,
+      180
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      '19.43260812',
+      '-99.13320912'
+    ],
+    [
+      '',
+      ''
+    ]
+  ])('accepts the valid coordinate pair %s, %s', (latitude, longitude) => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.patchValue({ latitude, longitude });
+    form.get('latitude').updateValueAndValidity();
+    form.get('longitude').updateValueAndValidity();
+    expect(form.valid).toBe(true);
+  });
+
+  it.each([
+    [
+      91,
+      0
+    ],
+    [
+      -91,
+      0
+    ],
+    [
+      0,
+      181
+    ],
+    [
+      0,
+      -181
+    ],
+    [
+      NaN,
+      0
+    ],
+    [
+      0,
+      Infinity
+    ],
+    [
+      'not a number',
+      0
+    ],
+    [
+      '19.4.3',
+      0
+    ],
+    [
+      0,
+      ''
+    ],
+    [
+      '',
+      0
+    ]
+  ])('rejects the invalid coordinate pair %s, %s and never writes it', (latitude, longitude) => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.patchValue({ latitude, longitude });
+    form.get('latitude').updateValueAndValidity();
+    form.get('longitude').updateValueAndValidity();
+    expect(form.invalid).toBe(true);
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue({ ...officeAddress, latitude, longitude }));
+    component.editAddress(officeAddress);
+    expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+  });
+
+  it('revalidates both controls as a pair is entered, cleared, and the dialog closes', () => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    const opened = new Subject<void>();
+    const closed = new Subject<void>();
+    (component as any).setupCoordinateValidation({
+      afterOpened: () => opened,
+      afterClosed: () => closed,
+      componentInstance: { form }
+    });
+    opened.next();
+    form.get('latitude').setValue(0);
+    expect(form.get('longitude').hasError('required')).toBe(true);
+    form.get('longitude').setValue(0);
+    expect(form.valid).toBe(true);
+    form.get('latitude').setValue('');
+    expect(form.get('latitude').hasError('required')).toBe(true);
+    form.get('longitude').setValue('');
+    expect(form.valid).toBe(true);
+    closed.next();
+    const validate = jest.spyOn(form.get('longitude'), 'updateValueAndValidity');
+    form.get('latitude').setValue(1);
+    expect(validate).not.toHaveBeenCalled();
+  });
+
+  it('preserves coordinates and all address fields when only the postal code changes', () => {
+    const saved = {
+      ...officeAddress,
+      latitude: 19.43260812,
+      longitude: -99.13320912,
+      addressLine2: 'Second line',
+      addressLine3: 'Third line',
+      townVillage: 'Town',
+      countyDistrict: 'County'
+    };
+    const fields = (component as any).getAddressFormFields(saved);
+    const form = TestBed.inject(FormGroupService).createFormGroup(fields);
+    form.get('postalCode').setValue('09300');
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue(form.value));
+    component.editAddress(saved);
+    expect(organizationService.updateOfficeAddress).toHaveBeenCalledWith('1', '7', {
+      ...form.value,
+      locale: 'en'
+    });
+  });
+
+  it('distinguishes omitted coordinates from deliberately clearing both coordinates', () => {
+    const omitted = (component as any).normalizeAddressData({ ...officeAddress });
+    expect(omitted).not.toHaveProperty('latitude');
+    expect(omitted).not.toHaveProperty('longitude');
+    const undefinedValues = (component as any).normalizeAddressData({
+      ...officeAddress,
+      latitude: undefined,
+      longitude: undefined
+    });
+    expect(undefinedValues).not.toHaveProperty('latitude');
+    expect(undefinedValues).not.toHaveProperty('longitude');
+    const cleared = (component as any).normalizeAddressData({ ...officeAddress, latitude: '', longitude: null });
+    expect(cleared).toMatchObject({ latitude: null, longitude: null, locale: 'en' });
+  });
+
+  it('cancels editing without a write or refreshing the saved data', () => {
+    fixture.detectChanges();
+    dialog.open.mockReturnValue({ afterOpened: () => EMPTY, afterClosed: () => of(undefined) } as any);
+    component.editAddress(officeAddress);
+    expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+    expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([
+    0,
+    400,
+    403,
+    404,
+    500
+  ])('retains saved data and reports failed writes (HTTP %s)', (status) => {
+    fixture.detectChanges();
+    organizationService.updateOfficeAddress.mockReturnValue(throwError(() => ({ status })));
+    dialog.open.mockReturnValue(dialogRefWithValue({ ...officeAddress, latitude: 0, longitude: 0 }));
+    component.editAddress(officeAddress);
+    expect(component.officeAddresses).toEqual([officeAddress]);
+    expect(component.hasError).toBe(true);
+    expect(component.isSaving).toBe(false);
+    expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(1);
+  });
+
+  it('prevents a READ_OFFICE user from mutating addresses, including direct handler calls', () => {
+    jest
+      .spyOn(TestBed.inject(AuthenticationService), 'getCredentials')
+      .mockReturnValue({ permissions: ['READ_OFFICE'] } as any);
+    fixture.detectChanges();
+    component.editAddress(officeAddress);
+    component.toggleAddress(officeAddress);
+    component.deleteAddress(officeAddress);
+    component.officeAddresses = [];
+    component.addAddress();
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(component.canAddAddress).toBe(false);
+    expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+    expect(organizationService.deleteOfficeAddress).not.toHaveBeenCalled();
+  });
+  it('passes translation keys to the dialog to avoid translating Spanish button text twice', () => {
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('es', { labels: { buttons: { Edit: 'Editar', Submit: 'Enviar' } } });
+    translate.use('es');
+    fixture.detectChanges();
+    dialog.open.mockReturnValue({ afterOpened: () => EMPTY, afterClosed: () => of(undefined) } as any);
+    component.editAddress(officeAddress);
+    expect((dialog.open.mock.calls[0][1] as any).data.layout.addButtonText).toBe('labels.buttons.Edit');
+    component.officeAddresses = [];
+    component.addAddress();
+    expect((dialog.open.mock.calls[1][1] as any).data.layout.addButtonText).toBe('labels.buttons.Submit');
+  });
+  it.each([
+    [
+      '5e-8',
+      '0.00000005'
+    ],
+    [
+      '-5e-8',
+      '-0.00000005'
+    ],
+    [
+      '+5E-8',
+      '0.00000005'
+    ],
+    [
+      '1.234567e-2',
+      '0.01234567'
+    ],
+    [
+      '1.943260812e1',
+      '19.43260812'
+    ],
+    [
+      '5e1',
+      '50'
+    ],
+    [
+      '.5e-7',
+      '0.00000005'
+    ],
+    [
+      '0e999999999',
+      '0'
+    ],
+    [
+      '0E-8',
+      '0'
+    ],
+    [
+      '-89.13320912',
+      '-89.13320912'
+    ],
+    [
+      5e-8,
+      5e-8
+    ]
+  ])('serializes coordinate %s as %s without rounding', (input, expected) => {
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue({ ...officeAddress, latitude: input, longitude: '-5e-8' }));
+    component.editAddress(officeAddress);
+    expect(organizationService.updateOfficeAddress).toHaveBeenCalledWith(
+      '1',
+      '7',
+      expect.objectContaining({
+        latitude: expected,
+        longitude: '-0.00000005',
+        locale: 'en'
+      })
+    );
+  });
+
+  it('serializes exponent coordinates on address creation as well as editing', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue({ ...officeAddress, latitude: '5e-8', longitude: '-5e-8' }));
+    component.addAddress();
+    expect(organizationService.createOfficeAddress).toHaveBeenCalledWith(
+      '1',
+      expect.objectContaining({
+        latitude: '0.00000005',
+        longitude: '-0.00000005',
+        locale: 'en'
+      })
+    );
+  });
+
+  it.each([
+    'CREATE_OFFICE',
+    'UPDATE_OFFICE',
+    'DELETE_OFFICE'
+  ] as const)(
+    'allows %s without explicit permissions when RBAC is disabled, but keeps summaries read-only',
+    (permission) => {
+      environment.productionModeEnableRBAC = false;
+      jest.spyOn(TestBed.inject(AuthenticationService), 'getCredentials').mockReturnValue({ permissions: [] } as any);
+      expect(component.canManageAddress(permission)).toBe(true);
+      component.readOnly = true;
+      expect(component.canManageAddress(permission)).toBe(false);
+    }
+  );
+
+  it.each([
+    'CREATE_OFFICE',
+    'UPDATE_OFFICE',
+    'DELETE_OFFICE'
+  ] as const)('requires %s or ALL_FUNCTIONS when RBAC is enabled', (permission) => {
+    const credentials = jest.spyOn(TestBed.inject(AuthenticationService), 'getCredentials');
+    credentials.mockReturnValue({ permissions: ['ALL_FUNCTIONS_READ'] } as any);
+    expect(component.canManageAddress(permission)).toBe(false);
+    credentials.mockReturnValue({ permissions: [permission] } as any);
+    expect(component.canManageAddress(permission)).toBe(true);
+    credentials.mockReturnValue({ permissions: ['ALL_FUNCTIONS'] } as any);
+    expect(component.canManageAddress(permission)).toBe(true);
+    component.readOnly = true;
+    expect(component.canManageAddress(permission)).toBe(false);
+  });
+  it.each([
+    '0.12345678',
+    '-0.1234567800',
+    '1e-8',
+    '-5e-8',
+    '1.23456789e1',
+    '1.23456780e-1',
+    '1000e-11',
+    '0.000000000',
+    '0e-999999999',
+    0.12345678
+  ])('accepts coordinate %s when its expanded value fits eight decimal places', (value) => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.patchValue({ latitude: value, longitude: value });
+    form.get('latitude').updateValueAndValidity();
+    form.get('longitude').updateValueAndValidity();
+    expect(form.valid).toBe(true);
+  });
+
+  it.each([
+    '0.123456789',
+    '-0.123456789',
+    '1e-9',
+    '-5e-9',
+    '1.23456789e-2',
+    '1000e-12',
+    '1e-999999999',
+    0.123456789,
+    5e-9
+  ])('rejects over-precision coordinate %s for either axis and prevents update requests', (value) => {
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    fixture.detectChanges();
+    for (const axis of [
+      'latitude',
+      'longitude'
+    ]) {
+      form.patchValue({ latitude: 0, longitude: 0, [axis]: value });
+      form.get('latitude').updateValueAndValidity();
+      form.get('longitude').updateValueAndValidity();
+      expect(form.get(axis).getError('maxDecimals')).toEqual({ decimals: 8 });
+      expect(form.invalid).toBe(true);
+      dialog.open.mockReturnValue(dialogRefWithValue(form.value));
+      component.editAddress(officeAddress);
+    }
+    expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+  });
+
+  it('prevents creation with over-precision coordinates without changing the supplied values', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
+    fixture.detectChanges();
+    const values = { ...officeAddress, latitude: '1e-9', longitude: '-0.123456789' };
+    dialog.open.mockReturnValue(dialogRefWithValue(values));
+    component.addAddress();
+    expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
+    expect(values).toMatchObject({ latitude: '1e-9', longitude: '-0.123456789' });
   });
 });

@@ -17,7 +17,7 @@
         }
       </h3>
     </div>
-    @if (!readOnly && !hasOfficeAddress) {
+    @if (canManageAddress('CREATE_OFFICE') && !hasOfficeAddress) {
       <div class="action-button m-b-10 gap-25px">
         <button
           mat-raised-button
@@ -63,7 +63,7 @@
   @if (!isLoading && !hasError && !isPluginUnavailable && !officeAddresses.length) {
     <div class="address-state empty-state">
       <span>{{ 'labels.text.No data found' | translate }}</span>
-      @if (!readOnly) {
+      @if (canManageAddress('CREATE_OFFICE')) {
         <button
           mat-raised-button
           color="primary"
@@ -96,7 +96,8 @@
                 mat-button
                 color="primary"
                 (click)="editAddress(address)"
-                [disabled]="isSaving || optionsLoadFailed || isPluginUnavailable"
+                [attr.aria-label]="'labels.buttons.Edit' | translate"
+                [disabled]="!canManageAddress('UPDATE_OFFICE') || isSaving || optionsLoadFailed || isPluginUnavailable"
                 *mifosxHasPermission="'UPDATE_OFFICE'"
               >
                 <fa-icon icon="edit"></fa-icon>
@@ -105,15 +106,17 @@
                 mat-button
                 color="warn"
                 (click)="deleteAddress(address)"
-                [disabled]="isSaving || isPluginUnavailable"
+                [attr.aria-label]="'labels.buttons.Delete' | translate"
+                [disabled]="!canManageAddress('DELETE_OFFICE') || isSaving || isPluginUnavailable"
                 *mifosxHasPermission="'DELETE_OFFICE'"
               >
                 <fa-icon icon="trash"></fa-icon>
               </button>
               <mat-slide-toggle
                 [checked]="address.isActive"
+                [attr.aria-label]="'labels.inputs.Active Status' | translate"
                 (change)="toggleAddress(address)"
-                [disabled]="isSaving || isPluginUnavailable"
+                [disabled]="!canManageAddress('UPDATE_OFFICE') || isSaving || isPluginUnavailable"
                 *mifosxHasPermission="'UPDATE_OFFICE'"
               ></mat-slide-toggle>
             </div>
@@ -195,31 +198,27 @@
                 }}</span>
               </div>
             }
-            @if (clientAddressLocationEnabled && (readOnly || hasValue(address.latitude))) {
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
-                <span>{{
-                  hasValue(address.latitude) ? address.latitude : ('labels.inputs.Not Provided' | translate)
-                }}</span>
-              </div>
-            }
-            @if (clientAddressLocationEnabled && (readOnly || hasValue(address.longitude))) {
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
-                <span>{{
-                  hasValue(address.longitude) ? address.longitude : ('labels.inputs.Not Provided' | translate)
-                }}</span>
-              </div>
-            }
+            <div class="address-row">
+              <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
+              <span>{{
+                hasValue(address.latitude) ? address.latitude : ('labels.inputs.Not Provided' | translate)
+              }}</span>
+            </div>
+            <div class="address-row">
+              <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
+              <span>{{
+                hasValue(address.longitude) ? address.longitude : ('labels.inputs.Not Provided' | translate)
+              }}</span>
+            </div>
             <div class="address-row">
               <span class="label">{{ 'labels.inputs.Active Status' | translate }}</span>
               <span>{{ getActiveStatusLabel(address.isActive) | translate }}</span>
             </div>
           </div>
-          @if (readOnly && !hasValidCoordinatePair(address.latitude, address.longitude)) {
+          @if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
             <p>{{ 'labels.text.No valid saved coordinates' | translate }}</p>
           }
-          @if (clientAddressLocationEnabled && hasValidCoordinatePair(address.latitude, address.longitude)) {
+          @if (hasValidCoordinatePair(address.latitude, address.longitude)) {
             <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
           }
         </mat-expansion-panel>
