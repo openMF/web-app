@@ -12,6 +12,7 @@ test('office details reflect persisted addresses, maps and available backend ser
   page,
   request
 }, testInfo) => {
+  test.setTimeout(240000);
   // Keep map assertions independent of tile-provider availability, including offline CI.
   await page.route('https://*.tile.openstreetmap.org/**', (route) => route.abort());
   const baseURL = testInfo.project.use.baseURL || 'http://localhost:4200';
@@ -78,13 +79,10 @@ test('office details reflect persisted addresses, maps and available backend ser
     await page.getByRole('option').first().click();
     await dialog.getByRole('combobox', { name: 'Country', exact: true }).click();
     await page.getByRole('option', { name: 'CR', exact: true }).click();
-    // Persist synthetic fixture coordinates through the form when location entry is enabled.
-    const coordinateEntryEnabled = (await dialog.getByLabel('Latitude', { exact: false }).count()) > 0;
-    if (coordinateEntryEnabled) {
-      await dialog.getByLabel('Latitude', { exact: false }).fill('9.928069');
-      await dialog.getByLabel('Longitude', { exact: false }).fill('-84.090725');
-    }
-    await page.screenshot({ path: testInfo.outputPath('create-address.png'), fullPage: true });
+    // Offices expose coordinate entry even with the default client location flag disabled.
+    await expect(dialog.getByLabel('Latitude', { exact: false })).toBeVisible();
+    await expect(dialog.getByLabel('Longitude', { exact: false })).toBeVisible();
+    // Creating an address without a location remains supported.
     const saved = page.waitForResponse(
       (response) =>
         response.url().includes(`/v2/offices/${officeId}/addresses`) && response.request().method() === 'POST'
@@ -92,30 +90,194 @@ test('office details reflect persisted addresses, maps and available backend ser
     await dialog.getByRole('button', { name: 'Submit', exact: true }).click();
     expect((await saved).status()).toBe(200);
     await expect(dialog).not.toBeVisible();
-    if (!coordinateEntryEnabled) {
-      const savedAddresses = await request.get(`${api}/v2/offices/${officeId}/addresses`, { headers });
-      expect(savedAddresses.ok()).toBeTruthy();
-      const addressId = (await savedAddresses.json())[0].officeAddressId;
-      const locationUpdate = await request.put(`${api}/v2/offices/${officeId}/addresses/${addressId}`, {
-        headers,
-        data: { latitude: 9.928069, longitude: -84.090725, locale: 'en' }
-      });
-      expect(locationUpdate.ok(), await locationUpdate.text()).toBeTruthy();
+    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await expect(summary.locator('mifosx-office-address-tab')).toContainText('Not Provided');
+    await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
+    await page.screenshot({ path: testInfo.outputPath('missing-location.png'), fullPage: true });
+
+    const readAddress = async () => {
+      const response = await request.get(`${api}/v2/offices/${officeId}/addresses`, { headers });
+      expect(response.ok()).toBeTruthy();
+      const values = await response.json();
+      expect(values).toHaveLength(1);
+      expect(values[0].officeId).toBe(officeId);
+      return values[0];
+    };
+    const original = await readAddress();
+    const openEdit = async () => {
+      await page.getByRole('tab', { name: 'Address', exact: true }).click();
+      const panel = page.locator('mifosx-office-address-tab mat-expansion-panel');
+      if ((await panel.locator('mat-expansion-panel-header').getAttribute('aria-expanded')) !== 'true') {
+        await panel.locator('mat-expansion-panel-header').click();
+      }
+      await panel.getByRole('button', { name: 'Edit', exact: true }).click();
+      await expect(dialog).toBeVisible();
+    };
+    const saveEdit = async () => {
+      const updated = page.waitForResponse(
+        (response) =>
+          response.url().endsWith(`/v2/offices/${officeId}/addresses/${original.officeAddressId}`) &&
+          response.request().method() === 'PUT'
+      );
+      await dialog.getByRole('button', { name: 'Edit', exact: true }).click();
+      expect((await updated).status()).toBe(200);
+      await expect(dialog).not.toBeVisible();
+      await expect(page.locator('mifosx-office-address-tab mat-expansion-panel')).toBeVisible();
+    };
+    await openEdit();
+    const latitude = dialog.getByLabel('Latitude', { exact: false });
+    const longitude = dialog.getByLabel('Longitude', { exact: false });
+    const saveButton = dialog.getByRole('button', { name: 'Edit', exact: true });
+    await latitude.fill('9.92806912');
+    await longitude.focus();
+    await longitude.blur();
+    await expect(saveButton).toBeDisabled();
+    await expect(dialog.locator('mat-error')).toContainText('required');
+    await longitude.fill('-84.09072512');
+    await latitude.fill('91');
+    await latitude.blur();
+    await expect(saveButton).toBeDisabled();
+    await expect(dialog.locator('mat-error')).toContainText('Maximum Value must be 90');
+    await latitude.fill('9.92806912');
+    await expect(saveButton).toBeEnabled();
+    for (const coordinate of [
+      latitude,
+      longitude
+    ]) {
+      const originalValue = await coordinate.inputValue();
+      for (const value of [
+        '0.123456789',
+        '-5e-9'
+      ]) {
+        await coordinate.fill(value);
+        await coordinate.blur();
+        await expect(saveButton).toBeDisabled();
+        await expect(dialog.locator('mat-error')).toHaveText('Up to 8 decimal places allowed');
+      }
+      await coordinate.fill(originalValue);
+      await expect(saveButton).toBeEnabled();
     }
+    // The form remains scrollable and its actions usable at all required widths.
+    for (const width of [
+      390,
+      768,
+      1280,
+      1920
+    ]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await longitude.scrollIntoViewIfNeeded();
+      await expect(latitude).toBeVisible();
+      await expect(longitude).toBeVisible();
+      await expect(saveButton).toBeInViewport();
+      expect(await dialog.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath(`edit-${width}.png`), fullPage: true });
+    }
+    await saveEdit();
+    const located = await readAddress();
+    expect(located).toMatchObject({ ...original, latitude: 9.92806912, longitude: -84.09072512 });
+
+    // A text-only edit must keep the location and the same office-address record.
+    await openEdit();
+    await dialog.getByLabel('Postal Code', { exact: false }).fill('10102');
+    await saveEdit();
+    expect(await readAddress()).toMatchObject({ ...located, postalCode: '10102' });
+    // Cancel must leave the persisted coordinates unchanged.
+    await openEdit();
+    await latitude.fill('10');
+    await dialog.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect(
+      page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Edit', exact: true })
+    ).toBeFocused();
+    expect(await readAddress()).toMatchObject({ ...located, postalCode: '10102' });
+    // Either member can be changed while retaining the other saved value.
+    await openEdit();
+    await latitude.fill('10.12345678');
+    await saveEdit();
+    expect(await readAddress()).toMatchObject({ latitude: 10.12345678, longitude: -84.09072512 });
+    await openEdit();
+    await longitude.fill('-85.12345678');
+    await saveEdit();
+    expect(await readAddress()).toMatchObject({ latitude: 10.12345678, longitude: -85.12345678 });
+    // Clearing both is deliberate, persists nulls, and removes the map after reload.
+    await openEdit();
+    await latitude.fill('');
+    await expect(saveButton).toBeDisabled();
+    await longitude.fill('');
+    await saveEdit();
+    expect(await readAddress()).toMatchObject({ latitude: null, longitude: null });
+    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await expect(summary).toBeVisible();
+    await page.reload();
+    await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
+    // Zero is a valid location and must render a marker.
+    await openEdit();
+    await latitude.fill('0');
+    await longitude.fill('0');
+    await saveEdit();
+    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
+    expect(await readAddress()).toMatchObject({ latitude: 0, longitude: 0 });
+    // Dynamic number inputs can return strings; the locale parser needs decimal text instead of e notation.
+    await openEdit();
+    await latitude.fill('5e-8');
+    await longitude.fill('-5e-8');
+    const exponentWrite = page.waitForRequest(
+      (request) =>
+        request.method() === 'PUT' &&
+        request.url().endsWith(`/v2/offices/${officeId}/addresses/${original.officeAddressId}`)
+    );
+    await saveEdit();
+    expect((await exponentWrite).postDataJSON()).toMatchObject({
+      latitude: '0.00000005',
+      longitude: '-0.00000005',
+      locale: 'en'
+    });
+    expect(await readAddress()).toMatchObject({ latitude: 0.00000005, longitude: -0.00000005 });
+
+    await openEdit();
+    await latitude.fill('9.92806912');
+    await longitude.fill('-84.09072512');
+    await saveEdit();
     // Reopen through a new document so no component state can satisfy these assertions.
-    await page.goto(`${baseURL}/#/organization/offices`);
-    await page.goto(`${baseURL}/#/organization/offices/${officeId}/general`);
+    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await expect(summary).toBeVisible();
+    await page.reload();
     await expect(summary).toContainText(street);
-    await expect(summary).toContainText('9.928069');
-    await expect(summary).toContainText('-84.090725');
+    await expect(summary).toContainText('9.92806912');
+    await expect(summary).toContainText('-84.09072512');
     await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
     await expect(summary.locator('.leaflet-container')).toBeVisible();
     await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
     await expect(summary.locator('mifosx-office-address-tab button')).toHaveCount(0);
+    await expect(summary.locator('mifosx-address-location-map')).toContainText('Map tiles unavailable');
+    for (const width of [
+      390,
+      768,
+      1280,
+      1920
+    ]) {
+      await page.setViewportSize({ width, height: 1000 });
+      const map = summary.locator('.leaflet-container');
+      await map.scrollIntoViewIfNeeded();
+      await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath(`location-${width}.png`), fullPage: true });
+    }
+    for (let repeat = 0; repeat < 3; repeat++) {
+      await page.getByRole('tab', { name: 'Address', exact: true }).click();
+      const header = page.locator('mifosx-office-address-tab mat-expansion-panel-header');
+      await header.click();
+      await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
+      await header.click();
+      await header.click();
+      await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
+      await page.getByRole('tab', { name: 'General', exact: true }).click();
+      await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
+    }
     const persisted = await request.get(`${api}/v2/offices/${officeId}/addresses`, { headers });
     expect(persisted.ok()).toBeTruthy();
     addresses = await persisted.json();
-    expect(addresses[0]).toMatchObject({ street, officeId, latitude: 9.928069, longitude: -84.090725 });
+    expect(addresses[0]).toMatchObject({ street, officeId, latitude: 9.92806912, longitude: -84.09072512 });
   }
   const services = await request.get(`${api}/v2/offices/${officeId}/services`, { headers });
   expect([
@@ -140,6 +302,7 @@ test('office details reflect persisted addresses, maps and available backend ser
       }
     });
     expect(createdService.ok(), await createdService.text()).toBeTruthy();
+    await expect(summary).toBeVisible();
     await page.reload();
     await expect(summary.locator('mifosx-office-services-tab')).toContainText('WEB-1046 integration fixture');
     await expect(summary.locator('mifosx-office-services-tab')).toContainText('Monday 09:00–17:00');
