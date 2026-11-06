@@ -13,7 +13,7 @@ import { ClientsService } from './clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
+import { Router, UrlTree, provideRouter } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faDownload, faPlus, faStop } from '@fortawesome/free-solid-svg-icons';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
@@ -488,5 +488,44 @@ describe('ClientsComponent — status filter', () => {
 
     // The stale full-set fetch was abandoned before it could resolve.
     expect(inFlight[0].observers.length).toBe(0);
+  });
+
+  describe('entity row keyboard activation', () => {
+    const renderRow = () => {
+      component.dataSource.data = [statusRow(7, 'clientStatusType.active')];
+      fixture.detectChanges();
+      return fixture.nativeElement.querySelector('.list-row') as HTMLElement;
+    };
+
+    it('exposes each rendered row as a keyboard-focusable link', () => {
+      const row = renderRow();
+
+      expect(row.getAttribute('role')).toBe('link');
+      expect(row.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('navigates to the row route when Enter is pressed', () => {
+      const router = TestBed.inject(Router);
+      const navigateByUrl = jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+      const row = renderRow();
+
+      row.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+
+      expect(navigateByUrl).toHaveBeenCalledTimes(1);
+      expect(router.serializeUrl(navigateByUrl.mock.calls[0][0] as UrlTree)).toMatch(/\/7\/general$/);
+    });
+
+    it('navigates on Space without scrolling the page', () => {
+      const router = TestBed.inject(Router);
+      const navigateByUrl = jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+      const row = renderRow();
+      const event = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+
+      row.dispatchEvent(event);
+
+      expect(event.defaultPrevented).toBe(true);
+      expect(navigateByUrl).toHaveBeenCalledTimes(1);
+      expect(router.serializeUrl(navigateByUrl.mock.calls[0][0] as UrlTree)).toMatch(/\/7\/general$/);
+    });
   });
 });
