@@ -14,6 +14,7 @@ import {
   OverlayConnectionPosition,
   ConnectionPositionPair
 } from '@angular/cdk/overlay';
+import { coerceElement } from '@angular/cdk/coercion';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef, inject } from '@angular/core';
 
@@ -21,6 +22,7 @@ import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef, inject }
 import { PopoverConfig } from './popover-config';
 import { PopoverRef } from './popover-ref';
 import { PopoverComponent } from './popover.component';
+import { PopoverSpotlightService } from './popover-spotlight.service';
 
 /**
  * Injection token that can be used to access the data that was passed in to a popover.
@@ -29,7 +31,6 @@ import { PopoverComponent } from './popover.component';
 export const POPOVER_DATA = new InjectionToken('popover.data');
 
 const defaultConfig: PopoverConfig = {
-  backdropClass: '',
   disableClose: false,
   panelClass: '',
   arrowOffset: 30,
@@ -45,6 +46,7 @@ const defaultConfig: PopoverConfig = {
 export class PopoverService {
   private overlay = inject(Overlay);
   private injector = inject(Injector);
+  private spotlight = inject(PopoverSpotlightService);
 
   /**
    * Opens the popover at target element
@@ -65,7 +67,6 @@ export class PopoverService {
     const arrowSize = popoverConfig.arrowSize;
     const arrowOffset = popoverConfig.arrowOffset;
     const panelOffset = arrowSize / 2;
-    let showbackdrop: boolean;
     let positions: ConnectionPositionPair[];
     // preferred positions, in order of priority
     if (position === 'bottom') {
@@ -184,9 +185,7 @@ export class PopoverService {
       ];
     }
     if (backdrop) {
-      showbackdrop = true;
-    } else {
-      showbackdrop = false;
+      this.spotlight.show(coerceElement(target));
     }
     const positionStrategy = this.overlay
       .position()
@@ -196,14 +195,15 @@ export class PopoverService {
       .withPositions(positions);
 
     const overlayRef = this.overlay.create({
-      hasBackdrop: showbackdrop,
-      backdropClass: config.backdropClass,
       panelClass: config.panelClass,
       positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.reposition()
     });
 
     const popoverRef = new PopoverRef(overlayRef, positionStrategy, popoverConfig);
+    if (backdrop) {
+      popoverRef.afterClosed().subscribe(() => this.spotlight.release());
+    }
 
     const popover = overlayRef.attach(
       new ComponentPortal(
