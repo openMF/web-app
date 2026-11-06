@@ -23,6 +23,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -57,7 +58,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatIconButton,
     MatIcon,
     FaIconComponent,
-    MatTooltip
+    MatTooltip,
+    CdkTrapFocus
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -65,13 +67,17 @@ export class SearchToolComponent {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
-  @ViewChild('queryInput') queryInput: ElementRef<HTMLInputElement>;
+  @ViewChild('queryInput') queryInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('searchTrigger') searchTrigger?: ElementRef<HTMLButtonElement>;
 
   /** Query Form Control */
   query = new UntypedFormControl('');
 
   /** Controls modal visibility */
   searchVisible = false;
+
+  /** Reference to the trigger or previously focused element before modal opened. */
+  triggerElement: HTMLElement | null = null;
 
   /** Close modal on Escape key anywhere in the document. */
   @HostListener('document:keydown.escape')
@@ -86,21 +92,33 @@ export class SearchToolComponent {
     if (this.searchVisible) {
       this.closeModal();
     } else {
+      this.triggerElement = this.searchTrigger?.nativeElement || (document.activeElement as HTMLElement) || null;
       this.searchVisible = true;
-      setTimeout(() => this.queryInput?.nativeElement.focus(), 60);
+      this.cdr.markForCheck();
     }
   }
 
-  /** Closes the modal and marks the view for re-render under OnPush. */
+  /** Closes the modal, restores focus to the trigger, and marks the view for re-render under OnPush. */
   closeModal(): void {
     this.searchVisible = false;
     this.cdr.markForCheck();
+    this.restoreTriggerFocus();
+  }
+
+  /** Restores focus to the search trigger or recorded trigger element. */
+  restoreTriggerFocus(): void {
+    const target = this.searchTrigger?.nativeElement || this.triggerElement;
+    if (target && typeof target.focus === 'function') {
+      target.focus();
+    }
   }
 
   /** Executes search and closes the modal. Scope refinement lives on the results page. */
   search(): void {
     const queryParams: any = { query: this.query.value };
     this.closeModal();
-    this.router.navigate(['/search'], { queryParams });
+    this.router.navigate(['/search'], { queryParams })?.then?.(() => {
+      this.restoreTriggerFocus();
+    });
   }
 }
