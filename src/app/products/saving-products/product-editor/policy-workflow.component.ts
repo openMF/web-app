@@ -24,6 +24,7 @@ import { forkJoin, finalize, catchError, of } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { isoDate } from './interest-rate.model';
 import { ProductPolicyService } from './product-policy.service';
 import { PolicyAudit, PolicyConfiguration, PolicyReview, PolicyVersion } from './product-policy.model';
 
@@ -115,12 +116,14 @@ export class PolicyWorkflowComponent implements OnChanges {
       this.configuration.capabilities.activation &&
       !this.versions.some((v) => v.version === this.configuration.revision) &&
       policyPermission(this.auth, 'SUBMIT_SAVINGS_PRODUCT_POLICY') &&
-      /^\d{4}-\d{2}-\d{2}$/.test(this.form.controls.effectiveDate.value || '') &&
+      isoDate(this.form.controls.effectiveDate.value || '') &&
       (!this.businessDate || this.form.controls.effectiveDate.value >= this.businessDate)
     );
   }
   canCheck(version: PolicyVersion) {
     return (
+      !this.unsaved &&
+      !this.busy &&
       version.status === 'PENDING_APPROVAL' &&
       version.makerId !== this.auth.getCredentials()?.userId &&
       policyPermission(this.auth, 'CHECK_SAVINGS_PRODUCT_POLICY')

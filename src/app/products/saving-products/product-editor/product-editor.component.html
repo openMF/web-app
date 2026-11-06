@@ -167,15 +167,16 @@
           <div [formGroup]="policy" class="policy-grid" [attr.inert]="pending || !loaded ? '' : null">
             <mat-form-field
               ><mat-label>{{ 'SavingsEditor.InterestMode' | translate }}</mat-label>
-              <mat-select formControlName="interestMode" required>
+              <mat-select
+                formControlName="interestMode"
+                (selectionChange)="changeInterestMode($event.value)"
+                [disabled]="!!interest?.saving"
+                required
+              >
                 @for (option of capabilities?.interestModes; track option) {
                   <mat-option
                     [value]="option"
-                    [disabled]="
-                      (option !== 'NONE' && policy.controls.classification.value === 'SIGHT') ||
-                      option === 'TIERED' ||
-                      option === 'REFERENCE_RATE'
-                    "
+                    [disabled]="option !== 'NONE' && policy.controls.classification.value === 'SIGHT'"
                     >{{
                       (option === 'NONE' ? 'SavingsEditor.NoInterest' : 'SavingsEditor.' + option) | translate
                     }}</mat-option
@@ -185,7 +186,7 @@
               <mat-error>{{ fieldError('interestMode') | translate }}</mat-error></mat-form-field
             >
           </div>
-          <p>{{ 'SavingsEditor.FutureInterest' | translate }}</p>
+          <p>{{ 'InterestManagement.CoreSeparation' | translate }}</p>
           @if (!immutable) {
             <button mat-button (click)="zeroInterest()">{{ 'SavingsEditor.SetNoInterest' | translate }}</button>
           }
@@ -195,6 +196,14 @@
               [savingProductsTemplate]="template"
             ></mifosx-saving-product-terms-step>
           </div>
+          <mifosx-interest-configuration
+            [configuration]="configuration"
+            [context]="context"
+            [mode]="policy.controls.interestMode.value"
+            [blocked]="advancedBlocked"
+            (saved)="advancedSaved($event)"
+            (conflicted)="workflowConflict()"
+          ></mifosx-interest-configuration>
         </section>
         <section [hidden]="tab !== 2">
           <h2>{{ 'SavingsEditor.Rules' | translate }}</h2>
@@ -328,7 +337,7 @@
       @if (configuration) {
         <mifosx-policy-workflow
           [configuration]="configuration"
-          [unsaved]="policy.dirty || policy.invalid || conflict"
+          [unsaved]="policy.dirty || policy.invalid || conflict || !!interest?.dirty || !!interest?.saving"
           (refreshed)="refresh()"
           (conflicted)="workflowConflict()"
         ></mifosx-policy-workflow>

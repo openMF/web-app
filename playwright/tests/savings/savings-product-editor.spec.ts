@@ -14,8 +14,14 @@ const root = (process.env.E2E_FINERACT_URL || 'https://localhost:8443') + '/fine
 const username = process.env.E2E_USERNAME || 'mifos';
 const password = process.env.E2E_PASSWORD || 'password';
 const checker = process.env.E2E_POLICY_CHECKER;
+const passwordFor = (user: string) =>
+  user === checker
+    ? process.env.E2E_CHECKER_PASSWORD || password
+    : user === process.env.E2E_POLICY_READER
+      ? process.env.E2E_READER_PASSWORD || password
+      : password;
 const headers = (user = username) => ({
-  Authorization: 'Basic ' + Buffer.from(`${user}:${password}`).toString('base64'),
+  Authorization: 'Basic ' + Buffer.from(`${user}:${passwordFor(user)}`).toString('base64'),
   'Fineract-Platform-TenantId': process.env.E2E_TENANT || 'default'
 });
 
@@ -24,10 +30,19 @@ async function api(request: APIRequestContext, path: string, user = username) {
   expect(response.ok()).toBeTruthy();
   return response;
 }
+async function tenantDate(request: APIRequestContext) {
+  const config = await (await api(request, '/configurations/name/enable-business-date')).json();
+  if (config.enabled) {
+    const value = await (await api(request, '/businessdate/BUSINESS_DATE')).json();
+    return value.date.map((part: number, index: number) => String(part).padStart(index ? 2 : 4, '0')).join('-');
+  }
+  const response = await api(request, '/savingsproducts/policy/template');
+  return new Date(response.headers()['date']).toISOString().slice(0, 10);
+}
 async function login(page: Page, user = username) {
   const loginPage = new LoginPage(page);
   await loginPage.navigate();
-  await loginPage.loginAndWaitForDashboard(user, password);
+  await loginPage.loginAndWaitForDashboard(user, passwordFor(user));
 }
 async function select(page: Page, control: string, label: string) {
   await page.locator(`mat-select[formControlName="${control}"]`).click();
@@ -39,7 +54,9 @@ async function tab(page: Page, name: string) {
   await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 }
 async function editorReady(page: Page) {
-  await expect(page.locator('mifosx-product-editor mat-progress-bar')).toBeHidden();
+  await expect(
+    page.locator('mifosx-product-editor mat-progress-bar[aria-label="Saving product configuration"]')
+  ).toBeHidden();
   await expect(
     page.locator('mifosx-product-editor').getByText('Policy settings are configurable metadata.', { exact: false })
   ).toBeVisible();
@@ -63,13 +80,14 @@ async function fillProduct(page: Page, fixed: boolean) {
     await page.locator('input[formControlName="nominalAnnualInterestRate"]').fill('4.5');
   } else await page.getByRole('button', { name: 'Set no interest and zero nominal rate' }).click();
   await page.locator('mat-select[formControlName="interestMode"]').click();
-  await expect(page.getByRole('option', { name: 'Tiered interest (unavailable)', exact: true })).toHaveAttribute(
+  await expect(page.getByRole('option', { name: 'Tiered interest configuration', exact: true })).toHaveAttribute(
     'aria-disabled',
-    'true'
+    fixed ? 'false' : 'true'
   );
-  await expect(
-    page.getByRole('option', { name: 'Reference-rate interest (unavailable)', exact: true })
-  ).toHaveAttribute('aria-disabled', 'true');
+  await expect(page.getByRole('option', { name: 'Reference-rate configuration', exact: true })).toHaveAttribute(
+    'aria-disabled',
+    fixed ? 'false' : 'true'
+  );
   await page.keyboard.press('Escape');
   await expect(page.getByRole('listbox')).toHaveCount(0);
   await page.screenshot({
@@ -97,8 +115,7 @@ test('real create, partial-failure retry, edit revision/conflict, submit, indepe
   const capabilities = await (await api(request, '/savingsproducts/policy/template')).json();
   expect(capabilities.activation).toBe(true);
   expect(capabilities.financialEnforcement).toBe(false);
-  const dateResponse = await api(request, '/savingsproducts/policy/template');
-  const serverDate = new Date(dateResponse.headers()['date']);
+  const serverDate = new Date((await tenantDate(request)) + 'T00:00:00Z');
   const effective = new Date(serverDate.getTime() + 2 * 86400000).toISOString().slice(0, 10);
   await login(page);
   await fillProduct(page, false);
@@ -164,7 +181,7 @@ test('real create, partial-failure retry, edit revision/conflict, submit, indepe
   await page.getByRole('button', { name: 'Reload server draft (discard local policy edits)' }).click();
   await expect(page.locator('input[formControlName="accountDesignation"]')).toHaveValue('Concurrent administrator');
   await expect(page.locator('mifosx-policy-workflow').getByText('No submitted versions.')).toBeAttached();
-  await page.locator('input[formControlName="effectiveDate"]').fill(effective);
+  await page.locator('mifosx-policy-workflow input[formControlName="effectiveDate"]').fill(effective);
   await page.getByRole('button', { name: 'Submit for Approval', exact: true }).click();
   await expect(page.getByText('Independent review is pending.', { exact: false })).toBeVisible();
   await page.screenshot({ path: `${artifacts}/draft-submitted.png`, fullPage: true, animations: 'disabled' });
@@ -173,7 +190,11 @@ test('real create, partial-failure retry, edit revision/conflict, submit, indepe
     data: {}
   });
   expect(self.status()).toBe(403);
-  const checkerContext = await browser.newContext({ ignoreHTTPSErrors: true, viewport: { width: 1366, height: 768 } });
+  const checkerContext = await browser.newContext({
+    ignoreHTTPSErrors: true,
+    viewport: { width: 1366, height: 768 },
+    baseURL: process.env.E2E_BASE_URL || 'http://localhost:4202'
+  });
   const checkerPage = await checkerContext.newPage();
   checkerPage.on('pageerror', (e) => errors.push(e.message));
   await login(checkerPage, checker);
@@ -190,7 +211,9 @@ test('real create, partial-failure retry, edit revision/conflict, submit, indepe
   await expect(
     checkerPage.getByText('Applicable active version: No applicable approved policy', { exact: true })
   ).toBeVisible();
-  await checkerPage.getByText('Version history', { exact: true }).click();
+  await expect(checkerPage.getByText('Approved (effective date pending)', { exact: false })).toBeAttached();
+  const historyButton = checkerPage.getByRole('button', { name: 'Version history', exact: true });
+  if ((await historyButton.getAttribute('aria-expanded')) !== 'true') await historyButton.click();
   await expect(checkerPage.getByText('Approved (effective date pending)', { exact: false })).toBeVisible();
   await checkerPage.screenshot({ path: `${artifacts}/approval-status.png`, fullPage: true, animations: 'disabled' });
   const active = await api(request, `/savingsproducts/policy/${productId}/active`);
@@ -288,8 +311,7 @@ test('real active policy, rejection, denied writes, read-only form and unsaved n
   await expect(page).toHaveURL(/saving-products\/\d+\/edit/);
   await editorReady(page);
   const id = Number(page.url().match(/saving-products\/(\d+)/)![1]);
-  const dateResponse = await api(request, '/savingsproducts/policy/template');
-  const today = new Date(dateResponse.headers()['date']).toISOString().slice(0, 10);
+  const today = await tenantDate(request);
   const submit = await request.post(root + `/savingsproducts/policy/${id}/submit`, {
     headers: headers(),
     data: { expectedRevision: 1, effectiveDate: today }

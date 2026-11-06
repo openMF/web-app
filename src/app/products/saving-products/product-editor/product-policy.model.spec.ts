@@ -50,7 +50,7 @@ describe('policy decimals and DTO mapping', () => {
     expect(body).toContain('"maximumBalance":9999999999999.99');
     expect(body).toContain('"expectedRevision":7');
     expect(parsePolicyJson<{ policy: ProductPolicy }>(body).policy.maximumBalance).toBe('9999999999999.99');
-    expect(Object.keys(JSON.parse(body).policy)).toHaveLength(17);
+    expect(Object.keys(JSON.parse(body).policy)).toHaveLength(19);
     expect(() => serializePolicy(-1, policy)).toThrow();
     expect(() => serializePolicy(1, { ...policy, maximumBalance: '1e10' })).toThrow();
   });
