@@ -41,7 +41,7 @@
 
 <mat-card-content>
   <mat-tab-group>
-    <mat-tab label="Details">
+    <mat-tab label="{{ 'labels.heading.Details' | translate }}">
       <div class="layout-row-wrap">
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
@@ -154,13 +154,13 @@
     </mat-tab>
 
     @if (centerAccountsData && centerAccountsData.loanAccounts) {
-      <mat-tab label="Loan Accounts">
+      <mat-tab label="{{ 'labels.heading.Loan Accounts' | translate }}">
         <mifosx-loan-account-table [loanAccountData]="centerAccountsData.loanAccounts"></mifosx-loan-account-table>
       </mat-tab>
     }
 
     @if (centerAccountsData && centerAccountsData.savingsAccounts) {
-      <mat-tab label="Savings Accounts">
+      <mat-tab label="{{ 'labels.heading.Savings Accounts' | translate }}">
         <mifosx-savings-account-table
           [savingsAccountData]="centerAccountsData.savingsAccounts"
         ></mifosx-savings-account-table>
