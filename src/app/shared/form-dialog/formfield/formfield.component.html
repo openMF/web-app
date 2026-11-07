@@ -41,6 +41,19 @@
             }
           </mat-select>
         }
+        @if (
+          form.controls[formfield.controlName].hasError('invalidNumber') &&
+          !form.controls[formfield.controlName].hasError('min') &&
+          !form.controls[formfield.controlName].hasError('max')
+        ) {
+          <mat-error>{{ 'labels.inputs.Please enter a valid number' | translate }}</mat-error>
+        }
+        @if (form.controls[formfield.controlName].hasError('maxDecimals')) {
+          <mat-error>{{
+            'errors.validation.maxDecimals'
+              | translate: { decimals: form.controls[formfield.controlName].getError('maxDecimals').decimals }
+          }}</mat-error>
+        }
         @if (form.controls[formfield.controlName].hasError('required')) {
           <mat-error>
             {{ formfield.label }} {{ 'labels.commons.is' | translate }}

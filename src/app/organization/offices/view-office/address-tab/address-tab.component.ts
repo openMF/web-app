@@ -7,9 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Angular Material Imports */
@@ -27,7 +35,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 /** rxjs Imports */
 import { forkJoin, of, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, finalize, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs/operators';
 
 /** Custom Components */
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -40,6 +48,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from 'app/clients/clients.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 
 /** Custom Models */
@@ -51,7 +60,7 @@ import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
 
 /** Custom Imports */
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.util';
+import { CoordinateType, hasValidCoordinatePair, parseCoordinate } from 'app/clients/utils/address-coordinate.util';
 
 @Component({
   selector: 'mifosx-office-address-tab',
@@ -73,12 +82,11 @@ import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.uti
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressTabComponent implements OnInit {
+  @Input() readOnly = false;
+
   readonly hasValidCoordinatePair = hasValidCoordinatePair;
 
-  get clientAddressLocationEnabled(): boolean {
-    return environment.enableClientAddressLocation;
-  }
-
+  private authenticationService = inject(AuthenticationService);
   private route = inject(ActivatedRoute);
   private organizationService = inject(OrganizationService);
   private clientsService = inject(ClientsService);
@@ -102,6 +110,7 @@ export class AddressTabComponent implements OnInit {
   optionsLoadFailed = false;
 
   private autoFilledFields = new Set<string>();
+  private readonly coordinateDecimals = 8;
 
   get hasOfficeAddress(): boolean {
     return this.officeAddresses.length > 0;
@@ -109,6 +118,7 @@ export class AddressTabComponent implements OnInit {
 
   get canAddAddress(): boolean {
     return (
+      this.canManageAddress('CREATE_OFFICE') &&
       !this.hasOfficeAddress &&
       !this.isLoading &&
       !this.isSaving &&
@@ -155,7 +165,9 @@ export class AddressTabComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(({ addresses, template }: { addresses: any; template: any }) => {
-        this.officeAddresses = Array.isArray(addresses) ? addresses : [];
+        this.officeAddresses = Array.isArray(addresses)
+          ? addresses.filter((address: any) => address && typeof address === 'object')
+          : [];
         this.addressTemplate = {
           ...this.addressTemplate,
           ...template
@@ -177,12 +189,13 @@ export class AddressTabComponent implements OnInit {
         ' ' +
         this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(),
-      layout: { addButtonText: this.translateService.instant('labels.buttons.Submit') }
+      layout: { addButtonText: 'labels.buttons.Submit' }
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupCoordinateValidation(addAddressDialogRef);
     this.setupPostalCodeLookup(addAddressDialogRef);
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data && this.isValidLocationInput(response.data.value)) {
         this.saveAddress(
           this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value))
         );
@@ -191,7 +204,12 @@ export class AddressTabComponent implements OnInit {
   }
 
   editAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (
+      !this.canManageAddress('UPDATE_OFFICE') ||
+      this.isSaving ||
+      this.optionsLoadFailed ||
+      this.isPluginUnavailable
+    ) {
       return;
     }
 
@@ -208,12 +226,13 @@ export class AddressTabComponent implements OnInit {
         ' ' +
         this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(address),
-      layout: { addButtonText: this.translateService.instant('labels.buttons.Edit') }
+      layout: { addButtonText: 'labels.buttons.Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupCoordinateValidation(editAddressDialogRef);
     this.setupPostalCodeLookup(editAddressDialogRef);
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data && this.isValidLocationInput(response.data.value)) {
         this.saveAddress(
           this.organizationService.updateOfficeAddress(
             this.officeId,
@@ -226,7 +245,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   deleteAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (!this.canManageAddress('DELETE_OFFICE') || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -246,7 +265,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   toggleAddress(address: any) {
-    if (this.isPluginUnavailable) {
+    if (!this.canManageAddress('UPDATE_OFFICE') || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -332,12 +351,52 @@ export class AddressTabComponent implements OnInit {
       isActive: !!addressData.isActive
     };
 
-    if (this.clientAddressLocationEnabled) {
-      normalizedAddressData.latitude = this.hasValue(addressData.latitude) ? addressData.latitude : null;
-      normalizedAddressData.longitude = this.hasValue(addressData.longitude) ? addressData.longitude : null;
+    // Omitted coordinates mean unchanged; explicit empty values deliberately clear the pair.
+    if (addressData.latitude !== undefined && addressData.longitude !== undefined) {
+      // Fineract's locale-based string parser needs decimal notation; expand exponents without rounding.
+      normalizedAddressData.locale = 'en';
+      normalizedAddressData.latitude = this.hasValue(addressData.latitude)
+        ? this.serializeCoordinate(addressData.latitude)
+        : null;
+      normalizedAddressData.longitude = this.hasValue(addressData.longitude)
+        ? this.serializeCoordinate(addressData.longitude)
+        : null;
     }
 
     return normalizedAddressData;
+  }
+
+  private serializeCoordinate(value: string | number): string | number {
+    if (typeof value !== 'string') {
+      return value;
+    }
+
+    const match = /^([+-]?)(\d*)(?:\.(\d*))?[eE]([+-]?\d+)$/.exec(value.trim());
+    if (!match || !Number.isFinite(Number(value))) {
+      return value;
+    }
+    // Zero needs no exponent expansion; nonzero underflow is rejected by precision validation.
+    if (Number(value) === 0) {
+      return '0';
+    }
+
+    const [
+      ,
+      sign,
+      integer,
+      fraction = '',
+      exponent
+    ] = match;
+    const digits = integer + fraction;
+    const decimalPosition = integer.length + Number(exponent);
+    const prefix = sign === '-' ? '-' : '';
+    if (decimalPosition <= 0) {
+      return `${prefix}0.${'0'.repeat(-decimalPosition)}${digits}`;
+    }
+    if (decimalPosition >= digits.length) {
+      return `${prefix}${digits}${'0'.repeat(decimalPosition - digits.length)}`;
+    }
+    return `${prefix}${digits.slice(0, decimalPosition)}.${digits.slice(decimalPosition)}`;
   }
 
   private getAddressFormFields(address?: any) {
@@ -420,30 +479,28 @@ export class AddressTabComponent implements OnInit {
         options: { label: 'name', value: 'id', data: this.addressTemplate.countryIdOptions ?? [] },
         order: 11
       }),
-      ...(this.clientAddressLocationEnabled
-        ? [
-            new InputBase({
-              controlName: 'latitude',
-              label: this.translateService.instant('labels.inputs.Latitude'),
-              value: address ? address.latitude : '',
-              type: 'number',
-              min: -90,
-              max: 90,
-              step: '0.00000001',
-              order: 12
-            }),
-            new InputBase({
-              controlName: 'longitude',
-              label: this.translateService.instant('labels.inputs.Longitude'),
-              value: address ? address.longitude : '',
-              type: 'number',
-              min: -180,
-              max: 180,
-              step: '0.00000001',
-              order: 13
-            })
-          ]
-        : []),
+      new InputBase({
+        controlName: 'latitude',
+        label: this.translateService.instant('labels.inputs.Latitude'),
+        value: address?.latitude ?? '',
+        type: 'number',
+        min: -90,
+        max: 90,
+        step: '0.00000001',
+        validators: [this.coordinateValidator('latitude')],
+        order: 12
+      }),
+      new InputBase({
+        controlName: 'longitude',
+        label: this.translateService.instant('labels.inputs.Longitude'),
+        value: address?.longitude ?? '',
+        type: 'number',
+        min: -180,
+        max: 180,
+        step: '0.00000001',
+        validators: [this.coordinateValidator('longitude')],
+        order: 13
+      }),
       new CheckboxBase({
         controlName: 'isActive',
         label: this.translateService.instant('labels.inputs.Active Status'),
@@ -452,6 +509,69 @@ export class AddressTabComponent implements OnInit {
       })
     ];
     return formfields;
+  }
+
+  canManageAddress(permission: 'CREATE_OFFICE' | 'UPDATE_OFFICE' | 'DELETE_OFFICE'): boolean {
+    if (this.readOnly) {
+      return false;
+    }
+    if (!environment.productionModeEnableRBAC) {
+      return true;
+    }
+    const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return permissions.includes('ALL_FUNCTIONS') || permissions.includes(permission);
+  }
+
+  private coordinateValidator(type: CoordinateType): ValidatorFn {
+    return (control) => {
+      const other = control.parent?.get(type === 'latitude' ? 'longitude' : 'latitude');
+      if (!this.hasValue(control.value)) {
+        return this.hasValue(other?.value) ? { required: true } : null;
+      }
+      if (parseCoordinate(control.value, type) === null) {
+        return { invalidNumber: true };
+      }
+      return this.hasCoordinatePrecision(control.value) ? null : { maxDecimals: { decimals: this.coordinateDecimals } };
+    };
+  }
+
+  private hasCoordinatePrecision(value: string | number): boolean {
+    const match = /^[+-]?(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/.exec(String(value).trim());
+    if (!match) {
+      return false;
+    }
+    const integer = match[1];
+    const fraction = match[2] ?? '';
+    const exponent = Number(match[3] ?? 0);
+    const significantDigits = (integer + fraction).replace(/0+$/, '');
+    // Count the expanded fractional digits without allocating an exponent-sized string or rounding.
+    return (
+      significantDigits.length === 0 || significantDigits.length - integer.length - exponent <= this.coordinateDecimals
+    );
+  }
+
+  private isValidLocationInput(data: any): boolean {
+    return (
+      (!this.hasValue(data.latitude) && !this.hasValue(data.longitude)) ||
+      (hasValidCoordinatePair(data.latitude, data.longitude) &&
+        this.hasCoordinatePrecision(data.latitude) &&
+        this.hasCoordinatePrecision(data.longitude))
+    );
+  }
+
+  private setupCoordinateValidation(dialogRef: MatDialogRef<FormDialogComponent>) {
+    dialogRef.afterOpened().subscribe(() => {
+      const form = dialogRef.componentInstance.form;
+      const validatePair = () => {
+        form.get('latitude')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        form.get('longitude')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        form.updateValueAndValidity({ emitEvent: false });
+      };
+      validatePair();
+      form.valueChanges
+        .pipe(takeUntil(dialogRef.afterClosed()), takeUntilDestroyed(this.destroyRef))
+        .subscribe(validatePair);
+    });
   }
 
   private translateAddressTypes() {
