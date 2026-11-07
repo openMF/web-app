@@ -181,4 +181,15 @@ describe('WebAppComponent — logout confirmation gate', () => {
 
     jest.useRealTimers();
   });
+
+  describe('document language synchronization', () => {
+    it('synchronizes the document root language when a language change event occurs', () => {
+      mockTranslateService.onLangChange.next({
+        lang: 'de-DE',
+        translations: {}
+      });
+
+      expect(document.documentElement.lang).toBe('de-DE');
+    });
+  });
 });
