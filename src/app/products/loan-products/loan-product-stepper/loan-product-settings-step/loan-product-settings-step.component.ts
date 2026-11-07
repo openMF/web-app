@@ -973,13 +973,15 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
     }
-    if (!productSettings['delinquencyBucketId']) {
-      productSettings['delinquencyGraceDays'] = null;
-      productSettings['delinquencyStartType'] = null;
-    }
-    if (!productSettings['breachId']) {
-      productSettings['breachGraceDays'] = null;
-      productSettings['breachStartType'] = null;
+    if (this.loanProductService.isWorkingCapital) {
+      if (!productSettings['delinquencyBucketId']) {
+        productSettings['delinquencyGraceDays'] = null;
+        productSettings['delinquencyStartType'] = null;
+      }
+      if (!productSettings['breachId']) {
+        productSettings['breachGraceDays'] = null;
+        productSettings['breachStartType'] = null;
+      }
     }
     return productSettings;
   }
