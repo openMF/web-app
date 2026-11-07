@@ -16,8 +16,8 @@
     @for (detail of details; track $index) {
       <p>{{ detail }}</p>
     }
-    <button mat-button (click)="load()" [disabled]="busy">{{ 'SavingsEditor.RefreshHistory' | translate }}</button>
   }
+  <button mat-button (click)="load()" [disabled]="busy">{{ 'SavingsEditor.RefreshHistory' | translate }}</button>
   @if (loaded) {
     <p>
       {{ 'SavingsEditor.ActiveVersion' | translate }}:

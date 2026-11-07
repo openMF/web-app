@@ -6,6 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import {
+  InterestMatrix,
+  ReferenceFormula,
+  readMatrix,
+  readFormula,
+  parseExactJson,
+  serializeExactJson
+} from './interest-rate.model';
 import { FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 
 export type Classification = 'SIGHT' | 'INTEREST_BEARING_SIGHT' | 'SAVINGS';
@@ -33,6 +41,8 @@ export interface ProductPolicy {
   additionalPaymentReference: boolean;
   paymentReferencePartner: string | null;
   interestMode: InterestMode;
+  interestMatrix?: InterestMatrix | null;
+  referenceRate?: ReferenceFormula | null;
 }
 export interface PolicyCapabilities {
   draftConfiguration: boolean;
@@ -177,7 +187,9 @@ export function createPolicyForm(builder: FormBuilder) {
     ],
     additionalPaymentReference: [false],
     paymentReferencePartner: builder.control<string | null>(null),
-    interestMode: builder.control<InterestMode | null>(null, Validators.required)
+    interestMode: builder.control<InterestMode | null>(null, Validators.required),
+    interestMatrix: builder.control<InterestMatrix | null | undefined>(undefined),
+    referenceRate: builder.control<ReferenceFormula | null | undefined>(undefined)
   });
 }
 export type PolicyForm = ReturnType<typeof createPolicyForm>;
@@ -267,6 +279,8 @@ export function normalizedPolicy(form: PolicyForm): ProductPolicy {
   const value = form.getRawValue() as ProductPolicy;
   return {
     ...value,
+    ...(value.interestMatrix === undefined ? {} : { interestMatrix: readMatrix(value.interestMatrix) }),
+    ...(value.referenceRate === undefined ? {} : { referenceRate: readFormula(value.referenceRate) }),
     feeChargeId: value.feeApplicable ? value.feeChargeId : null,
     freezingTermDays: value.freezing === 'TERM' ? value.freezingTermDays : null,
     paymentReferencePartner: value.additionalPaymentReference ? value.paymentReferencePartner : null
@@ -274,21 +288,22 @@ export function normalizedPolicy(form: PolicyForm): ProductPolicy {
 }
 export function serializePolicy(expectedRevision: number, policy: ProductPolicy): string {
   if (!Number.isSafeInteger(expectedRevision) || expectedRevision < 0) throw new Error('Invalid revision');
-  let json = JSON.stringify({ expectedRevision, policy });
   for (const field of [
     'maximumBalance',
     'minimumMonthlyAverageBalance'
   ] as const) {
     if (!validMoney(policy[field], 6)) throw new Error('Invalid monetary amount');
-    // Validated decimal grammar excludes injected JSON. Remove leading zeroes to meet JSON syntax.
-    const literal = policy[field].replace(/^0+(?=\d)/, '');
-    json = json.replace('"' + field + '":' + JSON.stringify(policy[field]), '"' + field + '":' + literal);
   }
-  return json;
+  return serializeExactJson({
+    expectedRevision,
+    policy: {
+      ...policy,
+      ...(policy.interestMatrix === undefined ? {} : { interestMatrix: readMatrix(policy.interestMatrix) }),
+      ...(policy.referenceRate === undefined ? {} : { referenceRate: readFormula(policy.referenceRate) })
+    }
+  });
 }
-/** Preserve all monetary digits before JSON.parse can convert numeric tokens into binary floats. */
+/** Parse decimal tokens before JSON.parse can convert them into binary floats. */
 export function parsePolicyJson<T>(json: string): T {
-  return JSON.parse(
-    json.replace(/("(?:maximumBalance|minimumMonthlyAverageBalance)"\s*:\s*)(\d+(?:\.\d+)?)/g, '$1"$2"')
-  ) as T;
+  return parseExactJson<T>(json);
 }
