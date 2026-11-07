@@ -85,6 +85,12 @@ describe('IndividualCollectionSheetComponent', () => {
     return component;
   }
 
+  it('starts on the business date, the latest date the form accepts', () => {
+    const component = createComponent();
+    expect(component.collectionSheetForm.value.transactionDate).toEqual(new Date(2026, 9, 13));
+    expect(component.maxDate).toEqual(new Date(2026, 9, 13));
+  });
+
   it('shows the collection sheet once the response arrives', () => {
     const component = createComponent();
     const response$ = new Subject<any>();

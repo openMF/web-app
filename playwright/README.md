@@ -61,6 +61,32 @@ npm run e2e:docker -- --debug
 
 In order, these run the tests whose title matches, run one folder, show the browser while the tests run, and open the Playwright inspector so you can step through a test.
 
+### BE-01 unified Savings Products catalog
+
+`playwright/tests/savings/savings-products-list.spec.ts` is excluded from the default
+configuration, including `npm run e2e:docker`. The standard Docker backend does not
+include the WEB-1350 BE-01 Savings Plugin or the classified product fixtures.
+
+Run this spec explicitly against a compatible development backend:
+
+```bash
+E2E_SLOW_MO=0 E2E_FINERACT_URL=http://localhost:4200 npx playwright test \
+  --config=playwright.be01.config.ts --project=chromium --workers=1
+```
+
+The URL above authenticates through the same local Angular proxy as the app
+(`npm run start:local`, targeting Fineract at `https://localhost:8443`). Configure
+`E2E_BASE_URL`, `E2E_FINERACT_URL`, `E2E_USERNAME`, `E2E_PASSWORD` and `E2E_TENANT_ID`
+as needed for another development environment.
+
+The backend must expose `GET /savingsproducts/policy/template` and
+`GET /savingsproducts/policy/{productId}`. Provision at least one real product in
+each classification (`SIGHT`, `INTEREST_BEARING_SIGHT`, `SAVINGS`) and one
+unconfigured legacy product. The test user needs core savings-product and BE-01
+policy read permissions, plus access to the existing Edit screen. Provisioning
+belongs in an authorized development tenant; the spec reads existing products.
+Missing capabilities or fixtures fail the explicit run; the spec does not skip.
+
 ### Look at the results
 
 Every run writes an HTML report to `playwright-report/`. Open it with:

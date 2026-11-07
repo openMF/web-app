@@ -11,17 +11,19 @@
     <div class="m-b-10">
       <h3>{{ 'labels.heading.Services' | translate }}</h3>
     </div>
-    <div class="action-button m-b-10 gap-25px">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addService()"
-        [disabled]="isLoading || isSaving || isPluginUnavailable"
-        *mifosxHasPermission="'CREATE_OFFICE'"
-      >
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
-    </div>
+    @if (!readOnly) {
+      <div class="action-button m-b-10 gap-25px">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addService()"
+          [disabled]="isLoading || isSaving || isPluginUnavailable"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      </div>
+    }
   </div>
 
   @if (isLoading) {
@@ -49,9 +51,11 @@
   @if (!isLoading && !hasError && !isPluginUnavailable && !officeServices.length) {
     <div class="service-state empty-state">
       <span>{{ 'labels.text.No data found' | translate }}</span>
-      <button mat-raised-button color="primary" (click)="addService()" *mifosxHasPermission="'CREATE_OFFICE'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
+      @if (!readOnly) {
+        <button mat-raised-button color="primary" (click)="addService()" *mifosxHasPermission="'CREATE_OFFICE'">
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      }
     </div>
   }
 

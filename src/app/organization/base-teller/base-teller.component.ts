@@ -24,7 +24,7 @@ import { canReadCashTransfers } from './cash-transfers-between-tellers/cash-tran
 import { canReadWithdrawals } from './withdrawals/withdrawal.guard';
 import { canReadTransfers } from './account-transfers/account-transfer.guard';
 
-import { canReadVault } from './vault-cash-deposit/vault-cash-deposit.guard';
+import { canReadVault, canReadVaultHistory } from './vault-cash-deposit/vault-cash-deposit.guard';
 
 import { hasFxPermission } from '../foreign-currency/foreign-currency.guard';
 
@@ -271,7 +271,22 @@ export class BaseTellerComponent {
               'base-teller',
               'vault-cash-deposit'
             ]
-          }
+          },
+          ...(canReadVaultHistory(this.authentication.getCredentials()?.permissions ?? [])
+            ? [
+                {
+                  label: 'vaultDeposit.history.title',
+                  materialIcon: 'history',
+                  permission: 'READ_BASE_TELLER_TRANSACTION_HISTORY',
+                  route: [
+                    '/organization',
+                    'base-teller',
+                    'vault-cash-deposit',
+                    'history'
+                  ]
+                }
+              ]
+            : [])
         ]
       : [];
   }

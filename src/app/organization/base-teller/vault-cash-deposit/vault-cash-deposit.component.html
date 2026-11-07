@@ -7,14 +7,28 @@
 -->
 
 <div class="container vault-deposit">
-  <mat-card>
+  <mat-card class="deposit-card">
     <mat-card-content>
-      <header>
-        <div>
-          <p>{{ 'vaultDeposit.specialOperations' | translate }}</p>
-          <h2>{{ 'vaultDeposit.title' | translate }}</h2>
+      <header class="workspace-header">
+        <div class="heading-group">
+          <span class="header-icon"><mat-icon aria-hidden="true">account_balance</mat-icon></span>
+          <div>
+            <p class="eyebrow">{{ 'vaultDeposit.specialOperations' | translate }}</p>
+            <h2>{{ 'vaultDeposit.ui.prepare' | translate }}</h2>
+          </div>
         </div>
-        <a mat-button routerLink="/organization/base-teller">{{ 'labels.text.Base Teller' | translate }}</a>
+        <nav class="header-actions" [attr.aria-label]="'vaultDeposit.specialOperations' | translate">
+          @if (canViewHistory) {
+            <a mat-stroked-button routerLink="/organization/base-teller/vault-cash-deposit/history">
+              <mat-icon aria-hidden="true">history</mat-icon>
+              {{ 'vaultDeposit.history.title' | translate }}
+            </a>
+          }
+          <a mat-button routerLink="/organization/base-teller">
+            <mat-icon aria-hidden="true">arrow_back</mat-icon>
+            {{ 'labels.text.Base Teller' | translate }}
+          </a>
+        </nav>
       </header>
 
       @if (contextLoading()) {
@@ -25,212 +39,256 @@
       }
       @if (contextError()) {
         <div class="message error" role="alert">
+          <mat-icon aria-hidden="true">error_outline</mat-icon>
           <span>{{ contextError() | translate }}</span>
           <button mat-button type="button" (click)="reload()">{{ 'cashInventory.retry' | translate }}</button>
         </div>
       }
       @if (context(); as ctx) {
-        <dl class="context-grid">
-          <div>
-            <dt>{{ 'vaultDeposit.branch' | translate }}</dt>
-            <dd>{{ ctx.branch.name }}</dd>
-          </div>
-          <div>
-            <dt>{{ 'vaultDeposit.vault' | translate }}</dt>
-            <dd>{{ ctx.vault.name }}</dd>
-          </div>
-          <div>
-            <dt>{{ 'vaultDeposit.vaultStatus' | translate }}</dt>
-            <dd>{{ 'vaultDeposit.status.' + ctx.vault.status | translate }}</dd>
-          </div>
-        </dl>
-        <p>{{ 'vaultDeposit.statusNote' | translate }}</p>
-
-        @if (!contextLoading() && !contextError()) {
-          <mat-form-field>
-            <mat-label>{{ 'vaultDeposit.supportedCurrencies' | translate }}</mat-label>
-            <mat-select [formControl]="currencyControl">
-              @for (currency of currencies(); track currency.code) {
-                <mat-option [value]="currency.code">{{ currency.code }} — {{ currency.name }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          @if (!currencies().length) {
-            <p role="status">{{ 'cashAllocation.empty.currencies' | translate }}</p>
-          }
-        }
-
-        @if (denominationsError()) {
-          <p class="message error" role="alert">{{ denominationsError() | translate }}</p>
-        }
-        @if (selectedCurrency(); as currency) {
-          <p>{{ 'vaultDeposit.catalogNote' | translate }}</p>
-          @if (denominationsLoading()) {
-            <div class="message" role="status">
-              <mat-spinner diameter="24" aria-hidden="true"></mat-spinner>
-              <span>{{ 'cashExchange.loading' | translate }}</span>
+        <section class="vault-context" [attr.aria-label]="'vaultDeposit.vault' | translate">
+          <dl class="context-grid">
+            <div>
+              <dt><mat-icon aria-hidden="true">business</mat-icon>{{ 'vaultDeposit.branch' | translate }}</dt>
+              <dd>{{ ctx.branch.name }}</dd>
             </div>
+            <div>
+              <dt><mat-icon aria-hidden="true">account_balance</mat-icon>{{ 'vaultDeposit.vault' | translate }}</dt>
+              <dd>{{ ctx.vault.name }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'vaultDeposit.vaultStatus' | translate }}</dt>
+              <dd>
+                <span class="status-badge"
+                  ><mat-icon aria-hidden="true">info_outline</mat-icon
+                  >{{ 'vaultDeposit.status.' + ctx.vault.status | translate }}</span
+                >
+              </dd>
+            </div>
+          </dl>
+          @if (ctx.vault.status === 'UNKNOWN') {
+            <p class="status-note">{{ 'vaultDeposit.ui.statusHelp' | translate }}</p>
           }
-          <div class="catalog-grid" [attr.aria-busy]="denominationsLoading()">
-            @for (
-              catalog of [
-                { title: 'vaultDeposit.banknotes', rows: banknotes() },
-                { title: 'vaultDeposit.coins', rows: coins() }
-              ];
-              track catalog.title
-            ) {
-              <section [attr.aria-label]="catalog.title | translate">
-                <h3>{{ catalog.title | translate }}</h3>
-                @if (catalog.rows.length) {
-                  <table mat-table [dataSource]="catalog.rows" [attr.aria-label]="catalog.title | translate">
-                    <ng-container matColumnDef="value">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'cashAllocation.labels.denomination' | translate }}</th>
-                      <td mat-cell *matCellDef="let row">
-                        {{ row.value | withdrawalMoney: currency.decimalPlaces }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="quantity">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.quantity' | translate }}</th>
-                      <td mat-cell *matCellDef="let row">
-                        <mat-form-field class="quantity-field">
-                          <mat-label>{{ 'vaultDeposit.preview.quantity' | translate }}</mat-label>
-                          <input
-                            matInput
-                            type="text"
-                            inputmode="numeric"
-                            autocomplete="off"
-                            [formControl]="quantityControl(row)"
-                            [attr.aria-label]="
-                              ('vaultDeposit.preview.quantity' | translate) +
-                              ' ' +
-                              (row.value | withdrawalMoney: currency.decimalPlaces) +
-                              ' ' +
-                              currency.code +
-                              ' ' +
-                              (catalog.title | translate)
-                            "
-                            [attr.data-denomination]="row.denominationId"
-                          />
-                          @if (quantityControl(row).invalid) {
-                            <mat-error>{{
-                              (quantityControl(row).hasError('backend')
-                                ? 'vaultDeposit.preview.serverQuantity'
-                                : 'vaultDeposit.preview.invalidQuantity'
-                              ) | translate
-                            }}</mat-error>
-                          }
-                        </mat-form-field>
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="subtotal">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.subtotal' | translate }}</th>
-                      <td mat-cell *matCellDef="let row">
-                        {{ subtotal(row) | withdrawalMoney: currency.decimalPlaces }}
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columns"></tr>
-                  </table>
-                } @else if (!denominationsLoading() && !denominationsError()) {
-                  <p role="status">{{ 'vaultDeposit.noDenominations' | translate }}</p>
-                }
-              </section>
-            }
-          </div>
+        </section>
 
-          @if (catalogValid()) {
-            <section aria-labelledby="vault-estimate-title">
-              <h3 id="vault-estimate-title">
-                {{ 'vaultDeposit.preview.clientEstimate' | translate }} — {{ currency.code }}
-              </h3>
-              <dl class="context-grid" aria-live="polite" aria-atomic="true">
-                <div>
-                  <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
-                  <dd data-total="banknotes">
-                    {{ estimate()?.banknotesTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
-                  </dd>
-                </div>
-                <div>
-                  <dt>{{ 'vaultDeposit.preview.coinsTotal' | translate }}</dt>
-                  <dd data-total="coins">
-                    {{ estimate()?.coinsTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
-                  </dd>
-                </div>
-                <div>
-                  <dt>{{ 'vaultDeposit.preview.totalCash' | translate }}</dt>
-                  <dd data-total="cash">
-                    {{ estimate()?.totalCash ?? null | withdrawalMoney: currency.decimalPlaces }}
-                  </dd>
-                </div>
-              </dl>
-              @if (!quantities.valid) {
-                <p role="alert">{{ 'vaultDeposit.preview.invalidInput' | translate }}</p>
-              } @else if (!estimate()?.positive) {
-                <p>{{ 'vaultDeposit.preview.noQuantity' | translate }}</p>
-              } @else if (!estimate()?.inRange) {
-                <p role="alert">{{ 'vaultDeposit.preview.amountRange' | translate }}</p>
-              }
-              @if (!ctx.capabilities.previewDeposit) {
-                <p>{{ 'vaultDeposit.preview.notPermitted' | translate }}</p>
-              }
-              <button
-                mat-raised-button
-                type="button"
-                [disabled]="!canPreview"
-                (click)="previewTransaction($event)"
-                aria-describedby="vault-processing-explanation"
-              >
-                {{ (previewLoading() ? 'vaultDeposit.preview.loading' : 'vaultDeposit.preview.action') | translate }}
-              </button>
-              @if (previewLoading()) {
-                <p role="status">{{ 'vaultDeposit.preview.loading' | translate }}</p>
-              }
-              @if (previewError()) {
-                <p class="message error" role="alert">{{ previewError() | translate }}</p>
-                @if (previewNeedsRefresh) {
-                  <button mat-button type="button" (click)="reload()">
-                    {{ 'labels.buttons.Refresh' | translate }}
-                  </button>
-                } @else {
-                  <button mat-button type="button" [disabled]="!canPreview" (click)="previewTransaction($event)">
-                    {{ 'cashInventory.retry' | translate }}
-                  </button>
-                }
-              }
-            </section>
-          }
-
-          @if (ctx.capabilities.viewInventory) {
-            <section aria-labelledby="vault-inventory-title">
-              <h3 id="vault-inventory-title">{{ 'vaultDeposit.recordedInventory' | translate }}</h3>
-              @if (inventoryLoading()) {
-                <p role="status">{{ 'cashInventory.states.loadingInventory' | translate }}</p>
-              } @else if (inventoryError()) {
-                <p class="message error" role="alert">{{ inventoryError() | translate }}</p>
-              } @else if (balances().length) {
-                @for (row of balances(); track row.custodianKey + row.currencyCode) {
-                  <p>
-                    {{ 'cashInventory.columns.balance' | translate }}:
-                    @if (row.balance !== null && row.balance !== undefined) {
-                      {{ row.balance | number: '1.' + row.decimalPlaces + '-' + row.decimalPlaces }}
-                      {{ row.currencyCode }}
-                    } @else {
-                      {{ 'vaultDeposit.status.UNAVAILABLE' | translate }}
+        <div class="deposit-workspace">
+          <section class="cash-entry" aria-labelledby="vault-entry-title">
+            <div class="entry-toolbar">
+              <div>
+                <h3 id="vault-entry-title">{{ 'vaultDeposit.ui.countCash' | translate }}</h3>
+                <p class="supporting-text">{{ 'vaultDeposit.ui.entryHint' | translate }}</p>
+              </div>
+              @if (!contextLoading() && !contextError()) {
+                <mat-form-field appearance="outline" subscriptSizing="dynamic" class="currency-field">
+                  <mat-label>{{ 'vaultDeposit.supportedCurrencies' | translate }}</mat-label>
+                  <mat-select [formControl]="currencyControl">
+                    @for (currency of currencies(); track currency.code) {
+                      <mat-option [value]="currency.code">{{ currency.code }} — {{ currency.name }}</mat-option>
                     }
-                  </p>
-                  <p>{{ 'cashInventory.lastUpdated' | translate }}: {{ row.asOf | date: 'medium' }}</p>
-                }
-              } @else {
-                <p role="status">{{ 'vaultDeposit.inventoryUnavailable' | translate }}</p>
+                  </mat-select>
+                </mat-form-field>
               }
-            </section>
+            </div>
+            @if (!contextLoading() && !contextError() && !currencies().length) {
+              <p class="message" role="status">{{ 'cashAllocation.empty.currencies' | translate }}</p>
+            }
+            @if (denominationsError()) {
+              <p class="message error" role="alert">{{ denominationsError() | translate }}</p>
+            }
+            @if (selectedCurrency(); as currency) {
+              @if (denominationsLoading()) {
+                <div class="message" role="status">
+                  <mat-spinner diameter="24" aria-hidden="true"></mat-spinner>
+                  <span>{{ 'cashExchange.loading' | translate }}</span>
+                </div>
+              }
+              <div class="catalog-grid" [attr.aria-busy]="denominationsLoading()">
+                @for (
+                  catalog of [
+                    { title: 'vaultDeposit.banknotes', icon: 'payments', rows: banknotes() },
+                    { title: 'vaultDeposit.coins', icon: 'toll', rows: coins() }
+                  ];
+                  track catalog.title
+                ) {
+                  <section class="denomination-panel" [attr.aria-label]="catalog.title | translate">
+                    <div class="panel-heading">
+                      <mat-icon aria-hidden="true">{{ catalog.icon }}</mat-icon>
+                      <h4>{{ catalog.title | translate }}</h4>
+                      <span class="panel-currency" aria-hidden="true">{{ currency.code }}</span>
+                    </div>
+                    @if (catalog.rows.length) {
+                      <table mat-table [dataSource]="catalog.rows" [attr.aria-label]="catalog.title | translate">
+                        <ng-container matColumnDef="value">
+                          <th mat-header-cell *matHeaderCellDef>
+                            {{ 'cashAllocation.labels.denomination' | translate }}
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ row.value | withdrawalMoney: currency.decimalPlaces }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="quantity">
+                          <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.quantity' | translate }}</th>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="quantity-field">
+                              <input
+                                matInput
+                                type="text"
+                                inputmode="numeric"
+                                autocomplete="off"
+                                [formControl]="quantityControl(row)"
+                                [attr.aria-label]="
+                                  ('vaultDeposit.preview.quantity' | translate) +
+                                  ' ' +
+                                  (row.value | withdrawalMoney: currency.decimalPlaces) +
+                                  ' ' +
+                                  currency.code +
+                                  ' ' +
+                                  (catalog.title | translate)
+                                "
+                                [attr.data-denomination]="row.denominationId"
+                              />
+                              @if (quantityControl(row).invalid) {
+                                <mat-error>{{
+                                  (quantityControl(row).hasError('backend')
+                                    ? 'vaultDeposit.preview.serverQuantity'
+                                    : 'vaultDeposit.preview.invalidQuantity'
+                                  ) | translate
+                                }}</mat-error>
+                              }
+                            </mat-form-field>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="subtotal">
+                          <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.subtotal' | translate }}</th>
+                          <td mat-cell *matCellDef="let row">
+                            {{ subtotal(row) | withdrawalMoney: currency.decimalPlaces }}
+                          </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+                      </table>
+                    } @else if (!denominationsLoading() && !denominationsError()) {
+                      <p class="empty-catalog" role="status">{{ 'vaultDeposit.noDenominations' | translate }}</p>
+                    }
+                  </section>
+                }
+              </div>
+              <p class="catalog-note">
+                <mat-icon aria-hidden="true">info_outline</mat-icon>{{ 'vaultDeposit.catalogNote' | translate }}
+              </p>
+              @if (ctx.capabilities.viewInventory) {
+                <mat-expansion-panel class="inventory-panel">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title
+                      ><mat-icon aria-hidden="true">inventory_2</mat-icon
+                      >{{ 'vaultDeposit.recordedInventory' | translate }}</mat-panel-title
+                    >
+                  </mat-expansion-panel-header>
+                  @if (inventoryLoading()) {
+                    <p role="status">{{ 'cashInventory.states.loadingInventory' | translate }}</p>
+                  } @else if (inventoryError()) {
+                    <p class="message error" role="alert">{{ inventoryError() | translate }}</p>
+                  } @else if (balances().length) {
+                    @for (row of balances(); track row.custodianKey + row.currencyCode) {
+                      <p>
+                        {{ 'cashInventory.columns.balance' | translate }}:
+                        @if (row.balance !== null && row.balance !== undefined) {
+                          {{ row.balance | number: '1.' + row.decimalPlaces + '-' + row.decimalPlaces }}
+                          {{ row.currencyCode }}
+                        } @else {
+                          {{ 'vaultDeposit.status.UNAVAILABLE' | translate }}
+                        }
+                      </p>
+                      <p class="supporting-text">
+                        {{ 'cashInventory.lastUpdated' | translate }}: {{ row.asOf | date: 'medium' }}
+                      </p>
+                    }
+                  } @else {
+                    <p role="status">{{ 'vaultDeposit.inventoryUnavailable' | translate }}</p>
+                  }
+                </mat-expansion-panel>
+              }
+            }
+          </section>
+          @if (selectedCurrency(); as currency) {
+            @if (catalogValid()) {
+              <aside class="deposit-summary" aria-labelledby="vault-estimate-title">
+                <div class="summary-heading">
+                  <h3 id="vault-estimate-title">{{ 'vaultDeposit.ui.summary' | translate }}</h3>
+                  <span class="currency-badge">{{ currency.code }}</span>
+                </div>
+                <p class="estimate-label">{{ 'vaultDeposit.preview.clientEstimate' | translate }}</p>
+                <dl class="estimate-lines" aria-live="polite" aria-atomic="true">
+                  <div>
+                    <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
+                    <dd data-total="banknotes">
+                      {{ estimate()?.banknotesTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'vaultDeposit.preview.coinsTotal' | translate }}</dt>
+                    <dd data-total="coins">
+                      {{ estimate()?.coinsTotal ?? null | withdrawalMoney: currency.decimalPlaces }}
+                    </dd>
+                  </div>
+                  <div class="cash-total">
+                    <dt>{{ 'vaultDeposit.preview.totalCash' | translate }}</dt>
+                    <dd>
+                      <span class="total-currency">{{ currency.code }}</span
+                      ><span data-total="cash">{{
+                        estimate()?.totalCash ?? null | withdrawalMoney: currency.decimalPlaces
+                      }}</span>
+                    </dd>
+                  </div>
+                </dl>
+                @if (!quantities.valid) {
+                  <p class="validation-message" role="alert">{{ 'vaultDeposit.preview.invalidInput' | translate }}</p>
+                } @else if (!estimate()?.positive) {
+                  <p class="supporting-text">{{ 'vaultDeposit.preview.noQuantity' | translate }}</p>
+                } @else if (!estimate()?.inRange) {
+                  <p class="validation-message" role="alert">{{ 'vaultDeposit.preview.amountRange' | translate }}</p>
+                }
+                @if (!ctx.capabilities.previewDeposit) {
+                  <p class="supporting-text">{{ 'vaultDeposit.preview.notPermitted' | translate }}</p>
+                }
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="preview-action"
+                  type="button"
+                  [disabled]="!canPreview"
+                  (click)="previewTransaction($event)"
+                  aria-describedby="vault-preview-help vault-processing-explanation"
+                >
+                  <mat-icon aria-hidden="true">visibility</mat-icon>
+                  {{ (previewLoading() ? 'vaultDeposit.preview.loading' : 'vaultDeposit.preview.action') | translate }}
+                </button>
+                <p id="vault-preview-help" class="preview-help">{{ 'vaultDeposit.ui.previewHelp' | translate }}</p>
+                @if (previewLoading()) {
+                  <p role="status">{{ 'vaultDeposit.preview.loading' | translate }}</p>
+                }
+                @if (previewError()) {
+                  <p class="message error" role="alert">{{ previewError() | translate }}</p>
+                  @if (previewNeedsRefresh) {
+                    <button mat-button type="button" (click)="reload()">
+                      {{ 'labels.buttons.Refresh' | translate }}
+                    </button>
+                  } @else {
+                    <button mat-button type="button" [disabled]="!canPreview" (click)="previewTransaction($event)">
+                      {{ 'cashInventory.retry' | translate }}
+                    </button>
+                  }
+                }
+              </aside>
+            }
           }
-        }
+        </div>
       }
-
       <section class="phase-notice" aria-labelledby="vault-processing-title">
-        <h3 id="vault-processing-title">{{ 'vaultDeposit.processingUnavailable' | translate }}</h3>
-        <p id="vault-processing-explanation">{{ 'vaultDeposit.processingExplanation' | translate }}</p>
+        <mat-icon aria-hidden="true">lock_outline</mat-icon>
+        <div>
+          <h3 id="vault-processing-title">{{ 'vaultDeposit.processingUnavailable' | translate }}</h3>
+          <p id="vault-processing-explanation">{{ 'vaultDeposit.processingExplanation' | translate }}</p>
+        </div>
       </section>
     </mat-card-content>
   </mat-card>

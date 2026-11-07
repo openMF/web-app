@@ -2309,7 +2309,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
               ...template.advancedPaymentAllocationTypes,
               ...(template.creditAllocationAllocationTypes ?? [])
             ],
-            futureInstallmentAllocationRules: template.advancedPaymentAllocationFutureInstallmentAllocationRules
+            futureInstallmentAllocationRules: template.advancedPaymentAllocationFutureInstallmentAllocationRules,
+            creditAllocationStrategies: template.creditAllocationStrategyOptions
           }
         : null;
     this.advancePaymentAllocationDataCache = { template, data };

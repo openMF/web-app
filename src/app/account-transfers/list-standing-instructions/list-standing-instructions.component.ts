@@ -166,7 +166,7 @@ export class ListStandingInstructionsComponent {
       offset: 0,
       fromAccountType: this.accountTypeId,
       fromAccountId: this.fromAccountId.value,
-      fromTransferType: this.transferType.value
+      transferType: this.transferType.value
     };
     this.accountTransfersService.getStandingInstructions(searchData).subscribe((response: any) => {
       this.instructionsData = response.pageItems;

@@ -5,6 +5,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
+
 <h2 mat-dialog-title id="vault-preview-title">{{ 'vaultDeposit.preview.generalTransaction' | translate }}</h2>
 <mat-dialog-content>
   <p>{{ 'vaultDeposit.preview.authoritative' | translate }}</p>
@@ -33,6 +34,7 @@
   @for (currency of preview.currencies; track currency.currencyCode) {
     <section [attr.aria-label]="currency.currencyCode">
       <h3>{{ currency.currencyCode }}</h3>
+      <mifosx-vault-deposit-breakdown [currency]="currency"></mifosx-vault-deposit-breakdown>
       <dl class="totals">
         <div>
           <dt>{{ 'vaultDeposit.preview.banknotesTotal' | translate }}</dt>
@@ -101,7 +103,8 @@
   }
   <section class="notice" aria-labelledby="vault-policy-title">
     <h3 id="vault-policy-title">{{ 'vaultDeposit.preview.executionUnavailable' | translate }}</h3>
-    <p>{{ 'vaultDeposit.preview.phaseNotice' | translate }}</p>
+    <p id="vault-confirmation-limitation">{{ 'vaultDeposit.confirmation.unavailable' | translate }}</p>
+    <p>{{ 'vaultDeposit.confirmation.approvalPolicy' | translate }}</p>
     @if (!preview.executionReadiness.executionAllowed) {
       <p>{{ 'vaultDeposit.preview.blocked' | translate }}</p>
     }
@@ -125,4 +128,14 @@
 <mat-dialog-actions align="end">
   <button mat-button type="button" mat-dialog-close>{{ 'vaultDeposit.preview.edit' | translate }}</button>
   <button mat-button type="button" mat-dialog-close>{{ 'vaultDeposit.preview.close' | translate }}</button>
+  <!-- The actual Phase 3 endpoint unconditionally blocks; no approved execution contract exists. -->
+  <button
+    mat-flat-button
+    type="button"
+    disabled
+    aria-describedby="vault-confirmation-limitation"
+    data-testid="confirm-vault-deposit"
+  >
+    {{ 'vaultDeposit.confirmation.confirm' | translate }}
+  </button>
 </mat-dialog-actions>

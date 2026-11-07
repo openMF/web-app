@@ -25,6 +25,20 @@ describe('address coordinate utilities', () => {
     expect(parseCoordinate('0E-8', 'latitude')).toBe(0);
   });
 
+  it.each([
+    true,
+    false,
+    [],
+    [0],
+    {},
+    [
+      1,
+      2
+    ]
+  ])('rejects nonnumeric JSON coordinate %p', (value) => {
+    expect(parseCoordinate(value, 'latitude')).toBeNull();
+  });
+
   it('should reject unavailable or non-finite coordinates', () => {
     expect(parseCoordinate(null, 'latitude')).toBeNull();
     expect(parseCoordinate(undefined, 'longitude')).toBeNull();

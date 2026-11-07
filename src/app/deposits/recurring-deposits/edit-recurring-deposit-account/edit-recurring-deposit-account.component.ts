@@ -159,7 +159,7 @@ export class EditRecurringDepositAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
-        feeOnMonthDay: charge.feeOnMonthDay,
+        feeOnMonthDay: this.dateUtils.formatMonthDay(charge.feeOnMonthDay, monthDayFormat, dateFormat),
         feeInterval: charge.feeInterval
       })),
       isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount

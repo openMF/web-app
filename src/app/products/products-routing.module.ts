@@ -22,6 +22,7 @@ import { LoanProductSelectionComponent } from './loan-products/create-loan-produ
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
 import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
 import { SavingProductsComponent } from './saving-products/saving-products.component';
+import { productEditorGuard } from './saving-products/product-editor/product-editor.guard';
 import { CreateSavingProductComponent } from './saving-products/create-saving-product/create-saving-product.component';
 import { ViewSavingProductComponent } from './saving-products/view-saving-product/view-saving-product.component';
 import { EditSavingProductComponent } from './saving-products/edit-saving-product/edit-saving-product.component';
@@ -71,7 +72,6 @@ import { LoanProductsResolver } from './loan-products/loan-products.resolver';
 import { LoanProductsTemplateResolver } from './loan-products/loan-products-template.resolver';
 import { LoanProductResolver } from './loan-products/loan-product.resolver';
 import { LoanProductAndTemplateResolver } from './loan-products/edit-loan-product/loan-product-and-template.resolver';
-import { SavingProductsResolver } from './saving-products/saving-products.resolver';
 import { SavingProductsTemplateResolver } from './saving-products/saving-products-template.resolver';
 import { SavingProductResolver } from './saving-products/saving-product.resolver';
 import { SavingProductAndTemplateResolver } from './saving-products/edit-saving-product/saving-product-and-template.resolver';
@@ -388,14 +388,13 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: SavingProductsComponent,
-              resolve: {
-                savingProducts: SavingProductsResolver
-              }
+              component: SavingProductsComponent
             },
             {
               path: 'create',
               component: CreateSavingProductComponent,
+              canDeactivate: [productEditorGuard],
+              runGuardsAndResolvers: 'paramsOrQueryParamsChange',
               data: { title: 'Create Savings Product', breadcrumb: 'Create' },
               resolve: {
                 savingProductsTemplate: SavingProductsTemplateResolver
@@ -443,6 +442,8 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSavingProductComponent,
+                  canDeactivate: [productEditorGuard],
+                  runGuardsAndResolvers: 'paramsOrQueryParamsChange',
                   data: { title: 'Edit Saving Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
                     savingProductAndTemplate: SavingProductAndTemplateResolver
@@ -1167,7 +1168,6 @@ const routes: Routes = [
     LoanProductsTemplateResolver,
     LoanProductResolver,
     LoanProductAndTemplateResolver,
-    SavingProductsResolver,
     SavingProductsTemplateResolver,
     SavingProductResolver,
     SavingProductAndTemplateResolver,

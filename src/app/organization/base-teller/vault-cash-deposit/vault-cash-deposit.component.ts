@@ -13,11 +13,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { EMPTY, Subject, catchError, defer, finalize, merge, startWith, switchMap, tap, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { CashInventoryRow } from '../cash-inventory/cash-inventory.service';
-import { canReadVault } from './vault-cash-deposit.guard';
+import { canReadVault, canReadVaultHistory } from './vault-cash-deposit.guard';
 import { VaultContext, VaultCurrency, VaultDenomination, VaultDepositPreview } from './vault-cash-deposit.models';
 import { WithdrawalMoneyPipe } from '../withdrawals/withdrawal-money.pipe';
 import { toUnits } from '../cash-exchange/cash-exchange.models';
@@ -33,6 +35,8 @@ import { VaultCashDepositService } from './vault-cash-deposit.service';
     ...STANDALONE_SHARED_IMPORTS,
     MatProgressSpinnerModule,
     MatTableModule,
+    MatIconModule,
+    MatExpansionModule,
     WithdrawalMoneyPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -236,6 +240,10 @@ export class VaultCashDepositComponent implements OnInit {
         })
       : EMPTY;
     return merge(denominations, inventory);
+  }
+
+  get canViewHistory(): boolean {
+    return canReadVaultHistory(this.authentication.getCredentials()?.permissions ?? []);
   }
 
   get rows(): VaultDenomination[] {

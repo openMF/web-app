@@ -180,9 +180,13 @@ export default defineConfig({
       : []),
     {
       name: 'chromium',
-      // Exclude role-specific test folders so they only run under the
-      // project that carries the correct storageState for that role.
-      testIgnore: /tests\/(admin|restricted)\//,
+      // Role-specific specs use their own auth projects. BE-01 requires a plugin
+      // and classified fixtures absent from Docker; run it via playwright.be01.config.ts.
+      testIgnore: [
+        /tests\/(admin|restricted)\//,
+        /savings-products-list\.spec\.ts$/,
+        /savings-product-editor\.spec\.ts$/
+      ],
       use: {
         ...devices['Desktop Chrome'],
         storageState: ROLES.default.storageStateFile,

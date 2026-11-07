@@ -18,6 +18,25 @@ export function canReadVault(permissions: readonly string[]): boolean {
   ].some((p) => permissions.includes(p));
 }
 
+export function canReadVaultHistory(permissions: readonly string[]): boolean {
+  return canReadVault(permissions) && [
+      'ALL_FUNCTIONS',
+      'ALL_FUNCTIONS_READ',
+      'READ_BASE_TELLER_TRANSACTION_HISTORY'
+    ].some((permission) => permissions.includes(permission));
+}
+
+/** History, detail, audit and receipt checks all require BOTH backend read permissions. */
+export const vaultDepositHistoryGuard: CanActivateFn = () => {
+  const authentication = inject(AuthenticationService);
+  const router = inject(Router);
+  if (!authentication.isAuthenticated()) return router.createUrlTree(['/login']);
+  return (
+    canReadVaultHistory(authentication.getCredentials()?.permissions ?? []) ||
+    router.createUrlTree(['/organization/base-teller'])
+  );
+};
+
 /** Keep this read permission enforced even when the legacy menu RBAC flag is off. */
 export const vaultCashDepositGuard: CanActivateFn = () => {
   const authentication = inject(AuthenticationService);

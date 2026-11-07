@@ -14,6 +14,9 @@ import { ExternalIdentifierComponent } from '../../../../shared/external-identif
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { AddressTabComponent } from '../address-tab/address-tab.component';
+import { ServicesTabComponent } from '../services-tab/services-tab.component';
+
 /**
  * Office View General Tab
  */
@@ -24,7 +27,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ExternalIdentifierComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    AddressTabComponent,
+    ServicesTabComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
