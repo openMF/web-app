@@ -1,0 +1,283 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section aria-labelledby="advanced-interest-heading">
+  <h3 id="advanced-interest-heading">{{ 'InterestManagement.AdvancedConfiguration' | translate }}</h3>
+  <p class="capability-notice">{{ 'InterestManagement.ConfigurationOnly' | translate }}</p>
+  @if (!configuration?.revision) {
+    <p>{{ 'InterestManagement.SavePolicyFirst' | translate }}</p>
+  }
+  @if (blocked) {
+    <p>{{ 'InterestManagement.SaveBasicFirst' | translate }}</p>
+  }
+  @if (busy) {
+    <mat-progress-bar
+      mode="indeterminate"
+      [attr.aria-label]="'InterestManagement.Loading' | translate"
+    ></mat-progress-bar>
+  }
+  @if (error) {
+    <div role="alert">
+      <p>{{ error | translate }}</p>
+      @for (detail of details; track $index) {
+        <p>{{ detail }}</p>
+      }
+    </div>
+  }
+  @if (notice) {
+    <p role="status">{{ notice | translate }}</p>
+  }
+  @if (mode === 'TIERED' || mode === 'REFERENCE_RATE') {
+    <div class="interest-actions">
+      <button mat-button type="button" (click)="load()" [disabled]="busy || !configuration?.revision">
+        {{ 'InterestManagement.RefreshConfiguration' | translate }}
+      </button>
+    </div>
+    @if (financialOperational !== null) {
+      <p>{{ 'InterestManagement.FinancialOperational' | translate }}: {{ financialOperational }}</p>
+      <ul>
+        @for (blocker of blockers; track blocker) {
+          <li>{{ blocker }}</li>
+        }
+      </ul>
+    }
+  }
+  @if (mode === 'TIERED') {
+    <h4>{{ 'InterestManagement.Matrix' | translate }} · {{ context.currency }} ({{ context.digits }})</h4>
+    <p>{{ 'InterestManagement.Semantics' | translate }}</p>
+    <p>{{ 'InterestManagement.InclusiveRanges' | translate }}</p>
+    <div [formGroup]="matrixForm" (input)="stateChanged.emit()">
+      <div role="table" [attr.aria-label]="'InterestManagement.Matrix' | translate" class="matrix-table">
+        <div role="row" class="matrix-row matrix-header">
+          <span role="columnheader">{{ 'InterestManagement.LowerBalance' | translate }}</span>
+          <span role="columnheader">{{ 'InterestManagement.UpperBalance' | translate }}</span>
+          <span role="columnheader">{{ 'InterestManagement.AnnualRate' | translate }}</span>
+          <span role="columnheader">{{ 'InterestManagement.RowActions' | translate }}</span>
+        </div>
+        @for (row of rows.controls; track row; let i = $index) {
+          <div role="row" class="matrix-row" [formGroup]="row">
+            <div role="cell">
+              <mat-form-field
+                ><mat-label>{{ 'InterestManagement.LowerBalance' | translate }} · {{ i + 1 }}</mat-label>
+                <input matInput inputmode="decimal" formControlName="lowerBalance" [readonly]="!editable" required />
+                <mat-error>{{ 'InterestManagement.BalanceInvalid' | translate }}</mat-error>
+              </mat-form-field>
+              @for (issue of matrixIssues(i, 'lowerBalance'); track issue.key) {
+                <p class="field-error" role="alert">{{ issue.key | translate }}</p>
+              }
+            </div>
+            <div role="cell">
+              <mat-form-field
+                ><mat-label>{{ 'InterestManagement.UpperBalance' | translate }} · {{ i + 1 }}</mat-label>
+                <input matInput inputmode="decimal" formControlName="upperBalance" [readonly]="!editable" />
+                <mat-hint>{{ 'InterestManagement.UnboundedHint' | translate }}</mat-hint>
+              </mat-form-field>
+              @for (issue of matrixIssues(i, 'upperBalance'); track issue.key) {
+                <p class="field-error" role="alert">{{ issue.key | translate }}</p>
+              }
+            </div>
+            <div role="cell">
+              <mat-form-field
+                ><mat-label>{{ 'InterestManagement.AnnualRate' | translate }} · {{ i + 1 }}</mat-label>
+                <input
+                  matInput
+                  inputmode="decimal"
+                  formControlName="annualRatePercent"
+                  [readonly]="!editable"
+                  required
+                />
+              </mat-form-field>
+              @for (issue of matrixIssues(i, 'annualRatePercent'); track issue.key) {
+                <p class="field-error" role="alert">{{ issue.key | translate }}</p>
+              }
+            </div>
+            <div role="cell">
+              <button
+                mat-button
+                type="button"
+                (click)="remove(i)"
+                [disabled]="!editable"
+                [attr.aria-label]="('InterestManagement.RemoveBracket' | translate) + ' ' + (i + 1)"
+              >
+                {{ 'InterestManagement.RemoveBracket' | translate }} {{ i + 1 }}
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <p>{{ 'InterestManagement.NoMatrix' | translate }}</p>
+        }
+      </div>
+      <div role="alert">
+        @for (issue of issues; track $index) {
+          @if (issue.row === undefined) {
+            <p>{{ issue.key | translate }}</p>
+          }
+        }
+      </div>
+      <div class="interest-actions">
+        <button mat-button type="button" (click)="add()" [disabled]="!editable || rows.length >= 50">
+          {{ 'InterestManagement.AddBracket' | translate }}
+        </button>
+        <button mat-button type="button" (click)="validate()" [disabled]="!editable">
+          {{ 'InterestManagement.ValidateMatrix' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="validate(true)"
+          [disabled]="!editable || !matrixForm.dirty"
+        >
+          {{ 'InterestManagement.SaveMatrix' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+  @if (mode === 'REFERENCE_RATE') {
+    <h4>{{ 'InterestManagement.Formula' | translate }}</h4>
+    @if (!configuration?.policy?.referenceRate) {
+      <p>{{ 'InterestManagement.NoFormula' | translate }}</p>
+    }
+    <div [formGroup]="formulaForm" class="interest-grid" (input)="stateChanged.emit()">
+      <mat-form-field
+        ><mat-label>{{ 'InterestManagement.ReferenceDefinition' | translate }}</mat-label>
+        <mat-select formControlName="referenceId" [disabled]="!editable" required>
+          @for (definition of definitions; track definition.referenceId) {
+            <mat-option [value]="definition.referenceId"
+              >{{ definition.referenceId }} · {{ definition.referenceType }} · {{ definition.tenor }}</mat-option
+            >
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'InterestManagement.FormulaMode' | translate }}</mat-label>
+        <mat-select formControlName="formulaMode" (selectionChange)="formulaModeChanged()" [disabled]="!editable">
+          <mat-option value="ADDITIVE_SPREAD">{{ 'InterestManagement.Additive' | translate }}</mat-option>
+          <mat-option value="MULTIPLICATIVE_FACTOR">{{ 'InterestManagement.Multiplicative' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      @if (formulaForm.controls.formulaMode.value === 'ADDITIVE_SPREAD') {
+        <mat-form-field
+          ><mat-label>{{ 'InterestManagement.Spread' | translate }}</mat-label
+          ><input matInput inputmode="decimal" formControlName="spreadPercentagePoints" [readonly]="!editable" required
+        /></mat-form-field>
+      } @else {
+        <mat-form-field
+          ><mat-label>{{ 'InterestManagement.Multiplier' | translate }}</mat-label
+          ><input
+            matInput
+            inputmode="decimal"
+            formControlName="multiplier"
+            [readonly]="!editable"
+            required
+          /><mat-hint>{{ 'InterestManagement.MultiplierHint' | translate }}</mat-hint></mat-form-field
+        >
+      }
+      <mat-form-field
+        ><mat-label>{{ 'InterestManagement.ReviewFrequency' | translate }}</mat-label>
+        <mat-select formControlName="reviewFrequency" [disabled]="!editable"
+          ><mat-option value="DAILY">{{ 'InterestManagement.Daily' | translate }}</mat-option
+          ><mat-option value="END_OF_MONTH">{{ 'InterestManagement.EndOfMonth' | translate }}</mat-option></mat-select
+        >
+      </mat-form-field>
+    </div>
+    @if (formulaForm.dirty && !formulaValid) {
+      <p role="alert">{{ 'InterestManagement.FormulaInvalid' | translate }}</p>
+    }
+    <p>{{ 'InterestManagement.ReviewNotice' | translate }}</p>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="saveFormula()"
+      [disabled]="!editable || !formulaForm.dirty || !formulaValid"
+    >
+      {{ 'InterestManagement.SaveFormula' | translate }}
+    </button>
+  }
+  @if (configuration?.revision && (mode === 'TIERED' || mode === 'REFERENCE_RATE')) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header
+        ><mat-panel-title>{{
+          (mode === 'TIERED' ? 'InterestManagement.BracketSelection' : 'InterestManagement.RatePreview') | translate
+        }}</mat-panel-title></mat-expansion-panel-header
+      >
+      <p>{{ 'InterestManagement.ApprovedOnly' | translate }}</p>
+      <div [formGroup]="reviewForm" class="interest-grid">
+        <mat-form-field
+          ><mat-label>{{ 'SavingsEditor.BusinessDate' | translate }}</mat-label
+          ><input matInput type="date" formControlName="businessDate" required
+        /></mat-form-field>
+        @if (mode === 'TIERED') {
+          <mat-form-field
+            ><mat-label>{{ 'InterestManagement.ReviewBalance' | translate }} ({{ context.currency }})</mat-label
+            ><input matInput inputmode="decimal" formControlName="balance"
+          /></mat-form-field>
+        }
+      </div>
+      <button mat-button type="button" (click)="review()" [disabled]="busy">
+        {{ 'InterestManagement.RequestReview' | translate }}
+      </button>
+      @if (preview) {
+        <dl class="rate-details">
+          <dt>{{ 'SavingsEditor.Version' | translate }}</dt>
+          <dd>{{ preview.policyVersion }} · {{ preview.policyEffectiveDate }}</dd>
+          <dt>{{ 'InterestManagement.ReferenceDefinition' | translate }}</dt>
+          <dd>{{ preview.referenceId }} · {{ preview.tenor }}</dd>
+          <dt>{{ 'InterestManagement.BenchmarkVersion' | translate }}</dt>
+          <dd>{{ preview.benchmarkVersion }} · {{ preview.benchmarkEffectiveDate }}</dd>
+          <dt>{{ 'InterestManagement.AnnualRate' | translate }}</dt>
+          <dd>{{ preview.benchmarkAnnualRatePercent }}%</dd>
+          <dt>{{ 'InterestManagement.FormulaMode' | translate }}</dt>
+          <dd>{{ preview.formulaMode }} · {{ preview.spreadPercentagePoints ?? preview.multiplier }}</dd>
+          <dt>{{ 'InterestManagement.RatePreview' | translate }}</dt>
+          <dd>{{ preview.calculatedAnnualRatePercent }}%</dd>
+          <dt>{{ 'SavingsEditor.BusinessDate' | translate }}</dt>
+          <dd>{{ preview.businessDate }}</dd>
+          <dt>{{ 'InterestManagement.CalculationStatus' | translate }}</dt>
+          <dd>{{ preview.calculationStatus }}</dd>
+          <dt>{{ 'InterestManagement.FinancialOperational' | translate }}</dt>
+          <dd>{{ preview.financialOperational }}</dd>
+        </dl>
+        <ul>
+          @for (blocker of preview.blockers; track blocker) {
+            <li>{{ blocker }}</li>
+          }
+        </ul>
+      }
+      @if (selection) {
+        <p>
+          {{ 'SavingsEditor.Version' | translate }} {{ selection.policyVersion }} · {{ selection.businessDate }} ·
+          {{ selection.currencyCode }}
+        </p>
+        <p>
+          {{ selection.bracket.lowerBalance }}–{{ selection.bracket.upperBalance ?? '∞' }} ·
+          {{ selection.bracket.annualRatePercent }}%
+        </p>
+        <p>
+          {{ selection.calculationStatus }} · {{ 'InterestManagement.FinancialOperational' | translate }}:
+          {{ selection.financialOperational }}
+        </p>
+      }
+    </mat-expansion-panel>
+  }
+  <mat-expansion-panel>
+    <mat-expansion-panel-header
+      ><mat-panel-title>{{
+        'InterestManagement.BenchmarkManagement' | translate
+      }}</mat-panel-title></mat-expansion-panel-header
+    >
+    <mifosx-benchmark-management
+      (definitionsChanged)="definitions = $event"
+      (stateChanged)="stateChanged.emit()"
+    ></mifosx-benchmark-management>
+  </mat-expansion-panel>
+  @if (configuration?.savingsProductId) {
+    <mifosx-rate-propagation [productId]="configuration.savingsProductId"></mifosx-rate-propagation>
+  }
+</section>

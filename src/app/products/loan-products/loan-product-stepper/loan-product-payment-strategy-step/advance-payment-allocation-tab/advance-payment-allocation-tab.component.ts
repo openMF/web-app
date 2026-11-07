@@ -92,11 +92,14 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
 
   futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
 
+  creditAllocationStrategy = new UntypedFormControl('', Validators.required);
+
   @ViewChild('table') table: MatTable<any>;
 
   ngOnInit(): void {
     if (this.advancedCreditAllocation) {
       this.creditAllocationsData = this.advancedCreditAllocation?.creditAllocationOrder;
+      this.creditAllocationStrategy.patchValue(this.advancedCreditAllocation.creditAllocationStrategy);
     }
 
     if (this.advancedPaymentAllocation) {
@@ -136,6 +139,20 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
       this.table.renderRows();
       this.allocationChanged.emit(true);
     }
+  }
+
+  creditAllocationStrategyChanged(value: string): void {
+    this.advancedCreditAllocation.creditAllocationStrategy = value;
+    this.allocationChanged.emit(true);
+  }
+
+  /** The strategy selector is only offered when the backend publishes the strategy options. */
+  hasCreditAllocationStrategyOptions(): boolean {
+    return this.advancedCreditAllocation?.creditAllocationStrategyOptions?.length > 0;
+  }
+
+  isPrincipalOnly(): boolean {
+    return this.advancedPaymentStrategy.isPrincipalOnly(this.advancedCreditAllocation);
   }
 
   isDefault(): boolean {

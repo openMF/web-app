@@ -3057,3 +3057,74 @@ describe('loan-product.config field labels vs the controls beside them', () => {
     expect(FORM_STEPS.flatMap((step) => step.fields).filter((field) => field.periodUnitFrom)).toHaveLength(3);
   });
 });
+
+describe('loan-product.config buildPayload — semi-monthly repayment frequency', () => {
+  const SEMI_MONTHLY = 6;
+
+  function customAdvancedForm(overrides: Record<string, unknown>): Record<string, unknown> {
+    return {
+      ...INITIAL_FORM_STATE,
+      name: 'Semi Monthly',
+      shortName: 'SM01',
+      currencyCode: 'USD',
+      principal: 1000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 12,
+      ...overrides
+    };
+  }
+
+  it('keeps both days and forces repaidEvery to 1 for a semi-monthly product', () => {
+    const payload = buildPayload(
+      customAdvancedForm({
+        repaymentFrequencyType: SEMI_MONTHLY,
+        repaymentEvery: 3,
+        firstRepaymentDayOfMonth: 10,
+        secondRepaymentDayOfMonth: 25
+      }) as any,
+      'custom-advanced'
+    );
+
+    expect(payload.repaymentFrequencyType).toBe(SEMI_MONTHLY);
+    expect(payload.repaymentEvery).toBe(1);
+    expect(payload.firstRepaymentDayOfMonth).toBe(10);
+    expect(payload.secondRepaymentDayOfMonth).toBe(25);
+  });
+
+  it('never sends only one of the two days', () => {
+    const payload = buildPayload(
+      customAdvancedForm({ repaymentFrequencyType: SEMI_MONTHLY, firstRepaymentDayOfMonth: 10 }) as any,
+      'custom-advanced'
+    );
+
+    expect(payload).not.toHaveProperty('firstRepaymentDayOfMonth');
+    expect(payload).not.toHaveProperty('secondRepaymentDayOfMonth');
+  });
+
+  it('drops both days for any other frequency, including stale values', () => {
+    const payload = buildPayload(
+      customAdvancedForm({
+        repaymentFrequencyType: 2,
+        repaymentEvery: 3,
+        firstRepaymentDayOfMonth: 10,
+        secondRepaymentDayOfMonth: 25
+      }) as any,
+      'custom-advanced'
+    );
+
+    expect(payload.repaymentEvery).toBe(3);
+    expect(payload).not.toHaveProperty('firstRepaymentDayOfMonth');
+    expect(payload).not.toHaveProperty('secondRepaymentDayOfMonth');
+  });
+
+  it('never sends blank days', () => {
+    const payload = buildPayload(customAdvancedForm({ repaymentFrequencyType: 2 }) as any, 'custom-advanced');
+
+    expect(payload).not.toHaveProperty('firstRepaymentDayOfMonth');
+    expect(payload).not.toHaveProperty('secondRepaymentDayOfMonth');
+  });
+
+  it('labels the semi-monthly frequency in the review value map', () => {
+    expect(VALUE_MAP.repaymentFrequencyType['6']).toBe('Semi Monthly');
+  });
+});

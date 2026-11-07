@@ -314,6 +314,21 @@ export interface WorkingCapitalNearBreachActions {
   submittedOnDate: number[];
 }
 
+/**
+ * One row of the near-breach history dialog: the previous and new threshold/frequency pair a
+ * near-breach action switched between, and whether that action was later reversed.
+ */
+export interface WorkingCapitalNearBreachData {
+  effectiveDate: number[];
+  previousThreshold: number;
+  previousFrequency: number;
+  previousFrequencyType: string;
+  newThreshold: number;
+  newFrequency: number;
+  newFrequencyType: string;
+  reversed: boolean;
+}
+
 export interface WorkingCapitalWriteOffRequest {
   transactionDate: string;
   /** Lower-case "writeoff" on purpose: the backend follows the term/progressive loan parameter shape. */
