@@ -103,7 +103,7 @@ export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent imp
         Validators.required
       ],
       submittedOnDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       rescheduleReasonComment: [''],

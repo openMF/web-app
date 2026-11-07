@@ -231,4 +231,11 @@ describe('PrepayLoanComponent - contract termination', () => {
     expect(loansServiceStub.getLoanAccountDetails).not.toHaveBeenCalled();
     expect(loansServiceStub.getLoanContractTerminationTemplate).not.toHaveBeenCalled();
   });
+
+  it('starts the prepay date on the business date, the latest date the picker allows', () => {
+    const component = createComponent({ ...contractTerminationTemplate, actionName: 'Prepay Loan' });
+
+    expect(component.prepayLoanForm.value.transactionDate).toBe(businessDate);
+    expect(component.prepayLoanForm.value.transactionAmount).toBe(contractTerminationTemplate.amount);
+  });
 });
