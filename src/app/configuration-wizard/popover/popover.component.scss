@@ -7,10 +7,103 @@
  */
 
 :host {
+  --popover-enter-x: 0;
+  --popover-enter-y: 8px;
+
   position: relative;
   background: var(--md-sys-color-surface, white);
   border-radius: 8px;
   padding: 20px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+  transform-origin: top center;
+  animation: popover-enter 280ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+
+// The popover grows out of its arrow, travelling towards the element it points at.
+:host-context(.top.left) {
+  transform-origin: 30px top;
+}
+
+:host-context(.top.right) {
+  transform-origin: calc(100% - 30px) top;
+}
+
+:host-context(.bottom) {
+  --popover-enter-y: -8px;
+
+  transform-origin: bottom center;
+}
+
+:host-context(.bottom.left) {
+  transform-origin: 30px bottom;
+}
+
+:host-context(.bottom.right) {
+  transform-origin: calc(100% - 30px) bottom;
+}
+
+:host-context(.center.left) {
+  --popover-enter-x: 8px;
+  --popover-enter-y: 0;
+
+  transform-origin: left center;
+}
+
+:host-context(.center.right) {
+  --popover-enter-x: -8px;
+  --popover-enter-y: 0;
+
+  transform-origin: right center;
+}
+
+:host-context(.popover-leaving) {
+  animation: popover-leave 120ms ease-in both;
+}
+
+// Popover content comes from the caller's template, so it needs ::ng-deep to be reached.
+:host ::ng-deep > :not(.arrow) {
+  animation: popover-content-enter 240ms ease-out 60ms both;
+}
+
+:host ::ng-deep > :nth-child(2):not(.arrow) {
+  animation-delay: 100ms;
+}
+
+:host ::ng-deep > :nth-child(n + 3):not(.arrow) {
+  animation-delay: 140ms;
+}
+
+@keyframes popover-enter {
+  from {
+    opacity: 0;
+    transform: translate(var(--popover-enter-x), var(--popover-enter-y)) scale(0.94);
+  }
+}
+
+@keyframes popover-leave {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes popover-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host ::ng-deep > :not(.arrow) {
+    animation: none;
+  }
+
+  :host-context(.popover-leaving) {
+    opacity: 0;
+    animation: none;
+  }
 }
 
 .arrow {
