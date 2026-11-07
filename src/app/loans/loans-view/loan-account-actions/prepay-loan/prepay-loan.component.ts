@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  effect,
+  inject,
+  untracked
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
@@ -39,6 +48,16 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrepayLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private static readonly EARLY_TERMINATION_COMMANDS: Record<string, string> = {
+    'Contract Termination': 'contractTermination',
+    'Loan Withdrawal': 'loanWithdrawal'
+  };
+
+  private static readonly SUBMIT_PERMISSIONS: Record<string, string> = {
+    contractTermination: 'CONTRACT_TERMINATION_LOAN',
+    loanWithdrawal: 'LOAN_WITHDRAWAL_LOAN'
+  };
+
   private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
@@ -61,8 +80,11 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
 
   prepayData: any;
   currency: Currency | null = null;
-  contractTermination: boolean;
+  /** Backend command of the early termination action, or null for a normal prepayment. */
+  earlyTerminationCommand: string | null = null;
   maturityDate: Date | null = null;
+  /** Earliest date a loan withdrawal may be backdated to: its last transaction or the latest charge submission. */
+  earliestBackdatedDate: Date | null = null;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -73,6 +95,11 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
    */
   constructor() {
     super();
+    // A reloaded page starts from today's date until the footer has loaded the business date from the server.
+    effect(() => {
+      const businessDate = this.settingsService.businessDate;
+      untracked(() => this.applyBusinessDate(businessDate));
+    });
   }
 
   /**
@@ -81,11 +108,12 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
    */
   ngOnInit() {
     this.prepayData = this.dataObject;
-    this.contractTermination = this.dataObject['actionName'] == 'Contract Termination';
+    this.earlyTerminationCommand =
+      PrepayLoanComponent.EARLY_TERMINATION_COMMANDS[this.dataObject['actionName']] ?? null;
     this.maxDate = this.settingsService.businessDate;
     this.createprepayLoanForm();
-    if (this.contractTermination) {
-      this.setContractTerminationDetails();
+    if (this.isEarlyTermination) {
+      this.setEarlyTerminationDetails();
     } else {
       this.setPrepayLoanDetails();
     }
@@ -94,11 +122,19 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     }
   }
 
+  get isEarlyTermination(): boolean {
+    return !!this.earlyTerminationCommand;
+  }
+
+  get submitPermission(): string {
+    return PrepayLoanComponent.SUBMIT_PERMISSIONS[this.earlyTerminationCommand] ?? 'REPAYMENT_LOAN';
+  }
+
   /**
    * Creates the prepay loan form.
    */
   createprepayLoanForm() {
-    if (this.contractTermination) {
+    if (this.isEarlyTermination) {
       this.prepayLoanForm = this.formBuilder.group({
         transactionDate: [
           this.settingsService.businessDate,
@@ -148,26 +184,23 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
   }
 
   /**
-   * Bounds the contract termination date and keeps the payoff preview in step with it.
+   * Bounds the early termination date and keeps the payoff preview in step with it.
    */
-  setContractTerminationDetails() {
+  setEarlyTerminationDetails() {
     this.minDate = this.settingsService.businessDate;
-    this.maxDate = this.settingsService.maxFutureDate;
+    this.updateEarlyTerminationMaxDate();
 
-    this.loanService.getLoanAccountDetails(this.loanId).subscribe((loanDetails: any) => {
+    this.loanService.getLoanAccountResource(this.loanId, 'transactions,charges').subscribe((loanDetails: any) => {
       const actualMaturityDate = loanDetails?.timeline?.actualMaturityDate;
       if (actualMaturityDate) {
         this.maturityDate = this.dateUtils.parseDate(actualMaturityDate);
-        const lastAllowedDate = new Date(
-          this.maturityDate.getFullYear(),
-          this.maturityDate.getMonth(),
-          this.maturityDate.getDate() - 1
-        );
-        // terminating on the business date stays allowed even after maturity: the backend applies the
-        // maturity bound to future dates only
-        this.maxDate = this.dateUtils.isBefore(lastAllowedDate, this.minDate) ? this.minDate : lastAllowedDate;
-        this.cdr.markForCheck();
       }
+      if (this.earlyTerminationCommand === 'loanWithdrawal') {
+        this.earliestBackdatedDate = this.latestRecordedDate(loanDetails);
+      }
+      this.updateEarlyTerminationMinDate(this.settingsService.businessDate);
+      this.updateEarlyTerminationMaxDate();
+      this.cdr.markForCheck();
     });
 
     this.prepayLoanForm
@@ -178,7 +211,7 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
         map((date) => this.dateUtils.formatDate(date, this.settingsService.dateFormat)),
         distinctUntilChanged(),
         switchMap((terminationDate) =>
-          this.loanService.getLoanContractTerminationTemplate(this.loanId, terminationDate)
+          this.loanService.getLoanEarlyTerminationTemplate(this.loanId, this.earlyTerminationCommand, terminationDate)
         ),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -186,6 +219,71 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
         this.prepayData = response;
         this.cdr.markForCheck();
       });
+  }
+
+  private updateEarlyTerminationMinDate(businessDate: Date) {
+    this.minDate =
+      this.earliestBackdatedDate && this.dateUtils.isBefore(this.earliestBackdatedDate, businessDate)
+        ? this.earliestBackdatedDate
+        : businessDate;
+  }
+
+  /** The latest of the loan's last user transaction and its charge submissions, as the backend bounds a backdated withdrawal. */
+  private latestRecordedDate(loanDetails: any): Date | null {
+    const transactionDates = (loanDetails?.transactions ?? [])
+      .filter(
+        (transaction: any) =>
+          !transaction.manuallyReversed &&
+          !transaction.type?.accrual &&
+          !transaction.type?.accrualAdjustment &&
+          !transaction.type?.accrualActivity &&
+          !transaction.type?.incomePosting
+      )
+      .map((transaction: any) => transaction.date);
+    const chargeDates = (loanDetails?.charges ?? [])
+      .filter((charge: any) => charge.submittedOnDate)
+      .map((charge: any) => charge.submittedOnDate);
+    return [
+      ...transactionDates,
+      ...chargeDates
+    ]
+      .map((date: any) => this.dateUtils.parseDate(date))
+      .reduce(
+        (latest: Date | null, date: Date) => (latest === null || this.dateUtils.isBefore(latest, date) ? date : latest),
+        null
+      );
+  }
+
+  private updateEarlyTerminationMaxDate() {
+    if (!this.maturityDate) {
+      this.maxDate = this.settingsService.maxFutureDate;
+      return;
+    }
+    const lastAllowedDate = new Date(
+      this.maturityDate.getFullYear(),
+      this.maturityDate.getMonth(),
+      this.maturityDate.getDate() - 1
+    );
+    // terminating on the business date stays allowed even after maturity: the backend applies the
+    // maturity bound to future dates only
+    const businessDate = this.settingsService.businessDate;
+    this.maxDate = this.dateUtils.isBefore(lastAllowedDate, businessDate) ? businessDate : lastAllowedDate;
+  }
+
+  /**
+   * Moves the early termination date and its bounds to the business date, unless the user already picked a date.
+   */
+  private applyBusinessDate(businessDate: Date) {
+    if (!this.isEarlyTermination || !this.prepayLoanForm || !businessDate) {
+      return;
+    }
+    this.updateEarlyTerminationMinDate(businessDate);
+    this.updateEarlyTerminationMaxDate();
+    const transactionDate = this.prepayLoanForm.get('transactionDate');
+    if (transactionDate.pristine && transactionDate.value?.getTime?.() !== businessDate.getTime()) {
+      transactionDate.setValue(businessDate);
+    }
+    this.cdr.markForCheck();
   }
 
   /**
@@ -235,27 +333,27 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     });
   }
 
-  submitContractTermination() {
-    const contractTerminationFormData = this.prepayLoanForm.value;
+  submitEarlyTermination() {
+    const earlyTerminationFormData = this.prepayLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.prepayLoanForm.value.transactionDate;
-    if (contractTerminationFormData.transactionDate instanceof Date) {
-      contractTerminationFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+    if (earlyTerminationFormData.transactionDate instanceof Date) {
+      earlyTerminationFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
     const data = {
-      ...contractTerminationFormData,
+      ...earlyTerminationFormData,
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
+    this.loanService.loanActionButtons(this.loanId, this.earlyTerminationCommand, data).subscribe((response: any) => {
       this.gotoLoanDefaultView();
     });
   }
 
   submit() {
-    if (this.contractTermination) {
-      this.submitContractTermination();
+    if (this.isEarlyTermination) {
+      this.submitEarlyTermination();
     } else {
       this.submitRepayment();
     }

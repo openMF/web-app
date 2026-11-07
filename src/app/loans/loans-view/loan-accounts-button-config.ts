@@ -349,11 +349,17 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'SALE_LOAN'
           }
         ];
-        if (!this.isContractTermination(substatus)) {
-          this.optionArray.push({
-            name: 'Contract Termination',
-            taskPermissionName: 'CONTRACT_TERMINATION_LOAN'
-          });
+        if (!this.isTerminatedEarly(substatus)) {
+          this.optionArray.push(
+            {
+              name: 'Contract Termination',
+              taskPermissionName: 'CONTRACT_TERMINATION_LOAN'
+            },
+            {
+              name: 'Loan Withdrawal',
+              taskPermissionName: 'LOAN_WITHDRAWAL_LOAN'
+            }
+          );
         }
         this.optionPaymentArray = [
           {
@@ -493,11 +499,11 @@ export class LoansAccountButtonConfiguration {
     }
   }
 
-  private isContractTermination(substatus: OptionData): boolean {
-    if (substatus == null) {
-      return false;
-    }
-    return substatus.code === 'loanSubStatus.loanSubStatusType.contractTermination';
+  private isTerminatedEarly(substatus: OptionData): boolean {
+    return (
+      substatus?.code === 'loanSubStatus.loanSubStatusType.contractTermination' ||
+      substatus?.code === 'loanSubStatus.loanSubStatusType.loanWithdrawal'
+    );
   }
 
   private addCommonActions(status: string) {
