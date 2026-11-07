@@ -401,6 +401,12 @@
             <td class="r-amount">{{ recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
           </tr>
           <tr>
+            <td>{{ 'labels.inputs.Interest Rate Chart Overridden' | translate }}</td>
+            <td class="r-amount">
+              {{ (recurringDepositsAccountData.isRateChartOverridden ? 'Yes' : 'No') | translate }}
+            </td>
+          </tr>
+          <tr>
             <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
             <td>
               <span>{{

@@ -13,6 +13,19 @@
     </div>
   </div>
 
+  @if (recurringDepositsAccountData?.isRateChartOverridden) {
+    <div class="m-b-16">
+      <div class="alert">
+        <div class="message">
+          <fa-icon icon="info-circle" class="m-r-10"></fa-icon>
+          {{ 'labels.inputs.Interest Rate Chart Overridden' | translate }}: {{ 'Yes' | translate }} &mdash;
+          {{ 'labels.inputs.Nominal Annual Interest Rate' | translate }}:
+          {{ recurringDepositsAccountData?.nominalAnnualInterestRate }}%
+        </div>
+      </div>
+    </div>
+  }
+
   <div class="mat-elevation-z1 m-b-25">
     <table mat-table [dataSource]="interestRateChartData" #chartsTable multiTemplateDataRows>
       <ng-container matColumnDef="period">
