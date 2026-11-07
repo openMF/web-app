@@ -106,7 +106,7 @@
     "@types/leaflet.markercluster": "^1.5.4",
     "@types/leaflet": "^1.9.21",
     "@types/lodash": "4.17.24",
-    "@types/node": "24.13.1",
+    "@types/node": "^26.6.6",
     "@types/vkbeautify": "^0.99.2",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
     "@typescript-eslint/parser": "^8.48.1",
@@ -141,7 +141,7 @@
   },
   "engines": {
     "node": ">= 20.19.0",
-    "npm": ">= 8.11.0"
+    "npm": ">= 10.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -45,16 +45,4 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
       (attribute: boolean) => attribute
     );
   }
-
-  exportDefinition(): void {
-    const product = this.loanProduct;
-    delete product['id'];
-    const fileName: string = product.name.replace(' ', '_') + '.json';
-    const link = document.createElement('a');
-    link.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(JSON.stringify(product, null, 2)));
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
 }

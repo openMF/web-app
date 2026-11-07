@@ -79,6 +79,28 @@ describe('ErrorHandlerInterceptor', () => {
     400,
     403,
     409,
+    422,
+    500
+  ])('keeps vault preview diagnostics out of logs and global alerts (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v2/base-teller/vault-cash-deposits/preview',
+        status,
+        'POST',
+        'private SQL token'
+      )
+    ).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    0,
+    400,
+    403,
+    409,
     500
   ])('keeps pickup error bodies out of generic alerts and logging (HTTP %s)', (status) => {
     const log = jest.spyOn(console, 'error');
