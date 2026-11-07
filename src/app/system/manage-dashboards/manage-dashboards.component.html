@@ -333,7 +333,11 @@
           <div class="widget-filter-toolbar m-b-20">
             <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-input-field">
               <mat-label>{{ 'labels.inputs.Filter widgets by name or description...' | translate }}</mat-label>
-              <input matInput [(ngModel)]="searchFilter" placeholder="Search widgets..." />
+              <input
+                matInput
+                [(ngModel)]="searchFilter"
+                [placeholder]="'labels.placeholders.Search widgets' | translate"
+              />
               <mat-icon matSuffix>
                 <fa-icon icon="search"></fa-icon>
               </mat-icon>
@@ -411,7 +415,7 @@
                             multiple
                             [(ngModel)]="widget.allowedRoles"
                             (selectionChange)="onRolesChanged(widget, $event.value)"
-                            placeholder="Select roles"
+                            [placeholder]="'labels.placeholders.Select roles' | translate"
                           >
                             @for (role of availableRoles; track role) {
                               <mat-option [value]="role">{{ role }}</mat-option>

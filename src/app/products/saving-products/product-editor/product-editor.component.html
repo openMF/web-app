@@ -1,0 +1,346 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container product-editor">
+  <mat-card
+    ><mat-card-content>
+      <h1>{{ (editing ? 'SavingsEditor.EditTitle' : 'SavingsEditor.CreateTitle') | translate }}</h1>
+      @if (editing || createdId) {
+        <p>{{ 'SavingsEditor.ProductId' | translate }}: {{ productId }} · {{ template.name }}</p>
+      }
+      @if (editing) {
+        <p>{{ 'SavingsEditor.CoreReadOnly' | translate }}</p>
+      }
+      <a mat-button [routerLink]="[]" [queryParams]="{ core: 1 }" [disabled]="dirty">{{
+        'SavingsEditor.CoreEditor' | translate
+      }}</a>
+      @if (busy) {
+        <mat-progress-bar
+          mode="indeterminate"
+          [attr.aria-label]="'SavingsEditor.Saving' | translate"
+        ></mat-progress-bar>
+      }
+      @if (error) {
+        <div role="alert">
+          <p>{{ error | translate }}</p>
+          @for (detail of errorDetails; track $index) {
+            <p>{{ detail }}</p>
+          }
+        </div>
+        <button mat-button (click)="load()" [disabled]="busy">{{ 'SavingsEditor.Reload' | translate }}</button>
+      }
+      @if (coreCommandId) {
+        <p>{{ 'SavingsEditor.CoreCommand' | translate }}: {{ coreCommandId }}</p>
+      }
+      @if (notice) {
+        <p role="status">{{ notice | translate }}</p>
+      }
+      @if (createdId && error) {
+        <p>{{ 'SavingsEditor.ProductId' | translate }}: {{ createdId }}</p>
+        <a mat-button [routerLink]="['/products/saving-products', createdId, 'edit']">{{
+          'SavingsEditor.Resume' | translate
+        }}</a>
+      }
+      @if (!loaded && !busy) {
+        <p>{{ 'SavingsEditor.PolicyUnavailable' | translate }}</p>
+      }
+      @if (loaded && !capabilities?.financialEnforcement) {
+        <p class="policy-notice">{{ 'SavingsEditor.MetadataNotice' | translate }}</p>
+      }
+      @if (configuration) {
+        <p>
+          {{ 'SavingsEditor.Status.' + configuration.status | translate }} · {{ 'SavingsEditor.Revision' | translate }}
+          {{ configuration.revision ?? '—' }}
+        </p>
+      }
+      <nav
+        mat-tab-nav-bar
+        [disablePagination]="true"
+        [tabPanel]="panel"
+        [attr.aria-label]="'SavingsEditor.Configuration' | translate"
+      >
+        <a
+          mat-tab-link
+          class="editor-tab"
+          href="#basic-information"
+          [active]="tab === 0"
+          (click)="$event.preventDefault(); tab = 0"
+          ><span class="tab-title">{{ 'SavingsEditor.Basic' | translate }}</span></a
+        >
+        <a
+          mat-tab-link
+          class="editor-tab"
+          href="#interest-configuration"
+          [active]="tab === 1"
+          (click)="$event.preventDefault(); tab = 1"
+          ><span class="tab-title">{{ 'SavingsEditor.Interest' | translate }}</span></a
+        >
+        <a
+          mat-tab-link
+          class="editor-tab"
+          href="#additional-rules"
+          [active]="tab === 2"
+          (click)="$event.preventDefault(); tab = 2"
+          ><span class="tab-title">{{ 'SavingsEditor.Rules' | translate }}</span></a
+        >
+      </nav>
+      <mat-tab-nav-panel #panel>
+        <section [hidden]="tab !== 0">
+          <h2>{{ 'SavingsEditor.Basic' | translate }}</h2>
+          <div [attr.inert]="immutable ? '' : null">
+            <mifosx-saving-product-details-step
+              [embedded]="true"
+              [savingProductsTemplate]="editing ? template : null"
+            ></mifosx-saving-product-details-step>
+            <mifosx-saving-product-currency-step
+              [embedded]="true"
+              [savingProductsTemplate]="template"
+            ></mifosx-saving-product-currency-step>
+            <div [formGroup]="settings.savingProductSettingsForm">
+              <mat-form-field class="full-width"
+                ><mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
+                <input matInput formControlName="minRequiredOpeningBalance" inputmode="decimal" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div [formGroup]="policy" class="policy-grid" [attr.inert]="pending || !loaded ? '' : null">
+            <mat-form-field
+              ><mat-label>{{ 'SavingsEditor.Classification' | translate }}</mat-label>
+              <mat-select formControlName="classification" required>
+                @for (option of capabilities?.classifications; track option) {
+                  <mat-option [value]="option" [disabled]="false">{{
+                    'SavingsEditor.' + option | translate
+                  }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>{{ fieldError('classification') | translate }}</mat-error></mat-form-field
+            ><mat-form-field
+              ><mat-label>{{ 'SavingsEditor.Purpose' | translate }}</mat-label>
+              <mat-select formControlName="purpose" required>
+                @for (option of capabilities?.purposes; track option) {
+                  <mat-option [value]="option" [disabled]="false">{{
+                    'SavingsEditor.' + option | translate
+                  }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>{{ fieldError('purpose') | translate }}</mat-error></mat-form-field
+            ><mat-checkbox formControlName="liquidGuarantee">{{
+              'SavingsEditor.LiquidGuarantee' | translate
+            }}</mat-checkbox
+            ><mat-checkbox formControlName="withdrawalsAllowed">{{
+              'SavingsEditor.WithdrawalsAllowed' | translate
+            }}</mat-checkbox
+            ><mat-checkbox formControlName="depositsAllowed">{{
+              'SavingsEditor.DepositsAllowed' | translate
+            }}</mat-checkbox
+            ><mat-form-field
+              ><mat-label>{{ 'SavingsEditor.MaximumBalance' | translate }}</mat-label>
+              <input matInput formControlName="maximumBalance" inputmode="decimal" required />
+              <mat-error>{{ fieldError('maximumBalance') | translate }}</mat-error></mat-form-field
+            ><mat-form-field
+              ><mat-label>{{ 'SavingsEditor.MonthlyAverage' | translate }}</mat-label>
+              <input matInput formControlName="minimumMonthlyAverageBalance" inputmode="decimal" required />
+              <mat-error>{{ fieldError('minimumMonthlyAverageBalance') | translate }}</mat-error></mat-form-field
+            ><mat-checkbox formControlName="feeApplicable">{{
+              'SavingsEditor.FeeApplicable' | translate
+            }}</mat-checkbox>
+            @if (policy.controls.feeApplicable.value) {
+              <mat-form-field
+                ><mat-label>{{ 'SavingsEditor.FeeCharge' | translate }}</mat-label
+                ><mat-select formControlName="feeChargeId" required>
+                  @for (fee of fees; track fee.id) {
+                    <mat-option [value]="fee.id">{{ fee.name }}</mat-option>
+                  }</mat-select
+                ><mat-error>{{ fieldError('feeChargeId') | translate }}</mat-error></mat-form-field
+              >
+            }
+          </div>
+          <p>{{ 'SavingsEditor.FeeNotice' | translate }}</p>
+        </section>
+        <section [hidden]="tab !== 1">
+          <h2>{{ 'SavingsEditor.Interest' | translate }}</h2>
+          <div [formGroup]="policy" class="policy-grid" [attr.inert]="pending || !loaded ? '' : null">
+            <mat-form-field
+              ><mat-label>{{ 'SavingsEditor.InterestMode' | translate }}</mat-label>
+              <mat-select
+                formControlName="interestMode"
+                (selectionChange)="changeInterestMode($event.value)"
+                [disabled]="!!interest?.saving"
+                required
+              >
+                @for (option of capabilities?.interestModes; track option) {
+                  <mat-option
+                    [value]="option"
+                    [disabled]="option !== 'NONE' && policy.controls.classification.value === 'SIGHT'"
+                    >{{
+                      (option === 'NONE' ? 'SavingsEditor.NoInterest' : 'SavingsEditor.' + option) | translate
+                    }}</mat-option
+                  >
+                }
+              </mat-select>
+              <mat-error>{{ fieldError('interestMode') | translate }}</mat-error></mat-form-field
+            >
+          </div>
+          <p>{{ 'InterestManagement.CoreSeparation' | translate }}</p>
+          @if (!immutable) {
+            <button mat-button (click)="zeroInterest()">{{ 'SavingsEditor.SetNoInterest' | translate }}</button>
+          }
+          <div [attr.inert]="immutable ? '' : null">
+            <mifosx-saving-product-terms-step
+              [embedded]="true"
+              [savingProductsTemplate]="template"
+            ></mifosx-saving-product-terms-step>
+          </div>
+          <mifosx-interest-configuration
+            [configuration]="configuration"
+            [context]="context"
+            [mode]="policy.controls.interestMode.value"
+            [blocked]="advancedBlocked"
+            (saved)="advancedSaved($event)"
+            (conflicted)="workflowConflict()"
+          ></mifosx-interest-configuration>
+        </section>
+        <section [hidden]="tab !== 2">
+          <h2>{{ 'SavingsEditor.Rules' | translate }}</h2>
+          <div [formGroup]="policy" class="policy-grid" [attr.inert]="pending || !loaded ? '' : null">
+            <mat-form-field
+              ><mat-label>{{ 'SavingsEditor.Freezing' | translate }}</mat-label>
+              <mat-select formControlName="freezing" required>
+                @for (option of capabilities?.freezingModes; track option) {
+                  <mat-option [value]="option" [disabled]="false">{{
+                    (option === 'NONE' ? 'SavingsEditor.NoFreezing' : 'SavingsEditor.' + option) | translate
+                  }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>{{ fieldError('freezing') | translate }}</mat-error></mat-form-field
+            >
+            @if (policy.controls.freezing.value === 'TERM') {
+              <mat-form-field
+                ><mat-label>{{ 'SavingsEditor.FreezingDays' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="freezingTermDays"
+                  type="number"
+                  min="1"
+                  max="2147483647"
+                  step="1"
+                  required
+                />
+                <mat-error>{{ fieldError('freezingTermDays') | translate }}</mat-error></mat-form-field
+              >
+            }
+            <mat-checkbox formControlName="directDebitForLoanPayment">{{
+              'SavingsEditor.DirectDebit' | translate
+            }}</mat-checkbox
+            ><mat-form-field
+              ><mat-label>{{ 'SavingsEditor.Multiplicity' | translate }}</mat-label>
+              <mat-select formControlName="multiplicity" required>
+                @for (option of capabilities?.multiplicities; track option) {
+                  <mat-option [value]="option" [disabled]="false">{{
+                    'SavingsEditor.' + option | translate
+                  }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>{{ fieldError('multiplicity') | translate }}</mat-error></mat-form-field
+            ><mat-form-field
+              ><mat-label>{{ 'SavingsEditor.Designation' | translate }}</mat-label>
+              <input matInput formControlName="accountDesignation" maxlength="100" required />
+              <mat-error>{{ fieldError('accountDesignation') | translate }}</mat-error></mat-form-field
+            ><mat-checkbox formControlName="additionalPaymentReference">{{
+              'SavingsEditor.AdditionalReference' | translate
+            }}</mat-checkbox>
+            @if (policy.controls.additionalPaymentReference.value) {
+              <mat-form-field
+                ><mat-label>{{ 'SavingsEditor.PaymentPartner' | translate }}</mat-label>
+                <input matInput formControlName="paymentReferencePartner" maxlength="100" required />
+                <mat-error>{{ fieldError('paymentReferencePartner') | translate }}</mat-error></mat-form-field
+              >
+            }
+          </div>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                ><mat-panel-title>{{
+                  'SavingsEditor.CoreSettings' | translate
+                }}</mat-panel-title></mat-expansion-panel-header
+              >
+              <div [attr.inert]="immutable ? '' : null">
+                <mifosx-saving-product-settings-step
+                  [embedded]="true"
+                  [savingProductsTemplate]="template"
+                ></mifosx-saving-product-settings-step>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                ><mat-panel-title>{{
+                  'labels.inputs.CHARGES' | translate
+                }}</mat-panel-title></mat-expansion-panel-header
+              >
+              <div [attr.inert]="immutable ? '' : null">
+                <mifosx-saving-product-charges-step
+                  [embedded]="true"
+                  [savingProductsTemplate]="template"
+                  [currencyCode]="currency.savingProductCurrencyForm.get('currencyCode')"
+                ></mifosx-saving-product-charges-step>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header
+                ><mat-panel-title>{{
+                  'labels.inputs.ACCOUNTING' | translate
+                }}</mat-panel-title></mat-expansion-panel-header
+              >
+              <div [attr.inert]="immutable ? '' : null">
+                <mifosx-saving-product-accounting-step
+                  [embedded]="true"
+                  [savingProductsTemplate]="template"
+                  [accountingRuleData]="accountingRules"
+                  [isDormancyTrackingActive]="settings.savingProductSettingsForm.get('isDormancyTrackingActive')"
+                  [allowOverdraft]="settings.savingProductSettingsForm.get('allowOverdraft')"
+                  [savingProductFormValid]="true"
+                ></mifosx-saving-product-accounting-step>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </section>
+      </mat-tab-nav-panel>
+      @if (loaded && (policy.dirty || policy.touched)) {
+        <div role="alert" class="validation-errors">
+          @for (message of validationErrors; track message) {
+            <p>{{ message | translate }}</p>
+          }
+          @if (policy.controls.accountDesignation.invalid) {
+            <p>{{ 'SavingsEditor.DesignationRequired' | translate }}</p>
+          }
+        </div>
+      }
+      <div class="editor-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="save()"
+          [disabled]="saveDisabled"
+          *mifosxHasPermission="'UPDATE_SAVINGS_PRODUCT_POLICY'"
+        >
+          {{ (createdId && error ? 'SavingsEditor.RetryPolicy' : 'SavingsEditor.SaveDraft') | translate }}
+        </button>
+        <a mat-button routerLink="/products/saving-products" [disabled]="busy">{{
+          'SavingsEditor.Back' | translate
+        }}</a>
+      </div>
+      @if (configuration) {
+        <mifosx-policy-workflow
+          [configuration]="configuration"
+          [unsaved]="policy.dirty || policy.invalid || conflict || !!interest?.dirty || !!interest?.saving"
+          (refreshed)="refresh()"
+          (conflicted)="workflowConflict()"
+        ></mifosx-policy-workflow>
+      }</mat-card-content
+  ></mat-card>
+</div>

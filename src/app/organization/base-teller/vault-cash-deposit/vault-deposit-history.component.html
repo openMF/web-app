@@ -1,0 +1,178 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container vault-history">
+  <mat-card>
+    <mat-card-content>
+      <header>
+        <div>
+          <p>{{ 'vaultDeposit.specialOperations' | translate }}</p>
+          <h2>{{ 'vaultDeposit.history.title' | translate }}</h2>
+        </div>
+        <nav>
+          <a mat-button routerLink="/organization/base-teller/vault-cash-deposit">{{
+            'vaultDeposit.title' | translate
+          }}</a
+          ><a mat-button routerLink="/organization/base-teller">{{ 'labels.text.Base Teller' | translate }}</a>
+        </nav>
+      </header>
+      <p class="notice">{{ 'vaultDeposit.history.attemptsNotice' | translate }}</p>
+      <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+        <div class="filters">
+          <mat-form-field
+            ><mat-label>{{ 'vaultDeposit.history.fromDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="fromDate" /><mat-error>{{
+              'vaultDeposit.history.errors.filters' | translate
+            }}</mat-error></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'vaultDeposit.history.toDate' | translate }}</mat-label
+            ><input matInput type="date" formControlName="toDate" /><mat-error>{{
+              'vaultDeposit.history.errors.filters' | translate
+            }}</mat-error></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'vaultDeposit.history.officeId' | translate }}</mat-label
+            ><input matInput inputmode="numeric" formControlName="officeId" /><mat-error>{{
+              'vaultDeposit.history.errors.filters' | translate
+            }}</mat-error></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'vaultDeposit.history.vaultKey' | translate }}</mat-label
+            ><input matInput formControlName="vaultKey" /><mat-error>{{
+              'vaultDeposit.history.errors.filters' | translate
+            }}</mat-error></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label
+            ><input matInput formControlName="currencyCode" maxlength="3" /><mat-error>{{
+              'vaultDeposit.history.errors.filters' | translate
+            }}</mat-error></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'vaultDeposit.history.status' | translate }}</mat-label
+            ><mat-select formControlName="status"
+              ><mat-option value="">{{ 'vaultDeposit.history.all' | translate }}</mat-option
+              ><mat-option value="BLOCKED">{{ 'vaultDeposit.history.blocked' | translate }}</mat-option></mat-select
+            ></mat-form-field
+          >
+          <mat-form-field class="reference-filter"
+            ><mat-label>{{ 'vaultDeposit.history.reference' | translate }}</mat-label
+            ><input matInput formControlName="reference" /><mat-hint>{{
+              'vaultDeposit.history.exactReference' | translate
+            }}</mat-hint
+            ><mat-error>{{ 'vaultDeposit.history.errors.filters' | translate }}</mat-error></mat-form-field
+          >
+        </div>
+        @if (filtersForm.hasError('dateRange')) {
+          <p role="alert">{{ 'vaultDeposit.history.dateRange' | translate }}</p>
+        }
+        @if (filtersForm.hasError('vaultMismatch')) {
+          <p role="alert">{{ 'vaultDeposit.history.vaultMismatch' | translate }}</p>
+        }
+        <div class="actions">
+          <button mat-flat-button type="submit" [disabled]="filtersForm.invalid">
+            {{ 'vaultDeposit.history.search' | translate }}
+          </button>
+          <button mat-button type="button" (click)="resetFilters()">
+            {{ 'vaultDeposit.history.reset' | translate }}
+          </button>
+          <button mat-button type="button" (click)="refresh()" [disabled]="loading()">
+            {{ 'vaultDeposit.refresh' | translate }}
+          </button>
+        </div>
+      </form>
+      @if (loading()) {
+        <div role="status" class="actions">
+          <mat-spinner diameter="24" aria-hidden="true"></mat-spinner
+          ><span>{{ 'cashExchange.loading' | translate }}</span>
+        </div>
+      }
+      @if (error()) {
+        <div class="notice error" role="alert">
+          {{ error() | translate }}
+          <button mat-button type="button" (click)="refresh()">{{ 'cashInventory.retry' | translate }}</button>
+        </div>
+      }
+      @if (page(); as result) {
+        <p>{{ 'vaultDeposit.history.sortOrder' | translate }}</p>
+        @if (!result.items.length) {
+          <p class="notice" role="status" data-testid="vault-history-empty">
+            {{ 'vaultDeposit.history.empty' | translate }}
+          </p>
+        } @else {
+          <div
+            class="table-scroll"
+            tabindex="0"
+            role="region"
+            [attr.aria-label]="'vaultDeposit.history.title' | translate"
+          >
+            <table mat-table [dataSource]="result.items">
+              <ng-container matColumnDef="reference"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.history.reference' | translate }}</th>
+                <td mat-cell *matCellDef="let item">{{ item.attemptReference }}</td></ng-container
+              >
+              <ng-container matColumnDef="date"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.businessDate' | translate }}</th>
+                <td mat-cell *matCellDef="let item">
+                  {{ item.businessDate }}<small>{{ item.createdAt | date: 'medium' }}</small>
+                </td></ng-container
+              >
+              <ng-container matColumnDef="branch"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.branch' | translate }}</th>
+                <td mat-cell *matCellDef="let item">{{ item.branch.name }}</td></ng-container
+              >
+              <ng-container matColumnDef="vault"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.vault' | translate }}</th>
+                <td mat-cell *matCellDef="let item">{{ item.vault.name }}</td></ng-container
+              >
+              <ng-container matColumnDef="amount"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.history.proposedCash' | translate }}</th>
+                <td mat-cell *matCellDef="let item">
+                  @for (currency of item.currencies; track currency.currencyCode) {
+                    <div>
+                      {{ currency.currencyCode }} {{ currency.proposedCash | withdrawalMoney: currency.decimalPlaces }}
+                    </div>
+                  }
+                </td></ng-container
+              >
+              <ng-container matColumnDef="status"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.history.status' | translate }}</th>
+                <td mat-cell *matCellDef="let item">{{ statusLabel(item.status) | translate }}</td></ng-container
+              >
+              <ng-container matColumnDef="actions"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.history.actions' | translate }}</th>
+                <td mat-cell *matCellDef="let item">
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="openDetail(item)"
+                    [disabled]="!item.permittedActions.includes('VIEW_DETAILS')"
+                  >
+                    {{ 'vaultDeposit.history.details' | translate }}</button
+                  ><button mat-button type="button" disabled>{{ 'vaultDeposit.history.receipt' | translate }}</button
+                  ><small>{{ 'vaultDeposit.history.receiptNotPosted' | translate }}</small>
+                </td></ng-container
+              >
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            </table>
+          </div>
+        }
+        <mat-paginator
+          [length]="result.totalFilteredRecords"
+          [pageIndex]="pageIndex"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizes"
+          (page)="changePage($event)"
+          [attr.aria-label]="'vaultDeposit.history.pagination' | translate"
+        ></mat-paginator>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

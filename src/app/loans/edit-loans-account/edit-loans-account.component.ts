@@ -24,6 +24,7 @@ import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBasicDetails } from '../models/loan-product.model';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 
 /**
  * Edit Loans
@@ -247,10 +248,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       loanType
     };
     delete loansAccountData.isValid;
-    if (loansAccountData.syncRepaymentsWithMeeting) {
+    // Semi-monthly loans cannot be linked to a meeting calendar (the backend rejects `calendarId`).
+    if (loansAccountData.syncRepaymentsWithMeeting && !isSemiMonthly(loansAccountData.repaymentFrequencyType)) {
       loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
     }
+    delete loansAccountData.syncRepaymentsWithMeeting;
 
     if (loansAccountData.recalculationRestFrequencyDate) {
       loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(
@@ -321,10 +323,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
         this.productDetails.allowAttributeOverrides.breach === false
       ) {
+        // Locked values from getRawValue() must be absent — BE rejects presence even as null.
         delete payload['breachId'];
         delete payload['nearBreachId'];
-        // Locked breach settings are inherited from the product; getRawValue() would still carry the disabled value.
-        // The backend rejects these keys by presence (even null), so they must be absent, not emptied.
         delete payload['breachGraceDays'];
         delete payload['breachStartType'];
       }
@@ -333,24 +334,9 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         this.productDetails.allowAttributeOverrides.delinquencyBucketClassification === false
       ) {
         delete payload['delinquencyBucketId'];
-        // Grace days and start type follow the bucket override switch (FINERACT-2684).
         delete payload['delinquencyGraceDays'];
         delete payload['delinquencyStartType'];
       }
-    }
-
-    // No Empty values to be sent.
-    [
-      'delinquencyGraceDays',
-      'delinquencyStartType',
-      'breachStartType'
-    ].forEach((attr: string) => {
-      if (payload[attr] === null || payload[attr] === '') {
-        delete payload[attr];
-      }
-    });
-    if (payload['delinquencyBucketId'] === '') {
-      payload['delinquencyBucketId'] = null;
     }
 
     this.loansService

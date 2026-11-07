@@ -38,6 +38,13 @@ import { LoansAccountScheduleStepComponent } from '../../loans-account-stepper/l
 import { LoansAccountPreviewStepComponent } from '../../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** How one member loan relates to the other loans of the same GLIM application. */
+interface GlimApplicationLink {
+  applicationId: number;
+  isParent: boolean;
+  isLast: boolean;
+}
+
 @Component({
   selector: 'mifosx-create-glim-account',
   templateUrl: './create-glim-account.component.html',
@@ -198,7 +205,7 @@ export class CreateGlimAccountComponent {
     };
   }
 
-  setData(client: any, totalLoan: number): any {
+  setData(client: any, totalLoan: number, glimLink: GlimApplicationLink): any {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     // const monthDayFormat = 'dd MMMM';
@@ -233,7 +240,12 @@ export class CreateGlimAccountComponent {
       totalLoan: totalLoan,
       loanType: 'glim',
       amortizationType: 1,
-      isParentAccount: true,
+      // Fineract links every member loan of one application through this id. It creates the GLIM account
+      // for the loan that carries isParentAccount (checked by presence, so the other loans must omit it)
+      // and stops adding loans to it after the one marked lastApplication.
+      applicationId: glimLink.applicationId,
+      ...(glimLink.isParent ? { isParentAccount: true } : {}),
+      ...(glimLink.isLast ? { lastApplication: true } : {}),
       principal: client.principal,
       syncDisbursementWithMeeting: false,
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
@@ -258,15 +270,25 @@ export class CreateGlimAccountComponent {
     const requestData = [];
     const memberSelected = this.selectedMembers?.selectedMembers ?? [];
     const totalLoan = this.totalLoanAmount();
+    const applicationId = this.newApplicationId();
     for (let index = 0; index < memberSelected.length; index++) {
       requestData.push({
         requestId: index.toString(),
         method: 'POST',
         relativeUrl: 'loans',
-        body: this.setData(memberSelected[index], totalLoan)
+        body: this.setData(memberSelected[index], totalLoan, {
+          applicationId,
+          isParent: index === 0,
+          isLast: index === memberSelected.length - 1
+        })
       });
     }
     return requestData;
+  }
+
+  /** A random positive id; any 32-bit value fits Fineract's glim_accounts.application_id column (numeric(10,0)). */
+  newApplicationId(): number {
+    return crypto.getRandomValues(new Uint32Array(1))[0] + 1;
   }
 
   totalLoanAmount(): number {

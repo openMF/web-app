@@ -23,6 +23,7 @@ jest.mock('jspdf-autotable', () => ({ __esModule: true, default: jest.fn() }));
 /**
  * Terms as LoansAccountTermsStepComponent.loansAccountTerms returns them: getRawValue() keeps
  * the values of the controls locked by the product, so every gated key is present here.
+ * Cleared fields are already null (see loansAccountTerms getter).
  */
 const RAW_TERMS = {
   principalAmount: 1000,
@@ -138,5 +139,28 @@ describe('CreateLoansAccountComponent — Working Capital override gating', () =
       breachGraceDays: 5,
       breachStartType: 'DISBURSEMENT'
     });
+  });
+
+  it('forwards nulls from cleared terms (getter already normalised empties to null)', () => {
+    component.loansAccountTermsStep = {
+      loansAccountTerms: {
+        ...RAW_TERMS,
+        delinquencyBucketId: null,
+        delinquencyGraceDays: null,
+        delinquencyStartType: null,
+        breachId: null,
+        nearBreachId: null,
+        breachGraceDays: null,
+        breachStartType: null
+      }
+    } as any;
+
+    const payload = submittedPayload({ delinquencyBucketClassification: true, breach: true });
+
+    expect(payload.delinquencyBucketId).toBeNull();
+    expect(payload.delinquencyGraceDays).toBeNull();
+    expect(payload.breachId).toBeNull();
+    expect(payload.breachGraceDays).toBeNull();
+    expect(payload.nearBreachId).toBeNull();
   });
 });

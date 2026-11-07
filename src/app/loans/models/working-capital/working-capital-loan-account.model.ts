@@ -209,10 +209,10 @@ export interface Payment {
 export interface WorkingCapitalBalances {
   id: number;
   principalOutstanding: number;
-  totalPaidPrincipal: number;
-  totalPayment: number;
-  realizedIncome: number;
-  unrealizedIncome: number;
+  principalPaid?: number;
+  totalRepayment?: number;
+  realizedIncomeFromDiscountFee?: number;
+  unrealizedIncomeFromDiscountFee?: number;
   overpaymentAmount: number;
   breachPastDueAmount: number | null | undefined;
   /** Gross amount written off. It does not go down as recoveries come in. */
@@ -312,6 +312,21 @@ export interface WorkingCapitalNearBreachActions {
   frequency: number;
   frequencyType: string;
   submittedOnDate: number[];
+}
+
+/**
+ * One row of the near-breach history dialog: the previous and new threshold/frequency pair a
+ * near-breach action switched between, and whether that action was later reversed.
+ */
+export interface WorkingCapitalNearBreachData {
+  effectiveDate: number[];
+  previousThreshold: number;
+  previousFrequency: number;
+  previousFrequencyType: string;
+  newThreshold: number;
+  newFrequency: number;
+  newFrequencyType: string;
+  reversed: boolean;
 }
 
 export interface WorkingCapitalWriteOffRequest {
