@@ -35,8 +35,12 @@
 }
 
 .mifosx-notifications-menu {
-  margin-top: 8px;
   overflow: hidden;
+
+  // Material caps panels at 280px, which cut off the 320px container and left its content off-centre
+  &.mat-mdc-menu-panel {
+    max-width: 320px;
+  }
 
   .mat-mdc-menu-content,
   .mat-menu-content {

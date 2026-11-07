@@ -18,6 +18,8 @@
     [formControl]="languageSelector"
     (selectionChange)="setLanguage()"
     class="languageselector"
+    [panelClass]="panelClass"
+    [panelWidth]="panelWidth"
     [placeholder]="!showLabel ? ('labels.inputs.Language' | translate) : ''"
   >
     @for (language of languages; track language) {
