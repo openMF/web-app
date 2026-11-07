@@ -8,7 +8,10 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { ProductEditorComponent } from '../product-editor/product-editor.component';
 
 /** Custom Components */
 import { SavingProductDetailsStepComponent } from '../saving-product-stepper/saving-product-details-step/saving-product-details-step.component';
@@ -28,7 +31,7 @@ import { SavingProductPreviewStepComponent } from '../saving-product-stepper/sav
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
-  selector: 'mifosx-edit-saving-product',
+  selector: 'mifosx-core-edit-saving-product',
   templateUrl: './edit-saving-product.component.html',
   styleUrls: ['./edit-saving-product.component.scss'],
   imports: [
@@ -48,7 +51,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditSavingProductComponent {
+export class CoreEditSavingProductComponent {
   private route = inject(ActivatedRoute);
   private productsService = inject(ProductsService);
   private router = inject(Router);
@@ -82,6 +85,25 @@ export class EditSavingProductComponent {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
+  }
+
+  get coreForms() {
+    return [
+      this.savingProductDetailsStep?.savingProductDetailsForm,
+      this.savingProductCurrencyStep?.savingProductCurrencyForm,
+      this.savingProductTermsStep?.savingProductTermsForm,
+      this.savingProductSettingsStep?.savingProductSettingsForm,
+      this.savingProductAccountingStep?.savingProductAccountingForm
+    ];
+  }
+
+  get dirty() {
+    return this.coreForms.some((form) => form?.dirty) || this.savingProductChargesStep?.pristine === false;
+  }
+
+  private markSaved() {
+    this.coreForms.forEach((form) => form?.markAsPristine());
+    this.savingProductChargesStep.pristine = true;
   }
 
   get savingProductDetailsForm() {
@@ -142,6 +164,7 @@ export class EditSavingProductComponent {
     this.productsService
       .updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
       .subscribe((response: any) => {
+        this.markSaved();
         this.router.navigate(
           [
             '../../',
@@ -150,5 +173,41 @@ export class EditSavingProductComponent {
           { relativeTo: this.route }
         );
       });
+  }
+}
+
+/** Route host keeps original core stepper view queries intact behind an explicit independent flow. */
+@Component({
+  selector: 'mifosx-edit-saving-product',
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    ProductEditorComponent,
+    CoreEditSavingProductComponent
+  ],
+  template: `
+    @for (product of [template]; track product.id) {
+      @if (coreEditor) {
+        <p>{{ 'SavingsEditor.CoreEditNotice' | translate }}</p>
+        <a mat-button [routerLink]="[]" [queryParams]="{ core: null }">{{
+          'SavingsEditor.ReturnUnified' | translate
+        }}</a>
+        <mifosx-core-edit-saving-product></mifosx-core-edit-saving-product>
+      } @else {
+        <mifosx-product-editor [template]="product"></mifosx-product-editor>
+      }
+    }
+  `
+})
+export class EditSavingProductComponent {
+  private route = inject(ActivatedRoute);
+  private query = toSignal(this.route.queryParamMap, { initialValue: this.route.snapshot.queryParamMap });
+  private data = toSignal(this.route.data, { initialValue: this.route.snapshot.data });
+  @ViewChild(ProductEditorComponent) editor?: ProductEditorComponent;
+  @ViewChild(CoreEditSavingProductComponent) core?: CoreEditSavingProductComponent;
+  get coreEditor() {
+    return this.query().get('core') === '1';
+  }
+  get template() {
+    return this.data()['savingProductAndTemplate'];
   }
 }

@@ -112,7 +112,8 @@ export class AccountTransfersService {
 
   deleteStandingInstrucions(id: any) {
     const httpParams = new HttpParams().set('command', 'delete');
-    return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
+    // Fineract has no DELETE here: a standing instruction is deleted with PUT ?command=delete.
+    return this.http.put(`/standinginstructions/${id}`, {}, { params: httpParams });
   }
 
   getStandingInstructionsTransactions(standingInstructionsId: any, dateFormat: any, locale: any) {

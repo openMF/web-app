@@ -21,7 +21,7 @@
         </button>
       </mat-menu>
       <mat-form-field class="office-field" appearance="outline">
-        <mat-label>Branch</mat-label>
+        <mat-label>{{ 'labels.inputs.Branch' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.officeId">
           @for (office of offices; track office.id) {
             <mat-option [value]="office.id">
@@ -32,9 +32,9 @@
       </mat-form-field>
 
       <mat-form-field class="product-field" appearance="outline">
-        <mat-label>Product</mat-label>
+        <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.productId">
-          <mat-option value="">All</mat-option>
+          <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
           @for (product of products; track product.id) {
             <mat-option [value]="product.id">
               {{ product.name }}
@@ -45,9 +45,9 @@
 
       @if (clientGroups.length) {
         <mat-form-field class="client-group-field" appearance="outline">
-          <mat-label>Client Group</mat-label>
+          <mat-label>{{ 'labels.inputs.Client Group' | translate }}</mat-label>
           <mat-select [formControl]="filtersForm.controls.clientGroupId">
-            <mat-option value="">All</mat-option>
+            <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
             @for (group of clientGroups; track group.id) {
               <mat-option [value]="group.id">
                 {{ group.name }}
@@ -58,7 +58,7 @@
       }
 
       <mat-form-field class="timescale-field" appearance="outline">
-        <mat-label>Date Range</mat-label>
+        <mat-label>{{ 'labels.inputs.Date Range' | translate }}</mat-label>
         <mat-select [formControl]="filtersForm.controls.timescale">
           <mat-option value="Day">{{ 'labels.buttons.Day' | translate }}</mat-option>
           <mat-option value="Week">{{ 'labels.buttons.Week' | translate }}</mat-option>
