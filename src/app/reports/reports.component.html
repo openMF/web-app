@@ -132,15 +132,30 @@
       *ngFor="let group of paginatedGroups; trackBy: trackByCategory"
       [class.collapsed]="isGroupCollapsed(group.categoryKey)"
     >
-      <div class="group-head" (click)="toggleGroup(group.categoryKey)">
-        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-        <h3>{{ cleanTranslatedCategory(group.categoryKey | translate) }}</h3>
-        <div class="group-meta">{{ group.reports.length }}</div>
-      </div>
+      <h3 class="group-heading">
+        <button
+          type="button"
+          class="group-head"
+          [attr.aria-expanded]="!isGroupCollapsed(group.categoryKey)"
+          [attr.aria-controls]="getGroupContentId(group.categoryKey)"
+          (click)="toggleGroup(group.categoryKey)"
+        >
+          <svg
+            class="caret"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          <span class="group-title-text">{{ cleanTranslatedCategory(group.categoryKey | translate) }}</span>
+          <span class="group-meta">{{ group.reports.length }}</span>
+        </button>
+      </h3>
 
-      <div class="group-body">
+      <div class="group-body" [id]="getGroupContentId(group.categoryKey)">
         <a
           *ngFor="let report of group.reports; trackBy: trackById; let i = index"
           class="row"
