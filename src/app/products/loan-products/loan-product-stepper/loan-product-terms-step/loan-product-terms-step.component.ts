@@ -6,7 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -40,6 +50,26 @@ import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  inactivePricingFields,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { StringEnumOptionData } from 'app/shared/models/option-data.model';
+import {
+  annualEirValidators,
+  greaterThanZeroValidator,
+  withinBoundsValidator
+} from 'app/shared/validators/working-capital-pricing.validator';
+import {
+  applyRepaymentDaysToPayload,
+  firstRepaymentDayOptions,
+  isSemiMonthly,
+  secondRepaymentDayOptions
+} from 'app/shared/loan/semi-monthly/semi-monthly';
+import { SemiMonthlyDayPipe, SemiMonthlyDueDaysPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
 
 @Component({
   selector: 'mifosx-loan-product-terms-step',
@@ -64,11 +94,14 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    FindPipe
+    FindPipe,
+    SemiMonthlyDayPipe,
+    SemiMonthlyDueDaysPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
+  private readonly destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private processingStrategyService = inject(ProcessingStrategyService);
   private dialog = inject(MatDialog);
@@ -87,6 +120,8 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
   overAppliedCalculationTypeData: any;
   repaymentFrequencyTypeData: any;
   repaymentStartDateTypeOptions: any;
+  /** Semi-monthly first-day options (1–27). */
+  readonly firstRepaymentDayOptions = firstRepaymentDayOptions();
 
   displayedColumns: string[] = [
     'valueConditionType',
@@ -97,6 +132,10 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     'actions'
   ];
   isAdvancedTransactionProcessingStrategy = false;
+
+  /** Working Capital: options of the payment amount calculation strategy select. */
+  paymentAmountCalculationStrategyOptions: StringEnumOptionData[] = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
 
   constructor() {
     super();
@@ -143,6 +182,14 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         interestRecognitionOnDisbursementDate: this.loanProductsTemplate.interestRecognitionOnDisbursementDate || false,
         interestRateFrequencyType: this.loanProductsTemplate.interestRateFrequencyType?.id,
         repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType?.id,
+        // A product moved off semi-monthly keeps its old days on the backend, so they are only
+        // prefilled while the product is still semi-monthly.
+        firstRepaymentDayOfMonth: isSemiMonthly(this.loanProductsTemplate.repaymentFrequencyType)
+          ? (this.loanProductsTemplate.firstRepaymentDayOfMonth ?? null)
+          : null,
+        secondRepaymentDayOfMonth: isSemiMonthly(this.loanProductsTemplate.repaymentFrequencyType)
+          ? (this.loanProductsTemplate.secondRepaymentDayOfMonth ?? null)
+          : null,
         repaymentStartDateType: this.loanProductsTemplate.repaymentStartDateType?.id || 1
       });
 
@@ -194,20 +241,112 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     }
 
     if (this.loanProductService.isWorkingCapital) {
+      this.paymentAmountCalculationStrategyOptions =
+        this.loanProductsTemplate.paymentAmountCalculationStrategyOptions?.length > 0
+          ? this.loanProductsTemplate.paymentAmountCalculationStrategyOptions
+          : WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS;
+      const strategy = resolvePaymentAmountCalculationStrategy(
+        this.loanProductsTemplate.paymentAmountCalculationStrategy
+      );
       this.loanProductTermsForm.patchValue({
         minPrincipal: this.loanProductsTemplate.minPrincipal,
         principal: this.loanProductsTemplate.principal,
         maxPrincipal: this.loanProductsTemplate.maxPrincipal,
+        paymentAmountCalculationStrategy: strategy,
         minPeriodPaymentRate: this.loanProductsTemplate.minPeriodPaymentRate,
         periodPaymentRate: this.loanProductsTemplate.periodPaymentRate,
         maxPeriodPaymentRate: this.loanProductsTemplate.maxPeriodPaymentRate,
+        minAnnualEir: this.loanProductsTemplate.minAnnualEir,
+        annualEir: this.loanProductsTemplate.annualEir,
+        maxAnnualEir: this.loanProductsTemplate.maxAnnualEir,
+        minPaymentAmount: this.loanProductsTemplate.minPaymentAmount,
+        paymentAmount: this.loanProductsTemplate.paymentAmount,
+        maxPaymentAmount: this.loanProductsTemplate.maxPaymentAmount,
         repaymentEvery: this.loanProductsTemplate.repaymentEvery,
         repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType
           ? this.loanProductsTemplate.repaymentFrequencyType.id
           : null,
         discount: this.loanProductsTemplate.discount
       });
+      this.applyPaymentAmountCalculationStrategy(strategy);
     }
+  }
+
+  /** Working Capital: strategy currently selected in the form (TPV when the control is blank). */
+  get paymentAmountCalculationStrategy(): WorkingCapitalPaymentAmountCalculationStrategy {
+    return resolvePaymentAmountCalculationStrategy(
+      this.loanProductTermsForm.get('paymentAmountCalculationStrategy')?.value
+    );
+  }
+
+  /**
+   * Working Capital: the backend accepts exactly one pricing group per strategy and returns
+   * `not.allowed.for.<strategy>.strategy` for any other. Switching the select therefore clears
+   * the groups that no longer apply and moves the validators to the active one. Under ANNUAL_EIR
+   * and PAYMENT_AMOUNT the discount is mandatory and must be positive.
+   */
+  private applyPaymentAmountCalculationStrategy(strategy: WorkingCapitalPaymentAmountCalculationStrategy): void {
+    const form = this.loanProductTermsForm;
+    const bounded = (minName: string, maxName: string) =>
+      withinBoundsValidator(
+        () => form.get(minName)?.value,
+        () => form.get(maxName)?.value
+      );
+    const groups: Record<WorkingCapitalPaymentAmountCalculationStrategy, Record<string, any[]>> = {
+      TPV: {
+        minPeriodPaymentRate: [Validators.min(0)],
+        periodPaymentRate: [
+          Validators.required,
+          Validators.min(0),
+          bounded('minPeriodPaymentRate', 'maxPeriodPaymentRate')
+        ],
+        maxPeriodPaymentRate: [Validators.min(0)]
+      },
+      ANNUAL_EIR: {
+        minAnnualEir: annualEirValidators(),
+        annualEir: [
+          Validators.required,
+          ...annualEirValidators(),
+          bounded('minAnnualEir', 'maxAnnualEir')
+        ],
+        maxAnnualEir: annualEirValidators()
+      },
+      PAYMENT_AMOUNT: {
+        minPaymentAmount: [greaterThanZeroValidator()],
+        paymentAmount: [
+          Validators.required,
+          greaterThanZeroValidator(),
+          bounded('minPaymentAmount', 'maxPaymentAmount')
+        ],
+        maxPaymentAmount: [greaterThanZeroValidator()]
+      }
+    };
+    inactivePricingFields(strategy).forEach((name) => {
+      const control = form.get(name);
+      if (control) {
+        control.clearValidators();
+        control.setValue(null, { emitEvent: false });
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    });
+    Object.entries(groups[strategy]).forEach(
+      ([
+        name,
+        validators
+      ]) => {
+        const control = form.get(name)!;
+        control.setValidators(validators);
+        control.updateValueAndValidity({ emitEvent: false });
+      }
+    );
+    const discount = form.get('discount')!;
+    discount.setValidators(
+      strategy === WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV ? [Validators.min(0)] : [
+            Validators.required,
+            greaterThanZeroValidator()
+          ]
+    );
+    discount.updateValueAndValidity({ emitEvent: false });
   }
 
   createLoanProductTermsForm() {
@@ -293,6 +432,10 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           '',
           Validators.required
         ],
+        // Only meaningful for the semi-monthly frequency; validators are attached/removed by
+        // `setConditionalControls` as the frequency changes.
+        firstRepaymentDayOfMonth: [null],
+        secondRepaymentDayOfMonth: [null],
         minimumDaysBetweenDisbursalAndFirstRepayment: [
           '',
           []
@@ -341,6 +484,16 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
             Validators.min(0)
           ]
         ],
+        paymentAmountCalculationStrategy: [
+          WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV,
+          Validators.required
+        ],
+        minAnnualEir: [null],
+        annualEir: [null],
+        maxAnnualEir: [null],
+        minPaymentAmount: [null],
+        paymentAmount: [null],
+        maxPaymentAmount: [null],
         repaymentEvery: [
           '',
           [
@@ -369,6 +522,9 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
   }
 
   setConditionalControls() {
+    if (this.loanProductService.isWorkingCapital) {
+      this.setWorkingCapitalConditionalControls();
+    }
     if (this.loanProductService.isLoanProduct) {
       this.loanProductTermsForm
         .get('allowApprovedDisbursedAmountsOverApplied')!
@@ -473,6 +629,22 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         }
       });
 
+      this.loanProductTermsForm
+        .get('repaymentFrequencyType')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((repaymentFrequencyType) => this.applySemiMonthlyRules(isSemiMonthly(repaymentFrequencyType)));
+
+      // A first day on or after the selected second day leaves no valid second day, so it is cleared.
+      this.loanProductTermsForm
+        .get('firstRepaymentDayOfMonth')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((firstDay) => {
+          const secondDay = this.loanProductTermsForm.get('secondRepaymentDayOfMonth')!;
+          if (secondDay.value != null && firstDay != null && Number(secondDay.value) <= Number(firstDay)) {
+            secondDay.setValue(null);
+          }
+        });
+
       this.zeroInterest.valueChanges.subscribe((zeroInterest) => {
         if (zeroInterest) {
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(0);
@@ -493,6 +665,26 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         this.validateAdvancedPaymentStrategyControls();
       });
     }
+  }
+
+  /** Working Capital: re-shape the pricing inputs whenever the strategy or a bound changes. */
+  private setWorkingCapitalConditionalControls(): void {
+    this.loanProductTermsForm
+      .get('paymentAmountCalculationStrategy')!
+      .valueChanges.subscribe((value: string) =>
+        this.applyPaymentAmountCalculationStrategy(resolvePaymentAmountCalculationStrategy(value))
+      );
+    const revalidate = (target: string, ...bounds: string[]) =>
+      bounds.forEach((name) =>
+        this.loanProductTermsForm
+          .get(name)!
+          .valueChanges.subscribe(() =>
+            this.loanProductTermsForm.get(target)!.updateValueAndValidity({ emitEvent: false })
+          )
+      );
+    revalidate('periodPaymentRate', 'minPeriodPaymentRate', 'maxPeriodPaymentRate');
+    revalidate('annualEir', 'minAnnualEir', 'maxAnnualEir');
+    revalidate('paymentAmount', 'minPaymentAmount', 'maxPaymentAmount');
   }
 
   get principalVariationsForBorrowerCycle(): UntypedFormArray {
@@ -622,8 +814,47 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     return formfields;
   }
 
+  /**
+   * Semi-monthly products carry both due days (mandatory, set as a pair) and are always repaid every
+   * single period — the backend rejects any other `repaymentEvery`. Any other frequency rejects the
+   * days, so they are cleared and their validators dropped.
+   */
+  private applySemiMonthlyRules(semiMonthly: boolean): void {
+    const firstDay = this.loanProductTermsForm.get('firstRepaymentDayOfMonth');
+    const secondDay = this.loanProductTermsForm.get('secondRepaymentDayOfMonth');
+    const repaymentEvery = this.loanProductTermsForm.get('repaymentEvery');
+    if (!firstDay || !secondDay || !repaymentEvery) {
+      return;
+    }
+    if (semiMonthly) {
+      firstDay.setValidators(Validators.required);
+      secondDay.setValidators(Validators.required);
+      repaymentEvery.setValue(1);
+      repaymentEvery.disable();
+    } else {
+      firstDay.clearValidators();
+      firstDay.setValue(null);
+      secondDay.clearValidators();
+      secondDay.setValue(null);
+      repaymentEvery.enable();
+    }
+    firstDay.updateValueAndValidity();
+    secondDay.updateValueAndValidity();
+  }
+
+  /** Second-day options: only the days after the selected first day. */
+  secondRepaymentDayOptions(): number[] {
+    return secondRepaymentDayOptions(this.loanProductTermsForm.get('firstRepaymentDayOfMonth')?.value);
+  }
+
+  isSemiMonthly(): boolean {
+    return isSemiMonthly(this.loanProductTermsForm.get('repaymentFrequencyType')?.value);
+  }
+
   get loanProductTerms() {
     const formValue = this.loanProductTermsForm.getRawValue();
+    // The backend rejects the days on any frequency other than semi-monthly, and takes them only as a pair.
+    applyRepaymentDaysToPayload(formValue, formValue.repaymentFrequencyType);
     // Normalize decimal separators: convert comma to dot for backend compatibility
     const normalizeDecimal = (value: any) => {
       if (typeof value === 'string' && value.includes(',')) {
@@ -631,6 +862,19 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
       }
       return value;
     };
+
+    if (this.loanProductService.isWorkingCapital) {
+      // Only the active strategy's inputs may travel: the backend rejects the others and, on
+      // update, clears whatever belonged to the previous strategy by itself.
+      const terms = {
+        ...formValue,
+        minAnnualEir: normalizeDecimal(formValue.minAnnualEir),
+        annualEir: normalizeDecimal(formValue.annualEir),
+        maxAnnualEir: normalizeDecimal(formValue.maxAnnualEir)
+      };
+      inactivePricingFields(this.paymentAmountCalculationStrategy).forEach((name) => delete terms[name]);
+      return terms;
+    }
 
     return {
       ...formValue,

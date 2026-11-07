@@ -1,0 +1,275 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="cash-transfer">
+  <mat-card-content>
+    <div class="workflow">
+      <header class="workflow-header">
+        <span class="workflow-icon" aria-hidden="true"><mat-icon>swap_horiz</mat-icon></span>
+        <div>
+          <h2 #heading tabindex="-1">{{ 'cashTellerTransfer.title' | translate }}</h2>
+          <p>{{ 'cashTellerTransfer.subtitle' | translate }}</p>
+        </div>
+      </header>
+      <ol class="steps" [attr.aria-label]="'cashTellerTransfer.title' | translate">
+        @for (label of steps; track label; let i = $index) {
+          <li [attr.aria-current]="step === i ? 'step' : null" [class.completed]="step > i">
+            <span class="step-number" aria-hidden="true">
+              @if (step > i) {
+                <mat-icon>check</mat-icon>
+              } @else {
+                {{ i + 1 }}
+              }
+            </span>
+            <span class="step-label">{{ label | translate }}</span>
+          </li>
+        }
+      </ol>
+      @if (loading || busy || printing) {
+        <p role="status" aria-live="polite">{{ 'cashTellerTransfer.loading' | translate }}</p>
+      }
+      @if (error) {
+        <p role="alert" class="error">{{ error | translate }}</p>
+      }
+      @if (inventoryError) {
+        <section
+          class="setup-panel"
+          [class.setup-required]="sourceSetupRequired"
+          role="alert"
+          aria-labelledby="setup-title"
+        >
+          <span class="setup-icon" aria-hidden="true"
+            ><mat-icon>{{ sourceSetupRequired ? 'account_balance_wallet' : 'info_outline' }}</mat-icon></span
+          >
+          <div class="setup-body">
+            <h3 id="setup-title">
+              {{
+                (sourceSetupRequired ? 'cashTellerTransfer.drawerSetupTitle' : 'cashTellerTransfer.unavailable')
+                  | translate
+              }}
+            </h3>
+            <p>{{ inventoryError | translate }}</p>
+            <div class="setup-actions">
+              @if (canOpenSourceDrawer) {
+                <a mat-flat-button color="primary" routerLink="/organization/base-teller/cash-allocations">
+                  {{ 'cashTellerTransfer.openDrawer' | translate
+                  }}<mat-icon iconPositionEnd aria-hidden="true">arrow_forward</mat-icon>
+                </a>
+              }
+              <button mat-stroked-button (click)="reload()" [disabled]="loading || busy || !!pending">
+                <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'cashTellerTransfer.refresh' | translate }}
+              </button>
+            </div>
+          </div>
+        </section>
+      }
+      @if (pending && !pending.requiresReview) {
+        <p role="status">{{ 'cashTellerTransfer.uncertain' | translate }}</p>
+      }
+      @if (pending?.requiresReview) {
+        <section class="setup-panel" role="alert">
+          <div class="setup-body">
+            <p>{{ 'cashTellerTransfer.reviewRecovery' | translate }}</p>
+            <mat-checkbox [formControl]="recoveryReviewed">{{
+              'cashTellerTransfer.reviewAcknowledgement' | translate
+            }}</mat-checkbox>
+            <div class="setup-actions">
+              <button mat-stroked-button (click)="discardPending()" [disabled]="busy || !recoveryReviewed.value">
+                {{ 'cashTellerTransfer.discardRecovery' | translate }}
+              </button>
+            </div>
+          </div>
+        </section>
+      }
+      @if (context && !hasPermission('CREATE')) {
+        <p>{{ 'accountTransfer.readOnly' | translate }}</p>
+      }
+      @if (step < 2 && context && !pending) {
+        <section class="selectors">
+          <div>
+            <h3>{{ 'cashTellerTransfer.source' | translate }}</h3>
+            <p>{{ context.source.cashierName }} · {{ context.source.tellerName }} · #{{ context.source.cashierId }}</p>
+            <p>{{ context.source.officeName }}</p>
+            <p>{{ 'cashTellerTransfer.businessDate' | translate }}: {{ context.businessDate }}</p>
+          </div>
+          <form [formGroup]="form">
+            <mat-form-field>
+              <mat-label>{{ 'cashTellerTransfer.destination' | translate }}</mat-label>
+              <mat-select formControlName="destinationCashierId" required>
+                @for (teller of destinations; track teller.cashierId) {
+                  <mat-option [value]="teller.cashierId"
+                    >{{ teller.cashierName }} · {{ teller.tellerName }} · #{{ teller.cashierId }} ·
+                    {{ teller.officeName }}</mat-option
+                  >
+                }
+              </mat-select>
+              <mat-error>{{ 'cashTellerTransfer.invalidDestination' | translate }}</mat-error>
+            </mat-form-field>
+            @if (!destinations.length) {
+              <p role="status">{{ 'cashTellerTransfer.noDestinations' | translate }}</p>
+            }
+          </form>
+        </section>
+        @if (step === 1) {
+          @for (row of rows; track row.currencyCode) {
+            <section class="currency-panel">
+              <h3>{{ 'cashTellerTransfer.currency' | translate }}: {{ row.currencyCode }}</h3>
+              <div class="denominations">
+                <table mat-table [dataSource]="row.denominations">
+                  <ng-container matColumnDef="denomination"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'cashTellerTransfer.denomination' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      <span class="mobile-label">{{ 'cashTellerTransfer.denomination' | translate }}: </span
+                      >{{ line.denominationValue }}
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="type"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'cashTellerTransfer.type' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      {{
+                        (line.denominationType === 'COIN' ? 'cashTellerTransfer.coins' : 'cashTellerTransfer.bills')
+                          | translate
+                      }}
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="available"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'cashTellerTransfer.available' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      <span class="mobile-label">{{ 'cashTellerTransfer.available' | translate }}: </span
+                      >{{ line.availableQuantity }}
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="quantity"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'cashTellerTransfer.quantity' | translate }}</th>
+                    <td mat-cell *matCellDef="let line; let i = index">
+                      <mat-form-field>
+                        <mat-label
+                          >{{ 'cashTellerTransfer.quantity' | translate }} · {{ row.currencyCode }}
+                          {{ line.denominationValue }}</mat-label
+                        >
+                        <input
+                          matInput
+                          type="number"
+                          min="0"
+                          step="1"
+                          [max]="line.availableQuantity"
+                          [formControl]="row.quantities.at(i)"
+                          [attr.data-currency]="row.currencyCode"
+                          [attr.data-denomination]="line.denominationId"
+                        />
+                        <mat-error>{{
+                          (row.quantities.at(i).hasError('max')
+                            ? 'cashTellerTransfer.insufficient'
+                            : 'cashTellerTransfer.invalidQuantity'
+                          ) | translate
+                        }}</mat-error>
+                      </mat-form-field>
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="amount"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'cashTellerTransfer.amount' | translate }}</th>
+                    <td mat-cell *matCellDef="let line; let i = index">
+                      <span class="mobile-label">{{ 'cashTellerTransfer.amount' | translate }}: </span
+                      >{{ amount(row, i) }}
+                    </td></ng-container
+                  >
+                  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                  <tr mat-row *matRowDef="let line; columns: columns"></tr>
+                </table>
+              </div>
+              <div class="totals" aria-live="polite">
+                <p>{{ 'cashTellerTransfer.totalBills' | translate }}: {{ total(row, 'BILL') }}</p>
+                <p>{{ 'cashTellerTransfer.totalCoins' | translate }}: {{ total(row, 'COIN') }}</p>
+                <p>
+                  <strong>{{ 'cashTellerTransfer.total' | translate }}: {{ row.currencyCode }} {{ total(row) }}</strong>
+                </p>
+              </div>
+            </section>
+          }
+          @if (!canContinue && !busy) {
+            <p>{{ 'cashTellerTransfer.selectionHint' | translate }}</p>
+          }
+        }
+      }
+      @if (step === 2 && preview) {
+        <h3>{{ 'cashTellerTransfer.generalTransaction' | translate }}</h3>
+        <mifosx-cash-transfer-summary [record]="preview" />
+      }
+      @if (step === 3 && result) {
+        <div role="status">
+          <h3>{{ 'cashTellerTransfer.success' | translate }}</h3>
+        </div>
+        <mifosx-cash-transfer-summary [record]="result" />
+        @if (context) {
+          <h3>{{ 'cashTellerTransfer.refreshedInventory' | translate }}</h3>
+          @for (currency of context.currencies; track currency.currencyCode) {
+            @for (line of currency.denominations; track line.denominationId) {
+              <p>
+                {{ currency.currencyCode }} · {{ line.denominationValue }} ·
+                {{ 'cashTellerTransfer.available' | translate }}: {{ line.availableQuantity }}
+              </p>
+            }
+          }
+        }
+      }
+      <div class="actions">
+        <a mat-button routerLink="/organization/base-teller"
+          ><mat-icon aria-hidden="true">arrow_back</mat-icon>{{ 'cashTellerTransfer.home' | translate }}</a
+        >
+        @if (step < 3 && context && !pending) {
+          <button mat-button (click)="cancel()" [disabled]="busy || loading">
+            {{ 'cashTellerTransfer.cancel' | translate }}
+          </button>
+        }
+        @if (step > 0 && step < 3 && !pending) {
+          <button mat-button (click)="back()" [disabled]="busy || loading">
+            {{ 'cashTellerTransfer.back' | translate }}
+          </button>
+        }
+        @if (step === 0 && context) {
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="next()"
+            [disabled]="!destination || loading || busy || !!inventoryError || !hasPermission('CREATE')"
+          >
+            {{ 'cashTellerTransfer.next' | translate }}
+          </button>
+        }
+        @if (step === 1) {
+          <button mat-flat-button color="primary" (click)="continue()" [disabled]="!canContinue">
+            {{ 'cashTellerTransfer.continue' | translate }}
+          </button>
+        }
+        @if (step === 2 && hasPermission('CREATE') && !pending?.requiresReview) {
+          <button mat-flat-button color="primary" (click)="confirm()" [disabled]="!canConfirm">
+            {{ (pending ? 'cashTellerTransfer.retry' : 'cashTellerTransfer.confirm') | translate }}
+          </button>
+        }
+        @if (step === 3 && result) {
+          @if (hasPermission('REPRINT')) {
+            <button mat-button (click)="printReceipt()" [disabled]="printing">
+              {{ (receipt ? 'cashTellerTransfer.reprint' : 'cashTellerTransfer.print') | translate }}
+            </button>
+          }
+          @if (hasPermission('CREATE')) {
+            <button mat-flat-button color="primary" (click)="cancel()" [disabled]="loading">
+              {{ 'cashTellerTransfer.new' | translate }}
+            </button>
+          }
+        }
+      </div>
+    </div>
+    @if (receipt) {
+      <section class="receipt">
+        <h2>{{ 'cashTellerTransfer.title' | translate }}</h2>
+        <mifosx-cash-transfer-summary [record]="receipt" />
+      </section>
+    }
+  </mat-card-content>
+</mat-card>

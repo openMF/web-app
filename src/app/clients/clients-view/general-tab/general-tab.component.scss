@@ -432,7 +432,7 @@
     background: var(--pr-savings);
   }
 
-  &.fixed {
+  &.fixed-deposit {
     background: var(--pr-fixed);
   }
 
@@ -454,7 +454,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 0;
+  min-width: min-content;
 }
 
 .acc-num {
@@ -562,7 +562,7 @@
   color: var(--pr-savings);
 }
 
-.product-type-chip.fixed {
+.product-type-chip.fixed-deposit {
   background: var(--pr-fixed-bg);
   color: var(--pr-fixed);
 }
@@ -575,6 +575,24 @@
 .product-type-chip.shares {
   background: var(--pr-shares-bg);
   color: var(--pr-shares);
+}
+
+.acc-external-id {
+  flex: 0 1 200px;
+  min-width: 0;
+}
+
+.acc-external-id-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+}
+
+.acc-external-id-value {
+  font-size: 12px;
+  color: var(--ch-text-2);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
 }
 
 .acc-product {
@@ -641,7 +659,7 @@
   color: var(--pr-savings);
 }
 
-.acc-balance-value.fixed {
+.acc-balance-value.fixed-deposit {
   color: var(--pr-fixed);
 }
 
@@ -698,6 +716,44 @@
   text-align: center;
   color: var(--ch-text-3);
   font-size: 13px;
+}
+
+// Keep every FD field in the card when the desktop columns no longer fit.
+@media (width <= 768px) {
+  .account-row.fixed-deposit {
+    display: grid;
+    grid-template-columns: 4px minmax(0, auto);
+    gap: 16px;
+
+    .indicator {
+      grid-column: 1;
+      grid-row: 1 / span 4;
+    }
+
+    .acc-identity,
+    .acc-product,
+    .acc-balance-block,
+    .acc-actions {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    .acc-status-row {
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      white-space: normal;
+    }
+
+    .acc-balance-block {
+      text-align: left;
+    }
+
+    .acc-actions {
+      justify-content: flex-start;
+    }
+  }
 }
 
 /* ── PDF modal preserved ────────────────────────────────────── */

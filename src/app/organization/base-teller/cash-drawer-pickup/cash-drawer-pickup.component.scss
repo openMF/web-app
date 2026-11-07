@@ -1,0 +1,86 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cash-pickup {
+  max-width: 1120px;
+  margin: 0 auto;
+
+  .selectors {
+    display: grid;
+    grid-template-columns: repeat(2, calc((100% - 16px) / 2));
+    gap: 16px;
+  }
+
+  .denomination {
+    display: grid;
+    grid-template-columns: repeat(3, calc((100% - 64px) / 6)) calc((100% - 64px) / 3) calc((100% - 64px) / 6);
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  .currency-panel {
+    margin-top: 24px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .totals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .error {
+    color: var(--mat-sys-error);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 16px 0;
+    position: sticky;
+    bottom: 0;
+    background: var(--mat-sys-surface, white);
+    z-index: 1;
+  }
+
+  .receipt {
+    margin-top: 24px;
+  }
+}
+
+@media (width <= 768px) {
+  .cash-pickup {
+    .selectors {
+      grid-template-columns: 100%;
+    }
+
+    .denomination {
+      grid-template-columns: repeat(2, calc((100% - 16px) / 2));
+    }
+
+    .headings {
+      display: none;
+    }
+  }
+}
+
+@media print {
+  .cash-pickup {
+    .workflow {
+      display: none;
+    }
+
+    box-shadow: none;
+  }
+}

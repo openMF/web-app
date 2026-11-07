@@ -120,7 +120,7 @@ export class GroupAttendanceComponent implements OnInit {
   ngOnInit() {
     this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
     this.meetingDates = this.groupData.collectionMeetingCalendar.recurringDates.filter(
-      (date: any) => new Date(date).getTime() < new Date().getTime()
+      (date: any) => !this.dateUtils.isAfter(this.dateUtils.parseDate(date), this.settingsService.businessDate)
     );
     this.getAttendanceOptions();
   }
@@ -172,11 +172,14 @@ export class GroupAttendanceComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevMeetingDate: Date = new Date(this.meetingDate.value);
+    const prevMeetingDate: Date = this.dateUtils.parseDate(this.meetingDate.value);
     const data = {
       meetingDate: this.dateUtils.formatDate(prevMeetingDate, dateFormat),
       calendarId: this.groupData.collectionMeetingCalendar.id,
-      clientsAttendance: this.dataSource,
+      clientsAttendance: this.dataSource.map((attendance: any) => ({
+        clientId: attendance.clientId,
+        attendanceType: { id: attendance.attendanceType }
+      })),
       dateFormat,
       locale
     };

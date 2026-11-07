@@ -31,15 +31,6 @@ import { AddChargePage } from '../../pages/charges/add-charge.page';
 const DUE_DATE = '15 January 2024';
 
 test.describe('Client charges · Add', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('adds a specified-due-date charge to a client', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     await ensureClientChargeDefinition(apiSetup);
     const client = await createActiveTestClient(apiSetup, cleanupGuard);

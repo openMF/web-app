@@ -59,7 +59,7 @@ export class WriteOffPageComponent extends LoanAccountActionsBaseComponent imple
   setWriteOffForm() {
     this.writeOffForm = this.formBuilder.group({
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       amount: [{ value: this.dataObject.amount, disabled: true }],

@@ -45,6 +45,7 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
 import { SystemService } from 'app/system/system.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
+import { Dates } from 'app/core/utils/dates';
 /**
  * Loans Account Details Step
  */
@@ -74,6 +75,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   private route = inject(ActivatedRoute);
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
   private commons = inject(Commons);
   private cdr = inject(ChangeDetectorRef);
   private systemService = inject(SystemService);
@@ -176,10 +178,10 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         fundId: this.loansAccountTemplate.fundId,
         submittedOnDate:
           this.loansAccountTemplate.timeline.submittedOnDate &&
-          new Date(this.loansAccountTemplate.timeline.submittedOnDate),
+          this.dateUtils.parseDate(this.loansAccountTemplate.timeline.submittedOnDate),
         expectedDisbursementDate:
           this.loansAccountTemplate.timeline.expectedDisbursementDate &&
-          new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
+          this.dateUtils.parseDate(this.loansAccountTemplate.timeline.expectedDisbursementDate),
         externalId: this.loansAccountTemplate.externalId
       });
       if (this.loansAccountTemplate.loanProductId) {

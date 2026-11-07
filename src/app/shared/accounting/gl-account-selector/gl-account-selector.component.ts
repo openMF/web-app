@@ -8,6 +8,7 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -42,6 +43,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
   private translateService = inject(TranslateService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   @Input() inputFormControl: UntypedFormControl;
   @Input() glAccountList: GLAccount[] = [];
@@ -64,6 +66,11 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
     // listen for search field value changes
     this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.searchGLAccount();
+    });
+
+    // refresh the clear button when the value is set from outside
+    this.inputFormControl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      this.changeDetectorRef.markForCheck();
     });
 
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
@@ -95,6 +102,12 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
         );
       }
     }
+  }
+
+  /** True when an account is selected; an account with ID 0 counts as selected. */
+  get hasValue(): boolean {
+    const value = this.inputFormControl.value;
+    return value !== null && value !== undefined && value !== '';
   }
 
   resetValue($event: Event): void {

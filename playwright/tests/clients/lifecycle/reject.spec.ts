@@ -25,15 +25,6 @@ const REJECTION_DATE = '02 January 2024';
 const REJECTION_REASON_NAME = 'E2E Reject Client Reason';
 
 test.describe('Client lifecycle · Reject (Pending → Rejected)', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('rejects a pending client from the client actions flow', async ({
     page,
     fineractApi,

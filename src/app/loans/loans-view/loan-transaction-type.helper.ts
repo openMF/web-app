@@ -15,6 +15,9 @@ import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.mode
  * responses do not always send them.
  */
 
+/** Id of the DISCOUNT_FEE transaction type in the Fineract catalogue. */
+const DISCOUNT_FEE_TYPE_ID = 44;
+
 export function isCapitalizedIncomeAmortizationTransaction(transactionType: LoanTransactionType): boolean {
   return (
     transactionType.capitalizedIncomeAmortization ||
@@ -59,5 +62,20 @@ export function isDiscountFeeKindTransaction(transactionType: LoanTransactionTyp
     transactionType.discountFee ||
     transactionType.code === 'loanTransactionType.discountFee' ||
     transactionType.code === 'loanTransactionType.discountFeeAdjustment'
+  );
+}
+
+/**
+ * Discount Fee itself, without its adjustment or the amortization members of
+ * the family. This is the transaction a Working Capital discount fee
+ * adjustment draws down, so it is matched on its own rather than through
+ * `isDiscountFeeKindTransaction`. The id backs up the flag and the code because
+ * Working Capital transaction payloads carry neither reliably.
+ */
+export function isDiscountFeeTransaction(transactionType: LoanTransactionType): boolean {
+  return (
+    transactionType.discountFee ||
+    transactionType.code === 'loanTransactionType.discountFee' ||
+    transactionType.id === DISCOUNT_FEE_TYPE_ID
   );
 }

@@ -95,7 +95,7 @@ export class EditTaxComponentComponent implements OnInit {
           Validators.max(100)
         ]
       ],
-      startDate: [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
+      startDate: [this.taxComponentData.startDate && this.dateUtils.parseDate(this.taxComponentData.startDate)],
       creditAccountType: [
         {
           value: creditAccountTypeValue,

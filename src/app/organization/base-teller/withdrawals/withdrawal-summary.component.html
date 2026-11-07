@@ -1,0 +1,144 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="withdrawal-summary">
+  <div class="amount-banner">
+    <div>
+      <span>{{ 'withdrawal.amount' | translate }}</span
+      ><strong>{{ record.currencyCode }} {{ record.amount | withdrawalMoney: record.account.decimalPlaces }}</strong>
+    </div>
+    <span class="record-status"
+      ><mat-icon aria-hidden="true">{{ record.status === 'COMPLETED' ? 'check_circle' : 'verified' }}</mat-icon
+      >{{ (record.status === 'COMPLETED' ? 'accountTransfer.COMPLETED' : 'withdrawal.validated') | translate }}</span
+    >
+  </div>
+  <dl class="record-details">
+    <div>
+      <dt>{{ 'withdrawal.customer' | translate }}</dt>
+      <dd>
+        {{ record.customer.displayName }}<small>{{ record.customer.clientNumber }}</small>
+      </dd>
+    </div>
+    <div>
+      <dt>{{ 'accountTransfer.accountNumber' | translate }}</dt>
+      <dd>
+        {{ record.account.accountNumber }}<small>{{ record.account.productName }}</small>
+      </dd>
+    </div>
+    <div>
+      <dt>{{ 'withdrawal.method' | translate }}</dt>
+      <dd>{{ 'cashInventory.types.' + record.method | translate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'accountTransfer.businessDate' | translate }}</dt>
+      <dd>{{ record.businessDate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'withdrawal.identificationType' | translate }}</dt>
+      <dd>{{ record.recipient.identificationType }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'withdrawal.identificationReference' | translate }}</dt>
+      <dd>{{ record.recipient.maskedReference }}</dd>
+    </div>
+    @if (record.id) {
+      <div>
+        <dt>{{ 'withdrawal.recordId' | translate }}</dt>
+        <dd>{{ record.id }}</dd>
+      </div>
+    }
+    @if (record.reference) {
+      <div>
+        <dt>{{ 'withdrawal.reference' | translate }}</dt>
+        <dd>{{ record.reference }}</dd>
+      </div>
+    }
+    @if (record.completedAt) {
+      <div>
+        <dt>{{ 'accountTransfer.completedAt' | translate }}</dt>
+        <dd>{{ record.completedAt }}</dd>
+      </div>
+    }
+    <div>
+      <dt>{{ 'accountTransfer.operator' | translate }}</dt>
+      <dd>{{ record.operatorName }}</dd>
+    </div>
+  </dl>
+  <section class="summary-section">
+    <h3>{{ 'cashTellerTransfer.breakdown' | translate }}</h3>
+    <table mat-table [dataSource]="record.denominations">
+      <ng-container matColumnDef="denomination"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'cashExchange.denomination' | translate }}</th>
+        <td mat-cell *matCellDef="let line">
+          {{ line.denominationValue | withdrawalMoney: record.account.decimalPlaces
+          }}<small>{{
+            (line.denominationType === 'COIN' ? 'cashTellerTransfer.coins' : 'cashTellerTransfer.bills') | translate
+          }}</small>
+        </td></ng-container
+      >
+      <ng-container matColumnDef="quantity"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'cashExchange.quantity' | translate }}</th>
+        <td mat-cell *matCellDef="let line">{{ line.quantity }}</td></ng-container
+      >
+      <ng-container matColumnDef="amount"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'cashExchange.amount' | translate }} ({{ record.currencyCode }})</th>
+        <td mat-cell *matCellDef="let line">
+          {{ line.lineAmount | withdrawalMoney: record.account.decimalPlaces }}
+        </td></ng-container
+      >
+      <tr mat-header-row *matHeaderRowDef="['denomination', 'quantity', 'amount']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['denomination', 'quantity', 'amount']"></tr>
+    </table>
+    <div class="summary-totals">
+      <p>
+        <span>{{ 'cashTellerTransfer.totalBills' | translate }}</span
+        ><strong
+          >{{ record.currencyCode }} {{ total('BANKNOTE') | withdrawalMoney: record.account.decimalPlaces }}</strong
+        >
+      </p>
+      <p>
+        <span>{{ 'cashTellerTransfer.totalCoins' | translate }}</span
+        ><strong>{{ record.currencyCode }} {{ total('COIN') | withdrawalMoney: record.account.decimalPlaces }}</strong>
+      </p>
+    </div>
+  </section>
+  <section class="summary-section">
+    <h3>{{ 'accountTransfer.general' | translate }}</h3>
+    <div class="financial-effects">
+      <div>
+        <span>{{ 'withdrawal.accountDebit' | translate }}</span
+        ><strong
+          >{{ record.currencyCode }} {{ record.accountDebit | withdrawalMoney: record.account.decimalPlaces }}</strong
+        >
+      </div>
+      <div>
+        <span>{{ 'withdrawal.physicalOutflow' | translate }}</span
+        ><strong
+          >{{ record.currencyCode }}
+          {{ record.physicalCashOutflow | withdrawalMoney: record.account.decimalPlaces }}</strong
+        >
+      </div>
+    </div>
+    <div class="flows">
+      <div>
+        <h4>{{ 'accountTransfer.inflows' | translate }}</h4>
+        @for (flow of record.inflowsByCurrency | keyvalue; track flow.key) {
+          <p>{{ flow.key }} {{ flow.value | withdrawalMoney: record.account.decimalPlaces }}</p>
+        } @empty {
+          <p>{{ 'withdrawal.noInflows' | translate }}</p>
+        }
+      </div>
+      <div>
+        <h4>{{ 'accountTransfer.outflows' | translate }}</h4>
+        @for (flow of record.outflowsByCurrency | keyvalue; track flow.key) {
+          <p>{{ flow.key }} {{ flow.value | withdrawalMoney: record.account.decimalPlaces }}</p>
+        }
+      </div>
+    </div>
+  </section>
+</div>

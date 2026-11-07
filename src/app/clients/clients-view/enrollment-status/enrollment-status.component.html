@@ -1,0 +1,95 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="enrollment-status mat-typography" aria-live="polite">
+  <header class="page-header">
+    <div>
+      <h2>{{ 'enrollmentStatus.title' | translate }}</h2>
+      <p>{{ 'enrollmentStatus.description' | translate }}</p>
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="state-message loading-state">
+      <mat-spinner diameter="32"></mat-spinner>
+      <span>{{ 'enrollmentStatus.loading' | translate }}</span>
+    </div>
+  } @else if (loadError) {
+    <div class="state-message error-state" role="alert">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ loadError | translate }}</span>
+    </div>
+  } @else if (!enrollmentCase) {
+    <div class="state-message empty-state">
+      <mat-icon>info_outline</mat-icon>
+      <span>{{ 'enrollmentStatus.empty' | translate }}</span>
+    </div>
+  } @else {
+    <mat-card class="progress-dashboard">
+      <mat-card-content>
+        <div class="progress-track" role="list" [attr.aria-label]="'enrollmentStatus.title' | translate">
+          @for (group of stageGroups(enrollmentCase); track group.id) {
+            <article
+              class="stage-node"
+              role="listitem"
+              [attr.data-stage]="group.id"
+              [ngClass]="groupVisualClass(group)"
+            >
+              <div class="stage-marker" aria-hidden="true">
+                <mat-icon>{{ groupIcon(group) }}</mat-icon>
+              </div>
+
+              <div class="stage-content">
+                <h3>{{ group.label | translate }}</h3>
+
+                @if (group.id === 'registration') {
+                  <p class="stage-secondary">{{ 'enrollmentStatus.stages.onboarding' | translate }}</p>
+                }
+                @if (group.id === 'kyc') {
+                  <p class="stage-secondary">
+                    {{ kycLevel(group) || 'enrollmentStatus.notAvailable' | translate }}
+                  </p>
+                }
+                @if (group.id === 'compliance') {
+                  <p class="stage-secondary">{{ 'enrollmentStatus.stages.documentValidation' | translate }}</p>
+                }
+                @if (showActiveCustomer(group)) {
+                  <p class="stage-secondary">{{ 'enrollmentStatus.stages.activeCustomer' | translate }}</p>
+                }
+
+                <p class="stage-status">
+                  <mat-icon aria-hidden="true">{{ groupIcon(group) }}</mat-icon>
+                  <span>{{ groupStatusLabel(group) | translate }}</span>
+                </p>
+
+                @if (groupAging(group); as aging) {
+                  <p class="elapsed-days">
+                    {{ 'enrollmentStatus.fields.days' | translate: { count: aging.days } }}
+                  </p>
+                }
+
+                @if (groupStartedAt(group); as startedAt) {
+                  <p class="stage-date">
+                    <span>{{ 'enrollmentStatus.fields.startedOn' | translate }}</span>
+                    <strong>{{ startedAt | dateFormat }}</strong>
+                  </p>
+                }
+                @if (groupCompletedAt(group); as completedAt) {
+                  <p class="stage-date">
+                    <span>{{ 'enrollmentStatus.fields.completedOn' | translate }}</span>
+                    <strong>{{ completedAt | dateFormat }}</strong>
+                  </p>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</section>

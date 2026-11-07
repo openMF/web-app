@@ -59,6 +59,11 @@ const activities: any[] = [
     path: '/organization/base-teller/savings-account-deposits',
     permission: 'DEPOSIT_SAVINGSACCOUNT'
   },
+  {
+    activity: 'creditPayment.heading.title',
+    path: '/organization/base-teller/credit-payments',
+    permission: 'READ_BASE_TELLER_CREDIT_PAYMENT'
+  },
   ...(environment.productionMode
     ? [
         {

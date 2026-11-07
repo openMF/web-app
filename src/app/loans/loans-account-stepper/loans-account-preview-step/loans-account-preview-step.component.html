@@ -9,12 +9,19 @@
 <div class="content responsive-column">
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
-  <div class="flex-fill">
-    <span class="flex-30">{{ 'labels.inputs.Client' | translate }}:</span>
-    <span class="flex-70">
-      {{ loansAccountProductTemplate.clientName || loansAccountProductTemplate.client.displayName }}
-    </span>
-  </div>
+  @if (loansAccountProductTemplate.clientName || loansAccountProductTemplate.client) {
+    <div class="flex-fill" data-testid="client-row">
+      <span class="flex-30">{{ 'labels.inputs.Client' | translate }}:</span>
+      <span class="flex-70">
+        {{ loansAccountProductTemplate.clientName || loansAccountProductTemplate.client.displayName }}
+      </span>
+    </div>
+  } @else if (loansAccountProductTemplate.group) {
+    <div class="flex-fill" data-testid="group-row">
+      <span class="flex-30">{{ 'labels.inputs.Group' | translate }}:</span>
+      <span class="flex-70">{{ loansAccountProductTemplate.group.name }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-30">{{ 'labels.inputs.Product Type' | translate }}:</span>
@@ -97,17 +104,40 @@
       </span>
     </div>
     <div class="flex-fill">
-      <span class="flex-30"
-        >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}:</span
-      >
-      <span class="flex-70">
-        {{
-          loansAccount.totalPaymentVolume
-            | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
-        }}
-        <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
-      </span>
+      <span class="flex-30">{{ 'labels.inputs.Payment Amount Calculation Strategy' | translate }}:</span>
+      <span class="flex-70">{{ paymentAmountCalculationStrategyOption?.value | translateKey: 'catalogs' }}</span>
     </div>
+    @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+      <div class="flex-fill">
+        <span class="flex-30"
+          >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}:</span
+        >
+        <span class="flex-70">
+          {{
+            loansAccount.totalPaymentVolume
+              | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
+          <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
+        </span>
+      </div>
+    }
+    @if (paymentAmountCalculationStrategy === wcStrategy.ANNUAL_EIR) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Annual EIR' | translate }}:</span>
+        <span class="flex-70">{{ loansAccount.annualEir | number: '1.0-6' }} %</span>
+      </div>
+    }
+    @if (paymentAmountCalculationStrategy === wcStrategy.PAYMENT_AMOUNT) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Payment Amount' | translate }}:</span>
+        <span class="flex-70">
+          {{
+            loansAccount.paymentAmount | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
+          <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
+        </span>
+      </div>
+    }
 
     @if (loansAccount.discount) {
       <div class="flex-fill">
@@ -119,25 +149,23 @@
       </div>
     }
 
-    @if (loansAccount.delinquencyGraceDays) {
-      <div class="flex-fill">
-        <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
-        <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
-      </div>
-    }
-
-    @if (loansAccount.delinquencyStartType) {
-      <div class="flex-fill">
-        <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
-        <span class="flex-60">{{ camalize(delinquencyStartTypeOption?.value) | translateKey: 'catalogs' }}</span>
-      </div>
-    }
-
     @if (loansAccount.delinquencyBucketId) {
       <div class="flex-fill">
         <span class="flex-30">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
         <span class="flex-60">{{ getDelinquencyBucket(loansAccount.delinquencyBucketId)?.name }}</span>
       </div>
+      @if (loansAccount.delinquencyGraceDays || loansAccount.delinquencyGraceDays === 0) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
+          <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
+        </div>
+      }
+      @if (loansAccount.delinquencyStartType) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
+          <span class="flex-60">{{ camalize(delinquencyStartTypeOption?.value) | translateKey: 'catalogs' }}</span>
+        </div>
+      }
     }
 
     @if (loansAccount.breachId) {
@@ -147,6 +175,12 @@
           ><mifosx-breach-display [singleRow]="false" [breach]="getBreach(loansAccount.breachId)"
         /></span>
       </div>
+      @if (loansAccount.breachStartType) {
+        <div class="flex-fill">
+          <span class="flex-30">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+          <span class="flex-60">{{ breachStartTypeOption?.value | translateKey: 'catalogs' }}</span>
+        </div>
+      }
     }
 
     @if (loansAccount.nearBreachId) {
@@ -158,10 +192,12 @@
       </div>
     }
 
-    <div class="flex-fill">
-      <span class="flex-30">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
-      <span class="flex-70"> {{ loansAccount.periodPaymentRate | formatNumber }} % </span>
-    </div>
+    @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
+        <span class="flex-70"> {{ loansAccount.periodPaymentRate | formatNumber }} % </span>
+      </div>
+    }
 
     <div class="flex-fill">
       <span class="flex-30">{{ 'labels.inputs.Period Payment Frequency' | translate }}:</span>
@@ -253,6 +289,17 @@
         }}</span
       >
     </div>
+
+    @if (isSemiMonthly(loansAccount.repaymentFrequencyType)) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.First repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loansAccount.firstRepaymentDayOfMonth }}</span>
+      </div>
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Second repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loansAccount.secondRepaymentDayOfMonth | semiMonthlyDay }}</span>
+      </div>
+    }
 
     @if (productEnableDownPayment) {
       <div class="flex-fill">
@@ -511,7 +558,7 @@
   <button mat-raised-button [routerLink]="['..']" [queryParams]="{ productType: loanProductService.productType.value }">
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submitEvent.emit()">
+  <button mat-raised-button color="primary" [disabled]="submitting" (click)="submitEvent.emit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

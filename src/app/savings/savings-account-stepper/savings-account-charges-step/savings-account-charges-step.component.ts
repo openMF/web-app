@@ -120,8 +120,14 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.savingsAccountTemplate) {
       if (!this.isChargesPatched && this.savingsAccountTemplate.charges) {
+        // An account charge holds the calculated amount in `amount`; the value entered for the charge
+        // (flat amount or percentage) is `amountOrPercentage`, which is what the form sends back.
         this.chargesDataSource =
-          this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+          this.savingsAccountTemplate.charges.map((charge: any) => ({
+            ...charge,
+            id: charge.chargeId,
+            amount: charge.amountOrPercentage ?? charge.amount
+          })) || [];
         this.isChargesPatched = true;
       } else {
         this.chargesDataSource = [];
@@ -132,8 +138,11 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.savingsAccountProductTemplate) {
       this.chargeData = this.savingsAccountProductTemplate.chargeOptions;
-      this.chargesDataSource =
-        this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      // When modifying an application, keep the charges loaded from the account in ngOnInit.
+      if (!this.isChargesPatched) {
+        this.chargesDataSource =
+          this.savingsAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      }
     }
   }
 

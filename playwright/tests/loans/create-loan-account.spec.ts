@@ -30,15 +30,6 @@ const SUBMITTED_ON_DATE = '03 January 2024';
 const EXPECTED_DISBURSEMENT_DATE = '03 January 2024';
 
 test.describe('Loan account · Create', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('creates a loan account from the client applications menu', async ({
     page,
     fineractApi,

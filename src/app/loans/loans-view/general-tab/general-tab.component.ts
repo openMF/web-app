@@ -56,7 +56,8 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
       this.currencyCode = this.loanDetails.currency.code;
       if (this.loanDetails.transactions) {
         this.hasChargeBack = this.loanDetails.transactions.some(
-          (transaction: any) => transaction.type.code === 'loanTransactionType.chargeback'
+          (transaction: any) =>
+            transaction.type.code === 'loanTransactionType.chargeback' && !transaction.manuallyReversed
         );
       }
     });
@@ -68,6 +69,10 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
 
   hasNumberOfRepayments(): boolean {
     return this.loanDetails.numberOfRepayments !== null && this.loanDetails.numberOfRepayments !== undefined;
+  }
+
+  has(value: unknown): boolean {
+    return value !== null && value !== undefined;
   }
 
   statusClass(): string {

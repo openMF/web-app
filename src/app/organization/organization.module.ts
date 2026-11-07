@@ -28,6 +28,7 @@ import { TellersComponent } from './tellers/tellers.component';
 import { ViewTellerComponent } from './tellers/view-teller/view-teller.component';
 import { SavingsAccountOpeningComponent } from './base-teller/savings-account-opening/savings-account-opening.component';
 import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -113,6 +114,7 @@ import { InvestorsComponent } from './investors/investors.component';
     ViewTellerComponent,
     SavingsAccountOpeningComponent,
     SavingsAccountDepositComponent,
+    CreditPaymentComponent,
     PaymentTypesComponent,
     EditPaymentTypeComponent,
     PasswordPreferencesComponent,

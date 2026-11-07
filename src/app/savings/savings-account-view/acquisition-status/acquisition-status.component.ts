@@ -17,10 +17,49 @@ import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { AcquisitionBoard } from '../../models/acquisition-board.model';
+import {
+  AcquisitionBoard,
+  AcquisitionStage,
+  AcquisitionStageCode,
+  AcquisitionStageStatus
+} from '../../models/acquisition-board.model';
 import { SavingsService } from '../../savings.service';
 
 type AcquisitionError = 'forbidden' | 'not-found' | 'generic';
+type AcquisitionStatusStyle = 'completed' | 'current' | 'pending' | 'error' | 'closed' | 'unknown';
+
+interface AcquisitionStatusPresentation {
+  style: AcquisitionStatusStyle;
+  icon: string;
+  translationKey: string;
+}
+
+const STAGE_ORDER: AcquisitionStageCode[] = [
+  'ONBOARDING',
+  'COMPLIANCE',
+  'APPROVAL',
+  'ACTIVATION',
+  'DEPOSIT',
+  'WITHDRAWAL'
+];
+
+const STATUS_PRESENTATION: Record<string, AcquisitionStatusPresentation> = {
+  COMPLETED: { style: 'completed', icon: 'check', translationKey: 'COMPLETED' },
+  CURRENT: { style: 'current', icon: 'autorenew', translationKey: 'CURRENT' },
+  PENDING: { style: 'pending', icon: 'schedule', translationKey: 'PENDING' },
+  BLOCKED: { style: 'error', icon: 'block', translationKey: 'BLOCKED' },
+  CANCELLED: { style: 'error', icon: 'cancel', translationKey: 'CANCELLED' },
+  CLOSED: { style: 'closed', icon: 'lock', translationKey: 'CLOSED' },
+  FAILED: { style: 'error', icon: 'error', translationKey: 'FAILED' },
+  REJECTED: { style: 'error', icon: 'cancel', translationKey: 'REJECTED' },
+  WITHDRAWN: { style: 'error', icon: 'undo', translationKey: 'WITHDRAWN' }
+};
+
+const UNKNOWN_STATUS_PRESENTATION: AcquisitionStatusPresentation = {
+  style: 'unknown',
+  icon: 'help_outline',
+  translationKey: 'UNKNOWN'
+};
 
 @Component({
   selector: 'mifosx-acquisition-status',
@@ -50,6 +89,16 @@ export class AcquisitionStatusComponent implements OnInit {
 
   private clientId: string | number;
   private savingsAccountId: string | number;
+
+  get stages(): AcquisitionStage[] {
+    if (!this.board) {
+      return [];
+    }
+
+    return STAGE_ORDER.map((code) => this.board?.stages.find((stage) => stage.code === code)).filter(
+      (stage): stage is AcquisitionStage => Boolean(stage)
+    );
+  }
 
   ngOnInit(): void {
     const accountData = this.route.parent?.snapshot.data['savingsAccountData'];
@@ -89,7 +138,19 @@ export class AcquisitionStatusComponent implements OnInit {
       });
   }
 
-  statusClass(status: string): string {
-    return `status-${status.toLowerCase().replace(/[^a-z0-9-]/g, '-')}`;
+  statusClass(status: AcquisitionStageStatus): string {
+    return `status-${this.statusPresentation(status).style}`;
+  }
+
+  statusIcon(status: AcquisitionStageStatus): string {
+    return this.statusPresentation(status).icon;
+  }
+
+  statusTranslationKey(status: AcquisitionStageStatus): string {
+    return this.statusPresentation(status).translationKey;
+  }
+
+  private statusPresentation(status: AcquisitionStageStatus): AcquisitionStatusPresentation {
+    return STATUS_PRESENTATION[status] ?? UNKNOWN_STATUS_PRESENTATION;
   }
 }

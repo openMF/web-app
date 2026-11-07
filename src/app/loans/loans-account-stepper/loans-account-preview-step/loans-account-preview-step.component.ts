@@ -39,6 +39,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { TranslatePipe } from '../../../pipes/translate.pipe';
+import { SemiMonthlyDayPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
@@ -46,6 +48,12 @@ import { LongTextComponent } from 'app/shared/long-text/long-text.component';
 import { Breach, DelinquencyBucket, NearBreach } from 'app/products/loan-products/models/loan-product.model';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
 import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 /**
  * Create Loans Account Preview Step
@@ -56,6 +64,7 @@ import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.
   styleUrls: ['./loans-account-preview-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    SemiMonthlyDayPipe,
     ExternalIdentifierComponent,
     MatDivider,
     MatTable,
@@ -82,6 +91,9 @@ import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent implements OnChanges {
+  /** Semi-monthly due days are only shown for that frequency; other products/loans may keep stale ones. */
+  readonly isSemiMonthly = isSemiMonthly;
+
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   /** Loans Account Product Template */
@@ -93,6 +105,8 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
   @Input() loanProductsBasicDetails: LoanProductBasicDetails[];
 
   /** Submit Loans Account */
+  /** Disables the submit button while the loans account is being created */
+  @Input() submitting = false;
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
@@ -127,6 +141,12 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
 
   repaymentFrequencyTypeOption: OptionData | null = null;
   delinquencyStartTypeOption: StringEnumOptionData | null = null;
+  breachStartTypeOption: StringEnumOptionData | null = null;
+  /** Working Capital: strategy inherited from the product, resolved from the template. */
+  paymentAmountCalculationStrategy: WorkingCapitalPaymentAmountCalculationStrategy =
+    WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY.TPV;
+  paymentAmountCalculationStrategyOption: StringEnumOptionData | null = null;
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
 
   constructor() {
     super();
@@ -153,6 +173,14 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
     }
     if (this.loanProductService.isWorkingCapital) {
       const options = this.loansAccountProductTemplate.options ?? {};
+      const product = this.loansAccountProductTemplate.product ?? {};
+      this.paymentAmountCalculationStrategy = resolvePaymentAmountCalculationStrategy(
+        product.paymentAmountCalculationStrategy
+      );
+      this.paymentAmountCalculationStrategyOption = this.stringEnumOptionDataLookUp(
+        this.paymentAmountCalculationStrategy,
+        product.paymentAmountCalculationStrategyOptions ?? WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS
+      );
       this.repaymentFrequencyTypeOption = this.optionDataLookUp(
         this.loansAccount?.repaymentFrequencyType,
         options.periodFrequencyTypeOptions ?? []
@@ -161,9 +189,14 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
         this.loansAccount?.delinquencyStartType,
         options.delinquencyStartTypeOptions ?? []
       );
+      this.breachStartTypeOption = this.stringEnumOptionDataLookUp(
+        this.loansAccount?.breachStartType,
+        options.breachStartTypeOptions ?? []
+      );
     } else {
       this.repaymentFrequencyTypeOption = null;
       this.delinquencyStartTypeOption = null;
+      this.breachStartTypeOption = null;
     }
   }
 

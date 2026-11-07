@@ -240,9 +240,8 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       ) {
         formfield.value = this.datatables.formatJsonValue(this.dataObject.data[0].row[columns[index].idx]);
       } else {
-        formfield.value = this.dataObject.data[0].row[columns[index].idx]
-          ? this.dataObject.data[0].row[columns[index].idx]
-          : '';
+        // Keep stored falsy values such as 0 and false; only missing values become empty.
+        formfield.value = this.dataObject.data[0].row[columns[index].idx] ?? '';
       }
       return formfield;
     });

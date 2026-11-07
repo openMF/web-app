@@ -69,7 +69,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
         genderId: this.data.member.genderId,
         professionId: this.data.member.professionId,
         maritalStatusId: this.data.member.maritalStatusId,
-        dateOfBirth: this.data.member.dateOfBirth && new Date(this.data.member.dateOfBirth)
+        dateOfBirth: this.data.member.dateOfBirth && this.dateUtils.parseDate(this.data.member.dateOfBirth)
       });
     }
 

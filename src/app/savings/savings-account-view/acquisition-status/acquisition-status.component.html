@@ -46,18 +46,27 @@
     </mat-card>
   } @else {
     <div class="stage-flow">
-      @for (stage of board?.stages; track stage.code; let last = $last) {
-        <article class="stage" [class.current-stage]="board?.currentStage === stage.code">
-          <div class="stage-marker" [ngClass]="statusClass(stage.status)">
-            @if (stage.status === 'COMPLETED') {
-              <mat-icon>check</mat-icon>
-            } @else {
-              <span>{{ $index + 1 }}</span>
-            }
+      @for (stage of stages; track stage.code; let last = $last) {
+        <article
+          class="stage"
+          [class.current-stage]="
+            board?.currentStage !== null && board?.currentStage !== undefined
+              ? board?.currentStage === stage.code
+              : stage.status === 'CURRENT'
+          "
+          [attr.aria-labelledby]="'acquisition-stage-' + stage.code"
+        >
+          <div
+            class="stage-marker"
+            [ngClass]="statusClass(stage.status)"
+            role="img"
+            [attr.aria-label]="'acquisition.statuses.' + statusTranslationKey(stage.status) | translate"
+          >
+            <mat-icon aria-hidden="true">{{ statusIcon(stage.status) }}</mat-icon>
           </div>
           <mat-card class="stage-card">
             <mat-card-content>
-              <h3>
+              <h3 [id]="'acquisition-stage-' + stage.code">
                 @switch (stage.code) {
                   @case ('ONBOARDING') {
                     {{ 'acquisition.stages.ONBOARDING' | translate }}
@@ -77,48 +86,18 @@
                   @case ('WITHDRAWAL') {
                     {{ 'acquisition.stages.WITHDRAWAL' | translate }}
                   }
-                  @default {
-                    {{ stage.name }}
-                  }
                 }
               </h3>
-              <p class="backend-stage-name">{{ stage.name }}</p>
-              <mat-chip [ngClass]="statusClass(stage.status)">
-                @switch (stage.status) {
-                  @case ('COMPLETED') {
-                    {{ 'acquisition.statuses.COMPLETED' | translate }}
-                  }
-                  @case ('CURRENT') {
-                    {{ 'acquisition.statuses.CURRENT' | translate }}
-                  }
-                  @case ('PENDING') {
-                    {{ 'acquisition.statuses.PENDING' | translate }}
-                  }
-                  @case ('BLOCKED') {
-                    {{ 'acquisition.statuses.BLOCKED' | translate }}
-                  }
-                  @case ('CANCELLED') {
-                    {{ 'acquisition.statuses.CANCELLED' | translate }}
-                  }
-                  @case ('CLOSED') {
-                    {{ 'acquisition.statuses.CLOSED' | translate }}
-                  }
-                  @case ('FAILED') {
-                    {{ 'acquisition.statuses.FAILED' | translate }}
-                  }
-                  @case ('REJECTED') {
-                    {{ 'acquisition.statuses.REJECTED' | translate }}
-                  }
-                  @case ('WITHDRAWN') {
-                    {{ 'acquisition.statuses.WITHDRAWN' | translate }}
-                  }
-                  @default {
-                    {{ stage.status }}
-                  }
-                }
+              <mat-chip [ngClass]="statusClass(stage.status)" [attr.data-status]="statusTranslationKey(stage.status)">
+                <mat-icon aria-hidden="true">{{ statusIcon(stage.status) }}</mat-icon>
+                {{ 'acquisition.statuses.' + statusTranslationKey(stage.status) | translate }}
               </mat-chip>
 
-              @if (board?.currentStage === stage.code) {
+              @if (
+                board?.currentStage !== null && board?.currentStage !== undefined
+                  ? board?.currentStage === stage.code
+                  : stage.status === 'CURRENT'
+              ) {
                 <p class="current-indicator">
                   <mat-icon>play_arrow</mat-icon>
                   {{ 'acquisition.currentStage' | translate }}
@@ -130,12 +109,6 @@
                   <dt>{{ 'acquisition.fields.completedOn' | translate }}</dt>
                   <dd>{{ stage.completedOn || ('acquisition.notAvailable' | translate) }}</dd>
                 </div>
-                @if (stage.details?.sourceStatus) {
-                  <div>
-                    <dt>{{ 'acquisition.fields.sourceStatus' | translate }}</dt>
-                    <dd>{{ stage.details?.sourceStatus }}</dd>
-                  </div>
-                }
                 @if (stage.details?.actorName) {
                   <div>
                     <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
@@ -148,12 +121,6 @@
                     <dd>{{ stage.details?.amount }} {{ stage.details?.currencyCode }}</dd>
                   </div>
                 }
-                @if (stage.details?.accountStatus) {
-                  <div>
-                    <dt>{{ 'acquisition.fields.accountStatus' | translate }}</dt>
-                    <dd>{{ stage.details?.accountStatus }}</dd>
-                  </div>
-                }
                 @if (stage.details?.reason) {
                   <div>
                     <dt>{{ 'acquisition.fields.reason' | translate }}</dt>
@@ -164,7 +131,7 @@
             </mat-card-content>
           </mat-card>
           @if (!last) {
-            <div class="connector" aria-hidden="true"></div>
+            <div class="connector" [class.connector-completed]="stage.status === 'COMPLETED'" aria-hidden="true"></div>
           }
         </article>
       }

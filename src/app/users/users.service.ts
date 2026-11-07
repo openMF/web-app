@@ -13,6 +13,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
+/** Active password policy returned by GET /passwordpreferences. */
+export interface ActivePasswordPolicy {
+  id: number;
+  description: string;
+  active: boolean;
+}
+
 /**
  * Users service.
  */
@@ -110,5 +117,16 @@ export class UsersService {
   getStaff(officeId: any): Observable<any> {
     const httpParams = new HttpParams().set('officeId', officeId.toString()).set('status', 'all');
     return this.http.get('/staff', { params: httpParams });
+  }
+
+  /**
+   * @returns {Observable<ActivePasswordPolicy>} The active password policy from Organization > Password Preferences.
+   */
+  getActivePasswordPolicy(): Observable<ActivePasswordPolicy> {
+    // The policy is only a hint on the form, and reading it needs READ_PASSWORD_PREFERENCES,
+    // which users who can create users may not have, so a failure must not raise the global alert.
+    const configurableHttp = this.http as HttpClient & { skipErrorHandler?: () => HttpClient };
+    const http = configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
+    return http.get<ActivePasswordPolicy>('/passwordpreferences');
   }
 }

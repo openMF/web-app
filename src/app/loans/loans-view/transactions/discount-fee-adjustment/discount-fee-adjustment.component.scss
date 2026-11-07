@@ -1,0 +1,38 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.container {
+  width: 37rem;
+  margin-top: 3%;
+  padding-bottom: 2%;
+}
+
+// The cap the backend enforces on the amount, stated before the field rather
+// than only as a validation error. Styled with opacity rather than a fixed
+// colour so it reads the same in both themes.
+.remaining-discount {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.submit-error {
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+// Angular Material declares `.mat-mdc-card-content { display: block }` with the
+// same specificity as the global `.layout-column` utility and injects it after
+// the global stylesheet, so the utility loses and the inline-flex form fields
+// flow side by side instead of stacking. Re-declaring it here wins: view
+// encapsulation adds the component attribute to the selector.
+.layout-column {
+  display: flex;
+}

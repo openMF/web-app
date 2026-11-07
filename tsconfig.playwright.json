@@ -15,7 +15,8 @@
   },
   "include": [
     "playwright/**/*.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "playwright.be01.config.ts"
   ],
   "exclude": [
     "node_modules",

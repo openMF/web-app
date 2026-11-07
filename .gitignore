@@ -74,3 +74,6 @@ src/environments/.env.ts
 
 docs/
 scripts/
+
+# Scaffold documents shared across openMF repositories: keep them as provided
+/SECURITY.md

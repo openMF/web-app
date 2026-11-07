@@ -45,12 +45,22 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
+    // A saved product returns its decimal places and multiples inside `currency`.
+    const currency = this.recurringDepositProductsTemplate.currency;
+    const isEditing =
+      this.recurringDepositProductsTemplate.id !== undefined && this.recurringDepositProductsTemplate.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.recurringDepositProductsTemplate.inMultiplesOf ?? '');
 
     this.recurringDepositProductCurrencyForm.patchValue({
-      currencyCode: this.recurringDepositProductsTemplate.currency?.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.recurringDepositProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.recurringDepositProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();

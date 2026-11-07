@@ -11,3 +11,79 @@
 /* Shared entity-list system: tokens + toolbar/rows/pager/empty state. */
 @include entity-list.tokens;
 @include entity-list.list;
+
+/* ── Status filter (compact outline select in the toolbar) ─── */
+.status-filter {
+  width: 168px;
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    background: var(--loan-surface);
+    border-radius: 6px;
+  }
+
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 36px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  ::ng-deep .mdc-notched-outline__leading,
+  ::ng-deep .mdc-notched-outline__notch,
+  ::ng-deep .mdc-notched-outline__trailing {
+    border-color: var(--loan-border);
+  }
+
+  ::ng-deep .mat-mdc-form-field-focus-overlay {
+    background: transparent;
+  }
+
+  ::ng-deep
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__leading,
+  ::ng-deep
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__notch,
+  ::ng-deep
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__trailing {
+    border-color: var(--loan-blue-700);
+  }
+
+  ::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__leading,
+  ::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__notch,
+  ::ng-deep
+    .mdc-text-field--focused:not(.mdc-text-field--disabled)
+    .mdc-notched-outline
+    .mdc-notched-outline__trailing {
+    border-color: var(--loan-blue-700);
+  }
+
+  ::ng-deep .mat-mdc-select-value-text {
+    color: var(--loan-text-1);
+    font-family: inherit;
+    font-size: 13px;
+  }
+
+  ::ng-deep .mat-mdc-select-arrow {
+    color: var(--loan-text-2);
+  }
+}
+
+/* Reset button shown next to the filter once a status is selected. */
+.status-filter-clear {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: var(--loan-surface-h);
+  color: var(--loan-text-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}

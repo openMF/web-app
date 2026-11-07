@@ -1,0 +1,223 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="closing-form">
+  <mat-card-content>
+    @if (error) {
+      <p class="form-error" role="alert">{{ error | translate }}</p>
+    }
+    @if (pending) {
+      <p role="status">{{ 'eod.loading' | translate }}</p>
+    }
+    @if (!result) {
+      <header class="form-header">
+        <h2>{{ 'eod.finalClosing' | translate }}</h2>
+      </header>
+      @if (context) {
+        <div class="context-grid">
+          <mat-form-field appearance="outline" class="cashier-field">
+            <mat-label>{{ 'eod.cashier' | translate }}</mat-label>
+            <mat-select [formControl]="cashier" (selectionChange)="changedCashier()" [disabled]="pending || confirming">
+              @for (item of context.cashiers; track item.cashierId) {
+                <mat-option [value]="item.cashierId" [disabled]="item.closed"
+                  >{{ item.cashierName }} · {{ item.tellerName }} · {{ item.officeName }}</mat-option
+                >
+              }
+            </mat-select>
+          </mat-form-field>
+          <div class="business-date-field">
+            <span class="field-label">{{ 'eod.businessDate' | translate }}</span>
+            <strong>{{ context.businessDate }}</strong>
+          </div>
+        </div>
+        @if (!cashier.value) {
+          <p>{{ 'eod.noCashier' | translate }}</p>
+        }
+        <div class="currency-grid">
+          @for (row of rows; track row.currency.currencyCode) {
+            <section class="currency-block" [attr.aria-label]="row.currency.currencyCode">
+              <header class="currency-header">
+                <h3>{{ row.currency.currencyCode }}</h3>
+                <span
+                  >{{ 'eod.declaredCash' | translate }} <strong>{{ cashTotal(row) }}</strong></span
+                >
+              </header>
+              @for (kind of kinds; track kind) {
+                <section class="denomination-section">
+                  <h4>{{ 'eod.' + kind | translate }}</h4>
+                  <div
+                    class="denomination-table"
+                    role="table"
+                    [attr.aria-label]="('eod.' + kind | translate) + ' ' + row.currency.currencyCode"
+                  >
+                    <div class="denomination-heading denomination-row" role="row">
+                      <span role="columnheader">{{ 'eod.denomination' | translate }}</span>
+                      <span role="columnheader">{{ 'eod.quantity' | translate }}</span>
+                      <span role="columnheader">{{ 'eod.amount' | translate }}</span>
+                    </div>
+                    @for (d of lines(row, kind); track d.denominationId) {
+                      <div class="denomination-row" role="row">
+                        <span role="cell">{{ displayDenomination(d.value) }}</span>
+                        <mat-form-field appearance="outline" subscriptSizing="dynamic" role="cell">
+                          <mat-label>{{ 'eod.quantity' | translate }} · {{ displayDenomination(d.value) }}</mat-label>
+                          <input
+                            matInput
+                            type="number"
+                            min="0"
+                            step="1"
+                            [formControl]="quantity(row, d)"
+                            [readonly]="pending || confirming"
+                            [attr.data-denomination]="d.denominationId"
+                          />
+                          <mat-error>{{ 'eod.invalidDeclaration' | translate }}</mat-error>
+                        </mat-form-field>
+                        <span class="line-amount" role="cell">{{ amount(row, d) }}</span>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
+              <div class="currency-totals">
+                <div class="total-row">
+                  <span>{{ 'eod.coinTotal' | translate }}</span
+                  ><strong>{{ cashTotal(row, 'COIN') }}</strong>
+                </div>
+                <div class="total-row">
+                  <span>{{ 'eod.billTotal' | translate }}</span
+                  ><strong>{{ cashTotal(row, 'BILL') }}</strong>
+                </div>
+                <div class="total-row total-cash">
+                  <span>{{ 'eod.declaredCash' | translate }}</span
+                  ><strong>{{ cashTotal(row) }}</strong>
+                </div>
+                <div class="total-row">
+                  <span>{{ 'eod.selectedChecks' | translate }}</span
+                  ><strong>{{ checkTotal(row) }}</strong>
+                </div>
+                <mat-form-field appearance="outline" class="voucher-field">
+                  <mat-label>{{ 'eod.vouchers' | translate }}</mat-label>
+                  <input
+                    matInput
+                    inputmode="decimal"
+                    [formControl]="row.vouchers"
+                    [readonly]="pending || confirming"
+                    [attr.data-vouchers]="row.currency.currencyCode"
+                  />
+                  <mat-error>{{ 'eod.invalidDeclaration' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </section>
+          }
+        </div>
+        <div class="actions">
+          <div class="action-summary" aria-live="polite">
+            @for (row of rows; track row.currency.currencyCode) {
+              <div class="action-summary-row">
+                <strong>{{ row.currency.currencyCode }}</strong
+                ><span>{{ 'eod.declaredCash' | translate }} {{ cashTotal(row) }}</span
+                ><span>{{ 'eod.selectedChecks' | translate }} {{ checkTotal(row) }}</span
+                ><span>{{ 'eod.vouchers' | translate }} {{ row.vouchers.value }}</span>
+              </div>
+            }
+          </div>
+          <div class="action-buttons">
+            <button mat-button (click)="selectChecks()" [disabled]="pending || confirming || !cashier.value">
+              {{ 'eod.selectChecks' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="preview()"
+              [disabled]="pending || confirming || !valid || !hasPermission('CREATE')"
+            >
+              {{ 'eod.continue' | translate }}
+            </button>
+          </div>
+        </div>
+        @if (context.completedClosingIds.length) {
+          <section class="previous-closings">
+            <h3>{{ 'eod.previous' | translate }}</h3>
+            @for (id of context.completedClosingIds; track id) {
+              <button mat-button (click)="retrieve(id)" [disabled]="pending">
+                {{ 'eod.viewClosing' | translate }} {{ id }}
+              </button>
+            }
+          </section>
+        }
+      }
+      <button mat-button class="refresh-action" (click)="load()" [disabled]="pending || confirming">
+        {{ 'eod.refresh' | translate }}
+      </button>
+    } @else {
+      <div class="success-view">
+        <h2>{{ 'eod.success' | translate }}</h2>
+        <p>{{ 'eod.reference' | translate }}: {{ result.reference }}</p>
+        <p>{{ 'eod.completedAt' | translate }}: {{ result.completedAt }}</p>
+        <p>{{ 'eod.status' | translate }}: {{ 'eod.' + result.status | translate }}</p>
+        <mifosx-closing-summary [record]="result" />
+        <div class="success-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="printReport()"
+            [disabled]="pending || !hasPermission('REPRINT')"
+          >
+            {{ (printed ? 'eod.reprint' : 'eod.print') | translate }}
+          </button>
+          <button mat-button (click)="load()" [disabled]="pending">{{ 'eod.refresh' | translate }}</button>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
+@if (report) {
+  <section class="closing-report">
+    <h1>{{ 'eod.title' | translate }}</h1>
+    <p>{{ 'eod.reference' | translate }}: {{ report.reference }}</p>
+    <p>{{ 'eod.cashier' | translate }}: {{ report.cashierName }} · {{ report.tellerName }}</p>
+    <p>{{ 'eod.office' | translate }}: {{ report.officeName }}</p>
+    <p>{{ 'eod.businessDate' | translate }}: {{ report.businessDate }}</p>
+    <p>{{ 'eod.completedAt' | translate }}: {{ report.completedAt }}</p>
+    <p>{{ 'eod.authorizedBy' | translate }}: {{ report.authorizedByUsername }}</p>
+    <mifosx-closing-summary [record]="report" />
+    @for (balance of report.balancesByCurrency; track balance.currencyCode) {
+      <h2>{{ balance.currencyCode }}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ 'eod.type' | translate }}</th>
+            <th>{{ 'eod.denomination' | translate }}</th>
+            <th>{{ 'eod.quantity' | translate }}</th>
+            <th>{{ 'eod.amount' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of balance.denominations; track d.denominationId) {
+            <tr>
+              <td>{{ (d.type === 'COIN' ? 'eod.COIN' : 'eod.BILL') | translate }}</td>
+              <td>{{ d.value }}</td>
+              <td>{{ d.quantity }}</td>
+              <td>{{ d.amount }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p>
+        {{ 'eod.billTotal' | translate }}: {{ balance.billTotal }} · {{ 'eod.coinTotal' | translate }}:
+        {{ balance.coinTotal }}
+      </p>
+      <h3>{{ 'eod.selectedChecks' | translate }}</h3>
+      @for (check of balance.checks; track check.source + ':' + check.id) {
+        <p>
+          {{ check.date }} · {{ check.bank }} · {{ check.reference }} · {{ check.currencyCode }} {{ check.amount }} ·
+          {{ check.username }} · {{ check.cashierId }}
+        </p>
+      }
+    }
+  </section>
+}

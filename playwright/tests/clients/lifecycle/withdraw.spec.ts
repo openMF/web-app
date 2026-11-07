@@ -25,15 +25,6 @@ const WITHDRAWAL_DATE = '02 January 2024';
 const WITHDRAWAL_REASON_NAME = 'E2E Withdraw Client Reason';
 
 test.describe('Client lifecycle · Withdraw (Pending → Withdrawn)', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('withdraws a pending client from the client actions flow', async ({
     page,
     fineractApi,

@@ -61,13 +61,27 @@ describe('ViewTransactionComponent', () => {
    * Builds the component against stubbed collaborators. The gates run in the
    * constructor, so they are already resolved when it returns.
    * @param transactionData The resolved transaction
-   * @param options Loan status code and product flavour
+   * @param options Loan status code, product flavour and loan level fields
    */
   function createComponent(
     transactionData: any = transaction(2),
-    options: { loanStatusCode?: string; isWorkingCapital?: boolean } = {}
+    options: {
+      loanStatusCode?: string;
+      isWorkingCapital?: boolean;
+      loanScheduleTypeCode?: string;
+      loanDetails?: any;
+    } = {}
   ): ViewTransactionComponent {
-    const { loanStatusCode = 'loanStatusType.active', isWorkingCapital = false } = options;
+    const {
+      loanStatusCode = 'loanStatusType.active',
+      isWorkingCapital = false,
+      loanScheduleTypeCode = 'PROGRESSIVE',
+      loanDetails
+    } = options;
+    const loanDetailsAssociationData = loanDetails ?? {
+      status: { code: loanStatusCode },
+      loanScheduleType: { code: loanScheduleTypeCode }
+    };
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -75,7 +89,7 @@ describe('ViewTransactionComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({ loansAccountTransaction: transactionData }),
-            parent: { data: of({ loanDetailsAssociationData: { status: { code: loanStatusCode } } }) },
+            parent: { data: of({ loanDetailsAssociationData }) },
             snapshot: { params: { loanId: '1', clientId: '5' } }
           }
         },
@@ -97,7 +111,14 @@ describe('ViewTransactionComponent', () => {
           provide: SettingsService,
           useValue: { businessDate: new Date(2026, 5, 10), dateFormat: 'dd MMMM yyyy', language: { code: 'en' } }
         },
-        { provide: Dates, useValue: { formatDate: () => '01 June 2026' } }
+        {
+          provide: Dates,
+          useValue: {
+            formatDate: () => '01 June 2026',
+            parseDate: (value: any) =>
+              Array.isArray(value) ? new Date(value[0], value[1] - 1, value[2]) : new Date(value)
+          }
+        }
       ]
     });
 
@@ -140,6 +161,20 @@ describe('ViewTransactionComponent', () => {
       expect(component.allowEdition).toBe(false);
     });
 
+    it('offers only the reversal on a chargeback of a progressive loan', () => {
+      const component = createComponent(transaction(25));
+
+      expect(component.allowUndo).toBe(true);
+      expect(component.allowEdition).toBe(false);
+    });
+
+    it('offers no action on a chargeback of a cumulative loan', () => {
+      const component = createComponent(transaction(25), { loanScheduleTypeCode: 'CUMULATIVE' });
+
+      expect(component.allowUndo).toBe(false);
+      expect(component.allowEdition).toBe(false);
+    });
+
     it('offers no action on an interest refund', () => {
       const component = createComponent(transaction(33));
 
@@ -170,11 +205,20 @@ describe('ViewTransactionComponent', () => {
       expect(component.adjustPermission).toBe('ADJUST_WORKINGCAPITALLOAN');
     });
 
-    it('offers no adjustment on the Working Capital types the adjust command only reverses', () => {
+    it('offers the adjustment on every repayment like Working Capital type', () => {
       [
         22,
         23,
         26
+      ].forEach((typeId) => {
+        expect(createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true }).allowEdition).toBe(true);
+      });
+    });
+
+    it('offers no adjustment on the Working Capital types the adjust command rejects', () => {
+      [
+        1,
+        9
       ].forEach((typeId) => {
         expect(createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true }).allowEdition).toBe(false);
       });
@@ -186,6 +230,69 @@ describe('ViewTransactionComponent', () => {
       });
 
       expect(component.allowEdition).toBe(false);
+    });
+
+    it('offers the adjustment by difference on every Working Capital type its command accepts', () => {
+      [
+        2,
+        22,
+        23,
+        26
+      ].forEach((typeId) => {
+        const component = createComponent(workingCapitalTransaction(typeId), { isWorkingCapital: true });
+
+        expect(component.allowAdjustByDelta).toBe(true);
+        expect(component.adjustByDeltaPermission).toBe('ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION');
+      });
+    });
+
+    it('offers no adjustment by difference on a rejected type, a reversed transaction or a Term Loan', () => {
+      expect(createComponent(workingCapitalTransaction(44), { isWorkingCapital: true }).allowAdjustByDelta).toBe(false);
+      expect(
+        createComponent(workingCapitalTransaction(2, { reversed: true }), { isWorkingCapital: true }).allowAdjustByDelta
+      ).toBe(false);
+      expect(createComponent(transaction(2)).allowAdjustByDelta).toBe(false);
+    });
+  });
+
+  describe('Discount Fee Adjustment', () => {
+    /** A Working Capital discount fee with a pool left to draw down. */
+    const openDiscountFee = {
+      loanStatusCode: 'loanStatusType.active',
+      isWorkingCapital: true,
+      loanDetails: { status: { code: 'loanStatusType.active', active: true }, discountFee: 400 }
+    };
+
+    it('offers the adjustment on a Working Capital discount fee', () => {
+      const component = createComponent(transaction(44), openDiscountFee);
+
+      expect(component.allowDiscountFeeAdjustment).toBe(true);
+      // It is its own command, not a flavour of adjust, which the backend
+      // rejects for this type.
+      expect(component.allowEdition).toBe(false);
+    });
+
+    it('offers nothing once the discount pool is exhausted', () => {
+      const component = createComponent(transaction(44), {
+        ...openDiscountFee,
+        loanDetails: { status: { code: 'loanStatusType.active', active: true }, discountFee: 0 }
+      });
+
+      expect(component.allowDiscountFeeAdjustment).toBe(false);
+    });
+
+    it('offers nothing on a Term Loan, which has no such command', () => {
+      const component = createComponent(transaction(44), {
+        loanDetails: { status: { code: 'loanStatusType.active', active: true }, discountFee: 400 }
+      });
+
+      expect(component.allowDiscountFeeAdjustment).toBe(false);
+    });
+
+    it('offers nothing on a Working Capital repayment', () => {
+      const component = createComponent(transaction(2), openDiscountFee);
+
+      expect(component.allowDiscountFeeAdjustment).toBe(false);
     });
   });
 

@@ -1,0 +1,370 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container fx-workspace" [attr.aria-busy]="busy">
+  <mat-card class="fx-shell"
+    ><mat-card-content>
+      <header class="fx-header">
+        <div class="fx-heading">
+          <span class="fx-icon"><mat-icon aria-hidden="true">currency_exchange</mat-icon></span>
+          <div>
+            <a class="fx-eyebrow" routerLink="/organization/base-teller">{{ 'fx.baseTeller' | translate }}</a>
+            <h1>{{ 'fx.title' | translate }}</h1>
+            <p>{{ 'fx.workspaceHint' | translate }}</p>
+          </div>
+        </div>
+        <button mat-stroked-button type="button" (click)="reload()" [disabled]="busy">
+          <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'fx.refresh' | translate }}
+        </button>
+      </header>
+      @if (busy) {
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'fx.loading' | translate" />
+        <p class="fx-loading" role="status">{{ 'fx.loading' | translate }}</p>
+      }
+      @if (error && context) {
+        <div class="fx-alert" role="alert">
+          <mat-icon aria-hidden="true">error_outline</mat-icon>
+          <p>{{ error | translate }}</p>
+        </div>
+      }
+      @if (!context && !busy) {
+        <section class="fx-setup">
+          <span class="fx-setup-icon"><mat-icon aria-hidden="true">point_of_sale</mat-icon></span>
+          <h2>{{ 'fx.drawerSetup' | translate }}</h2>
+          @if (error) {
+            <p role="alert">{{ error | translate }}</p>
+          }
+          <p class="fx-muted">{{ 'fx.drawerHint' | translate }}</p>
+          <div class="fx-actions">
+            <a mat-raised-button color="primary" routerLink="/organization/base-teller/cash-allocations"
+              ><mat-icon aria-hidden="true">account_balance_wallet</mat-icon>{{ 'fx.openDrawer' | translate }}</a
+            ><a mat-button routerLink="/organization/base-teller">{{ 'fx.baseTeller' | translate }}</a>
+          </div>
+        </section>
+      }
+      @if (context) {
+        <dl class="fx-context">
+          <div>
+            <dt>{{ 'fx.branch' | translate }}</dt>
+            <dd>{{ context.cashier.officeName }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.teller' | translate }}</dt>
+            <dd>
+              {{ context.cashier.cashierName }}<small>{{ context.cashier.tellerName }}</small>
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.businessDate' | translate }}</dt>
+            <dd>{{ context.businessDate | date: 'mediumDate' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.nationalCurrency' | translate }}</dt>
+            <dd>
+              <span class="fx-badge">{{ context.nationalCurrency ?? ('fx.policyPending' | translate) }}</span>
+            </dd>
+          </div>
+        </dl>
+        <mifosx-fx-policy [capabilities]="context.capabilities" />
+        <div class="fx-layout">
+          <div class="fx-flow">
+            <section class="fx-panel">
+              <div class="fx-section-heading">
+                <span class="fx-step">01</span>
+                <h2>{{ 'fx.customerSearch' | translate }}</h2>
+                <mat-icon aria-hidden="true">person_search</mat-icon>
+              </div>
+              <form [formGroup]="search" (ngSubmit)="searchCustomers()">
+                <div class="fx-search-row">
+                  <mat-form-field appearance="outline"
+                    ><mat-label>{{ 'fx.searchBy' | translate }}</mat-label
+                    ><mat-select formControlName="field"
+                      ><mat-option value="clientNumber">{{ 'fx.clientNumber' | translate }}</mat-option
+                      ><mat-option value="name" [disabled]="true">{{
+                        'fx.customerName' | translate
+                      }}</mat-option></mat-select
+                    ></mat-form-field
+                  >
+                  <mat-form-field appearance="outline"
+                    ><mat-label>{{ 'fx.customerSearch' | translate }}</mat-label
+                    ><input matInput formControlName="value" maxlength="100" required [readonly]="busy || !canSearch"
+                  /></mat-form-field>
+                  <button mat-stroked-button type="submit" [disabled]="busy || !canSearch || search.invalid">
+                    <mat-icon aria-hidden="true">search</mat-icon>{{ 'fx.search' | translate }}
+                  </button>
+                </div>
+              </form>
+              @if (searched && !customers.length) {
+                <p role="status" class="fx-muted">{{ 'fx.empty' | translate }}</p>
+              }
+              <div class="fx-customer-results">
+                @for (c of customers; track c.id) {
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="selectCustomer(c)"
+                    [disabled]="busy || !c.active"
+                    [class.fx-selected]="customer?.id === c.id"
+                  >
+                    <mat-icon aria-hidden="true">{{
+                      customer?.id === c.id ? 'check_circle' : 'person_outline'
+                    }}</mat-icon
+                    >{{ c.number }} · {{ c.displayName }}
+                    @if (!c.active) {
+                      · {{ 'fx.inactive' | translate }}
+                    }
+                  </button>
+                }
+              </div>
+              @if (searched && totalCustomers > 25) {
+                <div class="fx-actions">
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="searchCustomers(customerOffset - 25)"
+                    [disabled]="busy || customerOffset === 0"
+                  >
+                    {{ 'fx.previous' | translate }}</button
+                  ><button
+                    mat-button
+                    type="button"
+                    (click)="searchCustomers(customerOffset + 25)"
+                    [disabled]="busy || customerOffset + 25 >= totalCustomers"
+                  >
+                    {{ 'fx.next' | translate }}
+                  </button>
+                </div>
+              }
+              @if (customer) {
+                <div class="fx-selected-customer" role="status">
+                  <mat-icon aria-hidden="true">verified_user</mat-icon>
+                  <div>
+                    <small>{{ 'fx.customer' | translate }}</small
+                    ><strong>{{ customer.displayName }}</strong
+                    ><span>{{ customer.number }}</span>
+                  </div>
+                </div>
+              }
+            </section>
+            <section class="fx-panel">
+              <div class="fx-section-heading">
+                <span class="fx-step">02</span>
+                <h2>{{ 'fx.tradeDetails' | translate }}</h2>
+                <span class="fx-badge">{{ 'fx.readOnly' | translate }}</span>
+              </div>
+              <mat-tab-group (selectedIndexChange)="switchMode($event)"
+                ><mat-tab [label]="'fx.purchase' | translate" [disabled]="busy"></mat-tab
+                ><mat-tab [label]="'fx.sale' | translate" [disabled]="busy"></mat-tab
+              ></mat-tab-group>
+              <p class="fx-direction">
+                <mat-icon aria-hidden="true">swap_horiz</mat-icon
+                >{{ (operation === 'PURCHASE' ? 'fx.purchaseDirection' : 'fx.saleDirection') | translate }}
+              </p>
+              @if (!canPreview) {
+                <p role="status" class="fx-alert">{{ 'fx.previewForbidden' | translate }}</p>
+              }
+              <form [formGroup]="form" (ngSubmit)="previewTrade()">
+                <fieldset [disabled]="busy || !canPreview" [attr.inert]="busy || !canPreview ? '' : null">
+                  <div class="fx-fields">
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.candidateDraft' | translate }}</mat-label
+                      ><mat-select formControlName="rateDraftId" (selectionChange)="selectRate()" required>
+                        @for (draft of context.rateDrafts; track draft.id) {
+                          <mat-option [value]="draft.id"
+                            >USD/{{ draft.quoteCurrency }} · {{ 'fx.version' | translate }} {{ draft.version }} ·
+                            {{ 'fx.draft' | translate }}</mat-option
+                          >
+                        }
+                      </mat-select></mat-form-field
+                    >
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.usdAmount' | translate }}</mat-label
+                      ><input matInput formControlName="usdAmount" inputmode="decimal" required /><mat-error>{{
+                        'fx.invalidAmount' | translate
+                      }}</mat-error></mat-form-field
+                    >
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.reference' | translate }}</mat-label
+                      ><input matInput formControlName="reference" maxlength="100" required
+                    /></mat-form-field>
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.identifier' | translate }}</mat-label
+                      ><input
+                        matInput
+                        formControlName="identifierId"
+                        inputmode="numeric"
+                        [required]="operation === 'PURCHASE'"
+                      /><mat-hint>{{ 'fx.identifierHint' | translate }}</mat-hint
+                      ><mat-error>{{ 'fx.identificationInvalid' | translate }}</mat-error></mat-form-field
+                    >
+                  </div>
+                  @if (!context.rateDrafts.length) {
+                    <p role="status">{{ 'fx.noDraft' | translate }}</p>
+                  }
+                  <div class="fx-section-heading fx-denomination-heading">
+                    <span class="fx-step">03</span>
+                    <h2>{{ 'fx.denominations' | translate }}</h2>
+                  </div>
+                  <div class="fx-cash-grid">
+                    @for (leg of ['usd', 'quote']; track leg) {
+                      <section class="fx-cash-panel">
+                        <h3>
+                          {{ 'fx.denominations' | translate }} ·
+                          {{ leg === 'usd' ? 'USD' : form.controls.quoteCurrency.value }} ·
+                          {{
+                            ((operation === 'PURCHASE') === (leg === 'usd') ? 'fx.inflow' : 'fx.outflow') | translate
+                          }}
+                        </h3>
+                        @if (!(leg === 'usd' ? usd : quote).length) {
+                          <p>{{ 'fx.noDenominations' | translate }}</p>
+                        }
+                        <div
+                          class="fx-table"
+                          role="region"
+                          [attr.aria-label]="
+                            ('fx.denominations' | translate) +
+                            ' ' +
+                            (leg === 'usd' ? 'USD' : form.controls.quoteCurrency.value)
+                          "
+                          tabindex="0"
+                        >
+                          <table mat-table [dataSource]="leg === 'usd' ? usd : quote">
+                            <ng-container matColumnDef="type"
+                              ><th mat-header-cell *matHeaderCellDef>{{ 'fx.type' | translate }}</th>
+                              <td mat-cell *matCellDef="let d">
+                                {{
+                                  (d.type === 'BILL' || d.type === 'NOTE' || d.type === 'BANKNOTE'
+                                    ? 'fx.bills'
+                                    : d.type === 'COIN'
+                                      ? 'fx.coins'
+                                      : 'fx.cash'
+                                  ) | translate
+                                }}
+                              </td></ng-container
+                            >
+                            <ng-container matColumnDef="value"
+                              ><th mat-header-cell *matHeaderCellDef>{{ 'fx.value' | translate }}</th>
+                              <td mat-cell *matCellDef="let d">
+                                {{ d.value | withdrawalMoney: (leg === 'usd' ? usdPrecision : quotePrecision) }}
+                                {{ d.currencyCode }}
+                              </td></ng-container
+                            >
+                            <ng-container matColumnDef="available"
+                              ><th mat-header-cell *matHeaderCellDef>{{ 'fx.available' | translate }}</th>
+                              <td mat-cell *matCellDef="let d">{{ d.availableQuantity }}</td></ng-container
+                            >
+                            <ng-container matColumnDef="quantity"
+                              ><th mat-header-cell *matHeaderCellDef>{{ 'fx.quantity' | translate }}</th>
+                              <td mat-cell *matCellDef="let d; let i = index">
+                                <mat-form-field
+                                  ><mat-label
+                                    >{{ 'fx.quantity' | translate }} ·
+                                    {{ d.value | withdrawalMoney: (leg === 'usd' ? usdPrecision : quotePrecision) }}
+                                    {{ d.currencyCode }}</mat-label
+                                  ><input
+                                    matInput
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    [formControl]="
+                                      (leg === 'usd'
+                                        ? form.controls.usdDenominations
+                                        : form.controls.quoteDenominations
+                                      ).at(i)
+                                    "
+                                  /><mat-error>{{ 'fx.invalidCash' | translate }}</mat-error></mat-form-field
+                                >
+                              </td></ng-container
+                            >
+                            <tr mat-header-row *matHeaderRowDef="['type', 'value', 'available', 'quantity']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['type', 'value', 'available', 'quantity']"></tr>
+                          </table>
+                        </div>
+                      </section>
+                    }
+                  </div>
+
+                  <div class="fx-form-footer">
+                    <p class="fx-muted">{{ 'fx.calculationPending' | translate }}</p>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="submit"
+                      [disabled]="busy || !canPreview || form.invalid || !customer || !usd.length || !quote.length"
+                    >
+                      <mat-icon aria-hidden="true">visibility</mat-icon>{{ 'fx.preview' | translate }}
+                    </button>
+                  </div>
+                </fieldset>
+              </form>
+            </section>
+          </div>
+          <aside class="fx-panel fx-summary">
+            <div class="fx-section-heading">
+              <mat-icon aria-hidden="true">receipt_long</mat-icon>
+              <h2>{{ 'fx.generalPreview' | translate }}</h2>
+            </div>
+            @if (candidate) {
+              <dl class="fx-summary-list">
+                <div>
+                  <dt>{{ 'fx.pair' | translate }}</dt>
+                  <dd>{{ candidate.baseCurrency }}/{{ candidate.quoteCurrency }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'fx.version' | translate }}</dt>
+                  <dd>
+                    {{ candidate.version }}<span class="fx-badge">{{ 'fx.draft' | translate }}</span>
+                  </dd>
+                </div>
+              </dl>
+            }
+            @if (preview) {
+              <section class="fx-preview-result" role="status">
+                <mat-icon aria-hidden="true">task_alt</mat-icon>
+                <p>{{ 'fx.incompletePreview' | translate }}</p>
+                <p>
+                  {{ preview.reference }} · {{ preview.businessDate }} · {{ 'fx.version' | translate }}
+                  {{ preview.candidateRateDraft.version }}
+                </p>
+                @for (cash of [preview.usdCash, preview.quoteCash]; track cash.currencyCode) {
+                  <p>
+                    {{ (cash.direction === 'INFLOW' ? 'fx.inflow' : 'fx.outflow') | translate }} ·
+                    {{ cash.currencyCode }}
+                    {{
+                      cash.denominationTotal
+                        | withdrawalMoney: (cash.currencyCode === 'USD' ? usdPrecision : quotePrecision)
+                    }}
+                  </p>
+                }
+                @if (
+                  preview.valuationValidated &&
+                  preview.appliedRate !== null &&
+                  preview.calculatedNationalAmount !== null
+                ) {
+                  <p>
+                    {{ 'fx.exchangeRate' | translate }}: {{ preview.appliedRate | withdrawalMoney: 12 }} ·
+                    {{ preview.nationalCurrency }}
+                    {{ preview.calculatedNationalAmount | withdrawalMoney: quotePrecision }}
+                  </p>
+                } @else {
+                  <p>{{ 'fx.calculationPending' | translate }}</p>
+                }
+                <p>{{ 'fx.executionUnavailable' | translate }}</p>
+              </section>
+            } @else {
+              <div class="fx-preview-empty">
+                <mat-icon aria-hidden="true">receipt_long</mat-icon>
+                <p>{{ 'fx.calculationPending' | translate }}</p>
+              </div>
+            }
+          </aside>
+        </div>
+      }
+    </mat-card-content></mat-card
+  >
+</div>

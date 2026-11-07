@@ -105,12 +105,12 @@ export class BusinessDateTabComponent implements OnInit {
     this.systemService.getBusinessDates().subscribe((businessDateData: any) => {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
-          this.businessDate = new Date(data.date);
+          this.businessDate = this.dateUtils.parseDate(data.date);
           this.businessDateForm.patchValue({
             businessDate: this.businessDate
           });
         } else {
-          this.cobDate = new Date(data.date);
+          this.cobDate = this.dateUtils.parseDate(data.date);
           this.businessDateForm.patchValue({
             cobDate: this.cobDate
           });

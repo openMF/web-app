@@ -1,0 +1,239 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container fx-workspace" [attr.aria-busy]="busy">
+  <mat-card class="fx-shell"
+    ><mat-card-content>
+      <header class="fx-header">
+        <div class="fx-heading">
+          <span class="fx-icon"><mat-icon aria-hidden="true">currency_exchange</mat-icon></span>
+          <div>
+            <a class="fx-eyebrow" routerLink="/organization">{{ 'fx.organization' | translate }}</a>
+            <h1>{{ 'fx.ratesTitle' | translate }}</h1>
+            <p>{{ 'fx.draftOnly' | translate }}</p>
+          </div>
+        </div>
+        <button mat-stroked-button type="button" (click)="reload()" [disabled]="busy">
+          <mat-icon aria-hidden="true">refresh</mat-icon>{{ 'fx.refresh' | translate }}
+        </button>
+      </header>
+      @if (busy) {
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'fx.loading' | translate" />
+        <p class="fx-loading" role="status">{{ 'fx.loading' | translate }}</p>
+      }
+      @if (error) {
+        <div class="fx-alert" role="alert">
+          <mat-icon aria-hidden="true">error_outline</mat-icon>
+          <p>{{ error | translate }}</p>
+        </div>
+      }
+      @if (context) {
+        <dl class="fx-context">
+          <div>
+            <dt>{{ 'fx.branch' | translate }}</dt>
+            <dd>{{ branchName }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.businessDate' | translate }}</dt>
+            <dd>{{ context.businessDate | date: 'mediumDate' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.nationalCurrency' | translate }}</dt>
+            <dd>
+              <span class="fx-badge">{{ context.nationalCurrency ?? ('fx.policyPending' | translate) }}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'fx.drafts' | translate }}</dt>
+            <dd>{{ drafts.length }}</dd>
+          </div>
+        </dl>
+        <mifosx-fx-policy [capabilities]="context.capabilities" [administration]="true" />
+
+        <div class="fx-layout fx-admin-layout">
+          <section class="fx-panel">
+            <div class="fx-section-heading">
+              <span class="fx-step">01</span>
+              <h2>{{ 'fx.tradeDetails' | translate }}</h2>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="previewDraft()">
+              <fieldset [disabled]="busy" [attr.inert]="busy ? '' : null">
+                <div class="fx-fields">
+                  <mat-form-field appearance="outline"
+                    ><mat-label>{{ 'fx.branch' | translate }}</mat-label
+                    ><mat-select formControlName="officeId" required>
+                      @for (branch of context.branches; track branch.id) {
+                        <mat-option [value]="branch.id">{{ branch.name }}</mat-option>
+                      }
+                    </mat-select></mat-form-field
+                  >
+                  <mat-form-field appearance="outline"
+                    ><mat-label>{{ 'fx.effectiveDate' | translate }}</mat-label
+                    ><input matInput type="date" formControlName="effectiveDate" required
+                  /></mat-form-field>
+                  <mat-form-field appearance="outline"
+                    ><mat-label>{{ 'fx.quoteCurrency' | translate }}</mat-label
+                    ><mat-select formControlName="quoteCurrency" required>
+                      @for (currency of context.currencies; track currency.code) {
+                        @if (currency.code !== 'USD') {
+                          <mat-option [value]="currency.code">{{ currency.code }} · {{ currency.name }}</mat-option>
+                        }
+                      }
+                    </mat-select></mat-form-field
+                  >
+                </div>
+                <button
+                  mat-stroked-button
+                  type="button"
+                  (click)="load()"
+                  [disabled]="busy || !form.controls.officeId.valid || !form.controls.effectiveDate.valid"
+                >
+                  {{ 'fx.loadDrafts' | translate }}
+                </button>
+                @if (canManage) {
+                  <h2>{{ 'fx.draft' | translate }} · USD</h2>
+                  <div class="fx-fields">
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.dailyBaseRate' | translate }}</mat-label
+                      ><input matInput inputmode="decimal" formControlName="dailyBaseRate" required /><mat-error>{{
+                        'fx.invalidRate' | translate
+                      }}</mat-error></mat-form-field
+                    >
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.buyPoints' | translate }}</mat-label
+                      ><input matInput inputmode="decimal" formControlName="buyPoints" required /><mat-error>{{
+                        'fx.invalidRate' | translate
+                      }}</mat-error></mat-form-field
+                    >
+                    <mat-form-field appearance="outline"
+                      ><mat-label>{{ 'fx.sellPoints' | translate }}</mat-label
+                      ><input matInput inputmode="decimal" formControlName="sellPoints" required /><mat-error>{{
+                        'fx.invalidRate' | translate
+                      }}</mat-error></mat-form-field
+                    >
+                  </div>
+                  <button mat-raised-button type="submit" [disabled]="busy || form.invalid">
+                    {{ 'fx.previewDraft' | translate }}
+                  </button>
+                }
+              </fieldset>
+            </form>
+            @if (preview) {
+              <section class="fx-review" role="status">
+                <h2>{{ 'fx.reviewDraft' | translate }}</h2>
+                <p>
+                  {{ preview.effectiveDate }} · {{ preview.baseCurrency }}/{{ preview.quoteCurrency }} ·
+                  {{ preview.dailyBaseRate | withdrawalMoney: 12 }}
+                </p>
+                @for (change of preview.changes; track change.branch.id) {
+                  <p>
+                    {{ change.branch.name }} · {{ 'fx.version' | translate }}: {{ change.previous?.version ?? 0 }} →
+                    {{ change.proposed.expectedVersion + 1 }}
+                  </p>
+                  <p>
+                    {{ 'fx.buyPoints' | translate }}: {{ change.proposed.buyPoints | withdrawalMoney: 12 }} ·
+                    {{ 'fx.sellPoints' | translate }}: {{ change.proposed.sellPoints | withdrawalMoney: 12 }}
+                  </p>
+                }
+                <p>{{ 'fx.draftOnly' | translate }}</p>
+                <button mat-raised-button type="button" (click)="confirmDraft()" [disabled]="busy || !canManage">
+                  {{ 'fx.confirmDraft' | translate }}
+                </button>
+              </section>
+            }
+            @if (saved) {
+              <p class="fx-success" role="status">{{ 'fx.draftSaved' | translate }}</p>
+            }
+          </section>
+          <section class="fx-panel">
+            <div class="fx-section-heading">
+              <span class="fx-step">02</span>
+              <h2>{{ 'fx.drafts' | translate }}</h2>
+              <mat-icon aria-hidden="true">history</mat-icon>
+            </div>
+            @if (!busy && !drafts.length) {
+              <p>{{ 'fx.empty' | translate }}</p>
+            }
+            <div class="fx-table" role="region" [attr.aria-label]="'fx.drafts' | translate" tabindex="0">
+              <table mat-table [dataSource]="drafts">
+                <ng-container matColumnDef="branch"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'fx.branch' | translate }}</th>
+                  <td mat-cell *matCellDef="let d">{{ d.officeName }} · {{ d.effectiveDate }}</td></ng-container
+                >
+                <ng-container matColumnDef="pair"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'fx.pair' | translate }}</th>
+                  <td mat-cell *matCellDef="let d">{{ d.baseCurrency }}/{{ d.quoteCurrency }}</td></ng-container
+                >
+                <ng-container matColumnDef="version"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'fx.version' | translate }}</th>
+                  <td mat-cell *matCellDef="let d">{{ d.version }} · {{ 'fx.draft' | translate }}</td></ng-container
+                >
+                <ng-container matColumnDef="review"
+                  ><th mat-header-cell *matHeaderCellDef>{{ 'fx.review' | translate }}</th>
+                  <td mat-cell *matCellDef="let d">
+                    <button mat-button type="button" (click)="inspect(d)" [disabled]="busy">
+                      {{ 'fx.review' | translate }} #{{ d.id }}
+                    </button>
+                  </td></ng-container
+                >
+                <tr mat-header-row *matHeaderRowDef="['branch', 'pair', 'version', 'review']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['branch', 'pair', 'version', 'review']"></tr>
+              </table>
+            </div>
+            <button mat-button (click)="load(offset - 100)" [disabled]="busy || offset === 0">
+              {{ 'fx.previous' | translate }}
+            </button>
+            <button mat-button (click)="load(offset + 100)" [disabled]="busy || drafts.length < 100">
+              {{ 'fx.next' | translate }}
+            </button>
+          </section>
+        </div>
+        <section class="fx-panel fx-audit-panel">
+          @if (selected) {
+            <h2>
+              {{ 'fx.draft' | translate }} #{{ selected.id }} · {{ 'fx.version' | translate }} {{ selected.version }}
+            </h2>
+            <p>
+              {{ selected.officeName }} · {{ selected.effectiveDate }} · {{ selected.baseCurrency }}/{{
+                selected.quoteCurrency
+              }}
+            </p>
+            <p>
+              {{ 'fx.dailyBaseRate' | translate }}: {{ selected.dailyBaseRate | withdrawalMoney: 12 }} ·
+              {{ 'fx.buyPoints' | translate }}: {{ selected.buyPoints | withdrawalMoney: 12 }} ·
+              {{ 'fx.sellPoints' | translate }}: {{ selected.sellPoints | withdrawalMoney: 12 }}
+            </p>
+            <p>
+              {{ 'fx.createdBy' | translate }}: {{ selected.createdBy }} · {{ selected.createdAt | date: 'medium' }}
+            </p>
+            <h2>{{ 'fx.audit' | translate }}</h2>
+            @if (!audit.length && !busy) {
+              <p>{{ 'fx.empty' | translate }}</p>
+            }
+            @for (row of audit; track row.id) {
+              <section class="fx-audit-entry">
+                <h3>#{{ row.draftId }} · {{ row.proposed.officeName }} · {{ row.proposed.effectiveDate }}</h3>
+                <p>
+                  {{ 'fx.version' | translate }}: {{ row.previous?.version ?? 0 }} → {{ row.proposed.version }} ·
+                  {{ 'fx.draftConfirmed' | translate }}
+                </p>
+                <p>{{ 'fx.createdBy' | translate }}: {{ row.operatorId }} · {{ row.recordedAt | date: 'medium' }}</p>
+                @for (field of changedFields(row); track field) {
+                  <p>
+                    {{ 'fx.' + field | translate }}: {{ auditValue(row, field, true) | withdrawalMoney: 12 }} →
+                    {{ auditValue(row, field) | withdrawalMoney: 12 }}
+                  </p>
+                }
+              </section>
+            }
+          }
+        </section>
+      }
+    </mat-card-content></mat-card
+  >
+</div>

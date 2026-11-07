@@ -1,0 +1,158 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="cash-pickup">
+  <mat-card-content>
+    <div class="workflow">
+      <h2>{{ 'cashPickup.title' | translate }}</h2>
+      @if (loading || checksLoading || busy) {
+        <p role="status">{{ 'cashPickup.loading' | translate }}</p>
+      }
+      @if (error) {
+        <p role="alert" class="error">{{ error | translate }}</p>
+      }
+      @if (result) {
+        <section aria-live="polite">
+          <h2>{{ 'cashPickup.success' | translate }}</h2>
+          <mifosx-pickup-summary [record]="result" />
+          <button
+            mat-raised-button
+            (click)="printReceipt()"
+            [disabled]="printing || !context?.permissions?.includes('REPRINT')"
+          >
+            {{ (receipt ? 'cashPickup.reprint' : 'cashPickup.print') | translate }}
+          </button>
+        </section>
+      }
+      @if (pendingPickup; as pending) {
+        <section aria-live="polite">
+          <p role="status">{{ 'cashPickup.retryHint' | translate }}</p>
+          <mifosx-pickup-summary [record]="pending.preview" />
+          <button mat-raised-button color="primary" (click)="resume()" [disabled]="busy">
+            {{ 'cashPickup.continue' | translate }}
+          </button>
+        </section>
+      } @else if (context) {
+        <form [formGroup]="form" (ngSubmit)="finish()">
+          <div class="selectors">
+            <mat-form-field>
+              <mat-label>{{ 'cashPickup.source' | translate }}</mat-label>
+              <mat-select formControlName="cashierId" required>
+                @for (source of context.sourceCashiers; track source.cashierId) {
+                  <mat-option [value]="source.cashierId">{{ source.cashierName }} · {{ source.tellerName }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ 'cashPickup.destination' | translate }}</mat-label>
+              <mat-select formControlName="destinationCashierId" required>
+                @for (destination of destinations; track destination.cashierId) {
+                  <mat-option [value]="destination.cashierId"
+                    >{{ destination.cashierName }} · {{ destination.tellerName }}</mat-option
+                  >
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <p>{{ 'cashPickup.businessDate' | translate }}: {{ context.businessDate }}</p>
+          @if (!context.sourceCashiers.length || !destinations.length) {
+            <p role="status">{{ 'cashPickup.noDrawers' | translate }}</p>
+          }
+          @for (row of rows; track row.currencyCode) {
+            <section class="currency-panel">
+              <h3>{{ 'cashPickup.currency' | translate }}: {{ row.currencyCode }}</h3>
+              <mat-table [dataSource]="row.denominations" [attr.aria-label]="row.currencyCode">
+                <ng-container matColumnDef="denomination">
+                  <mat-header-cell *matHeaderCellDef>{{ 'cashPickup.denomination' | translate }}</mat-header-cell>
+                  <mat-cell *matCellDef="let line">{{ line.value }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                  <mat-header-cell *matHeaderCellDef>{{ 'cashPickup.type' | translate }}</mat-header-cell>
+                  <mat-cell *matCellDef="let line">{{
+                    (line.type === 'COIN' ? 'cashPickup.coins' : 'cashPickup.bills') | translate
+                  }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="available">
+                  <mat-header-cell *matHeaderCellDef>{{ 'cashPickup.available' | translate }}</mat-header-cell>
+                  <mat-cell *matCellDef="let line"
+                    >{{ 'cashPickup.available' | translate }}: {{ line.availableQuantity }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="quantity">
+                  <mat-header-cell *matHeaderCellDef>{{ 'cashPickup.quantity' | translate }}</mat-header-cell>
+                  <mat-cell *matCellDef="let line; let i = index">
+                    <mat-form-field>
+                      <mat-label
+                        >{{ 'cashPickup.quantity' | translate }} · {{ line.value }} {{ row.currencyCode }}</mat-label
+                      >
+                      <input
+                        matInput
+                        type="number"
+                        min="0"
+                        step="1"
+                        [max]="line.availableQuantity"
+                        [formControl]="row.quantities.at(i)"
+                        [readonly]="busy"
+                        [attr.data-denomination]="line.denominationId"
+                        [attr.data-currency]="row.currencyCode"
+                      />
+                      @if (row.quantities.at(i).invalid) {
+                        <mat-error>{{ 'cashPickup.invalidQuantity' | translate }}</mat-error>
+                      }
+                    </mat-form-field>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                  <mat-header-cell *matHeaderCellDef>{{ 'cashPickup.amount' | translate }}</mat-header-cell>
+                  <mat-cell *matCellDef="let line; let i = index"
+                    >{{ 'cashPickup.amount' | translate }}: {{ amount(row, i) }}</mat-cell
+                  >
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columns" class="denomination headings" />
+                <mat-row *matRowDef="let line; columns: columns" class="denomination" />
+              </mat-table>
+              <div class="totals" aria-live="polite">
+                <p>{{ 'cashPickup.totalBills' | translate }}: {{ total(row, 'BILL') }}</p>
+                <p>{{ 'cashPickup.totalCoins' | translate }}: {{ total(row, 'COIN') }}</p>
+                <p>{{ 'cashPickup.totalCash' | translate }}: {{ total(row) }}</p>
+                <p>{{ 'cashPickup.totalChecks' | translate }}: {{ total(row, 'CHECK') }}</p>
+                <p>
+                  <strong>{{ 'cashPickup.total' | translate }}: {{ total(row, 'TOTAL') }}</strong>
+                </p>
+              </div>
+            </section>
+          }
+          <div class="actions">
+            <button mat-button type="button" (click)="reload()" [disabled]="busy || loading">
+              {{ 'cashPickup.refresh' | translate }}
+            </button>
+            <button
+              mat-button
+              type="button"
+              (click)="selectChecks()"
+              [disabled]="busy || loading || checksLoading || !form.controls.cashierId.value"
+            >
+              {{ 'cashPickup.selectChecks' | translate }} ({{ selected.length }})
+            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!canContinue">
+              {{ 'cashPickup.continue' | translate }}
+            </button>
+          </div>
+        </form>
+      } @else if (!loading && !pendingPickup) {
+        <button mat-button (click)="reload()">{{ 'cashPickup.refresh' | translate }}</button>
+      }
+    </div>
+    @if (receipt) {
+      <section class="receipt">
+        <h2>{{ 'cashPickup.title' | translate }}</h2>
+        <mifosx-pickup-summary [record]="receipt" [details]="true" />
+      </section>
+    }
+  </mat-card-content>
+</mat-card>

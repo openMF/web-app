@@ -22,3 +22,33 @@
     margin-top: 1em;
   }
 }
+
+.sheet-container {
+  max-width: 73rem;
+  margin: 24px auto 0;
+  padding: 24px;
+
+  table {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  tr.selected {
+    background-color: rgb(0 0 0 / 4%);
+  }
+}
+
+.alert {
+  background-color: rgb(253 236 234);
+  padding: 8px 16px;
+  border-radius: 4px;
+
+  .message {
+    padding: 8px 0;
+  }
+
+  .alert-check {
+    color: #f44336;
+    margin-right: 8px;
+  }
+}

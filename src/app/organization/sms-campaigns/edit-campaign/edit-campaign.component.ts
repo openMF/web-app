@@ -119,7 +119,7 @@ export class EditCampaignComponent {
     };
     if (this.smsCampaign.triggerType.id === 2) {
       smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(
-        new Date(this.smsCampaign.recurrenceStartDate),
+        this.dateUtils.parseDate(this.smsCampaign.recurrenceStartDate),
         dateTimeFormat
       );
     }

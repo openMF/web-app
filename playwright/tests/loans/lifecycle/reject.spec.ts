@@ -24,15 +24,6 @@ const SUBMITTED_ON_DATE = '03 January 2024';
 const REJECTED_ON_DATE = '04 January 2024';
 
 test.describe('Loan lifecycle · Reject', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('rejects a pending loan', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const loan = await createTestLoan(apiSetup, cleanupGuard, client.resourceId, {

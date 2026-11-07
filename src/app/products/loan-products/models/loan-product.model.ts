@@ -63,6 +63,10 @@ export interface LoanProduct {
   maxNumberOfRepayments?: number;
   repaymentEvery: number;
   repaymentFrequencyType: OptionData;
+  /** First due day (1–27) of a semi-monthly product. */
+  firstRepaymentDayOfMonth?: number;
+  /** Second due day (2–31, after the first) of a semi-monthly product; 31 means the last day of the month. */
+  secondRepaymentDayOfMonth?: number;
   minimumDaysBetweenDisbursalAndFirstRepayment?: number;
   interestRatePerPeriod: number;
   interestRateFrequencyType: OptionData;
@@ -121,6 +125,7 @@ export interface LoanProduct {
   advancedPaymentAllocationTypes: OptionData[];
   creditAllocationTransactionTypes: OptionData[];
   creditAllocationAllocationTypes: OptionData[];
+  creditAllocationStrategyOptions?: OptionData[];
   multiDisburseLoan: boolean;
   maxTrancheCount: number;
   allowFullTermForTranche: boolean;
@@ -191,10 +196,28 @@ export interface LoanProduct {
   writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
 
   // Working Capital attributes
+  delinquencyStartType?: StringEnumOptionData | null;
+  delinquencyStartTypeOptions?: StringEnumOptionData[];
+  breachStartType?: StringEnumOptionData | null;
+  breachStartTypeOptions?: StringEnumOptionData[];
   breach?: Breach;
   breachId?: number;
   nearBreach?: NearBreach;
   nearBreachId?: number;
+  /** TPV (default) | ANNUAL_EIR | PAYMENT_AMOUNT. Option object on GET, enum name on POST/PUT. */
+  paymentAmountCalculationStrategy?: StringEnumOptionData | string | null;
+  paymentAmountCalculationStrategyOptions?: StringEnumOptionData[];
+  periodPaymentRate?: number | null;
+  minPeriodPaymentRate?: number | null;
+  maxPeriodPaymentRate?: number | null;
+  /** Contractual annual EIR (%), up to 6 decimals. Only under ANNUAL_EIR. */
+  annualEir?: number | null;
+  minAnnualEir?: number | null;
+  maxAnnualEir?: number | null;
+  paymentAmount?: number | null;
+  minPaymentAmount?: number | null;
+  maxPaymentAmount?: number | null;
+  discount?: number | null;
 }
 
 export interface AllowAttributeOverrides {

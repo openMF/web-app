@@ -32,6 +32,8 @@ import { EditLoansAccountComponent } from './edit-loans-account/edit-loans-accou
 import { ViewChargeComponent } from './loans-view/view-charge/view-charge.component';
 import { ViewTransactionComponent } from './loans-view/transactions/view-transaction/view-transaction.component';
 import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
+import { DiscountFeeAdjustmentComponent } from './loans-view/transactions/discount-fee-adjustment/discount-fee-adjustment.component';
+import { WorkingCapitalDiscountFeeAdjustmentTemplateResolver } from './common-resolvers/working-capital/discount-fee-adjustment-template.resolver';
 import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/view-reciept.component';
 import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
 import { GlimAccountComponent } from './glim-account/glim-account.component';
@@ -409,6 +411,24 @@ const routes: Routes = [
             path: 'edit',
             component: EditTransactionComponent,
             data: { breadcrumb: 'Adjust', routeParamBreadcrumb: false },
+            resolve: {
+              loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
+            }
+          },
+          {
+            path: 'discount-fee-adjustment',
+            component: DiscountFeeAdjustmentComponent,
+            data: { breadcrumb: 'Discount Fee Adjustment', routeParamBreadcrumb: false },
+            resolve: {
+              discountFeeAdjustmentTemplate: WorkingCapitalDiscountFeeAdjustmentTemplateResolver
+            }
+          },
+          {
+            // Working Capital only: same form, but the amount is the signed
+            // difference and the delta based adjustment command is posted.
+            path: 'adjust-by-delta',
+            component: EditTransactionComponent,
+            data: { breadcrumb: 'Adjust by Difference', routeParamBreadcrumb: false, adjustMode: 'delta' },
             resolve: {
               loansAccountTransactionTemplate: LoansAccountTransactionTemplateResolver
             }

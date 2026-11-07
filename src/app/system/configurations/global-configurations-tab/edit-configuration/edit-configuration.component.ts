@@ -83,7 +83,7 @@ export class EditConfigurationComponent implements OnInit {
       description: [{ value: this.configuration.description, disabled: true }],
       value: [this.configuration.value],
       stringValue: [this.configuration.stringValue],
-      dateValue: [this.configuration.dateValue]
+      dateValue: [this.configuration.dateValue ? this.dateUtils.parseDate(this.configuration.dateValue) : null]
     });
   }
 

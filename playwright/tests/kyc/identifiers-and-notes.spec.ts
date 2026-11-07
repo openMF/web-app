@@ -39,15 +39,6 @@ test.describe('Client KYC · Identifiers', () => {
   // actually needs rather than forcing the click.
   test.use({ viewport: { width: 1280, height: 1080 } });
 
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('adds an identifier and lists it in the table', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const documentKey = `E2E-ID-${Date.now()}`;
@@ -93,15 +84,6 @@ test.describe('Client KYC · Identifiers', () => {
 });
 
 test.describe('Client KYC · Notes', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('adds a note through the inline form', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const noteText = `E2E note ${Date.now()}`;

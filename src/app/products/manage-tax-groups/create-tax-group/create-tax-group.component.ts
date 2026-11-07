@@ -188,7 +188,7 @@ export class CreateTaxGroupComponent implements OnInit {
       }),
       new DatepickerBase({
         controlName: 'startDate',
-        value: taxComponent.startDate ? new Date(taxComponent.startDate) : new Date(),
+        value: taxComponent.startDate ? this.dateUtils.parseDate(taxComponent.startDate) : new Date(),
         label: 'Start Date',
         minDate: this.minDate,
         maxDate: this.maxDate,

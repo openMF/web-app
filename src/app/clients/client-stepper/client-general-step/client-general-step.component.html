@@ -222,10 +222,24 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Mobile No' | translate }}</mat-label>
-      <input matInput type="text" formControlName="mobileNo" />
-    </mat-form-field>
+    <div class="mobile-number-group flex-48">
+      <mat-form-field class="mobile-code-field">
+        <mat-label>{{ 'labels.inputs.Code' | translate }}</mat-label>
+        <mat-select formControlName="mobileNoCountryCode" [attr.aria-label]="'labels.inputs.Country Code' | translate">
+          <mat-option value="">{{ 'labels.catalogs.None' | translate }}</mat-option>
+          @for (country of countryCallingCodes; track country.isoCode) {
+            <mat-option [value]="country.isoCode">
+              {{ 'countries.' + country.isoCode | translate }} ({{ country.dialCode }})
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mobile-number-field">
+        <mat-label>{{ 'labels.inputs.Mobile No' | translate }}</mat-label>
+        <input matInput type="text" formControlName="mobileNo" />
+      </mat-form-field>
+    </div>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Email Address' | translate }}</mat-label>

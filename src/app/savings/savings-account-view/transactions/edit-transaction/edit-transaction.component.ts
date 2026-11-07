@@ -95,9 +95,9 @@ export class EditTransactionComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createEditTransactionForm();
     this.editTransactionForm.patchValue({
-      transactionDate: this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
+      transactionDate: this.transactionTemplateData.date && this.dateUtils.parseDate(this.transactionTemplateData.date),
       transactionAmount: this.transactionTemplateData.amount,
-      paymentTypeId: this.transactionTemplateData.paymentTypeId
+      paymentTypeId: this.transactionTemplateData.paymentDetailData?.paymentType?.id ?? ''
     });
   }
 

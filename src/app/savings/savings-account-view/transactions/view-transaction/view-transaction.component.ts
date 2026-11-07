@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -66,6 +66,7 @@ export class ViewTransactionComponent {
   private router = inject(Router);
   dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Savings account data resolved from the transaction detail route. */
   savingsAccountData: any;
@@ -91,6 +92,7 @@ export class ViewTransactionComponent {
         }
         this.accountId = this.getRouteParam('savingAccountId') || '';
         this.entityDatatables = data.transactionDatatables;
+        this.changeDetectorRef.markForCheck();
       });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';

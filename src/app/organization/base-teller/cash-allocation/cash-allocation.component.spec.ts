@@ -176,6 +176,29 @@ describe('CashAllocationComponent', () => {
     expect(component.total).toBe('200.75');
   });
 
+  it.each([
+    'NOTE',
+    'BILL',
+    'BANKNOTE'
+  ])('renders the backend %s denomination type with the existing banknote translation', (type) => {
+    service.getCashAllocationContext.mockReturnValueOnce(
+      of({
+        ...context,
+        currencies: [
+          {
+            ...context.currencies[0],
+            denominations: [{ ...context.currencies[0].denominations[0], type }]
+          }
+        ]
+      })
+    );
+    component.currencyChanged();
+
+    expect(component.denominations.at(0).controls.type.value).toBe('BANKNOTE');
+    expect(component.denominations.at(0).controls.denominationId.value).toBe('crc-note-100');
+    expect(component.denominations.at(0).controls.value.value).toBe('100.00');
+  });
+
   it('reloads real configuration for another backend currency', () => {
     service.getCashAllocationContext.mockReturnValueOnce(
       of({ ...context, currencyCode: 'JPY', currencies: [context.currencies[1]] })

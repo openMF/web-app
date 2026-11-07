@@ -28,15 +28,6 @@ import { FamilyMembersPage } from '../../pages/kyc/family-members.page';
  * timing out on a permanently disabled Submit button.
  */
 test.describe('Client KYC · Family members', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('adds a family member and lists it on the tab', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
 

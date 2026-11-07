@@ -6,7 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { CashTransfersBetweenTellersComponent } from './base-teller/cash-transfers-between-tellers/cash-transfers-between-tellers.component';
+import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/cash-transfer.guard';
+
+import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
+import { officeAccessGuard } from './offices/office-access.guard';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -15,6 +21,10 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
+import { EndOfDayClosingComponent } from './base-teller/end-of-day-cash-closing/end-of-day-closing.component';
+import { endOfDayClosingGuard } from './base-teller/end-of-day-cash-closing/end-of-day-closing.guard';
+import { WithdrawalComponent } from './base-teller/withdrawals/withdrawal.component';
+import { withdrawalGuard } from './base-teller/withdrawals/withdrawal.guard';
 import { BaseTellerComponent } from './base-teller/base-teller.component';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/loan-provisioning-criteria.component';
 import { OfficesComponent } from './offices/offices.component';
@@ -31,12 +41,30 @@ import { SavingsAccountOpeningComponent } from './base-teller/savings-account-op
 import { SavingsAccountDepositComponent } from './base-teller/savings-account-deposit/savings-account-deposit.component';
 import { ReturnedCheckPaymentComponent } from './base-teller/returned-check-payment/returned-check-payment.component';
 import { returnedCheckPaymentGuard } from './base-teller/returned-check-payment/returned-check-payment.guard';
+import { CreditPaymentComponent } from './base-teller/credit-payment/credit-payment.component';
+import { creditPaymentGuard } from './base-teller/credit-payment/credit-payment.guard';
 import { ServicePaymentComponent } from './base-teller/service-payment/service-payment.component';
 import { servicePaymentGuard } from './base-teller/service-payment/service-payment.guard';
 import { CashManagementComponent } from './base-teller/cash-management/cash-management.component';
 import { cashManagementGuard } from './base-teller/cash-management/cash-management.guard';
 import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
 import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
+import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import {
+  vaultCashDepositGuard,
+  vaultDepositHistoryGuard
+} from './base-teller/vault-cash-deposit/vault-cash-deposit.guard';
+import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
+import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
+import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
+import { CashDrawerPickupComponent } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.component';
+import { cashDrawerPickupGuard } from './base-teller/cash-drawer-pickup/cash-drawer-pickup.guard';
+import { CashExchangeComponent } from './base-teller/cash-exchange/cash-exchange.component';
+import { cashExchangeGuard } from './base-teller/cash-exchange/cash-exchange.guard';
+import { TransactionHistoryComponent } from './base-teller/transaction-history/transaction-history.component';
+import { transactionHistoryGuard } from './base-teller/transaction-history/transaction-history.guard';
+import { TransactionReversalComponent } from './base-teller/transaction-reversal/transaction-reversal.component';
+import { transactionReversalGuard } from './base-teller/transaction-reversal/transaction-reversal.guard';
 import { PaymentTypesComponent } from './payment-types/payment-types.component';
 import { EditPaymentTypeComponent } from './payment-types/edit-payment-type/edit-payment-type.component';
 import { PasswordPreferencesComponent } from './password-preferences/password-preferences.component';
@@ -132,6 +160,9 @@ import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-origin
 import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
 import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
 
+import { AccountTransfersComponent } from './base-teller/account-transfers/account-transfers.component';
+import { accountTransferGuard } from './base-teller/account-transfers/account-transfer.guard';
+
 /** Organization Routes */
 const routes: Routes = [
   Route.withShell([
@@ -206,6 +237,7 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
+              canActivate: [officeAccessGuard],
               data: { title: 'View Office', routeResolveBreadcrumb: [
                   'office',
                   'name'
@@ -300,10 +332,7 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewEmployeeComponent,
-                  resolve: {
-                    employee: EmployeeResolver
-                  }
+                  component: ViewEmployeeComponent
                 },
                 {
                   path: 'edit',
@@ -452,10 +481,55 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'foreign-currency/rates',
+          canActivate: [fxRateGuard],
+          loadComponent: () => import('./foreign-currency/fx-rates.component').then((m) => m.FxRatesComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
+        },
+        {
+          path: 'base-teller/foreign-currency',
+          canActivate: [fxTellerGuard],
+          loadComponent: () => import('./foreign-currency/fx-teller.component').then((m) => m.FxTellerComponent),
+          data: { title: 'fx.title', breadcrumb: 'fx.title' }
+        },
+        {
           path: 'base-teller',
           pathMatch: 'full',
           component: BaseTellerComponent,
           data: { title: 'Base Teller', breadcrumb: 'Base Teller' }
+        },
+        {
+          path: 'base-teller/withdrawals',
+          component: WithdrawalComponent,
+          canActivate: [withdrawalGuard],
+          data: { title: 'withdrawal.title', breadcrumb: 'withdrawal.title' }
+        },
+        {
+          path: 'base-teller/cash-transfers-between-tellers',
+          component: CashTransfersBetweenTellersComponent,
+          canActivate: [cashTransferGuard],
+          data: { title: 'cashTellerTransfer.title', breadcrumb: 'cashTellerTransfer.title' }
+        },
+        {
+          path: 'base-teller/account-transfers',
+          component: AccountTransfersComponent,
+          canActivate: [accountTransferGuard],
+          data: { title: 'accountTransfer.title', breadcrumb: 'accountTransfer.title' }
+        },
+        {
+          path: 'base-teller/end-of-day-cash-closing',
+          component: EndOfDayClosingComponent,
+          canActivate: [endOfDayClosingGuard],
+          data: { title: 'eod.title', breadcrumb: 'eod.title' }
+        },
+        {
+          path: 'base-teller/catalog-updates',
+          component: CatalogUpdatesComponent,
+          canActivate: [catalogUpdatesGuard],
+          data: {
+            title: 'labels.heading.Catalog Updates',
+            breadcrumb: 'labels.heading.Catalog Updates'
+          }
         },
         {
           path: 'base-teller/cash-allocations',
@@ -464,6 +538,33 @@ const routes: Routes = [
           data: {
             title: 'cashAllocation.title',
             breadcrumb: 'cashAllocation.title'
+          }
+        },
+        {
+          path: 'base-teller/vault-cash-deposit/history',
+          canActivate: [vaultDepositHistoryGuard],
+          loadComponent: () =>
+            import('./base-teller/vault-cash-deposit/vault-deposit-history.component').then(
+              (m) => m.VaultDepositHistoryComponent
+            ),
+          data: { title: 'vaultDeposit.history.title', breadcrumb: 'vaultDeposit.history.title' }
+        },
+        {
+          path: 'base-teller/vault-cash-deposit',
+          canActivate: [vaultCashDepositGuard],
+          loadComponent: () =>
+            import('./base-teller/vault-cash-deposit/vault-cash-deposit.component').then(
+              (m) => m.VaultCashDepositComponent
+            ),
+          data: { title: 'vaultDeposit.title', breadcrumb: 'vaultDeposit.title' }
+        },
+        {
+          path: 'base-teller/cash-inventory',
+          component: CashInventoryComponent,
+          canActivate: [cashInventoryGuard],
+          data: {
+            title: 'cashInventory.title',
+            breadcrumb: 'cashInventory.title'
           }
         },
         {
@@ -486,6 +587,15 @@ const routes: Routes = [
           data: {
             title: 'labels.heading.Returned Check Payment',
             breadcrumb: 'labels.heading.Returned Check Payment'
+          }
+        },
+        {
+          path: 'base-teller/credit-payments',
+          component: CreditPaymentComponent,
+          canActivate: [creditPaymentGuard],
+          data: {
+            title: 'creditPayment.heading.title',
+            breadcrumb: 'creditPayment.heading.title'
           }
         },
         {
@@ -555,6 +665,33 @@ const routes: Routes = [
           }
         },
         {
+          path: 'base-teller/cash-drawer-pickup',
+          component: CashDrawerPickupComponent,
+          canActivate: [cashDrawerPickupGuard],
+          data: { title: 'cashPickup.title', breadcrumb: 'cashPickup.title' }
+        },
+        {
+          path: 'base-teller/cash-exchange',
+          component: CashExchangeComponent,
+          canActivate: [cashExchangeGuard],
+          data: { title: 'cashExchange.title', breadcrumb: 'cashExchange.title' }
+        },
+        {
+          path: 'base-teller/transaction-history',
+          component: TransactionHistoryComponent,
+          canActivate: [transactionHistoryGuard],
+          data: {
+            title: 'transactionHistory.title',
+            breadcrumb: 'transactionHistory.title'
+          }
+        },
+        {
+          path: 'base-teller/transaction-reversal',
+          component: TransactionReversalComponent,
+          canActivate: [transactionReversalGuard],
+          data: { title: 'transactionReversal.title', breadcrumb: 'transactionReversal.title' }
+        },
+        {
           path: 'base-teller/service-payments',
           component: ServicePaymentComponent,
           canActivate: [servicePaymentGuard],
@@ -594,17 +731,13 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewTellerComponent,
-                  resolve: {
-                    teller: TellerResolver
-                  }
+                  component: ViewTellerComponent
                 },
                 {
                   path: 'edit',
                   component: EditTellerComponent,
                   data: { title: 'Edit Teller', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
-                    teller: TellerResolver,
                     offices: OfficesResolver
                   }
                 },
@@ -648,7 +781,6 @@ const routes: Routes = [
                           component: EditCashierComponent,
                           data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                           resolve: {
-                            cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
                           }
                         },
@@ -815,10 +947,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: ManageFundsComponent,
-              resolve: {
-                funds: ManageFundsResolver
-              }
+              component: ManageFundsComponent
             },
             {
               path: 'create',
@@ -837,18 +966,12 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewFundComponent,
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  component: ViewFundComponent
                 },
                 {
                   path: 'edit',
                   component: EditFundComponent,
-                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
-                  resolve: {
-                    fundData: ManageFundResolver
-                  }
+                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
                 }
               ]
             }
@@ -908,10 +1031,7 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  component: ViewHolidaysComponent,
-                  resolve: {
-                    holidays: HolidayResolver
-                  }
+                  component: ViewHolidaysComponent
                 },
                 {
                   path: 'edit',
@@ -923,6 +1043,8 @@ const routes: Routes = [
                     routeResolveBreadcrumb: null
                   },
                   resolve: {
+                    // Not a duplicate of the parent: the parent resolves HolidayResolver under
+                    // `holidays`, and EditHolidayComponent reads `holiday`.
                     holiday: HolidayResolver,
                     holidayTemplate: HolidayTemplateResolver
                   }

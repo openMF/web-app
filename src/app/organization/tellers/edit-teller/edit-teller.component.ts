@@ -105,10 +105,10 @@ export class EditTellerComponent implements OnInit {
       ],
       description: [this.tellerData.description],
       startDate: [
-        this.tellerData.startDate && new Date(this.tellerData.startDate),
+        this.tellerData.startDate && this.dateUtils.parseDate(this.tellerData.startDate),
         Validators.required
       ],
-      endDate: [this.tellerData.endDate && new Date(this.tellerData.endDate)],
+      endDate: [this.tellerData.endDate && this.dateUtils.parseDate(this.tellerData.endDate)],
       status: [
         this.tellerData.status,
         Validators.required

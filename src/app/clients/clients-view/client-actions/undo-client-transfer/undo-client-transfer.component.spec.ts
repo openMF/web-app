@@ -43,7 +43,8 @@ describe('UndoClientTransferComponent', () => {
     } as any;
 
     dates = {
-      formatDate: jest.fn(() => '01 November 2025')
+      formatDate: jest.fn(() => '01 November 2025'),
+      parseDate: (value: any) => (Array.isArray(value) ? new Date(value[0], value[1] - 1, value[2]) : new Date(value))
     } as any;
 
     notifier = { notifyAndNavigate: jest.fn() } as any;

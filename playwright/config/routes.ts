@@ -17,6 +17,8 @@
  * `AppRoutes` interface so a portability swap is config-only.
  */
 
+import { BEHAVIOR } from './behavior';
+
 export interface AppRoutes {
   login: string;
   home: string;
@@ -87,6 +89,19 @@ export interface AppRoutes {
   users: string;
   userCreate: string;
   userView: (id: number) => string;
+
+  // ── Reports ─────────────────────────────────────────────────
+  /** Reports catalogue. */
+  reports: string;
+  /**
+   * Run-report screen for a single report.
+   *
+   * `type` and `id` travel as query parameters because the screen
+   * picks its renderer from `reportType` (Table / Chart / Pentaho /
+   * BIRT / SMS), and the accessors for every engine but Table/SMS are
+   * fetched by the route resolver from the numeric report id.
+   */
+  reportRun: (name: string, type: string, id: number) => string;
 }
 
 export const ROUTES: AppRoutes = {
@@ -144,5 +159,54 @@ export const ROUTES: AppRoutes = {
   groupAction: (id, action) => `/#/groups/${id}/actions/${encodeURIComponent(action)}`,
   users: '/#/appusers',
   userCreate: '/#/appusers/create',
-  userView: (id) => `/#/appusers/${id}`
+  userView: (id) => `/#/appusers/${id}`,
+
+  reports: '/#/reports',
+  // The report name is encoded because real names contain spaces and
+  // parentheses ("Client Listing", "Loan Officer (by Product)"), and
+  // Angular decodes the `:name` param before looking the report up —
+  // the encoding therefore has to round-trip exactly.
+  reportRun: (name, type, id) => `/#/reports/run/${encodeURIComponent(name)}?type=${encodeURIComponent(type)}&id=${id}`
 };
+
+/**
+ * The app route a URL points at, whichever routing style the app uses.
+ *
+ * Under hash routing (Angular) the route is in the fragment:
+ * `https://host/#/clients/1/general?tab=2` gives `/clients/1/general`.
+ * Under history routing (React) it is the path:
+ * `https://host/clients/1/general` gives `/clients/1/general`.
+ * The query string is dropped in both cases.
+ *
+ * Page objects use this in `waitForURL` predicates instead of reading
+ * `url.hash` or `url.pathname` directly, so the same predicate works
+ * against either app.
+ *
+ * @param usesHashRouting - Defaults to `BEHAVIOR.usesHashRouting`. It is
+ *   a parameter only so the unit spec can cover both routing styles.
+ */
+export function appRoutePath(url: URL, usesHashRouting: boolean = BEHAVIOR.usesHashRouting): string {
+  if (!usesHashRouting) {
+    return url.pathname;
+  }
+  return url.hash.replace(/^#/, '').split('?')[0] || '/';
+}
+
+/**
+ * Puts a `ROUTES` value in the form {@link appRoutePath} returns by
+ * dropping the hash-routing prefix: `/#/clients` gives `/clients`.
+ * History-routing values are returned unchanged.
+ */
+export function toAppRoutePath(route: string): string {
+  return route.replace(/^\/#(?=\/)/, '');
+}
+
+/**
+ * True when `url` is exactly at `route`, a value from `ROUTES`. The
+ * query string is ignored.
+ *
+ * @param usesHashRouting - See {@link appRoutePath}.
+ */
+export function isAtRoute(url: URL, route: string, usesHashRouting: boolean = BEHAVIOR.usesHashRouting): boolean {
+  return appRoutePath(url, usesHashRouting) === toAppRoutePath(route);
+}

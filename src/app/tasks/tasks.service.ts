@@ -79,6 +79,9 @@ export interface KycEvidence {
   idVerification?: { status?: string; decision?: string };
   amlScreeningStatus?: string;
   amlScreening?: { status?: string; decision?: string };
+  faceMatchEvidenceStatus?: string;
+  idVerificationEvidenceStatus?: string;
+  amlScreeningEvidenceStatus?: string;
 }
 
 export interface PendingProspectsSearchParams {
@@ -103,13 +106,13 @@ export interface PendingProspect {
   displayName?: string;
   officeId?: number | string;
   clientId?: number | string;
-  registrationStatus?: string;
+  registrationStatus?: string | null;
   createdAt?: string | number[];
   submittedAt?: string | number[];
   lastUpdatedAt?: string | number[];
-  currentStage?: string;
-  lastCompletedStage?: string;
-  stoppedAtStage?: string;
+  currentStage?: string | null;
+  lastCompletedStage?: string | null;
+  stoppedAtStage?: string | null;
   pendingCreditCount?: number;
 }
 
@@ -167,7 +170,10 @@ export class TasksService {
    * @param {PendingProspectsSearchParams} searchData Pending prospects search, paging, and sorting parameters.
    */
   getPendingProspects(searchData?: PendingProspectsSearchParams): Observable<PendingProspectsResponse> {
-    return this.http.get<PendingProspectsResponse>('/v2/prospects', { params: this.buildHttpParams(searchData) });
+    // This consultation renders safe, localized error states itself. Preserve all other task requests.
+    const configurableHttp = this.http as HttpClient & { skipErrorHandler?: () => HttpClient };
+    const http = configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
+    return http.get<PendingProspectsResponse>('/v2/prospects', { params: this.buildHttpParams(searchData) });
   }
 
   /**

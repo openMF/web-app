@@ -53,8 +53,8 @@ export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent i
    * and initialize with the required values
    */
   ngOnInit() {
-    this.maturityDate = new Date(this.dataObject.timeline.expectedMaturityDate);
-    this.maxDate = new Date(this.dataObject.timeline.expectedMaturityDate);
+    this.maturityDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
+    this.maxDate = this.dateUtils.parseDate(this.dataObject.timeline.expectedMaturityDate);
     this.startDate = new Date(this.settingsService.businessDate);
     if (this.startDate > this.maxDate) {
       this.startDate = this.maxDate;

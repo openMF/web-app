@@ -19,7 +19,11 @@ import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-in
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
-import { EnrollmentStatusComponent } from './checker-inbox-and-tasks-tabs/enrollment-status/enrollment-status.component';
+import {
+  CREDIT_APPLICATIONS_PERMISSION,
+  creditApplicationsGuard
+} from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
+import { pendingProspectsGuard } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.guard';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
 import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
@@ -73,21 +77,25 @@ export const routes: Routes = [
         {
           path: 'requests',
           component: CreditApplicationsComponent,
-          data: { title: 'Requests' }
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Requests', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'credit',
           component: CreditApplicationsComponent,
-          data: { title: 'Credit' }
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
-          path: 'enrollment-status',
-          component: EnrollmentStatusComponent,
-          data: { title: 'Enrollment Status' }
+          path: 'mass-rejection',
+          component: CreditApplicationsComponent,
+          canActivate: [creditApplicationsGuard],
+          data: { title: 'Mass Rejection', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'pending-prospects',
           component: PendingProspectsComponent,
+          canActivate: [pendingProspectsGuard],
           data: { title: 'Pending Prospects', permissions: ['READ_PROSPECT'] }
         },
         {

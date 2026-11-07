@@ -1,0 +1,55 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (record; as r) {
+  <dl>
+    <dt>{{ 'accountTransfer.operation' | translate }}</dt>
+    <dd>{{ 'accountTransfer.' + r.operationType | translate }}</dd>
+    <dt>{{ 'accountTransfer.orderingClient' | translate }}</dt>
+    <dd>{{ r.orderingClient.clientNumber }} · {{ r.orderingClient.displayName }}</dd>
+    <dt>{{ 'accountTransfer.businessDate' | translate }}</dt>
+    <dd>{{ r.businessDate }}</dd>
+    <dt>{{ 'accountTransfer.amount' | translate }}</dt>
+    <dd>{{ r.source.currencyCode }} {{ r.amount }}</dd>
+  </dl>
+  <h3>{{ 'accountTransfer.source' | translate }}</h3>
+  <mifosx-transfer-account-details [account]="r.source" />
+  <h3>{{ 'accountTransfer.beneficiary' | translate }}</h3>
+  <mifosx-transfer-account-details [account]="r.destination" />
+}
+@if (preview; as p) {
+  <h3>{{ 'accountTransfer.outflows' | translate }}</h3>
+  @for (flow of p.outflowsByCurrency | keyvalue; track flow.key) {
+    <p>{{ flow.key }} {{ flow.value }}</p>
+  }
+  <h3>{{ 'accountTransfer.inflows' | translate }}</h3>
+  @for (flow of p.inflowsByCurrency | keyvalue; track flow.key) {
+    <p>{{ flow.key }} {{ flow.value }}</p>
+  }
+  <p>{{ (p.balanced ? 'accountTransfer.balanced' : 'accountTransfer.unbalanced') | translate }}</p>
+  <p>{{ 'accountTransfer.fee' | translate }}: {{ p.source.currencyCode }} {{ p.withdrawalFee }}</p>
+  @if (p.warnings.length) {
+    <p role="status">{{ 'accountTransfer.feeWarning' | translate }}</p>
+  }
+}
+@if (receipt; as r) {
+  <dl>
+    <dt>{{ 'accountTransfer.reference' | translate }}</dt>
+    <dd>{{ r.reference }}</dd>
+    <dt>{{ 'accountTransfer.completedAt' | translate }}</dt>
+    <dd>{{ r.completedAt }}</dd>
+    <dt>{{ 'accountTransfer.status' | translate }}</dt>
+    <dd>{{ 'accountTransfer.' + r.status | translate }}</dd>
+    <dt>{{ 'accountTransfer.operator' | translate }}</dt>
+    <dd>{{ r.operatorName }}</dd>
+    @if (r.tellerId) {
+      <dt>{{ 'accountTransfer.teller' | translate }}</dt>
+      <dd>{{ r.tellerId }}</dd>
+    }
+  </dl>
+}

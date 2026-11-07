@@ -71,7 +71,7 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   createAcceptClientTransferForm() {
     this.acceptClientTransferForm = this.formBuilder.group({
-      transferDate: { value: new Date(this.transferDate), disabled: true },
+      transferDate: { value: this.dateUtils.parseDate(this.transferDate), disabled: true },
       note: ['']
     });
   }

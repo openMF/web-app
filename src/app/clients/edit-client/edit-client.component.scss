@@ -15,11 +15,8 @@
   max-width: 32%;
 }
 
-.gap-2percent {
-  gap: 2%;
-}
-
 .align-center {
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -65,6 +62,22 @@
 
 .responsive-row:last-child {
   margin-bottom: 0;
+}
+
+.mobile-number-group {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: flex-start;
+
+  .mobile-code-field {
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+
+  .mobile-number-field {
+    flex: 1 1 auto;
+  }
 }
 
 :host ::ng-deep .mat-form-field {
@@ -251,6 +264,18 @@
     flex: 1 1 100%;
     max-width: 100%;
     margin-right: 0;
+  }
+
+  .mobile-number-group {
+    flex-direction: column;
+    gap: 0;
+
+    .mobile-code-field,
+    .mobile-number-field {
+      flex: 1 1 100%;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }
 

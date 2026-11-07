@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -21,6 +21,7 @@ import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
 import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
@@ -670,8 +671,12 @@ export class LoansService {
    * Creates Loans Account
    * @param {any} loanAccount Loan Account
    */
-  createLoansAccount(productType: string, loanAccount: any): Observable<any> {
-    return this.http.post(`/${productType}`, loanAccount);
+  createLoansAccount(productType: string, loanAccount: any, idempotencyKey?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (idempotencyKey) {
+      headers = headers.set('Idempotency-Key', idempotencyKey);
+    }
+    return this.http.post(`/${productType}`, loanAccount, { headers });
   }
 
   getLoanDocuments(loanId: any): Observable<any> {
@@ -1037,10 +1042,11 @@ export class LoansService {
       loansAccountData.loanType = 'group';
     }
 
-    if (loansAccountData.syncRepaymentsWithMeeting) {
+    // Semi-monthly loans cannot be linked to a meeting calendar (the backend rejects `calendarId`).
+    if (loansAccountData.syncRepaymentsWithMeeting && !isSemiMonthly(loansAccountData.repaymentFrequencyType)) {
       loansAccountData.calendarId = calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
     }
+    delete loansAccountData.syncRepaymentsWithMeeting;
 
     if (loansAccountData.recalculationRestFrequencyDate) {
       loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(
@@ -1059,14 +1065,11 @@ export class LoansService {
       delete loansAccountData.disbursementData;
     }
     delete loansAccountData.isValid;
-    loansAccountData.principal = loansAccountData.principalAmount;
+    // Send the principal as a number: Fineract reads a text amount with the request locale,
+    // so "1500.75" would be saved as 150075 in es, de or pt.
+    loansAccountData.principal = Number(loansAccountData.principalAmount);
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
-
-    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
-    delete loansAccountData.allowPartialPeriodInterestCalculation;
     return loansAccountData;
   }
 

@@ -24,7 +24,7 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
-            <input matInput required type="{{ passwordInputType }}" formControlName="password" />
+            <input matInput type="{{ passwordInputType }}" formControlName="password" autocomplete="new-password" />
             @if (emailConfigurationForm.controls.password.value) {
               <button
                 mat-button
@@ -40,12 +40,7 @@
                 }
               </button>
             }
-            @if (emailConfigurationForm.controls.password.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-hint>{{ 'labels.text.Leave blank to keep the stored password' | translate }}</mat-hint>
           </mat-form-field>
 
           <mat-form-field>

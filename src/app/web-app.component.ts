@@ -33,6 +33,7 @@ import { SettingsService } from './settings/settings.service';
 import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 import { IdleTimeoutService } from './home/timeout-dialog/idle-timeout.service';
 import { SessionTimeoutDialogComponent } from './home/timeout-dialog/session-timeout-dialog.component';
+import { LogoutDialogComponent } from './shared/logout-dialog/logout-dialog.component';
 
 /** Custom Items */
 import { Alert } from './core/alert/alert.model';
@@ -46,6 +47,7 @@ import { ThemingService } from './shared/theme-toggle/theming.service';
 const log = new Logger('MifosX');
 
 import { registerLocaleData } from '@angular/common';
+import localeAZ from '@angular/common/locales/az';
 import localeCS from '@angular/common/locales/cs';
 import localeEN from '@angular/common/locales/en';
 import localeES from '@angular/common/locales/es';
@@ -60,6 +62,7 @@ import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+registerLocaleData(localeAZ);
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -344,6 +347,25 @@ export class WebAppComponent implements OnInit, OnDestroy {
     this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
+  /**
+   * Opens the logout confirmation dialog and only runs the existing logout flow
+   * once the operator confirms. Cancelling or dismissing the dialog preserves
+   * the authenticated session. Automatic flows (such as the session idle
+   * timeout) keep calling {@link logout} directly and are never interrupted by
+   * this dialog.
+   */
+  confirmLogout() {
+    this.dialog
+      .open(LogoutDialogComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.logout();
+        }
+      });
+  }
+
   help() {
     this.documentationLinks.open('userManual');
   }
@@ -358,7 +380,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     if (!(routeD === undefined)) {
       switch (routeD.id) {
         case 'logout':
-          this.logout();
+          this.confirmLogout();
           break;
         case 'help':
           this.help();

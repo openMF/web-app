@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -69,7 +69,10 @@ export class ClientAssignStaffComponent implements OnInit {
    */
   createClientAssignStaffForm() {
     this.clientAssignStaffForm = this.formBuilder.group({
-      staffId: ['']
+      staffId: [
+        '',
+        Validators.required
+      ]
     });
   }
 

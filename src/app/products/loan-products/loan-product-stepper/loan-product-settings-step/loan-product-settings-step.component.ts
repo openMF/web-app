@@ -89,6 +89,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
   defaultConfigValues: GlobalConfiguration[] = [];
 
   delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+  breachStartTypeOptions: StringEnumOptionData[] = [];
   breachOptions: Breach[] = [];
   nearBreachOptions: NearBreach[] = [];
 
@@ -184,18 +185,22 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
       this.breachOptions = this.loanProductsTemplate.breachOptions ?? [];
       this.nearBreachOptions = this.loanProductsTemplate.nearBreachOptions ?? [];
       this.delinquencyStartTypeOptions = this.loanProductsTemplate.delinquencyStartTypeOptions;
+      this.breachStartTypeOptions = this.loanProductsTemplate.breachStartTypeOptions ?? [];
       this.loanProductSettingsForm.patchValue({
         amortizationType: this.loanProductsTemplate.amortizationType
           ? this.loanProductsTemplate.amortizationType.id
           : null,
         npvDayCount: this.loanProductsTemplate.npvDayCount,
         delinquencyGraceDays: this.loanProductsTemplate.delinquencyGraceDays,
+        // The backend parses the enum name (code); the numeric id is rejected with invalid.delinquency.start.type.
         delinquencyStartType: this.loanProductsTemplate.delinquencyStartType
-          ? this.loanProductsTemplate.delinquencyStartType.id
+          ? this.loanProductsTemplate.delinquencyStartType.code
           : null,
         breachId: this.loanProductsTemplate.breach?.id ?? null,
         nearBreachId: this.loanProductsTemplate.nearBreach?.id ?? null,
-        breachGraceDays: this.loanProductsTemplate.breachGraceDays ?? null
+        breachGraceDays: this.loanProductsTemplate.breachGraceDays ?? null,
+        // null, never '': the backend rejects a blank code with invalid.breach.start.type and defaults an omitted one to DISBURSEMENT.
+        breachStartType: this.loanProductsTemplate.breachStartType?.code ?? null
       });
     }
 
@@ -468,7 +473,8 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         delinquencyStartType: [''],
         breachId: [''],
         nearBreachId: [''],
-        breachGraceDays: ['']
+        breachGraceDays: [''],
+        breachStartType: [null]
       });
     }
   }
@@ -927,14 +933,17 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         });
       } else {
         this.loanProductSettingsForm.patchValue({
-          delinquencyBucketId: ''
+          delinquencyBucketId: '',
+          delinquencyGraceDays: null,
+          delinquencyStartType: ''
         });
       }
     } else if (propertyName === 'breachId') {
       this.loanProductSettingsForm.patchValue({
         breachId: '',
         nearBreachId: '',
-        breachGraceDays: null
+        breachGraceDays: null,
+        breachStartType: null
       });
     } else if (propertyName === 'nearBreachId') {
       this.loanProductSettingsForm.patchValue({
@@ -963,6 +972,16 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     }
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
+    }
+    if (this.loanProductService.isWorkingCapital) {
+      if (!productSettings['delinquencyBucketId']) {
+        productSettings['delinquencyGraceDays'] = null;
+        productSettings['delinquencyStartType'] = null;
+      }
+      if (!productSettings['breachId']) {
+        productSettings['breachGraceDays'] = null;
+        productSettings['breachStartType'] = null;
+      }
     }
     return productSettings;
   }

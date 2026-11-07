@@ -447,6 +447,19 @@ describe('DatatableMultiRowComponent', () => {
     expect(formfieldValues.empty_value).toBeNull();
   });
 
+  it('does not force a mandatory boolean stored as false to be checked when editing', () => {
+    const selectedRow = row(7, 'Ada', 'Lovelace');
+    setDataObject(createDataObject([selectedRow]));
+
+    component.edit(selectedRow);
+
+    const dialogData = (matDialog.open.mock.calls[0][1] as any).data;
+    const isVerified = dialogData.formfields.find((formfield: any) => formfield.controlName === 'is_verified');
+
+    expect(isVerified.value).toBe(false);
+    expect(isVerified.required).toBe(false);
+  });
+
   it('updates the selected multi-row record without creating a duplicate row', () => {
     const selectedRow = row(7, 'Ada', 'Lovelace', 0);
     const updatedDataObject = createDataObject([row(7, 'Ada Jane', 'Lovelace', 0)]);

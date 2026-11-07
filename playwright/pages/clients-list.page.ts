@@ -67,6 +67,48 @@ export class ClientsListPage extends BasePage {
   }
 
   /**
+   * Returns the status filter (multi-select) that narrows the list by
+   * client status (Active / Pending / Closed / Rejected).
+   */
+  get statusFilter(): Locator {
+    return this.page.locator(CLIENTS_LIST_SELECTORS.statusFilter);
+  }
+
+  /**
+   * Returns the clear-status-filter (×) button that appears next to the
+   * filter once at least one status is selected.
+   */
+  get statusFilterClearButton(): Locator {
+    return this.page.locator(CLIENTS_LIST_SELECTORS.statusFilterClear);
+  }
+
+  /**
+   * Opens the status filter and selects the given status labels
+   * (translated, e.g. "Active"), then closes the panel and waits for the
+   * filtered result set to settle.
+   * @param statuses - Status labels to select; multi-select keeps prior choices
+   */
+  async selectStatuses(statuses: string[]): Promise<void> {
+    await this.statusFilter.click();
+    for (const status of statuses) {
+      await this.page.locator(CLIENTS_LIST_SELECTORS.statusFilterOption).filter({ hasText: status }).click();
+    }
+    await this.page.keyboard.press('Escape');
+    await this.page.waitForLoadState('networkidle');
+  }
+
+  /**
+   * Clears the active status filter via the inline (×) button, restoring
+   * the unfiltered server-side list. No-op when no status is selected.
+   */
+  async clearStatusFilter(): Promise<void> {
+    if (await this.statusFilterClearButton.isVisible()) {
+      await this.statusFilterClearButton.click();
+      await this.page.waitForLoadState('networkidle');
+    }
+  }
+
+  /**
    * Returns the primary "Create Client" CTA.
    *
    * Resolved by accessible name so the same locator works against the

@@ -101,11 +101,17 @@ export class EditHolidayComponent implements OnInit {
     if (!this.isActiveHoliday) {
       this.holidayForm.addControl(
         'fromDate',
-        new FormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required)
+        new FormControl(
+          this.holidayData.fromDate && this.dateUtils.parseDate(this.holidayData.fromDate),
+          Validators.required
+        )
       );
       this.holidayForm.addControl(
         'toDate',
-        new FormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required)
+        new FormControl(
+          this.holidayData.toDate && this.dateUtils.parseDate(this.holidayData.toDate),
+          Validators.required
+        )
       );
       this.holidayForm.addControl(
         'reschedulingType',
@@ -115,7 +121,8 @@ export class EditHolidayComponent implements OnInit {
         this.holidayForm.addControl(
           'repaymentsRescheduledTo',
           new FormControl(
-            this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo),
+            this.holidayData.repaymentsRescheduledTo &&
+              this.dateUtils.parseDate(this.holidayData.repaymentsRescheduledTo),
             Validators.required
           )
         );

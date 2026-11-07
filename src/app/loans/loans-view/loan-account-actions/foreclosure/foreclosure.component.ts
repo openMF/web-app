@@ -51,7 +51,7 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
   createforeclosureForm() {
     this.foreclosureForm = this.formBuilder.group({
       transactionDate: [
-        this.dataObject.date && new Date(this.dataObject.date),
+        this.dataObject.date && this.dateUtils.parseDate(this.dataObject.date),
         Validators.required
       ],
       outstandingPrincipalPortion: [{ value: this.dataObject.principalPortion || 0, disabled: true }],

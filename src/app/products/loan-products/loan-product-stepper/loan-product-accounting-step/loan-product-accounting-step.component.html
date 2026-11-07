@@ -23,7 +23,7 @@
       <mat-divider class="flex-98"></mat-divider>
 
       @if (loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4) {
-        <div class="flex-100 layout-row-wrap responsive-column">
+        <div class="flex-100 layout-row-wrap gap-2percent responsive-column">
           @if (isAccountingAccrualBased) {
             <mat-checkbox class="flex-73" formControlName="enableAccrualActivityPosting">{{
               'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate
@@ -60,7 +60,7 @@
           @if (
             loanProductAccountingForm.value.accountingRule === 3 || loanProductAccountingForm.value.accountingRule === 4
           ) {
-            <div class="flex-100 layout-row-wrap responsive-column">
+            <div class="flex-100 layout-row-wrap gap-2percent responsive-column">
               <mifosx-gl-account-selector
                 class="flex-48"
                 [inputFormControl]="loanProductAccountingForm.controls.receivableInterestAccountId"
@@ -323,7 +323,7 @@
       }
     </div>
   } @else if (loanProductService.isWorkingCapital) {
-    <div class="flex-100 layout-row-wrap responsive-column">
+    <div class="flex-100 layout-row-wrap gap-2percent responsive-column">
       <mat-radio-group
         class="flex-98 layout-row gap-5percent layout-lt-md-column radio-group-spacing"
         formControlName="accountingRule"
@@ -508,7 +508,7 @@
         }}</mat-checkbox>
 
         @if (loanProductAccountingForm.value.advancedAccountingRules) {
-          <div class="flex-100 layout-row-wrap responsive-column">
+          <div class="flex-100 layout-row-wrap gap-2percent responsive-column">
             <mifosx-advanced-accounting-mapping-rule
               class="flex-100 m-t-10"
               [textField]="'Fund Sources'"

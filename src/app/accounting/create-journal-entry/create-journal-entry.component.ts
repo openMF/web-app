@@ -269,6 +269,8 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
           });
       },
       error: () => {
+        // Fineract replays the stored response for a reused key, so a corrected entry needs a new key.
+        this.submitIdempotencyKey = undefined;
         this.isSubmitting = false;
         this.cdr.markForCheck();
       }

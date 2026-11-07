@@ -8,10 +8,18 @@
 
 import { afterEach, describe, expect, it } from '@jest/globals';
 
+import { TestBed } from '@angular/core/testing';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 import { BASE_TELLER_WORKFLOWS, BaseTellerComponent } from './base-teller.component';
 
 describe('BaseTellerComponent', () => {
+  function component(permissions: string[] = ['ALL_FUNCTIONS']) {
+    TestBed.configureTestingModule({
+      providers: [{ provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions }) } }]
+    });
+    return TestBed.runInInjectionContext(() => new BaseTellerComponent());
+  }
   const originalProductionMode = environment.productionMode;
 
   afterEach(() => {
@@ -20,6 +28,45 @@ describe('BaseTellerComponent', () => {
 
   it('uses the existing workflow routes and permission checks', () => {
     expect(BASE_TELLER_WORKFLOWS).toMatchObject([
+      { materialIcon: 'currency_exchange', permission: 'READ_BASE_TELLER_FX', route: [
+          '/organization',
+          'base-teller',
+          'foreign-currency'
+        ] },
+      { materialIcon: 'payments', permission: 'READ_BASE_TELLER_CASH_TRANSFER', route: [
+          '/organization',
+          'base-teller',
+          'cash-transfers-between-tellers'
+        ] },
+      { materialIcon: 'swap_horiz', permission: 'READ_ACCOUNTTRANSFER', route: [
+          '/organization',
+          'base-teller',
+          'account-transfers'
+        ] },
+      { materialIcon: 'move_down', permission: 'READ_BASE_TELLER_CASH_DRAWER_PICKUP', route: [
+          '/organization',
+          'base-teller',
+          'cash-drawer-pickup'
+        ] },
+      { materialIcon: 'point_of_sale', permission: 'READ_BASE_TELLER_END_OF_DAY_CLOSING', route: [
+          '/organization',
+          'base-teller',
+          'end-of-day-cash-closing'
+        ] },
+      { materialIcon: 'currency_exchange', permission: 'READ_BASE_TELLER_CASH_EXCHANGE', route: [
+          '/organization',
+          'base-teller',
+          'cash-exchange'
+        ] },
+      {
+        materialIcon: 'sync',
+        permission: 'READ_BASE_TELLER_CATALOG_UPDATE',
+        route: [
+          '/organization',
+          'base-teller',
+          'catalog-updates'
+        ]
+      },
       {
         materialIcon: 'point_of_sale',
         permission: 'READ_BASE_TELLER_CASH_ALLOCATION',
@@ -27,6 +74,15 @@ describe('BaseTellerComponent', () => {
           '/organization',
           'base-teller',
           'cash-allocations'
+        ]
+      },
+      {
+        materialIcon: 'inventory_2',
+        permission: 'READ_BASE_TELLER_CASH_INVENTORY',
+        route: [
+          '/organization',
+          'base-teller',
+          'cash-inventory'
         ]
       },
       {
@@ -54,6 +110,15 @@ describe('BaseTellerComponent', () => {
           '/organization',
           'base-teller',
           'returned-check-payments'
+        ]
+      },
+      {
+        fontAwesomeIcon: 'money-check-dollar',
+        permission: 'READ_BASE_TELLER_CREDIT_PAYMENT',
+        route: [
+          '/organization',
+          'base-teller',
+          'credit-payments'
         ]
       },
       {
@@ -111,6 +176,24 @@ describe('BaseTellerComponent', () => {
         ]
       },
       {
+        materialIcon: 'receipt_long',
+        permission: 'READ_BASE_TELLER_TRANSACTION_HISTORY',
+        route: [
+          '/organization',
+          'base-teller',
+          'transaction-history'
+        ]
+      },
+      {
+        materialIcon: 'undo',
+        permission: 'READ_BASE_TELLER_TRANSACTION_REVERSAL',
+        route: [
+          '/organization',
+          'base-teller',
+          'transaction-reversal'
+        ]
+      },
+      {
         fontAwesomeIcon: 'money-check-dollar',
         permission: 'READ_BASE_TELLER_SERVICE_PAYMENT',
         route: [
@@ -122,17 +205,67 @@ describe('BaseTellerComponent', () => {
     ]);
   });
 
+  it.each([
+    { permissions: [] as string[], visible: false },
+    { permissions: ['READ_BASE_TELLER_WITHDRAWAL'], visible: false },
+    { permissions: [
+        'READ_BASE_TELLER_WITHDRAWAL',
+        'READ_CLIENT',
+        'READ_SAVINGSACCOUNT'
+      ], visible: true },
+    { permissions: ['ALL_FUNCTIONS_READ'], visible: true }
+  ])('checks backend read permissions for the Outflows card: $permissions', ({ permissions, visible }) => {
+    const outflows = component(permissions).outflows;
+    expect(outflows).toHaveLength(visible ? 1 : 0);
+    if (visible)
+      expect(outflows[0].route).toEqual([
+        '/organization',
+        'base-teller',
+        'withdrawals'
+      ]);
+  });
+
+  it('hides transfers without permission even if legacy RBAC is off', () => {
+    expect(component([]).otherOperations).toEqual([]);
+  });
+  it('shows transfers under Other Operations with exact read permission', () => {
+    expect(component(['READ_ACCOUNTTRANSFER']).otherOperations).toHaveLength(1);
+  });
+
+  it('shows physical cash transfers under Other Operations with the backend permission', () => {
+    expect(component(['READ_BASE_TELLER_CASH_TRANSFER']).otherOperations.map((w) => w.label)).toEqual([
+      'cashTellerTransfer.title'
+    ]);
+  });
+
   it('hides Bill and Service Payment when production mode is disabled', () => {
     environment.productionMode = false;
-    const component = new BaseTellerComponent();
+    const instance = component();
 
-    expect(component.workflows).toHaveLength(10);
+    expect(instance.workflows).toHaveLength(18);
   });
 
   it('shows Bill and Service Payment when production mode is enabled', () => {
     environment.productionMode = true;
-    const component = new BaseTellerComponent();
+    const instance = component();
 
-    expect(component.workflows).toHaveLength(11);
+    expect(instance.workflows).toHaveLength(19);
+  });
+  it.each([
+    'READ_BASE_TELLER_CASH_INVENTORY',
+    'ALL_FUNCTIONS_READ',
+    'ALL_FUNCTIONS'
+  ])('shows one vault Special Operations link for %s', (permission) => {
+    const instance = component([permission]);
+    expect(instance.specialOperations).toHaveLength(permission === 'READ_BASE_TELLER_CASH_INVENTORY' ? 1 : 2);
+    expect(instance.specialOperations[0].route).toEqual([
+      '/organization',
+      'base-teller',
+      'vault-cash-deposit'
+    ]);
+    expect(instance.workflows.some((w) => w.route.includes('vault-cash-deposit'))).toBe(false);
+  });
+  it('hides vault navigation without the backend read permission', () => {
+    expect(component(['READ_TELLER']).specialOperations).toEqual([]);
   });
 });

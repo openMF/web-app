@@ -20,6 +20,24 @@ import { WorkingCapitalPrepayLoanComponent } from './prepay-loan.component';
 describe('WorkingCapitalPrepayLoanComponent', () => {
   const businessDate = new Date(2026, 0, 10);
 
+  /**
+   * The action route as the router activates it: `:loanId/actions/:action`, the
+   * route the base component walks up to when it navigates to a loan tab.
+   */
+  function actionRouteStub(): any {
+    const loansContainerRoute: any = {};
+    const route: any = {
+      routeConfig: { path: ':loanId/actions/:action' },
+      parent: loansContainerRoute,
+      snapshot: { params: { loanId: '1' } }
+    };
+    route.pathFromRoot = [
+      loansContainerRoute,
+      route
+    ];
+    return route;
+  }
+
   /** The payoff quote as the prepayment template returns it, options included. */
   const prepayFormData = {
     wcLoanId: 1,
@@ -59,7 +77,7 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
         { provide: ChangeDetectorRef, useValue: { markForCheck: jest.fn() } },
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { params: { loanId: '1' } } }
+          useValue: actionRouteStub()
         },
         { provide: Router, useValue: routerStub },
         { provide: LoansService, useValue: loansServiceStub },
@@ -181,7 +199,10 @@ describe('WorkingCapitalPrepayLoanComponent', () => {
     component.submit();
 
     expect(routerStub.navigate).toHaveBeenCalledTimes(1);
-    expect(routerStub.navigate.mock.calls[0][0]).toEqual(['../../transactions']);
+    expect(routerStub.navigate.mock.calls[0][0]).toEqual([
+      '1',
+      'transactions'
+    ]);
   });
 
   // A settled loan is Closed (obligations met) or Overpaid, and neither status

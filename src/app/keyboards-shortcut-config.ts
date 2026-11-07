@@ -61,7 +61,7 @@ export class KeyboardShortcutsConfiguration {
       // key: 'o',
       // route: ''
       // },
-      // Create Client - ctrl + c
+      // Create Client - alt + c
       {
         title: 'Create Client',
         ctrlKey: false,
@@ -124,7 +124,7 @@ export class KeyboardShortcutsConfiguration {
         key: 'r',
         route: 'reports'
       },
-      // Accounting - ctrl + a
+      // Accounting - alt + a
       {
         title: 'Accounting',
         ctrlKey: false,
@@ -133,7 +133,7 @@ export class KeyboardShortcutsConfiguration {
         key: 'a',
         route: 'accounting'
       },
-      // Save/Submit Forms - ctrl + s
+      // Save/Submit Forms - alt + s
       {
         title: 'Save/Submit Forms',
         ctrlKey: false,
@@ -143,7 +143,7 @@ export class KeyboardShortcutsConfiguration {
         route: '',
         id: 'submit'
       },
-      // Cancel - ctrl + x
+      // Cancel - alt + x
       {
         title: 'Cancel',
         ctrlKey: false,
@@ -153,7 +153,7 @@ export class KeyboardShortcutsConfiguration {
         route: '',
         id: 'cancel'
       },
-      // Help - ctrl + h
+      // Help - alt + h
       {
         title: 'Help',
         ctrlKey: false,

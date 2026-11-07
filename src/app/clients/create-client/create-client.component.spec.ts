@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of, BehaviorSubject } from 'rxjs';
+import { of, BehaviorSubject, Subject, throwError } from 'rxjs';
 import { CreateClientComponent } from './create-client.component';
 import { ClientsService } from '../clients.service';
 import { SettingsService } from '../../settings/settings.service';
@@ -353,7 +353,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         expect.objectContaining({
           dateFormat: 'dd MMMM yyyy',
           locale: 'en'
-        })
+        }),
+        expect.any(String)
       );
     });
 
@@ -409,7 +410,8 @@ describe('CreateClientComponent - Integration Tests', () => {
               longitude: '77.5946'
             }
           ]
-        })
+        }),
+        expect.any(String)
       );
     });
 
@@ -455,8 +457,38 @@ describe('CreateClientComponent - Integration Tests', () => {
           officeId: 1,
           dateFormat: 'dd MMMM yyyy',
           locale: 'en'
-        })
+        }),
+        expect.any(String)
       );
+    });
+    it('should send only one request when submit is triggered again while in flight', () => {
+      const response$ = new Subject<any>();
+      mockClientsService.createClient.mockReturnValue(response$ as any);
+
+      component.submit();
+      component.submit();
+
+      expect(mockClientsService.createClient).toHaveBeenCalledTimes(1);
+      expect(component.isSubmitting).toBe(true);
+
+      response$.next({ resourceId: 123 });
+      expect(mockRouter.navigate).toHaveBeenCalledTimes(1);
+    });
+
+    it('should allow resubmitting with a new idempotency key after a failed request', () => {
+      mockClientsService.createClient.mockReturnValueOnce(throwError(() => new Error('400')) as any);
+
+      component.submit();
+      expect(component.isSubmitting).toBe(false);
+      const firstKey = mockClientsService.createClient.mock.calls[0][1];
+
+      component.submit();
+      const secondKey = mockClientsService.createClient.mock.calls[1][1];
+
+      expect(mockClientsService.createClient).toHaveBeenCalledTimes(2);
+      expect(firstKey).toEqual(expect.any(String));
+      expect(secondKey).toEqual(expect.any(String));
+      expect(secondKey).not.toBe(firstKey);
     });
   });
 

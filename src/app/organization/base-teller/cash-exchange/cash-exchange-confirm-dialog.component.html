@@ -1,0 +1,19 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'cashExchange.generalTransaction' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ 'cashExchange.exchangeTo' | translate }}: {{ data.tellerName }}</p>
+  <p>{{ 'cashExchange.currency' | translate }}: {{ data.preview.currencyCode }}</p>
+  <p>{{ 'cashExchange.received' | translate }}: {{ data.preview.receivedAmount }}</p>
+  <p>{{ 'cashExchange.delivered' | translate }}: {{ data.preview.deliveredAmount }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">{{ 'cashExchange.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">{{ 'cashExchange.confirm' | translate }}</button>
+</mat-dialog-actions>

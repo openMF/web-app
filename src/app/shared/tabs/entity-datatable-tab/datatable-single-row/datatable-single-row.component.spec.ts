@@ -10,9 +10,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { FormControlName } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEdit, faEye, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -113,6 +116,10 @@ describe('DatatableSingleRowComponent', () => {
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
         { provide: MatDialog, useValue: matDialog },
+        // Lets a test render the dialog that edit() asked the mocked MatDialog to open.
+        { provide: MAT_DIALOG_DATA, useFactory: () => (matDialog.open.mock.calls[0][1] as any).data },
+        { provide: MatDialogRef, useValue: { updateSize: jest.fn() } },
+        provideNativeDateAdapter(),
         DatePipe,
         DecimalPipe,
         DateFormatPipe,
@@ -216,6 +223,50 @@ describe('DatatableSingleRowComponent', () => {
     expect(jsonField.required).toBe(true);
     expect(jsonField.validators[0]({ value: '{"name":"John",}' })).toEqual({ json: true });
     expect(jsonField.validators[0]({ value: '{"name":"John"}' })).toBeNull();
+  });
+
+  it('enables Submit once a missing field is filled, keeping stored pre-2000 dates, zero and false values', () => {
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'id', columnDisplayType: 'INTEGER', isColumnNullable: false },
+        { columnName: 'second_surname', columnDisplayType: 'STRING', isColumnNullable: true },
+        { columnName: 'date_of_birth', columnDisplayType: 'DATE', isColumnNullable: true },
+        { columnName: 'dependents', columnDisplayType: 'INTEGER', isColumnNullable: false },
+        { columnName: 'is_head_of_household', columnDisplayType: 'BOOLEAN', isColumnNullable: false }
+      ],
+      data: [
+        {
+          row: [
+            7,
+            null,
+            '1955-05-27',
+            0,
+            false
+          ]
+        }
+      ]
+    });
+
+    component.edit();
+
+    // Render the real dialog so the template validators (datepicker min, required checkbox) run as they do in the app.
+    const dialog = TestBed.createComponent(FormDialogComponent);
+    dialog.detectChanges();
+
+    expect(dialog.componentInstance.form.getRawValue()).toEqual(
+      expect.objectContaining({ second_surname: '', dependents: 0, is_head_of_household: false })
+    );
+
+    const secondSurname: HTMLInputElement = dialog.debugElement
+      .queryAll(By.directive(FormControlName))
+      .find((element) => element.injector.get(FormControlName).name === 'second_surname').nativeElement;
+    secondSurname.value = 'Lopez';
+    secondSurname.dispatchEvent(new Event('input'));
+    dialog.detectChanges();
+
+    const submitButton: HTMLButtonElement = dialog.nativeElement.querySelectorAll('mat-dialog-actions button')[1];
+    expect(dialog.componentInstance.form.valid).toBe(true);
+    expect(submitButton.disabled).toBe(false);
   });
 
   it('translates single-row system timestamp labels', () => {

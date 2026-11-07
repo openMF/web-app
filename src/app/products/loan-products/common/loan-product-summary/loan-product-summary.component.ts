@@ -49,7 +49,15 @@ import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filt
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { SemiMonthlyDayPipe } from 'app/shared/loan/semi-monthly/semi-monthly-due-days.pipe';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY,
+  WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS,
+  WorkingCapitalPaymentAmountCalculationStrategy,
+  resolvePaymentAmountCalculationStrategy
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../loan-product-base.component';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
@@ -61,6 +69,7 @@ import { LoanProductSummaryAdvAccountingComponent } from './loan-product-summary
   styleUrls: ['./loan-product-summary.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    SemiMonthlyDayPipe,
     MatDivider,
     MatTable,
     MatColumnDef,
@@ -86,6 +95,9 @@ import { LoanProductSummaryAdvAccountingComponent } from './loan-product-summary
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductSummaryComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
+  /** Semi-monthly due days are only shown for that frequency; other products/loans may keep stale ones. */
+  readonly isSemiMonthly = isSemiMonthly;
+
   private accounting = inject(Accounting);
   protected loanProductService = inject(LoanProductService);
 
@@ -118,6 +130,8 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
   advancePaymentAllocationData: AdvancePaymentAllocationData;
 
   accountingMappings: any = {};
+
+  readonly wcStrategy = WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY;
   paymentChannelToFundSourceMappings: PaymentChannelToFundSourceMapping[] = [];
   feeToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
   penaltyToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
@@ -519,7 +533,9 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
           this.advancePaymentAllocationData = {
             transactionTypes: advancedAllocationTransactionTypes,
             allocationTypes: advancedPaymentAllocationTypes,
-            futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
+            futureInstallmentAllocationRules:
+              this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules,
+            creditAllocationStrategies: this.loanProduct.creditAllocationStrategyOptions
           };
         } else {
           const advancedAllocationTransactionTypes: OptionData[] =
@@ -534,7 +550,8 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
             transactionTypes: advancedAllocationTransactionTypes,
             allocationTypes: advancedPaymentAllocationTypes,
             futureInstallmentAllocationRules:
-              this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
+              this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules,
+            creditAllocationStrategies: this.loanProductsTemplate.creditAllocationStrategyOptions
           };
         }
       }
@@ -549,6 +566,21 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
         */
       }
     }
+  }
+
+  /** Working Capital: strategy key, whether the product comes from the API (option object) or the form (enum name). */
+  paymentAmountCalculationStrategy(): WorkingCapitalPaymentAmountCalculationStrategy {
+    return resolvePaymentAmountCalculationStrategy(this.loanProduct?.paymentAmountCalculationStrategy);
+  }
+
+  /** Human readable strategy name, taken from the template options so the form preview shows the same text as the view. */
+  paymentAmountCalculationStrategyLabel(): string {
+    const strategy = this.paymentAmountCalculationStrategy();
+    const options: StringEnumOptionData[] =
+      this.loanProductsTemplate?.paymentAmountCalculationStrategyOptions ??
+      this.loanProduct?.paymentAmountCalculationStrategyOptions ??
+      WC_PAYMENT_AMOUNT_CALCULATION_STRATEGY_OPTIONS;
+    return options.find((option) => option.id === strategy)?.value ?? strategy;
   }
 
   optionDataLookUp(itemId: any, optionsData: any[]): OptionData {
@@ -731,6 +763,23 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
 
   mapHumanReadableValueStringEnumOptionDataList(incomingParameter: StringEnumOptionData[]): string[] {
     return incomingParameter.map((v) => v.value);
+  }
+
+  /**
+   * Resolves a Working Capital start type for display: the view receives a StringEnumOptionData, while the
+   * create/edit preview receives the bare code the form sends, which is looked up in the template options.
+   */
+  getStartTypeOption(
+    startType: StringEnumOptionData | string | null | undefined,
+    options: StringEnumOptionData[] | undefined
+  ): StringEnumOptionData | null {
+    if (!startType) {
+      return null;
+    }
+    if (typeof startType !== 'string') {
+      return startType;
+    }
+    return options?.find((option: StringEnumOptionData) => option.code === startType) ?? null;
   }
 
   getBreach(): Breach | null {

@@ -48,4 +48,19 @@ export class ViewStandingInstructionsComponent {
       }
     });
   }
+
+  /**
+   * The day of the month the instruction runs on, as [year, month, day] for the date pipe (shown without the year).
+   * Fineract returns it as recurrenceOnDay and recurrenceOnMonth (1-12); both are 0 when no day is set.
+   * A leap year keeps 29 February valid.
+   */
+  get recurrenceOnMonthDay(): number[] | null {
+    const day = this.standingInstructionsData?.recurrenceOnDay;
+    const month = this.standingInstructionsData?.recurrenceOnMonth;
+    return day && month ? [
+          2000,
+          month,
+          day
+        ] : null;
+  }
 }

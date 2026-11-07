@@ -1,0 +1,87 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cash-exchange {
+  max-width: 1120px;
+  margin: 0 auto;
+
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 12px));
+    gap: 24px;
+  }
+
+  .denomination-row {
+    display: grid;
+    grid-template-columns: repeat(3, calc((100% - 16px) / 3));
+    gap: 8px;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  small {
+    display: block;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .total,
+  .actions {
+    padding: 16px 0;
+  }
+
+  .actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background: var(--mat-sys-surface, var(--mdc-elevated-card-container-color, white));
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-right: auto;
+  }
+
+  .error {
+    color: var(--mat-sys-error);
+  }
+
+  .receipt {
+    margin-top: 24px;
+  }
+}
+
+@media (width <= 960px) {
+  .cash-exchange .panels {
+    grid-template-columns: 100%;
+  }
+}
+
+@media print {
+  .cash-exchange {
+    .exchange-form,
+    .print-action,
+    .error,
+    .success,
+    h2,
+    mat-spinner {
+      display: none;
+    }
+
+    box-shadow: none;
+  }
+}

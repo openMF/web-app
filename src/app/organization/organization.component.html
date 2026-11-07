@@ -471,6 +471,16 @@
             </mat-list-item>
           </div>
 
+          @if (canReadFxRates) {
+            <mat-list-item>
+              <div class="menu-list-item-content">
+                <a class="menu-left-section" [routerLink]="['foreign-currency', 'rates']">
+                  <mat-icon>currency_exchange</mat-icon>
+                  <div matLine>{{ 'fx.ratesTitle' | translate }}</div>
+                </a>
+              </div>
+            </mat-list-item>
+          }
           <div #baseTeller>
             <mat-list-item *mifosxHasPermission="baseTellerPermissions">
               <div class="menu-list-item-content">

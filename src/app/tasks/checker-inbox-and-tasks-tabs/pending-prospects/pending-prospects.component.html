@@ -9,13 +9,9 @@
 <div class="tab-container mat-typography">
   <form [formGroup]="pendingProspectsForm" (ngSubmit)="applyFilters()" class="pending-prospects-filter">
     <mat-form-field>
-      <mat-label>{{ 'labels.text.Search' | translate }}</mat-label>
-      <input matInput formControlName="q" />
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
       <input matInput [matDatepicker]="createdFromPicker" formControlName="createdFrom" />
+      <mat-error>{{ 'pendingProspects.invalidDate' | translate }}</mat-error>
       <mat-datepicker-toggle matSuffix [for]="createdFromPicker"></mat-datepicker-toggle>
       <mat-datepicker #createdFromPicker></mat-datepicker>
     </mat-form-field>
@@ -23,6 +19,7 @@
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
       <input matInput [matDatepicker]="createdToPicker" formControlName="createdTo" />
+      <mat-error>{{ 'pendingProspects.invalidDate' | translate }}</mat-error>
       <mat-datepicker-toggle matSuffix [for]="createdToPicker"></mat-datepicker-toggle>
       <mat-datepicker #createdToPicker></mat-datepicker>
     </mat-form-field>
@@ -30,6 +27,7 @@
     <mat-form-field>
       <mat-label>{{ 'labels.inputs.Registration Status' | translate }}</mat-label>
       <mat-select formControlName="registrationStatus">
+        <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
         @for (status of registrationStatusOptions; track status.value) {
           <mat-option [value]="status.value">{{ status.labelKey | translate }}</mat-option>
         }
@@ -37,7 +35,9 @@
     </mat-form-field>
 
     <div class="filter-actions">
-      <button mat-raised-button color="primary" type="submit">{{ 'labels.buttons.Search' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ 'labels.buttons.Advanced Search' | translate }}
+      </button>
       <button mat-button type="button" (click)="clearFilters()">{{ 'labels.buttons.Clear' | translate }}</button>
     </div>
   </form>
@@ -69,7 +69,7 @@
     </div>
   }
 
-  <div class="table-wrapper">
+  <div class="table-wrapper" [attr.aria-busy]="loading">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
       <ng-container matColumnDef="displayName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="displayName">
@@ -108,21 +108,21 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header="currentStage">
           {{ 'labels.inputs.Current Stage' | translate }}
         </th>
-        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.currentStage) | translate }}</td>
+        <td mat-cell *matCellDef="let prospect">{{ stageLabel(progress(prospect).currentStage) | translate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="lastCompletedStage">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="lastCompletedStage">
           {{ 'labels.inputs.Last Completed Stage' | translate }}
         </th>
-        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.lastCompletedStage) | translate }}</td>
+        <td mat-cell *matCellDef="let prospect">{{ stageLabel(progress(prospect).lastCompletedStage) | translate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="stoppedAtStage">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="stoppedAtStage">
-          {{ 'labels.inputs.Stopped At' | translate }}
+          {{ 'pendingProspects.pendingStep' | translate }}
         </th>
-        <td mat-cell *matCellDef="let prospect">{{ stageLabel(prospect.stoppedAtStage) | translate }}</td>
+        <td mat-cell *matCellDef="let prospect">{{ pendingStepLabel(prospect) | translate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="pendingCreditCount">
@@ -134,9 +134,11 @@
 
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="createdAt">
-          {{ 'labels.inputs.Created' | translate }}
+          {{ 'pendingProspects.registrationDate' | translate }}
         </th>
-        <td mat-cell *matCellDef="let prospect">{{ prospect.createdAt ? (prospect.createdAt | dateFormat) : '-' }}</td>
+        <td mat-cell *matCellDef="let prospect">
+          {{ prospect.createdAt ? (registrationDate(prospect) | dateFormat) : '-' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="lastUpdatedAt">
@@ -153,7 +155,7 @@
     </table>
   </div>
 
-  @if (!loading && dataSource.data.length === 0) {
+  @if (!loading && !loadError && dataSource.data.length === 0) {
     <div class="alert">
       <div class="message">
         <mat-icon class="alert-check">info</mat-icon>

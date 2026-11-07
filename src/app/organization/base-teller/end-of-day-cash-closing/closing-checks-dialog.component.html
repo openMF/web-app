@@ -1,0 +1,39 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'eod.checksTitle' | translate }}</h2>
+<mat-dialog-content>
+  @if (!data.checks.length) {
+    <p>{{ 'eod.noChecks' | translate }}</p>
+  }
+  <table mat-table [dataSource]="data.checks">
+    <ng-container matColumnDef="select"
+      ><th mat-header-cell *matHeaderCellDef>{{ 'eod.selectChecks' | translate }}</th>
+      <td mat-cell *matCellDef="let check">
+        <mat-checkbox
+          [checked]="isSelected(check)"
+          (change)="toggle(check)"
+          [aria-label]="check.reference || ('eod.selectChecks' | translate)"
+        /></td
+    ></ng-container>
+    @for (field of fields; track field) {
+      <ng-container [matColumnDef]="field"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'eod.' + field | translate }}</th>
+        <td mat-cell *matCellDef="let check">{{ check[field] }}</td></ng-container
+      >
+    }
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end"
+  ><button mat-button [mat-dialog-close]="null">{{ 'eod.cancel' | translate }}</button
+  ><button mat-raised-button color="primary" [mat-dialog-close]="selected">
+    {{ 'eod.accept' | translate }}
+  </button></mat-dialog-actions
+>

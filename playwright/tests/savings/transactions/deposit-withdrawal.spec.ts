@@ -31,15 +31,6 @@ const ACTIVATED_ON_DATE = '05 January 2024';
 const TRANSACTION_DATE = '06 January 2024';
 
 test.describe('Savings transactions', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('deposits funds and increases the account balance', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const account = await createActiveSavingsAccount(apiSetup, cleanupGuard, client.resourceId, {

@@ -34,6 +34,13 @@
         </mat-form-field>
       </div>
 
+      @if (noResults$ | async) {
+        <div class="empty-state" role="status">
+          <p>{{ 'labels.messages.No matching activities found' | translate }}</p>
+          <p>{{ 'labels.messages.Try a different search term' | translate }}</p>
+        </div>
+      }
+
       <mat-autocomplete #activitySearch="matAutocomplete">
         @for (activity of filteredActivities | async; track activity) {
           <mat-option [routerLink]="activity.path">
@@ -105,11 +112,7 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); searchActivityBack()">
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

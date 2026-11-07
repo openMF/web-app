@@ -20,6 +20,11 @@
           </mifosx-input-amount>
 
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input matInput [value]="disbursementDate | dateFormat" readonly />
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
             <mat-hint align="end">
@@ -53,7 +58,7 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!updateDiscountForm.valid || isSubmitting"
+            [disabled]="!updateDiscountForm.valid || isSubmitting || disbursementTransactionId <= 0"
             *mifosxHasPermission="'UPDATEDISCOUNT_WORKINGCAPITALLOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}

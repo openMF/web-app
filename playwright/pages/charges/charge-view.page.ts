@@ -10,7 +10,7 @@ import { expect, Locator, Page } from '@playwright/test';
 
 import { BasePage } from '../BasePage';
 import { CHARGE_VIEW_SELECTORS } from '../../config/selectors';
-import { ROUTES } from '../../config/routes';
+import { ROUTES, appRoutePath } from '../../config/routes';
 import { fillDateField } from '../material-form-helpers';
 
 /**
@@ -101,7 +101,7 @@ export class ChargeViewPage extends BasePage {
     await expect(this.paySubmitButton).toBeEnabled({ timeout: 15000 });
     await this.paySubmitButton.click();
 
-    await this.page.waitForURL((url) => !url.hash.includes('/pay'), { timeout: 30000 });
+    await this.page.waitForURL((url) => !appRoutePath(url).includes('/pay'), { timeout: 30000 });
   }
 
   /**

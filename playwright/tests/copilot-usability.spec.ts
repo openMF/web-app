@@ -5,7 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { test, expect, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { test, expect } from '../fixtures/auth-session';
 
 /**
  * The Copilot panel, driven the way an officer drives it.
@@ -48,13 +49,7 @@ async function setDark(page: Page, dark: boolean): Promise<void> {
 
 test.describe('Copilot panel', () => {
   test.beforeEach(async ({ page }) => {
-    // Playwright storageState only restores localStorage and cookies, and the web app reads
-    // its credentials from sessionStorage at boot.
     await page.addInitScript(() => {
-      const credentials = localStorage.getItem('mifosXCredentials');
-      if (credentials) {
-        sessionStorage.setItem('mifosXCredentials', credentials);
-      }
       // Once per test rather than once per navigation: a reload that cleared the preference
       // would be testing the clear instead of whether the panel keeps it.
       if (!sessionStorage.getItem('copilot-spec-started')) {

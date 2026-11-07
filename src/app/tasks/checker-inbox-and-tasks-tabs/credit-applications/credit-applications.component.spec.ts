@@ -11,14 +11,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, provideRouter } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject, throwError } from 'rxjs';
 
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { LoansService } from 'app/loans/loans.service';
-import { OrganizationService } from 'app/organization/organization.service';
 import { Dates } from 'app/core/utils/dates';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -32,7 +31,6 @@ describe('CreditApplicationsComponent', () => {
   let tasksService: jest.Mocked<TasksService>;
   let loansService: jest.Mocked<LoansService>;
   let clientsService: jest.Mocked<ClientsService>;
-  let organizationService: jest.Mocked<OrganizationService>;
   let productsService: jest.Mocked<ProductsService>;
   let dialog: jest.Mocked<MatDialog>;
   let authenticationService: jest.Mocked<AuthenticationService>;
@@ -68,7 +66,11 @@ describe('CreditApplicationsComponent', () => {
     ]
   };
 
-  function createComponent(creditApplicationsResponse = of(page), permissions: string[] = ['REJECT_LOAN']) {
+  function createComponent(
+    creditApplicationsResponse = of(page),
+    permissions: string[] = ['REJECT_LOAN'],
+    routePath = 'credit'
+  ) {
     tasksService = {
       getCreditApplications: jest.fn(() => creditApplicationsResponse)
     } as any;
@@ -87,9 +89,6 @@ describe('CreditApplicationsComponent', () => {
     clientsService = {
       getClientTemplate: jest.fn(() => of({ clientTypeOptions: [{ id: 3, name: 'Business' }] })),
       getClientAddressTemplate: jest.fn(() => of({ stateProvinceIdOptions: [{ id: 7, name: 'Texas' }] }))
-    } as any;
-    organizationService = {
-      getCurrencies: jest.fn(() => of({ selectedCurrencyOptions: [{ code: 'USD', name: 'US Dollar' }] }))
     } as any;
     dialog = {
       open: jest.fn(() => ({
@@ -126,7 +125,6 @@ describe('CreditApplicationsComponent', () => {
         { provide: TasksService, useValue: tasksService },
         { provide: LoansService, useValue: loansService },
         { provide: ClientsService, useValue: clientsService },
-        { provide: OrganizationService, useValue: organizationService },
         { provide: ProductsService, useValue: productsService },
         { provide: MatDialog, useValue: dialog },
         {
@@ -135,7 +133,19 @@ describe('CreditApplicationsComponent', () => {
         },
         { provide: AuthenticationService, useValue: authenticationService },
         provideNativeDateAdapter(),
-        provideRouter([])
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              routeConfig: { path: routePath },
+              data: {
+                title:
+                  routePath === 'credit' ? 'Credit' : routePath === 'mass-rejection' ? 'Mass Rejection' : 'Requests'
+              }
+            }
+          }
+        }
       ]
     });
 
@@ -159,7 +169,6 @@ describe('CreditApplicationsComponent', () => {
     expect(productsService.getLoanProductsBasicDetails).toHaveBeenCalled();
     expect(clientsService.getClientTemplate).toHaveBeenCalled();
     expect(clientsService.getClientAddressTemplate).toHaveBeenCalled();
-    expect(organizationService.getCurrencies).toHaveBeenCalled();
     expect((tasksService as any).getLoanApplicationSearchTemplate).toBeUndefined();
     expect(component.loanProductOptions).toEqual([
       { id: 9, name: 'Working Capital', productType: 'working-capital' },
@@ -170,47 +179,245 @@ describe('CreditApplicationsComponent', () => {
     );
   });
 
-  it('applies filters and resets the current page', () => {
-    component.pageIndex = 2;
+  it('renders only the prototype controls and Advanced Search action on the Credit route', () => {
+    const form = fixture.nativeElement.querySelector('form');
+    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
+      control.getAttribute('formControlName')
+    );
+
+    expect(controls).toEqual([
+      'submittedFrom',
+      'submittedTo',
+      'minAmount',
+      'maxAmount',
+      'stateProvinceId',
+      'municipality',
+      'productId'
+    ]);
+    expect(Object.keys(component.creditApplicationsForm.controls)).toEqual(controls);
+    expect(form.textContent).toContain('labels.inputs.From Date');
+    expect(form.textContent).toContain('labels.inputs.To Date');
+    expect(form.textContent).toContain('labels.inputs.Amount Range From');
+    expect(form.textContent).toContain('labels.inputs.Amount Range To');
+    expect(form.textContent).toContain('labels.inputs.State');
+    expect(form.textContent).toContain('labels.inputs.Municipality');
+    expect(form.textContent).toContain('labels.inputs.Product');
+    expect(form.textContent).toContain('labels.buttons.Advanced Search');
+    expect(form.textContent).not.toContain('labels.inputs.Customer Type');
+    expect(form.textContent).not.toContain('labels.inputs.Currency');
+    expect(form.textContent).not.toContain('labels.inputs.Status');
+    expect(form.textContent).toContain('labels.buttons.Clear');
+  });
+
+  it('renders exactly the approved Requests filters and Advanced Search action', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'requests');
+    const form = fixture.nativeElement.querySelector('form');
+    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
+      control.getAttribute('formControlName')
+    );
+
+    expect(controls).toEqual([
+      'submittedFrom',
+      'submittedTo',
+      'clientTypeId',
+      'stateProvinceId',
+      'municipality',
+      'productId',
+      'maxAmount'
+    ]);
+    expect(Object.keys(component.creditApplicationsForm.controls)).toEqual(controls);
+    expect(form.classList).toContain('requests-filter');
+    expect(form.textContent).toContain('labels.inputs.Customer Type');
+    expect(form.textContent).toContain('labels.inputs.State');
+    expect(form.textContent).toContain('labels.inputs.Municipality');
+    expect(form.textContent).toContain('labels.inputs.Product');
+    expect(form.textContent).toContain('labels.inputs.Maximum Amount');
+    expect(form.textContent).toContain('labels.buttons.Advanced Search');
+    expect(form.textContent).not.toContain('labels.inputs.Minimum Amount');
+    expect(form.textContent).not.toContain('labels.inputs.Currency');
+    expect(form.textContent).not.toContain('labels.inputs.Status');
+    expect(form.textContent).not.toContain('labels.buttons.Clear');
+  });
+
+  it('submits only the approved Requests filters plus server paging and sorting', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['READ_LOAN'], 'requests');
+    tasksService.getCreditApplications.mockClear();
     component.creditApplicationsForm.patchValue({
       submittedFrom: new Date(2026, 0, 1),
       submittedTo: new Date(2026, 0, 31),
       clientTypeId: 3,
       stateProvinceId: 7,
       municipality: 'Austin',
+      productId: 10,
+      maxAmount: 1200
+    });
+
+    component.applyFilters();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      submittedFrom: '2026-01-01',
+      submittedTo: '2026-01-31',
+      clientTypeId: 3,
+      stateProvinceId: 7,
+      municipality: 'Austin',
+      productId: 10,
+      maxAmount: 1200,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
+    expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+    expect(loansService.applyWorkingCapitalLoanAccountCommand).not.toHaveBeenCalled();
+  });
+
+  it('rejects a negative Requests maximum amount without calling the backend', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['READ_LOAN'], 'requests');
+    tasksService.getCreditApplications.mockClear();
+    component.creditApplicationsForm.patchValue({ maxAmount: -1 });
+
+    component.applyFilters();
+
+    expect(component.filterError).toBe('labels.text.Amounts cannot be negative');
+    expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+  });
+
+  it('renders only WEB-1063 filters and actions on the Mass Rejection route', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+    const form = fixture.nativeElement.querySelector('form');
+    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
+      control.getAttribute('formControlName')
+    );
+
+    expect(controls).toEqual([
+      'submittedFrom',
+      'submittedTo',
+      'productId',
+      'status'
+    ]);
+    expect(Object.keys(component.creditApplicationsForm.controls).sort()).toEqual(
+      [
+        'submittedFrom',
+        'submittedTo',
+        'status',
+        'productId'
+      ].sort()
+    );
+    expect(form.textContent).toContain('labels.buttons.Advanced Search');
+    expect(form.textContent).not.toContain('labels.inputs.Customer Type');
+    expect(form.textContent).not.toContain('labels.inputs.Municipality');
+    expect(form.textContent).not.toContain('labels.inputs.Amount Range From');
+    expect(form.textContent).not.toContain('labels.inputs.Amount Range To');
+    expect(fixture.nativeElement.textContent).toContain('labels.buttons.Reject Selected');
+    expect(component.displayedColumns[0]).toBe('select');
+  });
+
+  it('submits only the Mass Rejection filters plus server paging and sorting', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+    tasksService.getCreditApplications.mockClear();
+    component.creditApplicationsForm.patchValue({
+      submittedFrom: new Date(2026, 0, 1),
+      submittedTo: new Date(2026, 0, 31),
+      status: 100,
+      productId: 10
+    });
+
+    component.applyFilters();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      submittedFrom: '2026-01-01',
+      submittedTo: '2026-01-31',
+      status: 100,
+      productId: 10,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
+  });
+
+  it('uses statuses returned by the authoritative application search on Mass Rejection', () => {
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'mass-rejection');
+
+    expect(component.statusOptions.map((status) => status.id)).toEqual([
+      100,
+      200,
+      400,
+      500
+    ]);
+    expect(component.statusOptions).toContainEqual(
+      expect.objectContaining({
+        id: 100,
+        code: 'loanStatusType.submitted.and.pending.approval',
+        displayLabel: 'Submitted and pending approval'
+      })
+    );
+  });
+
+  it('keeps rejection controls and selection off the Requests and Credit screens', () => {
+    expect(component.displayedColumns).not.toContain('select');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
+
+    TestBed.resetTestingModule();
+    createComponent(of(page), ['REJECT_LOAN'], 'requests');
+
+    expect(component.displayedColumns).not.toContain('select');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
+  });
+
+  it('applies filters and resets the current page', () => {
+    component.pageIndex = 2;
+    component.creditApplicationsForm.patchValue({
+      submittedFrom: new Date(2026, 0, 1),
+      submittedTo: new Date(2026, 0, 31),
+      municipality: 'Austin',
       productId: 9,
-      status: 100
+      minAmount: 100,
+      maxAmount: 500,
+      stateProvinceId: 7
     });
 
     component.applyFilters();
 
     expect(component.pageIndex).toBe(0);
-    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(
-      expect.objectContaining({
-        submittedFrom: '2026-01-01',
-        submittedTo: '2026-01-31',
-        clientTypeId: 3,
-        stateProvinceId: 7,
-        municipality: 'Austin',
-        productId: 9,
-        status: 100,
-        offset: 0,
-        limit: 10
-      })
-    );
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      submittedFrom: '2026-01-01',
+      submittedTo: '2026-01-31',
+      municipality: 'Austin',
+      productId: 9,
+      minAmount: 100,
+      maxAmount: 500,
+      stateProvinceId: 7,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
   });
 
   it('clears filters and reloads the first page', () => {
     component.pageIndex = 3;
     component.filterError = 'labels.text.Amounts cannot be negative';
-    component.creditApplicationsForm.patchValue({ minAmount: 10, currencyCode: 'USD' });
+    component.creditApplicationsForm.patchValue({ minAmount: 10, stateProvinceId: 7 });
 
     component.clearFilters();
 
     expect(component.filterError).toBe('');
     expect(component.pageIndex).toBe(0);
     expect(component.creditApplicationsForm.value.minAmount).toBeNull();
-    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(expect.objectContaining({ offset: 0, limit: 10 }));
+    expect(component.creditApplicationsForm.value.stateProvinceId).toBeNull();
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
   });
 
   it('blocks invalid date ranges', () => {
@@ -226,7 +433,7 @@ describe('CreditApplicationsComponent', () => {
   });
 
   it('blocks invalid amount ranges', () => {
-    component.creditApplicationsForm.patchValue({ minAmount: 200, maxAmount: 100, currencyCode: 'USD' });
+    component.creditApplicationsForm.patchValue({ minAmount: 200, maxAmount: 100 });
 
     component.applyFilters();
 
@@ -234,13 +441,58 @@ describe('CreditApplicationsComponent', () => {
     expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
   });
 
-  it('requires currency when filtering by amount', () => {
+  it('applies amount filtering without adding a non-prototype currency parameter', () => {
     component.creditApplicationsForm.patchValue({ minAmount: 100 });
 
     component.applyFilters();
 
-    expect(component.filterError).toBe('labels.text.Currency is required when filtering by amount');
-    expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+    expect(component.filterError).toBe('');
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      minAmount: 100,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
+  });
+
+  it.each([
+    [
+      'submittedFrom',
+      new Date(2026, 0, 2),
+      'submittedFrom',
+      '2026-01-02'
+    ],
+    [
+      'stateProvinceId',
+      7,
+      'stateProvinceId',
+      7
+    ],
+    [
+      'municipality',
+      'Austin',
+      'municipality',
+      'Austin'
+    ],
+    [
+      'productId',
+      9,
+      'productId',
+      9
+    ]
+  ])('maps the %s Credit filter to only its supported API parameter', (control, value, parameter, expected) => {
+    component.creditApplicationsForm.patchValue({ [control]: value });
+
+    component.applyFilters();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
+      [parameter]: expected,
+      offset: 0,
+      limit: 10,
+      orderBy: 'submittedOnDate',
+      sortOrder: 'DESC'
+    });
   });
 
   it('uses paginator offset and limit and resets paging on a new search', () => {
@@ -311,13 +563,38 @@ describe('CreditApplicationsComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('labels.text.No credit applications found');
   });
 
+  it('keeps the existing credit result row rendering unchanged', () => {
+    fixture.detectChanges();
+    const tableText = fixture.nativeElement.querySelector('table').textContent;
+
+    expect(tableText).toContain('LN-42');
+    expect(tableText).toContain('Alex Client');
+    expect(tableText).toContain('Term Loan');
+    expect(component.dataSource.data).toEqual(page.pageItems);
+  });
+
   it('shows an error state when loading fails', () => {
     TestBed.resetTestingModule();
     createComponent(throwError(() => new Error('network')));
 
     expect(component.loading).toBe(false);
     expect(component.dataSource.data).toEqual([]);
+    expect(component.loadFailed).toBe(true);
     expect(component.filterError).toBe('labels.text.Unable to load credit applications');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.text.No credit applications found');
+  });
+
+  it('retries a failed request', () => {
+    TestBed.resetTestingModule();
+    createComponent(throwError(() => new Error('network')));
+    tasksService.getCreditApplications.mockReturnValue(of(page));
+    tasksService.getCreditApplications.mockClear();
+
+    component.retryLoad();
+
+    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+    expect(component.loadFailed).toBe(false);
+    expect(component.dataSource.data).toEqual(page.pageItems);
   });
 
   it('navigates rows to the existing loan details route', () => {
@@ -347,6 +624,17 @@ describe('CreditApplicationsComponent', () => {
     component.toggleSelection(rejectable, false);
 
     expect(component.selectedApplicationIds.size).toBe(0);
+  });
+
+  it('keeps pending applications selectable when the response omits the status code', () => {
+    const pendingWithoutCode = {
+      ...page.pageItems[0],
+      status: { id: 100, value: 'Submitted and pending approval' }
+    };
+
+    expect(component.isRejectable(pendingWithoutCode)).toBe(true);
+    component.toggleSelection(pendingWithoutCode, true);
+    expect(component.selectedApplicationIds).toEqual(new Set([42]));
   });
 
   it('selects and deselects the visible rejectable page', () => {
@@ -436,7 +724,7 @@ describe('CreditApplicationsComponent', () => {
     expect(loansService.applyWorkingCapitalLoanAccountCommand).toHaveBeenCalledWith(43, 'reject', expect.any(Object));
   });
 
-  it('does not select rows when the application product type cannot be determined', () => {
+  it('uses the normal loan rejection flow when optional product type metadata is absent', () => {
     const applicationWithoutProductType: any = { ...page.pageItems[0] };
     delete applicationWithoutProductType.productType;
 
@@ -445,7 +733,7 @@ describe('CreditApplicationsComponent', () => {
       true
     );
 
-    expect(component.selectedApplicationIds.size).toBe(0);
+    expect(component.selectedApplicationIds).toEqual(new Set([42]));
   });
 
   it('rejects multiple selected loans and refreshes the list after success', () => {
@@ -484,6 +772,7 @@ describe('CreditApplicationsComponent', () => {
     expect(component.rejectionResultParams).toEqual({ succeeded: 1, total: 2, failed: 1 });
     expect(component.rejectionResultType).toBe('error');
     expect(component.selectedApplicationIds).toEqual(new Set([43]));
+    expect(component.failedApplications).toEqual([expect.objectContaining({ loanId: 43, accountNo: 'LN-42' })]);
   });
 
   it('removes selected applications that are no longer rejectable on reload', () => {
@@ -542,8 +831,8 @@ describe('CreditApplicationsComponent', () => {
   it('hides mass reject when the user lacks the reject loan permission', () => {
     environment.productionModeEnableRBAC = true;
     TestBed.resetTestingModule();
-    createComponent(of(page), ['READ_LOAN']);
+    createComponent(of(page), ['READ_LOAN'], 'mass-rejection');
 
-    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Mass Reject');
+    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
   });
 });

@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup, UntypedFormBuilder, ValidationErrors, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
@@ -46,6 +46,14 @@ const EXTERNAL_GUARANTOR_CONTROLS = [
   'mobileNumber',
   'housePhoneNumber'
 ];
+
+/**
+ * Typed text is not a guarantor: the client has to be picked from the list, since only the
+ * picked client carries the id that is sent as entityId.
+ */
+function clientPickedValidator(control: AbstractControl): ValidationErrors | null {
+  return typeof control.value === 'string' && control.value !== '' ? { clientNotPicked: true } : null;
+}
 
 /**
  * Create Guarantor Action
@@ -111,7 +119,10 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
       // Existing client
       name: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          clientPickedValidator
+        ]
       ],
       savingsId: [''],
       amount: [''],

@@ -1,0 +1,679 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container credit-payment">
+  <mat-card class="workflow-card">
+    <mat-card-content>
+      <h2>{{ 'creditPayment.heading.title' | translate }}</h2>
+
+      @if (errorMessage) {
+        <div class="message error-message" role="alert">{{ errorMessage | translate }}</div>
+      }
+
+      @if (!canRead) {
+        <div class="message error-message">{{ 'creditPayment.errors.noReadPermission' | translate }}</div>
+      } @else if (isLoading) {
+        <div class="loading-state"><mat-spinner diameter="40"></mat-spinner></div>
+      } @else if (!context) {
+        <div class="message empty-state">{{ 'creditPayment.errors.configuration' | translate }}</div>
+        <button type="button" mat-raised-button color="primary" (click)="loadContext()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      } @else {
+        <section class="context-summary">
+          <span
+            >{{ 'creditPayment.fields.businessDate' | translate }}: <strong>{{ context.businessDate }}</strong></span
+          >
+          <span
+            >{{ 'creditPayment.fields.teller' | translate }}: <strong>{{ context.tellerId }}</strong></span
+          >
+          <span
+            >{{ 'creditPayment.fields.cashier' | translate }}: <strong>{{ context.cashierId }}</strong></span
+          >
+        </section>
+
+        <mat-stepper
+          orientation="vertical"
+          [linear]="!receipt"
+          [selectedIndex]="selectedStepIndex"
+          (selectedIndexChange)="selectedStepIndex = $event"
+        >
+          <mat-step [stepControl]="customerForm" [completed]="!!selectedCustomer">
+            <ng-template matStepLabel>{{ 'creditPayment.steps.customer' | translate }}</ng-template>
+            <form [formGroup]="customerForm" class="layout-column gap-20px">
+              <div class="layout-row gap-2percent responsive-column align-start">
+                <mat-form-field class="flex-80">
+                  <mat-label>{{ 'creditPayment.fields.customerSearch' | translate }}</mat-label>
+                  <input matInput formControlName="search" (keyup.enter)="searchCustomers()" />
+                  <mat-hint>{{ 'creditPayment.hints.customerSearch' | translate }}</mat-hint>
+                </mat-form-field>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="searchCustomers()"
+                  [disabled]="customerForm.invalid || isSearching"
+                >
+                  @if (isSearching) {
+                    <mat-spinner diameter="20"></mat-spinner>
+                  } @else {
+                    {{ 'labels.buttons.Search' | translate }}
+                  }
+                </button>
+              </div>
+
+              @if (hasSearched && !isSearching && !customers.length && !selectedCustomer) {
+                <div class="message empty-state">{{ 'creditPayment.empty.customers' | translate }}</div>
+              }
+              @if (customers.length) {
+                <mat-selection-list [multiple]="false" class="selection-list">
+                  @for (customer of customers; track customer.clientId) {
+                    <mat-list-option (click)="selectCustomer(customer)" [disabled]="isLoadingLoans">
+                      <strong>{{ customer.displayName }}</strong>
+                      <span>{{ customer.accountNo }} · {{ customer.officeName }} · {{ customer.status }}</span>
+                    </mat-list-option>
+                  }
+                </mat-selection-list>
+              }
+              @if (selectedCustomer) {
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'creditPayment.fields.customer' | translate }}</span
+                    ><strong>{{ selectedCustomer.displayName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.accountNumber' | translate }}</span
+                    ><strong>{{ selectedCustomer.accountNo }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.office' | translate }}</span
+                    ><strong>{{ selectedCustomer.officeName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.status' | translate }}</span
+                    ><strong>{{ selectedCustomer.status }}</strong>
+                  </div>
+                </section>
+                <button type="button" mat-raised-button matStepperNext [disabled]="isLoadingLoans">
+                  {{ 'labels.buttons.Next' | translate }}<fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              }
+            </form>
+          </mat-step>
+
+          <mat-step [completed]="!!selectedLoan">
+            <ng-template matStepLabel>{{ 'creditPayment.steps.loan' | translate }}</ng-template>
+            @if (isLoadingLoans || isLoadingLoan) {
+              <div class="loading-state"><mat-spinner diameter="40"></mat-spinner></div>
+            } @else if (selectedCustomer && !loans.length && !selectedLoan) {
+              <div class="message empty-state">{{ 'creditPayment.empty.loans' | translate }}</div>
+            } @else if (!selectedLoan) {
+              <mat-selection-list [multiple]="false" class="selection-list">
+                @for (loan of loans; track loan.id) {
+                  <mat-list-option (click)="selectLoan(loan)">
+                    <strong>{{ loan.accountNo }}</strong>
+                    <span> {{ loan.totalOutstanding }} {{ loan.currencyCode }} · {{ loan.status }} </span>
+                  </mat-list-option>
+                }
+              </mat-selection-list>
+            }
+
+            @if (selectedLoan) {
+              <section class="summary-grid balance-grid">
+                <div>
+                  <span>{{ 'creditPayment.fields.loanAccount' | translate }}</span
+                  ><strong>{{ selectedLoan.accountNo }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.totalDue' | translate }}</span
+                  ><strong>{{ selectedLoan.totalOutstanding }} {{ selectedLoan.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.status' | translate }}</span
+                  ><strong>{{ selectedLoan.status }}</strong>
+                </div>
+              </section>
+
+              <mat-tab-group>
+                <mat-tab [label]="'creditPayment.tabs.current' | translate">
+                  <section class="summary-grid tab-content">
+                    <div>
+                      <span>{{ 'creditPayment.fields.principal' | translate }}</span
+                      ><strong>{{ selectedLoan.principalOutstanding }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.interest' | translate }}</span
+                      ><strong>{{ selectedLoan.interestOutstanding }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.tax' | translate }}</span
+                      ><strong>{{ selectedLoan.taxOutstanding ?? 0 }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.fees' | translate }}</span
+                      ><strong>{{ selectedLoan.feeOutstanding }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.penalties' | translate }}</span
+                      ><strong>{{ selectedLoan.penaltyOutstanding }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.total' | translate }}</span
+                      ><strong>{{ selectedLoan.totalOutstanding }}</strong>
+                    </div>
+                  </section>
+                </mat-tab>
+                <mat-tab [label]="'creditPayment.tabs.overdue' | translate">
+                  <section class="summary-grid tab-content">
+                    <div>
+                      <span>{{ 'creditPayment.fields.principal' | translate }}</span
+                      ><strong>{{ selectedLoan.principalOverdue }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.interest' | translate }}</span
+                      ><strong>{{ selectedLoan.interestOverdue }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.tax' | translate }}</span
+                      ><strong>{{ selectedLoan.taxOverdue ?? 0 }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.fees' | translate }}</span
+                      ><strong>{{ selectedLoan.feeOverdue }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.penalties' | translate }}</span
+                      ><strong>{{ selectedLoan.penaltyOverdue }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.total' | translate }}</span
+                      ><strong>{{ selectedLoan.totalOverdue }}</strong>
+                    </div>
+                  </section>
+                </mat-tab>
+                <mat-tab [label]="'creditPayment.tabs.schedule' | translate">
+                  <div class="tab-content records">
+                    @for (period of schedulePeriods; track period.period) {
+                      <div class="record-row">
+                        <span>{{ period.period }}</span>
+                        <span>{{ displayDate(period.dueDate) }}</span>
+                        <span
+                          >{{ period.totalDueForPeriod ?? period.totalOutstandingForPeriod }}
+                          {{ selectedLoan.currencyCode }}</span
+                        >
+                      </div>
+                    } @empty {
+                      <div class="message empty-state">{{ 'creditPayment.empty.schedule' | translate }}</div>
+                    }
+                  </div>
+                </mat-tab>
+                <mat-tab [label]="'creditPayment.tabs.history' | translate">
+                  <div class="tab-content records">
+                    @for (transaction of transactions; track transaction.id) {
+                      <div class="record-row">
+                        <span>{{ transactionType(transaction) }}</span>
+                        <span>{{ displayDate(transaction.date) }}</span>
+                        <span>{{ transaction.amount }} {{ selectedLoan.currencyCode }}</span>
+                      </div>
+                    } @empty {
+                      <div class="message empty-state">{{ 'creditPayment.empty.history' | translate }}</div>
+                    }
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+
+              <div class="layout-row align-center gap-2percent responsive-column step-actions">
+                <button type="button" mat-raised-button matStepperPrevious>
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+                </button>
+                <button type="button" mat-raised-button matStepperNext>
+                  {{ 'labels.buttons.Next' | translate }}<fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                </button>
+              </div>
+            }
+          </mat-step>
+
+          <mat-step [stepControl]="paymentForm" [completed]="!!preview">
+            <ng-template matStepLabel>{{ 'creditPayment.steps.payment' | translate }}</ng-template>
+            <form [formGroup]="paymentForm" class="layout-column gap-20px">
+              <mat-button-toggle-group
+                formControlName="paymentMethod"
+                (change)="methodChanged()"
+                [attr.aria-label]="'creditPayment.fields.paymentMethod' | translate"
+              >
+                <mat-button-toggle value="CASH">{{ 'creditPayment.methods.CASH' | translate }}</mat-button-toggle>
+                <mat-button-toggle value="CHECK">{{ 'creditPayment.methods.CHECK' | translate }}</mat-button-toggle>
+              </mat-button-toggle-group>
+
+              <div class="form-grid">
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.amount' | translate }}</mat-label>
+                  <input matInput formControlName="amount" inputmode="decimal" required />
+                  @if (paymentForm.controls.amount.invalid && paymentForm.controls.amount.touched) {
+                    <mat-error>{{ 'creditPayment.validation.amount' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.paymentType' | translate }}</mat-label>
+                  <mat-select formControlName="paymentTypeId" required>
+                    @for (paymentType of paymentTypes; track paymentType.id) {
+                      <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (!paymentTypes.length) {
+                    <mat-hint>{{ 'creditPayment.empty.paymentTypes' | translate }}</mat-hint>
+                  }
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.note' | translate }}</mat-label>
+                  <textarea matInput formControlName="note" maxlength="500"></textarea>
+                </mat-form-field>
+              </div>
+            </form>
+
+            @if (paymentMethod === 'CASH') {
+              <form [formGroup]="cashForm">
+                @if (!denominations.length) {
+                  <div class="message empty-state">{{ 'creditPayment.empty.denominations' | translate }}</div>
+                } @else {
+                  <section class="detail-panel">
+                    <h3>{{ 'creditPayment.heading.denominations' | translate }}</h3>
+                    <div formArrayName="denominations" class="layout-column gap-20px">
+                      @for (
+                        denomination of denominations.controls;
+                        track denomination.controls.denominationId.value;
+                        let i = $index
+                      ) {
+                        <div [formGroupName]="i" class="denomination-row">
+                          <div>
+                            <span>{{ 'creditPayment.fields.denomination' | translate }}</span
+                            ><strong>{{ denomination.controls.value.value }} {{ selectedLoan?.currencyCode }}</strong>
+                          </div>
+                          <mat-form-field>
+                            <mat-label>{{ 'creditPayment.fields.quantity' | translate }}</mat-label>
+                            <input matInput type="number" min="0" step="1" formControlName="quantity" required />
+                            @if (denomination.controls.quantity.invalid) {
+                              <mat-error>{{ 'creditPayment.validation.quantity' | translate }}</mat-error>
+                            }
+                          </mat-form-field>
+                          <div>
+                            <span>{{ 'creditPayment.fields.subtotal' | translate }}</span
+                            ><strong>{{ lineTotal(denomination) }} {{ selectedLoan?.currencyCode }}</strong>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </section>
+                  <section class="summary-grid">
+                    <div>
+                      <span>{{ 'creditPayment.fields.paymentAmount' | translate }}</span
+                      ><strong>{{ paymentForm.controls.amount.value }} {{ selectedLoan?.currencyCode }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.tendered' | translate }}</span
+                      ><strong>{{ totalCash }} {{ selectedLoan?.currencyCode }}</strong>
+                    </div>
+                    <div [class.error]="!cashIsSufficient">
+                      <span>{{ 'creditPayment.fields.change' | translate }}</span
+                      ><strong>{{ changeAmount }} {{ selectedLoan?.currencyCode }}</strong>
+                    </div>
+                  </section>
+                  @if (!cashIsSufficient) {
+                    <div class="message error-message">
+                      {{ 'creditPayment.validation.insufficientCash' | translate }}
+                    </div>
+                  }
+                }
+              </form>
+            } @else {
+              <form [formGroup]="checkForm" class="form-grid detail-panel">
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.bank' | translate }}</mat-label>
+                  <mat-select formControlName="bankId" required>
+                    @for (bank of banks; track bank.id) {
+                      <mat-option [value]="bank.id">{{ bank.name }} ({{ bank.code }})</mat-option>
+                    }
+                  </mat-select>
+                  @if (!banks.length) {
+                    <mat-hint>{{ 'creditPayment.empty.banks' | translate }}</mat-hint>
+                  }
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.checkType' | translate }}</mat-label>
+                  <input matInput formControlName="checkType" required />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.checkNumber' | translate }}</mat-label>
+                  <input matInput formControlName="checkNumber" required />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.checkAccount' | translate }}</mat-label>
+                  <input matInput formControlName="accountNumber" />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.routingCode' | translate }}</mat-label>
+                  <input matInput formControlName="routingCode" />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>{{ 'creditPayment.fields.classification' | translate }}</mat-label>
+                  <mat-select formControlName="classification" required>
+                    <mat-option value="SUBJECT_TO_COLLECTION">{{
+                      'creditPayment.classification.SUBJECT_TO_COLLECTION' | translate
+                    }}</mat-option>
+                    <mat-option value="CLEARED_FUNDS">{{
+                      'creditPayment.classification.CLEARED_FUNDS' | translate
+                    }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                @if (checkForm.controls.classification.value === 'SUBJECT_TO_COLLECTION') {
+                  <div class="message warning-message full-width" role="note">
+                    {{ 'creditPayment.messages.pendingExplanation' | translate }}
+                  </div>
+                }
+              </form>
+            }
+
+            <div class="layout-row align-center gap-2percent responsive-column step-actions">
+              <button type="button" mat-raised-button matStepperPrevious>
+                <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+              </button>
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="requestPreview()"
+                [disabled]="!paymentDetailsValid || isPreviewing"
+              >
+                @if (isPreviewing) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  {{ 'creditPayment.actions.preview' | translate }}
+                }
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>{{ 'creditPayment.steps.confirmation' | translate }}</ng-template>
+            @if (preview) {
+              <div class="message warning-message">{{ 'creditPayment.messages.confirm' | translate }}</div>
+              <section class="summary-grid authoritative-summary">
+                <div>
+                  <span>{{ 'creditPayment.fields.customer' | translate }}</span
+                  ><strong>{{ selectedCustomer?.displayName }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.loanAccount' | translate }}</span
+                  ><strong>{{ selectedLoan?.accountNo }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.paymentMethod' | translate }}</span
+                  ><strong>{{ 'creditPayment.methods.' + preview.paymentMethod | translate }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.paymentAmount' | translate }}</span
+                  ><strong>{{ preview.paymentAmount }} {{ preview.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.tendered' | translate }}</span
+                  ><strong>{{ preview.tenderAmount }} {{ preview.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.change' | translate }}</span
+                  ><strong>{{ preview.changeAmount }} {{ preview.currencyCode }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.businessDate' | translate }}</span
+                  ><strong>{{ preview.businessDate }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.principal' | translate }}</span
+                  ><strong>{{ preview.nativeRepaymentTemplate?.principalPortion ?? 0 }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.interest' | translate }}</span
+                  ><strong>{{ preview.nativeRepaymentTemplate?.interestPortion ?? 0 }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.fees' | translate }}</span
+                  ><strong>{{ preview.nativeRepaymentTemplate?.feeChargesPortion ?? 0 }}</strong>
+                </div>
+                <div>
+                  <span>{{ 'creditPayment.fields.penalties' | translate }}</span
+                  ><strong>{{ preview.nativeRepaymentTemplate?.penaltyChargesPortion ?? 0 }}</strong>
+                </div>
+              </section>
+              @if (preview.paymentMethod === 'CHECK') {
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'creditPayment.fields.bank' | translate }}</span
+                    ><strong>{{ selectedBank?.name }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.checkNumber' | translate }}</span
+                    ><strong>{{ checkForm.controls.checkNumber.value }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.classification' | translate }}</span
+                    ><strong>{{ 'creditPayment.classification.' + preview.checkClassification | translate }}</strong>
+                  </div>
+                </section>
+                @if (!preview.postsRepaymentOnConfirmation) {
+                  <div class="message warning-message">
+                    {{ 'creditPayment.messages.pendingExplanation' | translate }}
+                  </div>
+                }
+              }
+              <div class="layout-row align-center gap-2percent responsive-column step-actions">
+                <button type="button" mat-raised-button matStepperPrevious [disabled]="isSubmitting">
+                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+                </button>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="submitPayment()"
+                  [disabled]="isSubmitting || !canCreate"
+                  *mifosxHasPermission="'CREATE_BASE_TELLER_CREDIT_PAYMENT'"
+                >
+                  @if (isSubmitting) {
+                    <mat-spinner diameter="20"></mat-spinner>
+                  } @else {
+                    {{ 'creditPayment.actions.confirmSubmit' | translate }}
+                  }
+                </button>
+              </div>
+              @if (!canCreate) {
+                <div class="message error-message">{{ 'creditPayment.errors.noCreatePermission' | translate }}</div>
+              }
+            }
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>{{ 'creditPayment.steps.receipt' | translate }}</ng-template>
+            @if (receipt) {
+              <section class="receipt">
+                <h3>{{ 'creditPayment.heading.receipt' | translate }}</h3>
+                <div class="lifecycle-status" [class.pending]="receipt.status === 'PENDING_COLLECTION'">
+                  {{ 'creditPayment.status.' + receipt.status | translate }}
+                </div>
+                @if (receipt.status === 'PENDING_COLLECTION') {
+                  <div class="message warning-message">{{ 'creditPayment.messages.pendingReceipt' | translate }}</div>
+                }
+                <section class="summary-grid">
+                  <div>
+                    <span>{{ 'creditPayment.fields.receiptNumber' | translate }}</span
+                    ><strong>{{ receipt.receiptNumber }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.customer' | translate }}</span
+                    ><strong>{{ receipt.clientName }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.loanAccount' | translate }}</span
+                    ><strong>{{ receipt.loanAccountNo }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.paymentMethod' | translate }}</span
+                    ><strong>{{ 'creditPayment.methods.' + receipt.paymentMethod | translate }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.amount' | translate }}</span
+                    ><strong>{{ receipt.amount }} {{ receipt.currencyCode }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.businessDate' | translate }}</span
+                    ><strong>{{ receipt.businessDate }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.operator' | translate }}</span
+                    ><strong>{{ receipt.operatorName }}</strong>
+                  </div>
+                  @if (receipt.tellerId) {
+                    <div>
+                      <span>{{ 'creditPayment.fields.teller' | translate }}</span
+                      ><strong>{{ receipt.tellerId }}</strong>
+                    </div>
+                  }
+                  @if (receipt.cashierId) {
+                    <div>
+                      <span>{{ 'creditPayment.fields.cashier' | translate }}</span
+                      ><strong>{{ receipt.cashierId }}</strong>
+                    </div>
+                  }
+                  @if (receipt.loanTransactionId) {
+                    <div>
+                      <span>{{ 'creditPayment.fields.loanTransaction' | translate }}</span
+                      ><strong>{{ receipt.loanTransactionId }}</strong>
+                    </div>
+                  }
+                  @if (receipt.cashierTransactionId) {
+                    <div>
+                      <span>{{ 'creditPayment.fields.cashierTransaction' | translate }}</span
+                      ><strong>{{ receipt.cashierTransactionId }}</strong>
+                    </div>
+                  }
+                  <div>
+                    <span>{{ 'creditPayment.fields.principal' | translate }}</span
+                    ><strong>{{ receipt.principalPortion ?? 0 }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.interest' | translate }}</span
+                    ><strong>{{ receipt.interestPortion ?? 0 }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.fees' | translate }}</span
+                    ><strong>{{ receipt.feePortion ?? 0 }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.penalties' | translate }}</span
+                    ><strong>{{ receipt.penaltyPortion ?? 0 }}</strong>
+                  </div>
+                  <div>
+                    <span>{{ 'creditPayment.fields.overpayment' | translate }}</span
+                    ><strong>{{ receipt.overpaymentPortion ?? 0 }}</strong>
+                  </div>
+                </section>
+                @if (receipt.paymentMethod === 'CASH') {
+                  <section class="summary-grid">
+                    <div>
+                      <span>{{ 'creditPayment.fields.tendered' | translate }}</span
+                      ><strong>{{ receipt.tenderAmount }} {{ receipt.currencyCode }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.change' | translate }}</span
+                      ><strong>{{ receipt.changeAmount }} {{ receipt.currencyCode }}</strong>
+                    </div>
+                  </section>
+                  <div class="receipt-denominations">
+                    @for (denomination of receipt.denominations; track denomination.denominationId) {
+                      <span>{{ denomination.value }} × {{ denomination.quantity }}</span>
+                    }
+                  </div>
+                }
+                @if (receipt.check) {
+                  <section class="summary-grid">
+                    <div>
+                      <span>{{ 'creditPayment.fields.bank' | translate }}</span
+                      ><strong>{{ receipt.check.bankName }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.checkType' | translate }}</span
+                      ><strong>{{ receipt.check.checkType }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.checkNumber' | translate }}</span
+                      ><strong>{{ receipt.check.checkNumber }}</strong>
+                    </div>
+                    <div>
+                      <span>{{ 'creditPayment.fields.classification' | translate }}</span
+                      ><strong>{{ 'creditPayment.classification.' + receipt.check.classification | translate }}</strong>
+                    </div>
+                    @if (receipt.check.returnReason) {
+                      <div>
+                        <span>{{ 'creditPayment.fields.returnReason' | translate }}</span
+                        ><strong>{{ receipt.check.returnReason }}</strong>
+                      </div>
+                    }
+                  </section>
+                }
+              </section>
+
+              @if (receipt.status === 'PENDING_COLLECTION' && receipt.check?.status === 'PENDING_COLLECTION') {
+                <section class="transition-panel">
+                  @if (canClear) {
+                    <button
+                      type="button"
+                      mat-raised-button
+                      color="primary"
+                      (click)="clearCheck()"
+                      [disabled]="isTransitioning"
+                    >
+                      {{ 'creditPayment.actions.clearCheck' | translate }}
+                    </button>
+                  }
+                  @if (canReturn) {
+                    <form [formGroup]="returnForm" class="layout-row gap-2percent responsive-column align-start">
+                      <mat-form-field class="flex-80">
+                        <mat-label>{{ 'creditPayment.fields.returnReason' | translate }}</mat-label>
+                        <input matInput formControlName="reason" required />
+                      </mat-form-field>
+                      <button
+                        type="button"
+                        mat-raised-button
+                        color="warn"
+                        (click)="returnCheck()"
+                        [disabled]="isTransitioning || returnForm.invalid"
+                      >
+                        {{ 'creditPayment.actions.returnCheck' | translate }}
+                      </button>
+                    </form>
+                  }
+                </section>
+              }
+
+              <div class="layout-row align-center gap-2percent responsive-column step-actions receipt-actions">
+                <button type="button" mat-raised-button color="primary" (click)="printReceipt()">
+                  {{ 'creditPayment.actions.print' | translate }}
+                </button>
+                @if (canReprint) {
+                  <button type="button" mat-raised-button (click)="retrieveReceipt(true)" [disabled]="isLoadingReceipt">
+                    {{ 'creditPayment.actions.reprint' | translate }}
+                  </button>
+                }
+                <button type="button" mat-raised-button (click)="newPayment()">
+                  {{ 'creditPayment.actions.newPayment' | translate }}
+                </button>
+              </div>
+            }
+          </mat-step>
+        </mat-stepper>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

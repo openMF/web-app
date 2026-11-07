@@ -55,7 +55,7 @@ export class LoansAccountCloseComponent extends LoanAccountActionsBaseComponent 
   createCloseForm() {
     this.closeLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(this.dataObject.date) || new Date(),
+        this.dataObject.date ? this.dateUtils.parseDate(this.dataObject.date) : new Date(),
         Validators.required
       ],
       note: []

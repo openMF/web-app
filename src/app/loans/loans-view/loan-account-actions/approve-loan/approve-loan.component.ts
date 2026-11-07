@@ -88,7 +88,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
         Validators.required
       ],
       expectedDisbursementDate: [
-        new Date(this.loanData.expectedDisbursementDate),
+        this.dateUtils.parseDate(this.loanData.expectedDisbursementDate),
         Validators.required
       ],
       approvedLoanAmount: [

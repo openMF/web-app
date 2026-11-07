@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnDestroy, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -41,6 +41,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { catchError } from 'rxjs/operators';
 import { AlertService } from 'app/core/alert/alert.service';
 import { EMPTY } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
@@ -76,6 +77,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 })
 export class GeneralTabComponent implements OnDestroy {
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   pdfUrl: SafeResourceUrl | null = null;
@@ -101,7 +103,7 @@ export class GeneralTabComponent implements OnDestroy {
           this.pdfUrl = null;
           this.alertService.alert({
             type: 'error',
-            message: 'Failed to load Loan Application PDF report.'
+            message: this.translateService.instant('errors.report.loanApplicationLoadFailed')
           });
           return EMPTY;
         }),
@@ -139,6 +141,7 @@ export class GeneralTabComponent implements OnDestroy {
   }
 
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private clientService = inject(ClientsService);
   private router = inject(Router);
   private reportsService = inject(ReportsService);
@@ -290,46 +293,21 @@ export class GeneralTabComponent implements OnDestroy {
           // Compute performance history from accounts data
           this.computePerformanceHistory(data.clientAccountsData ?? { loanAccounts: [], savingsAccounts: [] });
           this.computeAccountCounts();
+          this.changeDetectorRef.markForCheck();
         }
       );
   }
 
   private computeAccountCounts(): void {
-    // Mirror AccountsFilterPipe so counts match what the rendered lists show.
-    const CLOSED_LOAN_CODES = new Set([
-      'loanStatusType.closed.written.off',
-      'loanStatusType.closed.obligations.met',
-      'loanStatusType.closed.reschedule.outstanding.amount',
-      'loanStatusType.withdrawn.by.client',
-      'loanStatusType.rejected'
-    ]);
-    const CLOSED_SAVING_CODES = new Set([
-      'savingsAccountStatusType.withdrawn.by.applicant',
-      'savingsAccountStatusType.closed',
-      'savingsAccountStatusType.pre.mature.closure',
-      'savingsAccountStatusType.rejected'
-    ]);
-    const CLOSED_SHARE_CODES = new Set([
-      'shareAccountStatusType.closed',
-      'shareAccountStatusType.rejected'
-    ]);
-
-    const isOpenLoan = (a: any) => !CLOSED_LOAN_CODES.has(a?.status?.code);
-    const isOpenSaving = (a: any) => !CLOSED_SAVING_CODES.has(a?.status?.code);
-    const isOpenShare = (a: any) => !CLOSED_SHARE_CODES.has(a?.status?.code);
-    const depositType = (a: any) => a?.depositType?.value;
-
-    this.accountCounts.loan = this.loanAccounts.filter(isOpenLoan).length;
-    this.accountCounts.savings = this.savingAccounts.filter(
-      (a) => depositType(a) === 'Savings' && isOpenSaving(a)
-    ).length;
-    this.accountCounts.fixed = this.savingAccounts.filter(
-      (a) => depositType(a) === 'Fixed Deposit' && isOpenSaving(a)
-    ).length;
-    this.accountCounts.recurring = this.savingAccounts.filter(
-      (a) => depositType(a) === 'Recurring Deposit' && isOpenSaving(a)
-    ).length;
-    this.accountCounts.shares = this.shareAccounts.filter(isOpenShare).length;
+    // Use the same status and category filter as the rendered lists. The toggle
+    // switches between open and closed accounts; it does not combine both sets.
+    const filter = new AccountsFilterPipe();
+    const status = this.showClosedAccounts ? 'closed' : 'open';
+    this.accountCounts.loan = filter.transform(this.loanAccounts, 'loan', status, undefined).length;
+    this.accountCounts.savings = filter.transform(this.savingAccounts, 'saving', status, 'isSavings').length;
+    this.accountCounts.fixed = filter.transform(this.savingAccounts, 'saving', status, 'isFixed').length;
+    this.accountCounts.recurring = filter.transform(this.savingAccounts, 'saving', status, 'isRecurring').length;
+    this.accountCounts.shares = filter.transform(this.shareAccounts, 'share', status, undefined).length;
     this.accountCounts.total =
       this.accountCounts.loan +
       this.accountCounts.savings +
@@ -344,6 +322,7 @@ export class GeneralTabComponent implements OnDestroy {
 
   toggleShowClosedAccounts(): void {
     this.showClosedAccounts = !this.showClosedAccounts;
+    this.computeAccountCounts();
   }
 
   /**

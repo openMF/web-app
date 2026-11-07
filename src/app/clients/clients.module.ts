@@ -34,6 +34,7 @@ import { DocumentsTabComponent } from './clients-view/documents-tab/documents-ta
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
 import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
+import { EnrollmentStatusComponent } from './clients-view/enrollment-status/enrollment-status.component';
 import { ChargesOverviewComponent } from './clients-view/charges/charges-overview/charges-overview.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ClientAssignStaffComponent } from './clients-view/client-actions/client-assign-staff/client-assign-staff.component';
@@ -85,6 +86,7 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     ClientsViewComponent,
     GeneralTabComponent,
     PersonalDataTabComponent,
+    EnrollmentStatusComponent,
     FamilyMembersTabComponent,
     AddFamilyMemberComponent,
     EditFamilyMemberComponent,

@@ -285,7 +285,7 @@ export class CentersService {
    * @returns {Observable<any>} Returns the change.
    */
   executeEditCenter(centerId: string, data: any): Observable<any> {
-    return this.http.put(`/groups/${centerId}`, data);
+    return this.http.put(`/centers/${centerId}`, data);
   }
 
   getAllMeetingFallCenters(

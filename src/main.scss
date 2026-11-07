@@ -924,6 +924,10 @@ mat-card {
 
 /* Print styles — hide app shell, show only receipt content */
 @media print {
+  body:has(mifosx-end-of-day-closing) .cdk-overlay-container {
+    display: none !important;
+  }
+
   mat-sidenav,
   mifosx-toolbar,
   mifosx-breadcrumb,

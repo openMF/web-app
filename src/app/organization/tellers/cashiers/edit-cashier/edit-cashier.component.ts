@@ -108,11 +108,11 @@ export class EditCashierComponent implements OnInit {
       staffId: [{ value: this.cashierData.data.staffId, disabled: true }],
       description: [this.cashierData.data.description],
       startDate: [
-        this.cashierData.data.startDate ? new Date(this.cashierData.data.startDate) : null,
+        this.cashierData.data.startDate ? this.dateUtils.parseDate(this.cashierData.data.startDate) : null,
         Validators.required
       ],
       endDate: [
-        this.cashierData.data.endDate ? new Date(this.cashierData.data.endDate) : null,
+        this.cashierData.data.endDate ? this.dateUtils.parseDate(this.cashierData.data.endDate) : null,
         Validators.required
       ],
       isFullDay: [

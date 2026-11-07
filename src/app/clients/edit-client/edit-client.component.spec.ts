@@ -860,6 +860,57 @@ describe('EditClientComponent WEB-1161 production edit flow', () => {
     );
   });
 
+  describe('WEB-1330 mobile country calling code', () => {
+    it('renders the calling code selector beside the mobile number input', () => {
+      configureTestingModule(true);
+
+      const mobileNoInput = fixture.debugElement.query(By.css('input[formcontrolname="mobileNo"]'));
+      const callingCodeSelect = fixture.debugElement.query(By.css('mat-select[formcontrolname="mobileNoCountryCode"]'));
+
+      expect(mobileNoInput).toBeTruthy();
+      expect(callingCodeSelect).toBeTruthy();
+    });
+
+    it('prefills an existing international number by separating the calling code from the local number', () => {
+      configureTestingModule(true, { mobileNo: '+919876543210' });
+
+      expect(component.editClientForm.get('mobileNoCountryCode').value).toBe('IN');
+      expect(component.editClientForm.get('mobileNo').value).toBe('9876543210');
+    });
+
+    it('keeps a legacy number untouched and selects no calling code', () => {
+      configureTestingModule(true, { mobileNo: '555-0100' });
+
+      expect(component.editClientForm.get('mobileNoCountryCode').value).toBe('');
+      expect(component.editClientForm.get('mobileNo').value).toBe('555-0100');
+    });
+
+    it('submits the selected calling code combined with the edited number and drops the helper control', () => {
+      configureTestingModule(true, { mobileNo: '555-0100' });
+      component.editClientForm.patchValue({ mobileNoCountryCode: 'IN', mobileNo: '9876543210' });
+      component.editClientForm.markAsDirty();
+
+      component.submit();
+
+      expect(clientsService.updateClient).toHaveBeenCalled();
+      const payload = clientsService.updateClient.mock.calls[0][1] as any;
+      expect(payload.mobileNo).toBe('+919876543210');
+      expect(payload).not.toHaveProperty('mobileNoCountryCode');
+    });
+
+    it('submits a legacy number unchanged when no calling code is selected', () => {
+      configureTestingModule(true, { mobileNo: '555-0100' });
+      component.editClientForm.patchValue({ mobileNo: '555-0199' });
+      component.editClientForm.markAsDirty();
+
+      component.submit();
+
+      const payload = clientsService.updateClient.mock.calls[0][1] as any;
+      expect(payload.mobileNo).toBe('555-0199');
+      expect(payload).not.toHaveProperty('mobileNoCountryCode');
+    });
+  });
+
   describe('WEB-1103 incorporation validity till date', () => {
     /** The `Incorporation Validity Till Date` datepicker, as bound in the edit template. */
     function incorpValidityDatePicker(): MatDatepickerInput<Date> {

@@ -47,6 +47,30 @@
       {{ 'labels.buttons.Show Closed Accounts' | translate }}
     </label>
 
+    <mat-form-field class="status-filter" appearance="outline" subscriptSizing="dynamic">
+      <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+      <mat-select
+        multiple
+        [value]="selectedStatuses"
+        (selectionChange)="onStatusFilterChange($event.value)"
+        [attr.aria-label]="'labels.inputs.Status' | translate"
+      >
+        @for (option of statusFilterOptions; track option.key) {
+          <mat-option [value]="option.key">{{ option.labelKey | translate }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    @if (selectedStatuses.length > 0) {
+      <button
+        type="button"
+        class="status-filter-clear"
+        (click)="clearStatusFilter()"
+        [attr.aria-label]="'labels.buttons.Clear status filter' | translate"
+      >
+        ×
+      </button>
+    }
+
     @if (existsClientsToFilter && totalRows > 0) {
       <span class="count-badge">
         <strong>{{ totalRows | number }}</strong>

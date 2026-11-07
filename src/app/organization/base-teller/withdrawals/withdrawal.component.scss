@@ -1,0 +1,725 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.withdrawals {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--ds-text-1);
+
+  .withdrawal-card {
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    box-shadow: var(--ds-shadow-xs);
+    background: var(--ds-surface);
+  }
+
+  mat-card-content {
+    padding: 32px;
+  }
+
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  .workflow-header,
+  .heading-group,
+  .drawer-badge,
+  .section-heading,
+  .selected-customer,
+  .customer-result,
+  .actions,
+  .workflow-footer,
+  .status-chip,
+  .balance-state,
+  .completion-banner,
+  .identity-help {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .workflow-header,
+  .section-heading,
+  .workflow-footer {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .workflow-header {
+    margin-bottom: 24px;
+  }
+
+  .heading-group {
+    align-items: flex-start;
+  }
+
+  .heading-group p,
+  .section-heading p {
+    margin-top: 8px;
+    color: var(--ds-text-2);
+  }
+
+  .header-icon,
+  .avatar,
+  .setup-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--ds-radius);
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+  }
+
+  .drawer-badge {
+    padding: 8px 16px;
+    gap: 8px;
+    background: var(--ds-surface-alt);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .drawer-badge strong,
+  .drawer-badge span,
+  .customer-copy strong,
+  .customer-copy span,
+  .account-overview strong,
+  .account-overview small,
+  .cash-totals strong,
+  .cash-totals small {
+    display: block;
+  }
+
+  .drawer-badge strong {
+    color: var(--ds-text-1);
+    margin-bottom: 8px;
+  }
+
+  .drawer-badge mat-icon {
+    color: var(--ds-paid);
+  }
+
+  .progress-steps {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 32px;
+    padding: 16px 0;
+    border-block: 1px solid var(--ds-border);
+    list-style: none;
+    counter-reset: none;
+  }
+
+  .progress-steps li {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+    min-width: 0;
+    padding: 8px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    border-radius: var(--ds-radius);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--ds-surface-alt);
+    border: 1px solid var(--ds-border);
+    border-radius: 50%;
+    font-weight: 600;
+  }
+
+  .step-number mat-icon {
+    font-size: 1rem;
+    width: 16px;
+    height: 16px;
+  }
+
+  .progress-steps [aria-current='step'] {
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+    font-weight: 600;
+  }
+
+  .progress-steps [aria-current='step'] .step-number {
+    background: var(--ds-blue-700);
+    color: var(--ds-action-on-fill);
+    border-color: transparent;
+  }
+
+  .progress-steps .done .step-number {
+    background: var(--ds-paid-bg);
+    color: var(--ds-paid);
+    border-color: transparent;
+  }
+
+  .section-heading {
+    margin-bottom: 24px;
+  }
+
+  .search-form {
+    display: grid;
+    grid-template-columns: 24% auto auto;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .search-action {
+    min-height: 56px;
+  }
+
+  .primary-action:not(:disabled) {
+    background: var(--ds-blue-700);
+    color: var(--ds-action-on-fill);
+  }
+
+  .customer-list {
+    margin-top: 24px;
+  }
+
+  .customer-option {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 88px;
+    margin-top: 8px;
+    padding: 16px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    text-align: start;
+    white-space: normal;
+  }
+
+  .customer-result {
+    width: 100%;
+    text-align: start;
+  }
+
+  .customer-copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .customer-copy strong {
+    font-size: 1rem;
+    color: var(--ds-text-1);
+  }
+
+  .customer-copy span,
+  .customer-copy small {
+    margin-top: 8px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .customer-copy small {
+    margin: 0 0 8px;
+  }
+
+  .status-chip {
+    gap: 8px;
+    width: fit-content;
+    padding: 8px 16px;
+    background: var(--ds-paid-bg);
+    color: var(--ds-paid);
+    border-radius: 24px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .status-chip mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 1rem;
+  }
+
+  .search-empty,
+  .setup-state {
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--ds-surface-alt);
+    border: 1px dashed var(--ds-border-strong);
+    border-radius: var(--ds-radius);
+  }
+
+  .search-empty > mat-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 3rem;
+    color: var(--ds-text-3);
+    margin-bottom: 16px;
+  }
+
+  .search-empty p,
+  .setup-state p {
+    color: var(--ds-text-2);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .setup-state p {
+    max-width: 640px;
+    margin: 16px auto 24px;
+  }
+
+  .setup-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 24px;
+  }
+
+  .setup-icon mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 2rem;
+  }
+
+  .selected-customer {
+    padding: 16px 24px;
+    margin-bottom: 32px;
+    background: var(--ds-surface-alt);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    flex-wrap: wrap;
+  }
+
+  .customer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .account-section > h3 {
+    margin-bottom: 16px;
+  }
+
+  .account-select {
+    max-width: 100%;
+  }
+
+  .account-overview,
+  .cash-totals {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 25%));
+    margin-top: 16px;
+    background: var(--ds-surface-alt);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .account-overview > div,
+  .cash-totals > div {
+    padding: 16px;
+    min-width: 0;
+  }
+
+  .account-overview small,
+  .cash-totals small {
+    color: var(--ds-text-2);
+    margin-bottom: 8px;
+    font-size: 0.8125rem;
+  }
+
+  .account-overview strong {
+    overflow-wrap: anywhere;
+  }
+
+  .available-balance {
+    background: var(--ds-blue-50);
+  }
+
+  .available-balance strong {
+    color: var(--ds-blue-700);
+    font-size: 1.125rem;
+  }
+
+  .method-section {
+    display: grid;
+    grid-template-columns: minmax(0, 40%) auto;
+    gap: 24px;
+    align-items: center;
+    padding-block: 32px;
+    margin-top: 8px;
+  }
+
+  .method-section h3 {
+    margin-bottom: 16px;
+  }
+
+  .capability-note,
+  .notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px;
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+    line-height: 1.6;
+  }
+
+  .capability-note mat-icon,
+  .notice mat-icon {
+    flex-shrink: 0;
+  }
+
+  .notice {
+    margin-bottom: 24px;
+  }
+
+  .notice.error {
+    background: var(--ds-alert-bg);
+    color: var(--ds-alert);
+  }
+
+  .currency-label {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .panels,
+  .denomination-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, calc(50% - 8px)));
+    gap: 16px;
+  }
+
+  .identity-help {
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .identity-help mat-icon {
+    flex-shrink: 0;
+    font-size: 1.125rem;
+  }
+
+  .denomination-group {
+    min-width: 0;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+    overflow: hidden;
+  }
+
+  .denomination-group h4 {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 16px;
+    background: var(--ds-surface-alt);
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .denomination-row,
+  .denomination-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 20%) minmax(0, 15%) minmax(0, 35%) minmax(0, calc(30% - 24px));
+    gap: 8px;
+    align-items: center;
+    padding: 8px 16px;
+  }
+
+  .denomination-heading {
+    padding-block: 16px;
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+  }
+
+  .denomination-row {
+    border-top: 1px solid var(--ds-border);
+    min-height: 64px;
+    font-size: 0.875rem;
+  }
+
+  .available-quantity {
+    color: var(--ds-text-2);
+  }
+
+  .line-amount {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .out-of-stock > strong,
+  .out-of-stock .available-quantity {
+    color: var(--ds-text-3);
+  }
+
+  .balance-state {
+    gap: 8px;
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+  }
+
+  .balance-state.is-balanced {
+    color: var(--ds-paid);
+  }
+
+  .cash-totals {
+    grid-template-columns: repeat(3, minmax(0, calc(100% / 3)));
+    margin-top: 24px;
+  }
+
+  .cash-totals strong {
+    font-size: 1.125rem;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .cash-total {
+    background: var(--ds-blue-50);
+    color: var(--ds-blue-700);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    padding-block: 24px;
+    gap: 16px;
+  }
+
+  .confirmation-actions {
+    justify-content: flex-end;
+  }
+
+  .workflow-footer {
+    border-top: 1px solid var(--ds-border);
+    padding-top: 24px;
+    margin-top: 24px;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .receipt-lookup {
+    flex: 0 1 480px;
+    box-shadow: none;
+    border: 1px solid var(--ds-border);
+    background: var(--ds-surface);
+  }
+
+  mat-panel-title {
+    gap: 8px;
+    align-items: center;
+    color: var(--ds-text-2);
+  }
+
+  .receipt-lookup-form {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 8px;
+  }
+
+  .receipt-lookup-form button {
+    flex-shrink: 0;
+  }
+
+  .completion-banner {
+    gap: 8px;
+    color: var(--ds-paid);
+    background: var(--ds-paid-bg);
+    padding: 16px;
+    border-radius: var(--ds-radius);
+    margin-bottom: 24px;
+  }
+
+  .recovery-panel {
+    padding: 24px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .recovery-panel p {
+    margin-block: 16px;
+    color: var(--ds-text-2);
+  }
+
+  .recovery-panel mat-form-field {
+    max-width: 480px;
+    display: block;
+  }
+
+  .recovery-review {
+    margin-top: 24px;
+    border-top: 1px solid var(--ds-border);
+  }
+
+  mat-form-field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .receipt {
+    display: none;
+  }
+}
+
+@media (width <= 960px) {
+  .withdrawals {
+    .workflow-header {
+      align-items: flex-start;
+    }
+
+    .progress-steps {
+      flex-wrap: wrap;
+    }
+
+    .progress-steps li {
+      flex: 0 1 calc((100% - 16px) / 3);
+      box-sizing: border-box;
+    }
+
+    .denomination-panels {
+      grid-template-columns: 100%;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .withdrawals {
+    mat-card-content {
+      padding: 16px;
+    }
+
+    .header-icon {
+      display: none;
+    }
+
+    .heading-group {
+      min-width: 0;
+    }
+
+    .drawer-badge {
+      width: 100%;
+    }
+
+    .progress-steps {
+      margin-bottom: 24px;
+    }
+
+    .progress-steps li {
+      flex-basis: calc(50% - 8px);
+    }
+
+    .search-form,
+    .panels,
+    .method-section {
+      grid-template-columns: 100%;
+    }
+
+    .search-action {
+      min-height: 48px;
+    }
+
+    .selected-customer {
+      padding: 16px;
+      gap: 8px;
+    }
+
+    .customer-actions {
+      width: 100%;
+    }
+
+    .account-overview {
+      grid-template-columns: repeat(2, minmax(0, 50%));
+    }
+
+    .cash-totals {
+      grid-template-columns: 100%;
+    }
+
+    .customer-result {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .customer-result .customer-copy {
+      flex-basis: calc(100% - 64px);
+    }
+
+    .receipt-lookup {
+      flex-basis: 100%;
+      min-width: 0;
+    }
+
+    .receipt-lookup-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .denomination-heading,
+    .denomination-row {
+      padding-inline: 8px;
+      font-size: 0.75rem;
+    }
+
+    .actions button {
+      width: 100%;
+    }
+
+    .status-chip {
+      padding: 8px;
+    }
+  }
+}
+
+@media print {
+  .withdrawals {
+    .workflow {
+      display: none;
+    }
+
+    .receipt {
+      display: block;
+    }
+
+    .withdrawal-card {
+      border: 0;
+      box-shadow: none;
+    }
+
+    mat-card-content {
+      padding: 0;
+    }
+  }
+}

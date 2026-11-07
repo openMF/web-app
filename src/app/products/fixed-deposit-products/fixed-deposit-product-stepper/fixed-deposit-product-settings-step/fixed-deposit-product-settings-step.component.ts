@@ -74,11 +74,11 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
           : '',
         inMultiplesOfDepositTerm: this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm,
         inMultiplesOfDepositTermTypeId: this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType
-          ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm.id
+          ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType.id
           : '',
         maxDepositTerm: this.fixedDepositProductsTemplate.maxDepositTerm,
         maxDepositTermTypeId: this.fixedDepositProductsTemplate.maxDepositTermType
-          ? this.fixedDepositProductsTemplate.minDepositTermType.id
+          ? this.fixedDepositProductsTemplate.maxDepositTermType.id
           : '',
         preClosurePenalApplicable: this.fixedDepositProductsTemplate.preClosurePenalApplicable,
         preClosurePenalInterest: this.fixedDepositProductsTemplate.preClosurePenalInterest,

@@ -105,3 +105,114 @@ describe('LoansService - Working Capital transaction template', () => {
     expect(req.request.params.get('transactionDate')).toBe('05 January 2026');
   });
 });
+
+describe('LoansService - loan request payload', () => {
+  let service: LoansService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
+        { provide: Dates, useValue: { formatDate: () => '06 October 2026' } }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+  });
+
+  const build = (terms: { interestCalculationPeriodType: number; allowPartialPeriodInterestCalculation: boolean }) =>
+    service.buildLoanRequestPayload(
+      { principalAmount: 10000, disbursementData: [], ...terms },
+      { clientId: 1 },
+      [],
+      'en',
+      'dd MMMM yyyy'
+    );
+
+  it('sends "Calculate interest for exact days in partial period" as chosen', () => {
+    expect(
+      build({ interestCalculationPeriodType: 1, allowPartialPeriodInterestCalculation: true })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(true);
+    expect(
+      build({ interestCalculationPeriodType: 1, allowPartialPeriodInterestCalculation: false })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(false);
+  });
+
+  it('sends false when interest is calculated daily', () => {
+    expect(
+      build({ interestCalculationPeriodType: 0, allowPartialPeriodInterestCalculation: true })
+        .allowPartialPeriodInterestCalculation
+    ).toBe(false);
+  });
+
+  it('sends the principal typed in the form as a number', () => {
+    const payload = service.buildLoanRequestPayload(
+      { principalAmount: '1500.75', disbursementData: [] },
+      { clientId: 1 },
+      [],
+      'es',
+      'dd MMMM yyyy'
+    );
+
+    expect(payload.principal).toBe(1500.75);
+    expect(payload.principalAmount).toBeUndefined();
+  });
+});
+
+describe('LoansService - buildLoanRequestPayload with the semi-monthly frequency', () => {
+  let service: LoansService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        {
+          provide: SettingsService,
+          useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } }
+        },
+        { provide: Dates, useValue: { formatDate: () => '10 January 2026' } }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+  });
+
+  const template = { clientId: 1, group: { id: 7 } };
+  const calendarOptions = [{ id: 42 }];
+
+  function loansAccount(overrides: Record<string, unknown>): any {
+    return { charges: [], disbursementData: [], syncRepaymentsWithMeeting: true, ...overrides };
+  }
+
+  it('links a monthly group loan to the meeting calendar', () => {
+    const payload = service.buildLoanRequestPayload(
+      loansAccount({ repaymentFrequencyType: 2 }),
+      template,
+      calendarOptions,
+      'en',
+      'dd MMMM yyyy'
+    );
+
+    expect(payload.calendarId).toBe(42);
+    expect(payload).not.toHaveProperty('syncRepaymentsWithMeeting');
+  });
+
+  it('never sends calendarId for a semi-monthly loan, which the backend rejects', () => {
+    const payload = service.buildLoanRequestPayload(
+      loansAccount({ repaymentFrequencyType: 6, firstRepaymentDayOfMonth: 10 }),
+      template,
+      calendarOptions,
+      'en',
+      'dd MMMM yyyy'
+    );
+
+    expect(payload).not.toHaveProperty('calendarId');
+    expect(payload).not.toHaveProperty('syncRepaymentsWithMeeting');
+    expect(payload.firstRepaymentDayOfMonth).toBe(10);
+  });
+});

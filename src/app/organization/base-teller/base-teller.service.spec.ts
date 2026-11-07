@@ -36,6 +36,108 @@ describe('BaseTellerService', () => {
     httpMock.verify();
   });
 
+  it('uses the authoritative WEB-1253 context, customer, and loan endpoints', async () => {
+    const contextPromise = firstValueFrom(service.getCreditPaymentContext());
+    httpMock.expectOne('/v2/base-teller/credit-payments/context').flush({ businessDate: '2026-09-27' });
+    expect((await contextPromise).businessDate).toBe('2026-09-27');
+
+    const customersPromise = firstValueFrom(service.searchCreditPaymentCustomers('Ada'));
+    const customersRequest = httpMock.expectOne(
+      (request) => request.url === '/v2/base-teller/credit-payments/customers'
+    );
+    expect(customersRequest.request.params.get('q')).toBe('Ada');
+    expect(customersRequest.request.params.get('limit')).toBe('20');
+    customersRequest.flush([{ clientId: 7 }]);
+    expect((await customersPromise)[0].clientId).toBe(7);
+
+    const loansPromise = firstValueFrom(service.getCreditPaymentLoans(7));
+    httpMock.expectOne('/v2/base-teller/credit-payments/customers/7/loans').flush([{ id: 8 }]);
+    expect((await loansPromise)[0].id).toBe(8);
+
+    const loanPromise = firstValueFrom(service.getCreditPaymentLoan(8));
+    httpMock.expectOne('/v2/base-teller/credit-payments/loans/8').flush({ id: 8, totalOutstanding: 95 });
+    expect((await loanPromise).totalOutstanding).toBe(95);
+  });
+
+  it('uses the exact WEB-1253 preview, create, receipt, clear, and return contracts', async () => {
+    const payment = {
+      idempotencyKey: 'pay-1',
+      clientId: 7,
+      loanId: 8,
+      paymentMethod: 'CASH' as const,
+      amount: '20',
+      currencyCode: 'USD',
+      paymentTypeId: 5,
+      transactionDate: '2026-09-27',
+      dateFormat: 'yyyy-MM-dd',
+      locale: 'en',
+      denominations: [{ denominationId: 'USD-10', value: '10', quantity: 2 }]
+    };
+
+    const previewPromise = firstValueFrom(service.previewCreditPayment(payment));
+    const previewRequest = httpMock.expectOne('/v2/base-teller/credit-payments/preview');
+    expect(previewRequest.request.method).toBe('POST');
+    expect(previewRequest.request.body).toEqual(payment);
+    previewRequest.flush({ loanId: 8, paymentMethod: 'CASH' });
+    expect((await previewPromise).loanId).toBe(8);
+
+    const createPromise = firstValueFrom(service.createCreditPayment(payment));
+    const createRequest = httpMock.expectOne('/v2/base-teller/credit-payments');
+    expect(createRequest.request.method).toBe('POST');
+    expect(createRequest.request.body.idempotencyKey).toBe('pay-1');
+    createRequest.flush({ receiptNumber: 'CP-1', status: 'COMPLETED' });
+    expect((await createPromise).receiptNumber).toBe('CP-1');
+
+    const receiptPromise = firstValueFrom(service.getCreditPaymentReceipt('CP/1'));
+    httpMock.expectOne('/v2/base-teller/credit-payments/CP%2F1').flush({ receiptNumber: 'CP/1' });
+    expect((await receiptPromise).receiptNumber).toBe('CP/1');
+
+    const transition = {
+      idempotencyKey: 'transition-1',
+      transactionDate: '2026-09-27',
+      dateFormat: 'yyyy-MM-dd',
+      locale: 'en'
+    };
+    const clearPromise = firstValueFrom(service.clearCreditPaymentCheck(11, transition));
+    const clearRequest = httpMock.expectOne('/v2/base-teller/credit-payments/checks/11/clear');
+    expect(clearRequest.request.body).toEqual(transition);
+    clearRequest.flush({ status: 'CLEARED' });
+    expect((await clearPromise).status).toBe('CLEARED');
+
+    const returnPromise = firstValueFrom(service.returnCreditPaymentCheck(11, { ...transition, reason: 'NSF' }));
+    const returnRequest = httpMock.expectOne('/v2/base-teller/credit-payments/checks/11/return');
+    expect(returnRequest.request.body.reason).toBe('NSF');
+    returnRequest.flush({ status: 'RETURNED' });
+    expect((await returnPromise).status).toBe('RETURNED');
+  });
+
+  it('uses the exact WEB-1254 status endpoints', async () => {
+    const allPromise = firstValueFrom(service.getCatalogUpdates());
+    const allRequest = httpMock.expectOne('/v2/base-teller/catalog-updates');
+    expect(allRequest.request.method).toBe('GET');
+    allRequest.flush([{ category: 'GENERAL', status: 'UPDATE_REQUIRED', needsUpdate: true }]);
+    expect((await allPromise)[0].category).toBe('GENERAL');
+
+    const onePromise = firstValueFrom(service.getCatalogUpdate('ACCOUNTING'));
+    const oneRequest = httpMock.expectOne('/v2/base-teller/catalog-updates/ACCOUNTING');
+    expect(oneRequest.request.method).toBe('GET');
+    oneRequest.flush({ category: 'ACCOUNTING', status: 'CURRENT', needsUpdate: false });
+    expect((await onePromise).status).toBe('CURRENT');
+  });
+
+  it.each([
+    'GENERAL',
+    'ACCOUNTING',
+    'USERS'
+  ] as const)('posts a bodyless WEB-1254 synchronization for %s', async (category) => {
+    const resultPromise = firstValueFrom(service.synchronizeCatalog(category));
+    const request = httpMock.expectOne(`/v2/base-teller/catalog-updates/${category}/sync`);
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toBeNull();
+    request.flush({ category, status: 'CURRENT', needsUpdate: false });
+    expect((await resultPromise).category).toBe(category);
+  });
+
   it('searches customers and savings accounts through the platform search endpoint', async () => {
     const resultPromise = firstValueFrom(service.searchDepositCustomersAndAccounts('amina'));
 

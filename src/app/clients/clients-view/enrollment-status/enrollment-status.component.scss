@@ -1,0 +1,240 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.enrollment-status {
+  padding: 24px 16px;
+}
+
+.page-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.progress-dashboard {
+  overflow: hidden;
+
+  mat-card-content {
+    padding: 32px 24px 24px;
+  }
+}
+
+.progress-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 25%));
+
+  &::before {
+    position: absolute;
+    top: 28px;
+    right: 12.5%;
+    left: 12.5%;
+    height: 2px;
+    background: var(--mat-sys-outline-variant);
+    content: '';
+  }
+}
+
+.stage-node {
+  --stage-color: var(--mat-sys-outline);
+  --stage-contrast: var(--mat-sys-surface);
+
+  position: relative;
+  min-width: 0;
+  padding: 0 12px;
+  text-align: center;
+}
+
+.stage-marker {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  border: 4px solid var(--mat-sys-surface);
+  border-radius: 50%;
+  color: var(--stage-contrast);
+  background: var(--stage-color);
+  box-shadow: 0 0 0 2px var(--stage-color);
+
+  mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+  }
+}
+
+.stage-content {
+  h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.stage-secondary {
+  min-height: 40px;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+}
+
+.stage-status {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 4px 8px;
+  margin-top: 8px !important;
+  border-radius: 16px;
+  color: var(--stage-color);
+  background: color-mix(in srgb, var(--stage-color) 12%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.elapsed-days {
+  margin-top: 4px !important;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.stage-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px !important;
+  font-size: 0.75rem;
+
+  span {
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.stage-completed {
+  --stage-color: #138a3d;
+  --stage-contrast: #fff;
+}
+
+.stage-current {
+  --stage-color: #1976d2;
+  --stage-contrast: #fff;
+}
+
+.stage-yellow {
+  --stage-color: #d6ad00;
+  --stage-contrast: #292300;
+}
+
+.stage-orange {
+  --stage-color: #e56b00;
+  --stage-contrast: #fff;
+}
+
+.stage-red,
+.stage-blocked {
+  --stage-color: #b3261e;
+  --stage-contrast: #fff;
+}
+
+.stage-pending {
+  --stage-color: #70757a;
+  --stage-contrast: #fff;
+}
+
+.state-message {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  padding: 24px;
+  border-radius: 4px;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.error-state {
+  color: var(--mat-sys-error);
+}
+
+@media (width <= 960px) {
+  .progress-track {
+    grid-template-columns: repeat(2, minmax(0, 50%));
+    gap: 32px 0;
+
+    &::before {
+      display: none;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .progress-dashboard mat-card-content {
+    padding: 24px 16px;
+  }
+
+  .progress-track {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &::before {
+      top: 28px;
+      bottom: 28px;
+      left: 28px;
+      display: block;
+      width: 2px;
+      height: auto;
+    }
+  }
+
+  .stage-node {
+    display: grid;
+    grid-template-columns: 56px minmax(0, calc(100% - 72px));
+    gap: 16px;
+    padding: 0;
+    text-align: left;
+  }
+
+  .stage-marker {
+    margin-bottom: 0;
+  }
+
+  .stage-secondary {
+    min-height: 0;
+  }
+
+  .stage-status {
+    justify-content: flex-start;
+  }
+}

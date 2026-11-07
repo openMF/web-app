@@ -8,7 +8,6 @@
 
 import { test, expect } from '../../fixtures/test-fixtures';
 import { CreateClientPage } from '../../pages';
-import { BEHAVIOR } from '../../config/behavior';
 
 /**
  * Create-Client form-validation E2E spec (WEB-1029).
@@ -43,18 +42,6 @@ const SEEDED_HEAD_OFFICE = 'Head Office';
 const SUBMITTED_ON_DATE = '01 January 2024';
 
 test.describe('Create Client — form validation', () => {
-  test.beforeEach(async ({ page }) => {
-    // Copy localStorage credentials into sessionStorage so the Angular
-    // app can read its auth token after each page load (mirrors the
-    // pattern used in create-client.spec.ts and close-client.spec.ts).
-    await page.addInitScript((storageKey) => {
-      const creds = localStorage.getItem(storageKey);
-      if (creds) {
-        sessionStorage.setItem(storageKey, creds);
-      }
-    }, BEHAVIOR.authStorageKey);
-  });
-
   // ── Required-field gate ──────────────────────────────────────────────
 
   test('hides the Preview step when the office field is left empty', async ({ page }) => {

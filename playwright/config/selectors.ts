@@ -202,16 +202,22 @@ export const CREATE_CLIENT_SELECTORS: CreateClientSelectors = {
 /**
  * Selector contract for the Mifos X clients list page (`/#/clients`).
  *
- * The list renders a custom toolbar (search box + Create Client CTA)
- * and a div-based table where each `.list-row` carries a routerLink
- * to `/clients/:id/general`. The React port will replace the divs
- * with a shadcn `<DataTable>` but the logical contract — search box,
- * primary CTA, row click — is unchanged.
+ * The list renders a custom toolbar (search box + status filter + Create
+ * Client CTA) and a div-based table where each `.list-row` carries a
+ * routerLink to `/clients/:id/general`. The React port will replace the
+ * divs with a shadcn `<DataTable>` but the logical contract — search box,
+ * status filter, primary CTA, row click — is unchanged.
  */
 export interface ClientsListSelectors {
   searchInput: string;
   searchClearButton: string;
   showClosedToggle: string;
+  /** Multi-select status filter rendered as a compact outline mat-select. */
+  statusFilter: string;
+  /** Inline (×) button shown next to the filter once a status is selected. */
+  statusFilterClear: string;
+  /** An option inside the status filter's overlay panel, addressed by label. */
+  statusFilterOption: string;
   createClientButton: string;
   importClientButton: string;
   loadingBar: string;
@@ -230,6 +236,9 @@ export const CLIENTS_LIST_SELECTORS: ClientsListSelectors = {
   searchInput: '.entity-list-container .search input[type="text"]',
   searchClearButton: '.entity-list-container .search-clear',
   showClosedToggle: '.entity-list-container .toggle',
+  statusFilter: '.entity-list-container .status-filter mat-select',
+  statusFilterClear: '.entity-list-container .status-filter-clear',
+  statusFilterOption: '.mat-mdc-select-panel mat-option',
   createClientButton: 'Create Client',
   importClientButton: 'Import Client',
   loadingBar: '.entity-list-container .loading-bar',
@@ -1215,4 +1224,97 @@ export const MANAGE_GROUP_MEMBERS_SELECTORS: ManageGroupMembersSelectors = {
   memberItem: 'mifosx-manage-group-members .member-list .member-row',
   removeMemberButton: 'button',
   confirmButton: 'Confirm'
+};
+
+// ---------------------------------------------------------------------------
+// Reports — catalogue
+// ---------------------------------------------------------------------------
+
+/**
+ * Reports catalogue (`/#/reports`).
+ *
+ * The catalogue is a bespoke list, not a MatTable: every report is an
+ * `<a class="row">` whose accessible text is `reportName` + category, so
+ * rows are matched by text rather than by an index. Pinned reports are
+ * repeated in a separate strip (`a.feature-card`) — a pinned probe
+ * report would therefore render **twice**, which is why the row
+ * selector is scoped to `a.row` and not to `a`.
+ *
+ * `engineChip` matches the filter rail buttons only; the chip carries
+ * its report count next to the engine name, so it is matched with a
+ * text filter rather than an exact text match.
+ */
+export interface ReportsCatalogSelectors {
+  /** Free-text filter box. */
+  searchInput: string;
+  /** Engine filter chips (All / Table / Pentaho / BIRT / Chart / SMS). */
+  engineChip: string;
+  /** One catalogue row — text-matched on the report name. */
+  reportRow: string;
+  /** The row's report-name span, used for text matching. */
+  reportRowName: string;
+  /** Pinned strip card. */
+  pinnedCard: string;
+}
+
+export const REPORTS_CATALOG_SELECTORS: ReportsCatalogSelectors = {
+  searchInput: 'mifosx-reports .toolbar .search input',
+  engineChip: 'mifosx-reports .chip-rail button.chip',
+  reportRow: 'mifosx-reports a.row',
+  reportRowName: '.r-name-text',
+  pinnedCard: 'mifosx-reports a.feature-card'
+};
+
+// ---------------------------------------------------------------------------
+// Reports — run report (Pentaho / BIRT output)
+// ---------------------------------------------------------------------------
+
+/**
+ * Run-report screen (`/#/reports/run/:name`).
+ *
+ * ── Output type is a required control ───────────────────────────────
+ *
+ * Pentaho and BIRT reports add an `outputType` control with a
+ * `required` validator, so "Run Report" stays disabled until one of the
+ * `.tile` buttons is clicked. Parameter-free reports therefore need
+ * exactly two interactions before they can run: pick an output type,
+ * then run.
+ *
+ * ── The result is framed, not rendered in place ─────────────────────
+ *
+ * Both engines hand their bytes to a child component that frames them,
+ * and both frame them the same way: markup goes through `srcdoc` inside
+ * a frame sandboxed with `allow-scripts` but *not* `allow-same-origin`
+ * (an opaque origin), a PDF keeps a `blob:` URL pinned to
+ * `application/pdf` for the browser's viewer, and anything else is
+ * offered as a download. Assertions about framing should pin all three
+ * properties, because dropping any one of them is what turns a report
+ * body into script running as this application.
+ */
+export interface RunReportSelectors {
+  /** Primary run button, id-bound. */
+  runReportButton: string;
+  /** One output-type tile (PDF / HTML / XLS / XLSX / CSV / XML). */
+  outputTypeTile: string;
+  /** The tile's value tag, matched exactly so XLS does not also match XLSX. */
+  outputTypeTag: string;
+  /** Results shell that hosts the engine renderers. */
+  resultsShell: string;
+  /**
+   * Pentaho renderer's frame. Sandboxed (`allow-scripts`, and no
+   * `allow-same-origin`) when the output is markup; an unsandboxed
+   * `blob:` frame pinned to `application/pdf` when it is a PDF.
+   */
+  pentahoFrame: string;
+  /** Download link the renderer shows for an output it will not preview. */
+  pentahoDownloadLink: string;
+}
+
+export const RUN_REPORT_SELECTORS: RunReportSelectors = {
+  runReportButton: '#runreport',
+  outputTypeTile: 'button.tile',
+  outputTypeTag: '.tag',
+  resultsShell: 'mifosx-run-report .results-shell',
+  pentahoFrame: 'mifosx-pentaho iframe',
+  pentahoDownloadLink: 'mifosx-pentaho .pentaho-download__link'
 };

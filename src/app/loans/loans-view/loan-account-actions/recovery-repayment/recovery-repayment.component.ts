@@ -98,7 +98,7 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.recoveryRepaymentLoanForm.patchValue({
       transactionAmount: this.dataObject.amount,
-      transactionDate: new Date(this.dataObject.date)
+      transactionDate: this.dateUtils.parseDate(this.dataObject.date)
     });
   }
 

@@ -3,3 +3,6 @@
 **/.git
 src/environments/.env.ts
 package-lock.json
+
+# Scaffold documents shared across openMF repositories: keep them as provided, not reformatted
+/SECURITY.md

@@ -178,6 +178,24 @@ describe('CopilotExportService', () => {
       expect(renderedNode?.innerHTML).toContain('&lt;img src=x');
     });
 
+    /**
+     * The client name is typed by whoever edits the client, and the export is run by somebody
+     * else. The asker is the exporter's own username. Both go on the page as text.
+     */
+    it('escapes the client name and the asker rather than rendering them', async () => {
+      const clientName = '<img src=x onerror=alert(1)>';
+      const askedBy = '<b>priya</b>';
+
+      await service.exportToPdf(exchange({ clientName, askedBy }));
+
+      expect(renderedNode?.querySelector('img')).toBeNull();
+      expect(renderedNode?.querySelector('b')).toBeNull();
+      expect(renderedNode?.innerHTML).not.toContain('<img src=x');
+      expect(renderedNode?.innerHTML).toContain('&lt;img src=x');
+      expect(renderedNode?.textContent).toContain(clientName);
+      expect(renderedNode?.textContent).toContain(askedBy);
+    });
+
     it('splits a reply too tall for one page across pages', async () => {
       // 1560px across 180mm is 8.67px/mm, so a page holds about 2314px.
       renderedHeight = 5000;

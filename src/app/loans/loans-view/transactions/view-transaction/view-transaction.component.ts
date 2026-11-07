@@ -54,8 +54,12 @@ import { isAccrualKindTransaction, isDiscountFeeKindTransaction } from '../../lo
 import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
+  canAdjustWorkingCapitalDiscountFee,
   canAdjustWorkingCapitalTransaction,
-  canReverseLoanTransaction
+  canAdjustWorkingCapitalTransactionByDelta,
+  canReverseLoanTransaction,
+  loanAllowsReversal,
+  WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION
 } from '../../loan-transaction-adjust.helper';
 import {
   appendReversalFields,
@@ -127,7 +131,28 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   undoPermission: string = DEFAULT_UNDO_PERMISSION;
   /** Permission required by the Adjust button; each product posts its own adjust command. */
   adjustPermission: string = DEFAULT_UNDO_PERMISSION;
+  /** Permission required by the Adjust by Difference button, a Working Capital command of its own. */
+  readonly adjustByDeltaPermission = WORKING_CAPITAL_ADJUST_BY_DELTA_PERMISSION;
+  /**
+   * True when the Adjust by Difference button is offered: Working Capital
+   * only, on the types its delta based adjustment accepts. The amount sent is
+   * the signed difference, so it sits beside Adjust rather than replacing it.
+   */
+  allowAdjustByDelta = false;
+  /**
+   * True when the Discount Fee Adjustment button is offered. Its own command,
+   * shown only on a Working Capital discount fee: it draws the remaining
+   * discount pool down instead of reversing anything, so it sits beside Adjust
+   * rather than replacing it.
+   */
+  allowDiscountFeeAdjustment = false;
+
+  /** Status of the loan the transaction belongs to, read from the parent route. */
+  private loanStatus: { active?: boolean } | null = null;
+  /** What is left of the discount pool; an exhausted one leaves nothing to adjust. */
+  private remainingDiscount = 0;
   existTransactionRelations = false;
+  loanScheduleType: { code?: string } | null = null;
 
   paymentTypeOptions: {}[] = [];
   transactionRelations = new MatTableDataSource();
@@ -158,6 +183,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { loanDetailsAssociationData?: any }) => {
         this.willReopenLoan = adjustmentReopensLoan(data.loanDetailsAssociationData?.status);
+        this.loanScheduleType = data.loanDetailsAssociationData?.loanScheduleType ?? null;
+        this.loanStatus = data.loanDetailsAssociationData?.status ?? null;
+        this.remainingDiscount = Number(data.loanDetailsAssociationData?.discountFee ?? 0);
+        this.refreshDiscountFeeAdjustment();
       });
     this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
@@ -167,8 +196,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       this.transactionType = this.transactionData?.type ?? null;
       if (!this.transactionType) {
         this.allowEdition = false;
+        this.allowAdjustByDelta = false;
         this.allowUndo = false;
         this.allowChargeback = false;
+        this.allowDiscountFeeAdjustment = false;
         return;
       }
       const alreadyReversed = this.transactionData.manuallyReversed || this.transactionData.reversed;
@@ -190,9 +221,12 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       this.allowEdition = this.isWorkingCapital
         ? canAdjustWorkingCapitalTransaction(this.transactionType, alreadyReversed)
         : canAdjustLoanTransaction(this.transactionType, alreadyReversed);
+      this.allowAdjustByDelta =
+        this.isWorkingCapital && canAdjustWorkingCapitalTransactionByDelta(this.transactionType, alreadyReversed);
       this.allowUndo = this.isWorkingCapital
         ? this.allowUndoTransaction(alreadyReversed, this.transactionType, !!this.transactionData.wcLoanId)
-        : canReverseLoanTransaction(this.transactionType, alreadyReversed) ||
+        : (canReverseLoanTransaction(this.transactionType, alreadyReversed) &&
+            loanAllowsReversal(this.transactionType, this.loanScheduleType)) ||
           (!alreadyReversed && this.hasDedicatedUndoCommand(this.transactionType));
       this.allowChargeback =
         this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
@@ -224,6 +258,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       if (this.isWorkingCapital) {
         this.allowChargeback = false;
       }
+      this.refreshDiscountFeeAdjustment();
     });
     this.clientId = this.route.snapshot.params['clientId'];
     this.loanId = this.route.snapshot.params['loanId'];
@@ -291,6 +326,24 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     );
   }
 
+  /**
+   * Recomputes the Discount Fee Adjustment availability. Called from both route
+   * subscriptions because the decision needs the transaction from one and the
+   * loan status and remaining discount from the other, and either may arrive
+   * first.
+   */
+  private refreshDiscountFeeAdjustment(): void {
+    this.allowDiscountFeeAdjustment =
+      this.isWorkingCapital &&
+      !!this.transactionType &&
+      this.remainingDiscount > 0 &&
+      canAdjustWorkingCapitalDiscountFee(
+        this.transactionType,
+        this.transactionData?.manuallyReversed || this.transactionData?.reversed,
+        this.loanStatus
+      );
+  }
+
   isWriteOff(transactionType: LoanTransactionType): boolean {
     return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
   }
@@ -345,7 +398,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           const data = this.loanProductService.isLoanProduct
             ? {
                 transactionDate: this.dateUtils.formatDate(
-                  this.transactionData.date && new Date(this.transactionData.date),
+                  this.transactionData.date && this.dateUtils.parseDate(this.transactionData.date),
                   dateFormat
                 ),
                 transactionAmount: 0,
@@ -399,7 +452,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         const dateFormat = this.settingsService.dateFormat;
         const payload: any = {
           transactionDate: this.dateUtils.formatDate(
-            this.transactionData.date && new Date(this.transactionData.date),
+            this.transactionData.date && this.dateUtils.parseDate(this.transactionData.date),
             dateFormat
           ),
           transactionAmount: 0,
@@ -482,7 +535,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
-        label: 'Payment Type',
+        label: this.translateService.instant('labels.inputs.Payment Type'),
         value: '',
         options: { label: 'name', value: 'id', data: this.paymentTypeOptions },
         required: true,
@@ -490,7 +543,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       }),
       new InputBase({
         controlName: 'amount',
-        label: 'Amount',
+        label: this.translateService.instant('labels.inputs.Amount'),
         value: this.amountRelationsAllowed,
         type: 'number',
         required: true,
@@ -499,7 +552,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       })
     ];
     const data = {
-      title: `Chargeback ${this.transactionType.value} Transaction`,
+      title: this.translateService.instant('labels.heading.Chargeback Transaction', {
+        type: this.translateService.instant('labels.catalogs.' + this.transactionType.value)
+      }),
       layout: { addButtonText: 'Chargeback' },
       formfields: formfields
     };
@@ -526,7 +581,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         } else {
           this.alertService.alert({
             type: 'BusinessRule',
-            message: 'Chargeback amount must be lower or equal to: ' + this.amountRelationsAllowed
+            message: this.translateService.instant('errors.loans.alertWithAmount', {
+              label: this.translateService.instant('errors.loans.chargebackLimit'),
+              amount: this.amountRelationsAllowed
+            })
           });
         }
       }

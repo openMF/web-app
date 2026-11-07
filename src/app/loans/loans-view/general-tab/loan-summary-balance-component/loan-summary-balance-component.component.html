@@ -10,7 +10,7 @@
   <div class="section-head">
     <h3 class="section-title">{{ 'labels.heading.Loan Summary' | translate }}</h3>
     @if (currency) {
-      <span class="section-hint">{{ currency.name }} · {{ currency.code }}</span>
+      <span class="section-hint">{{ currency | currencyName }} · {{ currency.code }}</span>
     }
   </div>
   <div class="matrix-wrap">

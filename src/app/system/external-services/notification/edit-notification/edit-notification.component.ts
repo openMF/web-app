@@ -13,6 +13,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { buildExternalServiceUpdate, MASKED_EXTERNAL_SERVICE_PROPERTIES } from '../../external-service-update';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -37,6 +38,8 @@ export class EditNotificationComponent implements OnInit {
   notificationConfigurationData: any;
   /** Notification Configuration Form */
   notificationConfigurationForm: UntypedFormGroup;
+  /** Notification Configuration form value as loaded. */
+  initialNotificationConfiguration: Record<string, unknown>;
 
   /**
    * Retrieves the Notification configuration data from `resolve`.
@@ -63,10 +66,8 @@ export class EditNotificationComponent implements OnInit {
    */
   setNotificationConfigurationForm() {
     this.notificationConfigurationForm = this.formBuilder.group({
-      server_key: [
-        this.notificationConfigurationData[0].value,
-        Validators.required
-      ],
+      /** Fineract returns the server key masked, so it starts empty and blank means keep it. */
+      server_key: [''],
       gcm_end_point: [
         this.notificationConfigurationData[1].value,
         Validators.required
@@ -76,6 +77,7 @@ export class EditNotificationComponent implements OnInit {
         Validators.required
       ]
     });
+    this.initialNotificationConfiguration = this.notificationConfigurationForm.value;
   }
 
   /**
@@ -83,8 +85,17 @@ export class EditNotificationComponent implements OnInit {
    * if successful redirects to view Notification configuration.
    */
   submit() {
+    const notificationConfiguration = buildExternalServiceUpdate(
+      this.initialNotificationConfiguration,
+      this.notificationConfigurationForm.value,
+      MASKED_EXTERNAL_SERVICE_PROPERTIES.NOTIFICATION
+    );
+    if (Object.keys(notificationConfiguration).length === 0) {
+      this.router.navigate(['../'], { relativeTo: this.route });
+      return;
+    }
     this.systemService
-      .updateExternalConfiguration('NOTIFICATION', this.notificationConfigurationForm.value)
+      .updateExternalConfiguration('NOTIFICATION', notificationConfiguration)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

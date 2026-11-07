@@ -1,0 +1,24 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@for (balance of record.balancesByCurrency; track balance.currencyCode) {
+  <mat-card class="m-b-16"
+    ><mat-card-content>
+      <h3>{{ balance.currencyCode }}</h3>
+      <p>
+        <strong>{{ 'eod.' + balance.reconciliationStatus | translate }}</strong>
+      </p>
+      <dl>
+        @for (field of fields; track field) {
+          <dt>{{ 'eod.' + field | translate }}</dt>
+          <dd>{{ format(balance[field], balance.decimalPlaces) }}</dd>
+        }
+      </dl>
+    </mat-card-content></mat-card
+  >
+}

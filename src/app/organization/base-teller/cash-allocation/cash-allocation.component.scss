@@ -75,7 +75,7 @@
   .denomination-header,
   .denomination-row {
     display: grid;
-    grid-template-columns: 20% 25% 160px auto;
+    grid-template-columns: repeat(4, calc((100% - 48px) / 4));
     gap: 16px;
     align-items: center;
     padding: 8px 0;
@@ -91,7 +91,16 @@
   }
 
   .denomination-row mat-form-field {
+    width: 100%;
     margin-top: 8px;
+  }
+
+  .denomination-header span,
+  .denomination-row span,
+  .denomination-row strong,
+  .denomination-row mat-form-field {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .allocation-total {

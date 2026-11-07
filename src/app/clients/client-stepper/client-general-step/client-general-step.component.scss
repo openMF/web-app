@@ -30,6 +30,21 @@ mat-divider {
   margin-top: 2em;
 }
 
+.mobile-number-group {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+
+  .mobile-code-field {
+    flex: 0 0 42%;
+    max-width: 42%;
+  }
+
+  .mobile-number-field {
+    flex: 1 1 auto;
+  }
+}
+
 .name-fields-row {
   display: flex;
   gap: 8px;
@@ -61,6 +76,20 @@ mat-divider {
       width: 100%;
       min-width: unset;
       flex: none;
+    }
+  }
+}
+
+@media (width <= 480px) {
+  .mobile-number-group {
+    flex-direction: column;
+    gap: 0;
+
+    .mobile-code-field,
+    .mobile-number-field {
+      flex: 1 1 auto;
+      max-width: 100%;
+      width: 100%;
     }
   }
 }

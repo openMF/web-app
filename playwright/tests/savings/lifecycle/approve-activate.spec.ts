@@ -25,15 +25,6 @@ const APPROVED_ON_DATE = '04 January 2024';
 const ACTIVATED_ON_DATE = '05 January 2024';
 
 test.describe('Savings lifecycle · Approve and Activate', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('approves a pending savings account', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const account = await createTestSavingsAccount(apiSetup, cleanupGuard, client.resourceId, {

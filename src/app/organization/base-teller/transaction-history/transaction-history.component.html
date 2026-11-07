@@ -1,0 +1,599 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container transaction-history screen-content">
+  <mat-card>
+    <mat-card-content>
+      <div class="page-heading">
+        <div>
+          <h2>{{ 'transactionHistory.title' | translate }}</h2>
+          <p>{{ 'transactionHistory.description' | translate }}</p>
+        </div>
+        <button mat-raised-button type="button" [disabled]="reportLoading || searchLoading" (click)="printResults()">
+          <mat-icon aria-hidden="true">print</mat-icon>
+          {{ 'transactionHistory.actions.printResults' | translate }}
+        </button>
+      </div>
+
+      <section aria-labelledby="search-filters-heading">
+        <h3 id="search-filters-heading">{{ 'transactionHistory.sections.searchFilters' | translate }}</h3>
+
+        @if (contextLoading) {
+          <div class="loading-state" role="status" aria-live="polite">
+            <mat-spinner diameter="32"></mat-spinner>
+            <span>{{ 'transactionHistory.states.loadingFilters' | translate }}</span>
+          </div>
+        }
+        @if (contextError) {
+          <div class="message error-state" role="alert">
+            <span>{{ contextError | translate }}</span>
+            <button mat-button type="button" (click)="loadContext()">
+              {{ 'transactionHistory.actions.retry' | translate }}
+            </button>
+          </div>
+        }
+
+        <form [formGroup]="filtersForm" class="filter-grid" (ngSubmit)="applyFilters()">
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.dateFrom' | translate }}</mat-label>
+            <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" />
+            <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.dateTo' | translate }}</mat-label>
+            <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" />
+            <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+            @if (filtersForm.hasError('dateRange')) {
+              <mat-error>{{ 'transactionHistory.validation.dateRange' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.teller' | translate }}</mat-label>
+            <mat-select formControlName="tellerId">
+              <mat-option [value]="null">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (teller of context?.tellers ?? []; track teller.id) {
+                <mat-option [value]="teller.id">{{ teller.code }} - {{ teller.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.currency' | translate }}</mat-label>
+            <mat-select formControlName="currencyCode">
+              <mat-option value="">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (currency of context?.currencies ?? []; track currency.code) {
+                <mat-option [value]="currency.code">{{ currency.code }} - {{ currency.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (status of context?.statuses ?? []; track status.code) {
+                <mat-option [value]="status.code">{{ status.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.type' | translate }}</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (type of context?.types ?? []; track type.code) {
+                <mat-option [value]="type.code">{{ type.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.operation' | translate }}</mat-label>
+            <mat-select formControlName="operation">
+              <mat-option value="">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (operation of context?.operations ?? []; track operation.code) {
+                <mat-option [value]="operation.code">{{ operation.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.concept' | translate }}</mat-label>
+            <mat-select formControlName="concept">
+              <mat-option value="">{{ 'transactionHistory.fields.all' | translate }}</mat-option>
+              @for (concept of context?.concepts ?? []; track concept.code) {
+                <mat-option [value]="concept.code">{{ concept.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'transactionHistory.fields.reference' | translate }}</mat-label>
+            <input matInput formControlName="reference" maxlength="200" />
+            @if (filtersForm.controls.reference.hasError('maxlength')) {
+              <mat-error>{{ 'transactionHistory.validation.referenceLength' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="filter-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="searchLoading">
+              {{ 'transactionHistory.actions.search' | translate }}
+            </button>
+            <button mat-button type="button" [disabled]="searchLoading" (click)="clearFilters()">
+              {{ 'transactionHistory.actions.clear' | translate }}
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <mat-divider></mat-divider>
+
+      <section aria-labelledby="transaction-results-heading">
+        <h3 id="transaction-results-heading">{{ 'transactionHistory.sections.results' | translate }}</h3>
+
+        @if (searchLoading) {
+          <div class="loading-state" role="status" aria-live="polite">
+            <mat-spinner diameter="32"></mat-spinner>
+            <span>{{ 'transactionHistory.states.loadingHistory' | translate }}</span>
+          </div>
+        }
+        @if (searchError) {
+          <div class="message error-state" role="alert">
+            <span>{{ searchError | translate }}</span>
+            <button mat-button type="button" (click)="search()">
+              {{ 'transactionHistory.actions.retry' | translate }}
+            </button>
+          </div>
+        } @else if (!searchLoading && hasSearched && !items.length) {
+          <div class="message empty-state" role="status">
+            {{ 'transactionHistory.states.noTransactions' | translate }}
+          </div>
+        }
+
+        @if (items.length) {
+          <div class="table-wrapper">
+            <table
+              mat-table
+              matSort
+              [dataSource]="items"
+              [matSortActive]="sort"
+              [matSortDirection]="order === 'ASC' ? 'asc' : 'desc'"
+              [matSortDisableClear]="true"
+              (matSortChange)="changeSort($event)"
+            >
+              <ng-container matColumnDef="transactionDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.date' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.transactionDate | date: 'medium' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="operation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.operation' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ optionLabel(context?.operations, row.operation) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="inflow">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.inflows' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="amount">
+                  {{ row.inflow | number: digitsInfo(row.decimalPlaces) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="outflow">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.outflows' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="amount">
+                  {{ row.outflow | number: digitsInfo(row.decimalPlaces) }} {{ row.currencyCode }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="currencyCode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.currency' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.currencyCode }}</td>
+              </ng-container>
+              <ng-container matColumnDef="concept">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.concept' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ optionLabel(context?.concepts, row.concept) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.status' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ optionLabel(context?.statuses, row.status) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="reference">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  {{ 'transactionHistory.fields.reference' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.reference }}</td>
+              </ng-container>
+              <ng-container matColumnDef="teller">
+                <th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.teller' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{ tellerLabel(row.tellerId) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.actions' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    mat-icon-button
+                    type="button"
+                    [attr.aria-label]="'transactionHistory.actions.viewDetails' | translate"
+                    (click)="openDetail(row)"
+                  >
+                    <mat-icon aria-hidden="true">visibility</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns" (dblclick)="openDetail(row)"></tr>
+            </table>
+          </div>
+          <mat-paginator
+            [length]="totalFilteredRecords"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            showFirstLastButtons
+            (page)="changePage($event)"
+          ></mat-paginator>
+        }
+      </section>
+
+      @if (totals.length) {
+        <section aria-labelledby="totals-heading">
+          <h3 id="totals-heading">{{ 'transactionHistory.sections.totals' | translate }}</h3>
+          <div class="totals-grid">
+            @for (total of totals; track total.currencyCode) {
+              <mat-card class="total-card">
+                <mat-card-content>
+                  <h4>{{ total.currencyCode }}</h4>
+                  <dl>
+                    <div>
+                      <dt>{{ 'transactionHistory.fields.totalInflows' | translate }}</dt>
+                      <dd>
+                        {{ total.totalInflows | number: digitsInfo(total.decimalPlaces) }} {{ total.currencyCode }}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>{{ 'transactionHistory.fields.totalOutflows' | translate }}</dt>
+                      <dd>
+                        {{ total.totalOutflows | number: digitsInfo(total.decimalPlaces) }} {{ total.currencyCode }}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>{{ 'transactionHistory.fields.total' | translate }}</dt>
+                      <dd>{{ total.total | number: digitsInfo(total.decimalPlaces) }} {{ total.currencyCode }}</dd>
+                    </div>
+                  </dl>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </section>
+      }
+
+      <section aria-labelledby="transaction-detail-heading">
+        <h3 id="transaction-detail-heading">{{ 'transactionHistory.sections.details' | translate }}</h3>
+        @if (detailLoading) {
+          <div class="loading-state" role="status" aria-live="polite">
+            <mat-spinner diameter="32"></mat-spinner>
+            <span>{{ 'transactionHistory.states.loadingDetails' | translate }}</span>
+          </div>
+        }
+        @if (detailError) {
+          <div class="message error-state" role="alert">{{ detailError | translate }}</div>
+        }
+        @if (!detailLoading && !detail && !detailError) {
+          <div class="message empty-state">{{ 'transactionHistory.states.selectTransaction' | translate }}</div>
+        }
+        @if (detail) {
+          <div class="detail-panel">
+            <dl class="detail-grid">
+              <div>
+                <dt>{{ 'transactionHistory.fields.transactionDate' | translate }}</dt>
+                <dd>{{ detail.transactionDate | date: 'medium' }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.client' | translate }}</dt>
+                <dd>{{ detail.client?.displayName || ('transactionHistory.fields.notApplicable' | translate) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.identification' | translate }}</dt>
+                <dd>{{ detail.client?.identification || ('transactionHistory.fields.notApplicable' | translate) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.operation' | translate }}</dt>
+                <dd>{{ optionLabel(context?.operations, detail.operation) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.concept' | translate }}</dt>
+                <dd>{{ optionLabel(context?.concepts, detail.concept) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.reference' | translate }}</dt>
+                <dd>{{ detail.reference }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.teller' | translate }}</dt>
+                <dd>
+                  {{
+                    detail.teller
+                      ? detail.teller.code + ' - ' + detail.teller.name
+                      : ('transactionHistory.fields.notApplicable' | translate)
+                  }}
+                </dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.status' | translate }}</dt>
+                <dd>{{ optionLabel(context?.statuses, detail.status) }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'transactionHistory.fields.currency' | translate }}</dt>
+                <dd>{{ detail.currencyCode }}</dd>
+              </div>
+              @if (detail.cashReceived !== null) {
+                <div>
+                  <dt>{{ 'transactionHistory.fields.cashReceived' | translate }}</dt>
+                  <dd>
+                    {{ detail.cashReceived | number: digitsInfo(detail.decimalPlaces) }} {{ detail.currencyCode }}
+                  </dd>
+                </div>
+              }
+              @if (detail.checksReceived !== null) {
+                <div>
+                  <dt>{{ 'transactionHistory.fields.checksReceived' | translate }}</dt>
+                  <dd>
+                    {{ detail.checksReceived | number: digitsInfo(detail.decimalPlaces) }} {{ detail.currencyCode }}
+                  </dd>
+                </div>
+              }
+              @if (detail.change !== null) {
+                <div>
+                  <dt>{{ 'transactionHistory.fields.change' | translate }}</dt>
+                  <dd>{{ detail.change | number: digitsInfo(detail.decimalPlaces) }} {{ detail.currencyCode }}</dd>
+                </div>
+              }
+              @if (detail.adjustment !== null) {
+                <div>
+                  <dt>{{ 'transactionHistory.fields.adjustment' | translate }}</dt>
+                  <dd>{{ detail.adjustment | number: digitsInfo(detail.decimalPlaces) }} {{ detail.currencyCode }}</dd>
+                </div>
+              }
+              @if (detail.total !== null) {
+                <div>
+                  <dt>{{ 'transactionHistory.fields.total' | translate }}</dt>
+                  <dd>{{ detail.total | number: digitsInfo(detail.decimalPlaces) }} {{ detail.currencyCode }}</dd>
+                </div>
+              }
+            </dl>
+
+            @if (detail.cancellation) {
+              <h4>{{ 'transactionHistory.sections.cancellation' | translate }}</h4>
+              <dl class="detail-grid">
+                <div>
+                  <dt>{{ 'transactionHistory.fields.reason' | translate }}</dt>
+                  <dd>{{ detail.cancellation.reason }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'transactionHistory.fields.user' | translate }}</dt>
+                  <dd>{{ detail.cancellation.user }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'transactionHistory.fields.date' | translate }}</dt>
+                  <dd>{{ detail.cancellation.date | date: 'medium' }}</dd>
+                </div>
+              </dl>
+            }
+
+            <div class="detail-actions">
+              <button mat-raised-button type="button" [disabled]="denominationLoading" (click)="loadDenominations()">
+                {{ 'transactionHistory.actions.denominationDetails' | translate }}
+              </button>
+              @if (detail.receiptSupported) {
+                <button mat-raised-button type="button" [disabled]="receiptLoading" (click)="reprintReceipt()">
+                  <mat-icon aria-hidden="true">print</mat-icon>
+                  {{ 'transactionHistory.actions.reprintReceipt' | translate }}
+                </button>
+              }
+            </div>
+            @if (!detail.receiptSupported) {
+              <div class="message empty-state">{{ 'transactionHistory.errors.receiptUnavailable' | translate }}</div>
+            }
+            @if (receiptError) {
+              <div class="message error-state" role="alert">{{ receiptError | translate }}</div>
+            }
+          </div>
+        }
+      </section>
+
+      @if (detail && (denominationLoading || denominations || denominationError)) {
+        <section aria-labelledby="denomination-details-heading">
+          <h3 id="denomination-details-heading">{{ 'transactionHistory.sections.denominations' | translate }}</h3>
+          @if (denominationLoading) {
+            <div class="loading-state" role="status" aria-live="polite">
+              <mat-spinner diameter="32"></mat-spinner>
+              <span>{{ 'transactionHistory.states.loadingDenominations' | translate }}</span>
+            </div>
+          }
+          @if (denominationError) {
+            <div class="message error-state" role="alert">
+              <span>{{ denominationError | translate }}</span>
+              <button mat-button type="button" (click)="loadDenominations()">
+                {{ 'transactionHistory.actions.retry' | translate }}
+              </button>
+            </div>
+          }
+          @if (denominations) {
+            <h4>{{ 'transactionHistory.sections.operationDenominations' | translate }}</h4>
+            @if (!denominationLines('operation').length) {
+              <div class="message empty-state">{{ 'transactionHistory.states.noDenominations' | translate }}</div>
+            }
+            @for (currency of denominationCurrencies('operation'); track currency) {
+              <h5>{{ currency }}</h5>
+              <div class="table-wrapper denomination-table">
+                <table mat-table [dataSource]="denominationLines('operation', currency)">
+                  <ng-container matColumnDef="currency"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.currency' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">{{ line.currencyCode }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="type"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.type' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      {{
+                        line.denominationType
+                          ? ('transactionHistory.denominationTypes.' + line.denominationType | translate)
+                          : ('transactionHistory.fields.notApplicable' | translate)
+                      }}
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="denomination"
+                    ><th mat-header-cell *matHeaderCellDef>
+                      {{ 'transactionHistory.fields.denomination' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let line">
+                      {{ line.denominationValue | number }} ({{ line.denominationId }})
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="quantity"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.quantity' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">{{ line.quantity }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="amount"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.amount' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      {{ line.amount | number }} {{ line.currencyCode }}
+                    </td></ng-container
+                  >
+                  <tr mat-header-row *matHeaderRowDef="denominationColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: denominationColumns"></tr>
+                </table>
+              </div>
+            }
+          }
+          @if (denominations) {
+            <h4>{{ 'transactionHistory.sections.changeGiven' | translate }}</h4>
+            @if (!denominationLines('change').length) {
+              <div class="message empty-state">{{ 'transactionHistory.states.noDenominations' | translate }}</div>
+            }
+            @for (currency of denominationCurrencies('change'); track currency) {
+              <h5>{{ currency }}</h5>
+              <div class="table-wrapper denomination-table">
+                <table mat-table [dataSource]="denominationLines('change', currency)">
+                  <ng-container matColumnDef="currency"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.currency' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">{{ line.currencyCode }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="type"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.type' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      {{
+                        line.denominationType
+                          ? ('transactionHistory.denominationTypes.' + line.denominationType | translate)
+                          : ('transactionHistory.fields.notApplicable' | translate)
+                      }}
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="denomination"
+                    ><th mat-header-cell *matHeaderCellDef>
+                      {{ 'transactionHistory.fields.denomination' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let line">
+                      {{ line.denominationValue | number }} ({{ line.denominationId }})
+                    </td></ng-container
+                  >
+                  <ng-container matColumnDef="quantity"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.quantity' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">{{ line.quantity }}</td></ng-container
+                  >
+                  <ng-container matColumnDef="amount"
+                    ><th mat-header-cell *matHeaderCellDef>{{ 'transactionHistory.fields.amount' | translate }}</th>
+                    <td mat-cell *matCellDef="let line">
+                      {{ line.amount | number }} {{ line.currencyCode }}
+                    </td></ng-container
+                  >
+                  <tr mat-header-row *matHeaderRowDef="denominationColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: denominationColumns"></tr>
+                </table>
+              </div>
+            }
+          }
+        </section>
+      }
+
+      @if (reportError) {
+        <div class="message error-state" role="alert">{{ reportError | translate }}</div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+
+@if (receipt && printMode === 'receipt') {
+  <section class="print-only receipt-print" aria-label="{{ 'transactionHistory.sections.receipt' | translate }}">
+    <h1>{{ 'transactionHistory.sections.receipt' | translate }}</h1>
+    <p>{{ receipt.sourceType }} · {{ receipt.historyId }}</p>
+    <pre>{{ receipt.receipt | json }}</pre>
+  </section>
+}
+
+@if (report && printMode === 'report') {
+  <section class="print-only report-print" aria-label="{{ 'transactionHistory.sections.report' | translate }}">
+    <h1>{{ 'transactionHistory.title' | translate }}</h1>
+    <p>{{ 'transactionHistory.fields.generatedAt' | translate }}: {{ report.generatedAt | date: 'medium' }}</p>
+    <p>{{ 'transactionHistory.fields.totalRecords' | translate }}: {{ report.totalFilteredRecords }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'transactionHistory.fields.date' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.operation' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.inflows' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.outflows' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.currency' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.concept' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.status' | translate }}</th>
+          <th>{{ 'transactionHistory.fields.reference' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of report.items; track row.historyId) {
+          <tr>
+            <td>{{ row.transactionDate | date: 'short' }}</td>
+            <td>{{ optionLabel(context?.operations, row.operation) }}</td>
+            <td>{{ row.inflow | number: digitsInfo(row.decimalPlaces) }}</td>
+            <td>{{ row.outflow | number: digitsInfo(row.decimalPlaces) }}</td>
+            <td>{{ row.currencyCode }}</td>
+            <td>{{ optionLabel(context?.concepts, row.concept) }}</td>
+            <td>{{ optionLabel(context?.statuses, row.status) }}</td>
+            <td>{{ row.reference }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="report-totals">
+      @for (total of report.totalsByCurrency; track total.currencyCode) {
+        <p>
+          <strong>{{ total.currencyCode }}</strong> · {{ 'transactionHistory.fields.totalInflows' | translate }}:
+          {{ total.totalInflows | number: digitsInfo(total.decimalPlaces) }} ·
+          {{ 'transactionHistory.fields.totalOutflows' | translate }}:
+          {{ total.totalOutflows | number: digitsInfo(total.decimalPlaces) }} ·
+          {{ 'transactionHistory.fields.total' | translate }}:
+          {{ total.total | number: digitsInfo(total.decimalPlaces) }}
+        </p>
+      }
+    </div>
+  </section>
+}

@@ -10,9 +10,11 @@ import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.mode
 import {
   adjustmentReopensLoan,
   canAdjustLoanTransaction,
+  canAdjustWorkingCapitalDiscountFee,
   canAdjustWorkingCapitalTransaction,
   canReverseLoanTransaction,
-  isReverseOnlyLoanTransaction
+  isReverseOnlyLoanTransaction,
+  loanAllowsReversal
 } from './loan-transaction-adjust.helper';
 
 /** Only the id is read by the gates, so the rest of the type is irrelevant here. */
@@ -82,6 +84,10 @@ describe('LoanTransactionAdjustHelper', () => {
       23
     ],
     [
+      'CHARGEBACK',
+      25
+    ],
+    [
       'CAPITALIZED_INCOME',
       35
     ],
@@ -123,10 +129,6 @@ describe('LoanTransactionAdjustHelper', () => {
     [
       'INCOME_POSTING',
       19
-    ],
-    [
-      'CHARGEBACK',
-      25
     ],
     [
       'CHARGE_OFF',
@@ -198,6 +200,24 @@ describe('LoanTransactionAdjustHelper', () => {
     });
   });
 
+  describe('loan schedule type', () => {
+    it('allows reversing a chargeback on a progressive loan', () => {
+      expect(loanAllowsReversal(transactionType(25), { code: 'PROGRESSIVE' })).toBe(true);
+    });
+
+    it('rejects reversing a chargeback on a cumulative loan', () => {
+      expect(loanAllowsReversal(transactionType(25), { code: 'CUMULATIVE' })).toBe(false);
+    });
+
+    it('rejects reversing a chargeback when the schedule type is unknown', () => {
+      expect(loanAllowsReversal(transactionType(25), undefined)).toBe(false);
+    });
+
+    it('does not restrict other types on a cumulative loan', () => {
+      expect(loanAllowsReversal(transactionType(2), { code: 'CUMULATIVE' })).toBe(true);
+    });
+  });
+
   describe('Working Capital', () => {
     it('can re-submit a repayment with a new amount', () => {
       expect(canAdjustWorkingCapitalTransaction(transactionType(2), false)).toBe(true);
@@ -220,8 +240,8 @@ describe('LoanTransactionAdjustHelper', () => {
         'CHARGE_ADJUSTMENT',
         26
       ]
-    ])('keeps %s reverse-only, as the backend rejects a positive amount on it', (_name, id: number) => {
-      expect(canAdjustWorkingCapitalTransaction(transactionType(id), false)).toBe(false);
+    ])('re-submits %s with a new amount, as the adjust command accepts it', (_name, id: number) => {
+      expect(canAdjustWorkingCapitalTransaction(transactionType(id), false)).toBe(true);
     });
 
     it.each([
@@ -239,6 +259,47 @@ describe('LoanTransactionAdjustHelper', () => {
       ]
     ])('never offers the adjustment on %s', (_name, id: number) => {
       expect(canAdjustWorkingCapitalTransaction(transactionType(id), false)).toBe(false);
+    });
+  });
+
+  describe('Working Capital Discount Fee Adjustment', () => {
+    const activeLoan = { active: true };
+    const discountFee = transactionType(44);
+
+    it('offers the adjustment on an active discount fee of an open loan', () => {
+      expect(canAdjustWorkingCapitalDiscountFee(discountFee, false, activeLoan)).toBe(true);
+    });
+
+    it('matches the discount fee by code when the payload carries no id', () => {
+      const byCode = { code: 'loanTransactionType.discountFee' } as LoanTransactionType;
+
+      expect(canAdjustWorkingCapitalDiscountFee(byCode, false, activeLoan)).toBe(true);
+    });
+
+    it('offers nothing once the discount fee is reversed', () => {
+      expect(canAdjustWorkingCapitalDiscountFee(discountFee, true, activeLoan)).toBe(false);
+    });
+
+    it('offers nothing on a loan that is no longer open', () => {
+      expect(canAdjustWorkingCapitalDiscountFee(discountFee, false, { active: false })).toBe(false);
+      expect(canAdjustWorkingCapitalDiscountFee(discountFee, false, null)).toBe(false);
+    });
+
+    it.each([
+      [
+        'REPAYMENT',
+        2
+      ],
+      [
+        'DISCOUNT_FEE_ADJUSTMENT',
+        46
+      ]
+    ])('offers nothing on %s, which is not a discount fee', (_name, id: number) => {
+      expect(canAdjustWorkingCapitalDiscountFee(transactionType(id), false, activeLoan)).toBe(false);
+    });
+
+    it('stays out of the adjust command, which the backend rejects for a discount fee', () => {
+      expect(canAdjustWorkingCapitalTransaction(discountFee, false)).toBe(false);
     });
   });
 

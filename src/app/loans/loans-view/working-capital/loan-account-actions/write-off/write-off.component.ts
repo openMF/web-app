@@ -79,7 +79,9 @@ export class WorkingCapitalWriteOffComponent extends LoanAccountActionsBaseCompo
     this.writeOffReasonOptions = this.dataObject?.writeOffReasonOptions ?? [];
     this.outstandingAmount = this.dataObject?.amount ?? null;
     // Default the write-off date to the business date; there is no template amount for WC.
-    const defaultDate = this.dataObject?.date ? new Date(this.dataObject.date) : this.settingsService.businessDate;
+    const defaultDate = this.dataObject?.date
+      ? this.dateUtils.parseDate(this.dataObject.date)
+      : this.settingsService.businessDate;
     this.writeOffForm.controls.transactionDate.setValue(defaultDate);
     this.cdr.markForCheck();
   }

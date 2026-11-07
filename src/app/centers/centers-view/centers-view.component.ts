@@ -161,6 +161,10 @@ export class CentersViewComponent implements OnInit, OnDestroy {
       case 'Edit':
         this.router.navigate(['edit'], { relativeTo: this.route });
         break;
+
+      case 'Add Group':
+        this.router.navigate(['/groups/create'], { queryParams: { centerId: this.centerViewData.id } });
+        break;
     }
   }
 

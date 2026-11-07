@@ -78,8 +78,9 @@
           routerLinkActive
           #creditRequests="routerLinkActive"
           [active]="creditRequests.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
         >
-          {{ 'labels.inputs.Requests' | translate }}
+          {{ 'labels.inputs.Credit Applications' | translate }}
         </a>
         <a
           mat-tab-link
@@ -93,13 +94,13 @@
         </a>
         <a
           mat-tab-link
-          [routerLink]="['./enrollment-status']"
+          [routerLink]="['./mass-rejection']"
           routerLinkActive
-          #enrollmentStatus="routerLinkActive"
-          [active]="enrollmentStatus.isActive"
-          *mifosxHasPermission="'READ_CLIENT'"
+          #massRejection="routerLinkActive"
+          [active]="massRejection.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
         >
-          {{ 'labels.inputs.Enrollment Status' | translate }}
+          {{ 'labels.heading.Mass Rejection' | translate }}
         </a>
         <a
           mat-tab-link

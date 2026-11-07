@@ -25,34 +25,115 @@
     </h4>
 
     @if (loanProductService.isWorkingCapital) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label>
+      @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+        <mat-form-field class="flex-48">
+          <mat-label
+            >{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label
+          >
+          <input
+            type="number"
+            matInput
+            mifosxPositiveNumber
+            min="0"
+            required
+            formControlName="totalPaymentVolume"
+            step="any"
+          />
+          @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+            <mat-error>
+              {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (paymentAmountCalculationStrategy === wcStrategy.ANNUAL_EIR) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Annual EIR' | translate }}</mat-label>
+          <input type="number" matInput min="0" required formControlName="annualEir" step="0.000001" />
+          @if (annualEirBounds.min !== null || annualEirBounds.max !== null) {
+            <mat-hint>
+              @if (annualEirBounds.min !== null) {
+                {{ 'labels.inputs.Minimum' | translate }} {{ annualEirBounds.min | number: '1.0-6' }} %
+              }
+              @if (annualEirBounds.max !== null) {
+                {{ 'labels.inputs.Maximum' | translate }} {{ annualEirBounds.max | number: '1.0-6' }} %
+              }
+            </mat-hint>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('greaterThanZero')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('pattern')) {
+            <mat-error>{{ 'labels.commons.Only up to 6 decimal places allowed' | translate }}</mat-error>
+          }
+          @if (loansAccountTermsForm.controls.annualEir.hasError('outOfBounds')) {
+            <mat-error>
+              {{ 'labels.inputs.Annual EIR' | translate }}
+              {{ 'labels.commons.is out of the allowed range' | translate }}
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (paymentAmountCalculationStrategy === wcStrategy.PAYMENT_AMOUNT) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Payment Amount' | translate }}</mat-label>
+          <input type="number" matInput min="0" required formControlName="paymentAmount" step="any" />
+          @if (loansAccountTermsForm.controls.paymentAmount.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Payment Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+          @if (loansAccountTermsForm.controls.paymentAmount.hasError('greaterThanZero')) {
+            <mat-error>
+              {{ 'labels.inputs.Payment Amount' | translate }}
+              {{ 'labels.commons.must be greater than zero' | translate }}
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      <mat-form-field class="flex-23">
+        <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
         <input
           type="number"
           matInput
           mifosxPositiveNumber
           min="0"
-          required
-          formControlName="totalPaymentVolume"
+          [required]="paymentAmountCalculationStrategy !== wcStrategy.TPV"
+          formControlName="discount"
           step="any"
         />
-        @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+        @if (loansAccountTermsForm.controls.discount.hasError('required')) {
           <mat-error>
-            {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
+            {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+        @if (loansAccountTermsForm.controls.discount.hasError('greaterThanZero')) {
+          <mat-error>
+            {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.must be greater than zero' | translate }}
           </mat-error>
         }
       </mat-form-field>
 
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="discount" step="any" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" step="any" />
-      </mat-form-field>
+      @if (paymentAmountCalculationStrategy === wcStrategy.TPV) {
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
+          <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" step="any" />
+        </mat-form-field>
+      }
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Frequency' | translate }}</mat-label>
@@ -85,22 +166,6 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-23">
-        <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
-        <mat-select formControlName="delinquencyStartType">
-          @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
-            <mat-option [value]="delinquencyStartType.id">
-              {{ delinquencyStartType.value | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
         <mat-select formControlName="delinquencyBucketId">
@@ -121,6 +186,36 @@
           </button>
         }
       </mat-form-field>
+
+      @if (loansAccountTermsForm.get('delinquencyBucketId')?.value) {
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
+          @if (loansAccountTermsForm.controls.delinquencyGraceDays.hasError('positiveInteger')) {
+            <mat-error>
+              {{ 'labels.inputs.Delinquency Grace Days' | translate }}
+              {{ 'labels.commons.Must be a positive integer' | translate }}
+            </mat-error>
+          }
+          @if (!allowAttributeOverridesDelinquencyBucket) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
+          <mat-select formControlName="delinquencyStartType">
+            @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
+              <mat-option [value]="delinquencyStartType.code">
+                {{ delinquencyStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (!allowAttributeOverridesDelinquencyBucket) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
+        </mat-form-field>
+      }
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>
@@ -167,7 +262,30 @@
 
         <mat-form-field class="flex-23">
           <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
-          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+          <input type="number" min="0" step="1" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
+          @if (loansAccountTermsForm.controls.breachGraceDays.hasError('positiveInteger')) {
+            <mat-error>
+              {{ 'labels.inputs.Breach Grace Days' | translate }}
+              {{ 'labels.commons.Must be a positive integer' | translate }}
+            </mat-error>
+          }
+          @if (!allowAttributeOverridesBreach) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Breach Start Type' | translate }}</mat-label>
+          <mat-select formControlName="breachStartType">
+            @for (breachStartType of breachStartTypeOptions; track breachStartType) {
+              <mat-option [value]="breachStartType.code">
+                {{ breachStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (!allowAttributeOverridesBreach) {
+            <mat-hint>{{ 'labels.text.Defined by product' | translate }}</mat-hint>
+          }
         </mat-form-field>
       }
     }
@@ -253,6 +371,11 @@
         />
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
+        @if (loansAccountTermsForm.controls.repaymentsStartingFromDate.hasError('semiMonthlyDueDay')) {
+          <mat-error>{{
+            'labels.text.First repayment date must fall on a semi-monthly due day' | translate
+          }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="flex-fill flex-23" (click)="interestPicker.open()">
@@ -306,6 +429,44 @@
           }
         </mat-select>
       </mat-form-field>
+
+      @if (isSemiMonthly()) {
+        <mat-form-field class="flex-fill flex-23">
+          <mat-label>{{ 'labels.inputs.First repayment day of month' | translate }}</mat-label>
+          <mat-select formControlName="firstRepaymentDayOfMonth" required>
+            @for (day of firstRepaymentDayOptions; track day) {
+              <mat-option [value]="day">{{ day }}</mat-option>
+            }
+          </mat-select>
+          @if (loansAccountTermsForm.controls.firstRepaymentDayOfMonth.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.First repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill flex-23">
+          <mat-label>{{ 'labels.inputs.Second repayment day of month' | translate }}</mat-label>
+          <mat-select formControlName="secondRepaymentDayOfMonth" required>
+            @for (day of secondRepaymentDayOptions(); track day) {
+              <mat-option [value]="day">
+                {{ day | semiMonthlyDay }}
+              </mat-option>
+            }
+          </mat-select>
+          <mat-hint>{{
+            loansAccountTermsForm.controls.firstRepaymentDayOfMonth.value
+              | semiMonthlyDueDays: loansAccountTermsForm.controls.secondRepaymentDayOfMonth.value
+          }}</mat-hint>
+          @if (loansAccountTermsForm.controls.secondRepaymentDayOfMonth.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Second repayment day of month' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+      }
 
       @if (loansAccountTermsForm.controls.repaymentFrequencyType.value === 2) {
         <mat-form-field class="flex-fill flex-14">

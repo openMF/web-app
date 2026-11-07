@@ -10,7 +10,7 @@ import { expect, Locator, Page } from '@playwright/test';
 
 import { BasePage } from '../BasePage';
 import { FAMILY_MEMBERS_SELECTORS } from '../../config/selectors';
-import { ROUTES } from '../../config/routes';
+import { ROUTES, isAtRoute } from '../../config/routes';
 import { selectOption, fillDateField, fillIfVisible, confirmDialog } from '../material-form-helpers';
 import { loggedSleep } from '../../utils/sleep';
 
@@ -226,7 +226,7 @@ export class FamilyMembersPage extends BasePage {
   async submitForm(): Promise<void> {
     await expect(this.submitButton).toBeEnabled({ timeout: 15000 });
     await this.submitButton.click();
-    await this.page.waitForURL((url) => url.hash === `#/clients/${this.clientId}/family-members`, { timeout: 30000 });
+    await this.page.waitForURL((url) => isAtRoute(url, ROUTES.clientFamilyMembers(this.clientId)), { timeout: 30000 });
   }
 
   /**

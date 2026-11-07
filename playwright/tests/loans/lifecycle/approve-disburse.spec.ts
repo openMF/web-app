@@ -26,15 +26,6 @@ const APPROVED_ON_DATE = '04 January 2024';
 const DISBURSEMENT_DATE = '05 January 2024';
 
 test.describe('Loan lifecycle · Approve and Disburse', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('approves a pending loan', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const client = await createActiveTestClient(apiSetup, cleanupGuard);
     const loan = await createTestLoan(apiSetup, cleanupGuard, client.resourceId, {

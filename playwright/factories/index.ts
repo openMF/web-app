@@ -82,6 +82,17 @@ export {
 // recorded rather than thrown.
 export { createTestGroup, DEFAULT_TEST_GROUP_SUBMITTED_ON_DATE, type CreateTestGroupOverrides } from './group.factory';
 
+// `createTestUser` creates an app user with a generated password that meets
+// Fineract's password policy, and registers the user's deleter on the guard.
+export {
+  createTestUser,
+  generateE2EPassword,
+  DEFAULT_TEST_USER_ROLE_ID,
+  FINERACT_PASSWORD_REGEX,
+  type CreateTestUserOverrides,
+  type CreatedTestUser
+} from './user.factory';
+
 // ── Pure payload builders (no network) ─────────────────────────────
 
 export {

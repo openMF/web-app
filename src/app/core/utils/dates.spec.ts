@@ -1,6 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeEN from '@angular/common/locales/en';
+import moment from 'moment';
+import 'moment/locale/cs';
+import 'moment/locale/es';
+import 'moment/locale/ne';
 import { Dates } from './dates';
+
+registerLocaleData(localeEN);
 
 describe('Dates', () => {
   let service: Dates;
@@ -97,6 +104,115 @@ describe('Dates', () => {
           expect(service.angularToMomentFormat(f.angular)).toBe(f.moment);
         });
       });
+    });
+  });
+
+  describe('formatDateAsString', () => {
+    const christmasEve = new Date(2026, 11, 24);
+    // setup-jest.ts replaces localStorage with jest.fn() mocks, so the stored UI language is stubbed on getItem.
+    const getItem = localStorage.getItem as jest.Mock;
+    const useLanguage = (code: string) =>
+      getItem.mockImplementation((key: string) =>
+        key === 'mifosXLanguage' ? JSON.stringify({ name: code, code }) : null
+      );
+
+    afterEach(() => {
+      getItem.mockReset();
+      moment.locale('en');
+    });
+
+    it('writes month names in English for an English UI even when another moment locale is global', () => {
+      // Importing a moment locale file makes it the global locale, as the date pipe's imports do in the app.
+      moment.locale('cs');
+      useLanguage('en-US');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 December 2026');
+    });
+
+    it('writes month names in the UI language, which is the locale sent with the date', () => {
+      useLanguage('es-MX');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 diciembre 2026');
+    });
+
+    it('keeps ASCII digits for a locale that writes its own digits', () => {
+      useLanguage('ne');
+      expect(service.formatDateAsString(christmasEve, 'yyyy-MM-dd')).toBe('2026-12-24');
+    });
+
+    it('falls back to English when no UI language is stored', () => {
+      moment.locale('cs');
+      expect(service.formatDateAsString(christmasEve, 'dd MMMM yyyy')).toBe('24 December 2026');
+    });
+  });
+
+  describe('formatMonthDay', () => {
+    const getItem = localStorage.getItem as jest.Mock;
+
+    beforeEach(() =>
+      getItem.mockImplementation((key: string) =>
+        key === 'mifosXLanguage' ? JSON.stringify({ name: 'English', code: 'en' }) : null
+      )
+    );
+
+    afterEach(() => getItem.mockReset());
+
+    it('should format the [month, day] of a charge template', () => {
+      expect(
+        service.formatMonthDay(
+          [
+            7,
+            22
+          ],
+          'dd MMMM',
+          'dd MMMM yyyy'
+        )
+      ).toBe('22 July');
+    });
+
+    it('should format the ISO month-day of a saved account charge', () => {
+      expect(service.formatMonthDay('--03-15', 'dd MMMM', 'dd MMMM yyyy')).toBe('15 March');
+    });
+
+    it('should keep 29 February', () => {
+      expect(
+        service.formatMonthDay(
+          [
+            2,
+            29
+          ],
+          'dd MMMM',
+          'dd MMMM yyyy'
+        )
+      ).toBe('29 February');
+    });
+
+    it('should drop the year of a date picked in the charges step', () => {
+      expect(service.formatMonthDay('15 March 2027', 'dd MMMM', 'dd MMMM yyyy')).toBe('15 March');
+      expect(service.formatMonthDay(new Date(2027, 10, 5), 'dd MMMM', 'dd MMMM yyyy')).toBe('05 November');
+    });
+
+    it('should read a picked date with the date format it was written with', () => {
+      expect(service.formatMonthDay('05/11/2027', 'dd MMMM', 'dd/MM/yyyy')).toBe('05 November');
+      expect(service.formatMonthDay('11/05/2027', 'dd MMMM', 'MM/dd/yyyy')).toBe('05 November');
+    });
+
+    it('should leave a charge without a fee day empty', () => {
+      expect(service.formatMonthDay(undefined, 'dd MMMM', 'dd MMMM yyyy')).toBeUndefined();
+    });
+  });
+
+  describe('formatDate', () => {
+    it('should fall back to moment formatting for a valid date when locale is unregistered', () => {
+      localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'xx', code: 'xx' }));
+      const date = new Date(2025, 0, 15);
+      const result = service.formatDate(date, 'yyyy-MM-dd');
+      expect(result).toBe('2025-01-15');
+      localStorage.removeItem('mifosXLanguage');
+    });
+
+    it('should throw for an invalid timestamp instead of returning "Invalid date"', () => {
+      localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'xx', code: 'xx' }));
+      expect(() => service.formatDate('not-a-date', 'yyyy-MM-dd')).toThrow();
+      localStorage.removeItem('mifosXLanguage');
     });
   });
 });

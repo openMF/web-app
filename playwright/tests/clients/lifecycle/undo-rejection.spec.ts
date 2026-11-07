@@ -29,15 +29,6 @@ const REOPENED_DATE = '03 January 2024';
 const REJECTION_REASON_NAME = 'E2E Reject Client Reason';
 
 test.describe('Client lifecycle · Undo Rejection (Rejected → Pending)', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const creds = localStorage.getItem('mifosXCredentials');
-      if (creds) {
-        sessionStorage.setItem('mifosXCredentials', creds);
-      }
-    });
-  });
-
   test('undoes a rejection from the client actions flow', async ({ page, fineractApi, apiSetup, cleanupGuard }) => {
     const rejectionReason = await fineractApi.ensureClientRejectionReason(REJECTION_REASON_NAME);
 

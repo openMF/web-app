@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +25,23 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';
 import { PersonalDataViewService } from './personal-data-view.service';
 import { PersonalDataTabComponent } from './personal-data-tab.component';
+import { IdentitiesTabComponent } from '../identities-tab/identities-tab.component';
+import { DocumentsTabComponent } from '../documents-tab/documents-tab.component';
 import { environment } from 'environments/environment';
+
+@Component({
+  selector: 'mifosx-identities-tab',
+  standalone: true,
+  template: ''
+})
+class IdentitiesTabStubComponent {}
+
+@Component({
+  selector: 'mifosx-documents-tab',
+  standalone: true,
+  template: ''
+})
+class DocumentsTabStubComponent {}
 
 describe('PersonalDataTabComponent', () => {
   let fixture: ComponentFixture<PersonalDataTabComponent>;
@@ -85,7 +102,8 @@ describe('PersonalDataTabComponent', () => {
           useValue: {
             parent: {
               data: routeData.asObservable()
-            }
+            },
+            data: of({ clientIdentities: [] })
           }
         },
         {
@@ -106,6 +124,15 @@ describe('PersonalDataTabComponent', () => {
         DatePipe,
         provideNoopAnimations()
       ]
+    }).overrideComponent(PersonalDataTabComponent, {
+      remove: { imports: [
+          IdentitiesTabComponent,
+          DocumentsTabComponent
+        ] },
+      add: { imports: [
+          IdentitiesTabStubComponent,
+          DocumentsTabStubComponent
+        ] }
     });
 
     fixture = TestBed.createComponent(PersonalDataTabComponent);

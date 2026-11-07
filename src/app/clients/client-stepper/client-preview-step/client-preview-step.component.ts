@@ -64,6 +64,8 @@ export class ClientPreviewStepComponent {
   @Input() clientTemplate: any;
   /** Client Object */
   @Input() client: any;
+  /** Disables the submit button while the client is being created */
+  @Input() submitting = false;
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();

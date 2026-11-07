@@ -85,6 +85,10 @@ export class ChargeOffComponent extends LoanAccountActionsBaseComponent implemen
       dateFormat,
       locale
     };
+    // The reason is optional, but Fineract looks up any chargeOffReasonId it receives, so an empty one fails with 404.
+    if (!data.chargeOffReasonId) {
+      delete data.chargeOffReasonId;
+    }
     const command = 'charge-off';
     this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
       this.gotoLoanDefaultView();

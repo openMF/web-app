@@ -63,13 +63,12 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           : currency.inMultiplesOf
     });
     if (this.loanProductService.isLoanProduct) {
+      // New products start with 1. When editing, leave the field empty if the product has no value:
+      // filling in 1 would be saved with the product and round every installment of new loans up.
+      const defaultInstallmentMultiple = this.loanProductsTemplate.id ? '' : 1;
       this.loanProductCurrencyForm.patchValue({
         installmentAmountInMultiplesOf:
-          this.loanProductsTemplate.installmentAmountInMultiplesOf === 0 ||
-          this.loanProductsTemplate.installmentAmountInMultiplesOf === undefined ||
-          this.loanProductsTemplate.installmentAmountInMultiplesOf === null
-            ? 1
-            : this.loanProductsTemplate.installmentAmountInMultiplesOf
+          this.loanProductsTemplate.installmentAmountInMultiplesOf || defaultInstallmentMultiple
       });
     }
   }

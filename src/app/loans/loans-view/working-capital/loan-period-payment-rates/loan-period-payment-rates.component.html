@@ -9,16 +9,18 @@
 <div class="container">
   <h3>{{ 'labels.inputs.Period Payment Rates' | translate }}</h3>
 
-  <div class="layout-row transaction-buttons align-end gap-20px">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="addPaymentRate()"
-      *mifosxHasPermission="'UPDATERATE_WORKINGCAPITALLOAN'"
-    >
-      {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Period Payment Rate' | translate }}
-    </button>
-  </div>
+  @if (canAddPaymentRate) {
+    <div class="layout-row transaction-buttons align-end gap-20px">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addPaymentRate()"
+        *mifosxHasPermission="'UPDATERATE_WORKINGCAPITALLOAN'"
+      >
+        {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Period Payment Rate' | translate }}
+      </button>
+    </div>
+  }
 
   <table mat-table [dataSource]="loanPaymentRatesData">
     <ng-container matColumnDef="id">
@@ -47,6 +49,16 @@
       </th>
       <td mat-cell *matCellDef="let item" [ngClass]="periodPaymentRateStyle(item.reversed)">
         {{ item.newRate | formatNumber }} %
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="calculatedAnnualEir">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Calculated Annual EIR' | translate }}</th>
+      <td mat-cell *matCellDef="let item" [ngClass]="periodPaymentRateStyle(item.reversed)">
+        @if (item.calculatedAnnualEir !== null && item.calculatedAnnualEir !== undefined) {
+          {{ item.calculatedAnnualEir | number: '1.0-6' }} %
+        } @else {
+          {{ 'labels.inputs.Not Available' | translate }}
+        }
       </td>
     </ng-container>
     <ng-container matColumnDef="submittedOnDate">

@@ -13,13 +13,8 @@
         <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Server Key' | translate }}</mat-label>
-            <input matInput required formControlName="server_key" />
-            @if (notificationConfigurationForm.controls.server_key.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Server Key' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <input matInput formControlName="server_key" autocomplete="off" />
+            <mat-hint>{{ 'labels.text.Leave blank to keep the stored server key' | translate }}</mat-hint>
           </mat-form-field>
 
           <mat-form-field>

@@ -50,16 +50,25 @@ describe('TransactionsTabComponent', () => {
    * Builds the component against stubbed collaborators without running ngOnInit,
    * so the tests exercise the row action rules rather than the table setup.
    * @param isWorkingCapital Whether the loan is a Working Capital one
+   * @param loanStatusCode Status code of the loan
+   * @param loanDetails Extra loan level fields merged into the resolved loan
    */
   function createComponent(
     isWorkingCapital = false,
-    loanStatusCode = 'loanStatusType.active'
+    loanStatusCode = 'loanStatusType.active',
+    loanScheduleTypeCode = 'PROGRESSIVE',
+    loanDetails: any = {}
   ): TransactionsTabComponent {
     TestBed.resetTestingModule();
     const loanRoute = {
       snapshot: { params: { loanId: '1' } },
       data: of({
-        loanDetailsData: { status: { code: loanStatusCode, value: 'Active' }, transactions: [] }
+        loanDetailsData: {
+          status: { code: loanStatusCode, value: 'Active' },
+          loanScheduleType: { code: loanScheduleTypeCode },
+          transactions: [],
+          ...loanDetails
+        }
       })
     };
     TestBed.configureTestingModule({
@@ -127,10 +136,9 @@ describe('TransactionsTabComponent', () => {
     it('offers no action on types the adjust command rejects', () => {
       const component = createComponent();
 
-      // Chargeback, charge payment, income posting and interest refund used to
-      // be offered by the previous blacklist and failed on submit.
+      // Charge payment, income posting and interest refund used to be offered
+      // by the previous blacklist and failed on submit.
       [
-        25,
         17,
         19,
         33
@@ -138,6 +146,20 @@ describe('TransactionsTabComponent', () => {
         expect(component.allowUndoTransaction(transaction(typeId))).toBe(false);
         expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
       });
+    });
+
+    it('offers only the reversal on a chargeback of a progressive loan', () => {
+      const component = createComponent();
+
+      expect(component.allowUndoTransaction(transaction(25))).toBe(true);
+      expect(component.allowAdjustTransaction(transaction(25))).toBe(false);
+    });
+
+    it('offers no action on a chargeback of a cumulative loan', () => {
+      const component = createComponent(false, 'loanStatusType.active', 'CUMULATIVE');
+
+      expect(component.allowUndoTransaction(transaction(25))).toBe(false);
+      expect(component.allowAdjustTransaction(transaction(25))).toBe(false);
     });
 
     it('keeps the reversal on a write-off, which has its own command', () => {
@@ -234,6 +256,50 @@ describe('TransactionsTabComponent', () => {
     });
   });
 
+  describe('Working Capital adjust by difference', () => {
+    it('offers the entry on every type the delta based command accepts', () => {
+      const component = createComponent(true);
+
+      [
+        2,
+        22,
+        23,
+        26
+      ].forEach((typeId) => {
+        expect(component.allowAdjustByDeltaTransaction(transaction(typeId))).toBe(true);
+      });
+    });
+
+    it('offers no entry on a type the command rejects or on a reversed transaction', () => {
+      const component = createComponent(true);
+
+      expect(component.allowAdjustByDeltaTransaction(transaction(44))).toBe(false);
+      expect(component.allowAdjustByDeltaTransaction(transaction(2, { reversed: true }))).toBe(false);
+    });
+
+    it('offers no entry on a Term Loan, which has no delta based command', () => {
+      expect(createComponent(false).allowAdjustByDeltaTransaction(transaction(2))).toBe(false);
+    });
+
+    it('gates the entry with the permission the backend derives for the command', () => {
+      expect(createComponent(true).adjustByDeltaPermission).toBe('ADJUSTBYDELTA_WORKINGCAPITALLOANTRANSACTION');
+    });
+
+    it('opens the delta route of the adjust form with the product type the resolvers read', () => {
+      const component = createComponent(true);
+
+      component.adjustTransactionByDelta(transaction(2), { stopPropagation: jest.fn() } as unknown as MouseEvent);
+
+      expect(routerStub.navigate).toHaveBeenCalledWith(
+        [
+          77,
+          'adjust-by-delta'
+        ],
+        expect.objectContaining({ queryParams: { productType: 'workingCapital' } })
+      );
+    });
+  });
+
   describe('Working Capital row actions', () => {
     it('keeps its own reversal rules instead of the adjust command gate', () => {
       const component = createComponent(true);
@@ -250,17 +316,19 @@ describe('TransactionsTabComponent', () => {
       expect(component.allowAdjustTransaction(transaction(2))).toBe(true);
     });
 
-    it('offers no adjust action on the types its adjust command only reverses', () => {
+    it('offers the adjust action on the other types its adjust command routes', () => {
       const component = createComponent(true);
 
-      // The Working Capital adjust command accepts these only with a zero
-      // amount, which is what the undo entry already does.
+      // Payout refund, goodwill credit and charge adjustment go through the
+      // same repayment like adjustment as a repayment. The charge adjustment
+      // entry adjusts the transaction the charge adjustment created, not the
+      // charge itself.
       [
         22,
         23,
         26
       ].forEach((typeId) => {
-        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(false);
+        expect(component.allowAdjustTransaction(transaction(typeId))).toBe(true);
       });
     });
 
@@ -280,6 +348,43 @@ describe('TransactionsTabComponent', () => {
       const component = createComponent(true);
 
       expect(component.allowAdjustTransaction(transaction(2, { reversed: true }))).toBe(false);
+    });
+
+    it('offers the discount fee adjustment on a discount fee while the pool lasts', () => {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 400
+      });
+
+      expect(component.allowDiscountFeeAdjustment(transaction(44))).toBe(true);
+      // Its own command, so the adjust entry stays hidden for the same row.
+      expect(component.allowAdjustTransaction(transaction(44))).toBe(false);
+    });
+
+    it('offers no discount fee adjustment once the pool is exhausted', () => {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 0
+      });
+
+      expect(component.allowDiscountFeeAdjustment(transaction(44))).toBe(false);
+    });
+
+    it('opens the discount fee adjustment form with the product type the resolvers read', () => {
+      const component = createComponent(true, 'loanStatusType.active', 'PROGRESSIVE', {
+        status: { code: 'loanStatusType.active', value: 'Active', active: true },
+        discountFee: 400
+      });
+
+      component.discountFeeAdjustment(transaction(44), { stopPropagation: jest.fn() } as unknown as MouseEvent);
+
+      expect(routerStub.navigate).toHaveBeenCalledWith(
+        [
+          77,
+          'discount-fee-adjustment'
+        ],
+        expect.objectContaining({ queryParams: { productType: 'workingCapital' } })
+      );
     });
 
     it('gates the adjust action with the Working Capital permission', () => {

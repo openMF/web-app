@@ -7,7 +7,13 @@
  */
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function amountValueValidator(): ValidatorFn {
+/**
+ * Validates the shape of an amount: up to 13 integer digits and up to 6
+ * decimals. Amounts are unsigned unless `allowNegative` is set, which is only
+ * the case for signed differences such as a delta based adjustment.
+ * @param allowNegative Whether a leading minus sign is accepted
+ */
+export function amountValueValidator(allowNegative = false): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) return null;
     const maxTotalDigits = 19;
@@ -15,11 +21,12 @@ export function amountValueValidator(): ValidatorFn {
 
     // Regex breakdown:
     // ^ - Start of string
-    // (?=.{1,14}$) - Lookahead to ensure total length (including potential dot)
-    // [0-9]+ - One or more digits
+    // -? - Optional minus sign, only when negatives are allowed
+    // [0-9]{1,13} - One to thirteen integer digits
     // (\.[0-9]{1,6})? - Optional dot followed by 1 to 6 digits
     // $ - End of string
-    const regex = new RegExp(`^\\d{1,${maxTotalDigits - maxDecimals}}(\\.\\d{1,${maxDecimals}})?$`);
+    const sign = allowNegative ? '-?' : '';
+    const regex = new RegExp(`^${sign}\\d{1,${maxTotalDigits - maxDecimals}}(\\.\\d{1,${maxDecimals}})?$`);
 
     const valid = regex.test(control.value.toString());
     return valid ? null : { highAmountValue: true };

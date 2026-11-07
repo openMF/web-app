@@ -86,7 +86,7 @@ export class EditGroupMeetingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = this.settingsService.businessDate;
+    this.maxDate = this.settingsService.maxFutureDate;
     this.createEditGroupMeetingForm();
     this.buildDependencies();
   }
@@ -161,9 +161,10 @@ export class EditGroupMeetingComponent implements OnInit {
       }
     });
     this.groupEditMeetingForm.patchValue({
-      startDate: this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
+      startDate: this.calendarTemplate.startDate && this.dateUtils.parseDate(this.calendarTemplate.startDate),
       frequency: this.calendarTemplate.frequency.id,
-      interval: `${this.calendarTemplate.interval}`
+      // Fineract stores an interval of 1 without INTERVAL in the recurrence and returns it as -1.
+      interval: `${this.calendarTemplate.interval > 0 ? this.calendarTemplate.interval : 1}`
     });
   }
 

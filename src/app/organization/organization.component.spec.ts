@@ -13,6 +13,7 @@ import { afterEach, describe, expect, it } from '@jest/globals';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { environment } from 'environments/environment';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { OrganizationComponent } from './organization.component';
 
 describe('OrganizationComponent', () => {
@@ -27,6 +28,7 @@ describe('OrganizationComponent', () => {
     environment.productionMode = productionMode;
     TestBed.configureTestingModule({
       providers: [
+        { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions: [] as string[] }) } },
         { provide: ActivatedRoute, useValue: {} },
         { provide: Router, useValue: {} },
         { provide: ConfigurationWizardService, useValue: {} },
@@ -48,15 +50,19 @@ describe('OrganizationComponent', () => {
 
   it('uses all WEB-1232 permissions for Base Teller navigation', () => {
     expect(createComponent(false).baseTellerPermissions).toEqual([
+      'READ_BASE_TELLER_FX',
       'READ_BASE_TELLER_CASH_ALLOCATION',
+      'READ_BASE_TELLER_CASH_INVENTORY',
       'READ_TELLER',
       'DEPOSIT_SAVINGSACCOUNT',
       'READ_BASE_TELLER_RETURNED_CHECK_PAYMENT',
+      'READ_BASE_TELLER_CREDIT_PAYMENT',
       'READ_CASHIER_CLOSING',
       'READ_GLOBAL_SETTLEMENT',
       'CREATE_CASH_DEPOSIT',
       'READ_CASH_OPERATION_HISTORY',
-      'READ_CASH_HOLDINGS'
+      'READ_CASH_HOLDINGS',
+      'READ_BASE_TELLER_TRANSACTION_HISTORY'
     ]);
   });
 
