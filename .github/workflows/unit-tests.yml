@@ -39,6 +39,18 @@ jobs:
         continue-on-error: true
         run: npm run test:ci
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        if: ${{ !cancelled() }}
+        with:
+          files: ./coverage/lcov.info
+          disable_search: true
+          flags: unit-tests
+          handle_no_reports_found: true
+          name: mifos-web-app
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
         if: always()
