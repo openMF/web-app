@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Appunti",
-      "copied": "Copiato: {{value}}"
+      "copied": "Copiato: {{value}}",
+      "failed": "Copia negli appunti non riuscita"
     },
     "tenant": {
       "changed": {

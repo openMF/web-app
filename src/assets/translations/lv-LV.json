@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Starpliktuve",
-      "copied": "Nokopēts: {{value}}"
+      "copied": "Nokopēts: {{value}}",
+      "failed": "Neizdevās nokopēt starpliktuvē"
     },
     "tenant": {
       "changed": {
