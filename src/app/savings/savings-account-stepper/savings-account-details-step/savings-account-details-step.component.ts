@@ -96,7 +96,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
         });
       } else {
         this.savingsAccountDetailsForm.patchValue({
-          submittedOnDate: new Date()
+          submittedOnDate: this.settingsService.businessDate
         });
       }
     }
