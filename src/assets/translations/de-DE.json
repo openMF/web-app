@@ -4744,6 +4744,7 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Skip to main content": "Zum Hauptinhalt springen",
       "No valid saved coordinates": "Die Karte ist nicht verfügbar, da die gespeicherten Koordinaten fehlen oder ungültig sind.",
       "Clone": "Klonen",
       "Clone Loan Product": "Darlehensprodukt klonen",

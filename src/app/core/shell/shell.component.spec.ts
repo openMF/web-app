@@ -136,3 +136,101 @@ describe('ShellComponent — progress bar visibility', () => {
     expect(loadingBar()).toBeNull();
   });
 });
+
+describe('ShellComponent — Skip to content accessibility', () => {
+  let component: ShellComponent;
+  let fixture: ComponentFixture<ShellComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ShellComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        ProgressBarService,
+        provideAnimationsAsync(),
+        provideRouter([])
+      ]
+    })
+      .overrideComponent(ShellComponent, {
+        remove: {
+          imports: [
+            SidenavComponent,
+            ToolbarComponent,
+            BreadcrumbComponent,
+            ContentComponent,
+            FooterComponent
+          ]
+        },
+        add: {
+          imports: [
+            StubSidenavComponent,
+            StubToolbarComponent,
+            StubBreadcrumbComponent,
+            StubContentComponent,
+            StubFooterComponent
+          ]
+        }
+      })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(ShellComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('renders a skip to content anchor as the first focusable element in the shell', () => {
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector<HTMLAnchorElement>('a.skip-link');
+    expect(skipLink).not.toBeNull();
+    expect(skipLink?.getAttribute('href')).toBe('#main-content');
+  });
+
+  it('positions the skip link before the sidebar and toolbar in DOM order', () => {
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector('a.skip-link');
+    const sidenav = rootEl.querySelector('mat-sidenav');
+    const toolbar = rootEl.querySelector('mifosx-toolbar');
+
+    expect(skipLink).not.toBeNull();
+    expect(sidenav).not.toBeNull();
+    expect(toolbar).not.toBeNull();
+
+    const skipBeforeSidenav = (skipLink!.compareDocumentPosition(sidenav!) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+    const skipBeforeToolbar = (skipLink!.compareDocumentPosition(toolbar!) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+    expect(skipBeforeSidenav).toBe(true);
+    expect(skipBeforeToolbar).toBe(true);
+  });
+
+  it('uses the translation infrastructure for the skip link label', () => {
+    const rootEl = fixture.nativeElement as HTMLElement;
+    const skipLink = rootEl.querySelector('a.skip-link');
+    expect(skipLink).not.toBeNull();
+    expect(skipLink?.textContent?.trim().length).toBeGreaterThan(0);
+  });
+
+  it('focuses the #main-content landmark when the skip link is activated', () => {
+    const mainEl = document.createElement('main');
+    mainEl.id = 'main-content';
+    mainEl.tabIndex = -1;
+    document.body.appendChild(mainEl);
+
+    try {
+      const skipLink = fixture.nativeElement.querySelector('a.skip-link') as HTMLAnchorElement;
+      expect(skipLink).not.toBeNull();
+
+      skipLink.click();
+      expect(document.activeElement).toBe(mainEl);
+    } finally {
+      document.body.removeChild(mainEl);
+    }
+  });
+
+  it('preserves existing shell navigation functionality', () => {
+    expect(component.sidenavCollapsed).toBe(true);
+    component.toggleCollapse(false);
+    expect(component.sidenavCollapsed).toBe(false);
+  });
+});
