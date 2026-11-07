@@ -32,6 +32,8 @@ import { Accounting } from 'app/core/utils/accounting';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProductsService } from 'app/products/products.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { InterestConfigurationComponent } from './interest-configuration.component';
+import { InterestMode } from './product-policy.model';
 import { ProductPolicyService } from './product-policy.service';
 import { PolicyWorkflowComponent, policyPermission, policyError, serverErrors } from './policy-workflow.component';
 import {
@@ -70,6 +72,7 @@ export class PolicyFieldErrorMatcher implements ErrorStateMatcher {
     MatExpansionModule,
     MatProgressBarModule,
     PolicyWorkflowComponent,
+    InterestConfigurationComponent,
     SavingProductDetailsStepComponent,
     SavingProductCurrencyStepComponent,
     SavingProductTermsStepComponent,
@@ -111,6 +114,8 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
   notice = '';
   createdId: number | null = null;
   tab = 0;
+  private previousMode: InterestMode | null = null;
+  @ViewChild(InterestConfigurationComponent) interest?: InterestConfigurationComponent;
   private saved = false;
   private ready = false;
   get productId(): number | null {
@@ -144,6 +149,8 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
   get dirty() {
     return (
       this.busy ||
+      this.interest?.dirty ||
+      this.interest?.saving ||
       this.policy.dirty ||
       (!this.editing &&
         !this.saved &&
@@ -218,6 +225,7 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
           this.configuration = data.configuration;
           if (this.configuration?.policy) this.policy.reset(this.configuration.policy);
           else this.policy.markAsPristine();
+          this.previousMode = this.policy.controls.interestMode.value;
           this.loaded = true;
           this.conflict = false;
           if (!this.canWrite || !this.capabilities.draftConfiguration) this.policy.disable({ emitEvent: false });
@@ -229,6 +237,8 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
   get saveDisabled() {
     return (
       this.busy ||
+      this.interest?.dirty ||
+      this.interest?.saving ||
       !this.loaded ||
       this.conflict ||
       this.coreCreationUnresolved ||
@@ -301,6 +311,7 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
         next: (config) => {
           this.configuration = config;
           this.policy.reset(config.policy);
+          this.previousMode = config.policy.interestMode;
           this.saved = true;
           this.notice = 'SavingsEditor.DraftSaved';
           if (this.createdId) {
@@ -327,6 +338,38 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
     delete product.advancedAccountingRules;
     return product;
   }
+  changeInterestMode(mode: InterestMode) {
+    const matrix = this.policy.controls.interestMatrix;
+    const formula = this.policy.controls.referenceRate;
+    if ((matrix.value && mode !== 'TIERED') || (formula.value && mode !== 'REFERENCE_RATE') || this.interest?.dirty) {
+      if (!window.confirm(this.translate.instant('InterestManagement.ConfirmModeChange'))) {
+        this.policy.controls.interestMode.setValue(this.previousMode);
+        return;
+      }
+      if (matrix.value && mode !== 'TIERED') matrix.setValue(null);
+      if (formula.value && mode !== 'REFERENCE_RATE') formula.setValue(null);
+    }
+    this.previousMode = mode;
+    this.policy.markAsDirty();
+  }
+  advancedSaved(config: PolicyConfiguration) {
+    this.configuration = config;
+    this.policy.reset(config.policy);
+    this.previousMode = config.policy.interestMode;
+  }
+  get advancedBlocked() {
+    return (
+      this.busy ||
+      this.policy.dirty ||
+      this.policy.invalid ||
+      this.conflict ||
+      !this.canWrite ||
+      !this.loaded ||
+      !this.capabilities?.draftConfiguration ||
+      !this.workflow?.loaded ||
+      this.pending
+    );
+  }
   zeroInterest() {
     if (this.immutable) return;
     this.policy.controls.interestMode.setValue('NONE');
@@ -350,7 +393,7 @@ export class ProductEditorComponent implements OnInit, AfterViewInit {
     this.error = 'SavingsEditor.Conflict';
   }
   refresh() {
-    if (this.policy.dirty || !this.productId) return;
+    if (this.policy.dirty || this.interest?.dirty || this.interest?.saving || !this.productId) return;
     this.api
       .configuration(this.productId)
       .pipe(takeUntilDestroyed(this.destroyRef))

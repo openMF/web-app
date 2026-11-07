@@ -16,5 +16,6 @@ export const productEditorGuard: CanDeactivateFn<{
   core?: { readonly dirty: boolean };
 }> = (component) =>
   !component.editor?.busy &&
+  !component.editor?.interest?.saving &&
   (!(component.editor?.dirty || component.core?.dirty) ||
     window.confirm(inject(TranslateService).instant('SavingsEditor.Discard')));

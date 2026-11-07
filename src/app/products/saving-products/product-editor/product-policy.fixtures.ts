@@ -58,5 +58,7 @@ export const policy: ProductPolicy = {
   accountDesignation: 'Main account',
   additionalPaymentReference: false,
   paymentReferencePartner: null,
-  interestMode: 'NONE'
+  interestMode: 'NONE',
+  interestMatrix: null,
+  referenceRate: null
 };

@@ -11,7 +11,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProductPolicyService } from './product-policy.service';
-import { policy } from './product-policy.fixtures';
+import { policy, capabilities } from './product-policy.fixtures';
 
 describe('ProductPolicyService HTTP contracts', () => {
   let service: ProductPolicyService, http: HttpTestingController;
@@ -36,6 +36,9 @@ describe('ProductPolicyService HTTP contracts', () => {
   });
   it('writes the full DTO using numeric monetary literals', () => {
     service.save(42, 3, policy).subscribe((result) => expect(result.revision).toBe(4));
+    http
+      .expectOne('/savingsproducts/policy/42')
+      .flush(JSON.stringify({ savingsProductId: 42, revision: 3, status: 'DRAFT', policy, capabilities }));
     const req = http.expectOne('/savingsproducts/policy/42');
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toContain('"maximumBalance":9999999999999.99');
@@ -50,7 +53,7 @@ describe('ProductPolicyService HTTP contracts', () => {
     service.submit(42, 4, '2026-11-05').subscribe();
     const req = http.expectOne('/savingsproducts/policy/42/submit');
     expect(req.request.body).toEqual({ expectedRevision: 4, effectiveDate: '2026-11-05' });
-    req.flush({});
+    req.flush('{}');
   });
   it.each([
     true,
@@ -59,7 +62,7 @@ describe('ProductPolicyService HTTP contracts', () => {
     service.decide(42, 4, approve, 'Review reason').subscribe();
     const req = http.expectOne(`/savingsproducts/policy/42/versions/4/${approve ? 'approve' : 'reject'}`);
     expect(req.request.body).toEqual({ reason: 'Review reason' });
-    req.flush({});
+    req.flush('{}');
   });
   it('propagates 409 and 403 errors without retrying', () => {
     const error = jest.fn();
