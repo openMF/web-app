@@ -59,7 +59,7 @@ export const environment = {
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled === true,
+    enabled: loadedEnv.oauthServerEnabled === 'true' || loadedEnv.oauthServerEnabled === true,
     serverUrl: loadedEnv.oauthServerUrl || '',
     logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
     appId: loadedEnv.oauthAppId || '',
