@@ -1,0 +1,248 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (canRead) {
+  <mat-accordion>
+    <mat-expansion-panel (opened)="open()">
+      <mat-expansion-panel-header
+        ><mat-panel-title>{{
+          'FinancialControls.Diagnostics' | translate
+        }}</mat-panel-title></mat-expansion-panel-header
+      >
+      <section [attr.aria-label]="'FinancialControls.Diagnostics' | translate" [attr.aria-busy]="busy">
+        <p>{{ 'FinancialControls.DiagnosticNotice' | translate }}</p>
+        @if (busy) {
+          <p role="status">{{ 'SavingsEditor.Loading' | translate }}</p>
+        }
+        @if (error) {
+          <p role="alert">{{ error | translate }}</p>
+        }
+        @if (writeUncertain) {
+          <p role="alert">{{ 'FinancialControls.UncertainWrite' | translate }}</p>
+        }
+        <button mat-button (click)="load()" [disabled]="busy">{{ 'FinancialControls.Refresh' | translate }}</button>
+        @if (capabilities) {
+          <h3>{{ 'FinancialControls.FeeCapabilities' | translate }}</h3>
+          <dl class="financial-summary">
+            @for (field of fields; track field) {
+              <dt>{{ 'FinancialControls.' + field | translate }}</dt>
+              <dd>
+                {{
+                  (capabilities[field] ? 'FinancialControls.Supported' : 'FinancialControls.Unsupported') | translate
+                }}
+              </dd>
+            }
+          </dl>
+          <h4>{{ 'FinancialControls.Blockers' | translate }}</h4>
+          <ul>
+            @for (blocker of capabilities.blockers; track $index) {
+              <li>{{ label(blocker) | translate }}</li>
+            }
+          </ul>
+        }
+        @if (canAssess && capabilities) {
+          <form [formGroup]="form" class="editor-actions" (submit)="$event.preventDefault()">
+            <mat-form-field
+              ><mat-label>{{ 'FinancialControls.Period' | translate }}</mat-label
+              ><input
+                matInput
+                type="month"
+                formControlName="period"
+                [min]="permittedPeriod"
+                [max]="permittedPeriod"
+              /><mat-hint
+                >{{ 'FinancialControls.PermittedPeriod' | translate }}:
+                {{ permittedPeriod || ('SavingsEditor.Unavailable' | translate) }}</mat-hint
+              ></mat-form-field
+            >
+            <button mat-raised-button type="button" (click)="create()" [disabled]="!canCreate">
+              {{ 'FinancialControls.Create' | translate }}
+            </button>
+          </form>
+          <p>
+            {{ 'SavingsEditor.BusinessDate' | translate }}:
+            {{ businessDate || ('SavingsEditor.Unavailable' | translate) }}
+          </p>
+        }
+        <h3>{{ 'FinancialControls.RunHistory' | translate }}</h3>
+        @if (history) {
+          <table
+            class="diagnostic-table"
+            mat-table
+            [dataSource]="history.items"
+            [attr.aria-label]="'FinancialControls.RunHistory' | translate"
+          >
+            <ng-container matColumnDef="period"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.Period' | translate }}</th>
+              <td mat-cell *matCellDef="let item" [attr.data-label]="'FinancialControls.Period' | translate">
+                {{ item.period }}
+              </td></ng-container
+            >
+            <ng-container matColumnDef="status"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.Status' | translate }}</th>
+              <td mat-cell *matCellDef="let item" [attr.data-label]="'FinancialControls.Status' | translate">
+                {{ label(item.status) | translate }}
+              </td></ng-container
+            >
+            <ng-container matColumnDef="inspect"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.RunId' | translate }}</th>
+              <td mat-cell *matCellDef="let item" [attr.data-label]="'FinancialControls.RunId' | translate">
+                <button mat-button (click)="select(item.id)" [disabled]="busy">{{ item.id }}</button>
+              </td></ng-container
+            >
+            <tr mat-header-row *matHeaderRowDef="['period', 'status', 'inspect']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['period', 'status', 'inspect']"></tr>
+          </table>
+          @if (!history.items.length) {
+            <p>{{ 'FinancialControls.NoRuns' | translate }}</p>
+          }
+          <button mat-button (click)="moreRuns()" [disabled]="busy || !history.hasMore">
+            {{ 'FinancialControls.OlderRuns' | translate }}
+          </button>
+        }
+        @if (run) {
+          <h3>{{ 'FinancialControls.SelectedRun' | translate }}</h3>
+          <dl class="financial-summary">
+            <dt>{{ 'FinancialControls.RunId' | translate }}</dt>
+            <dd>{{ run.id }}</dd>
+            <dt>{{ 'FinancialControls.Tenant' | translate }}</dt>
+            <dd>{{ run.tenant }}</dd>
+            <dt>{{ 'FinancialControls.Period' | translate }}</dt>
+            <dd>{{ run.period }}</dd>
+            <dt>{{ 'SavingsEditor.BusinessDate' | translate }}</dt>
+            <dd>{{ run.businessDate }}</dd>
+            <dt>{{ 'FinancialControls.Status' | translate }}</dt>
+            <dd>{{ label(run.status) | translate }}</dd>
+            <dt>{{ 'FinancialControls.Evaluated' | translate }}</dt>
+            <dd>{{ run.evaluated }}</dd>
+            <dt>{{ 'FinancialControls.Blocked' | translate }}</dt>
+            <dd>{{ run.blocked }}</dd>
+            <dt>{{ 'FinancialControls.UnknownCount' | translate }}</dt>
+            <dd>{{ run.unknown }}</dd>
+            <dt>{{ 'FinancialControls.Cutoff' | translate }}</dt>
+            <dd>{{ run.cutoffAccountId }}</dd>
+            <dt>{{ 'FinancialControls.Checkpoint' | translate }}</dt>
+            <dd>{{ run.afterAccountId }}</dd>
+            <dt>{{ 'FinancialControls.CreatedBy' | translate }}</dt>
+            <dd>{{ run.createdBy }} · {{ run.createdAt }}</dd>
+          </dl>
+          <button mat-button (click)="select(run.id)" [disabled]="busy">
+            {{ 'FinancialControls.ReloadRun' | translate }}
+          </button>
+          @if (canAssess) {
+            <div [formGroup]="form" class="editor-actions">
+              <mat-form-field
+                ><mat-label>{{ 'FinancialControls.BatchSize' | translate }}</mat-label
+                ><input matInput type="number" formControlName="limit" min="1" max="100" step="1" /><mat-error>{{
+                  'FinancialControls.BatchInvalid' | translate
+                }}</mat-error></mat-form-field
+              >
+              <button mat-raised-button (click)="process()" [disabled]="!canProcess">
+                {{ 'FinancialControls.Process' | translate }}
+              </button>
+            </div>
+            <p>{{ 'FinancialControls.ProcessNotice' | translate }}</p>
+          }
+          <h3>{{ 'FinancialControls.Assessments' | translate }}</h3>
+          @if (page) {
+            <table
+              mat-table
+              class="diagnostic-table"
+              [dataSource]="page.items"
+              [attr.aria-label]="'FinancialControls.Assessments' | translate"
+            >
+              <ng-container matColumnDef="account"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.Account' | translate }}</th>
+                <td mat-cell *matCellDef="let item" [attr.data-label]="'FinancialControls.Account' | translate">
+                  {{ item.accountId }}
+                  <p>{{ 'FinancialControls.Product' | translate }}: {{ item.productId }}</p>
+                  <p>
+                    {{ 'SavingsEditor.Version' | translate }}:
+                    {{ item.policyVersion ?? ('SavingsEditor.Unavailable' | translate) }}
+                  </p>
+                </td></ng-container
+              >
+              <ng-container matColumnDef="outcome"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.Outcome' | translate }}</th>
+                <td mat-cell *matCellDef="let item" [attr.data-label]="'FinancialControls.Outcome' | translate">
+                  {{ label(item.outcome) | translate }}
+                  <p>{{ label(item.reason) | translate }}</p>
+                  <p>
+                    {{ 'FinancialControls.FinancialOutcome' | translate }}:
+                    {{ label(item.financialOutcome) | translate }}
+                  </p>
+                  <p>{{ item.recordedAt }} · {{ 'FinancialControls.AssessedBy' | translate }}: {{ item.assessedBy }}</p>
+                </td></ng-container
+              >
+              <ng-container matColumnDef="amount"
+                ><th mat-header-cell *matHeaderCellDef>{{ 'FinancialControls.ConfiguredAmount' | translate }}</th>
+                <td
+                  mat-cell
+                  *matCellDef="let item"
+                  [attr.data-label]="'FinancialControls.ConfiguredAmount' | translate"
+                >
+                  {{ item.configuredFeeAmount ?? ('SavingsEditor.Unavailable' | translate) }}
+                  <p>
+                    {{ 'SavingsEditor.FeeCharge' | translate }}:
+                    {{ item.feeChargeId ?? ('SavingsEditor.Unavailable' | translate) }}
+                  </p>
+                  <p>
+                    {{ 'SavingsEditor.MonthlyAverage' | translate }}:
+                    {{ item.minimumMonthlyAverageBalance ?? ('SavingsEditor.Unavailable' | translate) }}
+                  </p>
+                </td></ng-container
+              >
+              <tr mat-header-row *matHeaderRowDef="['account', 'outcome', 'amount']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['account', 'outcome', 'amount']"></tr>
+            </table>
+            @if (!page.items.length) {
+              <p>{{ 'FinancialControls.NoAssessments' | translate }}</p>
+            }
+            <div class="editor-actions">
+              <button mat-button (click)="assessments(true)" [disabled]="busy">
+                {{ 'FinancialControls.FirstPage' | translate }}</button
+              ><button mat-button (click)="assessments()" [disabled]="busy || !page.hasMore">
+                {{ 'FinancialControls.NextPage' | translate }}
+              </button>
+            </div>
+          }
+          @if (reconciliation) {
+            <h3>{{ 'FinancialControls.Reconciliation' | translate }}</h3>
+            <p>{{ 'FinancialControls.ReconciliationNotice' | translate }}</p>
+            <dl class="financial-summary">
+              <dt>{{ 'FinancialControls.RunId' | translate }}</dt>
+              <dd>{{ reconciliation.runId }}</dd>
+              <dt>{{ 'FinancialControls.Status' | translate }}</dt>
+              <dd>{{ label(reconciliation.status) | translate }}</dd>
+              <dt>{{ 'FinancialControls.UnknownCount' | translate }}</dt>
+              <dd>{{ reconciliation.unknownOutcomes }}</dd>
+              <dt>{{ 'FinancialControls.NativeAccounting' | translate }}</dt>
+              <dd>
+                {{
+                  (reconciliation.nativeAccountingVerified
+                    ? 'FinancialControls.Verified'
+                    : 'FinancialControls.NotVerified'
+                  ) | translate
+                }}
+              </dd>
+              <dt>{{ 'FinancialControls.FinancialRetry' | translate }}</dt>
+              <dd>
+                {{
+                  (reconciliation.financialRetryAllowed
+                    ? 'FinancialControls.BackendReported'
+                    : 'FinancialControls.Unavailable'
+                  ) | translate
+                }}
+              </dd>
+            </dl>
+          }
+        }
+      </section>
+    </mat-expansion-panel>
+  </mat-accordion>
+}

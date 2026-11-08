@@ -23,6 +23,7 @@ import { AlertService } from '../alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Models */
+import { financialRestrictionError } from 'app/savings/shared/financial-restriction-error';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 
 /** Initialize Logger */
@@ -118,6 +119,27 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    const restriction = financialRestrictionError(response);
+    if (
+      restriction &&
+      (/\/base-teller\/(?:withdrawals|account-transfers)(?:[/?]|$)/.test(request.url) ||
+        (request.method === 'POST' && /\/savingsaccounts\/[^/?]+\/transactions\/?(?:\?|$)/.test(request.url)))
+    ) {
+      // These workflows render known restrictions locally. Preserve the rejection without a duplicate alert.
+      return throwError(() => response);
+    }
+    if (restriction) {
+      // Domain rejection may be HTTP 403. Preserve the response without exposing server internals.
+      this.alertService.alert({
+        type: this.translate.instant('FinancialControls.TransactionRejected'),
+        message: this.translate.instant(restriction)
+      });
+      return throwError(() => response);
+    }
+    if (status !== 401 && /\/savings\/monthly-fees(?:[/?]|$)/.test(request.url)) {
+      // This optional administrative panel renders its own safe error and reload controls.
+      return throwError(() => response);
+    }
     // These teller workflows render safe localized errors, including text response bodies.
     if (
       /\/base-teller\/(?:account-transfers|cash-transfers|withdrawals|vault|vault-cash-deposits)(?:[/?]|$)/.test(

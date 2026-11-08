@@ -40,6 +40,15 @@
                 ></i>
               }
             </h3>
+            <p>
+              {{ 'FinancialControls.NativeAccountStatus' | translate }}:
+              {{ savingsAccountData.status?.value || ('SavingsEditor.Unavailable' | translate) }}
+            </p>
+            <p>
+              {{ 'FinancialControls.NativeRestrictions' | translate }}:
+              {{ savingsAccountData.subStatus?.value || ('SavingsEditor.Unavailable' | translate) }}
+            </p>
+            <p>{{ 'FinancialControls.AccountRestrictionNotice' | translate }}</p>
             <!-- Product Name Row -->
             <span class="product-row">
               <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>

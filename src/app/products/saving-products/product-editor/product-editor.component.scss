@@ -92,3 +92,57 @@ mat-card-content {
   overflow-wrap: anywhere;
   line-height: 1rem;
 }
+
+.financial-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, calc(50% - 0.5rem)));
+  gap: 1rem;
+
+  dt,
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.diagnostic-table {
+  width: 100%;
+  table-layout: fixed;
+
+  th,
+  td {
+    overflow-wrap: anywhere;
+    padding: 0.5rem;
+    vertical-align: top;
+  }
+}
+
+@media (width <= 48rem) {
+  .diagnostic-table {
+    display: block;
+
+    tr.mat-mdc-header-row {
+      display: none;
+    }
+
+    tr,
+    td {
+      display: block;
+      height: auto;
+    }
+
+    td button {
+      max-width: 100%;
+      height: auto;
+      min-width: 0;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    td::before {
+      content: attr(data-label);
+      display: block;
+      font-weight: 500;
+    }
+  }
+}

@@ -45,6 +45,7 @@ export interface ProductPolicy {
   referenceRate?: ReferenceFormula | null;
 }
 export interface PolicyCapabilities {
+  transactionControls?: TransactionControlCapabilities;
   draftConfiguration: boolean;
   activation: boolean;
   financialEnforcement: boolean;
@@ -55,6 +56,17 @@ export interface PolicyCapabilities {
   freezingModes: Freezing[];
   interestModes: InterestMode[];
   pendingFeatures: string[];
+}
+export interface TransactionControlCapabilities {
+  decisionEvaluation: boolean;
+  depositEventVeto: string;
+  withdrawalEventVeto: string;
+  maximumBalanceEnforcement: boolean;
+  freezingLifecycle: boolean;
+  operationsExceptions: boolean;
+  universalNativeCoverage: boolean;
+  configuredActivation: boolean;
+  blockers: string[];
 }
 export interface PolicyConfiguration {
   savingsProductId: number;
@@ -257,7 +269,10 @@ export function policyValidator(
     if (p.interestMode === 'NONE' && !/^0*(?:\.0*)?$/.test(String(c.rate))) fail('interestMode', 'ZeroRate');
     if (
       p.freezing === 'TERM' &&
-      (!Number.isInteger(p.freezingTermDays) || p.freezingTermDays <= 0 || p.freezingTermDays > 2147483647)
+      (p.freezingTermDays == null ||
+        !Number.isInteger(p.freezingTermDays) ||
+        p.freezingTermDays <= 0 ||
+        p.freezingTermDays > 2147483647)
     )
       fail('freezingTermDays', 'TermRequired');
     if (p.purpose === 'MAIN' && p.freezing !== 'NONE') fail('freezing', 'MainFreezing');
