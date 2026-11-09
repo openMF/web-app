@@ -36,13 +36,12 @@ mat-divider {
   }
 }
 
-.address {
-  h3 {
-    margin: 1% auto;
-  }
+.address-heading {
+  margin-top: 1em;
+}
 
-  p {
-    line-height: 30px;
-    margin-left: 2%;
+.address {
+  .address-type {
+    margin: 1em 0 0.5em;
   }
 }
