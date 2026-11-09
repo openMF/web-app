@@ -4739,6 +4739,15 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Vipengee kwa kila ukurasa:",
+        "nextPage": "Ukurasa unaofuata",
+        "previousPage": "Ukurasa uliopita",
+        "firstPage": "Ukurasa wa kwanza",
+        "lastPage": "Ukurasa wa mwisho",
+        "rangeLabel": "{{start}} – {{end}} ya {{length}}",
+        "emptyRangeLabel": "0 ya {{length}}"
+      },
       "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",

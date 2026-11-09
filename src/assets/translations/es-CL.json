@@ -4742,6 +4742,15 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Elementos por página:",
+        "nextPage": "Página siguiente",
+        "previousPage": "Página anterior",
+        "firstPage": "Primera página",
+        "lastPage": "Última página",
+        "rangeLabel": "{{start}} – {{end}} de {{length}}",
+        "emptyRangeLabel": "0 de {{length}}"
+      },
       "No valid saved coordinates": "El mapa no está disponible porque faltan las coordenadas guardadas o no son válidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar producto de Crédito",

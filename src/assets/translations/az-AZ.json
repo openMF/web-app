@@ -4699,6 +4699,15 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Səhifə başına element:",
+        "nextPage": "Növbəti səhifəyə keç",
+        "previousPage": "Əvvəlki səhifəyə keç",
+        "firstPage": "İlk səhifəyə keç",
+        "lastPage": "Son səhifəyə keç",
+        "rangeLabel": "{{start}} – {{end}} / {{length}}",
+        "emptyRangeLabel": "0 / {{length}}"
+      },
       "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "Clone": "Klonla",
       "Clone Loan Product": "Kredit məhsulunu klonla",

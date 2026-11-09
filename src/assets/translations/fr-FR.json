@@ -4742,6 +4742,15 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "paginator": {
+        "itemsPerPage": "Éléments par page :",
+        "nextPage": "Page suivante",
+        "previousPage": "Page précédente",
+        "firstPage": "Première page",
+        "lastPage": "Dernière page",
+        "rangeLabel": "{{start}} – {{end}} sur {{length}}",
+        "emptyRangeLabel": "0 sur {{length}}"
+      },
       "No valid saved coordinates": "La carte est indisponible, car les coordonnées enregistrées sont manquantes ou non valides.",
       "Clone": "Cloner",
       "Clone Loan Product": "Cloner le produit de prêt",
