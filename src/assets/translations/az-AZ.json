@@ -4699,6 +4699,7 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Skip to main content": "Əsas məzmuna keçin",
       "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "Clone": "Klonla",
       "Clone Loan Product": "Kredit məhsulunu klonla",

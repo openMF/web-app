@@ -125,4 +125,17 @@ export class ShellComponent implements OnInit, AfterViewInit {
     this.copilotRef?.setInput('sidenavCollapsed', $event);
     this.cdr.detectChanges();
   }
+
+  /**
+   * Focuses the main content landmark when skip link is activated.
+   * Prevents hash router navigation while reliably transferring focus.
+   * @param {Event} event Click or keyboard activation event
+   */
+  onSkipToContent(event: Event) {
+    event.preventDefault();
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.focus();
+    }
+  }
 }
