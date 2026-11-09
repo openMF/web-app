@@ -10,6 +10,7 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { Dates } from 'app/core/utils/dates';
+import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { SavingsService } from '../../savings.service';
 import { CreateGsimAccountComponent } from './create-gsim-account.component';
@@ -32,6 +33,8 @@ describe('CreateGsimAccountComponent charges', () => {
         },
         { provide: Router, useValue: { navigate: jest.fn() } },
         { provide: SavingsService, useValue: {} },
+        // only submit() looks the new GSIM account up; building the request bodies never calls it
+        { provide: GroupsService, useValue: {} },
         { provide: SettingsService, useValue: { language: { code: 'en' }, dateFormat: 'dd MMMM yyyy' } },
         // the dates already hold their display text, so formatting keeps it
         { provide: Dates, useValue: { formatDate: (value: any): string => value } }
