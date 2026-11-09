@@ -1,0 +1,38 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section [attr.aria-label]="title | translate">
+  <h3>{{ title | translate }}</h3>
+  @if (policy) {
+    <dl class="financial-summary">
+      <dt>{{ 'SavingsEditor.WithdrawalsAllowed' | translate }}</dt>
+      <dd>
+        {{ (policy.withdrawalsAllowed ? 'FinancialControls.Allowed' : 'FinancialControls.Restricted') | translate }}
+      </dd>
+      <dt>{{ 'SavingsEditor.DepositsAllowed' | translate }}</dt>
+      <dd>{{ (policy.depositsAllowed ? 'FinancialControls.Allowed' : 'FinancialControls.Restricted') | translate }}</dd>
+      <dt>{{ 'SavingsEditor.MaximumBalance' | translate }}</dt>
+      <dd>{{ currency }} {{ policy.maximumBalance }}</dd>
+      <dt>{{ 'SavingsEditor.MonthlyAverage' | translate }}</dt>
+      <dd>{{ currency }} {{ policy.minimumMonthlyAverageBalance }}</dd>
+      <dt>{{ 'SavingsEditor.FeeApplicable' | translate }}</dt>
+      <dd>{{ (policy.feeApplicable ? 'FinancialControls.ConfiguredFee' : 'FinancialControls.NoFee') | translate }}</dd>
+      @if (policy.feeApplicable) {
+        <dt>{{ 'SavingsEditor.FeeCharge' | translate }}</dt>
+        <dd>{{ policy.feeChargeId }} · {{ chargeName || ('SavingsEditor.Unavailable' | translate) }}</dd>
+      }
+      <dt>{{ 'SavingsEditor.Freezing' | translate }}</dt>
+      <dd>
+        {{ (policy.freezing === 'NONE' ? 'SavingsEditor.NoFreezing' : 'SavingsEditor.' + policy.freezing) | translate }}
+      </dd>
+    </dl>
+    <p>{{ 'FinancialControls.ConfigurationNotice' | translate }}</p>
+  } @else {
+    <p>{{ 'SavingsEditor.NoActive' | translate }}</p>
+  }
+</section>
