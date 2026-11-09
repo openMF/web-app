@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Área de transferência",
-      "copied": "Copiado: {{value}}"
+      "copied": "Copiado: {{value}}",
+      "failed": "Falha ao copiar para a área de transferência"
     },
     "tenant": {
       "changed": {

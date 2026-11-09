@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Zwischenablage",
-      "copied": "Kopiert: {{value}}"
+      "copied": "Kopiert: {{value}}",
+      "failed": "Kopieren in die Zwischenablage fehlgeschlagen"
     },
     "tenant": {
       "changed": {

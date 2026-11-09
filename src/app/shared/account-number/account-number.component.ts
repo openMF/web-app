@@ -8,6 +8,8 @@
 
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -23,6 +25,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class AccountNumberComponent implements OnInit {
   private clipboard = inject(Clipboard);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
 
   @Input() accountNo: string;
   @Input() display = 'right';
@@ -40,7 +44,23 @@ export class AccountNumberComponent implements OnInit {
   }
 
   copyValue(): void {
-    this.clipboard.copy(this.accountNo);
+    let copied = false;
+    try {
+      copied = this.clipboard.copy(this.accountNo);
+    } catch {
+      copied = false;
+    }
+    if (copied) {
+      this.alertService.alert({
+        type: this.translateService.instant('errors.clipboard.type'),
+        message: this.translateService.instant('errors.clipboard.copied', { value: this.accountNo })
+      });
+    } else {
+      this.alertService.alert({
+        type: this.translateService.instant('errors.clipboard.type'),
+        message: this.translateService.instant('errors.clipboard.failed')
+      });
+    }
   }
 
   mouseEnter() {
