@@ -10,7 +10,7 @@
   <mat-card class="account-card">
     <mifosx-account-header
       [statusCode]="iconLoanStatusColor()"
-      [statusTooltip]="'labels.status.' + loanDetailsData.status.value | translate"
+      [statusTooltip]="subStatusLabel() ?? 'labels.status.' + loanDetailsData.status.value | translate"
     >
       <!-- Loan account icon -->
       <div accountImage class="loan-icon-frame">

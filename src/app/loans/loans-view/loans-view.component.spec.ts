@@ -140,6 +140,25 @@ describe('LoansViewComponent', () => {
     expect(component.datatablesReady).toBe(true);
   });
 
+  describe('status of an early terminated loan', () => {
+    it('colours and names a loan withdrawal apart from a contract termination', () => {
+      seedActiveLoan({ subStatus: { code: 'loanSubStatus.loanSubStatusType.loanWithdrawal' } });
+      const withdrawn = createComponent();
+      expect(withdrawn.iconLoanStatusColor()).toBe('loanSubStatusType.loanWithdrawal');
+      expect(withdrawn.subStatusLabel()).toBe('labels.heading.Loan Withdrawal');
+
+      seedActiveLoan({ subStatus: { code: 'loanSubStatus.loanSubStatusType.contractTermination' } });
+      const terminated = createComponent();
+      expect(terminated.iconLoanStatusColor()).toBe('loanSubStatusType.contractTermination');
+      expect(terminated.subStatusLabel()).toBe('labels.heading.Contract Termination');
+    });
+
+    it('names no sub-status on a loan without one', () => {
+      seedActiveLoan();
+      expect(createComponent().subStatusLabel()).toBeNull();
+    });
+  });
+
   describe('action menu on an active loan', () => {
     it('offers Prepay Loan whether or not the product recalculates interest', () => {
       seedActiveLoan({ isInterestRecalculationEnabled: false });

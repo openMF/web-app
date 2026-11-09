@@ -65,7 +65,7 @@
             </div>
           </div>
 
-          @if (!contractTermination) {
+          @if (!isEarlyTermination) {
             <mifosx-input-amount
               [currency]="currency"
               [isRequired]="true"
@@ -80,7 +80,7 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          @if (!contractTermination) {
+          @if (!isEarlyTermination) {
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
               <mat-select formControlName="paymentTypeId">
@@ -93,7 +93,7 @@
             </mat-form-field>
           }
 
-          @if (!contractTermination) {
+          @if (!isEarlyTermination) {
             <div class="flex-fill">
               <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
                 <mat-slide-toggle>
@@ -142,7 +142,7 @@
             mat-raised-button
             color="primary"
             [disabled]="!prepayLoanForm.valid"
-            *mifosxHasPermission="'REPAYMENT_LOAN'"
+            *mifosxHasPermission="submitPermission"
           >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
