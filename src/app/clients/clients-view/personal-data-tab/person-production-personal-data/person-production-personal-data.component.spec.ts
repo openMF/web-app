@@ -355,6 +355,7 @@ describe('PersonProductionPersonalDataComponent', () => {
 
   it('keeps the existing KYC actions available when KYC validation is enabled', () => {
     component.isKycEnabled = true;
+    component.canExportKyc = true;
     component.validationData = {
       validationStatus: ValidationStatus.COMPLETE
     } as any;
@@ -370,5 +371,21 @@ describe('PersonProductionPersonalDataComponent', () => {
     expect(component.exportKyc.emit).toHaveBeenCalled();
     expect(component.validateDocumentation.emit).toHaveBeenCalled();
     expect(fixture.nativeElement.textContent).toContain('labels.inputs.COMPLETE');
+  });
+  it('disables export while loading and keeps validation available', () => {
+    component.isKycEnabled = true;
+    component.canExportKyc = true;
+    component.isExportingKyc = true;
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.export-kyc-button').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('.validate-docs-button').disabled).toBe(false);
+  });
+
+  it('hides an unauthorized export without hiding validation', () => {
+    component.isKycEnabled = true;
+    component.canExportKyc = false;
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.export-kyc-button')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.validate-docs-button')).not.toBeNull();
   });
 });

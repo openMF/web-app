@@ -7,6 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
 
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
@@ -21,7 +22,8 @@ import { PersonalDataField, PersonalDataTableSection, PersonalDataViewModel } fr
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
-    MatIcon
+    MatIcon,
+    MatProgressSpinner
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -29,6 +31,8 @@ export class PersonProductionPersonalDataComponent {
   @Input() clientViewData: any;
   @Input() viewModel: PersonalDataViewModel | null = null;
   @Input() isKycEnabled = false;
+  @Input() canExportKyc = false;
+  @Input() isExportingKyc = false;
   @Input() validationData: CustomerDataValidation | null = null;
 
   @Output() exportKyc = new EventEmitter<void>();
