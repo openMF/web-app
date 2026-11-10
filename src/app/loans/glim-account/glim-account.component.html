@@ -64,7 +64,7 @@
               (click)="routeEdit($event)"
               [routerLink]="['../../', element.childLoanId, 'actions', 'Approve']"
             >
-              <i class="fa fa-check"></i> {{ 'buttons.Approve' | translate }}
+              <i class="fa fa-check"></i> {{ 'labels.buttons.Approve' | translate }}
             </button>
           }
           @if (element.status?.waitingForDisbursal) {
@@ -74,7 +74,7 @@
               (click)="routeEdit($event)"
               [routerLink]="['../../', element.childLoanId, 'actions', 'Disburse']"
             >
-              <i class="fa fa-flag"></i> {{ 'buttons.Disburse' | translate }}
+              <i class="fa fa-flag"></i> {{ 'labels.menus.Disburse' | translate }}
             </button>
           }
         </td>

@@ -19,6 +19,7 @@
 
 .button-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
   margin-bottom: 0.5%;
@@ -162,7 +163,8 @@
 .pdf-modal-content {
   position: relative;
   background-color: white;
-  padding: 20px;
+  padding: 16px;
+  box-sizing: border-box;
   border-radius: 8px;
   width: 90%;
   max-width: 1000px;
@@ -173,25 +175,25 @@
 
   embed {
     flex: 1;
+    min-height: 0;
     border: none;
   }
 }
 
-.pdf-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  font-size: 24px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 1;
+.pdf-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
 
-  &:hover {
-    background-color: #d32f2f;
+  h2 {
+    flex: 1;
+    margin: 0;
   }
+}
+
+.export-kyc-button mat-spinner {
+  display: inline-block;
+  margin-right: 8px;
 }

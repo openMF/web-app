@@ -199,17 +199,17 @@
         } @else {
           <span class="muted-dash">—</span>
         }
-        <span class="mono"
+        <span class="mono" [title]="row.accountNumber || ''"
           ><mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number
         ></span>
-        <span class="mono">
+        <span class="mono" [title]="row.externalId || ''">
           @if (row.externalId) {
             <mifosx-external-identifier display="left" [externalId]="row.externalId"></mifosx-external-identifier>
           } @else {
             <span class="muted-dash">—</span>
           }
         </span>
-        <span class="office">{{ row.officeName }}</span>
+        <span class="office" [title]="row.officeName || ''">{{ row.officeName }}</span>
       </div>
     }
 
