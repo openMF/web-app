@@ -41,11 +41,13 @@
       class="tab-link"
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
+      (menuOpened)="matchMenuToTab(institutionMenu, institution)"
       tabindex="0"
       *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER', 'READ_LOAN']"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
+      <fa-icon class="tab-link-caret" icon="caret-down" size="sm"></fa-icon>
     </a>
 
     <span class="hide-lt-md">
@@ -70,17 +72,20 @@
         class="tab-link"
         [matMenuTriggerFor]="reportsMenu"
         #reportsMenuTrigger="matMenuTrigger"
+        (menuOpened)="matchMenuToTab(reportsMenu, reports)"
         tabindex="0"
         *mifosxHasPermission="'READ_REPORT'"
       >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'labels.menus.Reports' | translate }}
+        <fa-icon class="tab-link-caret" icon="caret-down" size="sm"></fa-icon>
       </a>
       <a
         #admin
         class="tab-link"
         [matMenuTriggerFor]="adminMenu"
         #adminMenuTrigger="matMenuTrigger"
+        (menuOpened)="matchMenuToTab(adminMenu, admin)"
         tabindex="0"
         *mifosxHasPermission="[
           'READ_USER',
@@ -93,6 +98,7 @@
       >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
+        <fa-icon class="tab-link-caret" icon="caret-down" size="sm"></fa-icon>
       </a>
       <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
@@ -111,6 +117,8 @@
     <mifosx-language-selector
       class="ml-1 language hide-lt-md"
       subscriptSizing="dynamic"
+      panelClass="mifosx-toolbar-select-panel"
+      [panelWidth]="null"
       tabindex="0"
     ></mifosx-language-selector>
   </div>
@@ -149,11 +157,11 @@
 </mat-toolbar>
 
 <!-- Language selector menu for small screen view -->
-<mat-menu #languageMenu="matMenu">
+<mat-menu #languageMenu="matMenu" class="mifosx-toolbar-menu mifosx-toolbar-icon-menu">
   <mifosx-language-selector class="ml-1 language"></mifosx-language-selector>
 </mat-menu>
 
-<mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
+<mat-menu #institutionMenu="matMenu" class="mifosx-toolbar-menu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
     {{ 'labels.menus.Clients' | translate }}
   </button>
@@ -196,7 +204,7 @@
 </mat-menu>
 
 <!-- Toolbar Menus -->
-<mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
+<mat-menu #reportsMenu="matMenu" class="mifosx-toolbar-menu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/reports']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.All' | translate }}
   </button>
@@ -217,7 +225,7 @@
   </button>
 </mat-menu>
 
-<mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
+<mat-menu #adminMenu="matMenu" class="mifosx-toolbar-menu" [overlapTrigger]="false">
   <button mat-menu-item [routerLink]="['/appusers']" tabindex="0" *mifosxHasPermission="'READ_USER'">
     {{ 'labels.menus.Users' | translate }}
   </button>
@@ -247,7 +255,7 @@
 </mat-menu>
 
 <!-- Application User Help Menu -->
-<mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">
+<mat-menu #applicationMenu="matMenu" class="mifosx-toolbar-menu mifosx-toolbar-icon-menu" [overlapTrigger]="false">
   <button mat-menu-item (click)="help()" tabindex="0">
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
