@@ -415,8 +415,6 @@
 }
 
 .fc-pin svg {
-  width: 13px;
-  height: 13px;
   fill: currentcolor;
 }
 
@@ -763,8 +761,6 @@
 }
 
 .r-icon svg {
-  width: 13px;
-  height: 13px;
   fill: currentcolor;
 }
 
@@ -781,6 +777,160 @@
 .r-icon:disabled {
   opacity: 0.35;
   cursor: not-allowed;
+}
+
+/* ── Pin button & pin/unpin animations ───────────────────────── */
+.pin-btn {
+  position: relative;
+}
+
+.pin-btn .pin-glyph {
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.pin-btn.pinned-on .pin-glyph {
+  transform: rotate(0deg);
+}
+
+.pin-btn:hover:not(:disabled, .pinned-on) .pin-glyph {
+  transform: rotate(20deg) translateY(-1px);
+}
+
+.pin-btn.pin-anim-in .pin-glyph {
+  animation: rp-pin-in 0.45s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+.pin-btn.pin-anim-out .pin-glyph {
+  animation: rp-pin-out 0.45s ease both;
+}
+
+/* Ripple pushed out from the pin as it is pressed in. */
+.pin-btn.pin-anim-in::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--ds-partial);
+  pointer-events: none;
+  animation: rp-pin-ripple 0.4s ease-out 0.15s both;
+}
+
+@keyframes rp-pin-in {
+  0% {
+    transform: translateY(0) rotate(45deg) scale(1);
+  }
+
+  35% {
+    transform: translateY(-6px) rotate(-8deg) scale(1.15);
+  }
+
+  65% {
+    transform: translateY(2px) rotate(0deg) scale(0.85);
+  }
+
+  85% {
+    transform: translateY(-1px) rotate(0deg) scale(1.05);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes rp-pin-out {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translateY(-7px) rotate(-12deg) scale(1.1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(0) rotate(45deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes rp-pin-ripple {
+  from {
+    transform: scale(0.4);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.r-name .pinned-icon.pop-in {
+  animation: rp-pin-pop 0.35s cubic-bezier(0.3, 0.7, 0.4, 1.4) both;
+}
+
+@keyframes rp-pin-pop {
+  from {
+    transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.feature-card.entering {
+  animation: rp-card-in 0.4s cubic-bezier(0.3, 0.7, 0.4, 1.2) both;
+}
+
+.feature-card.leaving {
+  pointer-events: none;
+  animation: rp-card-leave 0.3s ease 0.25s forwards;
+}
+
+@keyframes rp-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes rp-card-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.94);
+  }
+}
+
+/* Keep the animations near-instant (not removed) so `animationend` still fires. */
+@media (prefers-reduced-motion: reduce) {
+  .pin-btn .pin-glyph,
+  .pin-btn.pin-anim-in .pin-glyph,
+  .pin-btn.pin-anim-out .pin-glyph,
+  .pin-btn.pin-anim-in::after,
+  .r-name .pinned-icon.pop-in,
+  .feature-card.entering,
+  .feature-card.leaving {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+    transition: none;
+  }
 }
 
 /* ── Empty state ─────────────────────────────────────────────── */
