@@ -55,7 +55,7 @@ export const environment = {
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled === true,
+    enabled: loadedEnv.oauthServerEnabled === 'true' || loadedEnv.oauthServerEnabled === true,
     serverUrl: loadedEnv.oauthServerUrl || '',
     logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
     appId: loadedEnv.oauthAppId || '',
