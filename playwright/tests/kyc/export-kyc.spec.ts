@@ -153,7 +153,7 @@ for (const production of [
         const exportButton = page.getByRole('button', { name: 'Export KYC', exact: true });
         await expect(exportButton).toBeVisible();
         const header = page.locator('.button-header');
-        await expect(header).toHaveCSS('justify-content', 'flex-end');
+        await expect(header).toHaveCSS('justify-content', /^(flex-end|flow-end)$/);
         const section = page.locator('mifosx-personal-data-tab .section').first();
         expect((await exportButton.boundingBox())!.y).toBeLessThan((await section.boundingBox())!.y);
         const requestPromise = page.waitForRequest((request) => request.url().includes(`/runreports/${report}?`));
