@@ -78,12 +78,12 @@
     <div class="pinned-head">
       <h2>
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+          <path [attr.d]="pinFilledPath"></path>
         </svg>
         {{ 'labels.text.Pinned' | translate }}
       </h2>
       <span class="pinned-head-rule"></span>
-      <span class="pinned-head-meta"> {{ pinnedReports.length }} / 6 </span>
+      <span class="pinned-head-meta"> {{ pinnedCount }} / 6 </span>
     </div>
 
     <div class="pinned-grid">
@@ -91,8 +91,11 @@
         *ngFor="let report of pinnedReports; trackBy: trackById"
         class="feature-card"
         [ngClass]="'t-' + report.reportType.toLowerCase()"
+        [class.entering]="pinAnimationFor(report.id, 'pin')"
+        [class.leaving]="isLeavingPinned(report.id)"
         [routerLink]="['/reports', 'run', report.reportName]"
         [queryParams]="{ type: report.reportType, id: report.id }"
+        (animationend)="onPinnedCardAnimationEnd(report.id, $event)"
       >
         <div class="fc-top">
           <span class="fc-engine" [ngClass]="'eng-' + report.reportType.toLowerCase()">
@@ -100,12 +103,23 @@
           </span>
           <button
             type="button"
-            class="fc-pin pinned-on"
+            class="fc-pin pin-btn"
+            [class.pinned-on]="isPinned(report.id)"
+            [class.pin-anim-in]="pinAnimationFor(report.id, 'pin')"
+            [class.pin-anim-out]="pinAnimationFor(report.id, 'unpin')"
+            [attr.aria-pressed]="isPinned(report.id)"
+            [attr.aria-label]="'labels.buttons.Unpin' | translate"
             (click)="togglePin(report, $event)"
             [matTooltip]="'labels.buttons.Unpin' | translate"
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+            <svg
+              class="pin-glyph"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              (animationend)="onPinAnimationEnd(report.id)"
+            >
+              <path [attr.d]="pinPath(report.id)"></path>
             </svg>
           </button>
         </div>
@@ -215,11 +229,12 @@
               <svg
                 *ngIf="isPinned(report.id)"
                 class="pinned-icon"
+                [class.pop-in]="pinAnimationFor(report.id, 'pin')"
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 aria-hidden="true"
               >
-                <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+                <path [attr.d]="pinFilledPath"></path>
               </svg>
               <span class="r-name-text">{{ report.reportName }}</span>
             </div>
@@ -235,14 +250,24 @@
           <div class="r-actions">
             <button
               type="button"
-              class="r-icon"
+              class="r-icon pin-btn"
               [class.pinned-on]="isPinned(report.id)"
+              [class.pin-anim-in]="pinAnimationFor(report.id, 'pin')"
+              [class.pin-anim-out]="pinAnimationFor(report.id, 'unpin')"
               [disabled]="!isPinned(report.id) && isPinLimitReached()"
+              [attr.aria-pressed]="isPinned(report.id)"
+              [attr.aria-label]="(isPinned(report.id) ? 'labels.buttons.Unpin' : 'labels.buttons.Pin') | translate"
               [matTooltip]="(isPinned(report.id) ? 'labels.buttons.Unpin' : 'labels.buttons.Pin') | translate"
               (click)="togglePin(report, $event)"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path>
+              <svg
+                class="pin-glyph"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                (animationend)="onPinAnimationEnd(report.id)"
+              >
+                <path [attr.d]="pinPath(report.id)"></path>
               </svg>
             </button>
             <span class="r-run">
