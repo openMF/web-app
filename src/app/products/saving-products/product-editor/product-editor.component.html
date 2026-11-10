@@ -49,7 +49,7 @@
       @if (!loaded && !busy) {
         <p>{{ 'SavingsEditor.PolicyUnavailable' | translate }}</p>
       }
-      @if (loaded && !capabilities?.financialEnforcement) {
+      @if (loaded && !capabilities?.transactionControls && !capabilities?.financialEnforcement) {
         <p class="policy-notice">{{ 'SavingsEditor.MetadataNotice' | translate }}</p>
       }
       @if (configuration) {
@@ -57,6 +57,37 @@
           {{ 'SavingsEditor.Status.' + configuration.status | translate }} · {{ 'SavingsEditor.Revision' | translate }}
           {{ configuration.revision ?? '—' }}
         </p>
+      }
+      @if (loaded) {
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header
+              ><mat-panel-title>{{
+                'FinancialControls.Overview' | translate
+              }}</mat-panel-title></mat-expansion-panel-header
+            >
+            <div class="review-grid">
+              <mifosx-financial-policy-summary
+                [policy]="policy.getRawValue()"
+                [fees]="fees"
+                [currency]="context.currency"
+              ></mifosx-financial-policy-summary>
+              @if (workflow?.loaded) {
+                <mifosx-financial-policy-summary
+                  [policy]="workflow.active?.policy"
+                  [fees]="fees"
+                  [currency]="context.currency"
+                  title="FinancialControls.Active"
+                ></mifosx-financial-policy-summary>
+              } @else {
+                <p>{{ 'FinancialControls.ActiveUnavailable' | translate }}</p>
+              }
+            </div>
+            <mifosx-financial-capabilities
+              [capabilities]="capabilities?.transactionControls"
+            ></mifosx-financial-capabilities>
+          </mat-expansion-panel>
+        </mat-accordion>
       }
       <nav
         mat-tab-nav-bar
@@ -341,6 +372,7 @@
           (refreshed)="refresh()"
           (conflicted)="workflowConflict()"
         ></mifosx-policy-workflow>
-      }</mat-card-content
+      }
+      <mifosx-monthly-fee-diagnostics></mifosx-monthly-fee-diagnostics> </mat-card-content
   ></mat-card>
 </div>
