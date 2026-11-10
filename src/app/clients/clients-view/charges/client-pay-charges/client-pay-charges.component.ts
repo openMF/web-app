@@ -45,6 +45,8 @@ export class ClientPayChargesComponent implements OnInit {
   transactionData: any;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
 
   /**
    * Retrieves the charge data from `resolve`.
@@ -68,13 +70,14 @@ export class ClientPayChargesComponent implements OnInit {
    * Set Transaction Form.
    */
   setTransactionForm() {
+    this.maxDate = this.settingsService.businessDate;
     this.transactionForm = this.formBuilder.group({
       amount: [
         this.transactionData.amount,
         Validators.required
       ],
       transactionDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ]
     });
