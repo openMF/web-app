@@ -7,11 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Imports */
@@ -26,8 +30,8 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';
 import { environment } from 'environments/environment';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
-import { EMPTY, Observable, of, forkJoin } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { EMPTY, Observable, Subject, of, forkJoin } from 'rxjs';
+import { catchError, finalize, map, takeUntil, timeout } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
 import {
   CustomerDataValidation,
@@ -89,6 +93,8 @@ interface ClientViewData {
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
     MatIcon,
+    CdkTrapFocus,
+    MatProgressSpinner,
     PersonProductionPersonalDataComponent,
     EntityProductionPersonalDataComponent,
     IdentitiesTabComponent,
@@ -97,6 +103,8 @@ interface ClientViewData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonalDataTabComponent implements OnDestroy {
+  private authenticationService = inject(AuthenticationService);
+  private changeDetector = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private clientsService = inject(ClientsService);
   private sanitizer = inject(DomSanitizer);
@@ -117,6 +125,12 @@ export class PersonalDataTabComponent implements OnDestroy {
   /** Consolidated production Personal Data view model */
   productionViewModel$: Observable<PersonalDataViewModel | null> = of(null);
   /** PDF Display Control */
+  isExportingKyc = false;
+  private exportCancelled$ = new Subject<void>();
+  private exportTrigger: HTMLElement | null = null;
+  private pdfFile: Blob | null = null;
+  private pdfClientId: number | null = null;
+  private pdfTenant: string | null = null;
   showPdf = false;
   pdfUrl: SafeResourceUrl | null = null;
   rawPdfUrl: string | null = null;
@@ -139,7 +153,9 @@ export class PersonalDataTabComponent implements OnDestroy {
     this.systemService
       .getConfigurations()
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         catchError(() => {
+          this.changeDetector.markForCheck();
           this.isKycEnabled = false;
           this.configLoaded = true;
           return EMPTY;
@@ -149,13 +165,17 @@ export class PersonalDataTabComponent implements OnDestroy {
         const kycConfig = configs?.globalConfiguration?.find((c: any) => c.name === KYC_VALIDATION_CONFIG_NAME);
         this.isKycEnabled = kycConfig?.enabled ?? false;
         this.configLoaded = true;
+        this.changeDetector.markForCheck();
         this.loadValidationData();
       });
 
     this.route.parent.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { clientViewData: ClientViewData; clientDatatables?: any[] }) => {
+        this.exportCancelled$.next();
+        this.closePdf(false);
         this.clientViewData = data.clientViewData;
+        this.changeDetector.markForCheck();
         this.validationData = null;
         this.hasDatatableEntry = false;
         this.loadProductionViewModel(data.clientDatatables || []);
@@ -327,119 +347,220 @@ export class PersonalDataTabComponent implements OnDestroy {
     };
   }
 
-  /**
-   * Check if client is a person (individual)
-   */
-  isPerson(): boolean {
+  /** Use the same legal-form resolution for the profile layout and the report. */
+  private resolveLegalForm(): LegalFormId | null {
     const legalForm = this.clientViewData?.legalForm;
-    const legalFormId = Number(legalForm?.id);
-    const legalFormValue = `${legalForm?.code || legalForm?.value || legalForm?.name || ''}`.toLowerCase();
-    if (legalFormId === LegalFormId.ENTITY || legalFormValue.includes('entity')) {
-      return false;
+    const id = Number(legalForm?.id);
+    const code = legalForm?.code;
+    const codeId =
+      code === 'legalFormType.person'
+        ? LegalFormId.PERSON
+        : code === 'legalFormType.entity'
+          ? LegalFormId.ENTITY
+          : null;
+    if (id === LegalFormId.PERSON || id === LegalFormId.ENTITY) {
+      return codeId !== null && codeId !== id ? null : id;
     }
-    return legalFormId === LegalFormId.PERSON || legalFormValue.includes('person');
+    if (legalForm?.id != null && legalForm.id !== '') {
+      return null;
+    }
+    if (code) {
+      return codeId;
+    }
+    const value = (legalForm?.value || legalForm?.name || '').trim().toLowerCase();
+    if ([
+        'entity',
+        'legal entity',
+        'legal person',
+        'entity person'
+      ].includes(value)) {
+      return LegalFormId.ENTITY;
+    }
+    return [
+      'person',
+      'natural person',
+      'individual'
+    ].includes(value) ? LegalFormId.PERSON : null;
   }
 
-  /**
-   * Check if client is a legal entity (organization)
-   */
+  isPerson(): boolean {
+    return this.resolveLegalForm() === LegalFormId.PERSON;
+  }
+
   isLegalEntity(): boolean {
-    const legalForm = this.clientViewData?.legalForm;
-    const legalFormId = Number(legalForm?.id);
-    const legalFormValue = `${legalForm?.code || legalForm?.value || legalForm?.name || ''}`.toLowerCase();
-    return legalFormId === LegalFormId.ENTITY || legalFormValue.includes('entity');
+    return this.resolveLegalForm() === LegalFormId.ENTITY;
   }
 
-  /**
-   * Exports KYC report for the client using Pentaho
-   */
+  private get kycReportName(): string | null {
+    return this.isLegalEntity() ? 'KYCLegalPerson' : this.isPerson() ? 'KYCNaturalPerson' : null;
+  }
+
+  /** Mirror Fineract report grants; server-side report/client scope remains authoritative. */
+  get canExportKyc(): boolean {
+    const permissions = this.authenticationService.getCredentials()?.permissions || [];
+    const reportName = this.kycReportName;
+    const canReadClient = permissions.some((permission) => [
+        'ALL_FUNCTIONS',
+        'ALL_FUNCTIONS_READ',
+        'READ_CLIENT'
+      ].includes(permission));
+    const canRunReport = permissions.some((permission) => [
+        'ALL_FUNCTIONS',
+        'ALL_FUNCTIONS_READ',
+        'REPORTING_SUPER_USER',
+        `READ_${reportName}`
+      ].includes(permission));
+    return (
+      this.isKycEnabled &&
+      !environment.complianceHideClientData &&
+      Number.isSafeInteger(this.clientViewData?.id) &&
+      this.clientViewData.id > 0 &&
+      reportName !== null &&
+      canReadClient &&
+      canRunReport
+    );
+  }
+
+  /** Export through the existing authenticated Pentaho reporting flow. */
   exportKYC() {
-    if (!this.clientViewData?.id) {
+    if (this.isExportingKyc) {
+      return;
+    }
+    if (!this.canExportKyc) {
+      this.reportExportError();
       return;
     }
 
-    const clientId = this.clientViewData.id.toString();
+    this.closePdf(false);
+    this.exportTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const clientId = this.clientViewData.id;
     const tenantIdentifier = this.settingsService.tenantIdentifier;
-    const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
-
-    // Determine report name dynamically based on legalForm.code
-    let reportName = 'KYCReport';
-    const legalFormCode = this.clientViewData?.legalForm?.code;
-    if (legalFormCode === 'legalFormType.person') {
-      reportName = 'KYCNaturalPerson';
-    } else if (legalFormCode === 'legalFormType.entity') {
-      reportName = 'KYCLegalPerson';
-    }
-
-    const formData = {
-      'output-type': 'PDF',
-      R_clientId: clientId
-    };
-
+    const reportName = this.kycReportName!;
+    this.isExportingKyc = true;
+    this.changeDetector.markForCheck();
     this.reportsService
-      .getPentahoRunReportData(reportName, formData, tenantIdentifier, locale, dateFormat)
+      .getPentahoRunReportData(
+        reportName,
+        { 'output-type': 'PDF', R_clientId: clientId.toString() },
+        tenantIdentifier,
+        this.settingsService.language.code,
+        this.settingsService.dateFormat
+      )
       .pipe(
+        timeout(120000),
+        takeUntil(this.exportCancelled$),
         takeUntilDestroyed(this.destroyRef),
-        catchError((error: any): any => {
-          console.error('Document preview failed', error);
-          this.showPdf = false;
-          if (this.rawPdfUrl) {
-            URL.revokeObjectURL(this.rawPdfUrl);
-            this.rawPdfUrl = null;
+        map((res) => {
+          const contentType = (res.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();
+          const body = res.body;
+          // MIME and signature checks reject error pages, JSON and empty responses before trusting a Blob URL.
+          if (
+            !res.ok ||
+            contentType !== 'application/pdf' ||
+            !(body instanceof ArrayBuffer) ||
+            body.byteLength < 8 ||
+            !/^%PDF-(1\.[0-7]|2\.0)/.test(String.fromCharCode(...new Uint8Array(body, 0, 8)))
+          ) {
+            throw new Error('Invalid KYC PDF response');
           }
-          this.pdfUrl = null;
-          this.alertService.alert({
-            type: 'error',
-            message: this.translateService.instant('errors.kycReportLoadError')
-          });
+          return new Blob([body], { type: 'application/pdf' });
+        }),
+        catchError(() => {
+          this.reportExportError();
           return EMPTY;
+        }),
+        finalize(() => {
+          this.isExportingKyc = false;
+          this.changeDetector.markForCheck();
         })
       )
-      .subscribe((res: any) => {
-        if (this.rawPdfUrl) {
-          URL.revokeObjectURL(this.rawPdfUrl);
-          this.rawPdfUrl = null;
-          this.pdfUrl = null;
+      .subscribe((file) => {
+        if (
+          this.clientViewData.id !== clientId ||
+          this.settingsService.tenantIdentifier !== tenantIdentifier ||
+          !this.canExportKyc
+        ) {
+          return;
         }
-        const contentType = res.headers.get('Content-Type') || 'application/pdf';
-        const file = new Blob([res.body], { type: contentType });
+        this.pdfFile = file;
+        this.pdfClientId = clientId;
+        this.pdfTenant = tenantIdentifier;
         this.rawPdfUrl = URL.createObjectURL(file);
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.rawPdfUrl);
         this.showPdf = true;
+        this.changeDetector.markForCheck();
       });
   }
 
-  /**
-   * Closes the PDF modal
-   */
-  closePdf() {
+  private reportExportError() {
+    this.closePdf();
+    this.alertService.alert({
+      type: 'error',
+      message: this.translateService.instant('errors.kycReportLoadError')
+    });
+  }
+
+  downloadKyc() {
+    if (
+      this.pdfFile &&
+      this.pdfClientId === this.clientViewData.id &&
+      this.pdfTenant === this.settingsService.tenantIdentifier &&
+      this.canExportKyc
+    ) {
+      downloadBlob(this.pdfFile, `KYC-${this.pdfClientId}.pdf`);
+    }
+  }
+
+  get hasCurrentKycPreview(): boolean {
+    return (
+      this.showPdf &&
+      this.pdfClientId === this.clientViewData?.id &&
+      this.pdfTenant === this.settingsService.tenantIdentifier &&
+      this.canExportKyc
+    );
+  }
+
+  closePdf(restoreFocus = true) {
+    const trigger = this.exportTrigger;
+    const clientId = this.pdfClientId;
+    const tenant = this.pdfTenant;
+    if (restoreFocus && this.showPdf && trigger) {
+      // Run after the focus trap is removed. The disabled export button may have lost
+      // browser focus while the asynchronous report request was in progress.
+      setTimeout(() => {
+        if (
+          trigger.isConnected &&
+          this.clientViewData?.id === clientId &&
+          this.settingsService.tenantIdentifier === tenant
+        ) {
+          trigger.focus();
+        }
+      });
+    }
+    this.exportTrigger = null;
     this.showPdf = false;
     if (this.rawPdfUrl) {
       URL.revokeObjectURL(this.rawPdfUrl);
-      this.rawPdfUrl = null;
     }
+    this.rawPdfUrl = null;
     this.pdfUrl = null;
+    this.pdfFile = null;
+    this.pdfClientId = null;
+    this.pdfTenant = null;
   }
 
-  /**
-   * Handles keyboard events on the PDF modal
-   */
   onModalKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
       this.closePdf();
     }
   }
 
-  /**
-   * Cleanup on component destroy
-   */
   ngOnDestroy() {
-    if (this.rawPdfUrl) {
-      URL.revokeObjectURL(this.rawPdfUrl);
-      this.rawPdfUrl = null;
-    }
-    this.pdfUrl = null;
+    this.exportCancelled$.next();
+    this.exportCancelled$.complete();
+    this.closePdf(false);
   }
 
   /** Managed suffix marker used to identify the validation-appended portion of a description */

@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SubscriptSizing } from '@angular/material/form-field';
+import { MatSelectTrigger } from '@angular/material/select';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
+    ...STANDALONE_SHARED_IMPORTS,
+    MatSelectTrigger
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

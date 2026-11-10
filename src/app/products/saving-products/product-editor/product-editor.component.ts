@@ -32,6 +32,9 @@ import { Accounting } from 'app/core/utils/accounting';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProductsService } from 'app/products/products.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FinancialPolicySummaryComponent } from './financial-policy-summary.component';
+import { FinancialCapabilitiesComponent } from './financial-capabilities.component';
+import { MonthlyFeeDiagnosticsComponent } from './monthly-fee-diagnostics.component';
 import { InterestConfigurationComponent } from './interest-configuration.component';
 import { InterestMode } from './product-policy.model';
 import { ProductPolicyService } from './product-policy.service';
@@ -72,6 +75,9 @@ export class PolicyFieldErrorMatcher implements ErrorStateMatcher {
     MatExpansionModule,
     MatProgressBarModule,
     PolicyWorkflowComponent,
+    FinancialPolicySummaryComponent,
+    FinancialCapabilitiesComponent,
+    MonthlyFeeDiagnosticsComponent,
     InterestConfigurationComponent,
     SavingProductDetailsStepComponent,
     SavingProductCurrencyStepComponent,

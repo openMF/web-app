@@ -136,7 +136,7 @@ const decimalFields = new Set([
   'nominalAnnualRate'
 ]);
 /** Tokenize strings before numbers, so text containing JSON-like fragments cannot be rewritten. */
-export function parseExactJson<T>(json: string): T {
+export function parseExactJson<T>(json: string, additionalFields: readonly string[] = []): T {
   const tokens = json.match(/"(?:[^"\\]|\\.)*"|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?|[{}\[\]:,]|\s+|./g) || [];
   let key = '',
     afterColon = false;
@@ -146,7 +146,7 @@ export function parseExactJson<T>(json: string): T {
       afterColon = true;
       return token;
     }
-    if (afterColon && decimalFields.has(key) && /^-?\d/.test(token)) {
+    if (afterColon && (decimalFields.has(key) || additionalFields.includes(key)) && /^-?\d/.test(token)) {
       afterColon = false;
       return JSON.stringify(plainDecimal(token));
     }

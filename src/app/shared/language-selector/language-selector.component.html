@@ -20,6 +20,7 @@
     class="languageselector"
     [placeholder]="!showLabel ? ('labels.inputs.Language' | translate) : ''"
   >
+    <mat-select-trigger>{{ 'languages.' + languageSelector.value | translate }}</mat-select-trigger>
     @for (language of languages; track language) {
       <mat-option [value]="language">
         {{ 'languages.' + language | translate }}
