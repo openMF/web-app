@@ -939,6 +939,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} muss größer als null sein",
     "validation.sharesMinDefaultMaxOrder": "Das Minimum muss kleiner oder gleich dem Standardwert sein, und der Standardwert kleiner oder gleich dem Maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Unzureichendes Guthaben. Ihr Kontostand beträgt {{balance}}.",
+    "validation.invalidTime": "Geben Sie eine gültige Uhrzeit ein.",
+    "officeSchedules": {
+      "loadFailed": "Die Öffnungszeiten der Filiale konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "saveFailed": "Die Öffnungszeiten der Filiale konnten nicht gespeichert werden. Ihre Änderungen wurden beibehalten. Bitte versuchen Sie es erneut."
+    },
     "validation.openingTimeBeforeClosingTime": "Die Öffnungszeit muss vor der Schließzeit liegen.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Die Gebühr gehört nicht zu diesem Kredit.",
     "wc.loan.charge.waiver.inactive.charge": "Die Gebühr kann nicht erlassen werden, da sie nicht aktiv ist.",
@@ -4745,6 +4750,10 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Not configured": "Nicht konfiguriert",
+      "No configured hours": "Keine Öffnungszeiten konfiguriert",
+      "Enabled days need valid opening and closing times": "Für aktivierte Tage sind gültige Öffnungs- und Schließzeiten erforderlich.",
+      "Saving changes": "Änderungen werden gespeichert…",
       "No valid saved coordinates": "Die Karte ist nicht verfügbar, da die gespeicherten Koordinaten fehlen oder ungültig sind.",
       "Clone": "Klonen",
       "Clone Loan Product": "Darlehensprodukt klonen",

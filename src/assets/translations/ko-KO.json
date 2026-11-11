@@ -934,6 +934,11 @@
     "validation.mustBeGreaterThanZero": "{{field}}은(는) 0보다 커야 합니다",
     "validation.sharesMinDefaultMaxOrder": "최솟값은 기본값보다 작거나 같아야 하며, 기본값은 최댓값보다 작거나 같아야 합니다",
     "validation.msg.savingsproduct.insufficient.balance": "잔액이 부족합니다. 계좌 잔액은 {{balance}}입니다.",
+    "validation.invalidTime": "올바른 시간을 입력하세요.",
+    "officeSchedules": {
+      "loadFailed": "지점 영업시간을 불러올 수 없습니다. 다시 시도하세요.",
+      "saveFailed": "지점 영업시간을 저장할 수 없습니다. 변경 사항은 유지됩니다. 다시 시도하세요."
+    },
     "validation.openingTimeBeforeClosingTime": "개점 시간은 마감 시간보다 앞서야 합니다.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "해당 수수료는 이 대출에 속하지 않습니다.",
     "wc.loan.charge.waiver.inactive.charge": "수수료가 활성 상태가 아니므로 면제할 수 없습니다.",
@@ -4740,6 +4745,10 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "Not configured": "설정되지 않음",
+      "No configured hours": "설정된 영업시간이 없습니다",
+      "Enabled days need valid opening and closing times": "활성화된 요일에는 올바른 개점 및 폐점 시간이 필요합니다.",
+      "Saving changes": "변경 사항 저장 중…",
       "No valid saved coordinates": "저장된 좌표가 없거나 유효하지 않아 지도를 표시할 수 없습니다.",
       "Clone": "복제",
       "Clone Loan Product": "대출상품 복제",

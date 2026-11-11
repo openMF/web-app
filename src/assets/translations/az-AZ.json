@@ -845,6 +845,11 @@
     "validation.requiredField": "{{label}} məcburi sahədir.",
     "validation.mustBeAtLeast": "{{field}} ən azı {{min}} olmalıdır",
     "validation.mustBePositive": "{{field}} müsbət ədəd olmalıdır.",
+    "validation.invalidTime": "Düzgün vaxt daxil edin.",
+    "officeSchedules": {
+      "loadFailed": "Filialın iş saatlarını əldə etmək mümkün olmadı. Yenidən cəhd edin.",
+      "saveFailed": "Filialın iş saatlarını yadda saxlamaq mümkün olmadı. Dəyişiklikləriniz saxlanılıb. Yenidən cəhd edin."
+    },
     "validation.openingTimeBeforeClosingTime": "Açılış vaxtı bağlanış vaxtından əvvəl olmalıdır.",
     "breach": {
       "alreadyDisabled": "Bu kredit üçün pozuntunun qiymətləndirilməsi artıq söndürülüb.",
@@ -4700,6 +4705,10 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Not configured": "Tənzimlənməyib",
+      "No configured hours": "İş saatları təyin edilməyib",
+      "Enabled days need valid opening and closing times": "Aktiv günlər üçün düzgün açılış və bağlanış saatları tələb olunur.",
+      "Saving changes": "Dəyişikliklər yadda saxlanılır…",
       "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "Clone": "Klonla",
       "Clone Loan Product": "Kredit məhsulunu klonla",

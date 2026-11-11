@@ -893,6 +893,11 @@
     "validation.requiredField": "{{label}} is a required field.",
     "validation.mustBeAtLeast": "{{field}} must be at least {{min}}",
     "validation.mustBePositive": "{{field}} must be a positive number.",
+    "validation.invalidTime": "Enter a valid time.",
+    "officeSchedules": {
+      "loadFailed": "Unable to retrieve office hours. Please try again.",
+      "saveFailed": "Unable to save office hours. Your changes have been kept. Please try again."
+    },
     "validation.openingTimeBeforeClosingTime": "Opening time must be before closing time.",
     "breach": {
       "alreadyDisabled": "Breach evaluation is already disabled for this loan.",
@@ -4752,6 +4757,10 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Not configured": "Not configured",
+      "No configured hours": "No configured hours",
+      "Enabled days need valid opening and closing times": "Enabled days need valid opening and closing times.",
+      "Saving changes": "Saving changes…",
       "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "Clone": "Clone",
       "Clone Loan Product": "Clone Loan Product",

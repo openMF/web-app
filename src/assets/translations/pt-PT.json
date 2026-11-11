@@ -937,6 +937,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} deve ser maior do que zero",
     "validation.sharesMinDefaultMaxOrder": "O mínimo deve ser menor ou igual ao valor predefinido, e o predefinido menor ou igual ao máximo",
     "validation.msg.savingsproduct.insufficient.balance": "Saldo insuficiente. O saldo da sua conta é {{balance}}.",
+    "validation.invalidTime": "Introduza uma hora válida.",
+    "officeSchedules": {
+      "loadFailed": "Não foi possível obter o horário da agência. Tente novamente.",
+      "saveFailed": "Não foi possível guardar o horário da agência. As suas alterações foram mantidas. Tente novamente."
+    },
     "validation.openingTimeBeforeClosingTime": "A hora de abertura deve ser anterior à de fecho.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "O encargo não pertence a este empréstimo.",
     "wc.loan.charge.waiver.inactive.charge": "O encargo não pode ser perdoado porque não está ativo.",
@@ -4743,6 +4748,10 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Not configured": "Não configurado",
+      "No configured hours": "Nenhum horário configurado",
+      "Enabled days need valid opening and closing times": "Os dias ativados precisam de horas de abertura e fecho válidas.",
+      "Saving changes": "A guardar alterações…",
       "No valid saved coordinates": "O mapa não está disponível porque as coordenadas guardadas estão em falta ou são inválidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar produto de empréstimo",
