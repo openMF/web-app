@@ -286,6 +286,15 @@ export class ReportsComponent implements OnInit {
     return this.collapsedGroups.has(categoryKey);
   }
 
+  getGroupContentId(categoryKey: string): string {
+    const slug = (categoryKey || '')
+      .toLowerCase()
+      .replace(/^labels\.text\./, '')
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-|-$/g, '');
+    return `report-group-${slug || 'default'}`;
+  }
+
   /* ── Internals ────────────────────────────────────────────── */
 
   private recompute(): void {
