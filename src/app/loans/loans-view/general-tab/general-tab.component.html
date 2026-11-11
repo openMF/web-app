@@ -72,7 +72,7 @@
             @if (hasNumberOfRepayments()) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Number of Repayments' | translate }}</div>
-                <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber }}</div>
+                <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber: '' : 0 }}</div>
               </div>
             }
             @if (loanDetails.timeline?.expectedMaturityDate) {
