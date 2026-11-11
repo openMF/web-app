@@ -1020,6 +1020,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Add sub-account": "Přidat podúčet",
       "Clone": "Klonovat",
       "Finalize": "Dokončit",
       "New Operation": "Nová operace",
@@ -2378,6 +2379,17 @@
       "Schedules": "Rozvrhy"
     },
     "inputs": {
+      "Search by name or GL code": "Hledat podle názvu nebo kódu hlavní knihy",
+      "Usage": "Použití",
+      "Header": "Souhrnný",
+      "Detail": "Detailní",
+      "Header account": "Souhrnný účet",
+      "Detail account": "Detailní účet",
+      "Not applicable": "Nepoužije se",
+      "Parent account": "Nadřazený účet",
+      "Sub-accounts": "Podúčty",
+      "Tree": "Strom",
+      "List": "Seznam",
       "Breach Start Type": "Typ začátku porušení",
       "Calculated Annual EIR": "Vypočtená roční EIR",
       "Daily Effective Rate": "Denní efektivní sazba",
@@ -4741,6 +4753,11 @@
       "Remove tenant": "Odebrat záznam v registru pro {{identifier}} — jeho databáze zůstane nedotčena a žádná data tenanta se nesmažou"
     },
     "text": {
+      "Chart of accounts description": "Struktura hlavní knihy používaná pro účetní zápisy, produkty a finanční výkazy.",
+      "Count accounts": "Počet účtů: {{count}}",
+      "Showing accounts of total": "Zobrazeno {{shown}} z {{total}} účtů",
+      "Sub-account codes outside parent range": "Kódy podúčtů {{codes}} leží mimo rozsah {{parentCode}} nadřazeného účtu. Jednotné kódy usnadňují čtení výkazů.",
+      "No accounts match the filters": "Aktuálnímu hledání a filtrům neodpovídají žádné účty.",
       "No valid saved coordinates": "Mapa není k dispozici, protože uložené souřadnice chybí nebo jsou neplatné.",
       "Clone": "Klonovat",
       "Clone Loan Product": "Klonovat produkt půjčky",

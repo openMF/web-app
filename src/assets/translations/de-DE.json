@@ -1024,6 +1024,7 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Add sub-account": "Unterkonto hinzufügen",
       "Clone": "Klonen",
       "Finalize": "Abschließen",
       "New Operation": "Neuer Vorgang",
@@ -2382,6 +2383,17 @@
       "Reference": "Referenz"
     },
     "inputs": {
+      "Search by name or GL code": "Nach Name oder Hauptbuchcode suchen",
+      "Usage": "Verwendung",
+      "Header": "Sammelkonto",
+      "Detail": "Detailkonto",
+      "Header account": "Sammelkonto",
+      "Detail account": "Detailkonto",
+      "Not applicable": "Nicht zutreffend",
+      "Parent account": "Übergeordnetes Konto",
+      "Sub-accounts": "Unterkonten",
+      "Tree": "Baum",
+      "List": "Liste",
       "Breach Start Type": "Starttyp des Verstoßes",
       "Calculated Annual EIR": "Berechneter jährlicher Effektivzins (EIR)",
       "Daily Effective Rate": "Täglicher Effektivzins",
@@ -4745,6 +4757,11 @@
       "Remove tenant": "Den Registry-Eintrag von {{identifier}} entfernen — seine Datenbank bleibt unberührt und es werden keine Mandantendaten gelöscht"
     },
     "text": {
+      "Chart of accounts description": "Hauptbuchstruktur für Journalbuchungen, Produkte und Finanzberichte.",
+      "Count accounts": "{{count}} Konten",
+      "Showing accounts of total": "{{shown}} von {{total}} Konten werden angezeigt",
+      "Sub-account codes outside parent range": "Die Unterkontocodes {{codes}} liegen außerhalb des Bereichs {{parentCode}} des übergeordneten Kontos. Einheitliche Codes machen Berichte leichter lesbar.",
+      "No accounts match the filters": "Keine Konten entsprechen der aktuellen Suche und den Filtern.",
       "No valid saved coordinates": "Die Karte ist nicht verfügbar, da die gespeicherten Koordinaten fehlen oder ungültig sind.",
       "Clone": "Klonen",
       "Clone Loan Product": "Darlehensprodukt klonen",

@@ -6,57 +6,540 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-table {
+.coa {
+  --coa-accent: var(--brand-primary-500, #1074b9);
+  --coa-asset: #0f766e;
+  --coa-liability: #c2410c;
+  --coa-equity: #6d28d9;
+  --coa-income: #1d4ed8;
+  --coa-expense: #b45309;
+
+  padding-bottom: 24px;
+}
+
+// The dark theme reuses the light brand hue, which is too dim on the dark surface,
+// so lighten it toward the text colour the same way the loan product accent does.
+:host-context(.dark-theme) .coa {
+  --coa-accent: color-mix(in srgb, var(--brand-primary-100, #5ba2ec) 60%, var(--mat-app-text-color, #fff));
+  --coa-asset: #2dd4bf;
+  --coa-liability: #fb923c;
+  --coa-equity: #a78bfa;
+  --coa-income: #60a5fa;
+  --coa-expense: #fbbf24;
+}
+
+// The lightened accent needs dark text on the selected account type.
+:host-context(.dark-theme) .coa-types .mat-mdc-chip {
+  --mat-chip-selected-label-text-color: var(--ds-blue-20, #0d1f35);
+}
+
+// ===== Page heading =====
+.coa-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.coa-subtitle {
+  margin: 0;
+  color: var(--ds-text-2);
+}
+
+.coa-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+// ===== Account type colours =====
+.coa-dot {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--coa-asset);
+
+  &[data-type='LIABILITY'] {
+    background-color: var(--coa-liability);
+  }
+
+  &[data-type='EQUITY'] {
+    background-color: var(--coa-equity);
+  }
+
+  &[data-type='INCOME'] {
+    background-color: var(--coa-income);
+  }
+
+  &[data-type='EXPENSE'] {
+    background-color: var(--coa-expense);
+  }
+}
+
+.coa-dot-square {
+  border-radius: 2px;
+}
+
+// ===== Account type filter =====
+.coa-types {
+  margin-bottom: 16px;
+
+  .mat-mdc-chip {
+    --mat-chip-container-height: 40px;
+    --mat-chip-container-shape-radius: 20px;
+    --mat-chip-elevated-container-color: var(--ds-surface);
+    --mat-chip-elevated-selected-container-color: var(--coa-accent);
+    --mat-chip-label-text-color: var(--ds-text-1);
+    --mat-chip-selected-label-text-color: var(--ds-action-on-fill, #fff);
+
+    border: 1px solid var(--ds-border);
+    font-weight: 500;
+
+    &.mat-mdc-chip-selected {
+      border-color: var(--coa-accent);
+    }
+  }
+
+  .coa-dot {
+    margin-right: 8px;
+  }
+}
+
+.coa-chip-count {
+  margin-left: 8px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+// ===== Layout =====
+.coa-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.coa-card {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg, 12px);
+  background-color: var(--ds-surface);
+  overflow: hidden;
+}
+
+// ===== Search, filters and view switch =====
+.coa-toolbar {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mat-button-toggle-height: 40px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.coa-search {
+  flex: 1 1 240px;
+  max-width: 320px;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.coa-search-icon {
+  padding: 0 8px 0 16px;
+  color: var(--ds-text-3);
+}
+
+.coa-filter {
+  width: 160px;
+}
+
+.coa-expand-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+// ===== Tree and list tables =====
+.coa-table-wrapper {
+  overflow-x: auto;
+}
+
+.coa-table {
+  --mat-table-row-item-container-height: 56px;
+  --mat-table-header-container-height: 48px;
+
   width: 100%;
+  background-color: transparent;
 
-  .select-row:hover {
-    cursor: pointer;
+  .mat-mdc-header-cell {
+    color: var(--ds-text-2);
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
 
-.gl-account-tree {
-  ul,
-  li {
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
+.coa-row {
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: color-mix(in srgb, var(--coa-accent) 6%, transparent);
   }
 
-  li {
-    span {
-      cursor: pointer;
-    }
+  &:focus-visible {
+    outline: 2px solid var(--coa-accent);
+    outline-offset: -2px;
   }
 
-  .gl-account-tree-invisible {
-    display: none;
-  }
-}
-
-.content {
-  div {
-    margin: 1rem 0;
-    overflow-wrap: break-word;
-
-    &.header {
-      font-weight: 500;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
-// TODO: CONFIGURE THESE CLASSES GLOBALLY
-.enabled {
-  color: #32cd32;
+.coa-row-group {
+  background-color: var(--ds-surface-alt);
+
+  .coa-name {
+    font-weight: 600;
+  }
 }
 
-.disabled {
-  color: #f44366;
+.coa-row-header .coa-name {
+  font-weight: 500;
 }
 
-.manual-entries-allowed {
-  color: #32cd32;
+.coa-row-selected {
+  background-color: color-mix(in srgb, var(--coa-accent) 10%, transparent);
+  box-shadow: inset 4px 0 0 var(--coa-accent);
 }
 
-.manual-entries-not-allowed {
-  color: #f44366;
+// Disabled accounts are faded so they are not mixed in with active ones.
+.coa-row-disabled {
+  .coa-name,
+  .coa-code,
+  .coa-account-icon,
+  .coa-sub-account-name {
+    opacity: 0.56;
+  }
+}
+
+.coa-account-cell {
+  position: relative;
+}
+
+// A guide line runs down from each expanded parent, so it is clear which rows belong to which group.
+.coa-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--ds-border-strong);
+}
+
+.coa-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 240px;
+}
+
+.coa-toggle {
+  --mat-icon-button-state-layer-size: 32px;
+  --mdc-icon-button-state-layer-size: 32px;
+
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--ds-text-2);
+}
+
+.coa-toggle-spacer {
+  flex: none;
+  width: 32px;
+}
+
+.coa-account-icon {
+  flex: none;
+  color: var(--ds-text-3);
+
+  .coa-row-header & {
+    color: var(--coa-accent);
+  }
+}
+
+.coa-count {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, currentcolor 10%, transparent);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.coa-code {
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.coa-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coa-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, currentcolor 8%, transparent);
+  color: var(--ds-text-2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.coa-chip-header {
+  background-color: color-mix(in srgb, var(--coa-accent) 14%, transparent);
+  color: var(--coa-accent);
+}
+
+.coa-chip-active {
+  background-color: var(--ds-paid-bg);
+  color: var(--ds-paid);
+}
+
+.coa-chip-disabled {
+  background-color: color-mix(in srgb, var(--ds-text-3) 16%, transparent);
+  color: var(--ds-text-2);
+}
+
+.coa-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentcolor;
+}
+
+.coa-not-allowed {
+  color: var(--ds-alert);
+}
+
+.coa-muted {
+  color: var(--ds-text-3);
+}
+
+.coa-actions-cell {
+  width: 48px;
+  text-align: end;
+}
+
+.coa-empty {
+  padding: 32px 16px;
+  color: var(--ds-text-2);
+  text-align: center;
+}
+
+.coa-footer {
+  padding: 16px;
+  border-top: 1px solid var(--ds-border);
+  color: var(--ds-text-2);
+  font-size: 12px;
+}
+
+// ===== Details of the selected account =====
+.coa-details {
+  position: sticky;
+  top: 16px;
+  flex: none;
+  width: 352px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg, 12px);
+}
+
+.coa-details-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.coa-details-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ds-text-2);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.coa-details-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.coa-code-badge {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 8px;
+  background-color: var(--coa-accent);
+  color: var(--ds-action-on-fill, #fff);
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.coa-code-badge-light {
+  background-color: color-mix(in srgb, currentcolor 10%, transparent);
+  color: inherit;
+}
+
+.coa-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--ds-text-2);
+  font-size: 12px;
+
+  strong {
+    color: var(--ds-text-1);
+  }
+}
+
+.coa-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  margin: 0 0 16px;
+
+  > div {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  dt {
+    color: var(--ds-text-2);
+    font-size: 12px;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+}
+
+.coa-attributes > .coa-attribute-wide {
+  flex-basis: 100%;
+}
+
+.coa-sub-accounts-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.coa-sub-accounts {
+  margin-bottom: 16px;
+  padding: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius, 8px);
+  overflow: hidden;
+
+  .mat-mdc-list-item + .mat-mdc-list-item {
+    border-top: 1px solid var(--ds-border);
+  }
+}
+
+.coa-sub-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.coa-sub-account-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// A gentle note, not an error: the institution may tidy up its numbering when it suits.
+.coa-warning {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--ds-partial) 40%, transparent);
+  border-radius: var(--ds-radius, 8px);
+  background-color: var(--ds-partial-bg);
+  color: var(--ds-text-1);
+  font-size: 12px;
+  line-height: 16px;
+
+  fa-icon {
+    color: var(--ds-partial);
+  }
+}
+
+.coa-details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// ===== Small screens =====
+@media (width <= 960px) {
+  .coa-body {
+    flex-direction: column;
+  }
+
+  .coa-card,
+  .coa-details {
+    width: 100%;
+  }
+
+  .coa-details {
+    position: static;
+  }
+
+  .coa-expand-actions {
+    margin-left: 0;
+  }
 }

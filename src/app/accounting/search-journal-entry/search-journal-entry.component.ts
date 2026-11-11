@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { UntypedFormControl } from '@angular/forms';
@@ -82,6 +90,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -215,6 +224,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     this.maxDate = this.settingsService.businessDate;
     this.setFilteredOffices();
     this.setFilteredGlAccounts();
+    this.setGlAccountFromQueryParams();
     this.getJournalEntries();
   }
 
@@ -475,6 +485,30 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     return this.glAccountData.filter((option: any) =>
       (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase())
     );
+  }
+
+  /**
+   * Filters by the gl account passed in the `glAccountId` query parameter,
+   * so the journal entries of an account can be opened from the chart of accounts.
+   * The account is added to the gl account options when they do not include it,
+   * since they only list active detail accounts that allow manual entries.
+   */
+  private setGlAccountFromQueryParams() {
+    const glAccountId = Number(this.route.snapshot.queryParamMap.get('glAccountId'));
+    if (!glAccountId) {
+      return;
+    }
+    this.filterJournalEntriesBy.find((filter) => filter.type === 'glAccountId').value = String(glAccountId);
+    this.glAccount.setValue(glAccountId, { emitEvent: false });
+    if (!this.glAccountData?.some((glAccount: any) => glAccount.id === glAccountId)) {
+      this.accountingService.getGlAccount(String(glAccountId)).subscribe((glAccount: any) => {
+        this.glAccountData = [
+          ...(this.glAccountData || []),
+          glAccount
+        ];
+        this.changeDetectorRef.markForCheck();
+      });
+    }
   }
 
   /**

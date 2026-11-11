@@ -1022,6 +1022,7 @@
       "Home": "Lar"
     },
     "buttons": {
+      "Add sub-account": "Adicionar subconta",
       "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nova operação",
@@ -2380,6 +2381,17 @@
       "Create Savings Product": "Criar produto de poupança"
     },
     "inputs": {
+      "Search by name or GL code": "Pesquisar por nome ou código contabilístico",
+      "Usage": "Utilização",
+      "Header": "Cabeçalho",
+      "Detail": "Detalhe",
+      "Header account": "Conta de cabeçalho",
+      "Detail account": "Conta de detalhe",
+      "Not applicable": "Não aplicável",
+      "Parent account": "Conta principal",
+      "Sub-accounts": "Subcontas",
+      "Tree": "Árvore",
+      "List": "Lista",
       "Breach Start Type": "Tipo de início de violação",
       "Calculated Annual EIR": "EIR anual calculada",
       "Daily Effective Rate": "Taxa efetiva diária",
@@ -4743,6 +4755,11 @@
       "Remove tenant": "Remover a entrada de registo de {{identifier}} — a sua base de dados fica intacta e nenhum dado do inquilino é eliminado"
     },
     "text": {
+      "Chart of accounts description": "Estrutura do razão geral utilizada para lançamentos contabilísticos, produtos e relatórios financeiros.",
+      "Count accounts": "{{count}} contas",
+      "Showing accounts of total": "A mostrar {{shown}} de {{total}} contas",
+      "Sub-account codes outside parent range": "Os códigos de subconta {{codes}} estão fora do intervalo {{parentCode}} da conta principal. Códigos coerentes facilitam a leitura dos relatórios.",
+      "No accounts match the filters": "Nenhuma conta corresponde à pesquisa e aos filtros atuais.",
       "No valid saved coordinates": "O mapa não está disponível porque as coordenadas guardadas estão em falta ou são inválidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar produto de empréstimo",

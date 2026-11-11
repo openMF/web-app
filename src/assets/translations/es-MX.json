@@ -1022,6 +1022,7 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Add sub-account": "Agregar subcuenta",
       "Clone": "Clonar",
       "Finalize": "Finalizar",
       "New Operation": "Nueva operación",
@@ -2380,6 +2381,17 @@
       "Schedules": "Horarios"
     },
     "inputs": {
+      "Search by name or GL code": "Buscar por nombre o código contable",
+      "Usage": "Uso",
+      "Header": "Encabezado",
+      "Detail": "Detalle",
+      "Header account": "Cuenta de encabezado",
+      "Detail account": "Cuenta de detalle",
+      "Not applicable": "No aplica",
+      "Parent account": "Cuenta principal",
+      "Sub-accounts": "Subcuentas",
+      "Tree": "Árbol",
+      "List": "Lista",
       "Breach Start Type": "Tipo de inicio de incumplimiento",
       "Calculated Annual EIR": "EIR anual calculada",
       "Daily Effective Rate": "Tasa efectiva diaria",
@@ -4737,6 +4749,11 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Chart of accounts description": "Estructura del libro mayor utilizada para asientos contables, productos e informes financieros.",
+      "Count accounts": "{{count}} cuentas",
+      "Showing accounts of total": "Mostrando {{shown}} de {{total}} cuentas",
+      "Sub-account codes outside parent range": "Los códigos de subcuenta {{codes}} quedan fuera del rango {{parentCode}} de la cuenta principal. Los códigos coherentes facilitan la lectura de los informes.",
+      "No accounts match the filters": "Ninguna cuenta coincide con la búsqueda y los filtros actuales.",
       "No valid saved coordinates": "El mapa no está disponible porque faltan las coordenadas guardadas o no son válidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar producto de Crédito",
