@@ -1019,6 +1019,7 @@
       "Home": "집"
     },
     "buttons": {
+      "Add sub-account": "하위 계정 추가",
       "Clone": "복제",
       "Finalize": "완료",
       "New Operation": "새 작업",
@@ -2377,6 +2378,17 @@
       "Reference": "참조"
     },
     "inputs": {
+      "Search by name or GL code": "이름 또는 GL 코드로 검색",
+      "Usage": "용도",
+      "Header": "헤더",
+      "Detail": "세부",
+      "Header account": "헤더 계정",
+      "Detail account": "세부 계정",
+      "Not applicable": "해당 없음",
+      "Parent account": "상위 계정",
+      "Sub-accounts": "하위 계정",
+      "Tree": "트리",
+      "List": "목록",
       "Breach Start Type": "위반 시작 유형",
       "Calculated Annual EIR": "계산된 연간 EIR",
       "Daily Effective Rate": "일일 실효 이율",
@@ -4740,6 +4752,11 @@
       "Remove tenant": "{{identifier}}의 레지스트리 항목을 제거합니다 — 데이터베이스는 그대로 유지되며 테넌트 데이터는 삭제되지 않습니다"
     },
     "text": {
+      "Chart of accounts description": "분개, 상품 및 재무 보고서에 사용되는 총계정원장 구조입니다.",
+      "Count accounts": "계정 {{count}}개",
+      "Showing accounts of total": "전체 {{total}}개 계정 중 {{shown}}개 표시",
+      "Sub-account codes outside parent range": "하위 계정 코드 {{codes}}이(가) 상위 계정의 {{parentCode}} 범위를 벗어납니다. 코드가 일관되면 보고서를 읽기 쉽습니다.",
+      "No accounts match the filters": "현재 검색 및 필터와 일치하는 계정이 없습니다.",
       "No valid saved coordinates": "저장된 좌표가 없거나 유효하지 않아 지도를 표시할 수 없습니다.",
       "Clone": "복제",
       "Clone Loan Product": "대출상품 복제",

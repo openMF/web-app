@@ -1031,6 +1031,7 @@
       "Home": "Home"
     },
     "buttons": {
+      "Add sub-account": "Add sub-account",
       "Accept Transfer": "Accept Transfer",
       "Actions": "Actions",
       "Activate": "Activate",
@@ -2390,6 +2391,17 @@
       "Edit Guarantor": "Edit Guarantor"
     },
     "inputs": {
+      "Search by name or GL code": "Search by name or GL code",
+      "Usage": "Usage",
+      "Header": "Header",
+      "Detail": "Detail",
+      "Header account": "Header account",
+      "Detail account": "Detail account",
+      "Not applicable": "Not applicable",
+      "Parent account": "Parent account",
+      "Sub-accounts": "Sub-accounts",
+      "Tree": "Tree",
+      "List": "List",
       "Breach Start Type": "Breach Start Type",
       "Calculated Annual EIR": "Calculated Annual EIR",
       "Daily Effective Rate": "Daily Effective Rate",
@@ -4752,6 +4764,11 @@
       "Remove tenant": "Remove the registry entry for {{identifier}} — its database is left untouched and no tenant data is deleted"
     },
     "text": {
+      "Chart of accounts description": "General ledger structure used for journal entries, products and financial reports.",
+      "Count accounts": "{{count}} accounts",
+      "Showing accounts of total": "Showing {{shown}} of {{total}} accounts",
+      "Sub-account codes outside parent range": "Sub-account codes {{codes}} fall outside the parent's {{parentCode}} range. Consistent codes make reports easier to read.",
+      "No accounts match the filters": "No accounts match the current search and filters.",
       "No valid saved coordinates": "A map is unavailable because saved coordinates are missing or invalid.",
       "Clone": "Clone",
       "Clone Loan Product": "Clone Loan Product",

@@ -1019,6 +1019,7 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Add sub-account": "Pievienot apakškontu",
       "Clone": "Klonēt",
       "Finalize": "Pabeigt",
       "New Operation": "Jauna operācija",
@@ -2377,6 +2378,17 @@
       "Reference": "Atsauce"
     },
     "inputs": {
+      "Search by name or GL code": "Meklēt pēc nosaukuma vai virsgrāmatas koda",
+      "Usage": "Lietojums",
+      "Header": "Virsraksts",
+      "Detail": "Detalizēts",
+      "Header account": "Virsraksta konts",
+      "Detail account": "Detalizēts konts",
+      "Not applicable": "Nav piemērojams",
+      "Parent account": "Virskonts",
+      "Sub-accounts": "Apakškonti",
+      "Tree": "Koks",
+      "List": "Saraksts",
       "Breach Start Type": "Pārkāpuma sākuma tips",
       "Calculated Annual EIR": "Aprēķinātā gada EIR",
       "Daily Effective Rate": "Dienas efektīvā likme",
@@ -4740,6 +4752,11 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Chart of accounts description": "Virsgrāmatas struktūra, ko izmanto žurnāla ierakstiem, produktiem un finanšu pārskatiem.",
+      "Count accounts": "Konti: {{count}}",
+      "Showing accounts of total": "Rāda {{shown}} no {{total}} kontiem",
+      "Sub-account codes outside parent range": "Apakškontu kodi {{codes}} ir ārpus virskonta {{parentCode}} diapazona. Konsekventi kodi atvieglo pārskatu lasīšanu.",
+      "No accounts match the filters": "Pašreizējai meklēšanai un filtriem neatbilst neviens konts.",
       "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "Clone": "Klonēt",
       "Clone Loan Product": "Klonēt aizdevuma produktu",

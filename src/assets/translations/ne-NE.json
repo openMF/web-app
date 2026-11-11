@@ -1022,6 +1022,7 @@
       "Home": "घर"
     },
     "buttons": {
+      "Add sub-account": "उप-खाता थप्नुहोस्",
       "Clone": "क्लोन गर्नुहोस्",
       "Finalize": "अन्तिम रूप दिनुहोस्",
       "New Operation": "नयाँ कारोबार",
@@ -2380,6 +2381,17 @@
       "Reference": "सन्दर्भ"
     },
     "inputs": {
+      "Search by name or GL code": "नाम वा GL कोडबाट खोज्नुहोस्",
+      "Usage": "प्रयोग",
+      "Header": "हेडर",
+      "Detail": "विवरण",
+      "Header account": "हेडर खाता",
+      "Detail account": "विवरण खाता",
+      "Not applicable": "लागू हुँदैन",
+      "Parent account": "मूल खाता",
+      "Sub-accounts": "उप-खाताहरू",
+      "Tree": "ट्री",
+      "List": "सूची",
       "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
       "Calculated Annual EIR": "गणना गरिएको वार्षिक EIR",
       "Daily Effective Rate": "दैनिक प्रभावकारी दर",
@@ -4743,6 +4755,11 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Chart of accounts description": "जर्नल प्रविष्टि, उत्पादन र वित्तीय प्रतिवेदनका लागि प्रयोग हुने सामान्य खाताबहीको संरचना।",
+      "Count accounts": "{{count}} खाताहरू",
+      "Showing accounts of total": "{{total}} मध्ये {{shown}} खाताहरू देखाइँदै",
+      "Sub-account codes outside parent range": "उप-खाता कोडहरू {{codes}} मूल खाताको {{parentCode}} दायराभन्दा बाहिर छन्। एकरूप कोडले प्रतिवेदन पढ्न सजिलो बनाउँछ।",
+      "No accounts match the filters": "हालको खोज र फिल्टरसँग कुनै खाता मेल खाँदैन।",
       "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "Clone": "क्लोन गर्नुहोस्",
       "Clone Loan Product": "ऋण उत्पादन क्लोन गर्नुहोस्",

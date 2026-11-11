@@ -77,3 +77,4 @@ scripts/
 
 # Scaffold documents shared across openMF repositories: keep them as provided
 /SECURITY.md
+/CODE_OF_CONDUCT.md

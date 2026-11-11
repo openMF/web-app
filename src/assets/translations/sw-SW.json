@@ -1019,6 +1019,7 @@
       "Home": "Nyumbani"
     },
     "buttons": {
+      "Add sub-account": "Ongeza akaunti ndogo",
       "Clone": "Nakili",
       "Finalize": "Kamilisha",
       "New Operation": "Operesheni mpya",
@@ -2377,6 +2378,17 @@
       "Create Savings Product": "Unda Bidhaa ya Akiba"
     },
     "inputs": {
+      "Search by name or GL code": "Tafuta kwa jina au msimbo wa GL",
+      "Usage": "Matumizi",
+      "Header": "Kichwa",
+      "Detail": "Maelezo",
+      "Header account": "Akaunti ya kichwa",
+      "Detail account": "Akaunti ya maelezo",
+      "Not applicable": "Haihusiki",
+      "Parent account": "Akaunti kuu",
+      "Sub-accounts": "Akaunti ndogo",
+      "Tree": "Mti",
+      "List": "Orodha",
       "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
       "Calculated Annual EIR": "EIR ya mwaka iliyokokotolewa",
       "Daily Effective Rate": "Kiwango halisi cha kila siku",
@@ -4740,6 +4752,11 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Chart of accounts description": "Muundo wa leja kuu unaotumika kwa maingizo ya jarida, bidhaa na ripoti za fedha.",
+      "Count accounts": "Akaunti {{count}}",
+      "Showing accounts of total": "Inaonyesha akaunti {{shown}} kati ya {{total}}",
+      "Sub-account codes outside parent range": "Misimbo ya akaunti ndogo {{codes}} iko nje ya masafa ya {{parentCode}} ya akaunti kuu. Misimbo inayofuata mpangilio mmoja hurahisisha usomaji wa ripoti.",
+      "No accounts match the filters": "Hakuna akaunti inayolingana na utafutaji na vichujio vya sasa.",
       "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",

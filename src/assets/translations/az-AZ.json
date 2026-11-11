@@ -985,6 +985,7 @@
       "Home": "Əsas səhifə"
     },
     "buttons": {
+      "Add sub-account": "Alt hesab əlavə et",
       "Accept Transfer": "Köçürməni qəbul et",
       "Actions": "Əməliyyatlar",
       "Activate": "Aktivləşdir",
@@ -2343,6 +2344,17 @@
       "Edit Guarantor": "Zaminin məlumatlarını redaktə et"
     },
     "inputs": {
+      "Search by name or GL code": "Ad və ya BK kodu ilə axtarın",
+      "Usage": "İstifadə",
+      "Header": "Başlıq",
+      "Detail": "Təfərrüat",
+      "Header account": "Başlıq hesabı",
+      "Detail account": "Təfərrüat hesabı",
+      "Not applicable": "Tətbiq edilmir",
+      "Parent account": "Əsas hesab",
+      "Sub-accounts": "Alt hesablar",
+      "Tree": "Ağac",
+      "List": "Siyahı",
       "Breach Start Type": "Pozuntunun başlanğıc növü",
       "Calculated Annual EIR": "Hesablanmış illik EIR",
       "Daily Effective Rate": "Gündəlik effektiv dərəcə",
@@ -4700,6 +4712,11 @@
       "Remove tenant": "{{identifier}} üçün reyestr qeydini sil — onun verilənlər bazasına toxunulmayacaq və tenant məlumatları silinməyəcək"
     },
     "text": {
+      "Chart of accounts description": "Jurnal yazılışları, məhsullar və maliyyə hesabatları üçün istifadə olunan baş kitab strukturu.",
+      "Count accounts": "{{count}} hesab",
+      "Showing accounts of total": "{{total}} hesabdan {{shown}} hesab göstərilir",
+      "Sub-account codes outside parent range": "Alt hesab kodları {{codes}} əsas hesabın {{parentCode}} diapazonundan kənardadır. Ardıcıl kodlar hesabatların oxunmasını asanlaşdırır.",
+      "No accounts match the filters": "Cari axtarışa və filtrlərə uyğun hesab yoxdur.",
       "No valid saved coordinates": "Saxlanılmış koordinatlar çatışmadığı və ya etibarsız olduğu üçün xəritə mövcud deyil.",
       "Clone": "Klonla",
       "Clone Loan Product": "Kredit məhsulunu klonla",
