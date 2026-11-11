@@ -20,6 +20,19 @@ export class GLAccountNode {
   manualEntriesAllowed: boolean;
   description: string;
 
+  /** GL Account id. (not set for account type groups) */
+  id?: number;
+  /** GL Account type id. (used to create a sub-ledger account) */
+  typeId?: number;
+  /** Whether the GL Account is disabled. */
+  disabled = false;
+  /** Name of the tag assigned to the GL Account. */
+  tagName = '';
+  /** Parent GL Account. (not set for accounts directly under an account type) */
+  parent?: GLAccountNode;
+  /** Whether the node is an account type group (Assets, Liabilities, ...) instead of a GL Account. */
+  isTypeGroup = false;
+
   constructor(
     name: string,
     glCode: string = '',
