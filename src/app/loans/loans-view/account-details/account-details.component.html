@@ -110,13 +110,13 @@
           @if (has(loanDetails.numberOfRepayments)) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Number of Repayments' | translate }}</div>
-              <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber }}</div>
+              <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber: '' : 0 }}</div>
             </div>
           }
           @if (has(loanDetails.npvDayCount)) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Net Present Value day count' | translate }}</div>
-              <div class="fact-value amount">{{ loanDetails.npvDayCount | formatNumber }}</div>
+              <div class="fact-value amount">{{ loanDetails.npvDayCount | formatNumber: '' : 0 }}</div>
             </div>
           }
           @if (has(loanDetails.netDisbursalAmount)) {
@@ -396,7 +396,7 @@
             @if (has(loanDetails.breachGraceDays)) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Breach Grace Days' | translate }}</div>
-                <div class="fact-value amount">{{ loanDetails.breachGraceDays | formatNumber }}</div>
+                <div class="fact-value amount">{{ loanDetails.breachGraceDays | formatNumber: '' : 0 }}</div>
               </div>
             }
             @if (loanDetails.breachStartType) {
@@ -420,7 +420,7 @@
             @if (has(loanDetails.delinquencyGraceDays)) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Delinquency Grace Days' | translate }}</div>
-                <div class="fact-value amount">{{ loanDetails.delinquencyGraceDays | formatNumber }}</div>
+                <div class="fact-value amount">{{ loanDetails.delinquencyGraceDays | formatNumber: '' : 0 }}</div>
               </div>
             }
             @if (loanDetails.delinquencyStartType) {

@@ -157,7 +157,7 @@
       @if (loansAccount.delinquencyGraceDays || loansAccount.delinquencyGraceDays === 0) {
         <div class="flex-fill">
           <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
-          <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
+          <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber: '' : 0 }}</span>
         </div>
       }
       @if (loansAccount.delinquencyStartType) {
