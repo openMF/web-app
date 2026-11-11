@@ -937,6 +937,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} doit être supérieur à zéro",
     "validation.sharesMinDefaultMaxOrder": "Le minimum doit être inférieur ou égal à la valeur par défaut, et la valeur par défaut inférieure ou égale au maximum",
     "validation.msg.savingsproduct.insufficient.balance": "Solde insuffisant. Le solde de votre compte est de {{balance}}.",
+    "validation.invalidTime": "Saisissez une heure valide.",
+    "officeSchedules": {
+      "loadFailed": "Impossible de récupérer les horaires de l’agence. Veuillez réessayer.",
+      "saveFailed": "Impossible d’enregistrer les horaires de l’agence. Vos modifications ont été conservées. Veuillez réessayer."
+    },
     "validation.openingTimeBeforeClosingTime": "L'heure d'ouverture doit précéder l'heure de fermeture.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Les frais n'appartiennent pas à ce prêt.",
     "wc.loan.charge.waiver.inactive.charge": "Les frais ne peuvent pas être annulés car ils ne sont pas actifs.",
@@ -4743,6 +4748,10 @@
       "Remove tenant": "Supprimer l’entrée de registre de {{identifier}} — sa base de données reste intacte et aucune donnée du locataire n’est supprimée"
     },
     "text": {
+      "Not configured": "Non configuré",
+      "No configured hours": "Aucun horaire configuré",
+      "Enabled days need valid opening and closing times": "Les jours activés nécessitent des heures d’ouverture et de fermeture valides.",
+      "Saving changes": "Enregistrement des modifications…",
       "No valid saved coordinates": "La carte est indisponible, car les coordonnées enregistrées sont manquantes ou non valides.",
       "Clone": "Cloner",
       "Clone Loan Product": "Cloner le produit de prêt",

@@ -934,6 +934,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} lazima iwe kubwa kuliko sifuri",
     "validation.sharesMinDefaultMaxOrder": "Kiwango cha chini lazima kiwe kidogo au sawa na chaguo-msingi, na chaguo-msingi kiwe kidogo au sawa na kiwango cha juu",
     "validation.msg.savingsproduct.insufficient.balance": "Salio halitoshi. Salio la akaunti yako ni {{balance}}.",
+    "validation.invalidTime": "Weka saa halali.",
+    "officeSchedules": {
+      "loadFailed": "Imeshindwa kupata saa za kazi za tawi. Tafadhali jaribu tena.",
+      "saveFailed": "Imeshindwa kuhifadhi saa za kazi za tawi. Mabadiliko yako yamehifadhiwa kwenye fomu. Tafadhali jaribu tena."
+    },
     "validation.openingTimeBeforeClosingTime": "Saa ya kufungua lazima iwe kabla ya saa ya kufunga.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Ada hii si ya mkopo huu.",
     "wc.loan.charge.waiver.inactive.charge": "Ada haiwezi kusamehewa kwa sababu haiko hai.",
@@ -4740,6 +4745,10 @@
       "Remove tenant": "Ondoa kiingilio cha rejista cha {{identifier}} — hifadhidata yake inabaki salama na hakuna data ya tenant inayofutwa"
     },
     "text": {
+      "Not configured": "Haijasanidiwa",
+      "No configured hours": "Hakuna saa zilizosanidiwa",
+      "Enabled days need valid opening and closing times": "Siku zilizowezeshwa zinahitaji saa halali za kufungua na kufunga.",
+      "Saving changes": "Inahifadhi mabadiliko…",
       "No valid saved coordinates": "Ramani haipatikani kwa sababu viwianishi vilivyohifadhiwa havipo au si sahihi.",
       "Clone": "Nakili",
       "Clone Loan Product": "Nakili Bidhaa ya Mkopo",

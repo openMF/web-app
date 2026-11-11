@@ -45,6 +45,24 @@ describe('Office extension API contracts', () => {
     service.getOfficeSchedules('2').subscribe();
     http.expectOne('/v2/offices/2/schedules').flush({ officeId: 2, days: [] });
   });
+  it('puts the complete schedule body to the selected office resource', () => {
+    const schedule = { days: [
+        { weekday: 'MONDAY', enabled: true, openingTime: '08:00', closingTime: '18:00' },
+        ...[
+          'TUESDAY',
+          'WEDNESDAY',
+          'THURSDAY',
+          'FRIDAY',
+          'SATURDAY',
+          'SUNDAY'
+        ].map((weekday) => ({ weekday, enabled: false }))
+      ] };
+    service.updateOfficeSchedules('2', schedule).subscribe();
+    const update = http.expectOne('/v2/offices/2/schedules');
+    expect(update.request.method).toBe('PUT');
+    expect(update.request.body).toEqual(schedule);
+    update.flush({ officeId: 2 });
+  });
   it('propagates access errors instead of substituting sample data', () => {
     service.getOfficeAddresses('2').subscribe({ error: (error) => expect(error.status).toBe(403) });
     http.expectOne('/v2/offices/2/addresses').flush({}, { status: 403, statusText: 'Forbidden' });

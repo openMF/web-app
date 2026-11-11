@@ -937,6 +937,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} शून्य भन्दा ठूलो हुनुपर्छ",
     "validation.sharesMinDefaultMaxOrder": "न्यूनतम पूर्वनिर्धारित भन्दा सानो वा बराबर हुनुपर्छ, र पूर्वनिर्धारित अधिकतम भन्दा सानो वा बराबर हुनुपर्छ",
     "validation.msg.savingsproduct.insufficient.balance": "अपर्याप्त मौज्दात। तपाईंको खाताको मौज्दात {{balance}} छ।",
+    "validation.invalidTime": "मान्य समय प्रविष्ट गर्नुहोस्।",
+    "officeSchedules": {
+      "loadFailed": "शाखाको कार्य समय प्राप्त गर्न सकिएन। फेरि प्रयास गर्नुहोस्।",
+      "saveFailed": "शाखाको कार्य समय सुरक्षित गर्न सकिएन। तपाईंका परिवर्तनहरू फाराममा राखिएका छन्। फेरि प्रयास गर्नुहोस्।"
+    },
     "validation.openingTimeBeforeClosingTime": "खुल्ने समय बन्द हुने समय भन्दा अगाडि हुनुपर्छ।",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "यो शुल्क यस ऋणको होइन।",
     "wc.loan.charge.waiver.inactive.charge": "शुल्क सक्रिय नभएकाले मिनाहा गर्न सकिँदैन।",
@@ -4743,6 +4748,10 @@
       "Remove tenant": "{{identifier}} को रजिस्ट्री प्रविष्टि हटाउने — यसको डाटाबेस यथावत् रहन्छ र कुनै टेनेन्ट डाटा मेटिँदैन"
     },
     "text": {
+      "Not configured": "कन्फिगर गरिएको छैन",
+      "No configured hours": "कार्य समय कन्फिगर गरिएको छैन",
+      "Enabled days need valid opening and closing times": "सक्रिय दिनहरूमा मान्य खुल्ने र बन्द हुने समय आवश्यक छ।",
+      "Saving changes": "परिवर्तनहरू सुरक्षित गर्दै…",
       "No valid saved coordinates": "सुरक्षित गरिएका निर्देशाङ्कहरू नभएका वा अमान्य भएकाले नक्सा उपलब्ध छैन।",
       "Clone": "क्लोन गर्नुहोस्",
       "Clone Loan Product": "ऋण उत्पादन क्लोन गर्नुहोस्",

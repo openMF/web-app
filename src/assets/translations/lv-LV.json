@@ -934,6 +934,11 @@
     "validation.mustBeGreaterThanZero": "{{field}} jābūt lielākam par nulli",
     "validation.sharesMinDefaultMaxOrder": "Minimālajai vērtībai jābūt mazākai vai vienādai ar noklusējuma vērtību, bet noklusējuma vērtībai – mazākai vai vienādai ar maksimālo",
     "validation.msg.savingsproduct.insufficient.balance": "Nepietiekams atlikums. Jūsu konta atlikums ir {{balance}}.",
+    "validation.invalidTime": "Ievadiet derīgu laiku.",
+    "officeSchedules": {
+      "loadFailed": "Neizdevās iegūt filiāles darba laiku. Lūdzu, mēģiniet vēlreiz.",
+      "saveFailed": "Neizdevās saglabāt filiāles darba laiku. Jūsu izmaiņas ir saglabātas veidlapā. Lūdzu, mēģiniet vēlreiz."
+    },
     "validation.openingTimeBeforeClosingTime": "Atvēršanas laikam jābūt pirms slēgšanas laika.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "Maksa nepieder šim aizdevumam.",
     "wc.loan.charge.waiver.inactive.charge": "Maksu nevar atcelt, jo tā nav aktīva.",
@@ -4740,6 +4745,10 @@
       "Remove tenant": "Noņemt {{identifier}} reģistra ierakstu — tā datubāze paliek neskarta un nomnieka dati netiek dzēsti"
     },
     "text": {
+      "Not configured": "Nav konfigurēts",
+      "No configured hours": "Darba laiks nav iestatīts",
+      "Enabled days need valid opening and closing times": "Iespējotajām dienām nepieciešams derīgs atvēršanas un slēgšanas laiks.",
+      "Saving changes": "Saglabā izmaiņas…",
       "No valid saved coordinates": "Karte nav pieejama, jo saglabāto koordinātu trūkst vai tās nav derīgas.",
       "Clone": "Klonēt",
       "Clone Loan Product": "Klonēt aizdevuma produktu",

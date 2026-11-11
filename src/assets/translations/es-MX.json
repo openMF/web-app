@@ -937,6 +937,11 @@
     "validation.mustBeGreaterThan": "{{field}} debe ser mayor que {{other}}",
     "validation.mustBeGreaterThanZero": "{{field}} debe ser mayor que cero",
     "validation.sharesMinDefaultMaxOrder": "El mínimo debe ser menor o igual que el valor predeterminado, y el predeterminado menor o igual que el máximo",
+    "validation.invalidTime": "Ingrese una hora válida.",
+    "officeSchedules": {
+      "loadFailed": "No se pudieron obtener los horarios de la sucursal. Inténtelo de nuevo.",
+      "saveFailed": "No se pudieron guardar los horarios de la sucursal. Sus cambios se han conservado. Inténtelo de nuevo."
+    },
     "validation.openingTimeBeforeClosingTime": "La hora de apertura debe ser anterior a la de cierre.",
     "wc.loan.charge.waiver.charge.not.belongs.to.loan": "El cargo no pertenece a este préstamo.",
     "wc.loan.charge.waiver.inactive.charge": "El cargo no se puede condonar porque no está activo.",
@@ -4737,6 +4742,10 @@
       "Remove tenant": "Eliminar la entrada de registro de {{identifier}} — su base de datos queda intacta y no se elimina ningún dato de la instancia"
     },
     "text": {
+      "Not configured": "Sin configurar",
+      "No configured hours": "No hay horarios configurados",
+      "Enabled days need valid opening and closing times": "Los días habilitados requieren horas de apertura y cierre válidas.",
+      "Saving changes": "Guardando cambios…",
       "No valid saved coordinates": "El mapa no está disponible porque faltan las coordenadas guardadas o no son válidas.",
       "Clone": "Clonar",
       "Clone Loan Product": "Clonar producto de Crédito",

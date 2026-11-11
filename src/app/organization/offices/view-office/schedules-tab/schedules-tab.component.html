@@ -8,13 +8,13 @@
 
 <div class="tab-container mat-typography">
   <div class="layout-row align-start">
-    <div class="m-b-10">
+    <div class="m-b-16">
       <h3>{{ 'labels.heading.Schedules' | translate }}</h3>
     </div>
   </div>
 
   @if (isLoading) {
-    <div class="schedule-state">
+    <div class="schedule-state" role="status">
       <mat-spinner diameter="36"></mat-spinner>
       <span>{{ 'labels.text.Loading data' | translate }}</span>
     </div>
@@ -29,8 +29,8 @@
   }
 
   @if (hasError && !isLoading && !isPluginUnavailable) {
-    <div class="schedule-state error-state">
-      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+    <div class="schedule-state error-state" role="alert">
+      <span>{{ 'errors.officeSchedules.loadFailed' | translate }}</span>
       <button mat-button color="primary" (click)="loadOfficeSchedules()">
         {{ 'labels.buttons.Retry' | translate }}
       </button>
@@ -38,31 +38,45 @@
   }
 
   @if (saveError && !isLoading && !isPluginUnavailable) {
-    <div class="schedule-state error-state compact-state">
-      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+    <div class="schedule-state error-state compact-state" role="alert">
+      <span>{{ 'errors.officeSchedules.saveFailed' | translate }}</span>
     </div>
   }
 
   @if (!isLoading && !hasError && !isPluginUnavailable) {
+    @if (hasNoSchedule) {
+      <p role="status">{{ 'labels.text.No configured hours' | translate }}</p>
+    }
+    @if (hasIncompleteSchedule) {
+      <p role="status">{{ 'labels.text.Enabled days need valid opening and closing times' | translate }}</p>
+    }
     <form [formGroup]="schedulesForm" (ngSubmit)="submit()">
       <div class="schedule-table" formArrayName="days">
         <div class="schedule-header">
           <span class="day-column">{{ 'labels.inputs.Day' | translate }}</span>
           <span class="enabled-column">{{ 'labels.inputs.Enabled' | translate }}</span>
-          <span class="time-column">{{ 'labels.inputs.Opening Time' | translate }}</span>
-          <span class="time-column">{{ 'labels.inputs.Closing Time' | translate }}</span>
         </div>
 
         @for (dayControl of days.controls; track dayControl.get('weekday')?.value) {
-          <div class="schedule-row" [formGroupName]="$index">
-            <div class="weekday-label day-column">
+          <div
+            class="schedule-row"
+            [formGroup]="dayControl"
+            role="group"
+            [attr.aria-labelledby]="'schedule-day-' + $index"
+          >
+            <div class="weekday-label day-column" [id]="'schedule-day-' + $index">
               {{ getWeekdayLabelKey(dayControl) | translate }}
+              @if (!dayControl.get('enabled')?.value) {
+                <span class="day-status">{{ 'labels.text.Closed' | translate }}</span>
+              } @else if (isDayNotConfigured(dayControl)) {
+                <span class="day-status">{{ 'labels.text.Not configured' | translate }}</span>
+              }
             </div>
             <mat-checkbox
               class="enabled-column"
               formControlName="enabled"
               (change)="setDayEnabled(dayControl, $event.checked)"
-              [attr.aria-label]="'labels.inputs.Enabled' | translate"
+              [aria-label]="(getWeekdayLabelKey(dayControl) | translate) + ' ' + ('labels.inputs.Enabled' | translate)"
             ></mat-checkbox>
             <mat-form-field appearance="outline" class="time-column">
               <mat-label>{{ 'labels.inputs.Opening Time' | translate }}</mat-label>
@@ -70,9 +84,15 @@
                 matInput
                 type="time"
                 formControlName="openingTime"
-                [readonly]="isSaving"
-                (input)="refreshClosingTime(dayControl)"
+                step="1"
+                [placeholder]="'labels.text.Not configured' | translate"
+                [attr.aria-label]="
+                  (getWeekdayLabelKey(dayControl) | translate) + ' ' + ('labels.inputs.Opening Time' | translate)
+                "
               />
+              @if (hasInvalidTimeError(dayControl, 'openingTime')) {
+                <mat-error>{{ 'errors.validation.invalidTime' | translate }}</mat-error>
+              }
               @if (hasTimeRequiredError(dayControl, 'openingTime')) {
                 <mat-error>{{
                   'errors.validation.requiredField' | translate: { label: ('labels.inputs.Opening Time' | translate) }
@@ -81,7 +101,19 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="time-column">
               <mat-label>{{ 'labels.inputs.Closing Time' | translate }}</mat-label>
-              <input matInput type="time" formControlName="closingTime" [readonly]="isSaving" />
+              <input
+                matInput
+                type="time"
+                step="1"
+                formControlName="closingTime"
+                [placeholder]="'labels.text.Not configured' | translate"
+                [attr.aria-label]="
+                  (getWeekdayLabelKey(dayControl) | translate) + ' ' + ('labels.inputs.Closing Time' | translate)
+                "
+              />
+              @if (hasInvalidTimeError(dayControl, 'closingTime')) {
+                <mat-error>{{ 'errors.validation.invalidTime' | translate }}</mat-error>
+              }
               @if (hasTimeRequiredError(dayControl, 'closingTime')) {
                 <mat-error>{{
                   'errors.validation.requiredField' | translate: { label: ('labels.inputs.Closing Time' | translate) }
@@ -95,18 +127,24 @@
         }
       </div>
 
-      <div class="schedule-actions">
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="schedulesForm.invalid || isSaving"
-          *mifosxHasPermission="'UPDATE_OFFICE'"
-        >
-          <fa-icon icon="save" class="m-r-10"></fa-icon>
-          {{ 'labels.buttons.Save Changes' | translate }}
-        </button>
-      </div>
+      @if (canEdit) {
+        <div class="schedule-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="schedulesForm.invalid || isSaving || isLoading"
+            *mifosxHasPermission="'UPDATE_OFFICE'"
+          >
+            <fa-icon icon="save" class="m-r-8"></fa-icon>
+            @if (isSaving) {
+              <span role="status">{{ 'labels.text.Saving changes' | translate }}</span>
+            } @else {
+              {{ 'labels.buttons.Save Changes' | translate }}
+            }
+          </button>
+        </div>
+      }
     </form>
   }
 </div>
