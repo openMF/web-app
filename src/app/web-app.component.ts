@@ -8,7 +8,15 @@
 
 /* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  HostListener,
+  HostBinding,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
@@ -41,6 +49,7 @@ import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
 import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
+import { DocumentLanguageService } from './core/i18n/document-language.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
 
 /** Initialize Logger */
@@ -104,6 +113,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
   buttonConfig: KeyboardShortcutsConfiguration;
 
   i18nService: I18nService;
+  private documentLanguageService = inject(DocumentLanguageService);
 
   private authSubscription: Subscription;
   private destroy$ = new Subject<void>();
@@ -167,11 +177,15 @@ export class WebAppComponent implements OnInit, OnDestroy {
     log.debug('init');
 
     // Setup translations
+    this.documentLanguageService.init();
     this.translateService.addLangs(environment.supportedLanguages.split(','));
     if (this.settingsService.language) {
       this.translateService.use(this.settingsService.languageCode);
     } else {
       this.translateService.use(environment.defaultLanguage);
+    }
+    if (this.translateService.currentLang) {
+      this.documentLanguageService.setDocumentLanguage(this.translateService.currentLang);
     }
 
     this.i18nService = new I18nService(this.translateService);
