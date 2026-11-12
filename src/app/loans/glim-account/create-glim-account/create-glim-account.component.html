@@ -39,6 +39,7 @@
 
       <mifosx-loans-account-details-step
         [loansAccountTemplate]="loansAccountTemplate"
+        [loanProductsBasicDetails]="loanProductsBasicDetails"
         (loansAccountProductTemplate)="setTemplate($event)"
       >
       </mifosx-loans-account-details-step>
@@ -105,6 +106,7 @@
         <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
         <mifosx-loans-account-preview-step
           [loansAccountTemplate]="loansAccountTemplate"
+          [loanProductsBasicDetails]="loanProductsBasicDetails"
           [loansAccountProductTemplate]="loansAccountProductTemplate"
           [loansAccount]="loansAccount"
           [activeClientMembers]="activeClientMembers"
