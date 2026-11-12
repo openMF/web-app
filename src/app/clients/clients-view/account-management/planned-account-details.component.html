@@ -1,0 +1,153 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<dl class="facts">
+  <div>
+    <dt>{{ 'AccountManagement.Arrangement' | translate }}</dt>
+    <dd>{{ arrangement.id }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Customer' | translate }}</dt>
+    <dd>{{ arrangement.clientId }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Product' | translate }}</dt>
+    <dd>{{ arrangement.configuration.savingsProductId }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+    <dd>{{ arrangement.configuration.policyVersion }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.Employer' | translate }}</dt>
+    <dd>{{ arrangement.configuration.employerClientId ?? ('labels.text.Not configured' | translate) }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.ArrangementReference' | translate }}</dt>
+    <dd>{{ arrangement.configuration.arrangementReference || ('labels.text.Not configured' | translate) }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.ExpectedContribution' | translate }}</dt>
+    <dd>
+      {{
+        arrangement.configuration.contributionAmount
+          | accountMoney: native().data?.currency : native().data?.currencyDigits
+      }}
+    </dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Frequency' | translate }}</dt>
+    <dd>
+      {{ arrangement.configuration.frequencyInterval }}
+      <mifosx-account-status [code]="arrangement.configuration.frequencyUnit" />
+    </dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Start Date' | translate }}</dt>
+    <dd>{{ (arrangement.configuration.startDate | dateFormat) || ('labels.text.Not configured' | translate) }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.TermDays' | translate }}</dt>
+    <dd>{{ arrangement.configuration.termDays ?? ('labels.text.Not configured' | translate) }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Maturity Date' | translate }}</dt>
+    <dd>
+      {{ (arrangement.configuration.maturityDate | dateFormat) || ('labels.text.Not configured' | translate) }}
+    </dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.ArrangementStatus' | translate }}</dt>
+    <dd><mifosx-account-status [code]="arrangement.configuration.status" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.NativeAccountId' | translate }}</dt>
+    <dd>
+      @if (arrangement.savingsAccountId) {
+        <a
+          mat-button
+          [routerLink]="['/clients', clientId, 'savings-accounts', arrangement.savingsAccountId, 'general']"
+          >{{ arrangement.savingsAccountId }}</a
+        >
+      } @else {
+        {{ 'labels.text.Not configured' | translate }}
+      }
+    </dd>
+  </div>
+</dl>
+@if (!native().data?.currency) {
+  <p>{{ 'AccountManagement.CurrencyNotConfigured' | translate }}</p>
+}
+<mifosx-account-resource-state [state]="native()" (retry)="loadNative()" />
+@if (native().data; as account) {
+  <mifosx-managed-native-account [account]="account" />
+}
+@if (canLink) {
+  <p>{{ 'AccountManagement.LinkNativeExplanation' | translate }}</p>
+  <form [formGroup]="form" (ngSubmit)="link()">
+    <mat-form-field
+      ><mat-label>{{ 'AccountManagement.NativeAccountId' | translate }}</mat-label
+      ><input matInput inputmode="numeric" formControlName="savingsAccountId" required /></mat-form-field
+    ><button mat-button type="submit" [disabled]="form.invalid || busy()">
+      {{ 'AccountManagement.LinkNative' | translate }}
+    </button>
+  </form>
+}
+@if (message()) {
+  <p role="status">{{ message() | translate }}</p>
+}
+<h3>{{ 'AccountManagement.MaturityAndRelease' | translate }}</h3>
+<mifosx-account-resource-state [state]="maturity()" (retry)="loadMaturity()" />
+@if (maturity().data; as status) {
+  <p><mifosx-account-status [code]="status.state" /></p>
+  <ul>
+    @for (reason of status.blockers; track reason) {
+      <li><mifosx-account-status [code]="reason" /></li>
+    }
+  </ul>
+}
+<h3>{{ 'AccountManagement.PayrollContributions' | translate }}</h3>
+<p class="notice">{{ 'AccountManagement.ProjectedNotPaid' | translate }}</p>
+<mifosx-account-resource-state [state]="contributions()" (retry)="loadContributions()" />
+@if (contributions().data; as rows) {
+  <div class="table-container" tabindex="0" [attr.aria-label]="'AccountManagement.PayrollContributions' | translate">
+    <table mat-table [dataSource]="rows">
+      <ng-container matColumnDef="date"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due Date' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.dueDate | dateFormat }}</td></ng-container
+      >
+      <ng-container matColumnDef="expected"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'AccountManagement.ExpectedContribution' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.expectedAmount | accountMoney: native().data?.currency : native().data?.currencyDigits }}
+        </td></ng-container
+      >
+      <ng-container matColumnDef="state"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.State' | translate }}</th>
+        <td mat-cell *matCellDef="let row"><mifosx-account-status [code]="row.status" /></td
+      ></ng-container>
+      <ng-container matColumnDef="transaction"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'AccountManagement.NativeSavingsTransaction' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.nativeTransactionId ?? ('AccountManagement.NotEstablished' | translate) }}
+        </td></ng-container
+      >
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+  @if (!rows.length) {
+    <p>{{ 'AccountManagement.NoContributions' | translate }}</p>
+  }
+  @if (contributions().more) {
+    <button mat-button (click)="loadContributions()" [disabled]="contributions().loading">
+      {{ 'AccountManagement.LoadMore' | translate }}
+    </button>
+  }
+}
+<mifosx-planned-audit [clientId]="clientId" kind="arrangements" [subjectId]="arrangement.id" />

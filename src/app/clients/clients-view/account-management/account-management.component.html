@@ -1,0 +1,42 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2>{{ 'AccountManagement.Title' | translate }}</h2>
+@if (access.anyRead) {
+  @for (clientId of customer$ | async; track clientId) {
+    <p>{{ 'labels.inputs.Customer' | translate }}: {{ clientId }}</p>
+    <mat-tab-group dynamicHeight>
+      @if (access.has('READ_SAVINGS_ACCOUNT_RELATIONSHIP')) {
+        <mat-tab [label]="'SavingsProducts.Main' | translate"
+          ><ng-template matTabContent><mifosx-main-account [clientId]="clientId" /></ng-template
+        ></mat-tab>
+      }
+      @if (access.has('READ_GUARANTEE_SWEEP')) {
+        <mat-tab [label]="'SavingsProducts.Guaranteed' | translate"
+          ><ng-template matTabContent><mifosx-guaranteed-accounts [clientId]="clientId" /></ng-template
+        ></mat-tab>
+      }
+      @if (access.has('READ_PLANNED_SAVINGS')) {
+        <mat-tab [label]="'SavingsProducts.PlannedMain' | translate"
+          ><ng-template matTabContent><mifosx-planned-main-account [clientId]="clientId" /></ng-template
+        ></mat-tab>
+        <mat-tab [label]="'SavingsProducts.Pocket' | translate"
+          ><ng-template matTabContent><mifosx-savings-pockets [clientId]="clientId" /></ng-template
+        ></mat-tab>
+      }
+    </mat-tab-group>
+  } @empty {
+    <p role="alert">
+      {{
+        (contextInvalid() ? 'AccountManagement.AuthenticationRequired' : 'AccountManagement.InvalidRequest') | translate
+      }}
+    </p>
+  }
+} @else {
+  <p role="alert">{{ 'AccountManagement.Forbidden' | translate }}</p>
+}
