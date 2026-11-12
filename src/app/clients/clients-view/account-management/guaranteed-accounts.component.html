@@ -1,0 +1,193 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card
+  ><mat-card-content>
+    <h2>{{ 'SavingsProducts.Guaranteed' | translate }}</h2>
+    <p class="notice">{{ 'AccountManagement.GuaranteeNotEstablished' | translate }}</p>
+    <mifosx-account-resource-state [state]="capabilities()" (retry)="reload()" />
+    @if (capabilities().data; as caps) {
+      <h3>{{ 'AccountManagement.DiagnosticSources' | translate }}</h3>
+      <mifosx-account-resource-state [state]="sources()" (retry)="loadSources()" />
+      @for (source of sources().data; track source.savingsAccountId) {
+        <dl class="facts">
+          <div>
+            <dt>{{ 'labels.inputs.Account' | translate }}</dt>
+            <dd>
+              <a
+                mat-button
+                [routerLink]="['/clients', clientId, 'savings-accounts', source.savingsAccountId, 'general']"
+                >{{ source.savingsAccountId }}</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'SavingsEditor.Purpose' | translate }}</dt>
+            <dd><mifosx-account-status [code]="source.purpose" /></dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.NativeStatus' | translate }}</dt>
+            <dd><mifosx-account-status [code]="'SAVINGS_' + source.nativeStatus" /></dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+            <dd>{{ source.policyVersion }}</dd>
+          </div>
+        </dl>
+      } @empty {
+        @if (!sources().loading && !sources().error) {
+          <p>{{ 'AccountManagement.NoSources' | translate }}</p>
+        }
+      }
+      @if (sources().more) {
+        <button mat-button (click)="loadSources()" [disabled]="sources().loading">
+          {{ 'AccountManagement.LoadMore' | translate }}
+        </button>
+      }
+      <h3>{{ 'AccountManagement.LoanDiagnostics' | translate }}</h3>
+      <mifosx-account-resource-state [state]="loans()" (retry)="loadLoans()" />
+      @for (item of loans().data; track item.loanId) {
+        <p>
+          <a mat-button [routerLink]="['/clients', clientId, 'loans-accounts', item.loanId, 'general']">{{
+            item.loanId
+          }}</a>
+          {{ item.currencyCode }} · <mifosx-account-status [code]="'LOAN_' + item.nativeStatus" />
+        </p>
+      } @empty {
+        @if (!loans().loading && !loans().error) {
+          <p>{{ 'AccountManagement.NoLoans' | translate }}</p>
+        }
+      }
+      @if (loans().more) {
+        <button mat-button (click)="loadLoans()" [disabled]="loans().loading">
+          {{ 'AccountManagement.LoadMore' | translate }}
+        </button>
+      }
+      <h3>{{ 'AccountManagement.EligibilityPreview' | translate }}</h3>
+      <p>{{ 'AccountManagement.PreviewExplanation' | translate }}</p>
+      <form [formGroup]="form" (ngSubmit)="evaluate()">
+        <mat-form-field
+          ><mat-label>{{ 'accountTransfer.source' | translate }}</mat-label
+          ><mat-select formControlName="savingsAccountId">
+            @for (item of sources().data; track item.savingsAccountId) {
+              <mat-option [value]="item.savingsAccountId">{{ item.savingsAccountId }}</mat-option>
+            }
+          </mat-select></mat-form-field
+        >
+        <mat-form-field
+          ><mat-label>{{ 'AccountManagement.LinkedLoan' | translate }}</mat-label
+          ><mat-select formControlName="loanId">
+            @for (item of loans().data; track item.loanId) {
+              <mat-option [value]="item.loanId">{{ item.loanId }} · {{ item.currencyCode }}</mat-option>
+            }</mat-select
+          ><mat-hint>{{ 'AccountManagement.DiagnosticSelectionOnly' | translate }}</mat-hint></mat-form-field
+        >
+        <mat-form-field
+          ><mat-label>{{ 'AccountManagement.RequestedAmount' | translate }}</mat-label
+          ><input matInput inputmode="decimal" formControlName="amount" required /><mat-hint>{{
+            'AccountManagement.ExactAmount' | translate
+          }}</mat-hint></mat-form-field
+        >
+        <button mat-raised-button color="primary" type="submit" [disabled]="!validPreview || preview().loading">
+          {{ 'labels.buttons.Preview' | translate }}
+        </button>
+      </form>
+      @if (!access.has('READ_LOAN')) {
+        <p>{{ 'AccountManagement.LoanPrecisionPermission' | translate }}</p>
+      }
+      <mifosx-account-resource-state [state]="loan()" (retry)="selectionChanged()" />
+      <mifosx-account-resource-state [state]="native()" (retry)="selectionChanged()" />
+      @if (native().data; as account) {
+        <p>
+          {{ 'labels.inputs.Balance' | translate }}:
+          {{ account.summary?.accountBalance | accountMoney: account.currency.code : account.currency.decimalPlaces }}
+        </p>
+      }
+      <mifosx-account-resource-state [state]="preview()" (retry)="evaluate()" />
+      @if (preview().data; as decision) {
+        <h3><mifosx-account-status [code]="decision.state" /></h3>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'accountTransfer.source' | translate }}</dt>
+            <dd>{{ decision.savingsAccountId }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.LinkedLoan' | translate }}</dt>
+            <dd>{{ decision.loanId }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.RequestedAmount' | translate }}</dt>
+            <dd>{{ decision.requestedAmount | accountMoney: decision.currencyCode : decision.currencyDigits }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.LoanOutstanding' | translate }}</dt>
+            <dd>{{ decision.loanOutstanding | accountMoney: decision.currencyCode : decision.currencyDigits }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.WithdrawableBalance' | translate }}</dt>
+            <dd>
+              {{
+                decision.nativeWithdrawableBalance
+                  | accountMoney: decision.sourceCurrencyCode : decision.sourceCurrencyDigits
+              }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.AvailableGuaranteeFunds' | translate }}</dt>
+            <dd data-testid="available-guarantee-funds">
+              {{ decision.availableGuaranteeFunds | accountMoney: decision.currencyCode : decision.currencyDigits }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+            <dd>{{ decision.policyVersion ?? ('labels.text.Not configured' | translate) }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+            <dd>{{ decision.businessDate | dateFormat }}</dd>
+          </div>
+        </dl>
+        <ul>
+          @for (reason of decision.reasons; track reason) {
+            <li><mifosx-account-status [code]="reason" /></li>
+          }
+        </ul>
+      }
+      <p class="notice">{{ 'AccountManagement.NativeNotGuarantee' | translate }}</p>
+      <div class="actions">
+        @if (access.has('APPLY_GUARANTEE_SWEEP')) {
+          <button mat-raised-button disabled data-testid="apply-guarantee">
+            {{ 'labels.cbild.auditTrail.apply' | translate }}
+          </button>
+        }
+        @if (access.has('RELEASE_GUARANTEE_SWEEP')) {
+          <button mat-raised-button disabled data-testid="release-guarantee">
+            {{ 'labels.catalogs.Release' | translate }}
+          </button>
+        }
+      </div>
+      <p>
+        {{
+          (caps.manualSweep === false
+            ? 'AccountManagement.ManualSweepDisabled'
+            : 'AccountManagement.ExecutionIntegrationUnavailable'
+          ) | translate
+        }}
+      </p>
+      <ul>
+        @for (reason of caps.blockers; track reason) {
+          <li><mifosx-account-status [code]="reason" /></li>
+        }
+      </ul>
+      @if (selectedLoan(); as id) {
+        @for (loanId of [id]; track loanId) {
+          <mifosx-guarantee-history [clientId]="clientId" [loanId]="loanId" />
+        }
+      }
+    }</mat-card-content
+></mat-card>

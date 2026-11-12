@@ -7,13 +7,14 @@
  */
 
 import { throwError } from 'rxjs';
-import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { HttpContext, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
+import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { environment } from '../../../environments/environment';
 
 describe('ErrorHandlerInterceptor', () => {
@@ -42,6 +43,39 @@ describe('ErrorHandlerInterceptor', () => {
     }
   }
 
+  it.each([
+    400,
+    403,
+    404,
+    409,
+    422,
+    500
+  ])('keeps account-management status %s out of raw error alerts and logs', (status) => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    expect(
+      intercept('/savings/planned-savings/clients/7/pockets', status, 'GET', {
+        defaultUserMessage: 'SQL private account details'
+      })
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+  it('preserves native account failures for safe scoped rendering and retains the 401 session alert', () => {
+    const request = new HttpRequest('GET', '/savingsaccounts/18', {
+      context: new HttpContext().set(ACCOUNT_MANAGEMENT_REQUEST, true)
+    });
+    const response = new HttpErrorResponse({ status: 401, error: { defaultUserMessage: 'private internals' } });
+    let result: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (result = error) });
+    expect(result).toBe(response);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
   it.each([
     '/savingsaccounts/42?command=activate',
     '/savingsaccounts/42/transactions/7?command=modify'

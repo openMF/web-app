@@ -1,0 +1,102 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'AccountManagement.ConfigureArrangement' | translate }}</h2>
+<mat-dialog-content>
+  <p class="notice">{{ 'AccountManagement.MetadataOnly' | translate }}</p>
+  <form [formGroup]="form" id="planned-configuration" (ngSubmit)="save()">
+    @if (cancelling) {
+      <p>{{ 'AccountManagement.CancellationNotice' | translate }}</p>
+    } @else {
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label
+        ><input matInput type="number" formControlName="savingsProductId" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.PolicyVersion' | translate }}</mat-label
+        ><input matInput type="number" formControlName="policyVersion" required
+      /></mat-form-field>
+      <button mat-button type="button" (click)="loadPolicy()" [disabled]="policy().loading || busy()">
+        {{ 'AccountManagement.VerifyPolicy' | translate }}
+      </button>
+      <mifosx-account-resource-state [state]="policy()" (retry)="loadPolicy()" />
+      @if (policy().data; as p) {
+        <p>{{ p.coreSettings['currency_code'] }} · {{ 'AccountManagement.ApprovedPolicy' | translate }}</p>
+      }
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.Employer' | translate }}</mat-label
+        ><input matInput type="number" formControlName="employerClientId" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.ArrangementReference' | translate }}</mat-label
+        ><input matInput formControlName="arrangementReference" maxlength="100" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.ExpectedContribution' | translate }}</mat-label
+        ><input matInput inputmode="decimal" formControlName="contributionAmount" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label
+        ><mat-select formControlName="frequencyUnit">
+          @for (unit of ['DAYS', 'WEEKS', 'MONTHS']; track unit) {
+            <mat-option [value]="unit"><mifosx-account-status [code]="unit" /></mat-option>
+          }</mat-select
+      ></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Frequency Interval' | translate }}</mat-label
+        ><input matInput type="number" formControlName="frequencyInterval" min="1" max="36500" required
+      /></mat-form-field>
+      @if (form.controls.frequencyUnit.value === 'MONTHS') {
+        <mat-form-field
+          ><mat-label>{{ 'AccountManagement.ShortMonthRule' | translate }}</mat-label
+          ><mat-select formControlName="shortMonthRule">
+            @for (rule of ['SKIP', 'LAST_DAY']; track rule) {
+              <mat-option [value]="rule"><mifosx-account-status [code]="rule" /></mat-option>
+            }</mat-select
+        ></mat-form-field>
+      }
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label
+        ><input matInput type="date" formControlName="startDate" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.TermDays' | translate }}</mat-label
+        ><input matInput type="number" formControlName="termDays" min="1" max="36500" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Maturity Date' | translate }}</mat-label
+        ><input matInput type="date" formControlName="maturityDate" required /><mat-hint>{{
+          'AccountManagement.ExplicitMaturity' | translate
+        }}</mat-hint></mat-form-field
+      >
+    }
+    @if (data.arrangement) {
+      <mat-form-field
+        ><mat-label>{{ 'AccountManagement.ArrangementStatus' | translate }}</mat-label
+        ><mat-select formControlName="status"
+          ><mat-option value="CONFIGURATION_ONLY">{{ 'AccountManagement.MetadataOnly' | translate }}</mat-option
+          ><mat-option value="CANCELLED">{{
+            'creditOrigination.statuses.CANCELLED' | translate
+          }}</mat-option></mat-select
+        ></mat-form-field
+      >
+    }
+  </form>
+  @if (message()) {
+    <p role="alert">{{ message() | translate }}</p>
+  }
+  @if (!valid) {
+    <p>{{ 'AccountManagement.ConfigurationValidation' | translate }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end"
+  ><button mat-button mat-dialog-close [disabled]="busy()">{{ 'labels.buttons.Cancel' | translate }}</button
+  ><button mat-raised-button color="primary" type="submit" form="planned-configuration" [disabled]="!valid || busy()">
+    {{ 'AccountManagement.SaveMetadata' | translate }}
+  </button></mat-dialog-actions
+>

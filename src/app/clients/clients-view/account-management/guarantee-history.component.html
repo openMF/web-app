@@ -1,0 +1,128 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h3>{{ 'AccountManagement.GuaranteeHistory' | translate }}</h3>
+<mifosx-account-resource-state [state]="audit()" (retry)="loadAudit()" />
+<mat-accordion multi>
+  @for (row of audit().data; track row.id) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header
+        ><mat-panel-title><mifosx-account-status [code]="row.event" /></mat-panel-title
+        ><mat-panel-description>{{
+          row.recordedAt | dateFormat: 'YYYY-MM-DD HH:mm:ss'
+        }}</mat-panel-description></mat-expansion-panel-header
+      >
+      <dl class="facts">
+        <div>
+          <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+          <dd>{{ row.businessDate | dateFormat }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
+          <dd>{{ row.actorId }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'labels.inputs.Reason' | translate }}</dt>
+          <dd><mifosx-account-status [code]="row.reasonCode" /></dd>
+        </div>
+        @if (row.evaluation; as decision) {
+          <div>
+            <dt>{{ 'labels.inputs.State' | translate }}</dt>
+            <dd><mifosx-account-status [code]="decision.state" /></dd>
+          </div>
+          <div>
+            <dt>{{ 'accountTransfer.source' | translate }}</dt>
+            <dd>{{ decision.savingsAccountId }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.LinkedLoan' | translate }}</dt>
+            <dd>{{ decision.loanId }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'AccountManagement.RequestedAmount' | translate }}</dt>
+            <dd>{{ decision.requestedAmount | accountMoney: decision.currencyCode : decision.currencyDigits }}</dd>
+          </div>
+        }
+      </dl>
+      @if (row.reconciliation) {
+        <p><mifosx-account-status [code]="row.reconciliation.status" /></p>
+      }
+      @if (row.executionId) {
+        <button mat-button (click)="inspect(row.executionId)" [disabled]="receipt().loading">
+          {{ 'AccountManagement.InspectExecution' | translate }}
+        </button>
+      }
+    </mat-expansion-panel>
+  } @empty {
+    @if (!audit().loading && !audit().error) {
+      <p>{{ 'AccountManagement.NoHistory' | translate }}</p>
+    }
+  }
+</mat-accordion>
+@if (audit().more) {
+  <button mat-button (click)="loadAudit()" [disabled]="audit().loading">
+    {{ 'AccountManagement.LoadMore' | translate }}
+  </button>
+}
+<h3>{{ 'AccountManagement.Allocations' | translate }}</h3>
+<mifosx-account-resource-state [state]="allocations()" (retry)="loadAllocations()" />
+@for (row of allocations().data; track row.id) {
+  <dl class="facts">
+    <div>
+      <dt>{{ 'accountTransfer.source' | translate }}</dt>
+      <dd>{{ row.savingsAccountId }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'labels.inputs.State' | translate }}</dt>
+      <dd><mifosx-account-status [code]="row.state" /></dd>
+    </div>
+    <div>
+      <dt>{{ 'labels.inputs.Proposed Amount' | translate }}</dt>
+      <dd>{{ row.proposedAmount | accountMoney: row.currencyCode }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.AllocatedAmount' | translate }}</dt>
+      <dd>{{ row.reservedAmount | accountMoney: row.currencyCode }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.ConsumedAmount' | translate }}</dt>
+      <dd>{{ row.consumedAmount | accountMoney: row.currencyCode }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.ReleasedAmount' | translate }}</dt>
+      <dd>{{ row.releasedAmount | accountMoney: row.currencyCode }}</dd>
+    </div>
+  </dl>
+} @empty {
+  @if (!allocations().loading && !allocations().error) {
+    <p>{{ 'AccountManagement.NoAllocations' | translate }}</p>
+  }
+}
+@if (allocations().more) {
+  <button mat-button (click)="loadAllocations()" [disabled]="allocations().loading">
+    {{ 'AccountManagement.LoadMore' | translate }}
+  </button>
+}
+<h3>{{ 'AccountManagement.ReleaseStatus' | translate }}</h3>
+<mifosx-account-resource-state [state]="release()" (retry)="loadRelease()" />
+@if (release().data; as data) {
+  <p><mifosx-account-status [code]="data.state" /></p>
+  <ul>
+    @for (reason of data.blockers; track reason) {
+      <li><mifosx-account-status [code]="reason" /></li>
+    }
+  </ul>
+}
+<mifosx-account-resource-state [state]="receipt()" />
+<mifosx-account-resource-state [state]="reconciliation()" (retry)="reconcile()" />
+<mifosx-account-transaction-result [receipt]="receipt().data" [reconciliation]="reconciliation().data" />
+@if (receipt().data && access.has('RECONCILE_GUARANTEE_SWEEP')) {
+  <button mat-button (click)="reconcile()" [disabled]="reconciliation().loading">
+    {{ 'AccountManagement.CheckReconciliation' | translate }}
+  </button>
+}

@@ -24,6 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Models */
 import { financialRestrictionError } from 'app/savings/shared/financial-restriction-error';
+import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 
 /** Initialize Logger */
@@ -119,6 +120,20 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    // Account management renders allowlisted localized errors, including optional endpoint 404s.
+    // Never send its financial payloads to the generic response logger or raw server-message alerts.
+    if (
+      request.context.get(ACCOUNT_MANAGEMENT_REQUEST) ||
+      /\/savings\/(?:account-relationships|guarantee-sweeps|planned-savings)(?:[/?]|$)/.test(request.url)
+    ) {
+      if (status === 401) {
+        this.alertService.alert({
+          type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+          message: this.translate.instant('errors.error.auth.sessionExpired.message')
+        });
+      }
+      return throwError(() => response);
+    }
     const restriction = financialRestrictionError(response);
     if (
       restriction &&
