@@ -139,9 +139,9 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
-        dialogContext: this.translateService.instant(
+        dialogContext: `${this.translateService.instant(
           'labels.dialogContext.Are you sure you want to waive charge with id:'
-        )` ${this.chargeData.id}`,
+        )} ${this.chargeData.id}`,
         type: 'Basic'
       }
     });
