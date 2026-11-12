@@ -14,26 +14,31 @@ import {
   OnChanges,
   OnDestroy,
   Input,
+  Output,
+  EventEmitter,
   inject
 } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 
 /** rxjs Imports */
 import { finalize, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PdfPreviewComponent } from './pdf-preview/pdf-preview.component';
 
 /**
  * BIRT Component
  *
  * <p>Renders the output of an Eclipse BIRT report. The reporting engine returns a different kind of
  * document per output type, so each is presented the way a browser can actually show it: markup is
- * rendered inline, a PDF is handed to the browser's viewer, and a spreadsheet or data export — which
+ * rendered inline, a PDF is drawn by PDF.js, and a spreadsheet or data export — which
  * an iframe would either download behind the user's back or display as binary noise — is offered as
  * a download instead.
  */
@@ -42,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   templateUrl: './birt.component.html',
   styleUrls: ['./birt.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
+    ...STANDALONE_SHARED_IMPORTS,
+    PdfPreviewComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -55,6 +61,9 @@ export class BirtComponent implements OnChanges, OnDestroy {
 
   /** Run Report Data */
   @Input() dataObject: any;
+  @Output() reportError = new EventEmitter<HttpErrorResponse>();
+  pdfData: ArrayBuffer | null = null;
+  private reportSubscription: Subscription | null = null;
 
   /** substitute for resolver */
   hideOutput = true;
@@ -71,9 +80,6 @@ export class BirtComponent implements OnChanges, OnDestroy {
    */
   reportHtml: SafeHtml | null = null;
 
-  /** trusted resource url for BIRT output the browser renders itself, such as a PDF */
-  birtUrl: SafeResourceUrl | null = null;
-
   /** Set for an output the browser cannot display, which is offered as a download instead. */
   downloadUrl: SafeUrl | null = null;
 
@@ -87,16 +93,20 @@ export class BirtComponent implements OnChanges, OnDestroy {
    * Fetches run report data post changes in run report form.
    */
   ngOnChanges() {
+    this.reportSubscription?.unsubscribe();
     this.hideOutput = true;
-    this.getRunReportData();
+    if (this.dataObject) {
+      this.getRunReportData();
+    }
   }
 
   ngOnDestroy() {
+    this.reportSubscription?.unsubscribe();
     this.releaseBlobUrl();
   }
 
   getRunReportData() {
-    this.reportsService
+    this.reportSubscription = this.reportsService
       .getBirtRunReportData(
         this.dataObject.report.name,
         this.dataObject.formData,
@@ -110,6 +120,7 @@ export class BirtComponent implements OnChanges, OnDestroy {
           console.error('Error loading BIRT report:', error);
           this.clearOutput();
           this.hideOutput = true;
+          this.reportError.emit(error);
           return of(null);
         })
       )
@@ -139,14 +150,13 @@ export class BirtComponent implements OnChanges, OnDestroy {
       return;
     }
 
-    // Pinning application/pdf is not only about the engine mislabelling the response. The frame a
-    // PDF is shown in cannot be sandboxed, because Chrome will not run its PDF viewer in a sandboxed
-    // frame, so this type is what guarantees the document is handed to that viewer rather than
-    // parsed as markup. Everything else keeps whatever the server said.
+    // Pin PDF downloads to their type; preview bytes are rendered on a canvas, never as markup.
     const blobUrl = this.createBlobUrl(res.body, outputType === 'PDF' ? 'application/pdf' : contentType);
 
     if (outputType === 'PDF') {
-      this.birtUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+      this.pdfData = res.body;
+      this.downloadUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl);
+      this.downloadName = `${this.dataObject?.report?.name ?? 'report'}.pdf`;
     } else {
       this.downloadUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl);
       this.downloadName = `${this.dataObject?.report?.name ?? 'report'}.${outputType.toLowerCase() || 'dat'}`;
@@ -187,7 +197,7 @@ export class BirtComponent implements OnChanges, OnDestroy {
   private clearOutput(): void {
     this.releaseBlobUrl();
     this.reportHtml = null;
-    this.birtUrl = null;
+    this.pdfData = null;
     this.downloadUrl = null;
     this.downloadName = '';
   }

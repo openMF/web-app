@@ -25,7 +25,10 @@
       "currency": "Moneda",
       "showLastCutOff": "Mostrar último corte"
     },
-    "types": { "CASH": "Efectivo", "CHECK": "Cheque" },
+    "types": {
+      "CASH": "Efectivo",
+      "CHECK": "Cheque"
+    },
     "columns": {
       "user": "Usuario / Custodio",
       "name": "Nombre",
@@ -253,7 +256,11 @@
       "updating": "Actualizando...",
       "updatingCategory": "Actualizando {{category}}"
     },
-    "categories": { "ACCOUNTING": "Contabilidad", "GENERAL": "Catálogos generales", "USERS": "Usuarios" },
+    "categories": {
+      "ACCOUNTING": "Contabilidad",
+      "GENERAL": "Catálogos generales",
+      "USERS": "Usuarios"
+    },
     "errors": {
       "alreadyRunning": "Esta actualización de catálogo ya está en curso",
       "interrupted": "La actualización anterior del catálogo fue interrumpida. Inténtalo de nuevo",
@@ -4480,7 +4487,8 @@
       "Label": "Etiqueta",
       "Original Amount": "Monto original",
       "Resulting Amount": "Monto resultante",
-      "Head Office": "Sucursal matriz"
+      "Head Office": "Sucursal matriz",
+      "Client number": "# cliente"
     },
     "links": {
       "Community": "Comunidad",
@@ -7273,7 +7281,10 @@
       "dateRange": "Fecha desde debe ser anterior o igual a Fecha hasta.",
       "referenceLength": "La referencia no debe superar los 200 caracteres."
     },
-    "denominationTypes": { "BANKNOTE": "Billete", "COIN": "Moneda" }
+    "denominationTypes": {
+      "BANKNOTE": "Billete",
+      "COIN": "Moneda"
+    }
   },
   "enrollmentStatus": {
     "title": "Estado de enrolamiento",
@@ -7705,7 +7716,6 @@
     "drawerSetup": "Abra una caja para comenzar",
     "setupRequired": "Este espacio de retiros requiere atención",
     "checkHint": "La emisión de cheques no está habilitada. Puede continuar con efectivo.",
-
     "customer": "Cliente",
     "notAvailable": "No disponible",
     "forbidden": "No tiene permiso para realizar esta acción.",
@@ -8596,5 +8606,21 @@
     "FinancialRetryAllowed": "Permiso del servidor para reintentar la operación financiera",
     "ReconciliationEvidenceNotice": "Las comprobaciones individuales son evidencia diagnóstica. Las referencias coincidentes o los asientos equilibrados por sí solos no verifican la contabilidad nativa.",
     "CancellationNotice": "La cancelación solo cambia el estado de esta configuración. Se conservan las condiciones y la revisión; siguen vigentes las validaciones de políticas del servidor."
+  },
+  "reports": {
+    "pdf": {
+      "controls": "Controles de vista previa PDF",
+      "page": "Página {{page}} de {{total}}",
+      "zoomOut": "Reducir zoom",
+      "zoomIn": "Aumentar zoom",
+      "fit": "Ajustar ancho",
+      "loading": "Cargando vista previa PDF…",
+      "unavailable": "No se pudo mostrar la vista previa. Puedes descargar el PDF."
+    },
+    "client": {
+      "invalid": "Captura un número de cliente entero, mayor que cero.",
+      "notFound": "No se encontró el cliente en tu oficina. Verifica el número capturado.",
+      "noLoans": "El cliente no tiene créditos registrados para generar este reporte."
+    }
   }
 }
