@@ -1,0 +1,103 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card
+  ><mat-card-content>
+    <h2>{{ 'SavingsProducts.Pocket' | translate }}</h2>
+    <mifosx-account-resource-state [state]="capabilities()" (retry)="reload()" />
+    @if (capabilities().data; as caps) {
+      @if (caps.pocketRelationships !== true) {
+        <p>{{ 'AccountManagement.PocketRelationshipsUnavailable' | translate }}</p>
+      }
+      <p class="notice">{{ 'AccountManagement.PocketOperationsDisabled' | translate }}</p>
+      <div class="actions">
+        <button mat-button disabled data-testid="create-pocket">
+          {{ 'AccountManagement.CreatePocket' | translate }}</button
+        ><button mat-button disabled data-testid="transfer-pocket">
+          {{ 'labels.auditTrail.actions.TRANSFER' | translate }}
+        </button>
+      </div>
+      <mifosx-account-resource-state [state]="pockets()" (retry)="load()" />
+      <mat-accordion multi>
+        @for (row of pockets().data; track row.savingsAccountId + ':' + row.revision) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header
+              ><mat-panel-title>{{ row.name }}</mat-panel-title
+              ><mat-panel-description><mifosx-account-status [code]="row.relationshipStatus" /></mat-panel-description
+            ></mat-expansion-panel-header>
+            <dl class="facts">
+              <div>
+                <dt>{{ 'AccountManagement.NativeAccountId' | translate }}</dt>
+                <dd data-testid="pocket-native-account-id">{{ row.savingsAccountId }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'SavingsProducts.Main' | translate }}</dt>
+                <dd>
+                  <a
+                    mat-button
+                    [routerLink]="['/clients', clientId, 'savings-accounts', row.mainSavingsAccountId, 'general']"
+                    >{{ row.mainSavingsAccountId }}</a
+                  >
+                </dd>
+              </div>
+              <div>
+                <dt>{{ 'labels.inputs.Customer' | translate }}</dt>
+                <dd>{{ row.clientId }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+                <dd>{{ row.policyVersion }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'AccountManagement.MainPolicyVersion' | translate }}</dt>
+                <dd>{{ row.mainPolicyVersion }}</dd>
+              </div>
+            </dl>
+            <mifosx-managed-native-account [account]="row.nativeAccount" />
+            <div class="actions">
+              @if (canRename(row)) {
+                <button mat-button (click)="rename(row)">{{ 'AccountManagement.RenamePocket' | translate }}</button>
+              }
+              <button mat-button (click)="checkClosure(row)">{{ 'AccountManagement.CheckClosure' | translate }}</button>
+              <button mat-button disabled data-testid="close-pocket">
+                {{ 'AccountManagement.CloseAccount' | translate }}
+              </button>
+            </div>
+            @if (closure.get(row.savingsAccountId); as result) {
+              <mifosx-account-resource-state [state]="result()" (retry)="checkClosure(row)" />
+              @if (result().data; as eligibility) {
+                <p><mifosx-account-status [code]="eligibility.state" /></p>
+                <ul>
+                  @for (reason of eligibility.blockers; track reason) {
+                    <li><mifosx-account-status [code]="reason" /></li>
+                  }
+                </ul>
+              }
+            }
+            <ng-template matExpansionPanelContent
+              ><mifosx-planned-audit [clientId]="clientId" kind="pockets" [subjectId]="row.savingsAccountId"
+            /></ng-template>
+          </mat-expansion-panel>
+        } @empty {
+          @if (caps.pocketRelationships === true && !pockets().loading && !pockets().error) {
+            <p>{{ 'AccountManagement.NoPockets' | translate }}</p>
+          }
+        }
+      </mat-accordion>
+      @if (pockets().more) {
+        <button mat-button (click)="load()" [disabled]="pockets().loading">
+          {{ 'AccountManagement.LoadMore' | translate }}
+        </button>
+      }
+      <ul>
+        @for (reason of caps.blockers; track reason) {
+          <li><mifosx-account-status [code]="reason" /></li>
+        }
+      </ul>
+    }</mat-card-content
+></mat-card>

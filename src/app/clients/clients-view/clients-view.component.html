@@ -423,6 +423,16 @@
       </a>
       <a
         mat-tab-link
+        [routerLink]="['./account-management']"
+        routerLinkActive
+        #accountManagement="routerLinkActive"
+        [active]="accountManagement.isActive"
+        *mifosxHasPermission="['READ_SAVINGS_ACCOUNT_RELATIONSHIP', 'READ_GUARANTEE_SWEEP', 'READ_PLANNED_SAVINGS']"
+      >
+        {{ 'AccountManagement.Title' | translate }}
+      </a>
+      <a
+        mat-tab-link
         [routerLink]="['./personal-data']"
         routerLinkActive
         #personalData="routerLinkActive"
