@@ -7,17 +7,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { EMPTY, Subject, of, throwError } from 'rxjs';
+import { EMPTY, Subject, BehaviorSubject, of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import * as L from 'leaflet';
 import { FormGroupService } from 'app/shared/form-dialog/form-group.service';
 
+import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertService } from 'app/core/alert/alert.service';
 import { AddressTabComponent } from './address-tab.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -131,6 +133,7 @@ describe('Office AddressTabComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             parent: {
+              paramMap: of(convertToParamMap({ officeId: '1' })),
               snapshot: {
                 paramMap: {
                   get: jest.fn(() => '1')
@@ -169,6 +172,7 @@ describe('Office AddressTabComponent', () => {
   });
 
   afterEach(() => {
+    jest.useRealTimers();
     environment.productionModeEnableRBAC = originalRbacSetting;
   });
 
@@ -184,9 +188,10 @@ describe('Office AddressTabComponent', () => {
     );
     fixture.detectChanges();
     expect(component.officeAddresses).toHaveLength(2);
-    expect(fixture.nativeElement.querySelectorAll('mat-expansion-panel')).toHaveLength(2);
+    expect(fixture.nativeElement.querySelectorAll('.location-summary')).toHaveLength(2);
     expect(fixture.nativeElement.querySelectorAll('mifosx-address-location-map')).toHaveLength(1);
-    expect(fixture.nativeElement.querySelectorAll('button')).toHaveLength(0);
+    expect(fixture.nativeElement.querySelectorAll('.address-actions button')).toHaveLength(0);
+    expect(fixture.nativeElement.querySelector('.coordinate-strip button')).not.toBeNull();
     expect(fixture.nativeElement.textContent).toContain('Karnataka');
     expect(fixture.nativeElement.textContent).toContain('India');
     component.addAddress();
@@ -203,6 +208,33 @@ describe('Office AddressTabComponent', () => {
     expect(component.officeAddresses).toHaveLength(1);
     expect(fixture.nativeElement.textContent).toContain('MG Road');
     expect(component.optionsLoadFailed).toBe(true);
+  });
+
+  it('formats only saved address parts without duplicate or empty lines', () => {
+    fixture.detectChanges();
+    expect(
+      component.getPostalLines({ ...officeAddress, addressLine1: ' MG Road ', addressLine2: '', city: 'Karnataka' })
+    ).toEqual([
+      'MG Road',
+      'Karnataka, 560001, India'
+    ]);
+    expect(component.getPostalLines({})).toEqual([]);
+  });
+
+  it('copies the original saved coordinate precision and reports clipboard failure', () => {
+    const clipboard = jest.spyOn(TestBed.inject(Clipboard), 'copy').mockReturnValue(true);
+    const alert = jest.spyOn(TestBed.inject(AlertService), 'alert');
+    const address = { latitude: '12.1234567800', longitude: '-77.1234567890' };
+    component.copyCoordinates(address);
+    expect(clipboard).toHaveBeenCalledWith('12.1234567800, -77.1234567890');
+    expect(alert).toHaveBeenCalledWith(expect.objectContaining({ message: 'errors.clipboard.copied' }));
+    clipboard.mockReturnValue(false);
+    component.copyCoordinates(address);
+    expect(alert).toHaveBeenLastCalledWith(expect.objectContaining({ message: 'errors.clipboard.copyFailed' }));
+    component.copyCoordinates({ latitude: 91, longitude: 0 });
+    expect(clipboard).toHaveBeenCalledTimes(2);
+    expect(component.getMapUrl({ latitude: 91, longitude: 0 })).toBeNull();
+    expect(component.getMapUrl({ latitude: 0, longitude: 0 })).toContain('mlat=0&mlon=0');
   });
 
   it('loads office addresses and address template options', () => {
@@ -707,6 +739,57 @@ describe('Office AddressTabComponent', () => {
     const validate = jest.spyOn(form.get('longitude'), 'updateValueAndValidity');
     form.get('latitude').setValue(1);
     expect(validate).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    'close',
+    'office change',
+    'destroy'
+  ])('cleans up postal lookups on %s', (reason: string) => {
+    jest.useFakeTimers();
+    const params = new BehaviorSubject(convertToParamMap({ officeId: '1' }));
+    (TestBed.inject(ActivatedRoute).parent as any).paramMap = params;
+    fixture.detectChanges();
+    const pending = new Subject<any>();
+    const postal = TestBed.inject(PostalCodeLookupService);
+    const lookup = jest.fn(() => pending);
+    const resolve = jest.fn(() => ({ city: 'Resolved city' }));
+    Object.assign(postal, { enabled: true, lookupWithFallback: lookup, toResolvedAddress: resolve });
+    const form = TestBed.inject(FormGroupService).createFormGroup(
+      (component as any).getAddressFormFields(officeAddress)
+    );
+    form.get('countryId').setValue(null);
+    const opened = new Subject<void>();
+    const closed = new Subject<void>();
+    dialog.open.mockReturnValue({
+      afterOpened: () => opened,
+      afterClosed: () => closed,
+      componentInstance: { form }
+    } as any);
+    component.editAddress(officeAddress);
+    opened.next();
+    form.get('postalCode').setValue('10000');
+    jest.advanceTimersByTime(600);
+    pending.next({});
+    expect(form.get('city').value).toBe('Resolved city');
+    expect((component as any).autoFilledFields.size).toBe(1);
+    form.get('postalCode').setValue('20000');
+    jest.advanceTimersByTime(600);
+    expect(pending.observed).toBe(true);
+
+    if (reason === 'close') {
+      closed.next();
+      closed.complete();
+    } else if (reason === 'office change') params.next(convertToParamMap({ officeId: '2' }));
+    else fixture.destroy();
+
+    expect(pending.observed).toBe(false);
+    expect((component as any).autoFilledFields.size).toBe(0);
+    pending.next({});
+    form.get('postalCode').setValue('30000');
+    jest.advanceTimersByTime(600);
+    expect(resolve).toHaveBeenCalledTimes(1);
+    expect(lookup).toHaveBeenCalledTimes(2);
   });
 
   it('preserves coordinates and all address fields when only the postal code changes', () => {

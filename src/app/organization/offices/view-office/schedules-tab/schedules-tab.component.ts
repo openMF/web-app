@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -36,6 +44,7 @@ import { normalizeOfficeTime, officeTimeSeconds } from './office-schedule-time';
 import { OrganizationService } from 'app/organization/organization.service';
 
 /** Custom Imports */
+import { TranslateService } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface OfficeScheduleDay {
@@ -61,6 +70,34 @@ interface OfficeScheduleWeekday extends OfficeScheduleDay {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchedulesTabComponent implements OnInit {
+  @Input() readOnly = false;
+  private translate = inject(TranslateService);
+  private configuredWeekdays = new Set<string>();
+
+  isSummaryDayConfigured(day: AbstractControl): boolean {
+    return this.configuredWeekdays.has(day.get('weekday')?.value);
+  }
+
+  getShortWeekday(day: AbstractControl): string {
+    const index = this.weekdays.findIndex((entry) => entry.weekday === day.get('weekday')?.value);
+    try {
+      return new Intl.DateTimeFormat(this.translate.currentLang || 'en-US', {
+        weekday: 'short',
+        timeZone: 'UTC'
+      }).format(new Date(Date.UTC(2024, 0, 1 + index)));
+    } catch {
+      return this.translate.instant(this.getWeekdayLabelKey(day));
+    }
+  }
+
+  getSummaryHours(day: AbstractControl): string {
+    const opening = normalizeOfficeTime(day.get('openingTime')?.value);
+    const closing = normalizeOfficeTime(day.get('closingTime')?.value);
+    return opening && closing && officeTimeSeconds(opening) < officeTimeSeconds(closing)
+      ? `${opening} – ${closing}`
+      : '';
+  }
+
   private route = inject(ActivatedRoute);
   private formBuilder: UntypedFormBuilder;
 
@@ -102,7 +139,7 @@ export class SchedulesTabComponent implements OnInit {
 
   get canEdit(): boolean {
     const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
-    return permissions.includes('ALL_FUNCTIONS') || permissions.includes('UPDATE_OFFICE');
+    return !this.readOnly && (permissions.includes('ALL_FUNCTIONS') || permissions.includes('UPDATE_OFFICE'));
   }
 
   get hasIncompleteSchedule(): boolean {
@@ -280,6 +317,7 @@ export class SchedulesTabComponent implements OnInit {
   }
 
   private setScheduleDays(scheduleDays: OfficeScheduleDay[]) {
+    this.configuredWeekdays = new Set(scheduleDays.map((day) => this.normalizeWeekday(day.weekday)));
     this.days.clear();
     this.mergeWeekdays(scheduleDays).forEach((day) => this.days.push(this.createDayForm(day)));
     this.updateEditableState();

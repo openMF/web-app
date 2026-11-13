@@ -6,104 +6,152 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.action-button {
-  width: 85%;
-  margin: 0.2rem auto;
-  padding: 0.3rem;
-  border-radius: 3px;
-  transition: all 0.3s ease;
+:host {
+  display: block;
+  min-width: 0;
+  color: var(--ds-text-1);
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  --office-accent: var(--md-sys-color-primary);
+}
+
+.office-workspace {
+  padding: 16px 24px 32px;
+  min-width: 0;
+}
+
+.office-header,
+.office-identity,
+.office-title,
+.office-metadata,
+.office-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.office-header {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.office-identity {
+  min-width: 0;
+  flex: 1 1 480px;
+}
+
+.office-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 64px;
+  height: 64px;
+  border-radius: var(--ds-radius-lg);
+  color: var(--ds-action-on-fill);
+  background: color-mix(in srgb, var(--office-accent) 64%, #102e29);
+  font-size: 24px;
+}
+
+.office-introduction {
+  min-width: 0;
+}
+
+.office-title {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 8px;
+
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
   }
 }
 
-.office-card {
-  width: 100%;
-  margin: 0.75rem auto;
-  padding: 0.5rem;
-  border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 10%) !important;
+.hierarchy-badge,
+.tab-count {
+  padding: 0 8px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
 
-  .navigation-tabs {
-    overflow: auto;
-    padding: 0.2rem 0;
+.office-metadata {
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  color: var(--ds-text-2);
+  font-size: 0.875rem;
 
-    &::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgb(0 0 0 / 20%);
-      border-radius: 4px;
-    }
-
-    .mat-tab-label {
-      min-width: 80px;
-      padding: 0 0.5rem;
-      height: 36px;
-      font-size: 0.85rem;
-    }
+  span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    overflow-wrap: anywhere;
   }
 
-  @media (width <= 768px) {
-    width: 85%;
-    padding: 0.4rem;
+  b {
+    font-weight: 400;
+    word-break: break-all;
   }
 }
 
-.container {
-  padding: 0.5rem;
+.office-actions {
+  flex-wrap: wrap;
+
+  button {
+    color: var(--ds-action-on-fill);
+    min-height: 48px;
+    border-radius: var(--ds-radius);
+  }
 }
 
-.narrow-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0.75rem;
+.navigation-tabs {
+  --mat-tab-active-label-text-color: var(--office-accent);
+  --mat-tab-active-focus-label-text-color: var(--office-accent);
+  --mat-tab-active-hover-label-text-color: var(--office-accent);
+  --mat-tab-inactive-label-text-color: var(--ds-text-2);
+  --mat-tab-active-indicator-color: var(--office-accent);
+
+  border-bottom: 1px solid var(--ds-border);
 }
 
-.extra-small {
-  max-width: 500px;
-}
-
-.compact-tab {
+.office-tab {
   min-width: auto;
-  padding: 0 12px;
-}
-
-.card-content {
-  padding: 0.5rem;
+  padding: 0 24px;
+  gap: 8px;
+  color: var(--ds-text-2);
+  font-weight: 500;
 }
 
 .tab-panel {
-  padding: 0.5rem 0;
+  display: block;
+  padding-top: 24px;
+  min-width: 0;
 }
 
-.action-bar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  max-width: 600px;
-  margin: 0 auto 0.5rem;
-  padding: 0 0.5rem;
-}
+@media (width < 768px) {
+  .office-workspace {
+    padding: 16px 8px 24px;
+  }
 
-.edit-button {
-  min-width: 110px;
-  padding: 0.4rem 1rem;
-  font-size: 0.95rem;
-}
+  .office-identity {
+    align-items: flex-start;
+    flex-basis: 100%;
+  }
 
-.tab-header-with-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0.5rem 0.5rem 0;
-  margin-bottom: 0.5rem;
-}
+  .office-icon {
+    flex-basis: 48px;
+    height: 48px;
+  }
 
-.tab-actions {
-  display: flex;
-  gap: 0.5rem;
+  .office-actions {
+    width: 100%;
+  }
+
+  .office-tab {
+    padding-inline: 16px;
+  }
 }

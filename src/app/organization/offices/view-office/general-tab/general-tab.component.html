@@ -6,49 +6,64 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="office-card-wrapper">
-  <div class="card-header">
-    <span class="card-title">
-      {{ 'labels.heading.General' | translate }}
-    </span>
-  </div>
-
-  <div class="tab-container mat-typography compact-view">
-    <div class="layout-row-wrap responsive-column compact-details condensed">
-      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
-      <div class="flex-50 right">
-        {{ officeData.parentName ? officeData.parentName : 'N/A' }}
-      </div>
-      <hr class="section-divider" />
-
-      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Opened On' | translate }}</div>
-      <div class="flex-50 right">
-        {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
-      </div>
-      <hr class="section-divider" />
-
-      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Name Decorated' | translate }}</div>
-      <div class="flex-50 right">
-        {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
-      </div>
-      <hr class="section-divider" />
-
-      <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
-      @if (officeData.externalId) {
-        <div class="flex-50 right">
-          <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+<div class="office-overview">
+  <div class="operational-column">
+    <mat-card class="overview-card">
+      <mat-card-content>
+        <div class="section-heading">
+          <h2>{{ 'labels.heading.General' | translate }}</h2>
+          <a mat-button color="primary" [routerLink]="['../edit']" *mifosxHasPermission="'UPDATE_OFFICE'">
+            {{ 'labels.buttons.Edit' | translate }}
+          </a>
         </div>
-      }
-      @if (!officeData.externalId) {
-        <div class="flex-50 right">
-          {{ 'labels.inputs.Unassigned' | translate }}
-        </div>
-      }
-    </div>
+        <dl class="details-grid">
+          <div class="detail-field">
+            <dt>{{ 'labels.inputs.Office Name' | translate }}</dt>
+            <dd>{{ officeData.name ?? ('labels.inputs.Unassigned' | translate) }}</dd>
+          </div>
+          <div class="detail-field">
+            <dt>{{ 'labels.inputs.Name Decorated' | translate }}</dt>
+            <dd>{{ officeData.nameDecorated || ('labels.inputs.Unassigned' | translate) }}</dd>
+          </div>
+          <div class="detail-field">
+            <dt>{{ 'labels.inputs.Parent Office' | translate }}</dt>
+            <dd>{{ officeData.parentName || ('labels.inputs.Unassigned' | translate) }}</dd>
+          </div>
+          <div class="detail-field">
+            <dt>{{ 'labels.inputs.Opened On' | translate }}</dt>
+            <dd>
+              {{
+                officeData.openingDate
+                  ? (officeData.openingDate | dateFormat)
+                  : ('labels.inputs.Unassigned' | translate)
+              }}
+            </dd>
+          </div>
+          <div class="detail-field">
+            <dt>{{ 'labels.inputs.External Id' | translate }}</dt>
+            <dd>
+              @if (
+                officeData.externalId !== null && officeData.externalId !== undefined && officeData.externalId !== ''
+              ) {
+                <mifosx-external-identifier [externalId]="officeData.externalId" [completed]="true" />
+              } @else {
+                {{ 'labels.inputs.Unassigned' | translate }}
+              }
+            </dd>
+          </div>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+    <ng-container *mifosxHasPermission="'READ_OFFICE'">
+      <mat-card class="overview-card"
+        ><mat-card-content> <mifosx-office-services-tab [readOnly]="true" /> </mat-card-content
+      ></mat-card>
+      <mat-card class="overview-card"
+        ><mat-card-content> <mifosx-office-schedules-tab [readOnly]="true" /> </mat-card-content
+      ></mat-card>
+    </ng-container>
   </div>
+  <mat-card class="overview-card location-card" *mifosxHasPermission="'READ_OFFICE'">
+    <mat-card-content><mifosx-office-address-tab [readOnly]="true" /></mat-card-content>
+  </mat-card>
 </div>
-
-<ng-container *mifosxHasPermission="'READ_OFFICE'">
-  <mifosx-office-address-tab [readOnly]="true" />
-  <mifosx-office-services-tab [readOnly]="true" />
-</ng-container>

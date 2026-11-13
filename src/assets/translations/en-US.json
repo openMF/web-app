@@ -838,7 +838,8 @@
     },
     "clipboard": {
       "type": "Clipboard",
-      "copied": "Copied: {{value}}"
+      "copied": "Copied: {{value}}",
+      "copyFailed": "Unable to copy coordinates."
     },
     "tenant": {
       "changed": {
@@ -1363,7 +1364,9 @@
       "Test Connection": "Test Connection",
       "Post Dividends": "Post Dividends",
       "Discount Fee Adjustment": "Discount Fee Adjustment",
-      "Adjust by Difference": "Adjust by Difference"
+      "Adjust by Difference": "Adjust by Difference",
+      "Open in map": "Open in map",
+      "Configure": "Configure"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -2392,7 +2395,8 @@
       "Configuration": "Configuration",
       "Edit Charge Amount": "Edit Charge Amount",
       "Edit Charge Date": "Edit Charge Date",
-      "Edit Guarantor": "Edit Guarantor"
+      "Edit Guarantor": "Edit Guarantor",
+      "Weekly schedule": "Weekly schedule"
     },
     "inputs": {
       "Breach Start Type": "Breach Start Type",
@@ -4490,7 +4494,8 @@
       "Resulting Amount": "Resulting Amount",
       "Override Product Interest Rate Chart": "Override Product Interest Rate Chart",
       "Nominal Annual Interest Rate": "Nominal Annual Interest Rate",
-      "Interest Rate Chart Overridden": "Interest Rate Chart Overridden"
+      "Interest Rate Chart Overridden": "Interest Rate Chart Overridden",
+      "Head Office": "Head office"
     },
     "links": {
       "Community": "Community",

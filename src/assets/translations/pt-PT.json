@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Área de transferência",
-      "copied": "Copiado: {{value}}"
+      "copied": "Copiado: {{value}}",
+      "copyFailed": "Não foi possível copiar as coordenadas."
     },
     "tenant": {
       "changed": {
@@ -1354,7 +1355,9 @@
       "Deleting": "A eliminar",
       "Inactivate": "Inativar",
       "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
-      "Adjust by Difference": "Ajustar por diferença"
+      "Adjust by Difference": "Ajustar por diferença",
+      "Open in map": "Abrir no mapa",
+      "Configure": "Configurar"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -2382,7 +2385,8 @@
       "Services": "Serviços",
       "Schedules": "Horários",
       "Reference": "Referência",
-      "Create Savings Product": "Criar produto de poupança"
+      "Create Savings Product": "Criar produto de poupança",
+      "Weekly schedule": "Horário semanal"
     },
     "inputs": {
       "Breach Start Type": "Tipo de início de violação",
@@ -4481,7 +4485,8 @@
       "Export Date": "Data de exportação",
       "Label": "Rótulo",
       "Original Amount": "Valor original",
-      "Resulting Amount": "Valor resultante"
+      "Resulting Amount": "Valor resultante",
+      "Head Office": "Sede"
     },
     "links": {
       "Community": "Comunidade",
