@@ -74,6 +74,32 @@ describe('Office SchedulesTabComponent', () => {
     component = fixture.componentInstance;
   });
 
+  it('shows seven read-only summary tiles and distinguishes missing days from closed days', () => {
+    component.readOnly = true;
+    fixture.detectChanges();
+    const tiles = fixture.nativeElement.querySelectorAll('.day-tile');
+    expect(tiles).toHaveLength(7);
+    expect(tiles[0].textContent).toContain('09:00 – 17:00');
+    expect(tiles[1].textContent).toContain('Closed');
+    expect(tiles[2].textContent).toContain('Not configured');
+    expect(fixture.nativeElement.querySelector('form')).toBeNull();
+    expect(fixture.nativeElement.querySelector('input')).toBeNull();
+    component.submit();
+    expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
+    expect(organizationService.getOfficeSchedules).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not present reversed or malformed saved hours as an open interval', () => {
+    component.readOnly = true;
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '18:00', closingTime: '09:00' }
+        ] })
+    );
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.day-tile').textContent).toContain('Not configured');
+  });
+
   it('loads office schedules into weekday rows', () => {
     fixture.detectChanges();
 

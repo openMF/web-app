@@ -36,6 +36,7 @@ import { ADDRESS_LOCATION_MAP_TILE_ATTRIBUTION, ADDRESS_LOCATION_MAP_TILE_URL } 
 export class AddressLocationMapComponent implements AfterViewInit, OnChanges, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
 
+  @Input() compact = false;
   @Input() latitude: string | number | null | undefined;
   @Input() longitude: string | number | null | undefined;
 

@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Presse-papiers",
-      "copied": "Copié : {{value}}"
+      "copied": "Copié : {{value}}",
+      "copyFailed": "Impossible de copier les coordonnées."
     },
     "tenant": {
       "changed": {
@@ -1354,7 +1355,9 @@
       "Deleting": "Suppression",
       "Inactivate": "Désactiver",
       "Discount Fee Adjustment": "Ajustement des frais de remise",
-      "Adjust by Difference": "Ajuster par différence"
+      "Adjust by Difference": "Ajuster par différence",
+      "Open in map": "Ouvrir sur la carte",
+      "Configure": "Configurer"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -2382,7 +2385,8 @@
       "Deposit Details": "Détails du dépôt",
       "Services": "Services",
       "Schedules": "Horaires",
-      "Reference": "Référence"
+      "Reference": "Référence",
+      "Weekly schedule": "Horaires hebdomadaires"
     },
     "inputs": {
       "Breach Start Type": "Type de début de manquement",
@@ -4481,7 +4485,8 @@
       "Export Date": "Date d'export",
       "Label": "Libellé",
       "Original Amount": "Montant d'origine",
-      "Resulting Amount": "Montant résultant"
+      "Resulting Amount": "Montant résultant",
+      "Head Office": "Siège social"
     },
     "links": {
       "Community": "Communauté",

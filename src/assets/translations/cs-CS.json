@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Schránka",
-      "copied": "Zkopírováno: {{value}}"
+      "copied": "Zkopírováno: {{value}}",
+      "copyFailed": "Souřadnice se nepodařilo zkopírovat."
     },
     "tenant": {
       "changed": {
@@ -1352,7 +1353,9 @@
       "Deleting": "Mazání",
       "Inactivate": "Deaktivovat",
       "Discount Fee Adjustment": "Úprava poplatku za slevu",
-      "Adjust by Difference": "Upravit o rozdíl"
+      "Adjust by Difference": "Upravit o rozdíl",
+      "Open in map": "Otevřít na mapě",
+      "Configure": "Nastavit"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -2380,7 +2383,8 @@
       "Customer and Account": "Klient a účet",
       "Deposit Details": "Podrobnosti vkladu",
       "Services": "Služby",
-      "Schedules": "Rozvrhy"
+      "Schedules": "Rozvrhy",
+      "Weekly schedule": "Týdenní rozvrh"
     },
     "inputs": {
       "Breach Start Type": "Typ začátku porušení",
@@ -4479,7 +4483,8 @@
       "Export Date": "Datum exportu",
       "Label": "Popisek",
       "Original Amount": "Původní částka",
-      "Resulting Amount": "Výsledná částka"
+      "Resulting Amount": "Výsledná částka",
+      "Head Office": "Hlavní pobočka"
     },
     "links": {
       "Community": "Společenství",

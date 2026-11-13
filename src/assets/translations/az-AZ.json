@@ -790,7 +790,8 @@
     },
     "clipboard": {
       "type": "Mübadilə buferi",
-      "copied": "Kopyalandı: {{value}}"
+      "copied": "Kopyalandı: {{value}}",
+      "copyFailed": "Koordinatları kopyalamaq mümkün olmadı."
     },
     "tenant": {
       "changed": {
@@ -1317,7 +1318,9 @@
       "Test Connection": "Bağlantını yoxla",
       "Post Dividends": "Dividendləri hesaba yaz",
       "Discount Fee Adjustment": "Endirim Haqqı Düzəlişi",
-      "Adjust by Difference": "Fərqlə düzəliş et"
+      "Adjust by Difference": "Fərqlə düzəliş et",
+      "Open in map": "Xəritədə aç",
+      "Configure": "Tənzimlə"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -2345,7 +2348,8 @@
       "Configuration": "Konfiqurasiya",
       "Edit Charge Amount": "Haqqın məbləğini redaktə et",
       "Edit Charge Date": "Haqqın tarixini redaktə et",
-      "Edit Guarantor": "Zaminin məlumatlarını redaktə et"
+      "Edit Guarantor": "Zaminin məlumatlarını redaktə et",
+      "Weekly schedule": "Həftəlik cədvəl"
     },
     "inputs": {
       "Breach Start Type": "Pozuntunun başlanğıc növü",
@@ -4438,7 +4442,8 @@
       "Export Date": "İxrac tarixi",
       "Label": "Etiket",
       "Original Amount": "İlkin məbləğ",
-      "Resulting Amount": "Nəticə məbləği"
+      "Resulting Amount": "Nəticə məbləği",
+      "Head Office": "Baş ofis"
     },
     "links": {
       "Community": "İcma",

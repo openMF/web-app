@@ -7,12 +7,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faTrash, faExchange } from '@fortawesome/free-solid-svg-icons';
 import { of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
@@ -80,6 +80,7 @@ describe('Office ServicesTabComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             parent: {
+              paramMap: of(convertToParamMap({ officeId: '1' })),
               snapshot: {
                 paramMap: {
                   get: jest.fn(() => '1')
@@ -95,7 +96,7 @@ describe('Office ServicesTabComponent', () => {
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faPlus, faEdit, faTrash);
+    TestBed.inject(FaIconLibrary).addIcons(faPlus, faEdit, faTrash, faExchange);
     fixture = TestBed.createComponent(ServicesTabComponent);
     component = fixture.componentInstance;
   });
@@ -110,6 +111,29 @@ describe('Office ServicesTabComponent', () => {
     component.editService(officeService);
     component.deleteService(officeService);
     expect(dialog.open).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    '9-5',
+    '09:00-17:00, 18:00-20:00',
+    '22:00-06:00',
+    '24:00-25:00',
+    '09:60-17:00',
+    '',
+    null
+  ])('keeps unsupported service hours as text without a timeline: %s', (value) => {
+    expect(component.getDailyInterval(value)).toBeNull();
+  });
+
+  it('renders a daily timeline only for a single explicit increasing interval', () => {
+    const interval = component.getDailyInterval('09:00 – 17:30');
+    expect(interval.start).toBeCloseTo(37.5);
+    expect(interval.width).toBeCloseTo(35.4166667);
+    component.readOnly = true;
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.daily-timeline')).not.toBeNull();
+    expect(organizationService.getOfficeServices).toHaveBeenCalledTimes(1);
+    expect(organizationService.updateOfficeService).not.toHaveBeenCalled();
   });
 
   it('loads and renders office services', () => {
