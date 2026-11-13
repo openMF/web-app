@@ -38,7 +38,11 @@ const moneyFields = [
 @Injectable({ providedIn: 'root' })
 export class AccountManagementApi {
   private readonly http = inject(HttpClient);
-  get<T>(url: string, parameters: Record<string, string | number> = {}): Observable<T> {
+  get<T>(
+    url: string,
+    parameters: Record<string, string | number> = {},
+    exactFields: readonly string[] = []
+  ): Observable<T> {
     // Shared safe error rendering is narrowly scoped in ErrorHandlerInterceptor; auth stays intercepted.
     return this.http
       .get(url, {
@@ -46,7 +50,14 @@ export class AccountManagementApi {
         context: new HttpContext().set(ACCOUNT_MANAGEMENT_REQUEST, true),
         params: new HttpParams({ fromObject: parameters })
       })
-      .pipe(map((text) => parseExactJson<T>(text, moneyFields)));
+      .pipe(
+        map((text) =>
+          parseExactJson<T>(text, [
+            ...moneyFields,
+            ...exactFields
+          ])
+        )
+      );
   }
   put<T>(url: string, body: object | string): Observable<T> {
     return this.http

@@ -1,0 +1,29 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+mat-expansion-panel {
+  margin-block: 8px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  button {
+    height: auto;
+    min-height: 48px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+mat-panel-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

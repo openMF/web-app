@@ -72,7 +72,9 @@ src/environments/.env.ts
 /playwright/.auth/
 src/environments/.env.ts
 
-docs/
+docs/*
+!docs/WEB-1350-final-integration.md
+!docs/WEB-1350-FE07-review.md
 scripts/
 
 # Scaffold documents shared across openMF repositories: keep them as provided
