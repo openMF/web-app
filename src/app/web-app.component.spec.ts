@@ -20,6 +20,7 @@ import { ThemeStorageService } from 'app/shared/theme-picker/theme-storage.servi
 import { Dates } from 'app/core/utils/dates';
 import { IdleTimeoutService } from 'app/home/timeout-dialog/idle-timeout.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { DocumentLanguageService } from 'app/core/i18n/document-language.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 import { ThemingService } from 'app/shared/theme-toggle/theming.service';
@@ -75,6 +76,10 @@ const mockDates = { formatDate: jest.fn(() => '14 October 2026') } as any;
 const mockIdle = { start: jest.fn(), stop: jest.fn(), $onSessionTimeout: sessionTimeout$ } as any;
 const mockMatDialog = { open: mockDialogOpen } as any;
 const mockDocumentationLinks = { open: jest.fn() } as any;
+const mockDocumentLanguageService = {
+  init: jest.fn(),
+  setDocumentLanguage: jest.fn()
+};
 const mockThemingService = {
   theme: of(''),
   setInitialDarkMode: jest.fn(),
@@ -97,6 +102,7 @@ const testingModuleMetadata = {
     { provide: SettingsService, useValue: mockSettingsService },
     { provide: ThemingService, useValue: mockThemingService },
     { provide: DocumentationLinksService, useValue: mockDocumentationLinks },
+    { provide: DocumentLanguageService, useValue: mockDocumentLanguageService },
     { provide: MatDialog, useValue: mockMatDialog }
   ],
   declarations: [WebAppComponent],
@@ -180,5 +186,9 @@ describe('WebAppComponent — logout confirmation gate', () => {
     expect(component.logout).toHaveBeenCalledTimes(1);
 
     jest.useRealTimers();
+  });
+
+  it('initializes document language synchronization on startup', () => {
+    expect(mockDocumentLanguageService.init).toHaveBeenCalled();
   });
 });
