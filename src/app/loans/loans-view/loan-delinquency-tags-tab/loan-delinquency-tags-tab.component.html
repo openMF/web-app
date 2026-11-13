@@ -521,7 +521,7 @@
                 <tr>
                   <td>{{ item.classification }}</td>
                   <td class="num-col">
-                    <span class="num-cell">{{ item.minimumAgeDays | formatNumber }}</span>
+                    <span class="num-cell">{{ item.minimumAgeDays | formatNumber: '' : 0 }}</span>
                   </td>
                   <td class="num-col">
                     <span class="num-cell">

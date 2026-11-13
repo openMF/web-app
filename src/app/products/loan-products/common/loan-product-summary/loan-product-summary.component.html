@@ -445,7 +445,7 @@
     @if (loanProductService.isWorkingCapital) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Net Present Value day count' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.npvDayCount | formatNumber }}</span>
+        <span class="flex-60">{{ loanProduct.npvDayCount | formatNumber: '' : 0 }}</span>
       </div>
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Payment Allocation Transactions' | translate }}:</span>
@@ -606,7 +606,7 @@
       @if (loanProduct.delinquencyGraceDays || loanProduct.delinquencyGraceDays === 0) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber }}</span>
+          <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber: '' : 0 }}</span>
         </div>
       }
       @let delinquencyStartTypeOption =

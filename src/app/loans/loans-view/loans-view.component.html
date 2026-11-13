@@ -119,7 +119,7 @@
                     @if (loanDetailsData.delinquent && loanDetailsData.delinquent.pastDueDays > 0) {
                       <tr>
                         <td>{{ 'labels.inputs.Past Due Days' | translate }} :</td>
-                        <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber }}</td>
+                        <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber: '' : 0 }}</td>
                       </tr>
                     }
                     @if (
@@ -129,7 +129,7 @@
                     ) {
                       <tr>
                         <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
-                        <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber }}</td>
+                        <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber: '' : 0 }}</td>
                       </tr>
                     }
                   </tbody>
@@ -154,13 +154,13 @@
                     @if (loanDetailsData.delinquent.pastDueDays > 0) {
                       <tr>
                         <td>{{ 'labels.inputs.Past Due Days' | translate }} :</td>
-                        <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber }}</td>
+                        <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber: '' : 0 }}</td>
                       </tr>
                     }
                     @if (loanDetailsData.delinquent.delinquentDays > 0) {
                       <tr>
                         <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
-                        <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber }}</td>
+                        <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber: '' : 0 }}</td>
                       </tr>
                     }
                   </tbody>
