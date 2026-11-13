@@ -78,3 +78,25 @@ describe('LoanProducts.buildPayload', () => {
     });
   });
 });
+
+describe('LoanProducts.supportsDownPaymentCharges', () => {
+  it('allows down payment fees on a Progressive schedule with down payment enabled', () => {
+    expect(LoanProducts.supportsDownPaymentCharges(true, 'PROGRESSIVE')).toBe(true);
+  });
+
+  it('accepts the display label the wizard keeps for the schedule type', () => {
+    expect(LoanProducts.supportsDownPaymentCharges(true, 'Progressive')).toBe(true);
+  });
+
+  it('rejects a Cumulative schedule', () => {
+    expect(LoanProducts.supportsDownPaymentCharges(true, 'CUMULATIVE')).toBe(false);
+  });
+
+  it('rejects a product without down payment', () => {
+    expect(LoanProducts.supportsDownPaymentCharges(false, 'PROGRESSIVE')).toBe(false);
+  });
+
+  it('rejects missing settings', () => {
+    expect(LoanProducts.supportsDownPaymentCharges(undefined, undefined)).toBe(false);
+  });
+});

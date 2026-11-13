@@ -15,6 +15,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
 
 /**
  * Create Add Loan Charge component.
@@ -85,7 +86,7 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       .subscribe((chargeId) => {
         const chargeDetails = this.loanChargeOptions.find((option) => option.id === chargeId);
         if (chargeDetails) {
-          if (chargeDetails.chargeTimeType.id === 2) {
+          if (chargeDetails.chargeTimeType.id === 2 || isDownPaymentCharge(chargeDetails)) {
             this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
           } else {
             this.loanChargeForm.removeControl('dueDate');

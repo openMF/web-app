@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -44,6 +44,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanCharge } from 'app/loans/models/loan-charge.model';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
+import { LoanProducts } from 'app/products/loan-products/loan-products';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -80,6 +82,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
@@ -178,6 +181,14 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
           (charge: any) => charge.chargePaymentMode?.value != 'Account transfer'
         );
       }
+      if (
+        !LoanProducts.supportsDownPaymentCharges(
+          this.loansAccountProductTemplate.product?.enableDownPayment,
+          this.loansAccountProductTemplate.loanScheduleType?.code
+        )
+      ) {
+        this.chargeData = this.chargeData.filter((charge: any) => !isDownPaymentCharge(charge));
+      }
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
@@ -249,6 +260,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -294,6 +306,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         }
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -324,6 +337,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -342,6 +356,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
         this.pristine = false;
+        this.cdr.markForCheck();
       }
     });
   }

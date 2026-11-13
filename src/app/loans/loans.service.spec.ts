@@ -7,7 +7,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
@@ -214,5 +214,57 @@ describe('LoansService - buildLoanRequestPayload with the semi-monthly frequency
     expect(payload).not.toHaveProperty('calendarId');
     expect(payload).not.toHaveProperty('syncRepaymentsWithMeeting');
     expect(payload.firstRepaymentDayOfMonth).toBe(10);
+  });
+});
+
+describe('LoansService.hasOutstandingDownPaymentFee', () => {
+  let service: LoansService;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LoansService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SettingsService, useValue: {} },
+        { provide: Dates, useValue: {} }
+      ]
+    });
+    service = TestBed.inject(LoansService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => httpMock.verify());
+
+  function resolve(charges: Parameters<TestRequest['flush']>[0]): boolean | undefined {
+    let result: boolean | undefined;
+    service.hasOutstandingDownPaymentFee('7').subscribe((value) => (result = value));
+    httpMock.expectOne('/loans/7/charges').flush(charges);
+    return result;
+  }
+
+  it('is true for an unpaid down payment fee', () => {
+    expect(resolve([{ chargeTimeType: { id: 17 }, paid: false, waived: false }])).toBe(true);
+  });
+
+  it('ignores paid and waived down payment fees', () => {
+    expect(
+      resolve([
+        { chargeTimeType: { id: 17 }, paid: true, waived: false },
+        { chargeTimeType: { id: 17 }, paid: false, waived: true }
+      ])
+    ).toBe(false);
+  });
+
+  it('ignores other unpaid charges, such as a disbursement fee', () => {
+    expect(resolve([{ chargeTimeType: { id: 1 }, paid: false, waived: false }])).toBe(false);
+  });
+
+  it('is false when the charges cannot be loaded', () => {
+    let result: boolean | undefined;
+    service.hasOutstandingDownPaymentFee('7').subscribe((value) => (result = value));
+    httpMock.expectOne('/loans/7/charges').flush(null, { status: 500, statusText: 'Server Error' });
+    expect(result).toBe(false);
   });
 });
