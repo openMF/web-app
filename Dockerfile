@@ -36,6 +36,9 @@ RUN sh -c "ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS"
 ###############
 FROM $NGINX_IMAGE
 
+# PDF.js loads its bundled worker as an ES module; nginx otherwise serves .mjs as octet-stream.
+RUN sed -i 's#application/javascript[[:space:]]*js;#application/javascript js mjs;#' /etc/nginx/mime.types
+
 COPY --from=builder /dist/browser /usr/share/nginx/html
 
 EXPOSE 80
