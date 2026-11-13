@@ -20,6 +20,11 @@ import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS,
+  DOWN_PAYMENT_CHARGE_TIME_TYPE_ID,
+  isDownPaymentPercentageCharge
+} from 'app/products/charges/models/charge.model';
 
 /**
  * Edit Charge component.
@@ -147,6 +152,10 @@ export class EditChargeComponent implements OnInit {
             feeFrequency: this.chargeData.feeFrequency.id
           });
         }
+        this.applyDownPaymentRules(this.chargeData.chargeTimeType.id);
+        this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType: number) => {
+          this.applyDownPaymentRules(chargeTimeType);
+        });
         break;
       }
       case 'Savings': {
@@ -201,6 +210,38 @@ export class EditChargeComponent implements OnInit {
       );
     } else {
       this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '' }));
+    }
+  }
+
+  /** Charge calculation types allowed for the selected charge time type. */
+  get availableChargeCalculationTypes(): any[] {
+    if (this.chargeForm.get('chargeTimeType').value !== DOWN_PAYMENT_CHARGE_TIME_TYPE_ID) {
+      return this.chargeCalculationTypeOptions;
+    }
+    return this.chargeCalculationTypeOptions.filter((calculationType: any) =>
+      DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS.includes(calculationType.id)
+    );
+  }
+
+  get showDownPaymentPercentageHint(): boolean {
+    return isDownPaymentPercentageCharge(
+      this.chargeForm.get('chargeTimeType').value,
+      this.chargeForm.get('chargeCalculationType').value
+    );
+  }
+
+  /** A down payment fee cannot be a penalty and supports only Flat and % Amount. */
+  private applyDownPaymentRules(chargeTimeType: number) {
+    const penalty = this.chargeForm.get('penalty');
+    if (chargeTimeType === DOWN_PAYMENT_CHARGE_TIME_TYPE_ID) {
+      penalty.setValue(false);
+      penalty.disable();
+      const chargeCalculationType = this.chargeForm.get('chargeCalculationType');
+      if (!DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS.includes(chargeCalculationType.value)) {
+        chargeCalculationType.reset();
+      }
+    } else {
+      penalty.enable();
     }
   }
 

@@ -8,6 +8,7 @@
 
 import { ChangeDetectionStrategy, Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Observable, catchError, of, startWith } from 'rxjs';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -42,6 +43,16 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
   currency: Currency;
   /** Prevents duplicate submissions */
   isSubmitting = false;
+  /**
+   * `null` while the down payment lookup is pending; submission waits for it. A failed lookup offers
+   * the option: Fineract ignores `skipDownPaymentFee` on a disbursement without a down payment fee.
+   */
+  readonly showSkipDownPaymentFee$: Observable<boolean | null> = this.loanService
+    .isDownPaymentEnabled(this.loanId)
+    .pipe(
+      catchError(() => of(true)),
+      startWith(null)
+    );
 
   constructor() {
     super();
@@ -81,7 +92,8 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
         this.dataObject.amount,
         Validators.required
       ],
-      note: ['']
+      note: [''],
+      skipDownPaymentFee: [false]
     });
     if (this.dataObject.fixedEmiAmount) {
       this.disbursementForm.addControl(
@@ -117,6 +129,9 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
+    if (!data['skipDownPaymentFee']) {
+      delete data['skipDownPaymentFee'];
+    }
     this.loanService.loanActionButtons(this.loanId, 'disbursetosavings', data).subscribe({
       next: (response: any) => {
         this.router.navigate(['../../general'], {

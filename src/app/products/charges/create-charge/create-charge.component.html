@@ -83,6 +83,11 @@
                     </mat-option>
                   }
                 </mat-select>
+                @if (showDownPaymentPercentageHint) {
+                  <mat-hint>{{
+                    'labels.text.The percentage is based on the down payment amount' | translate
+                  }}</mat-hint>
+                }
                 @if (chargeForm.controls.chargeCalculationType.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Charge Calculation Type' | translate }} {{ 'labels.commons.is' | translate }}

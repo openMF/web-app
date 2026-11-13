@@ -832,6 +832,18 @@ export class LoansService {
   }
 
   /**
+   * Whether the next disbursement can create a down payment fee.
+   * Uses the loan's `enableDownPayment` flag, not GET /charges: after `skipDownPaymentFee` the previous
+   * fees are inactive and that endpoint omits them, but Fineract still takes charge definitions from all
+   * loan charges (including inactive) and creates a fee for the next disbursement.
+   * @param {string} loanId Loan Id
+   * @returns {Observable<boolean>} Whether down payment is enabled on the loan
+   */
+  isDownPaymentEnabled(loanId: string): Observable<boolean> {
+    return this.getLoanAccountAssociationDetails(loanId).pipe(map((loan: any) => loan?.enableDownPayment === true));
+  }
+
+  /**
    * @param {string} accountId loans account Id
    * @param {string} chargeId loans charge Id
    * @returns {Observable<any>}

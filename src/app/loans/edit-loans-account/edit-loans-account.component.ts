@@ -58,7 +58,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  @ViewChild(LoansAccountChargesStepComponent)
   loansAccountChargesStep: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
@@ -161,7 +161,7 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
         (!this.loansAccountDetailsForm.pristine ||
           !this.loansAccountTermsForm.pristine ||
           !this.loansAccountTermsStep.pristine ||
-          !this.loansAccountChargesStep?.pristine)
+          this.loansAccountChargesStep?.pristine === false)
       );
     } else if (this.loanProductService.isWorkingCapital) {
       return (

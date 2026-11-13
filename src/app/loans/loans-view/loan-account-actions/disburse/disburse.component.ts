@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { Observable, catchError, of, startWith } from 'rxjs';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
@@ -56,6 +57,14 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   disbursementLoanForm!: UntypedFormGroup;
   currency!: Currency;
   readonly maxExternalIdLength = 100;
+  /**
+   * `null` while the down payment lookup is pending; submission waits for it. A failed lookup offers
+   * the option: Fineract ignores `skipDownPaymentFee` on a disbursement without a down payment fee.
+   */
+  readonly showSkipDownPaymentFee$: Observable<boolean | null> = (this.isLoanProduct
+    ? this.loanService.isDownPaymentEnabled(this.loanId).pipe(catchError(() => of(true)))
+    : of(false)
+  ).pipe(startWith(null));
 
   constructor() {
     super();
@@ -89,7 +98,8 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       ],
       externalId: '',
       paymentTypeId: '',
-      note: ''
+      note: '',
+      skipDownPaymentFee: [false]
     });
     if (this.isWorkingCapital) {
       this.disbursementLoanForm.addControl(
@@ -165,6 +175,9 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       locale
     };
     payload['transactionAmount'] = payload['transactionAmount'] * 1;
+    if (!payload['skipDownPaymentFee']) {
+      delete payload['skipDownPaymentFee'];
+    }
     if (this.isWorkingCapital) {
       const paymentDetails: Record<string, any> = {};
       if (payload['paymentTypeId']) {
