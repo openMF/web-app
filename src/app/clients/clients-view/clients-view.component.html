@@ -427,7 +427,12 @@
         routerLinkActive
         #accountManagement="routerLinkActive"
         [active]="accountManagement.isActive"
-        *mifosxHasPermission="['READ_SAVINGS_ACCOUNT_RELATIONSHIP', 'READ_GUARANTEE_SWEEP', 'READ_PLANNED_SAVINGS']"
+        *mifosxHasPermission="[
+          'READ_SAVINGS_ACCOUNT_RELATIONSHIP',
+          'READ_GUARANTEE_SWEEP',
+          'READ_PLANNED_SAVINGS',
+          'READ_CONSOLIDATED_ISR_ELIGIBILITY'
+        ]"
       >
         {{ 'AccountManagement.Title' | translate }}
       </a>

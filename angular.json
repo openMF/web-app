@@ -37,6 +37,26 @@
               "src/llms.txt",
               "src/assets",
               {
+                "glob": "pdf.worker.min.mjs",
+                "input": "node_modules/pdfjs-dist/build",
+                "output": "assets/pdfjs"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/pdfjs-dist/standard_fonts",
+                "output": "assets/pdfjs/standard_fonts"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/pdfjs-dist/cmaps",
+                "output": "assets/pdfjs/cmaps"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/pdfjs-dist/wasm",
+                "output": "assets/pdfjs/wasm"
+              },
+              {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
                 "output": "assets/leaflet"

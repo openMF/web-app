@@ -29,6 +29,11 @@
           ><ng-template matTabContent><mifosx-savings-pockets [clientId]="clientId" /></ng-template
         ></mat-tab>
       }
+      @if (access.has('READ_CONSOLIDATED_ISR_ELIGIBILITY')) {
+        <mat-tab [label]="'ConsolidatedIsr.Title' | translate">
+          <ng-template matTabContent><mifosx-consolidated-isr [clientId]="clientId" /></ng-template>
+        </mat-tab>
+      }
     </mat-tab-group>
   } @empty {
     <p role="alert">

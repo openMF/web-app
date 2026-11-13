@@ -18,6 +18,7 @@ import { MainAccountComponent } from './main-account.component';
 import { GuaranteedAccountsComponent } from './guaranteed-accounts.component';
 import { PlannedMainAccountComponent } from './planned-main-account.component';
 import { SavingsPocketsComponent } from './savings-pockets.component';
+import { ConsolidatedIsrComponent } from './consolidated-isr.component';
 import { positiveId } from './account-management.state';
 
 @Component({
@@ -28,7 +29,8 @@ import { positiveId } from './account-management.state';
     MainAccountComponent,
     GuaranteedAccountsComponent,
     PlannedMainAccountComponent,
-    SavingsPocketsComponent
+    SavingsPocketsComponent,
+    ConsolidatedIsrComponent
   ],
   templateUrl: './account-management.component.html',
   styleUrls: ['./account-management.component.scss'],

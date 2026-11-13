@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -33,6 +34,7 @@ import { ChartComponent } from './chart/chart.component';
 import { PentahoComponent } from './pentaho/pentaho.component';
 import { BirtComponent } from './birt/birt.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { CLIENT_REPORT_ERROR_KEYS, isClientPdfReport } from './client-pdf-reports';
 
 /**
  * Run report component.
@@ -78,7 +80,7 @@ export class RunReportComponent implements OnInit {
   dataObject: any;
 
   /** Initializes new form group eportForm */
-  reportForm = new FormGroup({});
+  reportForm: FormGroup<Record<string, FormControl>> = new FormGroup({});
   /** Static Form control for decimal places in output */
   decimalChoice = new FormControl();
 
@@ -111,6 +113,7 @@ export class RunReportComponent implements OnInit {
   ];
 
   private dateRangeValidatorApplied = false;
+  clientReportError: string | null = null;
 
   /**
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
@@ -130,7 +133,26 @@ export class RunReportComponent implements OnInit {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
-        this.paramData = data.reportParameters;
+        this.report.name = this.route.snapshot.params['name'];
+        this.clientReportError = null;
+        this.reportForm = new FormGroup({});
+        this.parentParameters = [];
+        this.dateRangeValidatorApplied = false;
+        // Resolver data must remain unchanged for other reports sharing DefaultClient.
+        this.paramData = data.reportParameters.map((parameter) => ({
+          ...parameter,
+          selectOptions: [...(parameter.selectOptions ?? [])],
+          childParameters: [] as ReportParameter[]
+        }));
+        this.paramData
+          .filter((parameter) => this.isClientIdParameter(parameter))
+          .forEach((parameter) => {
+            parameter.displayType = 'text';
+            parameter.label = 'Client number';
+            parameter.parentParameterName = null;
+            parameter.inputName = 'R_clientId';
+            parameter.pentahoName = 'R_clientId';
+          });
         this.createRunReportForm();
         if (this.isTableReport()) {
           const amazonS3Config = data.configurations.globalConfiguration.find(
@@ -166,6 +188,14 @@ export class RunReportComponent implements OnInit {
     return this.report.type === 'BIRT';
   }
 
+  isClientReport(): boolean {
+    return isClientPdfReport(this.report);
+  }
+
+  isClientIdParameter(parameter: ReportParameter): boolean {
+    return this.isClientReport() && (parameter.name === 'DefaultClient' || parameter.variable === 'clientId');
+  }
+
   /**
    * Creates and sets the run report form.
    */
@@ -181,7 +211,18 @@ export class RunReportComponent implements OnInit {
     this.paramData.forEach((param: ReportParameter) => {
       if (!param.parentParameterName) {
         // Non Child Parameter
-        this.reportForm.addControl(param.name, new FormControl('', Validators.required));
+        const control = new FormControl('', Validators.required);
+        if (this.isClientIdParameter(param)) {
+          control.addValidators([
+            Validators.pattern(/^(?=.*[1-9])[0-9]+$/),
+            () => (this.clientReportError ? { birtValidation: true } : null)
+          ]);
+          control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            this.clientReportError = null;
+            control.updateValueAndValidity({ emitEvent: false });
+          });
+        }
+        this.reportForm.addControl(param.name, control);
         if (param.displayType === 'select') {
           this.fetchSelectOptions(param, param.name);
         }
@@ -200,8 +241,13 @@ export class RunReportComponent implements OnInit {
       this.mapPentahoParams();
     }
     if (this.isBirtReport()) {
-      this.reportForm.addControl('outputType', new FormControl('', Validators.required));
-      this.outputTypeOptions = this.buildOutputTypeOptions();
+      this.reportForm.addControl(
+        'outputType',
+        new FormControl(this.isClientReport() ? 'PDF' : '', Validators.required)
+      );
+      this.outputTypeOptions = this.buildOutputTypeOptions().filter(
+        (option) => !this.isClientReport() || option.value === 'PDF'
+      );
       this.mapBirtParams();
     }
     if (this.exportToS3Allowed) {
@@ -228,6 +274,9 @@ export class RunReportComponent implements OnInit {
   }
 
   setOutputType(value: string): void {
+    if (this.isClientReport() && value !== 'PDF') {
+      return;
+    }
     const control = this.reportForm.get('outputType');
     if (!control) {
       return;
@@ -280,16 +329,53 @@ export class RunReportComponent implements OnInit {
    * Maps BIRT specific names to form-control names.
    */
   mapBirtParams() {
-    this.reportsService.getBirtParams(this.report.id).subscribe((data: any) => {
-      data.forEach((entry: any) => {
-        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
-        if (param && entry.reportParameterName) {
-          param.pentahoName = `R_${entry.reportParameterName}`;
-        } else if (!param) {
-          console.warn('BIRT parameter not found in paramData:', entry.parameterName);
-        }
+    const parameters = this.paramData;
+    const clientParameters = parameters.filter((parameter) => this.isClientIdParameter(parameter));
+    this.reportsService
+      .getBirtParams(this.report.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: any) => {
+        data.forEach((entry: any) => {
+          const param: ReportParameter = parameters.find((_entry: any) => _entry.name === entry.parameterName);
+          if (param && entry.reportParameterName) {
+            param.pentahoName = `R_${entry.reportParameterName}`;
+          } else if (!param) {
+            console.warn('BIRT parameter not found in paramData:', entry.parameterName);
+          }
+        });
+        clientParameters.forEach((parameter) => {
+          parameter.pentahoName = 'R_clientId';
+        });
+        this.cdr.markForCheck();
       });
-    });
+  }
+
+  /** Recover the form after a failed binary response; keep validation through form reattachment. */
+  async handleBirtError(response: HttpErrorResponse): Promise<void> {
+    this.isCollapsed = false;
+    this.hideBirt = true;
+    let body = response.error;
+    try {
+      if (body instanceof ArrayBuffer || Object.prototype.toString.call(body) === '[object ArrayBuffer]') {
+        body = JSON.parse(new TextDecoder().decode(body));
+      } else if (body instanceof Blob) {
+        body = JSON.parse(await body.text());
+      } else if (typeof body === 'string') {
+        body = JSON.parse(body);
+      }
+    } catch {
+      body = null;
+    }
+    const code = body?.errors?.[0]?.userMessageGlobalisationCode ?? body?.userMessageGlobalisationCode;
+    const key = CLIENT_REPORT_ERROR_KEYS[code];
+    const parameter = this.paramData.find((entry) => this.isClientIdParameter(entry));
+    if (response.status === 400 && key && parameter) {
+      this.clientReportError = this.translateService.instant(key);
+      const control = this.reportForm.get(parameter.name);
+      control?.updateValueAndValidity({ emitEvent: false });
+      control?.markAsTouched();
+    }
+    this.cdr.markForCheck();
   }
 
   addDateRangeValidator(): void {
@@ -458,11 +544,18 @@ export class RunReportComponent implements OnInit {
    * Core run report functionality.
    */
   run() {
+    if (this.reportForm.invalid) {
+      this.reportForm.markAllAsTouched();
+      return;
+    }
     this.isCollapsed = true;
     const userResponseValues = this.formatUserResponse(this.reportForm.value);
     let formData = {
       ...userResponseValues
     };
+    if (this.isClientReport()) {
+      formData['output-type'] = 'PDF';
+    }
     if (this.reportUsesDates) {
       let dateFormat = this.settingsService.dateFormat;
       if (this.isTableReport()) {

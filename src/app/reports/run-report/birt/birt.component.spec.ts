@@ -8,13 +8,20 @@
 
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@angular/common/http/testing';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { BirtComponent } from './birt.component';
+import { PdfPreviewComponent } from './pdf-preview/pdf-preview.component';
+
+@Component({ selector: 'mifosx-birt-pdf-preview', template: '' })
+class PdfPreviewStubComponent {
+  @Input() data: ArrayBuffer;
+}
 
 /**
  * Hosts the component rather than creating it directly.
@@ -68,7 +75,12 @@ describe('BirtComponent', () => {
           useValue: { tenantIdentifier: 'acme', language: { code: 'en' }, dateFormat: 'dd MMMM yyyy' }
         }
       ]
-    }).compileComponents();
+    })
+      .overrideComponent(BirtComponent, {
+        remove: { imports: [PdfPreviewComponent] },
+        add: { imports: [PdfPreviewStubComponent] }
+      })
+      .compileComponents();
 
     httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(HostComponent);
@@ -116,22 +128,21 @@ describe('BirtComponent', () => {
     expect(sandbox).not.toContain('allow-same-origin');
   });
 
-  it('hands a PDF to the browser viewer rather than rendering it as markup', () => {
+  it('hands PDF bytes to the compiled preview and offers a PDF download', () => {
     run('PDF').flush(documentOf('%PDF-1.4'), { headers: { 'Content-Type': 'application/pdf' } });
     fixture.detectChanges();
 
-    const frame = query('iframe') as HTMLIFrameElement;
-    expect(frame.getAttribute('src')).toBe('blob:report/1');
-    expect(frame.srcdoc).toBe('');
+    expect(query('iframe')).toBeNull();
+    expect(query('mifosx-birt-pdf-preview')).not.toBeNull();
+    expect(query('a')?.getAttribute('href')).toBe('blob:report/1');
+    expect(query('a')?.getAttribute('download')).toBe('Active Loans.pdf');
   });
 
-  it('leaves the PDF frame unsandboxed, which is the only way Chrome will render it', () => {
-    // Chrome refuses to run its PDF viewer inside a sandboxed frame and blocks the page instead.
-    // The blob's pinned application/pdf type is what keeps that safe, so assert it alongside.
+  it('pins the PDF download type even if the server mislabels the response', () => {
     run('PDF').flush(documentOf('%PDF-1.4'), { headers: { 'Content-Type': 'text/html' } });
     fixture.detectChanges();
 
-    expect(query('iframe')?.hasAttribute('sandbox')).toBe(false);
+    expect(query('iframe')).toBeNull();
     expect(createObjectURL).toHaveBeenCalledWith(expect.objectContaining({ type: 'application/pdf' }));
   });
 
@@ -172,7 +183,7 @@ describe('BirtComponent', () => {
     fixture.detectChanges();
 
     expect(revokeObjectURL).toHaveBeenCalledWith('blob:report/1');
-    expect((query('iframe') as HTMLIFrameElement).getAttribute('src')).toBe('blob:report/2');
+    expect(query('a')?.getAttribute('href')).toBe('blob:report/2');
   });
 
   it('releases the document when the preview goes away', () => {
@@ -193,5 +204,19 @@ describe('BirtComponent', () => {
     expect(query('iframe')).toBeNull();
     expect(query('a')).toBeNull();
     expect(createObjectURL).not.toHaveBeenCalled();
+  });
+
+  it('emits the binary HTTP error so the parent can restore and validate the form', () => {
+    jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    fixture.componentInstance.dataObject = { report: { name: 'Active Loans' }, formData: { 'output-type': 'PDF' } };
+    fixture.detectChanges();
+    const component = fixture.debugElement.query(By.directive(BirtComponent)).componentInstance as BirtComponent;
+    const emitted = jest.fn();
+    component.reportError.subscribe(emitted);
+    httpMock
+      .expectOne((request) => request.url === '/runreports/Active Loans')
+      .flush(documentOf('{"errors":[]}'), { status: 400, statusText: 'Bad Request' });
+    expect(emitted).toHaveBeenCalledWith(expect.objectContaining({ status: 400 }));
+    expect(query('mifosx-birt-pdf-preview')).toBeNull();
   });
 });

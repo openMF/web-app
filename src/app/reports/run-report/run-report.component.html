@@ -60,7 +60,18 @@
                       {{ param.label | translateKey: 'inputs' }}<span class="required" aria-hidden="true">*</span>
                     </label>
                     <mat-form-field appearance="outline" class="rr-field">
-                      <input matInput required [formControlName]="param.name" />
+                      <input
+                        matInput
+                        required
+                        [formControlName]="param.name"
+                        [attr.inputmode]="isClientIdParameter(param) ? 'numeric' : null"
+                        [attr.aria-label]="param.label | translateKey: 'inputs'"
+                      />
+                      @if (isClientIdParameter(param) && reportForm.controls[param.name].hasError('birtValidation')) {
+                        <mat-error>{{ clientReportError }}</mat-error>
+                      } @else if (isClientIdParameter(param) && reportForm.controls[param.name].hasError('pattern')) {
+                        <mat-error>{{ 'reports.client.invalid' | translate }}</mat-error>
+                      }
                       @if (reportForm.controls[param.name].hasError('required')) {
                         <mat-error>
                           {{ param.label | translateKey: 'inputs' }} {{ 'labels.commons.is' | translate }}
@@ -132,22 +143,24 @@
 
         <div class="form-section">
           <div class="form-grid">
-            <div class="field">
-              <label class="field-label">{{ 'labels.inputs.Decimal Places' | translate }}</label>
-              <div class="segmented" role="radiogroup">
-                @for (d of decimalOptions; track d) {
-                  <button
-                    type="button"
-                    role="radio"
-                    [attr.aria-checked]="decimalChoice.value === d"
-                    [class.active]="decimalChoice.value === d"
-                    (click)="setDecimal(d)"
-                  >
-                    {{ d }}
-                  </button>
-                }
+            @if (!isClientReport()) {
+              <div class="field">
+                <label class="field-label">{{ 'labels.inputs.Decimal Places' | translate }}</label>
+                <div class="segmented" role="radiogroup">
+                  @for (d of decimalOptions; track d) {
+                    <button
+                      type="button"
+                      role="radio"
+                      [attr.aria-checked]="decimalChoice.value === d"
+                      [class.active]="decimalChoice.value === d"
+                      (click)="setDecimal(d)"
+                    >
+                      {{ d }}
+                    </button>
+                  }
+                </div>
               </div>
-            </div>
+            }
 
             @if (isPentahoReport() || isBirtReport()) {
               <div class="field col-span-3">
@@ -239,7 +252,7 @@
       <mifosx-table-and-sms *ngIf="!hideTable" [dataObject]="dataObject"></mifosx-table-and-sms>
       <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
       <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
-      <mifosx-birt *ngIf="!hideBirt" [dataObject]="dataObject"></mifosx-birt>
+      <mifosx-birt *ngIf="!hideBirt" [dataObject]="dataObject" (reportError)="handleBirtError($event)"></mifosx-birt>
     </div>
   }
 </div>
