@@ -560,9 +560,12 @@
 }
 
 .logo-image {
+  display: block;
   height: 130px;
   width: auto;
-  margin: 8px 24px;
+  max-width: 100%;
+  object-fit: contain;
+  margin: 8px auto;
   opacity: 0.95;
   transition: opacity 0.3s ease;
 
@@ -870,8 +873,7 @@
 
   .logo-image {
     height: 100px;
-    width: auto;
-    margin: 8px 20px;
+    margin: 8px auto;
   }
 
   // Hide resources section on medium and small screens
@@ -933,8 +935,7 @@
 
   .logo-image {
     height: 80px;
-    width: auto;
-    margin: 4px 16px;
+    margin: 4px auto;
   }
 
   .form-section {
