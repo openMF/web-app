@@ -6,86 +6,112 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container narrow-container extra-small">
-  <div class="action-bar">
-    <button
-      mat-raised-button
-      color="primary"
-      class="edit-button"
-      [routerLink]="['./edit']"
-      *mifosxHasPermission="'UPDATE_OFFICE'"
-    >
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Edit' | translate }}
-    </button>
-  </div>
-
-  <mat-card class="office-card">
-    <mat-card-content class="card-content">
-      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
-        <a
-          mat-tab-link
-          [routerLink]="['./general']"
-          routerLinkActive
-          #general="routerLinkActive"
-          [active]="general.isActive"
-          class="compact-tab"
-        >
-          {{ 'labels.inputs.General' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./address']"
-          routerLinkActive
-          #address="routerLinkActive"
-          [active]="address.isActive"
-          class="compact-tab"
-          *mifosxHasPermission="'READ_OFFICE'"
-        >
-          {{ 'labels.heading.Address' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./services']"
-          routerLinkActive
-          #services="routerLinkActive"
-          [active]="services.isActive"
-          class="compact-tab"
-          *mifosxHasPermission="'READ_OFFICE'"
-        >
-          {{ 'labels.heading.Services' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./schedules']"
-          routerLinkActive
-          #schedules="routerLinkActive"
-          [active]="schedules.isActive"
-          class="compact-tab"
-          *mifosxHasPermission="'READ_OFFICE'"
-        >
-          {{ 'labels.heading.Schedules' | translate }}
-        </a>
-        @for (officeDatatable of officeDatatables; track officeDatatable) {
-          <span>
-            <a
-              mat-tab-link
-              *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
-              [routerLink]="['./datatables', officeDatatable.registeredTableName]"
-              routerLinkActive
-              #datatable="routerLinkActive"
-              [active]="datatable.isActive"
-              class="compact-tab"
+<div class="office-workspace">
+  <header class="office-header">
+    <div class="office-identity">
+      <div class="office-icon" aria-hidden="true"><fa-icon icon="building"></fa-icon></div>
+      <div class="office-introduction">
+        <div class="office-title">
+          <h1>{{ officeData?.name }}</h1>
+          @if (isHeadOffice) {
+            <span class="hierarchy-badge">{{ 'labels.inputs.Head Office' | translate }}</span>
+          }
+        </div>
+        <div class="office-metadata">
+          @if (officeData?.openingDate) {
+            <span
+              ><fa-icon icon="calendar" aria-hidden="true"></fa-icon> {{ 'labels.inputs.Opened On' | translate }}
+              {{ officeData.openingDate | dateFormat }}</span
             >
-              {{ officeDatatable.registeredTableName }}
-            </a>
-          </span>
-        }
-      </nav>
+          }
+          @if (summary.location()) {
+            <span><fa-icon icon="location-arrow" aria-hidden="true"></fa-icon>{{ summary.location() }}</span>
+          }
+          @if (
+            officeData?.externalId !== null && officeData?.externalId !== undefined && officeData.externalId !== ''
+          ) {
+            <span
+              >{{ 'labels.inputs.External Id' | translate }}: <b>{{ officeData.externalId }}</b></span
+            >
+          }
+        </div>
+      </div>
+    </div>
+    <div class="office-actions">
+      <button mat-raised-button color="primary" [routerLink]="['./edit']" *mifosxHasPermission="'UPDATE_OFFICE'">
+        <fa-icon icon="edit" aria-hidden="true"></fa-icon>
+        {{ 'labels.text.Edit Office' | translate }}
+      </button>
+    </div>
+  </header>
+  <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel" [mat-stretch-tabs]="false">
+    <a
+      mat-tab-link
+      [routerLink]="['./general']"
+      routerLinkActive
+      #general="routerLinkActive"
+      [active]="general.isActive"
+      class="office-tab"
+    >
+      {{ 'labels.inputs.Summary' | translate }}
+    </a>
+    <a
+      mat-tab-link
+      [routerLink]="['./address']"
+      routerLinkActive
+      #address="routerLinkActive"
+      [active]="address.isActive"
+      class="office-tab"
+      *mifosxHasPermission="'READ_OFFICE'"
+    >
+      {{ 'labels.heading.Address' | translate }}
+      @if (summary.addressCount() !== null) {
+        <span class="tab-count">{{ summary.addressCount() }}</span>
+      }
+    </a>
+    <a
+      mat-tab-link
+      [routerLink]="['./services']"
+      routerLinkActive
+      #services="routerLinkActive"
+      [active]="services.isActive"
+      class="office-tab"
+      *mifosxHasPermission="'READ_OFFICE'"
+    >
+      {{ 'labels.heading.Services' | translate }}
+      @if (summary.serviceCount() !== null) {
+        <span class="tab-count">{{ summary.serviceCount() }}</span>
+      }
+    </a>
+    <a
+      mat-tab-link
+      [routerLink]="['./schedules']"
+      routerLinkActive
+      #schedules="routerLinkActive"
+      [active]="schedules.isActive"
+      class="office-tab"
+      *mifosxHasPermission="'READ_OFFICE'"
+    >
+      {{ 'labels.heading.Schedules' | translate }}
+    </a>
+    @for (officeDatatable of officeDatatables; track officeDatatable.registeredTableName) {
+      <span>
+        <a
+          mat-tab-link
+          *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
+          [routerLink]="['./datatables', officeDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+          class="office-tab"
+        >
+          {{ officeDatatable.registeredTableName }}
+        </a>
+      </span>
+    }
+  </nav>
 
-      <mat-tab-nav-panel #tabPanel class="tab-panel">
-        <router-outlet></router-outlet>
-      </mat-tab-nav-panel>
-    </mat-card-content>
-  </mat-card>
+  <mat-tab-nav-panel #tabPanel class="tab-panel">
+    <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
 </div>

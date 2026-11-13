@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Starpliktuve",
-      "copied": "Nokopēts: {{value}}"
+      "copied": "Nokopēts: {{value}}",
+      "copyFailed": "Neizdevās nokopēt koordinātas."
     },
     "tenant": {
       "changed": {
@@ -1351,7 +1352,9 @@
       "Deleting": "Dzēš",
       "Inactivate": "Deaktivizēt",
       "Discount Fee Adjustment": "Atlaides maksas korekcija",
-      "Adjust by Difference": "Koriģēt pēc starpības"
+      "Adjust by Difference": "Koriģēt pēc starpības",
+      "Open in map": "Atvērt kartē",
+      "Configure": "Konfigurēt"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2379,7 +2382,8 @@
       "Deposit Details": "Noguldījuma informācija",
       "Services": "Pakalpojumi",
       "Schedules": "Grafiki",
-      "Reference": "Atsauce"
+      "Reference": "Atsauce",
+      "Weekly schedule": "Nedēļas grafiks"
     },
     "inputs": {
       "Breach Start Type": "Pārkāpuma sākuma tips",
@@ -4478,7 +4482,8 @@
       "Export Date": "Eksporta datums",
       "Label": "Nosaukums",
       "Original Amount": "Sākotnējā summa",
-      "Resulting Amount": "Rezultējošā summa"
+      "Resulting Amount": "Rezultējošā summa",
+      "Head Office": "Galvenais birojs"
     },
     "links": {
       "Community": "kopiena",

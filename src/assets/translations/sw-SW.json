@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Ubao wa kunakili",
-      "copied": "Imenakiliwa: {{value}}"
+      "copied": "Imenakiliwa: {{value}}",
+      "copyFailed": "Imeshindikana kunakili viwianishi."
     },
     "tenant": {
       "changed": {
@@ -1351,7 +1352,9 @@
       "Deleting": "Inafuta",
       "Inactivate": "Zima",
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
-      "Adjust by Difference": "Rekebisha kwa Tofauti"
+      "Adjust by Difference": "Rekebisha kwa Tofauti",
+      "Open in map": "Fungua kwenye ramani",
+      "Configure": "Sanidi"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -2379,7 +2382,8 @@
       "Services": "Huduma",
       "Schedules": "Ratiba",
       "Reference": "Rejea",
-      "Create Savings Product": "Unda Bidhaa ya Akiba"
+      "Create Savings Product": "Unda Bidhaa ya Akiba",
+      "Weekly schedule": "Ratiba ya wiki"
     },
     "inputs": {
       "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
@@ -4478,7 +4482,8 @@
       "Export Date": "Tarehe ya Kuhamisha",
       "Label": "Lebo",
       "Original Amount": "Kiasi Asilia",
-      "Resulting Amount": "Kiasi Kinachotokana"
+      "Resulting Amount": "Kiasi Kinachotokana",
+      "Head Office": "Ofisi kuu"
     },
     "links": {
       "Community": "Jumuiya",

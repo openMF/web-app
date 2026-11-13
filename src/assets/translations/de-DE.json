@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Zwischenablage",
-      "copied": "Kopiert: {{value}}"
+      "copied": "Kopiert: {{value}}",
+      "copyFailed": "Die Koordinaten konnten nicht kopiert werden."
     },
     "tenant": {
       "changed": {
@@ -1356,7 +1357,9 @@
       "Deleting": "Wird gelöscht",
       "Inactivate": "Deaktivieren",
       "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
-      "Adjust by Difference": "Nach Differenz anpassen"
+      "Adjust by Difference": "Nach Differenz anpassen",
+      "Open in map": "Auf Karte öffnen",
+      "Configure": "Konfigurieren"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -2384,7 +2387,8 @@
       "Deposit Details": "Einzahlungsdetails",
       "Services": "Dienstleistungen",
       "Schedules": "Zeitpläne",
-      "Reference": "Referenz"
+      "Reference": "Referenz",
+      "Weekly schedule": "Wochenplan"
     },
     "inputs": {
       "Breach Start Type": "Starttyp des Verstoßes",
@@ -4483,7 +4487,8 @@
       "Export Date": "Exportdatum",
       "Label": "Bezeichnung",
       "Original Amount": "Ursprünglicher Betrag",
-      "Resulting Amount": "Resultierender Betrag"
+      "Resulting Amount": "Resultierender Betrag",
+      "Head Office": "Hauptgeschäftsstelle"
     },
     "links": {
       "Community": "Gemeinschaft",

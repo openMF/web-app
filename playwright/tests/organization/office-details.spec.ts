@@ -57,15 +57,15 @@ test('office details reflect persisted addresses, maps and available backend ser
       'Office Address management requires the Savings Plugin to be deployed.'
     );
     await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
-    await page.getByRole('tab', { name: 'Address', exact: true }).click();
+    await page.getByRole('tab', { name: /^Address\b/ }).click();
     await expect(
       page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Add', exact: true }).first()
     ).toBeDisabled();
-    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await page.getByRole('tab', { name: 'Summary', exact: true }).click();
   } else {
     await expect(summary.locator('mifosx-office-address-tab')).toContainText('No data found');
     await page.screenshot({ path: testInfo.outputPath('empty.png'), fullPage: true });
-    await page.getByRole('tab', { name: 'Address', exact: true }).click();
+    await page.getByRole('tab', { name: /^Address\b/ }).click();
     await page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Add', exact: true }).first().click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
@@ -90,8 +90,10 @@ test('office details reflect persisted addresses, maps and available backend ser
     await dialog.getByRole('button', { name: 'Submit', exact: true }).click();
     expect((await saved).status()).toBe(200);
     await expect(dialog).not.toBeVisible();
-    await page.getByRole('tab', { name: 'General', exact: true }).click();
-    await expect(summary.locator('mifosx-office-address-tab')).toContainText('Not Provided');
+    await page.getByRole('tab', { name: 'Summary', exact: true }).click();
+    await expect(summary.locator('mifosx-office-address-tab')).toContainText(
+      'A map is unavailable because saved coordinates are missing or invalid.'
+    );
     await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
     await page.screenshot({ path: testInfo.outputPath('missing-location.png'), fullPage: true });
 
@@ -105,7 +107,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     };
     const original = await readAddress();
     const openEdit = async () => {
-      await page.getByRole('tab', { name: 'Address', exact: true }).click();
+      await page.getByRole('tab', { name: /^Address\b/ }).click();
       const panel = page.locator('mifosx-office-address-tab mat-expansion-panel');
       if ((await panel.locator('mat-expansion-panel-header').getAttribute('aria-expanded')) !== 'true') {
         await panel.locator('mat-expansion-panel-header').click();
@@ -205,7 +207,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     await longitude.fill('');
     await saveEdit();
     expect(await readAddress()).toMatchObject({ latitude: null, longitude: null });
-    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await page.getByRole('tab', { name: 'Summary', exact: true }).click();
     await expect(summary).toBeVisible();
     await page.reload();
     await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
@@ -214,7 +216,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     await latitude.fill('0');
     await longitude.fill('0');
     await saveEdit();
-    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await page.getByRole('tab', { name: 'Summary', exact: true }).click();
     await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
     expect(await readAddress()).toMatchObject({ latitude: 0, longitude: 0 });
     // Dynamic number inputs can return strings; the locale parser needs decimal text instead of e notation.
@@ -239,7 +241,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     await longitude.fill('-84.09072512');
     await saveEdit();
     // Reopen through a new document so no component state can satisfy these assertions.
-    await page.getByRole('tab', { name: 'General', exact: true }).click();
+    await page.getByRole('tab', { name: 'Summary', exact: true }).click();
     await expect(summary).toBeVisible();
     await page.reload();
     await expect(summary).toContainText(street);
@@ -248,7 +250,11 @@ test('office details reflect persisted addresses, maps and available backend ser
     await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
     await expect(summary.locator('.leaflet-container')).toBeVisible();
     await expect(summary.locator('.leaflet-marker-icon')).toBeVisible();
-    await expect(summary.locator('mifosx-office-address-tab button')).toHaveCount(0);
+    // The overview permits coordinate copying, while management stays in the Address tab.
+    await expect(
+      summary.locator('mifosx-office-address-tab').getByRole('button', { name: 'Copy', exact: true })
+    ).toBeVisible();
+    await expect(summary.locator('mifosx-office-address-tab .address-actions')).toHaveCount(0);
     await expect(summary.locator('mifosx-address-location-map')).toContainText('Map tiles unavailable');
     for (const width of [
       390,
@@ -264,14 +270,14 @@ test('office details reflect persisted addresses, maps and available backend ser
       await page.screenshot({ path: testInfo.outputPath(`location-${width}.png`), fullPage: true });
     }
     for (let repeat = 0; repeat < 3; repeat++) {
-      await page.getByRole('tab', { name: 'Address', exact: true }).click();
+      await page.getByRole('tab', { name: /^Address\b/ }).click();
       const header = page.locator('mifosx-office-address-tab mat-expansion-panel-header');
       await header.click();
       await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
       await header.click();
       await header.click();
       await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
-      await page.getByRole('tab', { name: 'General', exact: true }).click();
+      await page.getByRole('tab', { name: 'Summary', exact: true }).click();
       await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
     }
     const persisted = await request.get(`${api}/v2/offices/${officeId}/addresses`, { headers });

@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "클립보드",
-      "copied": "복사됨: {{value}}"
+      "copied": "복사됨: {{value}}",
+      "copyFailed": "좌표를 복사할 수 없습니다."
     },
     "tenant": {
       "changed": {
@@ -1351,7 +1352,9 @@
       "Deleting": "삭제 중",
       "Inactivate": "비활성화",
       "Discount Fee Adjustment": "할인 수수료 조정",
-      "Adjust by Difference": "차액으로 조정"
+      "Adjust by Difference": "차액으로 조정",
+      "Open in map": "지도에서 열기",
+      "Configure": "설정"
     },
     "catalogs": {
       "% Amount": "양",
@@ -2379,7 +2382,8 @@
       "Deposit Details": "입금 상세 정보",
       "Services": "서비스",
       "Schedules": "운영 일정",
-      "Reference": "참조"
+      "Reference": "참조",
+      "Weekly schedule": "주간 일정"
     },
     "inputs": {
       "Breach Start Type": "위반 시작 유형",
@@ -4478,7 +4482,8 @@
       "Export Date": "내보낸 날짜",
       "Label": "항목",
       "Original Amount": "원래 금액",
-      "Resulting Amount": "결과 금액"
+      "Resulting Amount": "결과 금액",
+      "Head Office": "본점"
     },
     "links": {
       "Community": "지역 사회",

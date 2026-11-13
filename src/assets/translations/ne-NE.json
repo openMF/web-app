@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "क्लिपबोर्ड",
-      "copied": "प्रतिलिपि गरियो: {{value}}"
+      "copied": "प्रतिलिपि गरियो: {{value}}",
+      "copyFailed": "निर्देशाङ्क प्रतिलिपि गर्न सकिएन।"
     },
     "tenant": {
       "changed": {
@@ -1354,7 +1355,9 @@
       "Deleting": "मेटाउँदै",
       "Inactivate": "निष्क्रिय पार्नुहोस्",
       "Discount Fee Adjustment": "छुट शुल्क समायोजन",
-      "Adjust by Difference": "फरकद्वारा समायोजन"
+      "Adjust by Difference": "फरकद्वारा समायोजन",
+      "Open in map": "नक्सामा खोल्नुहोस्",
+      "Configure": "कन्फिगर गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -2382,7 +2385,8 @@
       "Deposit Details": "निक्षेप विवरण",
       "Services": "सेवाहरू",
       "Schedules": "तालिकाहरू",
-      "Reference": "सन्दर्भ"
+      "Reference": "सन्दर्भ",
+      "Weekly schedule": "साप्ताहिक समयतालिका"
     },
     "inputs": {
       "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
@@ -4481,7 +4485,8 @@
       "Export Date": "निर्यात मिति",
       "Label": "लेबल",
       "Original Amount": "मूल रकम",
-      "Resulting Amount": "परिणामी रकम"
+      "Resulting Amount": "परिणामी रकम",
+      "Head Office": "प्रधान कार्यालय"
     },
     "links": {
       "Community": "समुदाय",

@@ -6,11 +6,17 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography">
+<div class="tab-container mat-typography" [class.summary-view]="readOnly">
   <div class="layout-row align-start">
     <div class="m-b-10">
-      <h3>{{ 'labels.heading.Services' | translate }}</h3>
+      <h2>{{ 'labels.heading.Services' | translate }}</h2>
     </div>
+    @if (readOnly && !isLoading && !hasError && !isPluginUnavailable) {
+      <a mat-button color="primary" [routerLink]="['../services']" *mifosxHasPermission="'CREATE_OFFICE'">
+        <fa-icon icon="plus" aria-hidden="true" class="m-r-8"></fa-icon>
+        {{ 'labels.buttons.Add' | translate }}
+      </a>
+    }
     @if (!readOnly) {
       <div class="action-button m-b-10 gap-25px">
         <button
@@ -27,7 +33,7 @@
   </div>
 
   @if (isLoading) {
-    <div class="service-state">
+    <div class="service-state" role="status">
       <mat-spinner diameter="36"></mat-spinner>
       <span>{{ 'labels.text.Loading data' | translate }}</span>
     </div>
@@ -40,7 +46,7 @@
   }
 
   @if (hasError && !isLoading && !isPluginUnavailable) {
-    <div class="service-state error-state">
+    <div class="service-state error-state" role="alert">
       <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
       <button mat-button color="primary" (click)="loadOfficeServices()">
         {{ 'labels.buttons.Retry' | translate }}
@@ -60,60 +66,88 @@
   }
 
   @if (!isLoading && !hasError && !isPluginUnavailable && officeServices.length) {
-    <div class="mat-elevation-z1 table-container">
-      <table mat-table [dataSource]="officeServices">
-        <ng-container matColumnDef="serviceName">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Service Name' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
+    @if (readOnly) {
+      <div class="service-summary-labels" aria-hidden="true">
+        <span>{{ 'labels.inputs.Service Name' | translate }}</span>
+        <span>{{ 'labels.inputs.Working Hours' | translate }}</span>
+      </div>
+      <ul class="service-summary-list">
+        @for (service of officeServices; track getOfficeServiceId(service, $index)) {
+          <li class="service-summary-row">
+            <div class="service-name">
+              <span class="service-icon" aria-hidden="true"><fa-icon icon="exchange"></fa-icon></span>
+              <strong>{{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}</strong>
+            </div>
+            <span class="working-hours">{{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}</span>
+            @if (getDailyInterval(service.workingHours); as interval) {
+              <div class="daily-timeline" aria-hidden="true">
+                <div class="timeline-track">
+                  <span [style.left.%]="interval.start" [style.width.%]="interval.width"></span>
+                </div>
+                <div class="timeline-ticks">
+                  <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
+                </div>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="mat-elevation-z1 table-container">
+        <table mat-table [dataSource]="officeServices">
+          <ng-container matColumnDef="serviceName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Service Name' | translate }}</th>
+            <td mat-cell *matCellDef="let service">
+              {{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="serviceExternalId">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.serviceExternalId || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="serviceExternalId">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
+            <td mat-cell *matCellDef="let service">
+              {{ service.serviceExternalId || ('labels.inputs.Not Provided' | translate) }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="workingHours">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Working Hours' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="workingHours">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Working Hours' | translate }}</th>
+            <td mat-cell *matCellDef="let service">
+              {{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            <button
-              mat-button
-              color="primary"
-              (click)="editService(service)"
-              [disabled]="isSaving || isPluginUnavailable"
-              matTooltip="{{ 'labels.buttons.Edit' | translate }}"
-              [attr.aria-label]="'labels.buttons.Edit' | translate"
-              *mifosxHasPermission="'UPDATE_OFFICE'"
-            >
-              <fa-icon icon="edit"></fa-icon>
-            </button>
-            <button
-              mat-button
-              color="warn"
-              (click)="deleteService(service)"
-              [disabled]="isSaving || isPluginUnavailable"
-              matTooltip="{{ 'labels.buttons.Delete' | translate }}"
-              [attr.aria-label]="'labels.buttons.Delete' | translate"
-              *mifosxHasPermission="'DELETE_OFFICE'"
-            >
-              <fa-icon icon="trash"></fa-icon>
-            </button>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let service">
+              <button
+                mat-button
+                color="primary"
+                (click)="editService(service)"
+                [disabled]="isSaving || isPluginUnavailable"
+                matTooltip="{{ 'labels.buttons.Edit' | translate }}"
+                [attr.aria-label]="'labels.buttons.Edit' | translate"
+                *mifosxHasPermission="'UPDATE_OFFICE'"
+              >
+                <fa-icon icon="edit"></fa-icon>
+              </button>
+              <button
+                mat-button
+                color="warn"
+                (click)="deleteService(service)"
+                [disabled]="isSaving || isPluginUnavailable"
+                matTooltip="{{ 'labels.buttons.Delete' | translate }}"
+                [attr.aria-label]="'labels.buttons.Delete' | translate"
+                *mifosxHasPermission="'DELETE_OFFICE'"
+              >
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    }
   }
 </div>

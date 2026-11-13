@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Iškarpinė",
-      "copied": "Nukopijuota: {{value}}"
+      "copied": "Nukopijuota: {{value}}",
+      "copyFailed": "Nepavyko nukopijuoti koordinačių."
     },
     "tenant": {
       "changed": {
@@ -1351,7 +1352,9 @@
       "Deleting": "Šalinama",
       "Inactivate": "Deaktyvuoti",
       "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
-      "Adjust by Difference": "Koreguoti skirtumu"
+      "Adjust by Difference": "Koreguoti skirtumu",
+      "Open in map": "Atidaryti žemėlapyje",
+      "Configure": "Konfigūruoti"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -2379,7 +2382,8 @@
       "Deposit Details": "Indėlio informacija",
       "Services": "Paslaugos",
       "Schedules": "Tvarkaraščiai",
-      "Reference": "Nuoroda"
+      "Reference": "Nuoroda",
+      "Weekly schedule": "Savaitės tvarkaraštis"
     },
     "inputs": {
       "Breach Start Type": "Pažeidimo pradžios tipas",
@@ -4478,7 +4482,8 @@
       "Export Date": "Eksporto data",
       "Label": "Etiketė",
       "Original Amount": "Pradinė suma",
-      "Resulting Amount": "Galutinė suma"
+      "Resulting Amount": "Galutinė suma",
+      "Head Office": "Pagrindinis padalinys"
     },
     "links": {
       "Community": "bendruomenė",

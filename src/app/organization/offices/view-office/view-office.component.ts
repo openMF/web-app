@@ -7,10 +7,12 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef, ChangeDetectorRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { OfficeDetailsSummary } from './office-details-summary';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -22,24 +24,41 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./view-office.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet
   ],
+  providers: [OfficeDetailsSummary],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewOfficeComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+
+  readonly summary = inject(OfficeDetailsSummary);
+  officeData: any;
 
   /** Office datatables data */
   officeDatatables: any;
 
+  get isHeadOffice(): boolean {
+    return !!this.officeData?.id && !this.officeData.parentId && this.officeData.hierarchy === '.';
+  }
+
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officeDatatables: any }) => {
-      this.officeDatatables = data.officeDatatables;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { office: any; officeDatatables: any }) => {
+        if (this.officeData?.id !== data.office?.id) {
+          this.summary.reset();
+        }
+        this.officeData = data.office;
+        this.officeDatatables = data.officeDatatables;
+        this.changeDetectorRef.markForCheck();
+      });
   }
 }
