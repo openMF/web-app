@@ -138,6 +138,7 @@ export class SavingsAccountDepositComponent implements OnInit {
   canAccessWorkflow = false;
   private accountLoadRequestId = 0;
   private templateLoadRequestId = 0;
+  private receiptLoadRequestId = 0;
 
   get denominations(): FormArray<DenominationFormGroup> {
     return this.depositForm.get('denominations') as FormArray<DenominationFormGroup>;
@@ -209,9 +210,9 @@ export class SavingsAccountDepositComponent implements OnInit {
       accountNumber: new FormControl<string | null>('', Validators.maxLength(50)),
       checkNumber: new FormControl<string | null>('', Validators.maxLength(50)),
       routingCode: new FormControl<string | null>('', Validators.maxLength(50)),
-      receiptNumber: new FormControl<string | null>('', Validators.maxLength(50)),
+      receiptNumber: new FormControl<string | null>(this.generateReceiptNumber(), Validators.maxLength(50)),
       bankNumber: new FormControl<string | null>('', Validators.maxLength(50)),
-      note: new FormControl<string | null>(''),
+      note: new FormControl<string | null>('DEPOSITO EN VENTANILLA'),
       denominations: new FormArray<DenominationFormGroup>([])
     });
   }
@@ -557,13 +558,40 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   private loadReceipt(transactionId: FineractId): void {
-    this.baseTellerService.getSavingsDepositReceipt(this.selectedSavingsAccountId(), transactionId).subscribe({
+    const requestId = ++this.receiptLoadRequestId;
+    const savingsId = this.selectedSavingsAccountId();
+    const commandResult: SavingsDepositReceipt | undefined = this.commandResult;
+    const receiptNumber = commandResult?.paymentDetailData?.receiptNumber;
+    this.baseTellerService.getSavingsDepositReceipt(savingsId, transactionId).subscribe({
       next: (receipt: SavingsDepositReceipt) => {
+        if (
+          requestId !== this.receiptLoadRequestId ||
+          savingsId !== this.selectedSavingsAccountId() ||
+          commandResult !== this.commandResult
+        ) {
+          return;
+        }
+        if (!receipt.paymentDetailData?.receiptNumber && receiptNumber) {
+          receipt = {
+            ...receipt,
+            paymentDetailData: {
+              ...receipt.paymentDetailData,
+              receiptNumber
+            }
+          };
+        }
         this.receipt = receipt;
         this.cdr.markForCheck();
       },
       error: () => {
-        this.receipt = this.commandResult;
+        if (
+          requestId !== this.receiptLoadRequestId ||
+          savingsId !== this.selectedSavingsAccountId() ||
+          commandResult !== this.commandResult
+        ) {
+          return;
+        }
+        this.receipt = commandResult;
         this.cdr.markForCheck();
       }
     });
@@ -664,7 +692,25 @@ export class SavingsAccountDepositComponent implements OnInit {
     return Math.round((Number(value) || 0) * 1000000);
   }
 
+  private generateReceiptNumber(): string {
+    // RFC 9562 UUIDv7: 48-bit Unix milliseconds, version/variant bits, and 74 secure random bits.
+    const bytes = crypto.getRandomValues(new Uint8Array(16));
+    let timestamp = Date.now();
+    for (let index = 5; index >= 0; index--) {
+      bytes[index] = timestamp % 256;
+      timestamp = Math.floor(timestamp / 256);
+    }
+    bytes[6] = (bytes[6] & 0x0f) | 0x70;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = Array.from(bytes, (byte: number) => byte.toString(16).padStart(2, '0')).join('');
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+  }
+
   private clearSelectedAccount(): void {
+    this.receiptLoadRequestId++;
+    if (this.commandResult) {
+      this.depositForm.controls.receiptNumber.setValue(this.generateReceiptNumber());
+    }
     this.accountLoadRequestId++;
     this.templateLoadRequestId++;
     this.customer = null;

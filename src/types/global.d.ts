@@ -8,7 +8,7 @@ interface Window {
     allow_switching_backend_instance?: boolean;
     apiProvider?: string;
     apiVersion?: string;
-    oauthServerEnabled?: boolean;
+    oauthServerEnabled?: string | boolean;
     oauthServerUrl?: string;
     oauthAppId?: string;
     defaultLanguage?: string;

@@ -40,19 +40,25 @@
   .schedule-header,
   .schedule-row {
     display: grid;
-    grid-template-columns: minmax(96px, 26%) 76px minmax(0, calc(37% - 53px)) minmax(0, calc(37% - 53px));
+    grid-template-columns: repeat(2, minmax(0, calc(50% - 8px)));
     align-items: center;
-    column-gap: 10px;
+    column-gap: 16px;
   }
 
   .schedule-header {
-    min-height: 36px;
+    min-height: 40px;
     font-weight: 500;
     color: rgb(0 0 0 / 60%);
   }
 
   .schedule-row {
     min-height: 72px;
+    row-gap: 8px;
+  }
+
+  .day-status {
+    display: block;
+    font-weight: normal;
   }
 
   .weekday-label {
@@ -86,17 +92,13 @@
   @media (width <= 720px) {
     .schedule-header,
     .schedule-row {
-      grid-template-columns: minmax(96px, calc(100% - 74px)) 64px;
+      grid-template-columns: minmax(0, calc(100% - 80px)) 64px;
       row-gap: 8px;
       padding: 8px 0;
     }
 
     .schedule-row {
       border-bottom: 1px solid rgb(0 0 0 / 12%);
-    }
-
-    .schedule-header .time-column {
-      display: none;
     }
 
     .schedule-row .time-column {

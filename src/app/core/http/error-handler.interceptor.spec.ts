@@ -6,13 +6,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { HttpContext, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
+import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { environment } from '../../../environments/environment';
 
 describe('ErrorHandlerInterceptor', () => {
@@ -40,6 +42,89 @@ describe('ErrorHandlerInterceptor', () => {
       return 'threw';
     }
   }
+
+  it.each([
+    400,
+    403,
+    404,
+    409,
+    422,
+    500
+  ])('keeps account-management status %s out of raw error alerts and logs', (status) => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    expect(
+      intercept('/savings/planned-savings/clients/7/pockets', status, 'GET', {
+        defaultUserMessage: 'SQL private account details'
+      })
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+  it('preserves native account failures for safe scoped rendering and retains the 401 session alert', () => {
+    const request = new HttpRequest('GET', '/savingsaccounts/18', {
+      context: new HttpContext().set(ACCOUNT_MANAGEMENT_REQUEST, true)
+    });
+    const response = new HttpErrorResponse({ status: 401, error: { defaultUserMessage: 'private internals' } });
+    let result: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (result = error) });
+    expect(result).toBe(response);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+  it.each([
+    '/savingsaccounts/42?command=activate',
+    '/savingsaccounts/42/transactions/7?command=modify'
+  ])('renders known BE-06 business errors safely for workflows without inline handling (%s)', (url) => {
+    const error = {
+      errors: [
+        {
+          userMessageGlobalisationCode: 'error.msg.savings.product.transaction.deposits.disabled',
+          defaultUserMessage: 'private stack trace'
+        }
+      ]
+    };
+    expect(intercept(url, 403, 'POST', error)).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'FinancialControls.TransactionRejected',
+      message: 'FinancialControls.Errors.deposits.disabled'
+    });
+  });
+  it.each([
+    '/savingsaccounts/42/transactions?command=deposit',
+    '/fineract-provider/api/v1/savingsaccounts/42/transactions?command=withdrawal',
+    '/base-teller/withdrawals',
+    '/fineract-provider/api/v2/base-teller/account-transfers'
+  ])('leaves known restrictions to the local transaction message for %s', (url) => {
+    const request = new HttpRequest('POST', url, {});
+    const response = new HttpErrorResponse({
+      status: 403,
+      url,
+      error: {
+        errors: [{ userMessageGlobalisationCode: 'error.msg.savings.product.transaction.withdrawals.disabled' }]
+      }
+    });
+    const log = jest.spyOn(console, 'error');
+    let received: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error: unknown) => (received = error) });
+    expect(received).toBe(response);
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+  it('lets monthly diagnostics handle malformed backend errors without logging server messages', () => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/savings/monthly-fees/runs', 500, 'POST', 'private SQL')).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
 
   beforeEach(() => {
     alert = jest.fn();

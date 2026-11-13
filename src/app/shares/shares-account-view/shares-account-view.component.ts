@@ -179,7 +179,7 @@ export class SharesAccountViewComponent implements OnInit {
       data: { deleteContext: `shares account with id: ${this.sharesAccountData.id}` }
     });
     deleteSharesAccountDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.sharesService.deleteSharesAccount(this.sharesAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
