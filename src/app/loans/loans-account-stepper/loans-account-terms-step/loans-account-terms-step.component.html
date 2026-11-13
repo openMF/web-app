@@ -175,8 +175,9 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.delinquencyBucketId && allowAttributeOverridesDelinquencyBucket) {
+        @if (loansAccountTermsForm.controls.delinquencyBucketId.value && allowAttributeOverridesDelinquencyBucket) {
           <button
+            type="button"
             matSuffix
             mat-icon-button
             aria-label="{{ 'labels.buttons.Clear' | translate }}"
@@ -231,8 +232,14 @@
             </mat-option>
           }
         </mat-select>
-        @if (loansAccountTermsForm.controls.breachId && allowAttributeOverridesBreach) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'breachId')">
+        @if (loansAccountTermsForm.controls.breachId.value && allowAttributeOverridesBreach) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'breachId')"
+          >
             <fa-icon icon="close" size="md"></fa-icon>
           </button>
         }
@@ -253,8 +260,14 @@
               </mat-option>
             }
           </mat-select>
-          @if (loansAccountTermsForm.controls.nearBreachId && allowAttributeOverridesBreach) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'nearBreachId')">
+          @if (loansAccountTermsForm.controls.nearBreachId.value && allowAttributeOverridesBreach) {
+            <button
+              type="button"
+              matSuffix
+              mat-icon-button
+              aria-label="{{ 'labels.buttons.Clear' | translate }}"
+              (click)="clearProperty($event, 'nearBreachId')"
+            >
               <fa-icon icon="close" size="md"></fa-icon>
             </button>
           }
