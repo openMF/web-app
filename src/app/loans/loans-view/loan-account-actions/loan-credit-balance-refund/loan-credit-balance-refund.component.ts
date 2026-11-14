@@ -65,7 +65,7 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
   createCreditBalanceLoanForm() {
     this.creditBalanceLoanForm = this.formBuilder.group({
       transactionDate: [
-        this.isWorkingCapital ? this.settingsService.businessDate : new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       transactionAmount: [
