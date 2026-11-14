@@ -17,7 +17,15 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
-import { FormBuilder, FormGroup, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -749,6 +757,14 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, AfterViewC
 
   get chargesMultiDisburseControl(): UntypedFormControl | null {
     return (this.form?.get('multiDisburseLoan') as UntypedFormControl) ?? null;
+  }
+
+  /**
+   * The Charges step only reads this form's values (never subscribes), so in Classic mode it can be
+   * the hosted Settings form itself: `enableDownPayment` / `loanScheduleType` are not mirrored.
+   */
+  get chargesSettingsForm(): AbstractControl | null {
+    return (this.usesClassicSteps ? this.loanProductSettingsStep?.loanProductSettingsForm : this.form) ?? null;
   }
 
   /**

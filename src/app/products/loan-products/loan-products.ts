@@ -42,6 +42,18 @@ export class LoanProducts {
     return code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
   }
 
+  /**
+   * Fineract attaches a down payment fee only to a Progressive schedule with down payment enabled.
+   * The schedule type may come as the backend code ('PROGRESSIVE') or the display label ('Progressive').
+   */
+  public static supportsDownPaymentCharges(enableDownPayment: unknown, loanScheduleType: unknown): boolean {
+    return (
+      enableDownPayment === true &&
+      typeof loanScheduleType === 'string' &&
+      loanScheduleType.toUpperCase() === this.LOAN_SCHEDULE_TYPE_PROGRESSIVE
+    );
+  }
+
   public setItemsByDefault(configurations: any) {
     const itemsByDefault: GlobalConfiguration[] = [];
     configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {

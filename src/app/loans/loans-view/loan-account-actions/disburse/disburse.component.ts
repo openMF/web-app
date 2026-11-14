@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { Observable, of, startWith } from 'rxjs';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
@@ -56,6 +57,11 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   disbursementLoanForm!: UntypedFormGroup;
   currency!: Currency;
   readonly maxExternalIdLength = 100;
+  /** `null` while the down payment fee lookup is pending; submission waits for it. */
+  readonly showSkipDownPaymentFee$: Observable<boolean | null> = (this.isLoanProduct
+    ? this.loanService.hasOutstandingDownPaymentFee(this.loanId)
+    : of(false)
+  ).pipe(startWith(null));
 
   constructor() {
     super();
@@ -89,7 +95,8 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       ],
       externalId: '',
       paymentTypeId: '',
-      note: ''
+      note: '',
+      skipDownPaymentFee: [false]
     });
     if (this.isWorkingCapital) {
       this.disbursementLoanForm.addControl(
@@ -165,6 +172,9 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       locale
     };
     payload['transactionAmount'] = payload['transactionAmount'] * 1;
+    if (!payload['skipDownPaymentFee']) {
+      delete payload['skipDownPaymentFee'];
+    }
     if (this.isWorkingCapital) {
       const paymentDetails: Record<string, any> = {};
       if (payload['paymentTypeId']) {

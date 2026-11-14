@@ -18,6 +18,8 @@ export type LoanAccountPath = 'loans' | 'working-capital-loans';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
+import { LoanCharge } from './models/loan-charge.model';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
 import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
@@ -819,6 +821,19 @@ export class LoansService {
    */
   getLoanCharges(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/charges`);
+  }
+
+  /**
+   * @param {string} loanId Loan Id
+   * @returns {Observable<boolean>} Whether the loan has a down payment fee that is neither paid nor waived
+   */
+  hasOutstandingDownPaymentFee(loanId: string): Observable<boolean> {
+    return this.getLoanCharges(loanId).pipe(
+      map((charges: LoanCharge[]) =>
+        (charges ?? []).some((charge) => isDownPaymentCharge(charge) && !charge.paid && !charge.waived)
+      ),
+      catchError(() => of(false))
+    );
   }
 
   /**
