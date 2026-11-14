@@ -25,3 +25,18 @@
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
+
+.compact {
+  margin: 0;
+
+  .map-container {
+    box-sizing: border-box;
+    height: 280px;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius);
+  }
+
+  .map-error {
+    color: var(--ds-text-2);
+  }
+}

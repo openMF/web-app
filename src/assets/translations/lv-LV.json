@@ -827,7 +827,8 @@
     },
     "clipboard": {
       "type": "Starpliktuve",
-      "copied": "Nokopēts: {{value}}"
+      "copied": "Nokopēts: {{value}}",
+      "copyFailed": "Neizdevās nokopēt koordinātas."
     },
     "tenant": {
       "changed": {
@@ -1351,7 +1352,9 @@
       "Deleting": "Dzēš",
       "Inactivate": "Deaktivizēt",
       "Discount Fee Adjustment": "Atlaides maksas korekcija",
-      "Adjust by Difference": "Koriģēt pēc starpības"
+      "Adjust by Difference": "Koriģēt pēc starpības",
+      "Open in map": "Atvērt kartē",
+      "Configure": "Konfigurēt"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2380,7 +2383,8 @@
       "Deposit Details": "Noguldījuma informācija",
       "Services": "Pakalpojumi",
       "Schedules": "Grafiki",
-      "Reference": "Atsauce"
+      "Reference": "Atsauce",
+      "Weekly schedule": "Nedēļas grafiks"
     },
     "inputs": {
       "Breach Start Type": "Pārkāpuma sākuma tips",
@@ -4479,7 +4483,8 @@
       "Export Date": "Eksporta datums",
       "Label": "Nosaukums",
       "Original Amount": "Sākotnējā summa",
-      "Resulting Amount": "Rezultējošā summa"
+      "Resulting Amount": "Rezultējošā summa",
+      "Head Office": "Galvenais birojs"
     },
     "links": {
       "Community": "kopiena",
@@ -8477,5 +8482,98 @@
     "FinancialRetryAllowed": "Servera atļauja atkārtot finanšu operāciju",
     "ReconciliationEvidenceNotice": "Atsevišķās pārbaudes sniedz diagnostikas pierādījumus. Sakrītošas atsauces vai līdzsvaroti grāmatojumi vien nepārbauda vietējo grāmatvedību.",
     "CancellationNotice": "Atcelšana maina tikai šīs konfigurācijas statusu. Nosacījumi un pārskatījums tiek saglabāti; servera politiku pārbaudes joprojām ir spēkā."
+  },
+  "ConsolidatedIsr": {
+    "Title": "Konsolidētais ISR",
+    "DiagnosticPeriod": "Diagnostikas periods",
+    "Eligibility": "Kontu atbilstība",
+    "EligibleAccounts": "Atbilstošie konti",
+    "AccountObservations": "Kontu novērojumi",
+    "NativeWithholding": "Sākotnējais nodokļa ieturējums",
+    "TaxableBase": "Nodokļa bāze",
+    "CalculatedIsr": "Aprēķinātais ISR",
+    "ActualWithheldAmount": "Faktiski ieturētā summa",
+    "PolicyApprovalRequired": "Nepieciešams politikas apstiprinājums",
+    "HistoricalAssessments": "Vēsturiskie novērtējumi",
+    "AuditHistory": "Audita vēsture",
+    "ReconciliationRequired": "Nepieciešama saskaņošana",
+    "UnchangedBlocked": "Bez izmaiņām; aprēķins bloķēts",
+    "Unverified": "Nav pārbaudīts",
+    "NotReported": "Nav norādīts",
+    "CompleteSource": "Pilna avota kontu kopa",
+    "StructuralEligibility": "Strukturālā atbilstība",
+    "FinancialEligibility": "Finansiālā atbilstība",
+    "ObservedAt": "Novērošanas laiks",
+    "TaxProfile": "Nodokļu profila statuss",
+    "LedgerObservation": "Novērotais sākotnējais uzskaites atlikums",
+    "NativePostedInterest": "Sākotnēji iegrāmatotie procenti",
+    "NativeWithholdingConfigured": "Nodokļa ieturējums konfigurēts",
+    "TaxGroup": "Nodokļu grupas konfigurācija",
+    "NativeRecords": "Vēsturiskie sākotnējie darījumi",
+    "NativeTaxDetails": "Sākotnējie nodokļu dati",
+    "CalculationId": "Aprēķina ID",
+    "Supersedes": "Aizstātais ieraksts",
+    "HistoricalSnapshot": "Vēsturiskais diagnostikas momentuzņēmums",
+    "RecordedAt": "Ierakstīšanas laiks",
+    "BackendCapabilities": "Servera iespējas",
+    "InspectPeriod": "Pārbaudīt diagnostikas periodu",
+    "SelectPeriod": "Izvēlieties diagnostikas periodu kontu pārbaudei.",
+    "NoAccounts": "Diagnostikas kopā nav kontu.",
+    "IncompleteData": "Nepilnīgi kontu dati. Daļēji novērojumi nav pilnīgas kopsummas.",
+    "UnknownDiagnostic": "Papildu diagnostikas informācija nav pieejama. Pārbaudiet servera politiku.",
+    "IncompatibleBackend": "Nesaderīga servera atbilde. Pārbaudiet uzkrājumu moduļa versiju.",
+    "InvalidPeriod": "Izvēlieties derīgus sakārtotus datumus no 1900. gada līdz šodienai, ne vairāk kā 367 dienas ieskaitot. Jāievēro arī servera darbības datums.",
+    "DiagnosticsOnly": "Konsolidētā ISR diagnostika tikai lasīšanai. Novērojumi neapstiprina nodokļa aprēķinu vai veiktu ieturējumu.",
+    "EvidenceOnly": "Saglabātie novērtējumi ir nemainīgi diagnostikas pierādījumi, nevis nodokļu deklarācijas vai maksājumi.",
+    "NativeEvidence": "Sākotnējie atlikumi, procenti un nodokļi ir novērojumi, nevis apstiprināta nodokļa bāze vai veikti konsolidēti ieturējumi. Valūtas tiek nodalītas.",
+    "CalculationUnavailable": "Konsolidētā ISR aprēķins gaida apstiprinātus nodokļu noteikumus.",
+    "WithholdingUnavailable": "Konsolidētā ISR ieturēšana pašlaik nav pieejama.",
+    "AssessmentSaved": "Diagnostikas novērtējums saglabāts",
+    "ReconciliationChecked": "Saskaņošanas pierādījums reģistrēts",
+    "FinancialRetryAllowed": "Finansiāls atkārtots mēģinājums atļauts",
+    "Capabilities": {
+      "eligibilityDiagnostics": "Atbilstības diagnostika",
+      "nativeBalanceObservations": "Sākotnējo atlikumu novērojumi",
+      "consolidatedBalanceRetrieval": "Konsolidētā atlikuma iegūšana",
+      "draftRuleVersions": "Noteikumu projekti",
+      "approvedTaxRules": "Apstiprināti nodokļu noteikumi",
+      "calculation": "Konsolidētā ISR aprēķins",
+      "allocation": "Konsolidētais sadalījums",
+      "withholdingExecution": "Konsolidētā ieturējuma izpilde",
+      "accountingIntegrationVerified": "Grāmatvedības integrācija pārbaudīta",
+      "historicalSnapshots": "Vēsturiskie diagnostikas momentuzņēmumi",
+      "historicalReconciliation": "Vēsturiska saskaņošana"
+    },
+    "Reasons": {
+      "ISR_POLICY_NOT_APPROVED": "Nodokļu politika nav apstiprināta",
+      "TAX_PROFILE_UNVERIFIED": "Nodokļu profils nav pārbaudīts",
+      "AGGREGATION_BOUNDARY_UNAPPROVED": "Kontu apkopošanas robeža nav apstiprināta",
+      "TAX_PERIOD_UNSUPPORTED": "Nodokļu perioda noteikumi nav atbalstīti",
+      "TAXABLE_BASIS_UNAPPROVED": "Nodokļa bāze nav apstiprināta",
+      "ALLOCATION_UNAPPROVED": "Nodokļa sadalījums nav apstiprināts",
+      "ROUNDING_UNAPPROVED": "Noapaļošanas noteikumi nav apstiprināti",
+      "NATIVE_ACCOUNTING_INTEGRATION_UNVERIFIED": "Grāmatvedības integrācija nav pārbaudīta",
+      "ACCOUNT_CLASSIFICATION_UNSUPPORTED": "Konta klasifikācija nav atbalstīta",
+      "INVESTMENT_TREATMENT_UNAPPROVED": "Ieguldījumu aplikšana nav apstiprināta",
+      "ACCOUNT_STATUS_INELIGIBLE": "Konta statuss neatbilst",
+      "ACCOUNT_OWNERSHIP_UNSUPPORTED": "Konta īpašumtiesības nav atbalstītas",
+      "ACCOUNT_OFFICE_SCOPE_INCOMPLETE": "Filiāles tvērums nepilnīgs",
+      "ACCOUNT_POPULATION_LIMIT_EXCEEDED": "Pārsniegts kontu skaita ierobežojums",
+      "PRODUCT_POLICY_UNAVAILABLE": "Trūkst apstiprinātas produkta politikas",
+      "PRODUCT_POLICY_NOT_EFFECTIVE": "Produkta politika nav spēkā",
+      "PRODUCT_POLICY_TRANSITION_UNSUPPORTED": "Politikas pāreja nav atbalstīta",
+      "PRODUCT_CORE_CHANGED": "Mainīti sākotnējie produkta iestatījumi",
+      "TAX_GROUP_UNAVAILABLE": "Nodokļu grupa nav pieejama",
+      "TAX_CONFIGURATION_MISMATCH": "Nodokļu konfigurācija nesakrīt",
+      "CURRENCY_UNSUPPORTED": "Neatbalstīta valūta",
+      "CURRENCY_AGGREGATION_UNAPPROVED": "Valūtu apkopošana nav apstiprināta",
+      "SOURCE_DATA_UNAVAILABLE": "Avota dati nav pieejami",
+      "SOURCE_TRANSACTION_LIMIT_EXCEEDED": "Pārsniegts avota darījumu ierobežojums",
+      "HISTORICAL_BALANCE_BASIS_UNAPPROVED": "Vēsturiskā atlikuma bāze nav apstiprināta",
+      "HISTORICAL_ACCOUNT_STATE_UNVERIFIED": "Vēsturiskais konta stāvoklis nav pārbaudīts",
+      "NATIVE_WITHHOLDING_REMAINS_AUTHORITATIVE": "Sākotnējais ieturējums paliek autoritatīvs",
+      "SOURCE_DATA_CHANGED": "Avota dati mainījušies",
+      "NO_ACCOUNTS": "Nav kontu"
+    }
   }
 }

@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* stylelint-disable unit-allowed-list -- CSS Grid uses fractional tracks. */
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -41,5 +43,124 @@
 
   table {
     width: 100%;
+  }
+}
+
+.summary-view {
+  padding: 0;
+  margin: 0;
+
+  > .layout-row {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .m-b-10 {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .service-state {
+    min-height: 64px;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+}
+
+.service-summary-labels,
+.service-summary-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.service-summary-labels {
+  color: var(--ds-text-2);
+  font-size: 0.8125rem;
+  padding-bottom: 8px;
+}
+
+.service-summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-summary-row {
+  padding: 16px 0;
+  border-top: 1px solid var(--ds-border);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.service-name {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.service-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  border-radius: var(--ds-radius);
+  color: var(--office-accent);
+  background: color-mix(in srgb, var(--office-accent) 10%, var(--ds-surface));
+}
+
+.working-hours {
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+
+  span {
+    position: absolute;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--office-accent);
+  }
+}
+
+.timeline-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  color: var(--ds-text-2);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (width < 768px) {
+  .service-summary-row,
+  .service-summary-labels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .daily-timeline {
+    grid-column: 1 / -1;
   }
 }

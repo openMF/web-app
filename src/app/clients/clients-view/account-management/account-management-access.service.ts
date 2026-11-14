@@ -21,7 +21,8 @@ export class AccountManagementAccess {
     return [
       'READ_SAVINGS_ACCOUNT_RELATIONSHIP',
       'READ_GUARANTEE_SWEEP',
-      'READ_PLANNED_SAVINGS'
+      'READ_PLANNED_SAVINGS',
+      'READ_CONSOLIDATED_ISR_ELIGIBILITY'
     ].some((p) => this.has(p));
   }
 }

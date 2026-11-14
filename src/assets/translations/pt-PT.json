@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Área de transferência",
-      "copied": "Copiado: {{value}}"
+      "copied": "Copiado: {{value}}",
+      "copyFailed": "Não foi possível copiar as coordenadas."
     },
     "tenant": {
       "changed": {
@@ -1354,7 +1355,9 @@
       "Deleting": "A eliminar",
       "Inactivate": "Inativar",
       "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
-      "Adjust by Difference": "Ajustar por diferença"
+      "Adjust by Difference": "Ajustar por diferença",
+      "Open in map": "Abrir no mapa",
+      "Configure": "Configurar"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -2383,7 +2386,8 @@
       "Services": "Serviços",
       "Schedules": "Horários",
       "Reference": "Referência",
-      "Create Savings Product": "Criar produto de poupança"
+      "Create Savings Product": "Criar produto de poupança",
+      "Weekly schedule": "Horário semanal"
     },
     "inputs": {
       "Breach Start Type": "Tipo de início de violação",
@@ -4482,7 +4486,8 @@
       "Export Date": "Data de exportação",
       "Label": "Rótulo",
       "Original Amount": "Valor original",
-      "Resulting Amount": "Valor resultante"
+      "Resulting Amount": "Valor resultante",
+      "Head Office": "Sede"
     },
     "links": {
       "Community": "Comunidade",
@@ -8480,5 +8485,98 @@
     "FinancialRetryAllowed": "Permissão do servidor para nova tentativa financeira",
     "ReconciliationEvidenceNotice": "As verificações individuais são elementos de diagnóstico. Referências correspondentes ou lançamentos equilibrados, por si só, não verificam a contabilidade nativa.",
     "CancellationNotice": "O cancelamento altera apenas o estado desta configuração. As condições e a revisão são preservadas; continuam a aplicar-se as verificações de políticas do servidor."
+  },
+  "ConsolidatedIsr": {
+    "Title": "ISR consolidado",
+    "DiagnosticPeriod": "Período de diagnóstico",
+    "Eligibility": "Elegibilidade das contas",
+    "EligibleAccounts": "Contas elegíveis",
+    "AccountObservations": "Observações das contas",
+    "NativeWithholding": "Retenção nativa",
+    "TaxableBase": "Base tributável",
+    "CalculatedIsr": "ISR calculado",
+    "ActualWithheldAmount": "Montante efetivamente retido",
+    "PolicyApprovalRequired": "Aprovação da política necessária",
+    "HistoricalAssessments": "Avaliações históricas",
+    "AuditHistory": "Histórico de auditoria",
+    "ReconciliationRequired": "Reconciliação necessária",
+    "UnchangedBlocked": "Sem alterações; cálculo bloqueado",
+    "Unverified": "Não verificado",
+    "NotReported": "Não comunicado",
+    "CompleteSource": "População de origem completa",
+    "StructuralEligibility": "Elegibilidade estrutural",
+    "FinancialEligibility": "Elegibilidade financeira",
+    "ObservedAt": "Data de observação",
+    "TaxProfile": "Estado do perfil fiscal",
+    "LedgerObservation": "Saldo contabilístico nativo observado",
+    "NativePostedInterest": "Juros nativos contabilizados",
+    "NativeWithholdingConfigured": "Retenção nativa configurada",
+    "TaxGroup": "Configuração do grupo fiscal",
+    "NativeRecords": "Transações nativas históricas",
+    "NativeTaxDetails": "Registos de detalhes fiscais nativos",
+    "CalculationId": "ID do cálculo",
+    "Supersedes": "Registo substituído",
+    "HistoricalSnapshot": "Instantâneo histórico de diagnóstico",
+    "RecordedAt": "Data de registo",
+    "BackendCapabilities": "Capacidades do servidor",
+    "InspectPeriod": "Consultar período de diagnóstico",
+    "SelectPeriod": "Selecione um período de diagnóstico para consultar as contas.",
+    "NoAccounts": "Sem contas na população de diagnóstico.",
+    "IncompleteData": "Dados de contas incompletos. Observações parciais não representam totais completos.",
+    "UnknownDiagnostic": "Informação de diagnóstico adicional indisponível. Verifique as políticas do servidor.",
+    "IncompatibleBackend": "Resposta do servidor incompatível. Verifique a versão do módulo de poupança.",
+    "InvalidPeriod": "Selecione datas válidas e ordenadas de 1900 até hoje, no máximo 367 dias inclusive. A data de negócio do servidor também se aplica.",
+    "DiagnosticsOnly": "Diagnósticos ISR consolidados apenas de leitura. As observações não comprovam cálculo fiscal nem retenção executada.",
+    "EvidenceOnly": "As avaliações guardadas são provas de diagnóstico imutáveis, não declarações ou pagamentos fiscais.",
+    "NativeEvidence": "Saldos, juros e retenções nativos são observações, não bases tributáveis aprovadas nem retenções consolidadas executadas. As moedas permanecem separadas.",
+    "CalculationUnavailable": "O cálculo ISR consolidado aguarda regras fiscais aprovadas.",
+    "WithholdingUnavailable": "A retenção ISR consolidada não está disponível atualmente.",
+    "AssessmentSaved": "Avaliação de diagnóstico guardada",
+    "ReconciliationChecked": "Prova de reconciliação registada",
+    "FinancialRetryAllowed": "Nova tentativa financeira permitida",
+    "Capabilities": {
+      "eligibilityDiagnostics": "Diagnóstico de elegibilidade",
+      "nativeBalanceObservations": "Observações dos saldos nativos",
+      "consolidatedBalanceRetrieval": "Consulta do saldo consolidado",
+      "draftRuleVersions": "Propostas de regras em rascunho",
+      "approvedTaxRules": "Regras fiscais aprovadas",
+      "calculation": "Cálculo ISR consolidado",
+      "allocation": "Distribuição consolidada",
+      "withholdingExecution": "Execução de retenção consolidada",
+      "accountingIntegrationVerified": "Integração contabilística verificada",
+      "historicalSnapshots": "Instantâneos históricos de diagnóstico",
+      "historicalReconciliation": "Reconciliação histórica"
+    },
+    "Reasons": {
+      "ISR_POLICY_NOT_APPROVED": "Política fiscal não aprovada",
+      "TAX_PROFILE_UNVERIFIED": "Perfil fiscal não verificado",
+      "AGGREGATION_BOUNDARY_UNAPPROVED": "Limite de agregação não aprovado",
+      "TAX_PERIOD_UNSUPPORTED": "Regras do período fiscal não suportadas",
+      "TAXABLE_BASIS_UNAPPROVED": "Base tributável não aprovada",
+      "ALLOCATION_UNAPPROVED": "Distribuição fiscal não aprovada",
+      "ROUNDING_UNAPPROVED": "Regras de arredondamento não aprovadas",
+      "NATIVE_ACCOUNTING_INTEGRATION_UNVERIFIED": "Integração contabilística não verificada",
+      "ACCOUNT_CLASSIFICATION_UNSUPPORTED": "Classificação de conta não suportada",
+      "INVESTMENT_TREATMENT_UNAPPROVED": "Tratamento fiscal de investimentos não aprovado",
+      "ACCOUNT_STATUS_INELIGIBLE": "Estado da conta não elegível",
+      "ACCOUNT_OWNERSHIP_UNSUPPORTED": "Titularidade da conta não suportada",
+      "ACCOUNT_OFFICE_SCOPE_INCOMPLETE": "Âmbito da agência incompleto",
+      "ACCOUNT_POPULATION_LIMIT_EXCEEDED": "Limite de contas excedido",
+      "PRODUCT_POLICY_UNAVAILABLE": "Falta política de produto aprovada",
+      "PRODUCT_POLICY_NOT_EFFECTIVE": "Política de produto não vigente",
+      "PRODUCT_POLICY_TRANSITION_UNSUPPORTED": "Transição de política não suportada",
+      "PRODUCT_CORE_CHANGED": "Definições nativas do produto alteradas",
+      "TAX_GROUP_UNAVAILABLE": "Grupo fiscal indisponível",
+      "TAX_CONFIGURATION_MISMATCH": "Configuração fiscal incompatível",
+      "CURRENCY_UNSUPPORTED": "Moeda não suportada",
+      "CURRENCY_AGGREGATION_UNAPPROVED": "Agregação de moedas não aprovada",
+      "SOURCE_DATA_UNAVAILABLE": "Dados de origem indisponíveis",
+      "SOURCE_TRANSACTION_LIMIT_EXCEEDED": "Limite de transações de origem excedido",
+      "HISTORICAL_BALANCE_BASIS_UNAPPROVED": "Base de saldo histórico não aprovada",
+      "HISTORICAL_ACCOUNT_STATE_UNVERIFIED": "Estado histórico da conta não verificado",
+      "NATIVE_WITHHOLDING_REMAINS_AUTHORITATIVE": "A retenção nativa continua a ser a referência autorizada",
+      "SOURCE_DATA_CHANGED": "Dados de origem alterados",
+      "NO_ACCOUNTS": "Sem contas"
+    }
   }
 }

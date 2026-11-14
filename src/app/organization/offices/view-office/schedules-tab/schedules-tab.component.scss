@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* stylelint-disable unit-allowed-list -- CSS Grid uses fractional tracks. */
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -104,5 +106,78 @@
     .schedule-row .time-column {
       grid-column: 1 / -1;
     }
+  }
+}
+
+.summary-view {
+  padding: 0;
+  margin: 0;
+
+  > .layout-row {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .m-b-16 {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .schedule-state {
+    min-height: 64px;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+}
+
+.weekly-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.day-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  overflow-wrap: anywhere;
+}
+
+.short-weekday {
+  color: var(--ds-text-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.day-hours {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.closed-day {
+  background: var(--ds-surface-alt);
+  border-style: dashed;
+  color: var(--ds-text-2);
+}
+
+@media (width < 768px) {
+  .weekly-strip {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   }
 }

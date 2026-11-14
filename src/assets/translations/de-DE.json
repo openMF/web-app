@@ -830,7 +830,8 @@
     },
     "clipboard": {
       "type": "Zwischenablage",
-      "copied": "Kopiert: {{value}}"
+      "copied": "Kopiert: {{value}}",
+      "copyFailed": "Die Koordinaten konnten nicht kopiert werden."
     },
     "tenant": {
       "changed": {
@@ -1356,7 +1357,9 @@
       "Deleting": "Wird gelöscht",
       "Inactivate": "Deaktivieren",
       "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
-      "Adjust by Difference": "Nach Differenz anpassen"
+      "Adjust by Difference": "Nach Differenz anpassen",
+      "Open in map": "Auf Karte öffnen",
+      "Configure": "Konfigurieren"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -2385,7 +2388,8 @@
       "Deposit Details": "Einzahlungsdetails",
       "Services": "Dienstleistungen",
       "Schedules": "Zeitpläne",
-      "Reference": "Referenz"
+      "Reference": "Referenz",
+      "Weekly schedule": "Wochenplan"
     },
     "inputs": {
       "Breach Start Type": "Starttyp des Verstoßes",
@@ -4484,7 +4488,8 @@
       "Export Date": "Exportdatum",
       "Label": "Bezeichnung",
       "Original Amount": "Ursprünglicher Betrag",
-      "Resulting Amount": "Resultierender Betrag"
+      "Resulting Amount": "Resultierender Betrag",
+      "Head Office": "Hauptgeschäftsstelle"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -8482,5 +8487,98 @@
     "FinancialRetryAllowed": "Serverberechtigung für finanziellen Wiederholungsversuch",
     "ReconciliationEvidenceNotice": "Einzelne Prüfungen liefern Diagnosehinweise. Übereinstimmende Referenzen oder ausgeglichene Buchungen allein verifizieren die native Buchhaltung nicht.",
     "CancellationNotice": "Die Stornierung ändert nur den Status dieser Konfiguration. Bedingungen und Revision bleiben erhalten; die Richtlinienprüfungen des Servers gelten weiterhin."
+  },
+  "ConsolidatedIsr": {
+    "Title": "Konsolidierte ISR",
+    "DiagnosticPeriod": "Diagnosezeitraum",
+    "Eligibility": "Kontoeignung",
+    "EligibleAccounts": "Geeignete Konten",
+    "AccountObservations": "Kontobeobachtungen",
+    "NativeWithholding": "Nativer Steuerabzug",
+    "TaxableBase": "Steuerbemessungsgrundlage",
+    "CalculatedIsr": "Berechnete ISR",
+    "ActualWithheldAmount": "Tatsächlich einbehaltener Betrag",
+    "PolicyApprovalRequired": "Richtlinienfreigabe erforderlich",
+    "HistoricalAssessments": "Historische Bewertungen",
+    "AuditHistory": "Prüfverlauf",
+    "ReconciliationRequired": "Abgleich erforderlich",
+    "UnchangedBlocked": "Unverändert; Berechnung weiterhin gesperrt",
+    "Unverified": "Ungeprüft",
+    "NotReported": "Nicht gemeldet",
+    "CompleteSource": "Vollständiger Quelldatenbestand",
+    "StructuralEligibility": "Strukturelle Eignung",
+    "FinancialEligibility": "Finanzielle Eignung",
+    "ObservedAt": "Beobachtet am",
+    "TaxProfile": "Status des Steuerprofils",
+    "LedgerObservation": "Beobachteter nativer Buchsaldo",
+    "NativePostedInterest": "Nativ gebuchte Zinsen",
+    "NativeWithholdingConfigured": "Nativer Steuerabzug konfiguriert",
+    "TaxGroup": "Steuergruppenkonfiguration",
+    "NativeRecords": "Historische native Transaktionen",
+    "NativeTaxDetails": "Native Steuerdetaildatensätze",
+    "CalculationId": "Berechnungs-ID",
+    "Supersedes": "Ersetzter Datensatz",
+    "HistoricalSnapshot": "Historische Diagnosemomentaufnahme",
+    "RecordedAt": "Erfasst am",
+    "BackendCapabilities": "Serverfähigkeiten",
+    "InspectPeriod": "Diagnosezeitraum prüfen",
+    "SelectPeriod": "Wählen Sie einen Diagnosezeitraum zur Kontoprüfung.",
+    "NoAccounts": "Keine Konten im Diagnosebestand.",
+    "IncompleteData": "Unvollständige Kontodaten. Teilbeobachtungen sind keine vollständigen Gesamtsummen.",
+    "UnknownDiagnostic": "Weitere Diagnoseinformationen fehlen. Prüfen Sie die Richtlinienkonfiguration des Servers.",
+    "IncompatibleBackend": "Inkompatible Serverantwort. Prüfen Sie die Version des Sparmoduls.",
+    "InvalidPeriod": "Wählen Sie gültige geordnete Daten von 1900 bis heute, höchstens 367 Tage einschließlich. Das Geschäftsdatum des Servers gilt zusätzlich.",
+    "DiagnosticsOnly": "Schreibgeschützte konsolidierte ISR-Diagnose. Beobachtungen belegen weder Steuerberechnung noch ausgeführten Steuerabzug.",
+    "EvidenceOnly": "Gespeicherte Bewertungen sind unveränderliche Diagnosenachweise, keine Steuererklärungen oder Steuerzahlungen.",
+    "NativeEvidence": "Native Salden, Zinsen und Steuerabzüge sind Beobachtungen, keine genehmigten Steuerbemessungsgrundlagen oder ausgeführten konsolidierten Abzüge. Währungen bleiben getrennt.",
+    "CalculationUnavailable": "Die konsolidierte ISR-Berechnung wartet auf genehmigte Steuerregeln.",
+    "WithholdingUnavailable": "Der konsolidierte ISR-Steuerabzug ist derzeit nicht verfügbar.",
+    "AssessmentSaved": "Diagnosebewertung gespeichert",
+    "ReconciliationChecked": "Abgleichnachweis erfasst",
+    "FinancialRetryAllowed": "Finanzieller Wiederholungsversuch erlaubt",
+    "Capabilities": {
+      "eligibilityDiagnostics": "Eignungsdiagnose",
+      "nativeBalanceObservations": "Native Saldobeobachtungen",
+      "consolidatedBalanceRetrieval": "Abruf konsolidierter Salden",
+      "draftRuleVersions": "Regelentwürfe",
+      "approvedTaxRules": "Genehmigte Steuerregeln",
+      "calculation": "Konsolidierte ISR-Berechnung",
+      "allocation": "Konsolidierte Aufteilung",
+      "withholdingExecution": "Ausführung konsolidierter Steuerabzüge",
+      "accountingIntegrationVerified": "Buchhaltungsintegration geprüft",
+      "historicalSnapshots": "Historische Diagnosemomentaufnahmen",
+      "historicalReconciliation": "Historischer Abgleich"
+    },
+    "Reasons": {
+      "ISR_POLICY_NOT_APPROVED": "Steuerrichtlinie nicht genehmigt",
+      "TAX_PROFILE_UNVERIFIED": "Steuerprofil ungeprüft",
+      "AGGREGATION_BOUNDARY_UNAPPROVED": "Konsolidierungsgrenze nicht genehmigt",
+      "TAX_PERIOD_UNSUPPORTED": "Steuerzeitraumregeln nicht unterstützt",
+      "TAXABLE_BASIS_UNAPPROVED": "Steuerbemessungsgrundlage nicht genehmigt",
+      "ALLOCATION_UNAPPROVED": "Steueraufteilung nicht genehmigt",
+      "ROUNDING_UNAPPROVED": "Rundungsregeln nicht genehmigt",
+      "NATIVE_ACCOUNTING_INTEGRATION_UNVERIFIED": "Buchhaltungsintegration ungeprüft",
+      "ACCOUNT_CLASSIFICATION_UNSUPPORTED": "Kontoklassifizierung nicht unterstützt",
+      "INVESTMENT_TREATMENT_UNAPPROVED": "Anlagebesteuerung nicht genehmigt",
+      "ACCOUNT_STATUS_INELIGIBLE": "Kontostatus ungeeignet",
+      "ACCOUNT_OWNERSHIP_UNSUPPORTED": "Kontoinhaberschaft nicht unterstützt",
+      "ACCOUNT_OFFICE_SCOPE_INCOMPLETE": "Filialbereich unvollständig",
+      "ACCOUNT_POPULATION_LIMIT_EXCEEDED": "Kontenanzahlgrenze überschritten",
+      "PRODUCT_POLICY_UNAVAILABLE": "Genehmigte Produktrichtlinie fehlt",
+      "PRODUCT_POLICY_NOT_EFFECTIVE": "Produktrichtlinie nicht wirksam",
+      "PRODUCT_POLICY_TRANSITION_UNSUPPORTED": "Richtlinienübergang nicht unterstützt",
+      "PRODUCT_CORE_CHANGED": "Native Produkteinstellungen geändert",
+      "TAX_GROUP_UNAVAILABLE": "Steuergruppe nicht verfügbar",
+      "TAX_CONFIGURATION_MISMATCH": "Steuerkonfiguration stimmt nicht überein",
+      "CURRENCY_UNSUPPORTED": "Nicht unterstützte Währung",
+      "CURRENCY_AGGREGATION_UNAPPROVED": "Währungskonsolidierung nicht genehmigt",
+      "SOURCE_DATA_UNAVAILABLE": "Quelldaten nicht verfügbar",
+      "SOURCE_TRANSACTION_LIMIT_EXCEEDED": "Quelltransaktionsgrenze überschritten",
+      "HISTORICAL_BALANCE_BASIS_UNAPPROVED": "Historische Saldobasis nicht genehmigt",
+      "HISTORICAL_ACCOUNT_STATE_UNVERIFIED": "Historischer Kontostatus ungeprüft",
+      "NATIVE_WITHHOLDING_REMAINS_AUTHORITATIVE": "Nativer Steuerabzug bleibt maßgeblich",
+      "SOURCE_DATA_CHANGED": "Quelldaten geändert",
+      "NO_ACCOUNTS": "Keine Konten"
+    }
   }
 }

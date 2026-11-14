@@ -25,7 +25,10 @@
       "currency": "Moneda",
       "showLastCutOff": "Mostrar último corte"
     },
-    "types": { "CASH": "Efectivo", "CHECK": "Cheque" },
+    "types": {
+      "CASH": "Efectivo",
+      "CHECK": "Cheque"
+    },
     "columns": {
       "user": "Usuario / Custodio",
       "name": "Nombre",
@@ -253,7 +256,11 @@
       "updating": "Actualizando...",
       "updatingCategory": "Actualizando {{category}}"
     },
-    "categories": { "ACCOUNTING": "Contabilidad", "GENERAL": "Catálogos generales", "USERS": "Usuarios" },
+    "categories": {
+      "ACCOUNTING": "Contabilidad",
+      "GENERAL": "Catálogos generales",
+      "USERS": "Usuarios"
+    },
     "errors": {
       "alreadyRunning": "Esta actualización de catálogo ya está en curso",
       "interrupted": "La actualización anterior del catálogo fue interrumpida. Inténtalo de nuevo",
@@ -831,7 +838,8 @@
     },
     "clipboard": {
       "type": "Portapapeles",
-      "copied": "Copiado: {{value}}"
+      "copied": "Copiado: {{value}}",
+      "copyFailed": "No se pudieron copiar las coordenadas."
     },
     "tenant": {
       "changed": {
@@ -1354,7 +1362,9 @@
       "Deleting": "Eliminando",
       "Inactivate": "Inactivar",
       "Discount Fee Adjustment": "Ajuste de Comisión de Descuento",
-      "Adjust by Difference": "Ajustar por diferencia"
+      "Adjust by Difference": "Ajustar por diferencia",
+      "Open in map": "Abrir en mapa",
+      "Configure": "Configurar"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -2383,7 +2393,8 @@
       "Customer and Account": "Cliente y cuenta",
       "Deposit Details": "Detalles del depósito",
       "Services": "Servicios",
-      "Schedules": "Horarios"
+      "Schedules": "Horarios",
+      "Weekly schedule": "Horario semanal"
     },
     "inputs": {
       "Breach Start Type": "Tipo de inicio de incumplimiento",
@@ -4476,7 +4487,9 @@
       "Export Date": "Fecha de exportación",
       "Label": "Etiqueta",
       "Original Amount": "Monto original",
-      "Resulting Amount": "Monto resultante"
+      "Resulting Amount": "Monto resultante",
+      "Head Office": "Sucursal matriz",
+      "Client number": "# cliente"
     },
     "links": {
       "Community": "Comunidad",
@@ -7275,7 +7288,10 @@
       "dateRange": "Fecha desde debe ser anterior o igual a Fecha hasta.",
       "referenceLength": "La referencia no debe superar los 200 caracteres."
     },
-    "denominationTypes": { "BANKNOTE": "Billete", "COIN": "Moneda" }
+    "denominationTypes": {
+      "BANKNOTE": "Billete",
+      "COIN": "Moneda"
+    }
   },
   "enrollmentStatus": {
     "title": "Estado de enrolamiento",
@@ -7707,7 +7723,6 @@
     "drawerSetup": "Abra una caja para comenzar",
     "setupRequired": "Este espacio de retiros requiere atención",
     "checkHint": "La emisión de cheques no está habilitada. Puede continuar con efectivo.",
-
     "customer": "Cliente",
     "notAvailable": "No disponible",
     "forbidden": "No tiene permiso para realizar esta acción.",
@@ -8598,5 +8613,114 @@
     "FinancialRetryAllowed": "Permiso del servidor para reintentar la operación financiera",
     "ReconciliationEvidenceNotice": "Las comprobaciones individuales son evidencia diagnóstica. Las referencias coincidentes o los asientos equilibrados por sí solos no verifican la contabilidad nativa.",
     "CancellationNotice": "La cancelación solo cambia el estado de esta configuración. Se conservan las condiciones y la revisión; siguen vigentes las validaciones de políticas del servidor."
+  },
+  "reports": {
+    "pdf": {
+      "controls": "Controles de vista previa PDF",
+      "page": "Página {{page}} de {{total}}",
+      "zoomOut": "Reducir zoom",
+      "zoomIn": "Aumentar zoom",
+      "fit": "Ajustar ancho",
+      "loading": "Cargando vista previa PDF…",
+      "unavailable": "No se pudo mostrar la vista previa. Puedes descargar el PDF."
+    },
+    "client": {
+      "invalid": "Captura un número de cliente entero, mayor que cero.",
+      "notFound": "No se encontró el cliente en tu oficina. Verifica el número capturado.",
+      "noLoans": "El cliente no tiene créditos registrados para generar este reporte."
+    }
+  },
+  "ConsolidatedIsr": {
+    "Title": "ISR consolidado",
+    "DiagnosticPeriod": "Período de diagnóstico",
+    "Eligibility": "Elegibilidad de cuentas",
+    "EligibleAccounts": "Cuentas elegibles",
+    "AccountObservations": "Observaciones de cuentas",
+    "NativeWithholding": "Retención nativa",
+    "TaxableBase": "Base imponible",
+    "CalculatedIsr": "ISR calculado",
+    "ActualWithheldAmount": "Importe efectivamente retenido",
+    "PolicyApprovalRequired": "Se requiere aprobación de políticas",
+    "HistoricalAssessments": "Evaluaciones históricas",
+    "AuditHistory": "Historial de auditoría",
+    "ReconciliationRequired": "Se requiere conciliación",
+    "UnchangedBlocked": "Sin cambios; cálculo bloqueado",
+    "Unverified": "Sin verificar",
+    "NotReported": "No informado",
+    "CompleteSource": "Población de origen completa",
+    "StructuralEligibility": "Elegibilidad estructural",
+    "FinancialEligibility": "Elegibilidad financiera",
+    "ObservedAt": "Fecha de observación",
+    "TaxProfile": "Estado del perfil fiscal",
+    "LedgerObservation": "Saldo contable nativo observado",
+    "NativePostedInterest": "Intereses nativos contabilizados",
+    "NativeWithholdingConfigured": "Retención nativa configurada",
+    "TaxGroup": "Configuración del grupo fiscal",
+    "NativeRecords": "Transacciones nativas históricas",
+    "NativeTaxDetails": "Registros de detalle fiscal nativo",
+    "CalculationId": "ID del cálculo",
+    "Supersedes": "Registro sustituido",
+    "HistoricalSnapshot": "Instantánea histórica de diagnóstico",
+    "RecordedAt": "Fecha de registro",
+    "BackendCapabilities": "Capacidades del servidor",
+    "InspectPeriod": "Consultar período de diagnóstico",
+    "SelectPeriod": "Seleccione un período de diagnóstico para consultar las cuentas.",
+    "NoAccounts": "No hay cuentas en la población de diagnóstico.",
+    "IncompleteData": "Datos de cuentas incompletos. Las observaciones parciales no representan totales completos.",
+    "UnknownDiagnostic": "No hay información de diagnóstico adicional. Revise la configuración de políticas del servidor.",
+    "IncompatibleBackend": "Respuesta del servidor incompatible. Verifique la versión del complemento de ahorro.",
+    "InvalidPeriod": "Seleccione fechas válidas y ordenadas desde 1900 hasta hoy, con un máximo de 367 días inclusive. También se aplica la fecha de negocio del servidor.",
+    "DiagnosticsOnly": "Diagnósticos de ISR consolidado de solo lectura. Las observaciones no establecen un cálculo fiscal ni una retención ejecutada.",
+    "EvidenceOnly": "Las evaluaciones guardadas son evidencia de diagnóstico inmutable, no declaraciones ni pagos fiscales.",
+    "NativeEvidence": "Los saldos contables, intereses y retenciones nativas son observaciones, no saldos imponibles aprobados ni retenciones consolidadas ejecutadas. Las monedas permanecen separadas.",
+    "CalculationUnavailable": "El cálculo del ISR consolidado está pendiente de reglas fiscales aprobadas.",
+    "WithholdingUnavailable": "La retención del ISR consolidado no está disponible actualmente.",
+    "AssessmentSaved": "Evaluación de diagnóstico guardada",
+    "ReconciliationChecked": "Evidencia de conciliación registrada",
+    "FinancialRetryAllowed": "Reintento financiero permitido",
+    "Capabilities": {
+      "eligibilityDiagnostics": "Diagnóstico de elegibilidad",
+      "nativeBalanceObservations": "Observaciones de saldos nativos",
+      "consolidatedBalanceRetrieval": "Consulta de saldo consolidado",
+      "draftRuleVersions": "Propuestas de reglas en borrador",
+      "approvedTaxRules": "Reglas fiscales aprobadas",
+      "calculation": "Cálculo de ISR consolidado",
+      "allocation": "Asignación consolidada",
+      "withholdingExecution": "Ejecución de retención consolidada",
+      "accountingIntegrationVerified": "Integración contable verificada",
+      "historicalSnapshots": "Instantáneas históricas de diagnóstico",
+      "historicalReconciliation": "Conciliación histórica"
+    },
+    "Reasons": {
+      "ISR_POLICY_NOT_APPROVED": "Política fiscal no aprobada",
+      "TAX_PROFILE_UNVERIFIED": "Perfil fiscal sin verificar",
+      "AGGREGATION_BOUNDARY_UNAPPROVED": "Límite de agrupación de cuentas no aprobado",
+      "TAX_PERIOD_UNSUPPORTED": "Reglas del período fiscal no admitidas",
+      "TAXABLE_BASIS_UNAPPROVED": "Base imponible no aprobada",
+      "ALLOCATION_UNAPPROVED": "Asignación fiscal no aprobada",
+      "ROUNDING_UNAPPROVED": "Reglas de redondeo no aprobadas",
+      "NATIVE_ACCOUNTING_INTEGRATION_UNVERIFIED": "Integración contable no verificada",
+      "ACCOUNT_CLASSIFICATION_UNSUPPORTED": "Clasificación de cuenta no admitida",
+      "INVESTMENT_TREATMENT_UNAPPROVED": "Tratamiento fiscal de inversiones no aprobado",
+      "ACCOUNT_STATUS_INELIGIBLE": "Estado de cuenta no elegible",
+      "ACCOUNT_OWNERSHIP_UNSUPPORTED": "Titularidad de cuenta no admitida",
+      "ACCOUNT_OFFICE_SCOPE_INCOMPLETE": "Ámbito de oficina incompleto",
+      "ACCOUNT_POPULATION_LIMIT_EXCEEDED": "Límite de cuentas excedido",
+      "PRODUCT_POLICY_UNAVAILABLE": "Falta política de producto aprobada",
+      "PRODUCT_POLICY_NOT_EFFECTIVE": "Política de producto no vigente",
+      "PRODUCT_POLICY_TRANSITION_UNSUPPORTED": "Transición de política no admitida",
+      "PRODUCT_CORE_CHANGED": "Configuración nativa del producto modificada",
+      "TAX_GROUP_UNAVAILABLE": "Grupo fiscal no disponible",
+      "TAX_CONFIGURATION_MISMATCH": "Configuración fiscal incompatible",
+      "CURRENCY_UNSUPPORTED": "Moneda no admitida",
+      "CURRENCY_AGGREGATION_UNAPPROVED": "Agrupación de monedas no aprobada",
+      "SOURCE_DATA_UNAVAILABLE": "Datos de origen no disponibles",
+      "SOURCE_TRANSACTION_LIMIT_EXCEEDED": "Límite de transacciones de origen excedido",
+      "HISTORICAL_BALANCE_BASIS_UNAPPROVED": "Base de saldo histórico no aprobada",
+      "HISTORICAL_ACCOUNT_STATE_UNVERIFIED": "Estado histórico de cuenta sin verificar",
+      "NATIVE_WITHHOLDING_REMAINS_AUTHORITATIVE": "La retención nativa sigue siendo la fuente autorizada",
+      "SOURCE_DATA_CHANGED": "Datos de origen modificados",
+      "NO_ACCOUNTS": "Sin cuentas"
+    }
   }
 }
