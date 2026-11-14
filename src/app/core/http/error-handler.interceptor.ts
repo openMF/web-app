@@ -11,8 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
@@ -62,6 +62,33 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       }
     }
     return error;
+  }
+
+  /**
+   * Decodes a binary Blob error body into a structured JSON payload or string.
+   * Falls back to null if reading fails.
+   */
+  private async parseBlob(blob: Blob): Promise<unknown> {
+    try {
+      let text: string;
+      if (typeof blob.text === 'function') {
+        text = await blob.text();
+      } else {
+        text = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(reader.error);
+          reader.readAsText(blob);
+        });
+      }
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    } catch {
+      return null;
+    }
   }
 
   /**
@@ -119,6 +146,24 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
+    if (response.error instanceof Blob) {
+      return from(this.parseBlob(response.error)).pipe(
+        switchMap((parsedError) => {
+          const resolvedResponse = new HttpErrorResponse({
+            error: parsedError ?? response.error,
+            headers: response.headers,
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url ?? undefined
+          });
+          return this.processError(resolvedResponse, request);
+        })
+      );
+    }
+    return this.processError(response, request);
+  }
+
+  private processError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
     // Account management renders allowlisted localized errors, including optional endpoint 404s.
     // Never send its financial payloads to the generic response logger or raw server-message alerts.
