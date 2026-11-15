@@ -1,0 +1,543 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="anpa" [attr.aria-label]="'labels.anpa.title' | translate" [attr.aria-busy]="loading()">
+  <div class="toolbar">
+    <div>
+      <h2>{{ 'labels.anpa.title' | translate }}</h2>
+      <p>{{ 'labels.anpa.diagnosticOnly' | translate }}</p>
+    </div>
+    <button mat-button (click)="reload()" [disabled]="loading()">{{ 'labels.buttons.Refresh' | translate }}</button>
+  </div>
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" [attr.aria-label]="'labels.anpa.loading' | translate"></mat-progress-bar>
+  }
+  <div aria-live="polite">
+    @if (notice()) {
+      <p>{{ notice() | translate }}</p>
+    }
+  </div>
+  @for (error of errors(); track error.section) {
+    <mat-card class="error" role="alert"
+      ><mat-card-content
+        ><strong>{{ 'labels.anpa.' + error.section | translate }}</strong>
+        <p>{{ error.key | translate }}</p></mat-card-content
+      ></mat-card
+    >
+  }
+  @if (template(); as config) {
+    <mat-card
+      ><mat-card-content
+        ><p>{{ 'labels.anpa.connected' | translate }} · {{ config.nativeVersion }}</p>
+        <mat-chip-set [attr.aria-label]="'labels.anpa.capabilities' | translate">
+          <mat-chip>{{ 'labels.anpa.diagnostics' | translate }}</mat-chip>
+          @if (
+            !config.capabilities.financialWriteOffCorrection ||
+            !config.capabilities.nativeWriteOffInterceptionVerified ||
+            !config.capabilities.correctionControls?.correctedWriteOffExecution
+          ) {
+            <mat-chip>{{ 'labels.anpa.correctionUnavailable' | translate }}</mat-chip>
+          }
+          @if (!config.capabilities.correctionControls?.financialAdjustmentExecution) {
+            <mat-chip>{{ 'labels.anpa.proposalsOnly' | translate }}</mat-chip>
+          }
+        </mat-chip-set>
+      </mat-card-content></mat-card
+    >
+    <mat-accordion multi>
+      <mat-expansion-panel [expanded]="true"
+        ><mat-expansion-panel-header
+          ><mat-panel-title>{{ 'labels.anpa.overview' | translate }}</mat-panel-title></mat-expansion-panel-header
+        >
+        @if (eligibility(); as e) {
+          <dl class="facts">
+            <dt>{{ 'labels.anpa.loanId' | translate }}</dt>
+            <dd>{{ e.loan.loanId }}</dd>
+            <dt>{{ 'labels.inputs.Client ID' | translate }}</dt>
+            <dd>{{ e.loan.clientId ?? ('labels.inputs.Unavailable' | translate) }}</dd>
+            <dt>{{ 'labels.anpa.groupId' | translate }}</dt>
+            <dd>{{ e.loan.groupId ?? ('labels.inputs.Unavailable' | translate) }}</dd>
+            <dt>{{ 'labels.anpa.productId' | translate }}</dt>
+            <dd>{{ e.loan.productId }}</dd>
+            <dt>{{ 'labels.anpa.nativeStatus' | translate }}</dt>
+            <dd>
+              {{ nativeStatuses[e.loan.nativeStatus] || 'labels.inputs.Unavailable' | translate }} ({{
+                e.loan.nativeStatus
+              }})
+            </dd>
+            <dt>{{ 'labels.anpa.currentNpa' | translate }}</dt>
+            <dd>{{ (e.loan.currentNpa ? 'labels.anpa.currentlyNpa' : 'labels.anpa.notNpa') | translate }}</dd>
+            <dt>{{ 'labels.anpa.writtenOffOn' | translate }}</dt>
+            <dd>{{ e.loan.writtenOffOn ?? ('labels.inputs.Unavailable' | translate) }}</dd>
+            <dt>{{ 'labels.inputs.Accounting Rule' | translate }}</dt>
+            <dd>{{ e.loan.accountingRule }}</dd>
+            <dt>{{ 'labels.heading.Currency' | translate }}</dt>
+            <dd>{{ e.loan.currency }}</dd>
+            <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+            <dd>{{ e.loan.businessDate }}</dd>
+            <dt>{{ 'labels.anpa.diagnosticEligible' | translate }}</dt>
+            <dd>{{ (e.diagnosticEligible ? 'labels.buttons.Yes' : 'labels.buttons.No') | translate }}</dd>
+            <dt>{{ 'labels.anpa.nativeWriteOffCandidate' | translate }}</dt>
+            <dd>{{ (e.nativeWriteOffCandidate ? 'labels.buttons.Yes' : 'labels.buttons.No') | translate }}</dd>
+            <dt>{{ 'labels.anpa.financiallyExecutable' | translate }}</dt>
+            <dd>
+              {{
+                (e.financiallyExecutable &&
+                config.capabilities.financialWriteOffCorrection &&
+                config.capabilities.nativeWriteOffInterceptionVerified
+                  ? 'labels.buttons.Yes'
+                  : 'labels.buttons.No'
+                ) | translate
+              }}
+            </dd>
+          </dl>
+          <mifosx-anpa-blockers [reasons]="e.blockers"></mifosx-anpa-blockers>
+        }
+        @if (history(); as h) {
+          <h3>{{ 'labels.anpa.history' | translate }}</h3>
+          <p>{{ 'labels.anpa.observedOn' | translate }}: {{ h.observedOn }}</p>
+          @if (!h.confirmedTransitions.length) {
+            <p>{{ 'labels.anpa.noTransitions' | translate }}</p>
+          }
+          @for (t of h.confirmedTransitions; track $index) {
+            <p>
+              {{ t.date }} · {{ (t.npa ? 'labels.anpa.currentlyNpa' : 'labels.anpa.notNpa') | translate }} ·
+              {{ t.sourceReference }}
+            </p>
+          }
+          @for (period of h.knownPeriods; track $index) {
+            <p>
+              {{ period.from }} – {{ period.through }} · {{ 'labels.anpa.codes.' + period.state | translate }} ·
+              {{ period.source }}
+            </p>
+          }
+          @for (period of h.unknownPeriods; track $index) {
+            <p>
+              {{ period.from ?? ('labels.inputs.Unavailable' | translate) }} –
+              {{ period.through ?? ('labels.inputs.Unavailable' | translate) }} ·
+              {{ 'labels.inputs.Unavailable' | translate }}
+            </p>
+          }
+          <mifosx-anpa-blockers [reasons]="h.blockers"></mifosx-anpa-blockers>
+        }
+      </mat-expansion-panel>
+      @if (config.capabilities.receivableClassification) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{ 'labels.anpa.receivables' | translate }}</mat-panel-title></mat-expansion-panel-header
+          >
+          <p>{{ 'labels.anpa.noAllocation' | translate }}</p>
+          @if (receivables().length) {
+            <div class="table-scroll" tabindex="0" [attr.aria-label]="'labels.anpa.receivables' | translate">
+              <table mat-table [dataSource]="receivables()">
+                @for (field of bucketColumns; track field) {
+                  <ng-container [matColumnDef]="field"
+                    ><th mat-header-cell *matHeaderCellDef>{{ labelKey(field) | translate }}</th>
+                    <td mat-cell *matCellDef="let row">
+                      @switch (field) {
+                        @case ('netGlReceivable') {
+                          {{ row.netGlReceivable | anpaMoney: eligibility()?.loan }}
+                        }
+                        @case ('expenseEligible') {
+                          {{ row.expenseEligible | anpaMoney: eligibility()?.loan }}
+                        }
+                        @case ('references') {
+                          <div>{{ 'labels.anpa.accountIds' | translate }}: {{ row.accountIds.join(', ') || '—' }}</div>
+                          <div>{{ 'labels.anpa.journalIds' | translate }}: {{ row.journalIds.join(', ') || '—' }}</div>
+                          <div>
+                            {{ 'labels.anpa.transactionIds' | translate }}: {{ row.transactionIds.join(', ') || '—' }}
+                          </div>
+                          <div>{{ 'labels.anpa.mappingIds' | translate }}: {{ row.mappingIds.join(', ') || '—' }}</div>
+                        }
+                        @default {
+                          {{ 'labels.anpa.codes.' + row[field] | translate }}
+                        }
+                      }
+                    </td></ng-container
+                  >
+                }
+                <tr mat-header-row *matHeaderRowDef="bucketColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: bucketColumns"></tr>
+              </table>
+            </div>
+          } @else {
+            <p>{{ 'labels.anpa.empty' | translate }}</p>
+          }
+        </mat-expansion-panel>
+      }
+      @if (canPreview) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{ 'labels.anpa.preview' | translate }}</mat-panel-title></mat-expansion-panel-header
+          >
+          <form [formGroup]="form" class="toolbar" (ngSubmit)="previewNow()">
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.asOf' | translate }}</mat-label
+              ><input
+                matInput
+                type="date"
+                formControlName="asOf"
+                min="1900-01-01"
+                [max]="eligibility()?.loan?.businessDate"
+                required
+            /></mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="!validDate || previewLoading()">
+              {{ 'labels.anpa.generatePreview' | translate }}
+            </button>
+            @if (canSaveAssessment) {
+              <button mat-button type="button" (click)="command('assessment')" [disabled]="!validDate">
+                {{ 'labels.anpa.actions.assessment' | translate }}
+              </button>
+            }
+          </form>
+          @if (previewLoading()) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          }
+          @if (preview(); as p) {
+            <ng-container *ngTemplateOutlet="previewDetails; context: { $implicit: p }"></ng-container>
+          }
+        </mat-expansion-panel>
+      }
+      @if (config.capabilities.correctionControls) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{ 'labels.anpa.policies' | translate }}</mat-panel-title></mat-expansion-panel-header
+          >
+          @if (policy(); as p) {
+            <p>
+              {{ 'labels.anpa.explicitlyApproved' | translate }}:
+              {{ (p.explicitlyApproved ? 'labels.buttons.Yes' : 'labels.buttons.No') | translate }}
+            </p>
+            <p>
+              {{ 'labels.anpa.mappingsValidated' | translate }}:
+              {{ (p.mappingsValidated ? 'labels.buttons.Yes' : 'labels.buttons.No') | translate }}
+            </p>
+            <p>
+              {{ 'labels.anpa.policyId' | translate }}: {{ p.policyId || ('labels.inputs.Unavailable' | translate) }}
+            </p>
+            <mifosx-anpa-policy-definition [definition]="p.definition"></mifosx-anpa-policy-definition>
+            <mifosx-anpa-blockers [reasons]="p.blockers"></mifosx-anpa-blockers>
+          }
+          <p>{{ 'labels.anpa.separateChecker' | translate }}</p>
+          @if (canManagePolicy) {
+            <button mat-raised-button (click)="createPolicy()">{{ 'labels.anpa.createDraft' | translate }}</button>
+          }
+        </mat-expansion-panel>
+      }
+      @if (config.capabilities.accountingReconciliation && access.allows('READ_ANPA_RECONCILIATION')) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{
+              'labels.anpa.reconciliation' | translate
+            }}</mat-panel-title></mat-expansion-panel-header
+          >
+          <form [formGroup]="form" (ngSubmit)="reconcile()" class="toolbar">
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.assessmentId' | translate }}</mat-label
+              ><input matInput formControlName="assessmentId"
+            /></mat-form-field>
+            <button mat-button>{{ 'labels.anpa.review' | translate }}</button>
+            @if (canReconcile) {
+              <button mat-button type="button" (click)="command('reconciliation')">
+                {{ 'labels.anpa.actions.reconciliation' | translate }}
+              </button>
+            }
+          </form>
+          @if (review(); as r) {
+            <ng-container *ngTemplateOutlet="reviewDetails; context: { $implicit: r }"></ng-container>
+          }
+        </mat-expansion-panel>
+      }
+      @if (reclassification(); as evidence) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{
+              'labels.anpa.reclassification' | translate
+            }}</mat-panel-title></mat-expansion-panel-header
+          >
+          <p>{{ 'labels.anpa.candidateEvidence' | translate }}</p>
+          <mifosx-anpa-blockers [reasons]="evidence.blockers"></mifosx-anpa-blockers
+          ><mifosx-anpa-journals [journals]="evidence.candidates"></mifosx-anpa-journals>
+        </mat-expansion-panel>
+      }
+      @if (access.allows('READ_ANPA_AUDIT')) {
+        <mat-expansion-panel
+          ><mat-expansion-panel-header
+            ><mat-panel-title>{{ 'labels.anpa.audit' | translate }}</mat-panel-title></mat-expansion-panel-header
+          >
+          @if (config.capabilities.correctionControls) {
+            <form
+              [formGroup]="form"
+              class="toolbar"
+              (ngSubmit)="openRecord('policies', form.controls.policyEventId.value)"
+            >
+              <mat-form-field
+                ><mat-label>{{ 'labels.anpa.policyId' | translate }}</mat-label
+                ><input matInput formControlName="policyEventId"
+              /></mat-form-field>
+              <button mat-button [disabled]="!form.controls.policyEventId.value || detailLoading()">
+                {{ 'labels.heading.Details' | translate }}
+              </button>
+            </form>
+          }
+          @for (kind of kinds; track kind) {
+            @if (
+              (kind === 'assessments' && config.capabilities.historicalAssessments) ||
+              (kind === 'policies' && config.capabilities.correctionControls) ||
+              ((kind === 'reconciliations' || kind === 'proposals') &&
+                config.capabilities.accountingReconciliation &&
+                access.allows('READ_ANPA_RECONCILIATION') &&
+                (kind !== 'proposals' || config.capabilities.correctionControls?.adjustmentProposalSupport))
+            ) {
+              <h3>{{ 'labels.anpa.' + kind | translate }}</h3>
+              @if (rows(kind).length) {
+                <div class="table-scroll" tabindex="0" [attr.aria-label]="'labels.anpa.' + kind | translate">
+                  <table mat-table [dataSource]="rows(kind)">
+                    @for (field of recordColumns; track field) {
+                      <ng-container [matColumnDef]="field"
+                        ><th mat-header-cell *matHeaderCellDef>{{ labelKey(field) | translate }}</th>
+                        <td mat-cell *matCellDef="let row">
+                          @if (field === 'details') {
+                            <button mat-button (click)="openRecord(kind, row.id)" [disabled]="detailLoading()">
+                              {{ 'labels.heading.Details' | translate }}
+                            </button>
+                          } @else {
+                            {{ row[field] }}
+                          }
+                        </td></ng-container
+                      >
+                    }
+                    <tr mat-header-row *matHeaderRowDef="recordColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: recordColumns"></tr>
+                  </table>
+                </div>
+              } @else {
+                <p>{{ 'labels.anpa.empty' | translate }}</p>
+              }
+              @if (more()[kind]) {
+                <button mat-button (click)="loadMore(kind)" [disabled]="pageBusy().includes(kind)">
+                  {{ 'labels.anpa.loadMore' | translate }}
+                </button>
+              }
+            }
+          }
+          @if (canPropose) {
+            <button mat-raised-button (click)="command('proposal')">
+              {{ 'labels.anpa.actions.proposal' | translate }}
+            </button>
+          }
+          @if (detailLoading()) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          }
+          @if (selectedAssessment(); as a) {
+            <h3>{{ 'labels.anpa.assessments' | translate }} · {{ a.id }}</h3>
+            <ng-container *ngTemplateOutlet="auditMetadata; context: { $implicit: a }"></ng-container>
+            <p>{{ 'labels.anpa.supersedesId' | translate }}: {{ a.supersedesAssessmentId || '—' }}</p>
+            <p>{{ a.correctionReason }}</p>
+            <ng-container *ngTemplateOutlet="previewDetails; context: { $implicit: a.result }"></ng-container>
+          }
+          @if (selectedPolicy(); as p) {
+            <h3>{{ 'labels.anpa.policies' | translate }} · {{ p.id }}</h3>
+            <ng-container *ngTemplateOutlet="auditMetadata; context: { $implicit: p }"></ng-container>
+            <mifosx-anpa-policy-definition [definition]="draftDefinition"></mifosx-anpa-policy-definition>
+            @if (policyApproval; as approval) {
+              <dl class="facts">
+                <dt>{{ 'labels.anpa.actorId' | translate }}</dt>
+                <dd>{{ approval.makerId }}</dd>
+                <dt>{{ 'labels.anpa.approvalReference' | translate }}</dt>
+                <dd>{{ approval.approvalReference }}</dd>
+                <dt>{{ 'labels.anpa.policyId' | translate }}</dt>
+                <dd>{{ approval.policyId }}</dd>
+                <dt>{{ 'labels.anpa.mappingFingerprint' | translate }}</dt>
+                <dd>{{ approval.mappingFingerprint }}</dd>
+                <dt>{{ 'labels.anpa.sourceFingerprint' | translate }}</dt>
+                <dd>{{ approval.accountFingerprint }}</dd>
+              </dl>
+            }
+
+            <p>
+              {{ 'labels.anpa.approvalReference' | translate }}:
+              {{ p.request.approvalReference || p.request.policy?.approvalReference }}
+            </p>
+            @if (canApprove) {
+              <button mat-raised-button (click)="command('approval')">
+                {{ 'labels.anpa.actions.approval' | translate }}
+              </button>
+            }
+          }
+          @if (selectedReconciliation(); as r) {
+            <h3>{{ 'labels.anpa.reconciliations' | translate }} · {{ r.id }}</h3>
+            <ng-container *ngTemplateOutlet="auditMetadata; context: { $implicit: r }"></ng-container
+            ><ng-container *ngTemplateOutlet="reviewDetails; context: { $implicit: r.result }"></ng-container>
+            @if (canPropose) {
+              <button mat-button (click)="command('proposal')">{{ 'labels.anpa.actions.proposal' | translate }}</button>
+            }
+          }
+          @if (selectedProposal(); as p) {
+            <h3>{{ 'labels.anpa.proposals' | translate }} · {{ p.id }}</h3>
+            <ng-container *ngTemplateOutlet="auditMetadata; context: { $implicit: p }"></ng-container>
+            <p>{{ 'labels.anpa.codes.' + p.result.state | translate }}</p>
+            <p>{{ 'labels.anpa.codes.' + p.result.operation | translate }}</p>
+            <p>{{ p.result.reason }}</p>
+            <p>{{ 'labels.anpa.reconciliationId' | translate }}: {{ p.result.reconciliationId }}</p>
+            <p>{{ 'labels.anpa.proposalsOnly' | translate }}</p>
+            <mifosx-anpa-blockers [reasons]="p.result.blockers"></mifosx-anpa-blockers
+            ><ng-container *ngTemplateOutlet="reviewDetails; context: { $implicit: p.result.review }"></ng-container>
+          }
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  }
+</section>
+<ng-template #auditMetadata let-record>
+  <dl class="facts">
+    <dt>{{ 'labels.anpa.actorId' | translate }}</dt>
+    <dd>{{ record.actorId }}</dd>
+    <dt>{{ 'labels.anpa.recordedAt' | translate }}</dt>
+    <dd>{{ record.recordedAt }}</dd>
+    <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+    <dd>{{ record.businessDate }}</dd>
+    <dt>{{ 'labels.anpa.sourceFingerprint' | translate }}</dt>
+    <dd>{{ record.sourceFingerprint || record.result?.sourceFingerprint }}</dd>
+    <dt>{{ 'labels.anpa.parentId' | translate }}</dt>
+    <dd>{{ record.parentId || '—' }}</dd>
+    <dt>{{ 'labels.anpa.supersedesId' | translate }}</dt>
+    <dd>{{ record.request?.supersedesId || '—' }}</dd>
+  </dl>
+  <p>{{ record.request?.reason }}</p>
+</ng-template>
+<ng-template #previewDetails let-p>
+  <p>
+    <strong>{{ 'labels.anpa.codes.' + p.state | translate }}</strong> · {{ p.asOf }}
+  </p>
+  <dl class="facts">
+    <dt>{{ 'labels.anpa.proposedReceivableExpense' | translate }}</dt>
+    <dd>{{ p.proposedReceivableExpense | anpaMoney: p.loan }}</dd>
+    <dt>{{ 'labels.inputs.Principal' | translate }}</dt>
+    <dd>{{ p.loan.currentOutstanding.principal | anpaMoney: p.loan }}</dd>
+    <dt>{{ 'labels.heading.Interest' | translate }}</dt>
+    <dd>{{ p.loan.currentOutstanding.interest | anpaMoney: p.loan }}</dd>
+    <dt>{{ 'labels.anpa.fees' | translate }}</dt>
+    <dd>{{ p.loan.currentOutstanding.fees | anpaMoney: p.loan }}</dd>
+    <dt>{{ 'labels.inputs.Penalties' | translate }}</dt>
+    <dd>{{ p.loan.currentOutstanding.penalties | anpaMoney: p.loan }}</dd>
+  </dl>
+  <mifosx-anpa-blockers [reasons]="p.blockers"></mifosx-anpa-blockers>
+  <dl class="facts">
+    <dt>{{ 'labels.anpa.sourceFingerprint' | translate }}</dt>
+    <dd>{{ p.sourceFingerprint }}</dd>
+    <dt>{{ 'labels.anpa.mappingFingerprint' | translate }}</dt>
+    <dd>{{ p.mappingFingerprint }}</dd>
+  </dl>
+  @for (row of p.reconciliation; track $index) {
+    <p>
+      {{ 'labels.anpa.codes.' + row.category | translate }} · {{ 'labels.anpa.outstanding' | translate }}:
+      {{ row.currentNativeOutstanding | anpaMoney: p.loan }} · {{ 'labels.anpa.netGlReceivable' | translate }}:
+      {{ row.mappedGlBalance | anpaMoney: p.loan }} · {{ 'labels.anpa.difference' | translate }}:
+      {{ row.difference | anpaMoney: p.loan }} · {{ 'labels.anpa.codes.' + row.status | translate }}
+    </p>
+  }
+  <mifosx-anpa-charge-evidence [charges]="p.evidence.charges" [taxes]="p.evidence.taxes"></mifosx-anpa-charge-evidence>
+  <h4>{{ 'labels.anpa.candidateEvidence' | translate }}</h4>
+  <mifosx-anpa-journals [journals]="p.possibleReclassifications"></mifosx-anpa-journals>
+</ng-template>
+<ng-template #reviewDetails let-r>
+  <p>{{ 'labels.anpa.asOf' | translate }}: {{ r.calculationDate }}</p>
+  <p>
+    {{ 'labels.anpa.originalAssessmentId' | translate }}:
+    {{ r.originalAssessmentId || ('labels.inputs.Unavailable' | translate) }}
+  </p>
+  <mifosx-anpa-blockers [reasons]="r.blockers"></mifosx-anpa-blockers>
+  <dl class="facts">
+    <dt>{{ 'labels.inputs.Principal' | translate }}</dt>
+    <dd>{{ r.attribution.principalExpense | anpaMoney: eligibility()?.loan }}</dd>
+    <dt>{{ 'labels.anpa.eligible' | translate }}</dt>
+    <dd>{{ r.attribution.eligibleReceivables | anpaMoney: eligibility()?.loan }}</dd>
+    <dt>{{ 'labels.anpa.excluded' | translate }}</dt>
+    <dd>{{ r.attribution.excludedReceivables | anpaMoney: eligibility()?.loan }}</dd>
+    <dt>{{ 'labels.anpa.proposedReceivableExpense' | translate }}</dt>
+    <dd>{{ r.attribution.totalExpense | anpaMoney: eligibility()?.loan }}</dd>
+  </dl>
+  <mifosx-anpa-charge-evidence [charges]="r.evidence.charges" [taxes]="r.evidence.taxes"></mifosx-anpa-charge-evidence>
+  @for (category of r.attribution.categories; track $index) {
+    <mat-card
+      ><mat-card-content
+        ><h4>{{ 'labels.anpa.codes.' + category.category | translate }}</h4>
+        <dl class="facts">
+          <dt>{{ 'labels.anpa.regularOutstanding' | translate }}</dt>
+          <dd>{{ category.regularOutstanding | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.npaOutstanding' | translate }}</dt>
+          <dd>{{ category.npaOutstanding | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.eligible' | translate }}</dt>
+          <dd>{{ category.eligible | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.excluded' | translate }}</dt>
+          <dd>{{ category.excluded | anpaMoney: eligibility()?.loan }}</dd>
+        </dl>
+        <mifosx-anpa-blockers [reasons]="category.blockers"></mifosx-anpa-blockers></mat-card-content
+    ></mat-card>
+  }
+  @if (!r.writeOffs.length) {
+    <p>{{ 'labels.anpa.noWriteOffs' | translate }}</p>
+  }
+  @for (w of r.writeOffs; track w.transactionId) {
+    <mat-card
+      ><mat-card-content>
+        <h4>{{ 'labels.inputs.Transaction ID' | translate }} · {{ w.transactionId }}</h4>
+        <p>{{ w.writeOffDate }} · {{ 'labels.anpa.codes.' + w.state | translate }}</p>
+        <dl class="facts">
+          <dt>{{ 'labels.inputs.Reversed' | translate }}</dt>
+          <dd>{{ (w.reversed ? 'labels.buttons.Yes' : 'labels.buttons.No') | translate }}</dd>
+          <dt>{{ 'labels.anpa.nativeWriteOffAmount' | translate }}</dt>
+          <dd>{{ w.nativeWriteOffAmount | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.actualExpenseDebit' | translate }}</dt>
+          <dd>{{ w.actualExpenseDebit | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.expectedExpenseDebit' | translate }}</dt>
+          <dd>{{ w.expectedExpenseDebit | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.difference' | translate }}</dt>
+          <dd>{{ w.expenseDifference | anpaMoney: eligibility()?.loan }}</dd>
+          <dt>{{ 'labels.anpa.journalIds' | translate }}</dt>
+          <dd>{{ w.journalIds.join(', ') || '—' }}</dd>
+          <dt>{{ 'labels.anpa.reversalJournalIds' | translate }}</dt>
+          <dd>{{ w.reversalJournalIds.join(', ') || '—' }}</dd>
+          <dt>{{ 'labels.anpa.recoveryTransactionIds' | translate }}</dt>
+          <dd>{{ w.recoveryTransactionIds.join(', ') || '—' }}</dd>
+        </dl>
+        <div class="table-scroll" tabindex="0" [attr.aria-label]="'labels.anpa.comparison' | translate">
+          <table mat-table [dataSource]="w.categories">
+            @for (field of comparisonColumns; track field) {
+              <ng-container [matColumnDef]="field"
+                ><th mat-header-cell *matHeaderCellDef>{{ labelKey(field) | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  @if (field === 'category') {
+                    {{ 'labels.anpa.codes.' + row.category | translate }}
+                  } @else if (field === 'accountId') {
+                    {{ row.accountId ?? '—' }}
+                  } @else {
+                    {{ row[field] | anpaMoney: eligibility()?.loan }}
+                  }
+                </td></ng-container
+              >
+            }
+            <tr mat-header-row *matHeaderRowDef="comparisonColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: comparisonColumns"></tr>
+          </table>
+        </div>
+        <mifosx-anpa-blockers [reasons]="w.blockers"></mifosx-anpa-blockers> </mat-card-content
+    ></mat-card>
+  }
+  <h4>{{ 'labels.anpa.journals' | translate }}</h4>
+  <mifosx-anpa-journals [journals]="r.evidence.journals"></mifosx-anpa-journals>
+  <dl class="facts">
+    <dt>{{ 'labels.anpa.sourceFingerprint' | translate }}</dt>
+    <dd>{{ r.sourceFingerprint }}</dd>
+    <dt>{{ 'labels.anpa.mappingFingerprint' | translate }}</dt>
+    <dd>{{ r.mappingFingerprint }}</dd>
+    <dt>{{ 'labels.anpa.latestClosedThrough' | translate }}</dt>
+    <dd>{{ r.accountingPeriod.latestClosedThrough || '—' }}</dd>
+  </dl>
+</ng-template>

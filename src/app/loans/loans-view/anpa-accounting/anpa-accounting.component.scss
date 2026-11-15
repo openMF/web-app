@@ -1,0 +1,98 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.anpa {
+  padding: 16px;
+  min-width: 0;
+  color: var(--ds-text-1);
+}
+
+h2,
+h3,
+h4 {
+  margin-block: 16px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+mat-card,
+mat-expansion-panel {
+  margin-block: 16px;
+  min-width: 0;
+}
+
+mat-panel-title {
+  line-height: 1.5;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: minmax(0, 32%) minmax(0, calc(68% - 24px));
+  gap: 8px 24px;
+}
+
+dt {
+  color: var(--ds-text-2);
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+p {
+  overflow-wrap: anywhere;
+}
+
+.table-scroll {
+  overflow: auto;
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  padding: 8px 16px;
+}
+
+td {
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  border-inline-start: 4px solid var(--ds-alert);
+}
+
+@media (width <= 768px) {
+  .anpa {
+    padding: 8px;
+  }
+
+  .facts {
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, calc(50% - 4px)));
+  }
+
+  .table-scroll table {
+    min-width: 640px;
+  }
+}
