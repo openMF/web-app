@@ -7,6 +7,8 @@
  */
 
 /** Angular Imports */
+import { AnpaAccountingComponent } from './loans-view/anpa-accounting/anpa-accounting.component';
+import { anpaAccountingGuard } from './loans-view/anpa-accounting/anpa-accounting.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -128,6 +130,13 @@ const routes: Routes = [
             path: '',
             redirectTo: 'general',
             pathMatch: 'full'
+          },
+          {
+            path: 'anpa-accounting',
+            component: AnpaAccountingComponent,
+            canActivate: [anpaAccountingGuard],
+            runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+            data: { title: 'labels.anpa.title', breadcrumb: 'labels.anpa.title', routeParamBreadcrumb: false }
           },
           {
             path: 'general',

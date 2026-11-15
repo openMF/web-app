@@ -62,6 +62,7 @@ import { StatusLookupPipe } from '@pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { AnpaAccessService } from '../services/anpa-access.service';
 import { SystemService } from 'app/system/system.service';
 
 @Component({
@@ -96,6 +97,7 @@ import { SystemService } from 'app/system/system.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansViewComponent extends LoanProductBaseComponent implements OnInit {
+  readonly anpaAccess = inject(AnpaAccessService);
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   loansService = inject(LoansService);

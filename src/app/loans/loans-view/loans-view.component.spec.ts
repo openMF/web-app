@@ -16,6 +16,7 @@ import { LoansService } from 'app/loans/loans.service';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
+import { AnpaAccessService } from '../services/anpa-access.service';
 import { LoansViewComponent } from './loans-view.component';
 
 describe('LoansViewComponent', () => {
@@ -57,6 +58,7 @@ describe('LoansViewComponent', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
+        { provide: AnpaAccessService, useValue: { canRead: false } },
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: LoansService, useValue: loansServiceStub },
         { provide: SystemService, useValue: systemServiceStub },

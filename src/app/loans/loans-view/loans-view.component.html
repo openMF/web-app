@@ -367,6 +367,18 @@
         >
           {{ 'labels.inputs.Account Details' | translate }}
         </a>
+        @if (loanProductService.isLoanProduct && anpaAccess.canRead) {
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_ANPA_ACCOUNTING'"
+            [routerLink]="['./anpa-accounting']"
+            [queryParams]="{ productType: loanProductService.productType.value }"
+            routerLinkActive
+            #anpa="routerLinkActive"
+            [active]="anpa.isActive"
+            >{{ 'labels.anpa.title' | translate }}</a
+          >
+        }
         @if (loanProductService.isLoanProduct && loanDetailsData.originalSchedule) {
           <a
             mat-tab-link

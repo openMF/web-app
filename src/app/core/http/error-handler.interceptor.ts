@@ -120,6 +120,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    // ANPA renders sanitized translated errors and never exposes raw accounting exceptions.
+    if (/\/v1\/loans\/anpa-writeoff(?:[/?]|$)/.test(request.url)) {
+      return throwError(() => response);
+    }
+
     // Account management renders allowlisted localized errors, including optional endpoint 404s.
     // Never send its financial payloads to the generic response logger or raw server-message alerts.
     if (

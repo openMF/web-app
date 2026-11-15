@@ -126,6 +126,32 @@ describe('ErrorHandlerInterceptor', () => {
     log.mockRestore();
   });
 
+  it.each([
+    0,
+    400,
+    401,
+    403,
+    404,
+    409,
+    422,
+    500,
+    502,
+    503
+  ])('keeps ANPA exceptions local and sanitized (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v1/loans/anpa-writeoff/loans/2/adjustment-proposals',
+        status,
+        'POST',
+        'private Java exception'
+      )
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
   beforeEach(() => {
     alert = jest.fn();
     TestBed.configureTestingModule({

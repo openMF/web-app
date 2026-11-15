@@ -1,0 +1,118 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'labels.anpa.createDraft' | translate }}</h2>
+<mat-dialog-content
+  ><p>{{ 'labels.anpa.separateChecker' | translate }}</p>
+  <p>{{ 'labels.anpa.noDefaultMappings' | translate }}</p>
+  <form [formGroup]="form" id="anpa-policy" (ngSubmit)="submit()">
+    <div class="fields">
+      <mat-form-field
+        ><mat-label>{{ 'labels.anpa.version' | translate }}</mat-label
+        ><input matInput type="number" formControlName="version" min="1" max="1000000" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Effective From' | translate }}</mat-label
+        ><input matInput type="date" formControlName="effectiveFrom" min="1900-01-01" required
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.anpa.effectiveThrough' | translate }}</mat-label
+        ><input matInput type="date" formControlName="effectiveThrough"
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'labels.anpa.approvalReference' | translate }}</mat-label
+        ><input matInput formControlName="approvalReference" maxlength="1000" required
+      /></mat-form-field>
+    </div>
+    <p>{{ 'labels.inputs.Accounting Rule' | translate }}: {{ data.loan.accountingRule }} · {{ data.loan.currency }}</p>
+    <div formArrayName="rules">
+      @for (rule of form.controls.rules.controls; track rule; let index = $index) {
+        <fieldset [formGroupName]="index">
+          <legend>{{ 'labels.anpa.rules' | translate }} {{ index + 1 }}</legend>
+          <div class="fields">
+            <mat-form-field
+              ><mat-label>{{ 'labels.heading.Category' | translate }}</mat-label
+              ><mat-select formControlName="category" required>
+                @for (option of categories; track option) {
+                  <mat-option [value]="option">{{ 'labels.anpa.codes.' + option | translate }}</mat-option>
+                }
+              </mat-select></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.historicalOrigin' | translate }}</mat-label
+              ><mat-select formControlName="historicalOrigin" required>
+                @for (option of classifications; track option) {
+                  <mat-option [value]="option">{{ 'labels.anpa.codes.' + option | translate }}</mat-option>
+                }
+              </mat-select></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.currentClassification' | translate }}</mat-label
+              ><mat-select formControlName="currentClassification" required>
+                @for (option of classifications; track option) {
+                  <mat-option [value]="option">{{ 'labels.anpa.codes.' + option | translate }}</mat-option>
+                }
+              </mat-select></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.sourceAccountId' | translate }}</mat-label
+              ><input matInput type="number" formControlName="sourceAccountId" min="1"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.nativeMappingId' | translate }}</mat-label
+              ><input matInput type="number" formControlName="nativeMappingId" min="1"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.destinationAccountId' | translate }}</mat-label
+              ><input matInput type="number" formControlName="destinationAccountId" min="1"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.taxComponentId' | translate }}</mat-label
+              ><input matInput type="number" formControlName="taxComponentId" min="1"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.expenseEligible' | translate }}</mat-label
+              ><mat-select formControlName="expenseEligible"
+                ><mat-option [value]="true">{{ 'labels.buttons.Yes' | translate }}</mat-option
+                ><mat-option [value]="false">{{ 'labels.buttons.No' | translate }}</mat-option></mat-select
+              ></mat-form-field
+            >
+            <mat-form-field
+              ><mat-label>{{ 'labels.anpa.reclassifiedExpenseEligible' | translate }}</mat-label
+              ><mat-select formControlName="reclassifiedExpenseEligible"
+                ><mat-option [value]="true">{{ 'labels.buttons.Yes' | translate }}</mat-option
+                ><mat-option [value]="false">{{ 'labels.buttons.No' | translate }}</mat-option></mat-select
+              ></mat-form-field
+            >
+          </div>
+          <button mat-button type="button" (click)="removeRule(index)">
+            {{ 'labels.anpa.removeRule' | translate }}
+          </button>
+        </fieldset>
+      }
+    </div>
+    <button mat-button type="button" (click)="addRule()" [disabled]="form.controls.rules.length >= 100">
+      {{ 'labels.buttons.Add Rule' | translate }}
+    </button>
+    <mat-checkbox formControlName="confirmed">{{ 'labels.anpa.confirmRecord' | translate }}</mat-checkbox>
+  </form>
+  @if (error()) {
+    <p role="alert">{{ error() | translate }}</p>
+  }</mat-dialog-content
+><mat-dialog-actions align="end"
+  ><button mat-button [disabled]="busy()" (click)="close()">{{ 'labels.buttons.Cancel' | translate }}</button
+  ><button
+    mat-raised-button
+    color="primary"
+    form="anpa-policy"
+    type="submit"
+    [disabled]="!valid || busy() || submitted()"
+  >
+    {{ 'labels.buttons.Confirm' | translate }}
+  </button></mat-dialog-actions
+>
