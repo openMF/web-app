@@ -51,6 +51,10 @@ mat-divider {
   margin: var(--lp-space-16, 1rem) 0 var(--lp-space-24, 1.5rem);
 }
 
+.accounting-fields {
+  gap: var(--lp-space-8, 0.5rem) 2%;
+}
+
 .margin-t {
   margin-top: var(--lp-space-16, 1rem);
 }
