@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { DatePipe } from '@angular/common';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -66,6 +67,7 @@ describe('Branch details header', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        DatePipe,
         provideRouter([
           {
             path: 'organization/offices/:officeId',

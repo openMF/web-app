@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
       "Adjust by Difference": "Koreguoti skirtumu",
       "Open in map": "Atidaryti žemėlapyje",
-      "Configure": "Konfigūruoti"
+      "Configure": "Konfigūruoti",
+      "Add Address": "Pridėti adresą",
+      "Add another address": "Pridėti kitą adresą",
+      "Address actions": "Adreso veiksmai",
+      "Delete Address": "Ištrinti adresą",
+      "Edit Address": "Redaguoti adresą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -2394,7 +2399,11 @@
       "Services": "Paslaugos",
       "Schedules": "Tvarkaraščiai",
       "Reference": "Nuoroda",
-      "Weekly schedule": "Savaitės tvarkaraštis"
+      "Weekly schedule": "Savaitės tvarkaraštis",
+      "Branch addresses": "Filialo adresai",
+      "Complete address": "Visas adresas",
+      "Locality": "Vietovė",
+      "Location": "Vieta"
     },
     "inputs": {
       "Breach Start Type": "Pažeidimo pradžios tipas",
@@ -4494,7 +4503,10 @@
       "Label": "Etiketė",
       "Original Amount": "Pradinė suma",
       "Resulting Amount": "Galutinė suma",
-      "Head Office": "Pagrindinis padalinys"
+      "Head Office": "Pagrindinis padalinys",
+      "Filter addresses": "Filtruoti adresus",
+      "Last updated": "Paskutinį kartą atnaujinta",
+      "Updated by": "Atnaujino"
     },
     "links": {
       "Community": "bendruomenė",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "Koreguoti skirtumu",
       "The adjustment amount cannot be zero": "Koregavimo suma negali būti nulis",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Koregavimas panaikina sumą, todėl operacija atšaukiama be pakeitimo",
-      "A positive amount increases the transaction and a negative one decreases it": "Teigiama suma operaciją padidina, neigiama – sumažina"
+      "A positive amount increases the transaction and a negative one decreases it": "Teigiama suma operaciją padidina, neigiama – sumažina",
+      "Manage addresses for branch": "Tvarkykite {{name}} išsaugotus adresus.",
+      "Manage branch addresses": "Tvarkykite išsaugotus filialo adresus.",
+      "No addresses match this filter": "Šį filtrą atitinkančių adresų nėra.",
+      "Only one address per branch is supported": "Šis serveris palaiko vieną adresą kiekvienam filialui. Norėdami pakeisti, redaguokite arba ištrinkite esamą adresą.",
+      "Saving address": "Adresas išsaugomas…"
     },
     "permissions": {
       "actions": {

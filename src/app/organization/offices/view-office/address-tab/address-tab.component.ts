@@ -22,22 +22,16 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Angular Material Imports */
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import {
-  MatAccordion,
-  MatExpansionPanel,
-  MatExpansionPanelDescription,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle
-} from '@angular/material/expansion';
-import { MatDivider } from '@angular/material/divider';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 /** rxjs Imports */
 import { forkJoin, of, Subscription, Subject } from 'rxjs';
 import { map, catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs/operators';
 
 /** Custom Components */
+import { faMapMarkerAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -57,6 +51,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
+import { OfficeAddress } from './office-address.model';
 
 /** Custom Imports */
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -65,6 +60,8 @@ import { OfficeDetailsSummary } from '../office-details-summary';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { CoordinateType, hasValidCoordinatePair, parseCoordinate } from 'app/clients/utils/address-coordinate.util';
 
+type AddressFilter = 'all' | 'active' | 'inactive';
+
 @Component({
   selector: 'mifosx-office-address-tab',
   templateUrl: './address-tab.component.html',
@@ -72,14 +69,12 @@ import { CoordinateType, hasValidCoordinatePair, parseCoordinate } from 'app/cli
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
-    MatDivider,
     MatProgressSpinner,
-    MatSlideToggle,
+    MatButtonToggle,
+    MatButtonToggleGroup,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
     AddressLocationMapComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -87,6 +82,8 @@ import { CoordinateType, hasValidCoordinatePair, parseCoordinate } from 'app/cli
 export class AddressTabComponent implements OnInit {
   @Input() readOnly = false;
 
+  readonly pinIcon = faMapMarkerAlt;
+  readonly moreIcon = faEllipsisH;
   readonly hasValidCoordinatePair = hasValidCoordinatePair;
 
   private summary = inject(OfficeDetailsSummary, { optional: true });
@@ -105,8 +102,75 @@ export class AddressTabComponent implements OnInit {
   private readonly officeChanged = new Subject<void>();
   private loadRequest?: Subscription;
 
+  selectedFilter: AddressFilter = 'all';
+  selectedAddressId: string | null = null;
+  readonly filters: { value: AddressFilter; label: string }[] = [
+    { value: 'all', label: 'labels.inputs.All' },
+    { value: 'active', label: 'labels.inputs.Active' },
+    { value: 'inactive', label: 'labels.catalogs.Inactive' }
+  ];
+  readonly addressFields = [
+    { key: 'street', label: 'labels.inputs.Street' },
+    { key: 'addressLine1', label: 'labels.inputs.Address Line 1' },
+    { key: 'addressLine2', label: 'labels.inputs.Address Line 2' },
+    { key: 'addressLine3', label: 'labels.inputs.Address Line 3' },
+    { key: 'townVillage', label: 'labels.inputs.Town / Village' }
+  ] as const;
+  readonly localityFields = [
+    { key: 'city', label: 'labels.inputs.City', options: '' },
+    { key: 'countyDistrict', label: 'labels.inputs.County / District', options: '' },
+    { key: 'stateProvinceId', label: 'labels.inputs.State / Province', options: 'stateProvinceIdOptions' },
+    { key: 'countryId', label: 'labels.inputs.Country', options: 'countryIdOptions' },
+    { key: 'postalCode', label: 'labels.inputs.Postal Code', options: '' }
+  ] as const;
+
+  get officeName(): string {
+    return this.route.parent.snapshot.data?.['office']?.name ?? '';
+  }
+
+  get visibleAddresses(): OfficeAddress[] {
+    return this.officeAddresses.filter((address) => this.matchesFilter(address, this.selectedFilter));
+  }
+
+  get selectedAddress(): OfficeAddress | null {
+    return this.visibleAddresses.find((address) => this.addressKey(address) === this.selectedAddressId) ?? null;
+  }
+
+  filterCount(filter: AddressFilter): number {
+    return this.officeAddresses.filter((address) => this.matchesFilter(address, filter)).length;
+  }
+
+  setFilter(filter: AddressFilter): void {
+    if (!this.filters.some((entry) => entry.value === filter)) return;
+    this.selectedFilter = filter;
+    this.reconcileSelection(this.selectedAddressId, 0);
+  }
+
+  selectAddress(address: OfficeAddress): void {
+    if (this.visibleAddresses.includes(address)) this.selectedAddressId = this.addressKey(address);
+  }
+
+  addressKey(address: OfficeAddress): string {
+    return this.getOfficeAddressId(address, this.officeAddresses.indexOf(address));
+  }
+
+  private matchesFilter(address: OfficeAddress, filter: AddressFilter): boolean {
+    return filter === 'all' || address.isActive === (filter === 'active');
+  }
+
+  private reconcileSelection(preferredId = this.selectedAddressId, nextIndex?: number): void {
+    const visible = this.visibleAddresses;
+    const retained = visible.find((address) => this.addressKey(address) === preferredId);
+    const fallback =
+      nextIndex === undefined
+        ? ((preferredId === null ? visible.find((address) => address.isActive === true) : null) ?? visible[0])
+        : visible[Math.min(nextIndex, visible.length - 1)];
+    const selected = retained ?? fallback;
+    this.selectedAddressId = selected ? this.addressKey(selected) : null;
+  }
+
   officeId: string;
-  officeAddresses: any[] = [];
+  officeAddresses: OfficeAddress[] = [];
   addressTemplate: any = {
     addressTypeIdOptions: [],
     stateProvinceIdOptions: [],
@@ -148,12 +212,16 @@ export class AddressTabComponent implements OnInit {
         this.officeChanged.next();
         this.officeId = officeId;
         this.officeAddresses = [];
+        this.selectedAddressId = null;
+        this.selectedFilter = 'all';
+        this.addressTemplate = { addressTypeIdOptions: [], stateProvinceIdOptions: [], countryIdOptions: [] };
         this.isSaving = false;
         this.loadOfficeAddresses();
+        this.changeDetectorRef.markForCheck();
       });
   }
 
-  loadOfficeAddresses() {
+  loadOfficeAddresses(preferredId = this.selectedAddressId, nextIndex?: number) {
     this.loadRequest?.unsubscribe();
     this.summary?.addressCount.set(null);
     this.summary?.location.set('');
@@ -188,15 +256,16 @@ export class AddressTabComponent implements OnInit {
         takeUntil(this.officeChanged),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(({ addresses, template }: { addresses: any; template: any }) => {
+      .subscribe(({ addresses, template }: { addresses: (OfficeAddress | null)[] | null; template: any }) => {
         this.officeAddresses = Array.isArray(addresses)
-          ? addresses.filter((address: any) => address && typeof address === 'object')
+          ? addresses.filter((address): address is OfficeAddress => !!address && typeof address === 'object')
           : [];
         this.addressTemplate = {
           ...this.addressTemplate,
           ...template
         };
         this.translateAddressTypes();
+        this.reconcileSelection(preferredId, nextIndex);
         if (!this.hasError && !this.isPluginUnavailable && Array.isArray(addresses)) {
           this.summary?.addressCount.set(this.officeAddresses.length);
           const address = this.officeAddresses.find((entry) => entry.isActive === true) ?? this.officeAddresses[0];
@@ -234,17 +303,19 @@ export class AddressTabComponent implements OnInit {
       .afterClosed()
       .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
       .subscribe((response: any) => {
-        if (response?.data && this.isValidLocationInput(response.data.value)) {
+        if (response?.data && this.canAddAddress && this.isValidLocationInput(response.data.value)) {
           this.saveAddress(
-            this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value))
+            this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value)),
+            { created: true }
           );
         }
       });
   }
 
-  editAddress(address: any) {
+  editAddress(address: OfficeAddress) {
     if (
       !this.canManageAddress('UPDATE_OFFICE') ||
+      this.isLoading ||
       this.isSaving ||
       this.optionsLoadFailed ||
       this.isPluginUnavailable
@@ -274,7 +345,13 @@ export class AddressTabComponent implements OnInit {
       .afterClosed()
       .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
       .subscribe((response: any) => {
-        if (response?.data && this.isValidLocationInput(response.data.value)) {
+        if (
+          response?.data &&
+          !this.isSaving &&
+          !this.isLoading &&
+          this.canManageAddress('UPDATE_OFFICE') &&
+          this.isValidLocationInput(response.data.value)
+        ) {
           this.saveAddress(
             this.organizationService.updateOfficeAddress(
               this.officeId,
@@ -286,8 +363,8 @@ export class AddressTabComponent implements OnInit {
       });
   }
 
-  deleteAddress(address: any) {
-    if (!this.canManageAddress('DELETE_OFFICE') || this.isSaving || this.isPluginUnavailable) {
+  deleteAddress(address: OfficeAddress) {
+    if (!this.canManageAddress('DELETE_OFFICE') || this.isLoading || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -303,14 +380,16 @@ export class AddressTabComponent implements OnInit {
       .afterClosed()
       .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
       .subscribe((response: any) => {
-        if (response?.delete) {
-          this.saveAddress(this.organizationService.deleteOfficeAddress(this.officeId, officeAddressId));
+        if (response?.delete && !this.isSaving && !this.isLoading && this.canManageAddress('DELETE_OFFICE')) {
+          this.saveAddress(this.organizationService.deleteOfficeAddress(this.officeId, officeAddressId), {
+            nextIndex: this.visibleAddresses.indexOf(address)
+          });
         }
       });
   }
 
-  toggleAddress(address: any) {
-    if (!this.canManageAddress('UPDATE_OFFICE') || this.isSaving || this.isPluginUnavailable) {
+  toggleAddress(address: OfficeAddress) {
+    if (!this.canManageAddress('UPDATE_OFFICE') || this.isLoading || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -330,8 +409,10 @@ export class AddressTabComponent implements OnInit {
     return this.addressTemplate[fieldName]?.find((fieldObj: any) => fieldObj.id === fieldId);
   }
 
-  getAddressType(address: any): string {
-    return this.getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name ?? address.addressTypeId;
+  getAddressType(address: OfficeAddress): string {
+    return (
+      this.getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name ?? String(address.addressTypeId ?? '')
+    );
   }
 
   hasValue(value: any): boolean {
@@ -353,7 +434,7 @@ export class AddressTabComponent implements OnInit {
       });
   }
 
-  getPostalLines(address: any): string[] {
+  getPostalLines(address: OfficeAddress): string[] {
     const lines = this.uniqueAddressParts([
       address.street,
       address.addressLine1,
@@ -372,7 +453,7 @@ export class AddressTabComponent implements OnInit {
         ] : lines;
   }
 
-  getMapUrl(address: any): string | null {
+  getMapUrl(address: OfficeAddress): string | null {
     if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
       return null;
     }
@@ -381,7 +462,7 @@ export class AddressTabComponent implements OnInit {
     return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`;
   }
 
-  copyCoordinates(address: any) {
+  copyCoordinates(address: OfficeAddress) {
     if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
       return;
     }
@@ -395,7 +476,7 @@ export class AddressTabComponent implements OnInit {
     });
   }
 
-  private saveAddress(request: any) {
+  private saveAddress(request: any, selection: { created?: boolean; nextIndex?: number } = {}) {
     this.isSaving = true;
     this.hasError = false;
     this.isPluginUnavailable = false;
@@ -409,7 +490,12 @@ export class AddressTabComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
-        next: () => this.loadOfficeAddresses(),
+        next: (response: any) => {
+          if (selection.created) this.selectedFilter = 'all';
+          const preferredId =
+            selection.created && response?.entityId != null ? String(response.entityId) : this.selectedAddressId;
+          this.loadOfficeAddresses(preferredId, selection.nextIndex);
+        },
         error: (error: any) => {
           if (this.isEndpointNotFound(error)) {
             this.isPluginUnavailable = true;
@@ -426,11 +512,15 @@ export class AddressTabComponent implements OnInit {
     return error?.status === 404 && error?.error?.error === 'Not Found';
   }
 
-  getActiveStatusLabel(isActive: boolean): string {
-    return isActive ? 'labels.inputs.Active' : 'labels.catalogs.Inactive';
+  getActiveStatusLabel(isActive: unknown): string {
+    return isActive === true
+      ? 'labels.inputs.Active'
+      : isActive === false
+        ? 'labels.catalogs.Inactive'
+        : 'labels.inputs.Not Provided';
   }
 
-  getOfficeAddressId(address: any, index?: number): string {
+  getOfficeAddressId(address: OfficeAddress | null | undefined, index?: number): string {
     const officeAddressId = address?.officeAddressId ?? address?.id ?? address?.addressId;
     if (officeAddressId === null || officeAddressId === undefined) {
       return index === undefined ? '' : `office-address-${index}`;
@@ -502,7 +592,7 @@ export class AddressTabComponent implements OnInit {
     return `${prefix}${digits.slice(0, decimalPosition)}.${digits.slice(decimalPosition)}`;
   }
 
-  private getAddressFormFields(address?: any) {
+  private getAddressFormFields(address?: OfficeAddress) {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'addressTypeId',

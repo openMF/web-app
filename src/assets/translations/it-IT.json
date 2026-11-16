@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "Rettifica della commissione di sconto",
       "Adjust by Difference": "Rettifica per differenza",
       "Open in map": "Apri sulla mappa",
-      "Configure": "Configura"
+      "Configure": "Configura",
+      "Add Address": "Aggiungi indirizzo",
+      "Add another address": "Aggiungi un altro indirizzo",
+      "Address actions": "Azioni indirizzo",
+      "Delete Address": "Elimina indirizzo",
+      "Edit Address": "Modifica indirizzo"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -2394,7 +2399,11 @@
       "Services": "Servizi",
       "Schedules": "Orari",
       "Reference": "Riferimento",
-      "Weekly schedule": "Orario settimanale"
+      "Weekly schedule": "Orario settimanale",
+      "Branch addresses": "Indirizzi della filiale",
+      "Complete address": "Indirizzo completo",
+      "Locality": "Località",
+      "Location": "Posizione"
     },
     "inputs": {
       "Breach Start Type": "Tipo di inizio violazione",
@@ -4494,7 +4503,10 @@
       "Label": "Etichetta",
       "Original Amount": "Importo originale",
       "Resulting Amount": "Importo risultante",
-      "Head Office": "Sede principale"
+      "Head Office": "Sede principale",
+      "Filter addresses": "Filtra indirizzi",
+      "Last updated": "Ultimo aggiornamento",
+      "Updated by": "Aggiornato da"
     },
     "links": {
       "Community": "Comunità",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "Rettifica per differenza",
       "The adjustment amount cannot be zero": "L'importo della rettifica non può essere zero",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "La rettifica annulla l'importo, quindi la transazione viene stornata senza sostituzione",
-      "A positive amount increases the transaction and a negative one decreases it": "Un importo positivo aumenta la transazione e uno negativo la diminuisce"
+      "A positive amount increases the transaction and a negative one decreases it": "Un importo positivo aumenta la transazione e uno negativo la diminuisce",
+      "Manage addresses for branch": "Gestisci gli indirizzi salvati per {{name}}.",
+      "Manage branch addresses": "Gestisci gli indirizzi salvati della filiale.",
+      "No addresses match this filter": "Nessun indirizzo corrisponde a questo filtro.",
+      "Only one address per branch is supported": "Questo server supporta un indirizzo per filiale. Modifica o elimina l’indirizzo esistente per sostituirlo.",
+      "Saving address": "Salvataggio indirizzo…"
     },
     "permissions": {
       "actions": {

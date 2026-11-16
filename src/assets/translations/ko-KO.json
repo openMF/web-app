@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "할인 수수료 조정",
       "Adjust by Difference": "차액으로 조정",
       "Open in map": "지도에서 열기",
-      "Configure": "설정"
+      "Configure": "설정",
+      "Add Address": "주소 추가",
+      "Add another address": "다른 주소 추가",
+      "Address actions": "주소 작업",
+      "Delete Address": "주소 삭제",
+      "Edit Address": "주소 편집"
     },
     "catalogs": {
       "% Amount": "양",
@@ -2394,7 +2399,11 @@
       "Services": "서비스",
       "Schedules": "운영 일정",
       "Reference": "참조",
-      "Weekly schedule": "주간 일정"
+      "Weekly schedule": "주간 일정",
+      "Branch addresses": "지점 주소",
+      "Complete address": "전체 주소",
+      "Locality": "지역",
+      "Location": "위치"
     },
     "inputs": {
       "Breach Start Type": "위반 시작 유형",
@@ -4494,7 +4503,10 @@
       "Label": "항목",
       "Original Amount": "원래 금액",
       "Resulting Amount": "결과 금액",
-      "Head Office": "본점"
+      "Head Office": "본점",
+      "Filter addresses": "주소 필터",
+      "Last updated": "마지막 업데이트",
+      "Updated by": "업데이트한 사용자"
     },
     "links": {
       "Community": "지역 사회",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "차액으로 조정",
       "The adjustment amount cannot be zero": "조정 금액은 0일 수 없습니다",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "조정이 금액을 상쇄하므로 거래는 대체 없이 취소됩니다",
-      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다"
+      "A positive amount increases the transaction and a negative one decreases it": "양수 금액은 거래를 늘리고 음수 금액은 줄입니다",
+      "Manage addresses for branch": "{{name}}의 저장된 주소를 관리합니다.",
+      "Manage branch addresses": "저장된 지점 주소를 관리합니다.",
+      "No addresses match this filter": "이 필터와 일치하는 주소가 없습니다.",
+      "Only one address per branch is supported": "이 서버는 지점당 하나의 주소를 지원합니다. 기존 주소를 수정하거나 삭제하여 교체하세요.",
+      "Saving address": "주소 저장 중…"
     },
     "permissions": {
       "actions": {

@@ -6,13 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { DatePipe } from '@angular/common';
+import { SettingsService } from 'app/settings/settings.service';
+import { OfficeDetailsSummary } from '../office-details-summary';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faTrash, faMapMarkerAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { EMPTY, Subject, BehaviorSubject, of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import * as L from 'leaflet';
@@ -21,6 +25,7 @@ import { FormGroupService } from 'app/shared/form-dialog/form-group.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AddressTabComponent } from './address-tab.component';
+import { OfficeAddress } from './office-address.model';
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { OrganizationService } from 'app/organization/organization.service';
@@ -129,6 +134,9 @@ describe('Office AddressTabComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        DatePipe,
+        OfficeDetailsSummary,
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -154,7 +162,7 @@ describe('Office AddressTabComponent', () => {
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faPlus, faEdit, faTrash);
+    TestBed.inject(FaIconLibrary).addIcons(faPlus, faEdit, faTrash, faMapMarkerAlt, faEllipsisH);
     fixture = TestBed.createComponent(AddressTabComponent);
     component = fixture.componentInstance;
     const translateService = TestBed.inject(TranslateService);
@@ -258,12 +266,13 @@ describe('Office AddressTabComponent', () => {
     expect(fixture.nativeElement.querySelector('.action-button button')).not.toBeNull();
   });
 
-  it('hides the add action and prevents the add dialog when the office already has an address', () => {
+  it('disables both add actions and prevents the add dialog when the office already has an address', () => {
     fixture.detectChanges();
 
     expect(component.hasOfficeAddress).toBe(true);
     expect(component.canAddAddress).toBe(false);
-    expect(fixture.nativeElement.querySelector('.action-button button')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.action-button button').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('.add-another-card button').disabled).toBe(true);
 
     component.addAddress();
 
@@ -1045,5 +1054,370 @@ describe('Office AddressTabComponent', () => {
     component.addAddress();
     expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
     expect(values).toMatchObject({ latitude: '1e-9', longitude: '-0.123456789' });
+  });
+  describe('master-detail address management', () => {
+    const secondAddress = {
+      ...officeAddress,
+      officeAddressId: 8,
+      street: 'Second saved street',
+      isActive: false,
+      latitude: 13,
+      longitude: 78
+    };
+    const thirdAddress = {
+      ...officeAddress,
+      officeAddressId: 10,
+      street: 'Third saved street',
+      isActive: true,
+      latitude: 14,
+      longitude: 79
+    };
+
+    function render() {
+      (component as any).changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+    }
+
+    function loadMultiple() {
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([
+          secondAddress,
+          { ...officeAddress, latitude: 12, longitude: 77 },
+          thirdAddress
+        ])
+      );
+      fixture.detectChanges();
+    }
+
+    it('selects the first active record and displays only its details and map', () => {
+      loadMultiple();
+      expect(component.selectedAddressId).toBe('7');
+      expect(fixture.nativeElement.querySelectorAll('.address-card')).toHaveLength(3);
+      expect(fixture.nativeElement.querySelectorAll('.address-detail')).toHaveLength(1);
+      expect(fixture.nativeElement.querySelector('.address-detail').textContent).toContain('MG Road');
+      expect(fixture.nativeElement.querySelector('.address-detail').textContent).not.toContain(secondAddress.street);
+      expect(fixture.nativeElement.querySelectorAll('mifosx-address-location-map')).toHaveLength(1);
+      expect(mockMapSetView).toHaveBeenLastCalledWith(
+        [
+          12,
+          77
+        ],
+        15
+      );
+    });
+
+    it('selects the first available address when none is active', () => {
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([
+          secondAddress,
+          { ...officeAddress, isActive: false }
+        ])
+      );
+      fixture.detectChanges();
+      expect(component.selectedAddressId).toBe('8');
+    });
+
+    it('switches details and the same map without fetching or mutating', () => {
+      loadMultiple();
+      const cards = fixture.nativeElement.querySelectorAll('.address-card');
+      cards[0].click();
+      render();
+      expect(cards[0].getAttribute('aria-pressed')).toBe('true');
+      expect(cards[1].getAttribute('aria-pressed')).toBe('false');
+      expect(fixture.nativeElement.querySelector('.address-detail').textContent).toContain(secondAddress.street);
+      expect(mockMapSetView).toHaveBeenLastCalledWith(
+        [
+          13,
+          78
+        ],
+        15
+      );
+      expect(mockMarkerSetLatLng).toHaveBeenLastCalledWith([
+        13,
+        78
+      ]);
+      expect(L.map).toHaveBeenCalledTimes(1);
+      expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(1);
+      expect(organizationService.updateOfficeAddress).not.toHaveBeenCalled();
+      expect(dialog.open).not.toHaveBeenCalled();
+    });
+
+    it('counts the entire collection and does not treat unknown status as inactive', () => {
+      loadMultiple();
+      component.officeAddresses.push({ officeAddressId: 99, isActive: null });
+      expect(component.filterCount('all')).toBe(4);
+      expect(component.filterCount('active')).toBe(2);
+      expect(component.filterCount('inactive')).toBe(1);
+      component.setFilter('inactive');
+      expect(component.visibleAddresses).toEqual([secondAddress]);
+      expect(component.getActiveStatusLabel(null)).toBe('labels.inputs.Not Provided');
+      expect(TestBed.inject(OfficeDetailsSummary).addressCount()).toBe(3);
+    });
+
+    it('preserves alternative identifier selection and excludes null or missing status from status filters', () => {
+      const addresses: OfficeAddress[] = [
+        { officeAddressId: null, id: 'legacy-8', addressId: 80, isActive: null },
+        { addressId: 'physical-9', isActive: false },
+        { officeAddressId: 'mapping-7', id: 70, addressId: 90, isActive: true },
+        { id: 11 }
+      ];
+      organizationService.getOfficeAddresses.mockReturnValue(of(addresses));
+      fixture.detectChanges();
+
+      expect(component.selectedAddressId).toBe('mapping-7');
+      expect(component.addressKey(addresses[0])).toBe('legacy-8');
+      expect(component.filterCount('all')).toBe(4);
+      expect(component.filterCount('active')).toBe(1);
+      expect(component.filterCount('inactive')).toBe(1);
+      component.setFilter('inactive');
+      expect(component.selectedAddressId).toBe('physical-9');
+      component.setFilter('all');
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of(
+          addresses
+            .slice()
+            .reverse()
+            .map((address) => ({ ...address }))
+        )
+      );
+      component.loadOfficeAddresses();
+      expect(component.selectedAddressId).toBe('physical-9');
+      expect(component.selectedAddress?.isActive).toBe(false);
+    });
+
+    it('preserves visible selection and otherwise selects the first matching record locally', () => {
+      loadMultiple();
+      component.selectAddress(thirdAddress);
+      component.setFilter('active');
+      expect(component.selectedAddressId).toBe('10');
+      component.setFilter('inactive');
+      expect(component.selectedAddressId).toBe('8');
+      component.setFilter('all');
+      expect(component.selectedAddressId).toBe('8');
+      expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(1);
+      expect(clientsService.getClientAddressTemplate).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows a distinct no-matches state and removes the old details and map', () => {
+      fixture.detectChanges();
+      component.setFilter('inactive');
+      render();
+      expect(component.selectedAddress).toBeNull();
+      expect(fixture.nativeElement.querySelector('.no-matches')).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('.empty-state')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.address-detail')).toBeNull();
+      expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).toBeNull();
+      expect(TestBed.inject(OfficeDetailsSummary).addressCount()).toBe(1);
+    });
+
+    it('retains the selected mapping ID when reloading reordered records', () => {
+      loadMultiple();
+      component.selectAddress(thirdAddress);
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([
+          { ...thirdAddress, street: 'Updated saved street' },
+          secondAddress
+        ])
+      );
+      component.loadOfficeAddresses();
+      render();
+      expect(component.selectedAddressId).toBe('10');
+      expect(fixture.nativeElement.querySelector('.address-detail').textContent).toContain('Updated saved street');
+    });
+
+    it('selects the next available record after confirmed deletion', () => {
+      loadMultiple();
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([
+          secondAddress,
+          thirdAddress
+        ])
+      );
+      dialog.open.mockReturnValue(dialogRefWithDelete());
+      component.deleteAddress(component.selectedAddress);
+      expect(organizationService.deleteOfficeAddress).toHaveBeenCalledWith('1', '7');
+      expect(component.selectedAddressId).toBe('10');
+    });
+
+    it('preserves selection when a different record is deleted', () => {
+      loadMultiple();
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([
+          component.selectedAddress,
+          thirdAddress
+        ])
+      );
+      dialog.open.mockReturnValue(dialogRefWithDelete());
+      component.deleteAddress(secondAddress);
+      expect(component.selectedAddressId).toBe('7');
+    });
+
+    it('does not delete after cancellation', () => {
+      fixture.detectChanges();
+      dialog.open.mockReturnValue({ afterClosed: () => of({ delete: false }) } as any);
+      component.deleteAddress(officeAddress);
+      expect(organizationService.deleteOfficeAddress).not.toHaveBeenCalled();
+    });
+
+    it('selects a newly created mapping only after the write and authoritative reload', () => {
+      const write = new Subject<any>();
+      const reload = new Subject<any>();
+      organizationService.getOfficeAddresses.mockReturnValueOnce(of([])).mockReturnValue(reload);
+      organizationService.createOfficeAddress.mockReturnValue(write);
+      fixture.detectChanges();
+      component.setFilter('inactive');
+      dialog.open.mockReturnValue(dialogRefWithValue(officeAddress));
+      component.addAddress();
+      expect(component.isSaving).toBe(true);
+      expect(component.selectedAddress).toBeNull();
+      component.addAddress();
+      expect(organizationService.createOfficeAddress).toHaveBeenCalledTimes(1);
+      write.next({ entityId: 10 });
+      write.complete();
+      expect(component.isLoading).toBe(true);
+      expect(component.selectedAddress).toBeNull();
+      reload.next([thirdAddress]);
+      reload.complete();
+      expect(component.selectedFilter).toBe('all');
+      expect(component.selectedAddressId).toBe('10');
+    });
+
+    it('keeps status authoritative while saving and reconciles the filter after confirmation', () => {
+      const write = new Subject<any>();
+      const reload = new Subject<any>();
+      loadMultiple();
+      component.setFilter('active');
+      organizationService.updateOfficeAddress.mockReturnValue(write);
+      organizationService.getOfficeAddresses.mockReturnValue(reload);
+      component.toggleAddress(component.selectedAddress);
+      render();
+      expect(component.selectedAddress.isActive).toBe(true);
+      expect(fixture.nativeElement.querySelector('.saving-state')).not.toBeNull();
+      component.toggleAddress(component.selectedAddress);
+      expect(organizationService.updateOfficeAddress).toHaveBeenCalledTimes(1);
+      expect(organizationService.updateOfficeAddress).toHaveBeenCalledWith('1', '7', { isActive: false });
+      write.next({ entityId: 7 });
+      write.complete();
+      component.toggleAddress(component.selectedAddress);
+      expect(organizationService.updateOfficeAddress).toHaveBeenCalledTimes(1);
+      reload.next([
+        { ...officeAddress, isActive: false },
+        thirdAddress
+      ]);
+      reload.complete();
+      expect(component.selectedAddressId).toBe('10');
+      expect(component.filterCount('inactive')).toBe(1);
+    });
+
+    it.each([
+      401,
+      403,
+      404,
+      500
+    ])('does not present HTTP %s as a successful empty result', (status) => {
+      organizationService.getOfficeAddresses.mockReturnValue(throwError(() => ({ status })));
+      fixture.detectChanges();
+      expect(component.hasError).toBe(true);
+      expect(fixture.nativeElement.querySelector('.empty-state')).toBeNull();
+      expect(TestBed.inject(OfficeDetailsSummary).addressCount()).toBeNull();
+    });
+
+    it('clears selection and options on office changes and cancels stale reads', () => {
+      const params = new BehaviorSubject(convertToParamMap({ officeId: '1' }));
+      (TestBed.inject(ActivatedRoute).parent as any).paramMap = params;
+      fixture.detectChanges();
+      component.setFilter('active');
+      const stale = new Subject<any>();
+      const current = new Subject<any>();
+      organizationService.getOfficeAddresses.mockReturnValueOnce(stale).mockReturnValueOnce(current);
+      params.next(convertToParamMap({ officeId: '2' }));
+      expect(component.officeAddresses).toEqual([]);
+      expect(component.selectedAddressId).toBeNull();
+      expect(component.selectedFilter).toBe('all');
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.address-detail')).toBeNull();
+      expect(fixture.nativeElement.querySelector('mat-spinner')).not.toBeNull();
+      params.next(convertToParamMap({ officeId: '3' }));
+      expect(stale.observed).toBe(false);
+      stale.next([officeAddress]);
+      expect(component.selectedAddress).toBeNull();
+      current.next([thirdAddress]);
+      current.complete();
+      expect(component.selectedAddressId).toBe('10');
+      expect(organizationService.getOfficeAddresses).toHaveBeenLastCalledWith('3');
+    });
+
+    it('cancels an in-flight write when navigating to another office', () => {
+      const params = new BehaviorSubject(convertToParamMap({ officeId: '1' }));
+      (TestBed.inject(ActivatedRoute).parent as any).paramMap = params;
+      fixture.detectChanges();
+      const pending = new Subject<any>();
+      organizationService.updateOfficeAddress.mockReturnValue(pending);
+      component.toggleAddress(officeAddress);
+      organizationService.getOfficeAddresses.mockReturnValue(of([thirdAddress]));
+      params.next(convertToParamMap({ officeId: '2' }));
+      expect(pending.observed).toBe(false);
+      pending.next({ entityId: 7 });
+      expect(component.selectedAddressId).toBe('10');
+      expect(organizationService.getOfficeAddresses).toHaveBeenCalledTimes(2);
+      expect(component.isSaving).toBe(false);
+    });
+
+    it('renders saved fields even when template options are absent', () => {
+      clientsService.getClientAddressTemplate.mockReturnValue(of({}));
+      fixture.detectChanges();
+      expect(component.selectedAddress).toEqual(officeAddress);
+      expect(fixture.nativeElement.querySelector('.address-detail').textContent).toContain('MG Road');
+    });
+
+    it('removes a selected map when switching to invalid or missing coordinates', () => {
+      loadMultiple();
+      const invalid = { ...secondAddress, latitude: 91 };
+      component.officeAddresses = [
+        component.selectedAddress,
+        invalid
+      ];
+      component.selectAddress(invalid);
+      render();
+      expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).toBeNull();
+      expect(mockMapRemove).toHaveBeenCalledTimes(1);
+      expect(fixture.nativeElement.querySelector('.coordinate-strip button').disabled).toBe(true);
+      expect(fixture.nativeElement.querySelector('.location-column .open-map')).toBeNull();
+    });
+
+    it.each([
+      { date: [
+          2026,
+          11,
+          9
+        ], author: 'saved.editor', expectedDate: '09 November 2026' },
+      { date: '2026-11-09', author: 'saved.editor', expectedDate: '09 November 2026' },
+      { date: '2026-11-09T12:00:00Z', author: undefined, expectedDate: '09 November 2026' },
+      { date: undefined, author: 'saved.editor', expectedDate: '' },
+      { date: undefined, author: undefined, expectedDate: '' }
+    ])('displays only available audit metadata: %j', ({ date, author, expectedDate }) => {
+      organizationService.getOfficeAddresses.mockReturnValue(
+        of([{ ...officeAddress, updatedOn: date, updatedBy: author }])
+      );
+      fixture.detectChanges();
+      const audit = fixture.nativeElement.querySelector('.audit-metadata');
+      if (!expectedDate && !author) expect(audit).toBeNull();
+      else {
+        expect(audit.textContent).toContain(expectedDate);
+        if (author) expect(audit.textContent).toContain(author);
+        else expect(audit.textContent).not.toContain('Updated by');
+        if (!expectedDate) expect(audit.textContent).not.toContain('Last updated');
+      }
+    });
+
+    it('keeps the General overview free of management controls and filters', () => {
+      component.readOnly = true;
+      loadMultiple();
+      expect(fixture.nativeElement.querySelectorAll('.location-summary')).toHaveLength(3);
+      expect(fixture.nativeElement.querySelector('.address-workspace')).toBeNull();
+      expect(fixture.nativeElement.querySelector('mat-button-toggle-group')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.audit-metadata')).toBeNull();
+      expect(TestBed.inject(OfficeDetailsSummary).addressCount()).toBe(3);
+    });
   });
 });

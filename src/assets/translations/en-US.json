@@ -1366,7 +1366,12 @@
       "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Adjust by Difference": "Adjust by Difference",
       "Open in map": "Open in map",
-      "Configure": "Configure"
+      "Configure": "Configure",
+      "Add Address": "Add Address",
+      "Add another address": "Add another address",
+      "Address actions": "Address actions",
+      "Delete Address": "Delete Address",
+      "Edit Address": "Edit Address"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -2397,7 +2402,11 @@
       "Edit Charge Amount": "Edit Charge Amount",
       "Edit Charge Date": "Edit Charge Date",
       "Edit Guarantor": "Edit Guarantor",
-      "Weekly schedule": "Weekly schedule"
+      "Weekly schedule": "Weekly schedule",
+      "Branch addresses": "Branch addresses",
+      "Complete address": "Complete address",
+      "Locality": "Locality",
+      "Location": "Location"
     },
     "inputs": {
       "Breach Start Type": "Breach Start Type",
@@ -4495,7 +4504,10 @@
       "Nominal Annual Interest Rate": "Nominal Annual Interest Rate",
       "Interest Rate Chart Overridden": "Interest Rate Chart Overridden",
       "Head Office": "Head office",
-      "Client number": "# client"
+      "Client number": "# client",
+      "Filter addresses": "Filter addresses",
+      "Last updated": "Last updated",
+      "Updated by": "Updated by"
     },
     "links": {
       "Community": "Community",
@@ -5998,7 +6010,12 @@
       "Adjust by Difference": "Adjust by Difference",
       "The adjustment amount cannot be zero": "The adjustment amount cannot be zero",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "The adjustment cancels the amount, so the transaction is reversed without a replacement",
-      "A positive amount increases the transaction and a negative one decreases it": "A positive amount increases the transaction and a negative one decreases it"
+      "A positive amount increases the transaction and a negative one decreases it": "A positive amount increases the transaction and a negative one decreases it",
+      "Manage addresses for branch": "Manage saved addresses for {{name}}.",
+      "Manage branch addresses": "Manage saved branch addresses.",
+      "No addresses match this filter": "No addresses match this filter.",
+      "Only one address per branch is supported": "This backend supports one address per branch. Edit or delete the existing address to replace it.",
+      "Saving address": "Saving address…"
     },
     "permissions": {
       "actions": {

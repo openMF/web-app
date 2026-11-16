@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Adjust by Difference": "Rekebisha kwa Tofauti",
       "Open in map": "Fungua kwenye ramani",
-      "Configure": "Sanidi"
+      "Configure": "Sanidi",
+      "Add Address": "Ongeza anwani",
+      "Add another address": "Ongeza anwani nyingine",
+      "Address actions": "Vitendo vya anwani",
+      "Delete Address": "Futa anwani",
+      "Edit Address": "Hariri anwani"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -2394,7 +2399,11 @@
       "Schedules": "Ratiba",
       "Reference": "Rejea",
       "Create Savings Product": "Unda Bidhaa ya Akiba",
-      "Weekly schedule": "Ratiba ya wiki"
+      "Weekly schedule": "Ratiba ya wiki",
+      "Branch addresses": "Anwani za tawi",
+      "Complete address": "Anwani kamili",
+      "Locality": "Eneo",
+      "Location": "Mahali"
     },
     "inputs": {
       "Breach Start Type": "Aina ya kuanza kwa ukiukaji",
@@ -4494,7 +4503,10 @@
       "Label": "Lebo",
       "Original Amount": "Kiasi Asilia",
       "Resulting Amount": "Kiasi Kinachotokana",
-      "Head Office": "Ofisi kuu"
+      "Head Office": "Ofisi kuu",
+      "Filter addresses": "Chuja anwani",
+      "Last updated": "Ilisasishwa mwisho",
+      "Updated by": "Ilisasishwa na"
     },
     "links": {
       "Community": "Jumuiya",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "Rekebisha kwa Tofauti",
       "The adjustment amount cannot be zero": "Kiasi cha marekebisho hakiwezi kuwa sifuri",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Marekebisho yanafuta kiasi, kwa hivyo muamala unatenguliwa bila mbadala",
-      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza"
+      "A positive amount increases the transaction and a negative one decreases it": "Kiasi chanya huongeza muamala na kiasi hasi hupunguza",
+      "Manage addresses for branch": "Dhibiti anwani zilizohifadhiwa za {{name}}.",
+      "Manage branch addresses": "Dhibiti anwani zilizohifadhiwa za tawi.",
+      "No addresses match this filter": "Hakuna anwani zinazolingana na kichujio hiki.",
+      "Only one address per branch is supported": "Seva hii inaruhusu anwani moja kwa kila tawi. Hariri au ufute anwani iliyopo ili kuibadilisha.",
+      "Saving address": "Inahifadhi anwani…"
     },
     "permissions": {
       "actions": {
