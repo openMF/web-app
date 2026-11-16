@@ -1,0 +1,145 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+@if (view$ | async; as vm) {
+  @if (vm.compact) {
+    <!-- Compact bar: the whole bar opens the System information sheet -->
+    <button
+      type="button"
+      class="status-bar compact"
+      [attr.data-state]="vm.status.state"
+      [attr.aria-expanded]="detailsOpen"
+      [attr.aria-controls]="panelId"
+      (click)="openDetailsSheet()"
+    >
+      <ng-container *ngTemplateOutlet="statusTemplate; context: { $implicit: vm }"></ng-container>
+      <span class="spacer"></span>
+      <span class="item-value">{{ orDash(vm.fineract?.version) }}</span>
+      <ng-container *ngTemplateOutlet="preReleaseTemplate; context: { $implicit: vm.fineract }"></ng-container>
+      <mifosx-m3-icon
+        class="chevron"
+        [name]="detailsOpen ? 'expand_more' : 'expand_less'"
+        [size]="18"
+        aria-hidden="true"
+      ></mifosx-m3-icon>
+    </button>
+  } @else {
+    <div class="status-bar" [attr.data-state]="vm.status.state">
+      <div class="item item-status">
+        <ng-container *ngTemplateOutlet="statusTemplate; context: { $implicit: vm }"></ng-container>
+        <span class="item-value mono item-host">{{ orDash(vm.host) }}</span>
+      </div>
+
+      @if (vm.status.state === 'offline') {
+        <div class="item item-retry">
+          @if (vm.retryIn !== null) {
+            <span>{{ 'labels.text.Retrying in seconds' | translate: { seconds: vm.retryIn } }}</span>
+          }
+          <button type="button" class="bar-button" (click)="retryNow()">
+            {{ 'labels.buttons.Retry now' | translate }}
+          </button>
+        </div>
+      }
+
+      <div class="item item-tenant">
+        <span class="item-label">{{ 'labels.version.Tenant' | translate }}</span>
+        <span class="item-value">{{ orDash(vm.info.tenant) }}</span>
+      </div>
+
+      <div class="item item-user">
+        <span class="item-label">{{ 'labels.version.User' | translate }}</span>
+        <span class="item-value">{{ orDash(vm.info.username) }}</span>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="item item-webapp">
+        <span class="item-label">{{ 'labels.version.WebApp' | translate }}</span>
+        <span class="item-value">{{ orDash(vm.info.webApp.version) }}</span>
+        @if (vm.info.webApp.hash) {
+          <mifosx-commit-hash-chip
+            [hash]="vm.info.webApp.hash"
+            [fullHash]="vm.info.webApp.fullHash"
+          ></mifosx-commit-hash-chip>
+        }
+        <ng-container *ngTemplateOutlet="preReleaseTemplate; context: { $implicit: vm.info.webApp }"></ng-container>
+      </div>
+
+      <div class="item item-fineract">
+        <span class="item-label fineract-label">{{ 'labels.version.Fineract' | translate }}</span>
+        <span class="item-label fineract-short" aria-hidden="true">v</span>
+        <span class="item-value">{{ orDash(vm.fineract?.version) }}</span>
+        <ng-container *ngTemplateOutlet="preReleaseTemplate; context: { $implicit: vm.fineract }"></ng-container>
+      </div>
+
+      <div class="item item-render-time" [title]="'labels.version.Render Time' | translate">
+        <mifosx-m3-icon name="schedule" [size]="14" aria-hidden="true"></mifosx-m3-icon>
+        <span class="item-value">{{ vm.info.renderTime | date: 'HH:mm:ss' }}</span>
+      </div>
+
+      <button
+        #detailsButton
+        #detailsOrigin="cdkOverlayOrigin"
+        cdkOverlayOrigin
+        type="button"
+        class="bar-button details-button"
+        [class.open]="detailsOpen"
+        [attr.aria-expanded]="detailsOpen"
+        [attr.aria-controls]="panelId"
+        (click)="toggleDetails()"
+      >
+        {{ 'labels.buttons.Details' | translate }}
+        <mifosx-m3-icon
+          [name]="detailsOpen ? 'expand_more' : 'expand_less'"
+          [size]="16"
+          aria-hidden="true"
+        ></mifosx-m3-icon>
+      </button>
+    </div>
+
+    <!-- System information panel above the bar; it closes on Escape and on a click elsewhere -->
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="detailsOrigin"
+      [cdkConnectedOverlayOpen]="detailsOpen"
+      [cdkConnectedOverlayPositions]="panelPositions"
+      (overlayOutsideClick)="closeDetails()"
+      (detach)="onPanelDetached()"
+    >
+      <mifosx-system-info-panel
+        [view]="vm"
+        mode="popover"
+        (closed)="closeDetails(true)"
+        (retry)="retryNow()"
+      ></mifosx-system-info-panel>
+    </ng-template>
+  }
+
+  <!-- Declared outside the compact bar so it outlives it while the bottom sheet closes -->
+  <ng-template #panelSheet>
+    <mifosx-system-info-panel
+      [view]="vm"
+      mode="sheet"
+      (closed)="closeDetails(true)"
+      (retry)="retryNow()"
+    ></mifosx-system-info-panel>
+  </ng-template>
+}
+
+<!-- Status is always given as text, the dot only repeats it -->
+<ng-template #statusTemplate let-vm>
+  <span class="status" aria-live="polite">
+    <span class="status-dot" aria-hidden="true"></span>
+    <span class="status-text">{{ statusTextKeys[vm.status.state] | translate }}</span>
+  </span>
+</ng-template>
+
+<ng-template #preReleaseTemplate let-version>
+  @if (version?.preRelease) {
+    <span class="pre-release-badge">{{ version.preRelease }}</span>
+  }
+</ng-template>

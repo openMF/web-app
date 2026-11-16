@@ -9,6 +9,7 @@
 const { gitDescribeSync } = require('git-describe');
 const { resolve, relative } = require('path');
 const { writeFileSync } = require('node:fs');
+const { execSync } = require('node:child_process');
 const moment = require('moment');
 
 const gitInfo = gitDescribeSync({
@@ -17,6 +18,8 @@ const gitInfo = gitDescribeSync({
 });
 
 gitInfo.version = moment().format('YYMMDD');
+// git-describe only reports the abbreviated hash; the full one is copied from the footer for support.
+gitInfo.fullHash = execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
 
 const file = resolve(__dirname, '.', 'src', 'environments', '.env.ts');
 writeFileSync(
@@ -26,7 +29,8 @@ writeFileSync(
 export default {
   'mifos_x': {
     'version': '${gitInfo.version}',
-    'hash': '${gitInfo.hash}'
+    'hash': '${gitInfo.hash}',
+    'fullHash': '${gitInfo.fullHash}'
   },
   'allow_switching_backend_instance': true
 };

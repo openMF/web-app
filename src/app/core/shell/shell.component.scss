@@ -34,6 +34,13 @@ $color: #e2e4ec;
 
 .sidenav {
   overflow-x: hidden;
+  // The content grows to fill short pages, so the footer status bar sits at the bottom of the screen.
+  display: flex;
+  flex-direction: column;
+}
+
+mifosx-content {
+  flex: 1 0 auto;
 }
 
 @keyframes move {

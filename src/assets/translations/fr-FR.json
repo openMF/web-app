@@ -978,7 +978,10 @@
       "Server": "Serveur",
       "Username": "Nom d'utilisateur",
       "Name": "Nom",
-      "Render Time": "Temps de rendu"
+      "Render Time": "Temps de rendu",
+      "User": "Utilisateur",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "La plateforme <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> est sous licence <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licence Apache, Version 2.0</a>. L'Initiative Mifos a été la force motrice derrière Apache Fineract, le lançant sous le nom de Mifos X en 2011 et contribuant à Apache en 2016 avec l'obtention du statut de projet de premier niveau de l'Apache Software Foundation en 2017.",
@@ -1369,7 +1372,11 @@
       "Add another address": "Ajouter une autre adresse",
       "Address actions": "Actions sur l’adresse",
       "Delete Address": "Supprimer l’adresse",
-      "Edit Address": "Modifier l’adresse"
+      "Edit Address": "Modifier l’adresse",
+      "Retry now": "Réessayer maintenant",
+      "Details": "Détails",
+      "Copy diagnostics": "Copier le diagnostic",
+      "Report issue": "Signaler un problème"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "Adresses de l’agence",
       "Complete address": "Adresse complète",
       "Locality": "Localité",
-      "Location": "Emplacement"
+      "Location": "Emplacement",
+      "Connection": "Connexion",
+      "Versions": "Versions",
+      "Session": "Session"
     },
     "inputs": {
       "Breach Start Type": "Type de début de manquement",
@@ -6014,7 +6024,16 @@
       "Manage branch addresses": "Gérez les adresses enregistrées de l’agence.",
       "No addresses match this filter": "Aucune adresse ne correspond à ce filtre.",
       "Only one address per branch is supported": "Ce serveur accepte une adresse par agence. Modifiez ou supprimez l’adresse existante pour la remplacer.",
-      "Saving address": "Enregistrement de l’adresse…"
+      "Saving address": "Enregistrement de l’adresse…",
+      "Connected": "Connecté",
+      "Server unreachable": "Serveur injoignable",
+      "Checking connection": "Vérification de la connexion…",
+      "Retrying in seconds": "Nouvel essai dans {{seconds}} s",
+      "Copied": "Copié",
+      "Copy full commit hash": "Copier le hash complet du commit",
+      "Checked seconds ago": "Vérifié il y a {{seconds}} s",
+      "Pre-release backend": "Le backend utilise une version préliminaire. Déconseillé pour les données de production.",
+      "Diagnostics copied": "Diagnostic copié dans le presse-papiers"
     },
     "permissions": {
       "actions": {
