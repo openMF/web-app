@@ -16,6 +16,7 @@ import { ErrorHandlerInterceptor, HANDLE_HTTP_ERROR_LOCALLY } from './error-hand
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { environment } from '../../../environments/environment';
+import enTranslations from '../../../assets/translations/en-US.json';
 
 describe('ErrorHandlerInterceptor', () => {
   let interceptor: ErrorHandlerInterceptor;
@@ -491,6 +492,62 @@ describe('ErrorHandlerInterceptor', () => {
       }
     }
 
+    async function interceptDomainRuleViolationAsync(
+      nestedCode: string,
+      translations: { [key: string]: string } = {},
+      bodyType: 'arraybuffer' | 'blob' = 'blob',
+      args?: { value: unknown }[]
+    ): Promise<void> {
+      const parser = new TranslateDefaultParser();
+      TestBed.resetTestingModule();
+      alert = jest.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          ErrorHandlerInterceptor,
+          { provide: AlertService, useValue: { alert } },
+          {
+            provide: TranslateService,
+            useValue: {
+              instant: (key: string, params?: object) => parser.interpolate(translations[key] ?? key, params)
+            }
+          }
+        ]
+      });
+      const localInterceptor = TestBed.inject(ErrorHandlerInterceptor);
+      const body = {
+        userMessageGlobalisationCode: 'validation.msg.domain.rule.violation',
+        defaultUserMessage: 'Request was understood but caused a domain rule violation.',
+        errors: [
+          {
+            userMessageGlobalisationCode: nestedCode,
+            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit',
+            ...(args && { args })
+          }
+        ]
+      };
+      let errorPayload: unknown;
+      if (bodyType === 'blob') {
+        errorPayload = new Blob([JSON.stringify(body)], { type: 'application/json' });
+      } else {
+        errorPayload = encodeBody(body);
+      }
+      const response = new HttpErrorResponse({
+        status: 403,
+        url: '/fineract-provider/api/v1/loans/1/transactions/77',
+        error: errorPayload
+      });
+      await new Promise<void>((resolve) => {
+        try {
+          (localInterceptor as any).handleError(response, new HttpRequest('POST', response.url, {})).subscribe({
+            error: () => resolve(),
+            complete: () => resolve()
+          });
+        } catch {
+          resolve();
+        }
+      });
+    }
+
     it('shows the translated message for the backend code', () => {
       interceptDomainRuleViolation(REVERSE_ONLY_CODE, {
         [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.'
@@ -506,6 +563,18 @@ describe('ErrorHandlerInterceptor', () => {
         REVERSE_ONLY_CODE,
         { [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.' },
         true
+      );
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('shows the translated message when the body arrives as a Blob', async () => {
+      await interceptDomainRuleViolationAsync(
+        REVERSE_ONLY_CODE,
+        { [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.' },
+        'blob'
       );
 
       expect(alert).toHaveBeenCalledWith(
@@ -578,5 +647,175 @@ describe('ErrorHandlerInterceptor', () => {
       type: 'errors.error.auth.sessionExpired.type',
       message: 'errors.error.auth.sessionExpired.message'
     });
+  });
+
+  it('decodes Blob error bodies and translates Fineract errors in the intercept pipeline', async () => {
+    const errorBody = {
+      developerMessage: 'Raw untranslated server error message',
+      defaultUserMessage: 'Raw untranslated server error message',
+      errors: [
+        {
+          developerMessage: 'Raw untranslated server error message',
+          defaultUserMessage: 'Raw untranslated server error message',
+          userMessageGlobalisationCode: 'error.msg.reporting.error'
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/runreports/ClientListing?output-type=PDF',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    const translate = TestBed.inject(TranslateService);
+    jest.spyOn(translate, 'instant').mockImplementation((key: string) => {
+      if (key.startsWith('errors.')) {
+        const subKey = key.slice(7);
+        return enTranslations.errors?.[subKey] ?? key;
+      }
+      return (enTranslations as Record<string, string>)[key] ?? key;
+    });
+
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    if (!(errorReceived instanceof HttpErrorResponse)) {
+      throw new Error('Expected HttpErrorResponse');
+    }
+    expect(errorReceived.error).toEqual(errorBody);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'Internal Server Error',
+      message: 'An error occurred while generating the report.'
+    });
+  });
+
+  it('handles Blob error containing plain text gracefully', async () => {
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/reports/export',
+      error: new Blob(['Internal Gateway Error'], { type: 'text/plain' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    if (!(errorReceived instanceof HttpErrorResponse)) {
+      throw new Error('Expected HttpErrorResponse');
+    }
+    expect(errorReceived.error).toBe('Internal Gateway Error');
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type'
+      })
+    );
+  });
+
+  it('handles malformed string entries in errors array without throwing TypeError', async () => {
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify({ errors: ['upstream unavailable'] })], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type'
+      })
+    );
+  });
+
+  it('handles non-string developerMessage and defaultUserMessage without throwing TypeError', async () => {
+    const errorBody = {
+      errors: [
+        {
+          developerMessage: 42,
+          defaultUserMessage: true
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type',
+        message: 'errors.error.server.internal.message'
+      })
+    );
+  });
+
+  it('handles non-array args in nested error without throwing TypeError', async () => {
+    const errorBody = {
+      errors: [
+        {
+          userMessageGlobalisationCode: 'error.msg.reporting.error',
+          args: {}
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type',
+        message: 'errors.error.server.internal.message'
+      })
+    );
   });
 });
