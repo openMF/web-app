@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "Atlaides maksas korekcija",
       "Adjust by Difference": "Koriģēt pēc starpības",
       "Open in map": "Atvērt kartē",
-      "Configure": "Konfigurēt"
+      "Configure": "Konfigurēt",
+      "Add Address": "Pievienot adresi",
+      "Add another address": "Pievienot citu adresi",
+      "Address actions": "Adreses darbības",
+      "Delete Address": "Dzēst adresi",
+      "Edit Address": "Rediģēt adresi"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2394,7 +2399,11 @@
       "Services": "Pakalpojumi",
       "Schedules": "Grafiki",
       "Reference": "Atsauce",
-      "Weekly schedule": "Nedēļas grafiks"
+      "Weekly schedule": "Nedēļas grafiks",
+      "Branch addresses": "Filiāles adreses",
+      "Complete address": "Pilna adrese",
+      "Locality": "Apvidus",
+      "Location": "Atrašanās vieta"
     },
     "inputs": {
       "Breach Start Type": "Pārkāpuma sākuma tips",
@@ -4494,7 +4503,10 @@
       "Label": "Nosaukums",
       "Original Amount": "Sākotnējā summa",
       "Resulting Amount": "Rezultējošā summa",
-      "Head Office": "Galvenais birojs"
+      "Head Office": "Galvenais birojs",
+      "Filter addresses": "Filtrēt adreses",
+      "Last updated": "Pēdējoreiz atjaunināts",
+      "Updated by": "Atjaunināja"
     },
     "links": {
       "Community": "kopiena",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "Koriģēt pēc starpības",
       "The adjustment amount cannot be zero": "Korekcijas summa nedrīkst būt nulle",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Korekcija atceļ summu, tāpēc darījums tiek atcelts bez aizstāšanas",
-      "A positive amount increases the transaction and a negative one decreases it": "Pozitīva summa darījumu palielina, negatīva – samazina"
+      "A positive amount increases the transaction and a negative one decreases it": "Pozitīva summa darījumu palielina, negatīva – samazina",
+      "Manage addresses for branch": "Pārvaldiet {{name}} saglabātās adreses.",
+      "Manage branch addresses": "Pārvaldiet saglabātās filiāles adreses.",
+      "No addresses match this filter": "Neviena adrese neatbilst šim filtram.",
+      "Only one address per branch is supported": "Šis serveris atbalsta vienu adresi katrai filiālei. Lai to aizstātu, rediģējiet vai dzēsiet esošo adresi.",
+      "Saving address": "Adrese tiek saglabāta…"
     },
     "permissions": {
       "actions": {

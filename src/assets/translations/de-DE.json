@@ -1366,7 +1366,12 @@
       "Discount Fee Adjustment": "Anpassung der Rabattgebühr",
       "Adjust by Difference": "Nach Differenz anpassen",
       "Open in map": "Auf Karte öffnen",
-      "Configure": "Konfigurieren"
+      "Configure": "Konfigurieren",
+      "Add Address": "Adresse hinzufügen",
+      "Add another address": "Weitere Adresse hinzufügen",
+      "Address actions": "Adressaktionen",
+      "Delete Address": "Adresse löschen",
+      "Edit Address": "Adresse bearbeiten"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -2396,7 +2401,11 @@
       "Services": "Dienstleistungen",
       "Schedules": "Zeitpläne",
       "Reference": "Referenz",
-      "Weekly schedule": "Wochenplan"
+      "Weekly schedule": "Wochenplan",
+      "Branch addresses": "Filialadressen",
+      "Complete address": "Vollständige Adresse",
+      "Locality": "Ortsangaben",
+      "Location": "Standort"
     },
     "inputs": {
       "Breach Start Type": "Starttyp des Verstoßes",
@@ -4496,7 +4505,10 @@
       "Label": "Bezeichnung",
       "Original Amount": "Ursprünglicher Betrag",
       "Resulting Amount": "Resultierender Betrag",
-      "Head Office": "Hauptgeschäftsstelle"
+      "Head Office": "Hauptgeschäftsstelle",
+      "Filter addresses": "Adressen filtern",
+      "Last updated": "Zuletzt aktualisiert",
+      "Updated by": "Aktualisiert von"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -5999,7 +6011,12 @@
       "Adjust by Difference": "Nach Differenz anpassen",
       "The adjustment amount cannot be zero": "Der Anpassungsbetrag darf nicht null sein",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "Die Anpassung hebt den Betrag auf, daher wird die Transaktion ohne Ersatz storniert",
-      "A positive amount increases the transaction and a negative one decreases it": "Ein positiver Betrag erhöht die Transaktion, ein negativer verringert sie"
+      "A positive amount increases the transaction and a negative one decreases it": "Ein positiver Betrag erhöht die Transaktion, ein negativer verringert sie",
+      "Manage addresses for branch": "Gespeicherte Adressen für {{name}} verwalten.",
+      "Manage branch addresses": "Gespeicherte Filialadressen verwalten.",
+      "No addresses match this filter": "Keine Adressen entsprechen diesem Filter.",
+      "Only one address per branch is supported": "Dieser Server unterstützt eine Adresse pro Filiale. Bearbeiten oder löschen Sie die bestehende Adresse, um sie zu ersetzen.",
+      "Saving address": "Adresse wird gespeichert…"
     },
     "permissions": {
       "actions": {

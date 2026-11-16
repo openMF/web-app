@@ -1364,7 +1364,12 @@
       "Discount Fee Adjustment": "छुट शुल्क समायोजन",
       "Adjust by Difference": "फरकद्वारा समायोजन",
       "Open in map": "नक्सामा खोल्नुहोस्",
-      "Configure": "कन्फिगर गर्नुहोस्"
+      "Configure": "कन्फिगर गर्नुहोस्",
+      "Add Address": "ठेगाना थप्नुहोस्",
+      "Add another address": "अर्को ठेगाना थप्नुहोस्",
+      "Address actions": "ठेगानाका कार्यहरू",
+      "Delete Address": "ठेगाना मेटाउनुहोस्",
+      "Edit Address": "ठेगाना सम्पादन गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -2394,7 +2399,11 @@
       "Services": "सेवाहरू",
       "Schedules": "तालिकाहरू",
       "Reference": "सन्दर्भ",
-      "Weekly schedule": "साप्ताहिक समयतालिका"
+      "Weekly schedule": "साप्ताहिक समयतालिका",
+      "Branch addresses": "शाखाका ठेगानाहरू",
+      "Complete address": "पूरा ठेगाना",
+      "Locality": "स्थानीयता",
+      "Location": "स्थान"
     },
     "inputs": {
       "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
@@ -4494,7 +4503,10 @@
       "Label": "लेबल",
       "Original Amount": "मूल रकम",
       "Resulting Amount": "परिणामी रकम",
-      "Head Office": "प्रधान कार्यालय"
+      "Head Office": "प्रधान कार्यालय",
+      "Filter addresses": "ठेगानाहरू फिल्टर गर्नुहोस्",
+      "Last updated": "अन्तिम अद्यावधिक",
+      "Updated by": "अद्यावधिक गर्ने"
     },
     "links": {
       "Community": "समुदाय",
@@ -5997,7 +6009,12 @@
       "Adjust by Difference": "फरकद्वारा समायोजन",
       "The adjustment amount cannot be zero": "समायोजन रकम शून्य हुन सक्दैन",
       "The adjustment cancels the amount, so the transaction is reversed without a replacement": "समायोजनले रकम रद्द गर्छ, त्यसैले कारोबार प्रतिस्थापनबिना उल्ट्याइन्छ",
-      "A positive amount increases the transaction and a negative one decreases it": "सकारात्मक रकमले कारोबार बढाउँछ र नकारात्मकले घटाउँछ"
+      "A positive amount increases the transaction and a negative one decreases it": "सकारात्मक रकमले कारोबार बढाउँछ र नकारात्मकले घटाउँछ",
+      "Manage addresses for branch": "{{name}} का सुरक्षित ठेगानाहरू व्यवस्थापन गर्नुहोस्।",
+      "Manage branch addresses": "शाखाका सुरक्षित ठेगानाहरू व्यवस्थापन गर्नुहोस्।",
+      "No addresses match this filter": "यस फिल्टरसँग मिल्ने कुनै ठेगाना छैन।",
+      "Only one address per branch is supported": "यो सर्भरले प्रत्येक शाखामा एउटा ठेगाना मात्र समर्थन गर्छ। बदल्नको लागि हालको ठेगाना सम्पादन वा मेटाउनुहोस्।",
+      "Saving address": "ठेगाना सुरक्षित हुँदैछ…"
     },
     "permissions": {
       "actions": {

@@ -6,36 +6,65 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography" [class.summary-view]="readOnly">
-  <div class="layout-row align-start">
-    <div class="m-b-10">
-      <h2>
-        @if (readOnly) {
-          {{ 'labels.heading.Address & Location' | translate }}
-        } @else {
-          {{ 'labels.heading.Address' | translate }}
-        }
-      </h2>
-    </div>
-    @if (readOnly && !isLoading && !hasError && !isPluginUnavailable) {
-      <a mat-button color="primary" [routerLink]="['../address']" *mifosxHasPermission="'UPDATE_OFFICE'">
-        {{ 'labels.buttons.Edit' | translate }}
-      </a>
-    }
-    @if (canManageAddress('CREATE_OFFICE') && !hasOfficeAddress) {
-      <div class="action-button m-b-10 gap-25px">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="addAddress()"
-          [disabled]="!canAddAddress"
-          *mifosxHasPermission="'CREATE_OFFICE'"
-        >
-          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-        </button>
+<div class="tab-container mat-typography" [class.summary-view]="readOnly" [class.address-management]="!readOnly">
+  @if (readOnly) {
+    <div class="layout-row align-start">
+      <div class="m-b-10">
+        <h2>{{ 'labels.heading.Address & Location' | translate }}</h2>
       </div>
-    }
-  </div>
+      @if (!isLoading && !hasError && !isPluginUnavailable) {
+        <a mat-button color="primary" [routerLink]="['../address']" *mifosxHasPermission="'UPDATE_OFFICE'">{{
+          'labels.buttons.Edit' | translate
+        }}</a>
+      }
+    </div>
+  } @else {
+    <header class="management-header">
+      <div class="management-introduction">
+        <h2>{{ 'labels.heading.Branch addresses' | translate }}</h2>
+        <p>
+          {{
+            (officeName ? 'labels.text.Manage addresses for branch' : 'labels.text.Manage branch addresses')
+              | translate: { name: officeName }
+          }}
+        </p>
+      </div>
+      <div class="management-toolbar">
+        <mat-button-toggle-group
+          [value]="selectedFilter"
+          (change)="setFilter($event.value)"
+          [attr.aria-label]="'labels.inputs.Filter addresses' | translate"
+          [disabled]="isLoading || hasError || isPluginUnavailable"
+        >
+          @for (filter of filters; track filter.value) {
+            <mat-button-toggle [value]="filter.value"
+              >{{ filter.label | translate }}
+              <span class="filter-count">{{ filterCount(filter.value) }}</span></mat-button-toggle
+            >
+          }
+        </mat-button-toggle-group>
+        @if (canManageAddress('CREATE_OFFICE')) {
+          <div class="action-button">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addAddress()"
+              [disabled]="!canAddAddress"
+              [attr.aria-describedby]="hasOfficeAddress ? 'address-creation-limit' : null"
+              *mifosxHasPermission="'CREATE_OFFICE'"
+            >
+              <fa-icon icon="plus" aria-hidden="true"></fa-icon> {{ 'labels.buttons.Add Address' | translate }}
+            </button>
+            @if (hasOfficeAddress) {
+              <span id="address-creation-limit" class="visually-hidden">{{
+                'labels.text.Only one address per branch is supported' | translate
+              }}</span>
+            }
+          </div>
+        }
+      </div>
+    </header>
+  }
 
   @if (isLoading) {
     <div class="address-state" role="status">
@@ -170,155 +199,236 @@
         </section>
       }
     } @else {
-      <mat-accordion [multi]="readOnly">
-        @for (address of officeAddresses; track getOfficeAddressId(address, $index)) {
-          <mat-expansion-panel class="address" [expanded]="readOnly">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ getAddressType(address) || ('labels.heading.Address' | translate) }}
-              </mat-panel-title>
-              <mat-panel-description>
-                {{ 'labels.inputs.Active Status' | translate }}:
-                {{ getActiveStatusLabel(address.isActive) | translate }}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider [inset]="true"></mat-divider>
-            @if (!readOnly) {
-              <div class="address-actions layout-row align-end align-items-center">
+      <div class="address-workspace">
+        <aside class="address-selector" [attr.aria-label]="'labels.heading.Branch addresses' | translate">
+          @for (address of visibleAddresses; track addressKey(address)) {
+            <button
+              mat-button
+              class="address-card"
+              [disableRipple]="true"
+              [class.selected]="addressKey(address) === selectedAddressId"
+              [attr.aria-pressed]="addressKey(address) === selectedAddressId"
+              (click)="selectAddress(address)"
+            >
+              <span class="selector-heading">
+                <span class="pin-icon" aria-hidden="true"><fa-icon [icon]="pinIcon"></fa-icon></span>
+                <span class="selector-title">{{
+                  getAddressType(address) || ('labels.heading.Address' | translate)
+                }}</span>
+                <span class="status-badge" [class.active]="address.isActive === true">
+                  {{ getActiveStatusLabel(address.isActive) | translate }}
+                </span>
+              </span>
+              <span class="address-preview">{{
+                getPostalLines(address).join(', ') || ('labels.inputs.Not Provided' | translate)
+              }}</span>
+            </button>
+          }
+          @if (canManageAddress('CREATE_OFFICE')) {
+            <div class="add-another-card">
+              <fa-icon icon="plus" aria-hidden="true"></fa-icon>
+              <button
+                mat-button
+                (click)="addAddress()"
+                [disabled]="!canAddAddress"
+                *mifosxHasPermission="'CREATE_OFFICE'"
+              >
+                {{ 'labels.buttons.Add another address' | translate }}
+              </button>
+              <p>{{ 'labels.text.Only one address per branch is supported' | translate }}</p>
+            </div>
+          }
+        </aside>
+
+        @if (selectedAddress; as address) {
+          <mat-card class="address-detail" [attr.aria-busy]="isSaving">
+            <header class="detail-header">
+              <div class="detail-identity">
+                <div class="detail-title">
+                  <h3>{{ getAddressType(address) || ('labels.heading.Address' | translate) }}</h3>
+                  <span class="status-badge" [class.active]="address.isActive === true">
+                    {{ getActiveStatusLabel(address.isActive) | translate }}
+                  </span>
+                </div>
+                @let updatedDate = address.updatedOn | dateFormat;
+                @if (updatedDate || hasValue(address.updatedBy)) {
+                  <p class="audit-metadata">
+                    @if (updatedDate) {
+                      <span>{{ 'labels.inputs.Last updated' | translate }} {{ updatedDate }}</span>
+                    }
+                    @if (hasValue(address.updatedBy)) {
+                      <span>{{ 'labels.inputs.Updated by' | translate }} {{ address.updatedBy }}</span>
+                    }
+                  </p>
+                }
+              </div>
+              <div class="address-actions">
                 <button
-                  mat-button
+                  mat-stroked-button
+                  color="primary"
+                  (click)="toggleAddress(address)"
+                  [disabled]="!canManageAddress('UPDATE_OFFICE') || isSaving || isLoading || isPluginUnavailable"
+                  *mifosxHasPermission="'UPDATE_OFFICE'"
+                >
+                  {{ (address.isActive ? 'labels.buttons.Deactivate' : 'labels.buttons.Activate') | translate }}
+                </button>
+                <button
+                  mat-stroked-button
                   color="primary"
                   (click)="editAddress(address)"
-                  [attr.aria-label]="'labels.buttons.Edit' | translate"
                   [disabled]="
-                    !canManageAddress('UPDATE_OFFICE') || isSaving || optionsLoadFailed || isPluginUnavailable
+                    !canManageAddress('UPDATE_OFFICE') ||
+                    isSaving ||
+                    isLoading ||
+                    optionsLoadFailed ||
+                    isPluginUnavailable
                   "
                   *mifosxHasPermission="'UPDATE_OFFICE'"
                 >
-                  <fa-icon icon="edit"></fa-icon>
+                  <fa-icon icon="edit" aria-hidden="true"></fa-icon> {{ 'labels.buttons.Edit Address' | translate }}
                 </button>
                 <button
                   mat-button
-                  color="warn"
-                  (click)="deleteAddress(address)"
-                  [attr.aria-label]="'labels.buttons.Delete' | translate"
-                  [disabled]="!canManageAddress('DELETE_OFFICE') || isSaving || isPluginUnavailable"
+                  [matMenuTriggerFor]="addressMenu"
+                  [attr.aria-label]="'labels.buttons.Address actions' | translate"
+                  [disabled]="isSaving || isLoading"
                   *mifosxHasPermission="'DELETE_OFFICE'"
                 >
-                  <fa-icon icon="trash"></fa-icon>
+                  <fa-icon [icon]="moreIcon" aria-hidden="true"></fa-icon>
                 </button>
-                <mat-slide-toggle
-                  [checked]="address.isActive"
-                  [attr.aria-label]="'labels.inputs.Active Status' | translate"
-                  (change)="toggleAddress(address)"
-                  [disabled]="!canManageAddress('UPDATE_OFFICE') || isSaving || isPluginUnavailable"
-                  *mifosxHasPermission="'UPDATE_OFFICE'"
-                ></mat-slide-toggle>
+                <mat-menu #addressMenu="matMenu">
+                  <button
+                    mat-menu-item
+                    (click)="deleteAddress(address)"
+                    [disabled]="!canManageAddress('DELETE_OFFICE') || isSaving || isLoading || isPluginUnavailable"
+                    *mifosxHasPermission="'DELETE_OFFICE'"
+                  >
+                    <fa-icon icon="trash" aria-hidden="true"></fa-icon>
+                    {{ 'labels.buttons.Delete Address' | translate }}
+                  </button>
+                </mat-menu>
+              </div>
+            </header>
+            @if (isSaving) {
+              <div class="saving-state" role="status">
+                <mat-spinner diameter="24"></mat-spinner>{{ 'labels.text.Saving address' | translate }}
               </div>
             }
-            <div class="address-details">
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Address Type' | translate }}</span>
-                <span>{{ getAddressType(address) || ('labels.inputs.Not Provided' | translate) }}</span>
+            <mat-card-content class="detail-columns">
+              <div class="address-fields">
+                <section>
+                  <h4>{{ 'labels.heading.Address' | translate }}</h4>
+                  <dl class="street-fields">
+                    <div>
+                      <dt>{{ 'labels.inputs.Address Type' | translate }}</dt>
+                      <dd>{{ getAddressType(address) || ('labels.inputs.Not Provided' | translate) }}</dd>
+                    </div>
+                    @for (field of addressFields; track field.key) {
+                      <div>
+                        <dt>{{ field.label | translate }}</dt>
+                        <dd>
+                          {{
+                            hasValue(address[field.key])
+                              ? address[field.key]
+                              : ('labels.inputs.Not Provided' | translate)
+                          }}
+                        </dd>
+                      </div>
+                    }
+                  </dl>
+                </section>
+                <section>
+                  <h4>{{ 'labels.heading.Locality' | translate }}</h4>
+                  <dl class="locality-fields">
+                    @for (field of localityFields; track field.key) {
+                      <div>
+                        <dt>{{ field.label | translate }}</dt>
+                        <dd>
+                          {{
+                            (field.options
+                              ? getSelectedValue(field.options, address[field.key])?.name || address[field.key]
+                              : address[field.key]) || ('labels.inputs.Not Provided' | translate)
+                          }}
+                        </dd>
+                      </div>
+                    }
+                    <div>
+                      <dt>{{ 'labels.inputs.Active Status' | translate }}</dt>
+                      <dd>
+                        <span class="status-badge" [class.active]="address.isActive === true">{{
+                          getActiveStatusLabel(address.isActive) | translate
+                        }}</span>
+                      </dd>
+                    </div>
+                  </dl>
+                </section>
               </div>
-              @if (readOnly || hasValue(address.street)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Street' | translate }}</span>
-                  <span>{{
-                    hasValue(address.street) ? address.street : ('labels.inputs.Not Provided' | translate)
-                  }}</span>
+              <section class="location-column">
+                <h4>{{ 'labels.heading.Location' | translate }}</h4>
+                @if (hasValidCoordinatePair(address.latitude, address.longitude)) {
+                  <div class="location-map management-map">
+                    <mifosx-address-location-map
+                      [latitude]="address.latitude"
+                      [longitude]="address.longitude"
+                      [compact]="true"
+                    />
+                    <a
+                      mat-stroked-button
+                      class="open-map"
+                      [href]="getMapUrl(address)"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      [attr.aria-label]="
+                        ('labels.buttons.Open in map' | translate) + ': ' + getPostalLines(address).join(', ')
+                      "
+                    >
+                      {{ 'labels.buttons.Open in map' | translate }}
+                    </a>
+                  </div>
+                } @else {
+                  <p class="coordinate-state" role="status">
+                    {{ 'labels.text.No valid saved coordinates' | translate }}
+                  </p>
+                }
+                <div class="coordinate-strip">
+                  <div>
+                    <span class="coordinate-label">{{ 'labels.inputs.Latitude' | translate }}</span
+                    ><span>{{
+                      hasValue(address.latitude) ? address.latitude : ('labels.inputs.Not Provided' | translate)
+                    }}</span>
+                  </div>
+                  <div>
+                    <span class="coordinate-label">{{ 'labels.inputs.Longitude' | translate }}</span
+                    ><span>{{
+                      hasValue(address.longitude) ? address.longitude : ('labels.inputs.Not Provided' | translate)
+                    }}</span>
+                  </div>
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="copyCoordinates(address)"
+                    [disabled]="!hasValidCoordinatePair(address.latitude, address.longitude)"
+                  >
+                    {{ 'labels.text.Copy' | translate }}
+                  </button>
                 </div>
-              }
-              @if (hasValue(address.addressLine1)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Address Line 1' | translate }}</span>
-                  <span>{{ address.addressLine1 }}</span>
+                <div class="complete-address">
+                  <h4>{{ 'labels.heading.Complete address' | translate }}</h4>
+                  <address class="postal-address">
+                    {{ getPostalLines(address).join(', ') || ('labels.inputs.Not Provided' | translate) }}
+                  </address>
                 </div>
-              }
-              @if (hasValue(address.addressLine2)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Address Line 2' | translate }}</span>
-                  <span>{{ address.addressLine2 }}</span>
-                </div>
-              }
-              @if (hasValue(address.addressLine3)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Address Line 3' | translate }}</span>
-                  <span>{{ address.addressLine3 }}</span>
-                </div>
-              }
-              @if (hasValue(address.townVillage)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Town / Village' | translate }}</span>
-                  <span>{{ address.townVillage }}</span>
-                </div>
-              }
-              @if (readOnly || hasValue(address.city)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.City' | translate }}</span>
-                  <span>{{ hasValue(address.city) ? address.city : ('labels.inputs.Not Provided' | translate) }}</span>
-                </div>
-              }
-              @if (hasValue(address.countyDistrict)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Country District' | translate }}</span>
-                  <span>{{ address.countyDistrict }}</span>
-                </div>
-              }
-              @if (readOnly || hasValue(address.stateProvinceId)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.State / Province' | translate }}</span>
-                  <span>{{
-                    getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name ||
-                      address.stateProvinceId ||
-                      ('labels.inputs.Not Provided' | translate)
-                  }}</span>
-                </div>
-              }
-              @if (readOnly || hasValue(address.countryId)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Country' | translate }}</span>
-                  <span>{{
-                    getSelectedValue('countryIdOptions', address.countryId)?.name ||
-                      address.countryId ||
-                      ('labels.inputs.Not Provided' | translate)
-                  }}</span>
-                </div>
-              }
-              @if (readOnly || hasValue(address.postalCode)) {
-                <div class="address-row">
-                  <span class="label">{{ 'labels.inputs.Postal Code' | translate }}</span>
-                  <span>{{
-                    hasValue(address.postalCode) ? address.postalCode : ('labels.inputs.Not Provided' | translate)
-                  }}</span>
-                </div>
-              }
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
-                <span>{{
-                  hasValue(address.latitude) ? address.latitude : ('labels.inputs.Not Provided' | translate)
-                }}</span>
-              </div>
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
-                <span>{{
-                  hasValue(address.longitude) ? address.longitude : ('labels.inputs.Not Provided' | translate)
-                }}</span>
-              </div>
-              <div class="address-row">
-                <span class="label">{{ 'labels.inputs.Active Status' | translate }}</span>
-                <span>{{ getActiveStatusLabel(address.isActive) | translate }}</span>
-              </div>
-            </div>
-            @if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
-              <p>{{ 'labels.text.No valid saved coordinates' | translate }}</p>
-            }
-            @if (hasValidCoordinatePair(address.latitude, address.longitude)) {
-              <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
-            }
-          </mat-expansion-panel>
+              </section>
+            </mat-card-content>
+          </mat-card>
+        } @else {
+          <mat-card class="no-matches" role="status"
+            ><mat-card-content>{{
+              'labels.text.No addresses match this filter' | translate
+            }}</mat-card-content></mat-card
+          >
         }
-      </mat-accordion>
+      </div>
     }
   }
 </div>

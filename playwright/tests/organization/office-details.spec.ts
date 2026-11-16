@@ -59,14 +59,18 @@ test('office details reflect persisted addresses, maps and available backend ser
     await expect(summary.locator('mifosx-address-location-map')).toHaveCount(0);
     await page.getByRole('tab', { name: /^Address\b/ }).click();
     await expect(
-      page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Add', exact: true }).first()
+      page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Add Address', exact: true }).first()
     ).toBeDisabled();
     await page.getByRole('tab', { name: 'Summary', exact: true }).click();
   } else {
     await expect(summary.locator('mifosx-office-address-tab')).toContainText('No data found');
     await page.screenshot({ path: testInfo.outputPath('empty.png'), fullPage: true });
     await page.getByRole('tab', { name: /^Address\b/ }).click();
-    await page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Add', exact: true }).first().click();
+    await page
+      .locator('mifosx-office-address-tab')
+      .getByRole('button', { name: 'Add Address', exact: true })
+      .first()
+      .click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
     await dialog.getByLabel('Address Type', { exact: false }).click();
@@ -108,11 +112,10 @@ test('office details reflect persisted addresses, maps and available backend ser
     const original = await readAddress();
     const openEdit = async () => {
       await page.getByRole('tab', { name: /^Address\b/ }).click();
-      const panel = page.locator('mifosx-office-address-tab mat-expansion-panel');
-      if ((await panel.locator('mat-expansion-panel-header').getAttribute('aria-expanded')) !== 'true') {
-        await panel.locator('mat-expansion-panel-header').click();
-      }
-      await panel.getByRole('button', { name: 'Edit', exact: true }).click();
+      await page
+        .locator('mifosx-office-address-tab .address-detail')
+        .getByRole('button', { name: 'Edit Address', exact: true })
+        .click();
       await expect(dialog).toBeVisible();
     };
     const saveEdit = async () => {
@@ -124,7 +127,7 @@ test('office details reflect persisted addresses, maps and available backend ser
       await dialog.getByRole('button', { name: 'Edit', exact: true }).click();
       expect((await updated).status()).toBe(200);
       await expect(dialog).not.toBeVisible();
-      await expect(page.locator('mifosx-office-address-tab mat-expansion-panel')).toBeVisible();
+      await expect(page.locator('mifosx-office-address-tab .address-detail')).toBeVisible();
     };
     await openEdit();
     const latitude = dialog.getByLabel('Latitude', { exact: false });
@@ -188,7 +191,7 @@ test('office details reflect persisted addresses, maps and available backend ser
     await latitude.fill('10');
     await dialog.getByRole('button', { name: 'Cancel', exact: true }).click();
     await expect(
-      page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Edit', exact: true })
+      page.locator('mifosx-office-address-tab').getByRole('button', { name: 'Edit Address', exact: true })
     ).toBeFocused();
     expect(await readAddress()).toMatchObject({ ...located, postalCode: '10102' });
     // Either member can be changed while retaining the other saved value.
@@ -271,11 +274,11 @@ test('office details reflect persisted addresses, maps and available backend ser
     }
     for (let repeat = 0; repeat < 3; repeat++) {
       await page.getByRole('tab', { name: /^Address\b/ }).click();
-      const header = page.locator('mifosx-office-address-tab mat-expansion-panel-header');
-      await header.click();
+      const card = page.locator('mifosx-office-address-tab .address-card').first();
+      await card.click();
+      await expect(card).toHaveAttribute('aria-pressed', 'true');
       await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
-      await header.click();
-      await header.click();
+      await card.click();
       await expect(page.locator('.leaflet-marker-icon')).toHaveCount(1);
       await page.getByRole('tab', { name: 'Summary', exact: true }).click();
       await expect(summary.locator('.leaflet-marker-icon')).toHaveCount(1);
