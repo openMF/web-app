@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "El ajuste no puede reducir la transacción por debajo de cero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Horarios de la sucursal",
+      "description": "Horario regular de atención configurado para la sucursal.",
+      "timezoneUnavailable": "Zona horaria de la sucursal no disponible",
+      "edit": "Editar horario",
+      "regular": "Horario regular",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "por semana",
+      "operatingDays": "{{count}} días de atención",
+      "invalidInterval": "Horario inválido o incompleto",
+      "incompleteWeek": "Total semanal no disponible: faltan días o hay datos inválidos.",
+      "statusUnavailable": "Estado actual no disponible",
+      "statusExplanation": "Se necesitan la zona horaria de la sucursal y reglas verificadas de atención en feriados para determinar la disponibilidad actual.",
+      "specialDays": "Días especiales",
+      "holidayDescription": "Feriados de los próximos 60 días según el calendario del dispositivo. Los registros no establecen horarios de atención.",
+      "holidayForbidden": "No tienes permiso para consultar feriados.",
+      "holidayUnsupported": "Este servidor no admite información de feriados.",
+      "holidayMalformed": "No se pudieron interpretar los feriados. Revisa los registros en Administrar feriados.",
+      "holidayError": "No se pudieron cargar los feriados.",
+      "noHolidays": "No hay feriados próximos en este período.",
+      "pendingHoliday": "Pendiente de activación"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Instancia",

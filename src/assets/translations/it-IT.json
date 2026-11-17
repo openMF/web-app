@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "La rettifica non può ridurre la transazione sotto lo zero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Orari della filiale",
+      "description": "L’orario regolare configurato per la filiale.",
+      "timezoneUnavailable": "Fuso orario della filiale non disponibile",
+      "edit": "Modifica orario",
+      "regular": "Orario regolare",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "a settimana",
+      "operatingDays": "{{count}} giorni di apertura",
+      "invalidInterval": "Orario non valido o incompleto",
+      "incompleteWeek": "Totale settimanale non disponibile: alcuni giorni sono mancanti o non validi.",
+      "statusUnavailable": "Stato attuale non disponibile",
+      "statusExplanation": "Per determinare la disponibilità attuale servono il fuso orario della filiale e regole di apertura verificate per le festività.",
+      "specialDays": "Giorni speciali",
+      "holidayDescription": "Festività dei prossimi 60 giorni secondo il calendario del dispositivo. I dati sulle festività non definiscono gli orari di apertura.",
+      "holidayForbidden": "Non hai il permesso di visualizzare le festività.",
+      "holidayUnsupported": "Questo server non supporta le informazioni sulle festività.",
+      "holidayMalformed": "Impossibile leggere i dati delle festività. Controlla le voci in Gestisci festività.",
+      "holidayError": "Impossibile caricare le festività.",
+      "noHolidays": "Nessuna festività in arrivo in questo periodo.",
+      "pendingHoliday": "In attesa di attivazione"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Inquilino",

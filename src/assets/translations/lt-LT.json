@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Koregavimas negali sumažinti operacijos žemiau nulio."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filialo darbo laikas",
+      "description": "Nustatytas įprastas filialo darbo grafikas.",
+      "timezoneUnavailable": "Filialo laiko juosta nežinoma",
+      "edit": "Keisti darbo laiką",
+      "regular": "Įprastas darbo grafikas",
+      "hours": "{{count}} val.",
+      "minutes": "{{count}} min.",
+      "seconds": "{{count}} sek.",
+      "perWeek": "per savaitę",
+      "operatingDays": "Darbo dienų: {{count}}",
+      "invalidInterval": "Netinkamas arba neišsamus darbo laikas",
+      "incompleteWeek": "Savaitės suma nepasiekiama: trūksta dienų arba duomenys netinkami.",
+      "statusUnavailable": "Dabartinė būsena nežinoma",
+      "statusExplanation": "Dabartiniam prieinamumui nustatyti reikia filialo laiko juostos ir patvirtintų darbo švenčių dienomis taisyklių.",
+      "specialDays": "Ypatingos dienos",
+      "holidayDescription": "Artimiausių 60 dienų šventės pagal įrenginio kalendorių. Švenčių įrašai nenustato darbo laiko.",
+      "holidayForbidden": "Neturite teisės peržiūrėti švenčių.",
+      "holidayUnsupported": "Šis serveris nepalaiko švenčių informacijos.",
+      "holidayMalformed": "Nepavyko perskaityti švenčių duomenų. Patikrinkite įrašus švenčių valdyme.",
+      "holidayError": "Nepavyko įkelti švenčių.",
+      "noHolidays": "Šiuo laikotarpiu artėjančių švenčių nėra.",
+      "pendingHoliday": "Laukiama aktyvinimo"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nuomininkas",

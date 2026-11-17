@@ -972,6 +972,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Die Anpassung darf die Transaktion nicht unter null verringern."
   },
   "labels": {
+    "officeHours": {
+      "title": "Öffnungszeiten der Filiale",
+      "description": "Die konfigurierten regulären Öffnungszeiten der Filiale.",
+      "timezoneUnavailable": "Zeitzone der Filiale nicht verfügbar",
+      "edit": "Öffnungszeiten bearbeiten",
+      "regular": "Reguläre Öffnungszeiten",
+      "hours": "{{count}} Std.",
+      "minutes": "{{count}} Min.",
+      "seconds": "{{count}} Sek.",
+      "perWeek": "pro Woche",
+      "operatingDays": "{{count}} Öffnungstage",
+      "invalidInterval": "Ungültige oder unvollständige Zeiten",
+      "incompleteWeek": "Wochensumme nicht verfügbar: Tage fehlen oder sind ungültig.",
+      "statusUnavailable": "Aktueller Status nicht verfügbar",
+      "statusExplanation": "Für die aktuelle Verfügbarkeit sind die Zeitzone der Filiale und bestätigte Öffnungsregeln an Feiertagen erforderlich.",
+      "specialDays": "Besondere Tage",
+      "holidayDescription": "Feiertage der nächsten 60 Tage laut Gerätekalender. Feiertagseinträge legen keine Öffnungszeiten fest.",
+      "holidayForbidden": "Sie haben keine Berechtigung, Feiertage anzuzeigen.",
+      "holidayUnsupported": "Dieser Server unterstützt keine Feiertagsinformationen.",
+      "holidayMalformed": "Feiertagsdaten konnten nicht gelesen werden. Prüfen Sie die Einträge in der Feiertagsverwaltung.",
+      "holidayError": "Feiertage konnten nicht geladen werden.",
+      "noHolidays": "Keine bevorstehenden Feiertage in diesem Zeitraum.",
+      "pendingHoliday": "Aktivierung ausstehend"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Mieter",

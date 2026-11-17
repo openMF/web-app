@@ -972,6 +972,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "The adjustment cannot decrease the transaction below zero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Branch hours",
+      "description": "The branch's configured regular operating schedule.",
+      "timezoneUnavailable": "Branch timezone unavailable",
+      "edit": "Edit schedule",
+      "regular": "Regular schedule",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "per week",
+      "operatingDays": "{{count}} operating days",
+      "invalidInterval": "Invalid or incomplete hours",
+      "incompleteWeek": "Weekly total unavailable: some days are missing or invalid.",
+      "statusUnavailable": "Current status unavailable",
+      "statusExplanation": "A branch timezone and verified holiday opening rules are needed to determine current availability.",
+      "specialDays": "Special days",
+      "holidayDescription": "Holidays in the next 60 days, using your device calendar. Holiday records do not establish opening hours.",
+      "holidayForbidden": "You do not have permission to view holidays.",
+      "holidayUnsupported": "Holiday information is not supported by this server.",
+      "holidayMalformed": "Holiday data could not be read. Check the records in Manage Holidays.",
+      "holidayError": "Holidays could not be loaded.",
+      "noHolidays": "No upcoming holidays in this period.",
+      "pendingHoliday": "Pending activation"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Tenant",

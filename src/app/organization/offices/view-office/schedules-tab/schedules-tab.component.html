@@ -7,16 +7,39 @@
 -->
 
 <div class="tab-container mat-typography" [class.summary-view]="readOnly">
-  <div class="layout-row align-start">
-    <div class="m-b-16">
-      <h2>{{ (readOnly ? 'labels.heading.Weekly schedule' : 'labels.heading.Schedules') | translate }}</h2>
-    </div>
-    @if (readOnly) {
+  @if (readOnly) {
+    <div class="layout-row align-start">
+      <h2>{{ 'labels.heading.Weekly schedule' | translate }}</h2>
       <a mat-button color="primary" [routerLink]="['../schedules']" *mifosxHasPermission="'UPDATE_OFFICE'">
         {{ 'labels.buttons.Configure' | translate }}
       </a>
-    }
-  </div>
+    </div>
+  } @else {
+    <header class="hours-heading">
+      <div>
+        <h2>{{ 'labels.officeHours.title' | translate }}</h2>
+        <p>{{ 'labels.officeHours.description' | translate }}</p>
+      </div>
+      <div class="hours-heading-actions">
+        <span class="timezone-note"
+          ><fa-icon icon="clock" aria-hidden="true"></fa-icon>
+          {{ 'labels.officeHours.timezoneUnavailable' | translate }}</span
+        >
+        @if (canEdit && !isEditing && !hasError && !isPluginUnavailable) {
+          <button
+            mat-raised-button
+            color="primary"
+            class="edit-schedule"
+            (click)="startEditing()"
+            [disabled]="isLoading || isSaving"
+          >
+            <fa-icon icon="edit" aria-hidden="true"></fa-icon>
+            {{ 'labels.officeHours.edit' | translate }}
+          </button>
+        }
+      </div>
+    </header>
+  }
 
   @if (isLoading) {
     <div class="schedule-state" role="status">
@@ -68,7 +91,7 @@
           </div>
         }
       </div>
-    } @else {
+    } @else if (isEditing) {
       @if (hasNoSchedule) {
         <p role="status">{{ 'labels.text.No configured hours' | translate }}</p>
       }
@@ -156,6 +179,9 @@
 
         @if (canEdit) {
           <div class="schedule-actions">
+            <button mat-button type="button" (click)="cancelEditing()" [disabled]="isSaving || isLoading">
+              {{ 'labels.buttons.Cancel' | translate }}
+            </button>
             <button
               mat-raised-button
               color="primary"
@@ -173,6 +199,177 @@
           </div>
         }
       </form>
+    } @else {
+      <div class="hours-dashboard">
+        <mat-card class="hours-card regular-schedule">
+          <div class="card-heading">
+            <h3>{{ 'labels.officeHours.regular' | translate }}</h3>
+          </div>
+          @if (hasNoSchedule) {
+            <p class="schedule-notice" role="status">{{ 'labels.text.No configured hours' | translate }}</p>
+          }
+          <div class="mobile-axis" aria-hidden="true">
+            @for (hour of axisTicks; track hour) {
+              <span [style.left.%]="timelinePosition(hour * 3600)">{{ hour | number: '2.0-0' }}</span>
+            }
+          </div>
+          <mat-table
+            [dataSource]="days.controls"
+            class="weekly-table"
+            [attr.aria-label]="'labels.officeHours.regular' | translate"
+          >
+            <ng-container matColumnDef="weekday">
+              <mat-header-cell *matHeaderCellDef>
+                <span class="cdk-visually-hidden">{{ 'labels.inputs.Day' | translate }}</span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let day" class="weekday-name">{{ getWeekdayLabelKey(day) | translate }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="hours">
+              <mat-header-cell *matHeaderCellDef>
+                <span class="cdk-visually-hidden">{{ 'labels.officeHours.title' | translate }}</span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let day" class="configured-hours">
+                @if (!isSummaryDayConfigured(day)) {
+                  <span class="muted">{{ 'labels.text.Not configured' | translate }}</span>
+                } @else if (!day.get('enabled')?.value) {
+                  <span class="muted">{{ 'labels.text.Closed' | translate }}</span>
+                } @else if (dayDuration(day) === null) {
+                  <span class="invalid-hours">{{ 'labels.officeHours.invalidInterval' | translate }}</span>
+                } @else {
+                  {{ getSummaryHours(day) }}
+                }
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="timeline">
+              <mat-header-cell *matHeaderCellDef>
+                <div class="timeline-axis" aria-hidden="true">
+                  @for (hour of axisTicks; track hour) {
+                    <span [style.left.%]="timelinePosition(hour * 3600)">{{ hour | number: '2.0-0' }}</span>
+                  }
+                </div>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let day">
+                <div class="timeline-track" aria-hidden="true">
+                  @for (hour of axisTicks; track hour) {
+                    <span class="timeline-gridline" [style.left.%]="timelinePosition(hour * 3600)"></span>
+                  }
+                  @if (dayDuration(day) !== null) {
+                    <span class="timeline-bar" [style.left.%]="barStart(day)" [style.width.%]="barWidth(day)"></span>
+                  }
+                </div>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="duration">
+              <mat-header-cell *matHeaderCellDef>
+                <span class="cdk-visually-hidden">{{ 'labels.inputs.Duration' | translate }}</span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let day" class="daily-duration">
+                {{ dayDuration(day) !== null ? durationLabel(dayDuration(day)) : '—' }}
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="dashboardColumns"></mat-header-row>
+            <mat-row *matRowDef="let day; columns: dashboardColumns"></mat-row>
+          </mat-table>
+          <div class="weekly-summary">
+            @if (isWeekComplete) {
+              <span
+                ><strong>{{ durationLabel(weeklyDuration) }}</strong>
+                {{ 'labels.officeHours.perWeek' | translate }}</span
+              >
+              <span>{{ 'labels.officeHours.operatingDays' | translate: { count: (operatingDays | number) } }}</span>
+            } @else {
+              <span>{{ 'labels.officeHours.incompleteWeek' | translate }}</span>
+            }
+          </div>
+        </mat-card>
+        <aside class="hours-sidebar">
+          <mat-card class="status-card">
+            <span class="status-badge"
+              ><fa-icon icon="clock" aria-hidden="true"></fa-icon>{{ 'labels.officeHours.regular' | translate }}</span
+            >
+            <h3>{{ 'labels.officeHours.statusUnavailable' | translate }}</h3>
+            <p>{{ 'labels.officeHours.statusExplanation' | translate }}</p>
+          </mat-card>
+          <mat-card class="hours-card holidays-card">
+            <div class="card-heading holidays-heading">
+              <h3>{{ 'labels.officeHours.specialDays' | translate }}</h3>
+              @if (canCreateHoliday) {
+                <a
+                  mat-button
+                  color="primary"
+                  [routerLink]="['/organization/holidays/create']"
+                  *mifosxHasPermission="'CREATE_HOLIDAY'"
+                >
+                  <fa-icon icon="plus" aria-hidden="true"></fa-icon>{{ 'labels.buttons.Create Holiday' | translate }}
+                </a>
+              }
+              <p>{{ 'labels.officeHours.holidayDescription' | translate }}</p>
+            </div>
+            @switch (holidayState) {
+              @case ('loading') {
+                <p class="holiday-state" role="status">{{ 'labels.text.Loading data' | translate }}</p>
+              }
+              @case ('forbidden') {
+                <p class="holiday-state" role="status">{{ 'labels.officeHours.holidayForbidden' | translate }}</p>
+              }
+              @case ('unsupported') {
+                <p class="holiday-state" role="status">{{ 'labels.officeHours.holidayUnsupported' | translate }}</p>
+              }
+              @case ('malformed') {
+                <p class="holiday-state error-state" role="alert">
+                  {{ 'labels.officeHours.holidayMalformed' | translate }}
+                </p>
+              }
+              @case ('error') {
+                <div class="holiday-state error-state" role="alert">
+                  <span>{{ 'labels.officeHours.holidayError' | translate }}</span>
+                  <button mat-button color="primary" (click)="loadHolidays()">
+                    {{ 'labels.buttons.Retry' | translate }}
+                  </button>
+                </div>
+              }
+              @case ('ready') {
+                <ul class="holiday-list">
+                  @for (holiday of holidays; track holiday.id) {
+                    <li class="holiday-row">
+                      <div class="date-tile" aria-hidden="true">
+                        <strong>{{ holiday.fromDate | dateFormat: 'DD' }}</strong>
+                        <span>{{ holiday.fromDate | dateFormat: 'MMM' }}</span>
+                      </div>
+                      <div class="holiday-details">
+                        <strong>{{ holiday.name }}</strong>
+                        <span class="holiday-dates"
+                          >{{ holiday.fromDate | dateFormat }}
+                          @if (holiday.fromDate.getTime() !== holiday.toDate.getTime()) {
+                            – {{ holiday.toDate | dateFormat }}
+                          }
+                        </span>
+                      </div>
+                      <span class="holiday-badge" [class.pending-holiday]="holiday.pending">{{
+                        holiday.statusKey | translate
+                      }}</span>
+                    </li>
+                  } @empty {
+                    <li class="holiday-state">{{ 'labels.officeHours.noHolidays' | translate }}</li>
+                  }
+                </ul>
+              }
+            }
+            @if (canReadHolidays) {
+              <div class="holidays-footer">
+                <a
+                  mat-button
+                  color="primary"
+                  [routerLink]="['/organization/holidays']"
+                  *mifosxHasPermission="'READ_HOLIDAY'"
+                >
+                  {{ 'labels.heading.Manage Holidays' | translate }} <span aria-hidden="true">›</span>
+                </a>
+              </div>
+            }
+          </mat-card>
+        </aside>
+      </div>
     }
   }
 </div>

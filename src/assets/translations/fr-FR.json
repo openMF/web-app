@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "L'ajustement ne peut pas réduire la transaction en dessous de zéro."
   },
   "labels": {
+    "officeHours": {
+      "title": "Horaires de l’agence",
+      "description": "Les horaires réguliers configurés pour l’agence.",
+      "timezoneUnavailable": "Fuseau horaire de l’agence indisponible",
+      "edit": "Modifier les horaires",
+      "regular": "Horaires réguliers",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "par semaine",
+      "operatingDays": "{{count}} jours d’ouverture",
+      "invalidInterval": "Horaires invalides ou incomplets",
+      "incompleteWeek": "Total hebdomadaire indisponible : certains jours sont absents ou invalides.",
+      "statusUnavailable": "État actuel indisponible",
+      "statusExplanation": "Le fuseau horaire de l’agence et des règles d’ouverture vérifiées pour les jours fériés sont nécessaires pour déterminer la disponibilité actuelle.",
+      "specialDays": "Jours particuliers",
+      "holidayDescription": "Jours fériés des 60 prochains jours selon le calendrier de votre appareil. Ces données ne définissent pas les horaires d’ouverture.",
+      "holidayForbidden": "Vous n’avez pas l’autorisation de consulter les jours fériés.",
+      "holidayUnsupported": "Ce serveur ne prend pas en charge les informations sur les jours fériés.",
+      "holidayMalformed": "Les données des jours fériés sont illisibles. Vérifiez les entrées dans la gestion des jours fériés.",
+      "holidayError": "Impossible de charger les jours fériés.",
+      "noHolidays": "Aucun jour férié à venir sur cette période.",
+      "pendingHoliday": "En attente d’activation"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Locataire",

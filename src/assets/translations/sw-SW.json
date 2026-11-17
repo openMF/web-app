@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Marekebisho hayawezi kupunguza muamala chini ya sifuri."
   },
   "labels": {
+    "officeHours": {
+      "title": "Saa za tawi",
+      "description": "Ratiba ya kawaida ya kazi iliyowekwa kwa tawi.",
+      "timezoneUnavailable": "Ukanda wa saa wa tawi haupatikani",
+      "edit": "Hariri ratiba",
+      "regular": "Ratiba ya kawaida",
+      "hours": "Saa {{count}}",
+      "minutes": "Dak {{count}}",
+      "seconds": "Sek {{count}}",
+      "perWeek": "kwa wiki",
+      "operatingDays": "Siku {{count}} za huduma",
+      "invalidInterval": "Saa si sahihi au hazijakamilika",
+      "incompleteWeek": "Jumla ya wiki haipatikani: baadhi ya siku hazipo au si sahihi.",
+      "statusUnavailable": "Hali ya sasa haipatikani",
+      "statusExplanation": "Ukanda wa saa wa tawi na kanuni zilizothibitishwa za kufungua siku za sikukuu zinahitajika ili kujua upatikanaji wa sasa.",
+      "specialDays": "Siku maalum",
+      "holidayDescription": "Sikukuu za siku 60 zijazo kulingana na kalenda ya kifaa chako. Rekodi za sikukuu haziamui saa za kazi.",
+      "holidayForbidden": "Huna ruhusa ya kuona sikukuu.",
+      "holidayUnsupported": "Seva hii haitumii taarifa za sikukuu.",
+      "holidayMalformed": "Data ya sikukuu haikuweza kusomwa. Kagua rekodi katika Usimamizi wa Sikukuu.",
+      "holidayError": "Sikukuu hazikuweza kupakiwa.",
+      "noHolidays": "Hakuna sikukuu zinazokuja katika kipindi hiki.",
+      "pendingHoliday": "Inasubiri uanzishaji"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Mpangaji",

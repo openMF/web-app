@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Korekcija nedrīkst samazināt darījumu zem nulles."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filiāles darba laiks",
+      "description": "Filiālei iestatītais regulārais darba grafiks.",
+      "timezoneUnavailable": "Filiāles laika josla nav pieejama",
+      "edit": "Rediģēt darba laiku",
+      "regular": "Regulārais darba grafiks",
+      "hours": "{{count}} st.",
+      "minutes": "{{count}} min.",
+      "seconds": "{{count}} sek.",
+      "perWeek": "nedēļā",
+      "operatingDays": "Darba dienu skaits: {{count}}",
+      "invalidInterval": "Nederīgs vai nepilnīgs darba laiks",
+      "incompleteWeek": "Nedēļas kopsumma nav pieejama: trūkst dienu vai dati ir nederīgi.",
+      "statusUnavailable": "Pašreizējais statuss nav pieejams",
+      "statusExplanation": "Lai noteiktu pašreizējo pieejamību, ir nepieciešama filiāles laika josla un pārbaudīti darba noteikumi svētku dienās.",
+      "specialDays": "Īpašās dienas",
+      "holidayDescription": "Svētku dienas nākamajās 60 dienās pēc ierīces kalendāra. Svētku ieraksti nenosaka darba laiku.",
+      "holidayForbidden": "Jums nav atļaujas skatīt svētku dienas.",
+      "holidayUnsupported": "Šis serveris neatbalsta svētku dienu informāciju.",
+      "holidayMalformed": "Neizdevās nolasīt svētku datus. Pārbaudiet ierakstus svētku pārvaldībā.",
+      "holidayError": "Neizdevās ielādēt svētku dienas.",
+      "noHolidays": "Šajā periodā nav gaidāmu svētku dienu.",
+      "pendingHoliday": "Gaida aktivizēšanu"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nomnieks",
