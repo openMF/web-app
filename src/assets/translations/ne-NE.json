@@ -978,7 +978,10 @@
       "Server": "सर्भर",
       "Username": "प्रयोगकर्ता नाम",
       "Name": "नाम",
-      "Render Time": "प्रस्तुति समय"
+      "Render Time": "प्रस्तुति समय",
+      "User": "प्रयोगकर्ता",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> प्लेटफर्म <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache इजाजतपत्र, संस्करण 2.0</a> अन्तर्गत इजाजतपत्र प्राप्त छ। Mifos पहल Apache Fineract पछाडिको मार्गदर्शक शक्ति थियो, यसलाई 2011 मा Mifos X को रूपमा सुरु गर्दै र 2016 मा Apache मा योगदान गर्दै 2017 मा Apache Software Foundation को शीर्ष-स्तर परियोजनामा स्नातक भयो।",
@@ -1369,7 +1372,11 @@
       "Add another address": "अर्को ठेगाना थप्नुहोस्",
       "Address actions": "ठेगानाका कार्यहरू",
       "Delete Address": "ठेगाना मेटाउनुहोस्",
-      "Edit Address": "ठेगाना सम्पादन गर्नुहोस्"
+      "Edit Address": "ठेगाना सम्पादन गर्नुहोस्",
+      "Retry now": "अहिले पुनः प्रयास गर्नुहोस्",
+      "Details": "विवरणहरू",
+      "Copy diagnostics": "निदान प्रतिलिपि गर्नुहोस्",
+      "Report issue": "समस्या रिपोर्ट गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "शाखाका ठेगानाहरू",
       "Complete address": "पूरा ठेगाना",
       "Locality": "स्थानीयता",
-      "Location": "स्थान"
+      "Location": "स्थान",
+      "Connection": "जडान",
+      "Versions": "संस्करणहरू",
+      "Session": "सत्र"
     },
     "inputs": {
       "Breach Start Type": "उल्लङ्घन सुरु प्रकार",
@@ -6014,7 +6024,16 @@
       "Manage branch addresses": "शाखाका सुरक्षित ठेगानाहरू व्यवस्थापन गर्नुहोस्।",
       "No addresses match this filter": "यस फिल्टरसँग मिल्ने कुनै ठेगाना छैन।",
       "Only one address per branch is supported": "यो सर्भरले प्रत्येक शाखामा एउटा ठेगाना मात्र समर्थन गर्छ। बदल्नको लागि हालको ठेगाना सम्पादन वा मेटाउनुहोस्।",
-      "Saving address": "ठेगाना सुरक्षित हुँदैछ…"
+      "Saving address": "ठेगाना सुरक्षित हुँदैछ…",
+      "Connected": "जडान भयो",
+      "Server unreachable": "सर्भरमा पुग्न सकिएन",
+      "Checking connection": "जडान जाँच गर्दै…",
+      "Retrying in seconds": "{{seconds}} सेकेन्डमा पुनः प्रयास गरिँदै",
+      "Copied": "प्रतिलिपि गरियो",
+      "Copy full commit hash": "पूरा कमिट ह्यास प्रतिलिपि गर्नुहोस्",
+      "Checked seconds ago": "{{seconds}} सेकेन्ड अघि जाँच गरियो",
+      "Pre-release backend": "ब्याकइन्ड पूर्व-रिलिज संस्करणमा चलिरहेको छ। उत्पादन डाटाका लागि सिफारिस गरिँदैन।",
+      "Diagnostics copied": "निदान क्लिपबोर्डमा प्रतिलिपि गरियो"
     },
     "permissions": {
       "actions": {

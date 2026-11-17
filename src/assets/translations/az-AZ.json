@@ -934,7 +934,10 @@
       "Server": "Server",
       "Username": "İstifadəçi adı",
       "Name": "Ad",
-      "Render Time": "Göstərilmə vaxtı"
+      "Render Time": "Göstərilmə vaxtı",
+      "User": "İstifadəçi",
+      "WebApp": "Veb tətbiq",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforması <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache lisenziyasının 2.0 versiyası</a> əsasında lisenziyalaşdırılıb. Mifos Initiative Apache Fineract-ın inkişafına rəhbərlik etmiş, onu 2011-ci ildə Mifos X adı ilə istifadəyə vermiş və 2016-cı ildə Apache-yə təqdim etmişdir. Layihə 2017-ci ildə Apache Software Foundation-ın yüksək səviyyəli layihəsinə çevrilmişdir.",
@@ -1325,7 +1328,11 @@
       "Add another address": "Başqa ünvan əlavə et",
       "Address actions": "Ünvan əməliyyatları",
       "Delete Address": "Ünvanı sil",
-      "Edit Address": "Ünvanı redaktə et"
+      "Edit Address": "Ünvanı redaktə et",
+      "Retry now": "İndi yenidən cəhd et",
+      "Details": "Təfərrüatlar",
+      "Copy diagnostics": "Diaqnostikanı kopyala",
+      "Report issue": "Problemi bildir"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -2359,7 +2366,10 @@
       "Branch addresses": "Filial ünvanları",
       "Complete address": "Tam ünvan",
       "Locality": "Ərazi",
-      "Location": "Məkan"
+      "Location": "Məkan",
+      "Connection": "Bağlantı",
+      "Versions": "Versiyalar",
+      "Session": "Sessiya"
     },
     "inputs": {
       "Breach Start Type": "Pozuntunun başlanğıc növü",
@@ -5964,7 +5974,16 @@
       "Manage branch addresses": "Filialın saxlanmış ünvanlarını idarə edin.",
       "No addresses match this filter": "Bu filtrə uyğun ünvan yoxdur.",
       "Only one address per branch is supported": "Bu server hər filial üçün bir ünvanı dəstəkləyir. Əvəz etmək üçün mövcud ünvanı redaktə edin və ya silin.",
-      "Saving address": "Ünvan saxlanılır…"
+      "Saving address": "Ünvan saxlanılır…",
+      "Connected": "Qoşulub",
+      "Server unreachable": "Serverə çatmaq mümkün deyil",
+      "Checking connection": "Bağlantı yoxlanılır…",
+      "Retrying in seconds": "{{seconds}} s sonra yenidən cəhd ediləcək",
+      "Copied": "Kopyalandı",
+      "Copy full commit hash": "Tam commit heşini kopyala",
+      "Checked seconds ago": "{{seconds}} s əvvəl yoxlanılıb",
+      "Pre-release backend": "Server tərəfi buraxılışdan əvvəlki versiyada işləyir. İstehsal məlumatları üçün tövsiyə edilmir.",
+      "Diagnostics copied": "Diaqnostika mübadilə buferinə kopyalandı"
     },
     "permissions": {
       "actions": {

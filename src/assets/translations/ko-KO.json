@@ -978,7 +978,10 @@
       "Server": "서버",
       "Username": "사용자 이름",
       "Name": "이름",
-      "Render Time": "렌더링 시간"
+      "Render Time": "렌더링 시간",
+      "User": "사용자",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> 플랫폼은 <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 라이선스, 버전 2.0</a>에 따라 라이선스가 부여됩니다. Mifos 이니셔티브는 Apache Fineract를 뒤에서 주도하는 세력으로, 2011년에 Mifos X로 출시하고 2016년에 Apache에 기여하여 2017년에 Apache Software Foundation의 최상위 프로젝트로 졸업했습니다.",
@@ -1369,7 +1372,11 @@
       "Add another address": "다른 주소 추가",
       "Address actions": "주소 작업",
       "Delete Address": "주소 삭제",
-      "Edit Address": "주소 편집"
+      "Edit Address": "주소 편집",
+      "Retry now": "지금 재시도",
+      "Details": "세부 정보",
+      "Copy diagnostics": "진단 정보 복사",
+      "Report issue": "문제 신고"
     },
     "catalogs": {
       "% Amount": "양",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "지점 주소",
       "Complete address": "전체 주소",
       "Locality": "지역",
-      "Location": "위치"
+      "Location": "위치",
+      "Connection": "연결",
+      "Versions": "버전",
+      "Session": "세션"
     },
     "inputs": {
       "Breach Start Type": "위반 시작 유형",
@@ -6014,7 +6024,16 @@
       "Manage branch addresses": "저장된 지점 주소를 관리합니다.",
       "No addresses match this filter": "이 필터와 일치하는 주소가 없습니다.",
       "Only one address per branch is supported": "이 서버는 지점당 하나의 주소를 지원합니다. 기존 주소를 수정하거나 삭제하여 교체하세요.",
-      "Saving address": "주소 저장 중…"
+      "Saving address": "주소 저장 중…",
+      "Connected": "연결됨",
+      "Server unreachable": "서버에 연결할 수 없음",
+      "Checking connection": "연결 확인 중…",
+      "Retrying in seconds": "{{seconds}}초 후 재시도",
+      "Copied": "복사됨",
+      "Copy full commit hash": "전체 커밋 해시 복사",
+      "Checked seconds ago": "{{seconds}}초 전에 확인됨",
+      "Pre-release backend": "백엔드가 사전 릴리스 빌드로 실행 중입니다. 운영 데이터에는 권장되지 않습니다.",
+      "Diagnostics copied": "진단 정보가 클립보드에 복사되었습니다"
     },
     "permissions": {
       "actions": {

@@ -978,7 +978,10 @@
       "Server": "Serveris",
       "Username": "Vartotojo vardas",
       "Name": "Vardas",
-      "Render Time": "Atvaizdavimo laikas"
+      "Render Time": "Atvaizdavimo laikas",
+      "User": "Vartotojas",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma yra licencijuota pagal <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenciją, 2.0 versiją</a>. \"Mifos\" iniciatyva buvo varomoji jėga už Apache Fineract, paleidusi ją kaip Mifos X 2011 m. ir prisidėdama prie Apache 2016 m., o 2017 m. ji tapo aukščiausio lygio Apache Software Foundation projektu.",
@@ -1369,7 +1372,11 @@
       "Add another address": "Pridėti kitą adresą",
       "Address actions": "Adreso veiksmai",
       "Delete Address": "Ištrinti adresą",
-      "Edit Address": "Redaguoti adresą"
+      "Edit Address": "Redaguoti adresą",
+      "Retry now": "Bandyti dabar",
+      "Details": "Detalės",
+      "Copy diagnostics": "Kopijuoti diagnostiką",
+      "Report issue": "Pranešti apie problemą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "Filialo adresai",
       "Complete address": "Visas adresas",
       "Locality": "Vietovė",
-      "Location": "Vieta"
+      "Location": "Vieta",
+      "Connection": "Ryšys",
+      "Versions": "Versijos",
+      "Session": "Sesija"
     },
     "inputs": {
       "Breach Start Type": "Pažeidimo pradžios tipas",
@@ -6014,7 +6024,16 @@
       "Manage branch addresses": "Tvarkykite išsaugotus filialo adresus.",
       "No addresses match this filter": "Šį filtrą atitinkančių adresų nėra.",
       "Only one address per branch is supported": "Šis serveris palaiko vieną adresą kiekvienam filialui. Norėdami pakeisti, redaguokite arba ištrinkite esamą adresą.",
-      "Saving address": "Adresas išsaugomas…"
+      "Saving address": "Adresas išsaugomas…",
+      "Connected": "Prisijungta",
+      "Server unreachable": "Serveris nepasiekiamas",
+      "Checking connection": "Tikrinamas ryšys…",
+      "Retrying in seconds": "Kitas bandymas po {{seconds}} s",
+      "Copied": "Nukopijuota",
+      "Copy full commit hash": "Kopijuoti visą commit maišos kodą",
+      "Checked seconds ago": "Patikrinta prieš {{seconds}} s",
+      "Pre-release backend": "Serverio dalis veikia su išankstine versija. Nerekomenduojama gamybiniams duomenims.",
+      "Diagnostics copied": "Diagnostika nukopijuota į iškarpinę"
     },
     "permissions": {
       "actions": {

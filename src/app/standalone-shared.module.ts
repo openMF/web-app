@@ -28,6 +28,7 @@ import { CurrencyNamePipe } from '@pipes/currency-name.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
+import { EntityRowLinkDirective } from './directives/entity-row-link.directive';
 
 export const STANDALONE_SHARED_IMPORTS = [
   CommonModule,
@@ -58,6 +59,7 @@ export const STANDALONE_SHARED_IMPORTS = [
   DocumentationLinkPipe,
   CurrencyNamePipe,
   HasPermissionDirective,
+  EntityRowLinkDirective,
 
   // Pipes and Directives
   NgxTranslatePipe,
@@ -65,3 +67,4 @@ export const STANDALONE_SHARED_IMPORTS = [
 ];
 export { M3ButtonComponent } from './shared/m3-ui/m3-button/m3-button.component';
 export { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
+export { EntityRowLinkDirective } from './directives/entity-row-link.directive';

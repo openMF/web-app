@@ -979,7 +979,10 @@
       "Server": "Server",
       "Username": "Uživatelské jméno",
       "Name": "Jméno",
-      "Render Time": "Doba vykreslování"
+      "Render Time": "Doba vykreslování",
+      "User": "Uživatel",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "Platforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> je licencována pod <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencí Apache, verze 2.0</a>. Iniciativa Mifos byla hnácí silou za Apache Fineract, když ji spustila jako Mifos X v roce 2011 a přispěla do Apache v roce 2016 s absolvováním na projekt nejvyšší úrovně Apache Software Foundation v roce 2017.",
@@ -1370,7 +1373,11 @@
       "Add another address": "Přidat další adresu",
       "Address actions": "Akce adresy",
       "Delete Address": "Smazat adresu",
-      "Edit Address": "Upravit adresu"
+      "Edit Address": "Upravit adresu",
+      "Retry now": "Zkusit znovu",
+      "Details": "Podrobnosti",
+      "Copy diagnostics": "Kopírovat diagnostiku",
+      "Report issue": "Nahlásit problém"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -2404,7 +2411,10 @@
       "Branch addresses": "Adresy pobočky",
       "Complete address": "Úplná adresa",
       "Locality": "Obec a region",
-      "Location": "Poloha"
+      "Location": "Poloha",
+      "Connection": "Připojení",
+      "Versions": "Verze",
+      "Session": "Relace"
     },
     "inputs": {
       "Breach Start Type": "Typ začátku porušení",
@@ -6015,7 +6025,16 @@
       "Manage branch addresses": "Spravujte uložené adresy pobočky.",
       "No addresses match this filter": "Tomuto filtru neodpovídají žádné adresy.",
       "Only one address per branch is supported": "Tento server podporuje jednu adresu na pobočku. Chcete-li ji nahradit, upravte nebo smažte stávající adresu.",
-      "Saving address": "Ukládání adresy…"
+      "Saving address": "Ukládání adresy…",
+      "Connected": "Připojeno",
+      "Server unreachable": "Server je nedostupný",
+      "Checking connection": "Ověřování připojení…",
+      "Retrying in seconds": "Nový pokus za {{seconds}} s",
+      "Copied": "Zkopírováno",
+      "Copy full commit hash": "Kopírovat celý hash commitu",
+      "Checked seconds ago": "Ověřeno před {{seconds}} s",
+      "Pre-release backend": "Backend běží na předběžné verzi. Nedoporučuje se pro produkční data.",
+      "Diagnostics copied": "Diagnostika zkopírována do schránky"
     },
     "permissions": {
       "actions": {
