@@ -16,6 +16,7 @@ interface Window {
     preloadClients?: boolean;
     defaultCharDelimiter?: string;
     displayBackEndInfo?: string;
+    reportIssueUrl?: string;
     displayTenantSelector?: string;
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;

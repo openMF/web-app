@@ -980,7 +980,10 @@
       "Server": "Server",
       "Username": "Username",
       "Name": "Name",
-      "Render Time": "Render Time"
+      "Render Time": "Render Time",
+      "User": "User",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "The <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platform is licensed under the <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache License, Version 2.0</a>. The Mifos Initiative was the guiding force behind Apache Fineract, launching it as Mifos X in 2011 and contributing to Apache in 2016 with graduation to a top-level project of the Apache Software Foundation in 2017.",
@@ -1371,7 +1374,11 @@
       "Add another address": "Add another address",
       "Address actions": "Address actions",
       "Delete Address": "Delete Address",
-      "Edit Address": "Edit Address"
+      "Edit Address": "Edit Address",
+      "Retry now": "Retry now",
+      "Details": "Details",
+      "Copy diagnostics": "Copy diagnostics",
+      "Report issue": "Report issue"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -2406,7 +2413,10 @@
       "Branch addresses": "Branch addresses",
       "Complete address": "Complete address",
       "Locality": "Locality",
-      "Location": "Location"
+      "Location": "Location",
+      "Connection": "Connection",
+      "Versions": "Versions",
+      "Session": "Session"
     },
     "inputs": {
       "Breach Start Type": "Breach Start Type",
@@ -6015,7 +6025,16 @@
       "Manage branch addresses": "Manage saved branch addresses.",
       "No addresses match this filter": "No addresses match this filter.",
       "Only one address per branch is supported": "This backend supports one address per branch. Edit or delete the existing address to replace it.",
-      "Saving address": "Saving address…"
+      "Saving address": "Saving address…",
+      "Connected": "Connected",
+      "Server unreachable": "Server unreachable",
+      "Checking connection": "Checking connection…",
+      "Retrying in seconds": "Retrying in {{seconds}} s",
+      "Copied": "Copied",
+      "Copy full commit hash": "Copy full commit hash",
+      "Checked seconds ago": "Checked {{seconds}} s ago",
+      "Pre-release backend": "The backend is running a pre-release build. Not recommended for production data.",
+      "Diagnostics copied": "Diagnostics copied to the clipboard"
     },
     "permissions": {
       "actions": {

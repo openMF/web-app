@@ -978,7 +978,10 @@
       "Server": "Serveris",
       "Username": "Lietotājvārds",
       "Name": "Vārds",
-      "Render Time": "Attēlošanas laiks"
+      "Render Time": "Attēlošanas laiks",
+      "User": "Lietotājs",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma ir licencēta saskaņā ar <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenci, versiju 2.0</a>. Mifos iniciatīva bija virzītājspēks aiz Apache Fineract, uzsākot to kā Mifos X 2011. gadā un veicinot Apache 2016. gadā ar izlaišanos augstākā līmeņa projektā Apache Software Foundation 2017. gadā.",
@@ -1369,7 +1372,11 @@
       "Add another address": "Pievienot citu adresi",
       "Address actions": "Adreses darbības",
       "Delete Address": "Dzēst adresi",
-      "Edit Address": "Rediģēt adresi"
+      "Edit Address": "Rediģēt adresi",
+      "Retry now": "Mēģināt tagad",
+      "Details": "Detaļas",
+      "Copy diagnostics": "Kopēt diagnostiku",
+      "Report issue": "Ziņot par problēmu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "Filiāles adreses",
       "Complete address": "Pilna adrese",
       "Locality": "Apvidus",
-      "Location": "Atrašanās vieta"
+      "Location": "Atrašanās vieta",
+      "Connection": "Savienojums",
+      "Versions": "Versijas",
+      "Session": "Sesija"
     },
     "inputs": {
       "Breach Start Type": "Pārkāpuma sākuma tips",
@@ -6014,7 +6024,16 @@
       "Manage branch addresses": "Pārvaldiet saglabātās filiāles adreses.",
       "No addresses match this filter": "Neviena adrese neatbilst šim filtram.",
       "Only one address per branch is supported": "Šis serveris atbalsta vienu adresi katrai filiālei. Lai to aizstātu, rediģējiet vai dzēsiet esošo adresi.",
-      "Saving address": "Adrese tiek saglabāta…"
+      "Saving address": "Adrese tiek saglabāta…",
+      "Connected": "Savienots",
+      "Server unreachable": "Serveris nav sasniedzams",
+      "Checking connection": "Pārbauda savienojumu…",
+      "Retrying in seconds": "Atkārtots mēģinājums pēc {{seconds}} s",
+      "Copied": "Nokopēts",
+      "Copy full commit hash": "Kopēt pilno commit jaucējkodu",
+      "Checked seconds ago": "Pārbaudīts pirms {{seconds}} s",
+      "Pre-release backend": "Aizmugursistēma darbojas ar pirmsizlaides versiju. Nav ieteicams ražošanas datiem.",
+      "Diagnostics copied": "Diagnostika nokopēta starpliktuvē"
     },
     "permissions": {
       "actions": {

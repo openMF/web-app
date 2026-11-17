@@ -30,6 +30,7 @@ interface Window {
     preloadClients?: boolean;
     defaultCharDelimiter?: string;
     displayBackEndInfo?: string;
+    reportIssueUrl?: string;
     displayTenantSelector?: string;
     /** Production mode - when true, shows minimal hero with only branding at bottom */
     productionMode?: string | boolean;

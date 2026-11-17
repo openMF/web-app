@@ -399,6 +399,7 @@ If `EXTERNAL_EMAIL_REGEX` is not set, or is not a valid regular expression, the 
 | ---------------------------------- | ------------------------------------------------------------------- | ------------- |
 | MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view                               | true          |
 | MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer and Login view                       | false         |
+| MIFOS_REPORT_ISSUE_URL             | Link for the footer's "Report issue" button; hidden when empty      |               |
 | MIFOS_PRODUCTION_MODE              | Enable production UI mode (see [Production Mode](#production-mode)) | false         |
 | MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                                             | true          |
 | MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)                              | false         |

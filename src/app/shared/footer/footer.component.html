@@ -5,7 +5,7 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<!-- Business date: independent of variant and of the backend info setting -->
+<!-- Business date: independent of the backend info setting -->
 @if (isBusinessDateDefined) {
   <div class="business-date-field">
     <span class="business-date-label">{{ 'labels.text.Current Business Date' | translate }}</span>
@@ -17,70 +17,6 @@
 }
 
 <!-- Backend info: opt-in, the full set is always available in the System Information view -->
-@if (displayBackEndInfo && (systemInformation$ | async); as systemInformation) {
-  @if (variant === 'compact') {
-    <!-- Compact mode for Login -->
-    <div class="footer-compact">
-      <div class="footer-info">
-        <span class="info-item">
-          <span class="info-label">{{ 'APP_NAME' | translate }}</span>
-          <span class="info-value">{{ systemInformation.webApp.version }}</span>
-        </span>
-        <span class="info-separator">•</span>
-        <span class="info-item">
-          <span class="info-label">{{ 'labels.text.Fineract' | translate }}:</span>
-          <span class="info-value">{{ systemInformation.fineract.version }}</span>
-        </span>
-        <span class="info-separator">•</span>
-        <span class="info-item">
-          <span class="info-label">{{ 'labels.inputs.Server' | translate }}:</span>
-          <span class="info-value">{{ systemInformation.server }}</span>
-        </span>
-      </div>
-    </div>
-  } @else {
-    <!-- Default mode for Shell -->
-    <div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer">
-      <div class="layout-column m-t-10 m-b-10 content-wrapper footer-center">
-        <table class="versions">
-          <tr>
-            <td class="footer-content">{{ 'APP_NAME' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.webApp.version }} - <b>{{ systemInformation.webApp.hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.fineract.version }} - <b>{{ systemInformation.fineract.hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.server }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Username' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.username }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Name' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.name }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Render Time' | translate }}</td>
-            <td class="right footer-content">
-              {{ systemInformation.renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  }
+@if (displayBackEndInfo) {
+  <mifosx-status-bar></mifosx-status-bar>
 }

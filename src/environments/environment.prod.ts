@@ -38,6 +38,7 @@ export const environment = {
   production: true,
   version: env.mifos_x.version,
   hash: env.mifos_x.hash,
+  fullHash: env.mifos_x.fullHash,
   // For connecting to server running elsewhere update the tenant identifier
   fineractPlatformTenantId: loadedEnv['fineractPlatformTenantId'] || 'default',
   fineractPlatformTenantIds: loadedEnv['fineractPlatformTenantIds'] || 'default',
@@ -83,6 +84,8 @@ export const environment = {
 
   // Backend info is available in the System Information view, so it is hidden by default
   displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'false',
+  // Link opened by "Report issue" in the footer's System information panel; the button is hidden when empty
+  reportIssueUrl: loadedEnv['reportIssueUrl'] || '',
   displayTenantSelector: loadedEnv['displayTenantSelector'] || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv['productionMode'] === 'true' || loadedEnv['productionMode'] === true || false,

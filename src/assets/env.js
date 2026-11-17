@@ -41,6 +41,9 @@
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
+  // Link opened by "Report issue" in the footer's System information panel. Hidden when empty
+  window['env']['reportIssueUrl'] = '';
+
   // Show minimal production hero on login page
   window['env']['productionMode'] = '';
 

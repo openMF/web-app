@@ -978,7 +978,10 @@
       "Server": "Servidor",
       "Username": "Usuario",
       "Name": "Nombre",
-      "Render Time": "Tiempo de renderizado"
+      "Render Time": "Tiempo de renderizado",
+      "User": "Usuario",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "La plataforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> está licenciada bajo la <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencia Apache, Versión 2.0</a>. La Iniciativa Mifos fue la fuerza impulsora detrás de Apache Fineract, lanzándolo como Mifos X en 2011 y contribuyendo a Apache en 2016 con la graduación a un proyecto de nivel superior de la Apache Software Foundation en 2017.",
@@ -1369,7 +1372,11 @@
       "Add another address": "Agregar otro domicilio",
       "Address actions": "Acciones del domicilio",
       "Delete Address": "Eliminar domicilio",
-      "Edit Address": "Editar domicilio"
+      "Edit Address": "Editar domicilio",
+      "Retry now": "Reintentar ahora",
+      "Details": "Detalles",
+      "Copy diagnostics": "Copiar diagnóstico",
+      "Report issue": "Reportar problema"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -2403,7 +2410,10 @@
       "Branch addresses": "Domicilios de la sucursal",
       "Complete address": "Dirección completa",
       "Locality": "Localidad",
-      "Location": "Ubicación"
+      "Location": "Ubicación",
+      "Connection": "Conexión",
+      "Versions": "Versiones",
+      "Session": "Sesión"
     },
     "inputs": {
       "Breach Start Type": "Tipo de inicio de incumplimiento",
@@ -6009,7 +6019,16 @@
       "Manage branch addresses": "Administra los domicilios registrados de la sucursal.",
       "No addresses match this filter": "Ningún domicilio coincide con este filtro.",
       "Only one address per branch is supported": "Este servidor admite un domicilio por sucursal. Edita o elimina el domicilio existente para reemplazarlo.",
-      "Saving address": "Guardando domicilio…"
+      "Saving address": "Guardando domicilio…",
+      "Connected": "Conectado",
+      "Server unreachable": "Servidor inaccesible",
+      "Checking connection": "Verificando conexión…",
+      "Retrying in seconds": "Reintentando en {{seconds}} s",
+      "Copied": "Copiado",
+      "Copy full commit hash": "Copiar el hash completo del commit",
+      "Checked seconds ago": "Verificado hace {{seconds}} s",
+      "Pre-release backend": "El backend ejecuta una versión preliminar. No se recomienda para datos de producción.",
+      "Diagnostics copied": "Diagnóstico copiado al portapapeles"
     },
     "permissions": {
       "actions": {

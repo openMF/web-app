@@ -1,0 +1,252 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../system-info-shared' as shared;
+
+:host {
+  display: block;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: calc(100vw - 32px);
+
+  // Leaves room for the status bar below and a margin above.
+  max-height: calc(100vh - 72px);
+  overflow: hidden;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  box-shadow: var(--ds-shadow-md);
+  color: var(--ds-text-1);
+  font-size: 13px;
+  animation: panel-enter 150ms ease-out;
+}
+
+// In a bottom sheet the panel fills the sheet, which already has its own shape, shadow and scrolling.
+:host(.sheet) .panel {
+  width: auto;
+  max-width: none;
+  max-height: none;
+  margin: -8px -16px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+}
+
+// ===== Header =====
+.panel-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 16px;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.panel-icon {
+  color: var(--ds-blue-600);
+}
+
+.panel-title {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.close-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  background: transparent;
+  color: var(--ds-text-2);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-blue-600);
+    outline-offset: -2px;
+  }
+}
+
+// ===== Sections =====
+.panel-body {
+  flex: 1 1 auto;
+  padding: 4px 16px 8px;
+  overflow-y: auto;
+}
+
+.panel-section {
+  padding: 12px 0 4px;
+}
+
+.section-title {
+  margin: 0 0 6px;
+  color: var(--ds-text-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// ===== Connection status =====
+@include shared.connection-status;
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 4px 6px 4px 12px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+  box-sizing: border-box;
+
+  &[data-state='online'] {
+    background: var(--ds-paid-bg);
+  }
+
+  &[data-state='offline'] {
+    background: var(--ds-alert-bg);
+  }
+}
+
+.checked-ago {
+  margin-left: auto;
+  padding-right: 6px;
+  color: var(--ds-text-2);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.retry-button {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.status + .retry-button {
+  margin-left: auto;
+}
+
+// ===== Label and value rows =====
+.rows {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 34px;
+}
+
+dt {
+  flex: 0 0 auto;
+  color: var(--ds-text-2);
+}
+
+dd {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.pre-release-badge {
+  @include shared.pre-release-badge;
+}
+
+.pre-release-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--ds-radius);
+  background: var(--ds-partial-bg);
+  color: var(--ds-partial);
+  font-size: 12px;
+  line-height: 1.5;
+
+  mifosx-m3-icon {
+    flex: 0 0 auto;
+    margin-top: 1px;
+  }
+}
+
+// ===== Actions =====
+.panel-footer {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--ds-border);
+}
+
+.panel-button {
+  @include shared.outlined-button;
+
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+}
+
+.panel-button.primary {
+  flex: 1 1 auto;
+  border-color: var(--ds-blue-700);
+  background: var(--ds-blue-700);
+
+  // White on the light theme's blue, dark on the lighter blue of the dark theme, like the
+  // Material primary buttons.
+  color: var(--ds-surface);
+
+  &:hover {
+    border-color: var(--ds-blue-600);
+    background: var(--ds-blue-600);
+  }
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+}
