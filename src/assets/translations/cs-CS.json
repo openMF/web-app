@@ -972,6 +972,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Úprava nesmí snížit transakci pod nulu."
   },
   "labels": {
+    "officeHours": {
+      "title": "Otevírací doba pobočky",
+      "description": "Nastavená pravidelná otevírací doba pobočky.",
+      "timezoneUnavailable": "Časové pásmo pobočky není k dispozici",
+      "edit": "Upravit otevírací dobu",
+      "regular": "Pravidelná otevírací doba",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "týdně",
+      "operatingDays": "Počet provozních dnů: {{count}}",
+      "invalidInterval": "Neplatná nebo neúplná doba",
+      "incompleteWeek": "Týdenní součet není k dispozici: některé dny chybí nebo jsou neplatné.",
+      "statusUnavailable": "Aktuální stav není k dispozici",
+      "statusExplanation": "Pro určení aktuální dostupnosti je nutné časové pásmo pobočky a ověřená pravidla otevření o svátcích.",
+      "specialDays": "Zvláštní dny",
+      "holidayDescription": "Svátky v příštích 60 dnech podle kalendáře zařízení. Záznamy svátků neurčují otevírací dobu.",
+      "holidayForbidden": "Nemáte oprávnění zobrazit svátky.",
+      "holidayUnsupported": "Tento server nepodporuje informace o svátcích.",
+      "holidayMalformed": "Údaje o svátcích nelze přečíst. Zkontrolujte záznamy ve správě svátků.",
+      "holidayError": "Svátky se nepodařilo načíst.",
+      "noHolidays": "V tomto období nejsou žádné nadcházející svátky.",
+      "pendingHoliday": "Čeká na aktivaci"
+    },
     "version": {
       "Tenant": "Instanci",
       "Mifos WebApp": "Mifos® WebApp",

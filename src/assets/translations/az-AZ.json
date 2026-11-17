@@ -926,6 +926,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Düzəliş əməliyyatı sıfırdan aşağı sala bilməz."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filialın iş saatları",
+      "description": "Filial üçün təyin edilmiş müntəzəm iş qrafiki.",
+      "timezoneUnavailable": "Filialın saat qurşağı məlum deyil",
+      "edit": "İş saatlarını redaktə et",
+      "regular": "Müntəzəm iş qrafiki",
+      "hours": "{{count}} saat",
+      "minutes": "{{count}} dəq",
+      "seconds": "{{count}} san",
+      "perWeek": "həftədə",
+      "operatingDays": "{{count}} iş günü",
+      "invalidInterval": "Yanlış və ya natamam iş saatları",
+      "incompleteWeek": "Həftəlik cəm məlum deyil: bəzi günlər çatışmır və ya yanlışdır.",
+      "statusUnavailable": "Cari status məlum deyil",
+      "statusExplanation": "Cari əlçatanlığı müəyyən etmək üçün filialın saat qurşağı və bayram günlərində təsdiqlənmiş iş qaydaları lazımdır.",
+      "specialDays": "Xüsusi günlər",
+      "holidayDescription": "Cihazın təqviminə əsasən növbəti 60 gündəki bayramlar. Bayram qeydləri iş saatlarını müəyyən etmir.",
+      "holidayForbidden": "Bayramları görmək üçün icazəniz yoxdur.",
+      "holidayUnsupported": "Bu server bayram məlumatlarını dəstəkləmir.",
+      "holidayMalformed": "Bayram məlumatları oxunmadı. Bayramların idarə edilməsində qeydləri yoxlayın.",
+      "holidayError": "Bayramlar yüklənmədi.",
+      "noHolidays": "Bu dövrdə qarşıdan gələn bayram yoxdur.",
+      "pendingHoliday": "Aktivləşdirmə gözləyir"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
     "version": {
       "Tenant": "Təşkilat mühiti",

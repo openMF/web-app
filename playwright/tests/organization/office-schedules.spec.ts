@@ -76,6 +76,8 @@ test('office schedules display actual LocalTime values and persist the complete 
 
   await page.goto(`/#/organization/offices/${officeId}/schedules`);
   const panel = page.locator('mifosx-office-schedules-tab');
+  await expect(panel.locator('.weekly-table .mat-mdc-row')).toHaveCount(7);
+  await panel.getByRole('button', { name: 'Edit schedule', exact: true }).click();
   const rows = panel.locator('.schedule-row');
   await expect(rows).toHaveCount(7);
   for (let index = 0; index < 7; index++) {
@@ -122,7 +124,8 @@ test('office schedules display actual LocalTime values and persist the complete 
       ...days.slice(1)
     ] });
   expect((await refresh).ok()).toBeTruthy();
-  await expect(opening).toHaveValue('00:00');
+  await expect(panel.locator('.configured-hours').first()).toContainText('00:00');
+  await expect(panel.locator('form')).toHaveCount(0);
   const persisted = await readSchedule();
   expect(persisted.days[0]).toMatchObject({ openingTime: [
       0,
@@ -135,10 +138,12 @@ test('office schedules display actual LocalTime values and persist the complete 
     ] });
   expect(persisted.days.slice(1)).toEqual(initial.days.slice(1));
   await page.reload();
+  await panel.getByRole('button', { name: 'Edit schedule', exact: true }).click();
   await expect(opening).toHaveValue('00:00');
   await expect(closing).toHaveValue('12:00');
   await expect(panel.getByLabel('Tuesday Opening Time', { exact: true })).toHaveValue('08:30:05');
 
+  await panel.getByRole('button', { name: 'Cancel', exact: true }).click();
   for (const width of [
     390,
     768,
@@ -146,13 +151,11 @@ test('office schedules display actual LocalTime values and persist the complete 
     1920
   ]) {
     await page.setViewportSize({ width, height: 1000 });
-    await opening.scrollIntoViewIfNeeded();
-    await expect(opening).toBeVisible();
-    await expect(closing).toBeVisible();
+    await panel.locator('.regular-schedule').scrollIntoViewIfNeeded();
+    await expect(panel.locator('.regular-schedule')).toBeVisible();
     expect(await panel.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
     await page.screenshot({ path: testInfo.outputPath(`schedules-${width}.png`), fullPage: true });
-    await save.scrollIntoViewIfNeeded();
-    await expect(save).toBeInViewport();
+    await panel.getByRole('button', { name: 'Edit schedule', exact: true }).scrollIntoViewIfNeeded();
   }
   await page.getByRole('tab', { name: 'Services', exact: true }).click();
   const services = page.locator('mifosx-office-services-tab');
@@ -162,10 +165,9 @@ test('office schedules display actual LocalTime values and persist the complete 
   // Route reuse must retrieve this office's empty schedule, not the previous office's week.
   await page.goto(`/#/organization/offices/${emptyOfficeId}/schedules`);
   await expect(panel).toContainText('No configured hours');
-  await expect(panel.getByLabel('Monday Opening Time', { exact: true })).toHaveValue('');
+  await expect(panel.locator('.configured-hours').first()).toContainText('Not configured');
   await page.goto(`/#/organization/offices/${officeId}/schedules`);
-  await expect(opening).toHaveValue('00:00');
-  await expect(closing).toHaveValue('12:00');
+  await expect(panel.locator('.configured-hours').first()).toContainText('00:00 – 12:00');
   await testInfo.attach('real-schedule-readback', {
     body: JSON.stringify({ officeId, initial, payload, persisted }, null, 2),
     contentType: 'application/json'
