@@ -30,6 +30,12 @@
       <span class="stat-label">{{ 'labels.inputs.Total Savings' | translate }}</span>
       <strong class="stat-value">{{ performanceHistory.totalSavings | formatNumber }}</strong>
     </div>
+    @if (constitution) {
+      <div class="stat">
+        <span class="stat-label">{{ 'labels.inputs.Constitution' | translate }}</span>
+        <strong class="stat-value">{{ constitution.id | organisationCategoryName: constitution.name | async }}</strong>
+      </div>
+    }
   </div>
 
   <!-- Upcoming Charges -->

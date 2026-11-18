@@ -5870,6 +5870,7 @@
   "error.msg.membership.already.decided": "यो आवेदनको निर्णय भइसकेको छ।",
   "error.msg.membership.date.invalid": "निर्णय मिति आवेदन मितिदेखि आजसम्मको हुनुपर्छ।",
   "error.msg.membership.products.required": "शेयर-पहिले नियम लागू गर्नुअघि सदस्य बचत प्रोडक्ट र शेयर प्रोडक्ट छान्नुहोस्।",
+  "error.msg.membership.organisation.category.refused": "यो प्रकारको संस्था सहकारीको सदस्य बन्न सक्दैन।",
   "compliance": {
     "A year means": "\"एक वर्ष\" भनेको",
     "Accepted": "स्वीकृत",
@@ -7929,5 +7930,28 @@
     "warning": {
       "FAMILY_ALSO_STANDING": "एकै परिवारको अर्को सदस्य पनि उमेदवार छ: तिनीहरूमध्ये एक मात्र निर्वाचित हुन सक्छन्।"
     }
+  },
+  "organisationCategory": {
+    "COOPERATIVE": "सहकारी संस्था",
+    "GOVERNMENT_BODY": "सरकारी निकाय",
+    "COMMUNITY_SCHOOL": "सामुदायिक विद्यालय",
+    "TRUST": "गुठी",
+    "CLUB": "क्लब",
+    "NGO": "गैरसरकारी संस्था",
+    "PRODUCTION_OR_SERVICE": "उत्पादनमूलक वा सेवामूलक संस्था",
+    "CONSUMER_GROUP": "उपभोक्ता समूह",
+    "PRIVATE_LIMITED": "प्राइभेट लिमिटेड कम्पनी",
+    "PUBLIC_LIMITED": "पब्लिक लिमिटेड कम्पनी",
+    "PARTNERSHIP": "साझेदारी फर्म",
+    "SOLE_PROPRIETORSHIP": "एकल स्वामित्वको फर्म"
+  },
+  "organisationCategories": {
+    "title": "सदस्य बन्न सक्ने संस्थाहरू",
+    "settingsHint": "कुनै प्रकार बन्द गर्दा त्यस प्रकारका संस्थाका नयाँ आवेदन अस्वीकार हुन्छन्। त्यस प्रकारका संस्था पहिल्यै सदस्य भए सदस्य नै रहन्छन्।",
+    "loading": "संस्थाका प्रकारहरू लोड हुँदैछन्…",
+    "failed": "संस्थाका प्रकारहरूको सूची लोड हुन सकेन।",
+    "notMember": "सदस्य बन्न सक्दैन",
+    "greyedHint": "धूमिल देखिएका प्रकारका संस्था सहकारीको सदस्य बन्न सक्दैनन्।",
+    "cannotBeMember": "यो प्रकारको संस्था सदस्य बन्न सक्दैन।"
   }
 }

@@ -46,6 +46,7 @@ import { catchError } from 'rxjs/operators';
 import { AlertService } from 'app/core/alert/alert.service';
 import { EMPTY } from 'rxjs';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { OrganisationCategoryNamePipe } from '../../membership/organisation-category-select/organisation-category-select.component';
 
 /**
  * General Tab component.
@@ -72,6 +73,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     MatFooterRowDef,
     MatFooterRow,
     AccountNumberComponent,
+    OrganisationCategoryNamePipe,
     LongTextComponent,
     MatTooltip,
     StatusLookupPipe,
@@ -265,6 +267,8 @@ export class GeneralTabComponent implements OnDestroy {
 
   /** Client Id */
   clientid: any;
+  /** An organisation's type (Fineract's Constitution); absent for a person */
+  constitution: { id: number; name: string } | null = null;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -272,6 +276,9 @@ export class GeneralTabComponent implements OnDestroy {
    * @param {Router} router Router
    */
   constructor() {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientViewData: any }) => {
+      this.constitution = data.clientViewData?.clientNonPersonDetails?.constitution ?? null;
+    });
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(

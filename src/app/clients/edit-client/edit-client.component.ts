@@ -23,6 +23,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { NepaliDateInputComponent } from 'app/shared/nepali-date-input/nepali-date-input.component';
 import { MemberBsDatesService } from '../member-bs-dates.service';
+import { OrganisationCategorySelectComponent } from '../membership/organisation-category-select/organisation-category-select.component';
 import { of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
@@ -38,7 +39,8 @@ import { catchError, switchMap } from 'rxjs/operators';
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
     MatCheckbox,
-    NepaliDateInputComponent
+    NepaliDateInputComponent,
+    OrganisationCategorySelectComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -79,8 +81,6 @@ export class EditClientComponent implements OnInit {
   clientClassificationTypeOptions: any;
   /** Business Line Options */
   businessLineOptions: any;
-  /** Constitution Options */
-  constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
   legalFormId = LegalFormId.PERSON;
@@ -180,7 +180,6 @@ export class EditClientComponent implements OnInit {
     this.clientTypeOptions = this.clientDataAndTemplate.clientTypeOptions;
     this.clientClassificationTypeOptions = this.clientDataAndTemplate.clientClassificationOptions;
     this.businessLineOptions = this.clientDataAndTemplate.clientNonPersonMainBusinessLineOptions;
-    this.constitutionOptions = this.clientDataAndTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientDataAndTemplate.genderOptions;
   }
 

@@ -121,6 +121,40 @@
     }
   </form>
 
+  <section class="categories">
+    <h3>{{ 'organisationCategories.title' | translate }}</h3>
+    <p class="hint">{{ 'organisationCategories.settingsHint' | translate }}</p>
+    @switch (categoriesState()) {
+      @case ('loading') {
+        <p class="hint">{{ 'organisationCategories.loading' | translate }}</p>
+      }
+      @case ('failed') {
+        <p class="failed" role="alert">
+          {{ 'organisationCategories.failed' | translate }}
+          <button mat-button color="primary" type="button" (click)="loadCategories()">
+            {{ 'labels.buttons.Retry' | translate }}
+          </button>
+        </p>
+      }
+      @default {
+        <ul class="category-list">
+          @for (c of categories(); track c.codeValueId) {
+            <li>
+              <mat-slide-toggle
+                [checked]="c.mayBeMember"
+                [disabled]="!canUpdate || savingCategory() !== null"
+                (change)="toggleCategory(c, $event)"
+                >{{ categoryLabel(c) }}</mat-slide-toggle
+              >
+            </li>
+          } @empty {
+            <li class="empty">{{ 'membership.None' | translate }}</li>
+          }
+        </ul>
+      }
+    }
+  </section>
+
   <section class="cleanup">
     <div class="head">
       <h3>{{ 'membership.Active members who hold no shares' | translate }}</h3>
