@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Korekcija nedrīkst samazināt darījumu zem nulles."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filiāles darba laiks",
+      "description": "Filiālei iestatītais regulārais darba grafiks.",
+      "timezoneUnavailable": "Filiāles laika josla nav pieejama",
+      "edit": "Rediģēt darba laiku",
+      "regular": "Regulārais darba grafiks",
+      "hours": "{{count}} st.",
+      "minutes": "{{count}} min.",
+      "seconds": "{{count}} sek.",
+      "perWeek": "nedēļā",
+      "operatingDays": "Darba dienu skaits: {{count}}",
+      "invalidInterval": "Nederīgs vai nepilnīgs darba laiks",
+      "incompleteWeek": "Nedēļas kopsumma nav pieejama: trūkst dienu vai dati ir nederīgi.",
+      "statusUnavailable": "Pašreizējais statuss nav pieejams",
+      "statusExplanation": "Lai noteiktu pašreizējo pieejamību, ir nepieciešama filiāles laika josla un pārbaudīti darba noteikumi svētku dienās.",
+      "specialDays": "Īpašās dienas",
+      "holidayDescription": "Svētku dienas nākamajās 60 dienās pēc ierīces kalendāra. Svētku ieraksti nenosaka darba laiku.",
+      "holidayForbidden": "Jums nav atļaujas skatīt svētku dienas.",
+      "holidayUnsupported": "Šis serveris neatbalsta svētku dienu informāciju.",
+      "holidayMalformed": "Neizdevās nolasīt svētku datus. Pārbaudiet ierakstus svētku pārvaldībā.",
+      "holidayError": "Neizdevās ielādēt svētku dienas.",
+      "noHolidays": "Šajā periodā nav gaidāmu svētku dienu.",
+      "pendingHoliday": "Gaida aktivizēšanu"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nomnieks",
@@ -978,7 +1002,10 @@
       "Server": "Serveris",
       "Username": "Lietotājvārds",
       "Name": "Vārds",
-      "Render Time": "Attēlošanas laiks"
+      "Render Time": "Attēlošanas laiks",
+      "User": "Lietotājs",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma ir licencēta saskaņā ar <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenci, versiju 2.0</a>. Mifos iniciatīva bija virzītājspēks aiz Apache Fineract, uzsākot to kā Mifos X 2011. gadā un veicinot Apache 2016. gadā ar izlaišanos augstākā līmeņa projektā Apache Software Foundation 2017. gadā.",
@@ -1369,7 +1396,11 @@
       "Add another address": "Pievienot citu adresi",
       "Address actions": "Adreses darbības",
       "Delete Address": "Dzēst adresi",
-      "Edit Address": "Rediģēt adresi"
+      "Edit Address": "Rediģēt adresi",
+      "Retry now": "Mēģināt tagad",
+      "Details": "Detaļas",
+      "Copy diagnostics": "Kopēt diagnostiku",
+      "Report issue": "Ziņot par problēmu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -2403,7 +2434,10 @@
       "Branch addresses": "Filiāles adreses",
       "Complete address": "Pilna adrese",
       "Locality": "Apvidus",
-      "Location": "Atrašanās vieta"
+      "Location": "Atrašanās vieta",
+      "Connection": "Savienojums",
+      "Versions": "Versijas",
+      "Session": "Sesija"
     },
     "inputs": {
       "Breach Start Type": "Pārkāpuma sākuma tips",
@@ -6014,7 +6048,16 @@
       "Manage branch addresses": "Pārvaldiet saglabātās filiāles adreses.",
       "No addresses match this filter": "Neviena adrese neatbilst šim filtram.",
       "Only one address per branch is supported": "Šis serveris atbalsta vienu adresi katrai filiālei. Lai to aizstātu, rediģējiet vai dzēsiet esošo adresi.",
-      "Saving address": "Adrese tiek saglabāta…"
+      "Saving address": "Adrese tiek saglabāta…",
+      "Connected": "Savienots",
+      "Server unreachable": "Serveris nav sasniedzams",
+      "Checking connection": "Pārbauda savienojumu…",
+      "Retrying in seconds": "Atkārtots mēģinājums pēc {{seconds}} s",
+      "Copied": "Nokopēts",
+      "Copy full commit hash": "Kopēt pilno commit jaucējkodu",
+      "Checked seconds ago": "Pārbaudīts pirms {{seconds}} s",
+      "Pre-release backend": "Aizmugursistēma darbojas ar pirmsizlaides versiju. Nav ieteicams ražošanas datiem.",
+      "Diagnostics copied": "Diagnostika nokopēta starpliktuvē"
     },
     "permissions": {
       "actions": {
@@ -8796,5 +8839,47 @@
       "SOURCE_DATA_CHANGED": "Avota dati mainījušies",
       "NO_ACCOUNTS": "Nav kontu"
     }
+  },
+  "branchHistory": {
+    "title": "Izmaiņu vēsture",
+    "search": "Meklēt pēc lauka vai vērtības",
+    "section": "Sadaļa",
+    "allHistory": "Visa vēsture",
+    "dateRange": "Datumu diapazons",
+    "export": "Eksportēt ielādēto CSV",
+    "clearDates": "Notīrīt datumus",
+    "timezone": "Datumiem un laikam tiek izmantota tā pati vietējā laika josla kā laika skalai.",
+    "coverage": "Tiek rādīti tikai pārbaudīti tiešie filiāles audita notikumi. Adrešu, pakalpojumu, darba laika un svētku audita pārklājums nav pārbaudīts.",
+    "searchScope": "Meklēšana un kopsavilkumi ietver tikai ielādētos ierakstus (līdz {{limit}} API ierakstiem). Meklēšana ietver metadatus un atvērtos drošos laukus; CSV eksportē tikai atbilstošos ielādētos metadatus.",
+    "usersUnavailable": "Lietotāju filtrs nav pieejams. Citi filtri ir pieejami.",
+    "invalidRange": "Ievadiet derīgus datumus; sākums nedrīkst būt pēc beigām.",
+    "exportError": "CSV neizdevās izveidot. Eksportēšana nav pabeigta.",
+    "loading": "Ielādē reģistrētos audita notikumus…",
+    "invalidResponse": "Audita pakalpojums atgrieza neatbalstītu atbildi.",
+    "loadError": "Neizdevās ielādēt reģistrētos audita notikumus.",
+    "noMatches": "Neviens ielādētais notikums neatbilst filtriem. Var būt pieejami citi ieraksti.",
+    "empty": "Nav ielādētu pārbaudītu filiāles audita notikumu.",
+    "timestampUnavailable": "Laika zīmogs nav pieejams",
+    "unidentifiedActor": "Neidentificēts dalībnieks",
+    "submittedFields": "Iesniegtie lauki",
+    "viewAudit": "Skatīt auditu",
+    "detailError": "Audita informācija nav pieejama vai to nevarēja pārbaudīt šai filiālei.",
+    "noBeforeValues": "Šī API nereģistrēja iepriekšējās vērtības. Tās ir iesniegtās vērtības, nevis vēsturisks salīdzinājums.",
+    "noSafeFields": "Nav pieejamu atbalstītu drošu iesniegto lauku.",
+    "submittedValue": "Iesniegtā vērtība",
+    "noValue": "Vērtība nav iesniegta",
+    "pageError": "Nākamo lapu neizdevās ielādēt. Eksports būs pieejams pēc veiksmīgas atkārtotas ielādes.",
+    "loadMore": "Ielādēt vairāk",
+    "limitReached": "Sasniegts {{limit}} API ierakstu ierobežojums. Sašauriniet lietotāja vai datuma filtrus, lai skatītu vairāk vēstures.",
+    "endLoaded": "Ielādēto rezultātu beigas",
+    "loadedScope": "Tikai atbilstošie ielādētie filiāles ieraksti",
+    "records": "reģistrētie notikumi",
+    "actors": "identificētie dalībnieki",
+    "latestLoaded": "Jaunākais ielādētais notikums",
+    "bySection": "Izmaiņas pa sadaļām",
+    "notice": "Šis tikai lasāmais skats rāda reģistrēto audita informāciju. Ierakstus šeit nevar rediģēt. Pieejamā vēsture ir atkarīga no audita pārklājuma, glabāšanas un piekļuves politikām.",
+    "parentId": "Augstākās filiāles ID",
+    "permission": "Jums nav atļaujas skatīt audita vēsturi.",
+    "unknownAction": "Nenorādīta darbība"
   }
 }

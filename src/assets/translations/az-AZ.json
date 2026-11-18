@@ -926,6 +926,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Düzəliş əməliyyatı sıfırdan aşağı sala bilməz."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filialın iş saatları",
+      "description": "Filial üçün təyin edilmiş müntəzəm iş qrafiki.",
+      "timezoneUnavailable": "Filialın saat qurşağı məlum deyil",
+      "edit": "İş saatlarını redaktə et",
+      "regular": "Müntəzəm iş qrafiki",
+      "hours": "{{count}} saat",
+      "minutes": "{{count}} dəq",
+      "seconds": "{{count}} san",
+      "perWeek": "həftədə",
+      "operatingDays": "{{count}} iş günü",
+      "invalidInterval": "Yanlış və ya natamam iş saatları",
+      "incompleteWeek": "Həftəlik cəm məlum deyil: bəzi günlər çatışmır və ya yanlışdır.",
+      "statusUnavailable": "Cari status məlum deyil",
+      "statusExplanation": "Cari əlçatanlığı müəyyən etmək üçün filialın saat qurşağı və bayram günlərində təsdiqlənmiş iş qaydaları lazımdır.",
+      "specialDays": "Xüsusi günlər",
+      "holidayDescription": "Cihazın təqviminə əsasən növbəti 60 gündəki bayramlar. Bayram qeydləri iş saatlarını müəyyən etmir.",
+      "holidayForbidden": "Bayramları görmək üçün icazəniz yoxdur.",
+      "holidayUnsupported": "Bu server bayram məlumatlarını dəstəkləmir.",
+      "holidayMalformed": "Bayram məlumatları oxunmadı. Bayramların idarə edilməsində qeydləri yoxlayın.",
+      "holidayError": "Bayramlar yüklənmədi.",
+      "noHolidays": "Bu dövrdə qarşıdan gələn bayram yoxdur.",
+      "pendingHoliday": "Aktivləşdirmə gözləyir"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Eclipse Birt üçün Mifos hesabat əlavəsi",
     "version": {
       "Tenant": "Təşkilat mühiti",
@@ -934,7 +958,10 @@
       "Server": "Server",
       "Username": "İstifadəçi adı",
       "Name": "Ad",
-      "Render Time": "Göstərilmə vaxtı"
+      "Render Time": "Göstərilmə vaxtı",
+      "User": "İstifadəçi",
+      "WebApp": "Veb tətbiq",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforması <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache lisenziyasının 2.0 versiyası</a> əsasında lisenziyalaşdırılıb. Mifos Initiative Apache Fineract-ın inkişafına rəhbərlik etmiş, onu 2011-ci ildə Mifos X adı ilə istifadəyə vermiş və 2016-cı ildə Apache-yə təqdim etmişdir. Layihə 2017-ci ildə Apache Software Foundation-ın yüksək səviyyəli layihəsinə çevrilmişdir.",
@@ -1325,7 +1352,11 @@
       "Add another address": "Başqa ünvan əlavə et",
       "Address actions": "Ünvan əməliyyatları",
       "Delete Address": "Ünvanı sil",
-      "Edit Address": "Ünvanı redaktə et"
+      "Edit Address": "Ünvanı redaktə et",
+      "Retry now": "İndi yenidən cəhd et",
+      "Details": "Təfərrüatlar",
+      "Copy diagnostics": "Diaqnostikanı kopyala",
+      "Report issue": "Problemi bildir"
     },
     "catalogs": {
       "% Amount": "Məbləğin %-i",
@@ -2359,7 +2390,10 @@
       "Branch addresses": "Filial ünvanları",
       "Complete address": "Tam ünvan",
       "Locality": "Ərazi",
-      "Location": "Məkan"
+      "Location": "Məkan",
+      "Connection": "Bağlantı",
+      "Versions": "Versiyalar",
+      "Session": "Sessiya"
     },
     "inputs": {
       "Breach Start Type": "Pozuntunun başlanğıc növü",
@@ -5964,7 +5998,16 @@
       "Manage branch addresses": "Filialın saxlanmış ünvanlarını idarə edin.",
       "No addresses match this filter": "Bu filtrə uyğun ünvan yoxdur.",
       "Only one address per branch is supported": "Bu server hər filial üçün bir ünvanı dəstəkləyir. Əvəz etmək üçün mövcud ünvanı redaktə edin və ya silin.",
-      "Saving address": "Ünvan saxlanılır…"
+      "Saving address": "Ünvan saxlanılır…",
+      "Connected": "Qoşulub",
+      "Server unreachable": "Serverə çatmaq mümkün deyil",
+      "Checking connection": "Bağlantı yoxlanılır…",
+      "Retrying in seconds": "{{seconds}} s sonra yenidən cəhd ediləcək",
+      "Copied": "Kopyalandı",
+      "Copy full commit hash": "Tam commit heşini kopyala",
+      "Checked seconds ago": "{{seconds}} s əvvəl yoxlanılıb",
+      "Pre-release backend": "Server tərəfi buraxılışdan əvvəlki versiyada işləyir. İstehsal məlumatları üçün tövsiyə edilmir.",
+      "Diagnostics copied": "Diaqnostika mübadilə buferinə kopyalandı"
     },
     "permissions": {
       "actions": {
@@ -8784,5 +8827,47 @@
       "SOURCE_DATA_CHANGED": "Mənbə məlumatları dəyişib",
       "NO_ACCOUNTS": "Hesab yoxdur"
     }
+  },
+  "branchHistory": {
+    "title": "Dəyişiklik tarixçəsi",
+    "search": "Sahə və ya dəyər üzrə axtar",
+    "section": "Bölmə",
+    "allHistory": "Bütün tarixçə",
+    "dateRange": "Tarix aralığı",
+    "export": "Yüklənmiş CSV-ni ixrac et",
+    "clearDates": "Tarixləri təmizlə",
+    "timezone": "Tarix və saatlar zaman xətti ilə eyni yerli saat qurşağından istifadə edir.",
+    "coverage": "Yalnız filiala aid təsdiqlənmiş birbaşa audit hadisələri göstərilir. Ünvan, xidmət, iş saatı və bayram auditinin əhatəsi təsdiqlənməyib.",
+    "searchScope": "Axtarış və xülasələr yalnız yüklənmiş qeydləri əhatə edir ({{limit}} API qeydinədək). Axtarış metadatanı və açdığınız təhlükəsiz sahələri əhatə edir; CSV yalnız uyğun yüklənmiş metadatanı ixrac edir.",
+    "usersUnavailable": "İstifadəçi filtri əlçatan deyil. Digər filtrlər əlçatandır.",
+    "invalidRange": "Başlanğıcı sondan gec olmayan etibarlı tarixlər daxil edin.",
+    "exportError": "CSV yaradıla bilmədi. İxrac tamamlanmadı.",
+    "loading": "Qeydə alınmış audit hadisələri yüklənir…",
+    "invalidResponse": "Audit xidməti dəstəklənməyən cavab qaytardı.",
+    "loadError": "Qeydə alınmış audit hadisələri yüklənə bilmədi.",
+    "noMatches": "Yüklənmiş hadisələr bu filtrlərə uyğun deyil. Əlavə qeydlər ola bilər.",
+    "empty": "Filialın təsdiqlənmiş audit hadisələri yüklənməyib.",
+    "timestampUnavailable": "Vaxt möhürü əlçatan deyil",
+    "unidentifiedActor": "Naməlum iştirakçı",
+    "submittedFields": "Göndərilmiş sahələr",
+    "viewAudit": "Auditə bax",
+    "detailError": "Audit təfərrüatları əlçatan deyil və ya bu filial üçün təsdiqlənə bilmədi.",
+    "noBeforeValues": "Bu API əvvəlki dəyərləri qeydə almayıb. Bunlar göndərilmiş dəyərlərdir, tarixi müqayisə deyil.",
+    "noSafeFields": "Dəstəklənən təhlükəsiz göndərilmiş sahələr yoxdur.",
+    "submittedValue": "Göndərilmiş dəyər",
+    "noValue": "Göndərilmiş dəyər yoxdur",
+    "pageError": "Növbəti səhifə yüklənə bilmədi. İxrac uğurlu təkrar cəhddən sonra əlçatan olacaq.",
+    "loadMore": "Daha çox yüklə",
+    "limitReached": "{{limit}} API qeydi həddinə çatıldı. Daha çox tarixçə üçün istifadəçi və ya tarix filtrlərini daraldın.",
+    "endLoaded": "Yüklənmiş nəticələrin sonu",
+    "loadedScope": "Yalnız filialın uyğun yüklənmiş qeydləri",
+    "records": "qeydə alınmış hadisələr",
+    "actors": "müəyyən edilmiş iştirakçılar",
+    "latestLoaded": "Son yüklənmiş hadisə",
+    "bySection": "Bölmələr üzrə dəyişikliklər",
+    "notice": "Bu yalnız oxunan görünüş qeydə alınmış audit məlumatını göstərir. Qeydlər burada dəyişdirilə bilməz. Mövcud tarixçə auditin əhatəsindən, saxlama və giriş qaydalarından asılıdır.",
+    "parentId": "Üst filialın ID-si",
+    "permission": "Audit tarixçəsinə baxmaq icazəniz yoxdur.",
+    "unknownAction": "Göstərilməmiş əməl"
   }
 }

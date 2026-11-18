@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "El ajuste no puede reducir la transacción por debajo de cero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Horarios de la sucursal",
+      "description": "Horario regular de atención configurado para la sucursal.",
+      "timezoneUnavailable": "Zona horaria de la sucursal no disponible",
+      "edit": "Editar horario",
+      "regular": "Horario regular",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "por semana",
+      "operatingDays": "{{count}} días de atención",
+      "invalidInterval": "Horario inválido o incompleto",
+      "incompleteWeek": "Total semanal no disponible: faltan días o hay datos inválidos.",
+      "statusUnavailable": "Estado actual no disponible",
+      "statusExplanation": "Se necesitan la zona horaria de la sucursal y reglas verificadas de atención en feriados para determinar la disponibilidad actual.",
+      "specialDays": "Días especiales",
+      "holidayDescription": "Feriados de los próximos 60 días según el calendario del dispositivo. Los registros no establecen horarios de atención.",
+      "holidayForbidden": "No tienes permiso para consultar feriados.",
+      "holidayUnsupported": "Este servidor no admite información de feriados.",
+      "holidayMalformed": "No se pudieron interpretar los feriados. Revisa los registros en Administrar feriados.",
+      "holidayError": "No se pudieron cargar los feriados.",
+      "noHolidays": "No hay feriados próximos en este período.",
+      "pendingHoliday": "Pendiente de activación"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Instancia",
@@ -978,7 +1002,10 @@
       "Server": "Servidor",
       "Username": "Nombre de usuario",
       "Name": "Nombre",
-      "Render Time": "Tiempo de renderizado"
+      "Render Time": "Tiempo de renderizado",
+      "User": "Usuario",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "La plataforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> está licenciada bajo la <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencia Apache, Versión 2.0</a>. La Iniciativa Mifos fue la fuerza impulsora detrás de Apache Fineract, lanzándolo como Mifos X en 2011 y contribuyendo a Apache en 2016 con la graduación a un proyecto de nivel superior de la Apache Software Foundation en 2017.",
@@ -1369,7 +1396,11 @@
       "Add another address": "Agregar otro domicilio",
       "Address actions": "Acciones del domicilio",
       "Delete Address": "Eliminar domicilio",
-      "Edit Address": "Editar domicilio"
+      "Edit Address": "Editar domicilio",
+      "Retry now": "Reintentar ahora",
+      "Details": "Detalles",
+      "Copy diagnostics": "Copiar diagnóstico",
+      "Report issue": "Reportar problema"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -2403,7 +2434,10 @@
       "Branch addresses": "Domicilios de la sucursal",
       "Complete address": "Dirección completa",
       "Locality": "Localidad",
-      "Location": "Ubicación"
+      "Location": "Ubicación",
+      "Connection": "Conexión",
+      "Versions": "Versiones",
+      "Session": "Sesión"
     },
     "inputs": {
       "Breach Start Type": "Tipo de inicio de incumplimiento",
@@ -6014,7 +6048,16 @@
       "Manage branch addresses": "Administra los domicilios registrados de la sucursal.",
       "No addresses match this filter": "Ningún domicilio coincide con este filtro.",
       "Only one address per branch is supported": "Este servidor admite un domicilio por sucursal. Edita o elimina el domicilio existente para reemplazarlo.",
-      "Saving address": "Guardando domicilio…"
+      "Saving address": "Guardando domicilio…",
+      "Connected": "Conectado",
+      "Server unreachable": "Servidor inaccesible",
+      "Checking connection": "Verificando conexión…",
+      "Retrying in seconds": "Reintentando en {{seconds}} s",
+      "Copied": "Copiado",
+      "Copy full commit hash": "Copiar el hash completo del commit",
+      "Checked seconds ago": "Verificado hace {{seconds}} s",
+      "Pre-release backend": "El backend ejecuta una versión preliminar. No se recomienda para datos de producción.",
+      "Diagnostics copied": "Diagnóstico copiado al portapapeles"
     },
     "permissions": {
       "actions": {
@@ -8644,5 +8687,47 @@
       "SOURCE_DATA_CHANGED": "Datos de origen modificados",
       "NO_ACCOUNTS": "Sin cuentas"
     }
+  },
+  "branchHistory": {
+    "title": "Historial de cambios",
+    "search": "Buscar por campo o valor",
+    "section": "Sección",
+    "allHistory": "Todo el historial",
+    "dateRange": "Rango de fechas",
+    "export": "Exportar CSV cargado",
+    "clearDates": "Borrar fechas",
+    "timezone": "Las fechas y horas usan la misma zona horaria local que la cronología.",
+    "coverage": "Solo se muestran eventos de auditoría directos de la sucursal verificados. No se ha verificado la cobertura de domicilios, servicios, horarios y feriados.",
+    "searchScope": "La búsqueda y los resúmenes cubren solo registros cargados (hasta {{limit}} registros de la API). La búsqueda incluye metadatos y campos seguros que haya abierto; el CSV exporta solo metadatos cargados coincidentes.",
+    "usersUnavailable": "El filtro de usuarios no está disponible. Los demás filtros siguen disponibles.",
+    "invalidRange": "Ingrese fechas válidas con el inicio anterior o igual al fin.",
+    "exportError": "No se pudo crear el CSV. No se completó la exportación.",
+    "loading": "Cargando eventos de auditoría registrados…",
+    "invalidResponse": "El servicio de auditoría devolvió una respuesta no compatible.",
+    "loadError": "No se pudieron cargar los eventos de auditoría registrados.",
+    "noMatches": "Ningún evento cargado coincide con estos filtros. Puede haber más registros disponibles.",
+    "empty": "No hay eventos de auditoría verificados de la sucursal cargados.",
+    "timestampUnavailable": "Fecha y hora no disponibles",
+    "unidentifiedActor": "Actor no identificado",
+    "submittedFields": "Campos enviados",
+    "viewAudit": "Ver auditoría",
+    "detailError": "Los detalles de auditoría no están disponibles o no se pudieron verificar para esta sucursal.",
+    "noBeforeValues": "Esta API no registró valores anteriores. Estos son valores enviados, no una comparación histórica.",
+    "noSafeFields": "No hay campos enviados seguros y compatibles disponibles.",
+    "submittedValue": "Valor enviado",
+    "noValue": "Sin valor enviado",
+    "pageError": "No se pudo cargar la página siguiente. La exportación estará disponible cuando se reintente correctamente.",
+    "loadMore": "Cargar más",
+    "limitReached": "Se alcanzó el límite de {{limit}} registros de la API. Acote los filtros de usuario o fecha para revisar más historial.",
+    "endLoaded": "Fin de los resultados cargados",
+    "loadedScope": "Solo registros de la sucursal cargados y coincidentes",
+    "records": "eventos registrados",
+    "actors": "actores identificados",
+    "latestLoaded": "Último evento cargado",
+    "bySection": "Cambios por sección",
+    "notice": "Esta vista de solo lectura muestra información de auditoría registrada. Los registros no se pueden editar aquí. El historial disponible depende de la cobertura de auditoría y las políticas de retención y acceso.",
+    "parentId": "ID de sucursal superior",
+    "permission": "No tiene permiso para ver el historial de auditoría.",
+    "unknownAction": "Acción sin especificar"
   }
 }

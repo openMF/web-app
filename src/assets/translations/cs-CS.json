@@ -972,6 +972,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Úprava nesmí snížit transakci pod nulu."
   },
   "labels": {
+    "officeHours": {
+      "title": "Otevírací doba pobočky",
+      "description": "Nastavená pravidelná otevírací doba pobočky.",
+      "timezoneUnavailable": "Časové pásmo pobočky není k dispozici",
+      "edit": "Upravit otevírací dobu",
+      "regular": "Pravidelná otevírací doba",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "týdně",
+      "operatingDays": "Počet provozních dnů: {{count}}",
+      "invalidInterval": "Neplatná nebo neúplná doba",
+      "incompleteWeek": "Týdenní součet není k dispozici: některé dny chybí nebo jsou neplatné.",
+      "statusUnavailable": "Aktuální stav není k dispozici",
+      "statusExplanation": "Pro určení aktuální dostupnosti je nutné časové pásmo pobočky a ověřená pravidla otevření o svátcích.",
+      "specialDays": "Zvláštní dny",
+      "holidayDescription": "Svátky v příštích 60 dnech podle kalendáře zařízení. Záznamy svátků neurčují otevírací dobu.",
+      "holidayForbidden": "Nemáte oprávnění zobrazit svátky.",
+      "holidayUnsupported": "Tento server nepodporuje informace o svátcích.",
+      "holidayMalformed": "Údaje o svátcích nelze přečíst. Zkontrolujte záznamy ve správě svátků.",
+      "holidayError": "Svátky se nepodařilo načíst.",
+      "noHolidays": "V tomto období nejsou žádné nadcházející svátky.",
+      "pendingHoliday": "Čeká na aktivaci"
+    },
     "version": {
       "Tenant": "Instanci",
       "Mifos WebApp": "Mifos® WebApp",
@@ -979,7 +1003,10 @@
       "Server": "Server",
       "Username": "Uživatelské jméno",
       "Name": "Jméno",
-      "Render Time": "Doba vykreslování"
+      "Render Time": "Doba vykreslování",
+      "User": "Uživatel",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "Platforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> je licencována pod <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencí Apache, verze 2.0</a>. Iniciativa Mifos byla hnácí silou za Apache Fineract, když ji spustila jako Mifos X v roce 2011 a přispěla do Apache v roce 2016 s absolvováním na projekt nejvyšší úrovně Apache Software Foundation v roce 2017.",
@@ -1370,7 +1397,11 @@
       "Add another address": "Přidat další adresu",
       "Address actions": "Akce adresy",
       "Delete Address": "Smazat adresu",
-      "Edit Address": "Upravit adresu"
+      "Edit Address": "Upravit adresu",
+      "Retry now": "Zkusit znovu",
+      "Details": "Podrobnosti",
+      "Copy diagnostics": "Kopírovat diagnostiku",
+      "Report issue": "Nahlásit problém"
     },
     "catalogs": {
       "% Amount": "% částky",
@@ -2404,7 +2435,10 @@
       "Branch addresses": "Adresy pobočky",
       "Complete address": "Úplná adresa",
       "Locality": "Obec a region",
-      "Location": "Poloha"
+      "Location": "Poloha",
+      "Connection": "Připojení",
+      "Versions": "Verze",
+      "Session": "Relace"
     },
     "inputs": {
       "Breach Start Type": "Typ začátku porušení",
@@ -6015,7 +6049,16 @@
       "Manage branch addresses": "Spravujte uložené adresy pobočky.",
       "No addresses match this filter": "Tomuto filtru neodpovídají žádné adresy.",
       "Only one address per branch is supported": "Tento server podporuje jednu adresu na pobočku. Chcete-li ji nahradit, upravte nebo smažte stávající adresu.",
-      "Saving address": "Ukládání adresy…"
+      "Saving address": "Ukládání adresy…",
+      "Connected": "Připojeno",
+      "Server unreachable": "Server je nedostupný",
+      "Checking connection": "Ověřování připojení…",
+      "Retrying in seconds": "Nový pokus za {{seconds}} s",
+      "Copied": "Zkopírováno",
+      "Copy full commit hash": "Kopírovat celý hash commitu",
+      "Checked seconds ago": "Ověřeno před {{seconds}} s",
+      "Pre-release backend": "Backend běží na předběžné verzi. Nedoporučuje se pro produkční data.",
+      "Diagnostics copied": "Diagnostika zkopírována do schránky"
     },
     "permissions": {
       "actions": {
@@ -8798,5 +8841,47 @@
       "SOURCE_DATA_CHANGED": "Zdrojová data změněna",
       "NO_ACCOUNTS": "Žádné účty"
     }
+  },
+  "branchHistory": {
+    "title": "Historie změn",
+    "search": "Hledat podle pole nebo hodnoty",
+    "section": "Sekce",
+    "allHistory": "Celá historie",
+    "dateRange": "Rozsah dat",
+    "export": "Exportovat načtené CSV",
+    "clearDates": "Vymazat data",
+    "timezone": "Data a časy používají stejné místní časové pásmo jako časová osa.",
+    "coverage": "Zobrazují se pouze ověřené přímé auditní události pobočky. Pokrytí adres, služeb, provozní doby a svátků není ověřeno.",
+    "searchScope": "Vyhledávání a souhrny zahrnují pouze načtené záznamy (nejvýše {{limit}} záznamů API). Hledání zahrnuje metadata a otevřená bezpečná pole; CSV exportuje pouze odpovídající načtená metadata.",
+    "usersUnavailable": "Filtr uživatelů není dostupný. Ostatní filtry zůstávají dostupné.",
+    "invalidRange": "Zadejte platná data se začátkem před koncem nebo ve stejný okamžik.",
+    "exportError": "CSV se nepodařilo vytvořit. Export nebyl dokončen.",
+    "loading": "Načítání zaznamenaných auditních událostí…",
+    "invalidResponse": "Auditní služba vrátila nepodporovanou odpověď.",
+    "loadError": "Zaznamenané auditní události se nepodařilo načíst.",
+    "noMatches": "Žádné načtené události neodpovídají filtrům. Mohou být dostupné další záznamy.",
+    "empty": "Nejsou načteny žádné ověřené auditní události pobočky.",
+    "timestampUnavailable": "Časové razítko není dostupné",
+    "unidentifiedActor": "Neidentifikovaný původce",
+    "submittedFields": "Odeslaná pole",
+    "viewAudit": "Zobrazit audit",
+    "detailError": "Podrobnosti auditu nejsou dostupné nebo je nelze ověřit pro tuto pobočku.",
+    "noBeforeValues": "Toto API nezaznamenalo předchozí hodnoty. Jde o odeslané hodnoty, nikoli historické porovnání.",
+    "noSafeFields": "Nejsou dostupná žádná podporovaná bezpečná odeslaná pole.",
+    "submittedValue": "Odeslaná hodnota",
+    "noValue": "Žádná odeslaná hodnota",
+    "pageError": "Další stránku se nepodařilo načíst. Export bude dostupný po úspěšném opakování.",
+    "loadMore": "Načíst další",
+    "limitReached": "Dosažen limit {{limit}} záznamů API. Pro další historii upřesněte filtr uživatele nebo data.",
+    "endLoaded": "Konec načtených výsledků",
+    "loadedScope": "Pouze odpovídající načtené záznamy pobočky",
+    "records": "zaznamenané události",
+    "actors": "identifikovaní původci",
+    "latestLoaded": "Nejnovější načtená událost",
+    "bySection": "Změny podle sekce",
+    "notice": "Toto zobrazení pouze pro čtení ukazuje zaznamenané auditní informace. Záznamy zde nelze upravovat. Dostupná historie závisí na pokrytí auditu a pravidlech uchovávání a přístupu.",
+    "parentId": "ID nadřazené pobočky",
+    "permission": "Nemáte oprávnění zobrazit historii auditu.",
+    "unknownAction": "Nespecifikovaná akce"
   }
 }

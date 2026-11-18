@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "O ajuste não pode reduzir a transação abaixo de zero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Horário da sucursal",
+      "description": "O horário regular configurado para a sucursal.",
+      "timezoneUnavailable": "Fuso horário da sucursal indisponível",
+      "edit": "Editar horário",
+      "regular": "Horário regular",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "por semana",
+      "operatingDays": "{{count}} dias de atendimento",
+      "invalidInterval": "Horário inválido ou incompleto",
+      "incompleteWeek": "Total semanal indisponível: há dias em falta ou inválidos.",
+      "statusUnavailable": "Estado atual indisponível",
+      "statusExplanation": "São necessários o fuso horário da sucursal e regras de abertura verificadas para feriados para determinar a disponibilidade atual.",
+      "specialDays": "Dias especiais",
+      "holidayDescription": "Feriados dos próximos 60 dias segundo o calendário do dispositivo. Os registos não definem horários de abertura.",
+      "holidayForbidden": "Não tem permissão para consultar feriados.",
+      "holidayUnsupported": "Este servidor não suporta informações sobre feriados.",
+      "holidayMalformed": "Não foi possível ler os dados dos feriados. Verifique os registos em Gerir feriados.",
+      "holidayError": "Não foi possível carregar os feriados.",
+      "noHolidays": "Não há feriados próximos neste período.",
+      "pendingHoliday": "Ativação pendente"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Inquilino",
@@ -978,7 +1002,10 @@
       "Server": "Servidor",
       "Username": "Nome de usuário",
       "Name": "Nome",
-      "Render Time": "Tempo de renderização"
+      "Render Time": "Tempo de renderização",
+      "User": "Utilizador",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "A plataforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> é licenciada sob a <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licença Apache, Versão 2.0</a>. A Iniciativa Mifos foi a força motriz por trás do Apache Fineract, lançando-o como Mifos X em 2011 e contribuindo para o Apache em 2016 com graduação para um projeto de nível superior da Apache Software Foundation em 2017.",
@@ -1369,7 +1396,11 @@
       "Add another address": "Adicionar outro endereço",
       "Address actions": "Ações do endereço",
       "Delete Address": "Eliminar endereço",
-      "Edit Address": "Editar endereço"
+      "Edit Address": "Editar endereço",
+      "Retry now": "Tentar agora",
+      "Details": "Detalhes",
+      "Copy diagnostics": "Copiar diagnóstico",
+      "Report issue": "Comunicar problema"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -2403,7 +2434,10 @@
       "Branch addresses": "Endereços da agência",
       "Complete address": "Endereço completo",
       "Locality": "Localidade",
-      "Location": "Localização"
+      "Location": "Localização",
+      "Connection": "Ligação",
+      "Versions": "Versões",
+      "Session": "Sessão"
     },
     "inputs": {
       "Breach Start Type": "Tipo de início de violação",
@@ -6014,7 +6048,16 @@
       "Manage branch addresses": "Gerir os endereços guardados da agência.",
       "No addresses match this filter": "Nenhum endereço corresponde a este filtro.",
       "Only one address per branch is supported": "Este servidor suporta um endereço por agência. Edite ou elimine o endereço existente para o substituir.",
-      "Saving address": "A guardar endereço…"
+      "Saving address": "A guardar endereço…",
+      "Connected": "Ligado",
+      "Server unreachable": "Servidor inacessível",
+      "Checking connection": "A verificar a ligação…",
+      "Retrying in seconds": "Nova tentativa dentro de {{seconds}} s",
+      "Copied": "Copiado",
+      "Copy full commit hash": "Copiar o hash completo do commit",
+      "Checked seconds ago": "Verificado há {{seconds}} s",
+      "Pre-release backend": "O backend está a executar uma versão de pré-lançamento. Não recomendado para dados de produção.",
+      "Diagnostics copied": "Diagnóstico copiado para a área de transferência"
     },
     "permissions": {
       "actions": {
@@ -8796,5 +8839,47 @@
       "SOURCE_DATA_CHANGED": "Dados de origem alterados",
       "NO_ACCOUNTS": "Sem contas"
     }
+  },
+  "branchHistory": {
+    "title": "Histórico de alterações",
+    "search": "Pesquisar por campo ou valor",
+    "section": "Secção",
+    "allHistory": "Todo o histórico",
+    "dateRange": "Intervalo de datas",
+    "export": "Exportar CSV carregado",
+    "clearDates": "Limpar datas",
+    "timezone": "As datas e horas usam o mesmo fuso horário local da cronologia.",
+    "coverage": "São apresentados apenas eventos de auditoria diretos e verificados da agência. A cobertura de moradas, serviços, horários e feriados não está verificada.",
+    "searchScope": "A pesquisa e os resumos abrangem apenas os registos carregados (até {{limit}} registos da API). A pesquisa inclui metadados e campos seguros abertos; o CSV exporta apenas metadados carregados correspondentes.",
+    "usersUnavailable": "O filtro de utilizadores está indisponível. Os outros filtros continuam disponíveis.",
+    "invalidRange": "Introduza datas válidas com o início anterior ou igual ao fim.",
+    "exportError": "Não foi possível criar o CSV. A exportação não foi concluída.",
+    "loading": "A carregar eventos de auditoria registados…",
+    "invalidResponse": "O serviço de auditoria devolveu uma resposta não suportada.",
+    "loadError": "Não foi possível carregar os eventos de auditoria registados.",
+    "noMatches": "Nenhum evento carregado corresponde aos filtros. Podem existir mais registos.",
+    "empty": "Não há eventos de auditoria verificados da agência carregados.",
+    "timestampUnavailable": "Data e hora indisponíveis",
+    "unidentifiedActor": "Autor não identificado",
+    "submittedFields": "Campos enviados",
+    "viewAudit": "Ver auditoria",
+    "detailError": "Os detalhes de auditoria estão indisponíveis ou não puderam ser verificados para esta agência.",
+    "noBeforeValues": "Esta API não registou valores anteriores. Estes são valores enviados, não uma comparação histórica.",
+    "noSafeFields": "Não há campos enviados seguros e suportados disponíveis.",
+    "submittedValue": "Valor enviado",
+    "noValue": "Sem valor enviado",
+    "pageError": "Não foi possível carregar a página seguinte. A exportação ficará disponível após uma nova tentativa bem-sucedida.",
+    "loadMore": "Carregar mais",
+    "limitReached": "Atingido o limite de {{limit}} registos da API. Restrinja os filtros de utilizador ou data para consultar mais histórico.",
+    "endLoaded": "Fim dos resultados carregados",
+    "loadedScope": "Apenas registos carregados correspondentes da agência",
+    "records": "eventos registados",
+    "actors": "autores identificados",
+    "latestLoaded": "Último evento carregado",
+    "bySection": "Alterações por secção",
+    "notice": "Esta vista só de leitura apresenta informações de auditoria registadas. Os registos não podem ser editados aqui. O histórico disponível depende da cobertura de auditoria e das políticas de retenção e acesso.",
+    "parentId": "ID da agência superior",
+    "permission": "Não tem permissão para ver o histórico de auditoria.",
+    "unknownAction": "Ação não especificada"
   }
 }

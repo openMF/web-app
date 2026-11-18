@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "La rettifica non può ridurre la transazione sotto lo zero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Orari della filiale",
+      "description": "L’orario regolare configurato per la filiale.",
+      "timezoneUnavailable": "Fuso orario della filiale non disponibile",
+      "edit": "Modifica orario",
+      "regular": "Orario regolare",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "a settimana",
+      "operatingDays": "{{count}} giorni di apertura",
+      "invalidInterval": "Orario non valido o incompleto",
+      "incompleteWeek": "Totale settimanale non disponibile: alcuni giorni sono mancanti o non validi.",
+      "statusUnavailable": "Stato attuale non disponibile",
+      "statusExplanation": "Per determinare la disponibilità attuale servono il fuso orario della filiale e regole di apertura verificate per le festività.",
+      "specialDays": "Giorni speciali",
+      "holidayDescription": "Festività dei prossimi 60 giorni secondo il calendario del dispositivo. I dati sulle festività non definiscono gli orari di apertura.",
+      "holidayForbidden": "Non hai il permesso di visualizzare le festività.",
+      "holidayUnsupported": "Questo server non supporta le informazioni sulle festività.",
+      "holidayMalformed": "Impossibile leggere i dati delle festività. Controlla le voci in Gestisci festività.",
+      "holidayError": "Impossibile caricare le festività.",
+      "noHolidays": "Nessuna festività in arrivo in questo periodo.",
+      "pendingHoliday": "In attesa di attivazione"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Inquilino",
@@ -978,7 +1002,10 @@
       "Server": "Server",
       "Username": "Nome utente",
       "Name": "Nome",
-      "Render Time": "Tempo di rendering"
+      "Render Time": "Tempo di rendering",
+      "User": "Utente",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "La piattaforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> è concessa in licenza con la <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licenza Apache, Versione 2.0</a>. L'Iniziativa Mifos è stata la forza trainante dietro Apache Fineract, lanciandola come Mifos X nel 2011 e contribuendo ad Apache nel 2016 con la laurea a progetto di alto livello dell'Apache Software Foundation nel 2017.",
@@ -1369,7 +1396,11 @@
       "Add another address": "Aggiungi un altro indirizzo",
       "Address actions": "Azioni indirizzo",
       "Delete Address": "Elimina indirizzo",
-      "Edit Address": "Modifica indirizzo"
+      "Edit Address": "Modifica indirizzo",
+      "Retry now": "Riprova ora",
+      "Details": "Dettagli",
+      "Copy diagnostics": "Copia diagnostica",
+      "Report issue": "Segnala un problema"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -2403,7 +2434,10 @@
       "Branch addresses": "Indirizzi della filiale",
       "Complete address": "Indirizzo completo",
       "Locality": "Località",
-      "Location": "Posizione"
+      "Location": "Posizione",
+      "Connection": "Connessione",
+      "Versions": "Versioni",
+      "Session": "Sessione"
     },
     "inputs": {
       "Breach Start Type": "Tipo di inizio violazione",
@@ -6014,7 +6048,16 @@
       "Manage branch addresses": "Gestisci gli indirizzi salvati della filiale.",
       "No addresses match this filter": "Nessun indirizzo corrisponde a questo filtro.",
       "Only one address per branch is supported": "Questo server supporta un indirizzo per filiale. Modifica o elimina l’indirizzo esistente per sostituirlo.",
-      "Saving address": "Salvataggio indirizzo…"
+      "Saving address": "Salvataggio indirizzo…",
+      "Connected": "Connesso",
+      "Server unreachable": "Server non raggiungibile",
+      "Checking connection": "Verifica della connessione…",
+      "Retrying in seconds": "Nuovo tentativo tra {{seconds}} s",
+      "Copied": "Copiato",
+      "Copy full commit hash": "Copia l'hash completo del commit",
+      "Checked seconds ago": "Verificato {{seconds}} s fa",
+      "Pre-release backend": "Il backend esegue una versione preliminare. Non consigliato per i dati di produzione.",
+      "Diagnostics copied": "Diagnostica copiata negli appunti"
     },
     "permissions": {
       "actions": {
@@ -8796,5 +8839,47 @@
       "SOURCE_DATA_CHANGED": "Dati di origine modificati",
       "NO_ACCOUNTS": "Nessun conto"
     }
+  },
+  "branchHistory": {
+    "title": "Cronologia delle modifiche",
+    "search": "Cerca per campo o valore",
+    "section": "Sezione",
+    "allHistory": "Tutta la cronologia",
+    "dateRange": "Intervallo di date",
+    "export": "Esporta CSV caricato",
+    "clearDates": "Cancella date",
+    "timezone": "Date e orari usano lo stesso fuso orario locale della cronologia.",
+    "coverage": "Sono mostrati solo eventi di audit diretti e verificati della filiale. La copertura di indirizzi, servizi, orari e festività non è verificata.",
+    "searchScope": "Ricerca e riepiloghi coprono solo i record caricati (fino a {{limit}} record API). La ricerca include metadati e campi sicuri aperti; il CSV esporta solo i metadati caricati corrispondenti.",
+    "usersUnavailable": "Il filtro utenti non è disponibile. Gli altri filtri restano disponibili.",
+    "invalidRange": "Inserire date valide con l’inizio precedente o uguale alla fine.",
+    "exportError": "Impossibile creare il CSV. Nessuna esportazione completata.",
+    "loading": "Caricamento degli eventi di audit registrati…",
+    "invalidResponse": "Il servizio di audit ha restituito una risposta non supportata.",
+    "loadError": "Impossibile caricare gli eventi di audit registrati.",
+    "noMatches": "Nessun evento caricato corrisponde ai filtri. Potrebbero essere disponibili altri record.",
+    "empty": "Nessun evento di audit verificato della filiale caricato.",
+    "timestampUnavailable": "Data e ora non disponibili",
+    "unidentifiedActor": "Autore non identificato",
+    "submittedFields": "Campi inviati",
+    "viewAudit": "Visualizza audit",
+    "detailError": "I dettagli di audit non sono disponibili o non sono stati verificati per questa filiale.",
+    "noBeforeValues": "Questa API non ha registrato i valori precedenti. Questi sono valori inviati, non un confronto storico.",
+    "noSafeFields": "Nessun campo inviato sicuro e supportato disponibile.",
+    "submittedValue": "Valore inviato",
+    "noValue": "Nessun valore inviato",
+    "pageError": "Impossibile caricare la pagina successiva. L’esportazione sarà disponibile dopo un nuovo tentativo riuscito.",
+    "loadMore": "Carica altro",
+    "limitReached": "Raggiunto il limite di {{limit}} record API. Restringere i filtri utente o data per consultare altra cronologia.",
+    "endLoaded": "Fine dei risultati caricati",
+    "loadedScope": "Solo record caricati corrispondenti della filiale",
+    "records": "eventi registrati",
+    "actors": "autori identificati",
+    "latestLoaded": "Ultimo evento caricato",
+    "bySection": "Modifiche per sezione",
+    "notice": "Questa vista di sola lettura mostra le informazioni di audit registrate. I record non possono essere modificati qui. La cronologia disponibile dipende dalla copertura dell’audit e dalle politiche di conservazione e accesso.",
+    "parentId": "ID della filiale superiore",
+    "permission": "Non si dispone dell’autorizzazione per visualizzare la cronologia di audit.",
+    "unknownAction": "Azione non specificata"
   }
 }

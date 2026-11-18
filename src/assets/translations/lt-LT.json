@@ -970,6 +970,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "Koregavimas negali sumažinti operacijos žemiau nulio."
   },
   "labels": {
+    "officeHours": {
+      "title": "Filialo darbo laikas",
+      "description": "Nustatytas įprastas filialo darbo grafikas.",
+      "timezoneUnavailable": "Filialo laiko juosta nežinoma",
+      "edit": "Keisti darbo laiką",
+      "regular": "Įprastas darbo grafikas",
+      "hours": "{{count}} val.",
+      "minutes": "{{count}} min.",
+      "seconds": "{{count}} sek.",
+      "perWeek": "per savaitę",
+      "operatingDays": "Darbo dienų: {{count}}",
+      "invalidInterval": "Netinkamas arba neišsamus darbo laikas",
+      "incompleteWeek": "Savaitės suma nepasiekiama: trūksta dienų arba duomenys netinkami.",
+      "statusUnavailable": "Dabartinė būsena nežinoma",
+      "statusExplanation": "Dabartiniam prieinamumui nustatyti reikia filialo laiko juostos ir patvirtintų darbo švenčių dienomis taisyklių.",
+      "specialDays": "Ypatingos dienos",
+      "holidayDescription": "Artimiausių 60 dienų šventės pagal įrenginio kalendorių. Švenčių įrašai nenustato darbo laiko.",
+      "holidayForbidden": "Neturite teisės peržiūrėti švenčių.",
+      "holidayUnsupported": "Šis serveris nepalaiko švenčių informacijos.",
+      "holidayMalformed": "Nepavyko perskaityti švenčių duomenų. Patikrinkite įrašus švenčių valdyme.",
+      "holidayError": "Nepavyko įkelti švenčių.",
+      "noHolidays": "Šiuo laikotarpiu artėjančių švenčių nėra.",
+      "pendingHoliday": "Laukiama aktyvinimo"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nuomininkas",
@@ -978,7 +1002,10 @@
       "Server": "Serveris",
       "Username": "Vartotojo vardas",
       "Name": "Vardas",
-      "Render Time": "Atvaizdavimo laikas"
+      "Render Time": "Atvaizdavimo laikas",
+      "User": "Vartotojas",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma yra licencijuota pagal <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenciją, 2.0 versiją</a>. \"Mifos\" iniciatyva buvo varomoji jėga už Apache Fineract, paleidusi ją kaip Mifos X 2011 m. ir prisidėdama prie Apache 2016 m., o 2017 m. ji tapo aukščiausio lygio Apache Software Foundation projektu.",
@@ -1369,7 +1396,11 @@
       "Add another address": "Pridėti kitą adresą",
       "Address actions": "Adreso veiksmai",
       "Delete Address": "Ištrinti adresą",
-      "Edit Address": "Redaguoti adresą"
+      "Edit Address": "Redaguoti adresą",
+      "Retry now": "Bandyti dabar",
+      "Details": "Detalės",
+      "Copy diagnostics": "Kopijuoti diagnostiką",
+      "Report issue": "Pranešti apie problemą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -2403,7 +2434,10 @@
       "Branch addresses": "Filialo adresai",
       "Complete address": "Visas adresas",
       "Locality": "Vietovė",
-      "Location": "Vieta"
+      "Location": "Vieta",
+      "Connection": "Ryšys",
+      "Versions": "Versijos",
+      "Session": "Sesija"
     },
     "inputs": {
       "Breach Start Type": "Pažeidimo pradžios tipas",
@@ -6014,7 +6048,16 @@
       "Manage branch addresses": "Tvarkykite išsaugotus filialo adresus.",
       "No addresses match this filter": "Šį filtrą atitinkančių adresų nėra.",
       "Only one address per branch is supported": "Šis serveris palaiko vieną adresą kiekvienam filialui. Norėdami pakeisti, redaguokite arba ištrinkite esamą adresą.",
-      "Saving address": "Adresas išsaugomas…"
+      "Saving address": "Adresas išsaugomas…",
+      "Connected": "Prisijungta",
+      "Server unreachable": "Serveris nepasiekiamas",
+      "Checking connection": "Tikrinamas ryšys…",
+      "Retrying in seconds": "Kitas bandymas po {{seconds}} s",
+      "Copied": "Nukopijuota",
+      "Copy full commit hash": "Kopijuoti visą commit maišos kodą",
+      "Checked seconds ago": "Patikrinta prieš {{seconds}} s",
+      "Pre-release backend": "Serverio dalis veikia su išankstine versija. Nerekomenduojama gamybiniams duomenims.",
+      "Diagnostics copied": "Diagnostika nukopijuota į iškarpinę"
     },
     "permissions": {
       "actions": {
@@ -8796,5 +8839,47 @@
       "SOURCE_DATA_CHANGED": "Šaltinio duomenys pasikeitė",
       "NO_ACCOUNTS": "Sąskaitų nėra"
     }
+  },
+  "branchHistory": {
+    "title": "Pakeitimų istorija",
+    "search": "Ieškoti pagal lauką arba reikšmę",
+    "section": "Skyrius",
+    "allHistory": "Visa istorija",
+    "dateRange": "Datų intervalas",
+    "export": "Eksportuoti įkeltą CSV",
+    "clearDates": "Išvalyti datas",
+    "timezone": "Datos ir laikas naudoja tą pačią vietinę laiko juostą kaip laiko juosta.",
+    "coverage": "Rodomi tik patvirtinti tiesioginiai filialo audito įvykiai. Adresų, paslaugų, darbo laiko ir švenčių audito aprėptis nepatvirtinta.",
+    "searchScope": "Paieška ir suvestinės apima tik įkeltus įrašus (iki {{limit}} API įrašų). Paieška apima metaduomenis ir atvertus saugius laukus; CSV eksportuoja tik atitinkančius įkeltus metaduomenis.",
+    "usersUnavailable": "Naudotojų filtras nepasiekiamas. Kiti filtrai pasiekiami.",
+    "invalidRange": "Įveskite tinkamas datas, pradžia turi būti ne vėlesnė už pabaigą.",
+    "exportError": "CSV sukurti nepavyko. Eksportavimas nebaigtas.",
+    "loading": "Įkeliami užregistruoti audito įvykiai…",
+    "invalidResponse": "Audito paslauga grąžino nepalaikomą atsakymą.",
+    "loadError": "Nepavyko įkelti užregistruotų audito įvykių.",
+    "noMatches": "Joks įkeltas įvykis neatitinka filtrų. Gali būti daugiau įrašų.",
+    "empty": "Nėra įkeltų patvirtintų filialo audito įvykių.",
+    "timestampUnavailable": "Laiko žyma nepasiekiama",
+    "unidentifiedActor": "Nenustatytas veikėjas",
+    "submittedFields": "Pateikti laukai",
+    "viewAudit": "Peržiūrėti auditą",
+    "detailError": "Audito informacija nepasiekiama arba jos nepavyko patvirtinti šiam filialui.",
+    "noBeforeValues": "Ši API neužregistravo ankstesnių reikšmių. Tai pateiktos reikšmės, o ne istorinis palyginimas.",
+    "noSafeFields": "Nėra palaikomų saugių pateiktų laukų.",
+    "submittedValue": "Pateikta reikšmė",
+    "noValue": "Reikšmė nepateikta",
+    "pageError": "Nepavyko įkelti kito puslapio. Eksportas bus pasiekiamas sėkmingai pakartojus.",
+    "loadMore": "Įkelti daugiau",
+    "limitReached": "Pasiekta {{limit}} API įrašų riba. Susiaurinkite naudotojo ar datos filtrus, kad peržiūrėtumėte daugiau istorijos.",
+    "endLoaded": "Įkeltų rezultatų pabaiga",
+    "loadedScope": "Tik atitinkantys įkelti filialo įrašai",
+    "records": "užregistruoti įvykiai",
+    "actors": "nustatyti veikėjai",
+    "latestLoaded": "Naujausias įkeltas įvykis",
+    "bySection": "Pakeitimai pagal skyrių",
+    "notice": "Ši tik skaitoma peržiūra rodo užregistruotą audito informaciją. Čia įrašų keisti negalima. Pasiekiama istorija priklauso nuo audito aprėpties, saugojimo ir prieigos taisyklių.",
+    "parentId": "Aukštesniojo filialo ID",
+    "permission": "Neturite teisės peržiūrėti audito istorijos.",
+    "unknownAction": "Nenurodytas veiksmas"
   }
 }

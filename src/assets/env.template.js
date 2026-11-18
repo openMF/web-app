@@ -47,6 +47,9 @@
   // Regardless of this setting, it is always available in Admin > System > System Information
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
+  // Link opened by "Report issue" in the footer's System information panel. Hidden when empty
+  window['env']['reportIssueUrl'] = '$MIFOS_REPORT_ISSUE_URL';
+
   // Show minimal production hero on login page
   window['env']['productionMode'] = '$MIFOS_PRODUCTION_MODE';
   window['env']['enableGlobalDashboard'] = '$MIFOS_ENABLE_GLOBAL_DASHBOARD';

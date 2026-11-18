@@ -15,7 +15,6 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { SystemInfoService } from 'app/system/system-info.service';
 import { SystemService } from 'app/system/system.service';
 import { FooterComponent } from './footer.component';
 
@@ -43,7 +42,6 @@ describe('FooterComponent', () => {
         { provide: Dates, useValue: { parseDate, formatDate: () => '2026-10-10' } },
         { provide: AuthenticationService, useValue: {} },
         { provide: AlertService, useValue: { alertEvent: of() } },
-        { provide: SystemInfoService, useValue: {} },
         { provide: TranslateService, useValue: { instant: (key: string) => key } }
       ]
     })

@@ -6,18 +6,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { DatePipe } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, ParamMap, provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faEdit, faClock, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Subject, of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 import { SchedulesTabComponent } from './schedules-tab.component';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 describe('Office SchedulesTabComponent', () => {
   let component: SchedulesTabComponent;
@@ -48,7 +50,8 @@ describe('Office SchedulesTabComponent', () => {
 
     organizationService = {
       getOfficeSchedules: jest.fn(() => of(officeSchedule)),
-      updateOfficeSchedules: jest.fn(() => of({ resourceId: 1 }))
+      updateOfficeSchedules: jest.fn(() => of({ resourceId: 1 })),
+      getHolidays: jest.fn(() => of([]))
     } as unknown as jest.Mocked<OrganizationService>;
 
     await TestBed.configureTestingModule({
@@ -57,6 +60,8 @@ describe('Office SchedulesTabComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        provideRouter([]),
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
@@ -65,11 +70,12 @@ describe('Office SchedulesTabComponent', () => {
         },
         { provide: OrganizationService, useValue: organizationService },
         { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions }) } },
-        provideNoopAnimations()
+        provideNoopAnimations(),
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } }
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faSave);
+    TestBed.inject(FaIconLibrary).addIcons(faSave, faEdit, faClock, faPlus);
     fixture = TestBed.createComponent(SchedulesTabComponent);
     component = fixture.componentInstance;
   });
@@ -141,6 +147,8 @@ describe('Office SchedulesTabComponent', () => {
   it('submits the complete weekly schedule payload', () => {
     organizationService.getOfficeSchedules.mockReturnValue(of({ days: [] }));
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
 
     const monday = component.days.at(0);
     monday.get('enabled').setValue(true);
@@ -173,6 +181,8 @@ describe('Office SchedulesTabComponent', () => {
   it('prevents invalid submissions when opening time is not before closing time', () => {
     organizationService.getOfficeSchedules.mockReturnValue(of({ days: [] }));
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
 
     const monday = component.days.at(0);
     monday.get('enabled').setValue(true);
@@ -191,6 +201,8 @@ describe('Office SchedulesTabComponent', () => {
   it('requires both times for enabled days', () => {
     organizationService.getOfficeSchedules.mockReturnValue(of({ days: [] }));
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
 
     const monday = component.days.at(0);
     monday.get('enabled').setValue(true);
@@ -207,6 +219,8 @@ describe('Office SchedulesTabComponent', () => {
   });
 
   it('disables and clears time controls when a day is unchecked', () => {
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
 
     const monday = component.days.at(0);
@@ -259,6 +273,8 @@ describe('Office SchedulesTabComponent', () => {
         ] })
     );
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
     expect(component.days.at(0).get('openingTime').value).toBe('08:00');
     expect(fixture.nativeElement.querySelector('input[formControlName="openingTime"]').value).toBe('08:00');
   });
@@ -279,6 +295,8 @@ describe('Office SchedulesTabComponent', () => {
           }))
       })
     );
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     const rows = fixture.nativeElement.querySelectorAll('.schedule-row');
     expect(rows.length).toBe(7);
@@ -330,6 +348,8 @@ describe('Office SchedulesTabComponent', () => {
           { weekday: 'MONDAY', enabled: true, openingTime, closingTime }
         ] })
     );
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     expect(component.hasIncompleteSchedule).toBe(true);
     expect(fixture.nativeElement.querySelector('.day-status').textContent).toContain('Not configured');
@@ -407,6 +427,8 @@ describe('Office SchedulesTabComponent', () => {
     ]
   ])('rejects invalid same-day order %s to %s', (openingTime, closingTime) => {
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
     const monday = component.days.at(0);
     monday.patchValue({ openingTime, closingTime });
     component.submit();
@@ -415,6 +437,8 @@ describe('Office SchedulesTabComponent', () => {
   });
 
   it('revalidates time order when the opening time changes', () => {
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     const monday = component.days.at(0);
     monday.get('openingTime').setValue('19:00');
@@ -425,6 +449,8 @@ describe('Office SchedulesTabComponent', () => {
   });
 
   it('rejects malformed times even when set programmatically', () => {
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     component.days.at(0).patchValue({ openingTime: 'bad', closingTime: 'zzz' });
     component.submit();
@@ -452,6 +478,8 @@ describe('Office SchedulesTabComponent', () => {
       })
     );
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
     component.days.at(0).get('closingTime').setValue('13:00');
     component.submit();
     const payload = organizationService.updateOfficeSchedules.mock.calls[0][1];
@@ -474,6 +502,8 @@ describe('Office SchedulesTabComponent', () => {
     const save = new Subject<any>();
     const reload = new Subject<any>();
     organizationService.updateOfficeSchedules.mockReturnValue(save);
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     organizationService.getOfficeSchedules.mockReturnValue(reload);
     component.submit();
@@ -499,11 +529,15 @@ describe('Office SchedulesTabComponent', () => {
     fixture.detectChanges();
     expect(component.isLoading).toBe(false);
     expect(component.days.at(0).get('openingTime').value).toBe('10:00');
-    expect(fixture.nativeElement.querySelector('input[type=time]').value).toBe('10:00');
+    expect(component.isEditing).toBe(false);
+    expect(fixture.nativeElement.querySelector('form')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.configured-hours').textContent).toContain('10:00');
     expect(component.days.at(5).get('openingTime').disabled).toBe(true);
   });
 
   it('reports a failed post-save read without showing stale or empty configured hours', () => {
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     organizationService.getOfficeSchedules.mockReturnValue(throwError(() => ({ status: 503 })));
     component.submit();
@@ -519,6 +553,8 @@ describe('Office SchedulesTabComponent', () => {
     403,
     500
   ])('keeps edits and permits retry after failed save %s', (status) => {
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     component.days.at(0).get('openingTime').setValue('10:00');
     organizationService.updateOfficeSchedules.mockReturnValue(throwError(() => ({ status })));
@@ -541,14 +577,18 @@ describe('Office SchedulesTabComponent', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('button[type=submit]')).toBeNull();
     expect(component.days.at(0).get('enabled').disabled).toBe(true);
-    expect(fixture.nativeElement.querySelector('input[type=time]').disabled).toBe(true);
-    expect(fixture.nativeElement.querySelector('input[type=time]').value).toBe('09:00');
+    expect(fixture.nativeElement.querySelector('input[type=time]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.configured-hours').textContent).toContain('09:00');
+    component.startEditing();
+    expect(component.isEditing).toBe(false);
     component.submit();
     expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
   });
 
   it('allows ALL_FUNCTIONS users to edit and submit', () => {
     permissions = ['ALL_FUNCTIONS'];
+    fixture.detectChanges();
+    component.startEditing();
     fixture.detectChanges();
     expect(component.days.at(0).get('enabled').enabled).toBe(true);
     component.submit();
@@ -582,6 +622,8 @@ describe('Office SchedulesTabComponent', () => {
     const save = new Subject<any>();
     organizationService.updateOfficeSchedules.mockReturnValue(save);
     fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
     component.submit();
     organizationService.getOfficeSchedules.mockReturnValue(of({ officeId: 2, days: [] }));
     officeParams.next(convertToParamMap({ officeId: '2' }));
@@ -591,5 +633,222 @@ describe('Office SchedulesTabComponent', () => {
     expect(component.isSaving).toBe(false);
     expect(component.days.at(0).get('enabled').value).toBe(false);
     expect(organizationService.getOfficeSchedules).toHaveBeenCalledTimes(2);
+  });
+  it('opens the standalone tab in view mode and only enters the editor on an explicit action', () => {
+    fixture.detectChanges();
+    expect(component.isEditing).toBe(false);
+    expect(fixture.nativeElement.querySelector('form')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.weekly-table .mat-mdc-row')).toHaveLength(7);
+    expect(fixture.nativeElement.querySelector('.edit-schedule')).not.toBeNull();
+    component.submit();
+    expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
+    fixture.nativeElement.querySelector('.edit-schedule').click();
+    fixture.detectChanges();
+    expect(component.isEditing).toBe(true);
+    expect(fixture.nativeElement.querySelectorAll('input[type=time]')).toHaveLength(14);
+  });
+
+  it('cancel discards edits without a write or an additional read', () => {
+    fixture.detectChanges();
+    component.startEditing();
+    component.days.at(0).get('openingTime').setValue('11:00');
+    component.cancelEditing();
+    fixture.detectChanges();
+    expect(component.days.at(0).get('openingTime').value).toBe('09:00');
+    expect(component.isEditing).toBe(false);
+    expect(component.isSummaryDayConfigured(component.days.at(2))).toBe(false);
+    expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
+    expect(organizationService.getOfficeSchedules).toHaveBeenCalledTimes(1);
+  });
+
+  it('calculates exact bars and totals using only valid intervals', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({
+        days: component.weekdays.map((day, index) => ({
+          weekday: day.weekday,
+          enabled: index < 5,
+          openingTime: '08:00:05',
+          closingTime: '18:30:30'
+        }))
+      })
+    );
+    fixture.detectChanges();
+    const monday = component.days.at(0);
+    expect(component.isWeekComplete).toBe(true);
+    expect(component.dayDuration(monday)).toBe(37825);
+    expect(component.weeklyDuration).toBe(189125);
+    expect(component.operatingDays).toBe(5);
+    expect(component.barStart(monday)).toBeCloseTo((7205 / 57600) * 100);
+    expect(component.barWidth(monday)).toBeCloseTo((37825 / 57600) * 100);
+    expect(component.axisTicks).toEqual([
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22
+    ]);
+    expect(fixture.nativeElement.querySelectorAll('.timeline-bar')).toHaveLength(5);
+  });
+
+  it('expands the timeline to include early and late hours without clipping', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '00:00:01', closingTime: '23:59:59' }
+        ] })
+    );
+    fixture.detectChanges();
+    expect(component.axisStart).toBe(0);
+    expect(component.axisEnd).toBe(86400);
+    expect(component.barStart(component.days.at(0))).toBeGreaterThan(0);
+    expect(component.barWidth(component.days.at(0))).toBeLessThan(100);
+  });
+
+  it('distinguishes missing, disabled and invalid days without definitive weekly totals', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({
+        days: [
+          { weekday: 'MONDAY', enabled: false },
+          { weekday: 'TUESDAY', enabled: true, openingTime: '17:00', closingTime: '08:00' }
+        ]
+      })
+    );
+    fixture.detectChanges();
+    const rows = fixture.nativeElement.querySelectorAll('.weekly-table .mat-mdc-row');
+    expect(rows[0].textContent).toContain('Closed');
+    expect(rows[1].textContent).toContain('labels.officeHours.invalidInterval');
+    expect(rows[2].textContent).toContain('Not configured');
+    expect(fixture.nativeElement.querySelectorAll('.timeline-bar')).toHaveLength(0);
+    expect(component.isWeekComplete).toBe(false);
+    expect(fixture.nativeElement.querySelector('.weekly-summary').textContent).toContain(
+      'labels.officeHours.incompleteWeek'
+    );
+  });
+
+  it('never infers branch-local today, live status or countdown from the browser or business date', () => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.status-card').textContent).toContain(
+      'labels.officeHours.statusUnavailable'
+    );
+    expect(fixture.nativeElement.querySelectorAll('.today-badge, .current-time-marker')).toHaveLength(0);
+  });
+
+  it('loads holiday records for only the selected office without changing schedule data', () => {
+    permissions = ['ALL_FUNCTIONS'];
+    const now = new Date();
+    const date = [
+      now.getFullYear(),
+      now.getMonth() + 1,
+      now.getDate()
+    ];
+    organizationService.getHolidays.mockReturnValue(
+      of([
+        { id: 7, name: 'Verified holiday', fromDate: date, toDate: date, status: { id: 300, value: 'Active' } }
+      ])
+    );
+    fixture.detectChanges();
+    expect(organizationService.getHolidays).toHaveBeenCalledWith('1');
+    expect(fixture.nativeElement.querySelector('.holiday-row').textContent).toContain('Verified holiday');
+    expect(fixture.nativeElement.querySelector('.holiday-badge').textContent).toContain('Active');
+    expect(fixture.nativeElement.querySelector('.holiday-row').textContent).not.toContain('Closed');
+    expect(fixture.nativeElement.querySelectorAll('.weekly-table .mat-mdc-row')).toHaveLength(7);
+  });
+
+  it.each([
+    [
+      403,
+      'forbidden'
+    ],
+    [
+      404,
+      'unsupported'
+    ],
+    [
+      500,
+      'error'
+    ]
+  ])('keeps the regular schedule visible on holiday failure %s', (status, state) => {
+    permissions = ['ALL_FUNCTIONS'];
+    organizationService.getHolidays.mockReturnValue(throwError(() => ({ status })));
+    fixture.detectChanges();
+    expect(component.holidayState).toBe(state);
+    expect(fixture.nativeElement.querySelectorAll('.weekly-table .mat-mdc-row')).toHaveLength(7);
+    expect(fixture.nativeElement.textContent).not.toContain('labels.officeHours.noHolidays');
+  });
+
+  it('does not request holidays or expose holiday actions without permission', () => {
+    permissions = ['READ_OFFICE'];
+    fixture.detectChanges();
+    expect(organizationService.getHolidays).not.toHaveBeenCalled();
+    expect(component.holidayState).toBe('forbidden');
+    expect(fixture.nativeElement.querySelector('.holidays-footer')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.holidays-heading a')).toBeNull();
+  });
+
+  it('does not request holidays inside the compact General overview', () => {
+    permissions = ['ALL_FUNCTIONS'];
+    component.readOnly = true;
+    fixture.detectChanges();
+    expect(organizationService.getHolidays).not.toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.hours-dashboard')).toBeNull();
+  });
+
+  it('rejects malformed holiday responses without hiding the regular schedule', () => {
+    permissions = ['READ_HOLIDAY'];
+    organizationService.getHolidays.mockReturnValue(of({ days: [] }));
+    fixture.detectChanges();
+    expect(component.holidayState).toBe('malformed');
+    expect(component.holidays).toEqual([]);
+    expect(fixture.nativeElement.querySelectorAll('.weekly-table .mat-mdc-row')).toHaveLength(7);
+  });
+
+  it('cancels holiday requests and clears editor state when switching offices or destroying the component', () => {
+    permissions = ['ALL_FUNCTIONS'];
+    const stale = new Subject<any>();
+    const next = new Subject<any>();
+    organizationService.getHolidays.mockReturnValueOnce(stale).mockReturnValueOnce(next);
+    fixture.detectChanges();
+    component.startEditing();
+    officeParams.next(convertToParamMap({ officeId: '2' }));
+    expect(component.isEditing).toBe(false);
+    expect(component.holidays).toEqual([]);
+    expect(stale.observed).toBe(false);
+    stale.next([{ id: 1 }]);
+    expect(component.holidays).toEqual([]);
+    fixture.destroy();
+    expect(next.observed).toBe(false);
+  });
+  it('formats exact durations, including seconds, through localized units', () => {
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('en-US', {
+      labels: {
+        officeHours: {
+          hours: '{{count}} h',
+          minutes: '{{count}} min',
+          seconds: '{{count}} s'
+        }
+      }
+    });
+    translate.use('en-US');
+    expect(component.durationLabel(37825)).toBe('10 h 30 min 25 s');
+    expect(component.durationLabel(0)).toBe('0 h');
+  });
+
+  it('reports zero hours for a complete explicitly closed week', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({
+        days: component.weekdays.map((day) => ({
+          weekday: day.weekday,
+          enabled: false
+        }))
+      })
+    );
+    fixture.detectChanges();
+    expect(component.isWeekComplete).toBe(true);
+    expect(component.weeklyDuration).toBe(0);
+    expect(component.operatingDays).toBe(0);
   });
 });

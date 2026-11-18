@@ -972,6 +972,30 @@
     "validation.msg.WORKINGCAPITALLOAN.transactionAmount.delta.amount.should.not.result.in.negative": "The adjustment cannot decrease the transaction below zero."
   },
   "labels": {
+    "officeHours": {
+      "title": "Branch hours",
+      "description": "The branch's configured regular operating schedule.",
+      "timezoneUnavailable": "Branch timezone unavailable",
+      "edit": "Edit schedule",
+      "regular": "Regular schedule",
+      "hours": "{{count}} h",
+      "minutes": "{{count}} min",
+      "seconds": "{{count}} s",
+      "perWeek": "per week",
+      "operatingDays": "{{count}} operating days",
+      "invalidInterval": "Invalid or incomplete hours",
+      "incompleteWeek": "Weekly total unavailable: some days are missing or invalid.",
+      "statusUnavailable": "Current status unavailable",
+      "statusExplanation": "A branch timezone and verified holiday opening rules are needed to determine current availability.",
+      "specialDays": "Special days",
+      "holidayDescription": "Holidays in the next 60 days, using your device calendar. Holiday records do not establish opening hours.",
+      "holidayForbidden": "You do not have permission to view holidays.",
+      "holidayUnsupported": "Holiday information is not supported by this server.",
+      "holidayMalformed": "Holiday data could not be read. Check the records in Manage Holidays.",
+      "holidayError": "Holidays could not be loaded.",
+      "noHolidays": "No upcoming holidays in this period.",
+      "pendingHoliday": "Pending activation"
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Tenant",
@@ -980,7 +1004,10 @@
       "Server": "Server",
       "Username": "Username",
       "Name": "Name",
-      "Render Time": "Render Time"
+      "Render Time": "Render Time",
+      "User": "User",
+      "WebApp": "WebApp",
+      "Fineract": "Fineract"
     },
     "licensing": {
       "Apache Fineract Description": "The <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platform is licensed under the <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache License, Version 2.0</a>. The Mifos Initiative was the guiding force behind Apache Fineract, launching it as Mifos X in 2011 and contributing to Apache in 2016 with graduation to a top-level project of the Apache Software Foundation in 2017.",
@@ -1371,7 +1398,11 @@
       "Add another address": "Add another address",
       "Address actions": "Address actions",
       "Delete Address": "Delete Address",
-      "Edit Address": "Edit Address"
+      "Edit Address": "Edit Address",
+      "Retry now": "Retry now",
+      "Details": "Details",
+      "Copy diagnostics": "Copy diagnostics",
+      "Report issue": "Report issue"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -2406,7 +2437,10 @@
       "Branch addresses": "Branch addresses",
       "Complete address": "Complete address",
       "Locality": "Locality",
-      "Location": "Location"
+      "Location": "Location",
+      "Connection": "Connection",
+      "Versions": "Versions",
+      "Session": "Session"
     },
     "inputs": {
       "Breach Start Type": "Breach Start Type",
@@ -6015,7 +6049,16 @@
       "Manage branch addresses": "Manage saved branch addresses.",
       "No addresses match this filter": "No addresses match this filter.",
       "Only one address per branch is supported": "This backend supports one address per branch. Edit or delete the existing address to replace it.",
-      "Saving address": "Saving address…"
+      "Saving address": "Saving address…",
+      "Connected": "Connected",
+      "Server unreachable": "Server unreachable",
+      "Checking connection": "Checking connection…",
+      "Retrying in seconds": "Retrying in {{seconds}} s",
+      "Copied": "Copied",
+      "Copy full commit hash": "Copy full commit hash",
+      "Checked seconds ago": "Checked {{seconds}} s ago",
+      "Pre-release backend": "The backend is running a pre-release build. Not recommended for production data.",
+      "Diagnostics copied": "Diagnostics copied to the clipboard"
     },
     "permissions": {
       "actions": {
@@ -8929,5 +8972,47 @@
       "SOURCE_DATA_CHANGED": "Source data changed",
       "NO_ACCOUNTS": "No accounts"
     }
+  },
+  "branchHistory": {
+    "title": "Change history",
+    "search": "Search by field or value",
+    "section": "Section",
+    "allHistory": "All history",
+    "dateRange": "Date range",
+    "export": "Export loaded CSV",
+    "clearDates": "Clear dates",
+    "timezone": "Dates and times use the same local time zone as the timeline.",
+    "coverage": "Only verified direct office audit events are shown. Address, service, schedule and holiday audit coverage is not verified.",
+    "searchScope": "Search and summaries cover loaded records only (up to {{limit}} API records). Search includes metadata and safe fields you have opened; CSV exports matching loaded metadata only.",
+    "usersUnavailable": "User filters are unavailable. Other filters remain available.",
+    "invalidRange": "Enter valid dates with the start at or before the end.",
+    "exportError": "The CSV could not be created. No export was completed.",
+    "loading": "Loading recorded audit events…",
+    "invalidResponse": "The audit service returned an unsupported response.",
+    "loadError": "Recorded audit events could not be loaded.",
+    "noMatches": "No loaded events match these filters. More records may be available.",
+    "empty": "No verified office audit events are loaded.",
+    "timestampUnavailable": "Timestamp unavailable",
+    "unidentifiedActor": "Unidentified actor",
+    "submittedFields": "Submitted fields",
+    "viewAudit": "View audit",
+    "detailError": "Audit details are unavailable or could not be verified for this office.",
+    "noBeforeValues": "Previous values were not recorded by this API. These are submitted values, not a historical comparison.",
+    "noSafeFields": "No supported safe submitted fields are available.",
+    "submittedValue": "Submitted value",
+    "noValue": "No submitted value",
+    "pageError": "The next page could not be loaded. Export is unavailable until the page is retried successfully.",
+    "loadMore": "Load more",
+    "limitReached": "Reached the limit of {{limit}} API records. Narrow the user or date filters to review more history.",
+    "endLoaded": "End of loaded results",
+    "loadedScope": "Matching loaded office records only",
+    "records": "recorded events",
+    "actors": "identified actors",
+    "latestLoaded": "Latest loaded event",
+    "bySection": "Changes by section",
+    "notice": "This read-only view displays recorded audit information. Records cannot be edited here. Available history depends on audit coverage, retention and access policies.",
+    "parentId": "Parent office ID",
+    "permission": "You do not have permission to view audit history.",
+    "unknownAction": "Unspecified action"
   }
 }

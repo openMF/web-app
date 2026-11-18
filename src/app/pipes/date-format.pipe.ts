@@ -72,6 +72,6 @@ export class DateFormatPipe implements PipeTransform, OnDestroy {
       return dateVal.format(defaultDateFormat);
     }
 
-    return dateVal.format(dateFormat);
+    return dateVal.format(this.dateUtils.angularToMomentFormat(dateFormat));
   }
 }
