@@ -30,6 +30,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Angular Material Imports */
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 
 /** rxjs Imports */
 import { EMPTY, Subscription } from 'rxjs';
@@ -41,10 +42,11 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { normalizeOfficeTime, officeTimeSeconds } from './office-schedule-time';
+import { upcomingOfficeHolidays, OfficeHoliday } from './office-schedule-holidays';
 import { OrganizationService } from 'app/organization/organization.service';
 
 /** Custom Imports */
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, _ as extract } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface OfficeScheduleDay {
@@ -65,7 +67,8 @@ interface OfficeScheduleWeekday extends OfficeScheduleDay {
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatProgressSpinner
+    MatProgressSpinner,
+    MatTableModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -104,6 +107,8 @@ export class SchedulesTabComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);
   private loadRequest?: Subscription;
   private saveRequest?: Subscription;
+  private holidayRequest?: Subscription;
+  private savedDays: OfficeScheduleDay[] = [];
   private dayChanges = new Subscription();
   private organizationService = inject(OrganizationService);
   private changeDetectorRef = inject(ChangeDetectorRef);
@@ -127,6 +132,154 @@ export class SchedulesTabComponent implements OnInit {
   saveError = false;
   isPluginUnavailable = false;
   hasNoSchedule = false;
+  isEditing = false;
+  holidays: OfficeHoliday[] = [];
+  holidayState: 'loading' | 'ready' | 'forbidden' | 'unsupported' | 'malformed' | 'error' = 'loading';
+  readonly dashboardColumns = [
+    'weekday',
+    'hours',
+    'timeline',
+    'duration'
+  ];
+  axisStart = 6 * 3600;
+  axisEnd = 22 * 3600;
+  axisTicks: number[] = [];
+
+  get canReadHolidays(): boolean {
+    const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return permissions.some((permission: string) => [
+        'ALL_FUNCTIONS',
+        'ALL_FUNCTIONS_READ',
+        'READ_HOLIDAY'
+      ].includes(permission));
+  }
+
+  get canCreateHoliday(): boolean {
+    const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return (
+      !this.readOnly &&
+      permissions.some((permission: string) => [
+          'ALL_FUNCTIONS',
+          'CREATE_HOLIDAY'
+        ].includes(permission))
+    );
+  }
+
+  get isWeekComplete(): boolean {
+    return (
+      this.days.length === 7 &&
+      this.days.controls.every(
+        (day) => this.isSummaryDayConfigured(day) && (!day.get('enabled')?.value || this.dayDuration(day) !== null)
+      )
+    );
+  }
+
+  get weeklyDuration(): number {
+    return this.days.controls.reduce((total, day) => total + (this.dayDuration(day) ?? 0), 0);
+  }
+
+  get operatingDays(): number {
+    return this.days.controls.filter((day) => this.dayDuration(day) !== null).length;
+  }
+
+  dayDuration(day: AbstractControl): number | null {
+    if (!this.isSummaryDayConfigured(day) || !day.get('enabled')?.value || !this.getSummaryHours(day)) {
+      return null;
+    }
+    return officeTimeSeconds(day.get('closingTime')?.value) - officeTimeSeconds(day.get('openingTime')?.value);
+  }
+
+  timelinePosition(seconds: number): number {
+    return ((seconds - this.axisStart) / (this.axisEnd - this.axisStart)) * 100;
+  }
+
+  barStart(day: AbstractControl): number {
+    return this.timelinePosition(officeTimeSeconds(day.get('openingTime')?.value));
+  }
+
+  barWidth(day: AbstractControl): number {
+    return ((this.dayDuration(day) ?? 0) / (this.axisEnd - this.axisStart)) * 100;
+  }
+
+  durationLabel(seconds: number): string {
+    const units = [
+      [
+        Math.floor(seconds / 3600),
+        extract('labels.officeHours.hours')
+      ],
+      [
+        Math.floor((seconds % 3600) / 60),
+        extract('labels.officeHours.minutes')
+      ],
+      [
+        seconds % 60,
+        extract('labels.officeHours.seconds')
+      ]
+    ] as const;
+    return units
+      .filter(([count]) => count > 0 || seconds === 0)
+      .slice(0, seconds === 0 ? 1 : 3)
+      .map(
+        ([
+          count,
+          key
+        ]) =>
+          this.translate.instant(key, {
+            count: new Intl.NumberFormat(this.translate.currentLang || 'en-US').format(count)
+          })
+      )
+      .join(' ');
+  }
+
+  startEditing() {
+    if (!this.canEdit || this.isLoading || this.isSaving || this.hasError || this.isPluginUnavailable) return;
+    this.isEditing = true;
+    this.saveError = false;
+    this.updateEditableState();
+    this.changeDetectorRef.markForCheck();
+  }
+
+  cancelEditing() {
+    if (this.isSaving || this.isLoading) return;
+    this.isEditing = false;
+    this.saveError = false;
+    this.setScheduleDays(this.savedDays);
+    this.changeDetectorRef.markForCheck();
+  }
+
+  loadHolidays() {
+    this.holidayRequest?.unsubscribe();
+    this.holidays = [];
+    this.holidayState = 'loading';
+    if (this.readOnly || !this.officeId || !this.canReadHolidays) {
+      this.holidayState = 'forbidden';
+      return;
+    }
+    this.holidayRequest = this.organizationService
+      .getHolidays(this.officeId)
+      .pipe(
+        map((records) => upcomingOfficeHolidays(records, new Date())),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (holidays) => {
+          this.holidays = holidays;
+          this.holidayState = 'ready';
+          this.changeDetectorRef.markForCheck();
+        },
+        error: (error: any) => {
+          this.holidayState =
+            error instanceof TypeError
+              ? 'malformed'
+              : error?.status === 401 || error?.status === 403
+                ? 'forbidden'
+                : error?.status === 404 || error?.status === 405 || error?.status === 501
+                  ? 'unsupported'
+                  : 'error';
+          this.changeDetectorRef.markForCheck();
+        }
+      });
+  }
 
   constructor() {
     this.formBuilder = inject(UntypedFormBuilder);
@@ -157,14 +310,21 @@ export class SchedulesTabComponent implements OnInit {
         // Cancel both operations before resetting state for a different office.
         this.loadRequest?.unsubscribe();
         this.saveRequest?.unsubscribe();
+        this.holidayRequest?.unsubscribe();
+        this.isEditing = false;
+        this.savedDays = [];
         this.officeId = officeId;
         this.loadOfficeSchedules();
+        if (!this.readOnly) this.loadHolidays();
       });
   }
 
   loadOfficeSchedules() {
     this.loadRequest?.unsubscribe();
     this.isLoading = true;
+    this.isEditing = false;
+    this.savedDays = [];
+    this.configuredWeekdays.clear();
     this.hasError = false;
     this.saveError = false;
     this.isPluginUnavailable = false;
@@ -199,13 +359,21 @@ export class SchedulesTabComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((days) => {
+        this.savedDays = days;
         this.hasNoSchedule = days.length === 0;
         this.setScheduleDays(days);
       });
   }
 
   submit() {
-    if (!this.canEdit || this.hasError || this.isPluginUnavailable || this.isLoading || this.isSaving) {
+    if (
+      !this.isEditing ||
+      !this.canEdit ||
+      this.hasError ||
+      this.isPluginUnavailable ||
+      this.isLoading ||
+      this.isSaving
+    ) {
       return;
     }
 
@@ -245,7 +413,7 @@ export class SchedulesTabComponent implements OnInit {
   }
 
   setDayEnabled(dayControl: AbstractControl, enabled: boolean) {
-    if (!this.canEdit || this.isSaving || this.isLoading) {
+    if (!this.isEditing || !this.canEdit || this.isSaving || this.isLoading) {
       return;
     }
     const openingTime = dayControl.get('openingTime');
@@ -317,9 +485,24 @@ export class SchedulesTabComponent implements OnInit {
   }
 
   private setScheduleDays(scheduleDays: OfficeScheduleDay[]) {
+    this.dayChanges.unsubscribe();
+    this.dayChanges = new Subscription();
     this.configuredWeekdays = new Set(scheduleDays.map((day) => this.normalizeWeekday(day.weekday)));
     this.days.clear();
     this.mergeWeekdays(scheduleDays).forEach((day) => this.days.push(this.createDayForm(day)));
+    const validDays = this.days.controls.filter((day) => this.dayDuration(day) !== null);
+    this.axisStart = Math.min(
+      6 * 3600,
+      ...validDays.map((day) => Math.floor(officeTimeSeconds(day.get('openingTime').value) / 7200) * 7200)
+    );
+    this.axisEnd = Math.max(
+      22 * 3600,
+      ...validDays.map((day) => Math.ceil(officeTimeSeconds(day.get('closingTime').value) / 7200) * 7200)
+    );
+    this.axisTicks = Array.from(
+      { length: (this.axisEnd - this.axisStart) / 7200 + 1 },
+      (_, i) => this.axisStart / 3600 + i * 2
+    );
     this.updateEditableState();
   }
 
@@ -347,7 +530,7 @@ export class SchedulesTabComponent implements OnInit {
   }
 
   private updateEditableState() {
-    if (!this.canEdit || this.isSaving) {
+    if (!this.isEditing || !this.canEdit || this.isSaving) {
       this.schedulesForm.disable({ emitEvent: false });
       return;
     }

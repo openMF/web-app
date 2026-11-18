@@ -13,6 +13,8 @@ import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@ang
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { OfficeDetailsSummary } from './office-details-summary';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { canReadOfficeAudit } from './change-history-tab/office-audit';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -38,6 +40,11 @@ export class ViewOfficeComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private authentication = inject(AuthenticationService);
+
+  get canReadAudit(): boolean {
+    return canReadOfficeAudit(this.authentication.getCredentials());
+  }
 
   readonly summary = inject(OfficeDetailsSummary);
   officeData: any;
