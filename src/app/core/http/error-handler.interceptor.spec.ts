@@ -12,7 +12,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
-import { ErrorHandlerInterceptor } from './error-handler.interceptor';
+import { ErrorHandlerInterceptor, HANDLE_HTTP_ERROR_LOCALLY } from './error-handler.interceptor';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { environment } from '../../../environments/environment';
@@ -346,6 +346,19 @@ describe('ErrorHandlerInterceptor', () => {
   it('keeps serialized closing authorization failures local', () => {
     const error = JSON.stringify({ userMessageGlobalisationCode: 'authorization.required' });
     expect(intercept('/base-teller/end-of-day-closing', 401, 'POST', error)).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+  });
+
+  it('leaves opt-in inline errors to the caller without a duplicate global alert', () => {
+    const request = new HttpRequest('GET', '/v1/investment-products/41/rates/draft', {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
+    const response = new HttpErrorResponse({ status: 403 });
+    let received: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (received = error) });
+    expect(received).toBe(response);
     expect(alert).not.toHaveBeenCalled();
   });
 

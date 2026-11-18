@@ -145,6 +145,14 @@ export class CreateFixedDepositProductComponent {
     };
     delete fixedDepositProduct.advancedAccountingRules;
     this.productsService.createFixedDepositProduct(fixedDepositProduct).subscribe((response: any) => {
+      if (this.route.snapshot.queryParamMap.get('investment') === 'true') {
+        this.router.navigate([
+          '/products/investment-products',
+          response.resourceId,
+          'edit'
+        ]);
+        return;
+      }
       this.router.navigate(
         [
           '../',

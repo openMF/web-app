@@ -1,0 +1,77 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="investment-section">
+  <h2>{{ 'Investment.lookup' | translate }}</h2>
+  <p>{{ 'Investment.lookupHint' | translate }}</p>
+  <form [formGroup]="form" (ngSubmit)="lookup()">
+    <div class="investment-grid">
+      <mat-form-field
+        ><mat-label>{{ 'Investment.amount' | translate }}</mat-label
+        ><input matInput inputmode="decimal" formControlName="amount" required /><mat-error>{{
+          'errors.validation.required' | translate
+        }}</mat-error></mat-form-field
+      >
+      <mat-form-field
+        ><mat-label>{{ 'labels.inputs.Days' | translate }}</mat-label
+        ><input matInput type="number" min="1" step="1" formControlName="termDays" required /><mat-error>{{
+          'Investment.termRules' | translate
+        }}</mat-error></mat-form-field
+      >
+      <mat-form-field
+        ><mat-label>{{ 'Investment.asOfInstant' | translate }}</mat-label
+        ><input matInput formControlName="asOfInstant" /><mat-hint>{{
+          'Investment.instantHint' | translate
+        }}</mat-hint></mat-form-field
+      >
+    </div>
+    <button mat-stroked-button type="submit" [disabled]="loading()">{{ 'Investment.lookup' | translate }}</button>
+  </form>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" [details]="details()" />
+  @if (selection(); as result) {
+    <p role="status">{{ result.status | investmentCode }}</p>
+    @if (result.status === 'SELECTED_CONFIGURATION_ONLY') {
+      <dl class="investment-metadata">
+        <div>
+          <dt>{{ 'Investment.annualRate' | translate }}</dt>
+          <dd>{{ result.annualRatePercent }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.type' | translate }}</dt>
+          <dd>{{ result.investmentType | investmentCode }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.version' | translate }}</dt>
+          <dd>{{ result.version }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'labels.inputs.Effective Date' | translate }}</dt>
+          <dd>{{ result.effectiveDate }} · {{ result.timezone }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.effectiveInstant' | translate }}</dt>
+          <dd>{{ result.effectiveInstant }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.amountRange' | translate }}</dt>
+          <dd>
+            ≥ {{ result.amountBand.lower }} / {{ result.amountBand.upperInclusive ? '≤' : '&lt;' }}
+            {{ result.amountBand.upper ?? ('Investment.unbounded' | translate) }}
+          </dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.termRange' | translate }}</dt>
+          <dd>
+            {{ result.termBand.minimumDays }}–{{ result.termBand.maximumDays }} {{ 'labels.inputs.Days' | translate }}
+          </dd>
+        </div>
+      </dl>
+    }
+    <mifosx-investment-feedback [blockers]="result.blockers" [capabilities]="result.capabilities" />
+  }
+</section>
