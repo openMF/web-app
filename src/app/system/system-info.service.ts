@@ -61,8 +61,10 @@ export class SystemInfoService {
   private settingsService = inject(SettingsService);
   private authenticationService = inject(AuthenticationService);
 
-  /** The actuator response does not change while the app is loaded, so it is fetched once and replayed. */
+  /** The actuator response does not change while a server is selected, so it is fetched once and replayed. */
   private fineractVersion$: Observable<ComponentVersion>;
+  /** Server the cached version was read from; the login page can switch servers without a reload. */
+  private fineractVersionServer: string;
 
   /**
    * Returns the backend information. `renderTime` is evaluated per subscription,
@@ -96,15 +98,20 @@ export class SystemInfoService {
    * empty values for the rest of the session.
    */
   getFineractVersion(): Observable<ComponentVersion> {
-    if (!this.fineractVersion$) {
-      this.fineractVersion$ = this.versionService.getBackendInfo().pipe(
+    if (!this.fineractVersion$ || this.fineractVersionServer !== this.settingsService.server) {
+      this.fineractVersionServer = this.settingsService.server;
+      const version$: Observable<ComponentVersion> = this.versionService.getBackendInfo().pipe(
         map((data: any) => parseFineractVersion(data)),
         shareReplay({ bufferSize: 1, refCount: false }),
         catchError(() => {
-          this.fineractVersion$ = null;
+          // A late failure from a previously selected server must not drop the current server's cache.
+          if (this.fineractVersion$ === version$) {
+            this.fineractVersion$ = null;
+          }
           return of(parseFineractVersion(null));
         })
       );
+      this.fineractVersion$ = version$;
     }
     return this.fineractVersion$;
   }

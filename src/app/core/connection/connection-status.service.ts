@@ -38,7 +38,7 @@ export class ConnectionStatusService {
   /** Time between automatic checks, in milliseconds. */
   static readonly checkInterval = 30000;
   /** Time after which an unanswered check counts as unreachable, in milliseconds. */
-  static readonly checkTimeout = 10000;
+  static readonly checkTimeout = 5000;
 
   /**
    * Bypasses the interceptors: a check every 30 s must not flash the progress bar, raise an
@@ -72,6 +72,8 @@ export class ConnectionStatusService {
   private runChecks(subscriber: Subscriber<ConnectionStatus>): TeardownLogic {
     let status: ConnectionStatus = { state: 'checking', checkedAt: null, nextCheckAt: null };
     let running = false;
+    /** Health URL the running check was sent to. */
+    let runningUrl = '';
     let request: Subscription | undefined;
     let nextCheck: ReturnType<typeof setTimeout> | undefined;
 
@@ -93,17 +95,21 @@ export class ConnectionStatusService {
 
     const check = (showChecking: boolean) => {
       clearTimeout(nextCheck);
-      if (running) {
+      const url = this.healthUrl();
+      if (running && url === runningUrl) {
         // The running check reports for this request too.
         if (showChecking) {
           emit({ ...status, state: 'checking' });
         }
         return;
       }
+      // A check still waiting on a server that is no longer selected would report for the wrong one.
+      request?.unsubscribe();
       running = true;
+      runningUrl = url;
       // Automatic checks keep showing the last state, so the bar does not flicker every interval.
       emit({ ...status, state: showChecking ? 'checking' : status.state, nextCheckAt: null });
-      request = this.isReachable().subscribe((reachable: boolean) => {
+      request = this.isReachable(url).subscribe((reachable: boolean) => {
         running = false;
         status = { state: reachable ? 'online' : 'offline', checkedAt: new Date(), nextCheckAt: null };
         scheduleNextCheck();
@@ -136,8 +142,8 @@ export class ConnectionStatusService {
    * error still comes from a running server, while a 5xx means it is down (the health endpoint
    * answers 503 when Fineract reports DOWN).
    */
-  private isReachable(): Observable<boolean> {
-    return this.http.get(this.healthUrl(), { responseType: 'text' }).pipe(
+  private isReachable(url: string): Observable<boolean> {
+    return this.http.get(url, { responseType: 'text' }).pipe(
       timeout(ConnectionStatusService.checkTimeout),
       map(() => true),
       catchError((error: unknown) =>

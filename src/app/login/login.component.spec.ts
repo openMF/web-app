@@ -10,13 +10,12 @@ import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { AlertService } from '../core/alert/alert.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { SettingsService } from '../settings/settings.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
-import { VersionService } from '../system/version.service';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -46,7 +45,6 @@ describe('LoginComponent', () => {
           provide: ThemingService,
           useValue: { theme: new BehaviorSubject('light-theme'), setDarkMode: jest.fn() }
         },
-        { provide: VersionService, useValue: { getBackendInfo: () => of({}) } },
         { provide: TranslateService, useValue: { instant: (key: string) => key } }
       ]
     });

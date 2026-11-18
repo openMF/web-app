@@ -1,0 +1,56 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+@if (view$ | async; as vm) {
+  <section class="connection-card" [attr.data-state]="vm.state" [class.expanded]="expanded">
+    <div class="card-header">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="card-title">{{ 'labels.heading.Connection' | translate }}</span>
+      <span class="status-text" aria-live="polite">{{ statusTextKeys[vm.state] | translate }}</span>
+      <button
+        type="button"
+        mat-icon-button
+        class="toggle"
+        [attr.aria-expanded]="expanded"
+        [attr.aria-controls]="detailsId"
+        [attr.aria-label]="
+          (expanded ? 'labels.buttons.Hide connection details' : 'labels.buttons.Show connection details') | translate
+        "
+        (click)="toggleDetails()"
+      >
+        <mifosx-m3-icon
+          [name]="expanded ? 'expand_less' : 'expand_more'"
+          [size]="24"
+          aria-hidden="true"
+        ></mifosx-m3-icon>
+      </button>
+    </div>
+
+    <div class="details" [id]="detailsId">
+      <dl class="details-grid">
+        <div class="cell">
+          <dt>{{ 'labels.version.Server' | translate }}</dt>
+          <dd class="mono" [matTooltip]="server || ''" [attr.tabindex]="server ? 0 : null">
+            {{ orDash(serverHost(server)) }}
+          </dd>
+        </div>
+        <div class="cell">
+          <dt>{{ 'labels.version.Tenant ID' | translate }}</dt>
+          <dd class="mono">{{ orDash(tenant) }}</dd>
+        </div>
+        <div class="cell">
+          <dt>{{ 'labels.version.Mifos WebApp' | translate }}</dt>
+          <dd>{{ webAppVersion }}</dd>
+        </div>
+        <div class="cell">
+          <dt>{{ 'labels.version.Apache Fineract' | translate }}</dt>
+          <dd>{{ vm.fineractVersion }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+}
