@@ -14,6 +14,7 @@ import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.
 import { officeAccessGuard } from './offices/office-access.guard';
 
 import { NgModule } from '@angular/core';
+import { officeAuditGuard } from './offices/view-office/change-history-tab/office-audit.guard';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
@@ -272,6 +273,15 @@ const routes: Routes = [
                   path: 'schedules',
                   component: SchedulesTabComponent,
                   data: { title: 'Schedules', breadcrumb: 'Schedules', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'change-history',
+                  canActivate: [officeAuditGuard],
+                  loadComponent: () =>
+                    import('./offices/view-office/change-history-tab/change-history-tab.component').then(
+                      (m) => m.ChangeHistoryTabComponent
+                    ),
+                  data: { title: 'branchHistory.title', routeParamBreadcrumb: false }
                 },
                 {
                   path: 'datatables',
