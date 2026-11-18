@@ -13,13 +13,20 @@ import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { MembershipService } from '../membership.service';
-import { MembersWithoutShares, MembershipTemplate, PaymentTaken } from '../membership.models';
+import {
+  MembersWithoutShares,
+  MembershipTemplate,
+  OrganisationCategory,
+  PaymentTaken,
+  organisationCategoryLabel
+} from '../membership.models';
 
 /**
  * Membership settings (fineract-dbug ADR 0023 and 0035): the share-first rule, the products, and the rules each
@@ -33,7 +40,8 @@ import { MembersWithoutShares, MembershipTemplate, PaymentTaken } from '../membe
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     RouterLink,
-    FaIconComponent
+    FaIconComponent,
+    MatSlideToggle
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -49,6 +57,11 @@ export class MembershipSettingsComponent implements OnInit {
   readonly template = signal<MembershipTemplate | null>(null);
   readonly withoutShares = signal<MembersWithoutShares | null>(null);
   readonly saving = signal(false);
+  /** The organisation types and whether each may be members (fineract-dbug #127) */
+  readonly categories = signal<OrganisationCategory[]>([]);
+  readonly categoriesState = signal<'loading' | 'failed' | 'loaded'>('loading');
+  /** The type whose switch is being saved */
+  readonly savingCategory = signal<number | null>(null);
   readonly canUpdate = [
     'ALL_FUNCTIONS',
     'UPDATE_MEMBERSHIPSETTINGS'
@@ -90,6 +103,41 @@ export class MembershipSettingsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((id) => this.chosenShareProductId.set(id ?? null));
     this.load();
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    this.categoriesState.set('loading');
+    this.membershipService.organisationCategories().subscribe({
+      next: (list) => {
+        this.categories.set(list);
+        this.categoriesState.set('loaded');
+      },
+      error: () => this.categoriesState.set('failed')
+    });
+  }
+
+  categoryLabel(category: OrganisationCategory): string {
+    return organisationCategoryLabel(this.translate, category);
+  }
+
+  toggleCategory(category: OrganisationCategory, change: MatSlideToggleChange): void {
+    this.savingCategory.set(category.codeValueId);
+    this.membershipService.updateOrganisationCategory(category.codeValueId, change.checked).subscribe({
+      next: (list) => {
+        this.categories.set(list);
+        this.savingCategory.set(null);
+        this.snackBar.open(
+          this.translate.instant('membership.messages.settingsSaved'),
+          this.translate.instant('labels.buttons.Close'),
+          { duration: 3000 }
+        );
+      },
+      error: () => {
+        change.source.checked = !change.checked;
+        this.savingCategory.set(null);
+      }
+    });
   }
 
   save(): void {

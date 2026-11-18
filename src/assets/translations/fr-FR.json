@@ -5872,6 +5872,7 @@
   "error.msg.membership.already.decided": "This application has already been decided.",
   "error.msg.membership.date.invalid": "The decision date must be between the application date and today.",
   "error.msg.membership.products.required": "Choose the member savings product and the share product before switching the share-first rule on.",
+  "error.msg.membership.organisation.category.refused": "{{defaultUserMessage}}",
   "compliance": {
     "A year means": "\"A year\" means",
     "Accepted": "Accepted",
@@ -7245,5 +7246,28 @@
       "periodRange": "Choose a period from 1 month to 20 years, in whole years and months.",
       "periodNotDivisible": "{{months}} months does not divide into payments every 3 months. Try {{suggestions}} months."
     }
+  },
+  "organisationCategory": {
+    "COOPERATIVE": "Cooperative",
+    "GOVERNMENT_BODY": "Government body",
+    "COMMUNITY_SCHOOL": "Community school",
+    "TRUST": "Trust or guthi",
+    "CLUB": "Club",
+    "NGO": "NGO or INGO",
+    "PRODUCTION_OR_SERVICE": "Production or service organisation",
+    "CONSUMER_GROUP": "Consumer group",
+    "PRIVATE_LIMITED": "Private limited company",
+    "PUBLIC_LIMITED": "Public limited company",
+    "PARTNERSHIP": "Partnership firm",
+    "SOLE_PROPRIETORSHIP": "Sole proprietorship"
+  },
+  "organisationCategories": {
+    "title": "Organisations that can be members",
+    "settingsHint": "Switch a type off to refuse new applications from organisations of that type. Organisations of that type that are already members stay members.",
+    "loading": "Loading organisation types…",
+    "failed": "The list of organisation types could not be loaded.",
+    "notMember": "cannot be a member",
+    "greyedHint": "Types shown greyed out cannot be members of the cooperative.",
+    "cannotBeMember": "This type of organisation cannot be a member."
   }
 }

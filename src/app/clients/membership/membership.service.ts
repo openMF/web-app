@@ -22,6 +22,7 @@ import {
   MembershipStatus,
   MembershipTemplate,
   Nominee,
+  OrganisationCategory,
   RelationshipOption
 } from './membership.models';
 
@@ -146,5 +147,17 @@ export class MembershipService {
 
   updateSettings(settings: Partial<MembershipSettings>): Observable<MembershipSettingsView> {
     return this.http.put<MembershipSettingsView>('/nepal/memberships/settings', settings);
+  }
+
+  /** The organisation types in dropdown order, with whether each may be members; any signed-in user. */
+  organisationCategories(): Observable<OrganisationCategory[]> {
+    return this.http.get<OrganisationCategory[]>('/nepal/memberships/organisation-categories');
+  }
+
+  /** Switches a type on or off (UPDATE_MEMBERSHIPSETTINGS); answers the whole list. */
+  updateOrganisationCategory(codeValueId: number, mayBeMember: boolean): Observable<OrganisationCategory[]> {
+    return this.http.put<OrganisationCategory[]>(`/nepal/memberships/organisation-categories/${codeValueId}`, {
+      mayBeMember
+    });
   }
 }

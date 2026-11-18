@@ -24,6 +24,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
+import { OrganisationCategoryNamePipe } from '../../membership/organisation-category-select/organisation-category-select.component';
 
 /**
  * Client Preview Step Component
@@ -45,7 +46,8 @@ import { LegalFormId } from 'app/clients/models/legal-form.enum';
     FaIconComponent,
     FindPipe,
     DateFormatPipe,
-    YesnoPipe
+    YesnoPipe,
+    OrganisationCategoryNamePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -30,6 +30,7 @@
     flex: 1 1 100%;
 
     > mat-form-field,
+    > mifosx-organisation-category-select > mat-form-field,
     > mifosx-nepali-date-input {
       display: block;
       width: 100%;

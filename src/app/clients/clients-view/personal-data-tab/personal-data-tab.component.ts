@@ -35,6 +35,7 @@ import {
   ValidationStatus,
   emptyCustomerDataValidation
 } from 'app/clients/models/document-validation.model';
+import { OrganisationCategoryNamePipe } from '../../membership/organisation-category-select/organisation-category-select.component';
 import { ValidateCustomerDataDialogComponent } from '../custom-dialogs/validate-customer-data-dialog/validate-customer-data-dialog.component';
 
 /** Interfaces */
@@ -79,7 +80,8 @@ interface ClientViewData {
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
     DualDateComponent,
-    MatIcon
+    MatIcon,
+    OrganisationCategoryNamePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

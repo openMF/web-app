@@ -36,6 +36,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { NepaliDateInputComponent } from 'app/shared/nepali-date-input/nepali-date-input.component';
 import { MembershipCitizenshipComponent } from '../../membership/membership-citizenship/membership-citizenship.component';
+import { OrganisationCategorySelectComponent } from '../../membership/organisation-category-select/organisation-category-select.component';
 
 /**
  * Create Client Component
@@ -52,7 +53,8 @@ import { MembershipCitizenshipComponent } from '../../membership/membership-citi
     FaIconComponent,
     MatStepperNext,
     NepaliDateInputComponent,
-    MembershipCitizenshipComponent
+    MembershipCitizenshipComponent,
+    OrganisationCategorySelectComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -127,8 +129,6 @@ export class ClientGeneralStepComponent implements OnInit {
   clientClassificationTypeOptions: any;
   /** Business Line Options */
   businessLineOptions: any;
-  /** Constitution Options */
-  constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
   /** Saving Product Options */
@@ -205,7 +205,6 @@ export class ClientGeneralStepComponent implements OnInit {
     this.clientTypeOptions = this.clientTemplate.clientTypeOptions;
     this.clientClassificationTypeOptions = this.clientTemplate.clientClassificationOptions;
     this.businessLineOptions = this.clientTemplate.clientNonPersonMainBusinessLineOptions;
-    this.constitutionOptions = this.clientTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientTemplate.genderOptions;
     this.savingProductOptions = this.clientTemplate.savingProductOptions;
   }

@@ -153,6 +153,26 @@ export interface MembershipSettingsView {
   shareProductHasAccounting: boolean | null;
 }
 
+/** An organisation type (Fineract's Constitution) and whether organisations of it may be members (fineract-dbug #127). */
+export interface OrganisationCategory {
+  /** The id in clientNonPersonConstitutionOptions, sent as clientNonPersonDetails.constitutionId */
+  codeValueId: number;
+  /** Absent on a type the cooperative added itself under Manage Codes */
+  code?: string;
+  name: string;
+  mayBeMember: boolean;
+}
+
+/** The type in the user's language: organisationCategory.<CODE>, else the server's name. */
+export function organisationCategoryLabel(translate: TranslateService, category: OrganisationCategory): string {
+  if (!category.code) {
+    return category.name;
+  }
+  const key = `organisationCategory.${category.code}`;
+  const label = translate.instant(key);
+  return label && label !== key ? label : category.name;
+}
+
 export interface MembersWithoutShares {
   count: number;
   members: { clientId: number; accountNo: string; name: string; officeName: string; activatedOn?: string }[];
