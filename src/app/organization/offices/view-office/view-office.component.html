@@ -94,6 +94,18 @@
     >
       {{ 'labels.heading.Schedules' | translate }}
     </a>
+    @if (canReadAudit) {
+      <a
+        mat-tab-link
+        [routerLink]="['./change-history']"
+        routerLinkActive
+        #history="routerLinkActive"
+        [active]="history.isActive"
+        class="office-tab"
+      >
+        {{ 'branchHistory.title' | translate }}
+      </a>
+    }
     @for (officeDatatable of officeDatatables; track officeDatatable.registeredTableName) {
       <span>
         <a
