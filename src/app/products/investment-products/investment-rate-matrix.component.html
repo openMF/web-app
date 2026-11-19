@@ -1,0 +1,110 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div [formGroup]="form">
+  <p id="investment-boundaries">{{ 'Investment.boundaries' | translate }}</p>
+  <div class="investment-toolbar">
+    <button mat-stroked-button type="button" (click)="addAmount()" [disabled]="!canAddAmount">
+      {{ 'Investment.addAmount' | translate }}
+    </button>
+    <button mat-stroked-button type="button" (click)="addTerm()" [disabled]="!canAddTerm">
+      {{ 'Investment.addTerm' | translate }}
+    </button>
+  </div>
+  <div class="investment-scroll" tabindex="0" [attr.aria-label]="'Investment.matrix' | translate">
+    <table class="investment-matrix" aria-describedby="investment-boundaries">
+      <caption>
+        {{
+          'Investment.annualRate' | translate
+        }}
+        ·
+        {{
+          template.currencyCode
+        }}
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">{{ 'Investment.amountRange' | translate }}</th>
+          @for (term of terms.controls; track term; let t = $index) {
+            <th scope="col">
+              <div formArrayName="termBands">
+                <div [formGroupName]="t">
+                  <mat-form-field
+                    ><mat-label>{{ 'Investment.minimumDays' | translate }} {{ t + 1 }}</mat-label
+                    ><input matInput type="number" min="1" formControlName="minimumDays" [readonly]="!editable || busy"
+                  /></mat-form-field>
+                  <mat-form-field
+                    ><mat-label>{{ 'Investment.maximumDays' | translate }} {{ t + 1 }}</mat-label
+                    ><input matInput type="number" min="1" formControlName="maximumDays" [readonly]="!editable || busy"
+                  /></mat-form-field>
+                </div>
+              </div>
+              <button
+                mat-button
+                type="button"
+                (click)="removeTerm(t)"
+                [disabled]="!editable || busy || terms.length <= 1"
+              >
+                {{ 'Investment.removeTerm' | translate }} {{ t + 1 }}
+              </button>
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (amount of amounts.controls; track amount; let a = $index) {
+          <tr>
+            <th scope="row">
+              <div formArrayName="amountBands">
+                <div [formGroupName]="a">
+                  <mat-form-field
+                    ><mat-label>{{ 'Investment.lower' | translate }} {{ a + 1 }}</mat-label
+                    ><input matInput inputmode="decimal" formControlName="lower" [readonly]="!editable || busy"
+                  /></mat-form-field>
+                  <mat-form-field
+                    ><mat-label>{{ 'Investment.upper' | translate }} {{ a + 1 }}</mat-label
+                    ><input
+                      matInput
+                      inputmode="decimal"
+                      formControlName="upper"
+                      [readonly]="!editable || busy"
+                    /><mat-hint>{{ 'Investment.unboundedHint' | translate }}</mat-hint></mat-form-field
+                  >
+                  <mat-checkbox formControlName="upperInclusive">{{
+                    'Investment.upperInclusive' | translate
+                  }}</mat-checkbox>
+                </div>
+              </div>
+              <button
+                mat-button
+                type="button"
+                (click)="removeAmount(a)"
+                [disabled]="!editable || busy || amounts.length <= 1"
+              >
+                {{ 'Investment.removeAmount' | translate }} {{ a + 1 }}
+              </button>
+            </th>
+            @for (term of terms.controls; track term; let t = $index) {
+              <td>
+                <mat-form-field
+                  ><mat-label>{{ 'Investment.annualRate' | translate }} [{{ a + 1 }}, {{ t + 1 }}]</mat-label
+                  ><input
+                    matInput
+                    inputmode="decimal"
+                    [formControl]="rates.at(a).at(t)"
+                    [readonly]="!editable || busy"
+                  /><mat-error>{{ 'Investment.cellRules' | translate }}</mat-error></mat-form-field
+                >
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

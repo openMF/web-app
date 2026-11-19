@@ -8,7 +8,14 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+  HttpContextToken
+} from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, throwError } from 'rxjs';
@@ -30,6 +37,9 @@ import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
 
+/** Screens with complete inline error states may suppress duplicate global alerts. */
+export const HANDLE_HTTP_ERROR_LOCALLY = new HttpContextToken<boolean>(() => false);
+
 /**
  * Http Request interceptor to add a default error handler to requests.
  */
@@ -43,6 +53,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   ];
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.context.get(HANDLE_HTTP_ERROR_LOCALLY)) return next.handle(request);
     return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
   }
 

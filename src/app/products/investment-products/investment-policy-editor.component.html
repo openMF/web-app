@@ -1,0 +1,199 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card>
+  <h1>{{ 'Investment.configure' | translate }}</h1>
+  <button mat-stroked-button (click)="refresh()" [disabled]="loading() || busy">
+    {{ 'labels.buttons.Refresh' | translate }}
+  </button>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" [message]="message()" [details]="details()" />
+  @if (config(); as data) {
+    @if (template(); as options) {
+      <h2>{{ data.nativeProduct.name }}</h2>
+      <p>
+        {{ 'Investment.productId' | translate }}: {{ data.productId }} · {{ 'Investment.revision' | translate }}:
+        {{ data.revision }} · {{ data.status | investmentCode }} · {{ data.nativeProduct.currencyCode }}
+      </p>
+      <p class="investment-note">{{ 'Investment.configurationOnly' | translate }}</p>
+      <form [formGroup]="form" (ngSubmit)="submit(true)">
+        <h2>{{ 'Investment.identity' | translate }}</h2>
+        <div class="investment-grid">
+          <mat-form-field
+            ><mat-label>{{ 'Investment.type' | translate }}</mat-label
+            ><mat-select formControlName="investmentType">
+              @for (type of options.investmentTypes; track type) {
+                <mat-option [value]="type">{{ type | investmentCode }}</mat-option>
+              }</mat-select
+            ><mat-error>{{ 'errors.validation.required' | translate }}</mat-error></mat-form-field
+          >
+        </div>
+        <h2>{{ 'Investment.termAmount' | translate }}</h2>
+        @if (form.get('investmentType').value === 'CEDE') {
+          <p>
+            {{ 'Investment.suggestedMinimumTerm' | translate }}: {{ options.cedeSuggestedMinimumTermDays }} ·
+            {{ 'Investment.fields.termMultipleDays' | translate }}: {{ options.cedeTermMultipleDays }}
+          </p>
+        } @else if (form.get('investmentType').value === 'PROMISSORY_NOTE') {
+          <p>
+            {{ 'Investment.termRange' | translate }}: {{ options.promissoryNoteMinimumTermDays }}–{{
+              options.promissoryNoteMaximumTermDays
+            }}
+            {{ 'labels.inputs.Days' | translate }}
+          </p>
+        }
+        <div class="investment-grid">
+          @for (field of termFields; track field) {
+            <mat-form-field
+              ><mat-label>{{ field | investmentCode: 'fields' }}</mat-label
+              ><input matInput type="number" min="1" step="1" [formControlName]="field" required /><mat-error>{{
+                'Investment.termRules' | translate
+              }}</mat-error></mat-form-field
+            >
+          }
+          @for (field of amountFields; track field) {
+            <mat-form-field
+              ><mat-label>{{ field | investmentCode: 'fields' }}</mat-label
+              ><input matInput inputmode="decimal" [formControlName]="field" /><mat-hint>{{
+                'Investment.optionalNative' | translate
+              }}</mat-hint></mat-form-field
+            >
+          }
+        </div>
+        <h2>{{ 'Investment.reinvestment' | translate }}</h2>
+        <mat-checkbox formControlName="automaticReinvestmentEnabled">{{
+          'Investment.fields.automaticReinvestmentEnabled' | translate
+        }}</mat-checkbox>
+        <p>{{ 'Investment.renewalIntent' | translate }}</p>
+        @if (form.get('automaticReinvestmentEnabled').value) {
+          <div class="investment-grid">
+            <mat-form-field
+              ><mat-label>{{ 'Investment.fields.maximumReinvestments' | translate }}</mat-label
+              ><input matInput type="number" min="0" step="1" formControlName="maximumReinvestments"
+            /></mat-form-field>
+            <mat-form-field
+              ><mat-label>{{ 'Investment.fields.renewalRatePolicy' | translate }}</mat-label
+              ><mat-select formControlName="renewalRatePolicy">
+                @for (mode of options.renewalRatePolicies; track mode) {
+                  <mat-option [value]="mode">{{ mode | investmentCode }}</mat-option>
+                }
+              </mat-select></mat-form-field
+            >
+          </div>
+          <h3>{{ 'Investment.termLimits' | translate }}</h3>
+          <div formArrayName="maximumReinvestmentsByTerm">
+            @for (limit of limits.controls; track limit; let i = $index) {
+              <div [formGroupName]="i" class="investment-toolbar">
+                <mat-form-field
+                  ><mat-label>{{ 'labels.inputs.Days' | translate }}</mat-label
+                  ><input matInput type="number" min="1" formControlName="termDays"
+                /></mat-form-field>
+                <mat-form-field
+                  ><mat-label>{{ 'Investment.fields.maximumReinvestments' | translate }}</mat-label
+                  ><input matInput type="number" min="0" formControlName="maximumReinvestments"
+                /></mat-form-field>
+                <button mat-button type="button" (click)="removeLimit(i)" [disabled]="!canEditLimits">
+                  {{ 'labels.buttons.Remove' | translate }} {{ i + 1 }}
+                </button>
+              </div>
+            }
+          </div>
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="addLimit()"
+            [disabled]="!canEditLimits || limits.length >= 100"
+          >
+            {{ 'labels.buttons.Add' | translate }}
+          </button>
+        }
+        <h2>{{ 'Investment.interestTreatment' | translate }}</h2>
+        <p>
+          {{
+            (form.get('investmentType').value === 'CEDE' ? 'Investment.cedeIntent' : 'Investment.noteIntent')
+              | translate
+          }}
+        </p>
+        <div class="investment-grid">
+          @for (field of booleanFields; track field) {
+            <mat-checkbox [formControlName]="field">{{ field | investmentCode: 'fields' }}</mat-checkbox>
+          }
+          <mat-form-field
+            ><mat-label>{{ 'Investment.fields.interestPayoutMode' | translate }}</mat-label
+            ><mat-select formControlName="interestPayoutMode">
+              @for (mode of options.interestPayoutModes; track mode) {
+                <mat-option [value]="mode">{{ mode | investmentCode }}</mat-option>
+              }
+            </mat-select></mat-form-field
+          >
+          <mat-form-field
+            ><mat-label>{{ 'Investment.fields.principalSettlementMode' | translate }}</mat-label
+            ><mat-select formControlName="principalSettlementMode">
+              @for (mode of options.principalSettlementModes; track mode) {
+                <mat-option [value]="mode">{{ mode | investmentCode }}</mat-option>
+              }
+            </mat-select></mat-form-field
+          >
+        </div>
+        <h2>{{ 'Investment.cancellation' | translate }}</h2>
+        <mat-checkbox formControlName="earlyCancellationAllowed">{{
+          'Investment.fields.earlyCancellationAllowed' | translate
+        }}</mat-checkbox>
+        @if (form.get('earlyCancellationAllowed').value) {
+          <div class="investment-grid">
+            <mat-form-field
+              ><mat-label>{{ 'Investment.fields.penaltyMode' | translate }}</mat-label
+              ><mat-select formControlName="penaltyMode">
+                @for (mode of options.penaltyModes; track mode) {
+                  <mat-option [value]="mode">{{ mode | investmentCode }}</mat-option>
+                }
+              </mat-select></mat-form-field
+            >
+          </div>
+          @if (form.get('penaltyMode').value === 'VERSIONED_REFERENCE') {
+            <p>{{ 'Investment.referenceUnresolved' | translate }}</p>
+            <div class="investment-grid">
+              <mat-form-field
+                ><mat-label>{{ 'Investment.fields.cancellationPolicyReference' | translate }}</mat-label
+                ><input matInput formControlName="policyCode" maxlength="100"
+              /></mat-form-field>
+              <mat-form-field
+                ><mat-label>{{ 'Investment.revision' | translate }}</mat-label
+                ><input matInput type="number" min="1" formControlName="referenceRevision"
+              /></mat-form-field>
+            </div>
+          }
+        }
+        <mifosx-investment-feedback [blockers]="blockers()" />
+        <ul aria-live="polite">
+          @for (issue of issues(); track issue) {
+            <li>{{ issue | translate }}</li>
+          }
+        </ul>
+        <div class="investment-toolbar">
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="submit(false)"
+            [disabled]="busy || form.disabled || conflict()"
+          >
+            {{ 'labels.buttons.Validate' | translate }}
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="busy || form.disabled || conflict()">
+            {{ 'Investment.saveDraft' | translate }}
+          </button>
+          <a mat-button [routerLink]="['/products/investment-products', id]">{{
+            'labels.buttons.Cancel' | translate
+          }}</a>
+          @if (dirty) {
+            <span role="status">{{ 'Investment.unsaved' | translate }}</span>
+          }
+        </div>
+      </form>
+    }
+  }
+</mat-card>

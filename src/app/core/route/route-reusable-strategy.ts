@@ -13,7 +13,8 @@ import { Injectable } from '@angular/core';
 /**
  * A route strategy allowing for explicit route reuse.
  * Used as a workaround for https://github.com/angular/angular/issues/18374
- * To reuse a given route, add `data: { reuse: true }` to the route definition.
+ * Set `data.reuseByParam` to limit reuse to routes with the same parameter value.
+ * Set `data.reuse` to opt into reuse across route configurations.
  */
 @Injectable()
 export class RouteReusableStrategy extends RouteReuseStrategy {
@@ -32,6 +33,10 @@ export class RouteReusableStrategy extends RouteReuseStrategy {
   }
 
   public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    const reuseByParam: unknown = future.routeConfig?.data?.['reuseByParam'];
+    if (typeof reuseByParam === 'string' && future.paramMap.get(reuseByParam) !== curr.paramMap.get(reuseByParam)) {
+      return false;
+    }
     return future.routeConfig === curr.routeConfig || future.data.reuse;
   }
 }
