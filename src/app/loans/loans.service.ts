@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -693,6 +693,16 @@ export class LoansService {
 
   loadLoanDocument(loanId: any, data: any): Observable<any> {
     return this.http.post(`/loans/${loanId}/documents`, data);
+  }
+
+  /** Opt-in HTTP events; existing single-file callers retain their response contract. */
+  uploadLoanDocumentWithProgress(loanId: string, data: FormData): Observable<HttpEvent<unknown>> {
+    return this.http.post(`/loans/${loanId}/documents`, data, { observe: 'events', reportProgress: true });
+  }
+
+  /** Metadata-only multipart update verified against local Fineract. Never replaces a binary. */
+  updateLoanDocumentMetadata(loanId: string, documentId: string, data: FormData): Observable<unknown> {
+    return this.http.put(`/loans/${loanId}/documents/${documentId}`, data);
   }
 
   /**
