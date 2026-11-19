@@ -10,17 +10,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
-/**
- * Interface for version information.
- */
-export interface VersionInfo {
-  tenant?: string;
-  mifos?: string;
-  fineract?: {
-    version?: string;
-  };
-}
 
 /** Custom Models */
 import { Alert } from '../core/alert/alert.model';
@@ -45,8 +34,8 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
+import { ConnectionCardComponent } from './connection-card/connection-card.component';
 
-import { VersionService } from '../system/version.service';
 import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
 
 /**
@@ -69,14 +58,15 @@ import { sanitizeReturnUrl } from '../core/utils/return-url.utils';
     FaIconComponent,
     MatMenu,
     MatMenuItem,
-    M3IconComponent
+    M3IconComponent,
+    ConnectionCardComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
   /** Whether to show the tenant selector dropdown */
   showTenantSelector = true;
-  /** Show version info table if env allows */
+  /** Show the Connection card if env allows */
   displayBackendInfo = environment.displayBackEndInfo !== 'false';
   /** Production mode - minimal hero with branding only */
   productionMode = environment.productionMode === true;
@@ -86,22 +76,20 @@ export class LoginComponent implements OnInit {
   private themingService = inject(ThemingService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
   private authenticationService = inject(AuthenticationService);
 
   public environment = environment;
 
-  /** Version info for display */
-  versions: VersionInfo = {};
-  /** Server info for display */
-  server: string = '';
+  /** Selected server, read on every check so a new selection shows up straight away. */
+  get server(): string {
+    return this.settingsService.server;
+  }
 
-  /** Get tenant display name with first letter capitalized */
-  get tenantDisplayName(): string {
-    const tenant = this.versions?.tenant || this.settingsService.tenantIdentifier || 'default';
-    return tenant.charAt(0).toUpperCase() + tenant.slice(1).toLowerCase();
+  /** Selected tenant, read on every check so a new selection shows up straight away. */
+  get tenantIdentifier(): string {
+    return this.settingsService.tenantIdentifier;
   }
 
   /** True if password requires a reset. */
@@ -150,35 +138,6 @@ export class LoginComponent implements OnInit {
         this.updateLogo();
       }
     });
-
-    // Load version info for table
-    this.versionService
-      .getBackendInfo()
-      .pipe(take(1))
-      .subscribe(
-        (info: any) => {
-          this.versions = {
-            tenant: this.settingsService.tenantIdentifier,
-            mifos: info?.mifos || info?.mifosX || info?.mifos_x || info?.version || environment.version,
-            fineract:
-              typeof info?.fineract === 'object' && info?.fineract !== null
-                ? { version: info.fineract.version }
-                : typeof info?.fineract === 'string'
-                  ? { version: info.fineract }
-                  : info?.fineractX || info?.fineract_x
-                    ? { version: info.fineractX || info.fineract_x }
-                    : { version: info?.git?.build?.version }
-          };
-        },
-        () => {
-          this.versions = {
-            tenant: this.settingsService.tenantIdentifier,
-            mifos: environment.version,
-            fineract: { version: '' }
-          };
-        }
-      );
-    this.server = this.settingsService.server;
   }
 
   /**

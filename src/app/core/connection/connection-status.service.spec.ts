@@ -26,6 +26,7 @@ describe('ConnectionStatusService', () => {
   let subscriptions: Subscription[];
   let statuses: ConnectionStatus[];
   let hidden: boolean;
+  let settings: { serverHost: string };
 
   const subscribe = () => subscriptions.push(service.status$.subscribe((status) => statuses.push(status)));
   const latest = () => statuses[statuses.length - 1];
@@ -40,13 +41,14 @@ describe('ConnectionStatusService', () => {
     jest.useFakeTimers();
     jest.setSystemTime(start);
     hidden = false;
+    settings = { serverHost: server };
     Object.defineProperty(document, 'hidden', { configurable: true, get: () => hidden });
 
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: SettingsService, useValue: { serverHost: server } }
+        { provide: SettingsService, useValue: settings }
       ]
     });
 
@@ -102,7 +104,12 @@ describe('ConnectionStatusService', () => {
     subscribe();
     const request = httpMock.expectOne(healthUrl);
 
-    jest.advanceTimersByTime(ConnectionStatusService.checkTimeout);
+    // The login connection card (WEB-1445) must report a hung server after 5 seconds, not sooner.
+    jest.advanceTimersByTime(4999);
+    expect(request.cancelled).toBe(false);
+    expect(latest().state).toBe('checking');
+
+    jest.advanceTimersByTime(1);
 
     expect(request.cancelled).toBe(true);
     expect(latest().state).toBe('offline');
@@ -170,6 +177,19 @@ describe('ConnectionStatusService', () => {
     service.checkNow();
 
     expect(httpMock.match(healthUrl).length).toBe(1);
+  });
+
+  it('should restart a running check when another server was selected', () => {
+    subscribe();
+    const oldServer = httpMock.expectOne(healthUrl);
+    const otherHealthUrl = `https://other.example.org${environment.apiActuator}/actuator/health`;
+
+    settings.serverHost = 'https://other.example.org';
+    service.checkNow();
+
+    expect(oldServer.cancelled).toBe(true);
+    httpMock.expectOne(otherHealthUrl).flush('{"status":"UP"}');
+    expect(latest().state).toBe('online');
   });
 
   it('should share one check loop between subscribers', () => {

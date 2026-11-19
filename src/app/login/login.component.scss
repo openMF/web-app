@@ -6,52 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// ===
-/// ===== Version Info Section - Modern Card Style =====
-.login-version-info {
-  margin-bottom: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.version-info-container {
-  width: 100%;
-  background: var(--md-sys-color-surface-container, #f3f3f6);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--md-sys-color-outline-variant, #c4c6d0);
-}
-
-.version-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant, #e0e0e0);
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.version-label {
-  font-weight: 500;
-  font-size: 0.75rem;
-  color: var(--md-sys-color-on-surface-variant, #44474e);
-  flex-shrink: 0;
-}
-
-.version-value {
-  font-weight: 400;
-  font-size: 0.75rem;
-  color: var(--md-sys-color-on-surface, #1a1c1e);
-  text-align: right;
-  word-break: break-word;
-  max-width: 60%;
-}
-
 // ===== Resources Branding =====
 .resources-branding {
   text-align: center;
@@ -77,23 +31,6 @@
 // ===== Dark Mode Support =====
 :host-context(.dark-theme),
 :host-context([data-theme='dark']) {
-  .version-info-container {
-    background: var(--md-sys-color-surface-container-low, #2a2a2a);
-    border-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-
-  .version-item {
-    border-bottom-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-
-  .version-label {
-    color: var(--md-sys-color-on-surface-variant, #c4c6cf);
-  }
-
-  .version-value {
-    color: var(--md-sys-color-on-surface, #e2e2e5);
-  }
-
   .resources-branding {
     .branding-text {
       color: var(--md-sys-color-on-surface-variant, #c4c6cf);
@@ -126,23 +63,6 @@
 
   .logo-section {
     border-bottom-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-}
-
-// Responsive for version info
-/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
-@media (max-width: 768px) {
-  .version-info-container {
-    padding: 0.5rem 0.75rem;
-  }
-
-  .version-item {
-    padding: 0.35rem 0;
-  }
-
-  .version-label,
-  .version-value {
-    font-size: 0.7rem;
   }
 }
 
@@ -785,7 +705,7 @@
     flex-shrink: 0;
   }
 
-  .login-version-info {
+  mifosx-connection-card {
     margin-top: auto;
   }
 
@@ -881,14 +801,6 @@
 
   .form-section {
     margin-bottom: 0.75rem;
-  }
-
-  .login-version-info {
-    margin-bottom: 0.75rem;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.85rem;
   }
 
   .login-footer {
