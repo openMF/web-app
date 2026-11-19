@@ -6,11 +6,307 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mifosx-entity-documents-tab
-  [entityType]="entityType"
-  [entityId]="entityId"
-  [entityDocuments]="entityDocuments"
-  [callbackUpload]="uploadDocument"
-  [callbackDelete]="deleteDocument"
->
-</mifosx-entity-documents-tab>
+<section #workspace class="documents-workspace" [attr.aria-label]="'labels.heading.Documents' | translate">
+  <main class="documents-main">
+    <div class="document-toolbar">
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+        <mat-label>{{ 'loanDocuments.search' | translate }}</mat-label>
+        <input matInput [formControl]="search" />
+      </mat-form-field>
+      <mat-button-toggle-group
+        [value]="view"
+        (change)="setView($event.value)"
+        [attr.aria-label]="'loanDocuments.view' | translate"
+        hideSingleSelectionIndicator
+      >
+        <mat-button-toggle value="grid" [aria-label]="'loanDocuments.grid' | translate"
+          ><mat-icon>grid_view</mat-icon></mat-button-toggle
+        >
+        <mat-button-toggle value="list" [aria-label]="'loanDocuments.list' | translate"
+          ><mat-icon>view_list</mat-icon></mat-button-toggle
+        >
+      </mat-button-toggle-group>
+      <mat-form-field appearance="outline" class="sort-field" subscriptSizing="dynamic">
+        <mat-label>{{ 'loanDocuments.sort' | translate }}</mat-label>
+        <mat-select [value]="sort" (selectionChange)="setSort($event.value)">
+          <mat-option value="number">{{ 'loanDocuments.number' | translate }}</mat-option>
+          <mat-option value="name">{{ 'labels.inputs.Name' | translate }}</mat-option>
+          <mat-option value="category">{{ 'loanDocuments.category' | translate }}</mat-option>
+          <mat-option value="date" disabled>{{ 'loanDocuments.uploadDateUnavailable' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        (click)="downloadAll()"
+        [disabled]="zipBusy || loading || !visibleDocuments.length"
+        *mifosxHasPermission="'READ_DOCUMENT'"
+      >
+        <mat-icon>download</mat-icon>{{ 'loanDocuments.downloadAll' | translate }}
+      </button>
+      <button mat-flat-button class="upload-button" (click)="upload()" *mifosxHasPermission="'CREATE_DOCUMENT'">
+        <mat-icon>upload</mat-icon>{{ 'labels.buttons.Upload' | translate }}
+      </button>
+    </div>
+    <div class="category-filters" [attr.aria-label]="'loanDocuments.category' | translate">
+      <button mat-stroked-button [class.selected]="!category" [attr.aria-pressed]="!category" (click)="setCategory('')">
+        {{ 'loanDocuments.all' | translate }} <span class="count">{{ documents.length }}</span>
+      </button>
+      @for (item of categories; track item.key) {
+        <button
+          mat-stroked-button
+          [class.selected]="category === item.key"
+          [attr.aria-pressed]="category === item.key"
+          (click)="setCategory(item.key)"
+        >
+          <span class="category-dot" [attr.data-category]="item.key" aria-hidden="true"></span
+          >{{ 'loanDocuments.categories.' + item.key | translate }} <span class="count">{{ item.count }}</span>
+        </button>
+      }
+    </div>
+    @if (loading || mutationBusy) {
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="'loanDocuments.loading' | translate"></mat-progress-bar>
+    }
+    @if (zipBusy) {
+      <div class="zip-status" role="status">
+        {{ 'loanDocuments.preparingZip' | translate }} {{ zipProgress }}%<mat-progress-bar
+          mode="determinate"
+          [value]="zipProgress"
+        ></mat-progress-bar>
+      </div>
+    }
+    @if (error) {
+      <div class="feedback" role="alert">
+        {{ 'loanDocuments.' + error | translate }}
+        <button mat-button (click)="refresh()">{{ 'loanDocuments.refresh' | translate }}</button>
+      </div>
+    }
+    @if (!visibleDocuments.length && !loading) {
+      <div class="empty-state">
+        <mat-icon aria-hidden="true">folder_open</mat-icon>
+        <h3>{{ (documents.length ? 'loanDocuments.noMatches' : 'loanDocuments.empty') | translate }}</h3>
+      </div>
+    }
+    @if (view === 'grid') {
+      <div class="document-grid">
+        @for (doc of visibleDocuments; track doc.id) {
+          <mat-card
+            class="document-card"
+            [class.highlighted]="highlightedId === doc.id"
+            [attr.data-document-id]="doc.id"
+            tabindex="-1"
+          >
+            <button
+              class="thumbnail"
+              type="button"
+              [disabled]="!previewable(doc) || !can('READ_DOCUMENT')"
+              (click)="preview(doc)"
+              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + title(doc)"
+            >
+              @if (can('READ_DOCUMENT')) {
+                @defer (on viewport) {
+                  <mifosx-loan-document-thumbnail [document]="doc" [loanId]="entityId"></mifosx-loan-document-thumbnail>
+                } @placeholder {
+                  <span class="thumbnail-placeholder"><mat-icon aria-hidden="true">description</mat-icon></span>
+                }
+              }
+              @if (scheme && doc.number) {
+                <span class="number-badge">{{ doc.number.toString().padStart(2, '0') }}</span>
+              }
+              <span class="type-badge">{{ doc.extension || ('loanDocuments.file' | translate) }}</span>
+            </button>
+            <mat-card-content>
+              <h3 class="document-title">{{ title(doc) }}</h3>
+              <p class="original-filename" dir="rtl" [matTooltip]="doc.fileName || ''">
+                <bdi>{{ doc.fileName || ('loanDocuments.unavailable' | translate) }}</bdi>
+              </p>
+              <div class="card-footer">
+                <span class="category-label" [attr.data-category]="doc.category"
+                  ><span class="category-dot" aria-hidden="true"></span
+                  >{{ 'loanDocuments.categories.' + doc.category | translate }}</span
+                >
+                <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ doc: doc }"></ng-container>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+        <ng-container [ngTemplateOutlet]="uploadTile"></ng-container>
+      </div>
+    } @else {
+      <div class="document-table-wrapper">
+        <table mat-table [dataSource]="visibleDocuments" class="document-table">
+          <ng-container matColumnDef="number"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'loanDocuments.number' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">{{ doc.number || '—' }}</td></ng-container
+          >
+          <ng-container matColumnDef="name"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">
+              <button mat-button (click)="preview(doc)" [disabled]="!previewable(doc)">{{ title(doc) }}</button>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="category"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'loanDocuments.category' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">
+              <span class="category-label" [attr.data-category]="doc.category">{{
+                'loanDocuments.categories.' + doc.category | translate
+              }}</span>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="filename"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.File Name' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">
+              <span class="table-filename" [matTooltip]="doc.fileName || ''">{{
+                doc.fileName || ('loanDocuments.unavailable' | translate)
+              }}</span>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="size"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'loanDocuments.size' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">{{ size(doc.size) }}</td></ng-container
+          >
+          <ng-container matColumnDef="actions"
+            ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let doc">
+              <ng-container [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ doc: doc }"></ng-container></td
+          ></ng-container>
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let doc; columns: columns"
+            [class.highlighted]="highlightedId === doc.id"
+            [attr.data-document-id]="doc.id"
+            tabindex="-1"
+          ></tr>
+        </table>
+      </div>
+      <ng-container [ngTemplateOutlet]="uploadTile"></ng-container>
+    }
+  </main>
+  <aside class="documents-sidebar">
+    @if (slots.length) {
+      <mat-card class="side-panel dossier"
+        ><mat-card-content>
+          <h3>{{ 'loanDocuments.dossier' | translate }}</h3>
+          <p class="muted">{{ 'loanDocuments.dossierAdvice' | translate }}</p>
+          <div class="completion">
+            <strong>{{ completed }} / {{ slots.length }}</strong
+            ><span>{{ percentage }}%</span>
+          </div>
+          <mat-progress-bar
+            [value]="percentage"
+            [attr.aria-label]="'loanDocuments.dossier' | translate"
+          ></mat-progress-bar>
+          <div class="slot-grid">
+            @for (slot of slots; track slot.number) {
+              <button
+                mat-button
+                [class.filled]="slot.document"
+                [disabled]="!slot.document && !can('CREATE_DOCUMENT')"
+                (click)="locate(slot.number)"
+                [attr.aria-label]="
+                  ('loanDocuments.number' | translate) +
+                  ' ' +
+                  slot.number +
+                  ': ' +
+                  ((slot.document ? 'loanDocuments.loaded' : 'loanDocuments.missing') | translate)
+                "
+                [matTooltip]="
+                  scheme.labels?.[slot.number] || (slot.document ? 'loanDocuments.loaded' : 'loanDocuments.missing')
+                    | translate
+                "
+              >
+                {{ slot.number.toString().padStart(2, '0') }}
+              </button>
+            }
+          </div>
+          <div class="legend">
+            <span><i class="loaded-marker"></i>{{ 'loanDocuments.loaded' | translate }}</span
+            ><span><i class="missing-marker"></i>{{ 'loanDocuments.missing' | translate }}</span>
+          </div>
+        </mat-card-content></mat-card
+      >
+    }
+    @if (scheme && pendingApproval && requirements.length) {
+      <mat-card class="side-panel checklist"
+        ><mat-card-content
+          ><h3>{{ 'loanDocuments.beforeApproval' | translate }}</h3>
+          @for (rule of requirements; track $index) {
+            <div class="checklist-item">
+              <mat-icon
+                [class.complete]="rule.complete"
+                [attr.aria-label]="(rule.complete ? 'loanDocuments.loaded' : 'loanDocuments.missing') | translate"
+                >{{ rule.complete ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon
+              ><span>{{ rule.labelKey | translate }}</span>
+              @if (!rule.complete) {
+                <button mat-button (click)="upload(rule.number)" *mifosxHasPermission="'CREATE_DOCUMENT'">
+                  {{ 'labels.buttons.Upload' | translate }}
+                </button>
+              }
+            </div>
+          }
+        </mat-card-content></mat-card
+      >
+    }
+    <mat-card class="privacy-note"
+      ><mat-card-content
+        ><mat-icon aria-hidden="true">info_outline</mat-icon>
+        <p>{{ 'loanDocuments.privacyNote' | translate }}</p></mat-card-content
+      ></mat-card
+    >
+  </aside>
+</section>
+<ng-template #actions let-doc="doc">
+  <div class="document-actions">
+    <button
+      mat-icon-button
+      (click)="preview(doc)"
+      [disabled]="!previewable(doc)"
+      [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + title(doc)"
+      [matTooltip]="(previewable(doc) ? 'labels.buttons.Preview' : 'loanDocuments.previewFailed') | translate"
+      *mifosxHasPermission="'READ_DOCUMENT'"
+    >
+      <mat-icon>visibility</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="download(doc)"
+      [attr.aria-label]="('labels.buttons.Download' | translate) + ': ' + title(doc)"
+      [matTooltip]="'labels.buttons.Download' | translate"
+      *mifosxHasPermission="'READ_DOCUMENT'"
+    >
+      <mat-icon>download</mat-icon>
+    </button>
+    @if (can('UPDATE_DOCUMENT') || can('DELETE_DOCUMENT')) {
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        [attr.aria-label]="('loanDocuments.moreActions' | translate) + ': ' + title(doc)"
+      >
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu"
+        ><button mat-menu-item (click)="edit(doc)" *mifosxHasPermission="'UPDATE_DOCUMENT'">
+          <mat-icon>edit</mat-icon>{{ 'loanDocuments.editMetadata' | translate }}</button
+        ><button mat-menu-item (click)="delete(doc)" [disabled]="mutationBusy" *mifosxHasPermission="'DELETE_DOCUMENT'">
+          <mat-icon>delete_outline</mat-icon>{{ 'labels.buttons.Delete' | translate }}
+        </button></mat-menu
+      >
+    }
+  </div>
+</ng-template>
+<ng-template #uploadTile>
+  <button
+    mat-stroked-button
+    class="upload-tile"
+    (click)="upload()"
+    (dragover)="$event.preventDefault()"
+    (drop)="drop($event)"
+    *mifosxHasPermission="'CREATE_DOCUMENT'"
+  >
+    <span class="upload-tile-content"
+      ><mat-icon aria-hidden="true">upload</mat-icon><strong>{{ 'loanDocuments.uploadDocuments' | translate }}</strong
+      ><span>{{ 'loanDocuments.dropFiles' | translate }}</span></span
+    >
+  </button>
+</ng-template>
