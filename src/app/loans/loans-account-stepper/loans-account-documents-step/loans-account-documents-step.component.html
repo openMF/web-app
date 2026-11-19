@@ -1,0 +1,59 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<p class="hint">
+  {{ 'loanForm.documentsHint' | translate }}
+  @if (limits(); as limits) {
+    {{ 'loanForm.maxFileSize' | translate: { mb: limits.documentMaxFileSizeMb } }}
+  }
+</p>
+
+@for (group of form.controls; track group; let i = $index) {
+  <div class="document layout-row-wrap gap-2px responsive-column" [formGroup]="group">
+    <span class="file-name"><mat-icon>description</mat-icon>{{ fileName(i) }}</span>
+    <mat-form-field class="flex-fill">
+      <mat-label>{{ 'loanForm.documentName' | translate }}</mat-label>
+      <input matInput formControlName="name" required maxlength="250" />
+      @if (group.controls['name'].hasError('required')) {
+        <mat-error>{{ 'loanForm.required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="flex-fill">
+      <mat-label>{{ 'loanForm.documentDescription' | translate }}</mat-label>
+      <input matInput formControlName="description" maxlength="1000" />
+    </mat-form-field>
+    <button mat-icon-button type="button" (click)="remove(i)" [attr.aria-label]="'loanForm.removeDocument' | translate">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+} @empty {
+  <p class="hint">{{ 'loanForm.noDocuments' | translate }}</p>
+}
+
+@for (name of tooBig(); track name) {
+  <mat-error>
+    {{ name }}:
+    {{ 'error.msg.upload.file.too.big' | translate: { args: [{ value: limits()?.documentMaxFileSizeMb }] } }}
+  </mat-error>
+}
+
+<button mat-stroked-button type="button" class="margin-t" (click)="fileInput.click()">
+  <mat-icon>attach_file</mat-icon>{{ 'loanForm.addDocuments' | translate }}
+</button>
+<input #fileInput type="file" multiple hidden (change)="addFiles($event)" />
+
+<div class="layout-row align-center gap-2percent margin-t responsive-column stepper-buttons">
+  <button mat-raised-button type="button" matStepperPrevious>
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Previous' | translate }}
+  </button>
+  <button mat-raised-button type="button" matStepperNext (click)="form.markAllAsTouched()">
+    {{ 'labels.buttons.Next' | translate }}
+    <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+  </button>
+</div>

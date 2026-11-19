@@ -7267,5 +7267,24 @@
     "notMember": "cannot be a member",
     "greyedHint": "Types shown greyed out cannot be members of the cooperative.",
     "cannotBeMember": "This type of organisation cannot be a member."
+  },
+  "loanForm": {
+    "Supporting documents": "Supporting documents",
+    "required": "This field is required",
+    "min": "Must be at least {{min}}",
+    "max": "Must be at most {{max}}",
+    "minLength": "Must be at least {{length}} characters",
+    "maxLength": "Must be at most {{length}} characters",
+    "wholeNumber": "Must be a whole number",
+    "pattern": "Not in the expected format",
+    "invalid": "Invalid value",
+    "documentsHint": "Attach the documents this loan needs. They are uploaded to the loan once the application is submitted.",
+    "maxFileSize": "Each file up to {{mb}} MB.",
+    "documentName": "Document name",
+    "documentDescription": "Description",
+    "removeDocument": "Remove document",
+    "noDocuments": "No documents attached.",
+    "addDocuments": "Add documents",
+    "linkSavingsRequired": "Choose the savings account to collect instalments from"
   }
 }

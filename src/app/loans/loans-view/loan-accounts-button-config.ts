@@ -209,7 +209,7 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'CLOSE_LOAN'
           },
           {
-            name: 'Loan Screen Report',
+            name: 'Loan Screen Reports',
             taskPermissionName: 'READ_LOAN'
           },
           {
@@ -298,7 +298,7 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'CREATE_GUARANTOR'
           },
           {
-            name: 'Loan Screen Report',
+            name: 'Loan Screen Reports',
             taskPermissionName: 'READ_LOAN'
           }
         ];

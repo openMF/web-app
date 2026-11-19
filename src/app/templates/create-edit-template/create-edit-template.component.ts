@@ -7,8 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+  DestroyRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { concatMap, map } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -16,6 +25,8 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
 
 /** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
+import { environment } from 'environments/environment';
 import { TemplatesService } from '../templates.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ThemingService } from 'app/shared/theme-toggle/theming.service';
@@ -59,6 +70,8 @@ export class CreateEditComponent implements OnInit {
   private templateService = inject(TemplatesService);
   private themingService = inject(ThemingService);
   private destroyRef = inject(DestroyRef);
+  private settingsService = inject(SettingsService);
+  private cdr = inject(ChangeDetectorRef);
 
   themeKey = 'light';
 
@@ -81,9 +94,10 @@ export class CreateEditComponent implements OnInit {
       // The editor's text lives in an iframe the app's dark theme cannot reach: make it light in dark mode.
       content_style: isDark ? 'body { background-color: transparent !important; color: #f1f5f9 !important; }' : '',
       body_class: isDark ? 'dark-theme' : '',
-      plugins: 'lists link table media codesample',
+      // `code` opens the HTML source, where a template's markup must be pasted.
+      plugins: 'lists link table media codesample code',
       toolbar:
-        'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat'
+        'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat | code'
     };
   }
   /** TinyMCE component reference */
@@ -126,13 +140,21 @@ export class CreateEditComponent implements OnInit {
             mapperskey: new FormControl(mapper.mapperkey),
             mappersvalue: new FormControl(mapper.mappervalue)
           }));
+          // A template saved without mappers still needs a row, which carries the Add button.
+          if (this.mappers.length === 0) {
+            this.mappers.push({ mappersorder: 0, mapperskey: new FormControl(''), mappersvalue: new FormControl('') });
+          }
         }
       });
 
     this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
       this.themeKey = theme;
       this.editorVisible = false;
-      setTimeout(() => (this.editorVisible = true));
+      // OnPush: nothing else redraws the page after the timeout, so the editor stayed hidden on Edit.
+      setTimeout(() => {
+        this.editorVisible = true;
+        this.cdr.markForCheck();
+      });
     });
   }
 
@@ -190,7 +212,8 @@ export class CreateEditComponent implements OnInit {
    * Subscribe to value changes of entity to set default mapper.
    */
   buildDependencies() {
-    const tenantIdentifier = 'default'; // update once global settings are setup.
+    // Each cooperative is its own tenant; the mapper must read the one the user is signed in to.
+    const tenantIdentifier = this.settingsService.tenantIdentifier || environment.fineractPlatformTenantId;
     this.templateForm
       .get('entity')
       .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
@@ -200,14 +223,14 @@ export class CreateEditComponent implements OnInit {
           this.mappers.splice(0, 1, {
             mappersorder: 0,
             mapperskey: new FormControl('client'),
-            mappersvalue: new FormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
+            mappersvalue: new FormControl('v1/clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
           });
         } else {
           // loan
           this.mappers.splice(0, 1, {
             mappersorder: 0,
             mapperskey: new FormControl('loan'),
-            mappersvalue: new FormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
+            mappersvalue: new FormControl('v1/loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
           });
         }
         this.setEditorContent('');
@@ -269,23 +292,34 @@ export class CreateEditComponent implements OnInit {
   submit() {
     const template: any = {
       ...this.templateForm.value,
-      mappers: this.mappers.map((mapper: any) => ({
-        mappersorder: mapper.mappersorder,
-        mapperskey: mapper.mapperskey.value,
-        mappersvalue: mapper.mappersvalue.value
-      })),
+      // Fineract reads `mapperorder`, `mapperkey` and `mappervalue`; any other name is dropped silently.
+      mappers: this.mappers
+        .filter((mapper: any) => mapper.mapperskey.value && mapper.mappersvalue.value)
+        .map((mapper: any, index: number) => ({
+          mapperorder: index,
+          mapperkey: mapper.mapperskey.value,
+          mappervalue: mapper.mappersvalue.value
+        })),
       text: this.getEditorContent()
     };
     if (this.mode === 'create') {
-      this.templateService.createTemplate(template).subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+      // Creating a template does not save its mappers (only an update does), so save them right after.
+      this.templateService
+        .createTemplate(template)
+        .pipe(
+          concatMap((response: any) =>
+            this.templateService.updateTemplate(template, response.resourceId).pipe(map(() => response))
+          )
+        )
+        .subscribe((response: any) => {
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId
+            ],
+            { relativeTo: this.route }
+          );
+        });
     } else {
       this.templateService.updateTemplate(template, this.templateData.template.id).subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });

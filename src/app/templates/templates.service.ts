@@ -11,7 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, catchError, concatMap, from, map, of, switchMap, toArray } from 'rxjs';
+import { expandArrays, mapperPath, renderTemplate } from './template-merge';
 
 /**
  * Templates service.
@@ -33,6 +34,30 @@ export class TemplatesService {
    * @param templateId Template ID.
    * @returns {Observable<any>} Fetches Template.
    */
+  /**
+   * The template filled with an entity's data, as HTML (template-merge.ts). `scope` names the entity, `{ loanId }` or
+   * `{ clientId }`. Mappers run in their order, so a later one can use an earlier one's data, as on the server; one
+   * that fails is left out (the error handler reports it) and its placeholders print empty.
+   */
+  fillTemplate(templateId: string | number, scope: Record<string, unknown>): Observable<string> {
+    return this.http.get<any>(`/templates/${templateId}`).pipe(
+      switchMap((template) => {
+        const values: Record<string, unknown> = { ...scope };
+        const mappers = [...(template.mappers ?? [])].sort((a: any, b: any) => a.mapperorder - b.mapperorder);
+        return from(mappers).pipe(
+          concatMap((mapper: any) =>
+            this.http.get(mapperPath(mapper.mappervalue, values)).pipe(
+              catchError(() => of(undefined)),
+              map((data) => (values[mapper.mapperkey] = data))
+            )
+          ),
+          toArray(),
+          map(() => renderTemplate(template.text, expandArrays(values)))
+        );
+      })
+    );
+  }
+
   getTemplate(templateId: string): Observable<any> {
     return this.http.get(`/templates/${templateId}`);
   }
@@ -67,7 +92,8 @@ export class TemplatesService {
    * @returns {Observable<any>}.
    */
   updateTemplate(templateData: any, templateId: any): Observable<any> {
-    return this.http.put(`/templates/${templateId}`, templateData);
+    // Fineract takes the template's id from the body, not the URL, and refuses an update without it.
+    return this.http.put(`/templates/${templateId}`, { ...templateData, id: Number(templateId) });
   }
 
   /**

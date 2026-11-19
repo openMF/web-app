@@ -16,6 +16,14 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 import { environment } from 'environments/environment';
 
+/** `GET /v1/upload-limits`; `document*` is the limit for documents on clients, loans and other entities. */
+export interface UploadLimits {
+  imageMaxFileSizeBytes: number;
+  imageMaxFileSizeMb: number;
+  documentMaxFileSizeBytes: number;
+  documentMaxFileSizeMb: number;
+}
+
 /**
  * Clients service.
  */
@@ -236,8 +244,8 @@ export class ClientsService {
    * Upload limits the server enforces. Compare files against the *Bytes fields and show the *Mb fields,
    * so the displayed and enforced numbers never drift.
    */
-  getUploadLimits(): Observable<{ imageMaxFileSizeBytes: number; imageMaxFileSizeMb: number }> {
-    return this.http.get<{ imageMaxFileSizeBytes: number; imageMaxFileSizeMb: number }>('/upload-limits');
+  getUploadLimits(): Observable<UploadLimits> {
+    return this.http.get<UploadLimits>('/upload-limits');
   }
 
   uploadClientProfileImage(clientId: string, image: File) {
@@ -411,11 +419,6 @@ export class ClientsService {
   getClientReportTemplates() {
     const httpParams = new HttpParams().set('entityId', '0').set('typeId', '0');
     return this.http.get('/templates', { params: httpParams });
-  }
-
-  retrieveClientReportTemplate(templateId: string, clientId: string) {
-    const httpParams = new HttpParams().set('clientId', clientId);
-    return this.http.get(`/templates/${templateId}`, { params: httpParams, responseType: 'text' });
   }
 
   /**
