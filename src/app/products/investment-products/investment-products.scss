@@ -1,0 +1,114 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  max-width: 1600px;
+  margin-inline: auto;
+}
+
+.investment-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-block: 16px;
+}
+
+.investment-grid,
+.investment-metadata {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Fractional tracks keep financial metadata responsive. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
+}
+
+.investment-grid {
+  max-width: 1200px;
+  margin-block: 16px;
+}
+
+.investment-metadata {
+  dt {
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.investment-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  margin-block: 16px;
+
+  &:focus-visible {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+}
+
+.investment-matrix {
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    text-align: start;
+    vertical-align: top;
+    padding: 8px 16px;
+    border-bottom: 1px solid currentcolor;
+  }
+
+  mat-form-field {
+    min-width: 160px;
+    width: 100%;
+  }
+}
+
+.investment-loading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.investment-section {
+  margin-block: 24px;
+}
+
+.investment-note {
+  padding: 16px;
+  border-inline-start: 4px solid currentcolor;
+}
+
+.investment-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+mat-card {
+  padding: 24px;
+}
+
+mat-form-field {
+  max-width: 100%;
+}
+
+@media (width <= 768px) {
+  mat-card {
+    padding: 16px;
+  }
+
+  .investment-toolbar {
+    max-width: 100%;
+  }
+}

@@ -842,6 +842,12 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'investment-products',
+          loadChildren: () =>
+            import('./investment-products/investment-products.routes').then((m) => m.INVESTMENT_PRODUCT_ROUTES),
+          data: { title: 'Investment.title', breadcrumb: 'Investment.title' }
+        },
+        {
           path: 'fixed-deposit-products',
           data: { title: 'Fixed Deposit Products', breadcrumb: 'Fixed Deposit Products' },
           children: [

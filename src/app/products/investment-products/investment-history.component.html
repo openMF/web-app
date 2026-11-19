@@ -1,0 +1,176 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="investment-section">
+  <h1>{{ 'Investment.history' | translate }}</h1>
+  <div class="investment-toolbar">
+    <mat-form-field
+      ><mat-label>{{ 'Investment.history' | translate }}</mat-label
+      ><mat-select [formControl]="filter">
+        @if (access.has('READ_INVESTMENT_RATE')) {
+          <mat-option value="versions">{{ 'Investment.versions' | translate }}</mat-option
+          ><mat-option value="schedule">{{ 'Investment.schedule' | translate }}</mat-option
+          ><mat-option value="audit">{{ 'Investment.rateAudit' | translate }}</mat-option>
+        }
+        @if (access.has('READ_INVESTMENT_PRODUCT_POLICY')) {
+          <mat-option value="policy">{{ 'Investment.policyAudit' | translate }}</mat-option>
+        }
+      </mat-select></mat-form-field
+    >
+    <button mat-stroked-button (click)="load()" [disabled]="loading()">
+      {{ 'labels.buttons.Refresh' | translate }}
+    </button>
+  </div>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" />
+  <div class="investment-scroll" tabindex="0" [attr.aria-label]="'Investment.history' | translate">
+    <table class="investment-matrix">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'Investment.revision' | translate }}</th>
+          <th scope="col">{{ 'Investment.version' | translate }}</th>
+          <th scope="col">{{ 'Investment.status' | translate }}</th>
+          <th scope="col">{{ 'Investment.recordedAt' | translate }}</th>
+          <th scope="col">{{ 'Investment.actor' | translate }}</th>
+          <th scope="col">{{ 'labels.inputs.Effective Date' | translate }}</th>
+          <th scope="col">{{ 'labels.inputs.Actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (version of versions(); track version.version) {
+          <tr>
+            <td>{{ version.revision }}</td>
+            <td>{{ version.version }}</td>
+            <td>{{ version.status | investmentCode }}</td>
+            <td>{{ version.approvedAtUtc }}</td>
+            <td>
+              {{ 'Investment.maker' | translate }} {{ version.makerId }} / {{ 'Investment.checker' | translate }}
+              {{ version.checkerId }}
+            </td>
+            <td>{{ version.effectiveDate }} · {{ version.timezone }}<br />{{ version.effectiveInstant }}</td>
+            <td>
+              <button mat-button (click)="inspect(version.version)" [disabled]="loading() || version.version === null">
+                {{ 'labels.buttons.View' | translate }}
+              </button>
+            </td>
+          </tr>
+        }
+        @for (audit of rates(); track $index) {
+          <tr>
+            <td>{{ audit.revision }}</td>
+            <td>{{ audit.version ?? ('Investment.unknown' | translate) }}</td>
+            <td>{{ audit.action | investmentCode }}</td>
+            <td>{{ audit.recordedAtUtc }}</td>
+            <td>{{ audit.actorId }}</td>
+            <td>{{ audit.effectiveInstant ?? ('Investment.unknown' | translate) }}</td>
+            <td>
+              {{ 'Investment.previousVersion' | translate }}
+              {{ audit.previousVersion ?? ('Investment.unknown' | translate) }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7">
+              <h3>{{ 'Investment.changes' | translate }}</h3>
+              <table class="investment-matrix">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'Investment.amountRange' | translate }}</th>
+                    <th scope="col">{{ 'Investment.termRange' | translate }}</th>
+                    <th scope="col">{{ 'labels.buttons.Previous' | translate }}</th>
+                    <th scope="col">{{ 'labels.inputs.New' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (change of audit.cellChanges; track $index) {
+                    <tr>
+                      <td>
+                        ≥ {{ change.amountBand.lower }} / {{ change.amountBand.upperInclusive ? '≤' : '&lt;' }}
+                        {{ change.amountBand.upper ?? ('Investment.unbounded' | translate) }}
+                      </td>
+                      <td>{{ change.termBand.minimumDays }}–{{ change.termBand.maximumDays }}</td>
+                      <td>{{ change.previousRate ?? ('Investment.unknown' | translate) }}</td>
+                      <td>{{ change.newRate }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        }
+        @for (audit of policies(); track audit.revision) {
+          <tr>
+            <td>{{ audit.revision }}</td>
+            <td>{{ audit.previousRevision }}</td>
+            <td>{{ audit.operation | investmentCode }}</td>
+            <td>{{ audit.recordedAtUtc }}</td>
+            <td>{{ audit.actorId }}</td>
+            <td>{{ audit.businessDate }}</td>
+            <td>{{ 'Investment.changes' | translate }}</td>
+          </tr>
+          <tr>
+            <td colspan="7">
+              <table class="investment-matrix">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'Investment.field' | translate }}</th>
+                    <th scope="col">{{ 'labels.buttons.Previous' | translate }}</th>
+                    <th scope="col">{{ 'labels.inputs.New' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (field of audit.changedFields; track field) {
+                    <tr>
+                      <th scope="row">{{ field | investmentCode: 'fields' }}</th>
+                      <td>
+                        {{
+                          audit.previousConfiguration?.[field] === null ||
+                          audit.previousConfiguration?.[field] === undefined
+                            ? ('Investment.unknown' | translate)
+                            : (audit.previousConfiguration[field] | json)
+                        }}
+                      </td>
+                      <td>{{ audit.newConfiguration[field] | json }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        }
+        @if (!loading() && !error() && !count()) {
+          <tr>
+            <td colspan="7">{{ 'Investment.noHistory' | translate }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="investment-toolbar">
+    <button mat-stroked-button (click)="page(-1)" [disabled]="loading() || offset === 0">
+      {{ 'labels.buttons.Previous' | translate }}</button
+    ><span>{{ 'labels.text.Page' | translate }} {{ offset / limit + 1 }}</span
+    ><button mat-stroked-button (click)="page(1)" [disabled]="loading() || count() < limit">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+  @if (selected(); as version) {
+    <h2>{{ 'Investment.version' | translate }} {{ version.version }} · {{ version.status | investmentCode }}</h2>
+    <p>{{ version.effectiveDate }} · {{ version.timezone }} · {{ version.effectiveInstant }}</p>
+    <p>
+      {{ 'Investment.previousVersion' | translate }}:
+      {{ version.previousVersion ?? ('Investment.unknown' | translate) }} · {{ 'Investment.revision' | translate }}:
+      {{ version.policyRevision }}
+    </p>
+    @if (version.configuration.campaignMetadata; as campaign) {
+      <p>
+        {{ campaign.name }} · {{ campaign.type | investmentCode }} · {{ campaign.startDate }}–{{ campaign.endDate }}
+      </p>
+    }
+    <mifosx-investment-matrix-view [matrix]="version.configuration.matrix" />
+    <mifosx-investment-feedback [blockers]="version.blockers" [capabilities]="version.capabilities" />
+  }
+</section>
