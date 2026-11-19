@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "Copier le hash complet du commit",
       "Checked seconds ago": "Vérifié il y a {{seconds}} s",
       "Pre-release backend": "Le backend utilise une version préliminaire. Déconseillé pour les données de production.",
-      "Diagnostics copied": "Diagnostic copié dans le presse-papiers"
+      "Diagnostics copied": "Diagnostic copié dans le presse-papiers",
+      "Items per page:": "Éléments par page :",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} sur {{length}}"
     },
     "permissions": {
       "actions": {

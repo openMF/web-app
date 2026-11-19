@@ -6074,7 +6074,9 @@
       "Copy full commit hash": "Vollständigen Commit-Hash kopieren",
       "Checked seconds ago": "Vor {{seconds}} s geprüft",
       "Pre-release backend": "Das Backend läuft mit einer Vorabversion. Für Produktivdaten nicht empfohlen.",
-      "Diagnostics copied": "Diagnose in die Zwischenablage kopiert"
+      "Diagnostics copied": "Diagnose in die Zwischenablage kopiert",
+      "Items per page:": "Elemente pro Seite:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} von {{length}}"
     },
     "permissions": {
       "actions": {

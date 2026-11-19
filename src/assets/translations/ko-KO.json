@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "전체 커밋 해시 복사",
       "Checked seconds ago": "{{seconds}}초 전에 확인됨",
       "Pre-release backend": "백엔드가 사전 릴리스 빌드로 실행 중입니다. 운영 데이터에는 권장되지 않습니다.",
-      "Diagnostics copied": "진단 정보가 클립보드에 복사되었습니다"
+      "Diagnostics copied": "진단 정보가 클립보드에 복사되었습니다",
+      "Items per page:": "페이지당 항목 수:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} / {{length}}"
     },
     "permissions": {
       "actions": {

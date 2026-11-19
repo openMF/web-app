@@ -6072,7 +6072,9 @@
       "Copy full commit hash": "Nakili hashi kamili ya commit",
       "Checked seconds ago": "Imekaguliwa sekunde {{seconds}} zilizopita",
       "Pre-release backend": "Seva ya nyuma inaendesha toleo la kabla ya kutolewa. Haipendekezwi kwa data ya uzalishaji.",
-      "Diagnostics copied": "Taarifa za uchunguzi zimenakiliwa kwenye ubao wa kunakili"
+      "Diagnostics copied": "Taarifa za uchunguzi zimenakiliwa kwenye ubao wa kunakili",
+      "Items per page:": "Vipengee kwa kila ukurasa:",
+      "{{start}} – {{end}} of {{length}}": "{{start}} – {{end}} ya {{length}}"
     },
     "permissions": {
       "actions": {
