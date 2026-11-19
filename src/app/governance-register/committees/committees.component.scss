@@ -45,45 +45,327 @@
   }
 }
 
-// One row per committee instead of a full card each - clicking through to its own page (like the Elections list
-// does for an election) keeps this page scannable instead of stacking every committee's whole roster at once.
-.row {
-  cursor: pointer;
-  transition: background-color 0.15s ease;
+/* ───────────────────────── Each committee, as its own card ───────────────────────── */
 
-  &:hover {
-    background: var(--dk-surface-2, #f1f5f9);
-  }
+.committee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.committee-card {
+  min-width: 0;
+  padding: 24px 26px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 14px;
+  background: var(--mat-sys-surface, var(--dk-surface, #fff));
+  box-shadow: 0 3px 14px rgb(28 43 64 / 5%);
 
   &.inactive {
-    opacity: 0.7;
+    opacity: 0.75;
   }
 }
 
-.title-cell {
+.card-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.title-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 14px;
+  background: linear-gradient(
+    155deg,
+    var(--dk-primary-soft, #e0edf8) 0%,
+    var(--mat-sys-primary-container, #d7e6fb) 100%
+  );
+  color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+  box-shadow: 0 2px 6px rgb(36 96 185 / 14%);
+
+  mat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+  }
+}
+
+.period-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: -0.3px;
+  overflow-wrap: anywhere;
+
+  .chip {
+    font-size: 0.8rem;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    border-radius: 9px;
+  }
+}
+
+// A tinted banner instead of plain inline text, so a warning (an officer holding two seats, say) reads as
+// something that needs attention rather than another line of body copy.
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  border: 1px solid var(--dk-warning-border, #f0d08a);
+  border-radius: 10px;
+  background: var(--dk-warning-soft, #fff4dc);
+  color: var(--dk-text, #5c3d00);
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgb(200 127 10 / 14%);
+    color: var(--dk-warning, #c87f0a);
+    font-size: 19px;
+  }
+}
+
+/* ───────────────────────── Current / past members tables ───────────────────────── */
+
+.card-title {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin: 18px 0 14px;
+  font-size: 1.05rem;
+  font-weight: 750;
 
-  .row-icon {
-    flex: none;
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: var(--dk-primary-soft, #e0edf8);
     color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+    font-size: 17px;
   }
 }
 
-.name {
-  font-weight: 600;
+.committee-card .empty {
+  margin-top: 14px;
+}
+
+.sub {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+// A two-letter badge instead of a bare name, matching the same small-avatar treatment used elsewhere in this app.
+.person-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.person-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.avatar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 10px;
+  background: var(--dk-primary-soft, #e0edf8);
+  color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+  font-size: 12px;
+  font-weight: 750;
+
+  &--muted {
+    background: var(--dk-surface-2, #eceff1);
+    color: var(--dk-text-muted, rgb(127 127 127));
+  }
 }
 
 .row-actions {
   display: inline-flex;
-  flex-wrap: wrap;
   gap: 8px;
 }
 
+// Small tinted-outline squares that fill solid on hover, with an amber and a red variant for ending/voiding a term.
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid var(--dk-primary-soft, #cfe0f3);
+  border-radius: 9px;
+  background: var(--dk-primary-soft, #e0edf8);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  ::ng-deep .mat-mdc-button-touch-target {
+    width: 34px;
+    height: 34px;
+  }
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+    font-size: 18px;
+  }
+
+  &:hover {
+    border-color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+    background: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+    box-shadow: 0 3px 8px rgb(36 96 185 / 25%);
+    transform: translateY(-1px);
+
+    mat-icon {
+      color: #fff;
+    }
+  }
+
+  &--amber {
+    border-color: #f1dfa4;
+    background: var(--dk-warning-soft, #fff4dc);
+
+    mat-icon {
+      color: var(--dk-warning, #c87f0a);
+    }
+
+    &:hover {
+      border-color: var(--dk-warning, #c87f0a);
+      background: var(--dk-warning, #c87f0a);
+      box-shadow: 0 3px 8px rgb(200 127 10 / 25%);
+
+      mat-icon {
+        color: #fff;
+      }
+    }
+  }
+
+  &--red {
+    border-color: #f3cccc;
+    background: var(--dk-danger-soft, #fdeceb);
+
+    mat-icon {
+      color: var(--dk-danger, #c62828);
+    }
+
+    &:hover {
+      border-color: var(--dk-danger, #c62828);
+      background: var(--dk-danger, #c62828);
+      box-shadow: 0 3px 8px rgb(198 40 40 / 25%);
+
+      mat-icon {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.table-card {
+  margin-top: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-card .table-scroll {
+  overflow-x: auto;
+}
+
+.table-card table.blue {
+  border: 0;
+  border-radius: 0;
+}
+
+.past-members {
+  margin-top: 18px;
+  border-top: 1px solid var(--dk-border, #e2e8f0);
+  padding-top: 14px;
+
+  .table-card {
+    margin-top: 10px;
+  }
+
+  .empty {
+    margin: 10px 0 0;
+  }
+
+  // A bordered pill instead of a bare text link, so the expand/collapse control reads as a control rather than
+  // another line of body text.
+  > button {
+    padding: 6px 14px 6px 10px;
+    border: 1px solid var(--dk-primary-soft, #cfe0f3);
+    border-radius: 20px;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background: var(--dk-primary-soft, #e0edf8);
+    }
+  }
+}
+
+// A mistake, crossed out but kept in the history (fineract-dbug #138: nothing is deleted).
+tr.voided {
+  color: var(--dk-text-muted, rgb(127 127 127));
+  text-decoration: line-through;
+}
+
+// table.blue's own header styling (in the shared compliance mixin) targets Angular Material's mat-table markup
+// (.mat-mdc-header-row/th.mat-mdc-header-cell); this is a plain <table><thead>, so it never matched. Same blue
+// header, aimed at the real markup instead.
 table.blue {
   border-collapse: collapse;
 }
@@ -103,32 +385,29 @@ table.blue thead th:not(:last-child) {
 
 table.blue tbody td {
   padding: 16px 20px;
+  border-bottom: 1px solid var(--dk-border, #e2e8f0);
 }
 
-table.blue .num {
-  text-align: right;
-  white-space: nowrap;
+table.blue tbody tr:last-child td {
+  border-bottom: none;
 }
 
-.table-card {
-  margin-top: 16px;
-  border-radius: 10px;
-  overflow: hidden;
-}
+table.blue tbody tr {
+  transition: background-color 0.15s ease;
 
-.table-card .table-scroll {
-  overflow-x: auto;
-}
+  &:nth-child(even) {
+    background: var(--dk-surface-2, #f8fafc);
+  }
 
-.table-card table.blue {
-  border: 0;
-  border-radius: 0;
+  &:hover {
+    background: var(--dk-primary-soft, #eef4fc);
+  }
 }
 
 @media (width <= 720px) {
-  // Collapses the table into a stack of labelled cards - several columns of committee data don't fit a phone
-  // screen, and this keeps every value readable without the sideways scroll the compliance-page mixin otherwise
-  // forces.
+  // Collapses each committee's tables into a stack of labelled cards - several columns of member data don't fit
+  // a phone screen, and this keeps every value readable without the sideways scroll the compliance-page mixin
+  // otherwise forces.
   .table-card .table-scroll {
     overflow: visible;
   }
@@ -147,10 +426,6 @@ table.blue .num {
     border: 1px solid var(--dk-border, #e2e8f0);
     border-radius: 10px;
     overflow: hidden;
-
-    &:nth-child(even) {
-      background: var(--dk-surface-2, #f8fafc);
-    }
   }
 
   table.blue tbody tr:last-child {
@@ -175,12 +450,11 @@ table.blue .num {
     font-size: 0.75rem;
     text-align: left;
   }
+}
 
-  .title-cell {
-    justify-content: flex-end;
-  }
-
-  .row-actions {
-    justify-content: flex-end;
+@media (width <= 600px) {
+  .card-title-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
