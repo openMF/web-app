@@ -23,7 +23,8 @@ import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { TemplatesService } from 'app/templates/templates.service';
+import { PRINT_HEAD } from 'app/templates/template-merge';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -43,7 +44,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ClientScreenReportsComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  private clientsService = inject(ClientsService);
+  private templatesService = inject(TemplatesService);
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   private renderer = inject(Renderer2);
@@ -64,7 +65,6 @@ export class ClientScreenReportsComponent implements OnInit {
   /**
    * Fetches Client Action Data from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {ClientsService} clientsService Clients Service
    * @param {ActivatedRoute} route Activated Route
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
@@ -97,7 +97,7 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
+    templateWindow.document.write('<html><head>' + PRINT_HEAD);
     templateWindow.document.write('</head><body>');
     templateWindow.document.write(this.template);
     templateWindow.document.write('</body></html>');
@@ -110,7 +110,7 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   generate() {
     const templateId = this.clientScreenReportForm.get('templateId').value;
-    this.clientsService.retrieveClientReportTemplate(templateId, this.clientId).subscribe((response: any) => {
+    this.templatesService.fillTemplate(templateId, { clientId: this.clientId }).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });

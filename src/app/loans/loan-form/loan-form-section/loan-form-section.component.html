@@ -1,0 +1,131 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<form [formGroup]="form">
+  @if (section.description) {
+    <p class="section-description">{{ section.description }}</p>
+  }
+
+  <div class="layout-row-wrap gap-2px responsive-column">
+    @for (field of fields; track field.key) {
+      @if (isShown(field)) {
+        @let fieldError = error(field);
+        <div
+          class="field"
+          [class.full-width]="field.type === 'textarea' || field.type === 'radio'"
+          [attr.data-field]="field.key"
+        >
+          @switch (field.type) {
+            @case ('checkbox') {
+              <mat-checkbox [formControlName]="field.key" [required]="!!field.required">
+                {{ field.label }}
+              </mat-checkbox>
+              @if (field.description) {
+                <div class="hint">{{ field.description }}</div>
+              }
+              @if (fieldError) {
+                <mat-error>{{ fieldError.key | translate: fieldError.params }}</mat-error>
+              }
+            }
+
+            @case ('radio') {
+              <label class="radio-label" [id]="field.key + '-label'">
+                {{ field.label }}{{ field.required ? ' *' : '' }}
+              </label>
+              <mat-radio-group [formControlName]="field.key" [attr.aria-labelledby]="field.key + '-label'">
+                @for (option of field.options; track option.value) {
+                  <mat-radio-button [value]="option.value">{{ option.label }}</mat-radio-button>
+                }
+              </mat-radio-group>
+              @if (field.description) {
+                <div class="hint">{{ field.description }}</div>
+              }
+              @if (fieldError) {
+                <mat-error>{{ fieldError.key | translate: fieldError.params }}</mat-error>
+              }
+            }
+
+            @case ('date') {
+              <mifosx-nepali-date-input [label]="field.label" [formControlName]="field.key" />
+              @if (fieldError) {
+                <mat-error>{{ fieldError.key | translate: fieldError.params }}</mat-error>
+              }
+            }
+
+            @default {
+              <mat-form-field class="flex-fill">
+                <mat-label>{{ field.label }}</mat-label>
+                @switch (field.type) {
+                  @case ('textarea') {
+                    <textarea
+                      matInput
+                      rows="3"
+                      [formControlName]="field.key"
+                      [placeholder]="field.placeholder ?? ''"
+                      [required]="!!field.required"
+                    ></textarea>
+                  }
+                  @case ('select') {
+                    <mat-select [formControlName]="field.key" [required]="!!field.required">
+                      @if (!field.required) {
+                        <mat-option [value]="null"></mat-option>
+                      }
+                      @for (option of field.options; track option.value) {
+                        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                      }
+                    </mat-select>
+                  }
+                  @case ('multiselect') {
+                    <mat-select multiple [formControlName]="field.key" [required]="!!field.required">
+                      @for (option of field.options; track option.value) {
+                        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                      }
+                    </mat-select>
+                  }
+                  @case ('readonly') {
+                    <input matInput readonly [formControlName]="field.key" />
+                  }
+                  @default {
+                    <input
+                      matInput
+                      [type]="
+                        field.type === 'number' || field.type === 'currency' || field.type === 'percentage'
+                          ? 'number'
+                          : field.type === 'datetime'
+                            ? 'datetime-local'
+                            : field.type
+                      "
+                      [formControlName]="field.key"
+                      [placeholder]="field.placeholder ?? ''"
+                      [required]="!!field.required"
+                      [attr.min]="field.min"
+                      [attr.max]="field.max"
+                      [attr.maxlength]="field.maxLength"
+                    />
+                  }
+                }
+                @if (field.type === 'currency' && field.currency) {
+                  <span matTextPrefix>{{ field.currency }}&nbsp;</span>
+                }
+                @if (field.type === 'percentage') {
+                  <span matTextSuffix>%</span>
+                }
+                @if (field.description) {
+                  <mat-hint>{{ field.description }}</mat-hint>
+                }
+                @if (fieldError) {
+                  <mat-error>{{ fieldError.key | translate: fieldError.params }}</mat-error>
+                }
+              </mat-form-field>
+            }
+          }
+        </div>
+      }
+    }
+  </div>
+</form>

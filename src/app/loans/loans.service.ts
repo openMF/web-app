@@ -566,11 +566,6 @@ export class LoansService {
     return this.http.put(`/${productType}/${loanId}`, loanData);
   }
 
-  getTemplateData(templateId: any, loanId: any): Observable<any> {
-    const httpParams = new HttpParams().set('loanId', loanId);
-    return this.http.get(`/templates/${templateId}`, { params: httpParams, responseType: 'text' });
-  }
-
   /**
    * Get Loan Charge Aproval template.
    * @param {string} loanId Loan Id.

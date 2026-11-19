@@ -291,11 +291,20 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   }
 
   addFormControlsBasedOnProductType(): void {
+    const standingInstruction = new UntypedFormControl('');
+    // Fineract refuses the loan (`linkAccountId` is mandatory) when instalments are to be collected from a savings
+    // account that was not chosen; the product can tick the box on its own, so say so here, not after submitting.
+    const linkAccountId = new UntypedFormControl('', (control) =>
+      standingInstruction.value && !control.value ? { required: true } : null
+    );
+    standingInstruction.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => linkAccountId.updateValueAndValidity());
     const loanOnlyControls: Record<string, UntypedFormControl> = {
       loanOfficerId: new UntypedFormControl(''),
       loanPurposeId: new UntypedFormControl(''),
-      linkAccountId: new UntypedFormControl(''),
-      createStandingInstructionAtDisbursement: new UntypedFormControl('')
+      linkAccountId,
+      createStandingInstructionAtDisbursement: standingInstruction
     };
 
     if (this.loanProductService.isLoanProduct) {

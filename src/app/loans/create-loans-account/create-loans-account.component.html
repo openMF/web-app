@@ -86,14 +86,19 @@
           }
 
           @for (datatable of datatables; track datatable) {
-            <mat-step>
-              <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
+            <mat-step #dtstep>
+              <ng-template matStepLabel>{{ datatablesUtil.toDisplayLabel(datatable.registeredTableName) }}</ng-template>
               <mifosx-loans-account-datatable-step
                 [datatableData]="datatable"
                 #dtloan
               ></mifosx-loans-account-datatable-step>
             </mat-step>
           }
+
+          <mat-step #documentsMatStep>
+            <ng-template matStepLabel>{{ 'loanForm.Supporting documents' | translate }}</ng-template>
+            <mifosx-loans-account-documents-step></mifosx-loans-account-documents-step>
+          </mat-step>
         }
 
         @if (loansAccountFormValid) {

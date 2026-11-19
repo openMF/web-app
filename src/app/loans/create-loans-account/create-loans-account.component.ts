@@ -43,6 +43,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBasicDetails } from '../models/loan-product.model';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { Dates } from 'app/core/utils/dates';
+import { Datatables } from 'app/core/utils/datatables';
+import { LoansAccountDocumentsStepComponent } from '../loans-account-stepper/loans-account-documents-step/loans-account-documents-step.component';
+import { catchError, concatMap, from, map, of, toArray } from 'rxjs';
 
 /**
  * Create loans account
@@ -64,6 +67,7 @@ import { Dates } from 'app/core/utils/dates';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent,
+    LoansAccountDocumentsStepComponent,
     MatIcon
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -77,6 +81,7 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
   private cdr = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
+  readonly datatablesUtil = inject(Datatables);
 
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: false })
@@ -86,6 +91,10 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
   loansAccountChargesStep: LoansAccountChargesStepComponent;
   /** Get handle on dtloan tags in the template */
   @ViewChildren('dtloan') loanDatatables: QueryList<LoansAccountDatatableStepComponent>;
+  /** The steps holding them, in the same order, to open the first one left incomplete. */
+  @ViewChildren('dtstep') datatableSteps: QueryList<MatStep>;
+  @ViewChild(LoansAccountDocumentsStepComponent) documentsStep: LoansAccountDocumentsStepComponent;
+  @ViewChild('documentsMatStep') documentsMatStep: MatStep;
 
   /** Loans Account Template */
   loansAccountTemplate: any;
@@ -265,7 +274,27 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     }
   }
 
+  /** Opens the first section or the documents step with a missing or wrong value; false when all are fine. */
+  private openIncompleteStep(): boolean {
+    const sections = this.loanDatatables.toArray();
+    const invalid = sections.findIndex((section) => section.form.invalid);
+    if (invalid >= 0) {
+      sections.forEach((section) => section.form.markAllAsTouched());
+      this.datatableSteps.get(invalid).select();
+      return true;
+    }
+    if (this.documentsStep?.form.invalid) {
+      this.documentsStep.form.markAllAsTouched();
+      this.documentsMatStep.select();
+      return true;
+    }
+    return false;
+  }
+
   submitLoanProduct() {
+    if (this.openIncompleteStep()) {
+      return;
+    }
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(
@@ -284,8 +313,24 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
       payload['datatables'] = datatables;
     }
 
+    const documents = this.documentsStep?.documents ?? [];
     this.loansService
       .createLoansAccount(this.loanProductService.loanAccountPath, payload)
+      .pipe(
+        // The loan exists now; a document that fails is reported by the error handler and can be added again from
+        // the loan's Documents tab, so it does not stop the others or the move to the new loan.
+        concatMap((response: any) =>
+          from(documents).pipe(
+            concatMap((document) =>
+              this.loansService
+                .loadLoanDocument(response.resourceId, this.documentFormData(document))
+                .pipe(catchError(() => of(null)))
+            ),
+            toArray(),
+            map(() => response)
+          )
+        )
+      )
       .subscribe((response: any) => {
         this.router.navigate(
           [
@@ -301,6 +346,14 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
           }
         );
       });
+  }
+
+  private documentFormData(document: { file: File; name: string; description: string }): FormData {
+    const formData = new FormData();
+    formData.append('name', document.name);
+    formData.append('file', document.file);
+    formData.append('description', document.description);
+    return formData;
   }
 
   submitWorkingCapitalProduct() {
