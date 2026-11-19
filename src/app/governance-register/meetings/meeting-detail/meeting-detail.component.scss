@@ -32,16 +32,22 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--dk-primary-soft, #e0edf8);
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 13px;
+  background: linear-gradient(
+    155deg,
+    var(--dk-primary-soft, #e0edf8) 0%,
+    var(--mat-sys-primary-container, #d7e6fb) 100%
+  );
   color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
+  box-shadow: 0 2px 6px rgb(36 96 185 / 14%);
 
   mat-icon {
-    width: 21px;
-    height: 21px;
-    font-size: 21px;
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
   }
 }
 
@@ -52,11 +58,16 @@
 .meeting-tabs {
   display: block;
   margin: 16px 0 0;
-  padding: 6px 0 18px;
+  padding: 0 0 18px;
+  overflow: hidden;
   border: 1px solid var(--dk-border, #e2e8f0);
   border-radius: 14px;
   background: var(--mat-sys-surface, var(--dk-surface, #fff));
   box-shadow: 0 3px 14px rgb(28 43 64 / 5%);
+
+  ::ng-deep .mat-mdc-tab-header {
+    border-bottom: 1px solid var(--dk-border, #e2e8f0);
+  }
 
   ::ng-deep .mat-mdc-tab-label-container {
     padding: 0 10px;
@@ -64,10 +75,29 @@
 
   ::ng-deep .mdc-tab {
     gap: 8px;
+    opacity: 0.75;
+    transition: opacity 0.15s ease;
 
     mat-icon {
       color: inherit;
     }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  ::ng-deep .mdc-tab--active {
+    opacity: 1;
+
+    .mdc-tab__text-label {
+      font-weight: 700;
+    }
+  }
+
+  ::ng-deep .mdc-tab-indicator__content--underline {
+    border-top-width: 3px;
+    border-radius: 3px 3px 0 0;
   }
 }
 
@@ -114,8 +144,11 @@
   margin-bottom: 4px;
 
   .chip {
-    padding: 4px 14px;
-    font-size: 0.8rem;
+    padding: 5px 16px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     line-height: 1.4;
   }
 }
@@ -123,14 +156,11 @@
 .period-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-
-  mat-icon {
-    color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
-  }
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: -0.2px;
 }
 
 .facts {
@@ -149,22 +179,18 @@
   align-items: flex-start;
   gap: 4px;
   padding: 12px 14px;
-  border: 1px solid transparent;
+  border: 1px solid var(--dk-border, #e2e8f0);
   border-radius: 10px;
-  background: var(--dk-surface-2, #f1f5f9);
-  transition:
-    border-color 0.15s ease,
-    transform 0.15s ease;
-
-  &:hover {
-    border-color: var(--dk-border, #e2e8f0);
-    transform: translateY(-1px);
-  }
+  background: var(--mat-sys-surface, #fff);
+  box-shadow: 0 1px 4px rgb(28 43 64 / 4%);
 }
 
 .fact-label {
   color: var(--dk-text-muted, rgb(127 127 127));
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 
   &::after {
     content: '';
@@ -296,22 +322,11 @@ mifosx-nepali-date-input {
   list-style: none;
 
   li {
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    border: 1px solid var(--dk-border, #e2e8f0);
-    border-radius: 10px;
-    background: var(--dk-surface-2, #f8fafc);
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease;
-
-    &:hover {
-      border-color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
-      box-shadow: 0 1px 6px rgb(0 0 0 / 6%);
-    }
+    padding: 14px 0;
+    border-bottom: 1px solid var(--dk-border, #e2e8f0);
 
     &:last-child {
-      margin-bottom: 0;
+      border-bottom: none;
     }
 
     &.voided {
@@ -323,23 +338,16 @@ mifosx-nepali-date-input {
 .decision-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.number {
-  flex: none;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: var(--dk-primary-soft, #e0edf8);
-  color: var(--md-sys-color-primary, var(--dk-primary, #2460b9));
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.subject {
-  flex: 1;
-  font-weight: 600;
+// The decision's own Number/Subject/Wording, as the same labelled fact tiles the meeting's own header card uses
+// for Kind/Fiscal year/Decisions/Approved on - one consistent way of showing a label and its value everywhere
+// on this page.
+.decision-facts {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .struck {
@@ -385,9 +393,8 @@ mifosx-nepali-date-input {
   }
 }
 
-.wording {
-  margin: 6px 0 0;
-  color: var(--dk-text, inherit);
+// The wording fact keeps the line breaks it was written with, since it's the decision cited as actually written.
+.fact--wording .fact-value {
   white-space: pre-wrap;
 }
 
@@ -437,13 +444,54 @@ mifosx-nepali-date-input {
     margin-left: auto;
   }
 
-  .file-thumb {
+  // The view action lives on the thumbnail itself now, revealed on hover, instead of a separate button beside
+  // Download - the same treatment the person page's own document thumbnails already use.
+  .file-thumb-wrap {
+    position: relative;
+    display: block;
     flex: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+  }
+
+  .file-thumb {
     width: 40px;
     height: 40px;
     border-radius: 8px;
     border: 1px solid var(--dk-border, #e2e8f0);
     object-fit: cover;
+  }
+
+  .view-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgb(0 0 0 / 0%);
+    opacity: 0;
+    transition:
+      opacity 0.15s ease,
+      background-color 0.15s ease;
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+
+  .file-thumb-wrap:hover .view-overlay,
+  .file-thumb-wrap:focus-visible .view-overlay {
+    background: rgb(0 0 0 / 45%);
+    opacity: 1;
   }
 
   .file-icon {

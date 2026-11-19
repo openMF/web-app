@@ -220,6 +220,36 @@ tr.voided {
   padding: 18px 22px 0;
 }
 
+// A dashed, icon-led placeholder instead of a bare line of muted text, so a tab with nothing in it yet still
+// reads as a deliberate state rather than a page that failed to load.
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  margin-bottom: 18px;
+  border: 1.5px dashed var(--dk-border, #e2e8f0);
+  border-radius: 12px;
+  background: var(--dk-surface-2, #f8fafc);
+  text-align: center;
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--dk-text-muted, rgb(148 163 184));
+    font-size: 40px;
+    opacity: 0.6;
+  }
+
+  p {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.92rem;
+  }
+}
+
 .tab-panel-header {
   display: flex;
   flex-wrap: wrap;

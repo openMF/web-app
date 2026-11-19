@@ -242,9 +242,9 @@
       <mat-tab>
         <ng-template mat-tab-label><mat-icon>gavel</mat-icon>{{ 'meetings.Decisions' | translate }}</ng-template>
         <div class="tab-panel">
-          <div class="tab-panel-header">
-            <span class="grow"></span>
-            @if (m.status === 'DRAFT') {
+          @if (m.status === 'DRAFT') {
+            <div class="tab-panel-header">
+              <span class="grow"></span>
               <button
                 mat-flat-button
                 color="primary"
@@ -254,15 +254,27 @@
               >
                 <mat-icon>add</mat-icon>{{ 'meetings.AddDecision' | translate }}
               </button>
-            }
-          </div>
+            </div>
+          }
           @if (m.decisions.length) {
             <ul class="decisions">
               @for (d of m.decisions; track d.id) {
                 <li [class.voided]="d.voided">
                   <div class="decision-header">
-                    <span class="number">{{ 'meetings.DecisionNumber' | translate: { number: d.number } }}</span>
-                    <span class="subject" [class.struck]="d.voided">{{ d.subject }}</span>
+                    <div class="facts decision-facts">
+                      <div class="fact">
+                        <span class="fact-label">{{ 'meetings.Number' | translate }}</span>
+                        <span class="fact-value">{{ d.number }}</span>
+                      </div>
+                      <div class="fact">
+                        <span class="fact-label">{{ 'meetings.Subject' | translate }}</span>
+                        <span class="fact-value" [class.struck]="d.voided">{{ d.subject }}</span>
+                      </div>
+                      <div class="fact fact--wording">
+                        <span class="fact-label">{{ 'meetings.Wording' | translate }}</span>
+                        <span class="fact-value" [class.struck]="d.voided">{{ d.wording }}</span>
+                      </div>
+                    </div>
                     @if (m.status === 'DRAFT' && !d.voided) {
                       <span class="decision-actions">
                         <button
@@ -286,7 +298,6 @@
                       </span>
                     }
                   </div>
-                  <p class="wording" [class.struck]="d.voided">{{ d.wording }}</p>
                   @if (d.voided) {
                     <p class="sub">{{ 'governanceRegister.committees.Mistake' | translate }}: {{ d.voidReason }}</p>
                   }
@@ -315,9 +326,9 @@
       <mat-tab>
         <ng-template mat-tab-label><mat-icon>upload_file</mat-icon>{{ 'meetings.Minutes' | translate }}</ng-template>
         <div class="tab-panel">
-          <div class="tab-panel-header">
-            <span class="grow"></span>
-            @if (m.status === 'DRAFT') {
+          @if (m.status === 'DRAFT') {
+            <div class="tab-panel-header">
+              <span class="grow"></span>
               <button
                 mat-flat-button
                 color="primary"
@@ -340,14 +351,22 @@
                 accept="application/pdf,image/*"
                 (change)="uploadMinutes($event)"
               />
-            }
-          </div>
+            </div>
+          }
           @if (m.minutes.length) {
             <ul class="files">
               @for (f of m.minutes; track f.id) {
                 <li>
                   @if (minutesThumbs()[f.id]; as thumb) {
-                    <img class="file-thumb" [src]="thumb" alt="" />
+                    <button
+                      type="button"
+                      class="file-thumb-wrap"
+                      [matTooltip]="'labels.buttons.View' | translate"
+                      (click)="viewFile(thumb)"
+                    >
+                      <img class="file-thumb" [src]="thumb" alt="" />
+                      <span class="view-overlay"><mat-icon>visibility</mat-icon></span>
+                    </button>
                   } @else {
                     <span class="file-icon">
                       <mat-icon>{{
@@ -360,16 +379,6 @@
                     <span class="sub">{{ f.addedOn }} · {{ f.addedBy }}</span>
                   </div>
                   <span class="row-actions">
-                    @if (minutesThumbs()[f.id]; as thumb) {
-                      <button
-                        mat-icon-button
-                        type="button"
-                        [matTooltip]="'labels.buttons.View' | translate"
-                        (click)="viewFile(thumb)"
-                      >
-                        <mat-icon>visibility</mat-icon>
-                      </button>
-                    }
                     <button mat-button type="button" (click)="downloadFile(f.id, f.fileName)">
                       {{ 'labels.buttons.Download' | translate }}
                     </button>

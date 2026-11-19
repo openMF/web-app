@@ -52,6 +52,7 @@
                 <tr>
                   <th>{{ 'labels.inputs.name' | translate }}</th>
                   <th>{{ 'governanceRegister.Position' | translate }}</th>
+                  <th>{{ 'governanceRegister.directors.TermNumber' | translate }}</th>
                   <th>{{ 'governanceRegister.ServingSince' | translate }}</th>
                   <th>{{ 'governanceRegister.TermEndsOn' | translate }}</th>
                   <th>{{ 'governanceRegister.directors.WhatIsLeft' | translate }}</th>
@@ -68,6 +69,7 @@
                       }
                     </td>
                     <td>{{ positionLabel(d.positionCode, d.positionName) | translate }}</td>
+                    <td>{{ d.termNumber }}</td>
                     <td>{{ (d.servingSince | adToBs) || d.servingSince }}</td>
                     <td>{{ (d.termEndsOn | adToBs) || d.termEndsOn || '-' }}</td>
                     <td>

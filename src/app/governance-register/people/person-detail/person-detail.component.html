@@ -155,7 +155,10 @@
             }
 
             @if (!rp.links.length && !rp.related.length) {
-              <p class="empty">{{ 'relatedParties.NothingLinked' | translate }}</p>
+              <div class="empty-state">
+                <mat-icon>group_off</mat-icon>
+                <p>{{ 'relatedParties.NothingLinked' | translate }}</p>
+              </div>
             }
           }
         </div>
@@ -230,7 +233,10 @@
               </div>
             </div>
           } @else {
-            <p class="empty">{{ 'governanceRegister.people.NothingServing' | translate }}</p>
+            <div class="empty-state">
+              <mat-icon>work_off</mat-icon>
+              <p>{{ 'governanceRegister.people.NothingServing' | translate }}</p>
+            </div>
           }
 
           <h3 class="section-label divider-top">{{ 'governanceRegister.people.History' | translate }}</h3>
@@ -268,7 +274,10 @@
               </div>
             </div>
           } @else {
-            <p class="empty">{{ 'governanceRegister.people.NoHistory' | translate }}</p>
+            <div class="empty-state">
+              <mat-icon>history</mat-icon>
+              <p>{{ 'governanceRegister.people.NoHistory' | translate }}</p>
+            </div>
           }
         </div>
       </mat-tab>
@@ -342,7 +351,10 @@
               }
             </ul>
           } @else {
-            <p class="empty">{{ 'governanceRegister.documents.Empty' | translate }}</p>
+            <div class="empty-state">
+              <mat-icon>folder_open</mat-icon>
+              <p>{{ 'governanceRegister.documents.Empty' | translate }}</p>
+            </div>
           }
         </div>
       </mat-tab>

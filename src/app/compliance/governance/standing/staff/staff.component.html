@@ -69,9 +69,11 @@
           <tbody>
             @for (e of employees(); track e.staffId) {
               <tr class="row" [class.unlinked]="e.active && !e.clientId">
-                <td class="name-cell" [attr.data-label]="'labels.inputs.Staff' | translate">
-                  <span class="avatar">{{ initials(e.staffName) }}</span>
-                  <span>{{ e.staffName }}</span>
+                <td [attr.data-label]="'labels.inputs.Staff' | translate">
+                  <span class="name-cell">
+                    <span class="avatar">{{ initials(e.staffName) }}</span>
+                    <span>{{ e.staffName }}</span>
+                  </span>
                 </td>
                 <td [attr.data-label]="'labels.inputs.Office' | translate">{{ e.officeName }}</td>
                 <td [attr.data-label]="'labels.inputs.Status' | translate">

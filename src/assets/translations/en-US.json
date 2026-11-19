@@ -7309,6 +7309,7 @@
     "committees": {
       "Committees": "Committees",
       "AsOf": "As of",
+      "ViewAsOf": "View this committee as of",
       "IncludeInactive": "Include inactive",
       "AddCommittee": "Add a committee",
       "EditCommittee": "Edit the committee",
@@ -7433,6 +7434,7 @@
     "directors": {
       "DirectorsTable": "Directors' table",
       "WhatIsLeft": "What is left",
+      "TermNumber": "Term",
       "Empty": "No directors recorded.",
       "remaining": "{{years}}y {{months}}m {{days}}d"
     },

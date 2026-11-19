@@ -7310,6 +7310,7 @@
     "committees": {
       "Committees": "समितिहरू",
       "AsOf": "मिति सम्म",
+      "ViewAsOf": "यो समिति यो मितिसम्म हेर्नुहोस्",
       "IncludeInactive": "निष्क्रिय पनि देखाउनुहोस्",
       "AddCommittee": "समिति थप्नुहोस्",
       "EditCommittee": "समिति सम्पादन गर्नुहोस्",
@@ -7434,6 +7435,7 @@
     "directors": {
       "DirectorsTable": "सञ्चालक तालिका",
       "WhatIsLeft": "बाँकी अवधि",
+      "TermNumber": "कार्यकाल",
       "Empty": "कुनै सञ्चालक दर्ता छैन।",
       "remaining": "{{years}} वर्ष {{months}} महिना {{days}} दिन"
     },

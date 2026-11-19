@@ -136,6 +136,7 @@ table.blue thead th:not(:last-child) {
 table.blue tbody td {
   padding: 16px 20px;
   border-bottom: 1px solid var(--dk-border, #e2e8f0);
+  vertical-align: middle;
 }
 
 table.blue tbody tr:last-child td {

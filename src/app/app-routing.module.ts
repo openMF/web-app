@@ -394,20 +394,6 @@ const routes: Routes = [
             routeParamBreadcrumb: false,
             parentBreadcrumb: { label: 'People', url: '/governance-register/people' }
           }
-        },
-        {
-          // A committee's own page: a sibling of the tab shell too, same reasoning as people/:id above.
-          path: 'committees/:id',
-          loadComponent: () =>
-            import('./governance-register/committees/committee-detail/committee-detail.component').then(
-              (m) => m.CommitteeDetailComponent
-            ),
-          data: {
-            title: 'Committee',
-            breadcrumb: 'Committee',
-            routeParamBreadcrumb: false,
-            parentBreadcrumb: { label: 'Committees', url: '/governance-register/committees' }
-          }
         }
       ]
     },
