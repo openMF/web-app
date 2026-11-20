@@ -508,6 +508,54 @@ describe('LoansAccountTermsStepComponent — Working Capital grace days and star
     expect(terms.delinquencyGraceDays).toBeNull();
     expect(terms.breachGraceDays).toBeNull();
   });
+
+  it('clears delinquency bucket and its dependent grace days and start type on clearProperty', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({
+      delinquencyBucketId: 2,
+      delinquencyGraceDays: 5,
+      delinquencyStartType: 'DISBURSEMENT'
+    });
+    const event = { stopPropagation: jest.fn() } as unknown as Event;
+    component.clearProperty(event, 'delinquencyBucketId');
+
+    expect(component.loansAccountTermsForm.get('delinquencyBucketId')!.value).toBe('');
+    expect(component.loansAccountTermsForm.get('delinquencyGraceDays')!.value).toBe('');
+    expect(component.loansAccountTermsForm.get('delinquencyStartType')!.value).toBe('');
+    expect(event.stopPropagation).toHaveBeenCalled();
+  });
+
+  it('clears breach and near-breach and grace days on clearProperty', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({
+      breachId: 3,
+      nearBreachId: 4,
+      breachGraceDays: 5
+    });
+    const event = { stopPropagation: jest.fn() } as unknown as Event;
+    component.clearProperty(event, 'breachId');
+
+    expect(component.loansAccountTermsForm.get('breachId')!.value).toBe('');
+    expect(component.loansAccountTermsForm.get('nearBreachId')!.value).toBe('');
+    expect(component.loansAccountTermsForm.get('breachGraceDays')!.value).toBe('');
+    expect(event.stopPropagation).toHaveBeenCalled();
+  });
+
+  it('clears only near-breach when nearBreachId is cleared', () => {
+    selectProduct(templateFor(11, { delinquencyBucketClassification: true, breach: true }));
+    component.loansAccountTermsForm.patchValue({
+      breachId: 3,
+      nearBreachId: 4,
+      breachGraceDays: 5
+    });
+    const event = { stopPropagation: jest.fn() } as unknown as Event;
+    component.clearProperty(event, 'nearBreachId');
+
+    expect(component.loansAccountTermsForm.get('breachId')!.value).toBe(3);
+    expect(component.loansAccountTermsForm.get('nearBreachId')!.value).toBe('');
+    expect(component.loansAccountTermsForm.get('breachGraceDays')!.value).toBe(5);
+    expect(event.stopPropagation).toHaveBeenCalled();
+  });
 });
 
 describe('LoansAccountTermsStepComponent — nominal interest rate', () => {
