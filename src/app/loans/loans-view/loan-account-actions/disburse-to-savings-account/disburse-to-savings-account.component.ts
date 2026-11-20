@@ -85,7 +85,7 @@ export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseCom
   setDisbursementToSavingsForm() {
     this.disbursementForm = this.formBuilder.group({
       actualDisbursementDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       transactionAmount: [
