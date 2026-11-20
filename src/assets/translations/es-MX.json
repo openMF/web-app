@@ -839,7 +839,8 @@
     "clipboard": {
       "type": "Portapapeles",
       "copied": "Copiado: {{value}}",
-      "copyFailed": "No se pudieron copiar las coordenadas."
+      "copyFailed": "No se pudieron copiar las coordenadas.",
+      "failed": "Error al copiar al portapapeles"
     },
     "tenant": {
       "changed": {

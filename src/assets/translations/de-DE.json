@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Zwischenablage",
       "copied": "Kopiert: {{value}}",
-      "copyFailed": "Die Koordinaten konnten nicht kopiert werden."
+      "copyFailed": "Die Koordinaten konnten nicht kopiert werden.",
+      "failed": "Kopieren in die Zwischenablage fehlgeschlagen"
     },
     "tenant": {
       "changed": {

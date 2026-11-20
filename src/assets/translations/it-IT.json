@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Appunti",
       "copied": "Copiato: {{value}}",
-      "copyFailed": "Impossibile copiare le coordinate."
+      "copyFailed": "Impossibile copiare le coordinate.",
+      "failed": "Copia negli appunti non riuscita"
     },
     "tenant": {
       "changed": {

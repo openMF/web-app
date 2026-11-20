@@ -838,7 +838,8 @@
     "clipboard": {
       "type": "Schránka",
       "copied": "Zkopírováno: {{value}}",
-      "copyFailed": "Souřadnice se nepodařilo zkopírovat."
+      "copyFailed": "Souřadnice se nepodařilo zkopírovat.",
+      "failed": "Kopírování do schránky se nezdařilo"
     },
     "tenant": {
       "changed": {
