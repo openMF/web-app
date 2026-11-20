@@ -29,6 +29,13 @@ export interface GLAccount {
   type: OptionData;
   usage: OptionData;
   parentId?: number;
+  tagId?: GLAccountTag;
+}
+
+/** Tag assigned to a GL Account. */
+export interface GLAccountTag {
+  id: number;
+  name?: string;
 }
 
 export interface AccountingMapping {
