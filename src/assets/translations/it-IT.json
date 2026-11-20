@@ -9171,5 +9171,35 @@
       "identity": "Identità e domicilio",
       "other": "Altro"
     }
+  },
+  "branchServices": {
+    "title": "Servizi della filiale",
+    "description": "Servizi configurati per {{office}} e relativi orari registrati.",
+    "search": "Cerca servizi",
+    "add": "Aggiungi servizio",
+    "coverage": "Copertura degli orari abituali",
+    "branchHours": "Orari della filiale",
+    "recordedHours": "Orari dei servizi registrati",
+    "configuredServices": "Servizi configurati",
+    "count": "Servizi: {{count}}",
+    "configured": "Configurato",
+    "hoursUnavailable": "Orari del servizio non disponibili",
+    "noMatches": "Nessun servizio corrispondente",
+    "catalog": "Catalogo dei servizi",
+    "catalogDescription": "Catalogo dei servizi di filiale dell’istituto.",
+    "catalogUnavailable": "Catalogo non disponibile",
+    "catalogExplanation": "Nessun catalogo compatibile disponibile.",
+    "catalogAddGuidance": "Usa Aggiungi servizio per configurare un servizio per questa filiale.",
+    "timezone": "Fuso orario della filiale non disponibile. Si confrontano gli orari abituali, non la disponibilità odierna.",
+    "verification": "I giorni dei servizi non sono registrati. Non è possibile verificare la corrispondenza con gli orari della filiale.",
+    "unparsed": "Servizi con orari mancanti o in testo libero: {{count}}. Consulta i servizi configurati di seguito.",
+    "saving": "Salvataggio del servizio…",
+    "saveFailed": "Impossibile salvare la modifica. I servizi caricati in precedenza vengono mantenuti.",
+    "schedule": {
+      "empty": "Nessun orario della filiale configurato.",
+      "unavailable": "Orari della filiale non disponibili.",
+      "invalid": "Gli orari della filiale contengono dati non validi.",
+      "error": "Impossibile caricare gli orari della filiale."
+    }
   }
 }

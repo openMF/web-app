@@ -57,6 +57,7 @@ describe('Branch details header', () => {
     api = {
       getOfficeAddresses: jest.fn(() => of([])),
       getOfficeServices: jest.fn(() => of([])),
+      getOfficeSchedules: jest.fn(() => of({ days: [] })),
       updateOfficeService: jest.fn(() => of({})),
       updateOfficeAddress: jest.fn(() => of({}))
     };

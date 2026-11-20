@@ -9173,5 +9173,35 @@
       "identity": "Identität und Anschrift",
       "other": "Sonstige"
     }
+  },
+  "branchServices": {
+    "title": "Filialdienste",
+    "description": "Für {{office}} konfigurierte Dienste und ihre erfassten Zeiten.",
+    "search": "Dienste suchen",
+    "add": "Dienst hinzufügen",
+    "coverage": "Abdeckung der regulären Zeiten",
+    "branchHours": "Öffnungszeiten der Filiale",
+    "recordedHours": "Erfasste Dienstzeiten",
+    "configuredServices": "Konfigurierte Dienste",
+    "count": "Dienste: {{count}}",
+    "configured": "Konfiguriert",
+    "hoursUnavailable": "Dienstzeiten nicht verfügbar",
+    "noMatches": "Keine passenden Dienste",
+    "catalog": "Dienstkatalog",
+    "catalogDescription": "Institutionsweiter Katalog für Filialdienste.",
+    "catalogUnavailable": "Katalog nicht verfügbar",
+    "catalogExplanation": "Kein kompatibler Katalog verfügbar.",
+    "catalogAddGuidance": "Über Dienst hinzufügen können Sie einen Dienst für diese Filiale konfigurieren.",
+    "timezone": "Zeitzone der Filiale nicht verfügbar. Verglichen werden reguläre Zeiten, nicht die heutige Verfügbarkeit.",
+    "verification": "Wochentage der Dienste werden nicht erfasst. Die Übereinstimmung mit den Filialzeiten kann nicht geprüft werden.",
+    "unparsed": "Dienste mit fehlenden Zeiten oder Freitext: {{count}}. Siehe konfigurierte Dienste unten.",
+    "saving": "Dienst wird gespeichert…",
+    "saveFailed": "Die Änderung konnte nicht gespeichert werden. Zuvor geladene Dienste bleiben erhalten.",
+    "schedule": {
+      "empty": "Keine Filialzeiten konfiguriert.",
+      "unavailable": "Filialzeiten nicht verfügbar.",
+      "invalid": "Die Filialzeiten enthalten ungültige Daten.",
+      "error": "Die Filialzeiten konnten nicht geladen werden."
+    }
   }
 }

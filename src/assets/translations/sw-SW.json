@@ -9171,5 +9171,35 @@
       "identity": "Utambulisho na anwani",
       "other": "Nyingine"
     }
+  },
+  "branchServices": {
+    "title": "Huduma za tawi",
+    "description": "Huduma zilizosanidiwa kwa {{office}} na saa zake zilizorekodiwa.",
+    "search": "Tafuta huduma",
+    "add": "Ongeza huduma",
+    "coverage": "Ulinganisho wa saa za kawaida",
+    "branchHours": "Saa za kazi za tawi",
+    "recordedHours": "Saa za huduma zilizorekodiwa",
+    "configuredServices": "Huduma zilizosanidiwa",
+    "count": "Huduma: {{count}}",
+    "configured": "Imesanidiwa",
+    "hoursUnavailable": "Saa za huduma hazipatikani",
+    "noMatches": "Hakuna huduma zinazolingana",
+    "catalog": "Orodha ya huduma",
+    "catalogDescription": "Orodha ya huduma za matawi katika taasisi.",
+    "catalogUnavailable": "Orodha haipatikani",
+    "catalogExplanation": "Hakuna orodha inayooana.",
+    "catalogAddGuidance": "Tumia Ongeza huduma kusanidi huduma ya tawi hili.",
+    "timezone": "Ukanda wa saa wa tawi haupatikani. Huu ni ulinganisho wa saa za kawaida, si upatikanaji wa leo.",
+    "verification": "Siku za huduma hazijarekodiwa. Ulinganifu na saa za tawi hauwezi kuthibitishwa.",
+    "unparsed": "Idadi ya huduma zisizo na saa au zenye saa za maandishi huru: {{count}}. Angalia huduma zilizosanidiwa hapa chini.",
+    "saving": "Inahifadhi huduma…",
+    "saveFailed": "Mabadiliko hayakuweza kuhifadhiwa. Huduma zilizopakiwa awali zimehifadhiwa.",
+    "schedule": {
+      "empty": "Hakuna ratiba ya tawi iliyosanidiwa.",
+      "unavailable": "Ratiba ya tawi haipatikani.",
+      "invalid": "Ratiba ya tawi ina data batili.",
+      "error": "Ratiba ya tawi haikuweza kupakiwa."
+    }
   }
 }
