@@ -6884,6 +6884,42 @@
         "NO_TRAINING": "No AML training this fiscal year yet.",
         "STAFF_ACTIONS_OPEN": "A recommendation about staff is waiting for what was done."
       }
+    },
+    "goaml": {
+      "Codes": "goAML codes",
+      "Codes explanation": "FIU-Nepal's codes for each report field. Pick a code for every row below; a row left empty keeps a report needing it as a draft, and names the row.",
+      "Not set": "Not set",
+      "Empty hint": "A report needing this code stays a draft, and names it.",
+      "Save codes": "Save codes",
+      "Codes saved": "Codes saved",
+      "type": {
+        "report_code": "Report type",
+        "submission_code": "Submission method",
+        "currency": "Currency",
+        "country": "Country",
+        "gender": "Gender",
+        "transmode": "How the money moved",
+        "funds_type": "Kind of funds",
+        "account_type": "Account type",
+        "account_status": "Account status",
+        "account_role": "Role on the account",
+        "id_type": "Identity document type",
+        "contact_type": "Contact type",
+        "communication_type": "Communication type",
+        "address_type": "Address type",
+        "indicator": "Suspected offence",
+        "institution": "Our institution",
+        "legal_form": "Legal form",
+        "entity_role": "Role in the organisation"
+      },
+      "institution": {
+        "NAME": "Institution name",
+        "CODE": "Institution code",
+        "CodeHint": "The cooperative's own code - its PAN or a short form of its name. The same in every report. Never \"NA\" or \"Not Available\"."
+      },
+      "Codes missing": "{{count}} code(s) need attention",
+      "Codes complete": "All codes are set",
+      "Missing": "missing"
     }
   },
   "kym": {

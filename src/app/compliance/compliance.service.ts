@@ -15,6 +15,8 @@ import {
   AmlSettingsView,
   CashClass,
   ComplianceAccess,
+  GoamlCodeLists,
+  GoamlLookup,
   GoamlReport,
   LedgerStatus,
   TtrItem,
@@ -120,5 +122,19 @@ export class ComplianceService {
 
   ledgerStatus(): Observable<LedgerStatus> {
     return this.http.get<LedgerStatus>('/nepal/aml/movements/status');
+  }
+
+  /** FIU-Nepal's codes (fineract-dbug #288; docs/goaml-reports.md, "Codes"): our rows, grouped by `type`. */
+  goamlLookups(): Observable<GoamlLookup[]> {
+    return this.http.get<GoamlLookup[]>('/nepal/aml/goaml/lookups');
+  }
+
+  /** For each lookup `type`, the codes the schema in use allows - `institution` has none, it is free text. */
+  goamlCodeLists(): Observable<GoamlCodeLists> {
+    return this.http.get<GoamlCodeLists>('/nepal/aml/goaml/code-lists');
+  }
+
+  updateGoamlLookups(rows: GoamlLookup[]): Observable<GoamlLookup[]> {
+    return this.http.put<GoamlLookup[]>('/nepal/aml/goaml/lookups', rows);
   }
 }
