@@ -14,6 +14,7 @@
         @if (formfield.controlType === 'input') {
           <input
             [type]="formfield.type"
+            [attr.inputmode]="formfield.inputmode"
             matInput
             [formControlName]="formfield.controlName"
             [required]="formfield.required"

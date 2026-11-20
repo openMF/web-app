@@ -12,6 +12,7 @@ export class FormfieldBase {
   controlType: string;
   controlName: string;
   type: string;
+  inputmode?: string;
   label: string;
   value: any;
   required: boolean;
