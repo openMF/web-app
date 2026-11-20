@@ -199,7 +199,15 @@
       "integerQuantity": "Tam ədəd miqdar daxil edin",
       "noReadPermission": "Nağd pul bölgülərinə baxmaq icazəniz yoxdur",
       "preview": "Nağd pul bölgüsünün önbaxışını hesablamaq mümkün olmadı",
-      "receipt": "Nağd pul bölgüsü qəbzini əldə etmək mümkün olmadı"
+      "receipt": "Nağd pul bölgüsü qəbzini əldə etmək mümkün olmadı",
+      "configuration": "Valyuta və ya nominal konfiqurasiyası etibarsızdır. Səlahiyyətli administratordan kataloqu və valyuta dəqiqliyini yoxlamasını istəyin.",
+      "alreadyOpened": "Bu təyinat, iş günü və valyuta üçün açılış artıq tamamlanıb. Əlavə vəsait üçün uyğun nağd köçürmədən istifadə edin.",
+      "drawerClosed": "Bu kassa artıq uzlaşdırılıb. Nağd vəsait ayırmaq mümkün deyil.",
+      "insufficientSource": "Ayrılan məbləğ mənbədəki mövcud nağd qalığı aşır. Önizləmə əlçatan deyil; rəsmi qalığı və məbləği yoxlayın.",
+      "sourceCashier": "Mənbə kimi vəsaiti olan uyğun baş kassiri seçin.",
+      "cashier": "Bu filial və iş günü üçün uyğun kassir təyinatı yoxdur.",
+      "businessDate": "İş günü dəyişib. Cari məlumatları almaq üçün səhifəni yeniləyin.",
+      "accounting": "Tələb olunan mühasibat hesabı uyğunluqları yoxdur. Səlahiyyətli administratordan seyf, kassa və açılış qalığı qarşı hesab uyğunluqlarını yoxlamasını istəyin."
     },
     "labels": {
       "businessDate": "Əməliyyat tarixi",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Nağd pul bölgüsü konfiqurasiyası yüklənir...",
       "processing": "Emal edilir..."
+    },
+    "guidance": {
+      "opening": "Bu prosesdən seyfin və kassanın ilkin açılışı üçün istifadə edin. Açıq kassaya əlavə vəsait dəstəklənən nağd köçürmə tələb edir; eyni iş günü və valyuta üçün açılış təkrarlana bilməz.",
+      "denominations": "{{currency}} üçün aktiv nominallar yoxdur. Səlahiyyətli administratordan kataloqu konfiqurasiya etməsini istəyin. Önizləmə əlçatan deyil; ixtiyari nağd dəyərlər daxil edilə bilməz.",
+      "pending": "Əməliyyatın nəticəsi qeyri-müəyyəndir. Başqa əməliyyata başlamazdan əvvəl nəticəni əldə etmək üçün eyni əməliyyatı təkrar sınayın."
     }
   },
   "catalogUpdates": {

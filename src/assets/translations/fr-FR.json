@@ -199,7 +199,15 @@
       "integerQuantity": "Saisissez un nombre entier d’unités",
       "noReadPermission": "Vous n’êtes pas autorisé à consulter les affectations d’espèces",
       "preview": "Impossible de calculer l’aperçu de l’affectation d’espèces",
-      "receipt": "Impossible de récupérer le reçu de l’affectation d’espèces"
+      "receipt": "Impossible de récupérer le reçu de l’affectation d’espèces",
+      "configuration": "La configuration de la devise ou des coupures est invalide. Demandez à un administrateur autorisé de vérifier le catalogue et la précision de la devise.",
+      "alreadyOpened": "L’ouverture est déjà terminée pour cette destination, date comptable et devise. Utilisez un transfert autorisé pour ajouter des fonds.",
+      "drawerClosed": "Cette caisse a été rapprochée. L’allocation d’espèces est indisponible.",
+      "insufficientSource": "L’allocation dépasse le solde disponible à la source. L’aperçu est indisponible ; vérifiez le solde officiel et le montant.",
+      "sourceCashier": "Sélectionnez un caissier principal éligible disposant de fonds comme source.",
+      "cashier": "Aucune affectation de caissier éligible pour cette agence et cette date comptable.",
+      "businessDate": "La date comptable a changé. Rechargez la page pour obtenir le contexte actuel.",
+      "accounting": "Des correspondances comptables requises sont absentes. Demandez à un administrateur autorisé de vérifier les comptes du coffre, de la caisse et de contrepartie des soldes d’ouverture."
     },
     "labels": {
       "businessDate": "Date d’activité",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Chargement de la configuration de l’affectation d’espèces...",
       "processing": "Traitement en cours..."
+    },
+    "guidance": {
+      "opening": "Utilisez ce parcours pour l’ouverture initiale du coffre et de la caisse. Un apport à une caisse ouverte nécessite un transfert autorisé ; l’ouverture ne peut être répétée pour la même date comptable et devise.",
+      "denominations": "Aucune coupure active n’est configurée pour {{currency}}. Demandez à un administrateur autorisé de configurer le catalogue. L’aperçu reste indisponible ; les valeurs arbitraires ne sont pas admises.",
+      "pending": "Le résultat de la transaction est incertain. Réessayez la même transaction pour récupérer son résultat avant de commencer une autre opération."
     }
   },
   "catalogUpdates": {

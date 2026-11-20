@@ -199,7 +199,15 @@
       "integerQuantity": "Ingrese una cantidad entera de unidades",
       "noReadPermission": "No tiene permiso para ver las asignaciones de efectivo",
       "preview": "No se pudo calcular la vista previa de la asignación de efectivo",
-      "receipt": "No se pudo recuperar el recibo de asignación de efectivo"
+      "receipt": "No se pudo recuperar el recibo de asignación de efectivo",
+      "configuration": "La configuración de moneda o denominaciones no es válida. Solicite a un administrador autorizado que revise el catálogo y la precisión de la moneda.",
+      "alreadyOpened": "La apertura ya se completó para este destino, fecha operativa y moneda. Use una transferencia de efectivo válida para agregar fondos.",
+      "drawerClosed": "Esta caja ya se ha conciliado. La asignación de efectivo no está disponible.",
+      "insufficientSource": "La asignación supera el saldo de efectivo disponible en el origen. La vista previa no está disponible; revise el saldo oficial y el importe.",
+      "sourceCashier": "Seleccione un cajero principal con fondos y elegible como origen.",
+      "cashier": "No hay una asignación de cajero elegible para esta oficina y fecha operativa.",
+      "businessDate": "La fecha operativa ha cambiado. Recargue la página para obtener el contexto actual de asignación.",
+      "accounting": "Faltan asignaciones contables requeridas. Solicite a un administrador autorizado que revise las cuentas de bóveda, efectivo del cajero y contrapartida de saldos iniciales."
     },
     "labels": {
       "businessDate": "Fecha de operación",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Cargando la configuración de asignación de efectivo...",
       "processing": "Procesando..."
+    },
+    "guidance": {
+      "opening": "Use este flujo para la apertura inicial de bóveda y caja. Los fondos adicionales para una caja abierta requieren una transferencia admitida; no se puede repetir la apertura para la misma fecha operativa y moneda.",
+      "denominations": "{{currency}} no tiene denominaciones activas. Solicite a un administrador autorizado que configure el catálogo. La vista previa seguirá deshabilitada; no se pueden introducir valores de efectivo arbitrarios.",
+      "pending": "El resultado de la transacción es incierto. Reintente la misma transacción para recuperar su resultado antes de iniciar otra operación."
     }
   },
   "catalogUpdates": {

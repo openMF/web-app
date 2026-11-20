@@ -199,7 +199,15 @@
       "integerQuantity": "Geben Sie eine ganze Stückzahl ein",
       "noReadPermission": "Sie sind nicht berechtigt, Bargeldzuweisungen anzuzeigen",
       "preview": "Die Vorschau der Bargeldzuweisung konnte nicht berechnet werden",
-      "receipt": "Der Beleg für die Bargeldzuweisung konnte nicht abgerufen werden"
+      "receipt": "Der Beleg für die Bargeldzuweisung konnte nicht abgerufen werden",
+      "configuration": "Die Währungs- oder Stückelungskonfiguration ist ungültig. Lassen Sie Katalog und Währungsgenauigkeit von einem berechtigten Administrator prüfen.",
+      "alreadyOpened": "Die Eröffnung für dieses Ziel, diesen Geschäftstag und diese Währung ist abgeschlossen. Nutzen Sie einen zulässigen Bargeldtransfer für weitere Mittel.",
+      "drawerClosed": "Diese Kasse wurde abgestimmt. Eine Bargeldzuweisung ist nicht verfügbar.",
+      "insufficientSource": "Die Zuweisung überschreitet den verfügbaren Bargeldbestand der Quelle. Die Vorschau ist gesperrt; prüfen Sie den verbindlichen Bestand und den Betrag.",
+      "sourceCashier": "Wählen Sie einen berechtigten Hauptkassierer mit ausreichendem Bestand als Quelle.",
+      "cashier": "Für diese Geschäftsstelle und diesen Geschäftstag ist keine zulässige Kassiererzuweisung verfügbar.",
+      "businessDate": "Der Geschäftstag hat sich geändert. Laden Sie die Seite neu, um den aktuellen Kontext abzurufen.",
+      "accounting": "Erforderliche Kontenzuordnungen fehlen. Lassen Sie die Zuordnungen für Tresor, Kasse und Eröffnungsgegenkonto von einem berechtigten Administrator prüfen."
     },
     "labels": {
       "businessDate": "Geschäftsdatum",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Konfiguration der Bargeldzuweisung wird geladen...",
       "processing": "Verarbeitung läuft..."
+    },
+    "guidance": {
+      "opening": "Verwenden Sie diesen Ablauf zur erstmaligen Tresor- und Kasseneröffnung. Zusätzliche Mittel für eine offene Kasse erfordern einen unterstützten Bargeldtransfer; die Eröffnung kann für denselben Geschäftstag und dieselbe Währung nicht wiederholt werden.",
+      "denominations": "Für {{currency}} sind keine aktiven Stückelungen eingerichtet. Bitten Sie einen berechtigten Administrator, den Katalog einzurichten. Die Vorschau bleibt gesperrt; beliebige Bargeldwerte sind nicht zulässig.",
+      "pending": "Das Transaktionsergebnis ist unklar. Wiederholen Sie dieselbe Transaktion, um das Ergebnis abzurufen, bevor Sie einen weiteren Vorgang starten."
     }
   },
   "catalogUpdates": {

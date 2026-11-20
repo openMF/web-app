@@ -199,7 +199,15 @@
       "integerQuantity": "Įveskite sveikąjį vienetų skaičių",
       "noReadPermission": "Neturite teisės peržiūrėti grynųjų pinigų paskirstymų",
       "preview": "Nepavyko apskaičiuoti grynųjų pinigų paskirstymo peržiūros",
-      "receipt": "Nepavyko gauti grynųjų pinigų paskirstymo kvito"
+      "receipt": "Nepavyko gauti grynųjų pinigų paskirstymo kvito",
+      "configuration": "Valiutos arba nominalų konfigūracija netinkama. Paprašykite įgalioto administratoriaus patikrinti katalogą ir valiutos tikslumą.",
+      "alreadyOpened": "Šios paskirties, darbo dienos ir valiutos atidarymas jau baigtas. Papildomoms lėšoms naudokite leidžiamą grynųjų pervedimą.",
+      "drawerClosed": "Ši kasa jau suderinta. Grynųjų skyrimas neprieinamas.",
+      "insufficientSource": "Skiriama suma viršija turimą šaltinio grynųjų likutį. Peržiūra neprieinama; patikrinkite oficialų likutį ir sumą.",
+      "sourceCashier": "Pasirinkite tinkamą lėšų turintį vyriausiąjį kasininką kaip šaltinį.",
+      "cashier": "Šiam padaliniui ir darbo dienai nėra tinkamo kasininko paskyrimo.",
+      "businessDate": "Darbo diena pasikeitė. Įkelkite puslapį iš naujo, kad gautumėte dabartinį kontekstą.",
+      "accounting": "Trūksta privalomų apskaitos sąsajų. Paprašykite įgalioto administratoriaus patikrinti saugyklos, kasos ir pradinių likučių priešpriešines sąskaitas."
     },
     "labels": {
       "businessDate": "Veiklos data",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Įkeliama grynųjų pinigų paskirstymo konfigūracija...",
       "processing": "Apdorojama..."
+    },
+    "guidance": {
+      "opening": "Ši eiga skirta pradiniam saugyklos ir kasos atidarymui. Papildomoms lėšoms atviroje kasoje reikia leidžiamo grynųjų pervedimo; atidarymo negalima kartoti tą pačią darbo dieną ta pačia valiuta.",
+      "denominations": "{{currency}} neturi aktyvių nominalų. Paprašykite įgalioto administratoriaus sukonfigūruoti katalogą. Peržiūra neprieinama; savavališkų grynųjų verčių įvesti negalima.",
+      "pending": "Operacijos rezultatas neaiškus. Prieš pradėdami kitą operaciją pakartokite tą pačią operaciją, kad gautumėte jos rezultatą."
     }
   },
   "catalogUpdates": {
