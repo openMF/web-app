@@ -419,9 +419,9 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         this.loansAccountTermsData = this.loansAccountTemplate;
         this.loansAccountTermsForm.patchValue({
           discount:
-            this.loansAccountTermsData.proposedDiscountFee ||
-            this.loansAccountTermsData.approvedDiscountFee ||
-            this.loansAccountTermsData.discountFee ||
+            this.loansAccountTermsData.proposedDiscountFee ??
+            this.loansAccountTermsData.approvedDiscountFee ??
+            this.loansAccountTermsData.discountFee ??
             '',
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
           periodPaymentRate: this.loansAccountTermsData.paymentRate,
@@ -441,7 +441,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         // New Loan — solo inicializar si el producto realmente cambió
       } else if (productChanged) {
         this.loansAccountTermsForm.patchValue({
-          discount: this.loansAccountTermsData.product.discount || '',
+          discount: this.loansAccountTermsData.product.discount ?? '',
           principalAmount: this.loansAccountTermsData.product.principal,
           annualEir: this.loansAccountTermsData.product.annualEir ?? '',
           paymentAmount: this.loansAccountTermsData.product.paymentAmount ?? '',
@@ -608,21 +608,19 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       if (this.loansAccountTermsData) {
         // Creating a new account: fall back to the product default for anything not yet set.
         this.loansAccountTermsForm.patchValue({
+          discount: isEditingAccount
+            ? (this.loansAccountTermsData.proposedDiscountFee ??
+              this.loansAccountTermsData.approvedDiscountFee ??
+              this.loansAccountTermsData.discountFee ??
+              '')
+            : (this.loansAccountTermsData.product?.discount ?? ''),
           principalAmount: isEditingAccount
-            ? this.loansAccountTermsData.principal
+            ? (this.loansAccountTermsData.proposedPrincipal ?? this.loansAccountTermsData.principal)
             : this.loansAccountTermsData.principal || this.loansAccountTermsData.product?.principal,
-          // The account response names the rate `paymentRate`; `periodPaymentRate`
-          // only exists on the product template, so reading it here would blank
-          // the value ngOnChanges already read from the account.
           periodPaymentRate: isEditingAccount
-            ? this.loansAccountTermsData.paymentRate
+            ? (this.loansAccountTermsData.paymentRate ?? this.loansAccountTermsData.periodPaymentRate)
             : this.loansAccountTermsData.periodPaymentRate,
-          annualEir: isEditingAccount
-            ? this.loansAccountTermsData.annualEir
-            : (this.loansAccountTermsData.annualEir ?? this.loansAccountTermsData.product?.annualEir ?? ''),
-          paymentAmount: isEditingAccount
-            ? this.loansAccountTermsData.paymentAmount
-            : (this.loansAccountTermsData.paymentAmount ?? this.loansAccountTermsData.product?.paymentAmount ?? ''),
+          totalPaymentVolume: this.loansAccountTermsData.totalPaymentVolume,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: isEditingAccount
