@@ -53,7 +53,19 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   ];
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.context.get(HANDLE_HTTP_ERROR_LOCALLY)) return next.handle(request);
+    if (request.context.get(HANDLE_HTTP_ERROR_LOCALLY)) {
+      return next.handle(request).pipe(
+        catchError((error) => {
+          if (error.status === 401 && /\/base-teller\/cash-allocations(?:[/?]|$)/.test(request.url)) {
+            this.alertService.alert({
+              type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+              message: this.translate.instant('errors.error.auth.sessionExpired.message')
+            });
+          }
+          return throwError(() => error);
+        })
+      );
+    }
     return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
   }
 

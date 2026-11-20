@@ -363,6 +363,36 @@ describe('ErrorHandlerInterceptor', () => {
     expect(alert).not.toHaveBeenCalled();
   });
 
+  it.each([
+    '/v2/base-teller/cash-allocations/context',
+    '/v2/base-teller/cash-allocations/preview',
+    '/v2/base-teller/cash-allocations',
+    '/v2/base-teller/cash-allocations/77',
+    '/v2/base-teller/cash-allocations/77/receipt'
+  ])('keeps the shared session-expired alert for locally handled 401 at %s', (url) => {
+    const request = new HttpRequest('GET', url, { context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true) });
+    const response = new HttpErrorResponse({ status: 401, error: { developerMessage: 'Private server details' } });
+    let received: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (received = error) });
+    expect(received).toBe(response);
+    expect(alert).toHaveBeenCalledTimes(1);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+
+  it('keeps investment-product 401 handling inline without adding a shared alert', () => {
+    const request = new HttpRequest('GET', '/v1/investment-products/41/rates/draft', {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
+    const response = new HttpErrorResponse({ status: 401 });
+    interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({ error: () => {} });
+    expect(alert).not.toHaveBeenCalled();
+  });
+
   it('does not alert when the branding endpoint is absent', () => {
     // Deployment without the self-service plugin.
     const result = intercept(`/fineract-provider/api/v1${BRANDING_API_PATH}`, 404);

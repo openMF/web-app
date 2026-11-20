@@ -272,7 +272,15 @@
       "integerQuantity": "Inserisci un numero intero di elementi",
       "noReadPermission": "Non disponi dell’autorizzazione per visualizzare le allocazioni di contante",
       "preview": "Impossibile calcolare l’anteprima dell’allocazione di contante",
-      "receipt": "Impossibile recuperare la ricevuta dell’allocazione di contante"
+      "receipt": "Impossibile recuperare la ricevuta dell’allocazione di contante",
+      "configuration": "La configurazione della valuta o dei tagli non è valida. Chiedere a un amministratore autorizzato di verificare il catalogo e la precisione della valuta.",
+      "alreadyOpened": "L’apertura è già completata per questa destinazione, data operativa e valuta. Usare un trasferimento consentito per aggiungere fondi.",
+      "drawerClosed": "Questa cassa è stata riconciliata. L’assegnazione di contante non è disponibile.",
+      "insufficientSource": "L’assegnazione supera il saldo disponibile all’origine. L’anteprima non è disponibile; verificare il saldo ufficiale e l’importo.",
+      "sourceCashier": "Selezionare come origine un cassiere principale idoneo con fondi.",
+      "cashier": "Nessuna assegnazione di cassiere idonea per questa filiale e data operativa.",
+      "businessDate": "La data operativa è cambiata. Ricaricare la pagina per ottenere il contesto attuale.",
+      "accounting": "Mancano associazioni contabili necessarie. Chiedere a un amministratore autorizzato di verificare i conti di caveau, cassa e contropartita dei saldi iniziali."
     },
     "labels": {
       "businessDate": "Data operativa",
@@ -319,6 +327,20 @@
     "status": {
       "loading": "Caricamento della configurazione dell’allocazione di contante...",
       "processing": "Elaborazione in corso..."
+    },
+    "guidance": {
+      "opening": "Usare questo flusso per l’apertura iniziale di caveau e cassa. Ulteriori fondi per una cassa aperta richiedono un trasferimento consentito; l’apertura non può essere ripetuta per la stessa data operativa e valuta.",
+      "denominations": "{{currency}} non ha tagli attivi. Chiedere a un amministratore autorizzato di configurare il catalogo. L’anteprima resta disabilitata; non è possibile inserire valori arbitrari.",
+      "pending": "L’esito della transazione è incerto. Riprovare la stessa transazione per recuperarne l’esito prima di avviare un’altra operazione."
+    },
+    "recovery": {
+      "discard": "Elimina il recupero e ricomincia",
+      "confirmDiscard": "La richiesta precedente potrebbe essere già stata contabilizzata. Verificare prima lo storico o riconciliare con un amministratore. Eliminare i dati di recupero non annulla né storna una transazione. Eliminare i dati di questa scheda e ricominciare",
+      "stale": "La richiesta salvata appartiene a un’altra data operativa. Riprovare per recuperarne l’esito o riconciliare il tentativo precedente prima di eliminarla.",
+      "invalid": "I dati salvati per il recupero dell’assegnazione di contante sono illeggibili. Riconciliare i tentativi precedenti prima di eliminare i dati di questa scheda.",
+      "storage": "Impossibile accedere ai dati di recupero dell’assegnazione di contante. Verificare l’archiviazione della sessione e riprovare.",
+      "scope": "Questa assegnazione appartiene a un altro server, tenant, utente o filiale. Tornare all’ambito di accesso originale per recuperarla.",
+      "changed": "I dati di recupero o l’ambito di accesso sono cambiati. Ricaricare per recuperare la richiesta attuale."
     }
   },
   "catalogUpdates": {
