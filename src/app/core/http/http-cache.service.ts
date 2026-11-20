@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 /** Other Imports */
 import { each } from 'lodash';
@@ -96,15 +96,24 @@ export class HttpCacheService {
    */
   cleanCache(expirationDate?: Date) {
     if (expirationDate) {
+      const expirationTime = expirationDate.getTime();
       each(this.cachedData, (value: HttpCacheEntry, key: string) => {
-        if (expirationDate >= value.lastUpdated) {
+        const lastUpdatedTime = new Date(value.lastUpdated).getTime();
+        if (expirationTime >= lastUpdatedTime) {
           delete this.cachedData[key];
         }
       });
+      this.saveCacheData();
     } else {
       this.cachedData = {};
+      if (this.storage) {
+        if (typeof this.storage.removeItem === 'function') {
+          this.storage.removeItem(this.cachePersistenceStorageKey);
+        } else {
+          delete this.storage[this.cachePersistenceStorageKey];
+        }
+      }
     }
-    this.saveCacheData();
   }
 
   /**
@@ -122,12 +131,84 @@ export class HttpCacheService {
 
   private saveCacheData() {
     if (this.storage) {
-      this.storage[this.cachePersistenceStorageKey] = JSON.stringify(this.cachedData);
+      try {
+        const serializedData: { [key: string]: any } = {};
+        each(this.cachedData, (entry: HttpCacheEntry, key: string) => {
+          const headers: { [name: string]: string[] } = {};
+          if (entry.data?.headers && typeof entry.data.headers.keys === 'function') {
+            entry.data.headers.keys().forEach((headerKey: string) => {
+              const values = entry.data.headers.getAll(headerKey);
+              if (values) {
+                headers[headerKey] = values;
+              }
+            });
+          }
+          serializedData[key] = {
+            lastUpdated: entry.lastUpdated,
+            data: {
+              body: entry.data?.body,
+              status: entry.data?.status,
+              statusText: entry.data?.statusText,
+              url: entry.data?.url,
+              headers
+            }
+          };
+        });
+        const serializedString = JSON.stringify(serializedData);
+        if (typeof this.storage.setItem === 'function') {
+          this.storage.setItem(this.cachePersistenceStorageKey, serializedString);
+        } else {
+          this.storage[this.cachePersistenceStorageKey] = serializedString;
+        }
+      } catch (error) {
+        log.warn(`Failed to save cache to storage: ${error}`);
+      }
     }
   }
 
   private loadCacheData() {
-    const data = this.storage ? this.storage[this.cachePersistenceStorageKey] : null;
-    this.cachedData = data ? JSON.parse(data) : {};
+    const data = this.storage
+      ? typeof this.storage.getItem === 'function'
+        ? this.storage.getItem(this.cachePersistenceStorageKey)
+        : this.storage[this.cachePersistenceStorageKey]
+      : null;
+    this.cachedData = {};
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        each(parsed, (entry: any, key: string) => {
+          if (!entry || typeof entry !== 'object' || !entry.data || typeof entry.data !== 'object') {
+            return;
+          }
+          if (entry.data.headers && 'normalizedNames' in entry.data.headers) {
+            return;
+          }
+          const lastUpdated = new Date(entry.lastUpdated);
+          if (isNaN(lastUpdated.getTime())) {
+            return;
+          }
+          let headers = new HttpHeaders();
+          if (entry.data.headers && typeof entry.data.headers === 'object') {
+            each(entry.data.headers, (val: any, headerKey: string) => {
+              if (typeof val === 'string' || Array.isArray(val)) {
+                headers = headers.set(headerKey, val);
+              }
+            });
+          }
+          this.cachedData[key] = {
+            lastUpdated,
+            data: new HttpResponse({
+              body: entry.data.body !== undefined ? entry.data.body : null,
+              headers,
+              status: typeof entry.data.status === 'number' ? entry.data.status : 200,
+              statusText: entry.data.statusText || 'OK',
+              url: entry.data.url || undefined
+            })
+          };
+        });
+      } catch {
+        this.cachedData = {};
+      }
+    }
   }
 }
