@@ -51,6 +51,110 @@ form {
   max-width: 100%;
 }
 
+/* ───────────────────────── FIU-Nepal's codes (fineract-dbug #288) ───────────────────────── */
+
+.goaml-codes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  // Without this, the flex column's default align-items: stretch widens the legend pill to the
+  // section's full width instead of letting it shrink to fit "goAML codes" (unlike .frame elsewhere,
+  // which isn't a flex container, so its legend already shrinks to fit by default).
+  > .legend {
+    align-self: flex-start;
+  }
+
+  // A short, one-line hint (most rows just show their own ourValue) needs no more room than any other field on
+  // this page. Material's hint sits in its own absolutely-positioned strip below the field, so it never affects
+  // this margin either way - it only ever overlays the empty space this margin reserves.
+  mat-form-field {
+    margin-bottom: 8px;
+  }
+
+  // The rows with a hint long enough to wrap onto two or three lines (the institution code's hint always
+  // does; any empty row's "stays a draft" hint does too - see hasLongHint()) get enough reserved space
+  // below them that the wrapped lines land inside it, clear of the field after them.
+  mat-form-field.long-hint {
+    margin-bottom: 46px;
+  }
+
+  mat-hint {
+    text-align: left;
+  }
+}
+
+.goaml-codes-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+
+  .hint {
+    margin: 0;
+  }
+
+  .chip {
+    margin-left: auto;
+  }
+}
+
+// Two groups narrow enough to share a row (see GOAML_ROW_PARTNER) sit side by side here; a group on
+// its own in a row is the only flex item, so it still grows to the section's full width as before.
+.code-group-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.code-group {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 18px 16px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 12px;
+  background: var(--mat-sys-surface, #fff);
+}
+
+// A paired group (see GOAML_ROW_PARTNER) has only one or two fields and half the row's width - auto-fit
+// collapses the columns it doesn't need, so what's there grows to fill that width instead of leaving the
+// rest of its half empty. A group with the whole row to itself keeps the page's usual fixed 3 columns.
+.code-group-row.paired .fields {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+// A floating pill overlapping the box's top border, sized to fit its own text - the same look as
+// a .legend on .frame elsewhere on this page, rather than a full-width heading inside the box.
+.code-group-title {
+  position: relative;
+  top: -12px;
+  display: inline-block;
+  margin: 0 0 -4px;
+  padding: 0 10px;
+  border: 1px solid var(--dk-border, #e2e8f0);
+  border-radius: 10px;
+  background: var(--mat-sys-surface, #fff);
+  color: var(--dk-text-2, #334155);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+// A code a report depends on but has none of yet, picked out from the rest without needing its own column.
+.missing {
+  ::ng-deep .mat-mdc-form-field-hint {
+    color: var(--dk-warning, #c87f0a);
+  }
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

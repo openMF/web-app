@@ -205,6 +205,106 @@
         </div>
       </section>
 
+      <!-- FIU-Nepal's codes (fineract-dbug #288; docs/goaml-reports.md, "Codes"): plain [value]/(event) bindings,
+           not formControlName, so its own "Save codes" (PUT /lookups, a different call from PUT /settings) can
+           sit safely inside this same form without joining its FormGroup or its submit. -->
+      <section class="frame goaml-codes">
+        <h3 class="legend">{{ 'compliance.goaml.Codes' | translate }}</h3>
+        <div class="goaml-codes-header">
+          <p class="hint">{{ 'compliance.goaml.Codes explanation' | translate }}</p>
+          @if (goamlLookups().length) {
+            @if (goamlMissingCount() > 0) {
+              <span class="chip amber">{{
+                'compliance.goaml.Codes missing' | translate: { count: goamlMissingCount() }
+              }}</span>
+            } @else {
+              <span class="chip green">{{ 'compliance.goaml.Codes complete' | translate }}</span>
+            }
+          }
+        </div>
+
+        @for (groupRow of goamlGroupRows(); track groupRow[0].type) {
+          <div class="code-group-row" [class.paired]="groupRow.length === 2">
+            @for (group of groupRow; track group.type) {
+              <div class="code-group">
+                <h4 class="code-group-title">{{ 'compliance.goaml.type.' + group.type | translate }}</h4>
+                <div class="fields">
+                  @for (row of group.rows; track row.ourValue) {
+                    @if (isInstitutionType(group.type)) {
+                      <mat-form-field
+                        [class.missing]="isGoamlCodeEmpty(row)"
+                        [class.long-hint]="hasLongHint(row, group.type)"
+                      >
+                        <mat-label
+                          >{{ 'compliance.goaml.institution.' + row.ourValue | translate }}
+                          @if (isGoamlCodeEmpty(row)) {
+                            {{ ' ' }}({{ 'compliance.goaml.Missing' | translate }})
+                          }
+                        </mat-label>
+                        <input
+                          matInput
+                          [value]="goamlCodeValue(row)"
+                          (input)="setGoamlCode(row, $any($event.target).value)"
+                          [disabled]="!canEdit()"
+                          maxlength="100"
+                        />
+                        @if (row.ourValue === 'CODE') {
+                          <mat-hint>{{ 'compliance.goaml.institution.CodeHint' | translate }}</mat-hint>
+                        } @else if (isGoamlCodeEmpty(row)) {
+                          <mat-hint>{{ 'compliance.goaml.Empty hint' | translate }}</mat-hint>
+                        }
+                      </mat-form-field>
+                    } @else {
+                      <mat-form-field
+                        [class.missing]="isGoamlCodeEmpty(row)"
+                        [class.long-hint]="hasLongHint(row, group.type)"
+                      >
+                        <mat-label
+                          >{{ row.description || row.ourValue }}
+                          @if (isGoamlCodeEmpty(row)) {
+                            {{ ' ' }}({{ 'compliance.goaml.Missing' | translate }})
+                          }
+                        </mat-label>
+                        <mat-select
+                          [value]="goamlCodeValue(row)"
+                          (selectionChange)="setGoamlCode(row, $event.value)"
+                          [disabled]="!canEdit()"
+                        >
+                          <mat-option value="">{{ 'compliance.goaml.Not set' | translate }}</mat-option>
+                          @for (o of goamlCodeOptions(group.type); track o) {
+                            <mat-option [value]="o">{{ o }}</mat-option>
+                          }
+                        </mat-select>
+                        @if (isGoamlCodeEmpty(row)) {
+                          <mat-hint>{{ 'compliance.goaml.Empty hint' | translate }}</mat-hint>
+                        } @else {
+                          <mat-hint>{{ row.ourValue }}</mat-hint>
+                        }
+                      </mat-form-field>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        @if (canEdit()) {
+          <div class="actions">
+            <span class="spacer"></span>
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              [disabled]="savingCodes()"
+              (click)="saveGoamlCodes()"
+            >
+              {{ 'compliance.goaml.Save codes' | translate }}
+            </button>
+          </div>
+        }
+      </section>
+
       <div class="actions">
         @if (view()!.lastChange; as c) {
           <span class="hint"

@@ -134,6 +134,23 @@ export interface TtrItemDetail {
   movements: Movement[];
 }
 
+/**
+ * One of our rows of FIU-Nepal's codes (fineract-dbug #288; docs/goaml-reports.md, "Codes"): what Fineract calls
+ * this value (`ourValue`) in a group of values of this `type` (for example `gender`), its human label
+ * (`description`, read-only - filled in from the schema), and the FIU-Nepal `code` an officer picks for it.
+ * `institution`'s two rows (`NAME`, `CODE`) have no list - free text instead of a select.
+ */
+export interface GoamlLookup {
+  type: string;
+  ourValue: string;
+  code?: string | null;
+  description?: string | null;
+}
+
+/** Keyed by lookup `type`, each a FIU-Nepal code the schema in use allows for it (GET /nepal/aml/goaml/code-lists);
+ * `institution` is absent, since it has no list. */
+export type GoamlCodeLists = Record<string, string[]>;
+
 export type GoamlStatus = 'DRAFT' | 'READY' | 'SUBMITTED' | 'ACCEPTED' | 'REJECTED' | 'CORRECTED' | 'DISCARDED';
 
 /** A goAML report (fineract-dbug issue #134). */
