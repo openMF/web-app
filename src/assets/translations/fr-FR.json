@@ -9171,5 +9171,35 @@
       "identity": "Identité et domicile",
       "other": "Autres"
     }
+  },
+  "branchServices": {
+    "title": "Services de l’agence",
+    "description": "Services configurés pour {{office}} et leurs horaires enregistrés.",
+    "search": "Rechercher des services",
+    "add": "Ajouter un service",
+    "coverage": "Couverture des horaires habituels",
+    "branchHours": "Horaires de l’agence",
+    "recordedHours": "Horaires des services enregistrés",
+    "configuredServices": "Services configurés",
+    "count": "Services : {{count}}",
+    "configured": "Configuré",
+    "hoursUnavailable": "Horaires du service indisponibles",
+    "noMatches": "Aucun service correspondant",
+    "catalog": "Catalogue de services",
+    "catalogDescription": "Catalogue des services d’agence de l’institution.",
+    "catalogUnavailable": "Catalogue indisponible",
+    "catalogExplanation": "Aucun catalogue compatible disponible.",
+    "catalogAddGuidance": "Utilisez Ajouter un service pour configurer un service dans cette agence.",
+    "timezone": "Fuseau horaire de l’agence indisponible. Comparaison des horaires habituels, sans indication de disponibilité aujourd’hui.",
+    "verification": "Les jours des services ne sont pas enregistrés. La concordance avec les horaires de l’agence ne peut pas être vérifiée.",
+    "unparsed": "Services avec horaires manquants ou en texte libre : {{count}}. Consultez les services configurés ci-dessous.",
+    "saving": "Enregistrement du service…",
+    "saveFailed": "La modification n’a pas pu être enregistrée. Les services précédemment chargés sont conservés.",
+    "schedule": {
+      "empty": "Aucun horaire d’agence configuré.",
+      "unavailable": "Horaires de l’agence indisponibles.",
+      "invalid": "Les horaires de l’agence contiennent des données non valides.",
+      "error": "Les horaires de l’agence n’ont pas pu être chargés."
+    }
   }
 }

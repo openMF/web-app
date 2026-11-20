@@ -9173,5 +9173,35 @@
       "identity": "Totožnost a adresa",
       "other": "Ostatní"
     }
+  },
+  "branchServices": {
+    "title": "Služby pobočky",
+    "description": "Služby nastavené pro {{office}} a jejich zaznamenané hodiny.",
+    "search": "Hledat služby",
+    "add": "Přidat službu",
+    "coverage": "Pokrytí běžné otevírací doby",
+    "branchHours": "Otevírací doba pobočky",
+    "recordedHours": "Zaznamenané hodiny služeb",
+    "configuredServices": "Nastavené služby",
+    "count": "Počet služeb: {{count}}",
+    "configured": "Nastaveno",
+    "hoursUnavailable": "Hodiny služby nejsou dostupné",
+    "noMatches": "Žádné odpovídající služby",
+    "catalog": "Katalog služeb",
+    "catalogDescription": "Katalog služeb poboček celé instituce.",
+    "catalogUnavailable": "Katalog není dostupný",
+    "catalogExplanation": "Není dostupný kompatibilní katalog.",
+    "catalogAddGuidance": "Pomocí Přidat službu nastavte službu pro tuto pobočku.",
+    "timezone": "Časové pásmo pobočky není dostupné. Porovnávají se běžné hodiny, nikoli dnešní dostupnost.",
+    "verification": "Dny služeb nejsou zaznamenány. Soulad s otevírací dobou pobočky nelze ověřit.",
+    "unparsed": "Počet služeb bez uvedených hodin nebo s hodinami ve volném textu: {{count}}. Viz nastavené služby níže.",
+    "saving": "Ukládání služby…",
+    "saveFailed": "Změnu se nepodařilo uložit. Dříve načtené služby zůstávají zachovány.",
+    "schedule": {
+      "empty": "Otevírací doba pobočky není nastavena.",
+      "unavailable": "Otevírací doba pobočky není dostupná.",
+      "invalid": "Rozvrh pobočky obsahuje neplatné údaje.",
+      "error": "Otevírací dobu pobočky se nepodařilo načíst."
+    }
   }
 }

@@ -9171,5 +9171,35 @@
       "identity": "신원 및 주소",
       "other": "기타"
     }
+  },
+  "branchServices": {
+    "title": "지점 서비스",
+    "description": "{{office}}에 설정된 서비스와 기록된 운영 시간입니다.",
+    "search": "서비스 검색",
+    "add": "서비스 추가",
+    "coverage": "정규 운영 시간 비교",
+    "branchHours": "지점 운영 시간",
+    "recordedHours": "기록된 서비스 시간",
+    "configuredServices": "설정된 서비스",
+    "count": "서비스 수: {{count}}",
+    "configured": "설정됨",
+    "hoursUnavailable": "서비스 시간 정보 없음",
+    "noMatches": "일치하는 서비스 없음",
+    "catalog": "서비스 카탈로그",
+    "catalogDescription": "기관 전체의 지점 서비스 카탈로그입니다.",
+    "catalogUnavailable": "카탈로그 사용 불가",
+    "catalogExplanation": "호환되는 카탈로그가 없습니다.",
+    "catalogAddGuidance": "서비스 추가를 사용하여 이 지점의 서비스를 설정하세요.",
+    "timezone": "지점 시간대 정보가 없습니다. 오늘의 이용 가능 여부가 아닌 정규 운영 시간을 비교합니다.",
+    "verification": "서비스 요일이 기록되어 있지 않아 지점 운영 시간과의 일치 여부를 확인할 수 없습니다.",
+    "unparsed": "시간이 없거나 자유 형식 텍스트인 서비스 수: {{count}}. 아래 설정된 서비스를 확인하세요.",
+    "saving": "서비스 저장 중…",
+    "saveFailed": "변경 사항을 저장하지 못했습니다. 이전에 불러온 서비스는 유지됩니다.",
+    "schedule": {
+      "empty": "설정된 지점 일정이 없습니다.",
+      "unavailable": "지점 일정 사용 불가.",
+      "invalid": "지점 일정에 올바르지 않은 데이터가 있습니다.",
+      "error": "지점 일정을 불러오지 못했습니다."
+    }
   }
 }

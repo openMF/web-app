@@ -9159,5 +9159,35 @@
       "identity": "Şəxsiyyət və ünvan",
       "other": "Digər"
     }
+  },
+  "branchServices": {
+    "title": "Filial xidmətləri",
+    "description": "{{office}} üçün konfiqurasiya edilmiş xidmətlər və qeydə alınmış saatlar.",
+    "search": "Xidmətləri axtar",
+    "add": "Xidmət əlavə et",
+    "coverage": "Adi iş saatlarının əhatəsi",
+    "branchHours": "Filialın iş saatları",
+    "recordedHours": "Qeydə alınmış xidmət saatları",
+    "configuredServices": "Konfiqurasiya edilmiş xidmətlər",
+    "count": "Xidmətlər: {{count}}",
+    "configured": "Konfiqurasiya edilib",
+    "hoursUnavailable": "Xidmət saatları mövcud deyil",
+    "noMatches": "Uyğun xidmət tapılmadı",
+    "catalog": "Xidmət kataloqu",
+    "catalogDescription": "Təşkilat üzrə filial xidmətlərinin kataloqu.",
+    "catalogUnavailable": "Kataloq mövcud deyil",
+    "catalogExplanation": "Uyğun kataloq mövcud deyil.",
+    "catalogAddGuidance": "Bu filial üçün xidmət qurmaq üçün Xidmət əlavə et düyməsindən istifadə edin.",
+    "timezone": "Filialın saat qurşağı məlum deyil. Bugünkü mövcudluq deyil, adi saatlar müqayisə edilir.",
+    "verification": "Xidmət günləri qeydə alınmır. Filialın iş saatlarına uyğunluq yoxlanıla bilmir.",
+    "unparsed": "Saatları olmayan və ya sərbəst mətnlə göstərilən xidmətlərin sayı: {{count}}. Aşağıdakı xidmətlərə baxın.",
+    "saving": "Xidmət saxlanılır…",
+    "saveFailed": "Dəyişiklik saxlanılmadı. Əvvəllər yüklənmiş xidmətlər saxlanılır.",
+    "schedule": {
+      "empty": "Filialın iş saatları qurulmayıb.",
+      "unavailable": "Filialın iş saatları mövcud deyil.",
+      "invalid": "Filialın cədvəlində etibarsız məlumat var.",
+      "error": "Filialın iş saatları yüklənə bilmədi."
+    }
   }
 }

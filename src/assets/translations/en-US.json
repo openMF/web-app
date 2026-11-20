@@ -9304,5 +9304,35 @@
       "identity": "Identity and address",
       "other": "Other"
     }
+  },
+  "branchServices": {
+    "title": "Branch services",
+    "description": "Services configured for {{office}} and their recorded hours.",
+    "search": "Search services",
+    "add": "Add service",
+    "coverage": "Regular schedule coverage",
+    "branchHours": "Branch operating hours",
+    "recordedHours": "Recorded service hours",
+    "configuredServices": "Configured services",
+    "count": "Services: {{count}}",
+    "configured": "Configured",
+    "hoursUnavailable": "Service hours unavailable",
+    "noMatches": "No matching services",
+    "catalog": "Service catalog",
+    "catalogDescription": "Institution-wide office service catalog.",
+    "catalogUnavailable": "Catalog unavailable",
+    "catalogExplanation": "No compatible catalog is available.",
+    "catalogAddGuidance": "Use Add service to configure a service for this branch.",
+    "timezone": "Branch timezone unavailable. This compares regular hours, not today's availability.",
+    "verification": "Service weekdays are not recorded. Alignment with the branch schedule cannot be verified.",
+    "unparsed": "Services with missing or free-form hours: {{count}}. See the configured services below.",
+    "saving": "Saving service…",
+    "saveFailed": "The change could not be saved. Previously loaded services are retained.",
+    "schedule": {
+      "empty": "No branch schedule configured.",
+      "unavailable": "Branch schedule unavailable.",
+      "invalid": "The branch schedule contains invalid data.",
+      "error": "The branch schedule could not be loaded."
+    }
   }
 }
