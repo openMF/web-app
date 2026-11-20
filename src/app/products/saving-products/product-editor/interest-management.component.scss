@@ -1,0 +1,105 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+section,
+mat-expansion-panel,
+.history-entry {
+  margin-block: 1rem;
+}
+
+.interest-grid,
+.matrix-row {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.interest-grid {
+  grid-template-columns: repeat(2, minmax(0, calc(50% - 0.5rem)));
+  margin-block: 1rem;
+}
+
+.matrix-row {
+  grid-template-columns: repeat(3, minmax(0, calc(28% - 1rem))) minmax(6rem, 16%);
+  margin-block: 1rem;
+}
+
+.matrix-header {
+  font-weight: 500;
+}
+
+mat-form-field {
+  width: 100%;
+  min-width: 0;
+}
+
+.interest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-block: 1rem;
+  align-items: center;
+}
+
+.rate-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, calc(50% - 0.5rem)));
+  gap: 0.5rem 1rem;
+}
+
+dd {
+  margin: 0;
+}
+
+p,
+dd,
+dt,
+li {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 24rem;
+  overflow: auto;
+}
+
+.capability-notice {
+  padding: 1rem;
+  border-inline-start: 0.25rem solid currentcolor;
+}
+
+@media (width <= 48rem) {
+  .interest-grid,
+  .matrix-row,
+  .rate-details {
+    grid-template-columns: minmax(0, 100%);
+  }
+
+  .matrix-header {
+    display: none;
+  }
+
+  .matrix-row {
+    border-block-end: 1px solid currentcolor;
+    padding-block: 1rem;
+  }
+
+  .interest-actions > button {
+    max-width: 100%;
+    white-space: normal;
+    height: auto;
+    min-height: 3rem;
+  }
+}

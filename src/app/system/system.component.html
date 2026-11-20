@@ -399,73 +399,77 @@
             </mat-list-item>
           </div>
 
-          <mat-list-item [routerLink]="['manage-jobs']">
-            <div class="menu-list-item-content">
-              <div class="menu-left-section" [routerLink]="['manage-jobs']">
-                <mat-icon matListIcon>
-                  <fa-icon icon="clock" size="sm"></fa-icon>
-                </mat-icon>
-                <div matLine>
-                  {{ 'labels.heading.Manage Jobs' | translate }}
+          <div #schedulerJobs>
+            <mat-list-item [routerLink]="['manage-jobs']">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['manage-jobs']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="clock" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Manage Jobs' | translate }}
+                    @if (arrowBooleans[10]) {
+                      <p matLine [routerLink]="['manage-jobs']" class="menu-explanation">
+                        {{ 'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[10]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                      icon="arrow-down"
+                      size="md"
+                    ></fa-icon>
+                  }
                   @if (arrowBooleans[10]) {
-                    <p matLine [routerLink]="['manage-jobs']" class="menu-explanation">
-                      {{ 'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate }}
-                    </p>
+                    <fa-icon
+                      (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                      icon="arrow-up"
+                      size="md"
+                    ></fa-icon>
                   }
                 </div>
               </div>
-              <div class="menu-right-section">
-                @if (!arrowBooleans[10]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[10]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
-              </div>
-            </div>
-          </mat-list-item>
+            </mat-list-item>
+          </div>
 
-          <mat-list-item [routerLink]="['configurations']">
-            <div class="menu-list-item-content">
-              <div class="menu-left-section" [routerLink]="['configurations']">
-                <mat-icon>
-                  <fa-icon icon="cogs" size="sm"></fa-icon>
-                </mat-icon>
-                <div matLine>
-                  {{ 'labels.heading.Configurations' | translate }}
+          <div #configurations>
+            <mat-list-item [routerLink]="['configurations']">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['configurations']">
+                  <mat-icon>
+                    <fa-icon icon="cogs" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Configurations' | translate }}
+                    @if (arrowBooleans[11]) {
+                      <p matLine [routerLink]="['configurations']" class="menu-explanation">
+                        {{ 'labels.text.Global configurations, Cache and Business Date' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[11]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(11); $event.stopPropagation()"
+                      icon="arrow-down"
+                      size="md"
+                    ></fa-icon>
+                  }
                   @if (arrowBooleans[11]) {
-                    <p matLine [routerLink]="['configurations']" class="menu-explanation">
-                      {{ 'labels.text.Global configurations, Cache and Business Date' | translate }}
-                    </p>
+                    <fa-icon
+                      (click)="arrowBooleansToggle(11); $event.stopPropagation()"
+                      icon="arrow-up"
+                      size="md"
+                    ></fa-icon>
                   }
                 </div>
               </div>
-              <div class="menu-right-section">
-                @if (!arrowBooleans[11]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(11); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[11]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(11); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
-              </div>
-            </div>
-          </mat-list-item>
+            </mat-list-item>
+          </div>
 
           <mat-list-item [routerLink]="['theme']" *mifosxHasPermission="'READ_CONFIGURATION'">
             <div class="menu-list-item-content">

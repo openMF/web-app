@@ -1,0 +1,89 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (receipt; as row) {
+  <h3><mifosx-account-status [code]="state" /></h3>
+  @if (state === 'BLOCKED_PENDING_POLICY') {
+    <p>{{ 'AccountManagement.NoFinancialMovement' | translate }}</p>
+  }
+  @if (state === 'UNKNOWN') {
+    <p>{{ 'AccountManagement.VerifyOutcome' | translate }}</p>
+  }
+  <dl class="facts">
+    <div>
+      <dt>{{ 'AccountManagement.Execution' | translate }}</dt>
+      <dd>{{ row.id }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'transactionReversal.operation' | translate }}</dt>
+      <dd><mifosx-account-status [code]="row.operation" /></dd>
+    </div>
+    <div>
+      <dt>{{ 'accountTransfer.source' | translate }}</dt>
+      <dd>{{ row.savingsAccountId }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.LinkedLoan' | translate }}</dt>
+      <dd>{{ row.loanId }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.RequestedAmount' | translate }}</dt>
+      <dd>{{ row.requestedAmount | accountMoney: row.currencyCode : row.evaluation?.currencyDigits }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.AppliedAmount' | translate }}</dt>
+      <dd>{{ row.appliedAmount | accountMoney: row.currencyCode : row.evaluation?.currencyDigits }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+      <dd>{{ row.businessDate | dateFormat }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
+      <dd>{{ row.actorId }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'labels.inputs.Reason' | translate }}</dt>
+      <dd><mifosx-account-status [code]="row.reasonCode" /></dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.NativeSavingsTransaction' | translate }}</dt>
+      <dd>{{ row.nativeSavingsTransactionId ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.NativeLoanTransaction' | translate }}</dt>
+      <dd>{{ row.nativeLoanTransactionId ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'AccountManagement.NativeTransfer' | translate }}</dt>
+      <dd>{{ row.nativeTransferId ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+    </div>
+  </dl>
+}
+@if (reconciliation; as result) {
+  <p>{{ 'AccountManagement.Reconciliation' | translate }}: <mifosx-account-status [code]="result.status" /></p>
+  <dl class="facts">
+    @for (check of reconciliationChecks; track check.field) {
+      <div>
+        <dt>{{ check.label | translate }}</dt>
+        <dd [attr.data-testid]="check.field">
+          {{
+            (result[check.field] === true
+              ? 'labels.commons.Yes'
+              : result[check.field] === false
+                ? 'labels.commons.No'
+                : 'AccountManagement.NotEstablished'
+            ) | translate
+          }}
+        </dd>
+      </div>
+    }
+  </dl>
+  <p>{{ 'AccountManagement.ReconciliationEvidenceNotice' | translate }}</p>
+  <p>{{ 'AccountManagement.NoAutomaticRetry' | translate }}</p>
+}

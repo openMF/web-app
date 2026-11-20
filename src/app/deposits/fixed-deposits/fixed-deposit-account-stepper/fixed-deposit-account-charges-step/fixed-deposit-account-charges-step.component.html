@@ -72,7 +72,7 @@
         }
         @if (charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee') {
           <span>
-            {{ charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | dateFormat: 'dd MMMM') : 'Unassigned' }}
+            {{ charge.feeOnMonthDay ? formatFeeOnMonthDay(charge.feeOnMonthDay) : 'Unassigned' }}
           </span>
         }
         @if (

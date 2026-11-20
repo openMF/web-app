@@ -27,7 +27,7 @@
           <tr>
             <td class="info-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
             <td class="info-value">
-              {{ systemInformation.fineract.version }}
+              {{ systemInformation.fineract.raw }}
               @if (systemInformation.fineract.hash) {
                 <span class="info-hash">{{ systemInformation.fineract.hash }}</span>
               }

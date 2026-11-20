@@ -1,0 +1,126 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<!-- In a bottom sheet the sheet itself is the dialog, so the role, label and focus trap are only needed in the popover -->
+<section
+  class="panel"
+  [id]="panelId"
+  [attr.role]="mode === 'popover' ? 'dialog' : null"
+  [attr.aria-labelledby]="mode === 'popover' ? titleId : null"
+  [cdkTrapFocus]="mode === 'popover'"
+>
+  <header class="panel-header">
+    <mifosx-m3-icon class="panel-icon" name="dns" [size]="20" aria-hidden="true"></mifosx-m3-icon>
+    <h2 class="panel-title" [id]="titleId">{{ 'labels.heading.System Information' | translate }}</h2>
+    <button
+      type="button"
+      class="close-button"
+      [attr.aria-label]="'labels.buttons.Close' | translate"
+      (click)="closed.emit()"
+    >
+      <mifosx-m3-icon name="close" [size]="18" aria-hidden="true"></mifosx-m3-icon>
+    </button>
+  </header>
+
+  <div class="panel-body">
+    <section class="panel-section">
+      <h3 class="section-title">{{ 'labels.heading.Connection' | translate }}</h3>
+      <div class="status-row" [attr.data-state]="view.status.state">
+        <span class="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-text">{{ statusTextKeys[view.status.state] | translate }}</span>
+        </span>
+        @if (view.status.state !== 'checking' && view.status.checkedAt) {
+          <span class="checked-ago">
+            {{ 'labels.text.Checked seconds ago' | translate: { seconds: secondsSince(view.status.checkedAt, now()) } }}
+          </span>
+        }
+        @if (view.status.state === 'offline') {
+          <button type="button" class="panel-button retry-button" (click)="retry.emit()">
+            {{ 'labels.buttons.Retry now' | translate }}
+          </button>
+        }
+      </div>
+      <dl class="rows">
+        <div class="row">
+          <dt>{{ 'labels.version.Server' | translate }}</dt>
+          <dd class="mono">{{ orDash(view.info.server) }}</dd>
+        </div>
+        <div class="row">
+          <dt>{{ 'labels.version.Tenant' | translate }}</dt>
+          <dd>{{ orDash(view.info.tenant) }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="panel-section">
+      <h3 class="section-title">{{ 'labels.heading.Versions' | translate }}</h3>
+      <dl class="rows">
+        <div class="row">
+          <dt>{{ 'labels.version.Mifos WebApp' | translate }}</dt>
+          <dd class="row-webapp">
+            {{ orDash(view.info.webApp.version) }}
+            @if (view.info.webApp.hash) {
+              <mifosx-commit-hash-chip
+                [hash]="view.info.webApp.hash"
+                [fullHash]="view.info.webApp.fullHash"
+              ></mifosx-commit-hash-chip>
+            }
+            @if (view.info.webApp.preRelease) {
+              <span class="pre-release-badge">{{ view.info.webApp.preRelease }}</span>
+            }
+          </dd>
+        </div>
+        <div class="row">
+          <dt>{{ 'labels.version.Apache Fineract' | translate }}</dt>
+          <dd class="row-fineract">
+            {{ orDash(view.fineract?.version) }}
+            @if (view.fineract?.preRelease) {
+              <span class="pre-release-badge">{{ view.fineract.preRelease }}</span>
+            }
+          </dd>
+        </div>
+      </dl>
+      @if (view.fineract?.preRelease) {
+        <p class="pre-release-notice">
+          <mifosx-m3-icon name="warning" [size]="16" aria-hidden="true"></mifosx-m3-icon>
+          <span>{{ 'labels.text.Pre-release backend' | translate }}</span>
+        </p>
+      }
+    </section>
+
+    <section class="panel-section">
+      <h3 class="section-title">{{ 'labels.heading.Session' | translate }}</h3>
+      <dl class="rows">
+        <div class="row">
+          <dt>{{ 'labels.version.Username' | translate }}</dt>
+          <dd>{{ orDash(view.info.username) }}</dd>
+        </div>
+        <div class="row">
+          <dt>{{ 'labels.version.Name' | translate }}</dt>
+          <dd>{{ orDash(view.info.name) }}</dd>
+        </div>
+        <div class="row">
+          <dt>{{ 'labels.version.Render Time' | translate }}</dt>
+          <dd class="row-render-time">{{ orDash(view.info.renderTime | datetimeFormat) }}</dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+
+  <footer class="panel-footer">
+    <button type="button" class="panel-button primary copy-button" (click)="copyDiagnostics()">
+      <mifosx-m3-icon name="content_copy" [size]="16" aria-hidden="true"></mifosx-m3-icon>
+      {{ 'labels.buttons.Copy diagnostics' | translate }}
+    </button>
+    @if (reportIssueUrl) {
+      <a class="panel-button report-button" [href]="reportIssueUrl" target="_blank" rel="noopener noreferrer">
+        {{ 'labels.buttons.Report issue' | translate }}
+      </a>
+    }
+  </footer>
+</section>

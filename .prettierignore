@@ -6,3 +6,4 @@ package-lock.json
 
 # Scaffold documents shared across openMF repositories: keep them as provided, not reformatted
 /SECURITY.md
+/CODE_OF_CONDUCT.md

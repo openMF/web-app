@@ -31,14 +31,14 @@
             }
           </mat-form-field>
 
-          @if (prematureCloseAccountForm.controls.maturityAmount) {
+          @if (onAccountClosureOptions.length) {
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Maturity Amount' | translate }}</mat-label>
               <input type="number" matInput formControlName="maturityAmount" />
             </mat-form-field>
           }
 
-          @if (prematureCloseAccountForm.contains('onAccountClosureId')) {
+          @if (onAccountClosureOptions.length) {
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
               <mat-select required formControlName="onAccountClosureId">
@@ -83,12 +83,10 @@
             </mat-form-field>
           }
 
-          @if (prematureCloseAccountForm.contains('note')) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-              <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-            </mat-form-field>
-          }
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
         </div>
       </mat-card-content>
 
@@ -96,7 +94,7 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="warn" [disabled]="!prematureCloseAccountForm.valid">
+        <button mat-raised-button color="warn" [disabled]="prematureCloseAccountForm.invalid || isSubmitting">
           {{ 'labels.buttons.Confirm' | translate }}
         </button>
       </mat-card-actions>

@@ -8,11 +8,18 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+  HttpContextToken
+} from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, from, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
@@ -23,10 +30,15 @@ import { AlertService } from '../alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Models */
+import { financialRestrictionError } from 'app/savings/shared/financial-restriction-error';
+import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
 
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
+
+/** Screens with complete inline error states may suppress duplicate global alerts. */
+export const HANDLE_HTTP_ERROR_LOCALLY = new HttpContextToken<boolean>(() => false);
 
 /**
  * Http Request interceptor to add a default error handler to requests.
@@ -41,6 +53,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   ];
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.context.get(HANDLE_HTTP_ERROR_LOCALLY)) return next.handle(request);
     return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
   }
 
@@ -63,18 +76,46 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   /**
+   * Decodes a binary Blob error body into a structured JSON payload or string.
+   * Falls back to null if reading fails.
+   */
+  private async parseBlob(blob: Blob): Promise<unknown> {
+    try {
+      let text: string;
+      if (typeof blob.text === 'function') {
+        text = await blob.text();
+      } else {
+        text = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(reader.error);
+          reader.readAsText(blob);
+        });
+      }
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    } catch {
+      return null;
+    }
+  }
+
+  /**
    * Resolves a backend globalisation code against the `errors` section, where
    * the codes are stored as flat dotted keys. Returns null when the code has no
    * translation, so the caller can fall back to the server message.
    * @param code Globalisation code sent by the backend
    * @param args Values the backend sent with the error, shown in the message
    */
-  private translateErrorCode(code: string | undefined, args?: { value?: unknown }[]): string | null {
+  private translateErrorCode(code: string | undefined, args?: unknown): string | null {
     if (!code) {
       return null;
     }
     const key = `errors.${code}`;
-    const translated = this.translate.instant(key, this.toTranslationParams(args));
+    const params = Array.isArray(args) ? this.toTranslationParams(args) : {};
+    const translated = this.translate.instant(key, params);
     return translated && translated !== key ? translated : null;
   }
 
@@ -83,11 +124,13 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
    * reads `params[0]` as a plain key, not as an array index, so each arg is set under that key.
    * @param args Values the backend sent with the error
    */
-  private toTranslationParams(args?: { value?: unknown }[]): Record<string, unknown> {
+  private toTranslationParams(args: { value?: unknown }[]): Record<string, unknown> {
     const params: Record<string, unknown> = {};
-    (args ?? []).forEach((arg, index) => {
-      params[`params[${index}]`] = arg;
-    });
+    if (Array.isArray(args)) {
+      args.forEach((arg, index) => {
+        params[`params[${index}]`] = arg;
+      });
+    }
     return params;
   }
 
@@ -117,9 +160,71 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
+    if (response.error instanceof Blob) {
+      return from(this.parseBlob(response.error)).pipe(
+        switchMap((parsedError) => {
+          const resolvedResponse = new HttpErrorResponse({
+            error: parsedError ?? response.error,
+            headers: response.headers,
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url ?? undefined
+          });
+          return this.processError(resolvedResponse, request);
+        })
+      );
+    }
+    return this.processError(response, request);
+  }
+
+  private processError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
-    // Account transfers render safe localized errors, including text response bodies.
-    if (/\/base-teller\/(?:account-transfers|cash-transfers|withdrawals)(?:[/?]|$)/.test(request.url)) {
+    // ANPA renders sanitized translated errors and never exposes raw accounting exceptions.
+    if (/\/v1\/loans\/anpa-writeoff(?:[/?]|$)/.test(request.url)) {
+      return throwError(() => response);
+    }
+
+    // Account management renders allowlisted localized errors, including optional endpoint 404s.
+    // Never send its financial payloads to the generic response logger or raw server-message alerts.
+    if (
+      request.context.get(ACCOUNT_MANAGEMENT_REQUEST) ||
+      /\/savings\/(?:account-relationships|guarantee-sweeps|planned-savings)(?:[/?]|$)/.test(request.url)
+    ) {
+      if (status === 401) {
+        this.alertService.alert({
+          type: this.translate.instant('errors.error.auth.sessionExpired.type'),
+          message: this.translate.instant('errors.error.auth.sessionExpired.message')
+        });
+      }
+      return throwError(() => response);
+    }
+    const restriction = financialRestrictionError(response);
+    if (
+      restriction &&
+      (/\/base-teller\/(?:withdrawals|account-transfers)(?:[/?]|$)/.test(request.url) ||
+        (request.method === 'POST' && /\/savingsaccounts\/[^/?]+\/transactions\/?(?:\?|$)/.test(request.url)))
+    ) {
+      // These workflows render known restrictions locally. Preserve the rejection without a duplicate alert.
+      return throwError(() => response);
+    }
+    if (restriction) {
+      // Domain rejection may be HTTP 403. Preserve the response without exposing server internals.
+      this.alertService.alert({
+        type: this.translate.instant('FinancialControls.TransactionRejected'),
+        message: this.translate.instant(restriction)
+      });
+      return throwError(() => response);
+    }
+    if (status !== 401 && /\/savings\/monthly-fees(?:[/?]|$)/.test(request.url)) {
+      // This optional administrative panel renders its own safe error and reload controls.
+      return throwError(() => response);
+    }
+    // These teller workflows render safe localized errors, including text response bodies.
+    if (
+      /\/base-teller\/(?:account-transfers|cash-transfers|withdrawals|vault|vault-cash-deposits)(?:[/?]|$)/.test(
+        request.url
+      )
+    ) {
       if (status === 401) {
         this.alertService.alert({
           type: this.translate.instant('errors.error.auth.sessionExpired.type'),
@@ -189,10 +294,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     // Translate nested globalisation code if present
     let nestedMessage: string | null = null;
-    if (errorBody?.errors?.[0]?.userMessageGlobalisationCode) {
-      const nestedCode = errorBody.errors[0].userMessageGlobalisationCode;
-      const translated = this.translate.instant(nestedCode, errorBody.errors[0] || {});
-      nestedMessage = translated !== nestedCode ? translated : errorBody.errors[0].defaultUserMessage || null;
+    const firstNested = errorBody?.errors?.[0];
+    if (firstNested && typeof firstNested === 'object' && firstNested.userMessageGlobalisationCode) {
+      const nestedCode = firstNested.userMessageGlobalisationCode;
+      const translated = this.translate.instant(nestedCode, firstNested || {});
+      nestedMessage = translated !== nestedCode ? translated : firstNested.defaultUserMessage || null;
     }
 
     // Combine both messages if both exist and are distinct.
@@ -209,7 +315,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     // response, so a body delivered as an ArrayBuffer goes through the same
     // lookup instead of falling back to the untranslated server message.
     const nestedError = errorBody?.errors?.[0];
-    if (nestedError) {
+    if (nestedError && typeof nestedError === 'object') {
       const nestedCode = nestedError.userMessageGlobalisationCode;
       if (nestedCode && this.databaseErrorCodes.indexOf(nestedCode) > -1) {
         errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
@@ -219,8 +325,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         // back to the raw message the server sent.
         errorMessage =
           this.translateErrorCode(nestedCode, nestedError.args) ||
-          nestedError.defaultUserMessage?.replace(/\\./g, ' ') ||
-          nestedError.developerMessage?.replace(/\\./g, ' ');
+          (typeof nestedError.defaultUserMessage === 'string'
+            ? nestedError.defaultUserMessage.replace(/\\./g, ' ')
+            : null) ||
+          (typeof nestedError.developerMessage === 'string' ? nestedError.developerMessage.replace(/\\./g, ' ') : null);
       }
       if ('parameterName' in nestedError) {
         parameterName = nestedError.parameterName;

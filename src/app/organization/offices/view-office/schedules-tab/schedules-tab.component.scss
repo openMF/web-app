@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* stylelint-disable unit-allowed-list -- CSS Grid uses fractional tracks. */
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -25,7 +27,7 @@
   }
 
   .error-state {
-    color: var(--warn-color, #b00020);
+    color: var(--ds-alert, var(--warn-color, #b00020));
   }
 
   .unavailable-state {
@@ -40,19 +42,25 @@
   .schedule-header,
   .schedule-row {
     display: grid;
-    grid-template-columns: minmax(96px, 26%) 76px minmax(0, calc(37% - 53px)) minmax(0, calc(37% - 53px));
+    grid-template-columns: repeat(2, minmax(0, calc(50% - 8px)));
     align-items: center;
-    column-gap: 10px;
+    column-gap: 16px;
   }
 
   .schedule-header {
-    min-height: 36px;
+    min-height: 40px;
     font-weight: 500;
     color: rgb(0 0 0 / 60%);
   }
 
   .schedule-row {
     min-height: 72px;
+    row-gap: 8px;
+  }
+
+  .day-status {
+    display: block;
+    font-weight: normal;
   }
 
   .weekday-label {
@@ -77,6 +85,8 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   mat-form-field {
@@ -86,7 +96,7 @@
   @media (width <= 720px) {
     .schedule-header,
     .schedule-row {
-      grid-template-columns: minmax(96px, calc(100% - 74px)) 64px;
+      grid-template-columns: minmax(0, calc(100% - 80px)) 64px;
       row-gap: 8px;
       padding: 8px 0;
     }
@@ -95,12 +105,586 @@
       border-bottom: 1px solid rgb(0 0 0 / 12%);
     }
 
-    .schedule-header .time-column {
-      display: none;
-    }
-
     .schedule-row .time-column {
       grid-column: 1 / -1;
     }
+  }
+}
+
+.summary-view {
+  padding: 0;
+  margin: 0;
+
+  > .layout-row {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .m-b-16 {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .schedule-state {
+    min-height: 64px;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+}
+
+.weekly-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.day-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  overflow-wrap: anywhere;
+}
+
+.short-weekday {
+  color: var(--ds-text-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.day-hours {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.closed-day {
+  background: var(--ds-surface-alt);
+  border-style: dashed;
+  color: var(--ds-text-2);
+}
+
+@media (width < 768px) {
+  .weekly-strip {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+}
+
+:host {
+  display: block;
+  min-width: 0;
+  color: var(--ds-text-1);
+
+  --hours-accent: var(--md-sys-color-primary);
+}
+
+.tab-container:not(.summary-view) {
+  padding: 0;
+  margin: 0;
+
+  .schedule-header {
+    color: var(--ds-text-2);
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+}
+
+.hours-heading,
+.hours-heading-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hours-heading {
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  > div:first-child {
+    flex: 1 1 320px;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    max-width: 48em;
+    color: var(--ds-text-2);
+    line-height: 1.5;
+  }
+}
+
+.hours-heading-actions {
+  justify-content: flex-end;
+}
+
+.timezone-note {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--ds-text-2);
+  font-size: 0.875rem;
+}
+
+.edit-schedule {
+  min-height: 48px;
+  border-radius: var(--ds-radius);
+  background: var(--hours-accent);
+  color: var(--ds-action-on-fill);
+
+  fa-icon {
+    margin-right: 8px;
+  }
+}
+
+.hours-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 2.5fr) minmax(280px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.hours-card {
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: none;
+  background: var(--ds-surface);
+  color: var(--ds-text-1);
+  overflow: hidden;
+}
+
+.card-heading {
+  padding: 24px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ds-text-2);
+    line-height: 1.5;
+  }
+}
+
+.weekly-table {
+  width: 100%;
+  background: transparent;
+
+  .mat-mdc-header-cell,
+  .mat-mdc-cell {
+    box-sizing: border-box;
+    color: inherit;
+    border-color: var(--ds-border);
+    padding: 8px;
+    overflow-wrap: anywhere;
+  }
+
+  .mat-column-weekday {
+    flex: 0 0 17%;
+    width: 17%;
+    padding-left: 24px;
+    font-weight: 500;
+  }
+
+  .mat-column-hours {
+    flex: 0 0 22%;
+    width: 22%;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mat-column-duration {
+    flex: 0 0 12%;
+    width: 12%;
+    padding-right: 24px;
+    text-align: end;
+    color: var(--ds-text-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mat-column-timeline {
+    min-width: 0;
+  }
+
+  .configured-hours {
+    font-weight: 500;
+  }
+
+  .mat-mdc-header-row {
+    height: 48px;
+  }
+
+  .mat-mdc-row {
+    min-height: 56px;
+    background: var(--ds-surface);
+  }
+}
+
+.muted {
+  color: var(--ds-text-2);
+  font-weight: 400;
+}
+
+.invalid-hours {
+  color: var(--ds-alert);
+  font-weight: 400;
+}
+
+.timeline-axis,
+.mobile-axis {
+  position: relative;
+  height: 24px;
+  width: 100%;
+  color: var(--ds-text-2);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+
+  span {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+
+  span:first-child {
+    transform: none;
+  }
+
+  span:last-child {
+    transform: translateX(-100%);
+  }
+}
+
+.timeline-track {
+  height: 32px;
+  width: 100%;
+  position: relative;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface-alt);
+  overflow: hidden;
+}
+
+.timeline-gridline {
+  position: absolute;
+  inset-block: 0;
+  border-left: 1px solid var(--ds-border);
+  opacity: 0.5;
+}
+
+.timeline-bar {
+  position: absolute;
+  top: 8px;
+  height: 16px;
+  background: var(--hours-accent);
+  border-radius: var(--ds-radius-sm);
+}
+
+.weekly-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  padding: 16px 24px;
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+  line-height: 1.5;
+
+  strong {
+    color: var(--ds-text-1);
+    font-weight: 600;
+  }
+}
+
+.schedule-notice {
+  margin: 0;
+  padding: 0 24px 16px;
+  color: var(--ds-text-2);
+}
+
+.hours-sidebar {
+  display: grid;
+  min-width: 0;
+  gap: 24px;
+}
+
+.status-card {
+  padding: 24px;
+  border-radius: var(--ds-radius-lg);
+  background: var(--hours-accent);
+  color: var(--ds-action-on-fill);
+  box-shadow: none;
+
+  h3 {
+    margin: 16px 0 8px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  padding: 0 8px;
+  border-radius: var(--ds-radius);
+  background: rgb(255 255 255 / 12%);
+  font-size: 0.8125rem;
+  line-height: 2;
+}
+
+.holidays-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 16px;
+
+  p {
+    flex-basis: 100%;
+    font-size: 0.875rem;
+  }
+
+  a {
+    white-space: normal;
+    height: auto;
+    min-height: 40px;
+
+    fa-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.holiday-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.holiday-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 16px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--ds-border);
+}
+
+.date-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  grid-row: span 2;
+
+  strong {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  span {
+    color: var(--ds-text-2);
+    font-size: 0.75rem;
+  }
+}
+
+.holiday-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-wrap: anywhere;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+.holiday-dates {
+  color: var(--ds-text-2);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.holiday-badge {
+  justify-self: start;
+  grid-column: 2;
+  padding: 0 8px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-paid-bg);
+  color: var(--ds-paid);
+  font-size: 0.75rem;
+  line-height: 2;
+}
+
+.pending-holiday {
+  background: var(--ds-partial-bg);
+  color: var(--ds-partial);
+}
+
+.holiday-state {
+  padding: 16px 24px;
+  margin: 0;
+  color: var(--ds-text-2);
+  line-height: 1.5;
+}
+
+.error-state {
+  color: var(--ds-alert);
+}
+
+.holidays-footer {
+  padding: 8px 16px;
+  border-top: 1px solid var(--ds-border);
+
+  a {
+    white-space: normal;
+    min-height: 40px;
+    height: auto;
+    text-align: start;
+  }
+}
+
+.mobile-axis {
+  display: none;
+}
+
+@media (width < 1100px) {
+  .hours-dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hours-sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+@media (width < 768px) {
+  .hours-sidebar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hours-heading-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (width < 640px) {
+  .mobile-axis {
+    display: block;
+    width: auto;
+    margin: 0 16px;
+  }
+
+  .weekly-table {
+    display: block;
+
+    .mat-mdc-header-row {
+      display: none;
+    }
+
+    .mat-mdc-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      padding: 16px;
+      height: auto;
+      min-height: 0;
+      border-top: 1px solid var(--ds-border);
+    }
+
+    .mat-mdc-cell {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      width: auto;
+    }
+
+    .mat-column-weekday {
+      grid-column: 1;
+      padding: 0;
+      width: auto;
+    }
+
+    .mat-column-hours {
+      grid-column: 1;
+      grid-row: 2;
+      width: auto;
+    }
+
+    .mat-column-duration {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      align-self: center;
+      max-width: 8em;
+      padding: 0;
+      width: auto;
+    }
+
+    .mat-column-timeline {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+  }
+
+  .card-heading,
+  .status-card,
+  .holiday-row,
+  .holiday-state,
+  .weekly-summary {
+    padding: 16px;
+  }
+}
+
+@media (width >= 1600px) {
+  .holiday-row {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+  }
+
+  .date-tile {
+    grid-row: auto;
+  }
+
+  .holiday-badge {
+    grid-column: auto;
+    max-width: 8em;
   }
 }

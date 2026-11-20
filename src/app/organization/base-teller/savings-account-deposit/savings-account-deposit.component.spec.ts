@@ -7,7 +7,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatStepper } from '@angular/material/stepper';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight, faCheck, faPencilAlt, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +20,7 @@ import { describe, expect, it, beforeEach, jest } from '@jest/globals';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { BaseTellerService } from '../base-teller.service';
+import { BaseTellerService, SavingsDepositCommandResult, SavingsDepositReceipt } from '../base-teller.service';
 import { SavingsAccountDepositComponent } from './savings-account-deposit.component';
 
 describe('SavingsAccountDepositComponent', () => {
@@ -105,6 +107,174 @@ describe('SavingsAccountDepositComponent', () => {
     });
     component.denominations.at(0).patchValue({ denomination: 25, quantity: 2 });
   }
+
+  it('displays and submits the default editable note', () => {
+    makeFormsValid();
+    fixture.detectChanges();
+    const noteInput: HTMLTextAreaElement = fixture.nativeElement.querySelector('[formControlName="note"]');
+
+    expect(noteInput.value).toBe('DEPOSITO EN VENTANILLA');
+    expect(noteInput.readOnly).toBe(false);
+    expect(noteInput.disabled).toBe(false);
+
+    component.submit();
+
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledWith(
+      77,
+      expect.objectContaining({ note: 'DEPOSITO EN VENTANILLA' })
+    );
+  });
+
+  it('preserves an edited note and generated receipt through step navigation and submission', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    const stepper: MatStepper = fixture.debugElement.query(By.directive(MatStepper)).componentInstance;
+    stepper.next();
+    fixture.detectChanges();
+    const noteInput: HTMLTextAreaElement = fixture.nativeElement.querySelector('[formControlName="note"]');
+    noteInput.value = 'Nota personalizada';
+    noteInput.dispatchEvent(new Event('input'));
+
+    expect(component.proceedToPreview()).toBe(true);
+    stepper.next();
+    expect(stepper.selectedIndex).toBe(2);
+    stepper.previous();
+    stepper.previous();
+    expect(stepper.selectedIndex).toBe(0);
+    stepper.next();
+    stepper.next();
+    fixture.detectChanges();
+
+    expect(noteInput.value).toBe('Nota personalizada');
+    expect(component.depositForm.controls.receiptNumber.value).toBe(receiptNumber);
+    component.submit();
+
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledWith(
+      77,
+      expect.objectContaining({ note: 'Nota personalizada', receiptNumber })
+    );
+  });
+
+  it('automatically displays a read-only UUIDv7 receipt number within the existing length limit', () => {
+    const receiptInput: HTMLInputElement = fixture.nativeElement.querySelector('[formControlName="receiptNumber"]');
+
+    expect(receiptInput.value).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(receiptInput.readOnly).toBe(true);
+    expect(receiptInput.value).toBe(component.depositForm.controls.receiptNumber.value);
+    expect(component.depositForm.controls.receiptNumber.valid).toBe(true);
+    expect(receiptInput.maxLength).toBe(50);
+  });
+
+  it('encodes Unix milliseconds and sets version and variant bits while retaining secure random bits', () => {
+    const now = jest.spyOn(Date, 'now').mockReturnValue(0x017f22e279b0);
+    const randomValues = jest.spyOn(crypto, 'getRandomValues').mockReturnValueOnce(new Uint8Array(16).fill(0xff));
+    try {
+      component.createForms();
+
+      expect(randomValues).toHaveBeenCalledTimes(1);
+      expect(randomValues).toHaveBeenCalledWith(expect.any(Uint8Array));
+      expect(component.depositForm.controls.receiptNumber.value).toBe('017f22e2-79b0-7fff-bfff-ffffffffffff');
+    } finally {
+      now.mockRestore();
+      randomValues.mockRestore();
+    }
+  });
+
+  it('gives newly opened deposits different receipt numbers even within the same millisecond', () => {
+    const now = jest.spyOn(Date, 'now').mockReturnValue(0x017f22e279b0);
+    const nextFixture = TestBed.createComponent(SavingsAccountDepositComponent);
+    try {
+      nextFixture.detectChanges();
+      const receiptNumber = nextFixture.componentInstance.depositForm.controls.receiptNumber.value;
+      const anotherFixture = TestBed.createComponent(SavingsAccountDepositComponent);
+      try {
+        anotherFixture.detectChanges();
+
+        expect(anotherFixture.componentInstance.depositForm.controls.receiptNumber.value).not.toBe(receiptNumber);
+      } finally {
+        anotherFixture.destroy();
+      }
+    } finally {
+      nextFixture.destroy();
+      now.mockRestore();
+    }
+  });
+
+  it('preserves the receipt number during change detection, lookup navigation and template reloads', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    component.depositForm.controls.note.setValue('Nota personalizada');
+
+    component.lookupForm.controls.search.setValue('Amina');
+    component.selectLookupResult({ entityId: 10, entityName: 'Amina Doe', entityType: 'client' });
+    component.lookupForm.controls.savingsAccount.setValue(activeSavingsAccount);
+    fixture.detectChanges();
+    fixture.detectChanges();
+
+    expect(component.depositForm.controls.receiptNumber.value).toBe(receiptNumber);
+    expect(component.depositForm.controls.note.value).toBe('Nota personalizada');
+  });
+
+  it('generates a new receipt once when starting another deposit after success', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    component.submit();
+
+    component.lookupForm.controls.search.setValue('Amina');
+    const nextReceiptNumber = component.depositForm.controls.receiptNumber.value;
+    component.selectLookupResult({ entityId: 10, entityName: 'Amina Doe', entityType: 'client' });
+    makeFormsValid();
+
+    expect(nextReceiptNumber).not.toBe(receiptNumber);
+    expect(component.depositForm.controls.receiptNumber.value).toBe(nextReceiptNumber);
+    component.submit();
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenNthCalledWith(
+      2,
+      77,
+      expect.objectContaining({ receiptNumber: nextReceiptNumber })
+    );
+  });
+
+  it('reuses the same receipt number when retrying a failed operation', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => new Error('Network error')));
+
+    component.submit();
+    expect(component.isSubmitting).toBe(false);
+    expect(component.proceedToPreview()).toBe(true);
+    component.submit();
+
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(2);
+    for (const [
+      ,
+      payload
+    ] of baseTellerService.depositToSavingsAccount.mock.calls) {
+      expect(payload.receiptNumber).toBe(receiptNumber);
+    }
+    expect(component.depositForm.controls.receiptNumber.value).toBe(receiptNumber);
+  });
+
+  it('preserves duplicate-submission protection and the receipt number while submitting', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    const response = new Subject<SavingsDepositCommandResult>();
+    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(response.asObservable());
+
+    component.submit();
+    component.submit();
+
+    expect(component.isSubmitting).toBe(true);
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+    expect(component.depositForm.controls.receiptNumber.value).toBe(receiptNumber);
+    response.next({ resourceId: 101 });
+    response.complete();
+    fixture.detectChanges();
+    const submitButton = Array.from(fixture.nativeElement.querySelectorAll('button')).find(
+      (button: HTMLButtonElement) => button.textContent?.includes('labels.buttons.Submit')
+    ) as HTMLButtonElement;
+    expect(submitButton.disabled).toBe(true);
+  });
 
   it('filters payment types by CASH and CHECK metadata', () => {
     component.paymentTypeOptions = [
@@ -202,6 +372,8 @@ describe('SavingsAccountDepositComponent', () => {
       transactionDate: '16 September 2026',
       transactionAmount: 50,
       paymentTypeId: 1,
+      receiptNumber: component.depositForm.controls.receiptNumber.value,
+      note: 'DEPOSITO EN VENTANILLA',
       dateFormat: 'dd MMMM yyyy',
       locale: 'en'
     });
@@ -214,7 +386,6 @@ describe('SavingsAccountDepositComponent', () => {
       accountNumber: 'CHK-ACCOUNT',
       checkNumber: 'CHK-9',
       routingCode: 'RT-1',
-      receiptNumber: 'RC-9',
       bankNumber: 'BANK-1'
     });
 
@@ -225,7 +396,8 @@ describe('SavingsAccountDepositComponent', () => {
       accountNumber: 'CHK-ACCOUNT',
       checkNumber: 'CHK-9',
       routingCode: 'RT-1',
-      receiptNumber: 'RC-9',
+      receiptNumber: component.depositForm.controls.receiptNumber.value,
+      note: 'DEPOSITO EN VENTANILLA',
       bankNumber: 'BANK-1',
       dateFormat: 'dd MMMM yyyy',
       locale: 'en'
@@ -244,6 +416,60 @@ describe('SavingsAccountDepositComponent', () => {
     expect(baseTellerService.getSavingsDepositReceipt).toHaveBeenCalledWith(77, 101);
     expect(component.commandResult).toEqual({ resourceId: 101, savingsId: 77, changes: { paymentTypeId: 1 } });
     expect(component.receipt).toEqual(expect.objectContaining({ id: 101, runningBalance: 170 }));
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain('RC-101');
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).not.toContain(
+      component.depositForm.controls.receiptNumber.value
+    );
+  });
+
+  it('displays the generated receipt fallback if the saved transaction has no receipt number', () => {
+    makeFormsValid();
+    const receiptNumber = component.depositForm.controls.receiptNumber.value;
+    baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(of({ id: 101, amount: 50 }));
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain(receiptNumber);
+  });
+
+  it('preserves a receipt confirmed by the deposit response if receipt retrieval fails', () => {
+    makeFormsValid();
+    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
+      of({ resourceId: 101, paymentDetailData: { receiptNumber: 'BACKEND-101' } })
+    );
+    baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(throwError(() => new Error('Network error')));
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain('BACKEND-101');
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).not.toContain(
+      component.depositForm.controls.receiptNumber.value
+    );
+  });
+
+  it('retains a backend-confirmed receipt number if retrieved details omit it', () => {
+    makeFormsValid();
+    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
+      of({ resourceId: 101, paymentDetailData: { receiptNumber: 'BACKEND-101' } })
+    );
+    baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(
+      of({ id: 101, amount: 50, paymentDetailData: { paymentType: { name: 'Cash Drawer' } } })
+    );
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(component.receipt?.paymentDetailData).toEqual({
+      receiptNumber: 'BACKEND-101',
+      paymentType: { name: 'Cash Drawer' }
+    });
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain('BACKEND-101');
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).not.toContain(
+      component.depositForm.controls.receiptNumber.value
+    );
   });
 
   it('preserves backend error messages on failed submission', () => {
@@ -256,5 +482,80 @@ describe('SavingsAccountDepositComponent', () => {
 
     expect(component.errorMessage).toBe('paymentTypeId is required');
     expect(component.commandResult).toBeUndefined();
+  });
+
+  it.each([
+    'success',
+    'error'
+  ])('ignores a pending receipt %s after the account is cleared', (outcome) => {
+    makeFormsValid();
+    const pendingReceipt = new Subject<SavingsDepositReceipt>();
+    baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(pendingReceipt.asObservable());
+    component.submit();
+
+    component.lookupForm.controls.search.setValue('Another customer');
+    if (outcome === 'success') {
+      pendingReceipt.next({ id: 101, paymentDetailData: { receiptNumber: 'BACKEND-101' } });
+      pendingReceipt.complete();
+    } else {
+      pendingReceipt.error(new Error('Receipt lookup failed'));
+    }
+
+    expect(component.receipt).toBeUndefined();
+    expect(component.commandResult).toBeUndefined();
+  });
+
+  it.each([
+    'success',
+    'error'
+  ])('ignores an earlier deposit receipt %s after the next receipt loads', (outcome) => {
+    makeFormsValid();
+    const firstReceipt = new Subject<SavingsDepositReceipt>();
+    const secondReceipt = new Subject<SavingsDepositReceipt>();
+    baseTellerService.depositToSavingsAccount
+      .mockReturnValueOnce(of({ resourceId: 101, paymentDetailData: { receiptNumber: 'BACKEND-101' } }))
+      .mockReturnValueOnce(of({ resourceId: 202, paymentDetailData: { receiptNumber: 'BACKEND-202' } }));
+    baseTellerService.getSavingsDepositReceipt
+      .mockReturnValueOnce(firstReceipt.asObservable())
+      .mockReturnValueOnce(secondReceipt.asObservable());
+    component.submit();
+
+    component.lookupForm.controls.search.setValue('Another deposit');
+    makeFormsValid();
+    component.submit();
+    secondReceipt.next({ id: 202, amount: 50, runningBalance: 220 });
+    secondReceipt.complete();
+    const currentReceipt = component.receipt;
+
+    expect(currentReceipt?.paymentDetailData?.receiptNumber).toBe('BACKEND-202');
+    expect(baseTellerService.getSavingsDepositReceipt).toHaveBeenNthCalledWith(1, 77, 101);
+    expect(baseTellerService.getSavingsDepositReceipt).toHaveBeenNthCalledWith(2, 77, 202);
+
+    if (outcome === 'success') {
+      firstReceipt.next({ id: 101, amount: 50, runningBalance: 170 });
+      firstReceipt.complete();
+    } else {
+      firstReceipt.error(new Error('Receipt lookup failed'));
+    }
+    fixture.detectChanges();
+
+    expect(component.receipt).toBe(currentReceipt);
+    expect(component.receipt?.id).toBe(202);
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain('BACKEND-202');
+    expect(fixture.nativeElement.querySelector('.receipt').textContent).not.toContain('BACKEND-101');
+  });
+
+  it('ignores pending receipt details when a different savings account is selected', () => {
+    makeFormsValid();
+    const pendingReceipt = new Subject<SavingsDepositReceipt>();
+    baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(pendingReceipt.asObservable());
+    component.submit();
+    const commandReceipt = component.receipt;
+
+    component.lookupForm.controls.savingsAccount.setValue({ ...activeSavingsAccount, id: 88, accountNo: 'SA-88' });
+    pendingReceipt.next({ id: 101, amount: 50, paymentDetailData: { receiptNumber: 'BACKEND-101' } });
+    pendingReceipt.complete();
+
+    expect(component.receipt).toBe(commandReceipt);
   });
 });

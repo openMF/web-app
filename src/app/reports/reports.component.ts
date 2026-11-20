@@ -36,13 +36,18 @@ interface ReportGroup {
   collapsed: boolean;
 }
 
-const ENGINE_TYPES = [
+/**
+ * Preferred ordering for the engine chips. The chips themselves are built from
+ * the report types actually present, so an engine missing from this list still
+ * gets a chip rather than being left out of every filter.
+ */
+const ENGINE_ORDER: string[] = [
   'Table',
   'Pentaho',
   'BIRT',
   'Chart',
   'SMS'
-] as const;
+];
 
 /**
  * Reports component.
@@ -63,6 +68,14 @@ export class ReportsComponent implements OnInit {
   private static readonly PINNED_KEY = 'mifosx.reports.pinned';
   private static readonly COLLAPSE_KEY = 'mifosx.reports.collapsedGroups';
   private static readonly PINNED_LIMIT = 6;
+  /** Upper bound for the pin/unpin animations, used if `animationend` never fires. */
+  private static readonly PIN_ANIMATION_FALLBACK_MS = 800;
+
+  /** Push-pin glyphs (Material "push_pin", filled and outlined). */
+  readonly pinFilledPath =
+    'M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z';
+  readonly pinOutlinePath =
+    'M14 4v5c0 1.12.37 2.16 1 3H9c.65-.86 1-1.9 1-3V4h4m3-2H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3V4h1c.55 0 1-.45 1-1s-.45-1-1-1z';
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -83,6 +96,12 @@ export class ReportsComponent implements OnInit {
   private pinnedIds = new Set<number>();
   private collapsedGroups = new Set<string>();
 
+  /** The report whose pin was just toggled, so only that pin animates. */
+  private pinAnimation: { id: number; mode: 'pin' | 'unpin' } | null = null;
+  /** Unpinned reports whose card stays in the pinned strip until its exit animation ends. */
+  private leavingPinnedIds = new Set<number>();
+  private leavingTimers = new Map<number, ReturnType<typeof setTimeout>>();
+
   /** Derived views. */
   totalCount = 0;
   filteredCount = 0;
@@ -102,7 +121,8 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  readonly engines = ENGINE_TYPES;
+  /** Engine chips to render, derived from the loaded reports. */
+  engines: string[] = [];
 
   constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -110,6 +130,7 @@ export class ReportsComponent implements OnInit {
       this.reportsData = data.reports ?? [];
     });
     this.routeCategory = this.route.snapshot.params['filter'];
+    this.destroyRef.onDestroy(() => this.leavingTimers.forEach((timer) => clearTimeout(timer)));
   }
 
   ngOnInit(): void {
@@ -167,8 +188,12 @@ export class ReportsComponent implements OnInit {
     event.preventDefault();
     if (this.pinnedIds.has(report.id)) {
       this.pinnedIds.delete(report.id);
+      this.pinAnimation = { id: report.id, mode: 'unpin' };
+      this.startLeaving(report.id);
     } else if (this.pinnedIds.size < ReportsComponent.PINNED_LIMIT) {
       this.pinnedIds.add(report.id);
+      this.pinAnimation = { id: report.id, mode: 'pin' };
+      this.finishLeaving(report.id, false);
     } else {
       // At limit — no-op; user must unpin first.
       return;
@@ -180,6 +205,37 @@ export class ReportsComponent implements OnInit {
 
   isPinned(reportId: number): boolean {
     return this.pinnedIds.has(reportId);
+  }
+
+  get pinnedCount(): number {
+    return this.pinnedIds.size;
+  }
+
+  pinPath(reportId: number): string {
+    return this.isPinned(reportId) ? this.pinFilledPath : this.pinOutlinePath;
+  }
+
+  /** Whether the pin of the given report is currently playing its pin or unpin animation. */
+  pinAnimationFor(reportId: number, mode: 'pin' | 'unpin'): boolean {
+    return this.pinAnimation?.id === reportId && this.pinAnimation.mode === mode;
+  }
+
+  isLeavingPinned(reportId: number): boolean {
+    return this.leavingPinnedIds.has(reportId);
+  }
+
+  onPinAnimationEnd(reportId: number): void {
+    if (this.pinAnimation?.id === reportId) {
+      this.pinAnimation = null;
+      this.cdr.markForCheck();
+    }
+  }
+
+  onPinnedCardAnimationEnd(reportId: number, event: AnimationEvent): void {
+    // Ignore animations bubbling up from the pin glyph inside the card.
+    if (event.target === event.currentTarget && this.leavingPinnedIds.has(reportId)) {
+      this.finishLeaving(reportId);
+    }
   }
 
   isPinLimitReached(): boolean {
@@ -230,6 +286,16 @@ export class ReportsComponent implements OnInit {
     return this.collapsedGroups.has(categoryKey);
   }
 
+  getGroupContentId(categoryKey: string, index?: number): string {
+    const slug = (categoryKey || '')
+      .toLowerCase()
+      .replace(/^labels?\.text\./, '')
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-|-$/g, '');
+    const base = slug || 'default';
+    return index !== undefined ? `report-group-${base}-${index}` : `report-group-${base}`;
+  }
+
   /* ── Internals ────────────────────────────────────────────── */
 
   private recompute(): void {
@@ -278,22 +344,60 @@ export class ReportsComponent implements OnInit {
   }
 
   private computePinned(): void {
-    if (this.pinnedIds.size === 0) {
+    if (this.pinnedIds.size === 0 && this.leavingPinnedIds.size === 0) {
       this.pinnedReports = [];
       return;
     }
-    this.pinnedReports = this.reportsData.filter((r) => this.pinnedIds.has(r.id));
+    this.pinnedReports = this.reportsData.filter((r) => this.pinnedIds.has(r.id) || this.leavingPinnedIds.has(r.id));
+  }
+
+  /** Keeps an unpinned card in the strip so it can animate out before being removed. */
+  private startLeaving(reportId: number): void {
+    this.leavingPinnedIds.add(reportId);
+    clearTimeout(this.leavingTimers.get(reportId));
+    this.leavingTimers.set(
+      reportId,
+      setTimeout(() => this.finishLeaving(reportId), ReportsComponent.PIN_ANIMATION_FALLBACK_MS)
+    );
+  }
+
+  private finishLeaving(reportId: number, refresh = true): void {
+    clearTimeout(this.leavingTimers.get(reportId));
+    this.leavingTimers.delete(reportId);
+    if (!this.leavingPinnedIds.delete(reportId) || !refresh) {
+      return;
+    }
+    this.computePinned();
+    this.cdr.markForCheck();
   }
 
   private computeEngineCounts(): void {
+    // Counting only a fixed list of engines left any other report type out of
+    // every chip, so the chip counts did not add up to the catalogue total and
+    // those reports could not be reached by filtering. Count whatever types are
+    // present instead.
     const counts: Record<string, number> = {};
-    ENGINE_TYPES.forEach((t) => (counts[t] = 0));
     this.reportsData.forEach((r) => {
-      if (counts[r.reportType] !== undefined) {
-        counts[r.reportType]++;
+      if (!r.reportType) {
+        return;
       }
+      counts[r.reportType] = (counts[r.reportType] ?? 0) + 1;
     });
     this.engineCounts = counts;
+    this.engines = Object.keys(counts).sort((a, b) => {
+      const indexA = ENGINE_ORDER.indexOf(a);
+      const indexB = ENGINE_ORDER.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+      }
+      if (indexA !== -1) {
+        return -1;
+      }
+      if (indexB !== -1) {
+        return 1;
+      }
+      return a.localeCompare(b);
+    });
   }
 
   private loadPersistedState(): void {

@@ -27,6 +27,7 @@
             <input matInput required type="{{ accessKeyInputType }}" formControlName="s3_access_key" />
             @if (amazonS3ConfigurationForm.controls.s3_access_key.value) {
               <button
+                type="button"
                 mat-button
                 matSuffix
                 mat-icon-button
@@ -54,6 +55,7 @@
             <input matInput required type="{{ secretKeyInputType }}" formControlName="s3_secret_key" />
             @if (amazonS3ConfigurationForm.controls.s3_secret_key.value) {
               <button
+                type="button"
                 mat-button
                 matSuffix
                 mat-icon-button

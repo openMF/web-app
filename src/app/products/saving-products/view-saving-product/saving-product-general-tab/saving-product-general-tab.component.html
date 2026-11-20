@@ -12,7 +12,12 @@
     color="primary"
     class="m-t-20"
     [routerLink]="['../edit']"
-    *mifosxHasPermission="'UPDATE_SAVINGSPRODUCT'"
+    *mifosxHasPermission="[
+      'UPDATE_SAVINGSPRODUCT',
+      'UPDATE_SAVINGS_PRODUCT_POLICY',
+      'SUBMIT_SAVINGS_PRODUCT_POLICY',
+      'CHECK_SAVINGS_PRODUCT_POLICY'
+    ]"
   >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
   </button>

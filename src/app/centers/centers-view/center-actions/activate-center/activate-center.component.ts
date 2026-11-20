@@ -72,7 +72,7 @@ export class ActivateCenterComponent implements OnInit {
   createActivateCenterForm() {
     this.activateCenterForm = this.formBuilder.group({
       activationDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ]
     });

@@ -72,7 +72,7 @@
             @if (hasNumberOfRepayments()) {
               <div class="fact">
                 <div class="fact-label">{{ 'labels.inputs.Number of Repayments' | translate }}</div>
-                <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber }}</div>
+                <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber: '' : 0 }}</div>
               </div>
             }
             @if (loanDetails.timeline?.expectedMaturityDate) {
@@ -259,13 +259,11 @@
               {{ loanDetails.proposedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
             </div>
           </div>
-          @if (loanDetails.balance) {
+          @if (loanProductService.isWorkingCapital && has(loanDetails.totalPaymentVolume)) {
             <div class="fact">
-              <div class="fact-label">
-                {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}
-              </div>
+              <div class="fact-label">{{ 'labels.inputs.Total Payment Volume' | translate }}</div>
               <div class="fact-value amount">
-                {{ loanDetails.balance.totalPayment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+                {{ loanDetails.totalPaymentVolume | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
               </div>
             </div>
           }

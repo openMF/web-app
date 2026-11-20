@@ -131,7 +131,7 @@ We use Prettier to enforce a consistent code style automatically. This eliminate
 We maintain a linear, meaningful git history.
 
 - **One Feature = One PR:** Do not combine unrelated fixes.
-- **Squash Requirement:** If your PR contains more than 2 commits, you must squash them.
+- **Squash Requirement:** If your PR contains more than 1 commit, you must squash them. Merge commits added by "Update branch" are not counted.
   - ❌ **Bad History:** `init`, `wip`, `typo`, `fix`, `fix again`
   - ✅ **Good History:** `WEB-123: Implement client search functionality`
 

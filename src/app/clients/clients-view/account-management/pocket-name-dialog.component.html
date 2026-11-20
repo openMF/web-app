@@ -1,0 +1,29 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'AccountManagement.RenamePocket' | translate }}</h2>
+<mat-dialog-content>
+  <p>{{ 'AccountManagement.MetadataOnlyName' | translate }}</p>
+  <form [formGroup]="form" id="pocket-name" (ngSubmit)="save()">
+    <mat-form-field
+      ><mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label
+      ><input matInput formControlName="name" maxlength="100" required /><mat-error>{{
+        'AccountManagement.NameValidation' | translate
+      }}</mat-error></mat-form-field
+    >
+  </form>
+  @if (message()) {
+    <p role="alert">{{ message() | translate }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end"
+  ><button mat-button mat-dialog-close [disabled]="busy()">{{ 'labels.buttons.Cancel' | translate }}</button
+  ><button mat-raised-button color="primary" type="submit" form="pocket-name" [disabled]="form.invalid || busy()">
+    {{ 'AccountManagement.SaveMetadata' | translate }}
+  </button></mat-dialog-actions
+>

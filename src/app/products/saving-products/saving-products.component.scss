@@ -6,10 +6,105 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+.savings-product-list {
+  max-width: 100%;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+
+  mat-form-field {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   width: 100%;
 
-  .select-row:hover {
-    cursor: pointer;
+  td,
+  th {
+    padding: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  small {
+    display: block;
+    margin-top: 8px;
+  }
+}
+
+.classification {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid currentcolor;
+  border-radius: var(--ds-radius);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.feedback {
+  padding: 16px;
+}
+
+@media (width <= 768px) {
+  // Material creates these sections without Angular's template scope attribute.
+  :host ::ng-deep .savings-product-list table {
+    > thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    > tbody {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  table {
+    display: block;
+
+    tr.mat-mdc-row {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      padding: 8px;
+      border-bottom: 1px solid currentcolor;
+    }
+
+    td.mat-mdc-cell {
+      display: grid;
+      box-sizing: border-box;
+      width: 100%;
+      grid-template-columns: 32% auto;
+      align-items: start;
+      gap: 8px;
+      height: auto;
+      padding: 8px;
+      border-bottom: 0;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: 500;
+      }
+
+      small {
+        grid-column: 2;
+      }
+    }
   }
 }

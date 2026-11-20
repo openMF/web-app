@@ -169,7 +169,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   sortAttribute = '';
   sortDirection = '';
-  showClosedAccounts = false;
 
   /** Status filter options, reusing the same status labels the rows already translate. */
   readonly statusFilterOptions: { key: StatusFilterKey; labelKey: string }[] = [
@@ -226,10 +225,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
   clearSearch(searchInput: HTMLInputElement) {
     searchInput.value = '';
     this.search('');
-  }
-
-  toggleShowClosed() {
-    this.showClosedAccounts = !this.showClosedAccounts;
   }
 
   search(value: string) {

@@ -140,7 +140,7 @@ export class AccountingComponent implements AfterViewInit {
   previousStepChartofAccounts() {
     this.configurationWizardService.showChartofAccounts = false;
     this.configurationWizardService.showSchedulerJobsList = true;
-    this.router.navigate(['/system/scheduler-jobs']);
+    this.router.navigate(['/system/manage-jobs']);
   }
 
   /**

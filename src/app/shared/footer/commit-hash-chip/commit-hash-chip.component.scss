@@ -1,0 +1,29 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.commit-hash-chip {
+  padding: 1px 6px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 16px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--ds-border-strong);
+    color: var(--ds-text-1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-blue-600);
+    outline-offset: 1px;
+  }
+}

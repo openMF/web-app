@@ -9,7 +9,19 @@
 table {
   width: 100%;
 
-  .select-row:hover {
-    cursor: pointer;
+  .select-row {
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+
+    &:hover {
+      cursor: pointer;
+      background-color: color-mix(in srgb, var(--md-sys-color-primary, #1074b9) 8%, transparent);
+      box-shadow: inset 4px 0 0 var(--md-sys-color-primary, #1074b9);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 }

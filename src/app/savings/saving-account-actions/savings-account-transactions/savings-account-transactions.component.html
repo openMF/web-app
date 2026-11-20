@@ -19,6 +19,9 @@
       </mat-card-title>
     }
 
+    @if (financialError) {
+      <p role="alert">{{ financialError | translate }}</p>
+    }
     <mat-stepper #stepper linear orientation="vertical">
       <!-- Step 1: Transaction Details -->
       <mat-step [stepControl]="savingAccountTransactionForm">

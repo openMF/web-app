@@ -11,7 +11,10 @@ import { cashTransferGuard } from './base-teller/cash-transfers-between-tellers/
 
 import { fxRateGuard, fxTellerGuard } from './foreign-currency/foreign-currency.guard';
 /** Angular Imports */
+import { officeAccessGuard } from './offices/office-access.guard';
+
 import { NgModule } from '@angular/core';
+import { officeAuditGuard } from './offices/view-office/change-history-tab/office-audit.guard';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
@@ -48,6 +51,10 @@ import { cashManagementGuard } from './base-teller/cash-management/cash-manageme
 import { CashAllocationComponent } from './base-teller/cash-allocation/cash-allocation.component';
 import { cashAllocationGuard } from './base-teller/cash-allocation/cash-allocation.guard';
 import { CashInventoryComponent } from './base-teller/cash-inventory/cash-inventory.component';
+import {
+  vaultCashDepositGuard,
+  vaultDepositHistoryGuard
+} from './base-teller/vault-cash-deposit/vault-cash-deposit.guard';
 import { cashInventoryGuard } from './base-teller/cash-inventory/cash-inventory.guard';
 import { CatalogUpdatesComponent } from './base-teller/catalog-updates/catalog-updates.component';
 import { catalogUpdatesGuard } from './base-teller/catalog-updates/catalog-updates.guard';
@@ -231,6 +238,7 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
+              canActivate: [officeAccessGuard],
               data: { title: 'View Office', routeResolveBreadcrumb: [
                   'office',
                   'name'
@@ -249,10 +257,7 @@ const routes: Routes = [
                 {
                   path: 'general',
                   component: GeneralTabComponent,
-                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
-                  resolve: {
-                    office: OfficeResolver
-                  }
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false }
                 },
                 {
                   path: 'address',
@@ -268,6 +273,15 @@ const routes: Routes = [
                   path: 'schedules',
                   component: SchedulesTabComponent,
                   data: { title: 'Schedules', breadcrumb: 'Schedules', routeParamBreadcrumb: false }
+                },
+                {
+                  path: 'change-history',
+                  canActivate: [officeAuditGuard],
+                  loadComponent: () =>
+                    import('./offices/view-office/change-history-tab/change-history-tab.component').then(
+                      (m) => m.ChangeHistoryTabComponent
+                    ),
+                  data: { title: 'branchHistory.title', routeParamBreadcrumb: false }
                 },
                 {
                   path: 'datatables',
@@ -532,6 +546,24 @@ const routes: Routes = [
             title: 'cashAllocation.title',
             breadcrumb: 'cashAllocation.title'
           }
+        },
+        {
+          path: 'base-teller/vault-cash-deposit/history',
+          canActivate: [vaultDepositHistoryGuard],
+          loadComponent: () =>
+            import('./base-teller/vault-cash-deposit/vault-deposit-history.component').then(
+              (m) => m.VaultDepositHistoryComponent
+            ),
+          data: { title: 'vaultDeposit.history.title', breadcrumb: 'vaultDeposit.history.title' }
+        },
+        {
+          path: 'base-teller/vault-cash-deposit',
+          canActivate: [vaultCashDepositGuard],
+          loadComponent: () =>
+            import('./base-teller/vault-cash-deposit/vault-cash-deposit.component').then(
+              (m) => m.VaultCashDepositComponent
+            ),
+          data: { title: 'vaultDeposit.title', breadcrumb: 'vaultDeposit.title' }
         },
         {
           path: 'base-teller/cash-inventory',

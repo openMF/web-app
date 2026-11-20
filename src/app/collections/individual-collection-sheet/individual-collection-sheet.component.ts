@@ -207,7 +207,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
         Validators.required
       ],
       transactionDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       staffId: ['']

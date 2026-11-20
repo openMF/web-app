@@ -62,6 +62,8 @@ import { ClientTransactionPayResolver } from './common-resolvers/client-transact
 import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
 import { ClientCollateralResolver } from './common-resolvers/client-collateral.resolver';
 
+import { AccountManagementComponent } from './clients-view/account-management/account-management.component';
+
 const routes: Routes = [
   Route.withShell([
     {
@@ -104,6 +106,15 @@ const routes: Routes = [
                 clientAccountsData: ClientAccountsResolver,
                 clientChargesData: ClientChargesResolver,
                 clientCollateralData: ClientCollateralResolver
+              }
+            },
+            {
+              path: 'account-management',
+              component: AccountManagementComponent,
+              data: {
+                title: 'AccountManagement.Title',
+                breadcrumb: 'AccountManagement.Title',
+                routeParamBreadcrumb: false
               }
             },
             {

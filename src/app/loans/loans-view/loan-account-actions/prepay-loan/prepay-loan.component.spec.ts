@@ -43,6 +43,24 @@ describe('PrepayLoanComponent - contract termination', () => {
   let routerStub: any;
 
   /**
+   * The action route as the router activates it: `:loanId/actions/:action`, the
+   * route the base component walks up to when it navigates to a loan tab.
+   */
+  function actionRouteStub(): any {
+    const loansContainerRoute: any = {};
+    const route: any = {
+      routeConfig: { path: ':loanId/actions/:action' },
+      parent: loansContainerRoute,
+      snapshot: { params: { loanId: '1' } }
+    };
+    route.pathFromRoot = [
+      loansContainerRoute,
+      route
+    ];
+    return route;
+  }
+
+  /**
    * Builds the component against stubbed collaborators and runs ngOnInit, so the tests exercise the real form,
    * date bounds and payload logic without rendering the template.
    * @param dataObject The resolved action template; defaults to the contract termination quote.
@@ -54,10 +72,7 @@ describe('PrepayLoanComponent - contract termination', () => {
       providers: [
         FormBuilder,
         { provide: ChangeDetectorRef, useValue: { markForCheck: jest.fn() } },
-        {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { params: { loanId: '1' } } }
-        },
+        { provide: ActivatedRoute, useValue: actionRouteStub() },
         { provide: Router, useValue: routerStub },
         { provide: LoansService, useValue: loansServiceStub },
         {
@@ -220,7 +235,15 @@ describe('PrepayLoanComponent - contract termination', () => {
       locale: 'en',
       dateFormat: 'dd MMMM yyyy'
     });
+    // Back to the loan's general tab, built from the route that holds `:loanId` rather than `../` counting.
     expect(routerStub.navigate).toHaveBeenCalledTimes(1);
+    expect(routerStub.navigate).toHaveBeenCalledWith(
+      [
+        '1',
+        'general'
+      ],
+      { queryParams: { productType: 'loan' }, relativeTo: TestBed.inject(ActivatedRoute).parent }
+    );
   });
 
   it('leaves the prepay flow on the business date bound and asks for no loan details', () => {

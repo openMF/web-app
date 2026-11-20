@@ -8,21 +8,23 @@
 
 <form [formGroup]="savingProductSettingsForm">
   <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
-      <input
-        type="number"
-        matInput
-        matTooltip="{{ 'tooltips.Sets the minimum deposit amount' | translate }}"
-        formControlName="minRequiredOpeningBalance"
-        min="0"
-        step="0.01"
-      />
-      <mat-error *ngIf="savingProductSettingsForm.get('minRequiredOpeningBalance').hasError('min')">
-        {{ 'labels.inputs.Minimum Opening Balance' | translate }} {{ 'labels.commons.must be' | translate }}
-        {{ 'labels.commons.a positive number' | translate }}
-      </mat-error>
-    </mat-form-field>
+    @if (!embedded) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
+        <input
+          type="number"
+          matInput
+          matTooltip="{{ 'tooltips.Sets the minimum deposit amount' | translate }}"
+          formControlName="minRequiredOpeningBalance"
+          min="0"
+          step="0.01"
+        />
+        <mat-error *ngIf="savingProductSettingsForm.get('minRequiredOpeningBalance').hasError('min')">
+          {{ 'labels.inputs.Minimum Opening Balance' | translate }} {{ 'labels.commons.must be' | translate }}
+          {{ 'labels.commons.a positive number' | translate }}
+        </mat-error>
+      </mat-form-field>
+    }
 
     <mat-divider class="flex-98"></mat-divider>
 
@@ -277,14 +279,16 @@
     }
   </div>
 
-  <div class="layout-row align-center gap-2percent margin-t responsive-column">
-    <button mat-raised-button matStepperPrevious>
-      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Previous' | translate }}
-    </button>
-    <button mat-raised-button matStepperNext>
-      {{ 'labels.buttons.Next' | translate }}
-      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
-    </button>
-  </div>
+  @if (!embedded) {
+    <div class="layout-row align-center gap-2percent margin-t responsive-column">
+      <button mat-raised-button matStepperPrevious>
+        <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Previous' | translate }}
+      </button>
+      <button mat-raised-button matStepperNext>
+        {{ 'labels.buttons.Next' | translate }}
+        <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+      </button>
+    </div>
+  }
 </form>

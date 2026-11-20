@@ -9,7 +9,9 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import {
   AdvancePaymentAllocationData,
+  AdvancedPaymentStrategy,
   CreditAllocation,
+  CreditAllocationStrategies,
   PaymentAllocation
 } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
@@ -30,6 +32,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
 })
 export class ViewAdvancePaymenyAllocationComponent {
   protected loanProductService = inject(LoanProductService);
+  private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
 
   @Input() paymentAllocation: PaymentAllocation | null;
   @Input() creditAllocation: CreditAllocation | null;
@@ -51,6 +54,19 @@ export class ViewAdvancePaymenyAllocationComponent {
     }
     const allocationType = this.advancePaymentAllocationData.allocationTypes.find((t) => t.code === code);
     return allocationType.value;
+  }
+
+  /** A credit allocation without strategy predates the strategy support and is rule based. */
+  creditAllocationStrategyValue(code: string): string {
+    const strategyCode = code || CreditAllocationStrategies.RULE_BASED;
+    const strategy = this.advancePaymentAllocationData?.creditAllocationStrategies?.find(
+      (t) => t.code === strategyCode
+    );
+    return strategy ? strategy.value : strategyCode;
+  }
+
+  isPrincipalOnly(creditAllocation: CreditAllocation): boolean {
+    return this.advancedPaymentStrategy.isPrincipalOnly(creditAllocation);
   }
 
   futureInstallmentRuleValue(code: string): string {

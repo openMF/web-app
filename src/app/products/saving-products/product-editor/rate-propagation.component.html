@@ -1,0 +1,83 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header
+    ><mat-panel-title>{{
+      'InterestManagement.RatePropagation' | translate
+    }}</mat-panel-title></mat-expansion-panel-header
+  >
+  <p>{{ 'InterestManagement.PropagationNotice' | translate }}</p>
+  @if (!canRead) {
+    <p>{{ 'SavingsEditor.Denied' | translate }}</p>
+  }
+  @if (error) {
+    <div role="alert">
+      <p>{{ error | translate }}</p>
+      @for (detail of details; track $index) {
+        <p>{{ detail }}</p>
+      }
+    </div>
+  }
+  @if (canRead) {
+    <button mat-button type="button" (click)="loadCapabilities()" [disabled]="busy">
+      {{ 'InterestManagement.RefreshCapabilities' | translate }}
+    </button>
+  }
+  @if (capabilities) {
+    <p>{{ 'InterestManagement.FinancialOperational' | translate }}: {{ capabilities.financialExecutionSupported }}</p>
+    <ul>
+      @for (blocker of capabilities.blockers; track blocker) {
+        <li>{{ blocker }}</li>
+      }
+    </ul>
+    <div [formGroup]="form" class="interest-grid">
+      <mat-form-field
+        ><mat-label>{{ 'SavingsEditor.Version' | translate }}</mat-label
+        ><input matInput inputmode="numeric" formControlName="policyVersion"
+      /></mat-form-field>
+      <mat-form-field
+        ><mat-label>{{ 'InterestManagement.EffectiveDate' | translate }}</mat-label
+        ><input matInput type="date" formControlName="effectiveDate"
+      /></mat-form-field>
+      <button mat-button type="button" (click)="planPreview()" [disabled]="busy">
+        {{ 'InterestManagement.PlanPreview' | translate }}
+      </button>
+      <mat-form-field
+        ><mat-label>{{ 'InterestManagement.BatchId' | translate }}</mat-label
+        ><input matInput formControlName="batchId"
+      /></mat-form-field>
+      <button mat-button type="button" (click)="inspect()" [disabled]="busy">
+        {{ 'InterestManagement.InspectBatch' | translate }}
+      </button>
+    </div>
+  }
+  @if (preview) {
+    <p>{{ preview.effectiveDate }} · {{ preview.snapshotStatus }}</p>
+    <dl class="rate-details">
+      @for (key of populationKeys; track key) {
+        <dt>{{ 'InterestManagement.Count.' + key | translate }}</dt>
+        <dd>{{ preview.population[key] }}</dd>
+      }
+    </dl>
+  }
+  @if (batch) {
+    <p>
+      {{ batch.id }} · {{ batch.status }} · {{ batch.effectiveDate }} · {{ 'SavingsEditor.Version' | translate }}
+      {{ batch.policyVersion }}
+    </p>
+    <p>{{ 'InterestManagement.PopulationProgress' | translate }}: {{ batch.planningComplete }}</p>
+    <dl class="rate-details">
+      @for (key of counterKeys; track key) {
+        <dt>{{ 'InterestManagement.Count.' + key | translate }}</dt>
+        <dd>{{ batch.counters[key] }}</dd>
+      }
+    </dl>
+    <p>{{ batch.completionMeaning }}</p>
+  }
+</mat-expansion-panel>

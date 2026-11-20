@@ -1,0 +1,143 @@
+/**
+ * Copyright since 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { normalizeOfficeTime } from './office-schedule-time';
+
+describe('office LocalTime normalization', () => {
+  it.each([
+    [
+      [
+        8,
+        0,
+        0
+      ],
+      '08:00'
+    ],
+    [
+      [
+        18,
+        0,
+        0
+      ],
+      '18:00'
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      '00:00'
+    ],
+    [
+      [
+        12,
+        0,
+        0
+      ],
+      '12:00'
+    ],
+    [
+      [
+        23,
+        59,
+        59
+      ],
+      '23:59:59'
+    ],
+    [
+      '08:00',
+      '08:00'
+    ],
+    [
+      '18:00:00',
+      '18:00'
+    ],
+    [
+      '00:00:01',
+      '00:00:01'
+    ],
+    [
+      '12:00:00',
+      '12:00'
+    ],
+    [
+      ' 08:00 ',
+      '08:00'
+    ]
+  ])('normalizes %j as %s without timezone conversion', (input, expected) => {
+    expect(normalizeOfficeTime(input)).toBe(expected);
+  });
+
+  it.each([
+    null,
+    undefined,
+    '',
+    ' ',
+    '24:00',
+    '12:60',
+    '12:00:60',
+    '8:00',
+    'noon',
+    '2026-11-11T08:00:00Z',
+    '08:00Z',
+    '08:00+05:30',
+    '08:00:00.123',
+    [],
+    [8],
+    [
+      8,
+      0
+    ],
+    [
+      8,
+      0,
+      0,
+      0
+    ],
+    [
+      24,
+      0,
+      0
+    ],
+    [
+      -1,
+      0,
+      0
+    ],
+    [
+      8,
+      60,
+      0
+    ],
+    [
+      8,
+      0,
+      60
+    ],
+    [
+      8.5,
+      0,
+      0
+    ],
+    [
+      '8',
+      0,
+      0
+    ],
+    [
+      NaN,
+      0,
+      0
+    ],
+    {},
+    800
+  ])('recognizes missing or invalid time %j explicitly', (input) => {
+    expect(normalizeOfficeTime(input)).toBe('');
+  });
+});

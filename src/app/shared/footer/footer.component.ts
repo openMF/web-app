@@ -7,21 +7,21 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
-import { SystemInfoService, SystemInformation } from 'app/system/system-info.service';
 
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { NgClass, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 /**
  *  Footer component.
@@ -32,8 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./footer.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    NgClass,
-    DatePipe
+    DatePipe,
+    StatusBarComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,18 +46,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   private authenticationService = inject(AuthenticationService);
   private alertService = inject(AlertService);
   private dateUtils = inject(Dates);
-  private systemInfoService = inject(SystemInfoService);
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
-
-  @Input() styleClass: string = '';
-  @Input() variant: 'default' | 'compact' = 'default';
-
-  /**
-   * Backend information, only resolved when `displayBackEndInfo` is enabled.
-   * The full set is always available in the System Information view.
-   */
-  systemInformation$: Observable<SystemInformation>;
 
   /** Business Date */
   businessDate: Date = null;
@@ -94,10 +84,6 @@ export class FooterComponent implements OnInit, OnDestroy {
       }
     });
     this.getConfigurations();
-
-    if (this.displayBackEndInfo) {
-      this.systemInformation$ = this.systemInfoService.getSystemInformation();
-    }
   }
 
   ngOnDestroy() {

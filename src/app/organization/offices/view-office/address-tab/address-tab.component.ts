@@ -7,29 +7,31 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Angular Material Imports */
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import {
-  MatAccordion,
-  MatExpansionPanel,
-  MatExpansionPanelDescription,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle
-} from '@angular/material/expansion';
-import { MatDivider } from '@angular/material/divider';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 /** rxjs Imports */
-import { forkJoin, of, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, finalize, switchMap } from 'rxjs/operators';
+import { forkJoin, of, Subscription, Subject } from 'rxjs';
+import { map, catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs/operators';
 
 /** Custom Components */
+import { faMapMarkerAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -40,6 +42,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from 'app/clients/clients.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 
 /** Custom Models */
@@ -48,10 +51,16 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
+import { OfficeAddress } from './office-address.model';
 
 /** Custom Imports */
+import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertService } from 'app/core/alert/alert.service';
+import { OfficeDetailsSummary } from '../office-details-summary';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.util';
+import { CoordinateType, hasValidCoordinatePair, parseCoordinate } from 'app/clients/utils/address-coordinate.util';
+
+type AddressFilter = 'all' | 'active' | 'inactive';
 
 @Component({
   selector: 'mifosx-office-address-tab',
@@ -60,25 +69,27 @@ import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.uti
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
-    MatDivider,
     MatProgressSpinner,
-    MatSlideToggle,
+    MatButtonToggle,
+    MatButtonToggleGroup,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
     AddressLocationMapComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressTabComponent implements OnInit {
+  @Input() readOnly = false;
+
+  readonly pinIcon = faMapMarkerAlt;
+  readonly moreIcon = faEllipsisH;
   readonly hasValidCoordinatePair = hasValidCoordinatePair;
 
-  get clientAddressLocationEnabled(): boolean {
-    return environment.enableClientAddressLocation;
-  }
-
+  private summary = inject(OfficeDetailsSummary, { optional: true });
+  private clipboard = inject(Clipboard);
+  private alertService = inject(AlertService);
+  private authenticationService = inject(AuthenticationService);
   private route = inject(ActivatedRoute);
   private organizationService = inject(OrganizationService);
   private clientsService = inject(ClientsService);
@@ -88,8 +99,78 @@ export class AddressTabComponent implements OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
+  private readonly officeChanged = new Subject<void>();
+  private loadRequest?: Subscription;
+
+  selectedFilter: AddressFilter = 'all';
+  selectedAddressId: string | null = null;
+  readonly filters: { value: AddressFilter; label: string }[] = [
+    { value: 'all', label: 'labels.inputs.All' },
+    { value: 'active', label: 'labels.inputs.Active' },
+    { value: 'inactive', label: 'labels.catalogs.Inactive' }
+  ];
+  readonly addressFields = [
+    { key: 'street', label: 'labels.inputs.Street' },
+    { key: 'addressLine1', label: 'labels.inputs.Address Line 1' },
+    { key: 'addressLine2', label: 'labels.inputs.Address Line 2' },
+    { key: 'addressLine3', label: 'labels.inputs.Address Line 3' },
+    { key: 'townVillage', label: 'labels.inputs.Town / Village' }
+  ] as const;
+  readonly localityFields = [
+    { key: 'city', label: 'labels.inputs.City', options: '' },
+    { key: 'countyDistrict', label: 'labels.inputs.County / District', options: '' },
+    { key: 'stateProvinceId', label: 'labels.inputs.State / Province', options: 'stateProvinceIdOptions' },
+    { key: 'countryId', label: 'labels.inputs.Country', options: 'countryIdOptions' },
+    { key: 'postalCode', label: 'labels.inputs.Postal Code', options: '' }
+  ] as const;
+
+  get officeName(): string {
+    return this.route.parent.snapshot.data?.['office']?.name ?? '';
+  }
+
+  get visibleAddresses(): OfficeAddress[] {
+    return this.officeAddresses.filter((address) => this.matchesFilter(address, this.selectedFilter));
+  }
+
+  get selectedAddress(): OfficeAddress | null {
+    return this.visibleAddresses.find((address) => this.addressKey(address) === this.selectedAddressId) ?? null;
+  }
+
+  filterCount(filter: AddressFilter): number {
+    return this.officeAddresses.filter((address) => this.matchesFilter(address, filter)).length;
+  }
+
+  setFilter(filter: AddressFilter): void {
+    if (!this.filters.some((entry) => entry.value === filter)) return;
+    this.selectedFilter = filter;
+    this.reconcileSelection(this.selectedAddressId, 0);
+  }
+
+  selectAddress(address: OfficeAddress): void {
+    if (this.visibleAddresses.includes(address)) this.selectedAddressId = this.addressKey(address);
+  }
+
+  addressKey(address: OfficeAddress): string {
+    return this.getOfficeAddressId(address, this.officeAddresses.indexOf(address));
+  }
+
+  private matchesFilter(address: OfficeAddress, filter: AddressFilter): boolean {
+    return filter === 'all' || address.isActive === (filter === 'active');
+  }
+
+  private reconcileSelection(preferredId = this.selectedAddressId, nextIndex?: number): void {
+    const visible = this.visibleAddresses;
+    const retained = visible.find((address) => this.addressKey(address) === preferredId);
+    const fallback =
+      nextIndex === undefined
+        ? ((preferredId === null ? visible.find((address) => address.isActive === true) : null) ?? visible[0])
+        : visible[Math.min(nextIndex, visible.length - 1)];
+    const selected = retained ?? fallback;
+    this.selectedAddressId = selected ? this.addressKey(selected) : null;
+  }
+
   officeId: string;
-  officeAddresses: any[] = [];
+  officeAddresses: OfficeAddress[] = [];
   addressTemplate: any = {
     addressTypeIdOptions: [],
     stateProvinceIdOptions: [],
@@ -102,6 +183,7 @@ export class AddressTabComponent implements OnInit {
   optionsLoadFailed = false;
 
   private autoFilledFields = new Set<string>();
+  private readonly coordinateDecimals = 13;
 
   get hasOfficeAddress(): boolean {
     return this.officeAddresses.length > 0;
@@ -109,6 +191,7 @@ export class AddressTabComponent implements OnInit {
 
   get canAddAddress(): boolean {
     return (
+      this.canManageAddress('CREATE_OFFICE') &&
       !this.hasOfficeAddress &&
       !this.isLoading &&
       !this.isSaving &&
@@ -119,17 +202,35 @@ export class AddressTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.officeId = this.route.parent.snapshot.paramMap.get('officeId') ?? '';
-    this.loadOfficeAddresses();
+    this.route.parent.paramMap
+      .pipe(
+        map((params) => params.get('officeId') ?? ''),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((officeId) => {
+        this.officeChanged.next();
+        this.officeId = officeId;
+        this.officeAddresses = [];
+        this.selectedAddressId = null;
+        this.selectedFilter = 'all';
+        this.addressTemplate = { addressTypeIdOptions: [], stateProvinceIdOptions: [], countryIdOptions: [] };
+        this.isSaving = false;
+        this.loadOfficeAddresses();
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
-  loadOfficeAddresses() {
+  loadOfficeAddresses(preferredId = this.selectedAddressId, nextIndex?: number) {
+    this.loadRequest?.unsubscribe();
+    this.summary?.addressCount.set(null);
+    this.summary?.location.set('');
     this.isLoading = true;
     this.hasError = false;
     this.isPluginUnavailable = false;
     this.optionsLoadFailed = false;
 
-    forkJoin({
+    this.loadRequest = forkJoin({
       addresses: this.organizationService.getOfficeAddresses(this.officeId).pipe(
         catchError((error) => {
           if (this.isEndpointNotFound(error)) {
@@ -152,15 +253,31 @@ export class AddressTabComponent implements OnInit {
           this.isLoading = false;
           this.changeDetectorRef.markForCheck();
         }),
+        takeUntil(this.officeChanged),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(({ addresses, template }: { addresses: any; template: any }) => {
-        this.officeAddresses = Array.isArray(addresses) ? addresses : [];
+      .subscribe(({ addresses, template }: { addresses: (OfficeAddress | null)[] | null; template: any }) => {
+        this.officeAddresses = Array.isArray(addresses)
+          ? addresses.filter((address): address is OfficeAddress => !!address && typeof address === 'object')
+          : [];
         this.addressTemplate = {
           ...this.addressTemplate,
           ...template
         };
         this.translateAddressTypes();
+        this.reconcileSelection(preferredId, nextIndex);
+        if (!this.hasError && !this.isPluginUnavailable && Array.isArray(addresses)) {
+          this.summary?.addressCount.set(this.officeAddresses.length);
+          const address = this.officeAddresses.find((entry) => entry.isActive === true) ?? this.officeAddresses[0];
+          if (address) {
+            this.summary?.location.set(
+              this.uniqueAddressParts([
+                address.city,
+                this.getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name
+              ]).join(', ')
+            );
+          }
+        }
       });
   }
 
@@ -177,21 +294,32 @@ export class AddressTabComponent implements OnInit {
         ' ' +
         this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(),
-      layout: { addButtonText: this.translateService.instant('labels.buttons.Submit') }
+      layout: { addButtonText: 'labels.buttons.Submit' }
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupCoordinateValidation(addAddressDialogRef);
     this.setupPostalCodeLookup(addAddressDialogRef);
-    addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        this.saveAddress(
-          this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value))
-        );
-      }
-    });
+    addAddressDialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (response?.data && this.canAddAddress && this.isValidLocationInput(response.data.value)) {
+          this.saveAddress(
+            this.organizationService.createOfficeAddress(this.officeId, this.normalizeAddressData(response.data.value)),
+            { created: true }
+          );
+        }
+      });
   }
 
-  editAddress(address: any) {
-    if (this.isPluginUnavailable) {
+  editAddress(address: OfficeAddress) {
+    if (
+      !this.canManageAddress('UPDATE_OFFICE') ||
+      this.isLoading ||
+      this.isSaving ||
+      this.optionsLoadFailed ||
+      this.isPluginUnavailable
+    ) {
       return;
     }
 
@@ -208,25 +336,35 @@ export class AddressTabComponent implements OnInit {
         ' ' +
         this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(address),
-      layout: { addButtonText: this.translateService.instant('labels.buttons.Edit') }
+      layout: { addButtonText: 'labels.buttons.Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupCoordinateValidation(editAddressDialogRef);
     this.setupPostalCodeLookup(editAddressDialogRef);
-    editAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        this.saveAddress(
-          this.organizationService.updateOfficeAddress(
-            this.officeId,
-            officeAddressId,
-            this.normalizeAddressData(response.data.value)
-          )
-        );
-      }
-    });
+    editAddressDialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (
+          response?.data &&
+          !this.isSaving &&
+          !this.isLoading &&
+          this.canManageAddress('UPDATE_OFFICE') &&
+          this.isValidLocationInput(response.data.value)
+        ) {
+          this.saveAddress(
+            this.organizationService.updateOfficeAddress(
+              this.officeId,
+              officeAddressId,
+              this.normalizeAddressData(response.data.value)
+            )
+          );
+        }
+      });
   }
 
-  deleteAddress(address: any) {
-    if (this.isPluginUnavailable) {
+  deleteAddress(address: OfficeAddress) {
+    if (!this.canManageAddress('DELETE_OFFICE') || this.isLoading || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -238,15 +376,20 @@ export class AddressTabComponent implements OnInit {
     const deleteAddressDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.heading.Address') }
     });
-    deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.delete) {
-        this.saveAddress(this.organizationService.deleteOfficeAddress(this.officeId, officeAddressId));
-      }
-    });
+    deleteAddressDialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
+      .subscribe((response: any) => {
+        if (response?.delete && !this.isSaving && !this.isLoading && this.canManageAddress('DELETE_OFFICE')) {
+          this.saveAddress(this.organizationService.deleteOfficeAddress(this.officeId, officeAddressId), {
+            nextIndex: this.visibleAddresses.indexOf(address)
+          });
+        }
+      });
   }
 
-  toggleAddress(address: any) {
-    if (this.isPluginUnavailable) {
+  toggleAddress(address: OfficeAddress) {
+    if (!this.canManageAddress('UPDATE_OFFICE') || this.isLoading || this.isSaving || this.isPluginUnavailable) {
       return;
     }
 
@@ -266,15 +409,74 @@ export class AddressTabComponent implements OnInit {
     return this.addressTemplate[fieldName]?.find((fieldObj: any) => fieldObj.id === fieldId);
   }
 
-  getAddressType(address: any): string {
-    return this.getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name ?? address.addressTypeId;
+  getAddressType(address: OfficeAddress): string {
+    return (
+      this.getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name ?? String(address.addressTypeId ?? '')
+    );
   }
 
   hasValue(value: any): boolean {
     return value !== null && value !== undefined && value !== '';
   }
 
-  private saveAddress(request: any) {
+  private uniqueAddressParts(values: unknown[]): string[] {
+    const seen = new Set<string>();
+    return values
+      .filter((value): value is string => typeof value === 'string')
+      .map((value) => value.trim())
+      .filter((value) => {
+        const key = value.toLocaleLowerCase();
+        if (!value || seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      });
+  }
+
+  getPostalLines(address: OfficeAddress): string[] {
+    const lines = this.uniqueAddressParts([
+      address.street,
+      address.addressLine1,
+      address.addressLine2,
+      address.addressLine3,
+      address.townVillage,
+      address.countyDistrict,
+      address.city,
+      this.getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name,
+      address.postalCode,
+      this.getSelectedValue('countryIdOptions', address.countryId)?.name
+    ]);
+    return lines.length > 1 ? [
+          lines[0],
+          lines.slice(1).join(', ')
+        ] : lines;
+  }
+
+  getMapUrl(address: OfficeAddress): string | null {
+    if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
+      return null;
+    }
+    const latitude = encodeURIComponent(String(address.latitude).trim());
+    const longitude = encodeURIComponent(String(address.longitude).trim());
+    return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=16/${latitude}/${longitude}`;
+  }
+
+  copyCoordinates(address: OfficeAddress) {
+    if (!hasValidCoordinatePair(address.latitude, address.longitude)) {
+      return;
+    }
+    const value = `${String(address.latitude).trim()}, ${String(address.longitude).trim()}`;
+    const copied = this.clipboard.copy(value);
+    this.alertService.alert({
+      type: this.translateService.instant('errors.clipboard.type'),
+      message: this.translateService.instant(copied ? 'errors.clipboard.copied' : 'errors.clipboard.copyFailed', {
+        value
+      })
+    });
+  }
+
+  private saveAddress(request: any, selection: { created?: boolean; nextIndex?: number } = {}) {
     this.isSaving = true;
     this.hasError = false;
     this.isPluginUnavailable = false;
@@ -284,10 +486,16 @@ export class AddressTabComponent implements OnInit {
           this.isSaving = false;
           this.changeDetectorRef.markForCheck();
         }),
+        takeUntil(this.officeChanged),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
-        next: () => this.loadOfficeAddresses(),
+        next: (response: any) => {
+          if (selection.created) this.selectedFilter = 'all';
+          const preferredId =
+            selection.created && response?.entityId != null ? String(response.entityId) : this.selectedAddressId;
+          this.loadOfficeAddresses(preferredId, selection.nextIndex);
+        },
         error: (error: any) => {
           if (this.isEndpointNotFound(error)) {
             this.isPluginUnavailable = true;
@@ -304,11 +512,15 @@ export class AddressTabComponent implements OnInit {
     return error?.status === 404 && error?.error?.error === 'Not Found';
   }
 
-  getActiveStatusLabel(isActive: boolean): string {
-    return isActive ? 'labels.inputs.Active' : 'labels.catalogs.Inactive';
+  getActiveStatusLabel(isActive: unknown): string {
+    return isActive === true
+      ? 'labels.inputs.Active'
+      : isActive === false
+        ? 'labels.catalogs.Inactive'
+        : 'labels.inputs.Not Provided';
   }
 
-  getOfficeAddressId(address: any, index?: number): string {
+  getOfficeAddressId(address: OfficeAddress | null | undefined, index?: number): string {
     const officeAddressId = address?.officeAddressId ?? address?.id ?? address?.addressId;
     if (officeAddressId === null || officeAddressId === undefined) {
       return index === undefined ? '' : `office-address-${index}`;
@@ -332,15 +544,55 @@ export class AddressTabComponent implements OnInit {
       isActive: !!addressData.isActive
     };
 
-    if (this.clientAddressLocationEnabled) {
-      normalizedAddressData.latitude = this.hasValue(addressData.latitude) ? addressData.latitude : null;
-      normalizedAddressData.longitude = this.hasValue(addressData.longitude) ? addressData.longitude : null;
+    // Omitted coordinates mean unchanged; explicit empty values deliberately clear the pair.
+    if (addressData.latitude !== undefined && addressData.longitude !== undefined) {
+      // Fineract's locale-based string parser needs decimal notation; expand exponents without rounding.
+      normalizedAddressData.locale = 'en';
+      normalizedAddressData.latitude = this.hasValue(addressData.latitude)
+        ? this.serializeCoordinate(addressData.latitude)
+        : null;
+      normalizedAddressData.longitude = this.hasValue(addressData.longitude)
+        ? this.serializeCoordinate(addressData.longitude)
+        : null;
     }
 
     return normalizedAddressData;
   }
 
-  private getAddressFormFields(address?: any) {
+  private serializeCoordinate(value: string | number): string | number {
+    if (typeof value !== 'string') {
+      return value;
+    }
+
+    const match = /^([+-]?)(\d*)(?:\.(\d*))?[eE]([+-]?\d+)$/.exec(value.trim());
+    if (!match || !Number.isFinite(Number(value))) {
+      return value;
+    }
+    // Zero needs no exponent expansion; nonzero underflow is rejected by precision validation.
+    if (Number(value) === 0) {
+      return '0';
+    }
+
+    const [
+      ,
+      sign,
+      integer,
+      fraction = '',
+      exponent
+    ] = match;
+    const digits = integer + fraction;
+    const decimalPosition = integer.length + Number(exponent);
+    const prefix = sign === '-' ? '-' : '';
+    if (decimalPosition <= 0) {
+      return `${prefix}0.${'0'.repeat(-decimalPosition)}${digits}`;
+    }
+    if (decimalPosition >= digits.length) {
+      return `${prefix}${digits}${'0'.repeat(decimalPosition - digits.length)}`;
+    }
+    return `${prefix}${digits.slice(0, decimalPosition)}.${digits.slice(decimalPosition)}`;
+  }
+
+  private getAddressFormFields(address?: OfficeAddress) {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'addressTypeId',
@@ -420,30 +672,28 @@ export class AddressTabComponent implements OnInit {
         options: { label: 'name', value: 'id', data: this.addressTemplate.countryIdOptions ?? [] },
         order: 11
       }),
-      ...(this.clientAddressLocationEnabled
-        ? [
-            new InputBase({
-              controlName: 'latitude',
-              label: this.translateService.instant('labels.inputs.Latitude'),
-              value: address ? address.latitude : '',
-              type: 'number',
-              min: -90,
-              max: 90,
-              step: '0.00000001',
-              order: 12
-            }),
-            new InputBase({
-              controlName: 'longitude',
-              label: this.translateService.instant('labels.inputs.Longitude'),
-              value: address ? address.longitude : '',
-              type: 'number',
-              min: -180,
-              max: 180,
-              step: '0.00000001',
-              order: 13
-            })
-          ]
-        : []),
+      new InputBase({
+        controlName: 'latitude',
+        label: this.translateService.instant('labels.inputs.Latitude'),
+        value: address?.latitude == null ? '' : String(address.latitude),
+        type: 'text',
+        inputmode: 'decimal',
+        min: -90,
+        max: 90,
+        validators: [this.coordinateValidator('latitude')],
+        order: 12
+      }),
+      new InputBase({
+        controlName: 'longitude',
+        label: this.translateService.instant('labels.inputs.Longitude'),
+        value: address?.longitude == null ? '' : String(address.longitude),
+        type: 'text',
+        inputmode: 'decimal',
+        min: -180,
+        max: 180,
+        validators: [this.coordinateValidator('longitude')],
+        order: 13
+      }),
       new CheckboxBase({
         controlName: 'isActive',
         label: this.translateService.instant('labels.inputs.Active Status'),
@@ -452,6 +702,69 @@ export class AddressTabComponent implements OnInit {
       })
     ];
     return formfields;
+  }
+
+  canManageAddress(permission: 'CREATE_OFFICE' | 'UPDATE_OFFICE' | 'DELETE_OFFICE'): boolean {
+    if (this.readOnly) {
+      return false;
+    }
+    if (!environment.productionModeEnableRBAC) {
+      return true;
+    }
+    const permissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    return permissions.includes('ALL_FUNCTIONS') || permissions.includes(permission);
+  }
+
+  private coordinateValidator(type: CoordinateType): ValidatorFn {
+    return (control) => {
+      const other = control.parent?.get(type === 'latitude' ? 'longitude' : 'latitude');
+      if (!this.hasValue(control.value)) {
+        return this.hasValue(other?.value) ? { required: true } : null;
+      }
+      if (parseCoordinate(control.value, type) === null) {
+        return { invalidNumber: true };
+      }
+      return this.hasCoordinatePrecision(control.value) ? null : { maxDecimals: { decimals: this.coordinateDecimals } };
+    };
+  }
+
+  private hasCoordinatePrecision(value: string | number): boolean {
+    const match = /^[+-]?(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/.exec(String(value).trim());
+    if (!match) {
+      return false;
+    }
+    const integer = match[1];
+    const fraction = match[2] ?? '';
+    const exponent = Number(match[3] ?? 0);
+    const significantDigits = (integer + fraction).replace(/0+$/, '');
+    // Count the expanded fractional digits without allocating an exponent-sized string or rounding.
+    return (
+      significantDigits.length === 0 || significantDigits.length - integer.length - exponent <= this.coordinateDecimals
+    );
+  }
+
+  private isValidLocationInput(data: any): boolean {
+    return (
+      (!this.hasValue(data.latitude) && !this.hasValue(data.longitude)) ||
+      (hasValidCoordinatePair(data.latitude, data.longitude) &&
+        this.hasCoordinatePrecision(data.latitude) &&
+        this.hasCoordinatePrecision(data.longitude))
+    );
+  }
+
+  private setupCoordinateValidation(dialogRef: MatDialogRef<FormDialogComponent>) {
+    dialogRef.afterOpened().subscribe(() => {
+      const form = dialogRef.componentInstance.form;
+      const validatePair = () => {
+        form.get('latitude')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        form.get('longitude')?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        form.updateValueAndValidity({ emitEvent: false });
+      };
+      validatePair();
+      form.valueChanges
+        .pipe(takeUntil(dialogRef.afterClosed()), takeUntilDestroyed(this.destroyRef))
+        .subscribe(validatePair);
+    });
   }
 
   private translateAddressTypes() {
@@ -473,53 +786,63 @@ export class AddressTabComponent implements OnInit {
     if (!this.postalCodeLookup.enabled) return;
 
     let postalSub: Subscription;
-    dialogRef.afterOpened().subscribe(() => {
-      const form: FormGroup = dialogRef.componentInstance.form;
-      const postalCodeControl = form.get('postalCode');
-      if (!postalCodeControl) return;
+    dialogRef
+      .afterOpened()
+      .pipe(takeUntil(dialogRef.afterClosed()), takeUntil(this.officeChanged), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        const form: FormGroup = dialogRef.componentInstance.form;
+        const postalCodeControl = form.get('postalCode');
+        if (!postalCodeControl) return;
 
-      const initialCountryId = form.get('countryId')?.value || null;
-      postalSub = postalCodeControl.valueChanges
-        .pipe(
-          debounceTime(600),
-          distinctUntilChanged(),
-          switchMap((value: string) => {
-            if (!value || value.trim().length < 3) {
-              return of(null);
-            }
-            const postalCode = value.trim();
-            const currentCountryId = form.get('countryId')?.value;
-            const isUserSelectedCountry =
-              currentCountryId && (currentCountryId === initialCountryId || !this.autoFilledFields.has('countryId'));
-
-            if (isUserSelectedCountry) {
-              const countryCode = this.getSelectedCountryCode(form);
-              if (countryCode) {
-                return this.postalCodeLookup.lookup(countryCode, postalCode);
+        const initialCountryId = form.get('countryId')?.value || null;
+        postalSub = postalCodeControl.valueChanges
+          .pipe(
+            debounceTime(600),
+            distinctUntilChanged(),
+            switchMap((value: string) => {
+              if (!value || value.trim().length < 3) {
+                return of(null);
               }
-            }
-            return this.postalCodeLookup.lookupWithFallback(postalCode);
-          })
-        )
-        .subscribe((response) => {
-          if (!response) {
-            this.clearAutoFilledFields(form);
-            return;
-          }
-          const resolved = this.postalCodeLookup.toResolvedAddress(response);
-          if (resolved) {
-            this.clearAutoFilledFields(form);
-            this.applyResolvedAddress(form, resolved);
-          } else {
-            this.clearAutoFilledFields(form);
-          }
-        });
-    });
+              const postalCode = value.trim();
+              const currentCountryId = form.get('countryId')?.value;
+              const isUserSelectedCountry =
+                currentCountryId && (currentCountryId === initialCountryId || !this.autoFilledFields.has('countryId'));
 
-    dialogRef.afterClosed().subscribe(() => {
-      postalSub?.unsubscribe();
-      this.autoFilledFields.clear();
-    });
+              if (isUserSelectedCountry) {
+                const countryCode = this.getSelectedCountryCode(form);
+                if (countryCode) {
+                  return this.postalCodeLookup.lookup(countryCode, postalCode);
+                }
+              }
+              return this.postalCodeLookup.lookupWithFallback(postalCode);
+            })
+          )
+          .subscribe((response) => {
+            if (!response) {
+              this.clearAutoFilledFields(form);
+              return;
+            }
+            const resolved = this.postalCodeLookup.toResolvedAddress(response);
+            if (resolved) {
+              this.clearAutoFilledFields(form);
+              this.applyResolvedAddress(form, resolved);
+            } else {
+              this.clearAutoFilledFields(form);
+            }
+          });
+      });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntil(this.officeChanged),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          postalSub?.unsubscribe();
+          this.autoFilledFields.clear();
+        })
+      )
+      .subscribe();
   }
 
   private getSelectedCountryCode(form: FormGroup): string | null {

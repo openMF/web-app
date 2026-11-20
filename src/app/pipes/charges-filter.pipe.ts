@@ -7,15 +7,23 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
 
 @Pipe({ name: 'chargesFilter' })
 export class ChargesFilterPipe implements PipeTransform {
-  transform(charges: any, chargesDataSource: any, currencyCode: string, multiDisburseLoan?: boolean): any {
+  transform(
+    charges: any,
+    chargesDataSource: any,
+    currencyCode: string,
+    multiDisburseLoan?: boolean,
+    downPaymentChargesAllowed = true
+  ): any {
     if (charges) {
       charges = charges.filter((charge: any) => {
         if (
           charge.currency.code !== currencyCode ||
           (!!multiDisburseLoan && charge.chargeTimeType.id === 12) ||
+          (!downPaymentChargesAllowed && isDownPaymentCharge(charge)) ||
           chargesDataSource.filter((chargeData: any) => chargeData.id === charge.id).length
         ) {
           return false;

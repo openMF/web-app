@@ -1,0 +1,425 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h3>{{ 'ConsolidatedIsr.Title' | translate }}</h3>
+<p class="notice">{{ 'ConsolidatedIsr.DiagnosticsOnly' | translate }}</p>
+@if (!access.has('READ_CONSOLIDATED_ISR_ELIGIBILITY')) {
+  <p role="alert">{{ 'AccountManagement.Forbidden' | translate }}</p>
+} @else {
+  <mifosx-account-resource-state [state]="capabilities()" (retry)="reload()" />
+  @if (capabilities().data; as caps) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ 'ConsolidatedIsr.BackendCapabilities' | translate }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <dl class="facts">
+        @for (name of capabilityNames; track name) {
+          <div>
+            <dt>{{ 'ConsolidatedIsr.Capabilities.' + name | translate }}</dt>
+            <dd>{{ booleanKey(caps[name]) | translate }}</dd>
+          </div>
+        }
+      </dl>
+      <ng-container *ngTemplateOutlet="reasons; context: { $implicit: caps.blockers || [] }" />
+    </mat-expansion-panel>
+    @if (caps.calculation !== true || caps.approvedTaxRules !== true) {
+      <p class="notice">{{ 'ConsolidatedIsr.CalculationUnavailable' | translate }}</p>
+    }
+    @if (caps.withholdingExecution !== true) {
+      <p class="notice">{{ 'ConsolidatedIsr.WithholdingUnavailable' | translate }}</p>
+    }
+    <form
+      [formGroup]="form"
+      (ngSubmit)="inspectPeriod()"
+      [attr.aria-label]="'ConsolidatedIsr.DiagnosticPeriod' | translate"
+    >
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+        <input matInput formControlName="from" [matDatepicker]="fromPicker" [min]="minDate" [max]="maxDate" required />
+        <mat-datepicker-toggle matSuffix [for]="fromPicker" />
+        <mat-datepicker #fromPicker />
+        <mat-error>{{ 'ConsolidatedIsr.InvalidPeriod' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="through"
+          [matDatepicker]="throughPicker"
+          [min]="minDate"
+          [max]="maxDate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="throughPicker" />
+        <mat-datepicker #throughPicker />
+        <mat-error>{{ 'ConsolidatedIsr.InvalidPeriod' | translate }}</mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" [disabled]="form.invalid || !canInspectPeriod">
+        {{ 'ConsolidatedIsr.InspectPeriod' | translate }}
+      </button>
+    </form>
+    @if (form.hasError('period') && form.touched) {
+      <p role="alert">{{ 'ConsolidatedIsr.InvalidPeriod' | translate }}</p>
+    }
+    @if (loadedPeriod(); as period) {
+      <p>
+        {{ 'ConsolidatedIsr.DiagnosticPeriod' | translate }}: {{ period.from | dateFormat }} —
+        {{ period.through | dateFormat }}
+      </p>
+    } @else {
+      <p>{{ 'ConsolidatedIsr.SelectPeriod' | translate }}</p>
+    }
+    <mifosx-account-resource-state [state]="eligibility()" />
+    @if (eligibility().data; as data) {
+      <mat-card>
+        <mat-card-content>
+          <h4>{{ 'ConsolidatedIsr.Eligibility' | translate }}</h4>
+          <dl class="facts">
+            <div>
+              <dt>{{ 'labels.inputs.Customer' | translate }}</dt>
+              <dd>{{ data.clientId }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'ConsolidatedIsr.EligibleAccounts' | translate }}</dt>
+              <dd data-testid="isr-eligible-count">
+                {{ eligibleCount ?? ('AccountManagement.NotEstablished' | translate) }}
+              </dd>
+            </div>
+            <div>
+              <dt>{{ 'labels.inputs.Status' | translate }}</dt>
+              <dd>{{ codeKey(data.state) | translate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'ConsolidatedIsr.CompleteSource' | translate }}</dt>
+              <dd>{{ booleanKey(data.populationComplete) | translate }}</dd>
+            </div>
+          </dl>
+          @if (!data.populationComplete) {
+            <p role="alert">{{ 'ConsolidatedIsr.IncompleteData' | translate }}</p>
+          }
+          <ng-container *ngTemplateOutlet="reasons; context: { $implicit: data.blockers }" />
+          @for (account of data.accounts; track account.accountId) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title
+                  >{{ 'AccountManagement.NativeAccountId' | translate }}: {{ account.accountId }}</mat-panel-title
+                >
+              </mat-expansion-panel-header>
+              <dl class="facts">
+                <div>
+                  <dt>{{ 'labels.inputs.Product' | translate }}</dt>
+                  <dd>{{ account.productId }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'SavingsProducts.Classification' | translate }}</dt>
+                  <dd>{{ codeKey(account.classification) | translate }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+                  <dd>{{ account.policyVersion ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'ConsolidatedIsr.StructuralEligibility' | translate }}</dt>
+                  <dd>{{ booleanKey(account.structurallySupported) | translate }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'ConsolidatedIsr.FinancialEligibility' | translate }}</dt>
+                  <dd>{{ booleanKey(account.eligible) | translate }}</dd>
+                </div>
+              </dl>
+              <ng-container *ngTemplateOutlet="reasons; context: { $implicit: account.reasons }" />
+            </mat-expansion-panel>
+          } @empty {
+            <p>{{ 'ConsolidatedIsr.NoAccounts' | translate }}</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+    <mifosx-account-resource-state [state]="sources()" />
+    @if (sources().data; as data) {
+      <ng-container *ngTemplateOutlet="sourceDetails; context: { $implicit: data }" />
+    }
+    <mifosx-account-resource-state [state]="preview()" />
+    @if (preview().data; as result) {
+      <h4>{{ 'labels.buttons.Preview' | translate }}</h4>
+      <ng-container *ngTemplateOutlet="snapshot; context: { $implicit: result }" />
+    }
+    @if (caps.historicalSnapshots === true && access.has('READ_CONSOLIDATED_ISR')) {
+      <h4>{{ 'ConsolidatedIsr.HistoricalAssessments' | translate }}</h4>
+      <p>{{ 'ConsolidatedIsr.EvidenceOnly' | translate }}</p>
+      <mifosx-account-resource-state [state]="history()" (retry)="loadHistory()" />
+      <div class="history-list">
+        @for (entry of history().data || []; track entry.sequence) {
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="select(entry.calculation.calculationId)"
+            [attr.aria-pressed]="selectedId() === entry.calculation.calculationId"
+          >
+            {{ entry.calculation.recordedAt | dateFormat: 'L LTS' }} · {{ entry.calculation.calculationId }}
+          </button>
+        } @empty {
+          @if (!history().loading && !history().error) {
+            <p>{{ 'AccountManagement.NoHistory' | translate }}</p>
+          }
+        }
+      </div>
+      @if (history().more) {
+        <button mat-button type="button" (click)="loadHistory()" [disabled]="history().loading">
+          {{ 'AccountManagement.LoadMore' | translate }}
+        </button>
+      }
+      <mifosx-account-resource-state [state]="detail()" />
+      @if (detail().data; as record) {
+        <mat-card data-testid="isr-historical-detail">
+          <mat-card-content>
+            <h4>{{ 'ConsolidatedIsr.HistoricalSnapshot' | translate }}</h4>
+            <dl class="facts">
+              <div>
+                <dt>{{ 'ConsolidatedIsr.CalculationId' | translate }}</dt>
+                <dd>{{ record.calculationId }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'ConsolidatedIsr.RecordedAt' | translate }}</dt>
+                <dd>{{ record.recordedAt | dateFormat: 'L LTS' }}</dd>
+              </div>
+              <div>
+                <dt>{{ 'ConsolidatedIsr.Supersedes' | translate }}</dt>
+                <dd>{{ record.supersedes ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+              </div>
+              @if (access.has('READ_CONSOLIDATED_ISR_AUDIT')) {
+                <div>
+                  <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
+                  <dd>{{ record.actorId }}</dd>
+                </div>
+              }
+            </dl>
+            <ng-container *ngTemplateOutlet="snapshot; context: { $implicit: record.result }" />
+            <ng-container *ngTemplateOutlet="sourceDetails; context: { $implicit: record.result.sources }" />
+            @if (access.has('READ_CONSOLIDATED_ISR_AUDIT')) {
+              <button
+                mat-button
+                type="button"
+                (click)="loadAudit()"
+                [disabled]="audit().loading || (audit().data !== null && !audit().more)"
+              >
+                {{ 'ConsolidatedIsr.AuditHistory' | translate }}
+              </button>
+            }
+            <mifosx-account-resource-state [state]="audit()" />
+            @if (audit().data; as events) {
+              @for (event of events; track event.id) {
+                <dl class="facts">
+                  <div>
+                    <dt>{{ 'labels.inputs.Action' | translate }}</dt>
+                    <dd>{{ codeKey(event.action) | translate }}</dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'acquisition.fields.actor' | translate }}</dt>
+                    <dd>{{ event.actorId }}</dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+                    <dd>{{ event.businessDate | dateFormat }}</dd>
+                  </div>
+                  <div>
+                    <dt>{{ 'ConsolidatedIsr.RecordedAt' | translate }}</dt>
+                    <dd>{{ event.recordedAt | dateFormat: 'L LTS' }}</dd>
+                  </div>
+                </dl>
+              } @empty {
+                <p>{{ 'AccountManagement.NoHistory' | translate }}</p>
+              }
+              @if (audit().more) {
+                <p>{{ 'AccountManagement.LoadMore' | translate }}</p>
+              }
+            }
+            @if (caps.historicalReconciliation === true && access.has('RECONCILE_CONSOLIDATED_ISR')) {
+              <button mat-button type="button" (click)="inspectReconciliation()" [disabled]="reconciliation().loading">
+                {{ 'AccountManagement.CheckReconciliation' | translate }}
+              </button>
+            }
+            <mifosx-account-resource-state [state]="reconciliation()" />
+            @if (reconciliation().data; as check) {
+              <h4>{{ 'AccountManagement.Reconciliation' | translate }}</h4>
+              <dl class="facts">
+                <div>
+                  <dt>{{ 'labels.inputs.Status' | translate }}</dt>
+                  <dd>{{ codeKey(check.status) | translate }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'ConsolidatedIsr.RecordedAt' | translate }}</dt>
+                  <dd>{{ check.checkedAt | dateFormat: 'L LTS' }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'ConsolidatedIsr.Capabilities.accountingIntegrationVerified' | translate }}</dt>
+                  <dd>{{ booleanKey(check.accountingVerified) | translate }}</dd>
+                </div>
+                <div>
+                  <dt>{{ 'ConsolidatedIsr.FinancialRetryAllowed' | translate }}</dt>
+                  <dd>{{ booleanKey(check.financialRetryAllowed) | translate }}</dd>
+                </div>
+              </dl>
+              <ng-container *ngTemplateOutlet="reasons; context: { $implicit: check.blockers }" />
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+  }
+}
+
+<ng-template #reasons let-codes>
+  @if (codes.length) {
+    <ul>
+      @for (code of codes; track $index) {
+        <li>{{ codeKey(code) | translate }}</li>
+      }
+    </ul>
+  }
+</ng-template>
+
+<ng-template #snapshot let-result>
+  <dl class="facts" data-testid="isr-preview">
+    <div>
+      <dt>{{ 'labels.inputs.Status' | translate }}</dt>
+      <dd>{{ codeKey(result.state) | translate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+      <dd>{{ result.businessDate | dateFormat }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.DiagnosticPeriod' | translate }}</dt>
+      <dd>{{ result.taxPeriod.from | dateFormat }} — {{ result.taxPeriod.through | dateFormat }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.ObservedAt' | translate }}</dt>
+      <dd>{{ result.observedAt | dateFormat: 'L LTS' }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.TaxProfile' | translate }}</dt>
+      <dd>{{ codeKey(result.profile.status) | translate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.CompleteSource' | translate }}</dt>
+      <dd>{{ booleanKey(result.sources.complete) | translate }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.TaxableBase' | translate }}</dt>
+      <dd data-testid="isr-taxable-base">{{ result.taxableBase | accountMoney: result.profile.currency }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.CalculatedIsr' | translate }}</dt>
+      <dd data-testid="isr-calculated">{{ result.calculatedIsr | accountMoney: result.profile.currency }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'ConsolidatedIsr.ActualWithheldAmount' | translate }}</dt>
+      <dd data-testid="isr-actual-withheld">
+        {{ result.actualWithheldAmount | accountMoney: result.profile.currency }}
+      </dd>
+    </div>
+  </dl>
+  <ng-container *ngTemplateOutlet="reasons; context: { $implicit: result.blockers }" />
+</ng-template>
+
+<ng-template #sourceDetails let-data>
+  <mat-card>
+    <mat-card-content>
+      <h4>{{ 'ConsolidatedIsr.AccountObservations' | translate }}</h4>
+      <p class="notice">{{ 'ConsolidatedIsr.NativeEvidence' | translate }}</p>
+      <dl class="facts">
+        <div>
+          <dt>{{ 'ConsolidatedIsr.CompleteSource' | translate }}</dt>
+          <dd>{{ booleanKey(data.complete) | translate }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'ConsolidatedIsr.NativeRecords' | translate }}</dt>
+          <dd>{{ data.transactions.length }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'ConsolidatedIsr.NativeTaxDetails' | translate }}</dt>
+          <dd>{{ data.taxDetails.length }}</dd>
+        </div>
+      </dl>
+      @if (!data.complete) {
+        <p role="alert">{{ 'ConsolidatedIsr.IncompleteData' | translate }}</p>
+      }
+      <ng-container *ngTemplateOutlet="reasons; context: { $implicit: data.reasons }" />
+      @for (observation of data.observations; track $index) {
+        <h4>
+          {{ observation.currency }} · {{ observation.accountCount }}
+          {{ 'ConsolidatedIsr.AccountObservations' | translate }}
+        </h4>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'ConsolidatedIsr.LedgerObservation' | translate }}</dt>
+            <dd>
+              {{ observation.observedLedgerBalance | accountMoney: observation.currency : observation.currencyDigits }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'ConsolidatedIsr.NativePostedInterest' | translate }}</dt>
+            <dd>
+              {{ observation.nativePostedInterest | accountMoney: observation.currency : observation.currencyDigits }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'ConsolidatedIsr.NativeWithholding' | translate }}</dt>
+            <dd>
+              {{ observation.nativeWithheldTax | accountMoney: observation.currency : observation.currencyDigits }}
+            </dd>
+          </div>
+        </dl>
+      }
+      @for (account of data.accounts; track account.accountId) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header
+            ><mat-panel-title
+              >{{ 'AccountManagement.NativeAccountId' | translate }}: {{ account.accountId }} ·
+              {{ account.currency }}</mat-panel-title
+            ></mat-expansion-panel-header
+          >
+          <dl class="facts">
+            <div>
+              <dt>{{ 'labels.inputs.Product' | translate }}</dt>
+              <dd>{{ account.productId }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'SavingsProducts.Classification' | translate }}</dt>
+              <dd>{{ codeKey(account.classification) | translate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+              <dd>{{ account.policyVersion ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'labels.inputs.Status' | translate }}</dt>
+              <dd><mifosx-account-status [code]="'SAVINGS_' + account.status" /></dd>
+            </div>
+            <div>
+              <dt>{{ 'ConsolidatedIsr.LedgerObservation' | translate }}</dt>
+              <dd>{{ account.observedLedgerBalance | accountMoney: account.currency : account.currencyDigits }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'ConsolidatedIsr.NativeWithholdingConfigured' | translate }}</dt>
+              <dd>{{ booleanKey(account.nativeWithholdTax) | translate }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'ConsolidatedIsr.TaxGroup' | translate }}</dt>
+              <dd>{{ account.taxGroupId ?? ('AccountManagement.NotEstablished' | translate) }}</dd>
+            </div>
+          </dl>
+          <ng-container *ngTemplateOutlet="reasons; context: { $implicit: account.reasons }" />
+        </mat-expansion-panel>
+      } @empty {
+        <p>{{ 'ConsolidatedIsr.NoAccounts' | translate }}</p>
+      }
+    </mat-card-content>
+  </mat-card>
+</ng-template>

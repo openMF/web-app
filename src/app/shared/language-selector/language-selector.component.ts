@@ -10,6 +10,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SubscriptSizing } from '@angular/material/form-field';
+import { MatSelectTrigger } from '@angular/material/select';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
+    ...STANDALONE_SHARED_IMPORTS,
+    MatSelectTrigger
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -47,6 +49,12 @@ export class LanguageSelectorComponent {
    * selector sits in a row that has to align with something else.
    */
   @Input() subscriptSizing: SubscriptSizing = 'fixed';
+
+  /** Class applied to the dropdown panel, for hosts that have to adapt it to where it opens. */
+  @Input() panelClass = '';
+
+  /** Width of the dropdown panel. Matches the control by default, and fits the longest name when null. */
+  @Input() panelWidth: string | number | null = 'auto';
 
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();

@@ -7,6 +7,7 @@
 -->
 
 <div class="container mat-elevation-z8">
+  @let showSkipDownPaymentFee = showSkipDownPaymentFee$ | async;
   <mat-card>
     <form [formGroup]="disbursementLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
@@ -45,6 +46,11 @@
               <mat-label>{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</mat-label>
               <input matInput [value]="dataObject.availableDisbursementAmountWithOverApplied | formatNumber" readonly />
             </mat-form-field>
+          }
+          @if (showSkipDownPaymentFee) {
+            <mat-checkbox formControlName="skipDownPaymentFee">
+              {{ 'labels.inputs.Skip Down Payment Fee' | translate }}
+            </mat-checkbox>
           }
           @if (isWorkingCapital) {
             <mifosx-input-amount
@@ -132,7 +138,7 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!disbursementLoanForm.valid || isSubmitting"
+            [disabled]="!disbursementLoanForm.valid || isSubmitting || showSkipDownPaymentFee === null"
             *mifosxHasPermission="'DISBURSE_LOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}

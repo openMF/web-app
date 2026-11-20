@@ -6,110 +6,307 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography">
-  <div class="layout-row align-start">
-    <div class="m-b-10">
-      <h3>{{ 'labels.heading.Services' | translate }}</h3>
+<div class="tab-container mat-typography" [class.summary-view]="readOnly">
+  @if (readOnly) {
+    <div class="summary-heading">
+      <h2>{{ 'labels.heading.Services' | translate }}</h2>
+      @if (!isLoading && !hasError && !isPluginUnavailable) {
+        <a mat-button color="primary" [routerLink]="['../services']" *mifosxHasPermission="'CREATE_OFFICE'">
+          <fa-icon icon="plus" aria-hidden="true" class="m-r-8"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </a>
+      }
     </div>
-    <div class="action-button m-b-10 gap-25px">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addService()"
-        [disabled]="isLoading || isSaving || isPluginUnavailable"
-        *mifosxHasPermission="'CREATE_OFFICE'"
-      >
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
-    </div>
-  </div>
+    <ng-container *ngTemplateOutlet="serviceState" />
+    @if (!isLoading && !hasError && !isPluginUnavailable && officeServices.length) {
+      <div class="service-summary-labels" aria-hidden="true">
+        <span>{{ 'labels.inputs.Service Name' | translate }}</span>
+        <span>{{ 'labels.inputs.Working Hours' | translate }}</span>
+      </div>
+      <ul class="service-summary-list">
+        @for (service of officeServices; track getOfficeServiceId(service, $index)) {
+          <li class="service-summary-row">
+            <div class="service-name">
+              <span class="service-icon" aria-hidden="true"><fa-icon icon="exchange"></fa-icon></span>
+              <strong>{{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}</strong>
+            </div>
+            <span class="working-hours">{{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}</span>
+            @if (getDailyInterval(service.workingHours); as interval) {
+              <div class="daily-timeline" aria-hidden="true">
+                <div class="timeline-track">
+                  <span
+                    [style.left.%]="interval.start / 864"
+                    [style.width.%]="(interval.end - interval.start) / 864"
+                  ></span>
+                </div>
+                <div class="timeline-ticks">
+                  <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
+                </div>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  } @else {
+    <header class="services-heading">
+      <div class="services-introduction">
+        <h2>{{ 'branchServices.title' | translate }}</h2>
+        <p>{{ 'branchServices.description' | translate: { office: officeName } }}</p>
+      </div>
+      <div class="services-toolbar">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="service-search">
+          <mat-label>{{ 'branchServices.search' | translate }}</mat-label>
+          <input matInput type="search" [formControl]="search" />
+          <fa-icon matSuffix [icon]="searchIcon" aria-hidden="true"></fa-icon>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          class="add-service"
+          (click)="addService()"
+          [disabled]="isLoading || isSaving || isPluginUnavailable"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          <fa-icon icon="plus" aria-hidden="true"></fa-icon>{{ 'branchServices.add' | translate }}
+        </button>
+      </div>
+    </header>
 
-  @if (isLoading) {
-    <div class="service-state">
-      <mat-spinner diameter="36"></mat-spinner>
-      <span>{{ 'labels.text.Loading data' | translate }}</span>
+    <div class="services-dashboard">
+      <div class="services-main">
+        <mat-card class="service-card coverage-card">
+          <mat-card-content>
+            <div class="card-heading">
+              <h3>{{ 'branchServices.coverage' | translate }}</h3>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="weekday-picker">
+                <mat-label>{{ 'labels.heading.Weekly schedule' | translate }}</mat-label>
+                <mat-select [formControl]="selectedWeekday">
+                  @for (day of weekdays; track day) {
+                    <mat-option [value]="day.toUpperCase()">{{ 'labels.inputs.' + day | translate }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <p class="coverage-context">{{ 'branchServices.timezone' | translate }}</p>
+            @if (scheduleState === 'loading') {
+              <p role="status">{{ 'labels.text.Loading data' | translate }}</p>
+            } @else if (scheduleState !== 'ready') {
+              <div
+                class="schedule-feedback"
+                [attr.role]="scheduleState === 'error' || scheduleState === 'invalid' ? 'alert' : 'status'"
+              >
+                <span>{{ scheduleMessages[scheduleState] | translate }}</span>
+                @if (scheduleState === 'error' || scheduleState === 'unavailable') {
+                  <button mat-button color="primary" (click)="loadOfficeSchedules()">
+                    {{ 'labels.buttons.Retry' | translate }}
+                  </button>
+                }
+              </div>
+            }
+            <div class="coverage-timeline">
+              <div class="coverage-axis" aria-hidden="true">
+                @for (tick of axisTicks; track tick) {
+                  <span [style.left.%]="((tick - axisStart) / (axisEnd - axisStart)) * 100">{{ axisLabel(tick) }}</span>
+                }
+              </div>
+              @if (scheduleState === 'ready') {
+                <div class="coverage-row branch-row">
+                  <div class="coverage-label">
+                    <strong>{{ 'branchServices.branchHours' | translate }}</strong>
+                    <span>{{
+                      branchHours ||
+                        ((branchDay && !branchDay.enabled ? 'labels.text.Closed' : 'labels.text.Not configured')
+                          | translate)
+                    }}</span>
+                  </div>
+                  <div class="coverage-track" aria-hidden="true">
+                    @if (branchInterval; as interval) {
+                      <span
+                        class="coverage-bar branch-bar"
+                        [style.left.%]="barPosition(interval).start"
+                        [style.width.%]="barPosition(interval).width"
+                      ></span>
+                    }
+                  </div>
+                </div>
+              }
+              @if (!isLoading && !hasError && !isPluginUnavailable) {
+                @for (service of timedServices; track getOfficeServiceId(service, $index)) {
+                  <div class="coverage-row">
+                    <div class="coverage-label">
+                      <strong>{{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}</strong>
+                      <span>{{ service.workingHours }}</span>
+                    </div>
+                    <div class="coverage-track" aria-hidden="true">
+                      @if (getDailyInterval(service.workingHours); as interval) {
+                        <span
+                          class="coverage-bar"
+                          [style.left.%]="barPosition(interval).start"
+                          [style.width.%]="barPosition(interval).width"
+                        ></span>
+                      }
+                    </div>
+                  </div>
+                }
+                @if (unparsedServiceCount) {
+                  <p class="coverage-note">
+                    {{ 'branchServices.unparsed' | translate: { count: unparsedServiceCount } }}
+                  </p>
+                }
+              }
+            </div>
+            <div class="coverage-legend" aria-hidden="true">
+              <span><i class="legend-swatch branch-bar"></i>{{ 'branchServices.branchHours' | translate }}</span>
+              <span><i class="legend-swatch"></i>{{ 'branchServices.recordedHours' | translate }}</span>
+            </div>
+            <p class="coverage-note">{{ 'branchServices.verification' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="service-card configured-card" [attr.aria-busy]="isLoading || isSaving">
+          <div class="card-heading">
+            <h3>{{ 'branchServices.configuredServices' | translate }}</h3>
+            @if (!isLoading && !hasError && !isPluginUnavailable) {
+              <span class="service-count">{{
+                'branchServices.count' | translate: { count: officeServices.length }
+              }}</span>
+            }
+          </div>
+          <ng-container *ngTemplateOutlet="serviceState" />
+          @if (isSaving) {
+            <p class="mutation-state" role="status">{{ 'branchServices.saving' | translate }}</p>
+          }
+          @if (saveError) {
+            <p class="mutation-state error-state" role="alert">{{ 'branchServices.saveFailed' | translate }}</p>
+          }
+          @if (!isLoading && !hasError && officeServices.length && !isPluginUnavailable) {
+            @if (filteredServices.length) {
+              <table mat-table [dataSource]="filteredServices" class="services-table">
+                <ng-container matColumnDef="serviceName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Service Name' | translate }}</th>
+                  <td mat-cell *matCellDef="let service">
+                    <div class="service-name">
+                      <span class="service-icon" aria-hidden="true"><fa-icon icon="exchange"></fa-icon></span>
+                      <div>
+                        <strong>{{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}</strong>
+                        @if (service.serviceExternalId) {
+                          <span class="external-id"
+                            >{{ 'labels.inputs.External Id' | translate }}: {{ service.serviceExternalId }}</span
+                          >
+                        }
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="workingHours">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Working Hours' | translate }}</th>
+                  <td mat-cell *matCellDef="let service">
+                    <span class="mobile-field-label">{{ 'labels.inputs.Working Hours' | translate }}</span>
+                    <span class="working-hours">{{ service.workingHours || (hoursUnavailable | translate) }}</span>
+                    @if (duration(service.workingHours); as value) {
+                      <span class="service-duration">{{ value }}</span>
+                    }
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+                  <td mat-cell *matCellDef="let service">
+                    <span class="mobile-field-label">{{ 'labels.inputs.Status' | translate }}</span>
+                    <span class="configured-badge">{{ 'branchServices.configured' | translate }}</span>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <span class="visually-hidden">{{ 'labels.inputs.Actions' | translate }}</span>
+                  </th>
+                  <td mat-cell *matCellDef="let service">
+                    <div class="row-actions">
+                      <button
+                        mat-button
+                        color="primary"
+                        (click)="editService(service)"
+                        [disabled]="isLoading || isSaving || !getOfficeServiceId(service)"
+                        [attr.aria-label]="
+                          ('labels.buttons.Edit' | translate) +
+                          ': ' +
+                          (service.serviceName || ('labels.inputs.Not Provided' | translate))
+                        "
+                        *mifosxHasPermission="'UPDATE_OFFICE'"
+                      >
+                        {{ 'labels.buttons.Edit' | translate }}
+                      </button>
+                      <ng-container *mifosxHasPermission="'DELETE_OFFICE'">
+                        <button
+                          mat-button
+                          class="overflow-button"
+                          [matMenuTriggerFor]="serviceMenu"
+                          [disabled]="isLoading || isSaving || !getOfficeServiceId(service)"
+                          [attr.aria-label]="
+                            ('labels.inputs.Actions' | translate) +
+                            ': ' +
+                            (service.serviceName || ('labels.inputs.Not Provided' | translate))
+                          "
+                        >
+                          <fa-icon [icon]="moreIcon" aria-hidden="true"></fa-icon>
+                        </button>
+                        <mat-menu #serviceMenu="matMenu">
+                          <button mat-menu-item (click)="deleteService(service)" [disabled]="isLoading || isSaving">
+                            <fa-icon icon="trash" aria-hidden="true" class="m-r-8"></fa-icon
+                            >{{ 'labels.buttons.Delete' | translate }}
+                          </button>
+                        </mat-menu>
+                      </ng-container>
+                    </div>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            } @else {
+              <div class="service-state" role="status">{{ 'branchServices.noMatches' | translate }}</div>
+            }
+          }
+        </mat-card>
+      </div>
+      <aside class="services-sidebar">
+        <mat-card class="service-card catalog-card">
+          <mat-card-content>
+            <h3>{{ 'branchServices.catalog' | translate }}</h3>
+            <p>{{ 'branchServices.catalogDescription' | translate }}</p>
+            <div class="catalog-unavailable" role="status">
+              <span class="catalog-icon" aria-hidden="true"><fa-icon icon="exchange"></fa-icon></span>
+              <h4>{{ 'branchServices.catalogUnavailable' | translate }}</h4>
+              <p>{{ 'branchServices.catalogExplanation' | translate }}</p>
+              @if (canAddService) {
+                <p class="catalog-add-guidance">{{ 'branchServices.catalogAddGuidance' | translate }}</p>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </aside>
     </div>
   }
+</div>
 
-  @if (isPluginUnavailable && !isLoading) {
-    <div class="service-state unavailable-state">
+<ng-template #serviceState>
+  @if (isLoading) {
+    <div class="service-state" role="status">
+      <mat-spinner diameter="32"></mat-spinner><span>{{ 'labels.text.Loading data' | translate }}</span>
+    </div>
+  } @else if (isPluginUnavailable) {
+    <div class="service-state unavailable-state" role="status">
       <span>{{ 'labels.text.Office Services management requires the Savings Plugin to be deployed' | translate }}</span>
     </div>
-  }
-
-  @if (hasError && !isLoading && !isPluginUnavailable) {
-    <div class="service-state error-state">
+  } @else if (hasError) {
+    <div class="service-state error-state" role="alert">
       <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
       <button mat-button color="primary" (click)="loadOfficeServices()">
         {{ 'labels.buttons.Retry' | translate }}
       </button>
     </div>
-  }
-
-  @if (!isLoading && !hasError && !isPluginUnavailable && !officeServices.length) {
-    <div class="service-state empty-state">
+  } @else if (!officeServices.length) {
+    <div class="service-state empty-state" role="status">
       <span>{{ 'labels.text.No data found' | translate }}</span>
-      <button mat-raised-button color="primary" (click)="addService()" *mifosxHasPermission="'CREATE_OFFICE'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
     </div>
   }
-
-  @if (!isLoading && !hasError && !isPluginUnavailable && officeServices.length) {
-    <div class="mat-elevation-z1 table-container">
-      <table mat-table [dataSource]="officeServices">
-        <ng-container matColumnDef="serviceName">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Service Name' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.serviceName || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="serviceExternalId">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.serviceExternalId || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="workingHours">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Working Hours' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            {{ service.workingHours || ('labels.inputs.Not Provided' | translate) }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-          <td mat-cell *matCellDef="let service">
-            <button
-              mat-button
-              color="primary"
-              (click)="editService(service)"
-              [disabled]="isSaving || isPluginUnavailable"
-              matTooltip="{{ 'labels.buttons.Edit' | translate }}"
-              [attr.aria-label]="'labels.buttons.Edit' | translate"
-              *mifosxHasPermission="'UPDATE_OFFICE'"
-            >
-              <fa-icon icon="edit"></fa-icon>
-            </button>
-            <button
-              mat-button
-              color="warn"
-              (click)="deleteService(service)"
-              [disabled]="isSaving || isPluginUnavailable"
-              matTooltip="{{ 'labels.buttons.Delete' | translate }}"
-              [attr.aria-label]="'labels.buttons.Delete' | translate"
-              *mifosxHasPermission="'DELETE_OFFICE'"
-            >
-              <fa-icon icon="trash"></fa-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-  }
-</div>
+</ng-template>

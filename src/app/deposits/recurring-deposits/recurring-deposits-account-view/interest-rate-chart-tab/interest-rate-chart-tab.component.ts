@@ -63,6 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class InterestRateChartTabComponent {
   private route = inject(ActivatedRoute);
 
+  /** Recurring Deposits Account Data */
+  recurringDepositsAccountData: any;
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
@@ -93,7 +95,8 @@ export class InterestRateChartTabComponent {
    */
   constructor() {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
-      this.interestRateChartData = data.recurringDepositsAccountData.accountChart.chartSlabs;
+      this.recurringDepositsAccountData = data.recurringDepositsAccountData;
+      this.interestRateChartData = data.recurringDepositsAccountData?.accountChart?.chartSlabs || [];
     });
   }
 }

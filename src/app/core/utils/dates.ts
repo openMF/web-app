@@ -50,6 +50,29 @@ export class Dates {
     }
   }
 
+  /**
+   * Formats the day of an annual or monthly fee with the monthDayFormat sent to Fineract.
+   * The day comes as Fineract's [month, day] (template) or ISO month-day "--07-22" (saved account),
+   * or as the full date picked in a charges step (e.g. "15 March 2027"), whose year is dropped.
+   * The picked date is read with the dateFormat it was written with, so "05/11/2027" in dd/MM/yyyy is 5 November.
+   */
+  public formatMonthDay(monthDay: any, monthDayFormat: string, dateFormat: string): string {
+    if (!monthDay) {
+      return monthDay;
+    }
+    const isoMonthDay = typeof monthDay === 'string' ? /^--(\d{2})-(\d{2})$/.exec(monthDay) : null;
+    const monthAndDay = isoMonthDay ? isoMonthDay.slice(1).map(Number) : Array.isArray(monthDay) ? monthDay : null;
+    if (monthAndDay) {
+      // 2000 is a leap year, so 29 February is kept.
+      return this.formatDate(new Date(2000, monthAndDay[0] - 1, monthAndDay[1]), monthDayFormat);
+    }
+    const picked =
+      typeof monthDay === 'string'
+        ? moment(monthDay, this.angularToMomentFormat(dateFormat), this.getMomentLocale(this.language), true)
+        : null;
+    return this.formatDate(picked?.isValid() ? picked.toDate() : monthDay, monthDayFormat);
+  }
+
   public formatDateAsString(value: Date, dateFormat: string): string {
     const momentFormat = this.angularToMomentFormat(dateFormat);
     // Month names must be in the UI language, which is the locale sent to Fineract with the date. Moment's global

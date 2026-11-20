@@ -42,22 +42,6 @@
       </mat-form-field>
 
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
-        <mat-select formControlName="delinquencyStartType">
-          @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
-            <mat-option [value]="delinquencyStartType.code">
-              {{ delinquencyStartType.value | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
         <mat-select formControlName="delinquencyBucketId">
           @for (delinquencyBucket of delinquencyBucketData; track delinquencyBucket) {
@@ -66,12 +50,36 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
+        @if (loanProductSettingsForm.controls.delinquencyBucketId.value) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'delinquencyBucketId')"
+          >
             <fa-icon icon="close" size="md"></fa-icon>
           </button>
         }
       </mat-form-field>
+
+      @if (loanProductSettingsForm.value.delinquencyBucketId) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+        </mat-form-field>
+
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
+          <mat-select formControlName="delinquencyStartType">
+            @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
+              <mat-option [value]="delinquencyStartType.code">
+                {{ delinquencyStartType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>
@@ -87,8 +95,14 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.breachId) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'breachId')">
+        @if (loanProductSettingsForm.controls.breachId.value) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'breachId')"
+          >
             <fa-icon icon="close" size="md"></fa-icon>
           </button>
         }
@@ -109,8 +123,14 @@
               </mat-option>
             }
           </mat-select>
-          @if (loanProductSettingsForm.controls.nearBreachId) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'nearBreachId')">
+          @if (loanProductSettingsForm.controls.nearBreachId.value) {
+            <button
+              type="button"
+              matSuffix
+              mat-icon-button
+              aria-label="{{ 'labels.buttons.Clear' | translate }}"
+              (click)="clearProperty($event, 'nearBreachId')"
+            >
               <fa-icon icon="close" size="md"></fa-icon>
             </button>
           }
@@ -452,8 +472,14 @@
             </mat-option>
           }
         </mat-select>
-        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
+        @if (loanProductSettingsForm.controls.delinquencyBucketId.value) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'delinquencyBucketId')"
+          >
             <fa-icon icon="close" size="md"></fa-icon>
           </button>
         }

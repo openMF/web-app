@@ -33,6 +33,7 @@ export class SavingProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private destroyRef = inject(DestroyRef);
 
+  @Input() embedded = false;
   @Input() savingProductsTemplate: any;
 
   savingProductCurrencyForm: UntypedFormGroup;

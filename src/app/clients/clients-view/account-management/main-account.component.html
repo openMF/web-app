@@ -1,0 +1,143 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card>
+  <mat-card-content>
+    <h2>{{ 'SavingsProducts.Main' | translate }}</h2>
+    <mifosx-account-resource-state [state]="capabilities()" (retry)="reload()" />
+    @if (capabilities().data; as caps) {
+      <mifosx-account-resource-state [state]="main()" (retry)="loadMain()" />
+      @if (main().data; as data) {
+        @for (row of data.relationships; track row.savingsAccountId) {
+          <dl class="facts">
+            <div>
+              <dt>{{ 'labels.inputs.Account' | translate }}</dt>
+              <dd>
+                <a
+                  mat-button
+                  [routerLink]="['/clients', clientId, 'savings-accounts', row.savingsAccountId, 'general']"
+                  >{{ row.savingsAccountId }}</a
+                >
+              </dd>
+            </div>
+            <div>
+              <dt>{{ 'labels.inputs.Customer' | translate }}</dt>
+              <dd>{{ row.clientId }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'labels.inputs.Product' | translate }}</dt>
+              <dd>
+                <a mat-button [routerLink]="['/products/saving-products', row.savingsProductId]">{{
+                  native().data?.savingsProductName || row.savingsProductId
+                }}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+              <dd>{{ row.policyVersion }}</dd>
+            </div>
+            <div>
+              <dt>{{ 'AccountManagement.NativeStatus' | translate }}</dt>
+              <dd><mifosx-account-status [code]="'SAVINGS_' + row.nativeStatus" /></dd>
+            </div>
+          </dl>
+        } @empty {
+          <p>{{ 'AccountManagement.NoMainRelationship' | translate }}</p>
+        }
+      }
+      <mifosx-account-resource-state [state]="native()" (retry)="loadMain()" />
+      @if (native().data; as account) {
+        <dl class="facts">
+          <div>
+            <dt>{{ 'labels.inputs.Balance' | translate }}</dt>
+            <dd>
+              {{
+                account.summary?.accountBalance | accountMoney: account.currency.code : account.currency.decimalPlaces
+              }}
+            </dd>
+          </div>
+          <div>
+            <dt>{{ 'labels.inputs.Interest Posted' | translate }}</dt>
+            <dd>
+              {{
+                account.summary?.totalInterestPosted
+                  | accountMoney: account.currency.code : account.currency.decimalPlaces
+              }}
+            </dd>
+          </div>
+        </dl>
+      }
+      @if (canBind) {
+        <p>{{ 'AccountManagement.BindExplanation' | translate }}</p>
+        <form [formGroup]="form" (ngSubmit)="bind()">
+          <mat-form-field
+            ><mat-label>{{ 'AccountManagement.NativeAccountId' | translate }}</mat-label
+            ><input matInput inputmode="numeric" formControlName="savingsAccountId" required /><mat-error>{{
+              'AccountManagement.PositiveId' | translate
+            }}</mat-error></mat-form-field
+          >
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || busy()">
+            {{ 'AccountManagement.BindMain' | translate }}
+          </button>
+        </form>
+      }
+      @if (message()) {
+        <p role="status">{{ message() | translate }}</p>
+      }
+      <h3>{{ 'AccountManagement.RelationshipHistory' | translate }}</h3>
+      <mifosx-account-resource-state [state]="audit()" (retry)="loadAudit()" />
+      @if (audit().data; as rows) {
+        <div
+          class="table-container"
+          tabindex="0"
+          [attr.aria-label]="'AccountManagement.RelationshipHistory' | translate"
+        >
+          <table mat-table [dataSource]="rows">
+            <ng-container matColumnDef="action"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'transactionReversal.operation' | translate }}</th>
+              <td mat-cell *matCellDef="let row"><mifosx-account-status [code]="row.action" /></td
+            ></ng-container>
+            <ng-container matColumnDef="account"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.savingsAccountId }}</td></ng-container
+            >
+            <ng-container matColumnDef="policy"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'AccountManagement.PolicyVersion' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.policyVersion }}</td></ng-container
+            >
+            <ng-container matColumnDef="actor"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'acquisition.fields.actor' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.actorId }}</td></ng-container
+            >
+            <ng-container matColumnDef="date"
+              ><th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.history.createdAt' | translate }}</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.recordedAt | dateFormat: 'YYYY-MM-DD HH:mm:ss' }}
+              </td></ng-container
+            >
+            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns"></tr>
+          </table>
+        </div>
+        @if (!rows.length) {
+          <p>{{ 'AccountManagement.NoHistory' | translate }}</p>
+        }
+        @if (audit().more) {
+          <button mat-button (click)="loadAudit()" [disabled]="audit().loading">
+            {{ 'AccountManagement.LoadMore' | translate }}
+          </button>
+        }
+      }
+      <ul>
+        @for (reason of caps.blockers; track reason) {
+          <li><mifosx-account-status [code]="reason" /></li>
+        }
+      </ul>
+    }
+  </mat-card-content>
+</mat-card>

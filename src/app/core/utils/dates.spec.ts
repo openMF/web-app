@@ -144,6 +144,62 @@ describe('Dates', () => {
     });
   });
 
+  describe('formatMonthDay', () => {
+    const getItem = localStorage.getItem as jest.Mock;
+
+    beforeEach(() =>
+      getItem.mockImplementation((key: string) =>
+        key === 'mifosXLanguage' ? JSON.stringify({ name: 'English', code: 'en' }) : null
+      )
+    );
+
+    afterEach(() => getItem.mockReset());
+
+    it('should format the [month, day] of a charge template', () => {
+      expect(
+        service.formatMonthDay(
+          [
+            7,
+            22
+          ],
+          'dd MMMM',
+          'dd MMMM yyyy'
+        )
+      ).toBe('22 July');
+    });
+
+    it('should format the ISO month-day of a saved account charge', () => {
+      expect(service.formatMonthDay('--03-15', 'dd MMMM', 'dd MMMM yyyy')).toBe('15 March');
+    });
+
+    it('should keep 29 February', () => {
+      expect(
+        service.formatMonthDay(
+          [
+            2,
+            29
+          ],
+          'dd MMMM',
+          'dd MMMM yyyy'
+        )
+      ).toBe('29 February');
+    });
+
+    it('should drop the year of a date picked in the charges step', () => {
+      expect(service.formatMonthDay('15 March 2027', 'dd MMMM', 'dd MMMM yyyy')).toBe('15 March');
+      expect(service.formatMonthDay(new Date(2027, 10, 5), 'dd MMMM', 'dd MMMM yyyy')).toBe('05 November');
+    });
+
+    it('should read a picked date with the date format it was written with', () => {
+      expect(service.formatMonthDay('05/11/2027', 'dd MMMM', 'dd/MM/yyyy')).toBe('05 November');
+      expect(service.formatMonthDay('11/05/2027', 'dd MMMM', 'MM/dd/yyyy')).toBe('05 November');
+    });
+
+    it('should leave a charge without a fee day empty', () => {
+      expect(service.formatMonthDay(undefined, 'dd MMMM', 'dd MMMM yyyy')).toBeUndefined();
+    });
+  });
+
   describe('formatDate', () => {
     it('should fall back to moment formatting for a valid date when locale is unregistered', () => {
       localStorage.setItem('mifosXLanguage', JSON.stringify({ name: 'xx', code: 'xx' }));

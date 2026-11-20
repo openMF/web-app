@@ -63,10 +63,12 @@ export class EditRecurringDepositAccountComponent {
   recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
   @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true })
   recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
+  @ViewChild(RecurringDepositsAccountInterestRateChartStepComponent, { static: true })
+  recurringDepositsAccountInterestRateChartStep: RecurringDepositsAccountInterestRateChartStepComponent;
   @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true })
   recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
 
-  /** Recurring Deposits Account And Template */
+  /** Recurring Deposits Account Template */
   recurringDepositsAccountAndTemplate: any;
   /** Recurring Deposit Account Product Template */
   recurringDepositsAccountProductTemplate: any;
@@ -100,15 +102,23 @@ export class EditRecurringDepositAccountComponent {
     return this.recurringDepositAccountSettingsStep.recurringDepositAccountSettingsForm;
   }
 
+  /** Get Recurring Deposit Account Interest Rate Chart Form Data */
+  get recurringDepositAccountInterestRateChartForm() {
+    return this.recurringDepositsAccountInterestRateChartStep?.interestRateChartForm;
+  }
+
   // Checks if stepper is valid and not pristine.
   get recurringDepositAccountFormValidAndNotPristine() {
     return (
       this.recurringDepositAccountDetailsForm.valid &&
       this.recurringDepositAccountTermsForm.valid &&
       this.recurringDepositAccountSettingsForm.valid &&
+      (!this.recurringDepositAccountInterestRateChartForm || this.recurringDepositAccountInterestRateChartForm.valid) &&
       (!this.recurringDepositAccountDetailsForm.pristine ||
         !this.recurringDepositAccountTermsForm.pristine ||
         !this.recurringDepositAccountSettingsForm.pristine ||
+        (this.recurringDepositAccountInterestRateChartForm &&
+          !this.recurringDepositAccountInterestRateChartForm.pristine) ||
         !this.recurringDepositAccountChargesStep.pristine)
     );
   }
@@ -119,6 +129,7 @@ export class EditRecurringDepositAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
+      ...this.recurringDepositsAccountInterestRateChartStep?.interestRateChart,
       ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }
@@ -129,6 +140,7 @@ export class EditRecurringDepositAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
+      ...this.recurringDepositsAccountInterestRateChartStep?.interestRateChart,
       ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }
@@ -147,7 +159,7 @@ export class EditRecurringDepositAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
-        feeOnMonthDay: charge.feeOnMonthDay,
+        feeOnMonthDay: this.dateUtils.formatMonthDay(charge.feeOnMonthDay, monthDayFormat, dateFormat),
         feeInterval: charge.feeInterval
       })),
       isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount

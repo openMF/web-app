@@ -102,6 +102,8 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductAndTemplate: any;
+  /** True when the route copies an existing product into a new one instead of updating it. */
+  isCloneMode = false;
   accountingRuleData: string[] = [];
   itemsByDefault: GlobalConfiguration[] = [];
 
@@ -123,8 +125,12 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
-      this.loanProductAndTemplate = data.loanProductAndTemplate;
+    this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any; mode?: string }) => {
+      this.isCloneMode = data.mode === 'clone';
+      // A clone starts with the unique fields blank so the user must provide new ones.
+      this.loanProductAndTemplate = this.isCloneMode
+        ? { ...data.loanProductAndTemplate, name: '', shortName: '', externalId: '' }
+        : data.loanProductAndTemplate;
       if (this.loanProductService.isLoanProduct) {
         const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
         const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
@@ -423,22 +429,28 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
       delete loanProduct['useDueForRepaymentsConfigurations'];
     }
 
-    this.productsService
-      .updateLoanProduct(this.loanProductService.loanProductPath, this.loanProductAndTemplate.id, loanProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../',
-            response.resourceId
-          ],
-          {
-            queryParams: {
-              productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
-          }
+    const request$ = this.isCloneMode
+      ? this.productsService.createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
+      : this.productsService.updateLoanProduct(
+          this.loanProductService.loanProductPath,
+          this.loanProductAndTemplate.id,
+          loanProduct
         );
-      });
+
+    request$.subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        }
+      );
+    });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {

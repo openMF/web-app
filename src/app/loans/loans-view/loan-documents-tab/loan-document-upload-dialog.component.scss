@@ -1,0 +1,49 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/* stylelint-disable unit-allowed-list -- Responsive CSS Grid uses fractional tracks. */
+
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.drop-area {
+  padding: 24px;
+  text-align: center;
+  border: 1px dashed var(--mat-divider-color, #899b98);
+  border-radius: 16px;
+}
+
+.upload-entry {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--mat-divider-color, #899b98);
+}
+
+.file-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+}
+
+.metadata-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+
+@media (width <= 600px) {
+  .metadata-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

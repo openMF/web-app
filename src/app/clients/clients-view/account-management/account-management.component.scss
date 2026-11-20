@@ -1,0 +1,80 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+mat-card {
+  margin-block: 16px;
+}
+
+mat-card-content {
+  padding: 16px;
+}
+
+h2,
+h3 {
+  margin-block: 16px;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-block: 16px;
+
+  div {
+    flex: 1 1 224px;
+    min-width: 0;
+  }
+
+  dt {
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+form,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+  margin-block: 16px;
+}
+
+mat-form-field {
+  flex: 1 1 224px;
+  min-width: 0;
+}
+
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+p,
+li,
+mat-panel-description {
+  overflow-wrap: anywhere;
+}
+
+.notice {
+  border-inline-start: 4px solid currentcolor;
+  padding: 8px 16px;
+}

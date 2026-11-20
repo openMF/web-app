@@ -1,0 +1,299 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="branch-history" [attr.aria-label]="messages.title | translate">
+  @if (state === 'forbidden') {
+    <div class="history-state" role="alert">
+      <mat-icon aria-hidden="true">lock_outline</mat-icon>
+      <h2>{{ messages.permission | translate }}</h2>
+    </div>
+  } @else {
+    <div class="filter-toolbar" [formGroup]="filters">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="history-search">
+        <mat-label>{{ messages.search | translate }}</mat-label>
+        <mat-icon matSuffix aria-hidden="true">search</mat-icon>
+        <input matInput formControlName="search" maxlength="256" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>{{ messages.section | translate }}</mat-label>
+        <mat-select formControlName="section">
+          <mat-option value="all">{{ 'labels.inputs.All' | translate }}</mat-option>
+          <mat-option value="general">{{ 'labels.heading.General' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>{{ 'labels.inputs.User' | translate }}</mat-label>
+        <mat-select formControlName="makerId">
+          <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
+          @for (user of users; track user.id) {
+            <mat-option [value]="user.id">{{ user.username }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        class="date-toggle"
+        (click)="showDates = !showDates"
+        [attr.aria-expanded]="showDates"
+        aria-controls="audit-date-range"
+      >
+        <mat-icon aria-hidden="true">date_range</mat-icon>
+        {{
+          (filters.controls.from.value || filters.controls.to.value ? messages.dateRange : messages.allHistory)
+            | translate
+        }}
+        <mat-icon aria-hidden="true">expand_more</mat-icon>
+      </button>
+      <button
+        mat-stroked-button
+        class="export-button"
+        (click)="exportCsv()"
+        [disabled]="!canRead || state !== 'ready' || loadingMore || pageError || rangeInvalid || !visibleEvents.length"
+      >
+        <mat-icon aria-hidden="true">file_download</mat-icon>
+        {{ messages.export | translate }}
+      </button>
+      @if (showDates) {
+        <div class="date-range" id="audit-date-range">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
+            <input matInput type="datetime-local" step="1" formControlName="from" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
+            <input matInput type="datetime-local" step="1" formControlName="to" />
+          </mat-form-field>
+          <button mat-button (click)="clearDates()">{{ messages.clearDates | translate }}</button>
+          <p>{{ messages.timezone | translate }}</p>
+        </div>
+      }
+    </div>
+    <p class="scope-caption">{{ messages.coverage | translate }}</p>
+    <p class="scope-caption">{{ messages.searchScope | translate: { limit: maxLoaded } }}</p>
+    @if (templateError) {
+      <p class="inline-message" role="status">{{ messages.usersUnavailable | translate }}</p>
+    }
+    @if (rangeInvalid) {
+      <p class="inline-message error-message" role="alert">{{ messages.invalidRange | translate }}</p>
+    }
+    @if (exportError) {
+      <p class="inline-message error-message" role="alert">{{ messages.exportError | translate }}</p>
+    }
+
+    @if (state === 'loading') {
+      <div class="history-state" role="status">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p>{{ messages.loading | translate }}</p>
+      </div>
+    } @else if (state === 'error' || state === 'invalid') {
+      <div class="history-state" role="alert">
+        <mat-icon aria-hidden="true">error_outline</mat-icon>
+        <h2>{{ (state === 'invalid' ? messages.invalidResponse : messages.loadError) | translate }}</h2>
+        <button mat-stroked-button (click)="reload()">{{ 'labels.buttons.Retry' | translate }}</button>
+      </div>
+    } @else if (!rangeInvalid) {
+      <div class="history-layout">
+        <div class="timeline-column" [attr.aria-busy]="loadingMore">
+          <h2 class="visually-hidden">{{ messages.title | translate }}</h2>
+          @if (!visibleEvents.length) {
+            <div class="history-state empty-state" role="status">
+              <mat-icon aria-hidden="true">history</mat-icon>
+              <h3>{{ (queryActive ? messages.noMatches : messages.empty) | translate }}</h3>
+            </div>
+          }
+          <div class="audit-timeline">
+            @for (group of groups; track group.key) {
+              <section
+                class="month-group"
+                [attr.aria-label]="
+                  group.timestamp === null
+                    ? (messages.timestampUnavailable | translate)
+                    : (isoTimestamp(group.timestamp) | datetimeFormat: 'MMMM YYYY')
+                "
+              >
+                <h3 class="month-heading">
+                  {{
+                    group.timestamp === null
+                      ? (messages.timestampUnavailable | translate)
+                      : (isoTimestamp(group.timestamp) | datetimeFormat: 'MMMM YYYY')
+                  }}
+                </h3>
+                @for (event of group.events; track event.id) {
+                  <article class="timeline-event">
+                    <div class="timeline-icon" aria-hidden="true"><mat-icon>account_balance</mat-icon></div>
+                    <mat-card class="audit-card">
+                      <mat-card-content>
+                        <header class="event-header">
+                          <span class="actor-avatar" [class.unidentified]="!event.maker" aria-hidden="true">
+                            @if (event.maker) {
+                              {{ event.initials }}
+                            } @else {
+                              <mat-icon>person_outline</mat-icon>
+                            }
+                          </span>
+                          <div class="event-description">
+                            <strong>{{ event.maker || (messages.unidentifiedActor | translate) }}</strong>
+                            <span>{{ actionLabel(event) }}</span>
+                            <strong>{{ 'labels.auditTrail.entities.OFFICE' | translate }}</strong>
+                            <span class="audit-id">#{{ event.id }}</span>
+                          </div>
+                          <span class="section-badge">{{ 'labels.heading.General' | translate }}</span>
+                          @if (event.timestamp !== null) {
+                            <time [attr.datetime]="isoTimestamp(event.timestamp)">{{
+                              isoTimestamp(event.timestamp) | datetimeFormat
+                            }}</time>
+                          } @else {
+                            <span class="event-time">{{ messages.timestampUnavailable | translate }}</span>
+                          }
+                        </header>
+                        <div class="event-metadata">
+                          @if (event.processingResult) {
+                            <span
+                              >{{ 'labels.inputs.Status' | translate }}: <b>{{ event.processingResult }}</b></span
+                            >
+                          }
+                          @if (event.checker || event.checkedTimestamp !== null) {
+                            <span
+                              >{{ 'labels.inputs.Checker' | translate }}:
+                              {{ event.checker || (messages.unidentifiedActor | translate) }}
+                              @if (event.checkedTimestamp !== null) {
+                                · {{ isoTimestamp(event.checkedTimestamp) | datetimeFormat }}
+                              }
+                            </span>
+                          }
+                        </div>
+                        <div class="event-actions">
+                          <button
+                            mat-button
+                            (click)="toggleDetail(event)"
+                            [attr.aria-expanded]="!!details.get(event.id)?.expanded"
+                            [attr.aria-controls]="'audit-fields-' + event.id"
+                          >
+                            <mat-icon aria-hidden="true">{{
+                              details.get(event.id)?.expanded ? 'expand_less' : 'expand_more'
+                            }}</mat-icon>
+                            {{ messages.submittedFields | translate }}
+                          </button>
+                          <a
+                            mat-button
+                            [routerLink]="['/system/audit-trails', event.id]"
+                            [attr.aria-label]="(messages.viewAudit | translate) + ' ' + event.id"
+                          >
+                            {{ messages.viewAudit | translate }}<mat-icon aria-hidden="true">open_in_new</mat-icon>
+                          </a>
+                        </div>
+                        @if (details.get(event.id); as detail) {
+                          @if (detail.expanded) {
+                            <div class="submitted-fields" [id]="'audit-fields-' + event.id">
+                              @if (detail.state === 'loading') {
+                                <mat-progress-bar
+                                  mode="indeterminate"
+                                  [attr.aria-label]="messages.loading | translate"
+                                ></mat-progress-bar>
+                              } @else if (detail.state === 'error') {
+                                <p role="alert">{{ messages.detailError | translate }}</p>
+                                <button mat-button (click)="toggleDetail(event)">
+                                  {{ 'labels.buttons.Retry' | translate }}
+                                </button>
+                              } @else {
+                                <p class="comparison-notice">{{ messages.noBeforeValues | translate }}</p>
+                                @if (!detail.fields.length) {
+                                  <p>{{ messages.noSafeFields | translate }}</p>
+                                }
+                                <dl class="field-list">
+                                  @for (field of detail.fields; track field.key) {
+                                    <div class="field-row">
+                                      <dt>{{ field.label | translate }}</dt>
+                                      <dd>
+                                        <span class="value-label">{{ messages.submittedValue | translate }}</span>
+                                        <span class="submitted-value">{{
+                                          field.value === null || field.value === ''
+                                            ? (messages.noValue | translate)
+                                            : field.value
+                                        }}</span>
+                                      </dd>
+                                    </div>
+                                  }
+                                </dl>
+                              }
+                            </div>
+                          }
+                        }
+                      </mat-card-content>
+                    </mat-card>
+                  </article>
+                }
+              </section>
+            }
+          </div>
+          @if (pageError) {
+            <p class="inline-message error-message" role="alert">{{ messages.pageError | translate }}</p>
+          }
+          <div class="timeline-footer" aria-live="polite">
+            @if (loadingMore) {
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }
+            @if (hasMore) {
+              <button mat-stroked-button (click)="loadMore()" [disabled]="loadingMore">
+                {{ (pageError ? 'labels.buttons.Retry' : messages.loadMore) | translate }}
+              </button>
+            } @else {
+              <span>{{
+                (atLimit ? messages.limitReached : messages.endLoaded) | translate: { limit: maxLoaded }
+              }}</span>
+            }
+          </div>
+        </div>
+
+        <aside class="history-summary" [attr.aria-label]="'labels.inputs.Summary' | translate">
+          <mat-card class="summary-card">
+            <mat-card-content>
+              <h2>{{ 'labels.inputs.Summary' | translate }}</h2>
+              <p class="scope-caption">{{ messages.loadedScope | translate }}</p>
+              <div class="summary-metrics">
+                <div class="metric">
+                  <strong>{{ visibleEvents.length }}</strong
+                  ><span>{{ messages.records | translate }}</span>
+                </div>
+                <div class="metric">
+                  <strong>{{ actorCount }}</strong
+                  ><span>{{ messages.actors | translate }}</span>
+                </div>
+              </div>
+              @if (latest; as event) {
+                <p class="latest-event">
+                  {{ messages.latestLoaded | translate }}<br /><time [attr.datetime]="isoTimestamp(event.timestamp)">{{
+                    isoTimestamp(event.timestamp) | datetimeFormat
+                  }}</time
+                  ><br />{{ event.maker || (messages.unidentifiedActor | translate) }}
+                </p>
+              }
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="section-card">
+            <mat-card-content>
+              <h2>{{ messages.bySection | translate }}</h2>
+              <p class="scope-caption">{{ messages.loadedScope | translate }}</p>
+              <div class="section-count">
+                <span>{{ 'labels.heading.General' | translate }}</span>
+                <span class="section-track" aria-hidden="true"
+                  ><span [style.width.%]="visibleEvents.length ? 100 : 0"></span
+                ></span>
+                <strong>{{ visibleEvents.length }}</strong>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <div class="audit-notice">
+            <mat-icon aria-hidden="true">verified_user</mat-icon>
+            <p>{{ messages.notice | translate }}</p>
+          </div>
+        </aside>
+      </div>
+    }
+  }
+</section>

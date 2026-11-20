@@ -1,0 +1,118 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Styles shared by the footer status bar and the System information panel, so both show the
+// connection status, the pre-release badge and their buttons the same way.
+
+/// Status dot and text, coloured by the `data-state` attribute of an ancestor
+/// (`online`, `offline` or `checking`). The online dot pulses unless reduced motion is requested.
+@mixin connection-status {
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  .status-dot {
+    position: relative;
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ds-text-3);
+  }
+
+  [data-state='online'] {
+    .status-text {
+      color: var(--ds-paid);
+    }
+
+    .status-dot {
+      background: var(--ds-paid);
+
+      &::after {
+        position: absolute;
+        inset: -3px;
+        border: 2px solid var(--ds-paid);
+        border-radius: 50%;
+        content: '';
+        animation: status-pulse 2s ease-out infinite;
+      }
+    }
+  }
+
+  [data-state='offline'] {
+    .status-text {
+      color: var(--ds-alert);
+    }
+
+    .status-dot {
+      background: var(--ds-alert);
+    }
+  }
+
+  [data-state='checking'] .status-text {
+    color: var(--ds-text-2);
+  }
+
+  @keyframes status-pulse {
+    0% {
+      opacity: 0.6;
+      transform: scale(0.8);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-state='online'] .status-dot::after {
+      animation: none;
+    }
+  }
+}
+
+/// Amber badge for a pre-release build, e.g. `SNAPSHOT`.
+@mixin pre-release-badge {
+  padding: 1px 6px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-partial-bg);
+  color: var(--ds-partial);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/// Outlined button, e.g. "Retry now" and "Details".
+@mixin outlined-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface);
+  color: var(--ds-text-1);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--ds-border-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-blue-600);
+    outline-offset: 1px;
+  }
+}

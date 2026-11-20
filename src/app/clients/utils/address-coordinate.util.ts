@@ -19,7 +19,7 @@ const COORDINATE_RANGES: Record<CoordinateType, { min: number; max: number }> = 
 };
 
 export function parseCoordinate(value: any, type: CoordinateType): number | null {
-  if (value === null || value === undefined) {
+  if (typeof value !== 'number' && typeof value !== 'string') {
     return null;
   }
 

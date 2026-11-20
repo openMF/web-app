@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -21,6 +21,7 @@ import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
 import { WorkingCapitalTransactionTemplateCommand } from './models/working-capital/working-capital-loan-account.model';
+import { isSemiMonthly } from 'app/shared/loan/semi-monthly/semi-monthly';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
@@ -694,6 +695,16 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/documents`, data);
   }
 
+  /** Opt-in HTTP events; existing single-file callers retain their response contract. */
+  uploadLoanDocumentWithProgress(loanId: string, data: FormData): Observable<HttpEvent<unknown>> {
+    return this.http.post(`/loans/${loanId}/documents`, data, { observe: 'events', reportProgress: true });
+  }
+
+  /** Metadata-only multipart update verified against local Fineract. Never replaces a binary. */
+  updateLoanDocumentMetadata(loanId: string, documentId: string, data: FormData): Observable<unknown> {
+    return this.http.put(`/loans/${loanId}/documents/${documentId}`, data);
+  }
+
   /**
    * @param clientId Client Id
    * @param clientName Client Name
@@ -818,6 +829,18 @@ export class LoansService {
    */
   getLoanCharges(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/charges`);
+  }
+
+  /**
+   * Whether the next disbursement can create a down payment fee.
+   * Uses the loan's `enableDownPayment` flag, not GET /charges: after `skipDownPaymentFee` the previous
+   * fees are inactive and that endpoint omits them, but Fineract still takes charge definitions from all
+   * loan charges (including inactive) and creates a fee for the next disbursement.
+   * @param {string} loanId Loan Id
+   * @returns {Observable<boolean>} Whether down payment is enabled on the loan
+   */
+  isDownPaymentEnabled(loanId: string): Observable<boolean> {
+    return this.getLoanAccountAssociationDetails(loanId).pipe(map((loan: any) => loan?.enableDownPayment === true));
   }
 
   /**
@@ -1041,10 +1064,11 @@ export class LoansService {
       loansAccountData.loanType = 'group';
     }
 
-    if (loansAccountData.syncRepaymentsWithMeeting) {
+    // Semi-monthly loans cannot be linked to a meeting calendar (the backend rejects `calendarId`).
+    if (loansAccountData.syncRepaymentsWithMeeting && !isSemiMonthly(loansAccountData.repaymentFrequencyType)) {
       loansAccountData.calendarId = calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
     }
+    delete loansAccountData.syncRepaymentsWithMeeting;
 
     if (loansAccountData.recalculationRestFrequencyDate) {
       loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(

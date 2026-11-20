@@ -51,5 +51,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            PUPPETEER_SKIP_DOWNLOAD_ARG=true

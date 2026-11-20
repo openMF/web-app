@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* stylelint-disable unit-allowed-list -- CSS Grid uses fractional tracks. */
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -34,45 +36,587 @@
   .empty-state {
     flex-direction: column;
   }
+}
 
-  .address {
+.summary-view {
+  padding: 0;
+  margin: 0;
+
+  > .layout-row {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 16px;
+  }
 
-    .address-actions {
-      margin-top: 1%;
+  .m-b-10 {
+    margin: 0;
+  }
 
-      button {
-        margin-right: 1%;
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .address-state {
+    min-height: 64px;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+}
+
+.location-summary + .location-summary {
+  border-top: 1px solid var(--ds-border);
+  padding-top: 24px;
+  margin-top: 24px;
+}
+
+.location-map {
+  position: relative;
+}
+
+.open-map {
+  position: absolute;
+  bottom: 32px;
+  left: 16px;
+  z-index: 500;
+  background: var(--ds-surface);
+  color: var(--ds-text-1);
+  max-width: calc(100% - 32px);
+  white-space: normal;
+}
+
+.coordinate-state {
+  padding: 24px 16px;
+  background: var(--ds-surface-alt);
+  border-radius: var(--ds-radius);
+  color: var(--ds-text-2);
+}
+
+.address-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+  font-size: 0.8125rem;
+
+  span {
+    padding: 0 8px;
+    border-radius: var(--ds-radius);
+    color: var(--ds-text-2);
+    background: var(--ds-surface-alt);
+  }
+
+  .active-address {
+    color: var(--ds-paid);
+    background: var(--ds-paid-bg);
+  }
+}
+
+.postal-address {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+
+  span:first-child {
+    font-weight: 500;
+  }
+}
+
+.coordinate-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 8px;
+  margin-top: 24px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+
+  button {
+    margin-inline-start: auto;
+  }
+}
+
+.coordinate-label {
+  color: var(--ds-text-2);
+  margin-inline-end: 8px;
+}
+
+.location-metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  padding-top: 24px;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--ds-border);
+  font-size: 0.875rem;
+
+  div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  dt {
+    color: var(--ds-text-2);
+    font-size: 0.8125rem;
+    margin-bottom: 8px;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.address-management {
+  padding: 0;
+  margin: 0;
+  color: var(--ds-text-1);
+
+  --address-accent: #0f766e;
+  --address-button-fill: #0f766e;
+
+  .management-header,
+  .management-toolbar,
+  .detail-header,
+  .detail-title,
+  .address-actions,
+  .selector-heading,
+  .saving-state {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .management-header {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .management-introduction {
+    flex: 1 1 320px;
+    min-width: 0;
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: var(--ds-text-2);
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .management-toolbar {
+    flex-wrap: wrap;
+    max-width: 100%;
+
+    mat-button-toggle-group {
+      border: 0;
+      border-radius: var(--ds-radius);
+      padding: 4px;
+      max-width: 100%;
+      background: var(--ds-surface-alt);
+      flex-wrap: wrap;
+
+      --mat-button-toggle-height: 40px;
+      --mat-button-toggle-background-color: transparent;
+      --mat-button-toggle-text-color: var(--ds-text-2);
+      --mat-button-toggle-selected-state-text-color: var(--ds-text-1);
+      --mat-button-toggle-selected-state-background-color: var(--ds-surface);
+    }
+
+    mat-button-toggle {
+      border: 0;
+      border-radius: var(--ds-radius);
+    }
+
+    .action-button button {
+      min-height: 48px;
+      border-radius: var(--ds-radius);
+
+      --mat-button-protected-container-color: var(--address-button-fill);
+      --mat-button-protected-label-text-color: var(--ds-action-on-fill);
+    }
+  }
+
+  .unavailable-state {
+    color: var(--ds-text-2);
+  }
+
+  .error-state {
+    color: var(--ds-alert);
+  }
+
+  .filter-count {
+    margin-inline-start: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .address-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+    align-items: start;
+    gap: 24px;
+  }
+
+  .address-selector {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .address-card {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    text-align: start;
+    white-space: normal;
+    color: var(--ds-text-1);
+    background: var(--ds-surface);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    font-size: 0.875rem;
+    letter-spacing: normal;
+    line-height: 1.5;
+
+    &.selected {
+      border-color: var(--address-accent);
+      box-shadow: inset 0 0 0 1px var(--address-accent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--address-accent);
+      outline-offset: 4px;
+    }
+  }
+
+  .selector-heading {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .pin-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--ds-radius);
+    background: color-mix(in srgb, var(--address-accent) 12%, var(--ds-surface));
+    color: var(--address-accent);
+  }
+
+  .selector-title {
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .address-preview {
+    font-size: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    color: var(--ds-text-2);
+    font-weight: 400;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-lg);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--ds-text-2);
+    background: var(--ds-surface-alt);
+
+    &.active {
+      color: var(--ds-paid);
+      background: var(--ds-paid-bg);
+
+      &::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: currentcolor;
       }
     }
   }
 
-  .address-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 16px 2% 0;
+  .add-another-card {
+    display: grid;
+    justify-items: center;
+    padding: 24px 16px;
+    border: 1px dashed var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    text-align: center;
+    color: var(--ds-text-2);
+
+    > fa-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    button {
+      height: auto;
+      min-height: 40px;
+      white-space: normal;
+    }
+
+    p {
+      margin: 8px 0 0;
+      font-size: 0.8125rem;
+    }
   }
 
-  .address-row {
-    display: flex;
-    gap: 16px;
-    line-height: 24px;
+  .address-detail,
+  .no-matches {
+    min-width: 0;
+    background: var(--ds-surface);
+    color: var(--ds-text-1);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: none;
+  }
 
-    .label {
-      flex: 0 0 35%;
+  .detail-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--ds-border);
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .detail-identity {
+    min-width: 0;
+  }
+
+  .detail-title {
+    gap: 8px;
+    flex-wrap: wrap;
+
+    h3 {
+      margin: 0;
       font-weight: 600;
+      font-size: 1.5rem;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .audit-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 0;
+    font-size: 0.8125rem;
+    color: var(--ds-text-2);
+    overflow-wrap: anywhere;
+  }
+
+  .address-actions {
+    gap: 8px;
+    flex-wrap: wrap;
+
+    button {
+      min-height: 40px;
+      height: auto;
+      white-space: normal;
+      border-radius: var(--ds-radius);
+
+      &:not(:disabled) {
+        color: var(--address-accent);
+      }
+    }
+  }
+
+  .saving-state {
+    padding: 16px 24px 0;
+    color: var(--ds-text-2);
+  }
+
+  .detail-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    padding: 24px;
+
+    section,
+    .address-fields {
+      min-width: 0;
+    }
+
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ds-text-2);
+      margin: 0 0 8px;
+    }
+
+    dl {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    dt {
+      color: var(--ds-text-2);
+      font-size: 0.875rem;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  .street-fields > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--ds-border);
+    overflow-wrap: anywhere;
+  }
+
+  .address-fields section + section {
+    margin-top: 24px;
+  }
+
+  .locality-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+
+    > div {
+      min-width: 0;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--ds-border);
+      overflow-wrap: anywhere;
+    }
+
+    dt {
+      margin-bottom: 8px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  .coordinate-strip {
+    font-size: 0.875rem;
+    margin-top: 16px;
+    padding: 16px;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+  }
+
+  // Leave room for attribution and the shared map's tile-failure message.
+  .management-map .open-map {
+    bottom: 64px;
+  }
+
+  .coordinate-strip button:not(:disabled) {
+    color: var(--address-accent);
+  }
+
+  .complete-address {
+    margin-top: 16px;
+
+    .postal-address {
+      font-size: 1rem;
+    }
+
+    h4 {
+      font-weight: 400;
+    }
+  }
+
+  .no-matches {
+    padding: 24px;
+    text-align: center;
+    color: var(--ds-text-2);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+// Only the selected management map is enlarged; the shared General overview stays compact.
+:host ::ng-deep .address-management .management-map .compact .map-container {
+  height: clamp(280px, 24vw, 400px);
+}
+
+@media (width < 1100px) {
+  .address-management .detail-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width < 960px) {
+  .address-management .address-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width < 480px) {
+  .address-management {
+    .management-toolbar {
+      gap: 8px;
+    }
+
+    .detail-header,
+    .detail-columns {
+      padding: 16px;
+    }
+
+    .street-fields > div,
+    .locality-fields {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
     }
   }
 }
 
-@media (width <= 600px) {
-  .tab-container .address-row {
-    flex-direction: column;
-    gap: 2px;
-
-    .label {
-      flex-basis: auto;
-    }
-  }
+:host-context(.dark-theme) .address-management {
+  --address-accent: #5eead4;
 }

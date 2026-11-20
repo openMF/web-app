@@ -62,9 +62,9 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['/loans-accounts', element.childLoanId, 'actions', 'Approve']"
+              [routerLink]="['../../', element.childLoanId, 'actions', 'Approve']"
             >
-              <i class="fa fa-check"></i> {{ 'buttons.Approve' | translate }}
+              <i class="fa fa-check"></i> {{ 'labels.buttons.Approve' | translate }}
             </button>
           }
           @if (element.status?.waitingForDisbursal) {
@@ -72,9 +72,9 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['/loans-accounts', element.childLoanId, 'actions', 'Disburse']"
+              [routerLink]="['../../', element.childLoanId, 'actions', 'Disburse']"
             >
-              <i class="fa fa-flag"></i> {{ 'buttons.Disburse' | translate }}
+              <i class="fa fa-flag"></i> {{ 'labels.menus.Disburse' | translate }}
             </button>
           }
         </td>
@@ -83,7 +83,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
-        [routerLink]="['/loans-accounts', row.childLoanId, 'general']"
+        [routerLink]="['../../', row.childLoanId, 'general']"
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>

@@ -89,6 +89,19 @@ export interface AppRoutes {
   users: string;
   userCreate: string;
   userView: (id: number) => string;
+
+  // ── Reports ─────────────────────────────────────────────────
+  /** Reports catalogue. */
+  reports: string;
+  /**
+   * Run-report screen for a single report.
+   *
+   * `type` and `id` travel as query parameters because the screen
+   * picks its renderer from `reportType` (Table / Chart / Pentaho /
+   * BIRT / SMS), and the accessors for every engine but Table/SMS are
+   * fetched by the route resolver from the numeric report id.
+   */
+  reportRun: (name: string, type: string, id: number) => string;
 }
 
 export const ROUTES: AppRoutes = {
@@ -146,7 +159,14 @@ export const ROUTES: AppRoutes = {
   groupAction: (id, action) => `/#/groups/${id}/actions/${encodeURIComponent(action)}`,
   users: '/#/appusers',
   userCreate: '/#/appusers/create',
-  userView: (id) => `/#/appusers/${id}`
+  userView: (id) => `/#/appusers/${id}`,
+
+  reports: '/#/reports',
+  // The report name is encoded because real names contain spaces and
+  // parentheses ("Client Listing", "Loan Officer (by Product)"), and
+  // Angular decodes the `:name` param before looking the report up —
+  // the encoding therefore has to round-trip exactly.
+  reportRun: (name, type, id) => `/#/reports/run/${encodeURIComponent(name)}?type=${encodeURIComponent(type)}&id=${id}`
 };
 
 /**

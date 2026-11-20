@@ -9,10 +9,22 @@
 <div class="tab-container mat-typography production-personal-data">
   @if (isKycEnabled) {
     <div class="button-header">
-      <button mat-raised-button class="export-kyc-button" (click)="exportKyc.emit()">
-        <mat-icon>download</mat-icon>
-        {{ 'labels.buttons.Export KYC' | translate }}
-      </button>
+      @if (canExportKyc) {
+        <button
+          mat-raised-button
+          class="export-kyc-button"
+          [disabled]="isExportingKyc"
+          [attr.aria-busy]="isExportingKyc"
+          (click)="exportKyc.emit()"
+        >
+          @if (isExportingKyc) {
+            <mat-spinner [diameter]="16" [attr.aria-label]="'labels.buttons.Export KYC' | translate" />
+          } @else {
+            <mat-icon>download</mat-icon>
+          }
+          {{ 'labels.buttons.Export KYC' | translate }}
+        </button>
+      }
       <button mat-raised-button color="primary" class="validate-docs-button" (click)="validateDocumentation.emit()">
         <mat-icon>fact_check</mat-icon>
         {{ 'labels.buttons.Validate Documentation' | translate }}

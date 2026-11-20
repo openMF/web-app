@@ -1,0 +1,41 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@for (
+  group of [
+    { title: 'vaultDeposit.banknotes', lines: currency().banknotes },
+    { title: 'vaultDeposit.coins', lines: currency().coins }
+  ];
+  track group.title
+) {
+  <h4>{{ group.title | translate }} — {{ currency().currencyCode }}</h4>
+  @if (group.lines.length) {
+    <table
+      mat-table
+      [dataSource]="group.lines"
+      [attr.aria-label]="(group.title | translate) + ' ' + currency().currencyCode"
+    >
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef>{{ 'cashAllocation.labels.denomination' | translate }}</th>
+        <td mat-cell *matCellDef="let line">{{ line.value | withdrawalMoney: currency().decimalPlaces }}</td>
+      </ng-container>
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.quantity' | translate }}</th>
+        <td mat-cell *matCellDef="let line">{{ line.quantity }}</td>
+      </ng-container>
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef>{{ 'vaultDeposit.preview.subtotal' | translate }}</th>
+        <td mat-cell *matCellDef="let line">{{ line.subtotal | withdrawalMoney: currency().decimalPlaces }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  } @else {
+    <p>{{ 'vaultDeposit.history.noDenominations' | translate }}</p>
+  }
+}

@@ -1,0 +1,143 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../../shared/footer/system-info-shared' as shared;
+
+:host {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+// Same dot, pulse and status colours as the footer status bar.
+@include shared.connection-status;
+
+// The card sits on the login card's own surface. Lines and the grid fill are mixed from the text
+// colour, so they stay neutral against that surface in both themes.
+.connection-card {
+  --connection-card-line: color-mix(in srgb, currentcolor 14%, transparent);
+
+  overflow: hidden;
+  border: 1px solid var(--connection-card-line);
+  border-radius: var(--ds-radius-lg);
+  color: var(--ds-text-1);
+  font-size: 14px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 8px 0 16px;
+  font-weight: 600;
+}
+
+.card-title {
+  flex: 0 0 auto;
+}
+
+.status-text {
+  min-width: 0;
+}
+
+.toggle {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+// Animates the grid between zero and its natural height. Once collapsed it is also hidden, so its
+// content can neither be focused nor reached by a screen reader.
+.details {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- 0fr to 1fr is the only CSS way to animate to the content's height */
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 200ms ease,
+    visibility 0s linear 200ms;
+}
+
+.expanded .details {
+  /* stylelint-disable-next-line unit-allowed-list -- 0fr to 1fr is the only CSS way to animate to the content's height */
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 200ms ease,
+    visibility 0s;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 50%));
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--connection-card-line);
+  background: color-mix(in srgb, currentcolor 4%, transparent);
+}
+
+.cell {
+  min-width: 0;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--connection-card-line);
+
+  &:nth-child(odd) {
+    border-right: 1px solid var(--connection-card-line);
+  }
+
+  &:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+}
+
+dt {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 12px;
+}
+
+dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: break-word;
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-blue-600);
+    outline-offset: 2px;
+  }
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 359px) {
+  .details-grid {
+    grid-template-columns: minmax(0, 100%);
+  }
+
+  .cell {
+    &:nth-child(odd) {
+      border-right: none;
+    }
+
+    &:nth-last-child(2) {
+      border-bottom: 1px solid var(--connection-card-line);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details,
+  .expanded .details {
+    transition: none;
+  }
+}

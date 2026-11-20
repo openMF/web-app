@@ -11,6 +11,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  ChangeDetectorRef,
+  DestroyRef,
   TemplateRef,
   ElementRef,
   ViewChild,
@@ -32,7 +34,14 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { SavingProductListService } from './saving-product-list.service';
+import { CLASSIFICATION_LABELS, SavingsProductRow } from './saving-product-list.model';
 
 /* Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
@@ -59,25 +68,43 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator
+    MatPaginator,
+    MatProgressBar
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingProductsComponent implements OnInit, AfterViewInit {
-  private route = inject(ActivatedRoute);
+  private listService = inject(SavingProductListService);
   private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
+  protected configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
+  private changeDetector = inject(ChangeDetectorRef);
+  private reload = new Subject<void>();
 
-  savingProductsData: any;
-  displayedColumns: string[] = [
+  filters = this.formBuilder.nonNullable.group({ search: '', classification: '' });
+  classifications = Object.entries(CLASSIFICATION_LABELS);
+  loading = true;
+  error: 'forbidden' | 'failed' | null = null;
+  warning: 'unavailable' | 'forbidden' | null = null;
+  displayedColumns = [
     'name',
-    'shortName'
+    'shortName',
+    'classification',
+    'currency',
+    'interest',
+    'status',
+    'actions'
   ];
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<SavingsProductRow>([]);
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;
+  }
+  @ViewChild(MatSort) set sort(value: MatSort) {
+    this.dataSource.sort = value;
+  }
 
   /* Reference of create saving products button */
   @ViewChild('buttonSavingProduct') buttonSavingProduct: ElementRef<any>;
@@ -88,26 +115,67 @@ export class SavingProductsComponent implements OnInit, AfterViewInit {
   /* Template for popover on saving products table */
   @ViewChild('templateSavingProductTable') templateSavingProductTable: TemplateRef<any>;
 
-  /**
-   * @param {ActivatedRoute} route ActivatedRoute.
-   * @param {Router} router Router.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
-   */
-  constructor() {
-    this.route.data.subscribe((data: { savingProducts: any }) => {
-      this.savingProductsData = data.savingProducts;
-    });
-  }
-
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.savingProductsData);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = (product, filter) => {
+      const { search, classification } = JSON.parse(filter);
+      return (
+        product.name.toLowerCase().includes(search) && (!classification || product.classification === classification)
+      );
+    };
+    this.filters.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.applyFilters();
+    });
+    this.reload
+      .pipe(
+        startWith(undefined),
+        switchMap(() => {
+          this.loading = true;
+          this.error = null;
+          this.warning = null;
+          this.dataSource.data = [];
+          return this.listService.load().pipe(
+            map((result) => ({ result, error: null as 'forbidden' | 'failed' | null })),
+            catchError((error: unknown) =>
+              of({
+                result: null,
+                error:
+                  error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)
+                    ? ('forbidden' as const)
+                    : ('failed' as const)
+              })
+            )
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(({ result, error }) => {
+        this.loading = false;
+        this.error = error;
+        this.warning = result?.warning ?? null;
+        this.dataSource.data = result?.products ?? [];
+        this.applyFilters();
+        this.changeDetector.markForCheck();
+      });
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  private applyFilters() {
+    const { search, classification } = this.filters.getRawValue();
+    this.dataSource.filter = JSON.stringify({ search: search.trim().toLowerCase(), classification });
+    this.dataSource.paginator?.firstPage();
+  }
+
+  clearFilters() {
+    this.filters.reset({ search: '', classification: '' });
+  }
+
+  retry() {
+    this.reload.next();
+  }
+
+  interestRate(product: SavingsProductRow): number | null {
+    return typeof product.nominalAnnualInterestRate === 'number' && Number.isFinite(product.nominalAnnualInterestRate)
+      ? product.nominalAnnualInterestRate
+      : null;
   }
 
   /**

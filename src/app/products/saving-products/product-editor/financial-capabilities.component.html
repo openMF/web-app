@@ -1,0 +1,32 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section [attr.aria-label]="'FinancialControls.Enforcement' | translate">
+  <h3>{{ 'FinancialControls.Enforcement' | translate }}</h3>
+  @if (capabilities) {
+    <p>{{ 'FinancialControls.PartialNotice' | translate }}</p>
+    <dl class="financial-summary">
+      <dt>{{ 'FinancialControls.depositEventVeto' | translate }}</dt>
+      <dd>{{ label(capabilities.depositEventVeto) | translate }}</dd>
+      <dt>{{ 'FinancialControls.withdrawalEventVeto' | translate }}</dt>
+      <dd>{{ label(capabilities.withdrawalEventVeto) | translate }}</dd>
+      @for (field of fields; track field) {
+        <dt>{{ 'FinancialControls.' + field | translate }}</dt>
+        <dd>{{ support(capabilities[field]) | translate }}</dd>
+      }
+    </dl>
+    <h4>{{ 'FinancialControls.Blockers' | translate }}</h4>
+    <ul>
+      @for (blocker of capabilities.blockers; track $index) {
+        <li>{{ label(blocker) | translate }}</li>
+      }
+    </ul>
+  } @else {
+    <p>{{ 'FinancialControls.CapabilitiesUnavailable' | translate }}</p>
+  }
+</section>

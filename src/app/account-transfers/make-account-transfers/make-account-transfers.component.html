@@ -77,7 +77,7 @@
                   maxlength="10"
                   required
                   placeholder="{{ 'labels.text.EnterPhoneNumber' | translate }}"
-                  title="Phone number"
+                  [title]="'labels.inputs.Phone Number' | translate"
                 />
                 <mat-hint align="end">{{ beneficiaryForm.get('phoneNumber')?.value?.length || 0 }}/10</mat-hint>
               </mat-form-field>
@@ -154,7 +154,7 @@
                 formControlName="toClientId"
                 [matAutocomplete]="clientsAutocomplete"
                 placeholder="{{ 'labels.text.SelectOrTypeClientName' | translate }}"
-                title="Client name"
+                [title]="'labels.inputs.Client Name' | translate"
               />
               @if (beneficiaryForm.controls['toClientId'].hasError('required')) {
                 <mat-error>
@@ -293,7 +293,7 @@
                 required
                 formControlName="transferDate"
                 placeholder="{{ 'labels.text.SelectDate' | translate }}"
-                title="Transaction Date"
+                [title]="'labels.inputs.Transaction Date' | translate"
               />
               <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #transferDatePicker></mat-datepicker>
@@ -312,7 +312,7 @@
                 required
                 formControlName="transferAmount"
                 placeholder="{{ 'labels.text.EnterAmount' | translate }}"
-                title="Transfer amount"
+                [title]="'labels.inputs.Amount' | translate"
                 min="0.01"
                 step="0.01"
               />
@@ -337,7 +337,7 @@
                 cdkTextareaAutosize
                 cdkAutosizeMinRows="2"
                 placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
-                title="Transfer description"
+                [title]="'labels.inputs.Transfer Description' | translate"
               ></textarea>
               @if (transferDetailsForm.controls['transferDescription'].hasError('required')) {
                 <mat-error>

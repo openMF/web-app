@@ -221,7 +221,7 @@
 
           <ng-container matColumnDef="numberOfDays">
             <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
-            <td mat-cell class="col-r" *matCellDef="let item">{{ item.numberOfDays | formatNumber }}</td>
+            <td mat-cell class="col-r" *matCellDef="let item">{{ item.numberOfDays | formatNumber: '' : 0 }}</td>
           </ng-container>
 
           <ng-container matColumnDef="minPaymentAmount">

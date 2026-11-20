@@ -156,17 +156,19 @@
           <span class="flex-60"><mifosx-breach-display [singleRow]="false" [nearBreach]="getNearBreach()" /></span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
-      </div>
-      @let breachStartTypeOption =
-        getStartTypeOption(loanProduct.breachStartType, loanProductsTemplate?.breachStartTypeOptions);
-      @if (breachStartTypeOption) {
+      @if (getBreach()) {
         <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
-          <span class="flex-60">{{ breachStartTypeOption.value | translateKey: 'catalogs' }}</span>
+          <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber: '' : 0 }}</span>
         </div>
+        @let breachStartTypeOption =
+          getStartTypeOption(loanProduct.breachStartType, loanProductsTemplate?.breachStartTypeOptions);
+        @if (breachStartTypeOption) {
+          <div class="flex-fill layout-row">
+            <span class="flex-40">{{ 'labels.inputs.Breach Start Type' | translate }}:</span>
+            <span class="flex-60">{{ breachStartTypeOption.value | translateKey: 'catalogs' }}</span>
+          </div>
+        }
       }
     }
     @if (loanProductService.isLoanProduct) {
@@ -406,6 +408,16 @@
         {{ loanProduct.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
       >
     </div>
+    @if (isSemiMonthly(loanProduct.repaymentFrequencyType)) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.First repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.firstRepaymentDayOfMonth }}</span>
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Second repayment day of month' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.secondRepaymentDayOfMonth | semiMonthlyDay }}</span>
+      </div>
+    }
     @if (loanProduct.fixedLength) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Fixed Length' | translate }}:</span>
@@ -419,7 +431,9 @@
         <span class="flex-40"
           >{{ 'labels.inputs.Minimum days between disbursal and first repayment date' | translate }}:</span
         >
-        <span class="flex-60">{{ loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment | formatNumber }}</span>
+        <span class="flex-60">{{
+          loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment | formatNumber: '' : 0
+        }}</span>
       </div>
     }
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Settings' | translate }}</h3>
@@ -433,7 +447,7 @@
     @if (loanProductService.isWorkingCapital) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Net Present Value day count' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.npvDayCount | formatNumber }}</span>
+        <span class="flex-60">{{ loanProduct.npvDayCount | formatNumber: '' : 0 }}</span>
       </div>
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Payment Allocation Transactions' | translate }}:</span>
@@ -590,11 +604,11 @@
         <span class="flex-60">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
       </div>
     }
-    @if (loanProductService.isWorkingCapital) {
-      @if (loanProduct.delinquencyGraceDays) {
+    @if (loanProductService.isWorkingCapital && (loanProduct.delinquencyBucket || loanProduct.delinquencyBucketId)) {
+      @if (loanProduct.delinquencyGraceDays || loanProduct.delinquencyGraceDays === 0) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber }}</span>
+          <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber: '' : 0 }}</span>
         </div>
       }
       @let delinquencyStartTypeOption =

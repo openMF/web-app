@@ -7,6 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
 
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
@@ -21,7 +22,8 @@ import { PersonalDataField, PersonalDataTableSection, PersonalDataViewModel } fr
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
-    MatIcon
+    MatIcon,
+    MatProgressSpinner
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -29,6 +31,8 @@ export class PersonProductionPersonalDataComponent {
   @Input() clientViewData: any;
   @Input() viewModel: PersonalDataViewModel | null = null;
   @Input() isKycEnabled = false;
+  @Input() canExportKyc = false;
+  @Input() isExportingKyc = false;
   @Input() validationData: CustomerDataValidation | null = null;
 
   @Output() exportKyc = new EventEmitter<void>();
@@ -505,21 +509,21 @@ export class PersonProductionPersonalDataComponent {
 
   get addressFields(): PersonalDataField[] {
     const address = this.homeAddress;
+    // WEB-1444 person overview convention: line 1 is the exterior number and line 2 the neighborhood.
+    // These generic API fields do not establish an interior-number meaning for line 3.
     return this.fixedFields([
       {
         label: 'Street',
-        value: () =>
-          this.readObjectValue(address, [
-            'street',
-            'addressLine1'
-          ])
+        value: () => this.readObjectValue(address, ['street'])
       },
       {
         label: 'Street Number',
         value: () =>
           this.readObjectValue(address, [
             'streetNumber',
-            'addressLine2'
+            'houseNumber',
+            'houseNo',
+            'addressLine1'
           ])
       },
       {
@@ -527,7 +531,8 @@ export class PersonProductionPersonalDataComponent {
         value: () =>
           this.readObjectValue(address, [
             'apartmentNumber',
-            'addressLine3'
+            'apartmentNo',
+            'unitNumber'
           ])
       },
       {
@@ -536,7 +541,8 @@ export class PersonProductionPersonalDataComponent {
           this.readObjectValue(address, [
             'neighborhood',
             'colony',
-            'addressLine1'
+            'colonia',
+            'addressLine2'
           ])
       },
       {

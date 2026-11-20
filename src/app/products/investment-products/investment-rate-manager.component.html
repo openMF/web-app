@@ -1,0 +1,162 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card>
+  <h1>{{ 'Investment.matrix' | translate }}</h1>
+  <div class="investment-toolbar">
+    <button mat-stroked-button (click)="refresh()" [disabled]="loading() || busy">
+      {{ 'labels.buttons.Refresh' | translate }}
+    </button>
+  </div>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" [message]="message()" [details]="details()" />
+  @if (template(); as options) {
+    <p class="investment-note">{{ 'Investment.configurationOnly' | translate }}</p>
+    <p>
+      {{ 'Investment.timezone' | translate }}: {{ options.timezone ?? ('Investment.unknown' | translate) }} ·
+      {{ 'labels.inputs.Business Date' | translate }}: {{ options.businessDate ?? ('Investment.unknown' | translate) }}
+    </p>
+    <h2>{{ 'Investment.currentRate' | translate }}</h2>
+    @if (current(); as published) {
+      <p>
+        {{ published.status | investmentCode }} · {{ 'Investment.version' | translate }} {{ published.version }} ·
+        {{ published.effectiveDate }} · {{ published.timezone }}
+      </p>
+      <mifosx-investment-matrix-view [matrix]="published.configuration.matrix" />
+    } @else {
+      <p>{{ 'NO_APPLICABLE_RATE' | investmentCode }}</p>
+    }
+    <h2>{{ (draft() ? 'Investment.draft' : 'Investment.createDraft') | translate }}</h2>
+    @if (draft(); as proposal) {
+      <p>
+        {{ proposal.status | investmentCode }} · {{ 'Investment.revision' | translate }} {{ proposal.revision }} ·
+        {{ 'Investment.maker' | translate }} {{ proposal.makerId }}
+      </p>
+    }
+    @if (matrix) {
+      <form [formGroup]="form" (ngSubmit)="submit(true)">
+        <mifosx-investment-rate-matrix
+          [form]="matrix"
+          [template]="options"
+          [editable]="canManage && !conflict()"
+          [busy]="busy"
+        />
+        <h2>{{ 'Investment.validity' | translate }}</h2>
+        <div class="investment-grid">
+          <mat-form-field
+            ><mat-label>{{ 'Investment.validity' | translate }}</mat-label
+            ><mat-select formControlName="mode">
+              @for (mode of options.validityModes; track mode) {
+                <mat-option
+                  [value]="mode"
+                  [disabled]="mode === 'SCHEDULED' && !options.capabilities.rateSchedulingSupported"
+                  >{{ mode | investmentCode }}</mat-option
+                >
+              }
+            </mat-select></mat-form-field
+          >
+          @if (form.get('mode').value === 'SCHEDULED') {
+            <mat-form-field
+              ><mat-label>{{ 'labels.inputs.Effective Date' | translate }}</mat-label
+              ><input
+                matInput
+                type="date"
+                formControlName="effectiveDate"
+                [readonly]="busy || !canManage || conflict()"
+              /><mat-hint>{{ 'Investment.midnight' | translate }} · {{ options.timezone }}</mat-hint></mat-form-field
+            >
+          }
+        </div>
+        <p>
+          {{
+            (form.get('mode').value === 'SCHEDULED' ? 'Investment.scheduledHint' : 'Investment.immediateHint')
+              | translate
+          }}
+        </p>
+        @if (options.campaignTypes.length) {
+          <h2>{{ 'Investment.campaign' | translate }}</h2>
+          <mat-checkbox formControlName="campaignEnabled">{{ 'Investment.campaign' | translate }}</mat-checkbox>
+          @if (form.get('campaignEnabled').value) {
+            @if (!options.capabilities.campaignPublicationSupported) {
+              <p role="status">{{ 'CAMPAIGN_APPLICABILITY_AND_PRECEDENCE_UNAPPROVED' | investmentCode }}</p>
+            }
+            <div class="investment-grid">
+              <mat-form-field
+                ><mat-label>{{ 'Investment.campaignId' | translate }}</mat-label
+                ><input
+                  matInput
+                  formControlName="campaignId"
+                  maxlength="100"
+                  [readonly]="busy || !canManage || conflict()"
+              /></mat-form-field>
+              <mat-form-field
+                ><mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label
+                ><input
+                  matInput
+                  formControlName="campaignName"
+                  maxlength="200"
+                  [readonly]="busy || !canManage || conflict()"
+              /></mat-form-field>
+              <mat-form-field
+                ><mat-label>{{ 'Investment.type' | translate }}</mat-label
+                ><mat-select formControlName="campaignType">
+                  @for (type of options.campaignTypes; track type) {
+                    <mat-option [value]="type">{{ type | investmentCode }}</mat-option>
+                  }
+                </mat-select></mat-form-field
+              >
+              <mat-form-field
+                ><mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label
+                ><input matInput type="date" formControlName="startDate" [readonly]="busy || !canManage || conflict()"
+              /></mat-form-field>
+              <mat-form-field
+                ><mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label
+                ><input matInput type="date" formControlName="endDate" [readonly]="busy || !canManage || conflict()"
+              /></mat-form-field>
+            </div>
+          }
+        }
+        <ul aria-live="polite">
+          @for (issue of issues(); track issue) {
+            <li>{{ issue | translate }}</li>
+          }
+        </ul>
+        @if (canManage) {
+          <div class="investment-toolbar">
+            <button mat-stroked-button type="button" (click)="submit(false)" [disabled]="busy || conflict()">
+              {{ 'labels.buttons.Validate' | translate }}</button
+            ><button mat-raised-button color="primary" type="submit" [disabled]="busy || conflict()">
+              {{ 'Investment.saveDraft' | translate }}
+            </button>
+            @if (dirty) {
+              <span role="status">{{ 'Investment.unsaved' | translate }}</span>
+            }
+          </div>
+        }
+      </form>
+    } @else {
+      <p>{{ 'Investment.policyRequired' | translate }}</p>
+    }
+    <h2>{{ 'Investment.publication' | translate }}</h2>
+    <p>{{ 'Investment.independentReview' | translate }}</p>
+    @if (independent) {
+      <p role="status">{{ 'Investment.makerBlocked' | translate }}</p>
+    }
+    @if (access.has('APPROVE_INVESTMENT_RATE')) {
+      <button mat-raised-button color="primary" (click)="publish()" [disabled]="!canPublish">
+        {{ 'Investment.publish' | translate }}
+      </button>
+    }
+    <mifosx-investment-feedback [blockers]="blockers()" [capabilities]="options.capabilities" />
+    @if (options.capabilities.rateLookupSupported) {
+      <mifosx-investment-rate-lookup [productId]="id" [template]="options" />
+    }
+    @if (options.capabilities.rateHistorySupported) {
+      <mifosx-investment-history [productId]="id" [refreshKey]="refreshKey()" />
+    }
+  }
+</mat-card>

@@ -1,9 +1,10 @@
 ##
 # Single Commit Per PR Check
 # ─────────────────────────────────────────────────────────────────────────────
-# Enforces: every PR must contain exactly ONE commit.
+# Enforces: every PR must contain exactly ONE commit. Merge commits are not
+# counted, because "Update branch" adds them and squash merging removes them.
 #
-# If a PR has more than 1 commit, this check FAILS and posts a comment
+# If a PR has more than 1 non-merge commit, this check FAILS and posts a comment
 # explaining how to squash. Once the contributor squashes and force-pushes,
 # the check re-runs automatically and passes.
 #
@@ -48,12 +49,13 @@ jobs:
               per_page: 100,
             });
 
-            const count = commits.length;
+            // "Update branch" adds merge commits, which squash merging removes.
+            const count = commits.filter((c) => c.parents.length === 1).length;
             core.setOutput('count', count);
-            console.log(`PR has ${count} commit(s)`);
+            console.log(`PR has ${count} non-merge commit(s)`);
 
             if (count > 1) {
-              core.setFailed(`PR has ${count} commits — please squash into 1.`);
+              core.setFailed(`PR has ${count} non-merge commits — please squash into 1.`);
             }
 
       - name: Post squash instructions
@@ -67,12 +69,13 @@ jobs:
             const body = [
               '## ❌ Too many commits',
               '',
-              `This PR has **${count} commits** — it must have exactly **1**.`,
+              `This PR has **${count} commits**, not counting merge commits — it must have exactly **1**.`,
               '',
               '### How to squash',
               '```bash',
               '# From your PR branch:',
-              `git rebase -i HEAD~${count}`,
+              'git fetch upstream',
+              `git rebase -i upstream/${context.payload.pull_request.base.ref}`,
               '',
               '# In the editor that opens, keep the FIRST commit as "pick"',
               '# and change all others to "squash" (or "s"):',

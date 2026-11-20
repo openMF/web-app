@@ -7,12 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef, ChangeDetectorRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+import { AddressTabComponent } from '../address-tab/address-tab.component';
+import { SchedulesTabComponent } from '../schedules-tab/schedules-tab.component';
+import { ServicesTabComponent } from '../services-tab/services-tab.component';
 
 /**
  * Office View General Tab
@@ -24,11 +28,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     ExternalIdentifierComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    AddressTabComponent,
+    ServicesTabComponent,
+    SchedulesTabComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent {
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
@@ -36,8 +44,9 @@ export class GeneralTabComponent {
   officeData: any;
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { office: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { office: any }) => {
       this.officeData = data.office;
+      this.changeDetectorRef.markForCheck();
     });
   }
 }

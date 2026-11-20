@@ -11,7 +11,8 @@ import { ActivatedRoute, provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { describe, it, expect, jest } from '@jest/globals';
 
 import { Dates } from 'app/core/utils/dates';
@@ -186,5 +187,62 @@ describe('SavingsAccountTransactionsComponent', () => {
 
     expect(component.savingAccountTransactionForm.controls.transactionAmount.hasError('highAmountValue')).toBe(true);
     expect(component.savingAccountTransactionForm.valid).toBe(false);
+  });
+  it('retains a known backend restriction inline, clears pending state and does not advance or retry', async () => {
+    await setup();
+    setAmount(1);
+    const execute = jest
+      .spyOn(TestBed.inject(SavingsService), 'executeSavingsAccountTransactionsCommand')
+      .mockReturnValue(
+        throwError(
+          () =>
+            new HttpErrorResponse({
+              status: 400,
+              error: {
+                errors: [{ userMessageGlobalisationCode: 'error.msg.savings.product.transaction.purpose.unsupported' }]
+              }
+            })
+        )
+      );
+    const next = jest.spyOn(component.stepper, 'next');
+    component.confirmTransaction();
+    fixture.detectChanges();
+    expect(component.financialError).toBe('FinancialControls.Errors.purpose.unsupported');
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent).toContain(
+      'FinancialControls.Errors.purpose.unsupported'
+    );
+    expect(component.isSubmitting).toBe(false);
+    expect(execute).toHaveBeenCalledTimes(1);
+    expect(next).not.toHaveBeenCalled();
+    expect(component.transactionResponse).toBeNull();
+  });
+  it('preserves successful native submission and guards overlapping clicks', async () => {
+    await setup();
+    setAmount(1);
+    const pending = new Subject<{ resourceId: number }>();
+    const execute = jest
+      .spyOn(TestBed.inject(SavingsService), 'executeSavingsAccountTransactionsCommand')
+      .mockReturnValue(pending);
+    const next = jest.spyOn(component.stepper, 'next');
+    component.confirmTransaction();
+    component.confirmTransaction();
+    expect(execute).toHaveBeenCalledTimes(1);
+    pending.next({ resourceId: 123 });
+    pending.complete();
+    expect(component.transactionResponse).toEqual({ resourceId: 123 });
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(component.isSubmitting).toBe(false);
+  });
+  it('does not turn unknown backend errors into an invented restriction or receipt', async () => {
+    await setup();
+    setAmount(1);
+    jest
+      .spyOn(TestBed.inject(SavingsService), 'executeSavingsAccountTransactionsCommand')
+      .mockReturnValue(throwError(() => new HttpErrorResponse({ status: 403, error: {} })));
+    const next = jest.spyOn(component.stepper, 'next');
+    component.confirmTransaction();
+    expect(component.financialError).toBeNull();
+    expect(next).not.toHaveBeenCalled();
+    expect(component.isSubmitting).toBe(false);
   });
 });

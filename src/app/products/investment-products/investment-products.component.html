@@ -1,0 +1,139 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card>
+  <h1>{{ 'Investment.title' | translate }}</h1>
+  <p>{{ 'Investment.description' | translate }}</p>
+  <div class="investment-toolbar">
+    <button mat-stroked-button (click)="load()" [disabled]="loading()">
+      {{ 'labels.buttons.Refresh' | translate }}
+    </button>
+    @if (access.has('CREATE_FIXEDDEPOSITPRODUCT')) {
+      <a
+        mat-raised-button
+        color="primary"
+        routerLink="/products/fixed-deposit-products/create"
+        [queryParams]="{ investment: true }"
+        *mifosxHasPermission="'CREATE_FIXEDDEPOSITPRODUCT'"
+        >{{ 'Investment.create' | translate }}</a
+      >
+    }
+  </div>
+  <p class="investment-note">{{ 'Investment.nativeJourney' | translate }}</p>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" />
+  <form [formGroup]="filters" class="investment-toolbar" (submit)="$event.preventDefault()">
+    <mat-form-field
+      ><mat-label>{{ 'Investment.search' | translate }}</mat-label
+      ><input matInput formControlName="search"
+    /></mat-form-field>
+    <mat-form-field
+      ><mat-label>{{ 'Investment.type' | translate }}</mat-label
+      ><mat-select formControlName="type">
+        <mat-option value="">{{ 'labels.inputs.All' | translate }}</mat-option>
+        @for (type of ['PROMISSORY_NOTE', 'CEDE', 'UNCONFIGURED']; track type) {
+          <mat-option [value]="type">{{ type | investmentCode }}</mat-option>
+        }
+      </mat-select></mat-form-field
+    >
+  </form>
+  <div class="investment-scroll" tabindex="0" [attr.aria-label]="'Investment.title' | translate">
+    <table mat-table [dataSource]="source" matSort>
+      <ng-container matColumnDef="name"
+        ><th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.native.name }}</td></ng-container
+      >
+      <ng-container matColumnDef="type"
+        ><th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Investment.type' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.configuration?.policy?.investmentType | investmentCode }}
+        </td></ng-container
+      >
+      <ng-container matColumnDef="currency"
+        ><th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Currency' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{
+            row.configuration?.nativeProduct?.currencyCode ||
+              row.native.currency?.code ||
+              ('Investment.unknown' | translate)
+          }}
+        </td></ng-container
+      >
+      <ng-container matColumnDef="term"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'Investment.termRange' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          @if (row.configuration?.policy; as policy) {
+            {{ policy.minimumTermDays }}–{{ policy.maximumTermDays }} {{ 'labels.inputs.Days' | translate }}
+          } @else {
+            {{ 'Investment.unknown' | translate }}
+          }
+        </td></ng-container
+      >
+      <ng-container matColumnDef="amount"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'Investment.amountRange' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          @if (row.configuration; as config) {
+            {{
+              config.policy?.minimumInvestmentAmount ??
+                config.nativeProduct.minimumDepositAmount ??
+                ('Investment.unknown' | translate)
+            }}
+            /
+            {{
+              config.policy?.maximumInvestmentAmount ??
+                config.nativeProduct.maximumDepositAmount ??
+                ('Investment.unbounded' | translate)
+            }}
+          } @else {
+            {{ 'Investment.unknown' | translate }}
+          }
+        </td></ng-container
+      >
+      <ng-container matColumnDef="status"
+        ><th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'Investment.status' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          @if (row.error) {
+            {{ row.error | translate }}
+          } @else {
+            {{ row.configuration?.status | investmentCode }}
+          }
+        </td></ng-container
+      >
+      <ng-container matColumnDef="rate"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'Investment.rateStatus' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          @if (row.rateError) {
+            {{ row.rateError | translate }}
+          } @else {
+            {{ row.rateStatus | investmentCode }}
+          }
+        </td></ng-container
+      >
+      <ng-container matColumnDef="actions"
+        ><th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let row">
+          <a
+            mat-button
+            [routerLink]="access.has('READ_INVESTMENT_PRODUCT_POLICY') ? [row.native.id] : [row.native.id, 'rates']"
+            >{{ 'labels.buttons.View' | translate }}</a
+          >
+        </td></ng-container
+      >
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      <tr *matNoDataRow>
+        <td [attr.colspan]="columns.length">{{ 'Investment.empty' | translate }}</td>
+      </tr>
+    </table>
+  </div>
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50]"
+    showFirstLastButtons
+    [attr.aria-label]="'Investment.title' | translate"
+  />
+</mat-card>

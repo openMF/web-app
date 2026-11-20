@@ -123,27 +123,9 @@
           }
         </div>
 
-        <!-- Version Info Section -->
-        <div class="login-version-info" *ngIf="displayBackendInfo">
-          <div class="version-info-container">
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Tenant' | translate }}</span>
-              <span class="version-value">{{ tenantDisplayName }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</span>
-              <span class="version-value">{{ versions?.mifos }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</span>
-              <span class="version-value">{{ versions?.fineract?.version }}</span>
-            </div>
-            <div class="version-item">
-              <span class="version-label">{{ 'labels.version.Server' | translate }}</span>
-              <span class="version-value">{{ server }}</span>
-            </div>
-          </div>
-        </div>
+        @if (displayBackendInfo) {
+          <mifosx-connection-card [server]="server" [tenant]="tenantIdentifier"></mifosx-connection-card>
+        }
 
         <!-- Resources Links (hidden in production mode) -->
         @if (!productionMode) {

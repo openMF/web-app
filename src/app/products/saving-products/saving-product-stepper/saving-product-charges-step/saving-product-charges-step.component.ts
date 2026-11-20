@@ -60,6 +60,7 @@ export class SavingProductChargesStepComponent implements OnInit {
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
 
+  @Input() embedded = false;
   @Input() savingProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 

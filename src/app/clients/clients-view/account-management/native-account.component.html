@@ -1,0 +1,60 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<dl class="facts">
+  <div>
+    <dt>{{ 'AccountManagement.NativeStatus' | translate }}</dt>
+    <dd><mifosx-account-status [code]="'SAVINGS_' + account.nativeStatus" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.NativeSubStatus' | translate }}</dt>
+    <dd><mifosx-account-status [code]="'SUB_' + account.nativeSubStatus" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Product' | translate }}</dt>
+    <dd>
+      <a mat-button [routerLink]="['/products/saving-products', account.savingsProductId]">{{
+        account.savingsProductId
+      }}</a>
+    </dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.PolicyVersion' | translate }}</dt>
+    <dd>{{ account.policyVersion ?? ('labels.text.Not configured' | translate) }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Balance' | translate }}</dt>
+    <dd>{{ account.balance | accountMoney: account.currency : account.currencyDigits }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'AccountManagement.WithdrawableBalance' | translate }}</dt>
+    <dd>{{ account.withdrawableBalance | accountMoney: account.currency : account.currencyDigits }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'SavingsEditor.InterestMode' | translate }}</dt>
+    <dd><mifosx-account-status [code]="account.interestMode" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Interest Earned' | translate }}</dt>
+    <dd>{{ account.nativeInterestEarned | accountMoney: account.currency : account.currencyDigits }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Interest Posted' | translate }}</dt>
+    <dd>{{ account.nativeInterestPosted | accountMoney: account.currency : account.currencyDigits }}</dd>
+  </div>
+  <div>
+    <dt>{{ 'labels.inputs.Business Date' | translate }}</dt>
+    <dd>{{ account.businessDate | dateFormat }}</dd>
+  </div>
+</dl>
+<p>{{ 'AccountManagement.InterestExplanation' | translate }}</p>
+<ul>
+  @for (reason of account.blockers; track reason) {
+    <li><mifosx-account-status [code]="reason" /></li>
+  }
+</ul>

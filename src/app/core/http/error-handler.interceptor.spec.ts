@@ -6,14 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { HttpContext, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { TranslateDefaultParser, TranslateService } from '@ngx-translate/core';
 
 import { AlertService } from '../alert/alert.service';
-import { ErrorHandlerInterceptor } from './error-handler.interceptor';
+import { ErrorHandlerInterceptor, HANDLE_HTTP_ERROR_LOCALLY } from './error-handler.interceptor';
 import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
+import { ACCOUNT_MANAGEMENT_REQUEST } from './account-management-request';
 import { environment } from '../../../environments/environment';
+import enTranslations from '../../../assets/translations/en-US.json';
 
 describe('ErrorHandlerInterceptor', () => {
   let interceptor: ErrorHandlerInterceptor;
@@ -41,6 +44,115 @@ describe('ErrorHandlerInterceptor', () => {
     }
   }
 
+  it.each([
+    400,
+    403,
+    404,
+    409,
+    422,
+    500
+  ])('keeps account-management status %s out of raw error alerts and logs', (status) => {
+    const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    expect(
+      intercept('/savings/planned-savings/clients/7/pockets', status, 'GET', {
+        defaultUserMessage: 'SQL private account details'
+      })
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+  it('preserves native account failures for safe scoped rendering and retains the 401 session alert', () => {
+    const request = new HttpRequest('GET', '/savingsaccounts/18', {
+      context: new HttpContext().set(ACCOUNT_MANAGEMENT_REQUEST, true)
+    });
+    const response = new HttpErrorResponse({ status: 401, error: { defaultUserMessage: 'private internals' } });
+    let result: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (result = error) });
+    expect(result).toBe(response);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'errors.error.auth.sessionExpired.type',
+      message: 'errors.error.auth.sessionExpired.message'
+    });
+  });
+  it.each([
+    '/savingsaccounts/42?command=activate',
+    '/savingsaccounts/42/transactions/7?command=modify'
+  ])('renders known BE-06 business errors safely for workflows without inline handling (%s)', (url) => {
+    const error = {
+      errors: [
+        {
+          userMessageGlobalisationCode: 'error.msg.savings.product.transaction.deposits.disabled',
+          defaultUserMessage: 'private stack trace'
+        }
+      ]
+    };
+    expect(intercept(url, 403, 'POST', error)).toBe('errored');
+    expect(alert).toHaveBeenCalledWith({
+      type: 'FinancialControls.TransactionRejected',
+      message: 'FinancialControls.Errors.deposits.disabled'
+    });
+  });
+  it.each([
+    '/savingsaccounts/42/transactions?command=deposit',
+    '/fineract-provider/api/v1/savingsaccounts/42/transactions?command=withdrawal',
+    '/base-teller/withdrawals',
+    '/fineract-provider/api/v2/base-teller/account-transfers'
+  ])('leaves known restrictions to the local transaction message for %s', (url) => {
+    const request = new HttpRequest('POST', url, {});
+    const response = new HttpErrorResponse({
+      status: 403,
+      url,
+      error: {
+        errors: [{ userMessageGlobalisationCode: 'error.msg.savings.product.transaction.withdrawals.disabled' }]
+      }
+    });
+    const log = jest.spyOn(console, 'error');
+    let received: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error: unknown) => (received = error) });
+    expect(received).toBe(response);
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+  it('lets monthly diagnostics handle malformed backend errors without logging server messages', () => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/savings/monthly-fees/runs', 500, 'POST', 'private SQL')).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it.each([
+    0,
+    400,
+    401,
+    403,
+    404,
+    409,
+    422,
+    500,
+    502,
+    503
+  ])('keeps ANPA exceptions local and sanitized (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v1/loans/anpa-writeoff/loans/2/adjustment-proposals',
+        status,
+        'POST',
+        'private Java exception'
+      )
+    ).toBe('errored');
+    expect(alert).not.toHaveBeenCalled();
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
   beforeEach(() => {
     alert = jest.fn();
     TestBed.configureTestingModule({
@@ -51,6 +163,49 @@ describe('ErrorHandlerInterceptor', () => {
       ]
     });
     interceptor = TestBed.inject(ErrorHandlerInterceptor);
+  });
+
+  it.each([
+    0,
+    400,
+    401,
+    403,
+    404,
+    500
+  ])('keeps vault failures local and safe (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(intercept('/fineract-provider/api/v2/base-teller/vault/context', status, 'GET', 'sensitive SQL')).toBe(
+      'errored'
+    );
+    expect(log).not.toHaveBeenCalled();
+    if (status !== 401) expect(alert).not.toHaveBeenCalled();
+    else
+      expect(alert).toHaveBeenCalledWith({
+        type: 'errors.error.auth.sessionExpired.type',
+        message: 'errors.error.auth.sessionExpired.message'
+      });
+    log.mockRestore();
+  });
+  it.each([
+    0,
+    400,
+    403,
+    409,
+    422,
+    500
+  ])('keeps vault preview diagnostics out of logs and global alerts (HTTP %s)', (status) => {
+    const log = jest.spyOn(console, 'error');
+    expect(
+      intercept(
+        '/fineract-provider/api/v2/base-teller/vault-cash-deposits/preview',
+        status,
+        'POST',
+        'private SQL token'
+      )
+    ).toBe('errored');
+    expect(log).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    log.mockRestore();
   });
 
   it.each([
@@ -195,6 +350,19 @@ describe('ErrorHandlerInterceptor', () => {
     expect(alert).not.toHaveBeenCalled();
   });
 
+  it('leaves opt-in inline errors to the caller without a duplicate global alert', () => {
+    const request = new HttpRequest('GET', '/v1/investment-products/41/rates/draft', {
+      context: new HttpContext().set(HANDLE_HTTP_ERROR_LOCALLY, true)
+    });
+    const response = new HttpErrorResponse({ status: 403 });
+    let received: unknown;
+    interceptor
+      .intercept(request, { handle: () => throwError(() => response) })
+      .subscribe({ error: (error) => (received = error) });
+    expect(received).toBe(response);
+    expect(alert).not.toHaveBeenCalled();
+  });
+
   it('does not alert when the branding endpoint is absent', () => {
     // Deployment without the self-service plugin.
     const result = intercept(`/fineract-provider/api/v1${BRANDING_API_PATH}`, 404);
@@ -324,6 +492,62 @@ describe('ErrorHandlerInterceptor', () => {
       }
     }
 
+    async function interceptDomainRuleViolationAsync(
+      nestedCode: string,
+      translations: { [key: string]: string } = {},
+      bodyType: 'arraybuffer' | 'blob' = 'blob',
+      args?: { value: unknown }[]
+    ): Promise<void> {
+      const parser = new TranslateDefaultParser();
+      TestBed.resetTestingModule();
+      alert = jest.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          ErrorHandlerInterceptor,
+          { provide: AlertService, useValue: { alert } },
+          {
+            provide: TranslateService,
+            useValue: {
+              instant: (key: string, params?: object) => parser.interpolate(translations[key] ?? key, params)
+            }
+          }
+        ]
+      });
+      const localInterceptor = TestBed.inject(ErrorHandlerInterceptor);
+      const body = {
+        userMessageGlobalisationCode: 'validation.msg.domain.rule.violation',
+        defaultUserMessage: 'Request was understood but caused a domain rule violation.',
+        errors: [
+          {
+            userMessageGlobalisationCode: nestedCode,
+            defaultUserMessage: 'Loan transaction: 77 update not allowed as loan transaction is a goodwillCredit',
+            ...(args && { args })
+          }
+        ]
+      };
+      let errorPayload: unknown;
+      if (bodyType === 'blob') {
+        errorPayload = new Blob([JSON.stringify(body)], { type: 'application/json' });
+      } else {
+        errorPayload = encodeBody(body);
+      }
+      const response = new HttpErrorResponse({
+        status: 403,
+        url: '/fineract-provider/api/v1/loans/1/transactions/77',
+        error: errorPayload
+      });
+      await new Promise<void>((resolve) => {
+        try {
+          (localInterceptor as any).handleError(response, new HttpRequest('POST', response.url, {})).subscribe({
+            error: () => resolve(),
+            complete: () => resolve()
+          });
+        } catch {
+          resolve();
+        }
+      });
+    }
+
     it('shows the translated message for the backend code', () => {
       interceptDomainRuleViolation(REVERSE_ONLY_CODE, {
         [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.'
@@ -339,6 +563,18 @@ describe('ErrorHandlerInterceptor', () => {
         REVERSE_ONLY_CODE,
         { [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.' },
         true
+      );
+
+      expect(alert).toHaveBeenCalledWith(
+        expect.objectContaining({ message: 'This transaction type can only be reversed.' })
+      );
+    });
+
+    it('shows the translated message when the body arrives as a Blob', async () => {
+      await interceptDomainRuleViolationAsync(
+        REVERSE_ONLY_CODE,
+        { [`errors.${REVERSE_ONLY_CODE}`]: 'This transaction type can only be reversed.' },
+        'blob'
       );
 
       expect(alert).toHaveBeenCalledWith(
@@ -411,5 +647,175 @@ describe('ErrorHandlerInterceptor', () => {
       type: 'errors.error.auth.sessionExpired.type',
       message: 'errors.error.auth.sessionExpired.message'
     });
+  });
+
+  it('decodes Blob error bodies and translates Fineract errors in the intercept pipeline', async () => {
+    const errorBody = {
+      developerMessage: 'Raw untranslated server error message',
+      defaultUserMessage: 'Raw untranslated server error message',
+      errors: [
+        {
+          developerMessage: 'Raw untranslated server error message',
+          defaultUserMessage: 'Raw untranslated server error message',
+          userMessageGlobalisationCode: 'error.msg.reporting.error'
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/runreports/ClientListing?output-type=PDF',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    const translate = TestBed.inject(TranslateService);
+    jest.spyOn(translate, 'instant').mockImplementation((key: string) => {
+      if (key.startsWith('errors.')) {
+        const subKey = key.slice(7);
+        return enTranslations.errors?.[subKey] ?? key;
+      }
+      return (enTranslations as Record<string, string>)[key] ?? key;
+    });
+
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    if (!(errorReceived instanceof HttpErrorResponse)) {
+      throw new Error('Expected HttpErrorResponse');
+    }
+    expect(errorReceived.error).toEqual(errorBody);
+    expect(alert).toHaveBeenCalledWith({
+      type: 'Internal Server Error',
+      message: 'An error occurred while generating the report.'
+    });
+  });
+
+  it('handles Blob error containing plain text gracefully', async () => {
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/reports/export',
+      error: new Blob(['Internal Gateway Error'], { type: 'text/plain' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    if (!(errorReceived instanceof HttpErrorResponse)) {
+      throw new Error('Expected HttpErrorResponse');
+    }
+    expect(errorReceived.error).toBe('Internal Gateway Error');
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type'
+      })
+    );
+  });
+
+  it('handles malformed string entries in errors array without throwing TypeError', async () => {
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify({ errors: ['upstream unavailable'] })], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type'
+      })
+    );
+  });
+
+  it('handles non-string developerMessage and defaultUserMessage without throwing TypeError', async () => {
+    const errorBody = {
+      errors: [
+        {
+          developerMessage: 42,
+          defaultUserMessage: true
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type',
+        message: 'errors.error.server.internal.message'
+      })
+    );
+  });
+
+  it('handles non-array args in nested error without throwing TypeError', async () => {
+    const errorBody = {
+      errors: [
+        {
+          userMessageGlobalisationCode: 'error.msg.reporting.error',
+          args: {}
+        }
+      ]
+    };
+    const response = new HttpErrorResponse({
+      status: 500,
+      url: '/fineract-provider/api/v1/clients',
+      error: new Blob([JSON.stringify(errorBody)], { type: 'application/json' })
+    });
+    const request = new HttpRequest('GET', response.url, { responseType: 'blob' });
+    let errorReceived: unknown;
+    await new Promise<void>((resolve) => {
+      interceptor.intercept(request, { handle: () => throwError(() => response) }).subscribe({
+        error: (err: unknown) => {
+          errorReceived = err;
+          resolve();
+        }
+      });
+    });
+
+    expect(errorReceived).toBeInstanceOf(HttpErrorResponse);
+    expect(alert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'errors.error.server.internal.type',
+        message: 'errors.error.server.internal.message'
+      })
+    );
   });
 });

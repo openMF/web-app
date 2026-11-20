@@ -11,20 +11,29 @@ import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { catchError, map, shareReplay, startWith } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { VersionService } from 'app/system/version.service';
+import { parseFineractVersion, parseWebAppVersion } from './system-info.utils';
 
 /** Environment Configuration */
 import { environment } from '../../environments/environment';
 
 /** Version and build hash of a deployed component. */
 export interface ComponentVersion {
+  /** Version as reported, e.g. `1.17.0-SNAPSHOT`. */
+  raw: string;
+  /** Version without its pre-release marker, e.g. `1.17.0`. */
   version: string;
+  /** Pre-release marker, e.g. `SNAPSHOT`; empty for a release. */
+  preRelease: string;
+  /** Abbreviated commit hash, e.g. `12e7559`. */
   hash: string;
+  /** Full commit hash, copied from the hash chip. */
+  fullHash: string;
 }
 
 /** Backend and environment information useful for support and debugging. */
@@ -52,19 +61,23 @@ export class SystemInfoService {
   private settingsService = inject(SettingsService);
   private authenticationService = inject(AuthenticationService);
 
-  /** The actuator response does not change while the app is loaded, so it is fetched once and replayed. */
+  /** The actuator response does not change while a server is selected, so it is fetched once and replayed. */
   private fineractVersion$: Observable<ComponentVersion>;
+  /** Server the cached version was read from; the login page can switch servers without a reload. */
+  private fineractVersionServer: string;
 
   /**
    * Returns the backend information. `renderTime` is evaluated per subscription,
-   * so each view reports the moment it was rendered.
+   * so each view reports the moment it was rendered. The local values are emitted straight
+   * away and again once the Fineract version is known, so a slow backend does not hide them.
    */
   getSystemInformation(): Observable<SystemInformation> {
     return this.getFineractVersion().pipe(
+      startWith(parseFineractVersion(null)),
       map((fineract: ComponentVersion) => {
         const credentials = this.authenticationService.getCredentials();
         return {
-          webApp: { version: environment.version, hash: environment.hash },
+          webApp: parseWebAppVersion(environment.version, environment.hash, environment.fullHash),
           fineract,
           server: this.settingsService.server,
           tenant: this.tenantIdentifier(),
@@ -85,22 +98,20 @@ export class SystemInfoService {
    * empty values for the rest of the session.
    */
   getFineractVersion(): Observable<ComponentVersion> {
-    if (!this.fineractVersion$) {
-      this.fineractVersion$ = this.versionService.getBackendInfo().pipe(
-        map((data: any) => {
-          const buildVersion: string = data?.git?.build?.version;
-          if (!buildVersion) {
-            return { version: '', hash: '' };
-          }
-          const versionAndHash: string[] = buildVersion.split('-');
-          return { version: versionAndHash[0], hash: versionAndHash[1] || '' };
-        }),
+    if (!this.fineractVersion$ || this.fineractVersionServer !== this.settingsService.server) {
+      this.fineractVersionServer = this.settingsService.server;
+      const version$: Observable<ComponentVersion> = this.versionService.getBackendInfo().pipe(
+        map((data: any) => parseFineractVersion(data)),
         shareReplay({ bufferSize: 1, refCount: false }),
         catchError(() => {
-          this.fineractVersion$ = null;
-          return of({ version: '', hash: '' });
+          // A late failure from a previously selected server must not drop the current server's cache.
+          if (this.fineractVersion$ === version$) {
+            this.fineractVersion$ = null;
+          }
+          return of(parseFineractVersion(null));
         })
       );
+      this.fineractVersion$ = version$;
     }
     return this.fineractVersion$;
   }

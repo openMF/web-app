@@ -88,3 +88,8 @@ export { ManageGroupMembersPage, MANAGE_MEMBERS_ACTION } from './groups/manage-g
 export { ClientIdentifiersPage } from './kyc/client-identifiers.page';
 export { ClientNotesPage } from './kyc/client-notes.page';
 export { FamilyMembersPage, type FamilyMemberFormData } from './kyc/family-members.page';
+
+// ── Reports page objects ───────────────────────────────────────────
+
+export { ReportsCatalogPage } from './reports/reports-catalog.page';
+export { RunReportPage, type RunReportTarget } from './reports/run-report.page';

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -36,6 +45,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -44,6 +54,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanCharge } from 'app/loans/models/loan-charge.model';
+import { isDownPaymentCharge } from 'app/products/charges/models/charge.model';
+import { LoanProducts } from 'app/products/loan-products/loan-products';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -70,7 +82,8 @@ import { LoanCharge } from 'app/loans/models/loan-charge.model';
     MatStepperPrevious,
     MatStepperNext,
     DateFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -80,6 +93,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
@@ -91,6 +105,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   @Input() activeClientMembers?: any;
   // returns the chosen savings account linked to the loan account
   @Input() loansSavingsAccountLinked: any;
+  /** `enableDownPayment` of this loan from the Terms step; `undefined` when the product has no down payment. */
+  @Input() loanEnableDownPayment?: boolean;
 
   /** Charges Data */
   chargeData: any;
@@ -151,15 +167,17 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.loansAccountTemplate && this.loansAccountTemplate.charges) {
       this.chargesDataSource =
-        this.loansAccountTemplate.charges.map((loanCharge: LoanCharge) => {
-          const amount = this.isPercentageCharge(loanCharge) ? loanCharge.percentage : loanCharge.amount;
-          return {
-            ...loanCharge,
-            amount,
-            id: loanCharge.id,
-            chargeId: loanCharge.chargeId
-          };
-        }) || [];
+        this.loansAccountTemplate.charges
+          .filter((loanCharge: LoanCharge) => this.downPaymentChargesAllowed || !isDownPaymentCharge(loanCharge))
+          .map((loanCharge: LoanCharge) => {
+            const amount = this.isPercentageCharge(loanCharge) ? loanCharge.percentage : loanCharge.amount;
+            return {
+              ...loanCharge,
+              amount,
+              id: loanCharge.id,
+              chargeId: loanCharge.chargeId
+            };
+          }) || [];
     }
     this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
@@ -167,7 +185,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   /**
    * Executes on change of input values
    */
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges = {}) {
     if (this.loansAccountProductTemplate) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
@@ -178,33 +196,64 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
           (charge: any) => charge.chargePaymentMode?.value != 'Account transfer'
         );
       }
+      if (!this.downPaymentChargesAllowed) {
+        this.chargeData = this.chargeData.filter((charge: any) => !isDownPaymentCharge(charge));
+      }
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
-      const isModification = this.loanId != null;
-      if (
-        this.loansAccountProductTemplate.charges &&
-        this.loansAccountProductTemplate.charges.length > 0 &&
-        this.chargesDataSource.length === 0
-      ) {
-        this.chargesDataSource =
-          this.loansAccountProductTemplate.charges.map((charge: any) => ({
-            ...charge,
-            chargeId: charge.chargeId || charge.id
-          })) || [];
-      } else if (isModification && this.loansAccountTemplate && this.loansAccountTemplate.charges) {
-        this.chargesDataSource =
-          this.loansAccountTemplate.charges.map((loanCharge: LoanCharge) => {
-            const amount = this.isPercentageCharge(loanCharge) ? loanCharge.percentage : loanCharge.amount;
-            return {
-              ...loanCharge,
-              amount,
-              id: loanCharge.id,
-              chargeId: loanCharge.chargeId
-            };
-          }) || [];
+      // Only a new template re-seeds the table: any other input (form validity, which follows this step's
+      // own `pristine`, or the down payment toggle) would otherwise drop the user's charge edits.
+      if ('loansAccountProductTemplate' in changes || 'loansAccountTemplate' in changes) {
+        this.seedCharges();
       }
+      this.removeUnsupportedDownPaymentCharges();
     }
+  }
+
+  /** Fineract rejects a down payment fee unless this loan has down payment enabled and a Progressive schedule. */
+  private get downPaymentChargesAllowed(): boolean {
+    return (
+      this.loanEnableDownPayment !== false &&
+      LoanProducts.supportsDownPaymentCharges(
+        this.loansAccountProductTemplate?.product?.enableDownPayment,
+        this.loansAccountProductTemplate?.loanScheduleType?.code
+      )
+    );
+  }
+
+  private seedCharges() {
+    const isModification = this.loanId != null;
+    if (
+      this.loansAccountProductTemplate.charges &&
+      this.loansAccountProductTemplate.charges.length > 0 &&
+      this.chargesDataSource.length === 0
+    ) {
+      this.chargesDataSource =
+        this.loansAccountProductTemplate.charges.map((charge: any) => ({
+          ...charge,
+          chargeId: charge.chargeId || charge.id
+        })) || [];
+    } else if (isModification && this.loansAccountTemplate && this.loansAccountTemplate.charges) {
+      this.chargesDataSource =
+        this.loansAccountTemplate.charges.map((loanCharge: LoanCharge) => {
+          const amount = this.isPercentageCharge(loanCharge) ? loanCharge.percentage : loanCharge.amount;
+          return {
+            ...loanCharge,
+            amount,
+            id: loanCharge.id,
+            chargeId: loanCharge.chargeId
+          };
+        }) || [];
+    }
+  }
+
+  private removeUnsupportedDownPaymentCharges() {
+    if (this.downPaymentChargesAllowed || !this.chargesDataSource.some((charge) => isDownPaymentCharge(charge))) {
+      return;
+    }
+    this.chargesDataSource = this.chargesDataSource.filter((charge) => !isDownPaymentCharge(charge));
+    this.pristine = false;
   }
 
   /**
@@ -249,6 +298,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, amount: response.data.value.amount };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -294,6 +344,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         }
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -324,6 +375,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         const newCharge = { ...charge, feeInterval: response.data.value.feeInterval };
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
+        this.cdr.markForCheck();
       }
     });
     this.pristine = false;
@@ -342,6 +394,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1);
         this.chargesDataSource = this.chargesDataSource.concat([]);
         this.pristine = false;
+        this.cdr.markForCheck();
       }
     });
   }

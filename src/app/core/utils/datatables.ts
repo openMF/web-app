@@ -205,7 +205,9 @@ export class Datatables {
     datatableInputs.forEach((input: any) => {
       const controlName = this.getInputName(input);
       if (this.isNumeric(input.columnDisplayType)) {
-        output[input.columnName] = datatableDataValues[controlName] * 1;
+        const value = datatableDataValues[controlName];
+        // A blank optional number must stay empty: converting it would store 0 for a value nobody entered.
+        output[input.columnName] = value === null || value === undefined || value === '' ? null : Number(value);
       } else if (this.isDate(input.columnDisplayType)) {
         output[input.columnName] = this.dateUtils.formatDate(datatableDataValues[controlName], dateFormat);
         existDate = true;

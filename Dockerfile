@@ -1,15 +1,12 @@
 ###############
 ### STAGE 1: Build app
 ###############
-ARG BUILDER_IMAGE=node:24-alpine3.23
+ARG BUILDER_IMAGE=node:26-alpine
 ARG NGINX_IMAGE=nginx:1.31.7-alpine3.24
 
 FROM $BUILDER_IMAGE AS builder
 ARG NPM_REGISTRY_URL=https://registry.npmjs.org/
 ARG BUILD_ENVIRONMENT_OPTIONS="--configuration production"
-ARG PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
-ARG PUPPETEER_CHROMIUM_REVISION_ARG=1011831
-ARG PUPPETEER_SKIP_DOWNLOAD_ARG
 
 # Set the environment variable to increase Node.js memory limit
 ENV NODE_OPTIONS="--max-old-space-size=4096"
@@ -20,10 +17,6 @@ WORKDIR /usr/src/app
 
 ENV PATH=/usr/src/app/node_modules/.bin:$PATH
 
-# Export Puppeteer env variables for installation with non-default registry.
-ENV PUPPETEER_DOWNLOAD_HOST=$PUPPETEER_DOWNLOAD_HOST_ARG
-ENV PUPPETEER_CHROMIUM_REVISION=$PUPPETEER_CHROMIUM_REVISION_ARG
-ENV PUPPETEER_SKIP_DOWNLOAD=$PUPPETEER_SKIP_DOWNLOAD_ARG
 ENV CYPRESS_INSTALL_BINARY=0
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
@@ -42,6 +35,12 @@ RUN sh -c "ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS"
 ### STAGE 2: Serve app with nginx ###
 ###############
 FROM $NGINX_IMAGE
+
+# Pick up Alpine security fixes published before the nginx image is rebuilt on them.
+RUN apk upgrade --no-cache
+
+# PDF.js loads its bundled worker as an ES module; nginx otherwise serves .mjs as octet-stream.
+RUN sed -i 's#application/javascript[[:space:]]*js;#application/javascript js mjs;#' /etc/nginx/mime.types
 
 COPY --from=builder /dist/browser /usr/share/nginx/html
 

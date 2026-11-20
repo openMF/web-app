@@ -1,0 +1,139 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card>
+  <h1>{{ 'Investment.overview' | translate }}</h1>
+  <button mat-stroked-button (click)="load()" [disabled]="loading()">{{ 'labels.buttons.Refresh' | translate }}</button>
+  <mifosx-investment-feedback [loading]="loading()" [error]="error()" />
+  @if (config(); as data) {
+    <h2>{{ data.nativeProduct.name }}</h2>
+    <dl class="investment-metadata">
+      <div>
+        <dt>{{ 'Investment.productId' | translate }}</dt>
+        <dd>{{ data.productId }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'Investment.type' | translate }}</dt>
+        <dd>{{ data.policy?.investmentType | investmentCode }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'labels.inputs.Currency' | translate }}</dt>
+        <dd>{{ data.nativeProduct.currencyCode }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'Investment.revision' | translate }}</dt>
+        <dd>{{ data.revision }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'Investment.status' | translate }}</dt>
+        <dd>{{ data.status | investmentCode }}</dd>
+      </div>
+    </dl>
+    @if (access.has('UPDATE_INVESTMENT_PRODUCT_POLICY') && data.capabilities.configurationSupported) {
+      <a mat-raised-button color="primary" routerLink="edit">{{ 'Investment.configure' | translate }}</a>
+    }
+    <p class="investment-note">{{ 'Investment.configurationOnly' | translate }}</p>
+    @if (data.policy; as policy) {
+      <h3>{{ 'Investment.configure' | translate }}</h3>
+      <dl class="investment-metadata">
+        @for (field of policyFields; track field) {
+          <div>
+            <dt>{{ field | investmentCode: 'fields' }}</dt>
+            <dd>{{ policy[field] | investmentCode }}</dd>
+          </div>
+        }
+      </dl>
+      @if (policy.maximumReinvestmentsByTerm?.length) {
+        <div class="investment-scroll">
+          <table class="investment-matrix">
+            <caption>
+              {{
+                'Investment.termLimits' | translate
+              }}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{{ 'labels.inputs.Days' | translate }}</th>
+                <th scope="col">{{ 'Investment.fields.maximumReinvestments' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (limit of policy.maximumReinvestmentsByTerm; track limit.termDays) {
+                <tr>
+                  <td>{{ limit.termDays }}</td>
+                  <td>{{ limit.maximumReinvestments }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+      @if (policy.cancellationPolicyReference; as reference) {
+        <p>
+          {{ 'Investment.fields.cancellationPolicyReference' | translate }}: {{ reference.policyCode }} /
+          {{ reference.revision }}
+        </p>
+      }
+    }
+    <section class="investment-section">
+      <h2>{{ 'Investment.accounting' | translate }}</h2>
+      <dl class="investment-metadata">
+        <div>
+          <dt>{{ 'Investment.accountingRule' | translate }}</dt>
+          <dd>{{ 'ACCOUNTING_' + data.nativeProduct.accountingRule | investmentCode }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.accountingVerified' | translate }}</dt>
+          <dd>
+            {{ (data.validation.accountingMappingValidated ? 'labels.commons.Yes' : 'labels.commons.No') | translate }}
+          </dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.withholdTax' | translate }}</dt>
+          <dd>{{ (data.nativeProduct.withholdTax ? 'labels.commons.Yes' : 'labels.commons.No') | translate }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'Investment.taxGroup' | translate }}</dt>
+          <dd>{{ data.nativeProduct.taxGroupId ?? ('Investment.unknown' | translate) }}</dd>
+        </div>
+      </dl>
+      <div class="investment-scroll" tabindex="0" [attr.aria-label]="'Investment.accounting' | translate">
+        <table class="investment-matrix">
+          <thead>
+            <tr>
+              @for (field of mappingFields; track field) {
+                <th scope="col">{{ field | investmentCode: 'mapping' }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (mapping of data.nativeProduct.accountingMappings; track mapping.mappingId) {
+              <tr>
+                @for (field of mappingFields; track field) {
+                  <td>
+                    {{ mapping[field] | investmentCode }}
+                  </td>
+                }
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="8">{{ 'Investment.unknown' | translate }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (access.has('UPDATE_FIXEDDEPOSITPRODUCT')) {
+        <a mat-button [routerLink]="['/products/fixed-deposit-products', id, 'edit']">{{
+          'Investment.nativeEdit' | translate
+        }}</a>
+      }
+    </section>
+    <mifosx-investment-feedback [blockers]="data.validation.blockers" [capabilities]="data.capabilities" />
+  }
+</mat-card>

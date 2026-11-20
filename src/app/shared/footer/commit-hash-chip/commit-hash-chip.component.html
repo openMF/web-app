@@ -1,0 +1,15 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<button
+  type="button"
+  class="commit-hash-chip"
+  [matTooltip]="(copied ? 'labels.text.Copied' : 'labels.text.Copy full commit hash') | translate"
+  (click)="copy()"
+>
+  {{ hash }}
+</button>

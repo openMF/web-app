@@ -129,7 +129,7 @@
     </div>
 
     @for (row of dataSource.data; track row.id) {
-      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']">
+      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']" mifosxEntityRowLink>
         <div class="rail"></div>
         <div class="avatar" [class.muted]="severity(row) === 'closed' || severity(row) === 'rejected'">
           {{ initials(row.name) }}
@@ -145,17 +145,17 @@
         } @else {
           <span class="muted-dash">—</span>
         }
-        <span class="mono"
+        <span class="mono" [title]="row.accountNo || ''"
           ><mifosx-account-number display="left" [accountNo]="row.accountNo"></mifosx-account-number
         ></span>
-        <span class="mono">
+        <span class="mono" [title]="row.externalId || ''">
           @if (row.externalId) {
             <mifosx-external-identifier display="left" [externalId]="row.externalId"></mifosx-external-identifier>
           } @else {
             <span class="muted-dash">—</span>
           }
         </span>
-        <span class="office">{{ row.officeName }}</span>
+        <span class="office" [title]="row.officeName || ''">{{ row.officeName }}</span>
       </div>
     }
 

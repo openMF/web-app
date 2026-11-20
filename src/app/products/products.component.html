@@ -351,6 +351,18 @@
             </mat-list-item>
           </div>
 
+          @if (
+            investmentAccess.has('READ_FIXEDDEPOSITPRODUCT') &&
+            (investmentAccess.has('READ_INVESTMENT_PRODUCT_POLICY') || investmentAccess.has('READ_INVESTMENT_RATE'))
+          ) {
+            <a
+              mat-list-item
+              [routerLink]="['investment-products']"
+              *mifosxHasPermission="['READ_INVESTMENT_PRODUCT_POLICY', 'READ_INVESTMENT_RATE']"
+            >
+              <span matListItemTitle>{{ 'Investment.title' | translate }}</span>
+            </a>
+          }
           <div #fixedDepositProducts>
             <mat-list-item [routerLink]="['fixed-deposit-products']" *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
               <div class="menu-list-item-content">
@@ -540,7 +552,7 @@
   <p class="mw400">{{ 'labels.text.Two types of charges—fees and penalties' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      Close
+      {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepCharges()">
       {{ 'labels.buttons.Back' | translate }}

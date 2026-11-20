@@ -1,0 +1,250 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../system-info-shared' as shared;
+
+// Pinned to the bottom of the content area. Items are hidden by the width of the bar itself
+// rather than the viewport, since that depends on whether the sidenav is expanded.
+:host {
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  container-type: inline-size;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 8px 0 4px;
+  overflow: hidden;
+  border: none;
+  border-top: 1px solid var(--ds-border);
+  background: var(--ds-surface);
+  color: var(--ds-text-2);
+  font: inherit;
+  font-size: 12px;
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  &[data-state='offline'] {
+    background: var(--ds-alert-bg);
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+// ===== Items, separated by thin dividers =====
+.item {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 12px;
+  border-left: 1px solid var(--ds-border);
+}
+
+.item-status,
+.spacer + .item {
+  border-left: none;
+}
+
+// The server host, tenant and user name vary in length, so instead of pushing Details out of the
+// bar they are shortened with an ellipsis when space runs out. The panel shows them in full.
+.item-status,
+.item-tenant,
+.item-user {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.item-host,
+.item-tenant .item-value,
+.item-user .item-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-label {
+  color: var(--ds-text-3);
+}
+
+.item-value {
+  color: var(--ds-text-1);
+  font-weight: 600;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}
+
+.fineract-short {
+  display: none;
+}
+
+.item-render-time {
+  color: var(--ds-text-3);
+
+  .item-value {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// ===== Status =====
+@include shared.connection-status;
+
+// ===== Pre-release badge =====
+.pre-release-badge {
+  @include shared.pre-release-badge;
+}
+
+// ===== Buttons =====
+.bar-button {
+  @include shared.outlined-button;
+
+  gap: 2px;
+  height: 28px;
+  padding: 0 8px 0 10px;
+}
+
+.details-button.open {
+  border-color: var(--ds-blue-100);
+  background: var(--ds-blue-50);
+  color: var(--ds-blue-700);
+}
+
+// ===== Compact bar (small screens) =====
+.status-bar.compact {
+  gap: 8px;
+  padding: 0 12px;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-blue-600);
+    outline-offset: -2px;
+  }
+
+  .chevron {
+    color: var(--ds-text-2);
+  }
+}
+
+// ===== Items hidden as the bar narrows =====
+// Each width is what the items still shown need in the longest translation, with a 20-character
+// server host. Online the bar drops the render time, user, tenant, server host and WebApp, in that
+// order. Offline the retry countdown and Retry now need room too, so the same items go sooner,
+// then the countdown, the Fineract version (unknown while offline) and Retry now, which the panel
+// also offers.
+@mixin hide-webapp {
+  .item-webapp {
+    display: none;
+  }
+
+  .item-fineract {
+    border-left: none;
+  }
+
+  .fineract-label {
+    display: none;
+  }
+
+  .fineract-short {
+    display: inline;
+  }
+}
+
+@container (width < 1490px) {
+  [data-state='offline'] .item-render-time {
+    display: none;
+  }
+}
+
+@container (width < 1400px) {
+  [data-state='offline'] .item-user {
+    display: none;
+  }
+}
+
+@container (width < 1250px) {
+  [data-state='offline'] .item-tenant {
+    display: none;
+  }
+}
+
+@container (width < 1160px) {
+  .item-render-time {
+    display: none;
+  }
+}
+
+@container (width < 1080px) {
+  [data-state='offline'] .item-host {
+    display: none;
+  }
+}
+
+@container (width < 1070px) {
+  .item-user {
+    display: none;
+  }
+}
+
+@container (width < 925px) {
+  [data-state='offline'] {
+    @include hide-webapp;
+  }
+}
+
+@container (width < 900px) {
+  .item-tenant {
+    display: none;
+  }
+}
+
+@container (width < 740px) {
+  .item-host {
+    display: none;
+  }
+}
+
+@container (width < 700px) {
+  [data-state='offline'] .item-retry > span {
+    display: none;
+  }
+}
+
+@container (width < 590px) {
+  @include hide-webapp;
+}
+
+@container (width < 515px) {
+  [data-state='offline'] .item-fineract {
+    display: none;
+  }
+}
+
+@container (width < 465px) {
+  [data-state='offline'] .item-retry {
+    display: none;
+  }
+}
+
+@container (width < 400px) {
+  .item {
+    padding: 0 8px;
+  }
+}

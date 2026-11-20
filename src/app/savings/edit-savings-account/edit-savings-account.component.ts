@@ -143,7 +143,7 @@ export class EditSavingsAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: this.dateUtils.formatDate(charge.dueDate, dateFormat),
-        feeOnMonthDay: this.dateUtils.formatDate(charge.feeOnMonthDay, dateFormat),
+        feeOnMonthDay: this.formatFeeOnMonthDay(charge.feeOnMonthDay, monthDayFormat),
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
@@ -161,5 +161,21 @@ export class EditSavingsAccountComponent {
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
+  }
+
+  /**
+   * Formats the day of an annual or monthly fee with the monthDayFormat sent to Fineract.
+   * A charge loaded from the account holds Fineract's ISO month-day (e.g. "--03-15"), a charge whose date was
+   * changed in the charges step already holds the formatted day (e.g. "15 March").
+   */
+  formatFeeOnMonthDay(feeOnMonthDay: any, monthDayFormat: string): any {
+    const isoMonthDay = typeof feeOnMonthDay === 'string' ? /^--(\d{2})-(\d{2})$/.exec(feeOnMonthDay) : null;
+    if (isoMonthDay) {
+      return this.dateUtils.formatDate(
+        new Date(2000, Number(isoMonthDay[1]) - 1, Number(isoMonthDay[2])),
+        monthDayFormat
+      );
+    }
+    return feeOnMonthDay;
   }
 }

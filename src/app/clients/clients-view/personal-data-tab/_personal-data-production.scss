@@ -37,6 +37,11 @@
     }
   }
 
+  .export-kyc-button mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
   .validation-status-banner {
     display: flex;
     align-items: center;

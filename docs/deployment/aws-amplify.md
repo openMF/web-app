@@ -4,8 +4,8 @@ This guide documents the default AWS Amplify Hosting setup for the Mifos X Web A
 
 ## Prerequisites
 
-- Node.js `>= 20.19.0`.
-- npm `>= 8.11.0`.
+- Node.js `>= 26.13.0`.
+- npm `>= 10.0.0`.
 - An AWS Amplify Hosting app connected to this repository and branch.
 - A reachable Apache Fineract backend for the deployed web app.
 - Amplify environment variables configured for the target backend and tenant.
@@ -16,7 +16,7 @@ Use the checked-in root `amplify.yml` as the build specification.
 
 The deployment uses:
 
-- Node version: `20.19.0`, selected through `nvm`
+- Node version: `26.13.0`, selected through `nvm`
 - Install command: `npm ci --cache .npm --prefer-offline`
 - Build command: `npm run build`
 - Runtime environment command: `node scripts/render-amplify-env.js`
@@ -77,6 +77,7 @@ UI and runtime behavior:
 ```text
 MIFOS_ALLOW_SERVER_SWITCH_SELECTOR
 MIFOS_DISPLAY_BACKEND_INFO
+MIFOS_REPORT_ISSUE_URL
 MIFOS_PRODUCTION_MODE
 MIFOS_ENABLE_GLOBAL_DASHBOARD
 MIFOS_DISPLAY_TENANT_SELECTOR

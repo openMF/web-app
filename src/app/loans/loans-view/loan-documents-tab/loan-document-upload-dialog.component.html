@@ -1,0 +1,98 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>
+  {{ (data.document ? 'loanDocuments.editMetadata' : 'loanDocuments.uploadDocuments') | translate }}
+</h2>
+<mat-dialog-content>
+  @if (data.expectedNumber) {
+    <p>{{ 'loanDocuments.expectedNumber' | translate: { number: data.expectedNumber } }}</p>
+    <p>{{ 'loanDocuments.numberAdvice' | translate }}</p>
+  }
+  @if (data.document) {
+    <ng-container [ngTemplateOutlet]="fields" [ngTemplateOutletContext]="{ form: metadataForm }"></ng-container>
+    <p>{{ 'loanDocuments.metadataAdvice' | translate }}</p>
+  } @else {
+    <div class="drop-area" (dragover)="$event.preventDefault()" (drop)="drop($event)">
+      <mat-icon aria-hidden="true">cloud_upload</mat-icon>
+      <p>{{ 'loanDocuments.dropFiles' | translate }}</p>
+      <button mat-stroked-button (click)="picker.click()" [disabled]="busy">
+        {{ 'loanDocuments.chooseFiles' | translate }}
+      </button>
+      <input #picker type="file" multiple [accept]="accept" (change)="select($event)" hidden />
+    </div>
+    @if (invalidFiles) {
+      <p role="alert">{{ 'loanDocuments.invalidFiles' | translate }} {{ accept }}</p>
+    }
+    @for (entry of entries; track entry) {
+      <section class="upload-entry">
+        <div class="file-heading">
+          <span>{{ entry.file.name }}</span
+          ><span>{{ size(entry.file.size) }}</span>
+        </div>
+        @if (entry.status === 'pending' || entry.status === 'failed') {
+          <ng-container [ngTemplateOutlet]="fields" [ngTemplateOutletContext]="{ form: entry.form }"></ng-container>
+        }
+        <p aria-live="polite">
+          {{ 'loanDocuments.' + entry.status | translate }}
+          @if (entry.status === 'uploading' && entry.progress !== undefined) {
+            {{ entry.progress }}%
+          }
+        </p>
+        @if (entry.status === 'uploading') {
+          <mat-progress-bar
+            [mode]="entry.progress === undefined ? 'indeterminate' : 'determinate'"
+            [value]="entry.progress || 0"
+            [attr.aria-label]="'loanDocuments.uploading' | translate"
+          ></mat-progress-bar>
+        }
+        @if (entry.status === 'failed') {
+          <p>{{ 'loanDocuments.retryAdvice' | translate }}</p>
+          <button mat-button [disabled]="busy || entry.form.invalid" (click)="upload([entry])">
+            {{ 'loanDocuments.retry' | translate }}
+          </button>
+        }
+      </section>
+    }
+  }
+  @if (updateFailed) {
+    <p role="alert">{{ 'loanDocuments.updateFailed' | translate }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close [disabled]="busy">{{ 'labels.buttons.Close' | translate }}</button>
+  @if (data.document) {
+    <button mat-flat-button color="primary" [disabled]="busy || metadataForm.invalid" (click)="saveMetadata()">
+      {{ 'labels.buttons.Save' | translate }}
+    </button>
+  } @else {
+    <button mat-flat-button color="primary" [disabled]="!ready" (click)="upload()">
+      {{ 'labels.buttons.Upload' | translate }}
+    </button>
+  }
+</mat-dialog-actions>
+<ng-template #fields let-form="form">
+  <form [formGroup]="form" class="metadata-fields">
+    <mat-form-field appearance="outline"
+      ><mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label
+      ><input matInput formControlName="name" required
+    /></mat-form-field>
+    <mat-form-field appearance="outline"
+      ><mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label
+      ><textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline"
+      ><mat-label>{{ 'labels.inputs.Issuance Date' | translate }}</mat-label
+      ><input matInput type="date" formControlName="issuanceDate"
+    /></mat-form-field>
+    <mat-form-field appearance="outline"
+      ><mat-label>{{ 'labels.inputs.Expiry Date' | translate }}</mat-label
+      ><input matInput type="date" formControlName="expiryDate"
+    /></mat-form-field>
+  </form>
+</ng-template>

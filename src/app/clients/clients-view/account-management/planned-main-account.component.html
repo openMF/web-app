@@ -1,0 +1,58 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card
+  ><mat-card-content>
+    <h2>{{ 'SavingsProducts.PlannedMain' | translate }}</h2>
+    <p class="notice">{{ 'AccountManagement.MetadataOnly' | translate }}</p>
+    <mifosx-account-resource-state [state]="capabilities()" (retry)="reload()" />
+    @if (capabilities().data; as caps) {
+      @if (canConfigure) {
+        <button mat-raised-button color="primary" (click)="configure()">
+          {{ 'AccountManagement.ConfigureArrangement' | translate }}
+        </button>
+      }
+      <mifosx-account-resource-state [state]="arrangements()" (retry)="load()" />
+      <mat-accordion multi>
+        @for (row of arrangements().data; track row.id + ':' + row.revision) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header
+              ><mat-panel-title>{{ row.configuration.arrangementReference }}</mat-panel-title
+              ><mat-panel-description><mifosx-account-status [code]="row.state" /></mat-panel-description
+            ></mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent
+              ><mifosx-planned-account-details
+                [clientId]="clientId"
+                [arrangement]="row"
+                [capabilities]="caps"
+                (updated)="reload()"
+            /></ng-template>
+            @if (canConfigure && !row.savingsAccountId && row.configuration.status !== 'CANCELLED') {
+              <button mat-button (click)="configure(row)">{{ 'AccountManagement.EditMetadata' | translate }}</button>
+            }
+          </mat-expansion-panel>
+        } @empty {
+          @if (!arrangements().loading && !arrangements().error) {
+            <p>{{ 'AccountManagement.NoArrangements' | translate }}</p>
+          }
+        }
+      </mat-accordion>
+      @if (arrangements().more) {
+        <button mat-button (click)="load()" [disabled]="arrangements().loading">
+          {{ 'AccountManagement.LoadMore' | translate }}
+        </button>
+      }
+      <p>{{ 'AccountManagement.PayrollDisabled' | translate }}</p>
+      <button mat-button disabled>{{ 'labels.catalogs.Release' | translate }}</button>
+      <ul>
+        @for (reason of caps.blockers; track reason) {
+          <li><mifosx-account-status [code]="reason" /></li>
+        }
+      </ul>
+    }</mat-card-content
+></mat-card>

@@ -6,40 +6,144 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container m-b-20 layout-row align-end gap-20px">
-  <div #buttonSavingProduct class="in-block">
+<div class="container m-b-16 layout-row align-end">
+  <div #buttonSavingProduct>
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_SAVINGSPRODUCT'">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      <fa-icon icon="plus" class="m-r-8"></fa-icon>
       {{ 'labels.text.Create Savings Product' | translate }}
     </button>
   </div>
 </div>
 
-<div class="container">
-  <div #filter class="layout-row">
-    <mat-form-field class="flex-fill">
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)" />
+<div class="container savings-product-list">
+  <p>{{ 'SavingsProducts.PolicyNotice' | translate }}</p>
+  <form #filter class="filters" [formGroup]="filters" (submit)="$event.preventDefault()">
+    <mat-form-field>
+      <mat-label>{{ 'SavingsProducts.Search' | translate }}</mat-label>
+      <input matInput formControlName="search" type="search" />
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'SavingsProducts.Classification' | translate }}</mat-label>
+      <mat-select formControlName="classification">
+        <mat-option value="">{{ 'SavingsProducts.AllClassifications' | translate }}</mat-option>
+        <mat-option *ngFor="let classification of classifications" [value]="classification[0]">
+          {{ classification[1] | translate }}
+        </mat-option>
+        <mat-option value="UNCLASSIFIED">{{ 'SavingsProducts.Legacy' | translate }}</mat-option>
+        <mat-option value="UNKNOWN">{{ 'SavingsProducts.UnknownClassification' | translate }}</mat-option>
+        <mat-option value="UNAVAILABLE">{{ 'SavingsProducts.Unavailable' | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button type="button" (click)="clearFilters()">{{ 'SavingsProducts.ClearFilters' | translate }}</button>
+  </form>
+
+  <div *ngIf="loading" role="status">
+    <p>{{ 'SavingsProducts.Loading' | translate }}</p>
+    <mat-progress-bar mode="indeterminate" [attr.aria-label]="'SavingsProducts.Loading' | translate"></mat-progress-bar>
+  </div>
+  <div *ngIf="error" role="alert" class="feedback">
+    <p>{{ (error === 'forbidden' ? 'SavingsProducts.AccessDenied' : 'SavingsProducts.LoadFailed') | translate }}</p>
+    <button mat-button (click)="retry()">{{ 'SavingsProducts.Retry' | translate }}</button>
+  </div>
+  <div *ngIf="warning" role="status" class="feedback">
+    <p>
+      {{
+        (warning === 'forbidden' ? 'SavingsProducts.MetadataDenied' : 'SavingsProducts.MetadataUnavailable') | translate
+      }}
+    </p>
+    <button mat-button (click)="retry()">{{ 'SavingsProducts.Retry' | translate }}</button>
   </div>
 
-  <div #savingProductTable class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+  <div #savingProductTable class="mat-elevation-z2 table-container" [hidden]="loading || !!error">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      [attr.aria-label]="'labels.heading.Savings Products' | translate"
+    >
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
-        <td mat-cell *matCellDef="let savingProduct">{{ savingProduct.name }}</td>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'labels.inputs.Name' | translate">
+          <a [routerLink]="[product.id]" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">{{ product.name }}</a>
+        </td>
       </ng-container>
-
       <ng-container matColumnDef="shortName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Short Name' | translate }}</th>
-        <td mat-cell *matCellDef="let savingProduct">{{ savingProduct.shortName }}</td>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'labels.inputs.Short Name' | translate">
+          {{ product.shortName || ('SavingsProducts.NotAvailable' | translate) }}
+        </td>
       </ng-container>
-
+      <ng-container matColumnDef="classification">
+        <th mat-header-cell *matHeaderCellDef>{{ 'SavingsProducts.Classification' | translate }}</th>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'SavingsProducts.Classification' | translate">
+          <span class="classification">{{ product.classificationLabel | translate }}</span>
+          <small *ngIf="product.purposeLabel !== 'SavingsProducts.NotAvailable'">{{
+            product.purposeLabel | translate
+          }}</small>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="currency">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Currency' | translate }}</th>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'labels.inputs.Currency' | translate">
+          {{ product.currency?.code || ('SavingsProducts.NotAvailable' | translate) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="interest">
+        <th mat-header-cell *matHeaderCellDef>{{ 'SavingsProducts.CoreAnnualRate' | translate }}</th>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'SavingsProducts.CoreAnnualRate' | translate">
+          <ng-container *ngIf="interestRate(product) !== null; else missingRate">
+            {{ interestRate(product) | number: '1.0-6' }}%
+            <small *ngIf="interestRate(product) === 0">{{ 'SavingsProducts.NoInterest' | translate }}</small>
+          </ng-container>
+          <ng-template #missingRate>{{ 'SavingsProducts.NotAvailable' | translate }}</ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'SavingsProducts.PolicyStatus' | translate }}</th>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'SavingsProducts.PolicyStatus' | translate">
+          {{ product.policyStatusLabel | translate }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let product" [attr.data-label]="'labels.inputs.Actions' | translate">
+          <div class="actions">
+            <a
+              mat-button
+              [routerLink]="[product.id]"
+              *mifosxHasPermission="'READ_SAVINGSPRODUCT'"
+              [attr.aria-label]="('SavingsProducts.ViewProduct' | translate) + ': ' + product.name"
+              >{{ 'labels.buttons.View' | translate }}</a
+            >
+            <a
+              mat-button
+              [routerLink]="[product.id, 'edit']"
+              *mifosxHasPermission="[
+                'UPDATE_SAVINGSPRODUCT',
+                'UPDATE_SAVINGS_PRODUCT_POLICY',
+                'SUBMIT_SAVINGS_PRODUCT_POLICY',
+                'CHECK_SAVINGS_PRODUCT_POLICY'
+              ]"
+              [attr.aria-label]="('SavingsProducts.EditProduct' | translate) + ': ' + product.name"
+              >{{ 'labels.buttons.Edit' | translate }}</a
+            >
+          </div>
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    <div *ngIf="!dataSource.filteredData.length" class="feedback" role="status">
+      <p>{{ (dataSource.data.length ? 'SavingsProducts.NoMatches' : 'SavingsProducts.NoProducts') | translate }}</p>
+      <button mat-button *ngIf="dataSource.data.length" (click)="clearFilters()">
+        {{ 'SavingsProducts.ClearFilters' | translate }}
+      </button>
+    </div>
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons
+      [attr.aria-label]="'labels.heading.Savings Products' | translate"
+    ></mat-paginator>
   </div>
 </div>
 

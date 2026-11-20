@@ -6,8 +6,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { financialRestrictionError } from 'app/savings/shared/financial-restriction-error';
 import { _ as extract } from '@ngx-translate/core';
 export function withdrawalError(error: { status?: number; error?: unknown }): string {
+  const restriction = financialRestrictionError(error);
+  if (restriction) return restriction;
   let body = error.error;
   if (typeof body === 'string') {
     try {

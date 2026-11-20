@@ -125,4 +125,48 @@ describe('ReportsService report output formats', () => {
     expect(req.request.responseType).toBe('arraybuffer');
     req.flush(new ArrayBuffer(0));
   });
+  it.each([
+    'KYCNaturalPerson',
+    'KYCLegalPerson'
+  ])('requests %s as PDF for the current client and tenant', (report) => {
+    let response: any;
+    service
+      .getPentahoRunReportData(
+        report,
+        { 'output-type': 'PDF', R_clientId: '123' },
+        'synthetic-tenant',
+        'es-MX',
+        'yyyy-MM-dd'
+      )
+      .subscribe((value) => (response = value));
+    const request = httpMock.expectOne((req) => req.url === `/runreports/${report}`);
+    expect(request.request.method).toBe('GET');
+    expect(request.request.responseType).toBe('arraybuffer');
+    expect(request.request.params.get('tenantIdentifier')).toBe('synthetic-tenant');
+    expect(request.request.params.get('locale')).toBe('es-MX');
+    expect(request.request.params.get('dateFormat')).toBe('yyyy-MM-dd');
+    expect(request.request.params.get('output-type')).toBe('PDF');
+    expect(request.request.params.get('R_clientId')).toBe('123');
+    const body = new ArrayBuffer(8);
+    request.flush(body, { headers: { 'Content-Type': 'application/pdf' } });
+    expect(response.body).toBe(body);
+    expect(response.headers.get('Content-Type')).toBe('application/pdf');
+  });
+
+  it('propagates a report permission failure without retrying', () => {
+    const error = jest.fn();
+    service
+      .getPentahoRunReportData(
+        'KYCLegalPerson',
+        { 'output-type': 'PDF', R_clientId: '123' },
+        'synthetic-tenant',
+        'en',
+        'yyyy-MM-dd'
+      )
+      .subscribe({ error });
+    httpMock
+      .expectOne((req) => req.url === '/runreports/KYCLegalPerson')
+      .flush(new ArrayBuffer(0), { status: 403, statusText: 'Forbidden' });
+    expect(error).toHaveBeenCalledWith(expect.objectContaining({ status: 403 }));
+  });
 });

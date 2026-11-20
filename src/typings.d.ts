@@ -22,7 +22,7 @@ interface Window {
     allow_switching_backend_instance?: boolean;
     apiProvider?: string;
     apiVersion?: string;
-    oauthServerEnabled?: boolean;
+    oauthServerEnabled?: string | boolean;
     oauthServerUrl?: string;
     oauthAppId?: string;
     defaultLanguage?: string;
@@ -30,6 +30,7 @@ interface Window {
     preloadClients?: boolean;
     defaultCharDelimiter?: string;
     displayBackEndInfo?: string;
+    reportIssueUrl?: string;
     displayTenantSelector?: string;
     /** Production mode - when true, shows minimal hero with only branding at bottom */
     productionMode?: string | boolean;
