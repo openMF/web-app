@@ -524,6 +524,7 @@ const routes: Routes = [
         component: CreateGlimAccountComponent,
         resolve: {
           loansAccountTemplate: GLIMLoanTemplateResolver,
+          loanProductsBasicDetails: LoanProductsResolver,
           groupsData: GroupViewResolver
         }
       },
