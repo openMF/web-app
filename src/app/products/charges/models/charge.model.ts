@@ -58,3 +58,23 @@ export enum ChargeAppliesToCode {
   ChargepaymentmodeRegular = 'chargepaymentmode.regular',
   FeeFrequencyperiodFrequencyTypeMonths = 'feeFrequencyperiodFrequencyType.months'
 }
+
+export const DOWN_PAYMENT_CHARGE_TIME_TYPE_ID = 17;
+
+/** Fineract accepts only Flat and % Amount (of the down payment amount) for a down payment fee. */
+export const DOWN_PAYMENT_CHARGE_CALCULATION_TYPE_IDS = [
+  1,
+  2
+];
+
+export function isDownPaymentCharge(charge: { chargeTimeType?: { id?: number } } | null | undefined): boolean {
+  return charge?.chargeTimeType?.id === DOWN_PAYMENT_CHARGE_TIME_TYPE_ID;
+}
+
+/**
+ * True for a down payment fee that is not Flat, i.e. % Amount or not chosen yet:
+ * its percentage applies to the down payment amount, not to the disbursed amount.
+ */
+export function isDownPaymentPercentageCharge(chargeTimeType: unknown, chargeCalculationType: unknown): boolean {
+  return chargeTimeType === DOWN_PAYMENT_CHARGE_TIME_TYPE_ID && chargeCalculationType !== 1;
+}
