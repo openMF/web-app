@@ -185,6 +185,7 @@ test('navigates with real thumbnails, readable titles, categories and debounced 
 });
 test('reloads a retained thumbnail when an upload refresh cancels its pending attachment read', async ({ page }) => {
   // Finish the initial thumbnail before intercepting reads from the reloaded workspace.
+  // Let the first page finish its own read first, so only the reloaded page's reads are counted.
   await expect(page.locator('[data-document-id="1"] mifosx-loan-document-thumbnail img')).toBeVisible();
   let attempts = 0;
   await page.route('**/loans/1452/documents/1/attachment', async (route) => {

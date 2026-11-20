@@ -175,8 +175,7 @@ export class EditFixedDepositAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
-        feeOnMonthDay:
-          charge.feeOnMonthDay && this.dateUtils.formatDate([2000].concat(charge.feeOnMonthDay), monthDayFormat),
+        feeOnMonthDay: this.dateUtils.formatMonthDay(charge.feeOnMonthDay, monthDayFormat, dateFormat),
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.fixedDepositAccount.submittedOnDate, dateFormat),

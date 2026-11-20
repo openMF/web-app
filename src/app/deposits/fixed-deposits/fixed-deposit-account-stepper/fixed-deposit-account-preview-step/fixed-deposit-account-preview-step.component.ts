@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  inject
+} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgSwitch, TitleCasePipe, CurrencyPipe } from '@angular/common';
@@ -30,6 +39,8 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Fixed Deposit Preview Step
@@ -71,6 +82,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountPreviewStepComponent implements OnChanges {
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed Deposits Account Product Template */
@@ -120,5 +134,16 @@ export class FixedDepositAccountPreviewStepComponent implements OnChanges {
     if (this.fixedDepositsAccountProductTemplate) {
       this.interestRateChartData = this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs;
     }
+  }
+
+  /**
+   * Formats the fee day of a monthly or annual charge for display. The value may be Fineract's
+   * ISO month-day "--07-22" for a saved account, the [month, day] of the product template, or a
+   * date picked in the charges step.
+   * @param {any} feeOnMonthDay Fee day
+   * @returns {string} Formatted fee day
+   */
+  formatFeeOnMonthDay(feeOnMonthDay: any): string {
+    return this.dateUtils.formatMonthDay(feeOnMonthDay, 'dd MMMM', this.settingsService.dateFormat);
   }
 }

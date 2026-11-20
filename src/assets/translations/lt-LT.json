@@ -9171,5 +9171,35 @@
       "identity": "Tapatybė ir adresas",
       "other": "Kita"
     }
+  },
+  "branchServices": {
+    "title": "Filialo paslaugos",
+    "description": "{{office}} sukonfigūruotos paslaugos ir jų įrašytos darbo valandos.",
+    "search": "Ieškoti paslaugų",
+    "add": "Pridėti paslaugą",
+    "coverage": "Įprastų darbo valandų palyginimas",
+    "branchHours": "Filialo darbo valandos",
+    "recordedHours": "Įrašytos paslaugų valandos",
+    "configuredServices": "Sukonfigūruotos paslaugos",
+    "count": "Paslaugų: {{count}}",
+    "configured": "Sukonfigūruota",
+    "hoursUnavailable": "Paslaugos valandos neprieinamos",
+    "noMatches": "Atitinkančių paslaugų nėra",
+    "catalog": "Paslaugų katalogas",
+    "catalogDescription": "Visos įstaigos filialų paslaugų katalogas.",
+    "catalogUnavailable": "Katalogas neprieinamas",
+    "catalogExplanation": "Suderinamo katalogo nėra.",
+    "catalogAddGuidance": "Norėdami sukonfigūruoti filialo paslaugą, naudokite Pridėti paslaugą.",
+    "timezone": "Filialo laiko juosta nežinoma. Lyginamos įprastos valandos, o ne šiandienos prieinamumas.",
+    "verification": "Paslaugų savaitės dienos neįrašytos. Atitikties filialo darbo laikui patikrinti negalima.",
+    "unparsed": "Paslaugų, kurių valandos nenurodytos arba įrašytos laisvu tekstu, skaičius: {{count}}. Žr. sukonfigūruotas paslaugas žemiau.",
+    "saving": "Paslauga išsaugoma…",
+    "saveFailed": "Pakeitimo išsaugoti nepavyko. Anksčiau įkeltos paslaugos išsaugotos.",
+    "schedule": {
+      "empty": "Filialo grafikas nesukonfigūruotas.",
+      "unavailable": "Filialo grafikas neprieinamas.",
+      "invalid": "Filialo grafike yra netinkamų duomenų.",
+      "error": "Nepavyko įkelti filialo grafiko."
+    }
   }
 }

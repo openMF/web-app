@@ -9171,5 +9171,35 @@
       "identity": "Identitāte un adrese",
       "other": "Citi"
     }
+  },
+  "branchServices": {
+    "title": "Filiāles pakalpojumi",
+    "description": "{{office}} konfigurētie pakalpojumi un to reģistrētie darba laiki.",
+    "search": "Meklēt pakalpojumus",
+    "add": "Pievienot pakalpojumu",
+    "coverage": "Parastā darba laika salīdzinājums",
+    "branchHours": "Filiāles darba laiks",
+    "recordedHours": "Reģistrētie pakalpojumu laiki",
+    "configuredServices": "Konfigurētie pakalpojumi",
+    "count": "Pakalpojumi: {{count}}",
+    "configured": "Konfigurēts",
+    "hoursUnavailable": "Pakalpojuma laiks nav pieejams",
+    "noMatches": "Nav atbilstošu pakalpojumu",
+    "catalog": "Pakalpojumu katalogs",
+    "catalogDescription": "Iestādes filiāļu pakalpojumu katalogs.",
+    "catalogUnavailable": "Katalogs nav pieejams",
+    "catalogExplanation": "Nav pieejams saderīgs katalogs.",
+    "catalogAddGuidance": "Izmantojiet Pievienot pakalpojumu, lai konfigurētu šīs filiāles pakalpojumu.",
+    "timezone": "Filiāles laika josla nav zināma. Tiek salīdzināti parastie laiki, nevis šodienas pieejamība.",
+    "verification": "Pakalpojumu nedēļas dienas netiek reģistrētas. Atbilstību filiāles darba laikam nevar pārbaudīt.",
+    "unparsed": "Pakalpojumu skaits ar nenorādītu vai brīvā tekstā norādītu laiku: {{count}}. Skatiet konfigurētos pakalpojumus zemāk.",
+    "saving": "Pakalpojums tiek saglabāts…",
+    "saveFailed": "Izmaiņas neizdevās saglabāt. Iepriekš ielādētie pakalpojumi tiek saglabāti.",
+    "schedule": {
+      "empty": "Filiāles grafiks nav konfigurēts.",
+      "unavailable": "Filiāles grafiks nav pieejams.",
+      "invalid": "Filiāles grafikā ir nederīgi dati.",
+      "error": "Filiāles grafiku neizdevās ielādēt."
+    }
   }
 }

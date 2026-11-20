@@ -9019,5 +9019,35 @@
       "identity": "Identidad y domicilio",
       "other": "Otros"
     }
+  },
+  "branchServices": {
+    "title": "Servicios de la sucursal",
+    "description": "Servicios configurados para {{office}} y sus horarios registrados.",
+    "search": "Buscar servicios",
+    "add": "Agregar servicio",
+    "coverage": "Cobertura del horario habitual",
+    "branchHours": "Horario de la sucursal",
+    "recordedHours": "Horarios registrados de servicios",
+    "configuredServices": "Servicios configurados",
+    "count": "Servicios: {{count}}",
+    "configured": "Configurado",
+    "hoursUnavailable": "Horario del servicio no disponible",
+    "noMatches": "No hay servicios coincidentes",
+    "catalog": "Catálogo de servicios",
+    "catalogDescription": "Catálogo de servicios de sucursales de la institución.",
+    "catalogUnavailable": "Catálogo no disponible",
+    "catalogExplanation": "No hay un catálogo compatible.",
+    "catalogAddGuidance": "Usa Agregar servicio para configurar un servicio en esta sucursal.",
+    "timezone": "Zona horaria de la sucursal no disponible. Se comparan horarios habituales, no la disponibilidad de hoy.",
+    "verification": "No se registran los días de los servicios. No se puede verificar la coincidencia con el horario de la sucursal.",
+    "unparsed": "Servicios con horarios ausentes o de texto libre: {{count}}. Consulta los servicios configurados abajo.",
+    "saving": "Guardando servicio…",
+    "saveFailed": "No se pudo guardar el cambio. Se conservan los servicios cargados previamente.",
+    "schedule": {
+      "empty": "No hay horario de la sucursal configurado.",
+      "unavailable": "Horario de la sucursal no disponible.",
+      "invalid": "El horario de la sucursal contiene datos no válidos.",
+      "error": "No se pudo cargar el horario de la sucursal."
+    }
   }
 }
