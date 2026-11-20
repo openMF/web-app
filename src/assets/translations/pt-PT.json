@@ -199,7 +199,15 @@
       "integerQuantity": "Introduza um número inteiro de unidades",
       "noReadPermission": "Não tem permissão para consultar alocações de numerário",
       "preview": "Não foi possível calcular a pré-visualização da alocação de numerário",
-      "receipt": "Não foi possível obter o recibo da alocação de numerário"
+      "receipt": "Não foi possível obter o recibo da alocação de numerário",
+      "configuration": "A configuração da moeda ou das denominações é inválida. Peça a um administrador autorizado que reveja o catálogo e a precisão da moeda.",
+      "alreadyOpened": "A abertura já foi concluída para este destino, data operacional e moeda. Use uma transferência permitida para adicionar fundos.",
+      "drawerClosed": "Esta caixa já foi reconciliada. A atribuição de numerário está indisponível.",
+      "insufficientSource": "A atribuição excede o saldo de numerário disponível na origem. A pré-visualização está indisponível; reveja o saldo oficial e o montante.",
+      "sourceCashier": "Selecione um caixa principal elegível com fundos como origem.",
+      "cashier": "Não existe uma atribuição de caixa elegível para esta agência e data operacional.",
+      "businessDate": "A data operacional mudou. Recarregue a página para obter o contexto atual.",
+      "accounting": "Faltam mapeamentos contabilísticos obrigatórios. Peça a um administrador autorizado que reveja as contas do cofre, da caixa e de contrapartida dos saldos iniciais."
     },
     "labels": {
       "businessDate": "Data de negócio",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "A carregar a configuração da alocação de numerário...",
       "processing": "A processar..."
+    },
+    "guidance": {
+      "opening": "Use este fluxo para a abertura inicial do cofre e da caixa. Fundos adicionais para uma caixa aberta exigem uma transferência permitida; a abertura não pode ser repetida na mesma data operacional e moeda.",
+      "denominations": "{{currency}} não tem denominações ativas. Peça a um administrador autorizado que configure o catálogo. A pré-visualização permanece indisponível; não podem ser introduzidos valores arbitrários.",
+      "pending": "O resultado da transação é incerto. Repita a mesma transação para recuperar o resultado antes de iniciar outra operação."
     }
   },
   "catalogUpdates": {

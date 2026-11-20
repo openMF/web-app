@@ -199,7 +199,15 @@
       "integerQuantity": "Ievadiet veselu vienību skaitu",
       "noReadPermission": "Jums nav atļaujas skatīt skaidras naudas piešķīrumus",
       "preview": "Neizdevās aprēķināt skaidras naudas piešķīruma priekšskatījumu",
-      "receipt": "Neizdevās iegūt skaidras naudas piešķīruma kvīti"
+      "receipt": "Neizdevās iegūt skaidras naudas piešķīruma kvīti",
+      "configuration": "Valūtas vai nominālu konfigurācija nav derīga. Lūdziet pilnvarotam administratoram pārbaudīt katalogu un valūtas precizitāti.",
+      "alreadyOpened": "Atvēršana šim saņēmējam, darba dienai un valūtai jau ir pabeigta. Papildu līdzekļiem izmantojiet atļautu skaidras naudas pārvedumu.",
+      "drawerClosed": "Šī kase ir saskaņota. Skaidras naudas piešķiršana nav pieejama.",
+      "insufficientSource": "Piešķīrums pārsniedz pieejamo avota skaidras naudas atlikumu. Priekšskatījums nav pieejams; pārbaudiet oficiālo atlikumu un summu.",
+      "sourceCashier": "Kā avotu izvēlieties piemērotu galveno kasieri ar līdzekļiem.",
+      "cashier": "Šai filiālei un darba dienai nav pieejams piemērots kasiera norīkojums.",
+      "businessDate": "Darba diena ir mainījusies. Pārlādējiet lapu, lai saņemtu pašreizējo kontekstu.",
+      "accounting": "Trūkst obligāto grāmatvedības piesaistījumu. Lūdziet pilnvarotam administratoram pārbaudīt seifa, kases un sākuma atlikuma korespondējošo kontu piesaistījumus."
     },
     "labels": {
       "businessDate": "Darba datums",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Notiek skaidras naudas piešķīruma konfigurācijas ielāde...",
       "processing": "Notiek apstrāde..."
+    },
+    "guidance": {
+      "opening": "Izmantojiet šo darbplūsmu sākotnējai seifa un kases atvēršanai. Papildu līdzekļiem atvērtā kasē nepieciešams atbalstīts skaidras naudas pārvedums; atvēršanu nevar atkārtot tajā pašā darba dienā un valūtā.",
+      "denominations": "Valūtai {{currency}} nav aktīvu nominālu. Lūdziet pilnvarotam administratoram konfigurēt katalogu. Priekšskatījums nav pieejams; patvaļīgas skaidras naudas vērtības nevar ievadīt.",
+      "pending": "Darījuma iznākums nav zināms. Pirms citas darbības sākšanas atkārtojiet to pašu darījumu, lai atgūtu rezultātu."
     }
   },
   "catalogUpdates": {

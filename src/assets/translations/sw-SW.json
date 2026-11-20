@@ -199,7 +199,15 @@
       "integerQuantity": "Weka idadi kamili ya vipande",
       "noReadPermission": "Huna ruhusa ya kuona migawanyo ya fedha taslimu",
       "preview": "Imeshindikana kukokotoa hakikisho la ugawaji wa fedha taslimu",
-      "receipt": "Imeshindikana kupata risiti ya ugawaji wa fedha taslimu"
+      "receipt": "Imeshindikana kupata risiti ya ugawaji wa fedha taslimu",
+      "configuration": "Usanidi wa sarafu au madhehebu si sahihi. Mwombe msimamizi mwenye ruhusa akague orodha na usahihi wa sarafu.",
+      "alreadyOpened": "Ufunguzi umekamilika kwa lengwa, tarehe ya biashara na sarafu hii. Tumia uhamisho unaoruhusiwa kuongeza fedha.",
+      "drawerClosed": "Droo hii imelinganishwa. Ugawaji wa pesa taslimu haupatikani.",
+      "insufficientSource": "Ugawaji unazidi salio la pesa taslimu linalopatikana kwenye chanzo. Hakiki haipatikani; kagua salio rasmi na kiasi.",
+      "sourceCashier": "Chagua mtunza fedha mkuu anayestahili na mwenye fedha kama chanzo.",
+      "cashier": "Hakuna mgawo wa mtunza fedha anayestahili kwa ofisi na tarehe hii ya biashara.",
+      "businessDate": "Tarehe ya biashara imebadilika. Pakia ukurasa upya ili kupata muktadha wa sasa.",
+      "accounting": "Ulinganishaji wa akaunti unaohitajika haupo. Mwombe msimamizi mwenye ruhusa akague akaunti za hazina, pesa za mtunza fedha na akaunti ya upande wa pili ya salio la ufunguzi."
     },
     "labels": {
       "businessDate": "Tarehe ya Biashara",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Inapakia usanidi wa ugawaji wa fedha taslimu...",
       "processing": "Inachakata..."
+    },
+    "guidance": {
+      "opening": "Tumia utaratibu huu kufungua hazina na droo kwa mara ya kwanza. Fedha za ziada kwa droo iliyo wazi zinahitaji uhamisho unaoruhusiwa; ufunguzi hauwezi kurudiwa kwa tarehe ya biashara na sarafu ileile.",
+      "denominations": "{{currency}} haina madhehebu amilifu. Mwombe msimamizi mwenye ruhusa asanidi orodha ya madhehebu. Hakiki haipatikani; thamani za pesa zisizoidhinishwa haziwezi kuingizwa.",
+      "pending": "Matokeo ya muamala hayajulikani. Jaribu tena muamala huohuo ili kupata matokeo kabla ya kuanza shughuli nyingine."
     }
   },
   "catalogUpdates": {

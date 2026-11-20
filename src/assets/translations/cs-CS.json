@@ -199,7 +199,15 @@
       "integerQuantity": "Zadejte celé číslo kusů",
       "noReadPermission": "Nemáte oprávnění zobrazit přidělení hotovosti",
       "preview": "Náhled přidělení hotovosti se nepodařilo vypočítat",
-      "receipt": "Stvrzenku o přidělení hotovosti se nepodařilo načíst"
+      "receipt": "Stvrzenku o přidělení hotovosti se nepodařilo načíst",
+      "configuration": "Nastavení měny nebo nominálních hodnot je neplatné. Požádejte oprávněného správce o kontrolu katalogu a přesnosti měny.",
+      "alreadyOpened": "Otevření pro tento cíl, obchodní den a měnu již proběhlo. Pro doplnění prostředků použijte povolený převod hotovosti.",
+      "drawerClosed": "Tato pokladna již byla odsouhlasena. Přidělení hotovosti není dostupné.",
+      "insufficientSource": "Přidělení překračuje dostupný zůstatek zdroje. Náhled není dostupný; zkontrolujte oficiální zůstatek a částku.",
+      "sourceCashier": "Vyberte jako zdroj způsobilého hlavního pokladníka s prostředky.",
+      "cashier": "Pro tuto pobočku a obchodní den není dostupné způsobilé přiřazení pokladníka.",
+      "businessDate": "Obchodní den se změnil. Znovu načtěte stránku pro aktuální kontext.",
+      "accounting": "Chybí povinné účetní mapování. Požádejte oprávněného správce o kontrolu účtů trezoru, pokladny a protiúčtu počátečních zůstatků."
     },
     "labels": {
       "businessDate": "Obchodní datum",
@@ -246,6 +254,11 @@
     "status": {
       "loading": "Načítá se konfigurace přidělení hotovosti...",
       "processing": "Zpracovává se..."
+    },
+    "guidance": {
+      "opening": "Tento postup slouží k počátečnímu otevření trezoru a pokladny. Doplnění otevřené pokladny vyžaduje podporovaný převod hotovosti; otevření nelze opakovat pro stejný obchodní den a měnu.",
+      "denominations": "Pro {{currency}} nejsou nastaveny aktivní nominální hodnoty. Požádejte oprávněného správce o nastavení katalogu. Náhled zůstává nedostupný; libovolné hodnoty hotovosti nelze zadat.",
+      "pending": "Výsledek transakce je nejistý. Před zahájením další operace zopakujte stejnou transakci a zjistěte její výsledek."
     }
   },
   "catalogUpdates": {
