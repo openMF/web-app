@@ -7,6 +7,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
@@ -15,6 +17,7 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { ValidationStatus } from 'app/clients/models/document-validation.model';
 import { PersonProductionPersonalDataComponent } from './person-production-personal-data.component';
+import { PersonalDataViewService } from '../personal-data-view.service';
 
 describe('PersonProductionPersonalDataComponent', () => {
   let fixture: ComponentFixture<PersonProductionPersonalDataComponent>;
@@ -27,6 +30,8 @@ describe('PersonProductionPersonalDataComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         {
           provide: SettingsService,
           useValue: { language: { code: 'en' }, dateFormat: 'dd MMMM yyyy' }
@@ -344,6 +349,232 @@ describe('PersonProductionPersonalDataComponent', () => {
     expect(component.addressFields.find((field) => field.label === 'State')?.value).toBe('-');
     expect(component.addressFields.find((field) => field.label === 'Country')?.value).toBe('-');
     expect(fixture.nativeElement.textContent).not.toContain('>0<');
+  });
+
+  describe('address presentation', () => {
+    const legacyAddress = {
+      addressType: 'Home Address',
+      street: '',
+      addressLine1: '407',
+      addressLine2: 'SANTA RITA',
+      addressLine3: '',
+      city: 'LEON DE LOS ALDAMA',
+      postalCode: '37450',
+      stateProvinceId: 20,
+      countryId: 30
+    };
+
+    function renderAddresses(addresses: any[]): Record<string, string> {
+      fixture.componentRef.setInput('viewModel', { ...component.viewModel, addresses });
+      fixture.detectChanges();
+      const section = fixture.debugElement
+        .queryAll(By.css('.section'))
+        .find(
+          (element) => element.query(By.css('h3'))?.nativeElement.textContent.trim() === 'labels.heading.Home Address'
+        );
+      expect(section).toBeDefined();
+      return Object.fromEntries(
+        section!.queryAll(By.css('.data-item')).map((item) => [
+          item.query(By.css('.label')).nativeElement.textContent.trim().replace('labels.inputs.', ''),
+          item.query(By.css('.value')).nativeElement.textContent.trim()
+        ])
+      );
+    }
+
+    it('renders the reported legacy values under their correct labels without mutating the source', () => {
+      const address = Object.freeze({ ...legacyAddress });
+      const original = { ...address };
+      component.viewModel!.addressTemplate = {
+        stateProvinceIdOptions: [{ id: 20, name: 'Guanajuato' }],
+        countryIdOptions: [{ id: 30, name: 'México' }]
+      };
+      const expected = {
+        Street: '-',
+        'Street Number': '407',
+        'Apartment Number': '-',
+        Neighborhood: 'SANTA RITA',
+        'Zip code': '37450',
+        'Municipality/City': 'LEON DE LOS ALDAMA',
+        'Locality/Borough/Town': '-',
+        State: 'Guanajuato',
+        Country: 'México'
+      };
+
+      expect(renderAddresses([address])).toEqual(expected);
+      expect(renderAddresses([address])).toEqual(expected);
+      expect(address).toEqual(original);
+      expect(component.homeAddress).toBe(address);
+    });
+
+    it('prefers dedicated fields over conflicting legacy values and aliases', () => {
+      expect(
+        renderAddresses([
+          {
+            ...legacyAddress,
+            street: 'AVENIDA REFORMA',
+            streetNumber: '125',
+            houseNumber: '126',
+            houseNo: '127',
+            apartmentNumber: '4B',
+            apartmentNo: '5B',
+            unitNumber: '6B',
+            addressLine3: 'Unspecified third line',
+            neighborhood: 'CENTRO',
+            colony: 'OTHER COLONY',
+            colonia: 'OTHER COLONIA'
+          }
+        ])
+      ).toMatchObject({
+        Street: 'AVENIDA REFORMA',
+        'Street Number': '125',
+        'Apartment Number': '4B',
+        Neighborhood: 'CENTRO'
+      });
+    });
+
+    it.each([
+      { houseNumber: '12A', apartmentNo: '2B', colony: 'COLONY 2' },
+      { houseNo: '12A', unitNumber: '2B', colonia: 'COLONY 2' }
+    ])('supports established dedicated aliases: %o', (aliases) => {
+      expect(renderAddresses([{ ...legacyAddress, ...aliases }])).toMatchObject({
+        Street: '-',
+        'Street Number': '12A',
+        'Apartment Number': '2B',
+        Neighborhood: 'COLONY 2'
+      });
+    });
+
+    it('does not infer the meaning of address lines from their contents', () => {
+      expect(
+        renderAddresses([
+          {
+            ...legacyAddress,
+            addressLine1: '407-B',
+            addressLine2: '15 DE MAYO',
+            addressLine3: 'Unspecified third line'
+          }
+        ])
+      ).toMatchObject({
+        Street: '-',
+        'Street Number': '407-B',
+        'Apartment Number': '-',
+        Neighborhood: '15 DE MAYO'
+      });
+    });
+
+    it.each([
+      { addresses: [] },
+      { addresses: [{}] },
+      {
+        addresses: [
+          {
+            street: null,
+            streetNumber: null,
+            apartmentNumber: null,
+            neighborhood: null,
+            addressLine1: null,
+            addressLine2: null,
+            addressLine3: null
+          }
+        ]
+      }
+    ])('renders missing fields safely for %o', ({ addresses }) => {
+      const fields = renderAddresses(addresses);
+      expect(Object.values(fields)).toEqual(Array(9).fill('-'));
+    });
+
+    it('keeps the inactive home address ahead of an active work address', () => {
+      const work = { ...legacyAddress, addressType: 'Work Address', isActive: true, addressLine1: '999' };
+      const home = { ...legacyAddress, isActive: false };
+
+      expect(
+        renderAddresses([
+          work,
+          home
+        ])['Street Number']
+      ).toBe('407');
+      expect(component.homeAddress).toBe(home);
+    });
+
+    it('keeps the active address fallback when there is no home address', () => {
+      const work = { ...legacyAddress, addressType: 'Work Address', isActive: false, addressLine1: '999' };
+      const other = { ...legacyAddress, addressType: 'Other Address', isActive: true };
+
+      expect(
+        renderAddresses([
+          work,
+          other
+        ])
+      ).toMatchObject({ 'Street Number': '407', Neighborhood: 'SANTA RITA' });
+      expect(component.homeAddress).toBe(other);
+    });
+
+    it('keeps the first address fallback when no home or active address exists', () => {
+      const work = { ...legacyAddress, addressType: 'Work Address', isActive: false };
+      const other = { ...work, addressType: 'Other Address', addressLine1: '999' };
+
+      expect(
+        renderAddresses([
+          work,
+          other
+        ])
+      ).toMatchObject({ 'Street Number': '407', Neighborhood: 'SANTA RITA' });
+      expect(component.homeAddress).toBe(work);
+    });
+
+    it('loads and renders the profile through GET requests without issuing writes', () => {
+      const http = TestBed.inject(HttpTestingController);
+      const address = Object.freeze({ ...legacyAddress });
+      let loaded = false;
+      TestBed.inject(PersonalDataViewService)
+        .load('11')
+        .subscribe((viewModel) => {
+          loaded = true;
+          fixture.componentRef.setInput('viewModel', viewModel);
+        });
+      const responses = new Map<string, unknown>([
+        [
+          '/client/11/addresses',
+          [address]
+        ],
+        [
+          '/client/addresses/template',
+          component.viewModel!.addressTemplate
+        ],
+        [
+          '/clients/11/familymembers',
+          []
+        ],
+        [
+          '/clients/11/identifiers',
+          []
+        ],
+        [
+          '/clients/11/documents',
+          []
+        ]
+      ]);
+      responses.forEach((response, url) => {
+        const request = http.expectOne(url);
+        expect(request.request.method).toBe('GET');
+        request.flush(response as any);
+      });
+
+      expect(loaded).toBe(true);
+      expect(renderAddresses(component.viewModel!.addresses)).toMatchObject({
+        Street: '-',
+        'Street Number': '407',
+        Neighborhood: 'SANTA RITA'
+      });
+      expect(address).toEqual(legacyAddress);
+      http.expectNone((request) => [
+          'POST',
+          'PUT',
+          'PATCH',
+          'DELETE'
+        ].includes(request.method));
+      http.verify();
+    });
   });
 
   it('does not render section-level Edit buttons in the read-only overview', () => {

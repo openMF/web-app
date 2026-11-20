@@ -509,21 +509,21 @@ export class PersonProductionPersonalDataComponent {
 
   get addressFields(): PersonalDataField[] {
     const address = this.homeAddress;
+    // WEB-1444 person overview convention: line 1 is the exterior number and line 2 the neighborhood.
+    // These generic API fields do not establish an interior-number meaning for line 3.
     return this.fixedFields([
       {
         label: 'Street',
-        value: () =>
-          this.readObjectValue(address, [
-            'street',
-            'addressLine1'
-          ])
+        value: () => this.readObjectValue(address, ['street'])
       },
       {
         label: 'Street Number',
         value: () =>
           this.readObjectValue(address, [
             'streetNumber',
-            'addressLine2'
+            'houseNumber',
+            'houseNo',
+            'addressLine1'
           ])
       },
       {
@@ -531,7 +531,8 @@ export class PersonProductionPersonalDataComponent {
         value: () =>
           this.readObjectValue(address, [
             'apartmentNumber',
-            'addressLine3'
+            'apartmentNo',
+            'unitNumber'
           ])
       },
       {
@@ -540,7 +541,8 @@ export class PersonProductionPersonalDataComponent {
           this.readObjectValue(address, [
             'neighborhood',
             'colony',
-            'addressLine1'
+            'colonia',
+            'addressLine2'
           ])
       },
       {
