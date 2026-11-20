@@ -25,7 +25,7 @@
               <b>{{ 'labels.inputs.Number of Collaterals' | translate }} :</b>
             </td>
             <td class="flex-25 left">
-              {{ loanCollaterals?.length | formatNumber }}
+              {{ loanCollaterals?.length | formatNumber: '' : 0 }}
             </td>
             <td class="flex-25">
               <b>{{ 'labels.inputs.Total Amount' | translate }} :</b>
