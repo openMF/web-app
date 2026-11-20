@@ -162,6 +162,17 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   }
 
   /**
+   * Formats the fee day of a monthly or annual charge for display. The value may be Fineract's
+   * ISO month-day "--07-22" for a saved account, the [month, day] of the product template, or a
+   * date picked in the dialog.
+   * @param {any} feeOnMonthDay Fee day
+   * @returns {string} Formatted fee day
+   */
+  formatFeeOnMonthDay(feeOnMonthDay: any): string {
+    return this.dateUtils.formatMonthDay(feeOnMonthDay, 'dd MMMM', this.settingsService.dateFormat);
+  }
+
+  /**
    * Edits the Charge Date
    * @param {any} charge Charge
    */
