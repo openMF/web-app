@@ -176,6 +176,27 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   }
 
   /**
+   * Makes a dropdown at least as wide as the tab that opened it, so that the two line up as one shape.
+   * @param menu Dropdown that was opened.
+   * @param tab Toolbar tab that opened it.
+   */
+  matchMenuToTab(menu: MatMenu, tab: HTMLElement) {
+    const panel = document.getElementById(menu.panelId);
+    if (panel) {
+      panel.style.minWidth = `${tab.getBoundingClientRect().width}px`;
+    }
+  }
+
+  /**
+   * Marks a dropdown that opened beside another menu instead of under the toolbar,
+   * so that it is drawn as a free-standing panel.
+   * @param menu Dropdown that was opened as a submenu.
+   */
+  markAsSubmenu(menu: MatMenu) {
+    document.getElementById(menu.panelId)?.classList.add('mifosx-toolbar-submenu');
+  }
+
+  /**
    * Logs out the authenticated user and redirects to login page.
    * Uses unified AuthenticationService which handles both OAuth2 and OIDC logout.
    */
