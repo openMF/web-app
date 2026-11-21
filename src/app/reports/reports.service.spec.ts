@@ -126,6 +126,34 @@ describe('ReportsService report output formats', () => {
     req.flush(new ArrayBuffer(0));
   });
   it.each([
+    [
+      'es-MX',
+      {},
+      'es_MX'
+    ],
+    [
+      'en',
+      { locale: 'es-MX' },
+      'es_MX'
+    ],
+    [
+      'es_MX',
+      {},
+      'es_MX'
+    ],
+    [
+      'en',
+      {},
+      'en'
+    ]
+  ])('sends the effective BIRT locale in Fineract format (%s, %j)', (locale, formData, expected) => {
+    service.getBirtRunReportData('Client Details', formData, 'default', locale, 'dd MMMM yyyy').subscribe();
+
+    const req = httpMock.expectOne((request) => request.url === '/runreports/Client Details');
+    expect(req.request.params.get('locale')).toBe(expected);
+    req.flush(new ArrayBuffer(0));
+  });
+  it.each([
     'KYCNaturalPerson',
     'KYCLegalPerson'
   ])('requests %s as PDF for the current client and tenant', (report) => {

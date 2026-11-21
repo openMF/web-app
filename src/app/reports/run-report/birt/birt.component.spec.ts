@@ -11,7 +11,7 @@ import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@a
 import { Component, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -162,9 +162,11 @@ describe('BirtComponent', () => {
   });
 
   it('runs the report against the tenant the user is working in', () => {
+    TestBed.inject(TranslateService).use('es-MX').subscribe();
     const request = run('HTML');
 
     expect(request.request.params.get('tenantIdentifier')).toBe('acme');
+    expect(request.request.params.get('locale')).toBe('es_MX');
     request.flush(documentOf('<html></html>'), { headers: { 'Content-Type': 'text/html' } });
   });
 
