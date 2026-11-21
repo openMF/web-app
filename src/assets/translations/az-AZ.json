@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Yeni depozit",
+    "searchHint": "Müştəri adı, müştəri nömrəsi və ya əmanət hesabı nömrəsi ilə axtarın.",
+    "searching": "Axtarılır…",
+    "clearSearch": "Müştəri axtarışını təmizlə",
+    "noResults": "Uyğun müştəri və ya əmanət hesabı tapılmadı.",
+    "loadingAccounts": "Müştəri və hesablar yüklənir…",
+    "changeCustomer": "Müştərini dəyiş",
+    "accountHint": "Depoziti qəbul edəcək əmanət hesabını seçin.",
+    "ineligible": "Depozit üçün uyğun deyil",
+    "unavailable": "Mövcud deyil",
+    "noAccounts": "Bu müştəri üçün əmanət hesabı tapılmadı.",
+    "chooseCustomer": "Əmanət hesablarını görmək üçün müştəri seçin.",
+    "loadingSelection": "Hesab məlumatları və depozit seçimləri yüklənir…",
+    "depositInto": "Depozit ediləcək hesab",
+    "chooseAccount": "Təyinat əmanət hesabını seçin.",
+    "selectedAccount": "Seçilmiş hesab",
+    "detailsUnavailable": "Hesab məlumatları mövcud deyil.",
+    "historyUnavailable": "Son əməliyyatlar mövcud deyil.",
+    "safetyNotice": "Davam etməzdən əvvəl müştərinin şəxsiyyətini və təyinat hesabının nömrəsini təsdiqləyin.",
+    "customerUnavailable": "Müştəri və hesab sahibliyi təsdiqlənmədi. Müştərini yenidən seçin."
+  },
   "checkerInbox": {
     "status": {
       "processing": "{{count}} yoxlama elementi emal edilir…",

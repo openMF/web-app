@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Nouveau dépôt",
+    "searchHint": "Recherchez par nom, numéro de client ou numéro de compte d’épargne.",
+    "searching": "Recherche…",
+    "clearSearch": "Effacer la recherche du client",
+    "noResults": "Aucun client ni compte d’épargne correspondant.",
+    "loadingAccounts": "Chargement du client et des comptes…",
+    "changeCustomer": "Changer de client",
+    "accountHint": "Choisissez le compte d’épargne qui recevra le dépôt.",
+    "ineligible": "Non admissible aux dépôts",
+    "unavailable": "Indisponible",
+    "noAccounts": "Aucun compte d’épargne trouvé pour ce client.",
+    "chooseCustomer": "Sélectionnez un client pour afficher ses comptes d’épargne.",
+    "loadingSelection": "Chargement du compte et des options de dépôt…",
+    "depositInto": "Déposer sur",
+    "chooseAccount": "Sélectionnez un compte d’épargne destinataire.",
+    "selectedAccount": "Compte sélectionné",
+    "detailsUnavailable": "Détails du compte indisponibles.",
+    "historyUnavailable": "Transactions récentes indisponibles.",
+    "safetyNotice": "Confirmez l’identité du client et le numéro du compte destinataire avant de continuer.",
+    "customerUnavailable": "Le client et le titulaire du compte n’ont pas pu être confirmés. Sélectionnez à nouveau le client."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Traitement de {{count}} élément(s) de vérification…",

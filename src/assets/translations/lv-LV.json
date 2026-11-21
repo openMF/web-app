@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Jauna iemaksa",
+    "searchHint": "Meklējiet pēc klienta vārda, klienta numura vai krājkonta numura.",
+    "searching": "Meklē…",
+    "clearSearch": "Notīrīt klienta meklēšanu",
+    "noResults": "Nav atbilstošu klientu vai krājkontu.",
+    "loadingAccounts": "Ielādē klientu un kontus…",
+    "changeCustomer": "Mainīt klientu",
+    "accountHint": "Izvēlieties krājkontu, kurā tiks veikta iemaksa.",
+    "ineligible": "Nav piemērots iemaksām",
+    "unavailable": "Nav pieejams",
+    "noAccounts": "Šim klientam nav atrasti krājkonti.",
+    "chooseCustomer": "Izvēlieties klientu, lai skatītu viņa krājkontus.",
+    "loadingSelection": "Ielādē konta datus un iemaksas iespējas…",
+    "depositInto": "Iemaksāt kontā",
+    "chooseAccount": "Izvēlieties galamērķa krājkontu.",
+    "selectedAccount": "Izvēlētais konts",
+    "detailsUnavailable": "Konta dati nav pieejami.",
+    "historyUnavailable": "Pēdējie darījumi nav pieejami.",
+    "safetyNotice": "Pirms turpināt, apstipriniet klienta identitāti un galamērķa konta numuru.",
+    "customerUnavailable": "Neizdevās apstiprināt klientu un konta īpašumtiesības. Izvēlieties klientu vēlreiz."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Notiek {{count}} pārbaudes elementu apstrāde…",

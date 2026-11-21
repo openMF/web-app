@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "New Deposit",
+    "searchHint": "Search by customer name, client number or savings account number.",
+    "searching": "Searching…",
+    "clearSearch": "Clear customer search",
+    "noResults": "No matching customers or savings accounts.",
+    "loadingAccounts": "Loading customer and accounts…",
+    "changeCustomer": "Change Customer",
+    "accountHint": "Choose the savings account that will receive the deposit.",
+    "ineligible": "Ineligible for deposits",
+    "unavailable": "Unavailable",
+    "noAccounts": "No savings accounts found for this customer.",
+    "chooseCustomer": "Select a customer to view their savings accounts.",
+    "loadingSelection": "Loading account details and deposit options…",
+    "depositInto": "Deposit into",
+    "chooseAccount": "Select a destination savings account.",
+    "selectedAccount": "Selected Account",
+    "detailsUnavailable": "Account details unavailable.",
+    "historyUnavailable": "Recent transactions unavailable.",
+    "safetyNotice": "Confirm the customer’s identity and the destination account number before continuing.",
+    "customerUnavailable": "The customer and account ownership could not be confirmed. Please select the customer again."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Processing {{count}} checker item(s)…",
