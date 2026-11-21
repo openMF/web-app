@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Injector,
+  OnInit,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -19,6 +28,10 @@ import {
   Validators
 } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatIconButton } from '@angular/material/button';
+import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { MatIcon } from '@angular/material/icon';
+import { MatPrefix } from '@angular/material/form-field';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import {
   MatStepper,
@@ -32,12 +45,14 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   catchError,
-  debounceTime,
   distinctUntilChanged,
   EMPTY,
   finalize,
   forkJoin,
   map,
+  merge,
+  Subject,
+  timer,
   of,
   switchMap,
   tap
@@ -52,6 +67,7 @@ import { environment } from 'environments/environment';
 import {
   BaseTellerService,
   DepositClient,
+  DepositAccountTransaction,
   DepositClientAccounts,
   DepositPaymentType,
   DepositSavingsAccount,
@@ -96,6 +112,11 @@ type DepositFormGroup = FormGroup<{
   styleUrls: ['./savings-account-deposit.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatIconButton,
+    MatIcon,
+    MatPrefix,
+    MatRadioButton,
+    MatRadioGroup,
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatProgressSpinner,
@@ -117,6 +138,8 @@ export class SavingsAccountDepositComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private injector = inject(Injector);
+  private searchRetry = new Subject<void>();
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
@@ -136,6 +159,12 @@ export class SavingsAccountDepositComponent implements OnInit {
   isLoadingTemplate = false;
   isSubmitting = false;
   canAccessWorkflow = false;
+  isLoadingDetails = false;
+  accountDetailsUnavailable = false;
+  hasSearched = false;
+  private templateReady = false;
+  private detailLoadRequestId = 0;
+  private accountDetails = new Map<string, DepositSavingsAccount>();
   private accountLoadRequestId = 0;
   private templateLoadRequestId = 0;
   private receiptLoadRequestId = 0;
@@ -218,57 +247,94 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   watchLookup(): void {
-    this.lookupForm
-      .get('search')
-      ?.valueChanges.pipe(
-        tap((value: string | DepositSearchResult | null) => {
-          if (typeof value === 'string') {
-            this.clearSelectedAccount();
-          }
+    const queryChanges = this.lookupForm.controls.search.valueChanges.pipe(
+      map((value) => (typeof value === 'string' ? value.trim() : null)),
+      distinctUntilChanged()
+    );
+    merge(
+      queryChanges,
+      this.searchRetry.pipe(
+        map(() => {
+          const value = this.lookupForm.controls.search.value;
+          return typeof value === 'string' ? value.trim() : null;
+        })
+      )
+    )
+      .pipe(
+        tap((searchTerm) => {
+          if (searchTerm !== null) this.clearSelectedAccount();
+          this.searchResults = [];
+          this.hasSearched = false;
+          this.isSearching = false;
         }),
-        map((value: string | DepositSearchResult | null) => (typeof value === 'string' ? value.trim() : '')),
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((searchTerm: string) => {
-          if (searchTerm.length < 2) {
-            this.searchResults = [];
-            this.isSearching = false;
+        // Switching before the debounce cancels an old request immediately, but equivalent
+        // trimmed queries keep their current results or in-flight request.
+        switchMap((searchTerm) => {
+          if (searchTerm === null || searchTerm.length < 2) {
             this.cdr.markForCheck();
             return EMPTY;
           }
-          this.isSearching = true;
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-          return this.baseTellerService.searchDepositCustomersAndAccounts(searchTerm).pipe(
-            catchError((error: unknown) => {
-              this.searchResults = [];
-              this.errorMessage =
-                this.extractErrorMessage(error) || 'labels.text.Customer or savings account search failed';
-              return of([]);
-            }),
-            finalize(() => {
-              this.isSearching = false;
+          return timer(300).pipe(
+            switchMap(() => {
+              this.isSearching = true;
+              this.errorMessage = '';
               this.cdr.markForCheck();
+              return this.baseTellerService.searchDepositCustomersAndAccounts(searchTerm).pipe(
+                catchError((error: unknown) => {
+                  this.searchResults = [];
+                  this.errorMessage =
+                    this.extractErrorMessage(error) || 'labels.text.Customer or savings account search failed';
+                  return of([]);
+                }),
+                finalize(() => {
+                  this.isSearching = false;
+                  this.cdr.markForCheck();
+                })
+              );
             })
           );
         }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((response: DepositSearchResponse) => {
-        this.searchResults = Array.isArray(response) ? response : response?.pageItems || [];
+        const results = Array.isArray(response) ? response : response?.pageItems || [];
+        this.searchResults = results.filter((result) => [
+            'client',
+            'clients',
+            'savings'
+          ].includes(this.entityType(result)));
+        this.hasSearched = !this.errorMessage;
+        this.cdr.markForCheck();
       });
 
     this.lookupForm
       .get('savingsAccount')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((account: DepositSavingsAccount | '' | null) => {
-        if (account && typeof account === 'object') {
-          this.selectedSavingsAccount = account;
-          const savingsId = this.savingsAccountId(account);
-          if (savingsId) {
-            this.loadDepositTemplate(savingsId);
-          }
+        if (
+          !account ||
+          typeof account !== 'object' ||
+          !this.isActiveSavingsAccount(account) ||
+          !this.savingsAccounts.some(
+            (option) => String(this.savingsAccountId(option)) === String(this.savingsAccountId(account))
+          )
+        ) {
+          this.detailLoadRequestId++;
+          this.templateLoadRequestId++;
+          this.isLoadingDetails = false;
+          this.isLoadingTemplate = false;
+          this.templateReady = false;
+          this.paymentTypeOptions = [];
+          this.selectedSavingsAccount = null;
+          this.lookupForm.controls.savingsAccount.setErrors({ ineligible: true });
+          return;
         }
+        this.templateLoadRequestId++;
+        this.templateReady = false;
+        this.paymentTypeOptions = [];
+        this.selectedSavingsAccount = account;
+        this.loadSelectedAccountDetails(account);
+        if (this.selectedSavingsAccount) this.loadDepositTemplate(this.savingsAccountId(account));
       });
   }
 
@@ -288,7 +354,7 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   selectLookupResult(result: DepositSearchResult): void {
-    if (!result || typeof result !== 'object') {
+    if (this.isSubmitting || this.commandResult || !result || typeof result !== 'object') {
       return;
     }
     this.clearSelectedAccount();
@@ -300,20 +366,22 @@ export class SavingsAccountDepositComponent implements OnInit {
       }
       return;
     }
+    if (resultType !== 'client' && resultType !== 'clients') return;
     const clientId = result.entityId || result.id || result.clientId;
     if (clientId) {
       this.loadClientAccounts(clientId);
     }
   }
 
-  loadClientAccounts(clientId: FineractId): void {
+  loadClientAccounts(clientId: FineractId, selectedId?: FineractId): void {
     const requestId = ++this.accountLoadRequestId;
     this.isLoadingAccounts = true;
     forkJoin({
-      customer: this.baseTellerService.getDepositClient(clientId).pipe(catchError(() => of(null))),
+      customer: this.baseTellerService.getDepositClient(clientId),
       accounts: this.baseTellerService.getDepositClientAccounts(clientId)
     })
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.accountLoadRequestId) {
             this.isLoadingAccounts = false;
@@ -326,12 +394,21 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.accountLoadRequestId) {
             return;
           }
+          if (!customer?.id || String(customer.id) !== String(clientId)) {
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
+          }
           this.customer = customer;
-          this.savingsAccounts = this.activeSavingsAccounts(
-            accounts?.savingsAccounts || accounts?.savingAccounts || []
-          );
-          if (!this.savingsAccounts.length) {
-            this.errorMessage = 'labels.text.No active savings accounts available for this customer';
+          this.savingsAccounts = accounts?.savingsAccounts || accounts?.savingAccounts || [];
+          if (selectedId !== undefined) {
+            const selected = this.savingsAccounts.find(
+              (account) => String(this.savingsAccountId(account)) === String(selectedId)
+            );
+            if (selected && this.isActiveSavingsAccount(selected)) {
+              this.lookupForm.controls.savingsAccount.setValue(selected);
+            } else {
+              this.errorMessage = 'depositSelection.ineligible';
+            }
           }
         },
         error: (error: unknown) => {
@@ -349,6 +426,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.baseTellerService
       .getDepositSavingsAccount(savingsId)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.accountLoadRequestId) {
             this.isLoadingAccounts = false;
@@ -361,17 +439,12 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.accountLoadRequestId) {
             return;
           }
-          this.selectedSavingsAccount = account;
-          this.savingsAccounts = this.isActiveSavingsAccount(account) ? [account] : [];
-          this.customer = {
-            id: account.clientId,
-            displayName: account.clientName || account.clientDisplayName
-          };
-          if (this.savingsAccounts.length) {
-            this.lookupForm.patchValue({ savingsAccount: account });
-          } else {
-            this.errorMessage = 'labels.text.Selected savings account is not active';
+          if (!account.clientId || String(this.savingsAccountId(account)) !== String(savingsId)) {
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
           }
+          this.accountDetails.set(String(savingsId), account);
+          this.loadClientAccounts(account.clientId, savingsId);
         },
         error: (error: unknown) => {
           if (requestId !== this.accountLoadRequestId) {
@@ -385,12 +458,18 @@ export class SavingsAccountDepositComponent implements OnInit {
   loadDepositTemplate(savingsId: FineractId): void {
     const requestId = ++this.templateLoadRequestId;
     this.isLoadingTemplate = true;
+    this.templateReady = false;
+    this.paymentTypeOptions = [];
+    this.errorMessage = '';
+    this.lookupForm.controls.savingsAccount.setErrors({ loading: true });
     this.baseTellerService
       .getSavingsDepositTemplate(savingsId)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.templateLoadRequestId) {
             this.isLoadingTemplate = false;
+            this.updateSelectionValidity();
             this.cdr.markForCheck();
           }
         })
@@ -400,6 +479,8 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.templateLoadRequestId) {
             return;
           }
+          this.templateReady = true;
+          this.updateSelectionValidity();
           this.paymentTypeOptions = template?.paymentTypeOptions || [];
           this.syncSelectedPaymentType();
           if (!this.filteredPaymentTypeOptions.length) {
@@ -411,9 +492,225 @@ export class SavingsAccountDepositComponent implements OnInit {
             return;
           }
           this.paymentTypeOptions = [];
+          this.depositForm.controls.paymentTypeId.setValue('');
+          this.lookupForm.controls.savingsAccount.setErrors({ templateUnavailable: true });
           this.errorMessage = this.extractErrorMessage(error) || 'labels.text.Payment types could not be loaded';
         }
       });
+  }
+
+  get selectionReady(): boolean {
+    return (
+      !!this.customer?.id &&
+      !!this.selectedSavingsAccount &&
+      this.isActiveSavingsAccount(this.selectedSavingsAccount) &&
+      this.lookupForm.valid &&
+      this.templateReady &&
+      !this.isLoadingAccounts &&
+      !this.isLoadingTemplate
+    );
+  }
+
+  get customerName(): string {
+    return this.customer?.displayName || this.customer?.fullname || this.customer?.name || '';
+  }
+
+  get customerInitials(): string {
+    return this.customerName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join('');
+  }
+
+  changeCustomer(input: HTMLInputElement): void {
+    if (this.isSubmitting || this.commandResult) return;
+    this.lookupForm.controls.search.setValue('');
+    input.focus();
+  }
+
+  selectAccount(account: DepositSavingsAccount): void {
+    if (this.isSubmitting || this.commandResult || !this.isActiveSavingsAccount(account)) return;
+    if (String(this.selectedSavingsAccountId()) === String(this.savingsAccountId(account))) return;
+    this.lookupForm.controls.savingsAccount.setValue(account);
+  }
+
+  retrySelection(searchInput?: HTMLInputElement): void {
+    if (this.isSubmitting || this.commandResult) return;
+    if (this.selectedSavingsAccount) {
+      this.loadDepositTemplate(this.savingsAccountId(this.selectedSavingsAccount));
+    } else {
+      const result = this.lookupForm.controls.search.value;
+      if (result && typeof result === 'object') this.selectLookupResult(result);
+      else if (typeof result === 'string' && result.trim().length >= 2) {
+        this.searchRetry.next();
+        searchInput?.focus();
+      }
+    }
+  }
+
+  startNewDeposit(stepper: MatStepper, searchInput: HTMLInputElement): void {
+    if (this.isSubmitting || !this.commandResult) return;
+    const businessDate = this.settingsService.businessDate;
+    this.maxDate = businessDate;
+    // Invalidates pending receipt/account responses and generates the next receipt number once.
+    this.clearSelectedAccount();
+    const receiptNumber = this.depositForm.controls.receiptNumber.value;
+    stepper.reset();
+    this.lookupForm.reset({ search: '', savingsAccount: '' });
+    this.depositForm.reset(
+      {
+        depositType: 'CASH',
+        transactionDate: businessDate,
+        transactionAmount: 0,
+        paymentTypeId: '',
+        accountNumber: '',
+        checkNumber: '',
+        routingCode: '',
+        receiptNumber,
+        bankNumber: '',
+        note: 'DEPOSITO EN VENTANILLA'
+      },
+      { emitEvent: false }
+    );
+    this.denominations.clear();
+    this.addDenomination();
+    this.applyCheckValidators('CASH');
+    this.searchResults = [];
+    this.hasSearched = false;
+    this.cdr.markForCheck();
+    afterNextRender(() => searchInput.focus(), { injector: this.injector });
+  }
+
+  accountStatusLabel(account: DepositSavingsAccount): string {
+    const status = account.status;
+    return (
+      (typeof status === 'string' ? status : status?.value) ||
+      (this.isActiveSavingsAccount(account) ? 'labels.status.Active' : 'depositSelection.ineligible')
+    );
+  }
+
+  accountBalance(account: DepositSavingsAccount): number | null {
+    return account.summary?.availableBalance ?? account.summary?.accountBalance ?? account.accountBalance ?? null;
+  }
+
+  balanceLabel(account: DepositSavingsAccount): string {
+    return account.summary?.availableBalance != null
+      ? 'labels.inputs.Available Balance'
+      : 'labels.inputs.Account Balance';
+  }
+
+  formatMoney(amount: number | null | undefined, account: DepositSavingsAccount, currency = account.currency): string {
+    if (amount == null) return '';
+    const code = currency?.code || account.currencyCode;
+    const digits = currency?.decimalPlaces;
+    const locale = this.settingsService.language.code;
+    // Intl only formats the server amount; it never changes the stored balance or transaction payload.
+    return new Intl.NumberFormat(locale, {
+      ...(code ? ({ style: 'currency', currency: code, currencyDisplay: 'narrowSymbol' } as const) : {}),
+      ...(digits != null ? { minimumFractionDigits: digits, maximumFractionDigits: digits } : {})
+    }).format(amount);
+  }
+
+  formatAccountDate(date: number[] | undefined): string {
+    if (!date || date.length < 3) return '';
+    return new Intl.DateTimeFormat(this.settingsService.language.code, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }).format(new Date(date[0], date[1] - 1, date[2]));
+  }
+
+  get recentTransactions(): DepositAccountTransaction[] {
+    return [...(this.selectedSavingsAccount?.transactions || [])]
+      .sort((a, b) => this.transactionOrder(b) - this.transactionOrder(a) || Number(b.id) - Number(a.id))
+      .slice(0, 3);
+  }
+
+  transactionDirection(transaction: DepositAccountTransaction): string {
+    // Reversed entries are historical records, not a new credit/debit movement.
+    if (transaction.reversed || transaction.isReversal) return '';
+    if (transaction.entryType === 'CREDIT') return '+';
+    if (transaction.entryType === 'DEBIT') return '−';
+    const type = transaction.transactionType;
+    if (type?.deposit || type?.interestPosting || type?.dividendPayout) return '+';
+    if (type?.withdrawal || type?.feeDeduction || type?.overdraftInterest || type?.withholdTax) return '−';
+    return '';
+  }
+
+  private transactionOrder(transaction: DepositAccountTransaction): number {
+    const date = transaction.date;
+    return date?.length === 3 ? new Date(date[0], date[1] - 1, date[2]).getTime() : 0;
+  }
+
+  private loadSelectedAccountDetails(account: DepositSavingsAccount): void {
+    const requestId = ++this.detailLoadRequestId;
+    const savingsId = this.savingsAccountId(account);
+    this.accountDetailsUnavailable = false;
+    const cached = this.accountDetails.get(String(savingsId));
+    this.isLoadingDetails = true;
+    (cached ? of(cached) : this.baseTellerService.getDepositSavingsAccount(savingsId))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          if (requestId === this.detailLoadRequestId) {
+            this.isLoadingDetails = false;
+            this.updateSelectionValidity();
+            this.cdr.markForCheck();
+          }
+        })
+      )
+      .subscribe({
+        next: (details) => {
+          if (requestId !== this.detailLoadRequestId || this.isSubmitting || this.commandResult) return;
+          if (
+            String(this.savingsAccountId(details)) !== String(savingsId) ||
+            !details.clientId ||
+            String(details.clientId) !== String(this.customer?.id)
+          ) {
+            this.selectedSavingsAccount = null;
+            this.lookupForm.controls.savingsAccount.setValue('', { emitEvent: false });
+            this.templateLoadRequestId++;
+            this.templateReady = false;
+            this.isLoadingTemplate = false;
+            this.paymentTypeOptions = [];
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
+          }
+          // Preserve known identifiers only; status, currency and balances come from details.
+          const detailedAccount: DepositSavingsAccount = {
+            ...details,
+            productName:
+              details.productName || details.savingsProductName || account.productName || account.savingsProductName,
+            accountNo: details.accountNo || details.accountNumber || account.accountNo || account.accountNumber
+          };
+          this.accountDetails.set(String(savingsId), detailedAccount);
+          this.selectedSavingsAccount = detailedAccount;
+          this.savingsAccounts = this.savingsAccounts.map((item) =>
+            String(this.savingsAccountId(item)) === String(savingsId) ? detailedAccount : item
+          );
+          this.lookupForm.controls.savingsAccount.setValue(detailedAccount, { emitEvent: false });
+          this.updateSelectionValidity();
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          if (requestId !== this.detailLoadRequestId) return;
+          // The client account list already establishes ownership and eligibility. Optional history is independent.
+          this.accountDetailsUnavailable = true;
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+  private updateSelectionValidity(): void {
+    const control = this.lookupForm.controls.savingsAccount;
+    control.updateValueAndValidity({ emitEvent: false });
+    if (!this.selectedSavingsAccount || !this.isActiveSavingsAccount(this.selectedSavingsAccount)) {
+      control.setErrors({ ineligible: true });
+    } else if (!this.templateReady || this.isLoadingTemplate) {
+      control.setErrors({ selectionPending: true });
+    }
   }
 
   addDenomination(): void {
@@ -449,7 +746,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     if (typeof result === 'string') {
       return result;
     }
-    return `${result.entityAccountNo || result.accountNo || result.id || result.entityId || ''} - ${
+    return `${result.entityAccountNo || result.accountNo || result.id || result.entityId || result.accountId || ''} - ${
       result.entityName || result.displayName || result.name || ''
     }`;
   }
@@ -597,11 +894,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     });
   }
 
-  private activeSavingsAccounts(accounts: DepositSavingsAccount[]): DepositSavingsAccount[] {
-    return accounts.filter((account: DepositSavingsAccount) => this.isActiveSavingsAccount(account));
-  }
-
-  private isActiveSavingsAccount(account: DepositSavingsAccount): boolean {
+  isActiveSavingsAccount(account: DepositSavingsAccount): boolean {
     return (
       (typeof account?.status === 'object' && account.status?.active === true) ||
       (typeof account?.status === 'object' && account.status?.value === 'Active') ||
@@ -609,7 +902,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     );
   }
 
-  private entityType(result: DepositSearchResult): string {
+  entityType(result: DepositSearchResult): string {
     return String(result.entityType || result.subEntityType || result.accountType || '').toLowerCase();
   }
 
@@ -617,7 +910,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     return this.selectedSavingsAccount ? this.savingsAccountId(this.selectedSavingsAccount) : '';
   }
 
-  private savingsAccountId(account: DepositSavingsAccount): FineractId {
+  savingsAccountId(account: DepositSavingsAccount): FineractId {
     return account.id || account.accountId || account.savingsId || '';
   }
 
@@ -707,6 +1000,12 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   private clearSelectedAccount(): void {
+    this.detailLoadRequestId++;
+    this.accountDetails.clear();
+    this.isLoadingDetails = false;
+    this.accountDetailsUnavailable = false;
+    this.templateReady = false;
+    this.errorMessage = '';
     this.receiptLoadRequestId++;
     if (this.commandResult) {
       this.depositForm.controls.receiptNumber.setValue(this.generateReceiptNumber());

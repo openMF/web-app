@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Neue Einzahlung",
+    "searchHint": "Nach Kundenname, Kundennummer oder Sparkontonummer suchen.",
+    "searching": "Suche läuft…",
+    "clearSearch": "Kundensuche löschen",
+    "noResults": "Keine passenden Kunden oder Sparkonten.",
+    "loadingAccounts": "Kunde und Konten werden geladen…",
+    "changeCustomer": "Kunde ändern",
+    "accountHint": "Wählen Sie das Sparkonto für die Einzahlung.",
+    "ineligible": "Für Einzahlungen nicht zulässig",
+    "unavailable": "Nicht verfügbar",
+    "noAccounts": "Keine Sparkonten für diesen Kunden gefunden.",
+    "chooseCustomer": "Wählen Sie einen Kunden, um dessen Sparkonten anzuzeigen.",
+    "loadingSelection": "Kontodaten und Einzahlungsoptionen werden geladen…",
+    "depositInto": "Einzahlen auf",
+    "chooseAccount": "Wählen Sie ein Zielsparkonto.",
+    "selectedAccount": "Ausgewähltes Konto",
+    "detailsUnavailable": "Kontodaten nicht verfügbar.",
+    "historyUnavailable": "Letzte Transaktionen nicht verfügbar.",
+    "safetyNotice": "Bestätigen Sie die Identität des Kunden und die Zielkontonummer, bevor Sie fortfahren.",
+    "customerUnavailable": "Kunde und Kontoinhaber konnten nicht bestätigt werden. Wählen Sie den Kunden erneut."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Verarbeitung von {{count}} Checker-Element(en)…",

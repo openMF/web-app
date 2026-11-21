@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Nuovo deposito",
+    "searchHint": "Cerca per nome, numero cliente o numero di conto di risparmio.",
+    "searching": "Ricerca…",
+    "clearSearch": "Cancella ricerca cliente",
+    "noResults": "Nessun cliente o conto di risparmio corrispondente.",
+    "loadingAccounts": "Caricamento cliente e conti…",
+    "changeCustomer": "Cambia cliente",
+    "accountHint": "Scegli il conto di risparmio che riceverà il deposito.",
+    "ineligible": "Non idoneo ai depositi",
+    "unavailable": "Non disponibile",
+    "noAccounts": "Nessun conto di risparmio trovato per questo cliente.",
+    "chooseCustomer": "Seleziona un cliente per visualizzarne i conti di risparmio.",
+    "loadingSelection": "Caricamento dettagli del conto e opzioni di deposito…",
+    "depositInto": "Deposita su",
+    "chooseAccount": "Seleziona un conto di risparmio di destinazione.",
+    "selectedAccount": "Conto selezionato",
+    "detailsUnavailable": "Dettagli del conto non disponibili.",
+    "historyUnavailable": "Transazioni recenti non disponibili.",
+    "safetyNotice": "Conferma l’identità del cliente e il numero del conto di destinazione prima di continuare.",
+    "customerUnavailable": "Impossibile confermare il cliente e la titolarità del conto. Seleziona nuovamente il cliente."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Elaborazione di {{count}} elementi di controllo…",

@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Nový vklad",
+    "searchHint": "Hledejte podle jména, čísla klienta nebo čísla spořicího účtu.",
+    "searching": "Vyhledávání…",
+    "clearSearch": "Vymazat hledání klienta",
+    "noResults": "Nenalezeni žádní odpovídající klienti ani spořicí účty.",
+    "loadingAccounts": "Načítání klienta a účtů…",
+    "changeCustomer": "Změnit klienta",
+    "accountHint": "Vyberte spořicí účet, na který bude vklad připsán.",
+    "ineligible": "Vklady nejsou povoleny",
+    "unavailable": "Nedostupné",
+    "noAccounts": "Pro tohoto klienta nebyly nalezeny spořicí účty.",
+    "chooseCustomer": "Vyberte klienta pro zobrazení jeho spořicích účtů.",
+    "loadingSelection": "Načítání údajů účtu a možností vkladu…",
+    "depositInto": "Vložit na",
+    "chooseAccount": "Vyberte cílový spořicí účet.",
+    "selectedAccount": "Vybraný účet",
+    "detailsUnavailable": "Údaje o účtu nejsou dostupné.",
+    "historyUnavailable": "Nedávné transakce nejsou dostupné.",
+    "safetyNotice": "Před pokračováním ověřte totožnost klienta a číslo cílového účtu.",
+    "customerUnavailable": "Klienta a vlastnictví účtu se nepodařilo potvrdit. Vyberte klienta znovu."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Zpracovává se {{count}} položek ke kontrole…",
