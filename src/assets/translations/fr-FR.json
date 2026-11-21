@@ -9226,5 +9226,38 @@
       "invalid": "Les horaires de l’agence contiennent des données non valides.",
       "error": "Les horaires de l’agence n’ont pas pu être chargés."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Montant à déposer",
+    "changeAccount": "Changer de compte",
+    "banknotes": "Billets",
+    "coins": "Pièces",
+    "cashCounting": "Comptage des espèces",
+    "countHint": "Saisissez le nombre de billets et pièces reçus par valeur.",
+    "clearCount": "Effacer le comptage",
+    "decrease": "Diminuer la quantité de {{value}}",
+    "increase": "Augmenter la quantité de {{value}}",
+    "quantityFor": "Quantité de {{value}}",
+    "quantityInvalid": "Saisissez un entier de 0 à {{max}}.",
+    "counted": "Compté",
+    "matched": "Le comptage correspond au montant",
+    "missing": "Il manque {{difference}} pour atteindre le montant",
+    "excess": "Le comptage dépasse le montant de {{difference}}",
+    "neutral": "Saisissez un montant valide pour vérifier les espèces.",
+    "invalid": "Vérifiez les valeurs et les quantités.",
+    "pieces": "{{banknotes}} billets, {{coins}} pièces",
+    "amountInvalid": "Saisissez un montant positif respectant la précision de la devise du compte.",
+    "selectionInvalid": "Attendez le chargement d’un compte valide et de ses détails.",
+    "dateInvalid": "Saisissez une date de transaction valide.",
+    "paymentRequired": "Sélectionnez un type de paiement compatible.",
+    "checkRequired": "Complétez les informations obligatoires du chèque.",
+    "complete": "Tous les champs obligatoires sont remplis",
+    "reviewFields": "Vérifiez les champs indiqués.",
+    "generatedReceipt": "Généré automatiquement",
+    "optional": "Facultatif",
+    "notesHint": "Ex. : dépôt par un proche, référence de salaire…",
+    "summary": "Récapitulatif",
+    "estimatedBalance": "Solde estimé après le dépôt",
+    "notice": "Vérifiez le compte et le montant dans l’aperçu avant de soumettre. Le comptage est vérifié localement ; la transaction confirmée détermine le solde final."
   }
 }

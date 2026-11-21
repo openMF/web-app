@@ -9228,5 +9228,38 @@
       "invalid": "Rozvrh pobočky obsahuje neplatné údaje.",
       "error": "Otevírací dobu pobočky se nepodařilo načíst."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Částka vkladu",
+    "changeAccount": "Změnit účet",
+    "banknotes": "Bankovky",
+    "coins": "Mince",
+    "cashCounting": "Počítání hotovosti",
+    "countHint": "Zadejte počet přijatých kusů pro každou nominální hodnotu.",
+    "clearCount": "Vymazat počítání",
+    "decrease": "Snížit počet {{value}}",
+    "increase": "Zvýšit počet {{value}}",
+    "quantityFor": "Počet {{value}}",
+    "quantityInvalid": "Zadejte celé číslo od 0 do {{max}}.",
+    "counted": "Spočítáno",
+    "matched": "Hotovost odpovídá částce",
+    "missing": "Do částky chybí {{difference}}",
+    "excess": "Hotovost převyšuje částku o {{difference}}",
+    "neutral": "Zadejte platnou částku pro kontrolu hotovosti.",
+    "invalid": "Zkontrolujte nominální hodnoty a počty.",
+    "pieces": "{{banknotes}} bankovek, {{coins}} mincí",
+    "amountInvalid": "Zadejte kladnou částku s přesností měny účtu.",
+    "selectionInvalid": "Počkejte na načtení platného účtu a jeho údajů.",
+    "dateInvalid": "Zadejte platné datum transakce.",
+    "paymentRequired": "Vyberte odpovídající typ platby.",
+    "checkRequired": "Vyplňte povinné údaje šeku.",
+    "complete": "Všechna povinná pole jsou vyplněna",
+    "reviewFields": "Zkontrolujte označená pole.",
+    "generatedReceipt": "Generováno automaticky",
+    "optional": "Nepovinné",
+    "notesHint": "Např. vklad člena rodiny, reference mzdy…",
+    "summary": "Souhrn",
+    "estimatedBalance": "Odhadovaný zůstatek po vkladu",
+    "notice": "Před odesláním ověřte účet a částku v náhledu. Hotovost se kontroluje místně; konečný zůstatek určuje potvrzená transakce."
   }
 }

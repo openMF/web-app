@@ -373,159 +373,360 @@
             </div>
           </mat-step>
 
-          <mat-step [stepControl]="depositForm" [editable]="!isSubmitting && !commandResult">
+          <mat-step
+            [stepControl]="depositForm"
+            [completed]="canContinueDetails || !!commandResult"
+            [editable]="!isSubmitting && !commandResult"
+          >
             <ng-template matStepLabel>{{ 'labels.heading.Deposit Details' | translate }}</ng-template>
-            <form [formGroup]="depositForm" class="layout-column gap-20px">
-              <div class="form-grid">
-                <mat-form-field>
-                  <mat-label>{{ 'labels.inputs.Deposit Type' | translate }}</mat-label>
-                  <mat-select formControlName="depositType" required>
-                    <mat-option value="CASH">{{ 'labels.inputs.Cash' | translate }}</mat-option>
-                    <mat-option value="CHECK">{{ 'labels.inputs.Check' | translate }}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <mat-form-field (click)="transactionDatePicker.open()">
-                  <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-                  <input
-                    matInput
-                    [min]="minDate"
-                    [max]="maxDate"
-                    [matDatepicker]="transactionDatePicker"
-                    formControlName="transactionDate"
-                    required
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #transactionDatePicker></mat-datepicker>
-                </mat-form-field>
-
-                <mat-form-field>
-                  <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-                  <input type="number" matInput formControlName="transactionAmount" required />
-                  @if (depositForm.controls.transactionAmount.hasError('required')) {
-                    <mat-error>
-                      {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                      <strong>{{ 'labels.commons.required' | translate }}</strong>
-                    </mat-error>
-                  }
-                  @if (depositForm.controls.transactionAmount.hasError('min')) {
-                    <mat-error>{{ 'labels.text.Amount must be greater than zero' | translate }}</mat-error>
-                  }
-                </mat-form-field>
-
-                <mat-form-field>
-                  <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
-                  <mat-select formControlName="paymentTypeId" required>
-                    @if (!filteredPaymentTypeOptions.length) {
-                      <mat-option disabled>{{
-                        'labels.text.No eligible payment types available' | translate
-                      }}</mat-option>
-                    }
-                    @for (paymentType of filteredPaymentTypeOptions; track paymentType) {
-                      <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
-                    }
-                  </mat-select>
-                  @if (depositForm.controls.paymentTypeId.hasError('required')) {
-                    <mat-error>
-                      {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-                      <strong>{{ 'labels.commons.required' | translate }}</strong>
-                    </mat-error>
-                  }
-                </mat-form-field>
-              </div>
-
-              @if (depositType === 'CASH') {
-                <section class="funding-panel">
-                  <div class="section-heading">
-                    <h3>{{ 'labels.inputs.Denominations' | translate }}</h3>
-                    <button type="button" mat-button color="primary" (click)="addDenomination()">
-                      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-                      {{ 'labels.buttons.Add' | translate }}
-                    </button>
-                  </div>
-
-                  <div formArrayName="denominations" class="layout-column gap-20px">
-                    @for (denominationControl of denominations.controls; track denominationControl; let i = $index) {
-                      <div [formGroupName]="i" class="denomination-row">
-                        <mat-form-field>
-                          <mat-label>{{ 'labels.inputs.Denomination' | translate }}</mat-label>
-                          <input type="number" matInput formControlName="denomination" required />
-                        </mat-form-field>
-                        <mat-form-field>
-                          <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
-                          <input type="number" matInput formControlName="quantity" required />
-                        </mat-form-field>
-                        <div class="line-total">
-                          <span>{{ 'labels.inputs.Total' | translate }}</span>
-                          <strong>{{ selectedDenominationLineTotal(denominationControl) }}</strong>
-                        </div>
-                        <button type="button" mat-button color="warn" (click)="removeDenomination(i)">
-                          <fa-icon icon="trash" class="m-r-10"></fa-icon>
-                          {{ 'labels.buttons.Delete' | translate }}
-                        </button>
-                      </div>
-                    }
-                  </div>
-
-                  <div class="total-row" [class.error]="!cashDenominationsReconcile">
-                    <span>{{ 'labels.inputs.Total' | translate }}</span>
-                    <strong>{{ denominationTotal }} / {{ depositAmount }}</strong>
-                  </div>
-                  @if (!cashDenominationsReconcile) {
-                    <div class="message error-message">
-                      {{ 'labels.text.Cash denomination total must equal the transaction amount' | translate }}
-                    </div>
-                  }
-                </section>
-              }
-
-              @if (depositType === 'CHECK') {
-                <section class="funding-panel form-grid">
-                  <mat-form-field>
-                    <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
-                    <input matInput formControlName="accountNumber" required maxlength="50" />
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>{{ 'labels.inputs.Cheque Number' | translate }}</mat-label>
-                    <input matInput formControlName="checkNumber" required maxlength="50" />
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
-                    <input matInput formControlName="routingCode" required maxlength="50" />
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>{{ 'labels.inputs.Bank Number' | translate }}</mat-label>
-                    <input matInput formControlName="bankNumber" required maxlength="50" />
-                  </mat-form-field>
-                </section>
-              }
-
-              <mat-form-field>
-                <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
-                <input matInput formControlName="receiptNumber" maxlength="50" readonly />
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
-                <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-              </mat-form-field>
-
-              <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
-                <button mat-raised-button matStepperPrevious>
-                  <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-                  {{ 'labels.buttons.Previous' | translate }}
-                </button>
-                <button
-                  mat-raised-button
-                  matStepperNext
-                  [disabled]="!depositForm.valid || !cashDenominationsReconcile"
-                  (click)="proceedToPreview()"
+            @if (selectedSavingsAccount; as account) {
+              <div class="deposit-context" data-testid="deposit-context">
+                <span class="customer-avatar" aria-hidden="true">{{ customerInitials }}</span>
+                <strong>{{ customerName }}</strong>
+                <span class="context-product">{{ account.productName || account.savingsProductName }}</span>
+                <span class="account-number">{{ account.accountNo || account.accountNumber }}</span>
+                <span
+                  >{{ 'labels.inputs.Account Balance' | translate }} <strong>{{ money(currentBalance) }}</strong></span
                 >
-                  {{ 'labels.buttons.Next' | translate }}
-                  <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+                <button
+                  type="button"
+                  mat-button
+                  color="primary"
+                  (click)="changeDestination(depositStepper)"
+                  [disabled]="isSubmitting || !!commandResult"
+                >
+                  {{ 'depositDetails.changeAccount' | translate }}
                 </button>
               </div>
-            </form>
+            }
+            <div class="details-layout">
+              <form [formGroup]="depositForm" class="details-card">
+                <section class="details-entry">
+                  <div class="amount-type-grid">
+                    <mat-form-field appearance="outline" class="deposit-amount" subscriptSizing="dynamic">
+                      <mat-label>{{ 'depositDetails.depositAmount' | translate }}</mat-label>
+                      <input
+                        type="number"
+                        inputmode="decimal"
+                        matInput
+                        formControlName="transactionAmount"
+                        [step]="currencyStep"
+                        [min]="currencyStep"
+                        required
+                      />
+                      <span matPrefix class="currency-prefix">{{ currencySymbol }}</span>
+                      <span matSuffix class="currency-code">{{ accountCurrencyCode() }}</span>
+                      <mat-hint>{{
+                        depositForm.controls.transactionAmount.valid ? money(depositAmount) : ''
+                      }}</mat-hint>
+                      <mat-error>{{ 'depositDetails.amountInvalid' | translate }}</mat-error>
+                    </mat-form-field>
+                    <div class="deposit-type-field">
+                      <span id="deposit-type-label">{{ 'labels.inputs.Deposit Type' | translate }}</span>
+                      <mat-button-toggle-group
+                        formControlName="depositType"
+                        aria-labelledby="deposit-type-label"
+                        class="deposit-type-toggle"
+                      >
+                        <mat-button-toggle value="CASH"
+                          ><mat-icon aria-hidden="true">payments</mat-icon
+                          >{{ 'labels.inputs.Cash' | translate }}</mat-button-toggle
+                        >
+                        <mat-button-toggle value="CHECK"
+                          ><mat-icon aria-hidden="true">credit_card</mat-icon
+                          >{{ 'labels.inputs.Check' | translate }}</mat-button-toggle
+                        >
+                      </mat-button-toggle-group>
+                    </div>
+                  </div>
+                  <div class="deposit-metadata">
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                      <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+                      <mat-select formControlName="paymentTypeId" required>
+                        @for (paymentType of filteredPaymentTypeOptions; track paymentType.id) {
+                          <mat-option [value]="paymentType.id">{{ paymentType.name || paymentType.value }}</mat-option>
+                        } @empty {
+                          <mat-option disabled>{{
+                            'labels.text.No eligible payment types available' | translate
+                          }}</mat-option>
+                        }
+                      </mat-select>
+                      <mat-error>{{ 'depositDetails.paymentRequired' | translate }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                      <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+                      <input
+                        matInput
+                        [min]="minDate"
+                        [max]="maxDate"
+                        [matDatepicker]="transactionDatePicker"
+                        formControlName="transactionDate"
+                        required
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+                      <mat-datepicker #transactionDatePicker></mat-datepicker>
+                      <mat-error>{{ 'depositDetails.dateInvalid' | translate }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="receipt-field">
+                      <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
+                      <input matInput formControlName="receiptNumber" maxlength="50" readonly />
+                      <mat-hint>{{ 'depositDetails.generatedReceipt' | translate }}</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </section>
+                @if (depositType === 'CASH') {
+                  <section class="cash-count" aria-labelledby="cash-heading">
+                    <div class="section-heading">
+                      <div>
+                        <h2 id="cash-heading">{{ 'depositDetails.cashCounting' | translate }}</h2>
+                        <p>{{ 'depositDetails.countHint' | translate }}</p>
+                      </div>
+                      <button type="button" mat-button color="primary" (click)="clearCount()">
+                        {{ 'depositDetails.clearCount' | translate }}
+                      </button>
+                    </div>
+                    <div
+                      formArrayName="denominations"
+                      class="cash-columns"
+                      [class.manual-count]="!usesPresetDenominations"
+                    >
+                      @for (group of denominationGroups; track group.label) {
+                        <div class="cash-group" [class.manual-count]="!group.preset">
+                          <h3>{{ group.label | translate }}</h3>
+                          @for (row of group.rows; track row; let i = $index) {
+                            <div
+                              [formGroupName]="group.offset + i"
+                              class="cash-row"
+                              [class.has-quantity]="row.controls.quantity.valid && +row.controls.quantity.value! > 0"
+                            >
+                              @if (group.preset) {
+                                <span class="denomination-value" [class.coin]="group.offset > 0">{{
+                                  money(+row.controls.denomination.value!)
+                                }}</span>
+                              } @else {
+                                <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                  <mat-label>{{ 'labels.inputs.Denomination' | translate }}</mat-label>
+                                  <input
+                                    matInput
+                                    type="number"
+                                    inputmode="decimal"
+                                    formControlName="denomination"
+                                    [step]="currencyStep"
+                                    [min]="currencyStep"
+                                    required
+                                  />
+                                  <mat-error>{{ 'depositDetails.amountInvalid' | translate }}</mat-error>
+                                </mat-form-field>
+                              }
+                              <div class="quantity-stepper">
+                                <button
+                                  type="button"
+                                  mat-icon-button
+                                  (click)="adjustQuantity(group.offset + i, -1)"
+                                  [disabled]="row.controls.quantity.invalid || +row.controls.quantity.value! <= 0"
+                                  [attr.aria-label]="
+                                    'depositDetails.decrease'
+                                      | translate: { value: money(+row.controls.denomination.value!) }
+                                  "
+                                >
+                                  <mat-icon>remove</mat-icon>
+                                </button>
+                                <input
+                                  matInput
+                                  type="number"
+                                  inputmode="numeric"
+                                  formControlName="quantity"
+                                  min="0"
+                                  [max]="maxQuantity"
+                                  step="1"
+                                  required
+                                  [attr.aria-invalid]="row.controls.quantity.invalid"
+                                  [attr.aria-label]="
+                                    'depositDetails.quantityFor'
+                                      | translate: { value: money(+row.controls.denomination.value!) }
+                                  "
+                                />
+                                <button
+                                  type="button"
+                                  mat-icon-button
+                                  (click)="adjustQuantity(group.offset + i, 1)"
+                                  [disabled]="
+                                    row.controls.quantity.invalid || +row.controls.quantity.value! >= maxQuantity
+                                  "
+                                  [attr.aria-label]="
+                                    'depositDetails.increase'
+                                      | translate: { value: money(+row.controls.denomination.value!) }
+                                  "
+                                >
+                                  <mat-icon>add</mat-icon>
+                                </button>
+                              </div>
+                              <strong class="cash-subtotal">{{
+                                row.valid ? money(selectedDenominationLineTotal(row)) : '—'
+                              }}</strong>
+                              @if (!group.preset) {
+                                <button
+                                  type="button"
+                                  mat-icon-button
+                                  (click)="removeDenomination(group.offset + i)"
+                                  [attr.aria-label]="'labels.buttons.Delete' | translate"
+                                >
+                                  <mat-icon>delete_outline</mat-icon>
+                                </button>
+                              }
+                              @if (row.controls.quantity.invalid) {
+                                <span class="quantity-error">{{
+                                  'depositDetails.quantityInvalid' | translate: { max: maxQuantity }
+                                }}</span>
+                              }
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                    <button type="button" mat-button color="primary" (click)="addDenomination()">
+                      <mat-icon>add</mat-icon>{{ 'labels.buttons.Add' | translate }}
+                    </button>
+                    <div
+                      class="reconciliation"
+                      [class.matched]="reconciliationState === 'matched'"
+                      [class.mismatch]="reconciliationState === 'missing' || reconciliationState === 'excess'"
+                      role="status"
+                      aria-live="polite"
+                      aria-atomic="true"
+                    >
+                      <mat-icon aria-hidden="true">{{
+                        reconciliationState === 'matched'
+                          ? 'check_circle'
+                          : reconciliationState === 'neutral'
+                            ? 'info_outline'
+                            : 'warning_amber'
+                      }}</mat-icon>
+                      <div class="reconciliation-message">
+                        <strong>{{
+                          'depositDetails.' + reconciliationState | translate: { difference: money(cashDifference) }
+                        }}</strong>
+                        @if (usesPresetDenominations && denominations.valid && !hasCountedCustomDenominations) {
+                          <span>{{ 'depositDetails.pieces' | translate: pieceCounts }}</span>
+                        }
+                      </div>
+                      <div class="reconciliation-totals">
+                        <span
+                          >{{ 'depositDetails.counted' | translate
+                          }}<strong>{{ validCashCount ? money(denominationTotal) : '—' }}</strong></span
+                        ><span
+                          >{{ 'depositDetails.depositAmount' | translate
+                          }}<strong>{{
+                            depositForm.controls.transactionAmount.valid ? money(depositAmount) : '—'
+                          }}</strong></span
+                        >
+                      </div>
+                    </div>
+                  </section>
+                }
+                @if (depositType === 'CHECK') {
+                  <section class="funding-panel form-grid">
+                    <mat-form-field>
+                      <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
+                      <input matInput formControlName="accountNumber" required maxlength="50" />
+                      <mat-error>{{ 'depositDetails.checkRequired' | translate }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>{{ 'labels.inputs.Cheque Number' | translate }}</mat-label>
+                      <input matInput formControlName="checkNumber" required maxlength="50" />
+                      <mat-error>{{ 'depositDetails.checkRequired' | translate }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
+                      <input matInput formControlName="routingCode" required maxlength="50" />
+                      <mat-error>{{ 'depositDetails.checkRequired' | translate }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>{{ 'labels.inputs.Bank Number' | translate }}</mat-label>
+                      <input matInput formControlName="bankNumber" required maxlength="50" />
+                      <mat-error>{{ 'depositDetails.checkRequired' | translate }}</mat-error>
+                    </mat-form-field>
+                  </section>
+                }
+
+                <section class="deposit-notes">
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <mat-label
+                      >{{ 'labels.inputs.Notes' | translate }} · {{ 'depositDetails.optional' | translate }}</mat-label
+                    >
+                    <textarea
+                      matInput
+                      formControlName="note"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="2"
+                      [placeholder]="'depositDetails.notesHint' | translate"
+                    ></textarea>
+                  </mat-form-field>
+                </section>
+                <footer class="details-footer">
+                  <button type="button" mat-stroked-button matStepperPrevious>
+                    <mat-icon>arrow_back</mat-icon>{{ 'labels.buttons.Previous' | translate }}
+                  </button>
+                  <p>{{ detailsValidationMessage | translate }}</p>
+                  <button
+                    type="button"
+                    mat-flat-button
+                    color="primary"
+                    class="details-next"
+                    [disabled]="!canContinueDetails"
+                    (click)="goToPreview(depositStepper)"
+                  >
+                    {{ 'labels.buttons.Next' | translate }}<mat-icon iconPositionEnd>arrow_forward</mat-icon>
+                  </button>
+                </footer>
+              </form>
+              <aside class="deposit-sidebar" aria-labelledby="deposit-summary-heading">
+                <mat-card class="deposit-summary" data-testid="deposit-summary">
+                  <mat-card-content>
+                    <h2 id="deposit-summary-heading">{{ 'depositDetails.summary' | translate }}</h2>
+                    <div class="summary-line">
+                      <span>{{ 'labels.inputs.Account Balance' | translate }}</span
+                      ><strong>{{ money(currentBalance) }}</strong>
+                    </div>
+                    <div class="summary-line">
+                      <span>{{ 'labels.inputs.Deposit' | translate }}</span
+                      ><strong>{{
+                        depositForm.controls.transactionAmount.valid ? '+ ' + money(depositAmount) : '—'
+                      }}</strong>
+                    </div>
+                    <div class="estimated-balance">
+                      <span>{{ 'depositDetails.estimatedBalance' | translate }}</span
+                      ><strong>{{ money(estimatedBalance) }}</strong
+                      ><span>{{ accountCurrencyCode() }}</span>
+                    </div>
+                    <dl class="summary-details">
+                      <div>
+                        <dt>{{ 'labels.inputs.Deposit Type' | translate }}</dt>
+                        <dd>
+                          {{ (depositType === 'CASH' ? 'labels.inputs.Cash' : 'labels.inputs.Check') | translate }}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>{{ 'labels.inputs.Transaction Date' | translate }}</dt>
+                        <dd>{{ summaryDate }}</dd>
+                      </div>
+                      <div>
+                        <dt>{{ 'labels.inputs.Payment Type' | translate }}</dt>
+                        <dd>{{ paymentTypeName(depositForm.controls.paymentTypeId.value) || '—' }}</dd>
+                      </div>
+                      <div>
+                        <dt>{{ 'labels.inputs.Receipt Number' | translate }}</dt>
+                        <dd>{{ depositForm.controls.receiptNumber.value || '—' }}</dd>
+                      </div>
+                    </dl>
+                  </mat-card-content>
+                </mat-card>
+                <div class="safety-notice">
+                  <mat-icon aria-hidden="true">info_outline</mat-icon>
+                  <p>{{ 'depositDetails.notice' | translate }}</p>
+                </div>
+              </aside>
+            </div>
           </mat-step>
 
           <mat-step>

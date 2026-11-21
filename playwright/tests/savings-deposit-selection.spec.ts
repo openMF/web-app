@@ -415,7 +415,7 @@ test('New Deposit resets a confirmed receipt and returns to customer selection',
   await expect(page.getByTestId('customer-card')).toHaveCount(0);
   await expect(page.locator('.receipt')).toHaveCount(0);
   expect(await receiptNumberInput.inputValue()).not.toBe(originalReceiptNumber);
-  await expect(page.locator('input[formcontrolname="transactionAmount"]')).toHaveValue('0');
+  await expect(page.locator('input[formcontrolname="transactionAmount"]')).toHaveValue('');
   expect(writes).toEqual(['/savingsaccounts/77/transactions']);
   await chooseCustomer(page);
   await page.getByRole('radio', { name: /Everyday Savings/ }).check();
