@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Nuevo depósito",
+    "searchHint": "Busca por nombre, número de cliente o número de cuenta de ahorro.",
+    "searching": "Buscando…",
+    "clearSearch": "Limpiar búsqueda de cliente",
+    "noResults": "No se encontraron clientes ni cuentas de ahorro.",
+    "loadingAccounts": "Cargando cliente y cuentas…",
+    "changeCustomer": "Cambiar cliente",
+    "accountHint": "Elige la cuenta de ahorro que recibe el depósito.",
+    "ineligible": "No elegible para depósitos",
+    "unavailable": "No disponible",
+    "noAccounts": "No se encontraron cuentas de ahorro para este cliente.",
+    "chooseCustomer": "Selecciona un cliente para ver sus cuentas de ahorro.",
+    "loadingSelection": "Cargando detalles de la cuenta y opciones de depósito…",
+    "depositInto": "Depositar en",
+    "chooseAccount": "Selecciona una cuenta de ahorro de destino.",
+    "selectedAccount": "Cuenta seleccionada",
+    "detailsUnavailable": "Detalles de la cuenta no disponibles.",
+    "historyUnavailable": "Últimos movimientos no disponibles.",
+    "safetyNotice": "Confirma la identidad del cliente y el número de la cuenta de destino antes de continuar.",
+    "customerUnavailable": "No se pudo confirmar el cliente y la titularidad de la cuenta. Selecciona de nuevo al cliente."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Procesando {{count}} elemento(s) de revisión…",

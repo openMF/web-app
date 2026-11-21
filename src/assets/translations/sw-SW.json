@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Amana mpya",
+    "searchHint": "Tafuta kwa jina la mteja, namba ya mteja au namba ya akaunti ya akiba.",
+    "searching": "Inatafuta…",
+    "clearSearch": "Futa utafutaji wa mteja",
+    "noResults": "Hakuna wateja au akaunti za akiba zinazolingana.",
+    "loadingAccounts": "Inapakia mteja na akaunti…",
+    "changeCustomer": "Badilisha mteja",
+    "accountHint": "Chagua akaunti ya akiba itakayopokea amana.",
+    "ineligible": "Haistahiki kupokea amana",
+    "unavailable": "Haipatikani",
+    "noAccounts": "Hakuna akaunti za akiba zilizopatikana kwa mteja huyu.",
+    "chooseCustomer": "Chagua mteja ili kuona akaunti zake za akiba.",
+    "loadingSelection": "Inapakia maelezo ya akaunti na chaguo za amana…",
+    "depositInto": "Weka amana kwenye",
+    "chooseAccount": "Chagua akaunti ya akiba ya kupokea amana.",
+    "selectedAccount": "Akaunti iliyochaguliwa",
+    "detailsUnavailable": "Maelezo ya akaunti hayapatikani.",
+    "historyUnavailable": "Miamala ya hivi karibuni haipatikani.",
+    "safetyNotice": "Thibitisha utambulisho wa mteja na namba ya akaunti inayopokea amana kabla ya kuendelea.",
+    "customerUnavailable": "Mteja na umiliki wa akaunti havikuweza kuthibitishwa. Chagua mteja tena."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Inachakata {{count}} vipengee vya ukaguzi…",

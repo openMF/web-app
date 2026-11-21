@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Naujas įnašas",
+    "searchHint": "Ieškokite pagal kliento vardą, kliento numerį arba taupomosios sąskaitos numerį.",
+    "searching": "Ieškoma…",
+    "clearSearch": "Išvalyti kliento paiešką",
+    "noResults": "Atitinkančių klientų ar taupomųjų sąskaitų nerasta.",
+    "loadingAccounts": "Įkeliamas klientas ir sąskaitos…",
+    "changeCustomer": "Keisti klientą",
+    "accountHint": "Pasirinkite taupomąją sąskaitą, į kurią bus įneštos lėšos.",
+    "ineligible": "Netinkama įnašams",
+    "unavailable": "Nepasiekiama",
+    "noAccounts": "Šiam klientui taupomųjų sąskaitų nerasta.",
+    "chooseCustomer": "Pasirinkite klientą, kad matytumėte jo taupomąsias sąskaitas.",
+    "loadingSelection": "Įkeliami sąskaitos duomenys ir įnašo parinktys…",
+    "depositInto": "Įnešti į",
+    "chooseAccount": "Pasirinkite paskirties taupomąją sąskaitą.",
+    "selectedAccount": "Pasirinkta sąskaita",
+    "detailsUnavailable": "Sąskaitos duomenys nepasiekiami.",
+    "historyUnavailable": "Naujausios operacijos nepasiekiamos.",
+    "safetyNotice": "Prieš tęsdami patvirtinkite kliento tapatybę ir paskirties sąskaitos numerį.",
+    "customerUnavailable": "Nepavyko patvirtinti kliento ir sąskaitos nuosavybės. Pasirinkite klientą iš naujo."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Apdorojama {{count}} tikrinimo elementų…",
