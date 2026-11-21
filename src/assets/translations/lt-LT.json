@@ -9226,5 +9226,38 @@
       "invalid": "Filialo grafike yra netinkamų duomenų.",
       "error": "Nepavyko įkelti filialo grafiko."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Įmokos suma",
+    "changeAccount": "Keisti sąskaitą",
+    "banknotes": "Banknotai",
+    "coins": "Monetos",
+    "cashCounting": "Grynųjų skaičiavimas",
+    "countHint": "Įveskite gautų vienetų skaičių pagal nominalą.",
+    "clearCount": "Išvalyti skaičiavimą",
+    "decrease": "Mažinti {{value}} kiekį",
+    "increase": "Didinti {{value}} kiekį",
+    "quantityFor": "{{value}} kiekis",
+    "quantityInvalid": "Įveskite sveikąjį skaičių nuo 0 iki {{max}}.",
+    "counted": "Suskaičiuota",
+    "matched": "Grynųjų suma sutampa",
+    "missing": "Iki sumos trūksta {{difference}}",
+    "excess": "Suskaičiuota suma yra {{difference}} didesnė už įmokos sumą",
+    "neutral": "Įveskite tinkamą sumą gryniesiems patikrinti.",
+    "invalid": "Patikrinkite nominalus ir kiekius.",
+    "pieces": "{{banknotes}} banknotų, {{coins}} monetų",
+    "amountInvalid": "Įveskite teigiamą sumą sąskaitos valiutos tikslumu.",
+    "selectionInvalid": "Palaukite, kol bus įkelta tinkama sąskaita ir jos duomenys.",
+    "dateInvalid": "Įveskite tinkamą operacijos datą.",
+    "paymentRequired": "Pasirinkite tinkamą mokėjimo tipą.",
+    "checkRequired": "Užpildykite privalomus čekio duomenis.",
+    "complete": "Visi privalomi laukai užpildyti",
+    "reviewFields": "Patikrinkite pažymėtus laukus.",
+    "generatedReceipt": "Sugeneruota automatiškai",
+    "optional": "Neprivaloma",
+    "notesHint": "Pvz., šeimos nario įmoka, atlyginimo nuoroda…",
+    "summary": "Suvestinė",
+    "estimatedBalance": "Numatomas likutis po įmokos",
+    "notice": "Prieš pateikdami peržiūroje patikrinkite sąskaitą ir sumą. Grynieji tikrinami vietoje; galutinį likutį nustato patvirtinta operacija."
   }
 }

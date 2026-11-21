@@ -752,3 +752,470 @@
     }
   }
 }
+
+.deposit-context {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+
+  .customer-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .context-product {
+    color: var(--ds-text-2);
+  }
+
+  button {
+    margin-left: auto;
+  }
+}
+
+.details-layout {
+  --deposit-accent: var(--md-sys-color-primary);
+
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Fluid form/sidebar proportions. */
+  grid-template-columns: minmax(0, 2.5fr) minmax(264px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.details-card,
+.deposit-summary {
+  min-width: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  box-shadow: none;
+}
+
+.details-entry,
+.cash-count,
+.deposit-notes {
+  padding: 24px 32px;
+}
+
+.cash-count,
+.deposit-notes {
+  border-top: 1px solid var(--ds-border);
+}
+
+.amount-type-grid,
+.deposit-metadata,
+.cash-columns,
+.summary-details {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Equal fluid columns. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.amount-type-grid {
+  align-items: start;
+  margin: 8px 0 24px;
+}
+
+.deposit-metadata {
+  /* stylelint-disable-next-line unit-allowed-list -- Three equal metadata fields. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.details-card mat-form-field {
+  width: 100%;
+  min-width: 0;
+}
+
+.deposit-amount {
+  .currency-prefix {
+    font-size: 24px;
+    padding-left: 16px;
+    color: var(--ds-text-2);
+  }
+
+  input {
+    appearance: textfield;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .currency-code {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: var(--ds-radius);
+    background: var(--ds-surface-alt);
+    color: var(--ds-text-2);
+  }
+}
+
+.deposit-type-field {
+  display: grid;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.deposit-type-toggle {
+  display: flex;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  background: var(--ds-surface-alt);
+
+  mat-button-toggle {
+    flex: 1;
+    min-width: 0;
+    color: var(--ds-text-2);
+    background: transparent;
+  }
+
+  .mat-button-toggle-checked {
+    background: var(--ds-blue-50);
+    color: var(--deposit-accent);
+  }
+
+  mat-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+.cash-count {
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--ds-text-2);
+    margin-top: 8px;
+  }
+
+  .section-heading {
+    margin-bottom: 16px;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+}
+
+.cash-group {
+  min-width: 0;
+
+  h3 {
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ds-text-2);
+  }
+}
+
+.cash-row {
+  display: grid;
+  /* stylelint-disable-next-line unit-allowed-list -- Keep controls stable and distribute labels/subtotals. */
+  grid-template-columns: minmax(56px, 1fr) auto minmax(64px, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--ds-border);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.denomination-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ds-text-2);
+  padding: 8px;
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface-alt);
+  text-align: center;
+  justify-self: start;
+}
+
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ds-border-strong);
+  border-radius: var(--ds-radius);
+  height: 48px;
+
+  button {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: var(--deposit-accent);
+  }
+
+  input {
+    width: 40px;
+    height: 32px;
+    text-align: center;
+    color: var(--ds-text-1);
+    background: transparent;
+    border: 0;
+    border-inline: 1px solid var(--ds-border);
+    appearance: textfield;
+    font: inherit;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.has-quantity .quantity-stepper {
+  border-color: var(--deposit-accent);
+}
+
+.cash-subtotal {
+  justify-self: end;
+  text-align: end;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.quantity-error {
+  grid-column: 1 / -1;
+  color: var(--ds-alert);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.cash-group.manual-count {
+  grid-column: 1 / -1;
+}
+
+.manual-count {
+  /* stylelint-disable-next-line unit-allowed-list -- Manual rows use the full width. */
+  grid-template-columns: minmax(0, 1fr);
+
+  .cash-row {
+    /* stylelint-disable-next-line unit-allowed-list -- Custom amount, quantity, total, remove action. */
+    grid-template-columns: minmax(80px, 1fr) auto minmax(64px, 1fr) auto;
+    padding: 8px 0;
+  }
+}
+
+.reconciliation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+
+  > mat-icon {
+    flex-shrink: 0;
+  }
+
+  &.matched {
+    color: var(--ds-paid);
+    background: var(--ds-paid-bg);
+    border-color: var(--ds-paid);
+  }
+
+  &.mismatch {
+    color: var(--ds-partial);
+    background: var(--ds-partial-bg);
+    border-color: var(--ds-partial);
+  }
+}
+
+.reconciliation-message {
+  flex: 1;
+  min-width: 160px;
+
+  span {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+}
+
+.reconciliation-totals {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+
+  strong {
+    display: block;
+    color: var(--ds-text-1);
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.details-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--ds-border);
+  border-radius: 0 0 var(--ds-radius-lg) var(--ds-radius-lg);
+  background: var(--ds-surface-alt);
+  padding: 16px 32px;
+
+  p {
+    flex: 1;
+    margin: 0;
+    text-align: end;
+    font-size: 14px;
+    color: var(--ds-text-2);
+  }
+}
+
+.deposit-summary {
+  mat-card-content {
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+}
+
+.summary-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--ds-text-2);
+
+  strong {
+    color: var(--ds-text-1);
+  }
+}
+
+.estimated-balance {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+  border-block: 1px solid var(--ds-border);
+  color: var(--ds-text-2);
+
+  strong {
+    font-size: 28px;
+    color: var(--deposit-accent);
+    overflow-wrap: anywhere;
+  }
+}
+
+.summary-details {
+  margin: 16px 0 0;
+  gap: 24px 16px;
+
+  div {
+    min-width: 0;
+  }
+
+  dt {
+    font-size: 12px;
+    color: var(--ds-text-2);
+  }
+
+  dd {
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.quantity-stepper input:focus-visible,
+.details-layout button:focus-visible {
+  outline: 2px solid var(--deposit-accent);
+  outline-offset: 2px;
+}
+
+@media (width <= 1400px) {
+  .details-entry,
+  .cash-count,
+  .deposit-notes,
+  .details-footer {
+    padding: 24px;
+  }
+
+  .cash-columns,
+  .deposit-metadata {
+    /* stylelint-disable-next-line unit-allowed-list -- Stack within a narrower form column. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 1000px) {
+  .details-layout {
+    /* stylelint-disable-next-line unit-allowed-list -- Tablet sidebar follows the form. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 600px) {
+  .details-entry,
+  .cash-count,
+  .deposit-notes,
+  .details-footer,
+  .deposit-summary mat-card-content {
+    padding: 16px;
+  }
+
+  .amount-type-grid {
+    /* stylelint-disable-next-line unit-allowed-list -- Full-width mobile amount and type. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .details-footer {
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    p {
+      flex: 1 1 100%;
+      order: -1;
+      text-align: start;
+    }
+  }
+
+  .manual-count .cash-row {
+    /* stylelint-disable-next-line unit-allowed-list -- Custom amount and remove action wrap on mobile. */
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .deposit-context {
+    gap: 8px 16px;
+  }
+}
+
+:host-context(.dark-theme) .details-layout {
+  --deposit-accent: var(--brand-primary-100, var(--ds-blue-700));
+}

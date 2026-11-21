@@ -9228,5 +9228,38 @@
       "invalid": "Die Filialzeiten enthalten ungültige Daten.",
       "error": "Die Filialzeiten konnten nicht geladen werden."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Einzahlungsbetrag",
+    "changeAccount": "Konto ändern",
+    "banknotes": "Banknoten",
+    "coins": "Münzen",
+    "cashCounting": "Bargeldzählung",
+    "countHint": "Geben Sie die Anzahl der erhaltenen Scheine und Münzen je Nennwert ein.",
+    "clearCount": "Zählung löschen",
+    "decrease": "Anzahl von {{value}} verringern",
+    "increase": "Anzahl von {{value}} erhöhen",
+    "quantityFor": "Anzahl von {{value}}",
+    "quantityInvalid": "Geben Sie eine ganze Zahl von 0 bis {{max}} ein.",
+    "counted": "Gezählt",
+    "matched": "Bargeldzählung stimmt mit dem Betrag überein",
+    "missing": "Zum Betrag fehlen {{difference}}",
+    "excess": "Die Zählung übersteigt den Betrag um {{difference}}",
+    "neutral": "Geben Sie einen gültigen Betrag zum Bargeldabgleich ein.",
+    "invalid": "Prüfen Sie Nennwerte und Stückzahlen.",
+    "pieces": "{{banknotes}} Banknoten, {{coins}} Münzen",
+    "amountInvalid": "Geben Sie einen positiven Betrag mit der Genauigkeit der Kontowährung ein.",
+    "selectionInvalid": "Warten Sie, bis ein gültiges Konto und seine Details geladen sind.",
+    "dateInvalid": "Geben Sie ein gültiges Buchungsdatum ein.",
+    "paymentRequired": "Wählen Sie eine passende Zahlungsart.",
+    "checkRequired": "Vervollständigen Sie die erforderlichen Scheckangaben.",
+    "complete": "Alle Pflichtfelder sind ausgefüllt",
+    "reviewFields": "Prüfen Sie die markierten Felder.",
+    "generatedReceipt": "Automatisch erzeugt",
+    "optional": "Optional",
+    "notesHint": "Z. B. Einzahlung durch Angehörige, Gehaltsreferenz…",
+    "summary": "Zusammenfassung",
+    "estimatedBalance": "Geschätzter Saldo nach Einzahlung",
+    "notice": "Prüfen Sie Konto und Betrag vor dem Absenden in der Vorschau. Bargeld wird lokal abgeglichen; die bestätigte Buchung bestimmt den endgültigen Saldo."
   }
 }

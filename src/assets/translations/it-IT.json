@@ -9226,5 +9226,38 @@
       "invalid": "Gli orari della filiale contengono dati non validi.",
       "error": "Impossibile caricare gli orari della filiale."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Importo da depositare",
+    "changeAccount": "Cambia conto",
+    "banknotes": "Banconote",
+    "coins": "Monete",
+    "cashCounting": "Conteggio contanti",
+    "countHint": "Inserisci il numero di pezzi ricevuti per ogni taglio.",
+    "clearCount": "Azzera conteggio",
+    "decrease": "Riduci quantità di {{value}}",
+    "increase": "Aumenta quantità di {{value}}",
+    "quantityFor": "Quantità di {{value}}",
+    "quantityInvalid": "Inserisci un intero da 0 a {{max}}.",
+    "counted": "Contati",
+    "matched": "Il conteggio corrisponde all’importo",
+    "missing": "Mancano {{difference}} per raggiungere l’importo",
+    "excess": "Il conteggio supera l’importo di {{difference}}",
+    "neutral": "Inserisci un importo valido per verificare i contanti.",
+    "invalid": "Verifica tagli e quantità.",
+    "pieces": "{{banknotes}} banconote, {{coins}} monete",
+    "amountInvalid": "Inserisci un importo positivo con la precisione della valuta del conto.",
+    "selectionInvalid": "Attendi il caricamento di un conto valido e dei suoi dettagli.",
+    "dateInvalid": "Inserisci una data di transazione valida.",
+    "paymentRequired": "Seleziona un tipo di pagamento compatibile.",
+    "checkRequired": "Completa i dati obbligatori dell’assegno.",
+    "complete": "Tutti i campi obbligatori sono completi",
+    "reviewFields": "Verifica i campi evidenziati.",
+    "generatedReceipt": "Generato automaticamente",
+    "optional": "Facoltativo",
+    "notesHint": "Es.: deposito di un familiare, riferimento stipendio…",
+    "summary": "Riepilogo",
+    "estimatedBalance": "Saldo stimato dopo il deposito",
+    "notice": "Verifica conto e importo nell’anteprima prima di inviare. I contanti vengono verificati localmente; la transazione confermata determina il saldo finale."
   }
 }

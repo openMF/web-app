@@ -12,7 +12,10 @@ const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:4308';
 /** Synthetic read contracts: no authentication credentials or financial writes to a real backend. */
 export default defineConfig({
   testDir: './playwright/tests',
-  testMatch: 'savings-deposit-selection.spec.ts',
+  testMatch: [
+    'savings-deposit-selection.spec.ts',
+    'savings-deposit-details.spec.ts'
+  ],
   timeout: 60000,
   workers: 1,
   retries: 0,

@@ -9214,5 +9214,38 @@
       "invalid": "Filialın cədvəlində etibarsız məlumat var.",
       "error": "Filialın iş saatları yüklənə bilmədi."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Əmanət məbləği",
+    "changeAccount": "Hesabı dəyiş",
+    "banknotes": "Əskinaslar",
+    "coins": "Sikkələr",
+    "cashCounting": "Nağd pul sayımı",
+    "countHint": "Hər nominal üzrə alınan ədəd sayını daxil edin.",
+    "clearCount": "Sayımı təmizlə",
+    "decrease": "{{value}} sayını azalt",
+    "increase": "{{value}} sayını artır",
+    "quantityFor": "{{value}} sayı",
+    "quantityInvalid": "0 ilə {{max}} arasında tam ədəd daxil edin.",
+    "counted": "Sayılıb",
+    "matched": "Nağd pul məbləğə uyğundur",
+    "missing": "Məbləğə çatmaq üçün {{difference}} çatmır",
+    "excess": "Sayılan pul məbləğdən {{difference}} çoxdur",
+    "neutral": "Nağd pulu yoxlamaq üçün düzgün məbləğ daxil edin.",
+    "invalid": "Nominalları və sayları yoxlayın.",
+    "pieces": "{{banknotes}} əskinas, {{coins}} sikkə",
+    "amountInvalid": "Hesab valyutasının dəqiqliyinə uyğun müsbət məbləğ daxil edin.",
+    "selectionInvalid": "Düzgün hesabın və məlumatlarının yüklənməsini gözləyin.",
+    "dateInvalid": "Düzgün əməliyyat tarixi daxil edin.",
+    "paymentRequired": "Uyğun ödəniş növü seçin.",
+    "checkRequired": "Çekin tələb olunan məlumatlarını tamamlayın.",
+    "complete": "Bütün tələb olunan sahələr doldurulub",
+    "reviewFields": "İşarələnmiş sahələri yoxlayın.",
+    "generatedReceipt": "Avtomatik yaradılıb",
+    "optional": "İstəyə bağlı",
+    "notesHint": "Məs.: ailə üzvünün əmanəti, əməkhaqqı istinadı…",
+    "summary": "Xülasə",
+    "estimatedBalance": "Əmanətdən sonra təxmini balans",
+    "notice": "Göndərməzdən əvvəl önbaxışda hesabı və məbləği yoxlayın. Nağd pul yerli yoxlanılır; son balansı təsdiqlənmiş əməliyyat müəyyən edir."
   }
 }

@@ -9226,5 +9226,38 @@
       "invalid": "Ratiba ya tawi ina data batili.",
       "error": "Ratiba ya tawi haikuweza kupakiwa."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Kiasi cha kuweka",
+    "changeAccount": "Badilisha akaunti",
+    "banknotes": "Noti",
+    "coins": "Sarafu",
+    "cashCounting": "Hesabu ya fedha taslimu",
+    "countHint": "Weka idadi ya vipande vilivyopokelewa kwa kila thamani.",
+    "clearCount": "Futa hesabu",
+    "decrease": "Punguza idadi ya {{value}}",
+    "increase": "Ongeza idadi ya {{value}}",
+    "quantityFor": "Idadi ya {{value}}",
+    "quantityInvalid": "Weka namba nzima kati ya 0 na {{max}}.",
+    "counted": "Iliyohesabiwa",
+    "matched": "Hesabu ya fedha inalingana na kiasi",
+    "missing": "Inapungua {{difference}} kufikia kiasi",
+    "excess": "Hesabu inazidi kiasi kwa {{difference}}",
+    "neutral": "Weka kiasi halali ili kulinganisha fedha.",
+    "invalid": "Kagua thamani na idadi.",
+    "pieces": "Noti {{banknotes}}, sarafu {{coins}}",
+    "amountInvalid": "Weka kiasi chanya kwa usahihi wa sarafu ya akaunti.",
+    "selectionInvalid": "Subiri akaunti halali na maelezo yake yapakie.",
+    "dateInvalid": "Weka tarehe halali ya muamala.",
+    "paymentRequired": "Chagua aina inayofaa ya malipo.",
+    "checkRequired": "Jaza maelezo yanayohitajika ya hundi.",
+    "complete": "Sehemu zote zinazohitajika zimejazwa",
+    "reviewFields": "Kagua sehemu zilizoangaziwa.",
+    "generatedReceipt": "Imetolewa kiotomatiki",
+    "optional": "Si lazima",
+    "notesHint": "Mf.: amana ya mwanafamilia, rejea ya mshahara…",
+    "summary": "Muhtasari",
+    "estimatedBalance": "Salio linalokadiriwa baada ya amana",
+    "notice": "Kagua akaunti na kiasi katika hakiki kabla ya kutuma. Fedha huhakikiwa ndani ya programu; muamala uliothibitishwa huamua salio la mwisho."
   }
 }

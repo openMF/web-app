@@ -1249,7 +1249,7 @@ describe('SavingsAccountDepositComponent', () => {
       expect(component.depositForm.getRawValue()).toEqual({
         depositType: 'CASH',
         transactionDate: businessDate,
-        transactionAmount: 0,
+        transactionAmount: null,
         paymentTypeId: '',
         accountNumber: '',
         checkNumber: '',
@@ -1343,6 +1343,362 @@ describe('SavingsAccountDepositComponent', () => {
       render();
       expect(component.selectedSavingsAccount?.id).toBe(77);
       expect(fixture.nativeElement.querySelector('input[type="radio"]').disabled).toBe(true);
+    });
+  });
+  describe('WEB-1469 deposit details', () => {
+    function selectMxn() {
+      const account = { ...activeSavingsAccount, currency: { code: 'MXN', decimalPlaces: 2 } };
+      baseTellerService.getDepositSavingsAccount.mockReturnValue(of(account));
+      component.customer = { id: 10, displayName: 'Amina Doe' };
+      component.savingsAccounts = [account];
+      component.lookupForm.patchValue({ search: { entityId: 10 }, savingsAccount: account });
+      component.depositForm.controls.transactionAmount.setValue(1000);
+      return account;
+    }
+
+    it('starts with an empty amount, business date, default note and no false success', () => {
+      expect(component.depositForm.controls.transactionAmount.value).toBeNull();
+      expect(component.depositForm.controls.transactionDate.value).toBe(businessDate);
+      expect(component.depositForm.controls.note.value).toBe('DEPOSITO EN VENTANILLA');
+      expect(component.reconciliationState).toBe('neutral');
+      expect(component.cashDenominationsReconcile).toBe(false);
+    });
+
+    it.each([
+      0,
+      -1,
+      NaN,
+      Infinity,
+      1.001,
+      'invalid',
+      '1,000',
+      ' 1 ',
+      '0x10'
+    ])('rejects invalid amount %p without rounding', (amount) => {
+      makeFormsValid();
+      component.depositForm.controls.transactionAmount.setValue(amount as number);
+      expect(component.depositForm.controls.transactionAmount.invalid).toBe(true);
+      expect(component.canContinueDetails).toBe(false);
+    });
+
+    it.each([
+      0.01,
+      1,
+      1234.56
+    ])('accepts valid positive amount %p', (amount) => {
+      component.depositForm.controls.transactionAmount.setValue(amount);
+      expect(component.depositForm.controls.transactionAmount.valid).toBe(true);
+    });
+
+    it.each([
+      { code: 'JPY', decimalPlaces: 0, invalid: 1.1, valid: 1 },
+      { code: 'KWD', decimalPlaces: 3, invalid: 1.0001, valid: 1.001 }
+    ])('respects $code precision', ({ code, decimalPlaces, invalid, valid }) => {
+      component.selectedSavingsAccount = { currency: { code, decimalPlaces } };
+      component.depositForm.controls.transactionAmount.setValue(invalid);
+      expect(component.depositForm.controls.transactionAmount.invalid).toBe(true);
+      component.depositForm.controls.transactionAmount.setValue(valid);
+      expect(component.depositForm.controls.transactionAmount.valid).toBe(true);
+      expect(component.accountCurrencyCode()).toBe(code);
+    });
+
+    it('creates MXN shortcuts in the existing form array with zero quantities and renders both groups', () => {
+      selectMxn();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(component.denominations.getRawValue()).toEqual(
+        [
+          1000,
+          500,
+          200,
+          100,
+          50,
+          20,
+          10,
+          5,
+          2,
+          1,
+          0.5
+        ].map((denomination) => ({ denomination, quantity: 0 }))
+      );
+      expect(fixture.nativeElement.querySelectorAll('.cash-group')).toHaveLength(2);
+      expect(fixture.nativeElement.querySelectorAll('.cash-row')).toHaveLength(11);
+      expect(fixture.nativeElement.querySelector('[formControlName="denomination"]')).toBeNull();
+      expect(component.reconciliationState).toBe('missing');
+    });
+
+    it('retains editable manual denominations for other currencies', () => {
+      makeFormsValid();
+      expect(component.usesPresetDenominations).toBe(false);
+      component.addDenomination();
+      component.denominations.at(1).patchValue({ denomination: 5, quantity: 2 });
+      expect(component.denominationTotal).toBe(60);
+      component.removeDenomination(1);
+      expect(component.denominationTotal).toBe(50);
+    });
+
+    it('increments, decrements and never goes below zero or above the quantity bound', () => {
+      selectMxn();
+      component.adjustQuantity(0, -1);
+      expect(component.denominations.at(0).controls.quantity.value).toBe(0);
+      component.adjustQuantity(0, 1);
+      expect(component.denominationTotal).toBe(1000);
+      component.adjustQuantity(0, -1);
+      expect(component.denominationTotal).toBe(0);
+      component.denominations.at(0).controls.quantity.setValue(component.maxQuantity);
+      component.adjustQuantity(0, 1);
+      expect(component.denominations.at(0).controls.quantity.value).toBe(component.maxQuantity);
+    });
+
+    it.each([
+      -1,
+      0.5,
+      NaN,
+      Infinity,
+      1000001,
+      '',
+      null
+    ])('rejects invalid quantity %p', (quantity) => {
+      selectMxn();
+      component.denominations.at(0).controls.quantity.setValue(quantity);
+      expect(component.denominations.at(0).controls.quantity.invalid).toBe(true);
+      expect(component.reconciliationState).toBe('invalid');
+      expect(component.cashDenominationsReconcile).toBe(false);
+      expect(Number.isFinite(component.denominationTotal)).toBe(true);
+    });
+
+    it('reconciles banknotes using exact scaled integer sums', () => {
+      selectMxn();
+      component.denominations.at(1).controls.quantity.setValue(1);
+      component.denominations.at(2).controls.quantity.setValue(2);
+      component.denominations.at(3).controls.quantity.setValue(1);
+      expect(component.denominationTotal).toBe(1000);
+      expect(component.selectedDenominationLineTotal(component.denominations.at(2))).toBe(400);
+      expect(component.pieceCounts).toEqual({ banknotes: 4, coins: 0 });
+      expect(component.reconciliationState).toBe('matched');
+      expect(component.canContinueDetails).toBe(true);
+    });
+
+    it('handles fractional coins and decimal sums exactly', () => {
+      selectMxn();
+      component.depositForm.controls.transactionAmount.setValue(1);
+      component.denominations.at(10).controls.quantity.setValue(2);
+      expect(component.denominationTotal).toBe(1);
+      expect(component.cashDenominationsReconcile).toBe(true);
+      expect(component.pieceCounts).toEqual({ banknotes: 0, coins: 2 });
+      makeFormsValid();
+      component.selectedSavingsAccount = activeSavingsAccount;
+      component.denominations.clear();
+      component.addDenomination();
+      component.denominations.at(0).patchValue({ denomination: 0.1, quantity: 3 });
+      component.depositForm.controls.transactionAmount.setValue(0.3);
+      expect(component.cashDenominationsReconcile).toBe(true);
+    });
+
+    it('rejects overflow instead of displaying a matched count', () => {
+      makeFormsValid();
+      component.denominations.at(0).patchValue({ denomination: 90071992547409, quantity: component.maxQuantity });
+      expect(component.reconciliationState).toBe('invalid');
+      expect(component.canContinueDetails).toBe(false);
+    });
+
+    it('reports the correct missing and excess differences', () => {
+      selectMxn();
+      component.denominations.at(1).controls.quantity.setValue(1);
+      expect(component.reconciliationState).toBe('missing');
+      expect(component.cashDifference).toBe(500);
+      component.denominations.at(1).controls.quantity.setValue(3);
+      expect(component.reconciliationState).toBe('excess');
+      expect(component.cashDifference).toBe(500);
+    });
+
+    it('clear count only resets quantities', () => {
+      selectMxn();
+      component.depositForm.controls.note.setValue('Keep me');
+      component.adjustQuantity(0, 1);
+      const before = component.depositForm.getRawValue();
+      const account = component.selectedSavingsAccount;
+      component.clearCount();
+      expect(component.depositForm.getRawValue()).toEqual({
+        ...before,
+        denominations: before.denominations.map((row) => ({ ...row, quantity: 0 }))
+      });
+      expect(component.selectedSavingsAccount).toBe(account);
+      expect(component.reconciliationState).toBe('missing');
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+    });
+
+    it('blocks Preview through both the Next button and step headers while mismatched', () => {
+      makeFormsValid();
+      const stepper: MatStepper = fixture.debugElement.query(By.directive(MatStepper)).componentInstance;
+      stepper.next();
+      component.depositForm.controls.transactionAmount.setValue(100);
+      component.goToPreview(stepper);
+      stepper.next();
+      expect(stepper.selectedIndex).toBe(1);
+      expect(component.depositForm.hasError('cashReconciliation')).toBe(true);
+      component.denominations.at(0).controls.quantity.setValue(4);
+      component.goToPreview(stepper);
+      expect(stepper.selectedIndex).toBe(2);
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+    });
+
+    it('preserves check details, notes, amount and receipt while toggling types', () => {
+      makeFormsValid();
+      const receipt = component.depositForm.controls.receiptNumber.value;
+      component.depositForm.patchValue({
+        depositType: 'CHECK',
+        accountNumber: 'A',
+        checkNumber: 'C',
+        routingCode: 'R',
+        bankNumber: 'B',
+        note: 'N'
+      });
+      expect(component.denominations.disabled).toBe(true);
+      expect(component.depositForm.controls.paymentTypeId.value).toBe('');
+      component.depositForm.controls.paymentTypeId.setValue(2);
+      expect(component.depositForm.valid).toBe(true);
+      expect(component.cashDenominationsReconcile).toBe(true);
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.cash-count')).toBeNull();
+      expect(fixture.nativeElement.querySelector('[formControlName="checkNumber"]')).not.toBeNull();
+      component.depositForm.controls.depositType.setValue('CASH');
+      expect(component.denominations.enabled).toBe(true);
+      expect(component.depositForm.controls.checkNumber.value).toBe('C');
+      expect(component.depositForm.controls.note.value).toBe('N');
+      expect(component.depositForm.controls.transactionAmount.value).toBe(50);
+      expect(component.depositForm.controls.receiptNumber.value).toBe(receipt);
+    });
+
+    it('does not offer an unsupported transfer option', () => {
+      expect(fixture.nativeElement.querySelectorAll('mat-button-toggle')).toHaveLength(2);
+      expect(fixture.nativeElement.querySelector('mat-button-toggle[value="TRANSFER"]')).toBeNull();
+      makeFormsValid();
+      component.depositForm.controls.depositType.setValue('TRANSFER' as 'CASH');
+      expect(component.canContinueDetails).toBe(false);
+      component.submit();
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+    });
+
+    it('updates context and estimated balance from ledger balance, not available balance', () => {
+      selectMxn();
+      component.selectedSavingsAccount = {
+        ...component.selectedSavingsAccount!,
+        summary: { accountBalance: 120, availableBalance: 50 }
+      };
+      expect(component.currentBalance).toBe(120);
+      expect(component.estimatedBalance).toBe(1120);
+      component.depositForm.controls.transactionAmount.setValue(10.25);
+      expect(component.estimatedBalance).toBe(130.25);
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      const context = fixture.nativeElement.querySelector('.deposit-context').textContent;
+      expect(context).toContain('Amina Doe');
+      expect(context).toContain('SA-77');
+      expect(context).toContain('Voluntary Savings');
+      const summary = fixture.nativeElement.querySelector('.deposit-summary').textContent;
+      expect(summary).toContain('130.25');
+      expect(summary).toContain('MXN');
+      expect(summary).toContain('Cash Drawer');
+      expect(summary).toContain('2026');
+      expect(summary).toContain(component.depositForm.controls.receiptNumber.value);
+      expect(summary).not.toContain('50,000');
+    });
+
+    it('does not fabricate a ledger balance or estimate when only available balance exists', () => {
+      makeFormsValid();
+      component.selectedSavingsAccount = { summary: { availableBalance: 90 } };
+      expect(component.currentBalance).toBeNull();
+      expect(component.estimatedBalance).toBeNull();
+      component.selectedSavingsAccount = { accountBalance: 0, currency: { code: 'USD' } };
+      expect(component.estimatedBalance).toBe(50);
+      component.selectedSavingsAccount.accountBalance = -10;
+      expect(component.estimatedBalance).toBe(40);
+    });
+
+    it('clears stale context and count when the destination changes', () => {
+      selectMxn();
+      component.adjustQuantity(0, 1);
+      component.lookupForm.controls.search.setValue('Another customer');
+      expect(component.selectedSavingsAccount).toBeNull();
+      expect(component.currentBalance).toBeNull();
+      expect(component.estimatedBalance).toBeNull();
+      expect(component.usesPresetDenominations).toBe(false);
+      expect(component.canContinueDetails).toBe(false);
+    });
+
+    it('revalidates precision when account details change the currency', () => {
+      const pending = new Subject<DepositSavingsAccount>();
+      baseTellerService.getDepositSavingsAccount.mockReturnValueOnce(pending);
+      component.customer = { id: 10 };
+      component.savingsAccounts = [activeSavingsAccount];
+      component.lookupForm.patchValue({ search: { entityId: 10 }, savingsAccount: activeSavingsAccount });
+      component.depositForm.controls.transactionAmount.setValue(1.25);
+      pending.next({ ...activeSavingsAccount, currency: { code: 'JPY', decimalPlaces: 0 } });
+      pending.complete();
+      expect(component.depositForm.controls.transactionAmount.invalid).toBe(true);
+      expect(component.canContinueDetails).toBe(false);
+    });
+
+    it('revalidates a retained CHECK payment after the new account template arrives', () => {
+      makeFormsValid();
+      component.depositForm.patchValue({
+        depositType: 'CHECK',
+        paymentTypeId: 2,
+        accountNumber: 'A',
+        checkNumber: 'C',
+        routingCode: 'R',
+        bankNumber: 'B'
+      });
+      expect(component.canContinueDetails).toBe(true);
+      const receipt = component.depositForm.controls.receiptNumber.value;
+      const second = { ...activeSavingsAccount, id: 88, accountNo: 'SA-88' };
+      component.savingsAccounts.push(second);
+      baseTellerService.getDepositSavingsAccount.mockReturnValueOnce(of(second));
+      const template = new Subject<{ paymentTypeOptions: { id: number; isCashPayment: boolean }[] }>();
+      baseTellerService.getSavingsDepositTemplate.mockReturnValueOnce(template);
+      component.selectAccount(second);
+      expect(component.depositForm.hasError('incompatiblePayment')).toBe(true);
+      expect(component.canContinueDetails).toBe(false);
+      template.next({ paymentTypeOptions: [{ id: 2, isCashPayment: false }] });
+      template.complete();
+      expect(component.depositForm.controls.paymentTypeId.value).toBe(2);
+      expect(component.depositForm.hasError('incompatiblePayment')).toBe(false);
+      expect(component.canContinueDetails).toBe(true);
+      expect(component.depositForm.controls.receiptNumber.value).toBe(receipt);
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+    });
+
+    it('renders editable custom MXN rows alongside presets and reconciles smaller coin values', () => {
+      selectMxn();
+      component.depositForm.controls.transactionAmount.setValue(1000.2);
+      component.adjustQuantity(0, 1);
+      component.addDenomination();
+      component.denominations.at(11).patchValue({ denomination: 0.2, quantity: 1 });
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelectorAll('input[formControlName="denomination"]')).toHaveLength(1);
+      expect(fixture.nativeElement.querySelectorAll('.cash-row')).toHaveLength(12);
+      expect(component.cashDenominationsReconcile).toBe(true);
+      expect(component.canContinueDetails).toBe(true);
+      expect(component.pieceCounts).toEqual({ banknotes: 1, coins: 0 });
+      expect(fixture.nativeElement.querySelector('.reconciliation').textContent).not.toContain('depositDetails.pieces');
+      expect(component.buildPayload()).not.toHaveProperty('denominations');
+    });
+
+    it('removes only custom MXN rows and recovers preset-only reconciliation', () => {
+      selectMxn();
+      component.adjustQuantity(0, 1);
+      component.addDenomination();
+      component.denominations.at(11).patchValue({ denomination: 0.01, quantity: 20 });
+      expect(component.cashDenominationsReconcile).toBe(false);
+      component.removeDenomination(0);
+      expect(component.denominations.at(0).controls.denomination.value).toBe(1000);
+      component.removeDenomination(11);
+      expect(component.denominations.length).toBe(11);
+      expect(component.cashDenominationsReconcile).toBe(true);
+      expect(component.canContinueDetails).toBe(true);
     });
   });
 });
