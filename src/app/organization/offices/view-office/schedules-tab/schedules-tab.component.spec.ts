@@ -266,7 +266,7 @@ describe('Office SchedulesTabComponent', () => {
               0,
               0
             ], closingTime: [
-              18,
+              16,
               0,
               0
             ] }
@@ -277,7 +277,129 @@ describe('Office SchedulesTabComponent', () => {
     fixture.detectChanges();
     expect(component.days.at(0).get('openingTime').value).toBe('08:00');
     expect(fixture.nativeElement.querySelector('input[formControlName="openingTime"]').value).toBe('08:00');
+    expect(fixture.nativeElement.querySelector('input[formControlName="closingTime"]').value).toBe('16:00');
   });
+  it('renders minute steps and values for all seven days while retaining exact form times', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({
+        days: component.weekdays.map((day) => ({
+          weekday: day.weekday,
+          enabled: true,
+          openingTime: [
+            8,
+            30,
+            5
+          ],
+          closingTime: '16:45:30'
+        }))
+      })
+    );
+    fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
+    const rows = fixture.nativeElement.querySelectorAll('.schedule-row');
+    expect(rows).toHaveLength(7);
+    rows.forEach((row: HTMLElement, index: number) => {
+      const opening = row.querySelector<HTMLInputElement>('input[formControlName="openingTime"]');
+      const closing = row.querySelector<HTMLInputElement>('input[formControlName="closingTime"]');
+      expect(opening.step).toBe('60');
+      expect(closing.step).toBe('60');
+      expect(opening.value).toBe('08:30');
+      expect(closing.value).toBe('16:45');
+      expect(component.days.at(index).get('openingTime').value).toBe('08:30:05');
+      expect(component.days.at(index).get('closingTime').value).toBe('16:45:30');
+    });
+    expect(component.schedulesForm.valid).toBe(true);
+  });
+
+  it.each([
+    '08:30',
+    '08:31'
+  ])('replaces only the explicitly edited field with %s and marks blur as touched', (minuteValue) => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '08:30:05', closingTime: '18:00:30' }
+        ] })
+    );
+    fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input[formControlName="openingTime"]');
+    const opening = component.days.at(0).get('openingTime');
+    input.dispatchEvent(new Event('blur'));
+    expect(opening.touched).toBe(true);
+    expect(opening.value).toBe('08:30:05');
+    input.value = minuteValue;
+    input.dispatchEvent(new Event('input'));
+    expect(opening.dirty).toBe(true);
+    expect(opening.value).toBe(minuteValue);
+    component.submit();
+    expect(organizationService.updateOfficeSchedules.mock.calls[0][1].days[0]).toEqual({
+      weekday: 'MONDAY',
+      enabled: true,
+      openingTime: minuteValue,
+      closingTime: '18:00:30'
+    });
+  });
+
+  it.each([
+    false,
+    true
+  ])('omits seconds in dashboard and compact overview (readOnly=%s)', (readOnly) => {
+    component.readOnly = readOnly;
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '08:30:05', closingTime: '18:00:30' }
+        ] })
+    );
+    fixture.detectChanges();
+    const label = fixture.nativeElement.querySelector(readOnly ? '.day-tile' : '.configured-hours');
+    expect(label.textContent).toContain('08:30 – 18:00');
+    expect(label.textContent).not.toContain(':05');
+    expect(label.textContent).not.toContain(':30:');
+    expect(component.dayDuration(component.days.at(0))).toBe(34225);
+  });
+
+  it('validates exact saved times even when their minute displays are equal', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '08:30:05', closingTime: '08:30:30' }
+        ] })
+    );
+    fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
+    expect(component.schedulesForm.valid).toBe(true);
+    expect(component.dayDuration(component.days.at(0))).toBe(25);
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input[formControlName="closingTime"]');
+    input.value = '08:30';
+    input.dispatchEvent(new Event('input'));
+    expect(component.days.at(0).get('closingTime').hasError('timeOrder')).toBe(true);
+    component.submit();
+    expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
+  });
+
+  it('cancel restores saved seconds after native edits and reopening the editor', () => {
+    organizationService.getOfficeSchedules.mockReturnValue(
+      of({ days: [
+          { weekday: 'MONDAY', enabled: true, openingTime: '08:30:05', closingTime: '18:00:30' }
+        ] })
+    );
+    fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input[formControlName="openingTime"]');
+    input.value = '10:00';
+    input.dispatchEvent(new Event('input'));
+    component.cancelEditing();
+    fixture.detectChanges();
+    component.startEditing();
+    fixture.detectChanges();
+    expect(component.days.at(0).get('openingTime').value).toBe('08:30:05');
+    expect(fixture.nativeElement.querySelector('input[formControlName="openingTime"]').value).toBe('08:30');
+    expect(organizationService.updateOfficeSchedules).not.toHaveBeenCalled();
+  });
+
   it('normalizes seconds and displays weekdays in order with closed weekends', () => {
     organizationService.getOfficeSchedules.mockReturnValue(
       of({

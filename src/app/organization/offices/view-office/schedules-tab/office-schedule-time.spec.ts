@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { normalizeOfficeTime } from './office-schedule-time';
+import { formatOfficeTimeForDisplay, normalizeOfficeTime } from './office-schedule-time';
 
 describe('office LocalTime normalization', () => {
   it.each([
@@ -139,5 +139,91 @@ describe('office LocalTime normalization', () => {
     800
   ])('recognizes missing or invalid time %j explicitly', (input) => {
     expect(normalizeOfficeTime(input)).toBe('');
+  });
+});
+
+describe('office LocalTime presentation', () => {
+  it.each([
+    [
+      [
+        8,
+        0,
+        0
+      ],
+      '08:00'
+    ],
+    [
+      [
+        16,
+        0,
+        0
+      ],
+      '16:00'
+    ],
+    [
+      '08:00:00',
+      '08:00'
+    ],
+    [
+      '08:30:00',
+      '08:30'
+    ],
+    [
+      '16:00:00',
+      '16:00'
+    ],
+    [
+      '08:30:05',
+      '08:30'
+    ],
+    [
+      '18:00:30',
+      '18:00'
+    ],
+    [
+      '00:00',
+      '00:00'
+    ],
+    [
+      '12:00',
+      '12:00'
+    ],
+    [
+      '23:59:59',
+      '23:59'
+    ],
+    [
+      '25:00',
+      ''
+    ],
+    [
+      '12:60',
+      ''
+    ],
+    [
+      'invalid',
+      ''
+    ],
+    [
+      null,
+      ''
+    ]
+  ])('presents %j as %s using the existing 24-hour label convention', (value, expected) => {
+    expect(formatOfficeTimeForDisplay(value)).toBe(expected);
+  });
+
+  it('does not mutate LocalTime arrays or discard normalized persistence precision', () => {
+    const value = Object.freeze([
+      8,
+      30,
+      5
+    ]);
+    expect(formatOfficeTimeForDisplay(value)).toBe('08:30');
+    expect(value).toEqual([
+      8,
+      30,
+      5
+    ]);
+    expect(normalizeOfficeTime(value)).toBe('08:30:05');
   });
 });

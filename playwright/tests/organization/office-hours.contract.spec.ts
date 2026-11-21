@@ -26,12 +26,23 @@ const office = { id: 1, name: 'Hours contract fixture', hierarchy: '.', openingD
     1
   ] };
 
-async function mockHours(page: Page, permissions = ['ALL_FUNCTIONS'], holidayError = 0, scheduleError = 0) {
+async function mockHours(
+  page: Page,
+  permissions = ['ALL_FUNCTIONS'],
+  holidayError = 0,
+  scheduleError = 0,
+  exactTimes = false
+) {
   const calls: { method: string; path: string; officeId: string | null; payload: any }[] = [];
   let days = weekdays.map((weekday, index) => ({
     weekday,
     enabled: index < 5,
-    ...(index < 5 ? { openingTime: '08:00', closingTime: '18:00' } : {})
+    ...(index < 5
+      ? {
+          openingTime: exactTimes && index === 1 ? '08:30:05' : '08:00',
+          closingTime: exactTimes && index === 1 ? '18:00:30' : '18:00'
+        }
+      : {})
   }));
   await page.addInitScript(
     ({ permissions }) => {
@@ -198,7 +209,7 @@ test('edit, cancel and authoritative save preserve the complete-week contract', 
   await page.setViewportSize({ width: 390, height: 3600 });
   await settleLayout(page, 390);
   const opening = screen.getByLabel('Monday Opening Time', { exact: true });
-  await opening.fill('05:30:05');
+  await opening.fill('05:30');
   await expect(screen.getByRole('button', { name: 'Save Changes', exact: true })).toBeInViewport();
   expect(await screen.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   await page.screenshot({ path: testInfo.outputPath('editor-390.png'), fullPage: true, animations: 'disabled' });
@@ -211,10 +222,10 @@ test('edit, cancel and authoritative save preserve the complete-week contract', 
   await opening.fill('19:00');
   await opening.blur();
   await expect(save).toBeDisabled();
-  await opening.fill('05:30:05');
+  await opening.fill('05:30');
   await save.click();
   await expect(screen.locator('form')).toHaveCount(0);
-  await expect(screen.locator('.configured-hours').first()).toContainText('05:30:05');
+  await expect(screen.locator('.configured-hours').first()).toContainText('05:30');
   const writes = calls.filter((call) => call.method === 'PUT');
   expect(writes).toHaveLength(1);
   expect(writes[0].path).toBe('/v2/offices/1/schedules');
@@ -222,7 +233,7 @@ test('edit, cancel and authoritative save preserve the complete-week contract', 
   expect(writes[0].payload.days[0]).toEqual({
     weekday: 'MONDAY',
     enabled: true,
-    openingTime: '05:30:05',
+    openingTime: '05:30',
     closingTime: '18:00'
   });
   expect(writes[0].payload.days[6]).toEqual({ weekday: 'SUNDAY', enabled: false });
@@ -275,4 +286,84 @@ test('unavailable schedule plugin preserves branch navigation', async ({ page })
   await expect(page.locator('mifosx-office-schedules-tab .unavailable-state')).toBeVisible();
   await expect(page.locator('.office-header')).toContainText(office.name);
   await expect(page.locator('mifosx-office-schedules-tab .hours-dashboard')).toHaveCount(0);
+});
+
+test('minute-only native controls preserve untouched seconds through save, reload and General overview', async ({
+  page
+}, testInfo) => {
+  const calls = await mockHours(page, ['ALL_FUNCTIONS'], 0, 0, true);
+  const screen = page.locator('mifosx-office-schedules-tab');
+  await expect(screen.locator('.configured-hours').nth(1)).toHaveText('08:30 – 18:00');
+  await screen.getByRole('button', { name: 'Edit schedule', exact: true }).click();
+  const inputs = screen.locator('input[type=time]');
+  await expect(inputs).toHaveCount(14);
+  for (const input of await inputs.all()) {
+    await expect(input).toHaveAttribute('step', '60');
+    expect(await input.inputValue()).toMatch(/^(\d{2}:\d{2})?$/);
+    expect(await input.evaluate((element: HTMLInputElement) => element.validity.stepMismatch)).toBe(false);
+  }
+  const tuesday = screen.getByLabel('Tuesday Opening Time', { exact: true });
+  await expect(tuesday).toHaveValue('08:30');
+  await tuesday.focus();
+  await tuesday.blur();
+  const monday = screen.getByLabel('Monday Opening Time', { exact: true });
+  await monday.evaluate((input: HTMLInputElement) => {
+    input.addEventListener('click', () => input.showPicker(), { once: true });
+  });
+  await monday.click();
+  await page.screenshot({ path: testInfo.outputPath('native-minute-picker.png'), animations: 'disabled' });
+  await page.keyboard.press('Escape');
+  await monday.fill('08:30');
+  await monday.focus();
+  await monday.press('ArrowUp');
+  expect(await monday.inputValue()).not.toBe('08:30');
+  await monday.fill('08:31');
+  const save = screen.getByRole('button', { name: 'Save Changes', exact: true });
+  for (const width of [
+    390,
+    768,
+    1280,
+    1920
+  ]) {
+    await page.setViewportSize({ width, height: 1200 });
+    await settleLayout(page, width);
+    await tuesday.scrollIntoViewIfNeeded();
+    await expect(tuesday).toBeVisible();
+    expect(await screen.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+    await page.screenshot({
+      path: testInfo.outputPath(`minute-editor-${width}.png`),
+      fullPage: true,
+      animations: 'disabled'
+    });
+    await monday.fill('');
+    await monday.blur();
+    await monday.scrollIntoViewIfNeeded();
+    await expect(screen.locator('mat-error').first()).toBeVisible();
+    await expect(save).toBeDisabled();
+    await monday.fill('08:31');
+  }
+  await expect(save).toBeEnabled();
+  await save.click();
+  await expect(screen.locator('form')).toHaveCount(0);
+  const write = calls.filter((call) => call.method === 'PUT');
+  expect(write).toHaveLength(1);
+  expect(write[0].payload.days).toHaveLength(7);
+  expect(write[0].payload.days[0].openingTime).toBe('08:31');
+  expect(write[0].payload.days[1]).toEqual({
+    weekday: 'TUESDAY',
+    enabled: true,
+    openingTime: '08:30:05',
+    closingTime: '18:00:30'
+  });
+  await page.reload();
+  await expect(screen.locator('.configured-hours').first()).toHaveText('08:31 – 18:00');
+  await expect(screen.locator('.configured-hours').nth(1)).toHaveText('08:30 – 18:00');
+  await screen.getByRole('button', { name: 'Edit schedule', exact: true }).click();
+  await expect(tuesday).toHaveValue('08:30');
+  await tuesday.fill('09:00');
+  await screen.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await expect(screen.locator('.configured-hours').nth(1)).toHaveText('08:30 – 18:00');
+  await page.getByRole('tab', { name: 'Summary', exact: true }).click();
+  await expect(screen.locator('.day-tile').nth(1)).toContainText('08:30 – 18:00');
+  expect(calls.filter((call) => call.method === 'PUT')).toHaveLength(1);
 });
