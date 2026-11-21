@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Injector,
+  OnInit,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -19,6 +28,13 @@ import {
   Validators
 } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { toUnits } from '../cash-exchange/cash-exchange.models';
+import { MAX_DEPOSIT_QUANTITY, MXN_DEPOSIT_DENOMINATIONS } from './deposit-denominations.config';
+import { MatIconButton } from '@angular/material/button';
+import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { MatIcon } from '@angular/material/icon';
+import { MatPrefix } from '@angular/material/form-field';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import {
   MatStepper,
@@ -32,12 +48,14 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   catchError,
-  debounceTime,
   distinctUntilChanged,
   EMPTY,
   finalize,
   forkJoin,
   map,
+  merge,
+  Subject,
+  timer,
   of,
   switchMap,
   tap
@@ -52,6 +70,7 @@ import { environment } from 'environments/environment';
 import {
   BaseTellerService,
   DepositClient,
+  DepositAccountTransaction,
   DepositClientAccounts,
   DepositPaymentType,
   DepositSavingsAccount,
@@ -62,6 +81,10 @@ import {
   SavingsDepositReceipt,
   SavingsDepositTemplate
 } from '../base-teller.service';
+
+function extract(value: string): string {
+  return value;
+}
 
 type DepositType = 'CASH' | 'CHECK';
 type DepositSearchResponse = DepositSearchResult[] | { pageItems?: DepositSearchResult[] };
@@ -96,6 +119,13 @@ type DepositFormGroup = FormGroup<{
   styleUrls: ['./savings-account-deposit.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatButtonToggle,
+    MatButtonToggleGroup,
+    MatIconButton,
+    MatIcon,
+    MatPrefix,
+    MatRadioButton,
+    MatRadioGroup,
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatProgressSpinner,
@@ -117,6 +147,8 @@ export class SavingsAccountDepositComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private injector = inject(Injector);
+  private searchRetry = new Subject<void>();
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date();
@@ -136,6 +168,14 @@ export class SavingsAccountDepositComponent implements OnInit {
   isLoadingTemplate = false;
   isSubmitting = false;
   canAccessWorkflow = false;
+  isLoadingDetails = false;
+  accountDetailsUnavailable = false;
+  hasSearched = false;
+  readonly maxQuantity = MAX_DEPOSIT_QUANTITY;
+  private denominationContext = '';
+  private templateReady = false;
+  private detailLoadRequestId = 0;
+  private accountDetails = new Map<string, DepositSavingsAccount>();
   private accountLoadRequestId = 0;
   private templateLoadRequestId = 0;
   private receiptLoadRequestId = 0;
@@ -164,21 +204,198 @@ export class SavingsAccountDepositComponent implements OnInit {
       : this.paymentTypeOptions;
   }
 
+  get currencyPrecision(): number {
+    const precision = this.selectedSavingsAccount?.currency?.decimalPlaces;
+    if (precision != null && Number.isInteger(precision) && precision >= 0 && precision <= 20) return precision;
+    const currency = this.accountCurrencyCode();
+    // Before account metadata is available, retain the existing six-place calculation scale.
+    // Never invent a currency for the input or summary.
+    return currency
+      ? new Intl.NumberFormat(this.settingsService.language.code, { style: 'currency', currency }).resolvedOptions()
+          .maximumFractionDigits
+      : 6;
+  }
+
+  get currencySymbol(): string {
+    const currency = this.accountCurrencyCode();
+    return currency
+      ? new Intl.NumberFormat(this.settingsService.language.code, {
+          style: 'currency',
+          currency,
+          currencyDisplay: 'narrowSymbol'
+        })
+          .formatToParts(0)
+          .find((part) => part.type === 'currency')?.value || currency
+      : '';
+  }
+
+  get currencyStep(): number {
+    return 1 / 10 ** this.currencyPrecision;
+  }
+
+  get usesPresetDenominations(): boolean {
+    return this.accountCurrencyCode() === 'MXN' && this.currencyPrecision >= 2;
+  }
+
+  get banknoteCount(): number {
+    return MXN_DEPOSIT_DENOMINATIONS.filter((item) => item.kind === 'banknote').length;
+  }
+
+  get presetDenominationCount(): number {
+    return this.usesPresetDenominations ? MXN_DEPOSIT_DENOMINATIONS.length : 0;
+  }
+
+  get denominationGroups() {
+    if (!this.usesPresetDenominations) {
+      return [{ label: 'labels.inputs.Denominations', rows: this.denominations.controls, offset: 0, preset: false }];
+    }
+    const groups = [
+      {
+        label: extract('depositDetails.banknotes'),
+        rows: this.denominations.controls.slice(0, this.banknoteCount),
+        offset: 0,
+        preset: true
+      },
+      {
+        label: extract('depositDetails.coins'),
+        rows: this.denominations.controls.slice(this.banknoteCount, this.presetDenominationCount),
+        offset: this.banknoteCount,
+        preset: true
+      }
+    ];
+    if (this.denominations.length > this.presetDenominationCount) {
+      groups.push({
+        label: 'labels.inputs.Denominations',
+        rows: this.denominations.controls.slice(this.presetDenominationCount),
+        offset: this.presetDenominationCount,
+        preset: false
+      });
+    }
+    return groups;
+  }
+
+  get hasCountedCustomDenominations(): boolean {
+    return this.denominations.controls
+      .slice(this.presetDenominationCount)
+      .some((row) => Number(row.controls.quantity.value) > 0);
+  }
+
+  get validCashCount(): boolean {
+    return this.denominations.valid && this.countedUnits() != null;
+  }
+
   get denominationTotal(): number {
-    const total = this.denominations.controls.reduce((sum: number, control: AbstractControl) => {
-      const denomination = Number(control.get('denomination')?.value ?? 0);
-      const quantity = Number(control.get('quantity')?.value ?? 0);
-      return sum + denomination * quantity;
-    }, 0);
-    return this.toMoneyAmount(total);
+    const units = this.countedUnits();
+    return units == null ? 0 : this.toMoneyAmount(units);
   }
 
   get cashDenominationsReconcile(): boolean {
-    return (
-      this.depositType !== 'CASH' ||
-      (this.denominations.length > 0 &&
-        this.toMoneyUnits(this.denominationTotal) === this.toMoneyUnits(this.depositAmount))
+    if (this.depositType !== 'CASH') return true;
+    const units = this.toMoneyUnits(this.depositForm?.controls.transactionAmount.value);
+    const counted = this.countedUnits();
+    return units != null && units > 0n && counted != null && units === counted && this.denominations.valid;
+  }
+
+  readonly reconciliationMessages = {
+    matched: extract('depositDetails.matched'),
+    missing: extract('depositDetails.missing'),
+    excess: extract('depositDetails.excess'),
+    neutral: extract('depositDetails.neutral'),
+    invalid: extract('depositDetails.invalid')
+  };
+
+  get reconciliationState(): 'neutral' | 'matched' | 'missing' | 'excess' | 'invalid' {
+    if (!this.depositForm.controls.transactionAmount.valid) return 'neutral';
+    if (!this.denominations.valid || this.countedUnits() == null) return 'invalid';
+    if (this.cashDenominationsReconcile) return 'matched';
+    return this.denominationTotal < this.depositAmount ? 'missing' : 'excess';
+  }
+
+  get cashDifference(): number {
+    const amount = this.toMoneyUnits(this.depositForm.controls.transactionAmount.value);
+    const counted = this.countedUnits();
+    return amount == null || counted == null
+      ? 0
+      : this.toMoneyAmount(counted > amount ? counted - amount : amount - counted);
+  }
+
+  get pieceCounts(): { banknotes: number; coins: number } {
+    const quantities = this.denominations.controls.map((row) =>
+      row.controls.quantity.valid ? Number(row.controls.quantity.value) : 0
     );
+    return {
+      banknotes: quantities.slice(0, this.banknoteCount).reduce((a, b) => a + b, 0),
+      coins: quantities.slice(this.banknoteCount, this.presetDenominationCount).reduce((a, b) => a + b, 0)
+    };
+  }
+
+  get currentBalance(): number | null {
+    const balance = this.selectedSavingsAccount?.summary?.accountBalance ?? this.selectedSavingsAccount?.accountBalance;
+    return typeof balance === 'number' && Number.isFinite(balance) ? balance : null;
+  }
+
+  get estimatedBalance(): number | null {
+    if (this.currentBalance == null || !this.depositForm.controls.transactionAmount.valid) return null;
+    // Balance may be negative (overdraft). Scale its magnitude using the same exact conversion.
+    const balance = this.toMoneyUnits(Math.abs(this.currentBalance));
+    const amount = this.toMoneyUnits(this.depositAmount);
+    if (balance == null || amount == null) return null;
+    const result = (this.currentBalance < 0 ? -balance : balance) + amount;
+    return result > BigInt(Number.MAX_SAFE_INTEGER) ? null : this.toMoneyAmount(result);
+  }
+
+  money(amount: number | null): string {
+    return amount == null || !Number.isFinite(amount) || !this.selectedSavingsAccount
+      ? '—'
+      : this.formatMoney(amount, this.selectedSavingsAccount);
+  }
+
+  get summaryDate(): string {
+    const date = this.depositForm.controls.transactionDate.value;
+    return date instanceof Date && Number.isFinite(date.getTime())
+      ? new Intl.DateTimeFormat(this.settingsService.language.code, {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        }).format(date)
+      : '—';
+  }
+
+  get detailsValidationMessage(): string {
+    if (!this.selectionReady) return extract('depositDetails.selectionInvalid');
+    if (!this.depositForm.controls.transactionAmount.valid) return extract('depositDetails.amountInvalid');
+    if (!this.depositForm.controls.transactionDate.valid) return extract('depositDetails.dateInvalid');
+    if (!this.filteredPaymentTypeOptions.some((option) => option.id === this.depositForm.controls.paymentTypeId.value))
+      return extract('depositDetails.paymentRequired');
+    if (this.depositType === 'CHECK' && [
+        'accountNumber',
+        'checkNumber',
+        'routingCode',
+        'bankNumber'
+      ].some((name) => this.depositForm.get(name)?.invalid)) return extract('depositDetails.checkRequired');
+    if (!this.cashDenominationsReconcile)
+      return 'labels.text.Cash denomination total must equal the transaction amount';
+    return this.depositForm.valid ? extract('depositDetails.complete') : extract('depositDetails.reviewFields');
+  }
+
+  get canContinueDetails(): boolean {
+    return (
+      this.selectionReady &&
+      this.depositForm.valid &&
+      this.cashDenominationsReconcile &&
+      !this.isSubmitting &&
+      !this.commandResult
+    );
+  }
+
+  goToPreview(stepper: MatStepper): void {
+    this.depositForm.markAllAsTouched();
+    if (this.canContinueDetails && this.proceedToPreview()) stepper.next();
+  }
+
+  changeDestination(stepper: MatStepper): void {
+    if (this.isSubmitting || this.commandResult) return;
+    stepper.selectedIndex = 0;
   }
 
   ngOnInit(): void {
@@ -200,11 +417,14 @@ export class SavingsAccountDepositComponent implements OnInit {
       savingsAccount: new FormControl<DepositSavingsAccount | '' | null>('', Validators.required)
     });
     this.depositForm = new FormGroup({
-      depositType: new FormControl<DepositType | null>('CASH', Validators.required),
-      transactionDate: new FormControl<Date | string | null>(this.settingsService.businessDate, Validators.required),
-      transactionAmount: new FormControl<number | null>(0, [
+      depositType: new FormControl<DepositType | null>('CASH', [
         Validators.required,
-        Validators.min(0.01)
+        Validators.pattern(/^(CASH|CHECK)$/)
+      ]),
+      transactionDate: new FormControl<Date | string | null>(this.settingsService.businessDate, Validators.required),
+      transactionAmount: new FormControl<number | null>(null, [
+        Validators.required,
+        this.moneyValidator()
       ]),
       paymentTypeId: new FormControl<FineractId | '' | null>('', Validators.required),
       accountNumber: new FormControl<string | null>('', Validators.maxLength(50)),
@@ -215,60 +435,105 @@ export class SavingsAccountDepositComponent implements OnInit {
       note: new FormControl<string | null>('DEPOSITO EN VENTANILLA'),
       denominations: new FormArray<DenominationFormGroup>([])
     });
+    this.depositForm.addValidators(() => {
+      if (!this.cashDenominationsReconcile) return { cashReconciliation: true };
+      const paymentId = this.depositForm.controls.paymentTypeId.value;
+      return paymentId && !this.filteredPaymentTypeOptions.some((option) => option.id === paymentId)
+        ? { incompatiblePayment: true }
+        : null;
+    });
   }
 
   watchLookup(): void {
-    this.lookupForm
-      .get('search')
-      ?.valueChanges.pipe(
-        tap((value: string | DepositSearchResult | null) => {
-          if (typeof value === 'string') {
-            this.clearSelectedAccount();
-          }
+    const queryChanges = this.lookupForm.controls.search.valueChanges.pipe(
+      map((value) => (typeof value === 'string' ? value.trim() : null)),
+      distinctUntilChanged()
+    );
+    merge(
+      queryChanges,
+      this.searchRetry.pipe(
+        map(() => {
+          const value = this.lookupForm.controls.search.value;
+          return typeof value === 'string' ? value.trim() : null;
+        })
+      )
+    )
+      .pipe(
+        tap((searchTerm) => {
+          if (searchTerm !== null) this.clearSelectedAccount();
+          this.searchResults = [];
+          this.hasSearched = false;
+          this.isSearching = false;
         }),
-        map((value: string | DepositSearchResult | null) => (typeof value === 'string' ? value.trim() : '')),
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((searchTerm: string) => {
-          if (searchTerm.length < 2) {
-            this.searchResults = [];
-            this.isSearching = false;
+        // Switching before the debounce cancels an old request immediately, but equivalent
+        // trimmed queries keep their current results or in-flight request.
+        switchMap((searchTerm) => {
+          if (searchTerm === null || searchTerm.length < 2) {
             this.cdr.markForCheck();
             return EMPTY;
           }
-          this.isSearching = true;
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-          return this.baseTellerService.searchDepositCustomersAndAccounts(searchTerm).pipe(
-            catchError((error: unknown) => {
-              this.searchResults = [];
-              this.errorMessage =
-                this.extractErrorMessage(error) || 'labels.text.Customer or savings account search failed';
-              return of([]);
-            }),
-            finalize(() => {
-              this.isSearching = false;
+          return timer(300).pipe(
+            switchMap(() => {
+              this.isSearching = true;
+              this.errorMessage = '';
               this.cdr.markForCheck();
+              return this.baseTellerService.searchDepositCustomersAndAccounts(searchTerm).pipe(
+                catchError((error: unknown) => {
+                  this.searchResults = [];
+                  this.errorMessage =
+                    this.extractErrorMessage(error) || 'labels.text.Customer or savings account search failed';
+                  return of([]);
+                }),
+                finalize(() => {
+                  this.isSearching = false;
+                  this.cdr.markForCheck();
+                })
+              );
             })
           );
         }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((response: DepositSearchResponse) => {
-        this.searchResults = Array.isArray(response) ? response : response?.pageItems || [];
+        const results = Array.isArray(response) ? response : response?.pageItems || [];
+        this.searchResults = results.filter((result) => [
+            'client',
+            'clients',
+            'savings'
+          ].includes(this.entityType(result)));
+        this.hasSearched = !this.errorMessage;
+        this.cdr.markForCheck();
       });
 
     this.lookupForm
       .get('savingsAccount')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((account: DepositSavingsAccount | '' | null) => {
-        if (account && typeof account === 'object') {
-          this.selectedSavingsAccount = account;
-          const savingsId = this.savingsAccountId(account);
-          if (savingsId) {
-            this.loadDepositTemplate(savingsId);
-          }
+        if (
+          !account ||
+          typeof account !== 'object' ||
+          !this.isActiveSavingsAccount(account) ||
+          !this.savingsAccounts.some(
+            (option) => String(this.savingsAccountId(option)) === String(this.savingsAccountId(account))
+          )
+        ) {
+          this.detailLoadRequestId++;
+          this.templateLoadRequestId++;
+          this.isLoadingDetails = false;
+          this.isLoadingTemplate = false;
+          this.templateReady = false;
+          this.paymentTypeOptions = [];
+          this.selectedSavingsAccount = null;
+          this.lookupForm.controls.savingsAccount.setErrors({ ineligible: true });
+          return;
         }
+        this.templateLoadRequestId++;
+        this.templateReady = false;
+        this.paymentTypeOptions = [];
+        this.selectedSavingsAccount = account;
+        this.configureDenominations();
+        this.loadSelectedAccountDetails(account);
+        if (this.selectedSavingsAccount) this.loadDepositTemplate(this.savingsAccountId(account));
       });
   }
 
@@ -278,6 +543,8 @@ export class SavingsAccountDepositComponent implements OnInit {
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((depositType: DepositType | null) => {
         this.applyCheckValidators(depositType || 'CASH');
+        if (depositType === 'CHECK') this.denominations.disable({ emitEvent: false });
+        else this.denominations.enable({ emitEvent: false });
         this.syncSelectedPaymentType();
       });
 
@@ -288,7 +555,7 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   selectLookupResult(result: DepositSearchResult): void {
-    if (!result || typeof result !== 'object') {
+    if (this.isSubmitting || this.commandResult || !result || typeof result !== 'object') {
       return;
     }
     this.clearSelectedAccount();
@@ -300,20 +567,22 @@ export class SavingsAccountDepositComponent implements OnInit {
       }
       return;
     }
+    if (resultType !== 'client' && resultType !== 'clients') return;
     const clientId = result.entityId || result.id || result.clientId;
     if (clientId) {
       this.loadClientAccounts(clientId);
     }
   }
 
-  loadClientAccounts(clientId: FineractId): void {
+  loadClientAccounts(clientId: FineractId, selectedId?: FineractId): void {
     const requestId = ++this.accountLoadRequestId;
     this.isLoadingAccounts = true;
     forkJoin({
-      customer: this.baseTellerService.getDepositClient(clientId).pipe(catchError(() => of(null))),
+      customer: this.baseTellerService.getDepositClient(clientId),
       accounts: this.baseTellerService.getDepositClientAccounts(clientId)
     })
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.accountLoadRequestId) {
             this.isLoadingAccounts = false;
@@ -326,12 +595,21 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.accountLoadRequestId) {
             return;
           }
+          if (!customer?.id || String(customer.id) !== String(clientId)) {
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
+          }
           this.customer = customer;
-          this.savingsAccounts = this.activeSavingsAccounts(
-            accounts?.savingsAccounts || accounts?.savingAccounts || []
-          );
-          if (!this.savingsAccounts.length) {
-            this.errorMessage = 'labels.text.No active savings accounts available for this customer';
+          this.savingsAccounts = accounts?.savingsAccounts || accounts?.savingAccounts || [];
+          if (selectedId !== undefined) {
+            const selected = this.savingsAccounts.find(
+              (account) => String(this.savingsAccountId(account)) === String(selectedId)
+            );
+            if (selected && this.isActiveSavingsAccount(selected)) {
+              this.lookupForm.controls.savingsAccount.setValue(selected);
+            } else {
+              this.errorMessage = 'depositSelection.ineligible';
+            }
           }
         },
         error: (error: unknown) => {
@@ -349,6 +627,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.baseTellerService
       .getDepositSavingsAccount(savingsId)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.accountLoadRequestId) {
             this.isLoadingAccounts = false;
@@ -361,17 +640,12 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.accountLoadRequestId) {
             return;
           }
-          this.selectedSavingsAccount = account;
-          this.savingsAccounts = this.isActiveSavingsAccount(account) ? [account] : [];
-          this.customer = {
-            id: account.clientId,
-            displayName: account.clientName || account.clientDisplayName
-          };
-          if (this.savingsAccounts.length) {
-            this.lookupForm.patchValue({ savingsAccount: account });
-          } else {
-            this.errorMessage = 'labels.text.Selected savings account is not active';
+          if (!account.clientId || String(this.savingsAccountId(account)) !== String(savingsId)) {
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
           }
+          this.accountDetails.set(String(savingsId), account);
+          this.loadClientAccounts(account.clientId, savingsId);
         },
         error: (error: unknown) => {
           if (requestId !== this.accountLoadRequestId) {
@@ -385,12 +659,18 @@ export class SavingsAccountDepositComponent implements OnInit {
   loadDepositTemplate(savingsId: FineractId): void {
     const requestId = ++this.templateLoadRequestId;
     this.isLoadingTemplate = true;
+    this.templateReady = false;
+    this.paymentTypeOptions = [];
+    this.errorMessage = '';
+    this.lookupForm.controls.savingsAccount.setErrors({ loading: true });
     this.baseTellerService
       .getSavingsDepositTemplate(savingsId)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           if (requestId === this.templateLoadRequestId) {
             this.isLoadingTemplate = false;
+            this.updateSelectionValidity();
             this.cdr.markForCheck();
           }
         })
@@ -400,6 +680,8 @@ export class SavingsAccountDepositComponent implements OnInit {
           if (requestId !== this.templateLoadRequestId) {
             return;
           }
+          this.templateReady = true;
+          this.updateSelectionValidity();
           this.paymentTypeOptions = template?.paymentTypeOptions || [];
           this.syncSelectedPaymentType();
           if (!this.filteredPaymentTypeOptions.length) {
@@ -411,21 +693,256 @@ export class SavingsAccountDepositComponent implements OnInit {
             return;
           }
           this.paymentTypeOptions = [];
+          this.depositForm.controls.paymentTypeId.setValue('');
+          this.lookupForm.controls.savingsAccount.setErrors({ templateUnavailable: true });
           this.errorMessage = this.extractErrorMessage(error) || 'labels.text.Payment types could not be loaded';
         }
       });
   }
 
-  addDenomination(): void {
+  get selectionReady(): boolean {
+    return (
+      !!this.customer?.id &&
+      !!this.selectedSavingsAccount &&
+      this.isActiveSavingsAccount(this.selectedSavingsAccount) &&
+      this.lookupForm.valid &&
+      this.templateReady &&
+      !this.isLoadingAccounts &&
+      !this.isLoadingTemplate
+    );
+  }
+
+  get customerName(): string {
+    return this.customer?.displayName || this.customer?.fullname || this.customer?.name || '';
+  }
+
+  get customerInitials(): string {
+    return this.customerName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join('');
+  }
+
+  changeCustomer(input: HTMLInputElement): void {
+    if (this.isSubmitting || this.commandResult) return;
+    this.lookupForm.controls.search.setValue('');
+    input.focus();
+  }
+
+  selectAccount(account: DepositSavingsAccount): void {
+    if (this.isSubmitting || this.commandResult || !this.isActiveSavingsAccount(account)) return;
+    if (String(this.selectedSavingsAccountId()) === String(this.savingsAccountId(account))) return;
+    this.lookupForm.controls.savingsAccount.setValue(account);
+  }
+
+  retrySelection(searchInput?: HTMLInputElement): void {
+    if (this.isSubmitting || this.commandResult) return;
+    if (this.selectedSavingsAccount) {
+      this.loadDepositTemplate(this.savingsAccountId(this.selectedSavingsAccount));
+    } else {
+      const result = this.lookupForm.controls.search.value;
+      if (result && typeof result === 'object') this.selectLookupResult(result);
+      else if (typeof result === 'string' && result.trim().length >= 2) {
+        this.searchRetry.next();
+        searchInput?.focus();
+      }
+    }
+  }
+
+  startNewDeposit(stepper: MatStepper, searchInput: HTMLInputElement): void {
+    if (this.isSubmitting || !this.commandResult) return;
+    const businessDate = this.settingsService.businessDate;
+    this.maxDate = businessDate;
+    // Invalidates pending receipt/account responses and generates the next receipt number once.
+    this.clearSelectedAccount();
+    const receiptNumber = this.depositForm.controls.receiptNumber.value;
+    stepper.reset();
+    this.lookupForm.reset({ search: '', savingsAccount: '' });
+    this.depositForm.reset(
+      {
+        depositType: 'CASH',
+        transactionDate: businessDate,
+        transactionAmount: null,
+        paymentTypeId: '',
+        accountNumber: '',
+        checkNumber: '',
+        routingCode: '',
+        receiptNumber,
+        bankNumber: '',
+        note: 'DEPOSITO EN VENTANILLA'
+      },
+      { emitEvent: false }
+    );
+    this.denominations.clear();
+    this.addDenomination();
+    this.applyCheckValidators('CASH');
+    this.searchResults = [];
+    this.hasSearched = false;
+    this.cdr.markForCheck();
+    afterNextRender(() => searchInput.focus(), { injector: this.injector });
+  }
+
+  accountStatusLabel(account: DepositSavingsAccount): string {
+    const status = account.status;
+    return (
+      (typeof status === 'string' ? status : status?.value) ||
+      (this.isActiveSavingsAccount(account) ? 'labels.status.Active' : 'depositSelection.ineligible')
+    );
+  }
+
+  accountBalance(account: DepositSavingsAccount): number | null {
+    return account.summary?.availableBalance ?? account.summary?.accountBalance ?? account.accountBalance ?? null;
+  }
+
+  balanceLabel(account: DepositSavingsAccount): string {
+    return account.summary?.availableBalance != null
+      ? 'labels.inputs.Available Balance'
+      : 'labels.inputs.Account Balance';
+  }
+
+  formatMoney(amount: number | null | undefined, account: DepositSavingsAccount, currency = account.currency): string {
+    if (amount == null) return '';
+    const code = currency?.code || account.currencyCode;
+    const digits = currency?.decimalPlaces;
+    const locale = this.settingsService.language.code;
+    // Intl only formats the server amount; it never changes the stored balance or transaction payload.
+    return new Intl.NumberFormat(locale, {
+      ...(code ? ({ style: 'currency', currency: code, currencyDisplay: 'narrowSymbol' } as const) : {}),
+      ...(digits != null ? { minimumFractionDigits: digits, maximumFractionDigits: digits } : {})
+    }).format(amount);
+  }
+
+  formatAccountDate(date: number[] | undefined): string {
+    if (!date || date.length < 3) return '';
+    return new Intl.DateTimeFormat(this.settingsService.language.code, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }).format(new Date(date[0], date[1] - 1, date[2]));
+  }
+
+  get recentTransactions(): DepositAccountTransaction[] {
+    return [...(this.selectedSavingsAccount?.transactions || [])]
+      .sort((a, b) => this.transactionOrder(b) - this.transactionOrder(a) || Number(b.id) - Number(a.id))
+      .slice(0, 3);
+  }
+
+  transactionDirection(transaction: DepositAccountTransaction): string {
+    // Reversed entries are historical records, not a new credit/debit movement.
+    if (transaction.reversed || transaction.isReversal) return '';
+    if (transaction.entryType === 'CREDIT') return '+';
+    if (transaction.entryType === 'DEBIT') return '−';
+    const type = transaction.transactionType;
+    if (type?.deposit || type?.interestPosting || type?.dividendPayout) return '+';
+    if (type?.withdrawal || type?.feeDeduction || type?.overdraftInterest || type?.withholdTax) return '−';
+    return '';
+  }
+
+  private transactionOrder(transaction: DepositAccountTransaction): number {
+    const date = transaction.date;
+    return date?.length === 3 ? new Date(date[0], date[1] - 1, date[2]).getTime() : 0;
+  }
+
+  private loadSelectedAccountDetails(account: DepositSavingsAccount): void {
+    const requestId = ++this.detailLoadRequestId;
+    const savingsId = this.savingsAccountId(account);
+    this.accountDetailsUnavailable = false;
+    const cached = this.accountDetails.get(String(savingsId));
+    this.isLoadingDetails = true;
+    (cached ? of(cached) : this.baseTellerService.getDepositSavingsAccount(savingsId))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          if (requestId === this.detailLoadRequestId) {
+            this.isLoadingDetails = false;
+            this.updateSelectionValidity();
+            this.cdr.markForCheck();
+          }
+        })
+      )
+      .subscribe({
+        next: (details) => {
+          if (requestId !== this.detailLoadRequestId || this.isSubmitting || this.commandResult) return;
+          if (
+            String(this.savingsAccountId(details)) !== String(savingsId) ||
+            !details.clientId ||
+            String(details.clientId) !== String(this.customer?.id)
+          ) {
+            this.selectedSavingsAccount = null;
+            this.lookupForm.controls.savingsAccount.setValue('', { emitEvent: false });
+            this.templateLoadRequestId++;
+            this.templateReady = false;
+            this.isLoadingTemplate = false;
+            this.paymentTypeOptions = [];
+            this.errorMessage = 'depositSelection.customerUnavailable';
+            return;
+          }
+          // Preserve known identifiers only; status, currency and balances come from details.
+          const detailedAccount: DepositSavingsAccount = {
+            ...details,
+            productName:
+              details.productName || details.savingsProductName || account.productName || account.savingsProductName,
+            accountNo: details.accountNo || details.accountNumber || account.accountNo || account.accountNumber
+          };
+          this.accountDetails.set(String(savingsId), detailedAccount);
+          this.selectedSavingsAccount = detailedAccount;
+          this.configureDenominations();
+          this.savingsAccounts = this.savingsAccounts.map((item) =>
+            String(this.savingsAccountId(item)) === String(savingsId) ? detailedAccount : item
+          );
+          this.lookupForm.controls.savingsAccount.setValue(detailedAccount, { emitEvent: false });
+          this.updateSelectionValidity();
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          if (requestId !== this.detailLoadRequestId) return;
+          // The client account list already establishes ownership and eligibility. Optional history is independent.
+          this.accountDetailsUnavailable = true;
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+  private updateSelectionValidity(): void {
+    const control = this.lookupForm.controls.savingsAccount;
+    control.updateValueAndValidity({ emitEvent: false });
+    if (!this.selectedSavingsAccount || !this.isActiveSavingsAccount(this.selectedSavingsAccount)) {
+      control.setErrors({ ineligible: true });
+    } else if (!this.templateReady || this.isLoadingTemplate) {
+      control.setErrors({ selectionPending: true });
+    }
+  }
+
+  private configureDenominations(): void {
+    const key = `${this.selectedSavingsAccountId()}:${this.accountCurrencyCode()}:${this.currencyPrecision}`;
+    if (key !== this.denominationContext) {
+      this.denominationContext = key;
+      this.denominations.clear({ emitEvent: false });
+      if (this.usesPresetDenominations) {
+        MXN_DEPOSIT_DENOMINATIONS.forEach((item) => this.addDenomination(item.value));
+      } else this.addDenomination();
+    }
+    this.depositForm.controls.transactionAmount.updateValueAndValidity({ emitEvent: false });
+    this.denominations.controls.forEach((row) =>
+      row.controls.denomination.updateValueAndValidity({ emitEvent: false })
+    );
+    if (this.depositType === 'CHECK') this.denominations.disable({ emitEvent: false });
+    this.depositForm.updateValueAndValidity({ emitEvent: false });
+  }
+
+  addDenomination(value?: number): void {
     this.denominations.push(
       new FormGroup({
-        denomination: new FormControl<number | string | null>('', [
+        denomination: new FormControl<number | string | null>(value ?? '', [
           Validators.required,
-          Validators.min(0.01)
+          this.moneyValidator()
         ]),
-        quantity: new FormControl<number | string | null>(1, [
+        quantity: new FormControl<number | string | null>(value == null ? 1 : 0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
+          Validators.max(this.maxQuantity),
           this.integerValidator()
         ])
       })
@@ -433,13 +950,49 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   removeDenomination(index: number): void {
-    this.denominations.removeAt(index);
+    if (index >= this.presetDenominationCount && index < this.denominations.length) this.denominations.removeAt(index);
   }
 
-  selectedDenominationLineTotal(control: AbstractControl): number {
-    const denomination = Number(control.get('denomination')?.value ?? 0);
-    const quantity = Number(control.get('quantity')?.value ?? 0);
-    return this.toMoneyAmount(denomination * quantity);
+  adjustQuantity(index: number, change: number): void {
+    const control = this.denominations.at(index).controls.quantity;
+    if (!control.valid) return;
+    control.setValue(Math.min(this.maxQuantity, Math.max(0, Number(control.value) + change)));
+    control.markAsDirty();
+  }
+
+  clearCount(): void {
+    this.denominations.controls.forEach((row) => row.controls.quantity.setValue(0));
+    this.denominations.markAsDirty();
+  }
+
+  selectedDenominationLineTotal(control: AbstractControl): number | null {
+    const units = this.toMoneyUnits(control.get('denomination')?.value);
+    const quantity = Number(control.get('quantity')?.value);
+    if (units == null || !Number.isInteger(quantity) || quantity < 0 || quantity > this.maxQuantity) return null;
+    const total = units * BigInt(quantity);
+    return total > BigInt(Number.MAX_SAFE_INTEGER) ? null : this.toMoneyAmount(total);
+  }
+
+  private countedUnits(): bigint | null {
+    if (!this.depositForm || !this.denominations.length) return null;
+    let total = 0n;
+    for (const row of this.denominations.controls) {
+      const units = this.toMoneyUnits(row.controls.denomination.value);
+      const quantity = Number(row.controls.quantity.value);
+      if (
+        units == null ||
+        units <= 0n ||
+        row.controls.quantity.value === '' ||
+        row.controls.quantity.value == null ||
+        !Number.isInteger(quantity) ||
+        quantity < 0 ||
+        quantity > this.maxQuantity
+      )
+        return null;
+      total += units * BigInt(quantity);
+      if (total > BigInt(Number.MAX_SAFE_INTEGER)) return null;
+    }
+    return total;
   }
 
   displayLookupResult(result: DepositSearchResult | string | null): string {
@@ -449,7 +1002,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     if (typeof result === 'string') {
       return result;
     }
-    return `${result.entityAccountNo || result.accountNo || result.id || result.entityId || ''} - ${
+    return `${result.entityAccountNo || result.accountNo || result.id || result.entityId || result.accountId || ''} - ${
       result.entityName || result.displayName || result.name || ''
     }`;
   }
@@ -468,14 +1021,11 @@ export class SavingsAccountDepositComponent implements OnInit {
 
   proceedToPreview(): boolean {
     this.errorMessage = '';
-    if (!this.lookupForm.valid || !this.depositForm.valid || !this.selectedSavingsAccountId()) {
-      return false;
-    }
     if (!this.cashDenominationsReconcile) {
       this.errorMessage = 'labels.text.Cash denomination total must equal the transaction amount';
       return false;
     }
-    return true;
+    return this.canContinueDetails;
   }
 
   submit(): void {
@@ -597,11 +1147,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     });
   }
 
-  private activeSavingsAccounts(accounts: DepositSavingsAccount[]): DepositSavingsAccount[] {
-    return accounts.filter((account: DepositSavingsAccount) => this.isActiveSavingsAccount(account));
-  }
-
-  private isActiveSavingsAccount(account: DepositSavingsAccount): boolean {
+  isActiveSavingsAccount(account: DepositSavingsAccount): boolean {
     return (
       (typeof account?.status === 'object' && account.status?.active === true) ||
       (typeof account?.status === 'object' && account.status?.value === 'Active') ||
@@ -609,7 +1155,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     );
   }
 
-  private entityType(result: DepositSearchResult): string {
+  entityType(result: DepositSearchResult): string {
     return String(result.entityType || result.subEntityType || result.accountType || '').toLowerCase();
   }
 
@@ -617,7 +1163,7 @@ export class SavingsAccountDepositComponent implements OnInit {
     return this.selectedSavingsAccount ? this.savingsAccountId(this.selectedSavingsAccount) : '';
   }
 
-  private savingsAccountId(account: DepositSavingsAccount): FineractId {
+  savingsAccountId(account: DepositSavingsAccount): FineractId {
     return account.id || account.accountId || account.savingsId || '';
   }
 
@@ -647,11 +1193,11 @@ export class SavingsAccountDepositComponent implements OnInit {
       !filteredOptions.some((paymentType: DepositPaymentType) => paymentType.id === selectedPaymentTypeId)
     ) {
       paymentTypeControl?.setValue('');
-      return;
-    }
-    if (!selectedPaymentTypeId && filteredOptions.length === 1) {
+    } else if (!selectedPaymentTypeId && filteredOptions.length === 1) {
       paymentTypeControl?.setValue(filteredOptions[0].id);
     }
+    // Replacing options can change compatibility even when the control value stays the same.
+    this.depositForm.updateValueAndValidity({ emitEvent: false });
   }
 
   private hasPermission(permission: string): boolean {
@@ -684,12 +1230,27 @@ export class SavingsAccountDepositComponent implements OnInit {
     );
   }
 
-  private toMoneyAmount(value: number): number {
-    return this.toMoneyUnits(value) / 1000000;
+  private toMoneyAmount(value: bigint): number {
+    return Number(value) / 10 ** this.currencyPrecision;
   }
 
-  private toMoneyUnits(value: number): number {
-    return Math.round((Number(value) || 0) * 1000000);
+  private toMoneyUnits(value: unknown): bigint | null {
+    if ((typeof value !== 'number' && typeof value !== 'string') || value === '' || !Number.isFinite(Number(value)))
+      return null;
+    try {
+      const units = toUnits(value, this.currencyPrecision);
+      return units <= BigInt(Number.MAX_SAFE_INTEGER) ? units : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private moneyValidator(): ValidatorFn {
+    return (control) => {
+      if (control.value == null || control.value === '') return null;
+      const units = this.toMoneyUnits(control.value);
+      return units != null && units > 0n ? null : { money: true };
+    };
   }
 
   private generateReceiptNumber(): string {
@@ -707,6 +1268,12 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   private clearSelectedAccount(): void {
+    this.detailLoadRequestId++;
+    this.accountDetails.clear();
+    this.isLoadingDetails = false;
+    this.accountDetailsUnavailable = false;
+    this.templateReady = false;
+    this.errorMessage = '';
     this.receiptLoadRequestId++;
     if (this.commandResult) {
       this.depositForm.controls.receiptNumber.setValue(this.generateReceiptNumber());
@@ -716,6 +1283,9 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.customer = null;
     this.savingsAccounts = [];
     this.selectedSavingsAccount = null;
+    this.denominationContext = '';
+    this.denominations.clear({ emitEvent: false });
+    this.addDenomination();
     this.paymentTypeOptions = [];
     this.commandResult = undefined;
     this.receipt = undefined;
@@ -729,7 +1299,11 @@ export class SavingsAccountDepositComponent implements OnInit {
   private integerValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
-      return value === null || value === '' || Number.isInteger(Number(value)) ? null : { integer: true };
+      return value == null ||
+        value === '' ||
+        ((typeof value === 'number' || /^\d+$/.test(value)) && Number.isInteger(Number(value)))
+        ? null
+        : { integer: true };
     };
   }
 }

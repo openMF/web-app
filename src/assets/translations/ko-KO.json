@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "새 입금",
+    "searchHint": "고객 이름, 고객 번호 또는 저축 계좌 번호로 검색하세요.",
+    "searching": "검색 중…",
+    "clearSearch": "고객 검색 지우기",
+    "noResults": "일치하는 고객 또는 저축 계좌가 없습니다.",
+    "loadingAccounts": "고객 및 계좌를 불러오는 중…",
+    "changeCustomer": "고객 변경",
+    "accountHint": "입금할 저축 계좌를 선택하세요.",
+    "ineligible": "입금 대상이 아님",
+    "unavailable": "사용할 수 없음",
+    "noAccounts": "이 고객의 저축 계좌를 찾을 수 없습니다.",
+    "chooseCustomer": "저축 계좌를 보려면 고객을 선택하세요.",
+    "loadingSelection": "계좌 정보 및 입금 옵션을 불러오는 중…",
+    "depositInto": "입금 대상",
+    "chooseAccount": "입금할 저축 계좌를 선택하세요.",
+    "selectedAccount": "선택한 계좌",
+    "detailsUnavailable": "계좌 정보를 사용할 수 없습니다.",
+    "historyUnavailable": "최근 거래를 사용할 수 없습니다.",
+    "safetyNotice": "계속하기 전에 고객의 신원과 입금 대상 계좌 번호를 확인하세요.",
+    "customerUnavailable": "고객 및 계좌 소유권을 확인할 수 없습니다. 고객을 다시 선택하세요."
+  },
   "checkerInbox": {
     "status": {
       "processing": "검사 항목 {{count}}개 처리 중…",
@@ -9204,5 +9226,38 @@
       "invalid": "지점 일정에 올바르지 않은 데이터가 있습니다.",
       "error": "지점 일정을 불러오지 못했습니다."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "입금 금액",
+    "changeAccount": "계좌 변경",
+    "banknotes": "지폐",
+    "coins": "동전",
+    "cashCounting": "현금 계수",
+    "countHint": "권종별로 받은 수량을 입력하세요.",
+    "clearCount": "계수 초기화",
+    "decrease": "{{value}} 수량 줄이기",
+    "increase": "{{value}} 수량 늘리기",
+    "quantityFor": "{{value}} 수량",
+    "quantityInvalid": "0부터 {{max}}까지의 정수를 입력하세요.",
+    "counted": "계수 금액",
+    "matched": "현금 계수가 금액과 일치합니다",
+    "missing": "금액까지 {{difference}} 부족합니다",
+    "excess": "계수 금액이 {{difference}} 초과합니다",
+    "neutral": "현금을 대조하려면 유효한 금액을 입력하세요.",
+    "invalid": "권종과 수량을 확인하세요.",
+    "pieces": "지폐 {{banknotes}}장, 동전 {{coins}}개",
+    "amountInvalid": "계좌 통화의 소수 자릿수에 맞는 양수를 입력하세요.",
+    "selectionInvalid": "유효한 계좌 및 상세 정보가 로드될 때까지 기다리세요.",
+    "dateInvalid": "유효한 거래 날짜를 입력하세요.",
+    "paymentRequired": "호환되는 결제 유형을 선택하세요.",
+    "checkRequired": "필수 수표 정보를 입력하세요.",
+    "complete": "모든 필수 항목이 입력되었습니다",
+    "reviewFields": "강조된 항목을 확인하세요.",
+    "generatedReceipt": "자동 생성",
+    "optional": "선택 사항",
+    "notesHint": "예: 가족 입금, 급여 참조…",
+    "summary": "요약",
+    "estimatedBalance": "입금 후 예상 잔액",
+    "notice": "제출 전 미리보기에서 계좌와 금액을 확인하세요. 현금 계수는 로컬에서 확인하며 최종 잔액은 확정된 거래에 따라 결정됩니다."
   }
 }

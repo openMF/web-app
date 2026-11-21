@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "New Deposit",
+    "searchHint": "Search by customer name, client number or savings account number.",
+    "searching": "Searching…",
+    "clearSearch": "Clear customer search",
+    "noResults": "No matching customers or savings accounts.",
+    "loadingAccounts": "Loading customer and accounts…",
+    "changeCustomer": "Change Customer",
+    "accountHint": "Choose the savings account that will receive the deposit.",
+    "ineligible": "Ineligible for deposits",
+    "unavailable": "Unavailable",
+    "noAccounts": "No savings accounts found for this customer.",
+    "chooseCustomer": "Select a customer to view their savings accounts.",
+    "loadingSelection": "Loading account details and deposit options…",
+    "depositInto": "Deposit into",
+    "chooseAccount": "Select a destination savings account.",
+    "selectedAccount": "Selected Account",
+    "detailsUnavailable": "Account details unavailable.",
+    "historyUnavailable": "Recent transactions unavailable.",
+    "safetyNotice": "Confirm the customer’s identity and the destination account number before continuing.",
+    "customerUnavailable": "The customer and account ownership could not be confirmed. Please select the customer again."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Processing {{count}} checker item(s)…",
@@ -9337,5 +9359,38 @@
       "invalid": "The branch schedule contains invalid data.",
       "error": "The branch schedule could not be loaded."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Amount to deposit",
+    "changeAccount": "Change account",
+    "banknotes": "Banknotes",
+    "coins": "Coins",
+    "cashCounting": "Cash count",
+    "countHint": "Enter the number of pieces received for each denomination.",
+    "clearCount": "Clear count",
+    "decrease": "Decrease {{value}} quantity",
+    "increase": "Increase {{value}} quantity",
+    "quantityFor": "Quantity of {{value}}",
+    "quantityInvalid": "Enter a whole number from 0 to {{max}}.",
+    "counted": "Counted",
+    "matched": "Cash count matches the amount",
+    "missing": "Missing {{difference}} to match the amount",
+    "excess": "Count exceeds the amount by {{difference}}",
+    "neutral": "Enter a valid amount to reconcile cash.",
+    "invalid": "Check the denomination values and quantities.",
+    "pieces": "{{banknotes}} banknotes, {{coins}} coins",
+    "amountInvalid": "Enter a positive amount using the account currency precision.",
+    "selectionInvalid": "Wait for a valid account and its details to finish loading.",
+    "dateInvalid": "Enter a valid transaction date.",
+    "paymentRequired": "Select a compatible payment type.",
+    "checkRequired": "Complete the required check details.",
+    "complete": "All required fields are complete",
+    "reviewFields": "Review the highlighted fields.",
+    "generatedReceipt": "Automatically generated",
+    "optional": "Optional",
+    "notesHint": "E.g. deposit by a family member, payroll reference…",
+    "summary": "Summary",
+    "estimatedBalance": "Estimated balance after deposit",
+    "notice": "Review the destination and amount in Preview before submitting. Cash counts are checked locally; the confirmed transaction determines the final balance."
   }
 }

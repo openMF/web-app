@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Nuevo depósito",
+    "searchHint": "Busca por nombre, número de cliente o número de cuenta de ahorro.",
+    "searching": "Buscando…",
+    "clearSearch": "Limpiar búsqueda de cliente",
+    "noResults": "No se encontraron clientes ni cuentas de ahorro.",
+    "loadingAccounts": "Cargando cliente y cuentas…",
+    "changeCustomer": "Cambiar cliente",
+    "accountHint": "Elige la cuenta de ahorro que recibe el depósito.",
+    "ineligible": "No elegible para depósitos",
+    "unavailable": "No disponible",
+    "noAccounts": "No se encontraron cuentas de ahorro para este cliente.",
+    "chooseCustomer": "Selecciona un cliente para ver sus cuentas de ahorro.",
+    "loadingSelection": "Cargando detalles de la cuenta y opciones de depósito…",
+    "depositInto": "Depositar en",
+    "chooseAccount": "Selecciona una cuenta de ahorro de destino.",
+    "selectedAccount": "Cuenta seleccionada",
+    "detailsUnavailable": "Detalles de la cuenta no disponibles.",
+    "historyUnavailable": "Últimos movimientos no disponibles.",
+    "safetyNotice": "Confirma la identidad del cliente y el número de la cuenta de destino antes de continuar.",
+    "customerUnavailable": "No se pudo confirmar el cliente y la titularidad de la cuenta. Selecciona de nuevo al cliente."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Procesando {{count}} elemento(s) de revisión…",
@@ -9339,5 +9361,38 @@
       "invalid": "El horario de la sucursal contiene datos no válidos.",
       "error": "No se pudo cargar el horario de la sucursal."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Monto a depositar",
+    "changeAccount": "Cambiar cuenta",
+    "banknotes": "Billetes",
+    "coins": "Monedas",
+    "cashCounting": "Conteo de efectivo",
+    "countHint": "Registra cuántas piezas de cada denominación recibiste.",
+    "clearCount": "Limpiar conteo",
+    "decrease": "Reducir cantidad de {{value}}",
+    "increase": "Aumentar cantidad de {{value}}",
+    "quantityFor": "Cantidad de {{value}}",
+    "quantityInvalid": "Ingresa un entero de 0 a {{max}}.",
+    "counted": "Contado",
+    "matched": "El conteo cuadra con el monto",
+    "missing": "Faltan {{difference}} para completar el monto",
+    "excess": "El conteo excede el monto por {{difference}}",
+    "neutral": "Ingresa un monto válido para conciliar el efectivo.",
+    "invalid": "Revisa las denominaciones y cantidades.",
+    "pieces": "{{banknotes}} billetes, {{coins}} monedas",
+    "amountInvalid": "Ingresa un monto positivo con la precisión de la moneda de la cuenta.",
+    "selectionInvalid": "Espera a que se carguen una cuenta válida y sus detalles.",
+    "dateInvalid": "Ingresa una fecha de transacción válida.",
+    "paymentRequired": "Selecciona un tipo de pago compatible.",
+    "checkRequired": "Completa los datos obligatorios del cheque.",
+    "complete": "Todos los campos obligatorios están completos",
+    "reviewFields": "Revisa los campos indicados.",
+    "generatedReceipt": "Generado automáticamente",
+    "optional": "Opcional",
+    "notesHint": "Ej.: depósito de un familiar, referencia de nómina…",
+    "summary": "Resumen",
+    "estimatedBalance": "Saldo estimado después del depósito",
+    "notice": "Revisa la cuenta y el monto en la vista previa antes de enviar. El conteo se verifica localmente; la transacción confirmada determina el saldo final."
   }
 }

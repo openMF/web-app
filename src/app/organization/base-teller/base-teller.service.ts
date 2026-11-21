@@ -66,6 +66,10 @@ export interface DepositClient {
   fullname?: string;
   name?: string;
   externalId?: string;
+  mobileNo?: string;
+  officeName?: string;
+  active?: boolean;
+  status?: { value?: string; code?: string };
 }
 
 export interface DepositSavingsAccount {
@@ -79,7 +83,12 @@ export interface DepositSavingsAccount {
   clientId?: FineractId;
   clientName?: string;
   clientDisplayName?: string;
-  currency?: { code?: string };
+  currency?: { code?: string; decimalPlaces?: number };
+  depositType?: { value?: string };
+  timeline?: { activatedOnDate?: number[] };
+  nominalAnnualInterestRate?: number;
+  minRequiredBalance?: number;
+  transactions?: DepositAccountTransaction[];
   currencyCode?: string;
   status?:
     | {
@@ -93,6 +102,27 @@ export interface DepositSavingsAccount {
     availableBalance?: number | null;
   };
   accountBalance?: number | null;
+}
+
+/** Optional records returned by the existing savings account associations response. */
+export interface DepositAccountTransaction {
+  id: FineractId;
+  date?: number[];
+  amount?: number;
+  currency?: { code?: string; decimalPlaces?: number };
+  entryType?: string;
+  reversed?: boolean;
+  isReversal?: boolean;
+  transactionType?: {
+    value?: string;
+    deposit?: boolean;
+    withdrawal?: boolean;
+    interestPosting?: boolean;
+    dividendPayout?: boolean;
+    feeDeduction?: boolean;
+    overdraftInterest?: boolean;
+    withholdTax?: boolean;
+  };
 }
 
 export interface DepositClientAccounts {

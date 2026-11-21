@@ -31,6 +31,11 @@ export function normalizeOfficeTime(value: unknown): string {
   return second === 0 ? time : `${time}:${String(second).padStart(2, '0')}`;
 }
 
+/** Minute-only presentation; keep normalizeOfficeTime for validation and persistence. */
+export function formatOfficeTimeForDisplay(value: unknown): string {
+  return normalizeOfficeTime(value).slice(0, 5);
+}
+
 export function officeTimeSeconds(value: string): number {
   const [
     hour,

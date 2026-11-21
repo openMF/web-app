@@ -1,4 +1,26 @@
 {
+  "depositSelection": {
+    "newDeposit": "Jauna iemaksa",
+    "searchHint": "Meklējiet pēc klienta vārda, klienta numura vai krājkonta numura.",
+    "searching": "Meklē…",
+    "clearSearch": "Notīrīt klienta meklēšanu",
+    "noResults": "Nav atbilstošu klientu vai krājkontu.",
+    "loadingAccounts": "Ielādē klientu un kontus…",
+    "changeCustomer": "Mainīt klientu",
+    "accountHint": "Izvēlieties krājkontu, kurā tiks veikta iemaksa.",
+    "ineligible": "Nav piemērots iemaksām",
+    "unavailable": "Nav pieejams",
+    "noAccounts": "Šim klientam nav atrasti krājkonti.",
+    "chooseCustomer": "Izvēlieties klientu, lai skatītu viņa krājkontus.",
+    "loadingSelection": "Ielādē konta datus un iemaksas iespējas…",
+    "depositInto": "Iemaksāt kontā",
+    "chooseAccount": "Izvēlieties galamērķa krājkontu.",
+    "selectedAccount": "Izvēlētais konts",
+    "detailsUnavailable": "Konta dati nav pieejami.",
+    "historyUnavailable": "Pēdējie darījumi nav pieejami.",
+    "safetyNotice": "Pirms turpināt, apstipriniet klienta identitāti un galamērķa konta numuru.",
+    "customerUnavailable": "Neizdevās apstiprināt klientu un konta īpašumtiesības. Izvēlieties klientu vēlreiz."
+  },
   "checkerInbox": {
     "status": {
       "processing": "Notiek {{count}} pārbaudes elementu apstrāde…",
@@ -9204,5 +9226,38 @@
       "invalid": "Filiāles grafikā ir nederīgi dati.",
       "error": "Filiāles grafiku neizdevās ielādēt."
     }
+  },
+  "depositDetails": {
+    "depositAmount": "Iemaksas summa",
+    "changeAccount": "Mainīt kontu",
+    "banknotes": "Banknotes",
+    "coins": "Monētas",
+    "cashCounting": "Skaidras naudas skaitīšana",
+    "countHint": "Ievadiet saņemto vienību skaitu katram nominālam.",
+    "clearCount": "Notīrīt skaitīšanu",
+    "decrease": "Samazināt {{value}} skaitu",
+    "increase": "Palielināt {{value}} skaitu",
+    "quantityFor": "{{value}} skaits",
+    "quantityInvalid": "Ievadiet veselu skaitli no 0 līdz {{max}}.",
+    "counted": "Saskaitīts",
+    "matched": "Skaidras naudas summa sakrīt",
+    "missing": "Līdz summai trūkst {{difference}}",
+    "excess": "Saskaitītā summa pārsniedz par {{difference}}",
+    "neutral": "Ievadiet derīgu summu naudas pārbaudei.",
+    "invalid": "Pārbaudiet nominālus un daudzumus.",
+    "pieces": "{{banknotes}} banknotes, {{coins}} monētas",
+    "amountInvalid": "Ievadiet pozitīvu summu ar konta valūtas precizitāti.",
+    "selectionInvalid": "Gaidiet derīga konta un tā datu ielādi.",
+    "dateInvalid": "Ievadiet derīgu darījuma datumu.",
+    "paymentRequired": "Izvēlieties atbilstošu maksājuma veidu.",
+    "checkRequired": "Aizpildiet obligātos čeka datus.",
+    "complete": "Visi obligātie lauki ir aizpildīti",
+    "reviewFields": "Pārbaudiet atzīmētos laukus.",
+    "generatedReceipt": "Ģenerēts automātiski",
+    "optional": "Neobligāti",
+    "notesHint": "Piem., ģimenes locekļa iemaksa, algas atsauce…",
+    "summary": "Kopsavilkums",
+    "estimatedBalance": "Paredzamais atlikums pēc iemaksas",
+    "notice": "Pirms iesniegšanas pārskatiet kontu un summu priekšskatījumā. Naudu pārbauda lokāli; galīgo atlikumu nosaka apstiprinātais darījums."
   }
 }

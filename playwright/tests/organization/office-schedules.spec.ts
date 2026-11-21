@@ -83,9 +83,11 @@ test('office schedules display actual LocalTime values and persist the complete 
   for (let index = 0; index < 7; index++) {
     const row = rows.nth(index);
     const opening = row.locator('input[formControlName=openingTime]');
+    await expect(opening).toHaveAttribute('step', '60');
+    await expect(row.locator('input[formControlName=closingTime]')).toHaveAttribute('step', '60');
     if (index < 5) {
       await expect(row.getByRole('checkbox')).toBeChecked();
-      await expect(opening).toHaveValue(index === 1 ? '08:30:05' : '08:00');
+      await expect(opening).toHaveValue(index === 1 ? '08:30' : '08:00');
       await expect(row.locator('input[formControlName=closingTime]')).toHaveValue('18:00');
     } else {
       await expect(row).toContainText('Closed');
@@ -141,7 +143,7 @@ test('office schedules display actual LocalTime values and persist the complete 
   await panel.getByRole('button', { name: 'Edit schedule', exact: true }).click();
   await expect(opening).toHaveValue('00:00');
   await expect(closing).toHaveValue('12:00');
-  await expect(panel.getByLabel('Tuesday Opening Time', { exact: true })).toHaveValue('08:30:05');
+  await expect(panel.getByLabel('Tuesday Opening Time', { exact: true })).toHaveValue('08:30');
 
   await panel.getByRole('button', { name: 'Cancel', exact: true }).click();
   for (const width of [

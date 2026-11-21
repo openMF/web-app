@@ -133,8 +133,9 @@
                 <input
                   matInput
                   type="time"
+                  mifosxOfficeScheduleTimeInput
                   formControlName="openingTime"
-                  step="1"
+                  step="60"
                   [placeholder]="'labels.text.Not configured' | translate"
                   [attr.aria-label]="
                     (getWeekdayLabelKey(dayControl) | translate) + ' ' + ('labels.inputs.Opening Time' | translate)
@@ -154,7 +155,8 @@
                 <input
                   matInput
                   type="time"
-                  step="1"
+                  mifosxOfficeScheduleTimeInput
+                  step="60"
                   formControlName="closingTime"
                   [placeholder]="'labels.text.Not configured' | translate"
                   [attr.aria-label]="
