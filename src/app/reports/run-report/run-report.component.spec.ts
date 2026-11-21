@@ -92,7 +92,7 @@ describe('RunReportComponent report output formats', () => {
     expect(component.formatUserResponse(component.reportForm.value)).toEqual({ 'output-type': 'XML' });
   });
 
-  function openClientReport(name = 'Tabla de Amortización Personal back to back', type = 'BIRT'): ReportParameter {
+  function openClientReport(name = 'Captacion - CARATULA TU CUENTA GARANTIZADA', type = 'BIRT'): ReportParameter {
     const parameter = new ReportParameter([
       'DefaultClient',
       'clientId',
@@ -141,10 +141,23 @@ describe('RunReportComponent report output formats', () => {
     (service.getBirtParams as jest.Mock).mockReturnValueOnce(older).mockReturnValueOnce(current);
     openClientReport();
     const previousParameter = component.paramData[0];
-    openClientReport('Client Details');
-    current.next([{ parameterName: 'DefaultClient', reportParameterName: 'currentClient' }]);
+    const office = new ReportParameter([
+      'Office',
+      'officeId',
+      'Office',
+      'text',
+      'number',
+      '',
+      '',
+      '',
+      null
+    ]);
+    route.snapshot.params.name = 'Office Report';
+    route.queryParams.next({ type: 'BIRT', id: 207 });
+    route.data.next({ reportParameters: [office], configurations: { globalConfiguration: [] } });
+    current.next([{ parameterName: 'Office', reportParameterName: 'currentOffice' }]);
     older.next([{ parameterName: 'DefaultClient', reportParameterName: 'olderClient' }]);
-    expect(component.paramData[0].pentahoName).toBe('R_currentClient');
+    expect(component.paramData[0].pentahoName).toBe('R_currentOffice');
     expect(previousParameter.pentahoName).toBe('R_clientId');
   });
 
@@ -176,10 +189,6 @@ describe('RunReportComponent report output formats', () => {
 
   it.each([
     [
-      'Client Details',
-      'BIRT'
-    ],
-    [
       'Tabla de Amortización Personal back to back',
       'Table'
     ],
@@ -191,6 +200,16 @@ describe('RunReportComponent report output formats', () => {
     openClientReport(name, type);
     expect(component.paramData[0].displayType).toBe('none');
     expect(component.isClientReport()).toBe(false);
+  });
+
+  it('keeps the regular output options for BIRT reports without a client parameter', () => {
+    route.snapshot.params.name = 'Tabla de Amortización Personal back to back';
+    route.queryParams.next({ type: 'BIRT', id: 206 });
+    route.data.next({ reportParameters: [], configurations: { globalConfiguration: [] } });
+
+    expect(component.isClientReport()).toBe(false);
+    expect(component.reportForm.get('DefaultClient')).toBeNull();
+    expect(component.outputTypeOptions.map((option) => option.value)).toContain('XLSX');
   });
 
   it('restores the form and retains a client error when Angular reattaches the control', async () => {
