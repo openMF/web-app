@@ -10,16 +10,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'truncateText' })
 export class TruncateTextPipe implements PipeTransform {
-  transform(value: string, chars: number): string {
-    if (value.length <= 40) {
+  transform(value: string, chars?: number): string {
+    if (!value) {
+      return '';
+    }
+
+    const limit = chars != null && chars >= 0 ? chars : 30;
+    if (value.length <= limit) {
       return value;
     }
 
-    let truncatedText = value.substring(0, 30);
-    if (chars) {
-      truncatedText = value.substring(0, chars);
-    }
-
-    return truncatedText;
+    return value.substring(0, limit);
   }
 }
