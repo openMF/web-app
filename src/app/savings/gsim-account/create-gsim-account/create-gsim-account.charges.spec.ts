@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeEN from '@angular/common/locales/en';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -15,16 +17,18 @@ import { SettingsService } from 'app/settings/settings.service';
 import { SavingsService } from '../../savings.service';
 import { CreateGsimAccountComponent } from './create-gsim-account.component';
 
+registerLocaleData(localeEN);
+
 describe('CreateGsimAccountComponent charges', () => {
   /** Charges as the charges step holds them after the user picked their dates. */
-  const charges = [
-    { id: 9, amount: 15, chargeTimeType: { value: 'Specified due date' }, dueDate: '25 October 2026' },
-    { id: 4, amount: 10, chargeTimeType: { value: 'Annual Fee' }, feeOnMonthDay: '15 March' },
-    { id: 7, amount: 5, chargeTimeType: { value: 'Monthly Fee' }, feeOnMonthDay: '05 November', feeInterval: 2 }
+  const pickedCharges = [
+    { id: 9, amount: 15, chargeTimeType: { value: 'Specified due date' }, dueDate: new Date(2026, 9, 25) },
+    { id: 4, amount: 10, chargeTimeType: { value: 'Annual Fee' }, feeOnMonthDay: '15 March 2027' },
+    { id: 7, amount: 5, chargeTimeType: { value: 'Monthly Fee' }, feeOnMonthDay: '05 November 2027', feeInterval: 2 }
   ];
 
-  /** Builds the request bodies for a GSIM application of two members with the charges above. */
-  function bodies(): any[] {
+  /** Builds the request bodies for a GSIM application of two members with the given charges. */
+  function bodies(charges: any[] = pickedCharges): any[] {
     TestBed.configureTestingModule({
       providers: [
         {
@@ -36,8 +40,8 @@ describe('CreateGsimAccountComponent charges', () => {
         // only submit() looks the new GSIM account up; building the request bodies never calls it
         { provide: GroupsService, useValue: {} },
         { provide: SettingsService, useValue: { language: { code: 'en' }, dateFormat: 'dd MMMM yyyy' } },
-        // the dates already hold their display text, so formatting keeps it
-        { provide: Dates, useValue: { formatDate: (value: any): string => value } }
+        Dates,
+        DatePipe
       ]
     });
     const component = TestBed.runInInjectionContext(() => new CreateGsimAccountComponent());
@@ -47,7 +51,7 @@ describe('CreateGsimAccountComponent charges', () => {
     ];
     component.savingsActiveClientMembers = { selectedClientMembers: { selectedMembers: members } } as any;
     component.savingsAccountDetailsStep = {
-      savingsAccountDetails: { productId: 1, submittedOnDate: '20 October 2026' }
+      savingsAccountDetails: { productId: 1, submittedOnDate: new Date(2026, 9, 20) }
     } as any;
     component.savingsAccountTermsStep = { savingsAccountTerms: {} } as any;
     component.savingsAccountChargesStep = { savingsAccountCharges: { charges } } as any;
@@ -72,6 +76,18 @@ describe('CreateGsimAccountComponent charges', () => {
     for (const body of bodies()) {
       expect(body.charges).toEqual(expected);
       expect(body.monthDayFormat).toBe('dd MMMM');
+    }
+  });
+
+  it('sends the [month, day] of a charge template as a day and month', () => {
+    const feeOnMonthDay = [
+      7,
+      22
+    ];
+    const charges = [{ id: 4, amount: 10, chargeTimeType: { value: 'Annual Fee' }, feeOnMonthDay, feeInterval: 1 }];
+
+    for (const body of bodies(charges)) {
+      expect(body.charges[0].feeOnMonthDay).toBe('22 July');
     }
   });
 });
