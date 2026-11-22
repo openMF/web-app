@@ -8,7 +8,11 @@
 
 import { describe, expect, it } from '@jest/globals';
 
-import { CREDIT_APPLICATIONS_PERMISSION, hasCreditApplicationsPermission } from './credit-applications.guard';
+import {
+  CREDIT_APPLICATIONS_PERMISSION,
+  hasCreditApplicationsPermission,
+  creditApplicationBatchGuard
+} from './credit-applications.guard';
 
 describe('Credit applications route permissions', () => {
   it('matches the backend READ_LOAN permission and recognizes aggregate access', () => {
@@ -17,5 +21,13 @@ describe('Credit applications route permissions', () => {
     expect(hasCreditApplicationsPermission(['ALL_FUNCTIONS'])).toBe(true);
     expect(hasCreditApplicationsPermission(['ALL_FUNCTIONS_READ'])).toBe(true);
     expect(hasCreditApplicationsPermission(['READ_CLIENT'])).toBe(false);
+  });
+});
+
+describe('creditApplicationBatchGuard', () => {
+  it('blocks navigation during either confirmed command queue', () => {
+    expect(creditApplicationBatchGuard({ approving: true, rejecting: false }, null!, null!, null!)).toBe(false);
+    expect(creditApplicationBatchGuard({ approving: false, rejecting: true }, null!, null!, null!)).toBe(false);
+    expect(creditApplicationBatchGuard({ approving: false, rejecting: false }, null!, null!, null!)).toBe(true);
   });
 });

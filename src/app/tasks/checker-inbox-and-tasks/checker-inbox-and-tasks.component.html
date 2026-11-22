@@ -6,117 +6,69 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container">
-  <mat-card class="tasks-card">
-    <mat-card-content>
-      <div class="card-heading pending-tasks-heading">{{ 'labels.heading.Pending Tasks' | translate }}</div>
-      <mat-divider></mat-divider>
-      <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel" [disablePagination]="true">
-        <a
-          mat-tab-link
-          [routerLink]="['./checker-inbox']"
-          routerLinkActive
-          #checkerInbox="routerLinkActive"
-          [active]="checkerInbox.isActive"
-          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
-        >
-          {{ 'labels.inputs.Checker Inbox' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./client-approval']"
-          routerLinkActive
-          #clientApproval="routerLinkActive"
-          [active]="clientApproval.isActive"
-          *mifosxHasPermission="'READ_CLIENT'"
-        >
-          {{ 'labels.inputs.Client Approval' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./loan-approval']"
-          routerLinkActive
-          #loanApproval="routerLinkActive"
-          [active]="loanApproval.isActive"
-          *mifosxHasPermission="'READ_LOAN'"
-        >
-          {{ 'labels.inputs.Loan Approval' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./council-approval']"
-          routerLinkActive
-          #councilApproval="routerLinkActive"
-          [active]="councilApproval.isActive"
-          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
-        >
-          {{ 'labels.text.Council Approval' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./loan-disbursal']"
-          routerLinkActive
-          #loanDisbursal="routerLinkActive"
-          [active]="loanDisbursal.isActive"
-          *mifosxHasPermission="'READ_LOAN'"
-        >
-          {{ 'labels.inputs.Loan Disbursal' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./reschedule-loan']"
-          routerLinkActive
-          #rescheduleLoan="routerLinkActive"
-          [active]="rescheduleLoan.isActive"
-          *mifosxHasPermission="'RESCHEDULE_LOAN'"
-        >
-          {{ 'labels.inputs.Reschedule Loan' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./requests']"
-          routerLinkActive
-          #creditRequests="routerLinkActive"
-          [active]="creditRequests.isActive"
-          *mifosxHasPermission="'READ_LOAN'"
-        >
-          {{ 'labels.inputs.Credit Applications' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./credit']"
-          routerLinkActive
-          #creditTaskSection="routerLinkActive"
-          [active]="creditTaskSection.isActive"
-          *mifosxHasPermission="'READ_LOAN'"
-        >
-          {{ 'labels.inputs.Credit' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./mass-rejection']"
-          routerLinkActive
-          #massRejection="routerLinkActive"
-          [active]="massRejection.isActive"
-          *mifosxHasPermission="'READ_LOAN'"
-        >
-          {{ 'labels.heading.Mass Rejection' | translate }}
-        </a>
-        <a
-          mat-tab-link
-          [routerLink]="['./pending-prospects']"
-          routerLinkActive
-          #pendingProspects="routerLinkActive"
-          [active]="pendingProspects.isActive"
-          *mifosxHasPermission="'READ_PROSPECT'"
-        >
-          {{ 'labels.inputs.Pending Prospects' | translate }}
-        </a>
-      </nav>
+<!--
+  Copyright since 2025 Mifos Initiative
 
-      <mat-tab-nav-panel #tabPanel>
-        <router-outlet></router-outlet>
-      </mat-tab-nav-panel>
-    </mat-card-content>
-  </mat-card>
-</div>
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<section class="tasks-container">
+  <header class="tasks-heading">
+    <p>{{ 'credits.description' | translate }}</p>
+  </header>
+  <div class="tasks-layout">
+    <mat-card class="queue-panel">
+      <button
+        mat-button
+        class="queue-toggle"
+        (click)="navigationOpen = !navigationOpen"
+        [attr.aria-expanded]="navigationOpen"
+        aria-controls="task-queues"
+      >
+        <i class="fa fa-bars" aria-hidden="true"></i> {{ 'labels.heading.Pending Tasks' | translate }}
+      </button>
+      <nav
+        id="task-queues"
+        class="queue-navigation"
+        [class.expanded]="navigationOpen"
+        [attr.aria-label]="'labels.heading.Pending Tasks' | translate"
+      >
+        @for (group of queueGroups; track group.label) {
+          <section class="queue-group">
+            <h2>{{ group.label | translate }}</h2>
+            @for (queue of group.queues; track queue.path) {
+              <a
+                mat-button
+                *mifosxHasPermission="queue.permissions"
+                [routerLink]="['./' + queue.path]"
+                routerLinkActive="active-queue"
+                ariaCurrentWhenActive="page"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="navigationOpen = false"
+                [class.empty-queue]="queue.path === 'credit' && creditCount === 0"
+              >
+                <span>{{ queue.label | translate }}</span>
+                @if (queue.path === 'credit' && creditCount !== null) {
+                  <span class="queue-count">{{ creditCount }}</span>
+                }
+              </a>
+            }
+          </section>
+        }
+      </nav>
+    </mat-card>
+    <main class="queue-workspace">
+      <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate()"></router-outlet>
+    </main>
+  </div>
+</section>

@@ -21,7 +21,8 @@ import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-appro
 import { CreditApplicationsComponent } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.component';
 import {
   CREDIT_APPLICATIONS_PERMISSION,
-  creditApplicationsGuard
+  creditApplicationsGuard,
+  creditApplicationBatchGuard
 } from './checker-inbox-and-tasks-tabs/credit-applications/credit-applications.guard';
 import { pendingProspectsGuard } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.guard';
 import { PendingProspectsComponent } from './checker-inbox-and-tasks-tabs/pending-prospects/pending-prospects.component';
@@ -78,18 +79,21 @@ export const routes: Routes = [
           path: 'requests',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Requests', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'credit',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Credit', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
           path: 'mass-rejection',
           component: CreditApplicationsComponent,
           canActivate: [creditApplicationsGuard],
+          canDeactivate: [creditApplicationBatchGuard],
           data: { title: 'Mass Rejection', permissions: [CREDIT_APPLICATIONS_PERMISSION] }
         },
         {
