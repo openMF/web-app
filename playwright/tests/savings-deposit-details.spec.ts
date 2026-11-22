@@ -136,7 +136,7 @@ for (const width of [
     await page.locator('.details-next').click();
     await expect(page.locator('mat-step-header[aria-selected="true"]')).toContainText('Preview');
     await expect(page.locator('.preview-summary')).toContainText('TEST-0077');
-    await expect(page.locator('.preview-summary')).toContainText('1000');
+    await expect(page.locator('.preview-summary')).toContainText('$1,000.00');
     expect(await page.locator('input[formcontrolname="receiptNumber"]').inputValue()).toBe(receipt);
     expect(writes).toEqual([]);
     expect(requests).toContain('/savingsaccounts/77');

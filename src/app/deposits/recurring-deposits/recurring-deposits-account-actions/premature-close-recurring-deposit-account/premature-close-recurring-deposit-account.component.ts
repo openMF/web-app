@@ -10,7 +10,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   UntypedFormGroup,
@@ -63,6 +63,8 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
   savingsAccountsData: any[] = [];
   /** What to do with the money on closure (withdraw or transfer to savings). */
   onAccountClosureOptions: any[] = [];
+  /** Whether a premature close request is in flight. */
+  isSubmitting = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -169,9 +171,10 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    if (this.prematureCloseRecurringDepositsAccountForm.invalid) {
+    if (this.isSubmitting || this.prematureCloseRecurringDepositsAccountForm.invalid) {
       return;
     }
+    this.isSubmitting = true;
     const prematureCloseRecurringDepositsAccountFormData = this.prematureCloseRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
@@ -189,8 +192,23 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
     };
     this.recurringDepositsService
       .executeRecurringDepositsAccountCommand(this.accountId, 'prematureClose', data)
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isSubmitting = false;
+          this.changeDetector.markForCheck();
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        },
+        // ErrorHandlerInterceptor already alerts the user about the failed
+        // request. Handle the rejection here so it does not become an unhandled
+        // RxJS error; the finalize operator resets the submission state so Confirm can retry.
+        error: () => {
+          // Intentionally no notification: the interceptor owns the message.
+        }
       });
   }
 }
