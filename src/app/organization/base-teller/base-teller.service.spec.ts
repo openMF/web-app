@@ -228,6 +228,14 @@ describe('BaseTellerService', () => {
     expect((await resultPromise).status).toBe(400);
   });
 
+  it('retrieves deposit details with precise transaction and account IDs', async () => {
+    const receiptPromise = firstValueFrom(service.getSavingsDepositReceipt(77, '9223372036854775807'));
+    const req = httpMock.expectOne('/savingsaccounts/77/transactions/9223372036854775807');
+    expect(req.request.method).toBe('GET');
+    req.flush({ id: '9223372036854775807', accountId: 77, amount: 10, runningBalance: 20 });
+    expect((await receiptPromise).id).toBe('9223372036854775807');
+  });
+
   it('searches returned checks with the exact backend filter parameters', async () => {
     const resultPromise = firstValueFrom(
       service.searchReturnedChecks({

@@ -16,17 +16,19 @@
           <div class="message error-message" role="alert">{{ errorMessage | translate }}</div>
         }
 
-        <mat-stepper orientation="horizontal" linear labelPosition="end" #depositStepper>
+        <mat-stepper
+          orientation="horizontal"
+          [linear]="!outcomeUncertain"
+          [selectedIndex]="initialStepIndex"
+          labelPosition="end"
+          #depositStepper
+        >
           <ng-template matStepperIcon="edit" let-index="index">{{ index + 1 }}</ng-template>
           <ng-template matStepperIcon="done">
             <fa-icon icon="check" size="sm"></fa-icon>
           </ng-template>
 
-          <mat-step
-            [stepControl]="lookupForm"
-            [completed]="selectionReady"
-            [editable]="!isSubmitting && !commandResult"
-          >
+          <mat-step [stepControl]="lookupForm" [completed]="selectionReady" [editable]="!workflowLocked">
             <ng-template matStepLabel>{{ 'labels.heading.Customer and Account' | translate }}</ng-template>
             <div class="selection-layout">
               <form [formGroup]="lookupForm" class="selection-card">
@@ -47,7 +49,7 @@
                         #customerSearch
                         formControlName="search"
                         [matAutocomplete]="lookupAutocomplete"
-                        [readonly]="isSubmitting || !!commandResult"
+                        [readonly]="workflowLocked"
                         (keydown.escape)="changeCustomer(customerSearch)"
                         required
                       />
@@ -139,7 +141,7 @@
                           mat-button
                           class="change-customer"
                           (click)="changeCustomer(customerSearch)"
-                          [disabled]="isSubmitting || !!commandResult"
+                          [disabled]="workflowLocked"
                         >
                           {{ 'depositSelection.changeCustomer' | translate }}
                         </button>
@@ -169,7 +171,7 @@
                             savingsAccountId(account) === savingsAccountId(selectedSavingsAccount || {})
                           "
                           [class.ineligible]="!isActiveSavingsAccount(account)"
-                          [disabled]="!isActiveSavingsAccount(account) || isSubmitting || !!commandResult"
+                          [disabled]="!isActiveSavingsAccount(account) || workflowLocked"
                         >
                           <span class="account-card-content">
                             <span class="account-information">
@@ -376,7 +378,7 @@
           <mat-step
             [stepControl]="depositForm"
             [completed]="canContinueDetails || !!commandResult"
-            [editable]="!isSubmitting && !commandResult"
+            [editable]="!workflowLocked"
           >
             <ng-template matStepLabel>{{ 'labels.heading.Deposit Details' | translate }}</ng-template>
             @if (selectedSavingsAccount; as account) {
@@ -393,7 +395,7 @@
                   mat-button
                   color="primary"
                   (click)="changeDestination(depositStepper)"
-                  [disabled]="isSubmitting || !!commandResult"
+                  [disabled]="workflowLocked"
                 >
                   {{ 'depositDetails.changeAccount' | translate }}
                 </button>
@@ -681,6 +683,21 @@
                 </footer>
               </form>
               <aside class="deposit-sidebar" aria-labelledby="deposit-summary-heading">
+                @if (selectedSavingsAccount && !depositCurrencyReady) {
+                  <div class="receipt-recovery" role="alert">
+                    <p>{{ 'depositReceipt.currencyRequired' | translate }}</p>
+                    <button
+                      mat-button
+                      type="button"
+                      color="primary"
+                      (click)="retryDepositCurrency()"
+                      [disabled]="isLoadingDetails"
+                      data-testid="retry-deposit-currency"
+                    >
+                      {{ 'depositSelection.retry' | translate }}
+                    </button>
+                  </div>
+                }
                 <mat-card class="deposit-summary" data-testid="deposit-summary">
                   <mat-card-content>
                     <h2 id="deposit-summary-heading">{{ 'depositDetails.summary' | translate }}</h2>
@@ -731,117 +748,451 @@
 
           <mat-step>
             <ng-template matStepLabel>{{ 'labels.heading.Preview' | translate }}</ng-template>
-            <section class="summary-grid preview-summary">
-              <div>
-                <span>{{ 'labels.heading.Savings Account' | translate }}</span>
-                <strong>{{ displaySavingsAccount(selectedSavingsAccount) }}</strong>
-              </div>
-              <div>
-                <span>{{ 'labels.inputs.Amount' | translate }}</span>
-                <strong>{{ depositAmount }} {{ accountCurrencyCode() }}</strong>
-              </div>
-              <div>
-                <span>{{ 'labels.inputs.Deposit Type' | translate }}</span>
-                <strong>{{
-                  (depositType === 'CASH' ? 'labels.inputs.Cash' : 'labels.inputs.Check') | translate
-                }}</strong>
-              </div>
-              <div>
-                <span>{{ 'labels.inputs.Payment Type' | translate }}</span>
-                <strong>{{ paymentTypeName(depositForm.value.paymentTypeId) || '-' }}</strong>
-              </div>
-            </section>
+            <section class="confirmation-root" [attr.aria-label]="'labels.heading.Savings Account Deposit' | translate">
+              @if (recordedNonPosting; as decision) {
+                <mat-card class="confirmation-card decision-recorded" role="status">
+                  <mat-card-content>
+                    <h2>{{ 'depositReceipt.nonPostingRecorded' | translate }}</h2>
+                    <p>
+                      {{ 'depositReceipt.requestReference' | translate }}: <strong>{{ decision.reference }}</strong>
+                    </p>
+                    <p>
+                      {{ 'depositReceipt.decisionNote' | translate }}: <strong>{{ decision.noteId }}</strong>
+                    </p>
+                  </mat-card-content>
+                </mat-card>
+              } @else if (receiptView; as view) {
+                <div class="confirmation-layout" [class.preview-summary]="!commandResult">
+                  <div class="confirmation-main">
+                    @if (commandResult) {
+                      <section
+                        class="confirmation-banner"
+                        role="status"
+                        aria-live="polite"
+                        data-testid="deposit-success"
+                      >
+                        <span class="confirmation-icon"><mat-icon aria-hidden="true">check_circle</mat-icon></span>
+                        <div class="confirmation-message">
+                          <span class="confirmation-status">{{ 'labels.inputs.Completed' | translate }}</span>
+                          <h2>{{ 'depositReceipt.success' | translate }}</h2>
+                          <p>{{ 'depositReceipt.confirmed' | translate }}</p>
+                        </div>
+                        <div class="confirmation-amount">
+                          <span>{{ 'labels.inputs.Amount' | translate }}</span>
+                          <div>
+                            <strong>{{ receiptMoney(view.amount) }}</strong> <span>{{ view.currency }}</span>
+                          </div>
+                        </div>
+                      </section>
+                    } @else {
+                      <section
+                        class="preview-notice"
+                        [class.uncertain]="outcomeUncertain"
+                        role="status"
+                        aria-live="polite"
+                      >
+                        @if (isSubmitting) {
+                          <mat-spinner
+                            diameter="32"
+                            [attr.aria-label]="'depositReceipt.processing' | translate"
+                          ></mat-spinner>
+                        } @else {
+                          <mat-icon aria-hidden="true">{{
+                            outcomeUncertain ? 'warning_amber' : 'fact_check'
+                          }}</mat-icon>
+                        }
+                        <div>
+                          <h2>
+                            {{
+                              (isSubmitting
+                                ? 'depositReceipt.processing'
+                                : outcomeUncertain
+                                  ? receiptMessages.uncertain
+                                  : receiptMessages.review
+                              ) | translate
+                            }}
+                          </h2>
+                          <p>
+                            {{
+                              (outcomeUncertain
+                                ? receiptMessages.reconcile
+                                : isSubmitting
+                                  ? receiptMessages.wait
+                                  : receiptMessages.reviewHint
+                              ) | translate
+                            }}
+                          </p>
+                          @if (outcomeUncertain) {
+                            <p class="request-reference">
+                              {{ 'depositReceipt.requestReference' | translate }}:
+                              <strong>{{ view.receiptNumber || '—' }}</strong>
+                            </p>
+                            @if (accountHistoryRoute) {
+                              <a mat-button color="primary" [routerLink]="accountHistoryRoute">{{
+                                'depositReceipt.reviewHistory' | translate
+                              }}</a>
+                              <div class="deposit-recovery-controls">
+                                <p>{{ 'depositReceipt.recoveryHint' | translate }}</p>
+                                <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                  <mat-label>{{ 'labels.inputs.Transaction Id' | translate }}</mat-label>
+                                  <input
+                                    matInput
+                                    [formControl]="recoveryTransactionId"
+                                    inputmode="numeric"
+                                    maxlength="64"
+                                    [readonly]="isVerifyingDeposit || isRecordingDecision"
+                                  />
+                                </mat-form-field>
+                                <button
+                                  mat-stroked-button
+                                  type="button"
+                                  color="primary"
+                                  (click)="verifyUncertainDeposit()"
+                                  [disabled]="
+                                    recoveryTransactionId.invalid || isVerifyingDeposit || isRecordingDecision
+                                  "
+                                >
+                                  {{
+                                    (isVerifyingDeposit ? receiptMessages.verifying : receiptMessages.verifyTransaction)
+                                      | translate
+                                  }}
+                                </button>
+                                @if (recoveryError) {
+                                  <p role="alert">{{ recoveryError | translate }}</p>
+                                }
+                              </div>
+                            }
+                            @if (canRecordNonPosting) {
+                              <section class="non-posting-reconciliation" [formGroup]="nonPostingForm">
+                                <h3>{{ 'depositReceipt.nonPostingTitle' | translate }}</h3>
+                                <p>{{ 'depositReceipt.nonPostingHint' | translate }}</p>
+                                <div class="non-posting-fields">
+                                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                    <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+                                    <mat-select formControlName="outcome" [disabled]="isRecordingDecision">
+                                      <mat-option value="NOT_POSTED">{{
+                                        'depositReceipt.notPosted' | translate
+                                      }}</mat-option>
+                                      <mat-option value="REJECTED">{{
+                                        'depositReceipt.definitivelyRejected' | translate
+                                      }}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                    <mat-label>{{ 'depositReceipt.repeatReference' | translate }}</mat-label>
+                                    <input
+                                      matInput
+                                      formControlName="reference"
+                                      maxlength="50"
+                                      [readonly]="isRecordingDecision"
+                                    />
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                    <mat-label>{{ 'depositReceipt.evidenceReference' | translate }}</mat-label>
+                                    <input
+                                      matInput
+                                      formControlName="evidence"
+                                      maxlength="100"
+                                      [readonly]="isRecordingDecision"
+                                    />
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                                    <mat-label>{{ 'depositReceipt.decisionReason' | translate }}</mat-label>
+                                    <textarea
+                                      matInput
+                                      formControlName="reason"
+                                      maxlength="400"
+                                      rows="3"
+                                      [readonly]="isRecordingDecision"
+                                    ></textarea>
+                                  </mat-form-field>
+                                </div>
+                                <mat-checkbox formControlName="acknowledged" [disabled]="isRecordingDecision">{{
+                                  'depositReceipt.nonPostingAcknowledgment' | translate
+                                }}</mat-checkbox>
+                                <button
+                                  mat-stroked-button
+                                  type="button"
+                                  color="primary"
+                                  (click)="recordNonPostingDecision()"
+                                  [disabled]="!canSubmitNonPosting"
+                                  [attr.aria-busy]="isRecordingDecision"
+                                >
+                                  {{ 'depositReceipt.recordNonPosting' | translate }}
+                                </button>
+                              </section>
+                            }
+                          }
+                        </div>
+                      </section>
+                    }
 
-            @if (receipt) {
-              <section class="receipt">
-                <div class="section-heading">
-                  <h3>{{ 'labels.heading.Payment Receipt' | translate }}</h3>
+                    <mat-card class="confirmation-card account-confirmation">
+                      <mat-card-content>
+                        <div class="confirmation-card-heading">
+                          <h2>{{ 'labels.inputs.Account' | translate }}</h2>
+                          @if (accountRoute && !isSubmitting) {
+                            <a mat-button color="primary" [routerLink]="accountRoute">{{
+                              'depositReceipt.viewAccount' | translate
+                            }}</a>
+                          }
+                        </div>
+                        <div class="confirmed-account">
+                          <span class="confirmed-avatar" aria-hidden="true">{{ customerInitials }}</span>
+                          <div>
+                            <strong>{{ view.customer || '—' }}</strong
+                            ><span>{{ 'labels.inputs.Client' | translate }} {{ view.customerNumber }}</span>
+                          </div>
+                          <div>
+                            <span>{{ 'labels.heading.Savings Account' | translate }}</span
+                            ><strong class="receipt-identifier">{{ view.accountNumber || '—' }}</strong>
+                          </div>
+                          <div>
+                            <span>{{ 'labels.inputs.Product' | translate }}</span
+                            ><strong>{{ view.product || '—' }}</strong>
+                          </div>
+                          <div>
+                            <span>{{ 'labels.inputs.Currency' | translate }}</span
+                            ><strong>{{ view.currency || '—' }}</strong>
+                          </div>
+                        </div>
+                        @if (commandResult) {
+                          <div
+                            class="balance-reconciliation"
+                            [class.balance-equation]="view.previousBalance !== null"
+                            data-testid="confirmed-balances"
+                          >
+                            @if (view.previousBalance !== null) {
+                              <div>
+                                <span>{{ 'depositReceipt.previousBalance' | translate }}</span
+                                ><strong>{{ receiptMoney(view.previousBalance) }}</strong>
+                              </div>
+                              <span class="balance-operator" aria-hidden="true">+</span>
+                            }
+                            <div>
+                              <span>{{ 'labels.inputs.Deposit' | translate }}</span
+                              ><strong>{{ receiptMoney(view.amount) }}</strong>
+                            </div>
+                            @if (view.previousBalance !== null) {
+                              <span class="balance-operator" aria-hidden="true">=</span>
+                            }
+                            <div class="confirmed-balance">
+                              <span>{{ 'depositReceipt.resultingBalance' | translate }}</span
+                              ><strong>{{
+                                view.resultingBalance === null
+                                  ? ('depositReceipt.unavailable' | translate)
+                                  : receiptMoney(view.resultingBalance)
+                              }}</strong
+                              ><span>{{ view.currency }}</span>
+                            </div>
+                          </div>
+                          @if (view.previousBalance === null) {
+                            <p class="balance-explanation">{{ 'depositReceipt.balanceNotice' | translate }}</p>
+                          }
+                        }
+                      </mat-card-content>
+                    </mat-card>
+
+                    <mat-card class="confirmation-card">
+                      <mat-card-content>
+                        <h2>{{ 'labels.heading.Deposit Details' | translate }}</h2>
+                        <dl class="confirmation-details">
+                          <div>
+                            <dt>{{ 'labels.inputs.Deposit Type' | translate }}</dt>
+                            <dd>
+                              {{
+                                (view.depositType === 'CASH' ? 'labels.inputs.Cash' : 'labels.inputs.Check') | translate
+                              }}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>{{ 'labels.inputs.Payment Type' | translate }}</dt>
+                            <dd>{{ view.paymentMethod || '—' }}</dd>
+                          </div>
+                          <div>
+                            <dt>
+                              {{
+                                (view.dateFromReceipt ? 'labels.inputs.Transaction Date' : 'depositReceipt.requestDate')
+                                  | translate
+                              }}
+                            </dt>
+                            <dd>{{ receiptDate }}</dd>
+                          </div>
+                          <div>
+                            <dt>{{ 'labels.inputs.Notes' | translate }}</dt>
+                            <dd class="receipt-note">{{ view.note || ('depositReceipt.noNote' | translate) }}</dd>
+                          </div>
+                        </dl>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+
                   @if (commandResult) {
-                    <button
-                      type="button"
-                      mat-flat-button
-                      color="primary"
-                      (click)="startNewDeposit(depositStepper, customerSearch)"
-                      [disabled]="isSubmitting"
-                    >
-                      {{ 'depositSelection.newDeposit' | translate }}
-                    </button>
+                    <mat-card class="confirmation-card receipt" aria-labelledby="receipt-heading">
+                      <mat-card-content>
+                        <div class="receipt-brand">
+                          <img src="assets/images/MifosX_logo.png" alt="Mifos X" /><strong>Mifos X</strong>
+                        </div>
+                        <div class="receipt-total">
+                          <h2 id="receipt-heading">{{ 'labels.heading.Payment Receipt' | translate }}</h2>
+                          <strong>{{ receiptMoney(view.amount) }}</strong
+                          ><span>{{ view.currency }}</span>
+                        </div>
+                        @if (!view.amountFromReceipt) {
+                          <p class="receipt-data-notice">{{ 'depositReceipt.requestAmount' | translate }}</p>
+                        }
+                        @if (isLoadingReceipt) {
+                          <div class="receipt-recovery" role="status">
+                            <mat-spinner diameter="24"></mat-spinner
+                            ><span>{{ 'depositReceipt.loading' | translate }}</span>
+                          </div>
+                        }
+                        @if (receiptUnavailable) {
+                          <div class="receipt-recovery" role="status">
+                            <p>{{ 'depositReceipt.detailsUnavailable' | translate }}</p>
+                            @if (view.transactionId) {
+                              <button
+                                mat-button
+                                type="button"
+                                color="primary"
+                                (click)="retryReceipt()"
+                                [disabled]="isLoadingReceipt || isExportingPdf"
+                              >
+                                {{ 'depositReceipt.retryDetails' | translate }}
+                              </button>
+                            }
+                          </div>
+                        }
+                        <dl class="receipt-fields">
+                          @for (field of receiptFields; track field.label) {
+                            <div>
+                              <dt>{{ field.label }}</dt>
+                              <dd>{{ field.value }}</dd>
+                            </div>
+                          }
+                        </dl>
+                        @if (!view.receiptConfirmed) {
+                          <p class="receipt-data-notice">{{ 'depositReceipt.referenceNotice' | translate }}</p>
+                        }
+                        <div class="receipt-actions">
+                          <button
+                            mat-flat-button
+                            type="button"
+                            color="primary"
+                            (click)="printReceipt()"
+                            [disabled]="isLoadingReceipt || isExportingPdf"
+                          >
+                            <mat-icon>print</mat-icon>{{ 'labels.buttons.Print Receipt' | translate }}
+                          </button>
+                          <button
+                            mat-stroked-button
+                            type="button"
+                            color="primary"
+                            (click)="downloadReceiptPdf()"
+                            [disabled]="isExportingPdf || isLoadingReceipt"
+                            [attr.aria-label]="'depositReceipt.downloadPdf' | translate"
+                          >
+                            @if (isExportingPdf) {
+                              <mat-spinner diameter="20"></mat-spinner>
+                            } @else {
+                              <mat-icon>download</mat-icon>
+                            }
+                            {{ 'depositReceipt.downloadPdf' | translate }}
+                          </button>
+                        </div>
+                        @if (pdfError) {
+                          <p class="receipt-export-error" role="alert">{{ 'depositReceipt.pdfFailed' | translate }}</p>
+                        }
+                      </mat-card-content>
+                    </mat-card>
+                  } @else {
+                    <mat-card class="confirmation-card preview-total">
+                      <mat-card-content>
+                        <mat-icon aria-hidden="true">account_balance_wallet</mat-icon>
+                        <h2>{{ 'depositDetails.depositAmount' | translate }}</h2>
+                        <strong>{{ receiptMoney(view.amount) }}</strong
+                        ><span>{{ view.currency }}</span>
+                        <p>
+                          {{
+                            (isSubmitting
+                              ? 'depositReceipt.processing'
+                              : outcomeUncertain
+                                ? receiptMessages.uncertain
+                                : receiptMessages.notSubmitted
+                            ) | translate
+                          }}
+                        </p>
+                        <div class="preview-reference">
+                          <span>{{ 'depositReceipt.requestReference' | translate }}</span
+                          ><strong>{{ view.receiptNumber || '—' }}</strong>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
                   }
-                  <button type="button" mat-button color="primary" (click)="printReceipt()">
-                    {{ 'labels.buttons.Print Receipt' | translate }}
-                  </button>
                 </div>
-                <section class="summary-grid">
-                  <div>
-                    <span>{{ 'labels.inputs.Transaction Id' | translate }}</span>
-                    <strong>{{ receipt.id ?? commandResult?.resourceId ?? '-' }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Savings Account' | translate }}</span>
-                    <strong>{{ receipt.accountNo || receipt.accountNumber || commandResult?.savingsId || '-' }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Amount' | translate }}</span>
-                    <strong
-                      >{{ receipt.amount ?? receipt.transactionAmount ?? depositAmount }}
-                      {{ accountCurrencyCode() }}</strong
-                    >
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Balance' | translate }}</span>
-                    <strong>{{ receipt.runningBalance ?? receipt.cumulativeBalance ?? '-' }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Payment Type' | translate }}</span>
-                    <strong>{{
-                      receipt.paymentDetailData?.paymentType?.name ||
-                        paymentTypeName(depositForm.value.paymentTypeId) ||
-                        '-'
-                    }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Receipt Number' | translate }}</span>
-                    <strong>{{
-                      receipt.paymentDetailData?.receiptNumber || depositForm.value.receiptNumber || '-'
-                    }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Transaction Type' | translate }}</span>
-                    <strong>{{ receipt.transactionType?.value || ('labels.inputs.Deposit' | translate) }}</strong>
-                  </div>
-                  <div>
-                    <span>{{ 'labels.inputs.Status' | translate }}</span>
-                    <strong>{{ commandResult ? ('labels.inputs.Completed' | translate) : '-' }}</strong>
-                  </div>
-                </section>
-              </section>
-            }
+              } @else {
+                <p class="preview-notice" role="alert">
+                  {{ (outcomeUncertain ? receiptMessages.reconcile : 'depositDetails.selectionInvalid') | translate }}
+                </p>
+              }
 
-            <div class="layout-row align-center gap-2percent margin-t responsive-column step-actions">
-              <button mat-raised-button matStepperPrevious [disabled]="isSubmitting || !!commandResult">
-                <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-                {{ 'labels.buttons.Previous' | translate }}
-              </button>
-              <button
-                mat-raised-button
-                color="primary"
-                (click)="submit()"
-                [disabled]="
-                  isSubmitting ||
-                  !!commandResult ||
-                  !depositForm.valid ||
-                  !lookupForm.valid ||
-                  !cashDenominationsReconcile
-                "
-                *mifosxHasPermission="'DEPOSIT_SAVINGSACCOUNT'"
-              >
-                @if (isSubmitting) {
-                  <mat-spinner diameter="20"></mat-spinner>
+              <footer class="confirmation-footer">
+                @if (commandResult || recordedNonPosting) {
+                  @if (commandResult) {
+                    <div class="reversal-guidance">
+                      <mat-icon aria-hidden="true">info_outline</mat-icon>
+                      <p>
+                        {{ 'depositReceipt.reversalGuidance' | translate }}
+                        @if (canReviewReversal && accountHistoryRoute) {
+                          <a [routerLink]="accountHistoryRoute">{{ 'depositReceipt.reviewHistory' | translate }}</a>
+                        }
+                      </p>
+                    </div>
+                  } @else {
+                    <p>{{ 'depositReceipt.nonPostingRecorded' | translate }}</p>
+                  }
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="startNewDeposit(depositStepper, customerSearch)"
+                    [disabled]="isSubmitting || isExportingPdf"
+                  >
+                    <mat-icon>add</mat-icon>{{ 'depositSelection.newDeposit' | translate }}
+                  </button>
+                  <button
+                    mat-flat-button
+                    type="button"
+                    color="primary"
+                    (click)="finish()"
+                    [disabled]="isSubmitting || isExportingPdf"
+                  >
+                    {{ 'depositReceipt.finish' | translate }}
+                  </button>
                 } @else {
-                  {{ 'labels.buttons.Submit' | translate }}
+                  <button mat-stroked-button type="button" matStepperPrevious [disabled]="workflowLocked">
+                    <mat-icon>arrow_back</mat-icon>{{ 'labels.buttons.Previous' | translate }}
+                  </button>
+                  <p>
+                    {{
+                      (outcomeUncertain ? receiptMessages.reconcile : receiptMessages.explicitConfirmation) | translate
+                    }}
+                  </p>
+                  <button
+                    mat-flat-button
+                    type="button"
+                    color="primary"
+                    (click)="submit()"
+                    [disabled]="!canContinueDetails || workflowLocked"
+                    *mifosxHasPermission="'DEPOSIT_SAVINGSACCOUNT'"
+                  >
+                    @if (isSubmitting) {
+                      <mat-spinner diameter="20"></mat-spinner>
+                    }
+                    {{ 'depositReceipt.confirmDeposit' | translate }}
+                  </button>
                 }
-              </button>
-            </div>
+              </footer>
+            </section>
           </mat-step>
         </mat-stepper>
       }

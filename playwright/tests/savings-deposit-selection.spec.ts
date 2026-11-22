@@ -400,10 +400,10 @@ test('New Deposit resets a confirmed receipt and returns to customer selection',
   await page.locator('input[formcontrolname="denomination"]').fill('25');
   await page.locator('input[formcontrolname="quantity"]').fill('2');
   await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm deposit', exact: true }).click();
   await expect(page.locator('.receipt')).toContainText('TEST-RECEIPT-101');
-  await expect(page.getByRole('button', { name: 'Submit', exact: true })).toBeDisabled();
-  await page.getByRole('tab', { name: /Customer and Account/ }).click();
+  await expect(page.getByRole('button', { name: 'Confirm deposit', exact: true })).toHaveCount(0);
+  await page.getByRole('tab', { name: /Customer and Account/ }).click({ force: true });
   await expect(page.locator('mat-step-header[aria-selected="true"]')).toContainText('Preview');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: testInfo.outputPath('receipt-new-deposit-mobile.png'), fullPage: true });
@@ -521,7 +521,7 @@ test('a Preview deposit failure renders one inline live alert', async ({ page })
   await page.locator('input[formcontrolname="denomination"]').fill('25');
   await page.locator('input[formcontrolname="quantity"]').fill('2');
   await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm deposit', exact: true }).click();
   const alerts = page.locator('mifosx-base-teller-savings-account-deposit [role="alert"]');
   await expect(alerts).toHaveCount(1);
   await expect(alerts).toHaveText('Synthetic deposit rejected');

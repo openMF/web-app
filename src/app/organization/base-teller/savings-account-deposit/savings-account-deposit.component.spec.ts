@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatStepper } from '@angular/material/stepper';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -21,6 +21,7 @@ import { describe, expect, it, beforeEach, afterEach, jest } from '@jest/globals
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
 import { Dates } from 'app/core/utils/dates';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import {
   BaseTellerService,
@@ -30,11 +31,14 @@ import {
   SavingsDepositCommandResult,
   SavingsDepositReceipt
 } from '../base-teller.service';
+import { DepositSubmissionStateService } from './deposit-submission-state.service';
+import { DepositReceiptExportService } from './deposit-receipt-export.service';
 import { SavingsAccountDepositComponent } from './savings-account-deposit.component';
 
 describe('SavingsAccountDepositComponent', () => {
   let component: SavingsAccountDepositComponent;
   let fixture: ComponentFixture<SavingsAccountDepositComponent>;
+  let savingsNotes: { getSavingsNotes: jest.Mock; createSavingsNote: jest.Mock };
   let baseTellerService: jest.Mocked<BaseTellerService>;
 
   const businessDate = new Date(2026, 8, 16);
@@ -49,6 +53,14 @@ describe('SavingsAccountDepositComponent', () => {
   };
 
   beforeEach(async () => {
+    let notes: unknown[] = [];
+    savingsNotes = {
+      getSavingsNotes: jest.fn(() => of(notes)),
+      createSavingsNote: jest.fn((_id: string, payload: { note: string }) => {
+        notes = [{ id: 501, createdById: 1, note: payload.note }];
+        return of({ resourceId: 501 });
+      })
+    };
     baseTellerService = {
       searchDepositCustomersAndAccounts: jest.fn(() => of([])),
       getDepositClient: jest.fn(() => of({ id: 10, displayName: 'Amina Doe', accountNo: 'CL-10' })),
@@ -82,9 +94,10 @@ describe('SavingsAccountDepositComponent', () => {
       ],
       providers: [
         { provide: BaseTellerService, useValue: baseTellerService },
+        { provide: SavingsService, useValue: savingsNotes },
         {
           provide: AuthenticationService,
-          useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
+          useValue: { getCredentials: jest.fn(() => ({ userId: 1, permissions: ['ALL_FUNCTIONS'] })) }
         },
         { provide: SettingsService, useValue: { businessDate, dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
         { provide: Dates, useValue: { formatDate: jest.fn(() => '16 September 2026') } },
@@ -119,6 +132,11 @@ describe('SavingsAccountDepositComponent', () => {
       paymentTypeId
     });
     component.denominations.at(0).patchValue({ denomination: 25, quantity: 2 });
+  }
+
+  function startAnotherDeposit(): void {
+    const stepper = fixture.debugElement.query(By.directive(MatStepper)).componentInstance as MatStepper;
+    component.startNewDeposit(stepper, fixture.nativeElement.querySelector('input[formControlName="search"]'));
   }
 
   it('displays and submits the default editable note', () => {
@@ -233,7 +251,7 @@ describe('SavingsAccountDepositComponent', () => {
     const receiptNumber = component.depositForm.controls.receiptNumber.value;
     component.submit();
 
-    component.lookupForm.controls.search.setValue('Amina');
+    startAnotherDeposit();
     const nextReceiptNumber = component.depositForm.controls.receiptNumber.value;
     component.selectLookupResult({ entityId: 10, entityName: 'Amina Doe', entityType: 'client' });
     makeFormsValid();
@@ -248,10 +266,12 @@ describe('SavingsAccountDepositComponent', () => {
     );
   });
 
-  it('reuses the same receipt number when retrying a failed operation', () => {
+  it('reuses the same receipt number when correcting a definitively rejected operation', () => {
     makeFormsValid();
     const receiptNumber = component.depositForm.controls.receiptNumber.value;
-    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => new Error('Network error')));
+    baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
+      throwError(() => ({ status: 400, error: { defaultUserMessage: 'Invalid payment' } }))
+    );
 
     component.submit();
     expect(component.isSubmitting).toBe(false);
@@ -283,10 +303,12 @@ describe('SavingsAccountDepositComponent', () => {
     response.next({ resourceId: 101 });
     response.complete();
     fixture.detectChanges();
-    const submitButton = Array.from(fixture.nativeElement.querySelectorAll('button')).find(
-      (button: HTMLButtonElement) => button.textContent?.includes('labels.buttons.Submit')
-    ) as HTMLButtonElement;
-    expect(submitButton.disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('[data-testid="deposit-success"]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.confirmation-footer').textContent).not.toContain(
+      'depositReceipt.confirmDeposit'
+    );
+    component.submit();
+    expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
   });
 
   it('filters payment types by CASH and CHECK metadata', () => {
@@ -378,7 +400,7 @@ describe('SavingsAccountDepositComponent', () => {
     fixture.detectChanges();
 
     const submitButton = Array.from(fixture.nativeElement.querySelectorAll('button')).find(
-      (button: HTMLButtonElement) => button.textContent?.includes('labels.buttons.Submit')
+      (button: HTMLButtonElement) => button.textContent?.includes('depositReceipt.confirmDeposit')
     ) as HTMLButtonElement;
 
     expect(submitButton.disabled).toBe(true);
@@ -494,7 +516,7 @@ describe('SavingsAccountDepositComponent', () => {
   it('preserves backend error messages on failed submission', () => {
     makeFormsValid();
     baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
-      throwError(() => ({ error: { defaultUserMessage: 'paymentTypeId is required' } }))
+      throwError(() => ({ status: 400, error: { defaultUserMessage: 'paymentTypeId is required' } }))
     );
 
     component.submit();
@@ -512,7 +534,7 @@ describe('SavingsAccountDepositComponent', () => {
     baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(pendingReceipt.asObservable());
     component.submit();
 
-    component.lookupForm.controls.search.setValue('Another customer');
+    startAnotherDeposit();
     if (outcome === 'success') {
       pendingReceipt.next({ id: 101, paymentDetailData: { receiptNumber: 'BACKEND-101' } });
       pendingReceipt.complete();
@@ -539,7 +561,7 @@ describe('SavingsAccountDepositComponent', () => {
       .mockReturnValueOnce(secondReceipt.asObservable());
     component.submit();
 
-    component.lookupForm.controls.search.setValue('Another deposit');
+    startAnotherDeposit();
     makeFormsValid();
     component.submit();
     secondReceipt.next({ id: 202, amount: 50, runningBalance: 220 });
@@ -564,7 +586,7 @@ describe('SavingsAccountDepositComponent', () => {
     expect(fixture.nativeElement.querySelector('.receipt').textContent).not.toContain('BACKEND-101');
   });
 
-  it('ignores pending receipt details when a different savings account is selected', () => {
+  it('blocks changing the destination while receipt details are pending', () => {
     makeFormsValid();
     const pendingReceipt = new Subject<SavingsDepositReceipt>();
     baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(pendingReceipt.asObservable());
@@ -578,13 +600,15 @@ describe('SavingsAccountDepositComponent', () => {
       of({ paymentTypeOptions: [{ id: 1, name: 'Cash Drawer', isCashPayment: true }] })
     );
     component.lookupForm.controls.savingsAccount.setValue(secondAccount);
-    expect(component.selectedSavingsAccount?.id).toBe(88);
-    expect(component.lookupForm.controls.savingsAccount.value).toEqual(secondAccount);
+    expect(component.selectedSavingsAccount?.id).toBe(77);
+    expect(component.lookupForm.controls.savingsAccount.value).toEqual(activeSavingsAccount);
     expect(component.lookupForm.valid).toBe(true);
     pendingReceipt.next({ id: 101, amount: 50, paymentDetailData: { receiptNumber: 'BACKEND-101' } });
     pendingReceipt.complete();
 
-    expect(component.receipt).toBe(commandReceipt);
+    expect(commandReceipt).toBeDefined();
+    expect(component.receipt?.id).toBe(101);
+    expect(component.receiptView?.accountNumber).toBe('SA-77');
   });
 
   describe('WEB-1468 selection', () => {
@@ -1293,7 +1317,7 @@ describe('SavingsAccountDepositComponent', () => {
       stepper.next();
       stepper.next();
       baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
-        throwError(() => ({ error: { defaultUserMessage: 'Synthetic deposit rejected' } }))
+        throwError(() => ({ status: 400, error: { defaultUserMessage: 'Synthetic deposit rejected' } }))
       );
       component.submit();
       render();
@@ -1699,6 +1723,409 @@ describe('SavingsAccountDepositComponent', () => {
       expect(component.denominations.length).toBe(11);
       expect(component.cashDenominationsReconcile).toBe(true);
       expect(component.canContinueDetails).toBe(true);
+    });
+  });
+  describe('WEB-1470 confirmation safety', () => {
+    function renderPreview(): void {
+      makeFormsValid();
+      const stepper = fixture.debugElement.query(By.directive(MatStepper)).componentInstance as MatStepper;
+      stepper.selectedIndex = 1;
+      stepper.next();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+    }
+
+    it('opens Preview without a success message, receipt, ID or financial POST', () => {
+      renderPreview();
+      expect(fixture.nativeElement.querySelector('.preview-summary').textContent).toContain('SA-77');
+      expect(fixture.nativeElement.querySelector('[data-testid="deposit-success"]')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.receipt')).toBeNull();
+      expect(component.receiptView?.transactionId).toBeNull();
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      0,
+      408,
+      500,
+      502,
+      503,
+      504
+    ])('locks unknown outcome after HTTP %s without retrying or resetting the reference', (status) => {
+      renderPreview();
+      const reference = component.depositForm.controls.receiptNumber.value;
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => ({ status })));
+      component.submit();
+      fixture.detectChanges();
+      expect(component.outcomeUncertain).toBe(true);
+      expect(component.commandResult).toBeUndefined();
+      expect(fixture.nativeElement.querySelector('[data-testid="deposit-success"]')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.receipt')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.uncertain').textContent).toContain(reference);
+      component.submit();
+      component.changeCustomer(fixture.nativeElement.querySelector('input[formControlName="search"]'));
+      component.lookupForm.controls.search.setValue('Another customer');
+      startAnotherDeposit();
+      component.finish();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      expect(component.selectedSavingsAccount?.id).toBe(77);
+      expect(component.depositForm.controls.receiptNumber.value).toBe(reference);
+    });
+
+    it('does not treat an empty or maker-checker-only response as posted', () => {
+      makeFormsValid();
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(of({ commandId: 9 }));
+      component.submit();
+      expect(component.outcomeUncertain).toBe(true);
+      expect(component.commandResult).toBeUndefined();
+      expect(baseTellerService.getSavingsDepositReceipt).not.toHaveBeenCalled();
+    });
+
+    it('keeps confirmed command state when the transaction ID is absent', () => {
+      makeFormsValid();
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(of({ savingsId: 77 }));
+      component.submit();
+      expect(component.commandResult).toEqual({ savingsId: 77 });
+      expect(component.receiptUnavailable).toBe(true);
+      expect(component.receiptView?.transactionId).toBeNull();
+      expect(baseTellerService.getSavingsDepositReceipt).not.toHaveBeenCalled();
+      component.submit();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+    });
+
+    it('retrieves missing receipt details without posting again', () => {
+      makeFormsValid();
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(throwError(() => ({ status: 503 })));
+      component.submit();
+      expect(component.receiptUnavailable).toBe(true);
+      expect(component.commandResult?.resourceId).toBe(101);
+      component.retryReceipt();
+      expect(component.receiptUnavailable).toBe(false);
+      expect(component.receipt?.id).toBe(101);
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      expect(baseTellerService.getSavingsDepositReceipt).toHaveBeenCalledTimes(2);
+    });
+
+    it.each([
+      { id: 102, accountId: 77 },
+      { id: 101, accountId: 88 }
+    ])('rejects mismatched receipt identity %j', (receipt) => {
+      makeFormsValid();
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(of(receipt));
+      component.submit();
+      expect(component.receiptUnavailable).toBe(true);
+      expect(component.receiptView?.transactionId).toBe('101');
+      expect(component.receiptView?.resultingBalance).toBeNull();
+    });
+
+    it.each([
+      { code: 'US' },
+      { code: 'US', decimalPlaces: 0 },
+      { code: 'US', decimalPlaces: 2 },
+      { code: 'USD', decimalPlaces: 2 },
+      undefined
+    ])('renders the confirmed receipt with safe currency formatting for %j', (currency) => {
+      renderPreview();
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(
+        of({ id: 101, accountId: 77, amount: 50, currency })
+      );
+      component.submit();
+      fixture.changeDetectorRef.markForCheck();
+      expect(() => fixture.detectChanges()).not.toThrow();
+      expect(component.receiptMoney(component.receiptView!.amount)).toBe('$50.00');
+      expect(fixture.nativeElement.querySelector('[data-testid="deposit-success"]')).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('.receipt').textContent).toContain('$50.00');
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+    });
+
+    it('retains the submitted context when forms are modified programmatically after confirmation', () => {
+      makeFormsValid();
+      component.submit();
+      component.depositForm.patchValue({ transactionAmount: 999, note: 'Changed', depositType: 'CHECK' });
+      component.customer = { id: 99, displayName: 'Other client' };
+      expect(component.receiptView?.amount).toBe(50);
+      expect(component.receiptView?.customer).toBe('Amina Doe');
+      expect(component.receiptView?.depositType).toBe('CASH');
+      expect(component.receiptView?.note).toBe('DEPOSITO EN VENTANILLA');
+    });
+
+    it('uses the existing print entry point only for a confirmed deposit', () => {
+      const print = jest.spyOn(window, 'print').mockImplementation(() => undefined);
+      component.printReceipt();
+      expect(print).not.toHaveBeenCalled();
+      makeFormsValid();
+      component.submit();
+      component.printReceipt();
+      expect(print).toHaveBeenCalledTimes(1);
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      print.mockRestore();
+    });
+
+    it('exports genuine receipt fields and keeps financial state after PDF failure', async () => {
+      makeFormsValid();
+      const exporter = jest
+        .spyOn(TestBed.inject(DepositReceiptExportService), 'download')
+        .mockRejectedValueOnce(new Error('Canvas failure'));
+      component.submit();
+      const command = component.commandResult;
+      await component.downloadReceiptPdf();
+      expect(exporter).toHaveBeenCalledWith(
+        'labels.heading.Payment Receipt',
+        '$50.00 USD',
+        expect.arrayContaining([
+          { label: 'labels.inputs.Transaction Id', value: '101' },
+          { label: 'labels.inputs.Receipt Number', value: 'RC-101' },
+          { label: 'labels.inputs.Savings Account', value: 'SA-77' }
+        ]),
+        '101'
+      );
+      expect(component.pdfError).toBe(true);
+      expect(component.isExportingPdf).toBe(false);
+      expect(component.commandResult).toBe(command);
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      exporter.mockRestore();
+    });
+
+    it('prevents concurrent PDF requests and clears export state on completion', async () => {
+      makeFormsValid();
+      component.submit();
+      let resolve!: () => void;
+      const exporter = jest.spyOn(TestBed.inject(DepositReceiptExportService), 'download').mockImplementationOnce(
+        () =>
+          new Promise<void>((done) => {
+            resolve = done;
+          })
+      );
+      const pending = component.downloadReceiptPdf();
+      await component.downloadReceiptPdf();
+      expect(exporter).toHaveBeenCalledTimes(1);
+      expect(component.isExportingPdf).toBe(true);
+      startAnotherDeposit();
+      expect(component.commandResult).toBeDefined();
+      resolve();
+      await pending;
+      expect(component.isExportingPdf).toBe(false);
+      exporter.mockRestore();
+    });
+
+    it('uses authoritative route IDs and finishes at the Base Teller without financial writes', () => {
+      const navigate = jest.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      makeFormsValid();
+      component.finish();
+      expect(navigate).not.toHaveBeenCalled();
+      component.submit();
+      expect(component.accountRoute).toEqual([
+        '/clients',
+        10,
+        'savings-accounts',
+        77
+      ]);
+      expect(component.accountHistoryRoute).toEqual([
+        '/clients',
+        10,
+        'savings-accounts',
+        77,
+        'transactions'
+      ]);
+      component.finish();
+      expect(navigate).toHaveBeenCalledWith(['/organization/base-teller']);
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      navigate.mockRestore();
+    });
+
+    it('has no unsupported sharing or decorative barcode control', () => {
+      makeFormsValid();
+      component.submit();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('[href^="mailto:"], .barcode, [aria-label="Email"]')).toBeNull();
+    });
+  });
+  describe('review corrections', () => {
+    it.each([
+      'pending',
+      'uncertain'
+    ])('restores an unresolved %s submission after the route is destroyed', (phase) => {
+      makeFormsValid();
+      const pending = new Subject<SavingsDepositCommandResult>();
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(
+        phase === 'pending' ? pending : throwError(() => ({ status: 0 }))
+      );
+      const reference = component.depositForm.controls.receiptNumber.value;
+      component.submit();
+      fixture.destroy();
+      const returned = TestBed.createComponent(SavingsAccountDepositComponent);
+      returned.detectChanges();
+      const restored = returned.componentInstance;
+      expect(restored.outcomeUncertain).toBe(true);
+      expect(restored.workflowLocked).toBe(true);
+      expect(restored.receiptView?.receiptNumber).toBe(reference);
+      expect(restored.depositForm.controls.receiptNumber.value).toBe(reference);
+      expect(returned.debugElement.query(By.directive(MatStepper)).componentInstance.selectedIndex).toBe(2);
+      restored.submit();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      returned.destroy();
+    });
+
+    it('refuses a financial POST when the original reference cannot be persisted', () => {
+      makeFormsValid();
+      const begin = jest.spyOn(TestBed.inject(DepositSubmissionStateService), 'begin').mockReturnValue(false);
+      component.submit();
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+      expect(component.errorMessage).toBe('depositReceipt.storageUnavailable');
+      begin.mockRestore();
+    });
+
+    it('only unlocks an uncertain submission after a matching receipt GET, without another POST', () => {
+      makeFormsValid();
+      const reference = component.depositForm.controls.receiptNumber.value!;
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => ({ status: 0 })));
+      component.submit();
+      component.recoveryTransactionId.setValue('101');
+      component.verifyUncertainDeposit();
+      expect(component.outcomeUncertain).toBe(true);
+      expect(component.recoveryError).toBe('depositReceipt.recoveryMismatch');
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(
+        of({ id: 101, accountId: 77, amount: 50, currency: { code: 'USD', decimalPlaces: 2 }, date: [
+            2026,
+            9,
+            16
+          ], entryType:
+            'CREDIT', transactionType: { deposit: true }, reversed: false, paymentDetailData: { receiptNumber: reference } })
+      );
+      component.verifyUncertainDeposit();
+      expect(component.outcomeUncertain).toBe(false);
+      expect(component.commandResult?.resourceId).toBe(101);
+      expect(TestBed.inject(DepositSubmissionStateService).pending).toBeNull();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+    });
+
+    it('uses the history Undo permission, retaining the separate account read check', () => {
+      const original = environment.productionModeEnableRBAC;
+      const credentials = jest.spyOn(TestBed.inject(AuthenticationService), 'getCredentials');
+      try {
+        environment.productionModeEnableRBAC = true;
+        credentials.mockReturnValue({ permissions: [
+            'READ_SAVINGSACCOUNT',
+            'ADJUSTTRANSACTION_SAVINGSACCOUNT'
+          ] } as never);
+        makeFormsValid();
+        expect(component.canReviewReversal).toBe(true);
+        expect(component.accountHistoryRoute).not.toBeNull();
+        credentials.mockReturnValue({ permissions: ['ADJUSTTRANSACTION_SAVINGSACCOUNT'] } as never);
+        expect(component.accountHistoryRoute).toBeNull();
+        credentials.mockReturnValue({ permissions: [
+            'READ_SAVINGSACCOUNT',
+            'UNDOTRANSACTION_SAVINGSACCOUNT'
+          ] } as never);
+        expect(component.canReviewReversal).toBe(false);
+      } finally {
+        environment.productionModeEnableRBAC = original;
+        credentials.mockRestore();
+      }
+    });
+
+    it('keeps the ledger date separate from an offset-bearing time in every receipt output', () => {
+      makeFormsValid();
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(
+        of({ id: 101, date: [
+            2026,
+            11,
+            11
+          ], transactionTime: '00:30:00Z' })
+      );
+      component.submit();
+      expect(component.receiptDate).toBe('Nov 11, 2026');
+      expect(component.receiptTime).toBe('00:30:00Z');
+      expect(component.receiptFields).toContainEqual({
+        label: 'labels.inputs.Transaction Date',
+        value: 'Nov 11, 2026'
+      });
+      expect(component.receiptFields).toContainEqual({ label: 'depositReceipt.transactionTime', value: '00:30:00Z' });
+    });
+  });
+  describe('second review corrections', () => {
+    it('blocks a financial POST if list and failed account details provide no currency, then persists retrieved currency', () => {
+      makeFormsValid();
+      component.selectedSavingsAccount = { ...activeSavingsAccount, currency: undefined };
+      expect(component.depositCurrencyReady).toBe(false);
+      expect(component.canContinueDetails).toBe(false);
+      component.submit();
+      expect(baseTellerService.depositToSavingsAccount).not.toHaveBeenCalled();
+      expect(component.errorMessage).toBe('depositReceipt.currencyRequired');
+      component.retryDepositCurrency();
+      expect(component.depositCurrencyReady).toBe(true);
+      component.denominations.at(0).patchValue({ denomination: 25, quantity: 2 });
+      const pending = new Subject<SavingsDepositCommandResult>();
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(pending);
+      component.submit();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+      expect(TestBed.inject(DepositSubmissionStateService).pending?.context?.account.currency).toEqual({
+        code: 'USD',
+        decimalPlaces: 2
+      });
+    });
+
+    it.each([
+      { date: undefined },
+      { date: [
+          2026,
+          11,
+          22
+        ] }
+    ])('labels confirmation details using date provenance %j', ({ date }) => {
+      makeFormsValid();
+      baseTellerService.getSavingsDepositReceipt.mockReturnValueOnce(of({ id: 101, date }));
+      component.submit();
+      fixture.detectChanges();
+      const details = fixture.nativeElement.querySelector('.confirmation-details').textContent;
+      expect(details).toContain(date ? 'labels.inputs.Transaction Date' : 'depositReceipt.requestDate');
+    });
+
+    it('records a checker non-posting decision before unlocking and never replays the deposit', () => {
+      makeFormsValid();
+      const reference = component.depositForm.controls.receiptNumber.value!;
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => ({ status: 0 })));
+      component.submit();
+      component.nonPostingForm.setValue({
+        outcome: 'NOT_POSTED',
+        reference,
+        evidence: 'CASE-1470',
+        reason: 'Bank operations independently confirmed the original request never reached posting.',
+        acknowledged: true
+      });
+      component.recordNonPostingDecision();
+      fixture.detectChanges();
+      expect(savingsNotes.createSavingsNote).toHaveBeenCalledTimes(1);
+      expect(component.recordedNonPosting).toMatchObject({ noteId: '501', reference, outcome: 'NOT_POSTED' });
+      expect(component.commandResult).toBeUndefined();
+      expect(fixture.nativeElement.querySelector('[data-testid="deposit-success"]')).toBeNull();
+      expect(component.workflowLocked).toBe(true);
+      expect(TestBed.inject(DepositSubmissionStateService).pending).toBeNull();
+      startAnotherDeposit();
+      expect(component.depositForm.controls.receiptNumber.value).not.toBe(reference);
+      expect(component.recordedNonPosting).toBeUndefined();
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
+    });
+
+    it('retains the original unresolved reference when decision-note persistence cannot be verified', () => {
+      makeFormsValid();
+      const reference = component.depositForm.controls.receiptNumber.value!;
+      baseTellerService.depositToSavingsAccount.mockReturnValueOnce(throwError(() => ({ status: 0 })));
+      component.submit();
+      component.nonPostingForm.setValue({
+        outcome: 'REJECTED',
+        reference,
+        evidence: 'CASE-1470',
+        reason: 'The bank command review confirms the original request was definitively rejected.',
+        acknowledged: true
+      });
+      savingsNotes.getSavingsNotes.mockImplementation(() => throwError(() => ({ status: 503 })));
+      component.recordNonPostingDecision();
+      expect(component.outcomeUncertain).toBe(true);
+      expect(component.recordedNonPosting).toBeUndefined();
+      expect(component.recoveryError).toBe('depositReceipt.nonPostingFailed');
+      expect(TestBed.inject(DepositSubmissionStateService).pending?.context?.receiptReference).toBe(reference);
+      expect(baseTellerService.depositToSavingsAccount).toHaveBeenCalledTimes(1);
     });
   });
 });
