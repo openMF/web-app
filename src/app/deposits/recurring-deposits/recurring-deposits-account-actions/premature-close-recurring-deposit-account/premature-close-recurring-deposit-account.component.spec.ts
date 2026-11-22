@@ -11,7 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
@@ -75,6 +75,11 @@ describe('PrematureCloseRecurringDepositAccountComponent', () => {
 
   const confirmButton = (): HTMLButtonElement =>
     fixture.nativeElement.querySelector('mat-card-actions button:last-child');
+
+  const prematureCloseRequests = () =>
+    recurringDepositsService.executeRecurringDepositsAccountCommand.mock.calls.filter(
+      (call) => call[1] === 'prematureClose'
+    );
 
   it('should disable Confirm when Closed On Date is empty', () => {
     expect(confirmButton().disabled).toBe(true);
@@ -194,5 +199,54 @@ describe('PrematureCloseRecurringDepositAccountComponent', () => {
         locale: 'en'
       }
     );
+  });
+
+  it('should not submit again while the first request is in flight', () => {
+    const form = component.prematureCloseRecurringDepositsAccountForm;
+    form.patchValue({ closedOnDate });
+    form.patchValue({ onAccountClosureId: 100 });
+    const pending = new Subject<any>();
+    recurringDepositsService.executeRecurringDepositsAccountCommand.mockReturnValueOnce(pending as any);
+
+    component.submit();
+    component.submit();
+
+    expect(prematureCloseRequests()).toHaveLength(1);
+    expect(component.isSubmitting).toBe(true);
+
+    fixture.detectChanges();
+    expect(confirmButton().disabled).toBe(true);
+
+    pending.next({});
+    pending.complete();
+    fixture.detectChanges();
+
+    expect(component.isSubmitting).toBe(false);
+    expect(confirmButton().disabled).toBe(false);
+  });
+
+  it('should handle a failed submission, then allow a successful retry', () => {
+    const form = component.prematureCloseRecurringDepositsAccountForm;
+    form.patchValue({ closedOnDate });
+    form.patchValue({ onAccountClosureId: 100 });
+    recurringDepositsService.executeRecurringDepositsAccountCommand.mockReturnValueOnce(
+      throwError(() => new Error('premature close failed'))
+    );
+
+    // The component subscription handles the error, so rxjs does not report it
+    // asynchronously as an unhandled error.
+    component.submit();
+    fixture.detectChanges();
+
+    expect(prematureCloseRequests()).toHaveLength(1);
+    expect(component.isSubmitting).toBe(false);
+    expect(router.navigate).not.toHaveBeenCalled();
+    expect(confirmButton().disabled).toBe(false);
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(prematureCloseRequests()).toHaveLength(2);
+    expect(router.navigate).toHaveBeenCalledWith(['../../'], { relativeTo: TestBed.inject(ActivatedRoute) });
   });
 });
