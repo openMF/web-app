@@ -14,7 +14,8 @@ export default defineConfig({
   testDir: './playwright/tests',
   testMatch: [
     'savings-deposit-selection.spec.ts',
-    'savings-deposit-details.spec.ts'
+    'savings-deposit-details.spec.ts',
+    'savings-deposit-confirmation.spec.ts'
   ],
   timeout: 60000,
   workers: 1,

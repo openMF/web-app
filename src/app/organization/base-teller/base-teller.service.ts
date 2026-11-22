@@ -160,6 +160,8 @@ export interface SavingsDepositCommandPayload {
 }
 
 export interface SavingsDepositCommandResult {
+  /** A maker-checker command ID alone does not identify a posted transaction. */
+  commandId?: FineractId;
   resourceId?: FineractId;
   entityId?: FineractId;
   transactionId?: FineractId;
@@ -169,6 +171,18 @@ export interface SavingsDepositCommandResult {
 
 export interface SavingsDepositReceipt extends SavingsDepositCommandResult {
   id?: FineractId;
+  /** SavingsAccountTransactionData fields from the existing transaction GET. */
+  accountId?: FineractId;
+  date?: number[];
+  transactionTime?: string;
+  currency?: { code?: string; decimalPlaces?: number };
+  entryType?: string;
+  reversed?: boolean;
+  isReversal?: boolean;
+  transfer?: unknown;
+  lienTransaction?: boolean;
+  submittedByUsername?: string;
+  note?: string;
   accountNo?: string;
   accountNumber?: string;
   amount?: number | null;
@@ -182,6 +196,7 @@ export interface SavingsDepositReceipt extends SavingsDepositCommandResult {
     };
   };
   transactionType?: {
+    deposit?: boolean;
     value?: string;
   };
 }

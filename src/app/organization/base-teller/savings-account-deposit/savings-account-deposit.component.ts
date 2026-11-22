@@ -17,10 +17,13 @@ import {
   OnInit,
   inject
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormArray,
+  FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
@@ -50,6 +53,7 @@ import {
   catchError,
   distinctUntilChanged,
   EMPTY,
+  filter,
   finalize,
   forkJoin,
   map,
@@ -81,6 +85,23 @@ import {
   SavingsDepositReceipt,
   SavingsDepositTemplate
 } from '../base-teller.service';
+
+import {
+  buildDepositReceiptViewModel,
+  commandTransactionId,
+  depositTransactionId,
+  matchesPendingDeposit,
+  hasDepositCurrency,
+  DepositReceiptContext,
+  DepositReceiptViewModel
+} from './deposit-receipt.model';
+import {
+  DepositReconciliationService,
+  NonPostingOutcome,
+  RecordedDepositDecision
+} from './deposit-reconciliation.service';
+import { DepositSubmissionStateService } from './deposit-submission-state.service';
+import { DepositReceiptExportService, DepositReceiptField } from './deposit-receipt-export.service';
 
 function extract(value: string): string {
   return value;
@@ -148,6 +169,75 @@ export class SavingsAccountDepositComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private injector = inject(Injector);
+  private router = inject(Router);
+  private translate = inject(TranslateService);
+  private receiptExport = inject(DepositReceiptExportService);
+  private reconciliationService = inject(DepositReconciliationService);
+  nonPostingForm: ReturnType<SavingsAccountDepositComponent['createNonPostingForm']>;
+  recordedNonPosting?: RecordedDepositDecision;
+  isRecordingDecision = false;
+
+  private readonly formBuilder: FormBuilder;
+
+  constructor() {
+    this.formBuilder = inject(FormBuilder);
+    this.nonPostingForm = this.createNonPostingForm();
+  }
+
+  private createNonPostingForm() {
+    return this.formBuilder.nonNullable.group({
+      outcome: [
+        '' as NonPostingOutcome | '',
+        [
+          Validators.required,
+          Validators.pattern(/^(NOT_POSTED|REJECTED)$/)
+        ]
+      ],
+      reference: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(50)
+        ]
+      ],
+      evidence: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100)
+        ]
+      ],
+      reason: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(20),
+          Validators.maxLength(400)
+        ]
+      ],
+      acknowledged: [
+        false,
+        Validators.requiredTrue
+      ]
+    });
+  }
+
+  private submissionState = inject(DepositSubmissionStateService);
+  initialStepIndex = 0;
+  isVerifyingDeposit = false;
+  recoveryError = '';
+  recoveryTransactionId = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[1-9]\d*$/),
+    Validators.maxLength(64)
+  ]);
+  private submittedContext?: DepositReceiptContext;
+  outcomeUncertain = false;
+  isLoadingReceipt = false;
+  receiptUnavailable = false;
+  isExportingPdf = false;
+  pdfError = false;
   private searchRetry = new Subject<void>();
 
   minDate = new Date(2000, 0, 1);
@@ -179,6 +269,18 @@ export class SavingsAccountDepositComponent implements OnInit {
   private accountLoadRequestId = 0;
   private templateLoadRequestId = 0;
   private receiptLoadRequestId = 0;
+
+  readonly receiptMessages = {
+    uncertain: extract('depositReceipt.uncertain'),
+    reconcile: extract('depositReceipt.reconcile'),
+    review: extract('depositReceipt.review'),
+    reviewHint: extract('depositReceipt.reviewHint'),
+    wait: extract('depositReceipt.wait'),
+    explicitConfirmation: extract('depositReceipt.explicitConfirmation'),
+    notSubmitted: extract('depositReceipt.notSubmitted'),
+    verifying: extract('depositReceipt.verifying'),
+    verifyTransaction: extract('depositReceipt.verifyTransaction')
+  };
 
   get denominations(): FormArray<DenominationFormGroup> {
     return this.depositForm.get('denominations') as FormArray<DenominationFormGroup>;
@@ -363,6 +465,7 @@ export class SavingsAccountDepositComponent implements OnInit {
 
   get detailsValidationMessage(): string {
     if (!this.selectionReady) return extract('depositDetails.selectionInvalid');
+    if (!hasDepositCurrency(this.selectedSavingsAccount)) return extract('depositReceipt.currencyRequired');
     if (!this.depositForm.controls.transactionAmount.valid) return extract('depositDetails.amountInvalid');
     if (!this.depositForm.controls.transactionDate.valid) return extract('depositDetails.dateInvalid');
     if (!this.filteredPaymentTypeOptions.some((option) => option.id === this.depositForm.controls.paymentTypeId.value))
@@ -378,13 +481,23 @@ export class SavingsAccountDepositComponent implements OnInit {
     return this.depositForm.valid ? extract('depositDetails.complete') : extract('depositDetails.reviewFields');
   }
 
+  get depositCurrencyReady(): boolean {
+    return hasDepositCurrency(this.selectedSavingsAccount);
+  }
+
+  retryDepositCurrency(): void {
+    if (this.workflowLocked || this.isLoadingDetails || !this.selectedSavingsAccount) return;
+    this.accountDetails.delete(String(this.selectedSavingsAccountId()));
+    this.loadSelectedAccountDetails(this.selectedSavingsAccount);
+  }
+
   get canContinueDetails(): boolean {
     return (
       this.selectionReady &&
+      hasDepositCurrency(this.selectedSavingsAccount) &&
       this.depositForm.valid &&
       this.cashDenominationsReconcile &&
-      !this.isSubmitting &&
-      !this.commandResult
+      !this.workflowLocked
     );
   }
 
@@ -394,13 +507,19 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   changeDestination(stepper: MatStepper): void {
-    if (this.isSubmitting || this.commandResult) return;
+    if (this.workflowLocked) return;
     stepper.selectedIndex = 0;
   }
 
   ngOnInit(): void {
     this.canAccessWorkflow = this.hasPermission('DEPOSIT_SAVINGSACCOUNT');
     this.maxDate = this.settingsService.businessDate;
+    const pending = this.canAccessWorkflow ? this.submissionState.pending : null;
+    if (pending) {
+      this.outcomeUncertain = true;
+      this.submittedContext = pending.context || undefined;
+      this.initialStepIndex = 2;
+    }
     this.createForms();
     if (!this.canAccessWorkflow) {
       this.errorMessage = 'labels.text.You do not have permission to deposit into savings accounts through Base Teller';
@@ -409,6 +528,20 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.watchLookup();
     this.watchDepositType();
     this.addDenomination();
+    if (pending?.context) {
+      const context = pending.context;
+      this.customer = context.customer;
+      this.selectedSavingsAccount = context.account;
+      this.depositForm.patchValue(
+        {
+          receiptNumber: context.receiptReference,
+          transactionAmount: context.amount,
+          depositType: context.depositType,
+          note: context.note
+        },
+        { emitEvent: false }
+      );
+    }
   }
 
   createForms(): void {
@@ -430,7 +563,10 @@ export class SavingsAccountDepositComponent implements OnInit {
       accountNumber: new FormControl<string | null>('', Validators.maxLength(50)),
       checkNumber: new FormControl<string | null>('', Validators.maxLength(50)),
       routingCode: new FormControl<string | null>('', Validators.maxLength(50)),
-      receiptNumber: new FormControl<string | null>(this.generateReceiptNumber(), Validators.maxLength(50)),
+      receiptNumber: new FormControl<string | null>(
+        this.submittedContext?.receiptReference || (this.outcomeUncertain ? '' : this.generateReceiptNumber()),
+        Validators.maxLength(50)
+      ),
       bankNumber: new FormControl<string | null>('', Validators.maxLength(50)),
       note: new FormControl<string | null>('DEPOSITO EN VENTANILLA'),
       denominations: new FormArray<DenominationFormGroup>([])
@@ -459,6 +595,7 @@ export class SavingsAccountDepositComponent implements OnInit {
       )
     )
       .pipe(
+        filter(() => !this.workflowLocked),
         tap((searchTerm) => {
           if (searchTerm !== null) this.clearSelectedAccount();
           this.searchResults = [];
@@ -509,6 +646,10 @@ export class SavingsAccountDepositComponent implements OnInit {
       .get('savingsAccount')
       ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((account: DepositSavingsAccount | '' | null) => {
+        if (this.workflowLocked) {
+          this.lookupForm.controls.savingsAccount.setValue(this.selectedSavingsAccount, { emitEvent: false });
+          return;
+        }
         if (
           !account ||
           typeof account !== 'object' ||
@@ -555,7 +696,7 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   selectLookupResult(result: DepositSearchResult): void {
-    if (this.isSubmitting || this.commandResult || !result || typeof result !== 'object') {
+    if (this.workflowLocked || !result || typeof result !== 'object') {
       return;
     }
     this.clearSelectedAccount();
@@ -726,19 +867,19 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   changeCustomer(input: HTMLInputElement): void {
-    if (this.isSubmitting || this.commandResult) return;
+    if (this.workflowLocked) return;
     this.lookupForm.controls.search.setValue('');
     input.focus();
   }
 
   selectAccount(account: DepositSavingsAccount): void {
-    if (this.isSubmitting || this.commandResult || !this.isActiveSavingsAccount(account)) return;
+    if (this.workflowLocked || !this.isActiveSavingsAccount(account)) return;
     if (String(this.selectedSavingsAccountId()) === String(this.savingsAccountId(account))) return;
     this.lookupForm.controls.savingsAccount.setValue(account);
   }
 
   retrySelection(searchInput?: HTMLInputElement): void {
-    if (this.isSubmitting || this.commandResult) return;
+    if (this.workflowLocked) return;
     if (this.selectedSavingsAccount) {
       this.loadDepositTemplate(this.savingsAccountId(this.selectedSavingsAccount));
     } else {
@@ -752,7 +893,7 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   startNewDeposit(stepper: MatStepper, searchInput: HTMLInputElement): void {
-    if (this.isSubmitting || !this.commandResult) return;
+    if (this.isSubmitting || this.isExportingPdf || (!this.commandResult && !this.recordedNonPosting)) return;
     const businessDate = this.settingsService.businessDate;
     this.maxDate = businessDate;
     // Invalidates pending receipt/account responses and generates the next receipt number once.
@@ -1029,15 +1170,26 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   submit(): void {
+    if (this.workflowLocked || !this.canAccessWorkflow) return;
     this.errorMessage = '';
-    if (!this.proceedToPreview() || this.isSubmitting) {
+    if (!hasDepositCurrency(this.selectedSavingsAccount)) {
+      this.errorMessage = extract('depositReceipt.currencyRequired');
       return;
     }
-
+    if (!this.proceedToPreview()) return;
+    const context = this.captureReceiptContext();
+    if (!context) return;
+    if (!this.submissionState.begin(context)) {
+      this.errorMessage = extract('depositReceipt.storageUnavailable');
+      return;
+    }
+    this.submittedContext = context;
+    const payload = this.buildPayload();
     this.isSubmitting = true;
     this.baseTellerService
-      .depositToSavingsAccount(this.selectedSavingsAccountId(), this.buildPayload())
+      .depositToSavingsAccount(context.accountId, payload)
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           this.isSubmitting = false;
           this.cdr.markForCheck();
@@ -1045,15 +1197,37 @@ export class SavingsAccountDepositComponent implements OnInit {
       )
       .subscribe({
         next: (response: SavingsDepositCommandResult) => {
+          // A null/empty response or a maker-checker command awaiting approval is not proof of posting.
+          // A nonempty successful command may omit the transaction ID; retain that confirmation,
+          // but never invent an ID or attempt a receipt GET without one.
+          if (
+            !response ||
+            !Object.keys(response).length ||
+            (response.commandId && !commandTransactionId(response)) ||
+            (response.savingsId != null && String(response.savingsId) !== String(context.accountId))
+          ) {
+            this.outcomeUncertain = true;
+            return;
+          }
+          this.submissionState.resolve(context.receiptReference);
           this.commandResult = response;
           this.receipt = response;
-          const transactionId = response?.resourceId || response?.entityId || response?.transactionId;
-          if (transactionId) {
-            this.loadReceipt(transactionId);
-          }
+          const transactionId = commandTransactionId(response);
+          this.receiptUnavailable = !transactionId;
+          if (transactionId) this.loadReceipt(transactionId);
         },
         error: (error: unknown) => {
-          this.errorMessage = this.extractErrorMessage(error) || 'labels.text.Savings account deposit failed';
+          const status = (error as { status?: number })?.status;
+          // A definitive client/business rejection can be corrected. Transport, timeout and server
+          // failures may have happened after posting: retain the original reference and block retries.
+          this.outcomeUncertain = !(status != null && status >= 400 && status < 500 && status !== 408);
+          this.errorMessage = this.outcomeUncertain
+            ? ''
+            : this.extractErrorMessage(error) || 'labels.text.Savings account deposit failed';
+          if (!this.outcomeUncertain) {
+            this.submissionState.resolve(context.receiptReference);
+            this.submittedContext = undefined;
+          }
         }
       });
   }
@@ -1092,7 +1266,267 @@ export class SavingsAccountDepositComponent implements OnInit {
   }
 
   printReceipt(): void {
-    window.print();
+    if (this.commandResult && !this.isExportingPdf) window.print();
+  }
+
+  get workflowLocked(): boolean {
+    return this.isSubmitting || !!this.commandResult || this.outcomeUncertain || !!this.recordedNonPosting;
+  }
+
+  get receiptView(): DepositReceiptViewModel | null {
+    const context = this.submittedContext || this.captureReceiptContext();
+    return context
+      ? buildDepositReceiptViewModel(context, this.commandResult, this.commandResult ? this.receipt : undefined)
+      : null;
+  }
+
+  get accountRoute(): (string | number)[] | null {
+    const context = this.submittedContext;
+    const customerId = context?.customer.id ?? this.customer?.id;
+    const accountId = context?.accountId ?? this.selectedSavingsAccountId();
+    return customerId && accountId && this.hasPermission('READ_SAVINGSACCOUNT') ? [
+          '/clients',
+          customerId,
+          'savings-accounts',
+          accountId
+        ] : null;
+  }
+
+  get canReviewReversal(): boolean {
+    return this.hasPermission('ADJUSTTRANSACTION_SAVINGSACCOUNT');
+  }
+
+  get accountHistoryRoute(): (string | number)[] | null {
+    return this.accountRoute ? [
+          ...this.accountRoute,
+          'transactions'
+        ] : null;
+  }
+
+  finish(): void {
+    if ((this.commandResult || this.recordedNonPosting) && !this.isSubmitting && !this.isExportingPdf)
+      void this.router.navigate(['/organization/base-teller']);
+  }
+
+  retryReceipt(): void {
+    const id = commandTransactionId(this.commandResult);
+    if (this.commandResult && id && !this.isLoadingReceipt && !this.isExportingPdf) this.loadReceipt(id);
+  }
+
+  receiptMoney(value: number | null): string {
+    const view = this.receiptView;
+    if (value == null || !Number.isFinite(value) || !view) return '—';
+    return new Intl.NumberFormat(this.settingsService.language.code, {
+      ...(view.currency
+        ? { style: 'currency' as const, currency: view.currency, currencyDisplay: 'narrowSymbol' as const }
+        : {}),
+      minimumFractionDigits: view.precision,
+      maximumFractionDigits: view.precision
+    }).format(value);
+  }
+
+  get receiptDate(): string {
+    const date = this.receiptView?.date;
+    if (!date || date.length !== 3) return '—';
+    const [
+      year,
+      month,
+      day
+    ] = date;
+    const civilDate = new Date(Date.UTC(year, month - 1, day));
+    if (
+      !Number.isFinite(civilDate.getTime()) ||
+      civilDate.getUTCFullYear() !== year ||
+      civilDate.getUTCMonth() !== month - 1 ||
+      civilDate.getUTCDate() !== day
+    )
+      return '—';
+    // A ledger date is a calendar date, not an instant in the browser's zone.
+    return new Intl.DateTimeFormat(this.settingsService.language.code, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC'
+    }).format(civilDate);
+  }
+
+  get receiptTime(): string | null {
+    const time = this.receiptView?.time;
+    return time && /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,9})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/.test(time)
+      ? time
+      : null;
+  }
+
+  verifyUncertainDeposit(): void {
+    const context = this.submittedContext;
+    const transactionId = this.recoveryTransactionId.value || '';
+    if (
+      !this.outcomeUncertain ||
+      !context ||
+      this.isVerifyingDeposit ||
+      this.isRecordingDecision ||
+      !this.accountHistoryRoute ||
+      this.recoveryTransactionId.invalid
+    )
+      return;
+    this.isVerifyingDeposit = true;
+    this.recoveryError = '';
+    this.baseTellerService
+      .getSavingsDepositReceipt(context.accountId, transactionId)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isVerifyingDeposit = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (receipt) => {
+          if (!receipt || !matchesPendingDeposit(context, transactionId, receipt)) {
+            this.recoveryError = extract('depositReceipt.recoveryMismatch');
+            return;
+          }
+          this.submissionState.resolve(context.receiptReference);
+          // The transaction GET independently confirms this reference; no financial POST is replayed.
+          this.commandResult = { resourceId: receipt.id, savingsId: receipt.accountId };
+          this.receipt = receipt;
+          this.outcomeUncertain = false;
+          this.receiptUnavailable = false;
+        },
+        error: () => {
+          this.recoveryError = extract('depositReceipt.recoveryMismatch');
+        }
+      });
+  }
+
+  get canRecordNonPosting(): boolean {
+    return this.outcomeUncertain && !!this.submittedContext && this.reconciliationService.canRecord;
+  }
+
+  get canSubmitNonPosting(): boolean {
+    return (
+      this.canRecordNonPosting &&
+      this.nonPostingForm.valid &&
+      this.nonPostingForm.controls.reference.value === this.submittedContext?.receiptReference &&
+      !this.isRecordingDecision &&
+      !this.isVerifyingDeposit
+    );
+  }
+
+  recordNonPostingDecision(): void {
+    const context = this.submittedContext;
+    if (!context || !this.canSubmitNonPosting) return;
+    this.isRecordingDecision = true;
+    this.recoveryError = '';
+    this.reconciliationService
+      .record(context, this.nonPostingForm.getRawValue())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.isRecordingDecision = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (recorded) => {
+          if (!this.submissionState.resolve(context.receiptReference)) {
+            this.recoveryError = extract('depositReceipt.nonPostingFailed');
+            return;
+          }
+          this.recordedNonPosting = recorded;
+          this.outcomeUncertain = false;
+        },
+        error: () => {
+          this.recoveryError = extract('depositReceipt.nonPostingFailed');
+        }
+      });
+  }
+
+  /** One field list drives screen, print and PDF. Missing values remain explicitly unavailable. */
+  get receiptFields(): DepositReceiptField[] {
+    const view = this.receiptView;
+    if (!view) return [];
+    const t = (key: string) => this.translate.instant(key);
+    const missing = t(extract('depositReceipt.unavailable'));
+    return [
+      { label: t('labels.inputs.Transaction Id'), value: view.transactionId || missing },
+      {
+        label: t(view.receiptConfirmed ? 'labels.inputs.Receipt Number' : 'depositReceipt.requestReference'),
+        value: view.receiptNumber || missing
+      },
+      {
+        label: t(view.dateFromReceipt ? 'labels.inputs.Transaction Date' : extract('depositReceipt.requestDate')),
+        value: this.receiptDate
+      },
+      ...(this.receiptTime ? [{ label: t(extract('depositReceipt.transactionTime')), value: this.receiptTime }] : []),
+      { label: t('labels.inputs.Client'), value: view.customer || missing },
+      { label: t('labels.inputs.Savings Account'), value: view.accountNumber || missing },
+      { label: t('labels.inputs.Product'), value: view.product || missing },
+      { label: t('labels.inputs.Transaction Type'), value: t(view.transactionType) },
+      { label: t('labels.inputs.Payment Type'), value: view.paymentMethod || missing },
+      {
+        label: t('labels.inputs.Deposit Type'),
+        value: t(view.depositType === 'CASH' ? 'labels.inputs.Cash' : 'labels.inputs.Check')
+      },
+      ...(view.operator ? [{ label: t(extract('depositReceipt.recordedOperator')), value: view.operator }] : []),
+      { label: t('labels.inputs.Notes'), value: view.note || t(extract('depositReceipt.noNote')) },
+      {
+        label: t('depositReceipt.resultingBalance'),
+        value: view.resultingBalance == null ? missing : `${this.receiptMoney(view.resultingBalance)} ${view.currency}`
+      }
+    ];
+  }
+
+  async downloadReceiptPdf(): Promise<void> {
+    const view = this.receiptView;
+    if (!this.commandResult || !view || this.isExportingPdf || this.isLoadingReceipt) return;
+    this.isExportingPdf = true;
+    this.pdfError = false;
+    const fields = [...this.receiptFields];
+    if (!view.receiptConfirmed)
+      fields.push({
+        label: this.translate.instant('depositReceipt.requestReference'),
+        value: this.translate.instant('depositReceipt.referenceNotice')
+      });
+    if (!view.amountFromReceipt)
+      fields.push({
+        label: this.translate.instant('labels.inputs.Amount'),
+        value: this.translate.instant('depositReceipt.requestAmount')
+      });
+    try {
+      await this.receiptExport.download(
+        this.translate.instant('labels.heading.Payment Receipt'),
+        `${this.receiptMoney(view.amount)} ${view.currency}`,
+        fields,
+        view.transactionId || view.receiptNumber || 'receipt'
+      );
+    } catch {
+      this.pdfError = true;
+    } finally {
+      this.isExportingPdf = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  private captureReceiptContext(): DepositReceiptContext | null {
+    if (!this.customer || !this.selectedSavingsAccount) return null;
+    const values = this.depositForm.getRawValue();
+    const date = values.transactionDate;
+    return {
+      customer: { ...this.customer },
+      account: { ...this.selectedSavingsAccount, currency: { ...this.selectedSavingsAccount.currency } },
+      accountId: this.selectedSavingsAccountId(),
+      amount: this.depositAmount,
+      depositType: this.depositType,
+      paymentMethod: this.paymentTypeName(values.paymentTypeId),
+      receiptReference: values.receiptNumber || '',
+      date: date instanceof Date && Number.isFinite(date.getTime()) ? [
+              date.getFullYear(),
+              date.getMonth() + 1,
+              date.getDate()
+            ] : null,
+      note: values.note || ''
+    };
   }
 
   paymentTypeName(paymentTypeId: FineractId | '' | null | undefined): string {
@@ -1109,42 +1543,59 @@ export class SavingsAccountDepositComponent implements OnInit {
 
   private loadReceipt(transactionId: FineractId): void {
     const requestId = ++this.receiptLoadRequestId;
-    const savingsId = this.selectedSavingsAccountId();
+    const savingsId = this.submittedContext?.accountId ?? this.selectedSavingsAccountId();
     const commandResult: SavingsDepositReceipt | undefined = this.commandResult;
     const receiptNumber = commandResult?.paymentDetailData?.receiptNumber;
-    this.baseTellerService.getSavingsDepositReceipt(savingsId, transactionId).subscribe({
-      next: (receipt: SavingsDepositReceipt) => {
-        if (
-          requestId !== this.receiptLoadRequestId ||
-          savingsId !== this.selectedSavingsAccountId() ||
-          commandResult !== this.commandResult
-        ) {
-          return;
+    this.isLoadingReceipt = true;
+    this.receiptUnavailable = false;
+    this.baseTellerService
+      .getSavingsDepositReceipt(savingsId, transactionId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (receipt: SavingsDepositReceipt) => {
+          if (
+            requestId !== this.receiptLoadRequestId ||
+            savingsId !== this.selectedSavingsAccountId() ||
+            commandResult !== this.commandResult
+          ) {
+            return;
+          }
+          this.isLoadingReceipt = false;
+          if (
+            !receipt ||
+            (receipt.id != null && depositTransactionId(receipt.id) !== depositTransactionId(transactionId)) ||
+            (receipt.accountId != null && String(receipt.accountId) !== String(savingsId))
+          ) {
+            this.receiptUnavailable = true;
+            this.cdr.markForCheck();
+            return;
+          }
+          if (!receipt.paymentDetailData?.receiptNumber && receiptNumber) {
+            receipt = {
+              ...receipt,
+              paymentDetailData: {
+                ...receipt.paymentDetailData,
+                receiptNumber
+              }
+            };
+          }
+          this.receipt = receipt;
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          if (
+            requestId !== this.receiptLoadRequestId ||
+            savingsId !== this.selectedSavingsAccountId() ||
+            commandResult !== this.commandResult
+          ) {
+            return;
+          }
+          this.receipt = commandResult;
+          this.isLoadingReceipt = false;
+          this.receiptUnavailable = true;
+          this.cdr.markForCheck();
         }
-        if (!receipt.paymentDetailData?.receiptNumber && receiptNumber) {
-          receipt = {
-            ...receipt,
-            paymentDetailData: {
-              ...receipt.paymentDetailData,
-              receiptNumber
-            }
-          };
-        }
-        this.receipt = receipt;
-        this.cdr.markForCheck();
-      },
-      error: () => {
-        if (
-          requestId !== this.receiptLoadRequestId ||
-          savingsId !== this.selectedSavingsAccountId() ||
-          commandResult !== this.commandResult
-        ) {
-          return;
-        }
-        this.receipt = commandResult;
-        this.cdr.markForCheck();
-      }
-    });
+      });
   }
 
   isActiveSavingsAccount(account: DepositSavingsAccount): boolean {
@@ -1275,11 +1726,19 @@ export class SavingsAccountDepositComponent implements OnInit {
     this.templateReady = false;
     this.errorMessage = '';
     this.receiptLoadRequestId++;
-    if (this.commandResult) {
+    if (this.commandResult || this.recordedNonPosting) {
       this.depositForm.controls.receiptNumber.setValue(this.generateReceiptNumber());
     }
     this.accountLoadRequestId++;
     this.templateLoadRequestId++;
+    this.submittedContext = undefined;
+    this.recordedNonPosting = undefined;
+    this.nonPostingForm.reset();
+    this.recoveryError = '';
+    this.outcomeUncertain = false;
+    this.isLoadingReceipt = false;
+    this.receiptUnavailable = false;
+    this.pdfError = false;
     this.customer = null;
     this.savingsAccounts = [];
     this.selectedSavingsAccount = null;

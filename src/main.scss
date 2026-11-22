@@ -977,6 +977,20 @@ mat-card {
 
 /* Print styles — hide app shell, show only receipt content */
 @media print {
+  // Only the savings deposit print view: suppress overlays and auxiliary app panels.
+  body:has(mifosx-base-teller-savings-account-deposit) {
+    .cdk-overlay-container,
+    mifosx-copilot-panel {
+      display: none !important;
+    }
+
+    mat-sidenav-content,
+    .mat-drawer-container {
+      overflow: visible !important;
+      height: auto !important;
+    }
+  }
+
   body:has(mifosx-end-of-day-closing) .cdk-overlay-container {
     display: none !important;
   }
