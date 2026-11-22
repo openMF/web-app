@@ -6,19 +6,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { DatePipe } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { of, Subject, throwError } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { LoansService } from 'app/loans/loans.service';
 import { Dates } from 'app/core/utils/dates';
+import { SearchService } from 'app/search/search.service';
+import { OrganizationService } from 'app/organization/organization.service';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { environment } from 'environments/environment';
@@ -67,12 +69,16 @@ describe('CreditApplicationsComponent', () => {
   };
 
   function createComponent(
-    creditApplicationsResponse = of(page),
+    creditApplicationsResponse: Observable<any> | ((params: any) => Observable<any>) = of(page),
     permissions: string[] = ['REJECT_LOAN'],
     routePath = 'credit'
   ) {
     tasksService = {
-      getCreditApplications: jest.fn(() => creditApplicationsResponse)
+      getCreditApplications: jest.fn((params: any) =>
+        typeof creditApplicationsResponse === 'function'
+          ? creditApplicationsResponse(params)
+          : creditApplicationsResponse
+      )
     } as any;
     loansService = {
       loanActionButtons: jest.fn(() => of({ resourceId: 42 })),
@@ -113,10 +119,20 @@ describe('CreditApplicationsComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
+        { provide: SearchService, useValue: { getSearchResults: jest.fn(() => of([])) } },
         DatePipe,
+        DecimalPipe,
+        {
+          provide: OrganizationService,
+          useValue: {
+            getCurrencies: jest.fn(() => of({ selectedCurrencyOptions: [{ code: 'USD', decimalPlaces: 2 }] }))
+          }
+        },
         {
           provide: Dates,
           useValue: {
+            angularToMomentFormat: () => 'YYYY-MM-DD',
+            getMomentLocale: () => 'en',
             formatDate: (date: Date) =>
               `${date.getFullYear()}-${`${date.getMonth() + 1}`.padStart(2, '0')}-${`${date.getDate()}`.padStart(2, '0')}`,
             isAfter: (date1: Date, date2: Date) => date1.getTime() > date2.getTime()
@@ -129,7 +145,12 @@ describe('CreditApplicationsComponent', () => {
         { provide: MatDialog, useValue: dialog },
         {
           provide: SettingsService,
-          useValue: { businessDate: new Date(2026, 8, 8), dateFormat: 'dd MMMM yyyy', language: { code: 'en' } }
+          useValue: {
+            businessDate: new Date(2026, 8, 8),
+            decimals: '2',
+            dateFormat: 'dd MMMM yyyy',
+            language: { code: 'en' }
+          }
         },
         { provide: AuthenticationService, useValue: authenticationService },
         provideNativeDateAdapter(),
@@ -179,34 +200,22 @@ describe('CreditApplicationsComponent', () => {
     );
   });
 
-  it('renders only the prototype controls and Advanced Search action on the Credit route', () => {
-    const form = fixture.nativeElement.querySelector('form');
-    const controls = Array.from(form.querySelectorAll('[formControlName]')).map((control: Element) =>
-      control.getAttribute('formControlName')
-    );
-
-    expect(controls).toEqual([
-      'submittedFrom',
-      'submittedTo',
-      'minAmount',
-      'maxAmount',
-      'stateProvinceId',
-      'municipality',
-      'productId'
+  it('renders compact filters, current-page search, summary cards and eligible selection on Credit', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelectorAll('.summary-card')).toHaveLength(4);
+    expect(element.querySelector('input[formControlName="pageSearch"]')).not.toBeNull();
+    expect(element.textContent).toContain('credits.searchScope');
+    expect(element.textContent).not.toContain('labels.buttons.Advanced Search');
+    expect(component.displayedColumns).toEqual([
+      'select',
+      'accountNo',
+      'clientName',
+      'productName',
+      'amount',
+      'submittedOnDate',
+      'status',
+      'actions'
     ]);
-    expect(Object.keys(component.creditApplicationsForm.controls)).toEqual(controls);
-    expect(form.textContent).toContain('labels.inputs.From Date');
-    expect(form.textContent).toContain('labels.inputs.To Date');
-    expect(form.textContent).toContain('labels.inputs.Amount Range From');
-    expect(form.textContent).toContain('labels.inputs.Amount Range To');
-    expect(form.textContent).toContain('labels.inputs.State');
-    expect(form.textContent).toContain('labels.inputs.Municipality');
-    expect(form.textContent).toContain('labels.inputs.Product');
-    expect(form.textContent).toContain('labels.buttons.Advanced Search');
-    expect(form.textContent).not.toContain('labels.inputs.Customer Type');
-    expect(form.textContent).not.toContain('labels.inputs.Currency');
-    expect(form.textContent).not.toContain('labels.inputs.Status');
-    expect(form.textContent).toContain('labels.buttons.Clear');
   });
 
   it('renders exactly the approved Requests filters and Advanced Search action', () => {
@@ -224,7 +233,8 @@ describe('CreditApplicationsComponent', () => {
       'stateProvinceId',
       'municipality',
       'productId',
-      'maxAmount'
+      'maxAmount',
+      'currencyCode'
     ]);
     expect(Object.keys(component.creditApplicationsForm.controls)).toEqual(controls);
     expect(form.classList).toContain('requests-filter');
@@ -235,7 +245,7 @@ describe('CreditApplicationsComponent', () => {
     expect(form.textContent).toContain('labels.inputs.Maximum Amount');
     expect(form.textContent).toContain('labels.buttons.Advanced Search');
     expect(form.textContent).not.toContain('labels.inputs.Minimum Amount');
-    expect(form.textContent).not.toContain('labels.inputs.Currency');
+    expect(form.textContent).toContain('labels.inputs.Currency');
     expect(form.textContent).not.toContain('labels.inputs.Status');
     expect(form.textContent).not.toContain('labels.buttons.Clear');
   });
@@ -251,7 +261,8 @@ describe('CreditApplicationsComponent', () => {
       stateProvinceId: 7,
       municipality: 'Austin',
       productId: 10,
-      maxAmount: 1200
+      maxAmount: 1200,
+      currencyCode: 'USD'
     });
 
     component.applyFilters();
@@ -264,6 +275,7 @@ describe('CreditApplicationsComponent', () => {
       municipality: 'Austin',
       productId: 10,
       maxAmount: 1200,
+      currencyCode: 'USD',
       offset: 0,
       limit: 10,
       orderBy: 'submittedOnDate',
@@ -312,6 +324,8 @@ describe('CreditApplicationsComponent', () => {
     expect(form.textContent).not.toContain('labels.inputs.Municipality');
     expect(form.textContent).not.toContain('labels.inputs.Amount Range From');
     expect(form.textContent).not.toContain('labels.inputs.Amount Range To');
+    component.toggleSelection(page.pageItems[0], true);
+    fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('labels.buttons.Reject Selected');
     expect(component.displayedColumns[0]).toBe('select');
   });
@@ -360,15 +374,15 @@ describe('CreditApplicationsComponent', () => {
     );
   });
 
-  it('keeps rejection controls and selection off the Requests and Credit screens', () => {
-    expect(component.displayedColumns).not.toContain('select');
+  it('keeps selection off Requests and exposes contextual actions only after Credit selection', () => {
+    expect(component.displayedColumns).toContain('select');
     expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
-
+    component.toggleSelection(page.pageItems[0], true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('labels.buttons.Reject Selected');
     TestBed.resetTestingModule();
     createComponent(of(page), ['REJECT_LOAN'], 'requests');
-
     expect(component.displayedColumns).not.toContain('select');
-    expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
   });
 
   it('applies filters and resets the current page', () => {
@@ -380,6 +394,7 @@ describe('CreditApplicationsComponent', () => {
       productId: 9,
       minAmount: 100,
       maxAmount: 500,
+      currencyCode: 'USD',
       stateProvinceId: 7
     });
 
@@ -393,9 +408,10 @@ describe('CreditApplicationsComponent', () => {
       productId: 9,
       minAmount: 100,
       maxAmount: 500,
+      currencyCode: 'USD',
       stateProvinceId: 7,
       offset: 0,
-      limit: 10,
+      limit: 25,
       orderBy: 'submittedOnDate',
       sortOrder: 'DESC'
     });
@@ -414,7 +430,7 @@ describe('CreditApplicationsComponent', () => {
     expect(component.creditApplicationsForm.value.stateProvinceId).toBeNull();
     expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
       offset: 0,
-      limit: 10,
+      limit: 25,
       orderBy: 'submittedOnDate',
       sortOrder: 'DESC'
     });
@@ -441,19 +457,16 @@ describe('CreditApplicationsComponent', () => {
     expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
   });
 
-  it('applies amount filtering without adding a non-prototype currency parameter', () => {
-    component.creditApplicationsForm.patchValue({ minAmount: 100 });
-
+  it('requires a currency for amount filters before issuing any reads', () => {
+    component.creditApplicationsForm.patchValue({ minAmount: '100.00000001' });
     component.applyFilters();
-
-    expect(component.filterError).toBe('');
-    expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
-      minAmount: 100,
-      offset: 0,
-      limit: 10,
-      orderBy: 'submittedOnDate',
-      sortOrder: 'DESC'
-    });
+    expect(component.filterError).toBe('credits.currencyRequired');
+    expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+    component.creditApplicationsForm.patchValue({ currencyCode: 'USD' });
+    component.applyFilters();
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(
+      expect.objectContaining({ minAmount: '100.00000001', currencyCode: 'USD' })
+    );
   });
 
   it.each([
@@ -489,7 +502,7 @@ describe('CreditApplicationsComponent', () => {
     expect(tasksService.getCreditApplications).toHaveBeenCalledWith({
       [parameter]: expected,
       offset: 0,
-      limit: 10,
+      limit: 25,
       orderBy: 'submittedOnDate',
       sortOrder: 'DESC'
     });
@@ -517,7 +530,7 @@ describe('CreditApplicationsComponent', () => {
 
     expect(component.paginator.pageIndex).toBe(0);
     expect(component.paginator.firstPage).not.toHaveBeenCalled();
-    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+    expect(tasksService.getCreditApplications.mock.calls.filter(([params]) => params.limit !== 1)).toHaveLength(1);
   });
 
   it('requests the server again when sorting changes', () => {
@@ -592,7 +605,7 @@ describe('CreditApplicationsComponent', () => {
 
     component.retryLoad();
 
-    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+    expect(tasksService.getCreditApplications.mock.calls.filter(([params]) => params.limit !== 1)).toHaveLength(1);
     expect(component.loadFailed).toBe(false);
     expect(component.dataSource.data).toEqual(page.pageItems);
   });
@@ -753,16 +766,16 @@ describe('CreditApplicationsComponent', () => {
       'labels.text.All selected credit applications were rejected successfully'
     );
     expect(component.selectedApplicationIds.size).toBe(0);
-    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(1);
+    expect(tasksService.getCreditApplications.mock.calls.filter(([params]) => params.limit !== 1)).toHaveLength(1);
   });
 
-  it('reports partial failure and keeps failed loans selected', () => {
+  it('reports partial failure and clears financial selection before refresh', () => {
     component.dataSource.data = [
       page.pageItems[0],
       { ...page.pageItems[0], loanId: 43 }
     ];
     loansService.loanActionButtons.mockImplementation((loanId: any) =>
-      loanId === 43 ? throwError(() => new Error('reject failed')) : of({ resourceId: loanId })
+      loanId === 43 ? throwError(() => ({ status: 400 })) : of({ resourceId: loanId })
     );
     component.toggleVisibleSelection(true);
 
@@ -771,7 +784,7 @@ describe('CreditApplicationsComponent', () => {
     expect(component.rejectionResultMessage).toBe('labels.text.Selected credit applications rejection partial result');
     expect(component.rejectionResultParams).toEqual({ succeeded: 1, total: 2, failed: 1 });
     expect(component.rejectionResultType).toBe('error');
-    expect(component.selectedApplicationIds).toEqual(new Set([43]));
+    expect(component.selectedApplicationIds.size).toBe(0);
     expect(component.failedApplications).toEqual([expect.objectContaining({ loanId: 43, accountNo: 'LN-42' })]);
   });
 
@@ -802,14 +815,14 @@ describe('CreditApplicationsComponent', () => {
   });
 
   it('reports complete rejection failure', () => {
-    loansService.loanActionButtons.mockReturnValue(throwError(() => new Error('reject failed')));
+    loansService.loanActionButtons.mockReturnValue(throwError(() => ({ status: 400 })));
     component.toggleSelection(page.pageItems[0], true);
 
     component.massReject();
 
     expect(component.rejectionResultMessage).toBe('labels.text.No selected credit applications could be rejected');
     expect(component.rejectionResultType).toBe('error');
-    expect(component.selectedApplicationIds.has(42)).toBe(true);
+    expect(component.selectedApplicationIds.size).toBe(0);
   });
 
   it('prevents duplicate submissions while rejection is running', () => {
@@ -834,5 +847,443 @@ describe('CreditApplicationsComponent', () => {
     createComponent(of(page), ['READ_LOAN'], 'mass-rejection');
 
     expect(fixture.nativeElement.textContent).not.toContain('labels.buttons.Reject Selected');
+  });
+  it('uses server totals for every summary and never fabricates a portfolio total', () => {
+    tasksService.getCreditApplications.mockImplementation((params: any) =>
+      of({
+        pageItems: [],
+        totalFilteredRecords: params.status === 100 ? 8 : params.status === 300 ? 39 : params.status === 500 ? 5 : 55
+      })
+    );
+    component.creditApplicationsForm.patchValue({ productId: 10 });
+    component.applyFilters();
+    expect(component.summaryCounts).toEqual({ '': 55, '100': 8, '300': 39, '500': 5 });
+    expect(fixture.nativeElement.textContent).not.toContain('34.6');
+    component.selectStatus(300);
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(
+      expect.objectContaining({ productId: 10, status: 300, offset: 0 })
+    );
+    expect(component.summaryCounts['']).toBe(55);
+    component.selectStatus('');
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(
+      expect.not.objectContaining({ status: expect.anything() })
+    );
+  });
+
+  it('represents summary errors as unavailable, independently from the table', () => {
+    tasksService.getCreditApplications.mockImplementation((params: any) =>
+      params.limit === 1 ? throwError(() => ({ status: 403 })) : of(page)
+    );
+    component.creditApplicationsForm.patchValue({ productId: 10 });
+    component.applyFilters();
+    expect(component.summaryCounts['100']).toBeNull();
+    expect(component.loadFailed).toBe(false);
+    expect(component.totalFilteredRecords).toBe(1);
+  });
+
+  it('cancels stale page and summary requests when filters change', () => {
+    const oldPage = new Subject<any>();
+    const newPage = new Subject<any>();
+    const oldSummary = new Subject<any>();
+    tasksService.getCreditApplications.mockImplementation((params: any) =>
+      params.productId === 9 ? (params.limit === 1 ? oldSummary : oldPage) : newPage
+    );
+    component.creditApplicationsForm.patchValue({ productId: 9 });
+    component.applyFilters();
+    component.creditApplicationsForm.patchValue({ productId: 10 });
+    component.applyFilters();
+    newPage.next({ totalFilteredRecords: 2, pageItems: [{ ...page.pageItems[0], accountNo: '000002' }] });
+    oldPage.next(page);
+    oldSummary.next({ totalFilteredRecords: 999 });
+    expect(component.dataSource.data[0].accountNo).toBe('000002');
+    expect(component.totalFilteredRecords).toBe(2);
+    expect(oldPage.observed).toBe(false);
+    expect(oldSummary.observed).toBe(false);
+  });
+
+  it('debounces explicitly page-local search without issuing a server query', fakeAsync(() => {
+    component.toggleVisibleSelection(true);
+    component.creditApplicationsForm.get('pageSearch').setValue('Nobody');
+    tick(299);
+    expect(component.dataSource.data).toHaveLength(1);
+    tick(1);
+    expect(component.dataSource.data).toHaveLength(0);
+    expect(component.selectedApplicationIds.size).toBe(0);
+    expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+  }));
+
+  it('clears selection on pagination, sort and filter changes', () => {
+    for (const change of [
+      () => component.changePaging({ pageIndex: 1, pageSize: 25 } as any),
+      () => component.sortData({ active: 'amount', direction: 'asc' }),
+      () => component.applyFilters()
+    ]) {
+      component.toggleSelection(page.pageItems[0], true);
+      change();
+      expect(component.selectedApplicationIds.size).toBe(0);
+    }
+  });
+
+  it('keeps leading zeros, translated status, metadata and currency precision', () => {
+    component.dataSource.data = [{ ...page.pageItems[0], accountNo: '00000042', amount: '1234.50' }];
+    fixture.detectChanges();
+    const table = fixture.nativeElement.querySelector('table');
+    expect(table.textContent).toContain('00000042');
+    expect(table.textContent).toContain('1,234.50');
+    expect(table.textContent).toContain('USD');
+    expect(table.textContent).toContain('Business');
+    expect(table.textContent).toContain('Texas / Austin');
+    expect(table.textContent).toContain('credits.pending');
+    expect(component.statusKey({ status: { id: 999, value: 'Extension status' } })).toBe('');
+    expect(component.statusTone({ status: { id: 200 } })).toBe('approved');
+    expect(component.currencyDigits('JPY')).toBe(0);
+    expect(component.currencyDigits('KWD')).toBe(3);
+  });
+
+  it('requires explicit mutation permissions even when menu RBAC is disabled', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['READ_LOAN'] } as any);
+    component.toggleVisibleSelection(true);
+    component.massApprove();
+    component.massReject();
+    expect(component.selectedApplicationIds.size).toBe(0);
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+  });
+
+  it('confirms approval, uses the selected business date and prevents duplicate commands', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+    const response = new Subject<any>();
+    loansService.loanActionButtons.mockReturnValue(response);
+    component.toggleVisibleSelection(true);
+    component.massApprove();
+    component.massApprove();
+    expect(dialog.open).toHaveBeenCalledTimes(1);
+    expect(dialog.open).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.objectContaining({
+        data: expect.objectContaining({
+          operation: 'approve',
+          accounts: ['LN-42'],
+          rejectedOnDate: new Date(2026, 8, 8)
+        })
+      })
+    );
+    expect(loansService.loanActionButtons).toHaveBeenCalledTimes(1);
+    expect(loansService.loanActionButtons).toHaveBeenCalledWith(42, 'approve', {
+      approvedOnDate: '2026-09-01',
+      dateFormat: 'dd MMMM yyyy',
+      locale: 'en'
+    });
+    component.changePaging({ pageIndex: 2, pageSize: 25 } as any);
+    expect(component.pageIndex).toBe(0);
+    response.next({ resourceId: 42 });
+    response.complete();
+    expect(component.batchOutcomes[0].outcome).toBe('succeeded');
+    expect(component.selectedApplicationIds.size).toBe(0);
+  });
+
+  it('does not approve working-capital or already-active applications in a batch', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+    component.toggleSelection({ ...page.pageItems[0], productType: 'working-capital' }, true);
+    component.toggleSelection({ ...page.pageItems[0], status: { id: 300 } }, true);
+    component.massApprove();
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(loansService.applyWorkingCapitalLoanAccountCommand).not.toHaveBeenCalled();
+  });
+
+  it('handles approval cancellation, complete failure, partial success and uncertain outcomes', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+    component.dataSource.data = [
+      page.pageItems[0],
+      { ...page.pageItems[0], loanId: 43 },
+      { ...page.pageItems[0], loanId: 44 }
+    ];
+    dialog.open.mockReturnValueOnce({ afterClosed: () => of({ confirm: false }) } as any);
+    component.toggleVisibleSelection(true);
+    component.massApprove();
+    expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+    loansService.loanActionButtons.mockImplementation((id: any) =>
+      id === 42 ? of({ resourceId: 42 }) : throwError(() => ({ status: id === 43 ? 400 : 0 }))
+    );
+    component.massApprove();
+    expect(component.outcomeCounts).toEqual({ total: 3, succeeded: 1, failed: 1, uncertain: 1 });
+    expect(component.rejectionResultMessage).toBe('credits.uncertainResult');
+    expect(loansService.loanActionButtons).toHaveBeenCalledTimes(3);
+    component.toggleSelection(page.pageItems[0], true);
+    loansService.loanActionButtons.mockReturnValue(throwError(() => ({ status: 400 })));
+    component.massApprove();
+    expect(component.outcomeCounts).toEqual({ total: 1, succeeded: 0, failed: 1, uncertain: 0 });
+  });
+
+  it('exports selected records with exact amounts and safe account numbers', async () => {
+    const createDescriptor = Object.getOwnPropertyDescriptor(URL, 'createObjectURL');
+    const revokeDescriptor = Object.getOwnPropertyDescriptor(URL, 'revokeObjectURL');
+    const createUrl = jest.fn((_blob: Blob) => 'blob:synthetic');
+    const revokeUrl = jest.fn();
+    Object.defineProperty(URL, 'createObjectURL', { value: createUrl, configurable: true });
+    Object.defineProperty(URL, 'revokeObjectURL', { value: revokeUrl, configurable: true });
+    const click = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+    let cleanup: () => void;
+    const timeout = jest.spyOn(global, 'setTimeout').mockImplementationOnce((handler) => {
+      cleanup = handler as () => void;
+      return 0 as any;
+    });
+    try {
+      component.toggleSelection(
+        { ...page.pageItems[0], accountNo: '000042', amount: '1234.50000001', clientName: '=WEBSERVICE("x")' },
+        true
+      );
+      component.exportCsv();
+      expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+      expect(createUrl).toHaveBeenCalledWith(expect.any(Blob));
+      const blob = createUrl.mock.calls[0][0] as Blob;
+      const csv = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(blob);
+      });
+      expect(csv).toContain('"\'000042"');
+      expect(csv).toContain('"1234.50000001"');
+      expect(csv).toContain('"\'=WEBSERVICE(""x"")"');
+      expect(csv.trim().split('\r\n')).toHaveLength(2);
+      expect(click).toHaveBeenCalledTimes(1);
+    } finally {
+      cleanup?.();
+      timeout.mockRestore();
+      click.mockRestore();
+      if (createDescriptor) Object.defineProperty(URL, 'createObjectURL', createDescriptor);
+      else delete URL.createObjectURL;
+      if (revokeDescriptor) Object.defineProperty(URL, 'revokeObjectURL', revokeDescriptor);
+      else delete URL.revokeObjectURL;
+    }
+  });
+
+  it('exports every filtered page and never downloads failed or incomplete exports', () => {
+    const click = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+    Object.defineProperty(URL, 'createObjectURL', { value: jest.fn(() => 'blob:synthetic'), configurable: true });
+    Object.defineProperty(URL, 'revokeObjectURL', { value: jest.fn(), configurable: true });
+    tasksService.getCreditApplications.mockImplementation((params: any) =>
+      of({
+        totalFilteredRecords: 201,
+        pageItems: Array.from({ length: params.offset === 0 ? 200 : 1 }, (_, i) => ({
+          ...page.pageItems[0],
+          loanId: params.offset + i
+        }))
+      })
+    );
+    component.exportCsv();
+    expect(tasksService.getCreditApplications).toHaveBeenCalledWith(
+      expect.objectContaining({ offset: 200, limit: 200 })
+    );
+    expect(click).toHaveBeenCalledTimes(1);
+    tasksService.getCreditApplications.mockReturnValue(of({ totalFilteredRecords: 2, pageItems: page.pageItems }));
+    component.exportCsv();
+    expect(component.exportError).toBe(true);
+    expect(click).toHaveBeenCalledTimes(1);
+    tasksService.getCreditApplications.mockReturnValue(throwError(() => ({ status: 403 })));
+    component.exportCsv();
+    expect(component.exportError).toBe(true);
+    expect(click).toHaveBeenCalledTimes(1);
+    click.mockRestore();
+  });
+  it('uses calendar ages for today, yesterday, older, missing and future dates', () => {
+    const translate = (component as any).translateService;
+    const spy = jest.spyOn(translate, 'instant');
+    const now = new Date();
+    component.relativeDate(now);
+    expect(spy).toHaveBeenLastCalledWith('credits.today', { count: 0 });
+    const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    component.relativeDate(yesterday);
+    expect(spy).toHaveBeenLastCalledWith('credits.yesterday', { count: 1 });
+    const older = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14);
+    component.relativeDate(older);
+    expect(spy).toHaveBeenLastCalledWith('credits.daysAgo', { count: 14 });
+    const future = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2);
+    component.relativeDate(future);
+    expect(spy).toHaveBeenLastCalledWith('credits.futureDays', { count: 2 });
+    expect(component.relativeDate(null)).toBe('');
+  });
+  it('blocks approval if the configured business date is unavailable', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+    TestBed.inject(SettingsService).setBusinessDate?.('');
+    (component as any).settingsService.businessDate = null;
+    component.toggleVisibleSelection(true);
+    component.massApprove();
+    expect(dialog.open).not.toHaveBeenCalled();
+  });
+  it('resolves an explicitly selected authorized client into the supported server clientId filter', fakeAsync(() => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: [
+        'READ_LOAN',
+        'READ_CLIENT'
+      ] } as any);
+    const search = TestBed.inject(SearchService);
+    const lookup = jest
+      .spyOn(search, 'getSearchResults')
+      .mockReturnValue(of([{ entityId: 7, entityName: 'Resolved client', entityType: 'CLIENT' }]));
+    component.creditApplicationsForm.get('pageSearch').setValue('Resolved');
+    tick(300);
+    expect(lookup).toHaveBeenCalledWith('Resolved', 'clients');
+    component.selectClient(component.clientMatches[0]);
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(
+      expect.objectContaining({ clientId: 7, offset: 0 })
+    );
+    expect(component.creditApplicationsForm.get('pageSearch').value).toBe('');
+    component.clearClient();
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(
+      expect.not.objectContaining({ clientId: expect.anything() })
+    );
+  }));
+  it('does not request client search without read-client permission', fakeAsync(() => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['READ_LOAN'] } as any);
+    const search = jest.spyOn(TestBed.inject(SearchService), 'getSearchResults');
+    component.creditApplicationsForm.get('pageSearch').setValue('Client');
+    tick(300);
+    expect(search).not.toHaveBeenCalled();
+  }));
+  it('keeps All available when Active cancels the initial unfiltered page', () => {
+    const initialPage = new Subject<any>();
+    TestBed.resetTestingModule();
+    createComponent((params) =>
+      params.limit === 1
+        ? of({ totalFilteredRecords: params.status ? 8 : 52 })
+        : params.status === 300
+          ? of({ totalFilteredRecords: 39, pageItems: [] })
+          : initialPage
+    );
+    component.selectStatus(300);
+    expect(initialPage.observed).toBe(false);
+    expect(component.summaryCounts['']).toBe(52);
+    expect(component.totalFilteredRecords).toBe(39);
+    expect(tasksService.getCreditApplications).toHaveBeenLastCalledWith(expect.objectContaining({ status: 300 }));
+  });
+
+  it.each([
+    true,
+    false
+  ])('does not replace a newer All page count with an older summary (All received early=%s)', (early) => {
+    const table = new Subject<any>();
+    const all = new Subject<any>();
+    const pending = new Subject<any>();
+    tasksService.getCreditApplications.mockImplementation((params: any) =>
+      params.limit !== 1
+        ? table
+        : !params.status
+          ? all
+          : params.status === 100
+            ? pending
+            : of({ totalFilteredRecords: 5 })
+    );
+    component.creditApplicationsForm.patchValue({ productId: 10 });
+    component.applyFilters();
+    if (early) {
+      all.next({ totalFilteredRecords: 52 });
+      all.complete();
+    }
+    table.next({ totalFilteredRecords: 55, pageItems: [] });
+    if (!early) {
+      all.next({ totalFilteredRecords: 52 });
+      all.complete();
+    }
+    pending.next({ totalFilteredRecords: 8 });
+    pending.complete();
+    expect(component.summaryCounts['']).toBe(55);
+    expect(component.summaryCounts['100']).toBe(8);
+    expect(component.summaryLoading).toBe(false);
+  });
+
+  it('does not submit server filters when Enter is pressed in page search', () => {
+    const event = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: 13,
+      bubbles: true,
+      cancelable: true
+    });
+    fixture.nativeElement.querySelector('input[formControlName="pageSearch"]').dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(true);
+    expect(tasksService.getCreditApplications).not.toHaveBeenCalled();
+  });
+
+  it('cancels pending lookups and allows the same query after client selection and paging', fakeAsync(() => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: [
+        'READ_CLIENT',
+        'READ_LOAN'
+      ] } as any);
+    const pendingLookup = new Subject<any>();
+    const lookup = jest.spyOn(TestBed.inject(SearchService), 'getSearchResults').mockReturnValue(pendingLookup);
+    component.creditApplicationsForm.get('pageSearch').setValue('Alex');
+    tick(300);
+    expect(lookup).toHaveBeenCalledTimes(1);
+    expect(pendingLookup.observed).toBe(true);
+    component.selectClient({ entityId: 7, entityName: 'Alex Client' });
+    expect(pendingLookup.observed).toBe(false);
+    component.creditApplicationsForm.get('pageSearch').setValue('Alex');
+    tick(300);
+    expect(lookup).toHaveBeenCalledTimes(2);
+    component.changePaging({ pageIndex: 1, pageSize: 25 } as any);
+    expect(pendingLookup.observed).toBe(false);
+    const reads = tasksService.getCreditApplications.mock.calls.length;
+    component.creditApplicationsForm.get('pageSearch').setValue('Alex');
+    tick(300);
+    expect(lookup).toHaveBeenCalledTimes(3);
+    expect(tasksService.getCreditApplications).toHaveBeenCalledTimes(reads);
+  }));
+
+  it('preserves the rejection snapshot while a pending search debounce expires during confirmation', fakeAsync(() => {
+    const confirmation = new Subject<any>();
+    dialog.open.mockReturnValue({ afterClosed: () => confirmation } as any);
+    component.toggleSelection(page.pageItems[0], true);
+    component.creditApplicationsForm.get('pageSearch').setValue('Unmatched');
+    component.massReject();
+    tick(300);
+    expect(component.selectedApplicationIds.has(42)).toBe(true);
+    confirmation.next({ confirm: true, data: { rejectedOnDate: new Date(2026, 8, 1), note: 'Reviewed' } });
+    expect(loansService.loanActionButtons).toHaveBeenCalledWith(
+      42,
+      'reject',
+      expect.objectContaining({ note: 'Reviewed' })
+    );
+    expect(component.creditApplicationsForm.enabled).toBe(true);
+  }));
+
+  it.each([
+    'selection',
+    'permission'
+  ])('explicitly cancels confirmed rejection after %s changes', (change) => {
+    const confirmation = new Subject<any>();
+    dialog.open.mockReturnValue({ afterClosed: () => confirmation } as any);
+    component.toggleSelection(page.pageItems[0], true);
+    component.massReject();
+    if (change === 'selection') component.clearSelection();
+    else authenticationService.getCredentials.mockReturnValue({ permissions: ['READ_LOAN'] } as any);
+    confirmation.next({ confirm: true, data: { rejectedOnDate: new Date(2026, 8, 1) } });
+    expect(loansService.loanActionButtons).not.toHaveBeenCalled();
+    expect(component.creditApplicationsForm.enabled).toBe(true);
+    expect(component.rejectionResultMessage).toBe('credits.rejectionCanceled');
+  });
+
+  it('clears previous rejection details only when approval is confirmed', () => {
+    authenticationService.getCredentials.mockReturnValue({ permissions: ['APPROVE_LOAN'] } as any);
+    const confirmation = new Subject<any>();
+    const response = new Subject<any>();
+    dialog.open.mockReturnValue({ afterClosed: () => confirmation } as any);
+    loansService.loanActionButtons.mockReturnValue(response);
+    component.failedApplications = [page.pageItems[0]];
+    component.rejectionResultParams = { failed: 1 };
+    component.toggleSelection(page.pageItems[0], true);
+    component.massApprove();
+    confirmation.next({ confirm: false });
+    expect(component.failedApplications).toHaveLength(1);
+    expect(component.rejectionResultParams).toEqual({ failed: 1 });
+    confirmation.complete();
+    dialog.open.mockReturnValue({
+      afterClosed: () => of({ confirm: true, data: { rejectedOnDate: new Date(2026, 8, 1) } })
+    } as any);
+    component.massApprove();
+    expect(component.failedApplications).toEqual([]);
+    expect(component.rejectionResultParams).toEqual({});
+    response.next({ resourceId: 42 });
+    response.complete();
   });
 });

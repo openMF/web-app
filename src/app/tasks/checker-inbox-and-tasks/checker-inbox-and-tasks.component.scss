@@ -6,40 +6,178 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.card-heading {
-  font-size: 20px;
-  font-weight: 500;
-  color: #333;
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.tasks-container {
+  padding: 24px;
+  color: var(--ds-text-1);
+}
+
+.tasks-heading {
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: var(--ds-text-2);
+    margin: 0;
+  }
+}
+
+.tasks-layout {
+  display: grid;
+  grid-template-columns: 208px minmax(0, calc(100% - 232px));
+  gap: 24px;
+  align-items: start;
+}
+
+.queue-panel {
+  padding: 16px 8px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  box-shadow: none;
+}
+
+.queue-group {
   margin-bottom: 16px;
-}
 
-:host-context(.dark-theme) .pending-tasks-heading {
-  color: #fff;
-  text-shadow: 0 1px 4px rgb(0 0 0 / 70%);
-}
+  &:last-child {
+    margin-bottom: 0;
+  }
 
-mat-divider {
-  margin-bottom: 16px;
-}
+  h2 {
+    margin: 8px 16px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ds-text-2);
+  }
 
-:host ::ng-deep .navigation-tabs {
-  .mat-mdc-tab-header-pagination {
+  &:not(:has(a)) {
     display: none;
   }
 
-  .mat-mdc-tab-link-container {
-    overflow: visible;
+  a {
+    display: flex;
+    justify-content: start;
+    min-height: 48px;
+    height: auto;
+    width: 100%;
+    text-align: start;
+    padding: 8px 16px;
+    color: var(--ds-text-1);
+    border-radius: var(--ds-radius);
+    white-space: normal;
+    line-height: 1.3;
   }
 
-  .mat-mdc-tab-list {
-    transform: none !important;
+  .active-queue {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--ds-surface));
+    color: var(--md-sys-color-primary);
+    font-weight: 700;
   }
 
-  .mat-mdc-tab-links {
-    flex-wrap: wrap;
+  .empty-queue {
+    color: var(--ds-text-2);
+  }
+}
+
+:host ::ng-deep .queue-group .mdc-button__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.queue-count {
+  padding: 0 8px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+}
+
+.active-queue .queue-count {
+  background: var(--md-sys-color-primary);
+  color: var(--ds-action-on-fill);
+}
+
+.queue-workspace {
+  min-width: 0;
+}
+
+.queue-toggle {
+  display: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+@media (width <= 960px) {
+  .tasks-container {
+    padding: 16px;
   }
 
-  .mat-mdc-tab-link {
-    flex-grow: 0;
+  .tasks-layout {
+    grid-template-columns: minmax(0, 100%);
+    gap: 16px;
+  }
+
+  .queue-panel {
+    padding: 8px;
+  }
+
+  .queue-toggle {
+    display: inline-flex;
+    justify-content: start;
+    min-height: 48px;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .queue-navigation {
+    display: none;
+
+    &.expanded {
+      display: block;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .tasks-container {
+    padding: 8px;
+  }
+
+  .tasks-heading h1 {
+    font-size: 1.5rem;
   }
 }

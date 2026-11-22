@@ -6,17 +6,55 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<h1 mat-dialog-title>{{ 'labels.heading.Mass Reject Credit Applications' | translate }}</h1>
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>
+  {{
+    (data.operation === 'approve' ? 'labels.heading.Approve Loan' : 'labels.heading.Mass Reject Credit Applications')
+      | translate
+  }}
+</h1>
 
 <div mat-dialog-content>
   <p>
-    {{ 'labels.text.Selected credit applications will be rejected' | translate }}:
+    {{
+      (data.operation === 'approve'
+        ? 'credits.approveConfirmation'
+        : 'labels.text.Selected credit applications will be rejected'
+      ) | translate
+    }}:
     {{ data.selectedCount }}
   </p>
 
+  @if (data.accounts?.length) {
+    <ul>
+      @for (account of data.accounts; track $index) {
+        <li>{{ account }}</li>
+      }
+    </ul>
+  }
+  @if (data.operation === 'approve') {
+    <p>{{ 'credits.approvalLimit' | translate }}</p>
+  }
   <form [formGroup]="rejectForm" class="mass-reject-dialog-form">
     <mat-form-field (click)="rejectedDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Rejected On' | translate }}</mat-label>
+      <mat-label>{{
+        (data.operation === 'approve' ? 'labels.inputs.Approved on' : 'labels.inputs.Rejected On') | translate
+      }}</mat-label>
       <input matInput [max]="maxDate" [matDatepicker]="rejectedDatePicker" required formControlName="rejectedOnDate" />
       <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #rejectedDatePicker></mat-datepicker>
@@ -28,16 +66,23 @@
       }
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-      <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-    </mat-form-field>
+    @if (data.operation !== 'approve') {
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+        <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      </mat-form-field>
+    }
   </form>
 </div>
 
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-  <button mat-raised-button color="warn" [disabled]="rejectForm.invalid" (click)="confirm()">
+  <button
+    mat-raised-button
+    [color]="data.operation === 'approve' ? 'primary' : 'warn'"
+    [disabled]="rejectForm.invalid"
+    (click)="confirm()"
+  >
     {{ 'labels.buttons.Confirm' | translate }}
   </button>
 </mat-dialog-actions>

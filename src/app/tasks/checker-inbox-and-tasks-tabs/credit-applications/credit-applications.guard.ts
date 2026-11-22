@@ -7,7 +7,7 @@
  */
 
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanDeactivateFn, Router } from '@angular/router';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { environment } from 'environments/environment';
@@ -30,3 +30,7 @@ export const creditApplicationsGuard: CanActivateFn = () => {
   const permissions = inject(AuthenticationService).getCredentials()?.permissions ?? [];
   return hasCreditApplicationsPermission(permissions) || inject(Router).createUrlTree(['/']);
 };
+
+/** Keep the component and its bounded command queue alive until all confirmed writes finish. */
+export const creditApplicationBatchGuard: CanDeactivateFn<{ approving: boolean; rejecting: boolean }> = (component) =>
+  !component.approving && !component.rejecting;
