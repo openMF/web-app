@@ -6,7 +6,11 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<h1 mat-dialog-title>{{ data.context }} {{ 'labels.heading.Family Member' | translate }}</h1>
+<!-- The dialog opens focused on its title, not on First Name: an auto-focused field is marked
+     touched when the user clicks elsewhere, and would show "required" before it was used. -->
+<h1 mat-dialog-title tabindex="-1" cdkFocusInitial>
+  {{ data.context }} {{ 'labels.heading.Family Member' | translate }}
+</h1>
 
 <form [formGroup]="familyMemberForm" class="family-member-form">
   <div class="layout-row-wrap">
@@ -118,13 +122,7 @@
 
   <mat-dialog-actions align="end">
     <button type="button" mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-    <button
-      type="button"
-      mat-raised-button
-      color="primary"
-      [disabled]="!familyMemberForm.valid"
-      [mat-dialog-close]="{ member: familyMember }"
-    >
+    <button type="button" mat-raised-button color="primary" (click)="confirm()">
       {{ 'labels.buttons.Confirm' | translate }}
     </button>
   </mat-dialog-actions>

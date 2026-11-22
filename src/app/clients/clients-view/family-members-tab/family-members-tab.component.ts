@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from '../../client-stepper/client-family-members-step/client-family-member-dialog/client-family-member-dialog.component';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
@@ -126,7 +126,8 @@ export class FamilyMembersTabComponent {
       ? of(this.familyMemberOptions)
       : this.clientsService
           .getClientTemplate()
-          .pipe(tap((template: any) => (this.familyMemberOptions = template.familyMemberOptions)));
+          // map, not tap: the dialog needs the family-member options, not the whole client template.
+          .pipe(map((template: any) => (this.familyMemberOptions = template.familyMemberOptions)));
     options$
       .pipe(
         switchMap(
