@@ -6,6 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+mat-card {
+  background: transparent;
+  box-shadow: none;
+
+  // The top row's floating labels sit above the card's edge; don't clip them.
+  overflow: visible;
+}
+
+mat-card-content.mat-mdc-card-content {
+  padding: 0;
+}
+
 .manual-entries-allowed-wrapper {
   position: relative;
 

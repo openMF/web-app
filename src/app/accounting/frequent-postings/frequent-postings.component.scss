@@ -5,3 +5,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+mat-card {
+  background: transparent;
+  box-shadow: none;
+
+  // The top row's floating labels sit above the card's edge; don't clip them.
+  overflow: visible;
+}
+
+mat-card-content.mat-mdc-card-content {
+  padding: 0;
+}

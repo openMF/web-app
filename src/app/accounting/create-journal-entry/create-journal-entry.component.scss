@@ -5,3 +5,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+mat-card {
+  --mat-card-elevated-container-color: transparent;
+  --mat-card-elevated-container-elevation: none;
+
+  background: transparent;
+  box-shadow: none;
+
+  // The top row's floating labels sit above the card's edge; don't clip them.
+  overflow: visible;
+}
+
+mat-card-content.mat-mdc-card-content {
+  padding: 0;
+}
+
+// Each debit / credit line takes a full row, whatever the page width.
+.gl-entry-row {
+  flex-basis: 100%;
+}

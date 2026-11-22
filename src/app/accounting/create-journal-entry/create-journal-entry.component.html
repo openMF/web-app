@@ -53,7 +53,7 @@
           }
 
           @for (debit of debits.controls; track debit; let i = $index) {
-            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="debits">
+            <div class="flex-fill layout-row-wrap responsive-column gl-entry-row" formArrayName="debits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"
@@ -97,7 +97,7 @@
           }
 
           @for (credit of credits.controls; track credit; let i = $index) {
-            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="credits">
+            <div class="flex-fill layout-row-wrap responsive-column gl-entry-row" formArrayName="credits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"

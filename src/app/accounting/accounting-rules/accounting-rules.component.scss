@@ -6,10 +6,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'sass:map';
+@use 'theme/material-palette' as *;
+
 table {
   width: 100%;
 
   .select-row:hover {
     cursor: pointer;
+  }
+
+  .mat-mdc-header-cell {
+    --mat-sort-arrow-color: #{map.get($primary-palette, contrast, 500)};
+
+    background: map.get($primary-palette, 500);
+    color: map.get($primary-palette, contrast, 500);
   }
 }
