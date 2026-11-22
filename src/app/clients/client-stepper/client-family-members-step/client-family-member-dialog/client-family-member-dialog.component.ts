@@ -159,6 +159,18 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
   /**
    * Returns Formatted Family Member
    */
+  /**
+   * Closes with the family member, or, if a required field is empty, shows each field's error
+   * and stays open so the user can fill it in.
+   */
+  confirm() {
+    if (this.familyMemberForm.invalid) {
+      this.familyMemberForm.markAllAsTouched();
+      return;
+    }
+    this.dialogRef.close({ member: this.familyMember });
+  }
+
   get familyMember() {
     // Get form values including disabled controls like age
     const formValue = {
