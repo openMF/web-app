@@ -145,9 +145,7 @@ export class CreateSavingsAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: charge.dueDate ? this.dateUtils.formatDate(charge.dueDate, dateFormat) : charge.dueDate,
-        feeOnMonthDay: charge.feeOnMonthDay
-          ? this.dateUtils.formatDate(charge.feeOnMonthDay, monthDayFormat)
-          : charge.feeOnMonthDay,
+        feeOnMonthDay: this.dateUtils.formatMonthDay(charge.feeOnMonthDay, monthDayFormat, dateFormat),
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
