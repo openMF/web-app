@@ -42,16 +42,16 @@ import { MembershipApplication, deadlineTone } from '../membership.models';
         white-space: nowrap;
       }
       .ok {
-        background: #e7f5e8;
-        color: #2e7d32;
+        background: var(--dk-success-soft, #e7f5e8);
+        color: var(--dk-success, #2e7d32);
       }
       .soon {
-        background: #fff1dc;
-        color: #a15c00;
+        background: var(--dk-warning-soft, #fff1dc);
+        color: var(--dk-warning, #a15c00);
       }
       .overdue {
-        background: #fde8e7;
-        color: #c62828;
+        background: var(--dk-danger-soft, #fde8e7);
+        color: var(--dk-danger, #c62828);
       }
     `
   ],

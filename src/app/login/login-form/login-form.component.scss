@@ -197,22 +197,22 @@ $input-fill: #eef3fc;
     font-weight: 600;
     letter-spacing: 0.02em;
 
-    --md-filled-button-container-color: #{$brand-blue};
+    --md-filled-button-container-color: var(--dk-primary, #{$brand-blue});
     --md-filled-button-container-shape: 6px;
-    --md-filled-button-label-text-color: var(--dk-surface, #fff);
-    --md-filled-button-hover-label-text-color: var(--dk-surface, #fff);
-    --md-filled-button-focus-label-text-color: var(--dk-surface, #fff);
-    --md-filled-button-pressed-label-text-color: var(--dk-surface, #fff);
+    --md-filled-button-label-text-color: var(--dk-on-accent, #fff);
+    --md-filled-button-hover-label-text-color: var(--dk-on-accent, #fff);
+    --md-filled-button-focus-label-text-color: var(--dk-on-accent, #fff);
+    --md-filled-button-pressed-label-text-color: var(--dk-on-accent, #fff);
 
     border-radius: 6px;
-    box-shadow: 0 4px 12px rgb(36 96 185 / 25%);
+    box-shadow: 0 4px 12px rgb(var(--dk-ink-rgb, 36 96 185) / 25%);
     transition:
       box-shadow 0.2s ease,
       opacity 0.2s ease;
 
     /* stylelint-disable-next-line selector-no-qualifying-type -- md-filled-button reflects disabled as an attribute */
     &:hover:not([disabled]) {
-      box-shadow: 0 6px 16px rgb(36 96 185 / 35%);
+      box-shadow: 0 6px 16px rgb(var(--dk-ink-rgb, 36 96 185) / 35%);
     }
 
     /* stylelint-disable-next-line selector-no-qualifying-type -- md-filled-button reflects disabled as an attribute */

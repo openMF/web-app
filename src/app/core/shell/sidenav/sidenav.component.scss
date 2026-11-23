@@ -32,6 +32,7 @@
 .brand {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   padding: 16px;
   border-bottom: 1px solid var(--nav-border);
@@ -66,10 +67,15 @@
   width: auto;
   max-width: 100%;
   padding: 4px 8px;
-  // The logo has a white background, so it sits on a white plate.
-  border-radius: 8px;
-  background: var(--dk-surface, #fff);
+  // White-text logo with no background: sits straight on the blue (light) and grey (dark) sidebar.
   object-fit: contain;
+}
+
+// Only the G, shown instead of the full logo when the sidebar is collapsed to icons.
+.brand-mark {
+  display: none;
+  height: 32px;
+  width: auto;
 }
 
 .menu {
@@ -210,10 +216,13 @@
     padding: 16px 8px;
   }
 
-  // Icon-only width: the logo shrinks to fit.
+  // Icon-only width: the full logo gives way to the G.
   .brand-image {
-    height: auto;
-    padding: 4px;
+    display: none;
+  }
+
+  .brand-mark {
+    display: block;
   }
 
   .row {

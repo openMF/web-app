@@ -52,13 +52,13 @@ table {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: #fde8e8;
-  color: #b91c1c;
+  background: var(--dk-danger-soft, #fde8e8);
+  color: var(--dk-danger, #b91c1c);
 }
 
 .status-badge.status-active {
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--dk-success-soft, #dcfce7);
+  color: var(--dk-success, #15803d);
 }
 
 .office-tree {

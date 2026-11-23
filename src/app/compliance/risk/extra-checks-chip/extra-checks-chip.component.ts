@@ -37,8 +37,8 @@ import { RiskService } from '../risk.service';
         line-height: 24px;
         white-space: nowrap;
         vertical-align: middle;
-        color: #7a4a00;
-        background: #fff0d1;
+        color: var(--dk-warning, #7a4a00);
+        background: var(--dk-warning-soft, #fff0d1);
       }
       @media (width <= 600px) {
         .extra-checks {

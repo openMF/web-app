@@ -11,15 +11,15 @@
 <html lang="en" class="h-full bg-gray-100">
   <head>
     <meta charset="utf-8" />
-    <title>COFMIS</title>
+    <title>GroFiniX</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
 
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="icon" type="image/png" href="assets/images/debug-bg.png" sizes="182x184" />
-    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184" />
+    <link rel="icon" type="image/png" href="assets/images/grofinix-icon.png" sizes="256x256" />
+    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="manifest.json" />
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -35,6 +35,10 @@
     <!-- Load environment variables -->
   </head>
   <body class="h-full">
+    <script>
+      // Apply the saved theme before the app loads, so dark mode does not flash light first.
+      if (localStorage.getItem('mifosXTheme') === 'dark-theme') document.body.classList.add('dark-theme');
+    </script>
     <!--
       OAuth Redirect Interceptor (PRODUCTION)
       -------------------------------------
@@ -115,7 +119,7 @@
           <div class="spinner-ring spinner-ring-2"></div>
           <div class="spinner-dot"></div>
         </div>
-        <div class="loader-text">COFMIS</div>
+        <div class="loader-text">GroFiniX</div>
         <div class="loader-subtext">Loading your workspace&hellip;</div>
         <div class="loader-bar"><div class="loader-bar-fill"></div></div>
       </div>

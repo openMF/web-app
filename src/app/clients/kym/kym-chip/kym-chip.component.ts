@@ -57,20 +57,20 @@ import { KymService } from '../kym.service';
         cursor: pointer;
       }
       .red {
-        color: #9f1f17;
-        background: #fdeceb;
+        color: var(--dk-danger, #9f1f17);
+        background: var(--dk-danger-soft, #fdeceb);
       }
       .amber {
-        color: #7a4a00;
-        background: #fff0d1;
+        color: var(--dk-warning, #7a4a00);
+        background: var(--dk-warning-soft, #fff0d1);
       }
       .green {
-        color: #1b6b2a;
-        background: #e3f3e6;
+        color: var(--dk-success, #1b6b2a);
+        background: var(--dk-success-soft, #e3f3e6);
       }
       .blue {
-        color: #0b5488;
-        background: #e0edf8;
+        color: var(--dk-primary, #0b5488);
+        background: var(--dk-primary-soft, #e0edf8);
       }
       @media (width <= 600px) {
         .kym-chip {

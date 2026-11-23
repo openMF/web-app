@@ -21,12 +21,7 @@ export interface CoopAuthFeature {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthLayoutComponent {
-  /**
-   * Same default logo used by the main Mifos login component.
-   */
-  logoPath = 'assets/images/debug-bg.png';
-
-  @Input() title = 'Welcome to COFMIS';
+  @Input() title = 'Welcome to GroFiniX';
 
   @Input()
   subtitle =
@@ -54,8 +49,4 @@ export class AuthLayoutComponent {
    * overridable per page instead of hardcoded in the stylesheet.
    */
   @Input() cardMaxWidth = '440px';
-
-  onLogoError(): void {
-    this.logoPath = 'assets/images/debug-bg.png';
-  }
 }

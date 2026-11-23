@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "Le fichier sélectionné dépasse la limite de {{args.0.value}} Mo. Veuillez choisir un fichier plus petit et réessayer.",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",

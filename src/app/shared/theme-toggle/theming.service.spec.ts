@@ -12,6 +12,7 @@ import { ThemingService } from './theming.service';
 describe('ThemingService', () => {
   beforeEach(() => {
     document.body.className = '';
+    jest.clearAllMocks();
     TestBed.configureTestingModule({});
   });
 
@@ -21,10 +22,18 @@ describe('ThemingService', () => {
     expect(document.body.classList).toContain('light-theme');
   });
 
-  it('switches to dark without remembering it', () => {
+  it('saves the choice and starts dark when dark was saved', () => {
     TestBed.inject(ThemingService).setDarkMode(true);
     expect(document.body.classList).toContain('dark-theme');
-    expect(localStorage.setItem).not.toHaveBeenCalledWith(expect.stringMatching(/theme/i), expect.anything());
+    expect(localStorage.setItem).toHaveBeenCalledWith('mifosXTheme', 'dark-theme');
+
+    TestBed.inject(ThemingService).setDarkMode(false);
+    expect(localStorage.setItem).toHaveBeenCalledWith('mifosXTheme', 'light-theme');
+
+    TestBed.resetTestingModule();
+    (localStorage.getItem as jest.Mock).mockReturnValueOnce('dark-theme');
+    expect(TestBed.inject(ThemingService).isDark).toBe(true);
+    expect(localStorage.setItem).toHaveBeenCalledTimes(2);
   });
 
   it('prints in light and restores dark afterwards', () => {

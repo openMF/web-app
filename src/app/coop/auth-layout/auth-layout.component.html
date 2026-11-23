@@ -46,9 +46,10 @@
   <div class="login-panel">
     <div class="login-card-container">
       <div class="login-card" [style.--card-max-width]="cardMaxWidth">
-        <!-- DEBUGSOFT LOGO -->
+        <!-- LOGO: light and dark versions, one shown per theme -->
         <div class="logo-section">
-          <img [src]="logoPath" (error)="onLogoError()" alt="Debugsoft Logo" class="logo-image" />
+          <img src="assets/images/grofinix-light.png" alt="GroFiniX" class="logo-image logo-light" />
+          <img src="assets/images/grofinix-dark.png" alt="GroFiniX" class="logo-image logo-dark" />
         </div>
 
         <!-- LOGIN OR REGISTRATION CONTENT -->
@@ -58,7 +59,7 @@
 
     <!-- FOOTER -->
     <p class="login-footer">
-      &copy; 2026 COFMIS. All rights reserved. Developed by
+      &copy; 2026 GroFiniX. All rights reserved. Developed by
 
       <a href="https://dibugsoft.com/" target="_blank" rel="noopener noreferrer"> Debugsoft </a>
     </p>

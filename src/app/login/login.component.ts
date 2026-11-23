@@ -39,7 +39,6 @@ import { VerifyEmailComponent } from './staff-access/verify-email/verify-email.c
 import { ForgotPasswordComponent } from './staff-access/forgot-password/forgot-password.component';
 import { StaffAccessService } from '../core/authentication/staff-access.service';
 import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
-import { ThemingService } from '../shared/theme-toggle/theming.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
@@ -78,7 +77,6 @@ export class LoginComponent implements OnInit {
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
-  private themingService = inject(ThemingService);
   /** Sign-in help steps (verify email, reset password) shown in place of the sign-in form. */
   readonly staffAccess = inject(StaffAccessService);
 
@@ -102,9 +100,6 @@ export class LoginComponent implements OnInit {
    * Subscribes to alert event of alert service.
    */
   ngOnInit() {
-    // Signing in (and out) always starts in the light theme.
-    this.themingService.setDarkMode(false);
-
     this.staffAccess.backToSignIn();
     this.showTenantSelector = this.calculateTenantSelectorVisibility();
 

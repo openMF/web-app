@@ -227,6 +227,10 @@ $input-border: #e2e8f0;
   margin-bottom: 1.5rem;
 }
 
+.logo-image.logo-dark {
+  display: none;
+}
+
 .logo-image {
   display: block;
   width: auto;
@@ -272,6 +276,14 @@ $input-border: #e2e8f0;
     border-color: var(--dk-border-strong, #2c2d30);
     background: #1e1e1e;
     box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+  }
+
+  .logo-light {
+    display: none;
+  }
+
+  .logo-dark {
+    display: block;
   }
 
   .login-footer {

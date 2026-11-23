@@ -212,13 +212,4 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
     return this.settingsService.tenantIdentifier;
   }
-
-  onImageMissing(event: Event): void {
-    const target = event.currentTarget;
-    if (!(target instanceof HTMLImageElement)) {
-      return;
-    }
-    target.onerror = null;
-    target.src = `assets/images/default_home.png`;
-  }
 }

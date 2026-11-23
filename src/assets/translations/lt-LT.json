@@ -1,6 +1,6 @@
 ﻿{
   "error.msg.upload.file.too.big": "Pasirinktas failas viršija {{args.0.value}} MB ribą. Pasirinkite mažesnį failą ir bandykite dar kartą.",
-  "APP_NAME": "COFMIS",
+  "APP_NAME": "GroFiniX",
   "APP_FULL_NAME": "Cooperative Financial Management & Information System",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
