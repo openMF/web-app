@@ -396,4 +396,9 @@ export class SavingsService {
   loadSavingsDocument(savingAccountId: any, data: any): Observable<any> {
     return this.http.post(`/savings/${savingAccountId}/documents`, data);
   }
+
+  /** Changes a document's name, description and dates, and its file when one is sent (multipart). */
+  updateSavingsDocument(savingAccountId: any, documentId: any, data: FormData): Observable<any> {
+    return this.http.put(`/savings/${savingAccountId}/documents/${documentId}`, data);
+  }
 }

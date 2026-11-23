@@ -185,6 +185,20 @@
     background: rgba($peter-river, 0.12);
   }
 
+  // Pencil and "Edit", as on the Identities tab; as tall as the round buttons beside it.
+  .edit {
+    height: 2rem;
+    padding: 0 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8125rem;
+    color: $belize-hole;
+    background: rgba($peter-river, 0.12);
+
+    fa-icon {
+      margin-right: 0.375rem;
+    }
+  }
+
   .delete {
     color: $alizarin;
     background: rgba($alizarin, 0.1);

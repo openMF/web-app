@@ -96,4 +96,8 @@ export class LoanDocumentsTabComponent implements OnInit {
   deleteDocument(documentId: any) {
     this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
   }
+
+  /** An arrow function, so it keeps this component as `this` when the documents tab calls it. */
+  updateDocument = (documentId: string, formData: FormData) =>
+    this.loansService.updateLoanDocument(this.entityId, documentId, formData);
 }

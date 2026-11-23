@@ -535,6 +535,11 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/documents`, data);
   }
 
+  /** Changes a document's name, description and dates, and its file when one is sent (multipart). */
+  updateLoanDocument(loanId: any, documentId: any, data: FormData): Observable<any> {
+    return this.http.put(`/loans/${loanId}/documents/${documentId}`, data);
+  }
+
   /**
    * @param clientId Client Id
    * @param clientName Client Name

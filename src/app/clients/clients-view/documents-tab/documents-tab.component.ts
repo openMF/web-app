@@ -52,4 +52,8 @@ export class DocumentsTabComponent {
   uploadDocument(formData: FormData): any {
     return this.clientsService.uploadClientDocument(this.entityId, formData);
   }
+
+  /** An arrow function, so it keeps this component as `this` when the documents tab calls it. */
+  updateDocument = (documentId: string, formData: FormData) =>
+    this.clientsService.updateClientDocument(this.entityId, documentId, formData);
 }

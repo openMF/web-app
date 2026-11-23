@@ -337,6 +337,11 @@ export class ClientsService {
     return this.http.post(`/client_identifiers/${identifierId}/documents`, documentData);
   }
 
+  /** Removes a file attached to an identity (used when Edit replaces it with a new one). */
+  deleteClientIdentifierDocument(identifierId: string, documentId: string) {
+    return this.http.delete(`/client_identifiers/${identifierId}/documents/${documentId}`);
+  }
+
   getClientDocuments(clientId: string) {
     return this.http.get(`/clients/${clientId}/documents`);
   }
@@ -347,6 +352,11 @@ export class ClientsService {
 
   uploadClientDocument(clientId: string, documentData: any) {
     return this.http.post(`/clients/${clientId}/documents`, documentData);
+  }
+
+  /** Changes a document's name, description and dates, and its file when one is sent (multipart). */
+  updateClientDocument(clientId: string, documentId: string, documentData: FormData) {
+    return this.http.put(`/clients/${clientId}/documents/${documentId}`, documentData);
   }
 
   deleteClientDocument(parentEntityId: string, documentId: string) {

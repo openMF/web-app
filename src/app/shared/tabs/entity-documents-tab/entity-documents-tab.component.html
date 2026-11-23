@@ -83,6 +83,18 @@
                 >
                   <fa-icon icon="download"></fa-icon>
                 </button>
+                @if (callbackUpdate) {
+                  <button
+                    mat-button
+                    class="edit"
+                    (click)="editDocument(document)"
+                    [attr.aria-label]="('labels.buttons.Edit' | translate) + ': ' + document.name"
+                    *mifosxHasPermission="'UPDATE_DOCUMENT'"
+                  >
+                    <fa-icon icon="pen"></fa-icon>
+                    <span>{{ 'labels.buttons.Edit' | translate }}</span>
+                  </button>
+                }
                 <button
                   mat-icon-button
                   class="delete"

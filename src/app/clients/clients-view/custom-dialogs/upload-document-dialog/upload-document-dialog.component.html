@@ -13,6 +13,8 @@
     } @else {
       {{ 'labels.heading.Add Client Identifier' | translate }}
     }
+  } @else if (document) {
+    {{ 'labels.heading.Edit Document' | translate }}
   } @else {
     {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
   }
@@ -170,13 +172,35 @@
       @if (uploadDocumentForm.hasError('issueAfterExpiry')) {
         <mat-error class="document-dates__error">{{ 'bsDates.Issue date after expiry date' | translate }}</mat-error>
       }
+
+      <!-- Editing a document: what the server keeps, and a renamed KYM document. -->
+      @if (clearedValueKept) {
+        <p class="edit-note">{{ 'labels.text.EditDocumentClearedKept' | translate }}</p>
+      }
+      @if (kymNameLost) {
+        <p class="edit-warning">{{ 'labels.text.EditDocumentKymRename' | translate: { name: kymNameLost } }}</p>
+      }
     }
 
+    <!-- Editing a document shows the stored file; choosing another one replaces it. -->
     <mifosx-file-upload
       flex="60%"
-      [initialFileName]="uploadDocumentForm.controls.fileName?.value"
+      [initialFileName]="document?.fileName || uploadDocumentForm.controls.fileName?.value"
       (change)="onFileSelect($event)"
     ></mifosx-file-upload>
+
+    @if (document) {
+      @if (uploadDocumentForm.controls.file.hasError('fileType')) {
+        <mat-error class="file-type__error">
+          {{
+            'labels.text.EditDocumentSameFileType'
+              | translate: { type: uploadDocumentForm.controls.file.getError('fileType') }
+          }}
+        </mat-error>
+      } @else {
+        <p class="edit-note">{{ 'labels.text.EditDocumentKeepFileHint' | translate }}</p>
+      }
+    }
 
     @if (serverError) {
       <div class="server-error-banner">{{ serverError }}</div>
@@ -194,6 +218,8 @@
           } @else {
             {{ 'labels.buttons.Add' | translate }}
           }
+        } @else if (document) {
+          {{ 'labels.buttons.Submit' | translate }}
         } @else {
           {{ 'labels.buttons.Upload' | translate }}
         }
