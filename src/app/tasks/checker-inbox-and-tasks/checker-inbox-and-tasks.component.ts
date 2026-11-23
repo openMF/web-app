@@ -48,8 +48,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class CheckerInboxAndTasksComponent {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private countSubscription?: OutputRefSubscription;
+  readonly clientApprovalDescription = extract('clientApproval.description');
   navigationOpen = false;
   creditCount: number | null = null;
+  clientApprovalCount: number | null = null;
+  clientApprovalActive = false;
   readonly queueGroups = [
     {
       label: extract('credits.reviewGroup'),
@@ -88,12 +91,18 @@ export class CheckerInboxAndTasksComponent {
     }
   ];
 
-  onActivate(component: { queueCountChange?: OutputRef<number | null> }): void {
+  onActivate(component: {
+    queueCountChange?: OutputRef<number | null>;
+    clientApprovalCountChange?: OutputRef<number | null>;
+  }): void {
     this.countSubscription?.unsubscribe();
+    this.clientApprovalActive = !!component.clientApprovalCountChange;
+    this.clientApprovalCount = null;
     this.creditCount = null;
     this.changeDetectorRef.markForCheck();
-    this.countSubscription = component.queueCountChange?.subscribe((count) => {
-      this.creditCount = count;
+    this.countSubscription = (component.clientApprovalCountChange ?? component.queueCountChange)?.subscribe((count) => {
+      if (this.clientApprovalActive) this.clientApprovalCount = count;
+      else this.creditCount = count;
       this.changeDetectorRef.markForCheck();
     });
   }

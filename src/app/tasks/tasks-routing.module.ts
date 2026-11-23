@@ -34,6 +34,10 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
 /** Custom Resolvers */
 import { GetMakerCheckers } from './common-resolvers/getmakercheckers.resolver';
 import { GetGroupedClientsData } from './common-resolvers/getGroupedClientsData.resolver';
+import {
+  clientApprovalBatchGuard,
+  clientApprovalReadGuard
+} from './checker-inbox-and-tasks-tabs/client-approval/client-approval.guard';
 import { GetOffices } from './common-resolvers/getOffices.resolver';
 import { GetLoansToBeApproved } from './common-resolvers/getLoansToBeApproved.resolver';
 import { GetLoansToBeDisbursed } from './common-resolvers/getLoansToBeDisbursed.resolver';
@@ -62,9 +66,8 @@ export const routes: Routes = [
           path: 'client-approval',
           component: ClientApprovalComponent,
           data: { title: 'Client Approval' },
-          resolve: {
-            groupedClientData: GetGroupedClientsData
-          }
+          canActivate: [clientApprovalReadGuard],
+          canDeactivate: [clientApprovalBatchGuard]
         },
         {
           path: 'loan-approval',

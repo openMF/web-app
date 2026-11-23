@@ -6,78 +6,558 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.tab-container {
-  padding: 1%;
-  margin: 1%;
+:host {
+  display: block;
+  min-width: 0;
+  color: var(--ds-text-1);
+}
 
-  ::ng-deep mat-form-field {
-    .mat-mdc-form-field-subscript-wrapper {
-      height: 0;
-      min-height: 0;
-    }
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, calc((100% - 48px) / 4)));
+  gap: 16px;
+}
 
-    .mat-mdc-text-field-wrapper {
-      margin-bottom: 0;
-    }
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  min-width: 0;
+  min-height: 88px;
+  padding: 16px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  color: var(--ds-text-1);
+  box-shadow: none;
+  text-align: start;
 
-    .mat-mdc-form-field-infix {
-      padding-top: 8px;
-      padding-bottom: 8px;
-      min-height: 48px;
-    }
-
-    input {
-      height: 48px;
-    }
+  &.active {
+    border: 2px solid var(--md-sys-color-primary);
   }
 
-  button.mat-mdc-raised-button {
-    height: 48px;
-    line-height: 48px;
-    padding: 0 16px;
-    min-height: 48px;
+  > span,
+  > div > span {
+    color: var(--ds-text-2);
+    font-size: 0.875rem;
+    line-height: 1.4;
   }
 
-  .view-details {
-    cursor: pointer;
+  strong {
+    display: block;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 700;
   }
 
-  .tasks-header {
+  &.offices-card > div {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .tasks-search-field {
-    width: 280px;
-    margin: 0;
-  }
-
-  .tasks-action-btn {
-    margin: 0;
   }
 }
 
-.alert {
-  background-color: #e8f4fd;
-  padding: 6px 16px;
-  font-size: 0.875rem;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  line-height: 1.43;
-  border-radius: 4px;
-  letter-spacing: normal;
-  margin: 10px;
+:host ::ng-deep .summary-card .mdc-button__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
 
-  .message {
-    padding: 8px 0;
-    font-size: 18px;
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: 8px;
+  border-radius: 50%;
+}
+
+.warning {
+  background: var(--ds-partial);
+}
+
+.overdue {
+  background: var(--ds-alert);
+}
+
+.scope-note,
+.filter-help {
+  font-size: 0.8125rem;
+  color: var(--ds-text-2);
+  margin: 8px 0 16px;
+}
+
+.approval-workspace {
+  padding: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.filter-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 16px 8px;
+}
+
+.search-field {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.compact-filter {
+  flex: 0 1 144px;
+  min-width: 112px;
+}
+
+.date-filter {
+  min-height: 48px;
+}
+
+.filter-help {
+  padding: 0 16px;
+  margin: 0 0 8px;
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.bulk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--md-sys-color-primary) 6%, var(--ds-surface));
+  border-block: 1px solid var(--ds-border);
+}
+
+.selection-count {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selection-count > i {
+  color: var(--md-sys-color-primary);
+}
+
+.activation-date {
+  width: 224px;
+}
+
+.assign-staff {
+  width: 192px;
+}
+
+.approve-selected {
+  margin-inline-start: auto;
+}
+
+.office-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  background: var(--ds-surface-alt);
+  border-block: 1px solid var(--ds-border);
+}
+
+.office-toggle {
+  min-width: 0;
+  height: auto;
+  min-height: 40px;
+  text-align: start;
+}
+
+:host ::ng-deep .office-toggle .mdc-button__label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.group-count {
+  color: var(--ds-text-2);
+  background: var(--ds-surface);
+  border-radius: 16px;
+  padding: 0 8px;
+  font-size: 0.8125rem;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  background: var(--ds-surface);
+}
+
+th {
+  color: var(--ds-text-2);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+td {
+  font-size: 0.875rem;
+  color: var(--ds-text-1);
+}
+
+th,
+td {
+  padding: 8px 16px;
+  border-bottom-color: var(--ds-border);
+}
+
+.mat-column-select {
+  width: 48px;
+  padding: 0 0 0 8px;
+}
+
+.mat-column-client {
+  min-width: 200px;
+  width: 32%;
+}
+
+.mat-column-account {
+  white-space: nowrap;
+}
+
+.mat-column-actions {
+  padding-inline: 8px;
+}
+
+.client-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-block: 0;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ds-surface-alt);
+  color: var(--ds-text-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.client-identity strong {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.account-number {
+  font-family: monospace;
+}
+
+.staff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.staff-badge.unassigned {
+  background: var(--ds-partial-bg);
+  color: color-mix(in srgb, var(--ds-partial) 75%, var(--ds-text-1));
+  padding: 0 8px;
+  border-radius: 16px;
+}
+
+.waiting {
+  display: block;
+  color: var(--ds-text-2);
+  margin-top: 8px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.name-warning {
+  display: block;
+  color: color-mix(in srgb, var(--ds-partial) 75%, var(--ds-text-1));
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+
+.name-warning > i,
+button > i {
+  margin-inline-end: 8px;
+}
+
+:host ::ng-deep .client-approval .mat-mdc-table tr.mat-mdc-row {
+  // Override the existing global dark-theme stripe, which also uses !important.
+  background: var(--ds-surface) !important;
+}
+
+:host ::ng-deep .client-approval .mat-mdc-table tr.mat-mdc-row.selected-row {
+  background: color-mix(in srgb, var(--md-sys-color-primary) 12%, var(--ds-surface)) !important;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.visible-range {
+  color: var(--ds-text-2);
+  font-size: 0.875rem;
+}
+
+mat-paginator {
+  background: transparent;
+}
+
+.feedback,
+.outcomes {
+  padding: 16px;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.outcomes {
+  border-bottom: 1px solid var(--ds-border);
+
+  h3 {
+    margin-top: 0;
   }
 
-  .alert-check {
-    color: #359ff4;
-    margin-right: 2px;
-    font-size: 1.4rem;
+  li {
+    margin-block: 8px;
+  }
+
+  li > span {
+    margin-inline-start: 8px;
+  }
+}
+
+.error-text,
+.outcome-failed {
+  color: var(--ds-alert);
+}
+
+.warning-text,
+.outcome-uncertain {
+  color: color-mix(in srgb, var(--ds-partial) 75%, var(--ds-text-1));
+}
+
+.outcome-succeeded {
+  color: var(--ds-paid);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--ds-text-2);
+
+  > i {
+    font-size: 2rem;
+  }
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (width <= 1440px) {
+  .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, calc((100% - 16px) / 2)));
+  }
+
+  th,
+  td {
+    padding-inline: 8px;
+  }
+}
+
+@media (width <= 600px) {
+  .summary-cards {
+    grid-template-columns: minmax(0, 100%);
+    gap: 8px;
+  }
+
+  .summary-card {
+    min-height: 80px;
+  }
+
+  .search-field {
+    flex-basis: 100%;
+  }
+
+  .compact-filter {
+    flex: 1 1 112px;
+  }
+
+  .bulk-toolbar {
+    gap: 16px;
+  }
+
+  .selection-count,
+  .activation-date,
+  .assign-staff,
+  .approve-selected {
+    width: 100%;
+  }
+
+  .office-header {
+    align-items: start;
+  }
+
+  .office-toggle {
+    width: 100%;
+  }
+
+  .mat-mdc-header-row {
+    display: none;
+  }
+
+  .mat-mdc-table,
+  tbody {
+    display: block;
+  }
+
+  .mat-mdc-row {
+    display: grid;
+    grid-template-columns: 48px minmax(0, calc(100% - 48px));
+    height: auto;
+    padding: 8px;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .mat-mdc-cell {
+    display: block;
+    border: 0;
+    padding: 8px;
+    min-width: 0;
+  }
+
+  .mat-column-select {
+    grid-column: 1;
+    grid-row: 1 / 5;
+    width: auto;
+    padding: 0;
+  }
+
+  .mat-column-client {
+    grid-column: 2;
+    width: auto;
+    min-width: 0;
+  }
+
+  .mat-column-account,
+  .mat-column-staff,
+  .mat-column-submitted,
+  .mat-column-actions {
+    grid-column: 2;
+  }
+
+  .client-identity {
+    gap: 8px;
+    padding: 0;
+  }
+
+  .row-actions {
+    justify-content: start;
+    flex-wrap: wrap;
+  }
+
+  .pagination {
+    padding: 8px;
+  }
+
+  mat-paginator {
+    width: 100%;
+  }
+
+  :host ::ng-deep .mat-mdc-paginator-container {
+    padding: 0;
+    justify-content: center;
+  }
+
+  :host ::ng-deep .mat-mdc-paginator-range-label {
+    margin-inline: 8px;
+  }
+
+  .outcomes {
+    overflow-wrap: anywhere;
+
+    ul {
+      padding-inline-start: 16px;
+    }
+  }
+}
+
+:host ::ng-deep .client-approval .mat-mdc-form-field {
+  margin-bottom: 0;
+}
+
+:host ::ng-deep .client-approval .mat-mdc-form-field-infix {
+  min-height: 48px;
+  padding-block: 8px;
+}
+
+:host ::ng-deep .client-approval .mat-mdc-form-field-icon-suffix {
+  padding-inline: 8px;
+}
+
+@media (width <= 600px) {
+  :host ::ng-deep .table-container tbody {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media (width >= 601px) {
+  .table-container table .mat-mdc-row {
+    height: 64px;
   }
 }

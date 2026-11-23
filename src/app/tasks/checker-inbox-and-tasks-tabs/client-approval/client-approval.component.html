@@ -6,84 +6,410 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-@if (showData) {
-  <div class="tab-container mat-typography">
-    <div class="tasks-header">
-      <mat-form-field class="tasks-search-field">
-        <input
-          #filterInput
-          matInput
-          placeholder="{{ 'labels.text.Filter by name' | translate }}"
-          (keyup)="applyFilter(filterInput.value)"
-        />
+<section
+  class="client-approval"
+  [attr.aria-label]="'labels.inputs.Client Approval' | translate"
+  [attr.aria-busy]="loading || processing"
+>
+  <div class="summary-cards">
+    <button
+      mat-button
+      class="summary-card"
+      [class.active]="quickFilter === 'all'"
+      [attr.aria-pressed]="quickFilter === 'all'"
+      (click)="filterCard('all')"
+      [disabled]="busy || loading"
+    >
+      <span>{{ 'clientApproval.pending' | translate }}</span
+      ><strong>{{ summaryTotal ?? '—' }}</strong>
+    </button>
+    <button
+      mat-button
+      class="summary-card"
+      [class.active]="quickFilter === 'unassigned'"
+      [attr.aria-pressed]="quickFilter === 'unassigned'"
+      (click)="filterCard('unassigned')"
+      [disabled]="busy || loading || metrics.unassigned === null"
+    >
+      <span><i class="status-dot warning" aria-hidden="true"></i>{{ 'clientApproval.withoutStaff' | translate }}</span
+      ><strong>{{ metrics.unassigned ?? '—' }}</strong>
+    </button>
+    <button
+      mat-button
+      class="summary-card"
+      [class.active]="quickFilter === 'overdue'"
+      [attr.aria-pressed]="quickFilter === 'overdue'"
+      (click)="filterCard('overdue')"
+      [disabled]="busy || loading || metrics.overdue === null"
+    >
+      <span><i class="status-dot overdue" aria-hidden="true"></i>{{ 'clientApproval.overdue' | translate }}</span
+      ><strong>{{ metrics.overdue ?? '—' }}</strong>
+    </button>
+    <mat-card class="summary-card offices-card"
+      ><span>{{ 'clientApproval.offices' | translate }}</span>
+      <div>
+        <strong>{{ metrics.offices ?? '—' }}</strong
+        ><span>{{ metrics.officeName }}</span>
+      </div></mat-card
+    >
+  </div>
+  <p class="scope-note">{{ 'clientApproval.summaryScope' | translate }}</p>
+  @if (!complete && !loading && !error) {
+    <p class="scope-note">
+      {{ (aggregationFailed ? labels.metricsUnavailable : labels.aggregateLimit) | translate }}
+    </p>
+  }
+  @if (aggregationFailed && !loading && !busy && !error) {
+    <button mat-button (click)="reload()">{{ 'clientApproval.retry' | translate }}</button>
+  }
+  @if (metrics.overdue === null && complete && !loading) {
+    <p class="scope-note">{{ 'clientApproval.unknownDates' | translate }}</p>
+  }
+
+  <mat-card class="approval-workspace">
+    <form class="filter-toolbar" [formGroup]="filters" (ngSubmit)="$event.preventDefault()">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field">
+        <mat-label>{{ 'clientApproval.search' | translate }}</mat-label>
+        <input matInput formControlName="search" autocomplete="off" />
+        <i matSuffix class="fa fa-search" aria-hidden="true"></i>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="compact-filter">
+        <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+        <mat-select [canSelectNullableOptions]="true" formControlName="officeId"
+          ><mat-option [value]="null">{{ 'clientApproval.allOffices' | translate }}</mat-option>
+          @for (office of offices; track office.id) {
+            <mat-option [value]="office.id">{{ office.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="compact-filter">
+        <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
+        <mat-select [canSelectNullableOptions]="true" formControlName="staffId"
+          ><mat-option [value]="null">{{ 'clientApproval.allStaff' | translate }}</mat-option>
+          @if (filters.controls.officeId.value && !staffFailed) {
+            @for (person of staff; track person.id) {
+              <mat-option [value]="person.id">{{ person.displayName }}</mat-option>
+            }
+          }
+        </mat-select>
       </mat-form-field>
       <button
-        mat-raised-button
-        *mifosxHasPermission="'ACTIVATE_CLIENT'"
-        (click)="approveClients()"
-        class="tasks-action-btn mat-success"
+        mat-stroked-button
+        type="button"
+        class="date-filter"
+        [disabled]="!complete || busy || loading"
+        (click)="submittedOpen = !submittedOpen"
+        [attr.aria-expanded]="submittedOpen"
+        aria-controls="client-submission-filter"
       >
-        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
+        <i class="fa fa-calendar" aria-hidden="true"></i>{{ 'clientApproval.submitted' | translate }}
       </button>
-    </div>
-    @for (client of groupedClientEntries; track client.key) {
-      <h3>{{ client.key }}</h3>
-      @if (client.value.length > 0 && groupedClientDataSources[client.key]) {
-        <table mat-table [dataSource]="groupedClientDataSources[client.key]">
-          <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox
-                (change)="$event ? masterToggle(groupedClientDataSources[client.key].filteredData) : null"
-                [checked]="selection.hasValue() && isAllSelected(groupedClientDataSources[client.key].filteredData)"
-                [indeterminate]="
-                  selection.hasValue() && !isAllSelected(groupedClientDataSources[client.key].filteredData)
-                "
-                [aria-label]="checkboxLabel(groupedClientDataSources[client.key].filteredData)"
-              >
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <mat-checkbox
-                (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)"
-                [aria-label]="checkboxLabel(row)"
-              >
-              </mat-checkbox>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-              {{ element.displayName }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="accountNumber">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-              {{ element.accountNo }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="staff">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Staff' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-              {{ element.staffName }}
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-        </table>
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+      <button mat-button type="button" [disabled]="busy" (click)="reset()">
+        {{ 'labels.buttons.Reset' | translate }}
+      </button>
+      @if (submittedOpen && complete) {
+        <div class="date-range" id="client-submission-filter">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ 'clientApproval.submitted' | translate }}</mat-label>
+            <mat-date-range-input [rangePicker]="submittedPicker">
+              <input
+                matStartDate
+                formControlName="submittedFrom"
+                [placeholder]="'clientApproval.startDate' | translate"
+                [attr.aria-label]="'clientApproval.startDate' | translate"
+              />
+              <input
+                matEndDate
+                formControlName="submittedTo"
+                [placeholder]="'clientApproval.endDate' | translate"
+                [attr.aria-label]="'clientApproval.endDate' | translate"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="submittedPicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #submittedPicker></mat-date-range-picker>
+          </mat-form-field>
+          <button mat-button type="button" [disabled]="busy" (click)="clearDates()">
+            {{ 'clientApproval.clearDates' | translate }}
+          </button>
+          @if (invalidRange) {
+            <p role="alert" class="error-text">{{ 'clientApproval.invalidRange' | translate }}</p>
+          }
+        </div>
       }
+    </form>
+    @if (!filters.controls.officeId.value) {
+      <p class="filter-help">{{ 'clientApproval.staffOfficeHint' | translate }}</p>
     }
-  </div>
-}
+    @if (optionsFailed || staffFailed) {
+      <div class="feedback" role="alert">
+        {{ 'clientApproval.optionsError' | translate }}
+        <button mat-button [disabled]="busy" (click)="retryOptions()">{{ 'clientApproval.retry' | translate }}</button>
+      </div>
+    }
 
-@if (!showData) {
-  <div class="alert">
-    <div class="message">
-      <i class="fa fa-exclamation-circle alert-check"></i>
-      {{ 'labels.text.No pending loans for approval' | translate }}
+    <form class="bulk-toolbar" [formGroup]="activation" (ngSubmit)="approveClients()">
+      @if (selection.size > 0) {
+        <div class="selection-count">
+          <i class="fa fa-check-square" aria-hidden="true"></i
+          ><strong>{{ 'clientApproval.selected' | translate: { count: selection.size } }}</strong>
+          <button mat-button type="button" [disabled]="busy" (click)="clearSelection()">
+            {{ 'clientApproval.clearSelection' | translate }}
+          </button>
+        </div>
+      }
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="activation-date">
+        <mat-label>{{ 'clientApproval.activationDate' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="date"
+          [matDatepicker]="activationPicker"
+          [max]="maxDate"
+          [min]="minimumDate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="activationPicker"></mat-datepicker-toggle
+        ><mat-datepicker #activationPicker></mat-datepicker>
+        @if (activation.controls.date.invalid) {
+          <mat-error>{{ 'clientApproval.invalidActivationDate' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      @if (selection.size > 0 && hasPermission('ASSIGNSTAFF_CLIENT')) {
+        <mat-form-field
+          *mifosxHasPermission="'ASSIGNSTAFF_CLIENT'"
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="assign-staff"
+        >
+          <mat-label>{{ 'clientApproval.assignStaff' | translate }}</mat-label>
+          <mat-select [canSelectNullableOptions]="true" formControlName="staffId"
+            ><mat-option [value]="null">{{ 'clientApproval.keepStaff' | translate }}</mat-option>
+            @if (filters.controls.officeId.value && !staffFailed && !loadingStaff) {
+              @for (person of staff; track person.id) {
+                <mat-option [value]="person.id">{{ person.displayName }}</mat-option>
+              }
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @if (selection.size > 0) {
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="approve-selected"
+          *mifosxHasPermission="'ACTIVATE_CLIENT'"
+          [disabled]="!canApprove"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i
+          >{{ 'clientApproval.approveCount' | translate: { count: selection.size } }}
+        </button>
+      }
+    </form>
+    @if (busy) {
+      <p class="feedback" role="status">
+        {{ (processing ? labels.processing : labels.reviewing) | translate }}
+      </p>
+    }
+    @if (loading || processing) {
+      <mat-progress-bar
+        mode="indeterminate"
+        [attr.aria-label]="'clientApproval.loading' | translate"
+      ></mat-progress-bar>
+    }
+    @if (error) {
+      <div class="feedback error-text" role="alert">
+        {{ error | translate
+        }}<button mat-button [disabled]="busy" (click)="reload()">{{ 'clientApproval.retry' | translate }}</button>
+      </div>
+    }
+    @if (outcomes.length > 0) {
+      <section class="outcomes" aria-live="polite" [attr.aria-label]="'clientApproval.results' | translate">
+        <h3>{{ 'clientApproval.results' | translate }}</h3>
+        <p>{{ 'clientApproval.resultCounts' | translate: outcomeCounts }}</p>
+        @if (outcomeCounts.uncertain > 0) {
+          <p class="warning-text">{{ 'clientApproval.uncertainHelp' | translate }}</p>
+        }
+        <ul>
+          @for (outcome of outcomes; track outcome.client.id) {
+            <li>
+              <a *mifosxHasPermission="'READ_CLIENT'" [routerLink]="['/clients', outcome.client.id]"
+                >{{ outcome.client.displayName }} · {{ outcome.client.accountNo }}</a
+              >
+              <span [class]="'outcome-' + outcome.activation">{{
+                'clientApproval.' + outcome.activation | translate
+              }}</span>
+              @if (outcome.assignment) {
+                <span
+                  >{{ 'clientApproval.assignStaff' | translate }}:
+                  {{ 'clientApproval.' + outcome.assignment | translate }}</span
+                >
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+    @for (group of groups; track group.key) {
+      <section class="office-group">
+        <div class="office-header">
+          <button
+            mat-button
+            class="office-toggle"
+            [disabled]="busy"
+            (click)="toggleGroup(group)"
+            [attr.aria-expanded]="!collapsed.has(group.key)"
+            [attr.aria-controls]="group.key"
+          >
+            <i [class]="collapsed.has(group.key) ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" aria-hidden="true"></i>
+            <strong>{{ group.name || (labels.unknownOffice | translate) }}</strong
+            ><span class="group-count">{{ 'clientApproval.onPage' | translate: { count: group.clients.length } }}</span>
+          </button>
+          <button
+            mat-button
+            color="primary"
+            *mifosxHasPermission="'ACTIVATE_CLIENT'"
+            [disabled]="busy || loading || collapsed.has(group.key)"
+            (click)="selectGroup(group)"
+          >
+            {{ (allSelected(group) ? 'clientApproval.clearSelection' : labels.selectPage) | translate }}
+          </button>
+        </div>
+        @if (!collapsed.has(group.key)) {
+          <div class="table-container" [id]="group.key">
+            <table mat-table [dataSource]="group.clients">
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox
+                    color="primary"
+                    [disabled]="busy || loading || !hasPermission('ACTIVATE_CLIENT')"
+                    [checked]="allSelected(group)"
+                    [indeterminate]="someSelected(group) && !allSelected(group)"
+                    [aria-label]="
+                      'clientApproval.selectOfficePage'
+                        | translate: { office: group.name || (labels.unknownOffice | translate) }
+                    "
+                    (change)="selectGroup(group)"
+                  ></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox
+                    color="primary"
+                    [checked]="selection.has(row.id)"
+                    [disabled]="!canApproveRow(row)"
+                    [aria-label]="'clientApproval.selectClient' | translate: { account: row.accountNo }"
+                    (change)="toggle(row)"
+                  ></mat-checkbox>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="client">
+                <th mat-header-cell *matHeaderCellDef>{{ 'clientApproval.client' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  <div class="client-identity">
+                    <span class="avatar" aria-hidden="true">{{ initials(row.displayName) }}</span>
+                    <div>
+                      <strong>{{ row.displayName }}</strong>
+                      @if (nameWarning(row.displayName)) {
+                        <span class="name-warning"
+                          ><i class="fa fa-exclamation-triangle" aria-hidden="true"></i
+                          >{{ 'clientApproval.nameWarning' | translate }}</span
+                        >
+                      }
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="account">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
+                <td mat-cell *matCellDef="let row" class="account-number">{{ row.accountNo }}</td>
+              </ng-container>
+              <ng-container matColumnDef="staff">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Staff' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  <span class="staff-badge" [class.unassigned]="staffState(row) === 'unassigned'">
+                    @if (staffState(row) === 'unassigned') {
+                      <i class="fa fa-user-o" aria-hidden="true"></i>
+                    }
+                    {{
+                      row.staffName ||
+                        ((staffState(row) === 'unassigned' ? labels.unassigned : 'clientApproval.unavailable')
+                          | translate)
+                    }}</span
+                  >
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="submitted">
+                <th mat-header-cell *matHeaderCellDef>{{ 'clientApproval.submitted' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                  @if (submissionDate(row); as date) {
+                    <span>{{ date | dateFormat }}</span>
+                    @if (waiting(row) !== null) {
+                      <span class="waiting">{{ 'clientApproval.waiting' | translate: { days: waiting(row) } }}</span>
+                    }
+                  } @else {
+                    <span class="waiting">{{ 'clientApproval.unavailable' | translate }}</span>
+                  }
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+                  <span class="sr-only">{{ 'clientApproval.actions' | translate }}</span>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <div class="row-actions">
+                    <a
+                      mat-button
+                      color="primary"
+                      *mifosxHasPermission="'READ_CLIENT'"
+                      [routerLink]="['/clients', row.id]"
+                      >{{ 'labels.buttons.View' | translate }}</a
+                    ><button
+                      mat-stroked-button
+                      type="button"
+                      *mifosxHasPermission="'ACTIVATE_CLIENT'"
+                      [disabled]="!canApproveRow(row)"
+                      (click)="approveClients(row)"
+                    >
+                      {{ 'labels.buttons.Approve' | translate }}
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns"
+                [class.selected-row]="selection.has(row.id)"
+              ></tr>
+            </table>
+          </div>
+        }
+      </section>
+    }
+    @if (!loading && !error && rows.length === 0 && total === 0 && !invalidRange) {
+      <div class="empty-state" role="status">
+        <i class="fa fa-inbox" aria-hidden="true"></i>
+        <h3>{{ 'clientApproval.empty' | translate }}</h3>
+        <p>{{ 'clientApproval.emptyHelp' | translate }}</p>
+      </div>
+    }
+    <div class="pagination">
+      <span class="visible-range">
+        @if (total !== null && total > 0) {
+          {{ pageIndex * pageSize + 1 }}–{{ pageIndex * pageSize + rows.length }} {{ 'labels.text.of' | translate }}
+          {{ total }}
+        } @else {
+          {{ total ?? '—' }}
+        }
+      </span>
+      <mat-paginator
+        [length]="total ?? 0"
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        [disabled]="busy || loading || total === null"
+        showFirstLastButtons
+        (page)="page($event)"
+      ></mat-paginator>
     </div>
-  </div>
-}
+  </mat-card>
+</section>
