@@ -85,4 +85,8 @@ export class SavingsDocumentsTabComponent {
   deleteDocument(documentId: any) {
     this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
   }
+
+  /** An arrow function, so it keeps this component as `this` when the documents tab calls it. */
+  updateDocument = (documentId: string, formData: FormData) =>
+    this.savingsService.updateSavingsDocument(this.entityId, documentId, formData);
 }

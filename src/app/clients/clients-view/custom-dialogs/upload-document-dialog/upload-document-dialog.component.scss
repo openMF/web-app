@@ -77,7 +77,10 @@ h1.mat-mdc-dialog-title {
     }
   }
 
-  .document-dates__error {
+  .document-dates__error,
+  .file-type__error,
+  .edit-note,
+  .edit-warning {
     grid-column: 1 / -1;
   }
 
@@ -95,4 +98,26 @@ h1.mat-mdc-dialog-title {
   display: block;
   margin: -8px 0 12px;
   font-size: 0.75rem;
+}
+
+// Editing a document: the file type error and the notes about what is kept or no longer counted.
+.file-type__error {
+  display: block;
+  margin: 4px 0 8px;
+  font-size: 0.75rem;
+}
+
+.edit-note {
+  margin: 4px 0 8px;
+  font-size: 0.75rem;
+  color: var(--dk-text-muted, $msg-default);
+}
+
+.edit-warning {
+  margin: 4px 0 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid $msg-warning;
+  background: rgba($msg-warning, 0.1);
+  font-size: 0.875rem;
 }

@@ -73,6 +73,27 @@ const issueNotAfterExpiry: ValidatorFn = (group: AbstractControl): ValidationErr
   return issued && expires && issued.getTime() > expires.getTime() ? { issueAfterExpiry: true } : null;
 };
 
+/** Upper-case extension of a file name ("PDF"), or '' when there is none. */
+function extensionOf(fileName: string | null | undefined): string {
+  const match = /\.([a-z0-9]{1,5})$/i.exec(fileName || '');
+  return match ? match[1].toUpperCase() : '';
+}
+
+/**
+ * When a document is edited, a replacement file must be the same type as the stored one.
+ *
+ * The server's update writes the new bytes over the stored file but keeps the stored file name (and so its
+ * extension), so a JPG sent over a PDF would be previewed and downloaded as a PDF. No new file is fine.
+ */
+function sameTypeAs(storedFileName: string): ValidatorFn {
+  const stored = extensionOf(storedFileName);
+  return (control: AbstractControl): ValidationErrors | null => {
+    const file: File | '' | null = control.value;
+    if (!stored || !(file instanceof File)) return null;
+    return extensionOf(file.name) === stored ? null : { fileType: stored };
+  };
+}
+
 @Component({
   selector: 'mifosx-upload-document-dialog',
   templateUrl: './upload-document-dialog.component.html',
@@ -118,6 +139,13 @@ export class UploadDocumentDialogComponent implements OnInit {
   statusOptions: any[] = [];
   /** Existing identity being edited, if any - null means "add" mode */
   identity: any = null;
+  /** Existing document being edited (Documents tab), if any - null means "upload" mode */
+  document: any = null;
+  /**
+   * The names the KYM looks for at the start of a document's name (members only), so that renaming one
+   * can be flagged: the KYM would no longer count it.
+   */
+  kymDocumentNames: string[] = [];
 
   /**
    * Emitted when the user clicks Submit/Add/Upload with a valid form -
@@ -144,6 +172,8 @@ export class UploadDocumentDialogComponent implements OnInit {
     this.allowedDocumentTypes = data.allowedDocumentTypes || [];
     this.statusOptions = data.statusOptions || [];
     this.identity = data.identity || null;
+    this.document = data.document || null;
+    this.kymDocumentNames = data.kymDocumentNames || [];
   }
 
   ngOnInit() {
@@ -157,8 +187,8 @@ export class UploadDocumentDialogComponent implements OnInit {
     if (this.documentIdentifier) {
       // Unified form for identity: identifier fields + document upload.
       // When editing an existing identity, fields are pre-filled from
-      // it and a new file is optional (document upload is unchanged
-      // for now, so editing must not require re-selecting a file).
+      // it and a new file is optional: none keeps the stored file, and
+      // one chosen replaces it (identities-tab replaceIdentityDocument).
       const identity = this.identity;
       this.uploadDocumentForm = this.formBuilder.group(
         {
@@ -186,21 +216,50 @@ export class UploadDocumentDialogComponent implements OnInit {
         { validators: issueNotAfterExpiry }
       );
     } else {
-      // Standard document upload form
+      // Standard document form: blank to upload, or pre-filled from the document being edited, where a
+      // new file is optional (none keeps the stored file) and must be the same type as the stored one.
+      const document = this.document;
       this.uploadDocumentForm = this.formBuilder.group(
         {
           fileName: [
-            '',
+            document?.name ?? '',
             Validators.required
           ],
-          description: [''],
-          issuanceDate: [null],
-          expiryDate: [null],
-          file: ['']
+          description: [document?.description ?? ''],
+          issuanceDate: [toDate(document?.issuanceDate)],
+          expiryDate: [toDate(document?.expiryDate)],
+          file: [
+            '',
+            document ? sameTypeAs(document.fileName) : []
+          ]
         },
         { validators: issueNotAfterExpiry }
       );
     }
+  }
+
+  /**
+   * The KYM name an edited member document starts with, when the new name no longer starts with it -
+   * the KYM (which matches the start of the name, in any case) would stop counting the document.
+   */
+  get kymNameLost(): string | null {
+    const original = (this.document?.name || '').toLowerCase();
+    const renamed = (this.uploadDocumentForm.get('fileName')?.value || '').toLowerCase();
+    return this.kymDocumentNames.find((name) => original.startsWith(name) && !renamed.startsWith(name)) ?? null;
+  }
+
+  /**
+   * Whether a description or date the edited document has was cleared. The server ignores a blank value
+   * on update and keeps the stored one, so the dialog says so rather than appear to remove it.
+   */
+  get clearedValueKept(): boolean {
+    if (!this.document) return false;
+    const value = this.uploadDocumentForm.value;
+    return (
+      (!!this.document.description && !value.description) ||
+      (!!this.document.issuanceDate && !value.issuanceDate) ||
+      (!!this.document.expiryDate && !value.expiryDate)
+    );
   }
 
   /**
@@ -239,10 +298,11 @@ export class UploadDocumentDialogComponent implements OnInit {
    * right here without losing what the user typed. The plain document
    * upload form has no server-side error handling wired up yet, so it
    * keeps its previous behavior of closing immediately with the form
-   * value.
+   * value. Editing a document (Documents tab) emits too, like an identity,
+   * so an error from the update is shown here.
    */
   onSubmitClick(): void {
-    if (!this.documentIdentifier) {
+    if (!this.documentIdentifier && !this.document) {
       this.dialogRef.close(this.valueWithBsDates());
       return;
     }

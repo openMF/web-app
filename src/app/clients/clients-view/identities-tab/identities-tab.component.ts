@@ -392,8 +392,9 @@ export class IdentitiesTabComponent implements OnDestroy {
 
   /**
    * Edit Client Identifier with the same unified form used for Add, pre-filled
-   * with the existing identity's values. Document upload is left untouched -
-   * a new file is optional here and is not sent by this flow.
+   * with the existing identity's values. A new file is optional: when one is
+   * chosen it is attached to the identity, replacing the file shown in the
+   * form (see replaceIdentityDocument).
    * @param {any} identity Identity being edited
    */
   editIdentifier(identity: any) {
@@ -444,7 +445,11 @@ export class IdentitiesTabComponent implements OnDestroy {
           this.identifiersTable.renderRows();
           this.changeDetectorRef.detectChanges();
 
-          dialogRef.close();
+          if (response.file) {
+            this.replaceIdentityDocument(identity, response, dialogRef);
+          } else {
+            dialogRef.close();
+          }
         },
         error: (err: any) => {
           if (this.handleDuplicateDocumentType(err, identifierData.documentTypeId, dialogRef)) {
@@ -456,6 +461,59 @@ export class IdentitiesTabComponent implements OnDestroy {
           dialogRef.componentInstance.applyServerError(err);
         }
       });
+    });
+  }
+
+  /**
+   * Attaches the file chosen in Edit to the identity. It is uploaded first and only then is the file it
+   * replaces (the one shown in the form) removed, so a failed upload never loses the stored file; an identity
+   * with no file just gets this one. Uploading anew (not updating the stored document) keeps the new file's
+   * own name and type. The dialog closes once the file is stored, or shows the error and stays open.
+   */
+  private replaceIdentityDocument(identity: any, response: any, dialogRef: any): void {
+    const formData: FormData = new FormData();
+    formData.append('name', response.fileName || response.file.name);
+    formData.append('file', response.file);
+    this.clientService.uploadClientIdentifierDocument(identity.id, formData).subscribe({
+      next: (docRes: any) => {
+        const newDoc = {
+          id: docRes.resourceId,
+          parentEntityType: 'client_identifiers',
+          parentEntityId: identity.id,
+          name: response.fileName || response.file.name,
+          fileName: response.file.name
+        };
+        const replaced = identity.documents?.[0];
+        identity.documents = [
+          newDoc,
+          ...(identity.documents ?? []).slice(1)
+        ];
+        this.setThumbnail(newDoc);
+
+        if (replaced) {
+          this.documentPreviewService.release(replaced.id);
+          delete this.previewThumbnails[replaced.id];
+          this.clientService.deleteClientIdentifierDocument(identity.id, replaced.id).subscribe({
+            error: (err: any) => {
+              // The new file is stored; the old one could not be removed, so keep showing it too.
+              console.error('Failed to remove the replaced document', err);
+              identity.documents = [
+                ...identity.documents,
+                replaced
+              ];
+              this.setThumbnail(replaced);
+              this.identifiersTable.renderRows();
+              this.changeDetectorRef.markForCheck();
+            }
+          });
+        }
+
+        this.identifiersTable.renderRows();
+        this.changeDetectorRef.markForCheck();
+        dialogRef.close();
+      },
+      // The identity's details are already saved; only the file failed, so the dialog stays open with the error.
+      error: (err: any) => dialogRef.componentInstance.applyServerError(err)
     });
   }
   /**

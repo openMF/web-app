@@ -34,6 +34,7 @@ import { Observable } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DualDateComponent } from 'app/shared/dual-date/dual-date.component';
+import { KYM_DOCUMENTS } from 'app/clients/kym/kym.models';
 
 /** A date as yyyy-MM-dd, or null. */
 function isoDate(date: Date | null | undefined): string | null {
@@ -69,6 +70,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
 
   @Input() callbackUpload: (documentData: FormData) => Observable<any>;
   @Input() callbackDelete: (documentId: string) => void;
+  /** Saves an edited document (PUT .../documents/{documentId}); without it, cards show no Edit action. */
+  @Input() callbackUpdate: (documentId: string, documentData: FormData) => Observable<any>;
 
   previewThumbnails: Record<string, string> = {};
   private lightboxInstance: LightGallery | null = null;
@@ -128,6 +131,63 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           this.changeDetectorRef.markForCheck();
         });
       }
+    });
+  }
+
+  /**
+   * Edits a document in the upload dialog, pre-filled: name, description, issue and expiry dates, and
+   * optionally a new file of the same type (none keeps the stored file). The dialog stays open until the
+   * save succeeds, so an error from the server is shown in it; then the card is updated in place.
+   */
+  editDocument(document: any): void {
+    const dialogRef = this.dialog.open(UploadDocumentDialogComponent, {
+      data: {
+        documentIdentifier: false,
+        entityType: '',
+        document,
+        // Only a member's documents count towards the KYM.
+        kymDocumentNames: this.entityType === 'clients' ? Object.values(KYM_DOCUMENTS).flat() : []
+      },
+      width: '56rem',
+      maxWidth: '95vw'
+    });
+    dialogRef.componentInstance.submitted.subscribe((value: any) => {
+      const formData = new FormData();
+      formData.append('name', value.fileName);
+      formData.append('description', value.description ?? '');
+      const issuanceDate = isoDate(value.issuanceDate);
+      const expiryDate = isoDate(value.expiryDate);
+      if (issuanceDate) formData.append('issuanceDate', issuanceDate);
+      if (expiryDate) formData.append('expiryDate', expiryDate);
+      const newFile: File | null = value.file instanceof File ? value.file : null;
+      if (newFile) formData.append('file', newFile);
+
+      this.callbackUpdate(document.id, formData).subscribe({
+        next: () => {
+          // The server ignores a blank description or date and keeps the stored one, and keeps the stored
+          // file name when the file is replaced, so the card shows the same.
+          const updated = {
+            ...document,
+            name: value.fileName,
+            description: value.description || document.description,
+            issuanceDate: issuanceDate || document.issuanceDate,
+            expiryDate: expiryDate || document.expiryDate
+          };
+          const index = this.entityDocuments.findIndex((doc: any) => doc.id === document.id);
+          if (index !== -1) {
+            this.entityDocuments[index] = updated;
+          }
+          if (newFile) {
+            // The stored file changed: drop the cached preview so the new file is shown.
+            this.documentPreviewService.release(document.id);
+            delete this.previewThumbnails[document.id];
+            this.setThumbnail(updated);
+          }
+          this.changeDetectorRef.markForCheck();
+          dialogRef.close();
+        },
+        error: (err: any) => dialogRef.componentInstance.applyServerError(err)
+      });
     });
   }
 
