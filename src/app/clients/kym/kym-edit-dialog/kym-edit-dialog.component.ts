@@ -228,7 +228,9 @@ export class KymEditDialogComponent implements AfterViewInit {
         v.expectedTransactionsYear,
         [
           Validators.min(0),
-          Validators.max(1000000)
+          Validators.max(1000000),
+          // A count of transactions: whole numbers only, as the backend accepts.
+          Validators.pattern(/^\d+$/)
         ]
       ],
       expectedDepositYear: [

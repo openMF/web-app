@@ -258,3 +258,76 @@ describe('KymEditDialogComponent: Fill in', () => {
     expect(host().querySelector('.kym-target')).toBeNull();
   });
 });
+
+describe('KymEditDialogComponent: expected activity messages', () => {
+  let fixture: ComponentFixture<KymEditDialogComponent>;
+  let component: KymEditDialogComponent;
+
+  const errorFor = (name: string): string | null => {
+    const box = fixture.nativeElement.querySelector(`[formcontrolname="${name}"]`).closest('mat-form-field');
+    return box.querySelector('mat-error')?.textContent.trim() ?? null;
+  };
+  const enter = (name: string, value: unknown) => {
+    component.form.get(name).setValue(value);
+    component.form.get(name).markAsTouched();
+    fixture.componentRef.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        KymEditDialogComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        DatePipe,
+        provideNoopAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: MAT_DIALOG_DATA, useValue: { clientId: 793, kym: { values }, professions: [] } },
+        { provide: MatDialogRef, useValue: { close: jest.fn() } },
+        { provide: KymService, useValue: { update: jest.fn() } }
+      ]
+    });
+    fixture = TestBed.createComponent(KymEditDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('explains a transactions count above 10,00,000', () => {
+    enter('expectedTransactionsYear', 4300000);
+
+    expect(component.form.get('expectedTransactionsYear').hasError('max')).toBe(true);
+    expect(errorFor('expectedTransactionsYear')).toBe('kym.transactionsCountError');
+  });
+
+  it('explains a negative or decimal transactions count', () => {
+    enter('expectedTransactionsYear', -1);
+    expect(errorFor('expectedTransactionsYear')).toBe('kym.transactionsCountError');
+
+    enter('expectedTransactionsYear', 12.5);
+    expect(component.form.get('expectedTransactionsYear').hasError('pattern')).toBe(true);
+    expect(errorFor('expectedTransactionsYear')).toBe('kym.transactionsCountError');
+  });
+
+  it('accepts a whole number from 0 to 10,00,000', () => {
+    for (const ok of [
+      0,
+      250,
+      1000000
+    ]) {
+      enter('expectedTransactionsYear', ok);
+      expect(component.form.get('expectedTransactionsYear').valid).toBe(true);
+      expect(errorFor('expectedTransactionsYear')).toBeNull();
+    }
+  });
+
+  it('explains a negative expected deposit or borrowing', () => {
+    enter('expectedDepositYear', -5);
+    enter('expectedBorrowing', -5);
+
+    expect(errorFor('expectedDepositYear')).toBe('kym.notNegative');
+    expect(errorFor('expectedBorrowing')).toBe('kym.notNegative');
+  });
+});
