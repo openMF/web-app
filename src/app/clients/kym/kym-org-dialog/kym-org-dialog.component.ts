@@ -6,13 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { NepaliDateInputComponent } from 'app/shared/nepali-date-input/nepali-date-input.component';
 import { KymService } from '../kym.service';
 import { KymView, ORGANISATION_TYPES } from '../kym.models';
+import { revealFirstInvalid } from '../reveal-first-invalid';
 
 export interface KymOrgDialogData {
   clientId: number;
@@ -92,20 +93,18 @@ function iso(d: Date | null): string | null {
           <mat-label>{{ 'kym.org.field.otherDetails' | translate }}</mat-label>
           <textarea matInput rows="2" formControlName="otherDetails" maxlength="2000"></textarea>
         </mat-form-field>
-        <div class="confirm">
+        <div class="confirm" [class.confirm--invalid]="form.get('inPerson').touched && form.get('inPerson').invalid">
           <mat-checkbox formControlName="inPerson">{{ 'kym.org.inPersonLabel' | translate }}</mat-checkbox>
+          @if (form.get('inPerson').touched && form.get('inPerson').invalid) {
+            <p class="confirm__error" role="alert">{{ 'kym.org.inPersonRequired' | translate }}</p>
+          }
         </div>
       </mat-dialog-content>
       <mat-dialog-actions align="end">
         <button mat-raised-button type="button" mat-dialog-close [disabled]="busy()">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="busy() || form.invalid || !(changed() | keyvalue).length"
-        >
+        <button mat-raised-button color="primary" type="submit" [disabled]="busy() || !(changed() | keyvalue).length">
           {{ 'kym.Save' | translate }}
         </button>
       </mat-dialog-actions>
@@ -135,6 +134,15 @@ function iso(d: Date | null): string | null {
         border-radius: 6px;
         background: rgb(36 96 185 / 6%);
       }
+      /* Save pressed without the box ticked: outlined and explained. */
+      .confirm--invalid {
+        border: 2px solid var(--dk-danger, #d32f2f);
+      }
+      .confirm__error {
+        margin: 4px 0 0;
+        color: var(--dk-danger, #d32f2f);
+        font-size: 0.875rem;
+      }
       @media (width <= 600px) {
         .row {
           grid-template-columns: minmax(0, 1fr);
@@ -154,6 +162,7 @@ export class KymOrgDialogComponent {
   readonly data = inject<KymOrgDialogData>(MAT_DIALOG_DATA);
   private ref = inject(MatDialogRef<KymOrgDialogComponent, KymView>);
   private kymService = inject(KymService);
+  private host = inject(ElementRef<HTMLElement>);
 
   readonly types = ORGANISATION_TYPES;
   readonly today = new Date();
@@ -229,10 +238,19 @@ export class KymOrgDialogComponent {
     return out;
   }
 
+  /**
+   * Saves what changed. Save is clickable once something has changed; if anything is still missing or invalid
+   * (the "someone authorised is here" box most often), nothing is sent: every field shows its error and the first
+   * one is scrolled into view and focused.
+   */
   save(): void {
     const changes = this.changed();
-    if (this.form.invalid || !Object.keys(changes).length) {
+    if (!Object.keys(changes).length) {
+      return;
+    }
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      revealFirstInvalid(this.host.nativeElement);
       return;
     }
     this.busy.set(true);

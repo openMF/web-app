@@ -308,8 +308,11 @@
       <textarea matInput formControlName="remarks" rows="2"></textarea>
     </mat-form-field>
 
-    <div class="confirm">
+    <div class="confirm" [class.confirm--invalid]="form.get('inPerson').touched && form.get('inPerson').invalid">
       <mat-checkbox formControlName="inPerson">{{ 'kym.inPersonLabel' | translate }}</mat-checkbox>
+      @if (form.get('inPerson').touched && form.get('inPerson').invalid) {
+        <p class="confirm__error" role="alert">{{ 'kym.inPersonRequired' | translate }}</p>
+      }
       <mifosx-nepali-date-input
         formControlName="changeHappenedOn"
         [label]="'kym.changeHappenedOn' | translate"
@@ -322,12 +325,7 @@
     <button mat-raised-button type="button" mat-dialog-close [disabled]="busy()">
       {{ 'labels.buttons.Cancel' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="busy() || form.invalid || !(changed() | keyvalue).length"
-    >
+    <button mat-raised-button color="primary" type="submit" [disabled]="busy() || !(changed() | keyvalue).length">
       {{ 'kym.Save' | translate }}
     </button>
   </mat-dialog-actions>
