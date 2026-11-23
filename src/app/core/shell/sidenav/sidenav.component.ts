@@ -95,12 +95,17 @@ export class SidenavComponent implements AfterViewInit {
    * Scrolls the current page's link into view, once its module has opened and the list has rendered.
    * Called on load, after each navigation, and by the shell when the overlay sidebar opens.
    */
-  revealActive() {
-    setTimeout(() =>
-      this.host.nativeElement
-        .querySelector('.page.active, a.row.active, .module.active > .row')
-        ?.scrollIntoView({ block: 'nearest' })
-    );
+  revealActive(show = false) {
+    // One selector list would match the module's header first (it precedes its pages in the DOM), so try the page first.
+    setTimeout(() => {
+      const el: HTMLElement = this.host.nativeElement;
+      (el.querySelector('.page.active') ?? el.querySelector('a.row.active, .module.active > .row'))?.scrollIntoView({
+        block: 'nearest'
+      });
+      if (show) {
+        el.querySelector<HTMLElement>('.menu').style.visibility = '';
+      }
+    });
   }
 
   /** Opens the module holding the current page, as its pages become active. */
@@ -116,7 +121,14 @@ export class SidenavComponent implements AfterViewInit {
    */
   ngAfterViewInit() {
     // asked afresh at each sign-in: the shell, and with it this sidebar, is created after signing in
-    this.compliance.loadAccess(true).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    // The Compliance entry appears once this answers and pushes the menu down, so the menu stays hidden until then
+    // and is shown already scrolled; otherwise it visibly jumps. The timer shows it anyway if the answer is slow.
+    this.host.nativeElement.querySelector<HTMLElement>('.menu').style.visibility = 'hidden';
+    setTimeout(() => this.revealActive(true), 1000);
+    this.compliance
+      .loadAccess(true)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.revealActive(true));
     this.revealActive();
     this.router.events
       .pipe(
